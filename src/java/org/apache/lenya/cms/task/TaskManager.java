@@ -1,5 +1,5 @@
 /*
- * $Id: TaskManager.java,v 1.12 2003/05/30 21:04:38 andreas Exp $
+ * $Id: TaskManager.java,v 1.13 2003/06/06 17:29:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -136,8 +136,10 @@ public class TaskManager implements Configurable {
      *
      * @return DOCUMENT ME!
      */
-    public Task getTask(String taskId) {
-        assert tasks.containsKey(taskId);
+    public Task getTask(String taskId) throws ExecutionException {
+        if (!tasks.containsKey(taskId)) {
+            throw new ExecutionException("Task with ID '" + taskId + "' not found!");
+        }
         return (Task) tasks.get(taskId);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.21 2003/06/02 17:27:14 andreas Exp $
+ * $Id: TaskJob.java,v 1.22 2003/06/06 17:29:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -187,9 +187,9 @@ public class TaskJob
         
         Publication publication = PublicationFactory.getPublication(publicationId, contextPath);
         TaskManager manager = new TaskManager(publication.getDirectory().getAbsolutePath());
-        Task task = manager.getTask(taskId);
 
         try {
+            Task task = manager.getTask(taskId);
             task.parameterize(map.getParameters());
             task.execute(contextPath);
         }

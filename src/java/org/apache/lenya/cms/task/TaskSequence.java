@@ -1,5 +1,5 @@
 /*
- * $Id: TaskSequence.java,v 1.10 2003/05/30 21:04:38 andreas Exp $
+ * $Id: TaskSequence.java,v 1.11 2003/06/06 17:29:07 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -86,7 +86,11 @@ public class TaskSequence
         // set task IDs
         for (int i = 0; i < tasks.length; i++) {
             String taskId = taskConfigurations[i].getAttribute(TaskManager.TASK_ID_ATTRIBUTE);
-            tasks[i] = taskManager.getTask(taskId);
+            try {
+                tasks[i] = taskManager.getTask(taskId);
+            } catch (ExecutionException e) {
+                throw new ConfigurationException("Sequence initialization failed: ", e);
+            }
             log.debug("Adding task '" + taskId + "' to sequence.");
         }
     }
@@ -118,7 +122,7 @@ public class TaskSequence
      *
      * @throws IllegalStateException DOCUMENT ME!
      */
-    public String getTaskId(Task task) {
+    public String getTaskId(Task task) throws ExecutionException {
         String[] taskIds = getTaskManager().getTaskIds();
 
         for (int j = 0; j < taskIds.length; j++) {
