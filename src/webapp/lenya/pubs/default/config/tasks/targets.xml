@@ -108,6 +108,13 @@
       authoringpath="${authoring.dir}"
       documenttype="${create.doctype}"
       treefile="${authoring.tree}"/>
+      
+  <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
+  <init-history
+      documentid="${create.parent-id}/${create.child-id}"
+      documenttype="${create.doctype}"
+      />
+      
 </target>
 
 </project>
