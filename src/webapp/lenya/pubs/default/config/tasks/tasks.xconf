@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<tasks>
+
+  <task id="publish" class="org.apache.lenya.cms.task.AntTask">
+    <parameter name="target" value="publish"/>
+  </task>
+
+</tasks>

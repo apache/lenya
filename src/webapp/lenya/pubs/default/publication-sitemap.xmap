@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.19 2003/05/05 18:15:10 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.20 2003/05/07 17:34:03 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -9,11 +9,13 @@
     <map:matchers default="wildcard"/>
     <map:actions>
       <!-- FIXME: Factor out to root sitemap -->
+<!--
       <map:action name="task" logger="sitemap.action.task"
 	src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
       <map:action name="page-envelope"
       logger="sitemap.action.page-envelope"
 	src="org.apache.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
+-->
       <map:action name="uriparametrizer"
 	src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction"
 	logger="sitemap.action.uriparametrizer"/>
@@ -29,6 +31,42 @@
   <map:resources/>
 
   <map:pipelines>
+    <!-- Publisher  -->
+    <map:pipeline>
+<!--
+      <map:match type="usecase" pattern="publish">
+        <map:match type="step" pattern="showscreen">
+-->
+        <map:match pattern="lenya/publishScreen*">
+          <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp"/>
+          <map:transform src="../../xslt/publishing/main.xsl">
+            <map:parameter name="use-request-parameters" value="true"/>
+          </map:transform>
+          <map:serialize type="html"/>
+        </map:match>
+<!--
+      </map:match>
+      <map:match type="usecase" pattern="publish">
+        <map:match type="step" pattern="publish">
+-->
+        <map:match pattern="lenya/publish*">
+          <map:act type="request">
+            <map:parameter name="parameters" value="true"/>
+            <map:act type="task">
+              <map:parameter name="task-id" value="{task-id}"/>
+              <map:redirect-to uri="{parent_uri}" session="true"/>
+            </map:act>
+            <map:redirect-to uri="publishScreen?status=failed" session="true"/>
+<!--
+            <map:redirect-to uri="?usecase=publish&amp;step=showscreen" session="true"/>
+-->
+          </map:act>
+        </map:match>
+<!--
+      </map:match>
+-->
+    </map:pipeline>
+    <!-- /Publisher  -->
 
     <map:pipeline>
       <map:match pattern="**/">
