@@ -136,7 +136,7 @@
     <span style="white-space: nowrap">
     <a href="../../groups/{@id}/index.html"><xsl:value-of select="@id"/></a>
     <xsl:if test="normalize-space(.) != ''">
-      <em>(<xsl:value-of select="."/>)</em>
+      &#160;(<xsl:value-of select="."/>)
     </xsl:if>
     </span>
   </xsl:template>
