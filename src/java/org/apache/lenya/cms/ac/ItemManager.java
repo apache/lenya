@@ -1,5 +1,5 @@
 /*
- * $Id: ItemManager.java,v 1.2 2003/06/02 17:17:37 egli Exp $
+ * $Id: ItemManager.java,v 1.3 2003/06/03 13:47:38 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -112,9 +112,9 @@ public abstract class ItemManager {
 			}
 			Object item = null;
 			try {
-				Class[] constructorClasses = { Configuration.class };
+				Class[] constructorClasses = { Publication.class, Configuration.class };
 				Constructor constructor = Class.forName(klass).getConstructor(constructorClasses);
-				Object[] arguments = { config };
+				Object[] arguments = { publication, config };
 				item = constructor.newInstance(arguments);
 			} catch (Exception e) {
 				String errorMsg =
