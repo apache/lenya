@@ -44,7 +44,7 @@
 </xsl:template>
 
 <xsl:template match="block">
-  <xsl:apply-templates select="p | media">
+  <xsl:apply-templates select="p | media | hl2">
     <xsl:with-param name="block-position" select="position()"/>
   </xsl:apply-templates>
 </xsl:template>
@@ -52,9 +52,11 @@
 <xsl:template match="p">
   <xsl:param name="block-position"/>
   <p>
+<!--
     <xsl:if test="not(preceding-sibling::p)">
       <xsl:apply-templates select="../hl2" mode="block"/>
     </xsl:if>
+-->
     <xsl:apply-templates/>
     <xsl:if test="$authoring">
 	<br/>
@@ -63,7 +65,7 @@
   </p>
 </xsl:template>
 
-<xsl:template match="hl2" mode="block">
+<xsl:template match="hl2">
   <span class="art-title3"><xsl:value-of select="."/></span><br />
 </xsl:template>
 
@@ -87,7 +89,9 @@
 </xsl:template>
 
 <xsl:template match="up:authorline|authorline">
-    <span class="img-author"> (<xsl:value-of select="."/>)</span>
+  <xsl:if test="text()!=''">
+    <span class="img-author"> (Bild: <xsl:value-of select="."/>)</span>
+  </xsl:if>
 </xsl:template>
 
 <!--  General Text Templates  -->
@@ -114,7 +118,7 @@
   </ul>
 </xsl:template>
 
-<xsl:template match="listitem">
+<xsl:template match="listitem | bxlistitem">
   <li><xsl:apply-templates/></li>
 </xsl:template>
 
