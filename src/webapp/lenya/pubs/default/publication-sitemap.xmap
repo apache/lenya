@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.21 2003/05/08 12:38:38 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.22 2003/05/09 13:26:15 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -31,7 +31,7 @@
 
   <map:views>
     <map:view name="aggregation" from-label="aggregation">
-      <map:serialize/>
+      <map:serialize type="xml"/>
     </map:view>
   </map:views>
 
@@ -121,18 +121,46 @@
       </map:match>
     </map:pipeline>
 
+
+    <!-- Menubar -->
+    <map:pipeline>
+      <map:match pattern="lenyamenubar/authoring/article.xml">
+        <map:generate type="serverpages" src="config/menus/generic.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="lenyamenubar/live/article.xml">
+        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+
+
+    <map:pipeline>
+    <map:match pattern="lenyabody/*/*/*/*">
+          <map:aggregate element="cmsbody">
+<!--
+          <map:aggregate element="body" prefix="page" ns="http://www.lenya.org/2003/page" label="aggregation">
+-->
+	    <!-- /lenya.body/{publication-id}/{area}/{doctype}/{document-id} -->
+            <map:part src="cocoon://navigation/{1}/{2}/breadcrumb/{4}.xml"/>
+            <map:part src="cocoon://navigation/{1}/{2}/tabs/{4}.xml"/>
+            <map:part src="cocoon://navigation/{1}/{2}/menu/{4}.xml"/>
+            <map:part src="cocoon://{1}/{2}/{3}/{4}.xml"/>
+          </map:aggregate>
+      <map:serialize type="xml"/>
+    </map:match>
+    </map:pipeline>
+
     <map:pipeline>
     <map:match pattern="**.html">
       <map:act type="page-envelope">
 	<map:act type="uriparametrizer" src="{../1}.html">
           <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
           <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
-          <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page" label="aggregation">
-	    <!-- /navigation/{publication-id}/{area}/tabs/{document-id}.html.xml -->
-            <map:part src="cocoon://navigation/{../publication-id}/{../area}/breadcrumb/{document-id}.xml"/>
-            <map:part src="cocoon://navigation/{../publication-id}/{../area}/tabs/{document-id}.xml"/>
-            <map:part src="cocoon://navigation/{../publication-id}/{../area}/menu/{document-id}.xml"/>
-            <map:part src="cocoon://{../publication-id}/{../area}/{doctype}/{document-id}.xml"/>
+          <map:aggregate element="lenya" label="aggregation">
+            <map:part src="cocoon:/lenyamenubar/{../area}/article.xml"/>
+            <map:part src="cocoon:/lenyabody/{../publication-id}/{../area}/{doctype}/{document-id}"/>
           </map:aggregate>
           <map:transform src="xslt/page2xhtml.xsl">
             <map:parameter name="root" value="{../context-prefix}/{../publication-id}"/>
@@ -141,25 +169,16 @@
       </map:act>
       <map:serialize type="html"/>
     </map:match>
-
     </map:pipeline>
 
 
-    <!-- Menubar -->
-    <map:pipeline>
-      <map:match pattern="authoring/menus/article.xml">
-        <map:generate type="serverpages" src="config/menus/generic.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="live/menus/article.xml">
-        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
+
+
 
 
     <!-- Redirect to introduction -->
     <!-- FIXME: Factor out to root sitemap -->
+<!--
     <map:pipeline>
       <map:match pattern="">
         <map:redirect-to uri="introduction.html"/>
@@ -168,6 +187,7 @@
         <map:redirect-to uri="introduction.html"/>
       </map:match>
     </map:pipeline>
+-->
 
   </map:pipelines>
 </map:sitemap>
