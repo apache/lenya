@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.30 2003/09/17 12:47:31 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.31 2003/09/19 11:46:16 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -58,7 +58,7 @@ foldersTree.treeID = "t2"
 <xsl:template match="s:node">
   <xsl:param name="parentPath"/>
   <xsl:variable name="tree-area" select="ancestor::s:site/@area"/>
-  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', $tree-area, '/', @basic-url, @suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
+  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', $tree-area, '/', @basic-url, @language-suffix, @suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
   <xsl:variable name="exists-language" select="s:label[lang($chosenlanguage)]"/>
   <xsl:variable name="no-language-pre"><xsl:if test="not($exists-language)">&lt;span class='lenya-info-nolanguage'&gt;</xsl:if></xsl:variable>
   <xsl:variable name="no-language-post"><xsl:if test="not($exists-language)">&lt;/span&gt;</xsl:if></xsl:variable>

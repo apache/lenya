@@ -100,6 +100,7 @@ Apply nodes recursively
     
     <xsl:attribute name="suffix"><xsl:value-of select="$suffix"/></xsl:attribute>
     <xsl:attribute name="basic-url"><xsl:value-of select="$previous-url"/><xsl:value-of select="@id"/></xsl:attribute>
+    <xsl:attribute name="language-suffix"><xsl:value-of select="$canonical-language-suffix"/></xsl:attribute>
     
     <xsl:variable name="canonical-url">
       <xsl:text/>
