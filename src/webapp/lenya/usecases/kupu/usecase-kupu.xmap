@@ -87,7 +87,7 @@
               src="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
         </map:aggregate>              
         <map:transform src="fallback://resources/kupu/apache-lenya/lenya/kupusave.xsl"/>
-        <map:serialize type="xml"/>
+        <map:serialize type="xml-utf-8"/>
       </map:match>
     </map:pipeline>   
     
