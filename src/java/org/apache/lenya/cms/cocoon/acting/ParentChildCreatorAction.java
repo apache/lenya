@@ -89,8 +89,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
       }
     String doctype=request.getParameter("doctype");
     if(!validate(parentid,childid,childname,childtype,doctype)){
+      getLogger().error("Exception: Validation of parameters failed");
       return null;
-    }
+      }
 
     // Get session
     Session session=request.getSession(true);
@@ -140,7 +141,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     Element parent_element=(Element)nodes.get(0);
     getLogger().debug("PARENT ELEMENT: "+parent_element.getPath());
 
-    // Add node: branch or leaf
+    // Set child type: branch or leaf
     childType=creator.getChildType(childType);
     if(childType==AbstractParentChildCreator.BRANCH_NODE){
       childtype="branch";
@@ -148,6 +149,17 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     else{
       childtype="leaf";
       }
+
+    // Check if child already exists
+    String newChildXPath=xpath_string+"/"+childtype;
+    getLogger().debug("CHECK: "+newChildXPath);
+    if(doc.selectSingleNode(newChildXPath+"[@relURI='"+creator.generateTreeId(childid,childType)+"']") != null){
+      getLogger().error("Exception: XPath exists: "+newChildXPath+"[@relURI='"+creator.generateTreeId(childid,childType)+"']");
+      getLogger().error("No child added");
+      return null;
+      }
+
+    // Add node: branch or leaf
     parent_element.addElement(childtype).addAttribute("relURI",creator.generateTreeId(childid,childType)).addAttribute("doctype",doctype).addAttribute("menuName",childname);
     getLogger().debug("Tree has been modified: "+doc.asXML());
 
