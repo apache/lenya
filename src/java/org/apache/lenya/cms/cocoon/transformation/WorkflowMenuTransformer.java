@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.19 2003/08/22 16:37:24 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.20 2003/08/28 10:11:09 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,6 +68,7 @@ import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 import org.xml.sax.Attributes;
@@ -76,6 +77,7 @@ import org.xml.sax.helpers.AttributesImpl;
 
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -142,6 +144,23 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             char[] characters = instance.getCurrentState().toString().toCharArray();
             super.characters(characters, 0, characters.length);
             super.endElement(uri, "workflow-state", prefix + "workflow-state");
+            
+            if (Arrays.asList(instance.getWorkflow().getVariableNames()).contains("is-live")) {
+                super.startElement(
+                    uri,
+                    "is-live",
+                    prefix + "is-live",
+                    new AttributesImpl());
+
+                try {
+                    characters = Boolean.toString(instance.getValue("is_live")).toCharArray();
+                } catch (WorkflowException e) {
+                    throw new SAXException(e);
+                }
+                super.characters(characters, 0, characters.length);
+                super.endElement(uri, "is-live", prefix + "is-live");
+            }
+            
         }
     }
 
