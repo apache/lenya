@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.1 2003/05/07 07:45:16 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.2 2003/05/07 16:44:57 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,6 +47,8 @@ import org.apache.log4j.Category;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
@@ -54,101 +56,156 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.XPath;
-import org.dom4j.io.SAXReader;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.NamedNodeMap;
 
+import org.xml.sax.SAXException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 
 public class DefaultSiteTree
     implements SiteTree {
     static Category log = Category.getInstance(DefaultSiteTree.class);
+    
+    public static final String NAMESPACE_URI = "http://www.lenya.org/2003/sitetree";
+    public static final String NODE_NAME = "node";
+    public static final String LABEL_NAME = "label";
 
-    private Document doc = null;
+    private Document document = null;
     private File treefile = null;
 
-    public DefaultSiteTree(String treefilename) throws DocumentException {
+    public DefaultSiteTree(String treefilename)
+	throws ParserConfigurationException, SAXException, IOException {
  	this(new File(treefilename));
-	log.debug(treefilename);
     }
 
-    public DefaultSiteTree(File treefile) throws DocumentException {
+    public DefaultSiteTree(File treefile)
+	throws ParserConfigurationException, SAXException, IOException {
         // Read tree
 	this.treefile = treefile;
-        Document doc = new SAXReader().read("file:" + treefile);
+	document = DocumentHelper.readDocument(treefile);
     }
 
     public void addNode(String parentid, String id, Label[] labels) {
 	addNode(parentid, id, labels, null, null, false);
     }
 
+    protected Node findNode(Node node, List ids) {
+	if (ids.size() < 1) {
+	    return node;
+	} else {
+	    NodeList nodes = node.getChildNodes();
+	    for (int i = 0; i < nodes.getLength(); i++) {
+		NamedNodeMap attributes = nodes.item(i).getAttributes();
+		if (attributes != null) {
+		    Node idAttribute = attributes.getNamedItem("id");
+		    if (idAttribute != null && idAttribute.getNodeValue().equals(ids.get(0))) {
+			return findNode(nodes.item(i), ids.subList(1, ids.size()));
+		    }
+		}
+	    }
+	}
+	// node wasn't found
+	return null;
+    }
+
     public void addNode(String parentid, String id, Label[] labels,
 			String href, String suffix, boolean link) {
         // Get parent element
         StringTokenizer st = new StringTokenizer(parentid, "/");
-        String xpath_string = "/site"; // Trunk of tree
+	ArrayList ids = new ArrayList();
+	while (st.hasMoreTokens()) {
+	    ids.add(st.nextToken());
+	}
+
+	Element root = document.getDocumentElement();
 	
-        while (st.hasMoreTokens()) {
-            xpath_string = xpath_string + "/node[@id='" + st.nextToken() + "']";
-        }
+	NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
 	
-        log.debug("XPATH: " + xpath_string);
+	Element elements[] = helper.getChildren(root);
 	
-        XPath xpathSelector = DocumentHelper.createXPath(xpath_string);
-        List nodes = xpathSelector.selectNodes(doc);
-	
-        if (nodes.isEmpty()) {
-            log.error(".act(): No nodes: " + xpath_string);
-            log.error(".act(): No child added!");
+	Node parentNode = findNode(root, ids);
+
+        if (parentNode == null) {
+            log.error("No nodes: " + parentid + ". No child added");
 	    
             return;
         }
 	
-        Element parent_element = (Element) nodes.get(0);
-        log.debug("PARENT ELEMENT: " + parent_element.getPath());
+	log.debug("PARENT ELEMENT: " + parentNode);
+	System.out.println("Parent node " + parentNode);
 	
-        // Check if child already exists
-        String newChildXPath = xpath_string + "/" + "node";
-        log.debug("CHECK: " + newChildXPath);
+//         // Check if child already exists
+//         String newChildXPath = xpath_string + "/" + "node";
+//         log.debug("CHECK: " + newChildXPath);
 	
-        if (doc.selectSingleNode(newChildXPath + "[@id='" + id + "']") != null) {
-            log.error("Exception: XPath exists: " + newChildXPath + "[@id='" + id + "']");
-            log.error("No child added");
+//         if (doc.selectSingleNode(newChildXPath + "[@id='" + id + "']") != null) {
+//             log.error("Exception: XPath exists: " + newChildXPath + "[@id='" + id + "']");
+//             log.error("No child added");
 	    
-            return;
-        }
+//             return;
+//         }
 
         // Add node
-        Element node = parent_element.addElement("node").addAttribute("id", id);
-	if (href != null && href.length() > 0) {
-	    node.addAttribute("href", href);
-	}
+	Element child = helper.createElement(NODE_NAME);
+	child.setAttribute("id", id);
+ 	if (href != null && href.length() > 0) {
+ 	    child.setAttribute("href", href);
+ 	}
 	if (suffix != null && suffix.length() > 0) {
-	    node.addAttribute("suffix", suffix);
+	    child.setAttribute("suffix", suffix);
 	}
 	if (link == true) {
-	    node.addAttribute("link", "true");
+	    child.setAttribute("link", "true");
 	}
 	for (int i = 0; i < labels.length; i++) {
 	    String labelName = labels[i].getLabel();
-	    node.addElement("label").setText(labelName);
+	    Element label = helper.createElement(LABEL_NAME, labelName);
 	    String labelLanguage = labels[i].getLanguage();
 	    if (labelLanguage != null && labelLanguage.length() > 0) {
-		node.addAttribute("xml:lang", labelLanguage);
+		label.setAttribute("xml:lang", labelLanguage);
 	    }
+	    child.appendChild(label);
 	}
-	log.debug("Tree has been modified: " + doc.asXML());
+
+	parentNode.appendChild(child);
+	log.debug("Tree has been modified: " + root);
     }
 
     public void deleteNode(String id) {}
 
-    public void serialize() throws IOException {
-        // Write the tree
-        FileWriter fileWriter = new FileWriter(treefile);
-        doc.write(fileWriter);
-        fileWriter.close();
+    public void serialize()
+	throws IOException,
+	       TransformerConfigurationException,
+	       TransformerException  {
+	DocumentHelper.writeDocument(document, treefile);
+    }
+
+    public static void main(String[] args) {
+	try {
+	    DefaultSiteTree sitetree = new DefaultSiteTree(args[0]);
+	    Label label = new Label("Foo", null);
+	    Label[] labels = { label };
+	    
+	    sitetree.addNode("/tutorial", "foo", labels);
+	    
+	    Label label_de = new Label("Qualität", "de");
+	    Label label_en = new Label("Quality", "en");
+	    Label[] labels2 = { label_de, label_en  };
+	    sitetree.addNode("/tutorial/features", "here", labels2);
+	    
+	    sitetree.serialize();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
     }
 }
