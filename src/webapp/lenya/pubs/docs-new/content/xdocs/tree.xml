@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tree menuName="Lenya">
   <branch relURI="" doctype="ToC" menuName="Table of Contents">
-    <branch relURI="" doctype="XDoc" menuName="Installation">
+    <branch relURI="installation/" doctype="XDoc" menuName="Installation">
       <branch relURI="" doctype="XDoc" menuName="Requisites" />
       <branch relURI="" doctype="XDoc" menuName="Binary Version" />
-      <branch relURI="" doctype="XDoc" menuName="Source Version" />
+      <branch relURI="source_version.html" doctype="XDoc" menuName="Source Version" />
     </branch>
     <branch relURI="" doctype="XDoc" menuName="Getting Started (How-to's)">
       <branch relURI="" doctype="XDoc"
@@ -34,7 +34,7 @@
         menuName="Configure menus, creator, publisher, scheduler" />
       </branch>
     </branch>
-    <branch relURI="" doctype="XDoc" menuName="Concepts and Best Practises">
+    <branch relURI="concepts/" doctype="XDoc" menuName="Concepts and Best Practises">
       <branch relURI="" doctype="XDoc" menuName="Architecture">
         <branch relURI="" doctype="XDoc" menuName="Overview" />
         <branch relURI="" doctype="XDoc" menuName="Apache Cocoon" />
@@ -67,7 +67,7 @@
         menuName="Developing Tasks" />
       </branch>
     </branch>
-    <branch relURI="" doctype="XDoc" menuName="Components ">
+    <branch relURI="components/" doctype="XDoc" menuName="Components ">
       <branch relURI="" doctype="XDoc" menuName="Access controlling">
         <branch relURI="" doctype="XDoc" menuName="Overview" />
         <branch relURI="" doctype="XDoc" menuName="Users and roles (IML)" />

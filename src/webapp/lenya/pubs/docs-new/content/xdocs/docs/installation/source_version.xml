@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Installation of the Source Version</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Jan Prill" email="JanPrill@blauton.de"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Installation on MS Windows</title>
+
+<ol class="wide">
+  <li>
+    Get the last <a href="http://jakarta.apache.org/site/binindex.cgi">Tomcat Release Binary</a> (right now its Tomcat 4.1.24).
+  </li>
+  <li>
+    Install Tomcat like described
+    <a href="http://jakarta.apache.org/tomcat/tomcat-4.1-doc/RUNNING.txt">here</a>.
+    Basically this is setting the <code>JAVA_HOME</code> environment variable and
+    double-clicking on tomcat-4.1.24.exe. Decide to run Tomcat as a Windows NT/2000/XP-Service.
+  </li>
+  <li>
+    Check if Tomcat is running: <a href="http://localhost:8080">http://localhost:8080</a>.
+  </li>
+  <li>
+    Stop the Tomcat service (if you don't know how, try Start > Help > Services).
+  </li>
+  <li>
+    Get the latest <a href="http://ant.apache.org/bindownload.cgi">binary of Ant</a>.
+    Extract the zip to <code>C:\Programme\Apache Group\</code>.
+    After this step you got the binaries under <code>C:\Programme\Apache Group\apache-ant-*</code>.
+  </li>
+  <li>
+    Set a few environment variables. Mine are:
+    <ul>
+      <li><code>JAVA_HOME = C:\Programme\j2sdk1.4.1_01</code></li>
+      <li><code>ANT_HOME = C:\Programme\Apache Group\apache-ant-1.5.2</code></li>
+      <li><code>CATALINA_HOME = C:\Programme\Apache Group\Tomcat 4.1</code></li>
+      <li><code>CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.5.2\lib</code></li>
+      <li><code>PATH = &lt;snip&gt;;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.5.2\bin</code></li>
+    </ul>
+  </li>
+  <li>
+    Get
+    <ul>
+      <li>the latest <code>cocoon-2.1-build-*.tar.gz</code></li>
+      <li>the latest <code>lenya-dev-src-*.tar.gz</code></li>
+      <li><code>endorsed.tar.gz</code></li>
+    </ul>
+    from <a href="http://www.wyona.org/lenya">http://www.wyona.org/lenya</a>.
+  </li>
+  <li>
+    Extract <code>cocoon-2.1-build-*.tar.gz</code> to a directory of your choice
+    (in my example I chose <code>C:\Downloads\lenya</code>).
+  </li>
+  <li>
+    Copy the directory <code>C:\Downloads\lenya\cocoon-2.1-build-*\cocoon-2.1-build-*\build\cocoon</code>
+    (includes three directorys, <code>sitemap.xmap</code>, <code>welcome.xml</code>, <code>welcome.xslt</code>)
+    to <code>C:\Programme\Apache Group\Tomcat 4.1\webapps</code>.
+  </li>
+  <li>
+    Extract <code>lenya-dev-src-*.tar.gz</code> to a directory of your choice
+    (mine was <code>C:\Downloads\lenya\lenya-0.8-dev-src-20030328125056\lenya-0.8-dev-src-20030328125056</code>).
+    Copy the content of this directory to <code>C:\Programme\Apache Group\lenya-0.8</code>
+  </li>
+  <li>
+    Make a copy of <code>C:\Programme\Apache Group\lenya-0.8\build.properties.sample</code> to
+    <code>C:\Programme\Apache Group\lenya-0.8\build.properties</code>.
+  </li>
+  <li>
+    Edit this <code>build.properties</code>. For the described configuration the following
+    settings will work (don't use backslashes "<code>\</code>" for the paths!!!).
+    <ul>
+      <li><code>src.cocoon.dir=../Tomcat 4.1/webapps/cocoon</code></li>
+      <li><code>pubs.root.dirs=src/webapp/lenya/pubs</code></li>
+      <li><code>install.dir=../Tomcat 4.1/webapps/lenya</code></li>
+      <li><code>cache.dir=../Tomcat 4.1/work/Standalone/localhost/lenya</code></li>
+    </ul>
+  </li>
+  <li>
+    Open a console:
+    <source>
+>cd C:\Programme\Apache Group\lenya-0.8
+>ant install
+    </source>
+  </li>
+  <li>
+    Extract the <code>endorsed.tar.gz</code>. Copy the content of this archive to
+    <code>C:\Programme\Apache Group\Tomcat 4.1\common\endorsed</code>.
+  </li>
+  <li>
+    Rename the <code>C:\Programme\Apache Group\Tomcat 4.1\common\endorsed\xercesImpl.jar</code>
+    or remove it completly.
+  </li>
+  <li>
+    Restart the Tomcat service.
+  </li>
+  <li>
+    Test: <a href="http://localhost:8080/lenya">http://localhost:8080/lenya</a>.
+  </li>
+</ol>
+
+</section>
+
+</body>
+</document>

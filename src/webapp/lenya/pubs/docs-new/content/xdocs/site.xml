@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
   <node-1 label="Table of Contents">
-    <node-2 label="Installation">
+    <node-2 href="installation/" label="Installation">
       <node-3 label="Requisites"/>
       <node-4 label="Binary Version"/>
-      <node-5 label="Source Version"/>
+      <node-5 href="source_version.html" label="Source Version"/>
     </node-2>
     <node-6 label="Getting Started (How-to's)">
       <node-7 label="Customizing the default publication">
@@ -39,10 +39,10 @@
       </node-25>
       <node-31 label="Directory structure"/>
       <node-32 label="Different sitemaps and their function"/>
-      <node-33 href="siteTree.html" label="Site tree"/>
+      <node-33 label="Site tree"/>
       <node-34 label="Doctypes"/>
       <node-35 label="URI space"/>
-      <node-36 href="pageEnvelope.html" label="Page envelope"/>
+      <node-36 label="Page envelope"/>
       <node-37 label="XHTML templating"/>
       <node-38 label="Metadata"/>
       <node-39 href="tasks/" label="Tasks">
@@ -60,8 +60,8 @@
       </node-39>
     </node-24>
     <node-50 href="components/" label="Components ">
-      <node-51 href="access_controlling/" label="Access controlling">
-        <node-52 href="overview.html" label="Overview"/>
+      <node-51 label="Access controlling">
+        <node-52 label="Overview"/>
         <node-53 label="Users and roles (IML)"/>
         <node-54 label="Policies (PML)"/>
         <node-55 label="Authenticators and authorisers"/>
