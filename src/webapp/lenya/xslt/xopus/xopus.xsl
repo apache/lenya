@@ -23,7 +23,9 @@
 
                 // Xopus 2.0.0.8
 		xopus_globs.WYONA_CMS_URL="<xsl:value-of select="$context_prefix" />/xopus/XopusInterface";
-		xopus_globs.WYONA_CMS_EXIT_URL="/lenya/oscom/authoring/matrix/cocoon.html";
+		<!-- e.g. xopus_globs.WYONA_CMS_URL="/lenya/oscom/xopus/XopusInterface"; -->
+		xopus_globs.WYONA_CMS_EXIT_URL="<xsl:value-of select="substring-before(/lenya/menu/request_uri,'/xopus2')" /><xsl:value-of select="substring-after(/lenya/menu/request_uri,'/xopus2')"/>";
+		<!-- e.g. xopus_globs.WYONA_CMS_EXIT_URL="/lenya/oscom/authoring/matrix/cocoon.html"; -->
 	</script>
 </xsl:template>
 
