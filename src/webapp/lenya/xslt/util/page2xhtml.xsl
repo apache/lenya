@@ -13,6 +13,7 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+    exclude-result-prefixes="page xhtml"
     >
 
 <xsl:param name="contextprefix"/>
@@ -23,7 +24,7 @@
       <title><xsl:value-of select="page:title"/></title>
       <link rel="stylesheet" type="text/css"
         href="{$contextprefix}/lenya/css/default.css" title="default css"/>
-      <xsl:apply-templates select="xhtml:script" />
+      <xsl:apply-templates select="script" />
     </head>
     <body>
     
