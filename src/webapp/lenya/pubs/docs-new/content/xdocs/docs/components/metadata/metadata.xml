@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Meta Data</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Christian Egli" email="egli@apache.org"/>
+    </authors>
+  </header>
+
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+
+      <p>Meta data is kept directly inside the xml document. It is
+      based on the <link href="http://dublincore.org">Dublin Core</link>
+      standard.</p>
+
+      <p>There are basically three use cases:</p>
+      <ol>
+	<li>Create Meta Data</li>
+	<li>Display Meta Data</li>
+	<li>Modify Meta Data</li>
+      </ol>
+
+    </section>
+
+    <section>
+      <title>Implementation</title> 
+
+      <p></p>
+
+      <section>
+	<title>Create Meta Data</title>
+
+	<p>Upon creation of a document a sample is copied from the
+	sample doctype directory. This sample already contains some
+	sample meta data. The creator then applies an XSLT
+	transformation to this sample which adapts the sample values
+	to the values suplied in the creator request. This values are
+	partially filled in by the user (subject, desciption, etc.)
+	and partly by the system (creator, creation data). This is
+	done in the <code>create</code> ant task which at the end
+	invokes an xslt task which applies the
+	<code>addMetaData.xsl</code> stylesheet which adapts the meta
+	data according to the request values.</p>
+
+      </section>
+
+      <section>
+	<title>Display Meta Data</title>
+
+	<p>The display of meta data is handled by the <code>meta.xsp</code> xsp.</p>
+
+      </section>
+
+      <section>
+	<title>Modify Meta data</title>
+
+	<p>The modification of meta data is handled in the
+	<code>info.xmap</code> sitemap. The matcher makes sure to
+	check the document out before the modification and checking it
+	back in after the modification. This is done using the
+	<code>ReservedCheckoutTestAction</code> and
+	<code>ReservedCheckinAction</code>.  If there is an error the
+	request is redirected to the meta data screen which displays a
+	warning saying that the checkout or checkin failed and who was
+	locking the document since what date and time.</p>
+
+	<p>Once the document is checked out the madifications are
+	applied with the help of an ant task. There is a target named
+	<code>save-meta-data</code> which simply invokes the ant task
+	<code>WriteDCParametersTask</code>.  This task saves the meta
+	data using the <code>DublinCore</code> interface.</p>
+
+      </section>
+    </section>
+
+    <section>
+      <title>Involved classes, XSPs and XSLTs</title>
+
+      <p>The following classes, XSPs and XSLTs are involved in meta
+      data handling:</p>
+      <dl>
+	<dt>org.apache.lenya.cms.ant.WriteDCParametersTask</dt>
+	<dd>A simple ant task which saves the meta data which is
+	  passed as arguments to file using the
+	<code>DublinCore</code> class.</dd>
+	<dt>$publication-id/config/tasks/targets.xml</dt>
+	<dd>Defines the <code>save-meta-data</code> target which
+	handles saving of meta data with the help of the
+	<code>WriteDCParametersTask</code> ant task. Also defines
+	the <code>create</code> target which is used create new
+	documents and to change the meta data according to the request
+	values from the creation request.</dd>
+	<dt>org.apache.lenya.cms.publication.DublinCore</dt>
+	<dd>A simple interface to save and retrieve dublin core meta
+	data.</dd>
+	<dt>org.apache.lenya.cms.cocoon.acting.ReservedCheckoutTestAction</dt>
+	<dd>Action that tests if a document can be checked out and if
+	yes does check it out (See <link
+	href="../revisioncontrol/revisioncontroller.html">Revision Controller</link>).</dd>
+	<dt>org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction</dt>
+	<dd>Action that checks a document in (See <link
+	href="../revisioncontrol/revisioncontroller.html">Revision Controller</link>).</dd>
+	<dt>src/webapp/lenya/content/info/meta.xsp, src/webapp/lenya/xslt/info/info.xsl</dt>
+	<dd>Handle the display of the meta data in the info area. This
+	is also a form which can be used to modify the meta data via a
+	POST request.</dd>
+<!-- 	FIXME: move the unizh stuff into the core. -->
+	<dt>unizh/pubs/unizh/xslt/authoring/addMetaData.xsl</dt>
+	<dd>Simple XSLT stylesheet that modifies the meta data
+	according to the input parameters.</dd>
+      </dl>
+    </section>
+  </body>
+</document>
