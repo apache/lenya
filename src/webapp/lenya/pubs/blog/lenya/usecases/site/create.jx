@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+
+  <page:title><i18n:text>New Entry</i18n:text></page:title>
+  <page:body>
+    <div class="lenya-box">
+      <div class="lenya-box-title">
+        <i18n:text>New Entry</i18n:text>
+      </div>
+      <div class="lenya-box-body">
+        <form>
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+          <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+      	  <input type="hidden" name="doctype" value="entry"/>
+          <table class="lenya-table-noborder">
+            <tr>
+              <td colspan="2">
+                <ul>
+                  <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                  <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                </ul>
+              </td>
+            </tr>
+              <tr>
+                <td class="lenya-entry-caption">
+                  <i18n:text>Entry ID</i18n:text>*: </td>
+                <td>
+                  <input class="lenya-form-element" type="text" name="documentId" value="${usecase.getParameter('documentId')}"/>
+                  <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)</td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption">
+                  <i18n:text>Title</i18n:text>*: </td>
+                <td>
+                  <input class="lenya-form-element" type="text" name="title" value="${usecase.getParameter('title')}"/>
+                </td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption">* <i18n:text>required fields</i18n:text>
+                </td>
+              </tr>
+              <tr>
+                <td/>
+                <td>
+                  <input i18n:attr="value" type="submit" name="submit" value="Create"/>
+                  &#160;
+                  <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+                </td>
+              </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </page:body>
+</page:page>
