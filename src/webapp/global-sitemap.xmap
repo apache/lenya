@@ -65,12 +65,17 @@
       +-->
   <map:resources>
 
+
+    <!-- TODO: Is this resource being actually used somewhere? -->
+    <!-- TODO: This sitemap does not call this resource anywhere! -->
+    <!--
     <map:resource name="navigation">
       <map:generate src="lenya/pubs/{pub_id}/content/live/sitetree.xml" />
       <map:transform src="lenya/xslt/util/sitetree2navigation.xsl">
         <map:parameter name="nav_id" value="{nav_id}"/>
       </map:transform>
     </map:resource>
+    -->
    
     <map:resource name="style-cms-page">
     <!-- FIXME: due to resolver issues, i18n can currently not be used outside
