@@ -105,6 +105,7 @@ table.simple {
 }
 
 td.simple {
+    font-size: 80%;
     padding: 3px;
     background-color: White;
     border: solid 1px Navy;
@@ -129,4 +130,8 @@ img.simple {
     text-align: center;
     font-style: italic;
     font-size: 80%;
+}
+
+.abstract {
+    font-weight: bold;
 }

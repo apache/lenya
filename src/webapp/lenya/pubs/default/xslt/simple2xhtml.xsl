@@ -12,13 +12,19 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:simple="http://www.lenya.org/2003/simple-document"
-    exclude-result-prefixes="xhtml"
+    xmlns:lenya="http://lenya.org/2003/"
+    exclude-result-prefixes="simple lenya"
     >
+    
+<xsl:import href="lenya-header.xsl"/>
 
         
 <xsl:template match="/">
   <div id="body">
-    <xsl:apply-templates select="simple:simple-document/simple:body/node()"/>
+    <xsl:apply-templates select="simple:simple-document/lenya:header/lenya:document-title"/>
+    <xsl:apply-templates select="simple:simple-document/simple:body/simple:subtitle"/>
+    <xsl:apply-templates select="simple:simple-document/lenya:header/lenya:abstract"/>
+    <xsl:apply-templates select="simple:simple-document/simple:body/*[local-name() != 'subtitle']"/>
   </div>
 </xsl:template>
 
@@ -31,6 +37,16 @@
   </xsl:element>
 </xsl:template>
 <!-- /XHTML-like tags -->
+
+<!-- inline markup -->
+<xsl:template match="simple:bold">
+  <strong><xsl:apply-templates/></strong>
+</xsl:template>
+
+<xsl:template match="simple:emphasize">
+  <em><xsl:apply-templates/></em>
+</xsl:template>
+<!-- /inline markup -->
 
 <!-- tables -->
 
@@ -71,7 +87,7 @@
 <!-- headlines -->
 
 <xsl:template match="simple:subtitle">
-  <h1><xsl:apply-templates/></h1>
+  <h2><xsl:apply-templates/></h2>
 </xsl:template>
 
 <xsl:template match="simple:crossheading">
