@@ -1,5 +1,5 @@
 /*
-$Id: CMSHistory.java,v 1.7 2003/07/30 16:40:32 andreas Exp $
+$Id: CMSHistory.java,v 1.8 2003/08/05 12:00:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -142,5 +142,17 @@ public class CMSHistory extends History {
      */
     public void setDocument(Document document) {
         this.document = document;
+    }
+    
+    /**
+     * Initializes the workflow history of another document using the same
+     * workflow schema like this history.
+     * @param newDocument The document to initialize the history for.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected void initialize(Document newDocument) throws WorkflowException {
+        String workflowId = getWorkflowId();
+        CMSHistory newHistory = new CMSHistory(newDocument);
+        newHistory.initialize(workflowId);
     }
 }

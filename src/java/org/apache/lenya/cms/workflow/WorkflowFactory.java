@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.15 2003/07/29 14:24:13 andreas Exp $
+$Id: WorkflowFactory.java,v 1.16 2003/08/05 12:00:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,14 +70,13 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  *
  * @author andreas
  */
 public class WorkflowFactory {
-    public static final String WORKFLOW_DIRECTORY = "config/workflow".replace('/',
-            File.separatorChar);
+    public static final String WORKFLOW_DIRECTORY =
+        "config/workflow".replace('/', File.separatorChar);
 
     /** Creates a new instance of WorkflowFactory */
     protected WorkflowFactory() {
@@ -97,8 +96,7 @@ public class WorkflowFactory {
      * @return A workflow instance.
      * @throws WorkflowException when something went wrong.
      */
-    public WorkflowInstance buildInstance(Document document)
-        throws WorkflowException {
+    public WorkflowInstance buildInstance(Document document) throws WorkflowException {
         assert document != null;
 
         return new CMSHistory(document).getInstance();
@@ -124,7 +122,7 @@ public class WorkflowFactory {
     protected static Workflow buildWorkflow(Publication publication, String workflowFileName)
         throws WorkflowException {
         assert publication != null;
-        assert (workflowFileName != null) && !"".equals(workflowFileName);
+        assert(workflowFileName != null) && !"".equals(workflowFileName);
 
         File workflowDirectory = new File(publication.getDirectory(), WORKFLOW_DIRECTORY);
         File workflowFile = new File(workflowDirectory, workflowFileName);
@@ -169,8 +167,21 @@ public class WorkflowFactory {
      * @param workflowId The ID of the workflow.
      * @throws WorkflowException When something goes wrong.
      */
-    public static void initHistory(Document document, String workflowId)
-        throws WorkflowException {
+    public static void initHistory(Document document, String workflowId) throws WorkflowException {
         new CMSHistory(document).initialize(workflowId);
     }
+
+    /**
+     * Initializes the workflow history of a document that is a copy of
+     * another document.
+     * @param sourceDocument The original document.
+     * @param destinationDocument The document to initialize the history for.
+     * @throws WorkflowException When something goes wrong.
+     */
+    public static void initHistory(Document sourceDocument, Document destinationDocument)
+        throws WorkflowException {
+        CMSHistory history = new CMSHistory(sourceDocument);
+        history.initialize(destinationDocument);
+    }
+
 }
