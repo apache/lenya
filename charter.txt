@@ -1,5 +1,4 @@
-The Apache Lenya Project is a community project 
-developing open source content management solutions. 
+The Apache Lenya Project is a community project developing open source content management solutions. 
 
 With strong foundations in XML-based server-side web application frameworks,
 like Apache Cocoon, the Apache Lenya Project consists of a group of people 
