@@ -34,7 +34,7 @@
       <fileset dir="${default.build.dir}"/>
     </copy>
 
-    <echo>Overwrite ...</echo>
+    <echo>Replace default specifics ...</echo>
     <xslt
       in="${default.build.dir}/config/ac/ac.xconf"
       out="${clone.build.dir}/config/ac/ac.xconf"
@@ -61,6 +61,15 @@
       >
       <param name="publicationName" expression="${clone.publication.name}"/>
     </xslt>
+
+    <echo>Touch source of clone publication ${clone.publication.source.dir}</echo>
+    <touch>
+      <fileset dir="${clone.publication.source.dir}">
+        <patternset>
+          <include name="**"/>
+        </patternset>
+      </fileset>
+    </touch>
   </target>
 
 </project>

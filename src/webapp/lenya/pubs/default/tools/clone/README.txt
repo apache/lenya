@@ -1,13 +1,37 @@
 
   HOWTO CLONE THE DEFAULT PUBLICATION
-  -----------------------------------
+  ===================================
 
-Build Apache Lenya first by executing build.sh resp. build.bat
+  Clone Publication
+  -----------------
 
-Change to the directory src/webapp/lenya/pubs/default/tools/clone
+    - Build Apache Lenya first by executing build.sh resp. build.bat
 
-Copy build.properties to local.build.properties and modify the properties to your needs
+    - Change to the directory src/webapp/lenya/pubs/default/tools/clone
 
-Run ant in order to start the build process to clone the default publication
+    - Copy build.properties to local.build.properties and modify the properties to your needs
 
-Startup Apache Lenya according to your settings
+    - Run ant in order to start the build process to clone the default publication
+
+    - "Re-Build" Apache Lenya by executing build.sh resp. build.bat once more, whereas
+      do not forget to add the source dir of the clone publication to the local.build.properties
+      of the Apache Lenya build process
+
+    - Startup Apache Lenya according to your settings
+
+
+
+  Best Practice
+  -------------
+
+    It's very recommended to keep the modifications (e.g. XSLT and CSS) separate from the copy
+    of the default publication. Otherwise one might have trouble in upgrading to a new version
+    of Apache Lenya.
+
+
+  A Note on Development
+  ---------------------
+
+    After cloning the default publication it's sufficient to run build.sh resp. build.bat.
+    The clone process needs only to be replied if the default publication might have been updated by the 
+    Apache Lenya committers.
