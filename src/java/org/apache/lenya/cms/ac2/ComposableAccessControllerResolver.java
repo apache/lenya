@@ -1,5 +1,5 @@
 /*
-$Id: ComposableAccessControllerResolver.java,v 1.4 2003/08/11 16:03:19 andreas Exp $
+$Id: ComposableAccessControllerResolver.java,v 1.5 2003/08/11 16:06:17 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;

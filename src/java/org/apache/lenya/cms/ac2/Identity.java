@@ -1,5 +1,5 @@
 /*
-$Id: Identity.java,v 1.9 2003/08/07 14:53:43 andreas Exp $
+$Id: Identity.java,v 1.10 2003/08/11 16:06:17 andreas Exp $
 <License>
 
  ============================================================================
@@ -193,6 +193,7 @@ public class Identity implements Identifiable {
      /**
       * Checks if this identity contains a certain identifiable.
       * @param identifiable The identifiable to look for.
+      * @return A boolean value.
       */
      public boolean contains(Identifiable identifiable) {
          return identifiables.contains(identifiable);
