@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.61 2003/11/04 10:23:12 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.62 2003/11/26 16:10:36 egli Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
     <map:generators default="file"/>
     <map:matchers default="wildcard"/>
-    <map:actions/>
+    <map:actions>
+      <map:action logger="sitemap.action.language-exists" 
+        name="language-exists" 
+        src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
+    </map:actions>
     <map:selectors>
      <map:selector name="request-method" logger="sitemap.selector.request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
     </map:selectors>
@@ -17,8 +21,23 @@
     </map:view>
   </map:views>
   
-  <map:resources/>
-  
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:select type="parameter">
+        <map:parameter name="statusCode" value="{statusCode}"/>
+        <map:when test="">
+          <map:serialize/>
+        </map:when>
+        <map:otherwise>
+          <map:serialize status-code="{statusCode}"/>
+        </map:otherwise>
+      </map:select>
+    </map:resource>
+  </map:resources>
+
   <map:pipelines>
     <map:pipeline>
       <map:match pattern="**/">
@@ -83,16 +102,35 @@
       </map:match>
       
       <map:match pattern="**.html">
-        <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
-        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}.xml"/>
-        <map:serialize type="html"/>
+        <map:act type="language-exists">
+	  <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+	  <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml"/>
+	  <map:serialize type="html"/>
+        </map:act>
+
+        <!-- There is no version of the requested document-id for the
+             requested language. -->
+        <map:generate type="serverpages" src="../../content/exception/missing-language.xsp"/>
+        <map:transform src="../../xslt/exception/missing-language.xsl"/>
+        <map:call resource="style-cms-page"/>
+
       </map:match>
       
       <map:handle-errors type="500">
-        <!-- FIXME: other exceptions are also caught here! -->
-        <map:transform src="../../xslt/exception/not-published-yet.xsl"/>
+        <map:select type="exception">
+          <map:when test="document-does-not-exist">
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            </map:transform>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        </map:select>
         <map:serialize type="html"/>
       </map:handle-errors>
+      
     </map:pipeline>
   </map:pipelines>
 </map:sitemap>
