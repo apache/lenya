@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<!-- CVS: $Id: parameter-path.xmap,v 1.1 2003/04/11 15:38:55 egli Exp $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+  </map:components>
+
+  <map:views/>
+
+  <map:resources/>
+
+  <map:pipelines>
+
+    <map:pipeline>
+      
+      <map:match pattern="**">
+	<map:generate src="foo.xml"/>
+	<map:serialize type="xml"/>
+      </map:match>
+      
+    </map:pipeline>
+
+  </map:pipelines>
+</map:sitemap>
