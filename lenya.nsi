@@ -14,7 +14,7 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 
-; $Id: lenya.nsi,v 1.10 2004/06/11 14:39:33 roku Exp $
+; $Id: lenya.nsi,v 1.11 2004/06/11 18:14:43 roku Exp $
 
 ;--------------------------------
 ;Include Modern UI
@@ -85,6 +85,7 @@ Section "Apache Lenya" SecDummy
   File README.txt
   File CREDITS.txt
   File /r tools
+  File /r legal
 
   CreateDirectory "$SMPROGRAMS\Apache Lenya 1.2"
   CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Lenya Home Page.lnk" \
