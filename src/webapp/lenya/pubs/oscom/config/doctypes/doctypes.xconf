@@ -3,8 +3,13 @@
 <doctypes>
 <doc type="EditorProject">
  <creator src="org.wyona.cms.pubs.oscom.EditorProjectCreator"/>
-<!--
- <creator src="org.wyona.cms.authoring.DefaultCreator"/>
--->
+</doc>
+
+<doc type="CMSProject">
+ <creator src="org.wyona.cms.pubs.oscom.CMSProjectCreator"/>
+</doc>
+
+<doc type="CMFProject">
+ <creator src="org.wyona.cms.pubs.oscom.CMFProjectCreator"/>
 </doc>
 </doctypes>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id/>
+  <editor email="editor@lenya.org">editor</editor>
+  <system_name/>
+  <description>
+CMS Description
+  </description>
+  <main_url>http://www.lenya.org</main_url>
+  <license>
+    <license_name>Lenya Software License</license_name>
+    <license_url>http://www.lenya.org/license.html</license_url>
+  </license>
+</system>

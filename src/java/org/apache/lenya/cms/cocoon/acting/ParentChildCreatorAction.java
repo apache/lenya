@@ -144,7 +144,8 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     XPath xpathSelector=DocumentHelper.createXPath(xpath_string);
     List nodes=xpathSelector.selectNodes(doc);
     if(nodes.isEmpty()){
-      getLogger().error("No child added");
+      getLogger().error(".act(): No nodes: "+xpath_string);
+      getLogger().error(".act(): No child added!");
       return null;
       }
     Element parent_element=(Element)nodes.get(0);
@@ -196,7 +197,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
       session.removeAttribute("org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
       return actionMap;
       }
-    getLogger().error("No child added");
+    getLogger().error(".act(): No child added (very strange)!");
     return null;
     }
 /**

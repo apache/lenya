@@ -5,7 +5,7 @@
     <branch relURI="editor-matrix" doctype="EditorOverview" menuName="Editor Overview">
       <leaf relURI="xopus" doctype="EditorProject" menuName="Xopus"/>
     </branch>
-    <branch relURI="cmsf-matrix" doctype="CMSFOverview" menuName="CMS/F Overview">
+    <branch relURI="matrix" doctype="CMSFOverview" menuName="CMS/F Overview">
       <leaf relURI="wyona" doctype="CMSProject" menuName="Wyona"/>
       <leaf relURI="cocoon" doctype="CMFProject" menuName="Cocoon"/>
     </branch>

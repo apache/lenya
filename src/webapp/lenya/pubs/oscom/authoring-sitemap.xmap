@@ -262,6 +262,22 @@
     </map:match>
     <!-- /Project -->
   </map:pipeline>
+
+  <!-- Create New CMS Project -->
+  <map:pipeline>
+    <map:match pattern="authoring/matrix/ParentChildScreenNewCMS*">
+      <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+      <map:transform src="stylesheets/cms/parent-child-new-cms-project.xsl"/>
+      <map:serialize type="html"/>
+    </map:match>
+    <map:match pattern="authoring/matrix/create*">
+      <map:act type="parent-child">
+        <map:redirect-to uri="{parent_uri}" session="true"/>
+      </map:act>
+      <map:redirect-to uri="ParentChildScreenNewCMS?status=failed" session="true"/>
+    </map:match>
+  </map:pipeline>
+  <!-- /Create New CMS Project -->
 <!-- /Matrix -->
 
 

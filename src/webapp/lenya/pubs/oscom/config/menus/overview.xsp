@@ -15,6 +15,12 @@
   <menus>
     <menu name="File" label="File">
       <block>
+        <item href="ParentChildScreenNewCMS?parentid=/matrix">New&#160;CMS&#160;Project</item>
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
         <item>Edit&#160;with&#160;Xopus2</item>
 <!--
         <item href="xopus2/weekly-column.html">Edit&#160;with&#160;Xopus2</item>
