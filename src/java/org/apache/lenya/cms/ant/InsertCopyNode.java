@@ -1,5 +1,5 @@
 /*
-$Id: InsertCopyNode.java,v 1.4 2003/07/25 16:38:53 edith Exp $
+$Id: InsertCopyNode.java,v 1.5 2003/07/28 07:54:35 edith Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -83,8 +84,8 @@ public class InsertCopyNode extends TwoNodesTask {
 	/**
 	 * copies a node corresponding to a document with id firstdocumentid
 	 * and inserts it in the same tree like a node corresponding to a document with id secdocumentid.
-	 * @param firstdocumentid The document-id of the document correponding to the source node.
-	 * @param secdocumentid  The ment-id of the document corresponding to the destination node.
+	 * @param firstdocumentid The document-id of the document corresponding to the source node.
+	 * @param secdocumentid  The document-id of the document corresponding to the destination node.
 	 * @param absolutetreepath The absolute path of the tree of the node.
 	 * @throws SiteTreeException if there are problems with creating or saving the site tree.  
 	 */
@@ -94,15 +95,26 @@ public class InsertCopyNode extends TwoNodesTask {
 		try {
 			tree = new DefaultSiteTree(absolutetreepath);
 
-			SiteTreeNode node = tree.getNode(firstdocumentid);
+			String parentid = "";
+			StringTokenizer st = new StringTokenizer(secdocumentid, "/");
+			int length = st.countTokens();
 
-			if (node != null) {
-				tree.addNode(secdocumentid, node.getLabels(), node.getHref(), node.getSuffix(),
-					node.hasLink());
+			for (int i = 0; i < (length - 1); i++) {
+				parentid = parentid + "/" + st.nextToken();
+			}
+			String newid = st.nextToken();
+			
+			SiteTreeNode node = tree.getNode(firstdocumentid);
+			if (node != null){
+				SiteTreeNode parentNode = tree.getNode(parentid);
+				if (parentNode != null) {
+					tree.importSubtree(parentNode, node, newid);
+				} else {
+					throw new SiteTreeException("The parent node " + parentNode + " where the copied node shall be inserted not found");
+				}
 			} else {
 				throw new SiteTreeException("Node " + node + " couldn't be found");
 			}
-
 				tree.save();
 			} catch (ParserConfigurationException e) {
 				throw new SiteTreeException("Exception when creating the site tree", e);
@@ -116,9 +128,9 @@ public class InsertCopyNode extends TwoNodesTask {
 	}
     /**
      * copies a node corresponding to a document with id firstdocumentid
-     * and inserts it like a node orresponding to a document with id secdocumentid.
-     * @param firstdocumentid The document-id of the document correponding to the source node.
-     * @param secdocumentid  The ment-id of the document corresponding to the destination node.
+     * and inserts it like a node corresponding to a document with id secdocumentid.
+     * @param firstdocumentid The document-id of the document corresponding to the source node.
+     * @param secdocumentid  The document-id of the document corresponding to the destination node.
      * @param absolutefirsttreepath The absolute path of the tree of the src node.
      * @param absolutesectreepath The absolute path of the tree of the destination node.
      * @throws SiteTreeException if there are problems with creating or saving the site tree.  
@@ -135,14 +147,27 @@ public class InsertCopyNode extends TwoNodesTask {
             firsttree = new DefaultSiteTree(absolutefirsttreepath);
 			sectree = new DefaultSiteTree(absolutesectreepath);
 
-            SiteTreeNode node = firsttree.getNode(firstdocumentid);
+			String parentid = "";
+			StringTokenizer st = new StringTokenizer(secdocumentid, "/");
+			int length = st.countTokens();
 
-            if (node != null) {
-                sectree.addNode(secdocumentid, node.getLabels(), node.getHref(), node.getSuffix(),
-                    node.hasLink());
-            } else {
-                throw new SiteTreeException("Node " + node + " couldn't be found");
-            }
+			for (int i = 0; i < (length - 1); i++) {
+				parentid = parentid + "/" + st.nextToken();
+			}
+			String newid = st.nextToken();
+			
+			SiteTreeNode node = firsttree.getNode(firstdocumentid);
+
+			if (node != null){
+				SiteTreeNode parentNode = sectree.getNode(parentid);
+				if (parentNode != null) {
+					sectree.importSubtree(parentNode, node, newid);
+				} else {
+					throw new SiteTreeException("The parent node " + parentNode + " where the copied node shall be inserted not found");
+				}
+			} else {
+				throw new SiteTreeException("Node " + node + " couldn't be found");
+			}
 
                 sectree.save();
 			} catch (ParserConfigurationException e) {
