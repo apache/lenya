@@ -244,37 +244,59 @@
     </component-instance>
     
     <component-instance name="admin.users" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.Users">
-      <view template="admin/users" menu="true"/>
+      <view template="admin/users" menu="true">
+        <parameter name="tab" value="users"/>
+      </view>
     </component-instance>
     <component-instance name="admin.addUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddUser">
-      <view template="admin/addUser" menu="true"/>
+      <view template="admin/addUser" menu="true">
+        <parameter name="tab" value="users"/>
+      </view>
     </component-instance>
     <component-instance name="admin.userProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserProfile">
-      <view template="admin/userProfile" menu="true"/>
+      <view template="admin/userProfile" menu="true">
+        <parameter name="tab" value="users"/>
+      </view>
     </component-instance>
     <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserPassword">
-      <view template="admin/changePassword" menu="true"/>
+      <view template="admin/changePassword" menu="true">
+        <parameter name="tab" value="users"/>
+      </view>
     </component-instance>
     <component-instance name="admin.userGroups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserGroups">
-      <view template="admin/userGroups" menu="true"/>
+      <view template="admin/userGroups" menu="true">
+        <parameter name="tab" value="users"/>
+      </view>
     </component-instance>
     <component-instance name="admin.deleteUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteUser">
-      <view template="admin/deleteUser" menu="true"/>
+      <view template="admin/deleteUser" menu="true">
+        <parameter name="tab" value="users"/>
+      </view>
     </component-instance>
     <component-instance name="admin.groups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.Groups">
-      <view template="admin/groups" menu="true"/>
+      <view template="admin/groups" menu="true">
+        <parameter name="tab" value="groups"/>
+      </view>
     </component-instance>
     <component-instance name="admin.addGroup" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddGroup">
-      <view template="admin/addGroup" menu="true"/>
+      <view template="admin/addGroup" menu="true">
+        <parameter name="tab" value="groups"/>
+      </view>
     </component-instance>
     <component-instance name="admin.groupProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.GroupProfile">
-      <view template="admin/groupProfile" menu="true"/>
+      <view template="admin/groupProfile" menu="true">
+        <parameter name="tab" value="groups"/>
+      </view>
     </component-instance>
     <component-instance name="admin.groupMembers" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.GroupMembers">
-      <view template="admin/groupMembers" menu="true"/>
+      <view template="admin/groupMembers" menu="true">
+        <parameter name="tab" value="groups"/>
+      </view>
     </component-instance>
     <component-instance name="admin.deleteGroup" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteGroup">
-      <view template="admin/deleteGroup" menu="true"/>
+      <view template="admin/deleteGroup" menu="true">
+        <parameter name="tab" value="groups"/>
+      </view>
     </component-instance>
     <component-instance name="admin.ipRanges" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRanges">
       <view template="admin/ipRanges" menu="true"/>

@@ -28,7 +28,7 @@
       <tr>
         <td>
           <jx:choose>
-            <jx:when test="${request.getParameter('lenya.usecase').equals('admin.users')}">
+            <jx:when test="${usecase.getView().getParameter('tab').equals('users')}">
               <a href="?lenya.usecase=admin.users" class="lenya-tablink-active"><i18n:text>Users</i18n:text></a>
             </jx:when>
             <jx:otherwise>
@@ -38,7 +38,7 @@
         </td>
         <td>
           <jx:choose>
-            <jx:when test="${request.getParameter('lenya.usecase').equals('admin.groups')}">
+            <jx:when test="${usecase.getView().getParameter('tab').equals('groups')}">
               <a href="?lenya.usecase=admin.groups" class="lenya-tablink-active"><i18n:text>Groups</i18n:text></a>
             </jx:when>
             <jx:otherwise>
@@ -48,7 +48,7 @@
         </td>
         <td>
           <jx:choose>
-            <jx:when test="${request.getParameter('lenya.usecase').equals('admin.ipRanges')}">
+            <jx:when test="${usecase.getView().getParameter('tab').equals('ipRanges')}">
               <a href="?lenya.usecase=admin.ipRanges" class="lenya-tablink-active"><i18n:text>IP Ranges</i18n:text></a>
             </jx:when>
             <jx:otherwise>
