@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxcms.js,v 1.3 2002/10/25 10:12:21 felixcms Exp $
+// $Id: bitfluxcms.js,v 1.4 2002/11/17 16:48:14 felixcms Exp $
 var BX_id_counter = 0;
 var BX_wysiwyg_loaded = 0;
 

@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_core.js,v 1.3 2002/10/25 10:12:21 felixcms Exp $
+// $Id: bitfluxeditor_core.js,v 1.4 2002/11/17 16:48:14 felixcms Exp $
 
 /**
  * @file
@@ -527,6 +527,7 @@ function BX_addEvents() {
 
 function BX_keypress(e) {
 
+
     BX_selection = window.getSelection();
     try {
         BX_range = BX_selection.getRangeAt(0);
@@ -650,7 +651,6 @@ function BX_keypress(e) {
 }
 
 function BX_onkeyup(e) {
-
     switch (e.keyCode) {
 
     case e.DOM_VK_UP:
@@ -665,7 +665,6 @@ function BX_onkeyup(e) {
 			var _node = window.getSelection().anchorNode;
 			_node.target = _node;
 			BX_focusSpan(_node);
-
         }
         e.preventDefault();
         e.stopPropagation();
@@ -740,7 +739,8 @@ function BX_insertContent(content, doNoCollapse) {
         ;
 
         if (startOffBefore == BX_range.startOffset) {
-            BX_range.setEnd(BX_range.endContainer ,BX_range.endOffset +1);
+            try { BX_range.setEnd(BX_range.endContainer ,BX_range.endOffset +1);}
+			catch(e) {};
             //	        BX_range.setEnd(EndContainer ,EndPosition +1);
         }
 
@@ -821,9 +821,34 @@ function BX_cursor_moveLeft () {
     document.dispatchEvent(ev);
     */
     BX_selection = window.getSelection();
-
-    var stripWS = BX_selection.anchorNode.data.substring(0,BX_selection.anchorOffset).replace(/^[\t\n\r\s]*$/,"").replace(/[\t\n\r\s]{2,}$/," ");
-    BX_selection.collapse(BX_selection.anchorNode,stripWS.length);
+	if (BX_selection.anchorNode.nodeType != 3) {
+	// if the anchornode is not a textnode. find the next previous one.
+        var walker = document.createTreeWalker(document,NodeFilter.SHOW_TEXT,
+                                               {
+                                           acceptNode : function(node) {
+                                                       if ((/^[\t\n\r\s]*$/.test(node.nodeValue)))
+                                                           return NodeFilter.FILTER_REJECT;
+                                                       return NodeFilter.FILTER_ACCEPT;
+                                                   }
+                                               }
+                                               ,null);
+		BX_selection.anchorNode.normalize();
+		walker.currentNode = BX_selection.anchorNode;
+		//if selection has childnodes, we assume, that there is a textnode in it and are looking for that
+		// this is not perfect...
+		if (BX_selection.anchorNode.hasChildNodes()) {									   
+    	    var nextNode = walker.nextNode();
+		} else {
+		    var nextNode = walker.prevNode();
+		}
+		
+		var stripWS = nextNode.data.replace(/^[\t\n\r\s]*$/,"").replace(/[\t\n\r\s]{2,}$/," ");
+	    BX_selection.collapse(nextNode,stripWS.length);
+	
+	} else {
+	    var stripWS = BX_selection.anchorNode.data.substring(0,BX_selection.anchorOffset).replace(/^[\t\n\r\s]*$/,"").replace(/[\t\n\r\s]{2,}$/," ");
+    	BX_selection.collapse(BX_selection.anchorNode,stripWS.length);
+	}
     // if we are at the beginning of a node, search nextNode..
     if (BX_selection.anchorOffset == 0 ) {
         var walker = document.createTreeWalker(document,NodeFilter.SHOW_TEXT,
@@ -1997,7 +2022,7 @@ function BX_popup_link() {
 function BX_removeEvents() {
     document.removeEventListener("keypress",BX_keypress,false);
     document.addEventListener("keypress",BX_onkeyup,false);
-
+	BX_no_events = true;
     //    document.removeEventListener("keyup",BX_onkeyup,false);
 
     //    var allSpans = document.getElementsByName("bitfluxspan");
@@ -2037,7 +2062,7 @@ function BX_popup_addTagWithAttributes(tag,attributes,defaults) {
 
     document.removeEventListener("keypress",BX_keypress,false);
     document.removeEventListener("keyup",BX_onkeyup,false);
-
+	BX_no_events = true;
 
     BX_popup_show();
     BX_popup.style.top=BX_popup.offsetTop - 1 + "px";
@@ -2323,7 +2348,7 @@ function BX_errorMessage(e) {
             BX_innerHTML(BX_error_window.document,"");
             BX_error_window.document.writeln("<pre>");
             mes += "UserAgent: "+navigator.userAgent +"\n";
-            mes += "bitfluxeditor.js Info: $Revision: 1.3 $  $Name:  $  $Date: 2002/10/25 10:12:21 $ \n";
+            mes += "bitfluxeditor.js Info: $Revision: 1.4 $  $Name:  $  $Date: 2002/11/17 16:48:14 $ \n";
             BX_error_window.document.writeln(mes);
             mes = "\nError Object:\n\n";
             for (var b in e) {
@@ -2934,7 +2959,8 @@ function BX_dump (text,level) {
 	if (BX_debugging) {
 	//	dump (" \n");
 		dump(new Date());
-		dump(": " + text + "\n");
+		dump(": " + text );
+		dump ("\n");
 /*		dump("    in: ");
 		for(c = arguments.callee; c; c = c.caller){
 			dump(c.name + " ");

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: transformxmlback.xsl,v 1.3 2002/10/25 10:12:34 felixcms Exp $ -->
+<!-- $Id: transformxmlback.xsl,v 1.4 2002/11/17 16:48:14 felixcms Exp $ -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" encoding="iso-8859-1"/>
 <!-- the following 2 lines are not needed for this simpler example, they are needed for the 
@@ -37,7 +37,18 @@ be sure to adjust BX_elements also to bxlistitem, otherwise it won't work
 <xsl:param name="elementName" select="name()"/>
 
      <xsl:choose>
-    	<xsl:when test="(not(@*[not(name() = 'bxe_originalname') and not(name() = 'bxe_internalid') and not(name() = 'id')]) and  not(normalize-space(.))  and not(*)) and not(@bxe_bitfluxspan)">
+	 
+	 <!-- check if we can delete the element
+	 1) if it has no other attributes than bxe_originalname, bxe_internalid and id
+	 2) if it has attributes id and bxe_internalid (this will not delete elements with only id)
+	 3) if there is no text in the element except whitespaces
+	 4) if there are no child elements
+	 5) if there is no attribut bxe_bitfluxspan -->
+    	<xsl:when test="(not(@*[not(name() = 'bxe_originalname') and not(name() = 'bxe_internalid') and not(name() = 'id')]) 
+		and ( @id and @bxe_internalid)
+		and  not(normalize-space(.))  
+		and not(*)) 
+		and not(@bxe_bitfluxspan)">
         </xsl:when>
         <xsl:when test="@bxe_temporaryelement = 'yes'"></xsl:when>
 <!--        <xsl:when test="@id = 'BX_cursor'"></xsl:when>-->

@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: lenya.js,v 1.3 2002/11/11 18:09:16 felixcms Exp $
+// $Id: lenya.js,v 1.4 2002/11/17 16:48:14 felixcms Exp $
 /**
  * @file
  * Implements the wyona TransportDriver (only save for now)

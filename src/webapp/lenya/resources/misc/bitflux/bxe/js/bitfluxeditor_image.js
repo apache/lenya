@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_image.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+// $Id: bitfluxeditor_image.js,v 1.3 2002/11/17 16:48:14 felixcms Exp $
 /**
  * @file
  * Implements the image  plugin
@@ -48,7 +48,7 @@ function BX_onContextMenuImg(e,event){
 function BX_image_popup ()
 {
 
-    window.open("./"+BX_root_dir+"/insertpicture/index.html","image",'toolbar=no,width=550,height=350,scrollbars=no,resizable=yes','');
+    window.open(BX_root_dir+"/insertpicture/index.html","image",'toolbar=no,width=550,height=350,scrollbars=no,resizable=yes','');
 }
 
 // for whatever reason, jsdoc needs this line

@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor.js,v 1.4 2002/11/15 13:45:41 ah Exp $
+// $Id: bitfluxeditor.js,v 1.5 2002/11/17 16:48:14 felixcms Exp $
 
 /**
  * @file
@@ -135,6 +135,7 @@ function BX_checkUnsupportedBrowsers() {
 
 
 function BX_load(config_file,fromUrl,path) {
+
 		text = "Loading Bitflux Editor files....";
 
 		if (! (BX_checkUnsupportedBrowsers())) {
@@ -168,6 +169,7 @@ function BX_load(config_file,fromUrl,path) {
 
 function BX_load2(config_file,fromUrl) {
 //stage 2, after all core js files are loaded...
+
 	BXEui = new BXE_widget();
 
 	try {

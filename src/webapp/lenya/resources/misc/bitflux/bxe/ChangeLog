@@ -1,3 +1,46 @@
+2002-10-31  Christian Stocker  <chregu@bitflux.ch>
+
+    * js/bitfluxeditor_core.js: fix for bug 26
+
+    * js/bitfluxeditor_core.js:
+    fix for #26 (Mozilla 1.2 has some problems with the demo)
+
+2002-10-30  Christian Stocker  <chregu@bitflux.ch>
+
+    * js/bitfluxeditor_core.js
+      js/clipboard.js:
+    the events were not turned off on some popup boxes (fix for #20)
+
+    * js/bitfluxeditor_core.js: fix for bug #19 (backspace stops working)
+
+    * js/bitfluxeditor_image.js
+      js/bitfluxeditor_sc.js
+      js/undo.js: fix for bug #24 (absolute paths do not work)
+
+2002-10-25  Christian Stocker  <chregu@bitflux.ch>
+
+    * js/bitfluxeditor_core.js:
+    more fixes with empty nodes and hopefully prevent some more hangups
+
+    * js/bitfluxeditor_core.js: make empty toplevel nodes editable again
+
+    * xml/transformxmlback.xsl
+      js/bitfluxeditor_core.js:
+    don't delete empty "toplevel" nodes (part of bug #24)
+
+    * js/bitfluxeditor.js
+      js/widgets.js: argh, it's too early in the morning...
+
+    * js/bitfluxeditor.js: copy paste was a bad idea (removed vars..)
+
+    * js/bitfluxeditor.js: more unsopp. browser recognition
+
+    * js/bitfluxeditor.js
+      js/widgets.js:
+    check for unsupported browser before we do anything else...
+
+    * js/bitfluxeditor_core.js: absolute BX_root_dir should really work now
+
 2002-10-24  Christian Stocker  <chregu@bitflux.ch>
 
     * js/bitfluxeditor_core.js:

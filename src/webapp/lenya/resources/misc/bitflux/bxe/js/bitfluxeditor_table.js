@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_table.js,v 1.3 2002/10/25 10:12:22 felixcms Exp $
+// $Id: bitfluxeditor_table.js,v 1.4 2002/11/17 16:48:14 felixcms Exp $
 /**
  * @file
  * Implements the table plugin

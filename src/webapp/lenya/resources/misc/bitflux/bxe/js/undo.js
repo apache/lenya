@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: undo.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+// $Id: undo.js,v 1.3 2002/11/17 16:48:14 felixcms Exp $
 /**
  * @file
  * Implements some undo/redo functions
@@ -97,19 +97,19 @@ function BX_undo_updateButtons()
 {
     if (BX_undo_counter == BX_undo_max)
     {
-        document.getElementById("but_redo").src="./"+BX_root_dir+"/img/wt_redo_p.gif";
+        document.getElementById("but_redo").src=BX_root_dir+"/img/wt_redo_p.gif";
     }
     else
     {
-        document.getElementById("but_redo").src="./"+BX_root_dir+"/img/wt_redo_n.gif";
+        document.getElementById("but_redo").src=BX_root_dir+"/img/wt_redo_n.gif";
     }
     if (! BX_undo_buffer[BX_undo_counter - 1])
     {
-        document.getElementById("but_undo").src="./"+BX_root_dir+"/img/wt_undo_p.gif";
+        document.getElementById("but_undo").src=BX_root_dir+"/img/wt_undo_p.gif";
     }
     else
     {
-        document.getElementById("but_undo").src="./"+BX_root_dir+"/img/wt_undo_n.gif";
+        document.getElementById("but_undo").src=BX_root_dir+"/img/wt_undo_n.gif";
     }
 }
 

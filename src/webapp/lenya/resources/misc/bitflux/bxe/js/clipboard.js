@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: clipboard.js,v 1.2 2002/10/25 10:12:22 felixcms Exp $
+// $Id: clipboard.js,v 1.3 2002/11/17 16:48:14 felixcms Exp $
 /**
  * @file
  * Implements some Clipboard functions
@@ -55,6 +55,7 @@ function BX_clipboard_open()
 
         document.removeEventListener("keypress",BX_keypress,false);
         document.removeEventListener("keyup",BX_onkeyup,false);
+		BX_no_events = true;
         document.getElementById("bx_form_clipboard").text.focus();
         BX_popup_show();
         //fix for mozilla on mac and windows...
