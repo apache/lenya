@@ -429,13 +429,12 @@
               <map:parameter name="task-id" value="{request-param:task-id}"/>
               <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-assets&amp;lenya.step=showscreen&amp;lenya.area={request-param:lenya.area}"/>
             </map:act>
-            <!--
-            <map:generate src="{fallback:authoring/asset.xsp}"/>
-            <map:transform src="{fallback:authoring/asset.xsl}">
+            <map:generate src="{fallback:content/authoring/asset.xsp}" type="serverpages"/>
+            <map:transform src="{fallback:xslt/authoring/asset.xsl}">
+              <map:parameter name="use-request-parameters" value="true"/>
               <map:parameter name="error" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
-            -->
           </map:match>
 
           <map:match pattern="insert" type="step">
@@ -453,6 +452,12 @@
                 <map:redirect-to session="true" uri="{request:requestURI}"/>
               </map:act>
             </map:act>
+            <map:generate src="{fallback:content/authoring/asset.xsp}" type="serverpages"/>
+            <map:transform src="{fallback:xslt/authoring/asset.xsl}">
+              <map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="error" value="true"/>
+            </map:transform>
+            <map:call resource="style-cms-page"/>
           </map:match>
 
           <map:match pattern="remove" type="step">
