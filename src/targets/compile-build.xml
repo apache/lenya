@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: compile-build.xml,v 1.4 2004/05/04 13:46:26 michi Exp $ -->
+<!-- $Id$ -->
 
 <project name="compile">
 
@@ -68,5 +68,10 @@
     <delete dir="${build.root}"/>
     <echo>INFO: Delete ${dist.root}</echo>
     <delete dir="${dist.root}"/>
+
+    <condition property="servlet.engine.tomcat">
+      <equals arg1="${web.app.server}" arg2="Tomcat"/>
+    </condition>
+    <antcall target="clean-tomcat"/>
   </target>
 </project>

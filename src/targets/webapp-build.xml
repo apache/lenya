@@ -180,7 +180,7 @@
   <!-- Clean targets                                                -->
   <!-- ============================================================ -->
 
-  <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
+  <target name="clean-tomcat" description="Resets the deployment by also cleaning the servlet engine context" if="servlet.engine.tomcat">
     <!-- Empty server cache - this directory is set in the "local.build.properties" file -->
     <echo>INFO: Delete Tomcat Cache Dir: ${tomcat.cache.dir}</echo>
     <delete dir="${tomcat.cache.dir}"/>
