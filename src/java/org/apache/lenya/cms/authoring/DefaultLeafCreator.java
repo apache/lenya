@@ -1,5 +1,5 @@
 /*
-$Id: DefaultLeafCreator.java,v 1.11 2003/07/30 15:30:06 egli Exp $
+$Id: DefaultLeafCreator.java,v 1.12 2003/07/31 17:08:17 egli Exp $
 <License>
 
  ============================================================================
@@ -88,7 +88,7 @@ public class DefaultLeafCreator extends DefaultCreator {
         File parentDir,
         String childId,
         String language) {
-        return parentDir + File.separator + childId + "_" + language + ".xml";
+        return parentDir + File.separator + childId + getLanguageSuffix(language) + ".xml";
     }
 
     /** (non-Javadoc)
@@ -98,6 +98,11 @@ public class DefaultLeafCreator extends DefaultCreator {
         File parentDir,
         String childId,
         String language) {
-        return parentDir + File.separator + childId + "-meta" + "_" + language + ".xml";
+        return parentDir
+            + File.separator
+            + childId
+            + "-meta"
+            + getLanguageSuffix(language)
+            + ".xml";
     }
 }

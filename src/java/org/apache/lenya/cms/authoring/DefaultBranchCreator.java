@@ -1,5 +1,5 @@
 /*
-$Id: DefaultBranchCreator.java,v 1.11 2003/07/30 15:30:06 egli Exp $
+$Id: DefaultBranchCreator.java,v 1.12 2003/07/31 17:08:17 egli Exp $
 <License>
 
  ============================================================================
@@ -92,8 +92,8 @@ public class DefaultBranchCreator extends DefaultCreator {
             + File.separator
             + childId
             + File.separator
-            + "index_"
-            + language
+            + "index"
+            + getLanguageSuffix(language)
             + ".xml";
     }
 
@@ -108,8 +108,8 @@ public class DefaultBranchCreator extends DefaultCreator {
             + File.separator
             + childId
             + File.separator
-            + "indexmeta_"
-            + language
+            + "indexmeta"
+            + getLanguageSuffix(language)
             + ".xml";
     }
 }
