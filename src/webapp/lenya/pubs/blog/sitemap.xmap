@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.49 2004/02/19 13:20:37 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.50 2004/02/27 16:33:24 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -9,14 +9,6 @@
   <map:resources/>
 
   <map:pipelines>
-
-    <!-- CSS, path independent (mod_proxy) -->
-    <map:pipeline>
-      <map:match pattern="**/css/styles.css">
-        <map:read src="resources/css/styles.css" mime-type="text/css"/>
-      </map:match>
-    </map:pipeline>
-
     <!-- WebDAV -->
     <map:pipeline>
       <map:match pattern="webdav/**">
