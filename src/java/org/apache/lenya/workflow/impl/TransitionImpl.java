@@ -22,13 +22,13 @@ import org.apache.lenya.workflow.Transition;
 public class TransitionImpl implements Transition {
 
     /** Creates a new instance of TransitionImpl */
-    protected TransitionImpl(State source, State destination) {
+    protected TransitionImpl(State sourceState, State destinationState) {
 
-        assert source != null;
-        assert destination != null;
+        assert sourceState != null;
+        assert destinationState != null;
 
-        this.source = source;
-        this.destination = destination;
+        source = sourceState;
+        destination = destinationState;
     }
 
     private List actions = new ArrayList();
@@ -60,9 +60,9 @@ public class TransitionImpl implements Transition {
         return event;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
-        assert event != null;
+    public void setEvent(Event anEvent) {
+		assert anEvent != null;
+        event = anEvent;
     }
 
     private State source;

@@ -13,7 +13,10 @@ import org.apache.lenya.workflow.WorkflowBuildException;
  *
  * @author  andreas
  */
-public class ConditionFactory {
+public final class ConditionFactory {
+	
+	private ConditionFactory() {
+	}
 
     protected static Condition createCondition(
         String className,

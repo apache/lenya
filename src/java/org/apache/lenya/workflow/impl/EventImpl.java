@@ -15,9 +15,9 @@ import org.apache.lenya.workflow.Event;
 public class EventImpl implements Event {
 
     /** Creates a new instance of EventImpl */
-    protected EventImpl(String id) {
-        assert id != null;
-        this.id = id;
+    protected EventImpl(String eventId) {
+        assert eventId != null;
+        id = eventId;
     }
 
     private String id;

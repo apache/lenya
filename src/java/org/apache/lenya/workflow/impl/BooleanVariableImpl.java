@@ -15,9 +15,9 @@ import org.apache.lenya.workflow.BooleanVariable;
 public class BooleanVariableImpl implements BooleanVariable {
 
     /** Creates a new instance of BooleanVariableImpl */
-    protected BooleanVariableImpl(String name) {
-    	assert name != null;
-    	this.name = name;
+    protected BooleanVariableImpl(String variableName) {
+    	assert variableName != null;
+    	name = variableName;
     }
 
     private String name;

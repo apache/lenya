@@ -30,6 +30,9 @@ import org.xml.sax.SAXException;
  * @author  andreas
  */
 public class WorkflowBuilder {
+	
+	protected WorkflowBuilder() {
+	}
 
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
     public static final String DEFAULT_PREFIX = "wf";

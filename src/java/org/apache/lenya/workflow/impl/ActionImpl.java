@@ -16,9 +16,9 @@ public class ActionImpl
     implements Action {
     
     /** Creates a new instance of ActionImpl */
-    protected ActionImpl(String id) {
-        assert id != null;
-        this.id = id;
+    protected ActionImpl(String actionId) {
+        assert actionId != null;
+        id = actionId;
     }
     
     private String id;

@@ -30,8 +30,8 @@ public class BooleanVariableInstanceImpl implements BooleanVariableInstance {
     /**
      * @see org.apache.lenya.cms.workflow.BooleanVariableInstance#setValue(boolean)
      */
-    public void setValue(boolean value) {
-        this.value = value;
+    public void setValue(boolean variableValue) {
+        value = variableValue;
     }
 
 }
