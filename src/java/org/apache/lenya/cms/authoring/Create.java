@@ -16,9 +16,6 @@
  */
 package org.apache.lenya.cms.authoring;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -39,9 +36,8 @@ public class Create extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
      */
-    protected void doInitialize() throws Exception {
+    protected void doInitialize() {
         super.doInitialize();
-
     }
             
      /**
