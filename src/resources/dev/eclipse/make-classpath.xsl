@@ -17,15 +17,16 @@
 <!--
   Build the Eclipse .classpath file from a list of path items
   (see "eclipse-project" target in build.xml)
-  
-  $Id: make-classpath.xsl,v 1.1 2004/03/21 21:26:21 gregor Exp $
+
+  $Id$
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:output indent="yes" method="xml"/>
   <xsl:param name="exportlib"/>
-  
+  <xsl:param name="eclipse-cocoon-project"/>
+
   <xsl:strip-space elements="*"/>
 
   <xsl:template match="/data">
@@ -37,7 +38,7 @@
         <xsl:sort select="."/>
         <classpathentry kind="src" path="{.}"/>
       </xsl:for-each>
-          
+
       <!-- 2. libraries -->
       <xsl:for-each select="libs/item">
         <!-- alphabetical sorting, only file name -->
@@ -54,14 +55,14 @@
 
       <!-- 3. JRE runtime -->
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-     
+
       <!-- 4. output directory
            Build in a separate dir since Eclipse is confused
            by classes compiled externally by Sun's Javac -->
       <classpathentry kind="output" path="{output}"/>
 
       <!-- 5. Dependance on Cocoon. There needs to be a cocoon-2.1 eclipse project -->
-	  <classpathentry kind="src" path="/cocoon-2.1"/>
+	  <classpathentry kind="src" path="/{$eclipse-cocoon-project}"/>
 
     </classpath>
   </xsl:template>

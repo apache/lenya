@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 <project name="ide">
-  
+
   <description>
     IDE targets
   </description>
@@ -37,7 +37,7 @@
       <!-- Cocoon libs -->
       <fileset dir="${cocoon.src.dir}/${lib.dir}">
         <include name="core/*.jar"/>
-        <!-- Currently, we have no JVM dependent libraries       
+        <!-- Currently, we have no JVM dependent libraries
           <include name="core/jvm${target.vm}/*.jar"/>
         -->
         <include name="optional/*.jar"/>
@@ -54,7 +54,7 @@
         <exclude name="xalan*.jar"/>
         <exclude name="xml-api*.jar"/>
         <exclude name="xerces*.jar"/>
-      </fileset>      
+      </fileset>
       <!-- main libs -->
       <fileset dir="${lib.dir}">
         <include name="*.jar"/>
@@ -97,10 +97,11 @@
           processor="trax"
           style="src/resources/dev/eclipse/make-classpath.xsl">
        <param name="exportlib" expression="${ide.eclipse.export.libs}"/>
+       <param name="eclipse-cocoon-project" expression="Cocoon 2.1.6"/>
     </xslt>
 
     <!-- copy the project file (expand version) -->
-    <copy file="src/resources/dev/eclipse/project"
+    <copy file="src/resources/dev/eclipse/project.xml"
           tofile="${basedir}/.project"
           overwrite="yes">
     </copy>
@@ -115,7 +116,7 @@
             tofile="${build.webapp}/WEB-INF/classes/org/apache/cocoon/cocoon.roles"
             overwrite="yes"/>
   </target>
-  
+
   <target name="eclipse-webapp-delete-jars" depends="prepare">
       <!-- delete all jars and class files, they are already included in the project -->
       <delete>
