@@ -25,6 +25,7 @@ Framework
 </h3>
 
  <h2><xsl:value-of select="system_name"/></h2>
+ <xsl:apply-templates select="description"/>
  <ul>
    <li>Home: <a href="{main_url}" target="_blank"><xsl:apply-templates select="main_url"/></a></li>
    <li><xsl:apply-templates select="license"/></li>
@@ -34,6 +35,10 @@ Framework
 
 <xsl:template match="license">
  License: <a href="{license_url}"><xsl:apply-templates select="license_name"/></a>
+</xsl:template>
+
+<xsl:template match="description">
+  <p><xsl:apply-templates/></p>
 </xsl:template>
  
 </xsl:stylesheet>  
