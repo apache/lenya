@@ -222,13 +222,11 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
     }
     
 	if (ldap) {
-	/*
 	    configDir = new Packages.java.io.File(configDir);
 	    var ldapUser = new Packages.org.apache.lenya.ac.ldap.LDAPUser(configDir);
 	    if (!ldapUser.existsUser(ldapId)) {
 	    	messages.add("This LDAP user ID does not exist.");
 	    }
-	*/
 	}
 	
 	else {
