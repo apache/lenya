@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: mod_proxy.xml,v 1.1 2004/07/01 23:59:21 thorsten Exp $ -->
+<!-- $Id: mod_proxy.xml,v 1.2 2004/07/12 03:08:51 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -41,6 +41,30 @@ To enable mod_proxy for Apache 2:
 ./configure --prefix=/usr/local/httpd-2.0.48 --enable-proxy
 make
 make install
+/usr/local/httpd-2.0.48/bin/httpd -l
+]]>
+</source>
+
+<!--
+<source>
+<![CDATA[
+LoadModule proxy_module modules/mod_proxy.so
+]]>
+</source>
+-->
+</section>
+
+<section>
+<title>Apache 1: Enabling</title>
+<p>
+To enable mod_proxy for Apache 1: 
+</p>
+<source>
+<![CDATA[
+./configure --prefix=/usr/local/apache_1.3.27 --enable-module=proxy
+make
+make install
+/usr/local/apache_1.3.27/bin/httpd -l
 ]]>
 </source>
 </section>
@@ -67,7 +91,7 @@ after making sure that you have the mod_proxy module installed:</p>
 <section>
 <title>Related Links</title>
 <p>
-<link href="http://wiki.cocoondev.org/Wiki.jsp?page=ApacheModProxy">http://wiki.cocoondev.org/Wiki.jsp?page=ApacheModProxy</link>
+<link href="http://wiki.apache.org/cocoon/ApacheModProxy">http://wiki.apache.org/cocoon/ApacheModProxy</link>
 </p>
 </section>
 </body>
