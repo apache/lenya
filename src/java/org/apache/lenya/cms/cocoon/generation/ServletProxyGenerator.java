@@ -105,32 +105,37 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
             httpMethod.setQueryString(httpRequest.getQueryString());
             }
 
-          // Forward Cookies
+          // Copy/clone Cookies
           Cookie[] cookies=httpRequest.getCookies();
-          org.apache.commons.httpclient.Cookie[] transferedCookies=new org.apache.commons.httpclient.Cookie[cookies.length];
+          org.apache.commons.httpclient.Cookie[] transferedCookies=null;
+          if(cookies != null){
+          transferedCookies=new org.apache.commons.httpclient.Cookie[cookies.length];
           for(int i=0;i<cookies.length;i++){
             log.warn(".generate(): Original COOKIE: "+cookies[i].getPath()+" "+cookies[i].getName()+" "+cookies[i].getDomain()+" "+cookies[i].getValue());
             boolean secure=false; // http: false, https: true
             transferedCookies[i]=new org.apache.commons.httpclient.Cookie(url.getHost(),cookies[i].getName(),cookies[i].getValue(),url.getFile(),null,secure);
             log.warn(".generate(): Copied COOKIE: "+transferedCookies[i]);
             }
+            }
 
-          // Send request to servlet
-          httpMethod.setRequestHeader("Content-type","text/plain");
-          httpMethod.setPath(url.getPath());
-
+          // Initialize HttpClient
           HttpClient httpClient=new HttpClient();
-          if(transferedCookies.length > 0){
+
+          // Set cookies
+          if((transferedCookies != null) && (transferedCookies.length > 0)){
             HttpState httpState=new HttpState();
             httpState.addCookies(transferedCookies);
             httpClient.setState(httpState);
             }
-
+          // Debug cookies
           org.apache.commons.httpclient.Cookie[] tcookies=httpClient.getState().getCookies();
           for(int i=0;i<tcookies.length;i++){
             log.warn(".generate(): Transfered COOKIE: "+tcookies[i]);
             }
 
+          // Send request to servlet
+          httpMethod.setRequestHeader("Content-type","text/plain");
+          httpMethod.setPath(url.getPath());
           httpClient.startSession(url);
           httpClient.executeMethod(httpMethod);
           byte[] sresponse=httpMethod.getResponseBody();
@@ -152,6 +157,7 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
           this.contentHandler.endDocument();
 
           log.error(e);
+          e.printStackTrace();
           }
         finally{
           this.manager.release(parser);
