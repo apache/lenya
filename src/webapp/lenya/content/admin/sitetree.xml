@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree.xml,v 1.12 2004/03/13 12:31:32 gregor Exp $ -->
+<!-- $Id: sitetree.xml,v 1.13 2004/03/23 18:39:09 roku Exp $ -->
 
 <site
     xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
@@ -25,31 +25,31 @@
         "http://apache.org/cocoon/lenya/sitetree/1.0
         ../../resources/entities/sitetree.xsd">
     
-  <node id="index" href="index.html">
+  <node id="index">
     <label><i18n:text>Home</i18n:text></label>
   </node>
   
-  <node id="users" href="users.html">
+  <node id="users">
     <label><i18n:text>Users</i18n:text></label>
   </node>
 
-  <node id="groups" href="groups.html">
+  <node id="groups">
     <label><i18n:text>Groups</i18n:text></label>
   </node>
   
-  <node id="ipranges" href="ipranges.html">
+  <node id="ipranges">
     <label><i18n:text>IP Ranges</i18n:text></label>
   </node>
   
-  <node id="content" href="content.html">
+  <node id="content">
     <label><i18n:text>Delete Trash</i18n:text></label>
   </node>
 
-  <node id="lucene" href="lucene.html">
+  <node id="lucene">
     <label><i18n:text>Search</i18n:text></label>
   </node>
 
-  <node id="status" href="status.html">
+  <node id="status">
     <label><i18n:text>Cocoon and Server Status</i18n:text></label>
   </node>
   
