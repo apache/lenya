@@ -111,8 +111,7 @@
 	<dd>Handle the display of the meta data in the info area. This
 	is also a form which can be used to modify the meta data via a
 	POST request.</dd>
-<!-- 	FIXME: move the unizh stuff into the core. -->
-	<dt>unizh/pubs/unizh/xslt/authoring/addMetaData.xsl</dt>
+	<dt>src/webapp/lenya/xslt/authoring/addMetaData.xsl</dt>
 	<dd>Simple XSLT stylesheet that modifies the meta data
 	according to the input parameters.</dd>
       </dl>
