@@ -358,6 +358,32 @@
       </map:match>
 
 
+<!-- Newsletter -->
+      <map:match pattern="newsletter/">
+        <map:redirect-to uri="newsletter/index.html"/>
+      </map:match>
+
+      <map:match pattern="newsletter/index.xml">
+        <map:generate src="docs/publication/authoring/newsletter/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Dossier/xinclude.xsl" />
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/authoring/dossiers/2002/ada/index.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+
+      <map:match pattern="newsletter/index.html">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/newsletter.xml"/>
+          <map:part src="cocoon:/newsletter/index.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="stylesheets/publication/Page/Newsletter/Authoring/main.xsl">
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+
+
 <!-- Dossiers -->
       <map:match pattern="dossiers/">
         <map:redirect-to uri="2002/index.html"/>
