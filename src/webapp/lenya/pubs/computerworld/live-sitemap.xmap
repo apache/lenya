@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.8 2003/01/28 23:43:00 gregorcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.9 2003/01/28 23:49:13 gregorcms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -93,7 +93,7 @@
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Live/it-overview.xsl">
-					<map:parameter name="files" value="Stellen/"/>
+					<map:parameter name="files" value="Stellen"/>
 					<map:parameter name="id" value="/it-stellen/"/>
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 				</map:transform>
@@ -111,7 +111,7 @@
 					<map:part src="cocoon:/today"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Live/it-overview.xsl">
-					<map:parameter name="files" value="Kalender/"/>
+					<map:parameter name="files" value="Kalender"/>
 					<map:parameter name="id" value="/it-kalender/"/>
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 				</map:transform>
