@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.13 2003/05/28 13:18:55 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.14 2003/05/28 13:20:19 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -145,9 +145,7 @@ public class DefaultSiteTree implements SiteTree {
 					Node idAttribute = attributes.getNamedItem("id");
 					if (idAttribute != null
 						&& idAttribute.getNodeValue().equals(ids.get(0))) {
-						return findNode(
-							nodes.item(i),
-							ids.subList(1, ids.size()));
+						return findNode(nodes.item(i), ids.subList(1, ids.size()));
 					}
 				}
 			}
