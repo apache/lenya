@@ -437,7 +437,9 @@
             </map:select>
             <map:generate type="serverpages" src="{fallback:content/info/assets.xsp}"/>
             <map:transform src="{fallback:xslt/authoring/asset.xsl}">
+	      <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="use-request-parameters" value="true"/>
+              <!--<map:parameter name="error" value="true"/>-->
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -454,6 +456,7 @@
             </map:act>
             <map:generate src="{fallback:content/info/assets.xsp}" type="serverpages"/>
             <map:transform src="{fallback:xslt/authoring/asset.xsl}">
+	      <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="use-request-parameters" value="true"/>
               <map:parameter name="error" value="true"/>
             </map:transform>
@@ -488,6 +491,7 @@
             </map:act>
             <map:generate src="{fallback:content/info/assets.xsp}" type="serverpages"/>
             <map:transform src="{fallback:xslt/authoring/asset.xsl}">
+	      <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="use-request-parameters" value="true"/>
               <map:parameter name="error" value="true"/>
             </map:transform>
