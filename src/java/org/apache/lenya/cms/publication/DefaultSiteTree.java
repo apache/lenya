@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -94,10 +94,11 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * Create a DefaultSiteTree from a filename.
      *
-     * @param treefilename
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @param treefilename file name of the tree
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * @throws SAXException if the xml in the treefile is not valid
+     * @throws IOException if the file cannot be opened
      */
     public DefaultSiteTree(String treefilename)
         throws ParserConfigurationException, SAXException, IOException {
@@ -107,10 +108,11 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * Create a DefaultSiteTree from a file.
      *
-     * @param treefile
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @param treefile the file containing the tree
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * @throws SAXException  if the xml in the treefile is not valid
+     * @throws IOException  if the file cannot be opened
      */
     public DefaultSiteTree(File treefile)
         throws ParserConfigurationException, SAXException, IOException {
@@ -128,9 +130,9 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * Create a new DefaultSiteTree xml document.
      *
-     * @return
-     * @throws DOMException
-     * @throws ParserConfigurationException
+     * @return the new site document
+     * 
+     * @throws ParserConfigurationException if an error occurs
      */
     public Document createDocument() throws ParserConfigurationException {
         document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
@@ -150,7 +152,8 @@ public class DefaultSiteTree implements SiteTree {
      *
      * @param node where to start the search
      * @param ids list of node ids
-     * @return
+     * 
+     * @return the node that matches the path given in the list of ids
      */
     protected Node findNode(Node node, List ids) {
         if (ids.size() < 1) {
@@ -175,7 +178,7 @@ public class DefaultSiteTree implements SiteTree {
         return null;
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[])
      */
     public void addNode(String parentid, String id, Label[] labels)
@@ -183,7 +186,7 @@ public class DefaultSiteTree implements SiteTree {
         addNode(parentid, id, labels, null, null, false);
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(org.apache.lenya.cms.publication.SiteTreeNode)
      */
     public void addNode(SiteTreeNode node) throws SiteTreeException {
@@ -191,7 +194,7 @@ public class DefaultSiteTree implements SiteTree {
             node.getSuffix(), node.hasLink());
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
      */
     public void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
@@ -208,7 +211,7 @@ public class DefaultSiteTree implements SiteTree {
         this.addNode(parentid, id, labels, href, suffix, link);
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
      */
     public void addNode(String parentid, String id, Label[] labels, String href, String suffix,
@@ -263,7 +266,7 @@ public class DefaultSiteTree implements SiteTree {
         log.debug("Tree has been modified: " + document.getDocumentElement());
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#removeNode(java.lang.String)
      */
     public SiteTreeNode removeNode(String documentId) {
@@ -281,8 +284,10 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * removes the node corresponding to the given document-id
      * and returns it
-     * @param documentId
-     * @return a org.w3c.dom.Node
+     * 
+     * @param documentId the document-id of the Node to be removed
+     * 
+     * @return the <code>Node</code> that was removed
      */
     private Node removeNodeInternal(String documentId) {
         Node node = this.getNodeInternal(documentId);
@@ -295,8 +300,9 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * Find a node for a given document-id
      *
-     * @param documentId
-     * @return
+     * @param documentId the document-id of the Node that we're trying to get
+     * 
+     * @return the Node if there is a Node for the given document-id, null otherwise
      */
     private Node getNodeInternal(String documentId) {
         StringTokenizer st = new StringTokenizer(documentId, "/");
@@ -315,7 +321,7 @@ public class DefaultSiteTree implements SiteTree {
         return node;
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#getNode(java.lang.String)
      */
     public SiteTreeNode getNode(String documentId) {
@@ -333,35 +339,10 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * Save the DefaultSiteTree.
      *
-     * @throws IOException
-     * @throws TransformerConfigurationException
-     * @throws TransformerException
+     * @throws IOException if the save failed
+     * @throws TransformerException if the document could not be transformed
      */
     public void save() throws IOException, TransformerException {
         DocumentHelper.writeDocument(document, treefile);
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-        try {
-            DefaultSiteTree sitetree = new DefaultSiteTree(args[0]);
-            Label label = new Label("Foo", null);
-            Label[] labels = { label };
-
-            sitetree.addNode("/tutorial", "foo", labels);
-
-            Label label_de = new Label("Qualit?t", "de");
-            Label label_en = new Label("Quality", "en");
-            Label[] labels2 = { label_de, label_en };
-            sitetree.addNode("/tutorial/features", "here", labels2);
-
-            sitetree.save();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
