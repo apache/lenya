@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: live.xsp,v 1.8 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -23,16 +23,6 @@
 >
 
 <menu>
-
-  <!-- Import Lenya Page Envelope -->
-  <url-info>
-    <context-prefix></context-prefix>
-    <publication-id></publication-id>
-    <area></area>
-    <document-id></document-id>
-    <servlet-context-path></servlet-context-path>
-    <publication></publication>
-  </url-info>  
 
 </menu>
 

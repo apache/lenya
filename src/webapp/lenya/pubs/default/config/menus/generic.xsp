@@ -36,8 +36,6 @@
   <menu>
 
     <xsp:logic>
-      String projectid = parameters.getParameter("projectid","null");
-      
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
       

@@ -30,14 +30,6 @@
 
 <menu>
 
-  <url-info>
-    <context-prefix><xsp-request:get-context-path/></context-prefix>
-    <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
-    <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
-    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
-    <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
-  </url-info>
-
   <xsp:logic>
     String source = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
     source = source.substring(1); // Remove leading slash
