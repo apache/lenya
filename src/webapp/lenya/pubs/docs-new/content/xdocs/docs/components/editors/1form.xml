@@ -39,5 +39,12 @@ In order to get the redirect right after closing and saving the document, one mi
 The One Form Editor can be configured within the generic Lenya usecase sitemap <code>lenya/usecase.xmap</code>.
 </p>
 </section>
+
+<section>
+<title>Validation</title>
+<p>
+Upon saving, the form content is validated against the appropriate Relax NG schema using the <code>ValidateAction</code>
+</p>
+</section>
 </body>
 </document>

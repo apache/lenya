@@ -4,7 +4,7 @@
 <document> 
 
 <header> 
-    <title>HTML Form Editor</title>
+    <title>Forms Editor</title>
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
@@ -15,7 +15,8 @@
 
 <section>
 <title>XUpdate</title>
-<p>The HTML form editor is using XUpdate, hence it's good to understand the basics of XUpdate</p>
+<p>The Forms Editor is using the <link href="http://xmldb.org/xupdate/xupdate-wd.html">XUpdate specification<link> from the xmldb group to update elements and attributes. 
+You can test-drive the XUpdate engine in Lenya by doing the following:</p>
 <source>
 <![CDATA[
 java -classpath lib/xmldb-common-2003-09-02.jar:lib/xmldb-xupdate-2003-09-02.jar:lib/log4j-1.2.3.jar:build/lenya/webapp/WEB-INF/lib/xercesImpl-2.4.0.jar:build/lenya/webapp/WEB-INF/lib/xalan-2.5.1.jar org.xmldb.xupdate.lexus.XUpdateQueryImpl xupdate.xml entry.xml
@@ -24,7 +25,51 @@ java -classpath lib/xmldb-common-2003-09-02.jar:lib/xmldb-xupdate-2003-09-02.jar
 </section>
 
 <section>
+<title>Customization</title>
+<p>Customization of the Forms Editor is done with stylesheets. You need to have one stylesheet for each doctype. The
+stylesheet goes into <code>lenya/xslt/formeditor/mydoctype.xsl</code>. A simple stylesheet may look like</p>
+<source>
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+                                                                
+<xsl:stylesheet version="1.0"  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:import href="../../../../../xslt/authoring/edit/form.xsl"/>
+
+<xsl:template match="sidebar">
+ <xsl:apply-templates select="block"/>
+
+  <node name="Add Block">
+    <action><insert name="&lt;xupdate:append select=&quot;/sidebar&quot;&gt;&lt;xupdate:element name=&quot;block&quot;&gt;&lt;title&gt;New title&lt;/title&gt;&lt;content&gt;New content&lt;/content&gt;&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/></action>
+  </node>
+</xsl:template>
+
+<xsl:template match="block">
+  <node name="Add Block">
+    <action><insert name="&lt;xupdate:insert-before select=&quot;/sidebar/block[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;block&quot;&gt;&lt;title&gt;New title&lt;/title&gt;&lt;content&gt;New content&lt;/content&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;"/></action>
+  </node>
+  <node name="Delete Block">
+    <action><delete name="&lt;xupdate:remove select=&quot;/sidebar/block[@tagID='{@tagID}']&quot;/&gt;"/></action>
+  </node>
+  <node name="Title" select="/sidebar/block/title[@tagID='{title/@tagID}']">
+    <content type="plain"><input type="text" name="&lt;xupdate:update select=&quot;/sidebar/block/title[@tagID='{title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="title"/></xsl:attribute></input></content>
+  </node>
+  <node name="Content" select="/sidebar/block/content[@tagID='{content/@tagID}']">
+    <content type="mixed">
+      <textarea name="&lt;xupdate:update select=&quot;/sidebar/block/content[@tagID='{content/@tagID}']&quot;&gt;" cols="40" rows="3">
+        <xsl:copy-of select="content/node()"/>
+      </textarea>
+    </content>
+ </node> 
+</xsl:template>
+ 
+</xsl:stylesheet>
+]]>
+</source></section>
+    
+<section>
 <title>Editing attributes</title>
+<p>To add editing of attributes, you need to change the XPath and XUpdate statements to select the attribute:</p>
 <source>
 <![CDATA[
 <xsl:template match="xhtml:table">
