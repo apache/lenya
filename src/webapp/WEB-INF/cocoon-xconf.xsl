@@ -63,7 +63,7 @@
       class="org.apache.cocoon.components.modules.input.RealPathModule"
       logger="core.modules.input" name="realpath"/>
       
-    <component-instance logger="core.modules.input" name="page-envelope"
+    <component-instance logger="sitemap.modules.input" name="page-envelope"
         class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
 
     <component-instance logger="core.modules.input" name="access-control"
@@ -71,7 +71,7 @@
     
     <component-instance logger="core.modules.input" name="workflow"
         class="org.apache.lenya.cms.cocoon.components.modules.input.WorkflowModule"/>
-    
+        
   </xsl:copy>
 </xsl:template>
 
@@ -201,6 +201,10 @@
   <component logger="lenya.ac.cache"
      	class="org.apache.lenya.cms.ac2.cache.SourceCacheImpl"
      	role="org.apache.lenya.cms.ac2.cache.SourceCache"/>
+     	
+  <component logger="lenya.uriparameterizer"
+      class="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerImpl"
+      role="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer"/>
       
   </xsl:copy>
 </xsl:template>
