@@ -52,10 +52,10 @@
 
 <xsl:template match="Dossiers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <tr>
-    <td><a href="{Dossier/@href}"><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></a></td>
+    <td><a href="{@href}"><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></a></td>
   </tr>
 
-  <tr><td class="tsr-text"><span class="tsr-title"><a href="{Dossier/@href}{Dossier/Title/@href}"><xsl:value-of select="Dossier/Title"/></a></span><br /><xsl:value-of select="Dossier/Teaser"/></td></tr>
+  <tr><td class="tsr-text"><span class="tsr-title"><a href="{@href}{Dossier/@href}"><xsl:value-of select="Dossier/Title"/></a></span><br /><xsl:value-of select="Dossier/Teaser"/></td></tr>
 </xsl:template>
 
 </xsl:stylesheet>

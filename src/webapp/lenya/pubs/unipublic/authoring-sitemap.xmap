@@ -223,6 +223,13 @@
         </map:generate> 
         <map:serialize type="xml"/>
       </map:match>
+      <map:match pattern="menus/*/*/dossier.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/dossier.xsp">
+          <map:parameter name="year" value="{1}"/>
+          <map:parameter name="dossierId" value="{2}"/>
+        </map:generate> 
+        <map:serialize type="xml"/>
+      </map:match>
       <map:match pattern="menus/**.xml">
         <map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
         <map:serialize type="xml"/>
@@ -300,6 +307,37 @@
 
 
 
+<!-- Dossier -->
+      <map:match pattern="dossiers/*/*/index.xml">
+        <map:generate src="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/*/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+      <map:match pattern="dossiers/*/*/index.html">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/{1}/{2}/dossier.xml"/>
+          <map:part src="docs/publication/authoring/dossiers/{1}/{2}/index.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="stylesheets/publication/Page/Dossier/Authoring/main.xsl">
+          <map:parameter name="section" value="gesundheit"/>
+          <map:parameter name="documentid" value="docs/publication/authoring/magazin/gesundheit/articles/2002/0789/index.xml"/>
+          <map:parameter name="authoring" value="true"/>
+        </map:transform>
+        <map:serialize type="html"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+
+
+
+
+
+
+
+
       <!-- Section -->
       <map:match pattern="*/*/*/navigation.xml">
         <map:generate src="docs/publication/authoring/navigation.xml"/>
@@ -362,7 +400,9 @@
 
 
 
-      <!-- Article -->
+<!-- Article -->
+
+  <!-- Checkout -->
       <map:match pattern="rco/*/*/*/*/index.xml">
         <map:act type="reserved-checkout">
             <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
@@ -383,6 +423,7 @@
         <map:serialize type="xml"/>
       </map:match>
 
+  <!-- Checkin -->
       <map:match pattern="rci/*/*/*/*/index.xml">
         <map:act type="reserved-checkin">
           <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
@@ -401,6 +442,7 @@
         <map:serialize type="xml"/>
       </map:match>
 
+  <!-- Upload and append image -->
       <map:match type="usecase" pattern="uploadimage">
         <map:match type="step" pattern="showxml">
           <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
@@ -443,6 +485,7 @@
         <map:serialize type="xml"/>
       </map:match>
 
+
       <map:match pattern="*/*/*/*/">
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
@@ -451,27 +494,15 @@
           <map:part src="cocoon:/menus/{1}/{2}/{3}/{4}/article.xml"/>
           <map:part src="cocoon:/{1}/{2}/{3}/{4}/article.xml" element="cmsbody"/>
         </map:aggregate>
-<!--
-        <map:select>
-          <map:when test="explorer">
--->
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
-              <map:parameter name="section" value="{2}"/>
-              <map:parameter name="documentid" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
-              <map:parameter name="authoring" value="true"/>
-            </map:transform>
-<!--
-          </map:when>
-          <map:otherwise>
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
-              <map:parameter name="section" value="{2}"/>
-              <map:parameter name="authoring" value="true"/>
-            </map:transform>
-          </map:otherwise>
-        </map:select>
--->
+        <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="documentid" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="authoring" value="true"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
+
+
       <!-- Edit with Xopus2 -->
       <map:match pattern="xopus2/*/*/*/*/index.html">
         <map:aggregate element="wyona">
@@ -486,6 +517,9 @@
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
+
+
+
 
       <!-- XML -->
       <map:match pattern="**.xml">

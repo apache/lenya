@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<dossier>
+
+<teaser>
+  <title/>
+  <text/>
+  <image/>
+  <color/>
+</teaser>
+
+<title>Uni &amp; Ada</title>
+
+<lead>Universit&#228;t und ETH Z&#252;rich sind an der ...</lead>
+
+<Articles>
+  <Article channel="campus" section="uni-news" year="2002" dir="0576"/>
+  <Article channel="campus" section="uni-news" year="2002" dir="0531"/>
+</Articles>
+
+<related-content>
+  <block>
+    <title>Links</title>
+    <item>
+      <a href="http://www.ada-ausstellung.ch">Ada-Ausstellung</a>
+    </item>
+    <item>
+      <a href="http://www.expo.02.ch">EXPO0.2</a>
+    </item>
+    <item>
+      <a href="http://www.ini.unizh.ch/~expo">Ada der intelligente Raum</a> (Institut f&#252;r Neuroinformatik)
+    </item>
+  </block>
+</related-content>
+</dossier>
