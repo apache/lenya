@@ -59,33 +59,14 @@
     |end tab-separator
     +-->
 <!--+
-    |start not-selected
-    +--><td valign="bottom" class="tab">
-<div class="tab-separator">
-<table cellspacing="0" cellpadding="0" border="0">
-<tr>
-<td style="background-image: url(../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
-<div class="tab-not-selected-shadow">
-<div class="tab-not-selected">
-<a class="base-not-selected" href="../project/index.html">Project Information</a>
+    |start selected
+    +--><td style="background-image: url(../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a class="base-selected" href="../project/index.html">Project Information</a>
 </div>
-</div>
-</td><td style="background-image: url(../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-right.png"></td>
-</tr>
-<tr>
-<td style="background-image: url(../skin/images/tab-left.png)" valign="bottom">
-<div class="tab-not-selected-shadow-left">
-<img alt="" width="4" src="../skin/images/spacer.gif"></div>
-</td><td style="background-image: url(../skin/images/tab-right.png)" valign="bottom">
-<div class="tab-not-selected-shadow-right">
-<img alt="" width="4" src="../skin/images/spacer.gif"></div>
-</td>
-</tr>
-</table>
-</div>
-</td>
+</td><td style="background-image: url(../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-right-selected.png"></td>
 <!--+
-    |end not-selected
+    |end selected
     +-->
 <!--+
     |start not-selected
@@ -146,14 +127,33 @@
     |end not-selected
     +-->
 <!--+
-    |start selected
-    +--><td style="background-image: url(../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
-<div class="tab-selected">
-<a class="base-selected" href="../community/index.html">Community</a>
+    |start not-selected
+    +--><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a class="base-not-selected" href="../community/index.html">Community</a>
 </div>
-</td><td style="background-image: url(../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-right-selected.png"></td>
+</div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
 <!--+
-    |end selected
+    |end not-selected
     +-->
 </tr>
 </table>
@@ -205,7 +205,7 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="../community/index.html">Community</a>
+<a href="../project/index.html">Project</a>
 </div>
 <!--+
     |end when test=a
@@ -214,7 +214,7 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/">CVS Web</a>
+<a href="../project/roadmap.html">Roadmap</a>
 </div>
 <!--+
     |end when test=a
@@ -223,7 +223,7 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=%27Importance%27">Bug Tracker</a>
+<a href="../project/release.html">Release 1.2</a>
 </div>
 <!--+
     |end when test=a
@@ -255,7 +255,7 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="../community/irc.html">IRC</a>
+<a href="../project/acknowledgements.html">Credits</a>
 </div>
 <!--+
     |end when test=a
@@ -264,7 +264,7 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="../community/meetings.html">Meetings and Sprints</a>
+<a href="../project/license.html">License</a>
 </div>
 <!--+
     |end when test=a
@@ -282,7 +282,7 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="../community/website-update.html">Website Update</a>
+<a href="../project/related-projects.html">Related Projects</a>
 </div>
 <!--+
     |end when test=a
@@ -318,8 +318,9 @@
 <tr>
 <td valign="middle">
 <h1>Mailing Lists</h1>
-</td>
-<div id="skinconf-pdflink"></div>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="mailing-lists.pdf"><img alt="PDF" src="../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+<div id="skinconf-txtlink"></div>
 </tr>
 </table>
  

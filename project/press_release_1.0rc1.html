@@ -59,14 +59,33 @@
     |end tab-separator
     +-->
 <!--+
-    |start selected
-    +--><td style="background-image: url(../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
-<div class="tab-selected">
-<a class="base-selected" href="../project/index.html">Project Information</a>
+    |start not-selected
+    +--><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a class="base-not-selected" href="../project/index.html">Project Information</a>
 </div>
-</td><td style="background-image: url(../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-right-selected.png"></td>
+</div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
 <!--+
-    |end selected
+    |end not-selected
     +-->
 <!--+
     |start not-selected
@@ -223,7 +242,16 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="../project/../community/mailing-lists.html">Mailing Lists</a>
+<a href="../project/release.html">Release 1.2</a>
+</div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start when test=a
+    +-->
+<div class="menuitem">
+<a href="../community/mailing-lists.html">Mailing Lists</a>
 </div>
 <!--+
     |end when test=a
@@ -250,7 +278,7 @@
     |start when test=a
     +-->
 <div class="menuitem">
-<a href="../project/../community/live-sites.html">Live Sites</a>
+<a href="../community/live-sites.html">Live Sites</a>
 </div>
 <!--+
     |end when test=a
@@ -317,6 +345,30 @@
 </div>
 <!--+
     |end when test=a
+    +-->
+</div>
+<!--+
+    |end innermenuli call
+    +-->
+<!--+
+    |start innermenuli call
+    +-->
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<!--+
+    |start when test=a
+    +-->
+<div class="menuitem">
+<a href="../docs/index.html">Documentation</a>
+</div>
+<!--+
+    |end when test=a
+    +-->
+<!--+
+    |start otherwise
+    +-->
+<!--+
+    |end otherwise
     +-->
 </div>
 <!--+
@@ -430,8 +482,9 @@
 <tr>
 <td valign="middle">
 <h1>Apache Lenya 1.0 RC 1 Released</h1>
-</td>
-<div id="skinconf-pdflink"></div>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="press_release_1.0rc1.pdf"><img alt="PDF" src="../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+<div id="skinconf-txtlink"></div>
 </tr>
 </table>
 
