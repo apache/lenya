@@ -10,6 +10,7 @@
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:request="http://apache.org/xsp/request/2.0"
 >
 
   <xsp:structure>
@@ -37,6 +38,7 @@
    		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
    		<lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
   		<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
+  		<lenya-info:area></lenya-info:area>
   </lenya-info:overview>  
   <lenya-info:meta>  
         <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
@@ -56,23 +58,17 @@
   <rc:revisions>
   
   <xsp:logic>
-    String docid = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
+    String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
     Session session=request.getSession(true);
-    session.setAttribute("org.apache.lenya.cms.info.target",docid);
-</xsp:logic>
-  
-<!--
-    <xsp:logic>
-      <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
+    session.setAttribute("org.apache.lenya.cms.info.target",docId);
+    session.setAttribute("org.apache.lenya.cms.info.area", request.getParameter("lenya.area"));
+    Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
 
-      String rootDir=publication.getEnvironment().getPublicationPath();
-      String filename= "authoring" + docId + "/index.xml";
-      <xsp:content><usecase><xsp:expr>request.getParameter("lenya.usecase")</xsp:expr></usecase></xsp:content>
-      <xsp:content><request_uri><xsp:expr>request.getRequestURI()</xsp:expr></request_uri></xsp:content>
+    String rootDir= "C:\\build\\jakarta-tomcat-4.1.24\\webapps\\lenya\\lenya\\pubs\\default\\"; // publication.getEnvironment().getPublicationPath();
+    String filename= "authoring" + docId + "/index.xml";
+    String servletContextPath = publication.getServletContext().getCanonicalPath();
 
-      String servletContextPath = publication.getServletContext().getCanonicalPath();
-
-      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+//      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
 
       RevisionController rc = new RevisionController(rootDir);
 
@@ -82,18 +78,18 @@
       } catch (Exception e) {
         <rc:exception>rollback: Unable to get DOM doc for rcml file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
       }                                                                                                                                    
-/*      org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
+      org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
       org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
 
       for (int i = 0; i &lt; timeElements.getLength(); i++) {
         org.w3c.dom.Element time = (org.w3c.dom.Element) timeElements.item(i);
         time.setAttribute("humanreadable", new Date(new Long(time.getFirstChild().getNodeValue()).longValue()).toString());
       }
-*/      
+      
     </xsp:logic>
     rootdir: <xsp:expr>rootDir</xsp:expr>
     filename: <xsp:expr>filename</xsp:expr>
--->
+    
    </rc:revisions>
    
     <xsp:logic>
