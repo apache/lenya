@@ -17,10 +17,10 @@ div                     { font-family:Verdana; }
 body.authoring #menurow td div,
 body.admin     #menurow td div { display:block; }
 body.live      #menurow td div { display:none; }
-#menucontent                   { padding:2px 4px 2px 4px; }
+#menubar                       { padding:2px 4px 2px 4px; }
 
 #menurow    td,
-#contentrow td          { padding:4px 4px 0px 4px; border-style:solid; border-width:0px 1px 0px 1px; border-color:#FFFFFF #808080 #808080 #FFFFFF; }
+#contentrow td          { padding:4px 4px 4px 4px; border-style:solid; border-width:0px 1px 0px 1px; border-color:#FFFFFF #808080 #808080 #FFFFFF; }
 #tabrow     td          { border-bottom:solid 1px #FFFFFF; }
 #contentrow td          { border-bottom:solid 1px #808080; height:100%; }
 
@@ -32,13 +32,24 @@ body.live      #menurow   ,
 body.live      #contentrow  { background-color:red; }
 
 
+#mask                   { position:absolute; z-index:1; width:100%; height:100%; display:none; }
 #page                   { width:100%; height:100%; }
 
 .template               { display:none; }
 
 
 #menurow                { }
-#menucontent            { z-index:20; width:100%; height:22px; margin:4px 0px 0px 0px; background-image:url(media/menubg.gif); }
-.menu, .menuover        { float:left; padding:0px 0px 0px 4px; width:100px; font-size:80%; font-weight:bold; cursor:pointer; cursor:hand; }
-.menu                   { background-image:none; }
-.menuover               { background-image:url(media/menubgover.gif); }
+#menubar                { z-index:20; width:100%; height:22px; margin:4px 0px 0px 0px; background-image:url(/lenya/lenya/menu2/media/menubg.gif); }
+.menubuttoncontainer    { float:left; display:none; }
+.menubutton,
+.menubuttonover         { float:left; padding:0px 0px 0px 4px; width:100px; font-size:80%; font-weight:bold; cursor:pointer; cursor:hand; }
+.menubutton             { background-image:none; }
+.menubuttonover         { background-image:url(/lenya/lenya/menu2/media/menubgover.gif); }
+
+.menu, .menuvisible     { position:absolute; z-index:20; float:left; background-image:url(/lenya/lenya/menu2/media/menuitembg.gif); }
+.menu                   { display:none; border:none; }
+.menuvisible            { display:block; width:150px; border:solid 1px black; }
+.menuitem, .menuitemover{ padding:0px 3px 2px 3px; font-family:verdana; font-size:80%; cursor:pointer; cursor:hand; }
+.menuitem               { color:black; background-color:none; }
+.menuitemover           { color:red; background-color:white; }
+
