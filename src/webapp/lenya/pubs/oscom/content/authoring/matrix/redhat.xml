@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>redhat</id>
+  <editor email="ccm@redhat.com">Contact</editor>
+  <system_name>Red Hat CCM</system_name>
+  <description>
+Red Hat Content and Collaboration Management's CMS is a full-featured, standards-based open-source content management system built on top of the J2EE platform. CCM CMS includes versioning, workflow, lifecycle, permissioning, and templating capabilities and powers hundreds of intranet, extranet, and Internet web sites, including websites at Dunkin' Donuts, Deutsche Post, Siemens, Sundance Catalog, and many of the London boroughs. CMS is writtenly entirely in Java and uses a powerful object-relational persistence layer with support for Oracle and PostgreSQL.
+  </description>
+  <main_url>http://www.redhat.com/software/ccm/</main_url>
+  <license>
+    <license_name>CCM resp. IBM Public License</license_name>
+    <license_url>http://www.redhat.com/licenses/ccmpl.html</license_url>
+  </license>
+</system>
