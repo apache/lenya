@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Identity.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id: Identity.java,v 1.3 2004/04/28 13:56:18 andreas Exp $  */
 
 package org.apache.lenya.ac;
 
@@ -24,10 +24,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.cocoon.environment.Session;
+import org.apache.log4j.Category;
 
 
 public class Identity implements Identifiable {
     private Set identifiables = new HashSet();
+    
+    private static final Category log = Category.getInstance(Identity.class);
     
     /**
      * Ctor.
@@ -52,6 +55,11 @@ public class Identity implements Identifiable {
         assert identifiable != null;
         assert identifiable != this;
         assert !identifiables.contains(identifiable);
+        
+        if (log.isDebugEnabled()) {
+            log.debug("Adding identifiable: [" + identifiable + "]");
+        }
+        
         identifiables.add(identifiable);
     }
 

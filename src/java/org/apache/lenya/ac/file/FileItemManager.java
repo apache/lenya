@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileItemManager.java,v 1.6 2004/04/28 12:53:46 andreas Exp $  */
+/* $Id: FileItemManager.java,v 1.7 2004/04/28 13:56:18 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -104,18 +104,17 @@ public abstract class FileItemManager {
 
                 Item item = (Item) items.get(id);
 
-                if (item == null) {
-                    throw new AccessControlException("Item with ID [" + id + "] not found.");
-                }
+                if (item != null) {
 
-                if (item instanceof Groupable) {
-                    ((Groupable) item).removeFromAllGroups();
-                }
-                if (item instanceof Group) {
-                    ((Group) item).removeAllMembers();
-                }
+                    if (item instanceof Groupable) {
+                        ((Groupable) item).removeFromAllGroups();
+                    }
+                    if (item instanceof Group) {
+                        ((Group) item).removeAllMembers();
+                    }
 
-                remove(item);
+                    remove(item);
+                }
             }
 
             File[] changedFiles = notifier.getChangedFiles();
