@@ -83,7 +83,6 @@
     <map:pipeline>
       <map:match pattern="revision/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
-          <map:parameter name="rootDir" value="/home/michi/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/> 
           <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
@@ -105,7 +104,6 @@
        
       <map:match pattern="view/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
-          <map:parameter name="rootDir" value="/home/michi/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/> 
           <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
