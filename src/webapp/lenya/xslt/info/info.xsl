@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.36 2003/09/04 15:22:24 andreas Exp $
+ $Id: info.xsl,v 1.37 2003/09/04 15:31:27 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -84,7 +84,9 @@
    <tr><td class="lenya-entry-caption">Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
    <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:value-of select="lenya-info:workflow-state"/></td></tr>
    <tr><td class="lenya-entry-caption">Live:</td><td><xsl:value-of select="lenya-info:is-live"/></td></tr>
+   <!--
    <tr><td class="lenya-entry-caption">Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
+   -->
    <tr><td class="lenya-entry-caption">Available Languages:</td><td><xsl:apply-templates select="lenya-info:languages"/></td></tr>
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
    <tr><td class="lenya-entry-caption">Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
@@ -105,11 +107,11 @@
 </xsl:template>
 
 <xsl:template match="lenya-info:language">
+	<xsl:if test="position() > 1"><xsl:text>, </xsl:text></xsl:if>
 	<xsl:choose>
 		<xsl:when test="normalize-space(../../dc:language) = normalize-space(.)"><xsl:value-of select="normalize-space(.)"/></xsl:when>
 		<xsl:otherwise><a href="{@href}?lenya.usecase=info-overview&amp;lenya.step=showscreen"><xsl:value-of select="normalize-space(.)"/></a></xsl:otherwise>
 	</xsl:choose>
-	<xsl:text> </xsl:text>
 </xsl:template>
 
 
