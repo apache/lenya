@@ -42,6 +42,7 @@
             </page:title>
             <page:body >
                 <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
+                <script type="text/javascript" src="{$contextprefix}/lenya/javascript/asset.js">&#160;</script>
                 <script> 
                    window.onload = insertCaption
                    
@@ -49,9 +50,9 @@
                    
                    function insertImage(src, type) { 
                       var nodeid = '<xsl:value-of select="lenya-info:documentnodeid"/>/';
-                      var link = document.forms["image"].link.value;
-                      var caption = document.forms["image"].caption.value;
-                      var title = document.forms["image"].title.value;
+                      var link = document.forms['image'].link.value;
+                      var caption = document.forms['image'].caption.value;
+                      var title = document.forms['image'].title.value;
                       <![CDATA[
                       var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" type="'+type+'" data="'+nodeid + src+'">'+caption+'</object>'; 
                       ]]>
@@ -62,7 +63,7 @@
                    function insertCaption() { 
                     var selectionContent = window.opener.getSelection().getEditableRange().toString(); 
                     if (selectionContent.length != 0) { 
-                      document.forms["image"].caption.value = selectionContent;
+                      document.forms['image'].caption.value = selectionContent;
                     } 
                     focus(); 
                   } 
@@ -92,7 +93,7 @@
                             <tr>
                                 <td class="lenya-form-caption"><i18n:text key="lenya.imageupload.selectimage.label"/>:</td>
                                 <td><input class="lenya-form-element" 
-                                    type="file" name="properties.asset.data" 
+                                    type="file" name="properties.asset.data" onchange="imagepreview(this)" 
                                     id="data"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
                             </tr>
                             <tr>
@@ -122,6 +123,9 @@
                                         value="All rights reserved"/>
                                 </td>
                             </tr>
+                          <tr>
+                            <td class="lenya-form-caption"><i18n:text>Preview</i18n:text>:</td><td><img src="" id="preview" style="visibility: hidden; height: 100px;"/></td>
+                          </tr>
                             <tr>
                                 <td>&#160;</td>
                             </tr>
@@ -155,6 +159,11 @@
                                             <xsl:when 
                                                 test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png' or dc:format = 'application/x-shockwave-flash'">
                                                 <tr>
+                                                    <td>
+                                                        <img src="{../lenya-info:documentnodeid}/{dc:source}"        
+                                                          onclick="javascript:insertImage('{dc:source}', '{dc:format}');"
+                                                          style="cursor: pointer; height: 32px; vertical-align: middle;"/>
+                                                    </td>
                                                     <td 
                                                         colspan="2">
                                                         <xsl:value-of 
@@ -165,13 +174,7 @@
                                                         select="dc:extent"/> 
                                                         kB</td>
                                                     <td>
-                                                        <xsl:value-of 
-                                                            select="dc:date"/>
-                                                    </td>
-                                                    <td>
-                                                        <a 
-                                                            href="javascript:insertImage('{dc:source}', '{dc:format}');">
-                                                             <i18n:text>Insert</i18n:text></a>
+                                                        <xsl:value-of select="dc:date"/>
                                                     </td>
                                                 </tr>
                                                 <xsl:variable name="noimages">

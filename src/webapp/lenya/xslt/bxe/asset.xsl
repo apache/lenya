@@ -36,6 +36,7 @@
 
 <xsl:template name="pre-body">
   <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
+  <script type="text/javascript" src="{$contextprefix}/lenya/javascript/asset.js">&#160;</script>
   <script>
     var ext = '<xsl:value-of select="$extensions"/>';
 

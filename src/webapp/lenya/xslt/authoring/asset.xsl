@@ -87,6 +87,7 @@
       </xsl:choose>
       <div class="lenya-box-body">
     <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
+    <script type="text/javascript" src="{$contextprefix}/lenya/javascript/asset.js">&#160;</script>
     <script>
       var ext = '<xsl:value-of select="$extensions"/>';
     </script>  
@@ -163,6 +164,9 @@
                 <td class="lenya-form-caption"><i18n:text>Link</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
               </tr>
             </xsl:if>
+              <tr>
+                <td class="lenya-form-caption"><i18n:text>Preview</i18n:text>:</td><td><img src="" id="preview" style="visibility: hidden; height: 100px;"/></td>
+              </tr>
             <tr><td>&#160;</td></tr>
             <tr>
               <td/>

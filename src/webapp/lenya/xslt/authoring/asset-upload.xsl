@@ -35,6 +35,8 @@
 <xsl:param name="error"/>
 <xsl:param name="extensions" select="'doc dot rtf txt asc ascii xls xlw xlt ppt pot gif jpg png tif eps pct m3u kar mid smf mp3 swa mpg mpv mp4 mov bin sea hqx sit zip jmx jcl qz jbc jmt cfg pdf'"/>
 
+  <xsl:param name="contextprefix"/>
+
 <xsl:template match="/lenya-info:info">
   <page:page>
     <page:title><i18n:text key="lenya.assetupload.subtitle"/></page:title>
@@ -79,7 +81,8 @@ Override this template to add scripts etc.
             </tr>
           </xsl:if>
           <tr>
-            <td class="lenya-form-caption"><i18n:text>Select File</i18n:text>:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
+            <td class="lenya-form-caption"><i18n:text>Select File</i18n:text>:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data" 
+                onchange="imagepreview(this)"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
           </tr>
           <tr><td>&#160;</td></tr>
           <tr>
@@ -90,6 +93,9 @@ Override this template to add scripts etc.
           </tr>
           <tr>
             <td class="lenya-form-caption"><i18n:text>Rights</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
+          </tr>
+          <tr>
+            <td class="lenya-form-caption"><i18n:text>Preview</i18n:text>:</td><td><img src="" id="preview" style="visibility: hidden; height: 100px;"/></td>
           </tr>
           <tr><td>&#160;</td></tr>
           <tr>
@@ -146,7 +152,12 @@ Override this template to add scripts etc.
                  document.getElementById('assetSource').value = '{dc:source}';
                  document.getElementById('assetExtent').value = '{dc:extent}';"/>
     </td>
-    <td><xsl:value-of select="dc:title"/></td>
+    <td>
+        <xsl:if test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png'">
+            <img src="{../lenya-info:documentnodeid}/{dc:source}" style="height: 32px; vertical-align: middle;"/>&#160;
+        </xsl:if>
+        <xsl:value-of select="dc:title"/>
+    </td>
     <td><xsl:value-of select="dc:extent"/> KB</td>
     <td><xsl:value-of select="dc:date"/></td>
   </tr>
