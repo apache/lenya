@@ -52,7 +52,7 @@
       <map:match pattern="request2document">
         <map:generate src="{global:basedir}/pubs/{page-envelope:publication-id}/work/editor/authoring/{page-envelope:document-path}"/>
         <map:transform src="{global:basedir}/xslt/authoring/edit/unnumberTags.xsl"/>
-        <map:serialize type="xml-utf-8"/>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>   
     
