@@ -666,11 +666,19 @@
         <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="lenya/pubs/{1}/parameter-{2}.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
-      <!-- Scheduler -->
+      <!-- Workflow -->
       <map:pipeline>
+      
+        <!-- Scheduler -->
         <map:match type="usecase" pattern="schedule-page">
-          <map:mount uri-prefix="" src="lenya/scheduler.xmap" check-reload="true" reload-method="synchron"/>
+          <map:mount uri-prefix="" src="lenya/workflow.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
+        
+        <!-- task log -->
+        <map:match type="usecase" pattern="view-logs">
+          <map:mount uri-prefix="" src="lenya/workflow.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      
       </map:pipeline>
 
 
@@ -705,24 +713,6 @@
         </map:call>
         <map:transform src="lenya/xslt/util/navigation2html.xsl"/>
         <map:serialize type="html" />
-      </map:match>
-      
-      <!-- task log -->
-      <map:match pattern="*/logs/tasks/index.html">
-        <map:act type="request">
-        <map:parameter name="parameters" value="true"/>
-        <map:generate type="directory" src="lenya/pubs/{../1}/logs/tasks"/>
-        </map:act>
-        <map:transform src="lenya/xslt/logs/directory2html.xsl">
-          <map:parameter name="use-request-parameters" value="true"/>
-        </map:transform>
-        <map:serialize/>
-      </map:match>
-
-      <map:match pattern="*/logs/tasks/*.html">
-        <map:generate src="lenya/pubs/{1}/logs/tasks/{2}.xml"/>
-        <map:transform src="lenya/xslt/logs/antlog2html.xsl"/>
-        <map:serialize/>
       </map:match>
       
       <!-- Enter the actual publication (url = "") -->
