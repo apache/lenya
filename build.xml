@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.16 2002/01/23 07:34:38 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.17 2002/02/04 19:45:23 michicms Exp $
 
 -->
 
@@ -310,7 +310,7 @@
   -->
   <!--   <target name="webapp" depends="compile,javadocs"  -->
   <!--           description="Builds the webapp directory ready to be linked into a servlet engines context directory"> -->
-  <target name="webapp" depends="compile" 
+  <target name="webapp" depends="compile,javadocs" 
           description="Builds the webapp directory ready to be linked into a servlet engines context directory">
 
     <!--
