@@ -10,10 +10,10 @@ IMG {border:0px}
 
 
 #navTopBG    { height: 21px; background-image: 
-               url('../../../../../DOKUME~1/margrit1/LOKALE~1/Temp/images/menu-bg.gif'); 
+               url('/wyona-cms/wyona/menu/images/menu-bg.gif'); 
                background-repeat: repeat-x; padding-top: 1px }
 #navBlue     { height: 6px; background-image: 
-               url('../../../../../DOKUME~1/margrit1/LOKALE~1/Temp/images/unten.gif'); 
+               url('/wyona-cms/wyona/menu/images/unten.gif'); 
                background-repeat: repeat-x; padding-top: 1px }
 #menuSearch, #menuHelp, #menuFile, #menuDebug  {position:absolute; display:block; visibility:hidden; width:100px; top:55px;}
 	#menuFile {left:14px;}
@@ -25,7 +25,7 @@ IMG {border:0px}
 .menuOutline {border:1px #999999 solid; border-bottom:2px #999999 solid; background:#EEEEEE;}
 .menuBg      { background-color: #EEEEEE; background-repeat: repeat; background-attachment: 
                scroll; background-image: 
-               url('../../../../../DOKUME~1/margrit1/LOKALE~1/Temp/images/bottombg.gif'); 
+               url('/wyona-cms/wyona/menu/images/bottombg.gif'); 
                border: 1px solid #FFFFFF; background-position: 0% }
 .mI, .mI:visited {display:block; padding:4px; font:11px verdana, arial, san-serif; color:#444444; padding-top:2px; padding-bottom:2px;} /*50555A*/
 	.mI:hover {background:#FFFFFF}
