@@ -56,11 +56,11 @@ public class TreeSiteManager extends AbstractSiteManager {
     public SiteTree getTree(String area) throws SiteException {
         DefaultSiteTree sitetree = null;
 
-        if (siteTrees.containsKey(area)) {
-            sitetree = (DefaultSiteTree) siteTrees.get(area);
+        if (this.siteTrees.containsKey(area)) {
+            sitetree = (DefaultSiteTree) this.siteTrees.get(area);
         } else {
             sitetree = new DefaultSiteTree(getIdentityMap().getPublication().getDirectory(), area);
-            siteTrees.put(area, sitetree);
+            this.siteTrees.put(area, sitetree);
         }
         return sitetree;
     }
@@ -326,11 +326,18 @@ public class TreeSiteManager extends AbstractSiteManager {
             throw new SiteException("The document [" + document + "] is already contained!");
         }
         SiteTree tree = getTree(document.getArea());
-
         Label label = new Label("", document.getLanguage());
-        Label[] labels = { label };
-        tree.addNode(document.getId(), labels, null, null, false);
-        tree.save();
+        
+        SiteTreeNode node = tree.getNode(document.getId());
+        if (node == null) {
+            Label[] labels = { label };
+            tree.addNode(document.getId(), labels, null, null, false);
+            tree.save();
+        }
+        else {
+            tree.addLabel(document.getId(), label);
+        }
+
     }
 
 }
