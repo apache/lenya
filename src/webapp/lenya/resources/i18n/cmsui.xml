@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.44 2004/03/12 20:53:04 roku Exp $
+   $Id: cmsui.xml,v 1.45 2004/03/13 09:06:03 roku Exp $
    
 -->
 
@@ -69,7 +69,13 @@
   <message key="Create">Create</message>
   <message key="The Archive">Archive</message>
   <message key="Trash">Trash</message>
-  
+  <message key="Publisher">Publisher</message>
+  <message key="Navigation Title">Navigation Title</message>
+  <message key="Creator">Creator</message>
+  <message key="Language">Language</message>
+  <message key="Subject">Subject</message>
+  <message key="Rights">Rights</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
