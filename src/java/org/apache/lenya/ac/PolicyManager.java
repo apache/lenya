@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PolicyManager.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id: PolicyManager.java,v 1.3 2004/04/28 12:47:00 andreas Exp $  */
 
 package org.apache.lenya.ac;
 
@@ -36,7 +36,17 @@ public interface PolicyManager extends Component {
     Policy getPolicy(AccreditableManager controller, String url) throws AccessControlException;
 
     /**
-	 * Called when an accreditable was removed. Used to clean up the policies.
+     * Called when an accreditable was added. Used to create the admin interface policy.
+     * 
+     * @param manager The accreditable manager the accreditable belonged to.
+     * @param accreditable The accreditable that was removed.
+     * @throws AccessControlException when something went wrong.
+     */
+    void accreditableAdded(AccreditableManager manager, Accreditable accreditable) throws AccessControlException;
+
+    /**
+	 * Called when an accreditable was removed. Used to clean up the policies
+     * and to remove the admin interface policy.
 	 * 
      * @param manager The accreditable manager the accreditable belonged to.
 	 * @param accreditable The accreditable that was removed.
