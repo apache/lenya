@@ -15,11 +15,12 @@
  *
  */
 
-/* $Id: MailTask.java,v 1.34 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.mail;
 
 
+import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -83,7 +84,6 @@ public class MailTask extends AbstractTask {
     public void execute(String contextPath) {
         log.debug("\n---------------------------" + "\n- Sending mail" +
             "\n---------------------------");
-
         try {
             Parameters taskParameters = new Parameters();
 
@@ -101,11 +101,10 @@ public class MailTask extends AbstractTask {
                         absoluteUri += (":" + Integer.parseInt(serverPort));
                     }
 
-                    absoluteUri += (getParameters().getParameter(PARAMETER_CONTEXT_PREFIX) +
+                    absoluteUri += (getParameters().getParameter(PARAMETER_CONTEXT_PREFIX) + File.separator +
                     getParameters().getParameter(PARAMETER_PUBLICATION_ID) + uri);
                     uri = absoluteUri;
                 }
-
                 Document document = DocumentHelper.readDocument(new URL(uri));
                 Element root = document.getDocumentElement();
 
@@ -145,6 +144,7 @@ public class MailTask extends AbstractTask {
                 taskParameters.getParameter(ELEMENT_BODY, ""));
         } catch (Exception e) {
             log.error("Sending mail failed: ", e);
+            throw new RuntimeException (e);
         }
     }
 
