@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+    <context type="dontShow">
+         <!-- inline elements -->       
+         <element name="abbr" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="acronym" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="big" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="button" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="caption" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="dfn" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="input" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="kbd" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="label" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="q" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="samp" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="select" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="small" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="span" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="textarea" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="tt" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="var" ns="http://www.w3.org/1999/xhtml"/>
+         <!-- block elements --> 
+         <element name="address" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="blockquote" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="div" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="dl" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="fieldset" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="form" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="h1" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="h5" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="h6" ns="http://www.w3.org/1999/xhtml"/>         
+         <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0"/> 
+         <element name="pre" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="table" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="ol" ns="http://www.w3.org/1999/xhtml"/>
+         <element name="ul" ns="http://www.w3.org/1999/xhtml"/>
+         <!-- attributes --> 
+         <attribute name="id"/>      
+         <attribute name="style"/>      
+         <attribute name="xml:lang"/>      
+         <attribute name="accesskey"/>      
+         <attribute name="rel"/>      
+         <attribute name="rev"/>      
+         <attribute name="tabindex"/>      
+         <attribute name="name"/>      
+         <attribute name="axis"/>      
+         <attribute name="abbr"/>      
+         <attribute name="headers"/>      
+         <attribute name="scope"/>      
+         <attribute name="hreflang"/>      
+    </context>
