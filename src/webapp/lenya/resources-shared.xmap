@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -245,11 +245,11 @@
             <map:read src="pubs/{1}/resources/shared/{3}.cfg" mime-type="application/x-ms-word" />
           </map:match>
 
-<!-- matches pub-id/area/**.* this fallback may not work very well, but better than a 404
-          <map:match pattern="*/*/**.*">
-            <map:read src="pubs/{1}/resources/shared/{3}.*" mime-type="application/x-ms-word" />
+          <!-- matches pub-id/area/**favicon.ico -->
+          <map:match pattern="*/*/**favicon.ico">
+            <map:read src="pubs/{1}/resources/shared/favicon.ico" mime-type="application/ico"/>
           </map:match>
--->
+
     </map:pipeline>
   </map:pipelines>
 </map:sitemap>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -489,11 +489,6 @@
       <map:read mime-type="text/javascript" src="resources/scripts/{1}.js"/>
     </map:match>
     
-    <!-- favicon -->
-    <map:match pattern="**favicon.ico">
-      <map:read mime-type="image/x-icon" src="resources/icons/cocoon.ico"/>
-    </map:match>
-
       <map:handle-errors>
         <map:generate type="notifying"/>
         <map:transform src="stylesheets/system/error2html.xslt">
