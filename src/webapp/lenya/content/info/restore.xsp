@@ -34,7 +34,10 @@
         <exception>The identifier is null.</exception>
     }     
 
-    String parentId = identifier.substring(0, identifier.length() - documentId.length());
+    String parentId = identifier.substring(0, identifier.lastIndexOf("/"));
+    if (parentId.length() == 0) {
+        parentId = "/";
+    } 
     try {
         SiteTree sectree = publication.getSiteTree(Publication.AUTHORING_AREA);
         parentNode = sectree.getNode(parentId);
