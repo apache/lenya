@@ -24,7 +24,7 @@
       </separator>
       <block>
         <item>Edit&#160;Webperls</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/webperls.html&amp;docids=/frontpage/webperls.xml</xsp:attribute>Publish&#160;Webperls</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=/frontpage/webperls.html&amp;sources=/frontpage/webperls.xml</xsp:attribute>Publish&#160;Webperls</item>
         <item>Schedule&#160;Webperls</item>
       </block>
       <separator>
