@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.17 2003/07/17 11:59:52 egli Exp $
+$Id: Publication.java,v 1.18 2003/07/22 09:37:55 gregor Exp $
 <License>
 
  ============================================================================
@@ -165,15 +165,9 @@ public class Publication {
                 "Could not parse config file: " + configFile.getAbsolutePath(),
                 e);
         } catch (IOException e) {
-        	// FIXME: this code is commented out for backwards
-        	// compatibility. As soon as all publications have a 
-        	// publication.xconf the code can be uncommented.
-//            throw new PublicationException(
-//                "Could not find config file: " + configFile.getAbsolutePath(),
-//                e);
-			log.warn("Could not find config file: " + configFile.getAbsolutePath(), e);
-			defaultLanguage = "en";
-			mapper = new DefaultDocumentIdToPathMapper();
+            throw new PublicationException(
+                "Could not find config file: " + configFile.getAbsolutePath(),
+                e);
         } catch (ClassNotFoundException e) {
 			throw new PublicationException(
 				"Cannot instantiate documentToPathMapper: " + pathMapperClassName,
