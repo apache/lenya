@@ -26,6 +26,7 @@
   <documentation href="docs/" label="Documentation">
     <components href="components/" label="Components">
       <uri-parametrizer href="URIParametrizer.html" label="URI Parametrizer"/>
+      <pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
     </components>
     <concepts href="concepts/" label="Concepts and Best Practises">
       <sitetree href="siteTree.html" label="Site tree"/>

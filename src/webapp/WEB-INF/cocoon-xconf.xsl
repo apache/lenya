@@ -49,12 +49,16 @@
       <input-module name="request-attr"/>
       <input-module name="session-attr"/>
       <input-module name="defaults"/>
+      <input-module name="page-envelope"/>
     </component-instance>
       
     <component-instance
       class="org.apache.cocoon.components.modules.input.RealPathModule"
       logger="core.modules.input" name="realpath"/>
       
+    <component-instance logger="core.modules.input" name="page-envelope"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
+    
   </xsl:copy>
 </xsl:template>
 
