@@ -35,16 +35,16 @@
             <div class="lenya-box-body">
               <table class="lenya-table-noborder">
                 <tr>
-                  <td class="lenya-entry-caption">Source&#160;File(s):</td>
-                  <td>
+                  <td class="lenya-entry-caption" valign="top">Source&#160;File(s):</td>
+                  <td valign="top">
                     <xsl:call-template name="print-list-simple">
                       <xsl:with-param name="list-string" select="$sources"/>
                     </xsl:call-template>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lenya-entry-caption">URI(s):</td>
-                  <td>
+                  <td class="lenya-entry-caption" valign="top">URI(s):</td>
+                  <td valign="top">
                     <xsl:call-template name="print-list-simple">
                       <xsl:with-param name="list-string" select="$uris"/>
                     </xsl:call-template>
@@ -106,16 +106,16 @@
             <div class="lenya-box-body">
               <table class="lenya-table-noborder">
                 <tr>
-                  <td class="lenya-entry-caption">Source&#160;File(s):</td>
-                  <td>
+                  <td class="lenya-entry-caption" valign="top">Source&#160;File(s):</td>
+                  <td valign="top">
                     <xsl:call-template name="print-list-simple">
                       <xsl:with-param name="list-string" select="$sources"/>
                     </xsl:call-template>
                   </td>
                 </tr>
                 <tr>
-                  <td class="lenya-entry-caption">URI(s):</td>
-                  <td>
+                  <td class="lenya-entry-caption" valign="top">URI(s):</td>
+                  <td valign="top">
                     <xsl:call-template name="print-list-simple">
                       <xsl:with-param name="list-string" select="$uris"/>
                     </xsl:call-template>
