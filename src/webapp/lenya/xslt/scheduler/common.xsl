@@ -24,7 +24,7 @@
     
     <form method="GET">
     <input type="hidden" name="lenya.usecase" value="schedule"/>
-    <input type="hidden" name="lenya.step" value="showscreen"/>
+    <input type="hidden" name="lenya.step" value="add"/>
     
     <input type="hidden" name="task.id" value="{$task-id}"/>
     <xsl:call-template name="task-parameters"/>
