@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.8 2003/07/14 18:05:34 andreas Exp $
+$Id: FilePolicyManager.java,v 1.9 2003/07/15 12:35:24 egli Exp $
 <License>
 
  ============================================================================
@@ -223,7 +223,6 @@ public class FilePolicyManager
     /**
      * Builds a policy from a file. When the file is not present, an empty policy is returned.
      * @param controller The access controller to use.
-     * @param publication The publication.
      * @param url The url.
      * @param policyFilename The policy filename.
      * @return A policy.
@@ -250,10 +249,11 @@ public class FilePolicyManager
 
     /**
      * Returns the policy file for a URL and a policy filename.
-     * @param publication The publication.
      * @param url The url to get the file for.
      * @param policyFilename The name of the policy file.
      * @return A file object.
+     * 
+     * @throws AccessControlException if an error occurs
      */
     protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
         assert url.startsWith("/");
@@ -281,7 +281,6 @@ public class FilePolicyManager
 
     /**
      * Saves a policy to a file.
-     * @param publication The publication.
      * @param url The URL to save the policy for.
      * @param policy The policy.
      * @param filename The file.
@@ -392,7 +391,11 @@ public class FilePolicyManager
     }
 
     /**
-     * @return
+     * Get the path to the policies directory.
+     * 
+     * @return the path to the policies directory
+     * 
+     * @throws AccessControlException if an error occurs
      */
     public File getPoliciesDirectory() throws AccessControlException {
         
@@ -444,6 +447,8 @@ public class FilePolicyManager
     /**
      * Sets the policies directory.
      * @param directory The directory.
+     * 
+     * @throws AccessControlException if the directory is not a directory
      */
     public void setPoliciesDirectory(File directory) throws AccessControlException {
         if (!directory.isDirectory()) {

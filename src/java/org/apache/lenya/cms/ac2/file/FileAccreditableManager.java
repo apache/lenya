@@ -1,5 +1,5 @@
 /*
-$Id: FileAccreditableManager.java,v 1.3 2003/07/14 18:05:03 andreas Exp $
+$Id: FileAccreditableManager.java,v 1.4 2003/07/15 12:35:24 egli Exp $
 <License>
 
  ============================================================================
@@ -179,6 +179,8 @@ public class FileAccreditableManager
     /**
      * Sets the configuration directory.
      * @param file The configuration directory.
+     * 
+     * @throws AccessControlException if an error occurs
      */
     public void setConfigurationDirectory(File file) throws AccessControlException {
         if (file == null || !file.isDirectory()) {

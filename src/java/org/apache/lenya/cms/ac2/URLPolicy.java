@@ -72,7 +72,6 @@ public class URLPolicy implements Policy {
 	/**
 	 * Returns the resulting policy for a certain URL.
 	 * @param controller The acccess controller.
-	 * @param publication The publication.
 	 * @param url The URL.
 	 * @param manager The policy manager.
 	 */
