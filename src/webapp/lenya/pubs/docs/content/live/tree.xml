@@ -107,119 +107,120 @@
 			</branch>
 		</branch>
 		<!-- Developer's Guide -->
-		<branch relURI="developer-guide" doctype="Guide" menuName="Developer's Guide">
-			<branch relURI="" doctype="Empty" menuName="Strange Effects">
-				<leaf relURI="" doctype="Empty" menuName="XSLT (Xalan) Problems with IBMJava2-13: Use another JDK (jdk1.3.1)"/>
-			</branch>
-			<leaf relURI="architecture.html" doctype="XDoc" menuName="Architecture"/>
-			<leaf URL="http://xml.apache.org/cocoon" doctype="HTML" menuName="Pipeline Processor: Cocoon"/>
-			<leaf relURI="access-controller_deprecated.html" doctype="XDoc" menuName="Authorization and Authentication (deprecated)"/>
-			<branch relURI="access-controller.html" doctype="XDoc" menuName="Authorization and Authentication">
-				<leaf relURI="" doctype="Empty" menuName="Abstract Authenticator"/>
-				<leaf relURI="" doctype="Empty" menuName="Abstract Authorizer"/>
-				<leaf relURI="" doctype="Empty" menuName="Concrete Authenticator"/>
-				<leaf relURI="" doctype="Empty" menuName="Concrete Authorizer"/>
-				<leaf relURI="" doctype="Empty" menuName="Default Authenticator: IML Authenticator"/>
-				<leaf relURI="" doctype="Empty" menuName="Default Authorizer: PML Authorizer "/>
-			</branch>
-			<branch relURI="authoring" doctype="Empty" menuName="Authoring">
-				<branch relURI="create-resource.html" doctype="XDoc" menuName="Creating/Importing Content (Resource)">
-					<!--
+    <branch relURI="developer-guide" doctype="Guide" menuName="Developer's Guide">
+      <leaf relURI="architecture.html" doctype="XDoc" menuName="Architecture"/>
+      <leaf relURI="codingGuidelines.html" doctype="XDoc" menuName="Coding Guidelines"/>
+      <leaf URL="http://xml.apache.org/cocoon" doctype="HTML" menuName="Pipeline Processor: Cocoon"/>
+      <leaf relURI="access-controller_deprecated.html" doctype="XDoc" menuName="Authorization and Authentication (deprecated)"/>
+      <branch relURI="access-controller.html" doctype="XDoc" menuName="Authorization and Authentication">
+	<leaf relURI="" doctype="Empty" menuName="Abstract Authenticator"/>
+	<leaf relURI="" doctype="Empty" menuName="Abstract Authorizer"/>
+	<leaf relURI="" doctype="Empty" menuName="Concrete Authenticator"/>
+	<leaf relURI="" doctype="Empty" menuName="Concrete Authorizer"/>
+	<leaf relURI="" doctype="Empty" menuName="Default Authenticator: IML Authenticator"/>
+	<leaf relURI="" doctype="Empty" menuName="Default Authorizer: PML Authorizer "/>
+      </branch>
+      <branch relURI="authoring" doctype="Empty" menuName="Authoring">
+	<branch relURI="create-resource.html" doctype="XDoc" menuName="Creating/Importing Content (Resource)">
+	  <!--
           <leaf relURI="parent-child.html" doctype="XDoc" menuName="Parent Child"/>
--->
-					<leaf relURI="parent-child-creator.html" doctype="XDoc" menuName="Parent Child Creator"/>
-					<leaf relURI="document-collection.html" doctype="XDoc" menuName="Document Collection"/>
-					<leaf relURI="" doctype="Empty" menuName="HTTP Upload: Text"/>
-					<leaf relURI="http-upload-image.html" doctype="XDoc" menuName="HTTP Upload: Multimedia (Image, Audio, Video)"/>
-					<leaf relURI="file-upload.html" doctype="XDoc" menuName="File Upload"/>
-				</branch>
-				<branch relURI="edit" doctype="Empty" menuName="Editing Content">
-					<leaf relURI="html-form-editor.html" doctype="XDoc" menuName="Wyona's HTML Form Editor"/>
-					<leaf relURI="xopus2.html" doctype="XDoc" menuName="Xopus 2"/>
-					<branch relURI="xopus.html" doctype="XDoc" menuName="Q42's Xopus (IE5.5 or later)">
-						<leaf relURI="xopus.html#general" doctype="XDoc" menuName="General Information"/>
-						<leaf relURI="xopus.html#req-resp" doctype="XDoc" menuName="Xopus request and responses (the interface)"/>
-						<leaf relURI="xopus.html#navigation_bar" doctype="XDoc" menuName="Navigation Bar and Edit/Open Button"/>
-						<leaf relURI="xopus.html#confRequestURL" doctype="XDoc" menuName="Configuration of requested URL by the client Xopus"/>
-						<leaf relURI="xopus.html#locationXopus" doctype="XDoc" menuName="Location of Xopus"/>
-						<leaf relURI="xopus.html#setupCms" doctype="XDoc" menuName="Setting up the Wyona CMS for Xopus"/>
-						<leaf relURI="xopus.html#hookers" doctype="XDoc" menuName="Hooking Xopus to an existing page"/>
-						<leaf absURI="sample.html" doctype="XDoc" menuName="Test Xopus"/>
-					</branch>
-					<leaf relURI="bitflux.html" doctype="XDoc" menuName="Bitflux Editor"/>
-					<branch relURI="bitflux-howto.html" doctype="XDoc" menuName="Bitflux Editor How-To">
-						<leaf relURI="bitflux-howto.html#01" doctype="XDoc" menuName="Adapting the sitemap (bitflux.xmap)"/>
-						<leaf relURI="bitflux-howto.html#02" doctype="XDoc" menuName="Creating the XSLT"/>
-						<leaf relURI="bitflux-howto.html#03" doctype="XDoc" menuName="Creating the XSD"/>
-						<leaf relURI="bitflux-howto.html#04" doctype="XDoc" menuName="Creating the CSS"/>
-						<leaf relURI="bitflux-howto.html#05" doctype="XDoc" menuName="Adding an entry to the menu"/>
-					</branch>
-					<leaf relURI="editonpro.html" doctype="XDoc" menuName="RealObjects edit-on Pro"/>
-					<leaf URL="http://xmlwebgui.sourceforge.net/" doctype="HTML" menuName="XML Web GUI"/>
-					<leaf URL="http://sourceforge.net/projects/xsdheditor/" doctype="HTML" menuName="XS DHTML Editor"/>
-					<leaf URL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnxml/html/xmldocedit.asp" doctype="HTML" menuName="Microsoft WYSIWYG XML Editor"/>
-					<leaf URL="http://wysiwyg.skybuilders.com/" doctype="HTML" menuName="skyBuilders WYSIWYG HTML Editor"/>
-				</branch>
-				<leaf relURI="" doctype="Empty" menuName="Dependency Manager"/>
-			</branch>
-			<leaf relURI="cm-markup-language.html" doctype="XDoc" menuName="Content Management Markup Language"/>
-			<leaf relURI="revision-controller.html" doctype="XDoc" menuName="Revision Controlling"/>
-			<leaf relURI="slide.html" doctype="XDoc" menuName="Slide"/>
-			<leaf relURI="wf-markup-language.html" doctype="XDoc" menuName="Workflow Management"/>
-			<leaf relURI="workflow.html" doctype="XDoc" menuName="Workflow Management - after Brainstorming Day"/>
-			<leaf relURI="xml.html" doctype="XDoc" menuName="Working with XML"/>
-			<branch relURI="task-development.html" doctype="XDoc" menuName="Tasks">
-				<leaf relURI="tasks-publisher.html" doctype="XDoc" menuName="The DefaultFilePublisher Task"/>
-				<leaf relURI="tasks-exporter.html" doctype="XDoc" menuName="The StaticHTMLExporter Task"/>
-				<leaf relURI="tasks-mailtask.html" doctype="XDoc" menuName="The MailTask"/>
-			</branch>
-			<branch relURI="publishing.html" doctype="Empty" menuName="Publishing">
-				<leaf relURI="filesystem-publisher.html" doctype="XDoc" menuName="Filesystem Publisher"/>
-				<leaf relURI="command-line-interface.html" doctype="XDoc" menuName="Command Line Interface"/>
-			</branch>
-			<leaf relURI="replication.html" doctype="XDoc" menuName="Replication"/>
-			<branch relURI="" doctype="Empty" menuName="Event Handling">
-				<leaf URL="http://www.dralasoft.com/products/eventbroker/whitepaper/" doctype="HTML" menuName="Publisher-Dispatcher-Notifier-Subscriber Pattern"/>
-				<leaf URL="http://java.sun.com/products/jms/tutorial/1_3_1-fcs/doc/jms_tutorialTOC.html" doctype="HTML" menuName="Java Message Service"/>
-				<leaf URL="http://jakarta.apache.org/commons/sandbox/messenger/" doctype="HTML" menuName="Apache Commons Messenger"/>
-			</branch>
-			<branch relURI="" doctype="Empty" menuName="Services">
-				<leaf URL="http://www.canoo.net/services/GermanSpellingChecker/input/index.jsp?MenuId=GermanSpellingChecker02" doctype="HTML" menuName="Spell Checking"/>
-				<leaf relURI="" doctype="Empty" menuName="Related Content"/>
-				<leaf relURI="" doctype="Empty" menuName="Babel Fish"/>
-				<leaf relURI="" doctype="Empty" menuName="Highlighting and Linking (Companies, Persons, etc.)"/>
-				<leaf relURI="" doctype="Empty" menuName="Location and Showtime (Movies)"/>
-			</branch>
-			<leaf relURI="" doctype="Empty" menuName="Data Abstraction Layer"/>
-			<leaf relURI="int-syndication.html" doctype="XDoc" menuName="Syndication/Aggregation"/>
-			<leaf relURI="" doctype="Empty" menuName="Monitoring"/>
-			<leaf relURI="scheduler.html" doctype="XDoc" menuName="Scheduler"/>
-			<branch relURI="" doctype="Empty" menuName="Search">
-				<leaf relURI="lucene.html" doctype="XDoc" menuName="Lucene"/>
-				<leaf relURI="" doctype="Empty" menuName="HSQL DB"/>
-			</branch>
-			<!--
-      <leaf relURI="file-upload.html" doctype="XDoc" menuName="File Upload"/>      
--->
-			<branch relURI="" doctype="Empty" menuName="Testing">
-				<leaf URL="http://webtest.canoo.com/webtest/manual/WebTestHome.html" doctype="HTML" menuName="Webtest"/>
-				<leaf URL="http://sourceforge.net/projects/aft/" doctype="HTML" menuName="Anteater"/>
-				<leaf URL="http://jakarta.apache.org/commons/latka/index.html" doctype="HTML" menuName="Latka"/>
-				<leaf URL="http://htmlunit.sourceforge.net" doctype="HTML" menuName="HtmlUnit"/>
-				<leaf URL="http://sourceforge.net/projects/httpunit" doctype="HTML" menuName="HttpUnit"/>
-				<leaf URL="http://jakarta.apache.org/commons/sandbox/jelly/index.html" doctype="HTML" menuName="Jelly"/>
-			</branch>
-			<leaf relURI="proxy-generator.html" doctype="XDoc" menuName="Proxy Generator"/>
-			<leaf relURI="release-manager.html" doctype="XDoc" menuName="Release Manager Info"/>
-			<leaf absURI="/wyona-cms/scratchpad/index.html" doctype="HTML" menuName="Scratchpad"/>
-		</branch>
-		<branch relURI="javadoc" doctype="Guide" menuName="Javadoc">
-			<leaf relURI="index.html" doctype="HTML" menuName="Wyona Overview"/>
-			<leaf URL="http://xml.apache.org/cocoon/apidocs/index.html" doctype="HTML" menuName="Cocoon Overview"/>
-			<leaf URL="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/http/package-summary.html" doctype="HTML" menuName="Servlet API"/>
-			<leaf URL="http://www.dom4j.org/javadoc/index.html" doctype="HTML" menuName="dom4j"/>
-			<leaf URL="http://quartz.sourceforge.net/javadoc/index.html" doctype="HTML" menuName="Quartz Scheduler"/>
-			<leaf URL="http://java.sun.com/j2se/javadoc/index.html" doctype="HTML" menuName="Javadoc Tool Home Page"/>
-		</branch>
+	  -->
+	  <leaf relURI="parent-child-creator.html" doctype="XDoc" menuName="Parent Child Creator"/>
+	  <leaf relURI="document-collection.html" doctype="XDoc" menuName="Document Collection"/>
+	  <leaf relURI="" doctype="Empty" menuName="HTTP Upload: Text"/>
+	  <leaf relURI="http-upload-image.html" doctype="XDoc" menuName="HTTP Upload: Multimedia (Image, Audio, Video)"/>
+	  <leaf relURI="file-upload.html" doctype="XDoc" menuName="File Upload"/>
 	</branch>
+	<branch relURI="edit" doctype="Empty" menuName="Editing Content">
+	  <leaf relURI="html-form-editor.html" doctype="XDoc" menuName="Wyona's HTML Form Editor"/>
+	  <leaf relURI="xopus2.html" doctype="XDoc" menuName="Xopus 2"/>
+	  <branch relURI="xopus.html" doctype="XDoc" menuName="Q42's Xopus (IE5.5 or later)">
+	    <leaf relURI="xopus.html#general" doctype="XDoc" menuName="General Information"/>
+	    <leaf relURI="xopus.html#req-resp" doctype="XDoc" menuName="Xopus request and responses (the interface)"/>
+	    <leaf relURI="xopus.html#navigation_bar" doctype="XDoc" menuName="Navigation Bar and Edit/Open Button"/>
+	    <leaf relURI="xopus.html#confRequestURL" doctype="XDoc" menuName="Configuration of requested URL by the client Xopus"/>
+	    <leaf relURI="xopus.html#locationXopus" doctype="XDoc" menuName="Location of Xopus"/>
+	    <leaf relURI="xopus.html#setupCms" doctype="XDoc" menuName="Setting up the Wyona CMS for Xopus"/>
+	    <leaf relURI="xopus.html#hookers" doctype="XDoc" menuName="Hooking Xopus to an existing page"/>
+	    <leaf absURI="sample.html" doctype="XDoc" menuName="Test Xopus"/>
+	  </branch>
+	  <leaf relURI="bitflux.html" doctype="XDoc" menuName="Bitflux Editor"/>
+	  <branch relURI="bitflux-howto.html" doctype="XDoc" menuName="Bitflux Editor How-To">
+	    <leaf relURI="bitflux-howto.html#01" doctype="XDoc" menuName="Adapting the sitemap (bitflux.xmap)"/>
+	    <leaf relURI="bitflux-howto.html#02" doctype="XDoc" menuName="Creating the XSLT"/>
+	    <leaf relURI="bitflux-howto.html#03" doctype="XDoc" menuName="Creating the XSD"/>
+	    <leaf relURI="bitflux-howto.html#04" doctype="XDoc" menuName="Creating the CSS"/>
+	    <leaf relURI="bitflux-howto.html#05" doctype="XDoc" menuName="Adding an entry to the menu"/>
+	  </branch>
+	  <leaf relURI="editonpro.html" doctype="XDoc" menuName="RealObjects edit-on Pro"/>
+	  <leaf URL="http://xmlwebgui.sourceforge.net/" doctype="HTML" menuName="XML Web GUI"/>
+	  <leaf URL="http://sourceforge.net/projects/xsdheditor/" doctype="HTML" menuName="XS DHTML Editor"/>
+	  <leaf URL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnxml/html/xmldocedit.asp" doctype="HTML" menuName="Microsoft WYSIWYG XML Editor"/>
+	  <leaf URL="http://wysiwyg.skybuilders.com/" doctype="HTML" menuName="skyBuilders WYSIWYG HTML Editor"/>
+	</branch>
+	<leaf relURI="" doctype="Empty" menuName="Dependency Manager"/>
+      </branch>
+      <leaf relURI="cm-markup-language.html" doctype="XDoc" menuName="Content Management Markup Language"/>
+      <leaf relURI="revision-controller.html" doctype="XDoc" menuName="Revision Controlling"/>
+      <leaf relURI="slide.html" doctype="XDoc" menuName="Slide"/>
+      <leaf relURI="wf-markup-language.html" doctype="XDoc" menuName="Workflow Management"/>
+      <leaf relURI="workflow.html" doctype="XDoc" menuName="Workflow Management - after Brainstorming Day"/>
+      <leaf relURI="xml.html" doctype="XDoc" menuName="Working with XML"/>
+      <branch relURI="task-development.html" doctype="XDoc" menuName="Tasks">
+	<leaf relURI="tasks-publisher.html" doctype="XDoc" menuName="The DefaultFilePublisher Task"/>
+	<leaf relURI="tasks-exporter.html" doctype="XDoc" menuName="The StaticHTMLExporter Task"/>
+	<leaf relURI="tasks-mailtask.html" doctype="XDoc" menuName="The MailTask"/>
+      </branch>
+      <branch relURI="publishing.html" doctype="Empty" menuName="Publishing">
+	<leaf relURI="filesystem-publisher.html" doctype="XDoc" menuName="Filesystem Publisher"/>
+	<leaf relURI="command-line-interface.html" doctype="XDoc" menuName="Command Line Interface"/>
+      </branch>
+      <leaf relURI="replication.html" doctype="XDoc" menuName="Replication"/>
+      <branch relURI="" doctype="Empty" menuName="Event Handling">
+	<leaf URL="http://www.dralasoft.com/products/eventbroker/whitepaper/" doctype="HTML" menuName="Publisher-Dispatcher-Notifier-Subscriber Pattern"/>
+	<leaf URL="http://java.sun.com/products/jms/tutorial/1_3_1-fcs/doc/jms_tutorialTOC.html" doctype="HTML" menuName="Java Message Service"/>
+	<leaf URL="http://jakarta.apache.org/commons/sandbox/messenger/" doctype="HTML" menuName="Apache Commons Messenger"/>
+      </branch>
+      <branch relURI="" doctype="Empty" menuName="Services">
+	<leaf URL="http://www.canoo.net/services/GermanSpellingChecker/input/index.jsp?MenuId=GermanSpellingChecker02" doctype="HTML" menuName="Spell Checking"/>
+	<leaf relURI="" doctype="Empty" menuName="Related Content"/>
+	<leaf relURI="" doctype="Empty" menuName="Babel Fish"/>
+	<leaf relURI="" doctype="Empty" menuName="Highlighting and Linking (Companies, Persons, etc.)"/>
+	<leaf relURI="" doctype="Empty" menuName="Location and Showtime (Movies)"/>
+      </branch>
+      <leaf relURI="" doctype="Empty" menuName="Data Abstraction Layer"/>
+      <leaf relURI="int-syndication.html" doctype="XDoc" menuName="Syndication/Aggregation"/>
+      <leaf relURI="" doctype="Empty" menuName="Monitoring"/>
+      <leaf relURI="scheduler.html" doctype="XDoc" menuName="Scheduler"/>
+      <branch relURI="" doctype="Empty" menuName="Search">
+	<leaf relURI="lucene.html" doctype="XDoc" menuName="Lucene"/>
+	<leaf relURI="" doctype="Empty" menuName="HSQL DB"/>
+      </branch>
+      <!--
+      <leaf relURI="file-upload.html" doctype="XDoc" menuName="File Upload"/>      
+      -->
+      <branch relURI="" doctype="Empty" menuName="Testing">
+	<leaf URL="http://webtest.canoo.com/webtest/manual/WebTestHome.html" doctype="HTML" menuName="Webtest"/>
+	<leaf URL="http://sourceforge.net/projects/aft/" doctype="HTML" menuName="Anteater"/>
+	<leaf URL="http://jakarta.apache.org/commons/latka/index.html" doctype="HTML" menuName="Latka"/>
+	<leaf URL="http://htmlunit.sourceforge.net" doctype="HTML" menuName="HtmlUnit"/>
+	<leaf URL="http://sourceforge.net/projects/httpunit" doctype="HTML" menuName="HttpUnit"/>
+	<leaf URL="http://jakarta.apache.org/commons/sandbox/jelly/index.html" doctype="HTML" menuName="Jelly"/>
+      </branch>
+      <leaf relURI="proxy-generator.html" doctype="XDoc" menuName="Proxy Generator"/>
+      <leaf relURI="release-manager.html" doctype="XDoc" menuName="Release Manager Info"/>
+      <leaf absURI="/wyona-cms/scratchpad/index.html" doctype="HTML" menuName="Scratchpad"/>
+      <branch relURI="" doctype="Empty" menuName="Strange Effects">
+	<leaf relURI="" doctype="Empty" menuName="XSLT (Xalan) Problems with IBMJava2-13: Use another JDK (jdk1.3.1)"/>
+      </branch>
+    </branch>
+    <branch relURI="javadoc" doctype="Guide" menuName="Javadoc">
+      <leaf relURI="index.html" doctype="HTML" menuName="Wyona Overview"/>
+      <leaf URL="http://xml.apache.org/cocoon/apidocs/index.html" doctype="HTML" menuName="Cocoon Overview"/>
+      <leaf URL="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/http/package-summary.html" doctype="HTML" menuName="Servlet API"/>
+      <leaf URL="http://www.dom4j.org/javadoc/index.html" doctype="HTML" menuName="dom4j"/>
+      <leaf URL="http://quartz.sourceforge.net/javadoc/index.html" doctype="HTML" menuName="Quartz Scheduler"/>
+      <leaf URL="http://java.sun.com/j2se/javadoc/index.html" doctype="HTML" menuName="Javadoc Tool Home Page"/>
+    </branch>
+  </branch>
 </tree>
