@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search.xsl,v 1.3 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -28,7 +28,12 @@
 
 <xsl:template match="nav:site">
   <div id="search">
-    <form action="{@href}../search-{$area}/lucene"><input class="searchfield" type="text" name="queryString"/><input class="searchsubmit" type="submit" value="Search" name="find"/></form>
+    <form action="{@href}../search-{$area}/lucene">
+      <div>
+        <input class="searchfield" type="text" name="queryString"/>
+        <input class="searchsubmit" type="submit" value="Search" name="find"/>
+      </div>
+    </form>
   </div>
 </xsl:template>
 
