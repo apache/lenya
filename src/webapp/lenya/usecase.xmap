@@ -675,7 +675,7 @@
         <map:match pattern="xopus" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
-              <map:act type="resource-exists" src="../../ROOT/lenya-dev.nzz.ch/xopus/xopus.js"> <!-- Check for Xopus -->
+              <map:act type="resource-exists" src="../../ROOT/XOPUS_PREFIX/xopus/xopus.js"> <!-- Check for Xopus -->
                 <map:generate src="resources/misc/xopus/index.html"/>
                 <map:transform src="xslt/authoring/edit/xopus-xhtml.xsl">
                   <map:parameter name="xml" value="{request:contextPath}/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xml"/>
