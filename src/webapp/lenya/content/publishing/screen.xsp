@@ -83,7 +83,8 @@
 				
 				int i = versions.length - 1;
 				while (userId == null &amp;&amp; i &gt;= 0) {
-						if (versions[i].getEvent().getName().equals("submit")) {
+						if (versions[i].getEvent() != null &amp;&amp;
+						    versions[i].getEvent().getName().equals("submit")) {
 								userId = ((CMSVersion) versions[i]).getUserId();
 						}
 						i--;
