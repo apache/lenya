@@ -11,20 +11,17 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
+    xmlns:page="http://www.lenya.org/2003/cms-page"
     >
     
-<xsl:param name="test"/>
 
 <xsl:template match="/">
-  <html>
-    <head>
-      <title>Task Log History</title>
-    </head>
-    <body>
-      <h1>Task Log History: <xsl:value-of select="$test"/></h1>
+  <page:page>
+    <page:title>Task Log History</page:title>
+    <page:body>
       <xsl:apply-templates/>
-    </body>
-  </html>
+    </page:body>
+  </page:page>
 </xsl:template>    
 
     
@@ -41,7 +38,7 @@
       <xsl:with-param name="date" select="@name"/>
     </xsl:call-template>
   </xsl:variable>
-  <li><a href="{substring-before(@name, '.xml')}.html"><xsl:value-of select="$formatted-date"/></a></li>
+  <li><a href="?lenya.usecase=view-logs&amp;lenya.step=log&amp;logfile={@name}"><xsl:value-of select="$formatted-date"/></a></li>
 </xsl:template>
 
 

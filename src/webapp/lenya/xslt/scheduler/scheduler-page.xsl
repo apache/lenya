@@ -55,10 +55,10 @@
         <li><strong>Document:</strong>&#160;&#160;<xsl:value-of select="$document-uri"/></li>
       </ul>
     
-      <table class="scheduler-job" width="100%" height="3" border="0" cellpadding="0" cellspacing="0">
+      <table class="scheduler-job" border="0" cellpadding="0" cellspacing="0">
 
         <tr> 
-          <th>Add new job</th>
+          <th><strong>Add new job</strong></th>
           <th>Task</th>
           <th>Day</th>
           <th>Time</th>
@@ -72,7 +72,7 @@
         </tr>
 
         <tr>
-          <th>Edit existing jobs</th>
+          <th><strong>Edit existing jobs</strong></th>
           <th>Task</th>
           <th>Day</th>
           <th>Time</th>
@@ -83,52 +83,52 @@
         <xsl:if test="not(sch:publication/sch:jobs/sch:job)">
         <tr><td colspan="6">No active jobs.</td></tr>
         </xsl:if>
+        
+        <xsl:apply-templates select="sch:publication/sch:jobs/sch:job"/>
 
-        <xsl:for-each select="sch:publication">
-          <xsl:for-each select="sch:jobs">
-            <xsl:for-each select="sch:job">
-              <tr>
-                <form method="GET">
-
-                  <td>
-                    &#160;
-                    <!-- hidden input fields for parameters -->
-                    <xsl:call-template name="parameters-as-inputs"/>
-                    <xsl:apply-templates select="sch:parameter"/>
-                  </td>
-                  <td>
-                    <xsl:call-template name="tasks">
-                      <xsl:with-param name="current-task-id"
-                          select="sch:task/sch:parameter[@name='id']/@value"/>
-                    </xsl:call-template>
-                  </td>
-                  <xsl:choose>
-                    <xsl:when test="sch:trigger">
-                      <xsl:apply-templates select="sch:trigger"/>
-                      <td>
-                        <input type="submit" name="Action" value="Modify"/>
-                      </td>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <td colspan="2">
-                        <p>The job date has expired.</p>
-                      </td>
-                      <td>&#160;</td>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                  <td>
-                    <input type="submit" name="Action" value="Delete"/>
-                  </td>
-                </form>
-              </tr>
-            </xsl:for-each>
-          </xsl:for-each>
-        </xsl:for-each>
       </table>
     </page:body>
     
   </page:page>
   
+</xsl:template>
+
+
+<xsl:template match="sch:job">
+  <tr>
+    <form method="GET">
+
+      <td>
+        &#160;
+        <!-- hidden input fields for parameters -->
+        <xsl:call-template name="parameters-as-inputs"/>
+        <xsl:apply-templates select="sch:parameter"/>
+      </td>
+      <td>
+        <xsl:call-template name="tasks">
+          <xsl:with-param name="current-task-id"
+              select="sch:task/sch:parameter[@name='id']/@value"/>
+        </xsl:call-template>
+      </td>
+      <xsl:choose>
+        <xsl:when test="sch:trigger">
+          <xsl:apply-templates select="sch:trigger"/>
+          <td>
+            <input type="submit" name="Action" value="Modify"/>
+          </td>
+        </xsl:when>
+        <xsl:otherwise>
+          <td colspan="2">
+            <p>The job date has expired.</p>
+          </td>
+          <td>&#160;</td>
+        </xsl:otherwise>
+      </xsl:choose>
+      <td>
+        <input type="submit" name="Action" value="Delete"/>
+      </td>
+    </form>
+  </tr>
 </xsl:template>
 
 

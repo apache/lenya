@@ -223,6 +223,7 @@
 	    <td>Edit</td>
 	    <td></td>
 	    <td></td>
+	    <td></td>
 	  </tr>
 	  <tr>
 	    <td>User Admin</td>
@@ -254,6 +255,18 @@
 	    <td>showscreen</td>
 	    <td>Confirm the logout</td>
 	  </tr>
+          <tr>
+            <td>View Logs</td>
+            <td>view-logs</td>
+            <td>overview</td>
+            <td>Show the logfile list for this publication</td>
+          </tr>
+          <tr>
+            <td>&#160;</td>
+            <td>&#160;</td>
+            <td>log</td>
+            <td>Show a single logfile</td>
+          </tr>
 	</table>
 	
 	<fixme author="ce">Can the authenticate process done in a
@@ -382,6 +395,30 @@
 	      <td>view</td>
 	      <td>version</td>
 	      <td></td>
+	    </tr>
+	  </table>
+	</section>
+
+	<section>
+	  <title>View Logs</title>
+
+	  <p><code>lenya.usecase=view-logs</code></p>
+
+	  <table>
+	    <tr>
+	      <th><code>lenya.step=</code></th>
+	      <th>additional parameters</th>
+	      <th>sample value</th>
+	    </tr>
+	    <tr>
+	      <td>overview</td>
+	      <td></td>
+	      <td></td>
+	    </tr>
+	    <tr>
+	      <td>log</td>
+	      <td>logfile</td>
+	      <td>2003-05-13-18-34-00-314.xml</td>
 	    </tr>
 	  </table>
 	</section>

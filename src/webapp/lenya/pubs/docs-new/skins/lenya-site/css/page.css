@@ -6,6 +6,9 @@ p {  background-color: #FFFFFF; margin: 10px 0px 0px 0px; font-family: Verdana, 
 ol.wide ul li { margin-bottom: 0px; }
 ol.wide li { margin-bottom: 1.5em; }
 
+dt { font-weight: bold; }
+dd { margin-bottom: 1em; }
+
 .textheader { display: none;  }
 .headerlogo { padding: 0px 0px 20px 20px; }
 
@@ -135,8 +138,8 @@ h3 { font-size : 130%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bol
 */
 h3 { font-size : 130%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; border-bottom: solid 3px #E5E4D9; }
 
-h4 { font-size : 120%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : normal; text-align: left; }
-h5 { font-size : 100%; margin: 14px 0px 0px 0px; padding: 0px; font-weight : normal; text-align: left; }
+h4 { font-size : 120%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; text-align: left; }
+h5 { font-size : 110%; margin: 18px 0px 0px 0px; padding: 0px; font-weight : bold; text-align: left; }
 
 .content { padding: 15px 5px 5px 10px; font : small Verdana, Helvetica, sans-serif;  font-size : 80%;  }
 .content .ForrestTable { width: 100%; background-color: #7099C5; color: #ffffff; font-size : 100%;}
