@@ -1,5 +1,5 @@
 /*
-$Id: FilePublication.java,v 1.1 2003/11/26 18:22:47 andreas Exp $
+$Id: FilePublication.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -96,7 +96,7 @@ public class FilePublication extends AbstractPublication {
      */
     public void copyDocumentToArea(Document document, String destinationArea)
         throws PublicationException {
-        Document destinationDocument = cloneDocument(document, destinationArea);
+        Document destinationDocument = getAreaVersion(document, destinationArea);
         copyDocument(document, destinationDocument);
     }
 

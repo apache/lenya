@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.32 2003/11/26 18:22:47 andreas Exp $
+$Id: DefaultDocument.java,v 1.33 2003/11/27 14:01:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -217,9 +217,9 @@ public class DefaultDocument implements Document {
         this.language = language;
     }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getLabel()
-	 */
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getLabel()
+     */
     public String getLabel() throws DocumentException {
         try {
             return getPublication()
@@ -228,10 +228,10 @@ public class DefaultDocument implements Document {
                 .getLabel(getLanguage())
                 .getLabel();
         } catch (SiteTreeException e) {
-			throw new DocumentException(e);
+            throw new DocumentException(e);
         }
     }
-	
+
     private String area;
 
     /**
@@ -341,4 +341,41 @@ public class DefaultDocument implements Document {
             throw new DocumentException(e);
         }
     }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object object) {
+        boolean equals = false;
+        if (getClass().isInstance(object)) {
+            Document document = (Document) object;
+            equals =
+                getPublication().equals(document.getPublication())
+                    && getId().equals(document.getId())
+                    && getArea().equals(document.getArea())
+                    && getLanguage().equals(document.getLanguage());
+        }
+        return equals;
+
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() {
+
+        String key =
+            getPublication().getId()
+                + ":"
+                + getPublication().getServletContext()
+                + ":"
+                + getArea()
+                + ":"
+                + getId()
+                + ":"
+                + getLanguage();
+
+        return key.hashCode();
+    }
+
 }

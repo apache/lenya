@@ -1,5 +1,5 @@
 /*
-$Id: PublicationTask.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
+$Id: OrderedDocumentSet.java,v 1.1 2003/11/27 14:01:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,40 +53,59 @@ $Id: PublicationTask.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.publication.task;
+package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.task.AbstractTask;
-import org.apache.lenya.cms.task.ExecutionException;
-import org.apache.lenya.cms.task.Task;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Abstract super class for publication-based tasks.
+ * A document set which is ordered by dependence, starting with the document
+ * which does not require any other documents.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public abstract class PublicationTask extends AbstractTask {
+public class OrderedDocumentSet extends DocumentSet {
     
-    private Publication publication;
+    private List documents = new ArrayList();
 
     /**
-     * Returns the publication used by this task.
-     * @return A publication.
-     * @throws ExecutionException when an error occurs.
+     * @see org.apache.lenya.cms.publication.DocumentSet#add(org.apache.lenya.cms.publication.Document)
      */
-    protected Publication getPublication() throws ExecutionException {
-        if (publication == null) {
-            try {
-                String publicationId = getParameters().getParameter(Task.PARAMETER_PUBLICATION_ID);
-                String servletContextPath =
-                    getParameters().getParameter(Task.PARAMETER_SERVLET_CONTEXT);
-                publication = PublicationFactory.getPublication(publicationId, servletContextPath);
-            } catch (Exception e) {
-                throw new ExecutionException(e);
+    public void add(Document document) {
+        
+        Publication publication = document.getPublication();
+        int i = 0;
+        
+        try {
+            while (i < documents.size() && publication.dependsOn(document, (Document) documents.get(i))) {
+                i++;
             }
+        } catch (PublicationException e) {
+            StringWriter writer = new StringWriter();
+            e.printStackTrace(new PrintWriter(writer));
+            throw new IllegalStateException(writer.toString());
         }
-        return publication;
+        documents.add(i, document);
+    }
+
+    /**
+     * Checks if this set is empty.
+     * 
+     * @return A boolean value.
+     */
+    public boolean isEmpty() {
+        return documents.isEmpty();
+    }
+
+    /**
+     * Returns the documents contained in this set.
+     * 
+     * @return An array of documents.
+     */
+    public Document[] getDocuments() {
+        return (Document[]) documents.toArray(new Document[documents.size()]);
     }
 
 }

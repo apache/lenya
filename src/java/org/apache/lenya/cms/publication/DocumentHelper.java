@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.5 2003/11/13 16:10:59 andreas Exp $ <License>
+ * $Id: DocumentHelper.java,v 1.6 2003/11/27 14:01:49 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -242,24 +242,18 @@ public class DocumentHelper {
      */
     public static Document getParentDocument(Document document) throws ProcessingException {
 
+        Document[] requiredDocuments;
+        try {
+            requiredDocuments = document.getPublication().getRequiredDocuments(document);
+        } catch (PublicationException e) {
+            throw new ProcessingException(e);
+        }
         Document parent = null;
-
-        int lastSlashIndex = document.getId().lastIndexOf("/");
-        if (lastSlashIndex > 0) {
-            String parentId = document.getId().substring(0, lastSlashIndex);
-            Publication publication = document.getPublication();
-            DocumentBuilder builder = publication.getDocumentBuilder();
-            String parentUrl =
-                builder.buildCanonicalUrl(
-                    publication,
-                    document.getArea(),
-                    parentId,
-                    document.getLanguage());
-            try {
-                parent = builder.buildDocument(publication, parentUrl);
-            } catch (DocumentBuildException e) {
-                throw new ProcessingException(e);
-            }
+        if (requiredDocuments.length == 1) {
+            parent = requiredDocuments[0];
+        }
+        else if (requiredDocuments.length > 1) {
+            throw new ProcessingException("More than one parent documents exist!");
         }
 
         return parent;

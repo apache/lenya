@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.1 2003/11/26 18:22:47 andreas Exp $
+$Id: AbstractPublication.java,v 1.2 2003/11/27 14:01:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -63,6 +63,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A publication.
@@ -301,21 +302,83 @@ public abstract class AbstractPublication implements Publication {
     /**
      * Creates a version of the document object in another area.
      * @param document The document to clone.
-     * @param destinationArea The destination area.
+     * @param area The destination area.
      * @return A document.
      * @throws PublicationException when an error occurs.
      */
-    protected Document cloneDocument(Document document, String destinationArea)
-        throws PublicationException {
+    public Document getAreaVersion(Document document, String area) throws PublicationException {
         DocumentBuilder builder = getDocumentBuilder();
         String url =
-            builder.buildCanonicalUrl(
-                this,
-                destinationArea,
-                document.getId(),
-                document.getLanguage());
+            builder.buildCanonicalUrl(this, area, document.getId(), document.getLanguage());
         Document destinationDocument = builder.buildDocument(this, url);
         return destinationDocument;
+    }
+
+    /**
+     * This method does not use the sitetree object, but it calculates the
+     * parent using the document ID. The reason for this is that the
+     * actual documents don't have to exist.
+     * @see org.apache.lenya.cms.publication.Publication#getRequiredDocuments(org.apache.lenya.cms.publication.Document)
+     */
+    public Document[] getRequiredDocuments(Document document) throws PublicationException {
+
+        Document[] documents;
+
+        // remove leading slash
+        String id = document.getId().substring(1);
+        int slashIndex = id.lastIndexOf("/");
+        if (slashIndex == -1) {
+            documents = new Document[0];
+        } else {
+            String parentId = "/" + id.substring(0, slashIndex);
+            String parentUrl =
+                getDocumentBuilder().buildCanonicalUrl(
+                    this,
+                    document.getArea(),
+                    parentId,
+                    document.getLanguage());
+            Document parent = getDocumentBuilder().buildDocument(this, parentUrl);
+            documents = new Document[1];
+            documents[0] = parent;
+        }
+
+        return documents;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#dependsOn(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
+     */
+    public boolean dependsOn(Document dependingDocument, Document requiredDocument)
+        throws PublicationException {
+        
+        Document[] requiredDocuments = getRequiredDocuments(dependingDocument);
+        List requiredList = Arrays.asList(requiredDocuments);
+        
+        return requiredList.contains(requiredDocument);
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object object) {
+        boolean equals = false;
+
+        if (getClass().isInstance(object)) {
+            Publication publication = (Publication) object;
+            equals =
+                getId().equals(publication.getId())
+                    && getServletContext().equals(publication.getServletContext());
+        }
+
+        return equals;
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() {
+        String key = getServletContext() + ":" + getId();
+        return key.hashCode();
     }
 
 }
