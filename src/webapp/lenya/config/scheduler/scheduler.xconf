@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<scheduler>
+
+  <jobs>
+    <job type="publish" class="org.apache.lenya.cms.scheduler.PublishingJob">
+      <title>Publish</title>
+      <parameters>
+        <publisher class="org.apache.lenya.cms.publishing.DefaultFilePublisher"/>
+      </parameters>
+    </job>
+    <job type="hello_world" class="org.apache.lenya.cms.scheduler.HelloWorldJob">
+      <title>Print a String</title>
+    </job>
+  </jobs>
+  
+  <triggers>
+    <trigger type="cron" class="org.quartz.CronTrigger">
+      <title>Regular</title>
+    </trigger>
+    <trigger type="date" class="org.quartz.SimpleTrigger">
+      <title>Once</title>
+    </trigger>
+    <trigger type="andreas" class="org.quartz.AndreasTrigger">
+      <title>Andreas</title>
+    </trigger>
+  </triggers>
+  
+</scheduler>
