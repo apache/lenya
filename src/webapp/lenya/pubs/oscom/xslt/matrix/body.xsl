@@ -25,6 +25,7 @@ Framework
 </h3>
 
  <h2><xsl:value-of select="system_name"/></h2>
+ <xsl:apply-templates select="editor"/>
  <xsl:apply-templates select="description"/>
  <ul>
    <li>Home: <a href="{main_url}" target="_blank"><xsl:apply-templates select="main_url"/></a></li>
@@ -39,6 +40,14 @@ Framework
 
 <xsl:template match="description">
   <p><xsl:apply-templates/></p>
+</xsl:template>
+
+<xsl:template match="editor">
+<p>
+<font size="-1">
+Data maintained by <i><a href="mailto:{@email}"><xsl:apply-templates/></a></i>
+</font>
+</p>
 </xsl:template>
  
 </xsl:stylesheet>  

@@ -2,7 +2,7 @@
 
 <system type="cms">
   <id>bitflux</id>
-  <editor>Roger Fischer</editor>
+  <editor email="roger">Roger Fischer</editor>
   <system_name>Bitflux</system_name>
   <system_version>1.0</system_version>
   <system_startdate>Fall 1999</system_startdate>
