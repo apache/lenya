@@ -91,14 +91,14 @@
 
 <xsl:template match="node" mode="nodes">
 <tr>
-  <td valign="top"><xsl:apply-templates select="action"/><xsl:if test="not(action)">&#160;</xsl:if><xsl:apply-templates select="@select"/></td>
+  <td valign="top" style="background-color: #BFBFA2"><xsl:apply-templates select="action"/><xsl:if test="not(action)">&#160;</xsl:if><xsl:apply-templates select="@select"/></td>
   <xsl:choose>
     <xsl:when test="content">
-      <td valign="top"><xsl:apply-templates select="@name"/></td>
+      <td valign="top" style="background-color:#DCDBBF"><xsl:apply-templates select="@name"/></td>
       <td valign="top"><xsl:apply-templates select="content"/></td>
     </xsl:when>
     <xsl:otherwise>
-      <td colspan="2" valign="top"><xsl:apply-templates select="@name"/></td>
+      <td colspan="2" valign="top" style="background-color:#DCDBBF"><xsl:apply-templates select="@name"/></td>
     </xsl:otherwise>
   </xsl:choose>
 </tr>
@@ -106,8 +106,8 @@
 
 <xsl:template match="insert-after" mode="nodes">
     <tr>
-      <td><input type="submit" value="INSERT" name="insert-after"/></td>
-      <td colspan="2">
+      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT" name="insert-after"/></td>
+      <td colspan="2" style="background-color: #DCDBBF">
         <select name="&lt;xupdate:insert-after select=&quot;{@select}&quot;/&gt;" size="1">
             <option value="null">Choose element ...</option>
           <xsl:for-each select="element">
