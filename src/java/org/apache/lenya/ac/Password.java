@@ -1,12 +1,11 @@
 /*
-$Id: Password.java,v 1.1 2003/11/13 16:07:02 andreas Exp $
 <License>
 
  ============================================================================
                    The Apache Software License, Version 1.1
  ============================================================================
 
- Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+ Copyright (C) 1999-2004 The Apache Software Foundation. All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modifica-
  tion, are permitted provided that the following conditions are met:
@@ -48,26 +47,28 @@ $Id: Password.java,v 1.1 2003/11/13 16:07:02 andreas Exp $
  on  behalf of the Apache Software  Foundation and was  originally created by
  Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
  ware Foundation, please see <http://www.apache.org/>.
-
- Lenya includes software developed by the Apache Software Foundation, W3C,
- DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
 package org.apache.lenya.ac;
 
-import org.w3c.tools.crypt.Md5;
+import java.security.MessageDigest;
 
+import org.apache.log4j.Category;
 
 /**
- * DOCUMENT ME!
+ * Encrypt plain text password
+ * Example: "message digest" becomes "f96b697d7cb7938d525a2f31aaf161d0" (hexadecimal notation (32 characters))
  *
  * @author Michael Wechner
+ * @version $Id: Password.java,v 1.2 2004/01/25 23:08:19 michi Exp $
  */
 public class Password {
+    private static Category log = Category.getInstance(Password.class);
+
     /**
-     * DOCUMENT ME!
+     * CLI
      *
-     * @param args DOCUMENT ME!
+     * @param args plain text password
      */
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -84,18 +85,49 @@ public class Password {
     }
 
     /**
-     * DOCUMENT ME!
+     * Encrypt plain text password
      *
-     * @param plain DOCUMENT ME!
+     * @param plain plain text password
      *
-     * @return DOCUMENT ME!
+     * @return enrcypted password
      *
      */
     public static String encrypt(String plain) {
-        Md5 md5 = new Md5(plain);
+        return getMD5(plain);
+/*
+        org.w3c.tools.crypt.Md5 md5 = new org.w3c.tools.crypt.Md5(plain);
         byte[] b = md5.processString();
 
         return md5.getStringDigest();
+*/
     }
-    
+
+    /**
+     *
+     */
+    public static String getMD5(String plain) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (java.security.NoSuchAlgorithmException e) {
+            log.error(e);
+        }
+        return stringify(md.digest(plain.getBytes()));
+    }
+
+    /**
+     *
+     */
+    private static String stringify(byte[] buf) {
+        StringBuffer sb = new StringBuffer(2 * buf.length);
+
+        for (int i = 0; i < buf.length; i++) {
+            int h = (buf[i] & 0xf0) >> 4;
+            int l = (buf[i] & 0x0f);
+            sb.append(new Character((char) ((h > 9) ? (('a' + h) - 10) : ('0' + h))));
+            sb.append(new Character((char) ((l > 9) ? (('a' + l) - 10) : ('0' + l))));
+        }
+
+        return sb.toString();
+    }
 }
