@@ -16,6 +16,7 @@ public class IndexEnvironment implements Configurable{
 
   private String configurationFilePath;
 
+  private String update_index_type;
   private String index_dir;
   private String htdocs_dump_dir;
 /**
@@ -28,6 +29,9 @@ public class IndexEnvironment implements Configurable{
       }
     IndexEnvironment ie=new IndexEnvironment(args[0]);
     String parameter;
+
+    parameter=ie.getUpdateIndexType();
+    System.out.println(parameter);
 
     parameter=ie.getIndexDir();
     System.out.println(parameter);
@@ -57,8 +61,16 @@ public class IndexEnvironment implements Configurable{
  *
  */
   public void configure(Configuration configuration) throws ConfigurationException{
+    update_index_type=configuration.getChild("update-index").getAttribute("type");
     index_dir=configuration.getChild("index-dir").getAttribute("src");
     htdocs_dump_dir=configuration.getChild("htdocs-dump-dir").getAttribute("src");
+    }
+/**
+ *
+ */
+  public String getUpdateIndexType(){
+    log.debug(".getUpdateIndexType(): "+update_index_type);
+    return update_index_type;
     }
 /**
  *

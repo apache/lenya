@@ -11,31 +11,37 @@ CLASSPATH=$PREFIX/build/wyona-cms/classes:$PREFIX/src/cocoon/WEB-INF/lib/avalon-
 #echo $CLASSPATH
 
 CRAWLER_CONF=$1
+LUCENE_CONF=$2
 
-if ! [ $CRAWLER_CONF ];then
+if ! ([ $CRAWLER_CONF ] && [ $LUCENE_CONF ]);then
   echo ""
-  echo "Usage: crawl_and_index.sh crawler.xconf"
+  echo "Usage: crawl_and_index.sh crawler.xconf lucene.xconf"
   exit 0
 fi
 
 echo ""
+echo "=========================================================="
 echo "Target: crawl"
+echo "=========================================================="
+echo ""
 ##$JAVA -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
 ##$JAVA -cp $CLASSPATH org.wyona.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 
 
+
 echo ""
+echo "=========================================================="
 echo "Target: extract_text_from_pdf"
+echo "=========================================================="
+echo ""
+
 
 
 echo ""
+echo "=========================================================="
 echo "Target: index"
-##PUBLICATION_ID=oscom
-PUBLICATION_ID=unipublic
-LUCENE_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/$PUBLICATION_ID/resources/publication/search/lucene
-HTDOCS_DUMP_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/$PUBLICATION_ID/resources/publication/export/pending
-##HTDOCS_DUMP_DIR=$LUCENE_DIR/htdocs_dump
-INDEX_DIR=$LUCENE_DIR/index
+echo "=========================================================="
+echo ""
 CLASSPATH=$CLASSPATH:$PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
-##$JAVA -cp $CLASSPATH org.wyona.lucene.IndexHTML -create -index $INDEX_DIR $HTDOCS_DUMP_DIR
-$JAVA -cp $CLASSPATH org.wyona.lucene.IndexHTML -index $INDEX_DIR $HTDOCS_DUMP_DIR
+$JAVA -cp $CLASSPATH org.wyona.lucene.IndexEnvironment $LUCENE_CONF
+$JAVA -cp $CLASSPATH org.wyona.lucene.IndexHTML $LUCENE_CONF

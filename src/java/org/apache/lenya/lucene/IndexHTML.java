@@ -75,13 +75,29 @@ class IndexHTML {
       boolean create = false;
       File root = null;
       
-      String usage = "IndexHTML [-create] [-index <index>] <root_directory>";
+      String usage = "IndexHTML <lucene.xconf>";
+      //String usage = "IndexHTML [-create] [-index <index>] <root_directory>";
 
-      if (argv.length == 0) {
+      if(argv.length == 0){
 	System.err.println("Usage: " + usage);
 	return;
-      }
+        }
 
+      IndexEnvironment ie=new IndexEnvironment(argv[0]);
+      index=ie.resolvePath(ie.getIndexDir());
+      root=new File(ie.resolvePath(ie.getHTDocsDumpDir()));
+      if(ie.getUpdateIndexType().equals("new")){
+        create=true;
+        }
+      else if(ie.getUpdateIndexType().equals("incremental")){
+        create=false;
+        }
+      else{
+        System.err.println("ERROR: No such update-index/@type: "+ie.getUpdateIndexType());
+        return;
+        }
+
+/*
       for (int i = 0; i < argv.length; i++) {
 	if (argv[i].equals("-index")) {		  // parse -index option
 	  index = argv[++i];
@@ -93,6 +109,7 @@ class IndexHTML {
 	} else
 	  root = new File(argv[i]);
       }
+*/
 
       Date start = new Date();
 
