@@ -72,7 +72,7 @@
            source="1.4"/>
 
     <taskdef name="copyJavaSources" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
-    <taskdef name="copyPubLibraries" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyPubLibrariesTask"/>
+    <taskdef name="bulkCopy" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
     <taskdef name="copyPubs"        classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
   </target>
@@ -201,10 +201,16 @@
       </fileset>
     </copy>
     
+    <!-- FIXME: Use bulkCopy task in the future; needs regexp mapper which is part of ant optional package. -->
     <echo>INFO: Copy java source files from ${pubs.root.dirs} to ${build.src}</echo>
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.src}" />
     
     <echo>INFO: Copy publication specific libraries from ${pubs.root.dirs} (java/lib) to ${build.webapp}/WEB-INF/lib</echo>
-    <copyPubLibraries pubsrootdirs="${pubs.root.dirs}" libdir="java/lib" builddir="${build.webapp}/WEB-INF/lib" excludes="CVS,.svn"/>
+    <bulkCopy 
+      sourcedirs="${pubs.root.dirs}" 
+      todir="${build.webapp}/WEB-INF/lib" 
+      flatten="true">
+      <fileset includes="*/java/lib/*"/>
+    </bulkCopy>
   </target>
 </project>
