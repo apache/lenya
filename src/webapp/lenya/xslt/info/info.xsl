@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.19 2003/08/19 17:06:53 egli Exp $
+ $Id: info.xsl,v 1.20 2003/08/20 08:49:27 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -91,7 +91,7 @@
         <tr><td>Creator:</td><td><input type="text" id="dc:creator" name="properties.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input></td></tr>
         <tr><td>Subject:</td><td><input type="text" id="dc:subject" name="properties.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
         <tr><td>Description:</td><td><input type="text" id="dc:description" name="properties.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
-        <tr><td>Publisher:</td><td><input type="text" id="dc:publisher" name="properties.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
+        <tr><td>Publisher:</td><td><input type="text" id="dc:publisher" name="properties.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
         <tr><td>Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
         <tr><td>Rights:</td><td><input type="text" id="dc:rights" name="properties.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
       </table>
