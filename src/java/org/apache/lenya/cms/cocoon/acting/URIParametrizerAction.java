@@ -1,5 +1,5 @@
 /*
-$Id: URIParametrizerAction.java,v 1.15 2003/08/04 13:48:45 egli Exp $
+$Id: URIParametrizerAction.java,v 1.16 2003/08/05 11:58:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -82,8 +82,8 @@ import java.util.Map;
 /**
  * DOCUMENT ME!
  *
- * @author $Author: egli $
- * @version $Revision: 1.15 $
+ * @author $Author: andreas $
+ * @version $Revision: 1.16 $
  */
 public class URIParametrizerAction extends ConfigurableComposerAction {
     private static Category log = Category.getInstance(URIParametrizerAction.class);
@@ -91,8 +91,8 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
     /**
      * DOCUMENT ME!
      *
-     * @author $Author: egli $
-     * @version $Revision: 1.15 $
+     * @author $Author: andreas $
+     * @version $Revision: 1.16 $
      */
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
         private boolean inParamElement = false;
@@ -201,7 +201,6 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
      */
     protected Map parameterize(String uri, String src, Parameters parameters, SourceResolver resolver)
         throws ParameterException, ProcessingException, SAXException, IOException {
-        Source inputSource = null;
         URIParametrizerConsumer xmlConsumer = new URIParametrizerConsumer();
         Map uriParameters = new HashMap();
 
@@ -215,13 +214,20 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
             
             if (value == null) {
                 String parameterSrc = parameters.getParameter(parameterNames[i]) + "/" + src;
-                inputSource = resolver.resolveURI(parameterSrc);
+                
+                Source inputSource = null;
+                try {
+                    inputSource = resolver.resolveURI(parameterSrc);
 
-                if (this.getLogger().isDebugEnabled()) {
-                    this.getLogger().debug("File resolved to " + inputSource.getURI());
+                    if (this.getLogger().isDebugEnabled()) {
+                        this.getLogger().debug("File resolved to " + inputSource.getURI());
+                    }
+
+                    SourceUtil.toSAX(inputSource, xmlConsumer);
                 }
-
-                SourceUtil.toSAX(inputSource, xmlConsumer);
+                finally {
+                    resolver.release(inputSource);
+                }
                 value = xmlConsumer.getParameter();
                 cache.put(key, value);
             }

@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.5 2003/07/17 16:24:20 andreas Exp $
+$Id: SitemapPolicyManager.java,v 1.6 2003/08/05 11:56:02 andreas Exp $
 <License>
 
  ============================================================================
@@ -97,19 +97,25 @@ public class SitemapPolicyManager
 
         SourceResolver resolver = null;
         Policy policy = null;
+        Source source = null;
         try {
             resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
 
             String policyUrl = publicationId + "/policies" + url + ".acml";
             getLogger().debug("Policy URL: " + policyUrl);
-            Source source = resolver.resolveURI("cocoon://" + policyUrl);
+            source = resolver.resolveURI("cocoon://" + policyUrl);
             Document document = DocumentHelper.readDocument(source.getInputStream());
             policy = PolicyBuilder.getInstance().buildPolicy(accreditableManager, document);
 
         } catch (Exception e) {
             throw new AccessControlException(e);
         } finally {
-            getManager().release(resolver);
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                getManager().release(resolver);
+            }
         }
         return policy;
     }
