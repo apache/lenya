@@ -63,4 +63,7 @@
 }
    
 #lenya-info-treecanvas { border: dotted 1px #CCCCCC; width: 200px; float: left; padding: 10px; margin: 2px; font-size: 8pt; }
-#lenya-info-content { border: dotted 1px #CCCCCC; height: 600px; width: 700px; float: left; padding: 10px; margin: 2px;}
+#lenya-info-treecanvas a { font-size: small; color: black; color: #666666; text-decoration: none; }
+#lenya-info-treecanvas a:hover { text-decoration: underline; }
+
+#lenya-info-content { height: 600px; width: 700px; float: left; margin: 0px 20px;}
