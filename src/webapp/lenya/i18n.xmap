@@ -15,12 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: navigation.xmap,v 1.21 2004/03/13 14:28:33 gregor Exp $ -->
+<!-- $Id -->
 
 <!--
-  This sitemaps provides fallback messages catalogues and catalogue merging.
-  The reason for the existence of this sitemap is mainly to avoid endless loops when
-  the pipelines located here are in sitemap.map or global-sitemap.xmap.
+  This sitemaps provides fallback message catalogues and catalogue merging.
+  The reason for the existence of this sitemap is mainly to avoid endless loops caused by mounts
+  in sitemap.xmap and global-sitemap.xmap.
 -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
