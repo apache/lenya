@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml,v 1.2 2004/07/22 20:07:17 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -35,7 +35,7 @@
   <li>
     Download Lenya
     <ul>
-      <li><link href="cvs.html">CVS</link></li>
+      <li><link href="subversion.html">Subversion</link></li>
       <li><link href="ext:nightly.builds">Nightly Snapshots</link></li>
       <li><link href="ext:incubator.lenya">Incubating-lenya-1.2</link></li>
     </ul>
