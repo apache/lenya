@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.39 2003/08/12 13:32:25 egli Exp $
+$Id: PageEnvelope.java,v 1.40 2003/08/14 13:48:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -91,6 +91,9 @@ public class PageEnvelope {
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
 	public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+    
+    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
+    public static final String DEFAULT_PREFIX = "lenya";
 
     private String context;
 

@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.14 2003/08/13 09:57:31 egli Exp $
+$Id: Document.java,v 1.15 2003/08/14 13:48:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,6 +64,10 @@ import java.util.Date;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public interface Document {
+    
+    String NAMESPACE = "http://apache.org/cocoon/lenya/document/1.0";
+    String DEFAULT_PREFIX = "lenya";
+    
     /**
      * Returns the document ID of this document.
      * @return A URI object.
