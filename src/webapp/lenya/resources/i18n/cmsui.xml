@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.24 2004/02/22 17:52:59 roku Exp $
+  $Id: cmsui.xml,v 1.25 2004/02/22 20:38:35 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -51,7 +51,15 @@
   <message key="required fields">required fields</message>
   <message key="Search">Search</message>
   <message key="Home">Home</message>
-     
+  <message key="Title">Title</message>
+  <message key="Last modified">Last&#160;modified</message>
+  <message key="Overview">Overview</message>
+  <message key="Role">Role</message>
+  <message key="View">View</message>
+  <message key="Assets">Assets</message>
+  <message key="true">yes</message>
+  <message key="false">no</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
@@ -158,4 +166,17 @@ c
   <message key="Add IP Range">Add&#160;IP&#160;Range</message>
   <message key="IP Range Profile">IP&#160;Range&#160;Profile</message>
  
+  <!-- Site tab (info screens) -->
+  <message key="Available Languages">Available Languages</message>
+  <message key="This document is not available in this language.">This document is not available in this language.</message>
+  <message key="Document ID">Document ID</message>
+  <message key="Versions">Versions</message>
+  <message key="SSL Encryption">SSL&#160;Encryption</message>
+  <message key="Rollback to this version">Rollback to this version</message>
+  <message key="AC Archive">AC&#160;Archive</message>
+  <message key="AC Trash">AC&#160;Trash</message>
+  <message key="AC Auth">AC&#160;Auth</message>
+  <message key="AC Live">AC&#160;Live</message>
+  <message key="Scheduler">Scheduler</message>
+
 </catalogue>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.29 2004/02/22 17:58:29 roku Exp $
+   $Id: cmsui_de.xml,v 1.30 2004/02/22 20:38:35 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -51,6 +51,14 @@
   <message key="required fields">Pflichfelder</message> 
   <message key="Search">Suche</message>
   <message key="Home">Startseite</message>
+  <message key="Title">Titel</message>
+  <message key="Last modified">Letzte&#160;&#196;nderung</message>
+  <message key="Overview">&#220;bersicht</message>  
+  <message key="Role">Rolle</message>
+  <message key="View">Anzeigen</message>
+  <message key="Assets">Anlagen</message>
+  <message key="true">ja</message>
+  <message key="false">nein</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
@@ -97,7 +105,7 @@
   <message key="Move Up">Nach oben</message>
   <message key="Move Down">Nach unten</message>
   <message key="Logout">Abmelden</message>
-  <message key="View Task Logs">Aufgabenberichte ansehen</message>
+  <message key="View Task Logs">Aufgabenberichte</message>
   <message key="Support">Support</message>
   <message key="System Documentation">Systemdokumentation</message>
   <message key="User Documentation">Benutzerdokumentation</message>
@@ -157,6 +165,19 @@
   <message key="IP Range Administration">IP Administration</message>
   <message key="Add IP Range">IP Bereich&#160;hinzuf&#252;gen</message>
   <message key="IP Range Profile">IP Bereichsprofil</message>
-  
+
+  <!-- Site tab (info screens) -->
+  <message key="Available Languages">Verf&#252;gbare Sprachen</message>
+  <message key="This document is not available in this language.">Das Dokument ist in der gew&#252;nschten Sprache nicht vorhanden.</message>
+  <message key="Document ID">Dokument ID</message>
+  <message key="Versions">Versionen</message>
+  <message key="SSL Encryption">SSL&#160;Verschl&#252;sselung</message>
+  <message key="Rollback to this version">Zu dieser Version zur&#252;cksetzen</message>
+  <message key="AC Archive">Rechte&#160;Archiv</message>
+  <message key="AC Trash">Rechte&#160;Papierkorb</message>
+  <message key="AC Auth">Rechte&#160;Auth</message>
+  <message key="AC Live">Rechte&#160;Live</message>
+  <message key="Scheduler">Zeitsteuerung</message>
+
 </catalogue>
 
