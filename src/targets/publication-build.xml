@@ -34,7 +34,7 @@
     <xslt
       in="${forrest.context}/sitemap.xmap"
       out="${forrest.publication.dir}/forrest-sitemap.xmap"
-      style="${lenya.templates.forrest}/patch-sitemap.xsl"/>
+      style="${lenya.templates.forrest}/patch-sitemap.xmap.xsl"/>
     
     <unzip
       src="${forrest.home}/fresh-site.zip"
