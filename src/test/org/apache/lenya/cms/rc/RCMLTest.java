@@ -1,5 +1,5 @@
 /*
-$Id: RCMLTest.java,v 1.2 2003/07/31 11:56:42 andreas Exp $
+$Id: RCMLTest.java,v 1.3 2003/08/04 09:25:06 egli Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,8 @@ import java.io.File;
 
 import java.util.Date;
 
+import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.DOMWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
