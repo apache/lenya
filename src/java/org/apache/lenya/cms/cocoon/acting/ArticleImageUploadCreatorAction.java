@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleImageUploadCreatorAction.java,v 1.32 2003/05/02 16:31:48 andreas Exp $
+ * $Id: ArticleImageUploadCreatorAction.java,v 1.33 2003/05/30 09:23:14 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,34 +43,41 @@
  */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
-
 import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.environment.Context;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.servlet.multipart.MultipartHttpServletRequest;
+import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.excalibur.source.Source;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
-
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-
-import java.io.*;
-
-import java.util.*;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.servlet.multipart.MultipartHttpServletRequest;
-import org.apache.cocoon.servlet.multipart.Part;
 
 
 /**
@@ -166,8 +173,8 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
 
         // find the absolute path (so we know where to put images and
         // meta data)
-        Source inputSource = resolver.resolve("");
-        String sitemapPath = inputSource.getSystemId();
+        Source inputSource = resolver.resolveURI("");
+        String sitemapPath = inputSource.getURI();
         sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
         getLogger().debug("sitemapPath: " + sitemapPath);
 

@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.30 2003/05/02 15:32:20 michi Exp $
+ * $Id: XopusHandlerAction.java,v 1.31 2003/05/30 09:25:44 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,24 +45,21 @@ package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.component.ComponentException;
-import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
-import org.apache.cocoon.serialization.Serializer;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.cocoon.util.PostInputStream;
-import org.apache.cocoon.xml.dom.DOMStreamer;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -77,9 +74,6 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-
-import java.lang.String;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -149,8 +143,8 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         String source, Parameters params)
         throws IOException, ComponentException, SAXException, ProcessingException {
         // Get absolute path of sitemap directory
-        org.apache.cocoon.environment.Source input_source = resolver.resolve("");
-        String sitemapPath = input_source.getSystemId();
+        Source input_source = resolver.resolveURI("");
+        String sitemapPath = input_source.getURI();
         sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
         getLogger().debug(".act(): Absolute Sitemap Directory: " + sitemapPath);
         getLogger().debug(".act(): Absolute XML Root Directory: " + sitemapPath + xmlRoot);

@@ -1,5 +1,5 @@
 /*
- * $Id: BitfluxAction.java,v 1.13 2003/04/30 16:06:00 edith Exp $
+ * $Id: BitfluxAction.java,v 1.14 2003/05/30 09:24:07 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,6 +52,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
@@ -77,7 +78,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import java.lang.String;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -154,8 +154,8 @@ public class BitfluxAction extends ConfigurableComposerAction {
         }
 
         // Get absolute path of sitemap directory
-        org.apache.cocoon.environment.Source input_source = resolver.resolve("");
-        String sitemapPath = input_source.getSystemId();
+        Source input_source = resolver.resolveURI("");
+        String sitemapPath = input_source.getURI();
         sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
         getLogger().debug("Absolute SITEMAP Directory: " + sitemapPath);
         getLogger().debug("Absolute XML Root Directory: " + sitemapPath + xmlRoot);
