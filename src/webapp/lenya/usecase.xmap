@@ -821,8 +821,8 @@
         <map:match pattern="deactivate" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/deactivate.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/deactivate.xsl">
+            <map:generate src="{fallback:content/info/deactivate.xsp}" type="serverpages"/>
+            <map:transform src="{fallback:xslt/info/deactivate.xsl}">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/deactivate.xsl"/>
