@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: source_version.xml,v 1.12 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id: source_version.xml,v 1.13 2004/05/11 07:54:15 antonio Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -39,7 +39,7 @@
 structure:</p>
 
 <source>
-your_home (or c:\ on Windows, NOT My Dcouments)
+your_home (or c:\ on Windows, NOT My Documents)
     /src
         /cocoon-lenya           $LENYA_HOME
         /cocoon-2.1             $COCOON_HOME
@@ -47,7 +47,7 @@ your_home (or c:\ on Windows, NOT My Dcouments)
                 /webapp         $COCOON_WEBAPP
     /build
         /tomcat-4.1.24          $TOMCAT_HOME
-        /ant-1.5.3
+        /ant-1.6.1
 </source>
 
 </section>
@@ -111,10 +111,10 @@ your_home (or c:\ on Windows, NOT My Dcouments)
     </p>
     <ul>
       <li><code>JAVA_HOME = C:\Programme\j2sdk1.4.1_01</code></li>
-      <li><code>ANT_HOME = C:\Programme\Apache Group\apache-ant-1.5.2</code></li>
+      <li><code>ANT_HOME = C:\Programme\Apache Group\apache-ant-1.6.1</code></li>
       <li><code>CATALINA_HOME = C:\build\tomcat-4.1.24</code></li>
-      <li><code>CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.5.2\lib</code></li>
-      <li><code>PATH = &lt;snip&gt;;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.5.2\bin</code></li>
+      <li><code>CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.6.1\lib</code></li>
+      <li><code>PATH = &lt;snip&gt;;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.6.1\bin</code></li>
     </ul>
     <p/>
   </li>
@@ -152,7 +152,7 @@ $COCOON_HOME > build.bat
 <source>
 $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
 </source>
-    <p>See also <link href="http://cocoon.apache.org/2.0/installing/index.html">Installing Apache Cocoon</link></p>
+    <p>See also <link href="http://cocoon.apache.org/2.1/installing/index.html">Installing Apache Cocoon</link></p>
   </li>
   
   <li>

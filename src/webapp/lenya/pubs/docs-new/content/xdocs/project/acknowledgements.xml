@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: acknowledgements.xml,v 1.11 2004/05/10 18:32:29 thorsten Exp $ -->
+<!-- $Id: acknowledgements.xml,v 1.12 2004/05/11 07:54:15 antonio Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -55,6 +55,7 @@ Lenya is a combination of the names of his two sons Levi and Vanya.
 <li><strong>Gregor J. Rothfuss</strong> (gregor at apache.org)</li>
 <li><strong>J&#252;rgen Bigalke</strong></li>
 <li><strong>Rolf Kulemann</strong> (roku at apache.org)</li>
+<li><strong>Antonio Gallardo</strong> (antonio at apache.org)</li>
 </ul>
 </section>
 
