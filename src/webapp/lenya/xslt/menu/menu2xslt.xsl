@@ -18,6 +18,7 @@
 <!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
@@ -58,6 +59,7 @@
     </html>
   </xso:template>
   
+  
   <xso:template name="title">
     <title>
       Apache Lenya -
@@ -69,15 +71,8 @@
   </xso:template>
   
   </xsl:if>
-    
-  <xso:template match="xhtml:*">
-    <xso:element>
-      <xsl:attribute name="name">{local-name()}</xsl:attribute>
-      <xso:apply-templates select="@*|node()"/>
-    </xso:element>
-  </xso:template>
-  
-  
+
+
   <xso:template match="@*|node()">
     <xso:copy>
       <xso:apply-templates select="@*|node()"/>
