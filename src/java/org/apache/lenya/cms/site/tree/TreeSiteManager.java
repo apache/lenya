@@ -33,7 +33,7 @@ import org.apache.log4j.Category;
 /**
  * A tree-based site manager.
  * 
- * @version $Id: TreeSiteManager.java,v 1.4 2004/02/25 08:59:54 andreas Exp $
+ * @version $Id$
  */
 public class TreeSiteManager extends AbstractSiteManager {
 
@@ -269,7 +269,9 @@ public class TreeSiteManager extends AbstractSiteManager {
     public void setLabel(Document document, String label) throws SiteException {
         Label labelObject = getLabelObject(document);
         labelObject.setLabel(label);
+        
         SiteTree tree = getTree(document.getArea());
+        tree.setLabel(document.getId(), labelObject);
         tree.save();
     }
 
