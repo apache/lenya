@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : sitetree.xml
+    Created on : 11. April 2003, 11:05
+    Author     : andreas
+    Description:
+        Purpose of the document follows.
+-->
+
+<site xmlns="http://www.lenya.org/2003/sitetree">
+
+  <node href="index.html" label="Home"/>
+  
+  <node href="demo/" label="Demo">
+    <node href="unipublic.html" label="Unipublic"/>
+    <node href="news.html" label="Wyona News and Comments"/>
+    <node href="oscom.html" label="OSCOM"/>
+  </node>
+  
+  <node href="download/" label="Download">
+    <node href="source.html" label="Source Version"/>
+    <node href="binary.html" label="Binary Version"/>
+  </node>
+  
+  <node href="documentation/" label="Documentation"/>
+
+</site>

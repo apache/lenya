@@ -1,0 +1,23 @@
+/* 
+    Document   : page
+    Created on : 11. April 2003, 11:13
+    Author     : andreas
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { }
+
+.tabs { padding-top: .5em; font-family: Verdana, Arial, Sans-serif; padding-top: .5em; background-color: #EEEEFF; }
+
+.tab { padding: .2em; background-color: #CCCCFF; }
+.tab-selected { padding: .2em; background-color: #AAAAFF; }
+
+.menu { padding: 1em; font-family: Verdana, Arial, Sans-serif; background-color: #EEEEFF; }
+.menuitem-1 { font-weight: bold; margin-top: 1em; }
+.menuitem-2 { padding-left: 10px; font-size: 80%; }
+.menuitem-3 { padding-left: 20px; font-size: 60%; }
+.menuitem-selected-1 { color: Navy; font-weight: bold; margin-top: 1em; }
+.menuitem-selected-2 { color: Navy; font-weight: bold; padding-left: 10px; font-weight: bold; font-size: 80%; }
+.menuitem-selected-3 { color: Navy; font-weight: bold; padding-left: 20px; font-size: 60%; }
+
