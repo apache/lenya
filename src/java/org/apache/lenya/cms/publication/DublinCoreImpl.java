@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCoreImpl.java,v 1.16 2004/04/26 08:38:58 andreas Exp $  */
+/* $Id: DublinCoreImpl.java,v 1.17 2004/07/30 10:18:35 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -140,12 +140,8 @@ public class DublinCoreImpl {
             org.w3c.dom.Document doc = null;
             try {
                 doc = DocumentHelper.readDocument(infofile);
-            } catch (ParserConfigurationException e) {
-                throw new DocumentException(e);
-            } catch (SAXException e) {
-                throw new DocumentException(e);
-            } catch (IOException e) {
-                throw new DocumentException(e);
+            } catch (Exception e) {
+                throw new DocumentException("Parsing file [" + infofile + "] failed: ", e);
             }
 
             // FIXME: what if "lenya:meta" element doesn't exist yet?
