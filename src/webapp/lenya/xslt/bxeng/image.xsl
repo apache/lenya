@@ -53,6 +53,20 @@
                       var caption = document.forms["image"].caption.value;
                       var title = document.forms["image"].title.value;
                       <![CDATA[
+                      <!--change < and & to entities-->
+                      link = link.replace(/&amp;/g, "&");          
+                      link = link.replace(/&/g, "&amp;");
+                      link = link.replace(/&lt;/g, "<");          
+                      link = link.replace(/</g, "&lt;");                      
+                      caption = caption.replace(/&amp;/g, "&");          
+                      caption = caption.replace(/&/g, "&amp;");
+                      caption = caption.replace(/&lt;/g, "<");          
+                      caption = caption.replace(/</g, "&lt;");                       
+                      title = title.replace(/&amp;/g, "&");          
+                      title = title.replace(/&/g, "&amp;");
+                      title = title.replace(/&lt;/g, "<");          
+                      title = title.replace(/</g, "&lt;");                       
+                                                                                           
                       var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" type="'+type+'" data="'+nodeid + src+'">'+caption+'</object>'; 
                       ]]>
                       window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
@@ -221,7 +235,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="lenya-form-caption"> 
+                                                <td class="lenya-form-caption" style="vertical-align:top"> 
                                                     <i18n:text>Link</i18n:text>:</td>
                                                 <td colspan="4" 
                                                     class="lenya-form-caption"> 
