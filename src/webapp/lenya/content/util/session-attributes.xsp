@@ -56,7 +56,7 @@ for a TaskAction execution.
     if(session != null){
       id=(Identity)session.getAttribute("org.apache.lenya.ac.Identity");
       if(id != null){
-        <xsp:content><session:current_username><xsp:expr>id.getUsername()</xsp:expr></session:current_username></xsp:content>
+        <xsp:content><session:current_username><xsp:expr>id.getUser().getId()</xsp:expr></session:current_username></xsp:content>
         }
       else{
         <xsp:content><session:current_username/></xsp:content>
