@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IterativeHTMLCrawler.java,v 1.24 2004/03/05 11:00:06 michi Exp $  */
+/* $Id: IterativeHTMLCrawler.java,v 1.25 2004/03/05 21:36:30 michi Exp $  */
 
 package org.apache.lenya.search.crawler;
 
@@ -149,12 +149,10 @@ public class IterativeHTMLCrawler {
 
         while (currentPosition < urlsToCrawl.size()) {
             URL currentURL = (URL) urlsToCrawl.elementAt(currentPosition);
-            currentURLPath = currentURL.toString().substring(0,
-                    currentURL.toString().lastIndexOf("/"));
+            currentURLPath = currentURL.toString().substring(0, currentURL.toString().lastIndexOf("/"));
 
-            System.out.println(".crawl(): INFO: Current Array Size: " + urlsToCrawl.size() +
-                ", Current Position: " + currentPosition + ", Current URL: " +
-                currentURL.toString());
+            log.info("INFO: Current Array Size: " + urlsToCrawl.size() + ", Current Position: " + currentPosition + ", Current URL: " + currentURL.toString() + " (" + currentURLPath + ")");
+
 
             java.util.List urlsWithinPage = parsePage(currentURL.toString());
 
@@ -209,7 +207,8 @@ public class IterativeHTMLCrawler {
      */
     public URL addURL(String urlCandidate, String currentURLPath)
         throws MalformedURLException {
-        URL url = new URL(parseHREF(urlCandidate, urlCandidate.toLowerCase(), currentURLPath)); //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
+        URL url = new URL(parseHREF(urlCandidate, urlCandidate.toLowerCase(), currentURLPath));
+        //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
 
         if (filterURL(urlCandidate, currentURLPath, urlsToCrawlLowerCase)) {
             if (!robot.disallowed(url)) {
@@ -340,13 +339,13 @@ public class IterativeHTMLCrawler {
     }
 
     /**
-     * DOCUMENT ME!
+     * Parse URL and complete if necessary
      *
-     * @param url DOCUMENT ME!
-     * @param urlLowCase DOCUMENT ME!
-     * @param currentURLPath DOCUMENT ME!
+     * @param url URL from href
+     * @param urlLowCase url is lower case
+     * @param currentURLPath URL of current page
      *
-     * @return DOCUMENT ME!
+     * @return Completed URL
      */
     public String parseHREF(String url, String urlLowCase, String currentURLPath) {
         if (urlLowCase.startsWith("http://") || urlLowCase.startsWith("https://")) {
@@ -361,6 +360,7 @@ public class IterativeHTMLCrawler {
         } else if (urlLowCase.startsWith("../")) {
             int back = 1;
 
+            // Count number of "../"s
             while (urlLowCase.indexOf("../", back * 3) != -1)
                 back++;
 
@@ -371,13 +371,19 @@ public class IterativeHTMLCrawler {
                 pos = currentURLPath.lastIndexOf("/", pos) - 1;
             }
 
-            url = currentURLPath.substring(0, pos + 2) + url.substring(3 * back, url.length());
+            String dotsRemoved = url.substring(3 * back, url.length());
+            if (dotsRemoved.charAt(0) == '.') {
+                log.error("Parsing failed: " + url + " (" + currentURLPath + ")");
+                url = null;
+            } else {
+                url = currentURLPath.substring(0, pos + 2) + dotsRemoved;
+            }
         } else if (urlLowCase.startsWith("javascript:")) {
             // handle javascript:...
-            log.warn("\"javascript:\" is not implemented yet!");
+            log.debug("\"javascript:\" is not implemented yet!");
             url = null;
         } else if (urlLowCase.startsWith("#")) {
-            log.warn("\"#\" (anchor) will be irgnored!");
+            log.debug("\"#\" (anchor) will be ignored!");
 
             // internal anchor... ignore.
             url = null;
@@ -400,6 +406,7 @@ public class IterativeHTMLCrawler {
                 url = url.substring(0, i);
             }
         }
+
 
         return url;
     }
