@@ -155,8 +155,20 @@
       <!-- ============================================================ -->
       
       <map:match pattern="internal/lucene.html">
+        <map:generate type="xpathdirectory" src="pubs/{page-envelope:publication-id}/config/search">
+          <map:parameter name="xpath" value="/crawler|/lucene"/>
+          <map:parameter name="xmlFiles" value="\.x.*$"/>
+        </map:generate>
+        <map:transform src="xslt/search/admin.xsl"/>
+        <map:serialize type="xhtml"/>
+        <!--<map:call resource="style-cms-page"/>-->
+
+
+<!-- TODO: Replace create-index.xsp -->
+<!--
         <map:generate type="serverpages" src="content/search/create-index.xsp"/>
         <map:call resource="style-cms-page"/>
+-->
       </map:match>
 
       <!-- ============================================================ -->
