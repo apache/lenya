@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SourceCacheImpl.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
+/* $Id: SourceCacheImpl.java,v 1.4 2004/04/26 12:07:56 andreas Exp $  */
 
 package org.apache.lenya.ac.cache;
 
@@ -87,7 +87,9 @@ public class SourceCacheImpl
         try {
 
             if (cachedObject != null) {
-                getLogger().debug("Found cached object [" + cachedObject + "]");
+                if (getLogger().isDebugEnabled()){
+                    getLogger().debug("Found cached object [" + cachedObject + "]"); 
+                }
                 SourceValidity cachedValidity = cachedObject.getValidityObject();
 
                 int result = cachedValidity.isValid();
@@ -137,9 +139,13 @@ public class SourceCacheImpl
                         sourceValidity = getSourceValidity(sourceUri);
                     }
                     if (sourceValidity != null) {
-                        getLogger().debug("Source validity is not null.");
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("Source validity is not null.");
+                        }
                     } else {
-                        getLogger().debug("Source validity is null - not caching.");
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("Source validity is null - not caching.");
+                        }
                         key = null;
                     }
                 }
@@ -170,6 +176,7 @@ public class SourceCacheImpl
     /**
      * Returns the input stream to read a source from.
      * @param sourceUri The URI of the source.
+     * @param builder The input stream builder that should be used.
      * @return An object.
      * @throws MalformedURLException when an error occurs.
      * @throws IOException when an error occurs.
