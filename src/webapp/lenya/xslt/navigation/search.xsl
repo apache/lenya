@@ -11,7 +11,7 @@
 
 <xsl:template match="nav:site">
   <div id="search">
-    <a href="{@href}../search-{$area}/lucene"> Search </a>
+    <form action="{@href}../search-{$area}/lucene"><input class="searchfield" type="text" name="queryString"/><input class="searchsubmit" type="submit" value="Search" name="find"/></form>
   </div>
 </xsl:template>
 

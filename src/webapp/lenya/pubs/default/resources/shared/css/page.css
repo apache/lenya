@@ -136,13 +136,34 @@ td.tab-post-separator {
     margin-right: 10px;
     text-align: right;
     position:relative;
-    top:-18px
+    top:-19px
 }
 
+input.searchfield {
+    font-size: 80%;
+    background-color: #ffffff;
+    border: 1px solid #663300;
+}
+
+input.searchsubmit {
+    font-size: 80%;
+    color: Maroon;
+    background-color: #FFEEEE;
+    border: 1px solid #663300;
+}
+
+input.searchsubmit:hover {
+    color: #ffffff;
+    background-color: #BB9999;
+    border: 1px solid #ffffff;
+}
+
+/*
 #search a {
     text-decoration: none;
     color: Maroon;
 }
+*/
 
 /* body */
 
