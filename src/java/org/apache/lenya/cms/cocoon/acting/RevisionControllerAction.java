@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerAction.java,v 1.24 2003/08/26 15:52:31 edith Exp $
+$Id: RevisionControllerAction.java,v 1.25 2003/09/08 17:09:15 edith Exp $
 <License>
 
  ============================================================================
@@ -65,7 +65,9 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac.Identity;
+import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -76,7 +78,6 @@ import java.io.File;
 
 import java.util.Map;
 
-
 /**
  * DOCUMENT ME!
  *
@@ -84,118 +85,181 @@ import java.util.Map;
  * @version 2003.1.5
  */
 public class RevisionControllerAction extends AbstractAction {
-    private String rcmlDirectory = null;
-    private String backupDirectory = null;
-    private RevisionController rc = null;
-    private String username = null;
-    private String filename = null;
+	private String rcmlDirectory = null;
+	private String backupDirectory = null;
+	private RevisionController rc = null;
+	private String username = null;
+	private String filename = null;
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
-        // Get request object
-        Request request = ObjectModelHelper.getRequest(objectModel);
+	/**
+	 * DOCUMENT ME!
+	 *
+	 * @param redirector DOCUMENT ME!
+	 * @param resolver DOCUMENT ME!
+	 * @param objectModel DOCUMENT ME!
+	 * @param src DOCUMENT ME!
+	 * @param parameters DOCUMENT ME!
+	 *
+	 * @return DOCUMENT ME!
+	 *
+	 * @throws Exception DOCUMENT ME!
+	 */
+	public Map act(
+		Redirector redirector,
+		SourceResolver resolver,
+		Map objectModel,
+		String src,
+		Parameters parameters)
+		throws Exception {
+		// Get request object
+		Request request = ObjectModelHelper.getRequest(objectModel);
 
-        if (request == null) {
-            getLogger().error(".act(): No request object");
+		if (request == null) {
+			getLogger().error(".act(): No request object");
 
-            return null;
-        }
+			return null;
+		}
 
-        PageEnvelope envelope = null;
-        Publication publication = null;
-        Document document = null;
+		PageEnvelope envelope = null;
+		Publication publication = null;
+		Document document = null;
 
-        try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-            publication = envelope.getPublication();
-			document =envelope.getDocument();
-        } catch (Exception e) {
-            getLogger().error("Resolving page envelope failed: ", e);
-        }
+		try {
+			envelope =
+				PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+			publication = envelope.getPublication();
+			document = envelope.getDocument();
+		} catch (Exception e) {
+			getLogger().error("Resolving page envelope failed: ", e);
+		}
 
-        //get Parameters for RC
-        String publicationPath = publication.getDirectory().getCanonicalPath();
-        String servletContextPath = publication.getServletContext().getCanonicalPath();
-		RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
-        rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
-        backupDirectory = rcEnvironment.getBackupDirectory();
-        backupDirectory = publicationPath + File.separator + backupDirectory;
+		//get Parameters for RC
+		String publicationPath = publication.getDirectory().getCanonicalPath();
+		String servletContextPath =
+			publication.getServletContext().getCanonicalPath();
+		RCEnvironment rcEnvironment =
+			RCEnvironment.getInstance(
+				publication.getServletContext().getAbsolutePath());
+		rcmlDirectory = rcEnvironment.getRCMLDirectory();
+		rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
+		backupDirectory = rcEnvironment.getBackupDirectory();
+		backupDirectory = publicationPath + File.separator + backupDirectory;
 
-        // Initialize Revision Controller
-        rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
-        getLogger().debug("revision controller" + rc);
+		// Initialize Revision Controller
+		rc =
+			new RevisionController(
+				rcmlDirectory,
+				backupDirectory,
+				publicationPath);
+		getLogger().error("revision controller" + rc);
 
-        // /Initialize Revision Controller
-        // Get session
-        Session session = request.getSession(false);
+		// /Initialize Revision Controller
+		// Get session
+		Session session = request.getSession(false);
 
-        if (session == null) {
-            getLogger().error(".act(): No session object");
+		if (session == null) {
+			getLogger().error(".act(): No session object");
 
-            return null;
-        }
+			return null;
+		}
 
-        Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
-        org.apache.lenya.cms.ac2.Identity identityTwo = (org.apache.lenya.cms.ac2.Identity) session.getAttribute("org.apache.lenya.cms.ac2.Identity");
-        getLogger().debug(".act(): Identity: " + identity);
-        getLogger().debug(".act(): Identity: " + identityTwo);
+		Identity identity =
+			(Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
+		org.apache.lenya.cms.ac2.Identity identityTwo =
+			(org.apache.lenya.cms.ac2.Identity) session.getAttribute(
+				"org.apache.lenya.cms.ac2.Identity");
+		getLogger().debug(".act(): Identity: " + identity);
+		getLogger().debug(".act(): Identity: " + identityTwo);
 
-		filename = "/" + Publication.CONTENT_PATH +"/"+ document.getArea() +"/"+envelope.getDocumentPath(); 
-        getLogger().debug(".act(): filename : " + filename );
-        username = null;
+		//FIXME: hack because of the uri for the editor bitflux. The filename cannot be get from the page-envelope 
 
-        if (identity != null) {
-            username = identity.getUsername();
-        } else if (identityTwo != null) {
-            username = identityTwo.getUser().getId();
-        } else {
-            getLogger().error(".act(): No identity yet");
-        }
+		String documentid = document.getId();
+		int bx = documentid.lastIndexOf("-bxeng");
 
-        getLogger().debug(".act(): Username: " + username);
+		if (bx > 0) {
+			String language = document.getLanguage();
 
-        return null;
-    }
-    
-    /**
-     * Get the filename.
-     * 
-     * @return the filename
-     */
-    protected String getFilename() {
-        return filename;
-    }
+			int l = documentid.length();
+			int bxLength = "-bxeng".length();
+			int lang = documentid.lastIndexOf("_", bx);
+			int langLength = bx - lang;
 
-    /**
-     * Get the revision controller.
-     * 
-     * @return the revision controller
-     */
-    protected RevisionController getRc() {
-        return rc;
-    }
+			if (bx > 0 && bx + bxLength <= l) {
+				documentid =
+					documentid.substring(0, bx)
+						+ documentid.substring(bx + bxLength, l);
 
-    /**
-     * Get the user name.
-     * 
-     * @return the user name
-     */
-    protected String getUsername() {
-        return username;
-    }
+				if (lang > 0 && langLength + lang < l) {
+					language =
+						documentid.substring(lang + 1, lang + langLength);
+					documentid =
+						documentid.substring(0, lang)
+							+ documentid.substring(
+								lang + langLength,
+								l - bxLength);
+				}
+			}
+
+			DefaultDocumentBuilder builder =
+				DefaultDocumentBuilder.getInstance();
+
+			String srcUrl =
+				builder.buildCanonicalUrl(
+					publication,
+					document.getArea(),
+					documentid,
+					language);
+			Document srcDoc = builder.buildDocument(publication, srcUrl);
+			File newFile = srcDoc.getFile();
+			filename = newFile.getAbsolutePath();
+
+		} else {
+			filename = document.getFile().getAbsolutePath();
+		}
+
+		filename = filename.substring(publicationPath.length());
+		getLogger().debug("filename :" + filename);
+
+		username = null;
+
+		if (identity != null) {
+			username = identity.getUsername();
+		} else if (identityTwo != null) {
+			username = identityTwo.getUser().getId();
+		} else {
+			getLogger().error(".act(): No identity yet");
+		}
+
+		getLogger().debug(".act(): Username: " + username);
+
+		return null;
+	}
+
+	/**
+	 * Get the filename.
+	 * 
+	 * @return the filename
+	 */
+	protected String getFilename() {
+		return filename;
+	}
+
+	/**
+	 * Get the revision controller.
+	 * 
+	 * @return the revision controller
+	 */
+	protected RevisionController getRc() {
+		return rc;
+	}
+
+	/**
+	 * Get the user name.
+	 * 
+	 * @return the user name
+	 */
+	protected String getUsername() {
+		return username;
+	}
 
 }
