@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: paste.xsl,v 1.10 2003/07/28 16:44:52 edith Exp $
+ $Id: paste.xsl,v 1.11 2003/07/29 17:57:49 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -18,6 +18,7 @@
   <xsl:variable name="sec-document-id"><xsl:value-of select="/page/info/sec-document-id"/></xsl:variable>
   <xsl:variable name="first-area"><xsl:value-of select="/page/info/first-area"/></xsl:variable>
   <xsl:variable name="sec-area"><xsl:value-of select="/page/info/sec-area"/></xsl:variable>
+  <xsl:variable name="doctype"><xsl:value-of select="/page/info/doctype"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
 
   <xsl:template match="/">
@@ -62,6 +63,7 @@
   <input type="hidden" name="{$prefix}properties.node.secdocumentid" value="{$sec-document-id}"/>
   <input type="hidden" name="{$prefix}properties.firstarea" value="{$first-area}"/>
   <input type="hidden" name="{$prefix}properties.secarea" value="{$sec-area}"/>
+  <input type="hidden" name="{$prefix}properties.wf.doctype" value="{$doctype}"/>
 </xsl:template>
 
 </xsl:stylesheet>
