@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,12 +37,12 @@ import java.util.Map;
  */
 public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
   static Category log=Category.getInstance(ServletProxyGenerator.class);
-  protected org.apache.avalon.excalibur.source.Source src;
-  //protected org.apache.cocoon.environment.Source src;
+  protected String src;
+  //protected org.apache.avalon.excalibur.source.Source src;
 
     /** The URI of the namespace of this generator. */
+    private String URI="http://www.wyona.org/wyona-cms/servletproxygenerator/1.0";
 /*
-    private String URI="http://xml.apache.org/cocoon/requestgenerator/2.0";
     private String global_container_encoding;
     private String global_form_encoding;
     private String container_encoding;
@@ -66,7 +67,8 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
     super.setup(resolver, objectModel, src, par);
     try{
       log.warn("SETUP: "+src);
-      this.src=resolver.resolveURI(src);
+      this.src=src;
+      //this.src=resolver.resolveURI(src);
       }
     catch(Exception e){
       log.error(e);
@@ -100,13 +102,11 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
             log.warn("HTTP method:"+submitMethod);
             }
 
-          // Get servlet name from sitemap
-          //org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
-          log.error("SERVLET: "+this.src.getSystemId());
-
           // Forward InputStream to Servlet
-          URL url=new URL(this.src.getSystemId());
+          URL url=createURL(httpRequest);
+          //URL url=new URL(this.src.getSystemId());
           //URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld");
+          log.warn("SERVLET: "+url);
           org.apache.commons.httpclient.HttpMethod httpMethod=null;
           if(submitMethod.equals("POST")){
             httpMethod=new PostMethod();
@@ -143,58 +143,19 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
           parser.parse(input, this.xmlConsumer);
           }
         catch(Exception e){
+          this.contentHandler.startDocument();
+          AttributesImpl attr=new AttributesImpl();
+          this.start("servletproxygenerator",attr);
+          this.data(":generate(): "+e);
+          this.end("servletproxygenerator");
+          this.contentHandler.endDocument();
+
           log.error(e);
           }
         finally{
           this.manager.release(parser);
           }
-
-
-/*
-        this.contentHandler.startDocument();
-        AttributesImpl attr=new AttributesImpl();
-        this.start("hello",attr);
-        this.data("Christian");
-        this.end("hello");
-        this.contentHandler.endDocument();
-*/
     }
-/**
- *
- */
-/*
-    private void attribute(AttributesImpl attr, String name, String value) {
-        attr.addAttribute("",name,name,"CDATA",value);
-    }
-*/
-/**
- *
- */
-/*
-    private void start(String name, AttributesImpl attr)
-    throws SAXException {
-        super.contentHandler.startElement(URI,name,name,attr);
-        attr.clear();
-    }
-*/
-/**
- *
- */
-/*
-    private void end(String name)
-    throws SAXException {
-        super.contentHandler.endElement(URI,name,name);
-    }
-*/
-/**
- *
- */
-/*
-    private void data(String data)
-    throws SAXException {
-        super.contentHandler.characters(data.toCharArray(),0,data.length());
-    }
-*/
 /**
  * Log input stream for debugging
  *
@@ -211,5 +172,47 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
     }
     log.warn("Intercepted Input Stream:\n\n"+bufferOut.toString());
     return new ByteArrayInputStream(bufferOut.toByteArray());
+    }
+/**
+ *
+ */
+  private URL createURL(HttpRequest request) throws MalformedURLException{
+    URL url=null;
+    try{
+      url=new URL(this.src);
+      }
+    catch(MalformedURLException e){
+      log.warn(".createURL(): "+e);
+      url=new URL("http://127.0.0.1:"+request.getServerPort()+this.src);
+      }
+    return url;
+    }
+/**
+ *
+ */
+    private void attribute(AttributesImpl attr, String name, String value) {
+        attr.addAttribute("",name,name,"CDATA",value);
+    }
+/**
+ *
+ */
+    private void start(String name, AttributesImpl attr)
+    throws SAXException {
+        super.contentHandler.startElement(URI,name,name,attr);
+        attr.clear();
+    }
+/**
+ *
+ */
+    private void end(String name)
+    throws SAXException {
+        super.contentHandler.endElement(URI,name,name);
+    }
+/**
+ *
+ */
+    private void data(String data)
+    throws SAXException {
+        super.contentHandler.characters(data.toCharArray(),0,data.length());
     }
 }
