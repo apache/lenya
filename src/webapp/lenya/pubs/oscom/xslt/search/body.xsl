@@ -22,7 +22,9 @@ Search
 <!--
 <table bgcolor="#99ccff" width="100%">
 -->
-<table bgcolor="#dddddd" width="100%">
+<table bgcolor="#f0f0f0" width="100%" cellpadding="4" border="1">
+<tr><td>
+<table>
 <tr><td>
 Search within: 
 <select name="publication-id">
@@ -94,6 +96,8 @@ Limit your search to field:
 </td></tr>
 <tr><td align="left">
     <font size="-2"><a href="http://jakarta.apache.org/lucene/" class="navigationwhite">Powered by Apache Lucene</a></font>
+</td></tr>
+</table>
 </td></tr>
 </table>
   </form>

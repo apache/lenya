@@ -137,6 +137,23 @@ content="text/html; charset=iso-latin-1" />
       .news:hover {
         text-decoration: underline;
       }
+      INPUT.search {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        color: #663300;
+        background-color: #ffffff;
+        border: 1px solid #663300;
+      }
+      INPUT.searchsubmit {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        color: #7e6a4b;
+        background-color: #FFC36B;
+        border: 1px solid #663300;
+      }
+      INPUT.searchsubmit:hover {
+        color: #ffffff;
+        background-color: #FFA500;
+        border: 1px solid #ffffff;
+      }
     </xsl:comment>
     
 </style>
@@ -163,7 +180,7 @@ content="text/html; charset=iso-latin-1" />
 <!-- We can put topical banners here -->
 <form method="get" action="/lenya/oscom/search-oscom/lucene">
 <input type="hidden" name="publication-id" value="all" />
-<input type="text" name="queryString" /><input type="submit" name="find" value="Search" />
+<input type="text" name="queryString" class="search" size="15"/><input type="submit" name="find" value="Go" class="searchsubmit" />
 </form>
 <!--
 <img src="oscom-proposals_files/spacer.gif" width="1" height="1" border="0" />
