@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+The xml of a doctype can be defined by the integrator at will
+(using his own namespace)
+The sections <lenya:meta> and <lenya:header> are inserted underneath
+the root element to allow for cms standard functionality like editing
+of metadate or rendering of overviews
+-->
+<any_root_element>
+<!-- the root element can indicate the doctype -->
+  <lenya:meta>
+<!--
+    Deprecated: dates should be coded using the dc:date and sub-elements 
+    <lenya:publication-date>Date when the document was first published</lenya:publication-date>
+    <lenya:modification-date>Date when the document was last published</lenya:modification-date>
+    -->
+    <dc:title>These are the dublin core meta data</dc:title>
+    <dc:creator></dc:creator>
+    <dc:subject></dc:subject>
+    <dc:description></dc:description>
+    <dc:publisher></dc:publisher>
+    <dc:contributor></dc:contributor>
+    <dc:date>First published date</dc:date>
+<!-- FIXME:
+    It is not clear yet how the modification date should be encoded 
+    -->
+    <dc:type></dc:type>
+    <dc:format></dc:format>
+    <dc:identifier></dc:identifier>
+    <dc:source></dc:source>
+    <dc:language></dc:language>
+    <dc:relation></dc:relation>
+    <dc:coverage></dc:coverage>
+    <dc:rights></dc:rights>
+  </lenya:meta>
+  <lenya:header>
+    <lenya:page-title>Page Title (can be used on overview
+    pages)</lenya:page-title>
+<!--
+    Deprecated: the navigation title will be stored as "label" element in the sitetree.xml
+    <lenya:nav-title>Title that is displayed in the navigation (optional, if it does not exists, page-title is used)</lenya:nav-title>
+    -->
+    <lenya:html-title>Title that appears in the browser window
+    (optional)</lenya:html-title>
+    <lenya:abstract>Abstract that can be used on an overview
+    page</lenya:abstract>
+  </lenya:header>
+  <any_body_element>
+    <any_element>Here comes the doctype specific xml.</any_element>
+  </any_body_element>
+</any_root_element>
+

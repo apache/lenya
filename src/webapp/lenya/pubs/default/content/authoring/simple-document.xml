@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simple-document>
+<!-- the root element indicates the doctype -->
+  <lenya:meta>
+    <dc:title>These are the dublin core meta data</dc:title>
+    <dc:creator></dc:creator>
+    <dc:subject></dc:subject>
+    <dc:description></dc:description>
+    <dc:publisher></dc:publisher>
+    <dc:contributor></dc:contributor>
+    <dc:date>First published date</dc:date>
+    <dc:type></dc:type>
+    <dc:format></dc:format>
+    <dc:identifier></dc:identifier>
+    <dc:source></dc:source>
+    <dc:language></dc:language>
+    <dc:relation></dc:relation>
+    <dc:coverage></dc:coverage>
+    <dc:rights></dc:rights>
+  </lenya:meta>
+  <lenya:header>
+    <lenya:page-title>Page Title (can be used on overview
+    pages)</lenya:page-title>
+    <lenya:abstract>Abstract that can be used on an overview
+    page</lenya:abstract>
+  </lenya:header>
+  <body>
+    <subtitle></subtitle>
+    <crossheading></crossheading>
+    <p></p>
+    <informaltable>
+      <tgroup>
+        <tbody>
+          <row>
+            <entry></entry>
+            <entry></entry>
+          </row>
+          <row>
+            <entry></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+    <itemizedlist>
+      <listitem></listitem>
+      <listitem></listitem>
+    </itemizedlist>
+  </body>
+</simple-document>
+
