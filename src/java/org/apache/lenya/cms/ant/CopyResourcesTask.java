@@ -1,5 +1,5 @@
 /*
-$Id: CopyResourcesTask.java,v 1.1 2003/09/01 12:47:59 edith Exp $
+$Id: CopyResourcesTask.java,v 1.2 2003/09/09 12:12:41 edith Exp $
 <License>
 
  ============================================================================
@@ -75,7 +75,7 @@ import org.apache.tools.ant.BuildException;
  * @author edith
  *
  */
-public class CopyResourcesTask extends DocumentOperationTask {
+public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
 	/**
 	 * 
