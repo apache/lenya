@@ -1,5 +1,5 @@
 /*
-$Id: PolicyHelper.java,v 1.5 2003/08/07 10:23:27 andreas Exp $
+$Id: PolicyHelper.java,v 1.6 2003/08/19 18:46:03 andreas Exp $
 <License>
 
  ============================================================================
@@ -324,7 +324,7 @@ public class PolicyHelper {
      */
     public void setUrlSSLProtected(boolean ssl) throws ProcessingException {
         try {
-            DefaultPolicy policy = policyManager.buildURLPolicy(accessController.getAccreditableManager(), url);
+            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController.getAccreditableManager(), url);
             policy.setSSL(ssl);
             policyManager.saveSubtreePolicy(url, policy);
         } catch (AccessControlException e) {
