@@ -315,14 +315,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      org.apache.lenya.cms.publication.Document)
      */
     public void moveAll(Document source, Document target) throws PublicationException {
-        DocumentIdentityMap identityMap = source.getIdentityMap();
-        SiteManager manager = identityMap.getPublication().getSiteManager(identityMap);
-        Document[] descendantsArray = manager.getRequiringResources(source);
-        OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
-        descendants.add(source);
-
-        DocumentVisitor visitor = new MoveVisitor(this, source, target);
-        descendants.visitAscending(visitor);
+        copyAll(source, target);
+        deleteAll(source);
     }
 
     /**
@@ -331,17 +325,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void moveAllLanguageVersions(Document source, Document target)
             throws PublicationException {
-        DocumentIdentityMap identityMap = source.getIdentityMap();
-        String[] languages = source.getLanguages();
-        for (int i = 0; i < languages.length; i++) {
-
-            Document sourceVersion = identityMap.getFactory().getLanguageVersion(source,
-                    languages[i]);
-            Document targetVersion = identityMap.getFactory().get(target.getArea(),
-                    target.getId(),
-                    languages[i]);
-            moveDocument(sourceVersion, targetVersion);
-        }
+        copyAllLanguageVersions(source, target);
+        deleteAllLanguageVersions(source);
     }
 
     /**
@@ -485,31 +470,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             DocumentFactory factory = getRootTarget().getIdentityMap().getFactory();
             return factory.get(getRootTarget().getArea(), targetId, source.getLanguage());
         }
-    }
-
-    /**
-     * DocumentVisitor to move documents.
-     */
-    public class MoveVisitor extends SourceTargetVisitor {
-
-        /**
-         * Ctor.
-         * @param manager The document manager.
-         * @param source The root source.
-         * @param target The root target.
-         */
-        public MoveVisitor(DocumentManager manager, Document source, Document target) {
-            super(manager, source, target);
-        }
-
-        /**
-         * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
-         */
-        public void visitDocument(Document source) throws PublicationException {
-            Document target = getTarget(source);
-            getDocumentManager().moveAllLanguageVersions(source, target);
-        }
-
     }
 
     /**
