@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: SiteTreeNode.java,v 1.4 2003/07/04 14:07:39 egli Exp $
 <License>
 
  ============================================================================
@@ -56,25 +56,70 @@ $Id
 package org.apache.lenya.cms.publication;
 
 /**
- * DOCUMENT ME!
+ * This interface is a wrapper around the more general w3c.Node which
+ * hides some details which are irrelevant for site tree nodes. It basically
+ * delegates everything to the Node.
  *
- * @author $author$
- * @version $Revision: 1.3 $
+ * @author $Author: egli $
+ * @version $Revision: 1.4 $
  */
 public interface SiteTreeNode {
+	
+    /**
+     * Get the parent-id of this node.
+     * 
+     * @return the parent-id.
+     */
     String getParentId();
 
+	/**
+	 * Get the absolute parent-id of this node.
+	 * 
+	 * @return  the absolute parent-id.
+	 */
     String getAbsoluteParentId();
 
+	/**
+	 * Get the id of this node.
+	 * 
+	 * @return the node id.
+	 */
     String getId();
 
+	/**
+	 * Get all labels for this node (independent of their language attribute).
+	 * 
+	 * @return an <code>Array</code> of labels.
+	 */
     Label[] getLabels();
 
+	/**
+	 * Get the label for a specific language.
+	 * 
+	 * @param xmlLanguage the language for which the label is requested.
+	 * 
+	 * @return a <code>Label</code>
+	 */
     Label getLabel(String xmlLanguage);
 
+	/**
+	 * Get the href of this node.
+	 * 
+	 * @return the href.
+	 */
     String getHref();
 
+	/**
+	 * Get the suffix of this node.
+	 * 
+	 * @return the suffix.
+	 */
     String getSuffix();
 
+	/**
+	 * Check whether this node has a link.
+	 * 
+	 * @return true if this node has a link.
+	 */
     boolean hasLink();
 }

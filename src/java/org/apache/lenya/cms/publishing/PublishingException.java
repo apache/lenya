@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publishing;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class PublishingException extends Exception {
     /**
@@ -70,6 +70,8 @@ public class PublishingException extends Exception {
 
     /**
      * Creates a new PublishingException.
+     * 
+     * @param message the exception message
      */
     public PublishingException(String message) {
         super(message);
@@ -77,6 +79,9 @@ public class PublishingException extends Exception {
 
     /**
      * Creates a new PublishingException.
+     * 
+     * @param message the exception message
+     * @param cause the cause of the exception
      */
     public PublishingException(String message, Throwable cause) {
         super(message + " " + cause.getMessage());
@@ -84,6 +89,8 @@ public class PublishingException extends Exception {
 
     /**
      * Creates a new PublishingException.
+     * 
+     * @param cause  the cause of the exception
      */
     public PublishingException(Throwable cause) {
         super(cause.getMessage());

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: SiteTree.java,v 1.11 2003/07/04 14:07:39 egli Exp $
 <License>
 
  ============================================================================
@@ -58,17 +58,19 @@ package org.apache.lenya.cms.publication;
 /**
  * DOCUMENT ME!
  *
- * @author $author$
- * @version $Revision: 1.10 $
+ * @author $Author: egli $
+ * @version $Revision: 1.11 $
  */
 public interface SiteTree {
+	
     /**
      * Add a node.
      *
-     * @param parentid e.g. "/tutorial"
+     * @param parentid where the node is to be added
      * @param id e.g. "concepts"
-     * @param labels
-     * @throws SiteTreeException
+     * @param labels the labels of the node that is to be added
+     * 
+     * @throws SiteTreeException if the addition failed
      */
     void addNode(String parentid, String id, Label[] labels)
         throws SiteTreeException;
@@ -76,13 +78,14 @@ public interface SiteTree {
     /**
      * Add a node.
      *
-     * @param parentid
-     * @param id
-     * @param labels
-     * @param href
-     * @param suffix
-     * @param link
-     * @throws SiteTreeException
+     * @param parentid the node where the new node is to be inserted
+     * @param id the node id
+     * @param labels the labels 
+     * @param href the href of the new node
+     * @param suffix the suffix of the new node
+     * @param link the link 
+     * 
+     * @throws SiteTreeException if the addition failed
      */
     void addNode(String parentid, String id, Label[] labels, String href, String suffix,
         boolean link) throws SiteTreeException;
@@ -91,11 +94,14 @@ public interface SiteTree {
      * Add a node.
      * Compute the parent id and the id of the node from the document-id
      *
-     * @param documentid
-     * @param labels
-     * @param href
-     * @param suffix
-     * @param link
+     * @param documentid the document-id of the new node. 
+     *  From this the parent-id and the id are computed
+     * @param labels the labels
+     * @param href the href
+     * @param suffix the suffix
+     * @param link the link
+     * 
+     * @throws SiteTreeException if the addition failed
      */
     void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
         throws SiteTreeException;
@@ -108,8 +114,9 @@ public interface SiteTree {
      * the original node and will be inserted at the same parentid
      * as the original node.
      *
-     * @param node
-     * @throws SiteTreeException
+     * @param node the <code>SiteTreeNode</code> that is to be added
+     * 
+     * @throws SiteTreeException if the addition failed
      */
     void addNode(SiteTreeNode node) throws SiteTreeException;
 
@@ -117,16 +124,19 @@ public interface SiteTree {
      * Removes the node corresponding to the given document-id
      * from the tree, and returns it.
      *
-     * @param documentId
-     * @return
+     * @param documentId the document-id of the node that is to be removed
+     * 
+     * @return the removed node
      */
     SiteTreeNode removeNode(String documentId);
 
     /**
      * Return the Node for a given document-id.
      *
-     * @param documentId
-     * @return
+     * @param documentId the document-id of the node that is requested
+     * 
+     * @return a <code>SiteTreeNode</code> if there is a node for the given
+     * document-id, null otherwise.
      */
     SiteTreeNode getNode(String documentId);
 }

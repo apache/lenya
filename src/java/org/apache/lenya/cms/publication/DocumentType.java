@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DocumentType.java,v 1.7 2003/07/04 14:07:39 egli Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,11 @@ public class DocumentType {
     public static final String NAMESPACE = "http://www.lenya.org/2003/doctype";
     public static final String DEFAULT_PREFIX = "dt";
 
-    /** Creates a new instance of DocumentType */
+    /** Creates a new instance of DocumentType
+     * 
+     * @param name the name of the document type
+     * 
+     */
     protected DocumentType(String name) {
         assert name != null;
         this.name = name;
@@ -85,16 +89,20 @@ public class DocumentType {
 
     private ParentChildCreatorInterface creator = null;
 
-    /**
-     * @return
-     */
+	/**
+	 * Get the creator for this document type.
+	 * 
+	 * @return a <code>ParentChildCreatorInterface</code>
+	 */
     public ParentChildCreatorInterface getCreator() {
         return creator;
     }
 
-    /**
-     * @param string
-     */
+	/**
+	 * Set the creator
+	 * 
+	 * @param creator a <code>ParentChildCreatorInterface</code>
+	 */
     protected void setCreator(ParentChildCreatorInterface creator) {
         assert creator != null;
         this.creator = creator;
@@ -104,15 +112,20 @@ public class DocumentType {
 
     /**
      * Returns if this document type has a workflow definition.
+     * 
      * @return A boolean value.
      */
     public boolean hasWorkflow() {
         return workflowFile != null;
     }
 
-    /**
-     * @return
-     */
+	/**
+	 * Get the file name of the workflow file.
+	 * 
+	 * @return a <code>String</code>
+	 * 
+	 * @throws DocumentTypeBuildException if the document type has no workflow
+	 */
     public String getWorkflowFileName() throws DocumentTypeBuildException {
         if (!hasWorkflow()) {
             throw new DocumentTypeBuildException("The document type '" + getName() +
@@ -122,15 +135,17 @@ public class DocumentType {
         return workflowFile;
     }
 
-    /**
-     * @param string
-     */
+	/**
+	 * Set the file name of the workflow file.
+	 * 
+	 * @param string the new file name
+	 */
     public void setWorkflowFileName(String string) {
         assert string != null;
         workflowFile = string;
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString() {

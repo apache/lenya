@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PageEnvelopeException.java,v 1.6 2003/07/04 14:07:39 egli Exp $
 <License>
 
  ============================================================================
@@ -70,6 +70,8 @@ public class PageEnvelopeException extends Exception {
 
     /**
      * Creates a new PageEnvelopeException.
+     * 
+     * @param message the exception message
      */
     public PageEnvelopeException(String message) {
         super(message);
@@ -77,6 +79,9 @@ public class PageEnvelopeException extends Exception {
 
     /**
      * Creates a new PageEnvelopeException.
+     * 
+     * @param message the exception message
+     * @param cause the cause of the exception
      */
     public PageEnvelopeException(String message, Throwable cause) {
         super(message, cause);
@@ -84,6 +89,8 @@ public class PageEnvelopeException extends Exception {
 
     /**
      * Creates a new PageEnvelopeException.
+     * 
+     * @param cause  the cause of the exception
      */
     public PageEnvelopeException(Throwable cause) {
         super(cause);

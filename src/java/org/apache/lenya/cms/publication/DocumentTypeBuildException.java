@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DocumentTypeBuildException.java,v 1.5 2003/07/04 14:07:39 egli Exp $
 <License>
 
  ============================================================================
@@ -71,24 +71,30 @@ public class DocumentTypeBuildException extends Exception {
     }
 
     /**
-     * @param arg0
+     * Creates a new DocumentTypeBuildException.
+     * 
+     * @param message the exception message
      */
-    public DocumentTypeBuildException(String arg0) {
-        super(arg0);
+    public DocumentTypeBuildException(String message) {
+        super(message);
     }
 
     /**
-     * @param arg0
-     * @param arg1
+     * Creates a new DocumentTypeBuildException.
+     * 
+     * @param message the exception message
+     * @param cause the cause of the exception
      */
-    public DocumentTypeBuildException(String arg0, Throwable arg1) {
-        super(arg0, arg1);
+    public DocumentTypeBuildException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     /**
-     * @param arg0
+     * Creates a new DocumentTypeBuildException.
+     * 
+     * @param cause the cause of the exception
      */
-    public DocumentTypeBuildException(Throwable arg0) {
-        super(arg0);
+    public DocumentTypeBuildException(Throwable cause) {
+        super(cause);
     }
 }

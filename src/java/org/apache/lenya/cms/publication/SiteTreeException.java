@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: SiteTreeException.java,v 1.3 2003/07/04 14:07:39 egli Exp $
 <License>
 
  ============================================================================
@@ -56,12 +56,13 @@ $Id
 package org.apache.lenya.cms.publication;
 
 /**
- * DOCUMENT ME!
+ * Exceptions for site tree handling.
  *
- * @author $author$
- * @version $Revision: 1.2 $
+ * @author $Author: egli $
+ * @version $Revision: 1.3 $
  */
 public class SiteTreeException extends Exception {
+	
     /**
      * Creates a new SiteTreeException.
      */
@@ -70,6 +71,8 @@ public class SiteTreeException extends Exception {
 
     /**
      * Creates a new SiteTreeException.
+     * 
+     * @param message the exception message
      */
     public SiteTreeException(String message) {
         super(message);
@@ -77,6 +80,9 @@ public class SiteTreeException extends Exception {
 
     /**
      * Creates a new SiteTreeException.
+     * 
+     * @param message the exception message
+     * @param cause the cause of the exception
      */
     public SiteTreeException(String message, Throwable cause) {
         super(message, cause);
@@ -84,6 +90,8 @@ public class SiteTreeException extends Exception {
 
     /**
      * Creates a new SiteTreeException.
+     * 
+     * @param cause  the cause of the exception
      */
     public SiteTreeException(Throwable cause) {
         super(cause);

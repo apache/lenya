@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.7 2003/07/02 17:50:38 andreas Exp $
+$Id: PublicationFactory.java,v 1.8 2003/07/04 14:07:39 egli Exp $
 <License>
 
  ============================================================================
@@ -70,6 +70,11 @@ import java.util.Map;
  * @author  andreas
  */
 public final class PublicationFactory {
+	
+    /**
+     * Create a new <code>PublicationFactory</code>.
+     * 
+     */
     private PublicationFactory() {
     }
 
@@ -80,7 +85,10 @@ public final class PublicationFactory {
      * Creates a new publication.
      * The publication ID is resolved from the request URI.
      * The servlet context path is resolved from the context object.
+
      * @param objectModel The object model of the Cocoon component.
+     * 
+     * @return a <code>Publication</code>
      */
     public static Publication getPublication(Map objectModel) {
         assert objectModel != null;
@@ -90,12 +98,13 @@ public final class PublicationFactory {
     }
 
     /**
-     * DOCUMENT ME!
+     * Create a new publication with the given publication-id and servlet context path.
+     * These publications are cached and resused for similar requests.
      *
-     * @param id DOCUMENT ME!
-     * @param servletContextPath DOCUMENT ME!
+     * @param id the publication id
+     * @param servletContextPath the servlet context path of the publication
      *
-     * @return DOCUMENT ME!
+     * @return a <code>Publication</code>
      */
     public static Publication getPublication(String id, String servletContextPath) {
         assert id != null;
@@ -117,6 +126,7 @@ public final class PublicationFactory {
     
     /**
      * Creates a new publication based on a request and a context.
+     * 
      * @param request A request.
      * @param context A context.
      * @return A publication.

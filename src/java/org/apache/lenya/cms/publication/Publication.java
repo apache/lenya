@@ -76,7 +76,12 @@ public class Publication {
         AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA
     };
 
-    /** Creates a new instance of Publication */
+    /** 
+     * Creates a new instance of Publication
+     * 
+     * @param id the publication id
+     * @param servletContextPath the servlet context of this publication
+     */
     protected Publication(String id, String servletContextPath) {
         assert id != null;
         this.id = id;
@@ -147,7 +152,8 @@ public class Publication {
 
     /**
      * Returns the path mapper.
-     * @return
+     * 
+     * @return a <code>DocumentIdToPathMapper</code>
      */
     public DocumentIdToPathMapper getPathMapper() {
         return mapper;
