@@ -7,21 +7,15 @@
 package org.apache.lenya.cms.workflow;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac.UserManager;
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
@@ -39,12 +33,19 @@ public class WorkflowFactory {
     protected WorkflowFactory() {
     }
 
+    /**
+     * Returns an instance of the workflow factory.
+     * @return A workflow factory.
+     */
     public static WorkflowFactory newInstance() {
         return new WorkflowFactory();
     }
 
-    /*
+    /**
      * Creates a new workflow instance.
+     * @param document The document to create the instance for.
+     * @return A workflow instance.
+     * @throws WorkflowException when something went wrong.
      */
     public WorkflowInstance buildInstance(Document document) throws WorkflowException {
         assert document != null;
@@ -61,6 +62,13 @@ public class WorkflowFactory {
         return new CMSHistory(document).isInitialized();
     }
 
+    /**
+     * Builds a workflow for a given publication.
+     * @param publication The publication.
+     * @param workflowFileName The workflow definition filename.
+     * @return A workflow object.
+     * @throws WorkflowException when something went wrong.
+     */
     protected static Workflow buildWorkflow(Publication publication, String workflowFileName)
         throws WorkflowException {
             
@@ -74,13 +82,22 @@ public class WorkflowFactory {
         return workflow;
     }
 
-    /* 
+    /**
      * Creates a new workflow situation.
+     * @param roles The roles of the situation.
+     * @return A situation.
+     * @throws WorkflowException when something went wrong.
      */
     public Situation buildSituation(Role roles[]) throws WorkflowException {
         return new CMSSituation(roles);
     }
     
+    /**
+     * Creates a situation for a Cocoon object model.
+     * @param objectModel The object model.
+     * @return A workflow situation.
+     * @throws WorkflowException when something went wrong.
+     */
     public Situation buildSituation(Map objectModel) throws WorkflowException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession(true);
@@ -89,18 +106,11 @@ public class WorkflowFactory {
             throw new WorkflowException("No session object available!");
         }
         
-        Publication publication = PublicationFactory.getPublication(objectModel);
-        File configDir = new File(publication.getDirectory(), ItemManager.PATH);
-        
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        Policy policy = (Policy) session.getAttribute(Policy.class.getName());
-        
-        Role roles[];
-        try {
-            roles = policy.getRoles(identity);
-        } catch (AccessControlException e) {
-            throw new WorkflowException(e);
+        List roleList = (List) session.getAttribute(Role.class.getName());
+        if (roleList == null) {
+            throw new WorkflowException("Session does not contain roles!");
         }
+        Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
         return buildSituation(roles);
     }
     
@@ -108,8 +118,7 @@ public class WorkflowFactory {
     /**
      * Initializes the history of a document.
      * @param document The document object.
-     * @param type The document type the document belongs to.
-     * @param user The user who created the document.
+     * @param workflowId The ID of the workflow.
      * @throws WorkflowException When something goes wrong.
      */
     public static void initHistory(Document document, String workflowId) throws WorkflowException {
