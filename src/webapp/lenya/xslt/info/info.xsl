@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.54 2004/02/13 14:30:40 gregor Exp $
+ $Id: info.xsl,v 1.55 2004/02/20 09:11:26 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -37,8 +37,18 @@
 					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a></td>
 					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a></td>
 				</xsl:if>
-				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC&#160;Auth</a></td>
-				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC&#160;Live</a></td>
+				<xsl:choose>
+  				<xsl:when test="$area = 'authoring'">
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC&#160;Auth</a></td>
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC&#160;Live</a></td>
+				  </xsl:when>
+  				<xsl:when test="$area = 'archive'">
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-archive</xsl:with-param></xsl:call-template>AC&#160;Archive</a></td>
+				  </xsl:when>
+  				<xsl:when test="$area = 'trash'">
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-trash</xsl:with-param></xsl:call-template>AC&#160;Trash</a></td>
+				  </xsl:when>
+        </xsl:choose>
 				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">scheduler</xsl:with-param></xsl:call-template>Scheduler</a></td>
 			</xsl:if>
 		</tr>
@@ -52,12 +62,12 @@
 	-->
 	<div id="contentblock1" class="lenya-tab">
 		<xsl:choose>
-			<xsl:when test="$tab = 'ac-authoring' or $tab = 'ac-live'">
-               <xsl:apply-templates select="lenya-info:permissions"/>
+			<xsl:when test="starts-with($tab, 'ac-')">
+        <xsl:apply-templates select="lenya-info:permissions"/>
 			</xsl:when>
-			<xsl:otherwise>
-               <xsl:apply-templates/>
-			</xsl:otherwise>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
 		</xsl:choose>
 	</div>
 	
@@ -275,7 +285,7 @@
 				<input type="hidden" name="lenya.step" value="showscreen"/>
 				<input type="hidden" name="change_ssl" value="true"/>
                 <xsl:choose>
-                  <xsl:when test="$area = 'authoring'">        
+                  <xsl:when test="$area != 'authoring'">        
                     <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true">
        		        <xsl:if test="@ssl = 'true'">
 	        	      <xsl:attribute name="checked">checked</xsl:attribute>
@@ -351,7 +361,7 @@
     	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
     	<td>
     		<xsl:choose>
-    			<xsl:when test="$larea = 'authoring'">
+    			<xsl:when test="$larea != 'live'">
     				<xsl:apply-templates select="//lenya-info:items[@type = 'role']"/>
     			</xsl:when>
     			<xsl:otherwise>
@@ -361,7 +371,7 @@
     	</td>
     	<td>
     		<input type="submit" name="add_credential_{$type}" value="Add">
-    			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item) or not($area = 'authoring')">
+    			<xsl:if test="not(//lenya-info:items[@type = $type]/lenya-info:item) or ($area = 'live')">
     				<xsl:attribute name="disabled">disabled</xsl:attribute>
     			</xsl:if>
     		</input>
@@ -419,14 +429,11 @@
   	  </span>
   	</td>
   	<td>
-  		<xsl:if test="$larea = 'authoring'">
-  		<span style="color: {$color}">
-  		<xsl:value-of select="@role-id"/>
-  	  <xsl:if test="@role-name != ''">
-  		  (<xsl:value-of select="@role-name"/>)
-  	  </xsl:if>
-  	  </span>
-  	  </xsl:if>
+      <xsl:if test="$larea != 'live'">
+        <span style="color: {$color}"><xsl:value-of select="@role-id"/>
+          <xsl:if test="@role-name != ''">(<xsl:value-of select="@role-name"/>)</xsl:if>
+        </span>
+      </xsl:if>
   	</td>
   	<td>
   		<xsl:if test="not(@type = 'parent')">
@@ -436,7 +443,7 @@
   			<input type="hidden" name="accreditable_id" value="{@accreditable-id}"/>
   			<input type="hidden" name="role_id" value="{@role-id}"/>
   			<input type="submit" name="delete_credential_{@accreditable-type}" value="Delete">
-    			<xsl:if test="not($area = 'authoring')">
+    			<xsl:if test="$area = 'live'">
     				<xsl:attribute name="disabled">disabled</xsl:attribute>
     			</xsl:if>
     		</input>
