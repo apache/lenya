@@ -2,6 +2,13 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.lenya.org/2003/simple-document" xmlns:s="http://www.lenya.org/2003/simple-document" xmlns:lenya="http://lenya.org/2003/">
   <xs:import namespace="http://lenya.org/2003/" schemaLocation="lenya.xsd"/>
   <xs:element name="simple-document">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Simple Document</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Simple Document</bxe:name>
+				<bxe:returnelement></bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="lenya:meta"/>
@@ -11,6 +18,13 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="body">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Body</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Body</bxe:name>
+				<bxe:returnelement>p</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="s:subtitle"/>
@@ -25,8 +39,25 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="subtitle" type="xs:string"/>
-  <xs:element name="hl2" type="xs:string"/>
+  <xs:element name="hl2" type="xs:string">
+    <xs:annotation>
+    <xs:documentation xml:lang='en'>Headline 2</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Headline 2</bxe:name>
+ 	  <bxe:returnelement><![CDATA[<p>#para</p>]]></bxe:returnelement>
+ 	  <bxe:insertafter>
+ 	    <bxe:element>p</bxe:element>
+ 	  </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
+  </xs:element>  
   <xs:element name="informaltable">
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Informaltable</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Informaltable</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="s:tgroup"/>
@@ -34,6 +65,12 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="tgroup">
+   <xs:annotation>
+    <xs:documentation xml:lang='en'>Table Group</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Table Group</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="s:tbody"/>
@@ -41,6 +78,12 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="tbody">
+   <xs:annotation>
+    <xs:documentation xml:lang='en'>Table Body</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Table Body</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="s:row"/>
@@ -48,6 +91,12 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="row">
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Row</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Row</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="s:entry"/>
@@ -55,6 +104,13 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="entry">
+   <xs:annotation>
+    <xs:documentation xml:lang='en'>Entry</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Entry</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="s:bold"/>
@@ -64,6 +120,17 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="media">
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Media</xs:documentation>
+    <xs:appinfo>
+          <bxe:name>Media</bxe:name>
+          <bxe:returnelement>none</bxe:returnelement>
+          <bxe:insertafter>
+            <bxe:element>hl2</bxe:element>
+            <bxe:element>p</bxe:element>
+          </bxe:insertafter>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="s:media-reference"/>
@@ -73,13 +140,40 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="media-reference">
+   <xs:annotation>
+    <xs:documentation xml:lang='en'>Reference</xs:documentation>
+    <xs:appinfo>
+          <bxe:name>Reference</bxe:name>
+          <bxe:returnelement>none</bxe:returnelement>
+          <bxe:requiredattributes>source</bxe:requiredattributes>
+          <bxe:requiredattributes>alternate-text</bxe:requiredattributes>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType>
       <xs:attribute name="alternate-text" use="required"/>
       <xs:attribute name="source" use="required" type="xs:NCName"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="caption" type="xs:string"/>
+  <xs:element name="caption" type="xs:string">
+    <xs:annotation>
+    <xs:documentation xml:lang='en'>Caption</xs:documentation>
+    <xs:appinfo>
+          <bxe:name>Caption</bxe:name>
+          <bxe:returnelement>none</bxe:returnelement>
+    </xs:appinfo>
+  </xs:annotation>
+  </xs:element> 
   <xs:element name="p">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Paragraph</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Paragraph</bxe:name>
+				<bxe:returnelement>p</bxe:returnelement>
+				<bxe:insertafter>
+					<bxe:element>p</bxe:element>
+				</bxe:insertafter>
+			</xs:appinfo>
+		</xs:annotation>
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="s:bold"/>
@@ -89,6 +183,13 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="itemizedlist">
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Itemized List</xs:documentation>
+   <xs:appinfo>
+ 	  <bxe:name>Itemized List</bxe:name>
+ 	  <bxe:addalso><![CDATA[bxlistitem]]></bxe:addalso>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="s:listitem"/>
@@ -96,6 +197,13 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="listitem">
+    <xs:annotation>
+      <xs:documentation xml:lang='en'>Listitem</xs:documentation>
+      <xs:appinfo>
+   	    <bxe:name>Listitem</bxe:name>
+ 	    <bxe:returnelement>listitem</bxe:returnelement>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="s:emphasize"/>
@@ -103,11 +211,32 @@
       </xs:choice>
     </xs:complexType>
   </xs:element>
-  <xs:element name="emphasize" type="xs:string"/>
+  <xs:element name="emphasize" type="xs:string">
+   <xs:annotation>
+     <xs:documentation xml:lang='en'>Italic</xs:documentation>
+     <xs:appinfo>
+ 	   <bxe:name>Italic</bxe:name>
+     </xs:appinfo>
+   </xs:annotation>
+  </xs:element>
   <xs:element name="ulink">
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>External Link</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>External Link</bxe:name>
+ 	  <bxe:requiredattributes>url</bxe:requiredattributes>
+    </xs:appinfo>
+  </xs:annotation>
     <xs:complexType mixed="true">
       <xs:attribute name="url" use="required" type="xs:anyURI"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="bold" type="xs:NCName"/>
+  <xs:element name="bold" type="xs:NCName">
+    <xs:annotation>
+    <xs:documentation xml:lang='en'>Bold</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Bold</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  </xs:element>  
 </xs:schema>
