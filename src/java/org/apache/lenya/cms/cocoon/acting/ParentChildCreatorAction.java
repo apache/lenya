@@ -24,11 +24,14 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.List;
 
+import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.dom4j.XPath;
+
+import org.wyona.cms.authoring.AbstractParentChildCreator;
 
 /**
  * Describe class <code>ParentChildCreatorAction</code> here.
@@ -96,12 +99,6 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     //InputStream in=intercept(new FileInputStream(treefilename));
     Document doc=new SAXReader().read("file:"+treefilename);
 
-/*
-    // Get trunk
-    Element trunk=(Element)doc.selectSingleNode("/tree/branch");
-    getLogger().error("TRUNK: "+trunk.getName()+" "+trunk.getPath());
-*/
-
     // Get parent element
     StringTokenizer st=new StringTokenizer(parentid,"/");
     String xpath_string="/tree/branch"; // Trunk of tree
@@ -129,16 +126,33 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
     // Transaction should actually be finished here!
 
+    // Get creator
+    AbstractParentChildCreator creator=null;
+    String absoluteDoctypesPath=sitemapParentPath+doctypesPath;
+    Document doctypesDoc=new SAXReader().read("file:"+absoluteDoctypesPath+"doctypes.xconf");
+    Attribute creator_src=(Attribute)doctypesDoc.selectSingleNode("/doctypes/doc[@type='"+doctype+"']/creator/@src");
+    if(creator_src != null){
+      getLogger().error("CREATOR: "+creator_src.getName()+" "+creator_src.getPath()+" "+creator_src.getValue());
+      creator=(AbstractParentChildCreator)Class.forName(creator_src.getValue()).newInstance();
+      }
+    else{
+      getLogger().error("CREATOR: DefaultCreator");
+      creator=(AbstractParentChildCreator)Class.forName("org.wyona.cms.authoring.DefaultParentChildCreator").newInstance();
+      }
+
     // Create actual document
+    creator.create(new File(absoluteDoctypesPath+"samples"),new File(sitemapParentPath+docsPath+parentid),childid);
+
+/*
     String filename=sitemapParentPath+docsPath+parentid+"/"+childid+"/index.xml"; // Filename Generator
     String filenameMeta=sitemapParentPath+docsPath+parentid+"/"+childid+"/index-meta.xml"; // Filename Generator
-    String absoluteDoctypesPath=sitemapParentPath+doctypesPath;
-    String doctypeSample=absoluteDoctypesPath+"Group.xml";
-    String doctypeMeta=absoluteDoctypesPath+"Meta.xml";
+    String doctypeSample=absoluteDoctypesPath+"samples/"+doctype+".xml";
+    String doctypeMeta=absoluteDoctypesPath+"samples/Meta.xml";
     getLogger().error("Filename: "+filename);
     getLogger().error("Doctypes: "+absoluteDoctypesPath);
     copyFile(new File(doctypeSample),new File(filename));
     copyFile(new File(doctypeMeta),new File(filenameMeta));
+*/
 
     // Redirect to referer
     if(7 > 1){
