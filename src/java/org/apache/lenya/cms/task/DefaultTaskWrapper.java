@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.3 2003/08/28 10:16:00 andreas Exp $
+$Id: DefaultTaskWrapper.java,v 1.4 2003/08/29 11:37:10 andreas Exp $
 <License>
 
  ============================================================================
@@ -170,9 +170,6 @@ public class DefaultTaskWrapper implements TaskWrapper {
         getTaskParameters().setPublication(publication);
         getWrapperParameters().setWebappUrl(webappUrl);
 
-        if (taskId == null) {
-            throw new ExecutionException("No task id provided!");
-        }
         getWrapperParameters().setTaskId(taskId);
         getTaskParameters().parameterize(parameters);
     }
@@ -225,7 +222,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param roles The roles of the identity.
      */
     public void setWorkflowAware(String eventName, Identity identity, Role[] roles) {
-        this.workflowInvoker = new WorkflowInvoker(getParameterMap(), eventName, identity, roles);
+        this.workflowInvoker = new WorkflowInvoker(getParameters(), eventName, identity, roles);
     }
 
     /**
@@ -235,6 +232,11 @@ public class DefaultTaskWrapper implements TaskWrapper {
     public void execute() throws ExecutionException {
 
         String taskId = getWrapperParameters().getTaskId();
+        
+        if (taskId == null) {
+            throw new ExecutionException("No task id provided!");
+        }
+        
         log.debug("-----------------------------------");
         log.debug(" Executing task [" + taskId + "]");
         log.debug("-----------------------------------");
@@ -282,7 +284,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
 
         task.execute(publication.getServletContext().getAbsolutePath());
 
-        Notifier notifier = new Notifier(manager, getParameterMap());
+        Notifier notifier = new Notifier(manager, getParameters());
         notifier.sendNotification(getTaskParameters());
 
     }
@@ -319,11 +321,11 @@ public class DefaultTaskWrapper implements TaskWrapper {
             new NamespaceHelper(Task.NAMESPACE, Task.DEFAULT_PREFIX, document);
         Element element = taskHelper.createElement(ELEMENT_TASK);
 
-        for (Iterator i = getParameterMap().keySet().iterator(); i.hasNext(); ) {
+        for (Iterator i = getParameters().keySet().iterator(); i.hasNext(); ) {
             String key = (String) i.next();
             Element parameterElement = taskHelper.createElement(ELEMENT_PARAMETER);
             parameterElement.setAttribute(ATTRIBUTE_NAME, key);
-            parameterElement.setAttribute(ATTRIBUTE_VALUE, (String) getParameterMap().get(key));
+            parameterElement.setAttribute(ATTRIBUTE_VALUE, (String) getParameters().get(key));
             element.appendChild(parameterElement);
         }
 
@@ -335,7 +337,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param parent The parent of the task wrapper element.
      * @param helper The namespace helper of the document.
      */
-    protected void restore(NamespaceHelper helper, Element parent) {
+    public void restore(NamespaceHelper helper, Element parent) {
         org.w3c.dom.Document document = helper.getDocument();
         NamespaceHelper taskHelper =
             new NamespaceHelper(Task.NAMESPACE, Task.DEFAULT_PREFIX, document);
@@ -350,20 +352,9 @@ public class DefaultTaskWrapper implements TaskWrapper {
 
     /**
      * Returns all prefixed parameters.
-     * @return A parameter object.
-     */
-    public Parameters getParameters() {
-        Properties properties = new Properties();
-        properties.putAll(getParameterMap());
-        Parameters params = Parameters.fromProperties(properties);
-        return params;
-    }
-
-    /**
-     * Returns all prefixed parameters.
      * @return A map.
      */
-    public Map getParameterMap() {
+    public Map getParameters() {
         return parameters;
     }
 
@@ -373,7 +364,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      */
     protected void setNotifying(NamespaceMap notificationParameters) {
         log.info("Enabling notification");
-        getParameterMap().putAll(notificationParameters.getPrefixedMap());
+        getParameters().putAll(notificationParameters.getPrefixedMap());
     }
 
 }
