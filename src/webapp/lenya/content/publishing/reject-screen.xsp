@@ -38,6 +38,7 @@
 						if (versions[i].getEvent().getName().equals("submit")) {
 								userId = ((CMSVersion) versions[i]).getUserId();
 						}
+						i--;
 				}
 		  }
 		
