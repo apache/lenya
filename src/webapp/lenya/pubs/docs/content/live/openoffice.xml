@@ -113,6 +113,46 @@ to a file named Domain.xml in the Slide webapp directory:</p>
 	  <li>Replace folder "files" by OpenOffice dir name</li>
 	</ul>
 
+	<p>The following patch will apply all changes you need:</p>
+	<source>
+diff -u Domain.xml.orig Domain.xml
+--- Domain.xml.orig	Thu Nov  1 15:47:52 2001
++++ Domain.xml		Thu Mar 20 16:44:09 2003
+@@ -44,7 +44,7 @@
+           &lt;reference store="nodestore" /&gt;
+         &lt;/revisiondescriptorstore&gt;
+         &lt;contentstore classname="slidestore.reference.FileContentStore"&gt;
+-          &lt;parameter name="rootpath"&gt;contentstore&lt;/parameter&gt;
++          &lt;parameter name="rootpath"&gt;/home/slide/build/jakarta-tomcat-4.1.18-LE-jdk14/webapps/lenya/lenya/pubs/computerworld/content/authoring&lt;/parameter&gt;
+           &lt;parameter name="version"&gt;false&lt;/parameter&gt;
+           &lt;parameter name="resetBeforeStarting"&gt;true&lt;/parameter&gt;
+         &lt;/contentstore&gt;
+@@ -136,7 +136,7 @@
+       &lt;!-- Paths configuration --&gt;
+       &lt;userspath&gt;/users&lt;/userspath&gt;
+       &lt;guestpath&gt;guest&lt;/guestpath&gt;
+-      &lt;filespath&gt;/files&lt;/filespath&gt;
++      &lt;filespath&gt;/openoffice&lt;/filespath&gt;
+       &lt;parameter name="dav"&gt;true&lt;/parameter&gt;
+       &lt;parameter name="standalone"&gt;true&lt;/parameter&gt;
+ 
+@@ -245,13 +245,12 @@
+           
+         &lt;/objectnode&gt;
+         
+-        &lt;objectnode classname="org.apache.slide.structure.SubjectNode" 
+-         uri="/files"&gt;
++        &lt;objectnode classname="org.apache.slide.structure.SubjectNode" uri="/openoffice"&gt;
+ 
+           &lt;!-- ### Give read/write/manage permission to guest ### 
+                Uncomment the following line to give permission to do
+                all actions on /files to guest (unauthenticated users) --&gt;
+-          &lt;!-- &lt;permission action="/actions" subject="/users/guest"/&gt; --&gt;
++          &lt;permission action="/actions" subject="/users/guest"/&gt;
+ 
+           &lt;permission action="/actions/manage" subject="/users/john"/&gt;
+           &lt;permission action="/actions/write" subject="+/users/groupA"/&gt;
+	</source>
       </section>
 
     </section>
