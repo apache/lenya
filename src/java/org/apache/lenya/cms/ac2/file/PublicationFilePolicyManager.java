@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.7 2003/08/13 18:43:41 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.8 2003/08/15 09:43:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id: PublicationFilePolicyManager.java,v 1.7 2003/08/13 18:43:41 andreas Exp $
 package org.apache.lenya.cms.ac2.file;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,8 +92,8 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
 
         String publicationId = PublicationFactory.getPublicationId(url);
         url = url.substring(("/" + publicationId).length());
-        if (url.startsWith("/")) {
-            url = url.substring(1);
+        if (!url.startsWith("/") && !url.equals("")) {
+            url = "/" + url;
         }
 
         String policyUri =
@@ -104,7 +103,6 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
                 + publicationId
                 + "/"
                 + POLICIES_URI
-                + "/"
                 + url
                 + "/"
                 + policyFilename;
@@ -129,18 +127,16 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
         getLogger().debug("Building URL policy for URL [" + path + "]");
         Policy policy = buildURLPolicy(controller, "/" + publication.getId() + path);
         policies.add(policy);
-
-        if (path.startsWith("/")) {
-            path = path.substring(1);
-        }
+        
         String[] directories = path.split("/");
 
         path = "/" + publication.getId();
         for (int i = 0; i < directories.length; i++) {
-            path += "/" + directories[i];
+            path += directories[i];
             getLogger().debug("Building subtree policy for URL [" + path + "]");
             policy = buildSubtreePolicy(controller, path);
             policies.add(policy);
+            path += "/";
         }
 
         return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
