@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: meetings.xml,v 1.4 2004/03/13 12:42:14 gregor Exp $ -->
+<!-- $Id: meetings.xml,v 1.5 2004/05/11 17:11:11 gregor Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -31,7 +31,7 @@
   <body>
 <section><title>Sprints</title>
 <p>
-An introduction to sprints can be found <link href="http://www.oscom.org/Conferences/Sprints/">here</link>.
+An introduction to sprints can be found <link href="http://oscom.org/events/sprints/">here</link>.
 </p>
 </section>
   </body>
