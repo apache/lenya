@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.16 2004/02/14 15:15:36 roku Exp $
+$Id: cmsui_de.xml,v 1.17 2004/02/14 19:23:07 roku Exp $
 @author <a href="mailto:roku@apache.org">Rolf Kulemann</a>
 <License>
 
@@ -64,9 +64,11 @@ $Id: cmsui_de.xml,v 1.16 2004/02/14 15:15:36 roku Exp $
   <message key="Referer">R&#252;ckverweis</message>
   <message key="EXCEPTION">AUSNAHME</message>  
   <message key="User">Benutzer</message>
-  <message key="live">ver&#246;ffentlicht</message>
+  <message key="live">live</message>
   <message key="not">nicht</message>
-  
+  <message key="authoring">Bearbeitung</message>
+  <message key="review">Freigabe</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -81,7 +83,7 @@ $Id: cmsui_de.xml,v 1.16 2004/02/14 15:15:36 roku Exp $
   <message key="Password">Passwort</message>    
   <message key="Username">Benutzername</message>                
   <message key="Authentication failed">Anmeldung ist fehlgeschlagen</message>  
-  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1}</message>
+  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1}.</message>
 
   <!-- logout screen -->
   <message key="logout-from-pub">Abmelden von der {0} Publikation</message>
@@ -120,14 +122,21 @@ $Id: cmsui_de.xml,v 1.16 2004/02/14 15:15:36 roku Exp $
   <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
   <message key="Edit with Epoz">Bearbeiten mit Epoz</message>
   <message key="Edit with BXE">Bearbeiten mit BXE</message>
-  <message key="Edit with one Form">Bearbeiten mit einem Formular</message>
-  <message key="Edit with Forms">Bearbeiten mit Formularen</message>
+  <message key="Edit with one Form">Bearbeiten Formulareditor</message>
+  <message key="Edit with Forms">Bearbeiten mit Formwizard</message>
   <message key="Edit Metadata">Metadata bearbeiten</message>
   <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
 
   <!-- cms tabs -->
   <message key="Server Time">Serverzeit</message>  
-  <message key="Workflow State">Bearbeitungsstatus</message>
+  <message key="Workflow State">Status</message>
+
+  <!-- administration tab -->
+  <message key="Administration">Administration</message>
+  <message key="really-delete?">{0} wirklich l&#246;schen ?</message>
+  <message key="Delete Trash">Papierkorb leeren</message>
+  <message key="Delete the Trash">Papierkorb leeren</message>
+  <message key="Do you really want to delete the trash ?">M&#246;chten Sie den Papierkorb wirklich leeren ?</message>
 
 </catalogue>
 
