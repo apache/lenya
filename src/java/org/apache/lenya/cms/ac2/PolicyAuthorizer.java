@@ -1,5 +1,5 @@
 /*
-$Id: PolicyAuthorizer.java,v 1.15 2003/09/12 16:46:50 andreas Exp $
+$Id: PolicyAuthorizer.java,v 1.16 2003/10/15 15:54:08 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,7 @@ $Id: PolicyAuthorizer.java,v 1.15 2003/09/12 16:46:50 andreas Exp $
 package org.apache.lenya.cms.ac2;
 
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -200,7 +201,13 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         List roleList = (List) request.getAttribute(Role.class.getName());
 
         if (roleList == null) {
-            throw new AccessControlException("Request does not contain roles!");
+            String message = "    URI: [" + request.getRequestURI() + "]\n";
+            for (Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
+                String key = (String) e.nextElement();
+                message += "    Parameter: [" + key + "] = [" + request.getParameter(key) + "]\n";
+            }
+            
+            throw new AccessControlException("Request [" + request + "] does not contain roles: \n" + message);
         }
         
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
