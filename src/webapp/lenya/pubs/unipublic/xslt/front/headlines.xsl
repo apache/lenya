@@ -58,8 +58,21 @@
                 <td width="4" bgcolor="white">&#160;</td>
                 <td bgcolor="white" class="tsr-text">
 
-                  <p><a href="{@href}/"><img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}" align="right"/></a><span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
-                    <xsl:apply-templates select="body.head/abstract"/></p>
+                     <xsl:choose>
+                       <xsl:when test="body.head/media/media-reference">
+                  <p><a href="{@href}/">
+<img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}" align="right"/>
+                     </a>
+                  </p>
+                       </xsl:when>
+                       <xsl:otherwise>
+                  <p>
+                    <font color="red"> Attention: no image </font>
+                  </p>
+                       </xsl:otherwise>
+                     </xsl:choose>
+                     <span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
+                    <xsl:apply-templates select="body.head/abstract"/>
 
                   </td>
                 <td width="4" bgcolor="white">&#160;</td>
@@ -81,7 +94,18 @@
     <xsl:for-each select="Article">
       <xsl:if test="position()&#60;=2">
         <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-        <td align="right" width="150" bgcolor="#CCCC99" valign="bottom"><a href="{@href}/"><img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}"/></a></td>
+                      <xsl:choose>
+                       <xsl:when test="body.head/media/media-reference">
+        <td align="right" width="150" bgcolor="#CCCC99" valign="bottom"><a href="{@href}/">
+<img src="{$unipublic}/{@href}/{body.head/media/media-reference/@source}" width="80" height="60" border="0" alt="{body.head/media/media-reference/@alternate-text}" align="right"/>
+        </a></td>
+                       </xsl:when>
+                       <xsl:otherwise>
+        <td>
+                    <font color="red"> Attention:</font><br/><font color="red">no image </font>
+        </td>
+                       </xsl:otherwise>
+                     </xsl:choose>                                                                                                          
         <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
       </xsl:if>
     </xsl:for-each>
@@ -106,6 +130,5 @@
     <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
   </tr>
 </xsl:template>
-
 
 </xsl:stylesheet>
