@@ -16,27 +16,33 @@
         ../../resources/entities/sitetree.xsd">
     
   <node id="index">
-    <label>Home</label>
+    <label xml:lang="en">Home</label>
+    <label xml:lang="de">Home</label>
   </node>
   
   <node id="users">
-    <label>Users</label>
+    <label xml:lang="en">Users</label>
+    <label xml:lang="de">Users</label>
   </node>
 
   <node id="groups">
-    <label>Groups</label>
+    <label xml:lang="en">Groups</label>
+    <label xml:lang="de">Groups</label>
   </node>
   
   <node id="ipranges">
-    <label>IP Ranges</label>
+    <label xml:lang="en">IP Ranges</label>
+    <label xml:lang="de">IP Ranges</label>
   </node>
   
   <node id="content">
-    <label>Content</label>
+    <label xml:lang="en">Content</label>
+    <label xml:lang="de">Content</label>
   </node>
 
   <node id="status">
-    <label>Cocoon and Server Status</label>
+    <label xml:lang="en">Cocoon and Server Status</label>
+    <label xml:lang="de">Cocoon and Server Status</label>
   </node>
   
 </site>
