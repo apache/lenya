@@ -45,7 +45,7 @@
   <menus>
     <menu i18n:attr="name" name="File">
       <block>
-        <item uc:usecase="site.create">Add&#160;new&#160;Entry</item>
+        <item uc:usecase="site.create" href="?">Add&#160;new&#160;Entry</item>
       </block>
       <block>
         <item wf:event="edit" uc:usecase="edit" uc:step="open" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
