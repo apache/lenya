@@ -1,5 +1,5 @@
 /*
- * $Id: ReTokenizeFile.java,v 1.5 2003/02/07 12:14:22 ah Exp $
+ * $Id: ReTokenizeFile.java,v 1.6 2003/02/16 23:41:10 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,13 +51,14 @@ import org.wyona.lucene.html.HTMLParser;
 
 import java.io.*;
 import java.io.File;
+import java.util.StringTokenizer;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ReTokenizeFile {
     /**
@@ -174,6 +175,23 @@ public class ReTokenizeFile {
 
         //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): No word matches: "+index);
         return null;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param string DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String tidy(String string) {
+        StringTokenizer st = new StringTokenizer(string,"<>&");
+
+        StringBuffer sb = new StringBuffer("");
+        while(st.hasMoreElements()) {
+            sb.append(st.nextToken());
+        }
+        return sb.toString();
     }
 
     /**

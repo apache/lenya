@@ -1,5 +1,5 @@
 /*
- * $Id: IterativeHTMLCrawler.java,v 1.7 2003/02/07 12:14:23 ah Exp $
+ * $Id: IterativeHTMLCrawler.java,v 1.8 2003/02/16 23:41:10 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,6 +50,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.io.InputStreamReader;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -61,7 +65,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class IterativeHTMLCrawler {
     java.util.Vector urlsToCrawl;
@@ -132,8 +136,12 @@ public class IterativeHTMLCrawler {
         String currentURLPath = start.toString().substring(0, start.toString().lastIndexOf("/"));
 
         try {
+            System.out.println(".crawl(): Start crawling at: " + start);
             if (addURL(start.getFile(), currentURLPath) != null) {
                 dumpHTDoc(start);
+            }
+            else {
+                System.err.println(".crawl(): Start URL has not been dumped: " + start);
             }
         } catch (MalformedURLException e) {
             System.err.println(".crawl(): ERROR: " + e);
@@ -179,12 +187,14 @@ public class IterativeHTMLCrawler {
         try {
             java.io.PrintWriter out = new java.io.PrintWriter(new java.io.FileOutputStream(
                         url_list_file));
-            System.out.println("\n\n\n");
-            System.out.println(".crawl(): URLs to crawl:");
+            //System.out.println("\n\n\n");
+            //System.out.println(".crawl(): URLs to crawl:");
 
             for (int i = 0; i < urlsToCrawl.size(); i++) {
+/*
                 System.out.println(".crawl(): INFO: URL to crawl: " +
                     (URL) urlsToCrawl.elementAt(i));
+*/
                 out.println("" + (URL) urlsToCrawl.elementAt(i));
             }
 
@@ -206,6 +216,7 @@ public class IterativeHTMLCrawler {
      */
     public URL addURL(String urlCandidate, String currentURLPath)
         throws MalformedURLException {
+
         URL url = new URL(parseHREF(urlCandidate, urlCandidate.toLowerCase(), currentURLPath)); //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
 
         if (filterURL(urlCandidate, currentURLPath, urlsToCrawlLowerCase)) {
@@ -220,7 +231,7 @@ public class IterativeHTMLCrawler {
             }
         }
 
-        System.out.println(".addURL(): INFO: URL not added: " + urlCandidate);
+        //System.out.println(".addURL(): INFO: URL not added: " + urlCandidate);
 
         return null;
     }
@@ -233,7 +244,7 @@ public class IterativeHTMLCrawler {
      * @return ok, 404
      */
     public java.util.List parsePage(String urlString) {
-        System.out.println(".parsePage(): INFO: Parse page: " + urlString);
+        //System.out.println(".parsePage(): INFO: Parse page: " + urlString);
 
         String status = "ok";
 
@@ -304,7 +315,7 @@ public class IterativeHTMLCrawler {
 
         if (handler.getRobotFollow()) {
             java.util.List links = handler.getLinks();
-            System.out.println(".handleHTML(): Number of links found : " + links.size());
+            //System.out.println(".handleHTML(): Number of links found : " + links.size());
 
             /*
                   for(int i = 0; i < links.size(); i++){
@@ -343,8 +354,7 @@ public class IterativeHTMLCrawler {
      * @return DOCUMENT ME!
      */
     public boolean filterURL(String url, String currentURLPath, java.util.TreeSet links) {
-        System.out.println(".filterURL(): DEBUG: Filtering URL: " + url + " (" + currentURLPath +
-            ")");
+        //System.out.println(".filterURL(): DEBUG: Filtering URL: " + url + " (" + currentURLPath + ")");
 
         String urlLowCase = url.toLowerCase();
 
@@ -359,7 +369,8 @@ public class IterativeHTMLCrawler {
         }
 
         //System.out.println(".filterURL(): "+urlLowCase);
-        if ((url != null) && inScope(urlLowCase)) {
+        if ((url != null) && inScope(url)) {
+        //if ((url != null) && inScope(urlLowCase)) {
             //System.out.println(".filterURL(): In scope: "+url);
             if (!links.contains(urlLowCase)) {
                 //links.add(urlLowCase);
@@ -369,7 +380,7 @@ public class IterativeHTMLCrawler {
                 //System.out.println(".filterURL(): Not Added (already added) : "+url);
             }
         } else {
-            //System.out.println(".filterURL(): Not in scope: "+url);
+            System.out.println(".filterURL(): Not in scope: "+url);
         }
 
         return false;
@@ -414,11 +425,14 @@ public class IterativeHTMLCrawler {
         } else if (urlLowCase.startsWith("javascript:")) {
             // handle javascript:...
             //url = parseJavaScript(url, urlLowCase);
-            System.err.println(".parseHREF(): WARN: parseJavaScript() is not implemented yet");
+            System.err.println(".parseHREF(): WARN: \"javascript:\" is not implemented yet!");
+            url = null;
         } else if (urlLowCase.startsWith("#")) {
+            System.err.println(".parseHREF(): WARN: \"#\" (anchor) will be irgnored!");
             // internal anchor... ignore.
             url = null;
         } else if (urlLowCase.startsWith("mailto:")) {
+            System.err.println(".parseHREF(): WARN: \"mailto:\" is not a URL to be followed!");
             // handle mailto:...
             url = null;
         } else {
@@ -469,8 +483,8 @@ public class IterativeHTMLCrawler {
      * @throws MalformedURLException DOCUMENT ME!
      */
     public URL completeURL(URL parent, String child) throws MalformedURLException {
-        System.out.println(".completeURL(): " + parent);
-        System.out.println(".completeURL(): " + child);
+        //System.out.println(".completeURL(): " + parent);
+        //System.out.println(".completeURL(): " + child);
 
         return parent;
     }
@@ -497,14 +511,38 @@ public class IterativeHTMLCrawler {
                 File parent = new File(file.getParent());
 
                 if (!parent.exists()) {
+/*
                     System.out.println(".dumpHTDoc(): INFO: Directory will be created: " +
                         parent.getAbsolutePath());
+*/
                     parent.mkdirs();
                 }
 
-                FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
                 HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
                 java.io.InputStream in = httpConnection.getInputStream();
+                BufferedInputStream bin = new BufferedInputStream(in);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(bin));
+
+java.io.FileWriter fw = new java.io.FileWriter(file);
+int i;
+while ((i = reader.read()) != -1) {
+    fw.write(i);
+}
+
+fw.close();
+
+bin.close();
+in.close();
+httpConnection.disconnect();
+
+
+
+/*
+                //FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
+                FileWriter fw = new FileWriter(file.getAbsolutePath());
+                HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+                java.io.InputStream in = httpConnection.getInputStream();
+                //byte[] buffer = new byte[20000];
                 byte[] buffer = new byte[1024];
                 int bytes_read;
 
@@ -512,11 +550,16 @@ public class IterativeHTMLCrawler {
                     out.write(buffer, 0, bytes_read);
                 }
 
+                in.close();
                 httpConnection.disconnect();
                 out.close();
+*/
 
+
+
+
+/*
                 // In certain cases (e.g. large zip files) buffering generates an OutOfMemoryException (JVM has 60MB by default)
-                /*
                         HttpURLConnection httpConnection=(HttpURLConnection)url.openConnection();
                         java.io.InputStream in=httpConnection.getInputStream();
                         byte[] buffer=new byte[1024];
@@ -528,8 +571,12 @@ public class IterativeHTMLCrawler {
                         byte[] sresponse=bufferOut.toByteArray();
                         httpConnection.disconnect();
 
+                        System.out.println("HTDoc dump:\n\n"+bufferOut);
+
                         saveToFile(html_dump_directory+url.getFile(),sresponse);
-                */
+*/
+
+
                 System.out.println(".dumpHTDoc(): INFO: URL dumped: " + url);
             } catch (Exception e) {
                 System.err.println(".dumpHTDoc(): ERROR: " + e);

@@ -10,8 +10,12 @@
 
 <xsl:template match="search-and-results">
   <form>
-<table bgcolor="#dddddd">
+<table bgcolor="#99ccff" width="100%">
+<!--
+<table bgcolor="#dddddd" width="100%">
+-->
 <tr><td>
+Search within: 
 <select name="publication-id">
     <xsl:for-each select="configuration/publication">
       <xsl:choose>
@@ -40,6 +44,7 @@
       <xsl:attribute name="value"><xsl:value-of select="search/query-string"/></xsl:attribute>
     </input>
 </td></tr>
+<!--
 <tr><td>
     Sort by 
     <select name="sortBy">
@@ -57,8 +62,9 @@
       </option>
     </select>
 </td></tr>
+-->
 <tr><td>
-    Fields
+Limit your search to field:  
     <select name="fields">
       <option value="all">
         <xsl:if test="search/fields='all'">
@@ -77,25 +83,35 @@
 <tr><td align="right">
     <input type="submit" name="find" value="Search"/>
 </td></tr>
+<tr><td align="left">
+    <font size="-2"><a href="http://jakarta.apache.org/lucene/" class="navigationwhite">Powered by Apache Lucene</a></font>
+</td></tr>
 </table>
   </form>
+
+
 
   <xsl:apply-templates select="search/exception"/>
   <xsl:apply-templates select="results"/>
 </xsl:template>
 
-<!--
 <xsl:template match="results">
-  <h3>Results (Publication <xsl:value-of select="../search/publication-id"/>)</h3>
+  <xsl:variable name="pubid"><xsl:value-of select="../search/publication-id"/></xsl:variable>
+<!--
+  <xsl:variable name="pubname"><xsl:value-of select="/search-and-results/configuration/publication[@pid='all']/name"/></xsl:variable>
+-->
+  <h3>Search Results (within <xsl:value-of select="$pubid"/><!--<xsl:value-of select="$pubname"/>-->)</h3>
   <xsl:choose>
     <xsl:when test="hits">
 <p>
-      Documents <xsl:value-of select="pages/page[@type='current']/@start"/> - <xsl:value-of select="pages/page[@type='current']/@end"/> of <xsl:value-of select="@total-hits"/> matches
+      <xsl:value-of select="pages/page[@type='current']/@start"/> - <xsl:value-of select="pages/page[@type='current']/@end"/> of <xsl:value-of select="@total-hits"/> results
 </p>
-      <table width="90%" cellpadding="4" border="1">
+      <table width="100%" border="0">
+<!--
         <tr>
           <td>&#160;</td><td>Score</td><td>URL resp. File</td>
         </tr>
+-->
       <xsl:apply-templates select="hits/hit"/>
       </table>
     </xsl:when>
@@ -109,21 +125,26 @@
 
 <xsl:template match="hit">
 <tr>
+<!--
   <td valign="top"><xsl:value-of select="@pos"/></td>
-  <td valign="top"><xsl:value-of select="score/@percent"/>%</td>
+-->
+  <td valign="top"><b><xsl:value-of select="score/@percent"/>%</b></td>
+  <td valign="top">&#160;&#160;&#160;</td>
   <xsl:choose>
     <xsl:when test="path">
       <td>File: <xsl:value-of select="path"/></td>
     </xsl:when>
     <xsl:when test="uri">
       <td>
-        Title: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
+        <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
         <br />
-        <font size="-1">Excerpt: <xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
+        <font size="-1"><xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
         <br />
         <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="uri"/></a></font>
-        <br />
+        <br /><br />
+<!--
         <font size="-1">Mime-Type: <xsl:apply-templates select="mime-type"/><xsl:apply-templates select="no-mime-type"/></font>
+-->
       </td>
     </xsl:when>
     <xsl:otherwise>
@@ -133,6 +154,7 @@
 </tr>
 </xsl:template>
 
+<!--
 <xsl:template match="title">
 <xsl:value-of select="."/>
 </xsl:template>

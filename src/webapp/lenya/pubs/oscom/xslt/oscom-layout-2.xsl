@@ -141,8 +141,8 @@ content="text/html; charset=iso-latin-1" />
     
 </style>
 </head>
-<body bgcolor="#ffffff" text="#000000" leftmargin="0" topmargin="0"
-marginwidth="0" marginheight="0">
+<body bgcolor="#ffffff" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
 <!--top row: main navigation-->
 <table cellspacing="0" cellpadding="0" border="0" width="770">
 <tbody>
@@ -151,17 +151,24 @@ marginwidth="0" marginheight="0">
 <table cellspacing="0" cellpadding="0" border="0" width="100%" bgcolor="{$oscombarcolor}">
 <tbody>
 <tr>
-<td valign="bottom" class="sitelogoarea"><a
-href="http://www.oscom.org/"><img
-src="oscom-proposals_files/oscom-logo.png" width="329" height="54"
-alt="OSCOM - Open Source Content Management" border="0" /></a></td>
-<td valign="top" width="100%"><img
-src="oscom-proposals_files/spacer.gif" width="250" height="42"
-border="0" /></td>
-<td valign="middle" width="235">
-<!-- We can put topical banners here --><img
-src="oscom-proposals_files/spacer.gif" width="1" height="1"
-border="0" /></td>
+<td valign="bottom" class="sitelogoarea">
+<a href="http://www.oscom.org/">
+  <img src="oscom-proposals_files/oscom-logo.png" width="329" height="54" alt="OSCOM - Open Source Content Management" border="0" />
+</a>
+</td>
+<td valign="middle">
+  <img src="oscom-proposals_files/spacer.gif" width="100" height="1" border="0" />
+</td>
+<td valign="middle">
+<!-- We can put topical banners here -->
+<form method="get" action="">
+<input type="hidden" name="publication-id" value="all" />
+<input type="text" name="queryString" /><input type="submit" name="find" value="Search" />
+</form>
+<!--
+<img src="oscom-proposals_files/spacer.gif" width="1" height="1" border="0" />
+-->
+</td>
 </tr>
 </tbody>
 </table>
@@ -244,6 +251,8 @@ border="0" /></td>
 </tr>
 </tbody>
 </table>
+
+
 
 <table border="0" cellpadding="0" cellspacing="0" width="770">
 <tbody>
