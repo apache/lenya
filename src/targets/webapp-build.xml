@@ -196,6 +196,8 @@
 
   <!-- Cleans the build directory, with the exception of target.reset.excludes -->
   <target name="clean" depends="init" description="Cleans the build directories">
+    <mkdir dir="${build.root}"/> <!-- Create dir such that build process does not fail if build dir does not exist -->
+    <!--<echo>Delete directory ${build.root}</echo>-->
     <delete includeEmptyDirs="true">
       <fileset dir="${build.root}" excludes="${target.reset.excludes}" />
     </delete>
