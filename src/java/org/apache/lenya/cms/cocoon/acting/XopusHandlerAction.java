@@ -1,12 +1,15 @@
 package org.wyona.cms.cocoon.acting;
 
-import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.AbstractAction;
-import org.apache.cocoon.Constants;
-import java.util.Map;
 import java.util.HashMap;
-// import org.apache.cocoon.environment.Request;
-// import org.xml.sax.EntityResolver;
+import java.util.Map;
+
+import org.apache.avalon.framework.parameters.Parameters;
+
+import org.apache.cocoon.acting.ComposerAction;
+import org.apache.cocoon.Constants;
+import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.SourceResolver;
+
 // import java.io.BufferedReader;
 // import java.io.BufferedWriter;
 // import java.io.File;
@@ -28,14 +31,12 @@ import java.util.HashMap;
 // import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 // import org.apache.cocoon.acting.ValidatorActionHelper;
 // import org.apache.cocoon.environment.Context;
-import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
+// import org.apache.cocoon.environment.Request;
 // import org.apache.cocoon.environment.Session;
 // import org.apache.cocoon.environment.Source;
-import org.apache.cocoon.environment.SourceResolver;
 // import org.apache.cocoon.util.Tokenizer;
+// import org.xml.sax.EntityResolver;
 // import org.w3c.dom.Document;
-// import org.wyona.util.Stack;
 
 /**
  * Interfaces with Xopus: handles the requests and replies to them
@@ -44,7 +45,7 @@ import org.apache.cocoon.environment.SourceResolver;
  * @created 2002.02.21
  * @version 0.1
  */
-public abstract class XopusHandlerAction extends AbstractAction {
+public class XopusHandlerAction extends ComposerAction {
   public java.util.Map act (Redirector redirector, 
                   SourceResolver resolver, 
                   Map objectModel, 
@@ -53,9 +54,9 @@ public abstract class XopusHandlerAction extends AbstractAction {
     Map sitemapParams = new HashMap();
     sitemapParams.put("world", "hello");
 
-    Request request = (Request) objectModel.get(Constants.REQUEST_OBJECT);
-
-    request.setAttribute("hello", "world");
+//     Request request = (Request) objectModel.get(Constants.REQUEST_OBJECT);
+// 
+//     request.setAttribute("hello", "world");
 
     return sitemapParams;
   }
