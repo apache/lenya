@@ -15,7 +15,7 @@
  *
  */
 
-/* @version $Id: DefaultSiteTree.java,v 1.44 2004/04/23 16:41:48 andreas Exp $ */
+/* @version $Id: DefaultSiteTree.java,v 1.45 2004/08/16 12:22:42 andreas Exp $ */
 
 package org.apache.lenya.cms.publication;
 
@@ -531,7 +531,7 @@ public class DefaultSiteTree implements SiteTree {
             refDocumentId);
         newParent = this.getNode(parentId + "/" + id);
         if (newParent == null) {
-            throw new SiteTreeException("The added node  " + newParent.toString() + " not found");
+            throw new SiteTreeException("The added node was not found.");
         }
         SiteTreeNode[] children = subtreeRoot.getChildren();
         if (children == null) {
