@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.3 2003/07/29 14:26:39 andreas Exp $
+$Id: PolicyBuilder.java,v 1.4 2003/07/30 15:10:08 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Group;
-import org.apache.lenya.cms.ac.Machine;
+import org.apache.lenya.cms.ac.IPRange;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.xml.DocumentHelper;
@@ -99,7 +99,7 @@ public class PolicyBuilder {
     protected static final String USER_ELEMENT = "user";
     protected static final String ROLE_ELEMENT = "role";
     protected static final String WORLD_ELEMENT = "world";
-    protected static final String MACHINE_ELEMENT = "machine";
+    protected static final String IP_RANGE_ELEMENT = "ip-range";
     protected static final String ID_ATTRIBUTE = "id";
 
     /**
@@ -189,8 +189,8 @@ public class PolicyBuilder {
             accreditable = controller.getGroupManager().getGroup(id);
         } else if (elementName.equals(WORLD_ELEMENT)) {
             accreditable = World.getInstance();
-        } else if (elementName.equals(MACHINE_ELEMENT)) {
-            accreditable = new Machine(id);
+        } else if (elementName.equals(IP_RANGE_ELEMENT)) {
+            accreditable = controller.getIPRangeManager().getIPRange(id);
         }
 
         if (accreditable == null) {
@@ -259,9 +259,9 @@ public class PolicyBuilder {
             id = ((Group) accreditable).getId();
         } else if (accreditable instanceof World) {
             localName = WORLD_ELEMENT;
-        } else if (accreditable instanceof Machine) {
-            localName = MACHINE_ELEMENT;
-            id = ((Machine) accreditable).getIp();
+        } else if (accreditable instanceof IPRange) {
+            localName = IP_RANGE_ELEMENT;
+            id = ((IPRange) accreditable).getId();
         }
 
         if (localName == null) {
