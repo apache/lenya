@@ -42,9 +42,9 @@ public class UserPassword extends AccessControlUsecase {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
         
-        String checkOldPassword = getParameter(CHECK_PASSWORD);
+        String checkOldPassword = getParameterAsString(CHECK_PASSWORD);
         if (checkOldPassword != null && checkOldPassword.equals(Boolean.toString(true))) {
-            String oldPassword = getParameter(OLD_PASSWORD);
+            String oldPassword = getParameterAsString(OLD_PASSWORD);
             boolean authenticated = this.user.authenticate(oldPassword);
             if (!authenticated) {
                 addErrorMessage("The old password is not correct.");
@@ -59,19 +59,19 @@ public class UserPassword extends AccessControlUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        this.user.setPassword(getParameter(NEW_PASSWORD));
+        this.user.setPassword(getParameterAsString(NEW_PASSWORD));
     }
 
     private User user;
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
-    public void setParameter(String name, String value) {
+    public void setParameter(String name, Object value) {
         super.setParameter(name, value);
 
         if (name.equals(UserProfile.USER_ID)) {
-            String userId = value;
+            String userId = (String) value;
             this.user = getUserManager().getUser(userId);
             if (this.user == null) {
                 throw new RuntimeException("User [" + userId + "] not found.");
@@ -85,8 +85,8 @@ public class UserPassword extends AccessControlUsecase {
      * @param usecase The usecase.
      */
     protected static void checkNewPassword(AccessControlUsecase usecase) {
-        String password = usecase.getParameter(UserPassword.NEW_PASSWORD);
-        String confirmPassword = usecase.getParameter(UserPassword.CONFIRM_PASSWORD);
+        String password = usecase.getParameterAsString(UserPassword.NEW_PASSWORD);
+        String confirmPassword = usecase.getParameterAsString(UserPassword.CONFIRM_PASSWORD);
 
         if (!password.equals(confirmPassword)) {
             usecase.addErrorMessage("Password and confirmed password are not equal.");

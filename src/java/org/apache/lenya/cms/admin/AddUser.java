@@ -49,10 +49,10 @@ public class AddUser extends AccessControlUsecase {
      */
     void validate() throws UsecaseException {
 
-        String userId = getParameter(UserProfile.USER_ID);
-        String email = getParameter(UserProfile.EMAIL);
-        String className = getParameter(CLASS_NAME);
-        String ldapId = getParameter(LDAP_ID);
+        String userId = getParameterAsString(UserProfile.USER_ID);
+        String email = getParameterAsString(UserProfile.EMAIL);
+        String className = getParameterAsString(CLASS_NAME);
+        String ldapId = getParameterAsString(LDAP_ID);
 
         User existingUser = getUserManager().getUser(userId);
 
@@ -99,18 +99,18 @@ public class AddUser extends AccessControlUsecase {
     protected void doExecute() throws Exception {
         File configDir = ((FileUserManager) getUserManager()).getConfigurationDirectory();
 
-        String userId = getParameter(UserProfile.USER_ID);
-        String fullName = getParameter(UserProfile.FULL_NAME);
-        String description = getParameter(UserProfile.DESCRIPTION);
-        String email = getParameter(UserProfile.EMAIL);
-        String className = getParameter(CLASS_NAME);
+        String userId = getParameterAsString(UserProfile.USER_ID);
+        String fullName = getParameterAsString(UserProfile.FULL_NAME);
+        String description = getParameterAsString(UserProfile.DESCRIPTION);
+        String email = getParameterAsString(UserProfile.EMAIL);
+        String className = getParameterAsString(CLASS_NAME);
 
         User user;
         if (className.equals(LDAPUser.class.getName())) {
-            String ldapId = getParameter(LDAP_ID);
+            String ldapId = getParameterAsString(LDAP_ID);
             user = new LDAPUser(configDir, userId, email, ldapId);
         } else {
-            String password = getParameter(UserPassword.NEW_PASSWORD);
+            String password = getParameterAsString(UserPassword.NEW_PASSWORD);
             user = new FileUser(configDir, userId, fullName, email, "");
             user.setName(fullName);
             user.setPassword(password);

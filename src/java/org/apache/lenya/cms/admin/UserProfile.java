@@ -40,7 +40,7 @@ public class UserProfile extends AccessControlUsecase {
      */
     protected void doCheckExecutionConditions() throws Exception {
         
-        String email = getParameter(UserProfile.EMAIL);
+        String email = getParameterAsString(UserProfile.EMAIL);
         if (email.length() == 0) {
             addErrorMessage("Please enter an e-mail address.");
         }
@@ -52,9 +52,9 @@ public class UserProfile extends AccessControlUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         
-        String fullName = getParameter(UserProfile.FULL_NAME);
-        String description = getParameter(UserProfile.DESCRIPTION);
-        String email = getParameter(UserProfile.EMAIL);
+        String fullName = getParameterAsString(UserProfile.FULL_NAME);
+        String description = getParameterAsString(UserProfile.DESCRIPTION);
+        String email = getParameterAsString(UserProfile.EMAIL);
         
         getUser().setEmail(email);
         getUser().setName(fullName);
@@ -74,13 +74,13 @@ public class UserProfile extends AccessControlUsecase {
     }
     
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
-    public void setParameter(String name, String value) {
+    public void setParameter(String name, Object value) {
         super.setParameter(name, value);
         
         if (name.equals(USER_ID)) {
-            String userId = value;
+            String userId = (String) value;
             this.user = getUserManager().getUser(userId);
             if (this.user == null) {
                 throw new RuntimeException("User [" + userId + "] not found.");
