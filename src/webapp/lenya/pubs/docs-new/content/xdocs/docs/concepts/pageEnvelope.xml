@@ -7,6 +7,7 @@
     <authors>
       <person name="Christian Egli" email="christian.egli@wyona.org"/>
       <person name="Gregor J. Rothfuss" email="gregor.rothfuss@wyona.org"/>
+      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/>
     </authors> 
     <notice></notice> 
     <abstract>Proposal for a standard Page envelope which carries all
@@ -78,6 +79,23 @@
     <li>no_referer</li>   
            </ul>
     </section>
+    
+<section><title>The Java API</title>
+
+<p>
+The Java API of the page envelope consists of the following classes:
+</p>
+<dl>
+  <dt><code>org.apache.lenya.cms.publication.PageEvelope</code></dt>
+  <dd>An object of this class represents a page envelope.</dd>
+  
+  <dt><code>org.apache.lenya.cms.cocoon.acting.PageEvelopeAction</code></dt>
+  <dd>This action makes the page envelope attributes available as sitemap parameters.</dd>
+
+
+</dl>
+
+</section>
 
     <section>
       <title>TODO</title>
