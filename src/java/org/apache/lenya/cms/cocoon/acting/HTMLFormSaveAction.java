@@ -60,7 +60,10 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.xml.DocumentHelper;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import org.xmldb.common.xml.queries.XObject;
 import org.xmldb.common.xml.queries.XPathQuery;
 import org.xmldb.common.xml.queries.XPathQueryFactory;
 import org.xmldb.common.xml.queries.XUpdateQuery;
@@ -73,7 +76,7 @@ import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.19 2003/10/14 23:00:32 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.20 2003/10/19 11:15:20 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -81,6 +84,16 @@ import org.apache.lenya.xml.XPath;
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
     org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(HTMLFormSaveAction.class);
+
+    class XUpdateAttributes {
+        public String xupdateAttrExpr = "";
+        public String tagID = "";
+
+        public XUpdateAttributes(String xupdateAttrExpr, String tagID) {
+            this.xupdateAttrExpr = xupdateAttrExpr;
+            this.tagID = tagID;
+        }
+    }
 
     /**
      * Describe <code>configure</code> method here.
@@ -147,8 +160,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
                             // Check if node exists
                             xpath.setQString(select);
-                            org.xmldb.common.xml.queries.XObject result = xpath.execute(document);
-                            org.w3c.dom.NodeList selectionNodeList = result.nodeset();
+                            XObject result = xpath.execute(document);
+                            NodeList selectionNodeList = result.nodeset();
                             if (selectionNodeList.getLength() == 0) {
                                 log.warn(".act(): Node does not exist (might have been deleted during update): " + select);
                             } else {
@@ -164,17 +177,22 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                               xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
                             } else {
                               // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new and remove original
-                              String namespace = selectionNodeList.item(0).getNamespaceURI();
+                              Node nodeToCopy = selectionNodeList.item(0);
+                              String namespace = nodeToCopy.getNamespaceURI();
                               log.error(".act(): Update Node (namespace): " + namespace);
                               String namespaceAttribute = "";
                               if (namespace != null) {
-                                namespaceAttribute = "namespace=\"" + namespace + "\"";
+                                namespaceAttribute = " namespace=\"" + namespace + "\"";
                               }
-                              String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\" " + namespaceAttribute  + ">" + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
+                              // WARNING: getAttributes adds the attribute tagID with value "temp"
+                              XUpdateAttributes xa = getAttributes(nodeToCopy);
+                              String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\"" + namespaceAttribute  + ">" + xa.xupdateAttrExpr + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
                               log.error(".act(): Update Node (insert-after): " + xupdateInsertAfter);
                               String xupdateRemove = "<xupdate:remove select=\"" + select  + " \"/>";
                               log.error(".act(): Update Node (remove): " + xupdateRemove);
-                              xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + "</xupdate:modifications>");
+                              String xupdateUpdateAttribute = "<xupdate:update select=\"" + new XPath(select).removePredicates(select) + "[@tagID='temp']/@tagID"  + " \">" + xa.tagID  + "</xupdate:update>";
+                              log.error(".act(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
+                              xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + xupdateUpdateAttribute  + "</xupdate:modifications>");
 
                               //xq.setQString("<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>");
                             }
@@ -232,5 +250,36 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 return hmap;
             }
         }
+    }
+    /**
+     * Get attributes
+     */
+    private XUpdateAttributes getAttributes(Node node) {
+        String xupdateString = "";
+        String tagID = "";
+        org.w3c.dom.NamedNodeMap attributes = node.getAttributes();
+        if (attributes != null) {
+            for (int i = 0;i < attributes.getLength();i++) {
+              org.w3c.dom.Attr attribute = (org.w3c.dom.Attr)attributes.item(i);
+              log.error(".getAttributes(): " + attribute.getName() + " " + attribute.getValue());
+              if (!attribute.getName().equals("tagID")) {
+                  String namespace = attribute.getNamespaceURI();
+                  log.error(".getAttributes(): Namespace: " + namespace);
+                  String namespaceAttribute = "";
+                  if (namespace != null) {
+                      namespaceAttribute = " namespace=\"" + namespace + "\"";
+                  }
+                  xupdateString = xupdateString + "<xupdate:attribute name=\"" + attribute.getName()  + "\"" + namespaceAttribute  + ">" + attribute.getValue()  + "</xupdate:attribute>";
+              } else {
+                  xupdateString = xupdateString + "<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>";
+                  tagID = attribute.getValue();
+              }
+            }
+        } else {
+            xupdateString = "";
+        }
+        log.error(".getAttributes(): " + xupdateString);
+
+        return new XUpdateAttributes(xupdateString, tagID);
     }
 }
