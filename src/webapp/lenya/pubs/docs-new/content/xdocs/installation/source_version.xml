@@ -107,12 +107,23 @@ your_home (or c:\ on Windows, NOT My Dcouments)
   </li>
   <li>
     <p>
+      <strong>Copy the Cocoon build properties supplied by Lenya</strong>
+    </p>
+    <p>
+      Copy the files
+    </p>
+    <ul>
+    <li><code>local.build.properties</code></li>
+    <li><code>local.blocks.properties</code></li>
+    </ul>
+    <p>
+      from <code>$LENYA_HOME/src/cocoon</code> to <code>$COCOON_HOME</code>.
+    </p>
+  </li>
+  <li>
+    <p>
     <strong>Compile Cocoon</strong>
     </p>
-    <p>You need to build Cocoon with the local.blocks.properties and
-    local.build.properties which are optimized for lenya</p>
-    <p>Copy $LENYA_HOME/src/cocoon/* to $COCOON_HOME/.</p>
-
     <p><strong>MS Windows</strong></p>
 <source>
 $COCOON_HOME > build.bat
