@@ -82,6 +82,13 @@ public interface ResourcesManager {
     void addResource(Part part, Map metadata) throws Exception;
 
     /**
+     * Delete a resource from the document.
+     * @param name The filename of the resource.
+     * @throws Exception if an error occurs
+     */
+    void deleteResource(String name) throws Exception;
+
+    /**
      * Get the path to the resources.
      * @return the path to the resources
      * @deprecated the resource manager should not expose storage details.

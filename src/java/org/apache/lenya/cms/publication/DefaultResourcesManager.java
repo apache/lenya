@@ -379,4 +379,18 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.ResourcesManager#deleteResource(java.lang.String)
+     */
+    public void deleteResource(String name) throws Exception {
+        File[] resources = getResources();
+        for (int i = 0; i < resources.length; i++) {
+            if (resources[i].getName().equals(name)) {
+                File metaFile = getMetaFile(resources[i]);
+                metaFile.delete();
+                resources[i].delete();
+            }
+        }
+    }
+
 }
