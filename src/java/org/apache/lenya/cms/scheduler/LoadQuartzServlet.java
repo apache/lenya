@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.23 2003/04/24 13:52:59 gregor Exp $
+ * $Id: LoadQuartzServlet.java,v 1.24 2003/05/16 18:34:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,7 +69,7 @@ import org.apache.lenya.xml.DocumentHelper;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.23 2003/04/24 13:52:59 gregor Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.24 2003/05/16 18:34:29 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -255,37 +255,44 @@ public class LoadQuartzServlet extends HttpServlet {
             log.debug("documentUri from referer: " + documentUri);
         }
 
-        String startDay = request.getParameter("trigger.startDay");
-        String startMonth = request.getParameter("trigger.startMonth");
-        String startYear = request.getParameter("trigger.startYear");
-        String startHour = request.getParameter("trigger.startHour");
-        String startMin = request.getParameter("trigger.startMin");
-
-        Date startTime = null;
-
-        try {
-            startTime = new GregorianCalendar(Integer.parseInt(startYear),
-                    
-                // Month value is 0-based
-                Integer.parseInt(startMonth) - 1, Integer.parseInt(startDay),
-                    Integer.parseInt(startHour), Integer.parseInt(startMin)).getTime();
-        } catch (NumberFormatException e) {
-            log.error("NumberFormatException with parameters " +
-                "startYear, startMonth, startDay, startHour, startMin: " + startDay + ", " +
-                startMonth + ", " + startDay + ", " + startHour + ", " + startMin);
-        }
-
         // check if the request wants to submit, modify or delete a job.
         if (action == null) {
             // simply return all scheduled jobs, which is done below
         }
-        else if (action.equals("Add")) {
-            getScheduler().addJob(documentUri, publicationId, startTime, request);
-            log.debug(".handleRequest() Add : server-port:" + request.getServerPort());
-        }
-        else if (action.equals("Modify")) {
-            getScheduler().deleteJob(jobId, publicationId);
-            getScheduler().addJob(documentUri, publicationId, startTime, request);
+        
+        else if (action.equals("Add") || action.equals("Modify")) {
+        
+            String startDay = request.getParameter("trigger.startDay");
+            String startMonth = request.getParameter("trigger.startMonth");
+            String startYear = request.getParameter("trigger.startYear");
+            String startHour = request.getParameter("trigger.startHour");
+            String startMin = request.getParameter("trigger.startMin");
+
+            Date startTime = null;
+
+            try {
+                startTime = new GregorianCalendar(
+                    Integer.parseInt(startYear),
+                    Integer.parseInt(startMonth) - 1,  // Month value is 0-based
+                    Integer.parseInt(startDay),
+                    Integer.parseInt(startHour),
+                    Integer.parseInt(startMin)).getTime();
+            } catch (NumberFormatException e) {
+                log.error("NumberFormatException with parameters " +
+                    "startYear, startMonth, startDay, startHour, startMin: " + startDay + ", " +
+                    startMonth + ", " + startDay + ", " + startHour + ", " + startMin, e);
+                throw new IOException("Parsing scheduling date/time failed!");
+            }
+
+            if (action.equals("Add")) {
+                getScheduler().addJob(documentUri, publicationId, startTime, request);
+                log.debug(".handleRequest() Add : server-port:" + request.getServerPort());
+            }
+            else if (action.equals("Modify")) {
+                getScheduler().deleteJob(jobId, publicationId);
+                getScheduler().addJob(documentUri, publicationId, startTime, request);
+            }
+        
         }
         else if (action.equals("Delete")) {
             getScheduler().deleteJob(jobId, publicationId);

@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.17 2003/04/24 13:52:59 gregor Exp $
+ * $Id: TaskJob.java,v 1.18 2003/05/16 18:34:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,7 +57,6 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.Task;
 import org.apache.lenya.cms.task.TaskManager;
@@ -68,6 +67,7 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.lenya.cms.publication.Publication;
 import org.w3c.dom.Element;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -87,10 +87,9 @@ public class TaskJob
 
     protected Parameters getParameters(String servletContextPath, HttpServletRequest request) {
         String taskId = request.getParameter(JobDataMapWrapper.getFullName(TASK_PREFIX, TASK_ID));
-
-        if ((taskId == null) || taskId.equals("")) {
-            log.error("No task-id is provided!", new IllegalStateException());
-        }
+        
+        assert taskId != null;
+        assert !"".equals(taskId);
 
         log.debug("Creating data map for job " + taskId);
 
@@ -100,15 +99,9 @@ public class TaskJob
         // the publicationID is fetched from the session
         String publicationId = (String) request.getSession().getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
 
-        if ((publicationId == null) || publicationId.equals("")) {
-            log.error("No publication ID provided! ", new IllegalStateException());
-            publicationId = "no_such_publication";
-        }
-
-        // FIXME: Don't translate parameters
-        String publicationPath = servletContextPath + PublishingEnvironment.PUBLICATION_PREFIX +
-            publicationId + File.separator;
-
+        assert publicationId != null;
+        assert !"".equals(publicationId);
+        
         Parameters parameters = new Parameters();
 
         parameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT, servletContextPath);
@@ -192,8 +185,9 @@ public class TaskJob
 
         String contextPath = map.get(Task.PARAMETER_SERVLET_CONTEXT);
         String publicationId = map.get(Task.PARAMETER_PUBLICATION_ID);
-        String publicationPath = PublishingEnvironment.getPublicationPath(contextPath, publicationId);
-        TaskManager manager = new TaskManager(publicationPath);
+        
+        Publication publication = new Publication(publicationId, contextPath);
+        TaskManager manager = new TaskManager(publication.getDirectory().getAbsolutePath());
         Task task = manager.getTask(taskId);
 
         try {

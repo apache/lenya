@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.8 2003/05/14 16:33:01 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.9 2003/05/16 18:34:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -187,6 +187,7 @@ public class DefaultSiteTree
     public void deleteNode(String id) {}
 
     private Node getNodeInternal(String documentId) {
+        
         StringTokenizer st = new StringTokenizer(documentId, "/");
 	ArrayList ids = new ArrayList();
 	while (st.hasMoreTokens()) {
@@ -201,6 +202,9 @@ public class DefaultSiteTree
     }
 
     public SiteTreeNode getNode(String documentId) {
+        
+        assert documentId != null;
+        
 	Node node = getNodeInternal(documentId);
 	if (node == null) {
 	    return null;
