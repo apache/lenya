@@ -1,5 +1,5 @@
 /*
-$Id: ResourcesManager.java,v 1.5 2003/09/11 08:56:52 andreas Exp $
+$Id: ResourcesManager.java,v 1.6 2003/09/11 17:23:59 andreas Exp $
 <License>
 
  ============================================================================
@@ -114,7 +114,22 @@ public class ResourcesManager {
                 return file.isFile() && !file.getName().endsWith(RESOURCES_META_SUFFIX);
             }
         };
-        return getPath().listFiles(filter);
+        
+        return getFiles(filter);
+    }
+
+    /**
+     * Returns the resources that are matched by a certain file filter.
+     * @param filter A file filter.
+     * @return A file array.
+     */
+    protected File[] getFiles(FileFilter filter) {
+        File[] files = new File[0];
+        if (getPath().isDirectory()) {
+            files = getPath().listFiles(filter);
+        }
+        
+        return files;
     }
 
     /**
@@ -129,6 +144,6 @@ public class ResourcesManager {
                 return file.isFile() && file.getName().endsWith(RESOURCES_META_SUFFIX);
             }
         };
-        return getPath().listFiles(filter);
+        return getFiles(filter);
     }
 }
