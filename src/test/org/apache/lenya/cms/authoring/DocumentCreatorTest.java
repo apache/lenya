@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreatorTest.java,v 1.4 2003/07/15 14:11:10 egli Exp $
+$Id: DocumentCreatorTest.java,v 1.5 2003/08/07 16:08:21 egli Exp $
 <License>
 
  ============================================================================
@@ -62,17 +62,12 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
+import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 
-import org.xml.sax.SAXException;
-
 import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 
 /**
@@ -112,12 +107,10 @@ public class DocumentCreatorTest extends TestCase {
     /**
      * Tests whatever you want.
      * @throws CreatorException when something went wrong.
-     * @throws ParserConfigurationException when something went wrong.
-     * @throws SAXException when something went wrong.
-     * @throws IOException when something went wrong.
+     * @throws SiteTreeException when something went wrong.
      */
     public void testCreator()
-        throws CreatorException, ParserConfigurationException, SAXException, IOException {
+        throws CreatorException, SiteTreeException {
         Publication publication = PublicationHelper.getPublication();
         DocumentCreator creator = new DocumentCreator();
         File authoringDirectory = new File(publication.getDirectory(), AUTHORING_DIR);
@@ -131,7 +124,7 @@ public class DocumentCreatorTest extends TestCase {
 
         File sitetreeFile = new File(authoringDirectory, TREE_FILE);
 
-        SiteTree sitetree = new DefaultSiteTree(sitetreeFile);
+        SiteTree sitetree = publication.getSiteTree(AREA);
         SiteTreeNode node = sitetree.getNode(PARENT_ID + "/" + CHILD_ID);
         assertNotNull(node);
         System.out.println("Sitetree node was created: " + node.getId() + " (label: " +
@@ -147,6 +140,7 @@ public class DocumentCreatorTest extends TestCase {
     protected static final String DOCUMENT_TYPE = "simple";
     protected static final String CREATED_FILE = "tutorial/test-document/index.xml";
     protected static final String DOCUMENT_LANGUAGE = "en";
+    protected static final String AREA = "authoring";
 
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
