@@ -81,7 +81,10 @@
       <map:match pattern="admin.addUser" type="usecase">
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
-      <map:match pattern="userProfile" type="usecase">
+      <map:match pattern="admin.userProfile" type="usecase">
+        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+      </map:match>
+      <map:match pattern="admin.changePassword" type="usecase">
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
