@@ -35,7 +35,7 @@
         <item>-----------------</item>
       </block>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>"/bitfluxeditor/index.html?url-xml="+domain_prefix+"/magazin/gesundheit/2002/0508/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.xsd&amp;url-css="+domain_prefix+"/css/article.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/XopusInterface"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
+        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/magazin/gesundheit/2002/0508/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.xsd&amp;url-css="+domain_prefix+"/css/article.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/XopusInterface"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
       </block>
       <block>
         <item>-----------------</item>

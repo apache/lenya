@@ -24,11 +24,11 @@
 </style>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
       <title>unipublic -</title>
-      <link href="http://212.71.98.102:9999/wyona-cms/unipublic/unipublic.css" rel="stylesheet" type="text/css"/>
-      <link href="http://212.71.98.102:9999/wyona-cms/unipublic/unipublic.mac.css" type="text/css" rel="stylesheet"/>
-      <base href="http://212.71.98.102:9999/"/>
+      <link href="/wyona-cms/unipublic/unipublic.css" rel="stylesheet" type="text/css"/>
+      <link href="/wyona-cms/unipublic/unipublic.mac.css" type="text/css" rel="stylesheet"/>
+      <base href="/"/>
     </head>
-    <body background="http://212.71.98.102:9999/wyona-cms/unipublic/img_unipublic/bg.gif" bgcolor="#FFFFFF" vlink="#666666" alink="#993300" link="#333399" text="#333333">
+    <body background="/wyona-cms/unipublic/img_unipublic/bg.gif" bgcolor="#FFFFFF" vlink="#666666" alink="#993300" link="#333399" text="#333333">
       <center>
         <form method="post" action="http://www.unizh.ch/cgi-bin/unisearch">
           <input name="url" value="www.unipublic.unizh.ch" type="hidden"/>
@@ -36,20 +36,20 @@
           <table bgcolor="#666699" cellpadding="0" cellspacing="0" border="0" width="585">
             <tr>
               <td align="left" valign="middle" bgcolor="#999966">
-                <img alt=" " src="http://212.71.98.102:9999/wyona-cms/unipublic/img_uni/1.gif" width="3" height="20"/>
+                <img alt=" " src="/wyona-cms/unipublic/img_uni/1.gif" width="3" height="20"/>
                 <a href="http://www.unizh.ch/index.html">
-                  <img width="31" height="17" border="0" alt="Home" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_uni/oliv_home.gif"/>
+                  <img width="31" height="17" border="0" alt="Home" src="/wyona-cms/unipublic/img_uni/oliv_home.gif"/>
                 </a>
               </td>
               <td width="1" bgcolor="#999966"> </td>
               <td align="right" valign="middle" bgcolor="#999966">
                 <a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">
-                  <img align="middle" width="41" height="17" border="0" alt="Kontakt" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_uni/oliv_kontakt.gif"/>
+                  <img align="middle" width="41" height="17" border="0" alt="Kontakt" src="/wyona-cms/unipublic/img_uni/oliv_kontakt.gif"/>
                 </a>
-                <img align="middle" width="7" height="17" alt="|" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_uni/oliv_strich.gif"/>
-                <img align="middle" width="37" height="17" alt="Suchen" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_uni/oliv_suchen.gif"/>
+                <img align="middle" width="7" height="17" alt="|" src="/wyona-cms/unipublic/img_uni/oliv_strich.gif"/>
+                <img align="middle" width="37" height="17" alt="Suchen" src="/wyona-cms/unipublic/img_uni/oliv_suchen.gif"/>
                 <input size="18" name="keywords" type="text"/>
-                <input align="middle" name="search" border="0" type="image" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_uni/oliv_go.gif"/>
+                <input align="middle" name="search" border="0" type="image" src="/wyona-cms/unipublic/img_uni/oliv_go.gif"/>
               </td>
               <td width="57" bgcolor="#F5F5F5"> </td>
             </tr>
@@ -57,7 +57,7 @@
               <td height="39" align="right"> </td>
               <td colspan="2" valign="top" height="39" align="right">
                 <a href="http://www.unizh.ch/index.html">
-                  <img border="0" alt="Universität Zürich" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_uni/unilogoklein.gif" width="235" height="29"/>
+                  <img border="0" alt="Universität Zürich" src="/wyona-cms/unipublic/img_uni/unilogoklein.gif" width="235" height="29"/>
                 </a>
               </td>
               <td height="39" width="57"> </td>
@@ -71,7 +71,7 @@
             <td valign="top" align="center" width="187" height="16">
               <center>
                 <a href="../../../../">
-                  <img border="0" alt="Unipublic" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_unipublic/t_unipublic_ALT.gif" width="108" height="52"/>
+                  <img border="0" alt="Unipublic" src="/wyona-cms/unipublic/img_unipublic/t_unipublic_ALT.gif" width="108" height="52"/>
                 </a>
               </center>
             </td>
@@ -87,7 +87,7 @@
           </td>
             <td width="388">
               <a href="../">
-                <img border="0" alt="gesundheit" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_unipublic/r_gesundheit.gif" width="80" height="13"/>
+                <img border="0" alt="gesundheit" src="/wyona-cms/unipublic/img_unipublic/r_gesundheit.gif" width="80" height="13"/>
               </a>
             </td>
           </tr>
@@ -99,7 +99,7 @@
                     <table cellpadding="0" cellspacing="0" border="0" width="180">
                       <tr valign="top">
                         <td width="180">
-                          <img alt="Muscheln1" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_unipublic/t_teil7.gif" width="187" height="19"/>
+                          <img alt="Muscheln1" src="/wyona-cms/unipublic/img_unipublic/t_teil7.gif" width="187" height="19"/>
                         </td>
                       </tr>
                       <tr valign="top">
@@ -109,7 +109,7 @@
                       </tr>
                       <tr valign="top">
                         <td width="180">
-                          <img align="right" src="http://212.71.98.102:9999/wyona-cms/unipublic/img_unipublic/t_teil8.gif" width="181" height="27"/>
+                          <img align="right" src="/wyona-cms/unipublic/img_unipublic/t_teil8.gif" width="181" height="27"/>
                         </td>
                       </tr>
                     </table>
@@ -144,7 +144,7 @@
               <br/>
               </font>
                 </a>
-                <img alt=" " src="http://212.71.98.102:9999/wyona-cms/unipublic/img_unipublic/999999.gif" width="390" height="1"/>
+                <img alt=" " src="/wyona-cms/unipublic/img_unipublic/999999.gif" width="390" height="1"/>
                 <br/>
                 <font size="1">©Universität Zürich, , <a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">Impressum</a></font>
               </div>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<bxst:structure xmlns:bxst="http://bitflux.org/structure/1.0">    
+    
+        
+    	<bxst:section name="objects"  where="Mediaobject.ID = $ID">
+
+						  	<bxst:table name="Mediaobject" thatfield="foreignobjectid" objectfield="objectname" fields="ID , objectinfo_title , objectinfo_keywordset , objectinfo_abstract , caption_main , textobject_phrase , date_format(Mediaobject.changed,'%e.%c.%Y  (%H:%i:%s)') as changed ">
+					        	<bxst:table name="Imageobject" thisfield="foreignmediaobjectid"  								fields="ID , imagedata_fileref , imagedata_filesize , imagedata_width , imagedata_height "
+								/>
+
+			</bxst:table>
+<!--        
+ 			    	<bxst:table name="Document" fields="ID">
+		    	<bxst:table name="Document2Object" nofields="yes">				
+			        <bxst:table thatfield="foreignobjectid" objectfield="objectname" name="Article" fields="ID , title"/>
+					<bxst:table thatfield="foreignobjectid" objectfield="objectname"  name="Mediaobject" fields="ID">
+            			<bxst:table name="Imageobject" thisidfield="foreignmediaobjectid"/>
+					</bxst:table>
+				</bxst:table>
+				</bxst:table>
+-->
+		</bxst:section>
+        
+   	</bxst:structure>
+
+
+
+
+
+
+
