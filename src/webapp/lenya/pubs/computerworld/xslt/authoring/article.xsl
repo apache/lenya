@@ -18,10 +18,10 @@
       <tr>
         <td class="txt-s-black"><b>Teaser-Image</b></td>
 	<td class="txt-s-black">
-         <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head/abstract">
+         <a href="../{$documentid}?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/article/head/abstract">
           <xsl:choose>
             <xsl:when test="head/media">
-              <img src="/img/{head/media/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
+              <img src="/img/news/{head/media/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
             </xsl:when>
             <xsl:otherwise>
               <img src="/images/wyona/cms/util/reddot.gif" alt="Upload Image" border="0"/> Upload Image
