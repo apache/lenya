@@ -1,11 +1,11 @@
 #!/bin/sh
 
-export JAVA_HOME=/usr/local/j2sdk1.4.1_02
-export ANT_HOME=/home/michi/build/jakarta-ant-1.5.1
-export PATH=/home/michi/build/jakarta-ant-1.5.1/bin:$PATH
+export JAVA_HOME=/usr/java/j2sdk1.4.1_01
+export ANT_HOME=/home/michael/build/jakarta-ant-1.5.1
+export PATH=/home/michael/build/jakarta-ant-1.5.1/bin:$PATH
 
-LENYA_SOURCE_DIR=/home/michi/src/lenya
-TOMCAT_HOME=/home/michi/build/jakarta-tomcat-4.1.21-LE-jdk14
+LENYA_SOURCE_DIR=/home/michael/src/lenya
+TOMCAT_HOME=/home/michael/build/jakarta-tomcat-4.1.21-LE-jdk14
 
 
 
@@ -14,7 +14,7 @@ TOMCAT_HOME=/home/michi/build/jakarta-tomcat-4.1.21-LE-jdk14
 
 
 BUILD_FILE=$LENYA_SOURCE_DIR/src/webapp/lenya/bin/crawl_and_index.xml
-CONF_PATH=$TOMCAT_HOME/webapps/lenya/lenya/pubs/oscom/content
+CONF_PATH=$TOMCAT_HOME/webapps/lenya/lenya/pubs/oscom/config/search
 
 INDICES="-cambridge -lists -conferences -blog"
 #INDICES="-blog"
