@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase-bxeng.xmap,v 1.9 2004/03/19 10:21:36 gregor Exp $ -->
+<!-- $Id: usecase-bxeng.xmap,v 1.10 2004/03/24 13:14:09 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -42,8 +42,11 @@
 	
   <!-- =========================== Resources ================================ -->
   <map:resources>
-    
+        
     <map:resource name="style-cms-page">
+      <map:transform type="i18n">
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>
       <map:transform src="../../xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
