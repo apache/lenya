@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultAccessController.java,v 1.5 2004/04/28 12:52:35 andreas Exp $  */
+/* $Id: DefaultAccessController.java,v 1.6 2004/05/10 10:15:21 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.*;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.component.Component;
@@ -60,7 +61,8 @@ public class DefaultAccessController
     protected static final String TYPE_ATTRIBUTE = "type";
     protected static final String ACCREDITABLE_MANAGER_ELEMENT = "accreditable-manager";
     protected static final String POLICY_MANAGER_ELEMENT = "policy-manager";
-
+    private static final String  REGEX="([0-9]{1,3}\\.){3}[0-9]{1,3}";
+    
     private ServiceSelector accreditableManagerSelector;
     private AccreditableManager accreditableManager;
 
@@ -390,6 +392,18 @@ public class DefaultAccessController
         if (!hasValidIdentity(session)) {
             Identity identity = new Identity();
             String remoteAddress = request.getRemoteAddr();
+	    String clientAddress = request.getHeader("x-forwarded-for");
+
+	    if (clientAddress != null) { 
+		Pattern p = Pattern.compile(REGEX);
+		Matcher m = p.matcher(clientAddress);
+	       
+		if (m.find()) {
+		    remoteAddress=m.group();
+		}
+	    }
+
+	    getLogger().info("Remote Address to use: [" + remoteAddress +"]");
 
             Machine machine = new Machine(remoteAddress);
             IPRange[] ranges = accreditableManager.getIPRangeManager().getIPRanges();
