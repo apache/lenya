@@ -117,15 +117,15 @@ public class ArticleTask
         String year=st.nextToken();
         String dir=st.nextToken();
 
-        Document headlinesDocument = getDocument(domainPath + "frontpage/headlines.xml");
+        Document headlinesDocument = getDocument(domainPath + UnipublicEnvironment.headlinesFile);
         insertElement(headlinesDocument, "/Articles", "Article",
             channel, section, year, dir, title);
-        writeDocument(domainPath + "frontpage/headlines.xml", headlinesDocument);
+        writeDocument(domainPath + UnipublicEnvironment.headlinesFile, headlinesDocument);
         
-        Document newsletterDocument = getDocument(domainPath + "newsletter/index.xml");
+        Document newsletterDocument = getDocument(domainPath + UnipublicEnvironment.newsletterFile);
         insertElement(newsletterDocument, "/newsletter/articles", "article",
             channel, section, year, dir, title);
-        writeDocument(domainPath + "newsletter/index.xml", newsletterDocument);
+        writeDocument(domainPath + UnipublicEnvironment.newsletterFile, newsletterDocument);
         
     }
     
