@@ -83,10 +83,16 @@
 
    <!-- this template converts the object tag to img (for compatiblity with older browsers 
     for more, see http://www.xml.com/pub/a/2003/07/02/dive.html -->
+
+   <!-- TODO: Extract all object templates into a separate xslt,
+	     since we have dublicated code in content2edit.xsl in kupu /roku -->
    <xsl:template name="object2img">
       <img border="0">
-        <xsl:attribute name="src">
-          <xsl:value-of select="$nodeid"/>/<xsl:value-of select="@data"/>
+        <xsl:attribute name="src">          
+          <xsl:if test="not(starts-with(@data, '/'))">
+            <xsl:value-of select="$nodeid"/>/
+          </xsl:if>
+          <xsl:value-of select="@data"/>
         </xsl:attribute>
         <xsl:attribute name="alt">
           <!-- the overwritten title (stored in @name) has precedence over dc:title -->
