@@ -4,6 +4,8 @@
   language="java"
   xmlns:xsp="http://apache.org/xsp"  
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:xsp-session="http://apache.org/xsp/session/2.0" create-session="true"
   >
   
   <xsp:structure>
@@ -17,33 +19,39 @@
     <xsp-lenya:util/>
     
     <xsp:logic>
-      String referer = request.getRequestURI();
-      Session session = request.getSession(true);
-      String status = request.getParameter("status");
+      String SESSION_PARENT_ID_NAME = 
+          "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri";
+      // fetch the referer
+      String referer = <xsp-request:get-uri/>;
+      String status = <xsp-request:get-parameter name="status"/>;
       if (status == null) {
-        session.setAttribute("org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri",referer);
-        <xsp:content>
-	  <referer><xsp:expr>referer</xsp:expr></referer>
-        </xsp:content>
+        session.setAttribute(SESSION_PARENT_ID_NAME, referer);
       } else {
-        <xsp:content>
-	  <referer><xsp:expr>session.getAttribute("org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri")</xsp:expr></referer>
-        </xsp:content>
-        if (status.equals("failed")) {
-        <xsp:content><exception/></xsp:content>
-        }
+        referer = (String)session.getAttribute(SESSION_PARENT_ID_NAME);
       }
-      if (request.getParameter("parent-uri") != null) {
-        <xsp:content>
-	  <parentid><xsp:expr>request.getParameter("parent-uri")</xsp:expr></parentid>
-        </xsp:content>
-      } else {
-        <xsp:content>
-	  <parentid><xsp-lenya:document-id/></parentid>
-        </xsp:content>
+
+      // get the parentId
+      String parentId = <xsp-request:get-parameter name="parent-uri"/>;
+      if (parentId == null) {
+        parentId = <xsp-lenya:document-id/>;
+        // for creation purposes the parentid "/index" (the home page) is special.
+        if (parentId.equals("/index")) {
+          parentId = "/";
+	}
+      }
+
+      <xsp:content>
+	<referer><xsp:expr>referer</xsp:expr></referer>
+      </xsp:content>
+
+      if ((status != null) &amp;&amp; (status.equals("failed"))) {
+        <xsp:content><exception/></xsp:content>
       }
       <xsp:content>
-	<doctype><xsp:expr>request.getParameter("doctype")</xsp:expr></doctype>
+	<parentid><xsp:expr>parentId</xsp:expr></parentid>
+      </xsp:content>
+      <xsp:content>
+	<doctype><xsp:expr><xsp-request:get-parameter name="doctype"/></xsp:expr></doctype>
       </xsp:content>
     </xsp:logic>
   </parent-child>
