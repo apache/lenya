@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.27 2003/05/14 10:18:20 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.28 2003/05/14 13:36:37 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -81,7 +81,7 @@
 	    <map:serialize />
 	  </map:act>
 	  
-	  <!-- use default schema if available -->
+	  <!-- otherwise use default schema -->
 	  <map:generate type="serverpages" src="../../content/authoring/create.xsp"/>
 	  <map:transform src="../../xslt/authoring/create.xsl"/>
 	  <map:serialize />
