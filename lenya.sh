@@ -17,7 +17,7 @@
 # -----------------------------------------------------------------------------
 # Lenya Unix Shell Script
 #
-# $Id: lenya.sh,v 1.5 2004/05/14 23:53:28 michi Exp $
+# $Id$
 # -----------------------------------------------------------------------------
 
 # Configuration variables
@@ -116,6 +116,14 @@ if [ "$JAVA_PROFILE_ARGS" = "" ] ; then
   JAVA_PROFILE_ARGS='-Xrunhprof:heap=all,cpu=samples,thread=y,depth=3'
 fi
 
+
+# ----- Set platform specific variables
+
+PATHSEP=":";
+case "`uname`" in
+   CYGWIN*) PATHSEP=";" ;;
+esac
+
 # ----- Set Local Variables ( used to minimize cut/paste) ---------------------
 
 JAVA="$JAVA_HOME/bin/java"
@@ -123,7 +131,7 @@ ENDORSED_LIBS="$LENYA_LIB/endorsed"
 ENDORSED="-Djava.endorsed.dirs=$ENDORSED_LIBS"
 PARSER=-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser
 LOADER=Loader
-LOADER_LIB="$LENYA_HOME/tools/loader"
+LOADER_LIB="${LENYA_HOME}/tools/loader"
 
 CLI=-Dloader.main.class=org.apache.lenya.Main
 CLI_LIBRARIES="-Dloader.jar.repositories=$LENYA_LIB"
@@ -136,7 +144,7 @@ JETTY_WEBAPP="-Dwebapp=$LENYA_WEBAPP_HOME"
 JETTY_HOME="-Dhome=$LENYA_HOME"
 JETTY_PORT_ARGS="-Djetty.port=$JETTY_PORT"
 JETTY_ADMIN_ARGS="-Djetty.admin.port=$JETTY_ADMIN_PORT"
-JETTY_LIBRARIES="-Dloader.jar.repositories=$LENYA_HOME/tools/jetty/lib,$ENDORSED_LIBS"
+JETTY_LIBRARIES="-Dloader.jar.repositories=$LENYA_HOME/tools/jetty/lib${PATHSEP}${ENDORSED_LIBS}"
 
 # ----- Do the action ----------------------------------------------------------
 
