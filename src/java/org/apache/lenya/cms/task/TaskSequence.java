@@ -1,5 +1,5 @@
 /*
- * $Id: TaskSequence.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
+ * $Id: TaskSequence.java,v 1.4 2003/02/17 13:00:03 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -164,17 +164,6 @@ public class TaskSequence
                     String name = names[parIndex];
                     boolean useParameter = true;
 
-                    /*
-                                        // is this a qualified parameter?
-                                        if (name.indexOf(NAMESPACE_SEPARATOR) > -1) {
-
-                                            // remove namespace prefix (taskID + ":")
-                                            if (name.startsWith(taskId + NAMESPACE_SEPARATOR))
-                                                name = name.replaceFirst(taskId + NAMESPACE_SEPARATOR, "");
-                                            else
-                                                useParameter = false;
-                                        }
-                    */
                     if (useParameter) {
                         taskParameters.setParameter(name, getParameters().getParameter(name));
                     }

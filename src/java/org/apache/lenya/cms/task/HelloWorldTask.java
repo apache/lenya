@@ -1,5 +1,5 @@
 /*
- * $Id: HelloWorldTask.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
+ * $Id: HelloWorldTask.java,v 1.4 2003/02/17 13:00:03 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,6 +66,5 @@ public class HelloWorldTask extends AbstractTask {
      */
     public void execute(String path)
             throws ExecutionException {
-        // getLogger().debug(".execute(): " + getParameters().getParameter("text", "Hello World"));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.4 2003/02/07 12:14:12 ah Exp $
+ * $Id: Configuration.java,v 1.5 2003/02/17 12:55:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,7 +59,6 @@ public class Configuration {
     public String rcmlDirectory = null;
     public String backupDirectory = null;
 
-    //public String documentRootDirectory=null;
     public String mountPoints = null;
     public String password = null;
     public String servlet = null;
@@ -82,7 +81,6 @@ public class Configuration {
         rcmlDirectory = properties.getProperty("rcmlDirectory");
         backupDirectory = properties.getProperty("backupDirectory");
 
-        //documentRootDirectory=properties.getProperty("documentRootDirectory");
         mountPoints = properties.getProperty("mountPoints");
         password = properties.getProperty("password");
         servlet = properties.getProperty("servlet");
@@ -101,7 +99,6 @@ public class Configuration {
         log.debug("rcmlDirectory: " + conf.rcmlDirectory);
         log.debug("backupDirectory: " + conf.backupDirectory);
 
-        //log.debug("documentRootDirectory :"+conf.documentRootDirectory);
         log.debug("mountPoints :" + conf.mountPoints);
         log.debug("password :" + conf.password);
         log.debug("servlet :" + conf.servlet);

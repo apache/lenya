@@ -1,5 +1,5 @@
 /*
- * $Id: RCML.java,v 1.4 2003/02/07 12:14:12 ah Exp $
+ * $Id: RCML.java,v 1.5 2003/02/17 12:55:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -91,8 +91,6 @@ public class RCML {
     public RCML() {
         maximalNumberOfEntries = new org.wyona.xml.Configuration().maxNumberOfRollbacks;
         maximalNumberOfEntries = (2 * maximalNumberOfEntries) + 1;
-
-        //maximalNumberOfEntries=5;
     }
 
     /**
@@ -149,12 +147,9 @@ public class RCML {
         }
 
         try {
-            //RCML rcml=new RCML(args[0]);
             RCML rcml = new RCML(args[0], args[1]);
             rcml.checkOutIn(RCML.co, "michi", new Date().getTime());
 
-            //rcml.checkOutIn(RCML.ci,"michi",new Date().getTime());
-            //rcml.checkOutIn(RCML.ci,"michi",new Date().getTime());
             new DOMWriter(new PrintWriter(System.out)).print(rcml.document);
 
             CheckOutEntry coe = rcml.getLatestCheckOutEntry();
@@ -203,8 +198,6 @@ public class RCML {
      */
     public void write() throws IOException, Exception {
         log.debug("RCML.write(): writing out file: " + rcmlFile.getAbsolutePath());
-
-        //		new DOMWriter(new PrintWriter(new FileWriter(rcmlFile.getAbsolutePath()))).print(document);
         pruneEntries(maximalNumberOfEntries);
 
         XPSFileOutputStream xpsfos = new XPSFileOutputStream(rcmlFile.getAbsolutePath());
@@ -353,37 +346,6 @@ public class RCML {
         }
     }
 
-    /*
-        public CheckOutEntry getFirstEntry() throws Exception {
-
-                XPointerFactory xpf = new XPointerFactory();
-
-                Vector firstCheckOut = xpf.select(document.getDocumentElement(),"xpointer(/XPSRevisionControl/CheckOut[1]/Identity)xpointer(/XPSRevisionControl/CheckOut[1]/Time)");
-                Vector firstCheckIn  = xpf.select(document.getDocumentElement(),"xpointer(/XPSRevisionControl/CheckIn[1]/Identity)xpointer(/XPSRevisionControl/CheckIn[1]/Time)");
-
-                // No checkout at all
-                //
-                if(firstCheckOut.size() == 0) {
-                        return null;
-                }
-
-                String[] fcoValues = xpf.getNodeValues(firstCheckOut);
-                long fcoTime = new Long(fcoValues[1]).longValue();
-
-
-                if(firstCheckIn.size() == 2) {
-                        String[] fciValues = xpf.getNodeValues(firstCheckIn);
-                        long fciTime = new Long(fciValues[1]).longValue();
-                        if(fciTime > fcoTime) {
-                                return null;
-                        }
-                }
-
-                return new CheckOutEntry(fcoValues[0], fcoTime);
-
-        }
-
-        */
 
     /**
      * get all check in and check out

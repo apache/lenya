@@ -1,5 +1,5 @@
 /*
- * $Id: CMSProjectCreator.java,v 1.3 2003/02/10 15:17:06 michicms Exp $
+ * $Id: CMSProjectCreator.java,v 1.4 2003/02/17 12:55:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,12 +45,6 @@ package org.wyona.cms.pubs.oscom;
 
 import org.apache.log4j.Category;
 import org.apache.xpath.XPathAPI;
-
-/*
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-*/
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

@@ -1,5 +1,5 @@
 /*
- * $Id: CMFProjectCreator.java,v 1.2 2003/02/07 12:14:12 ah Exp $
+ * $Id: CMFProjectCreator.java,v 1.3 2003/02/17 12:55:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -162,7 +162,5 @@ public class CMFProjectCreator extends AbstractParentChildCreator {
         FileWriter fileWriter = new FileWriter(filename);
         doc.write(fileWriter);
         fileWriter.close();
-
-        //copyFile(new File(doctypeSample),new File(filename));
     }
 }

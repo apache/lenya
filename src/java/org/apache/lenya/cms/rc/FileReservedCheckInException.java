@@ -1,5 +1,5 @@
 /*
- * $Id: FileReservedCheckInException.java,v 1.2 2003/02/07 12:14:12 ah Exp $
+ * $Id: FileReservedCheckInException.java,v 1.3 2003/02/17 12:55:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,8 +53,7 @@ import java.util.Date;
  * @version 0.7.5
  */
 public class FileReservedCheckInException extends Exception {
-    //	public Date checkOutDate = null;
-    //	public String checkOutUsername = null;
+
     public String source = null;
     public Date date = null;
     public String username = null;

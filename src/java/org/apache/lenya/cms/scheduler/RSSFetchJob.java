@@ -1,5 +1,5 @@
 /*
- * $Id: RSSFetchJob.java,v 1.2 2003/02/07 12:14:21 ah Exp $
+ * $Id: RSSFetchJob.java,v 1.3 2003/02/17 12:55:18 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -96,25 +96,5 @@ public class RSSFetchJob implements Job {
         } catch (Exception e) {
             log.error(e);
         }
-
-        /*
-                JobDetail jobDetail = context.getJobDetail();
-                JobDataMap jobDataMap = jobDetail.getJobDataMap();
-
-                String docID = jobDataMap.getString(SchedulerAdaptor.DOCID);
-
-                String authoringPath = jobDataMap.getString("authoringPath");
-                String livePath = jobDataMap.getString("livePath");
-                String treeAuthoringPath = jobDataMap.getString("treeAuthoringPath");
-                String treeLivePath = jobDataMap.getString("treeLivePath");
-
-                log.info(jobDetail.getFullName() + "/" + docID +
-                         " executing.[" + new Date() + "]");
-                DefaultFilePublisher publisher =
-                    new DefaultFilePublisher(authoringPath, livePath,
-                                             treeAuthoringPath, treeLivePath,
-                                             docID);
-                publisher.publish();
-        */
     }
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: CommandLineTask.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
+ * $Id: CommandLineTask.java,v 1.5 2003/02/17 13:00:03 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -67,7 +67,6 @@ public class CommandLineTask extends AbstractTask {
     public void execute(String path) throws ExecutionException {
         String command = getParameters().getParameter("command",
                 "echo \"Exception: No command parameter\"");
-        // getLogger().debug(".execute(): " + command);
 
         try {
             Process process = Runtime.getRuntime().exec(command);
@@ -97,7 +96,6 @@ public class CommandLineTask extends AbstractTask {
             }
         } catch (java.io.IOException e) {
             throw new ExecutionException(e);
-            //getLogger().error(".execute(): ", e);
         }
     }
 }

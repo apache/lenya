@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractTask.java,v 1.4 2003/02/12 23:06:09 andreas Exp $
+ * $Id: AbstractTask.java,v 1.5 2003/02/17 13:00:03 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -78,14 +78,6 @@ public abstract class AbstractTask
      */
     public void parameterize(Parameters parameters)
             throws ParameterException {
-        /*
-        getLogger().debug("Initializing parameters");
-
-        for (int i = 0; i < parameters.getNames().length; i++) {
-            getLogger().debug("Setting parameter " + parameters.getNames()[i] + " to " +
-                parameters.getParameter(parameters.getNames()[i], "default"));
-        }
-        */
         this.parameters = this.parameters.merge(parameters);
     }
 
