@@ -71,13 +71,17 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.25 2003/11/28 19:23:17 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.26 2003/11/30 22:55:40 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -126,6 +130,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
         File file = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("file"));
         File schema = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("schema"));
+        File unnumberTagsXSL = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("unnumberTagsXSL"));
 
 
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -226,8 +231,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
 
 		    if (schema.isFile()) {
-                        // FIXME: remove tagID first
-                        String message = null; //RelaxNG.validate(schema, file);
+			String message = validateDocument(schema, file, unnumberTagsXSL);
                         if (message != null) {
                             log.error("Validation failed: " + message);
                             HashMap hmap = new HashMap();
@@ -365,5 +369,23 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     private String remove(String pname) {
         log.debug(".remove() REMOVE Node: " + pname);
         return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
+    }
+ 
+    /**
+     * Validate document
+     */
+    private String validateDocument(File schema, File file, File unnumberTagsXSL) {
+        try {
+            // Remove tagIDs
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer t = tf.newTransformer(new StreamSource(unnumberTagsXSL));
+            t.transform(new StreamSource(file), new StreamResult(new File(file.getAbsolutePath() + ".validate")));
+
+            // Validate
+            return RelaxNG.validate(schema, new File(file.getAbsolutePath() + ".validate"));
+        } catch (Exception e) {
+            log.error(e);
+            return "" + e;
+        }
     }
 }

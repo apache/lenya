@@ -365,6 +365,7 @@
               <map:act type="save">
                 <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
                 <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{request-param:form}.rng"/>
+                <map:parameter name="unnumberTagsXSL" value="xslt/authoring/edit/unnumberTags.xsl"/>
 
                 <!-- Continue editing: Insert, Delete, etc. -->
                 <map:generate src="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>

@@ -8,6 +8,9 @@
       <element name="echo:title">
         <text/>
       </element>
+      <element name="echo:summary">
+        <text/>
+      </element>
       <element name="echo:author">
         <element name="echo:name">
           <text/>
@@ -37,7 +40,7 @@
               <text/>
               <element>
                 <name ns="">b</name>
-                <data type="decimal"/>
+                <text/>
               </element>
             </choice>
           </oneOrMore>
