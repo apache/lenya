@@ -15,6 +15,7 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
@@ -31,9 +32,7 @@ public class PageEnvelopeModule
         PageEnvelope envelope = null;
         
         try {
-            Publication publication = PublicationFactory.getPublication(objectModel);
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            envelope = new PageEnvelope(publication, request);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         }
         catch (Exception e) {
             throw new ConfigurationException("Resolving page envelope failed: ", e);

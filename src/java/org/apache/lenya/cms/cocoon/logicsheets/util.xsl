@@ -23,6 +23,7 @@
         <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PublicationFactory</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PageEnvelope</xsp:include>
+        <xsp:include>org.apache.lenya.cms.publication.PageEnvelopeFactory</xsp:include>
       </xsp:structure>
       
       <xsl:apply-templates/>
@@ -33,7 +34,7 @@
   <xsp:logic>
     PageEnvelope xspPageEnvelope = null;
     try {
-        xspPageEnvelope = new PageEnvelope(resolver, request);
+        xspPageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
     } catch (Exception e) {}
     
     Publication xspUtilPublication = null;

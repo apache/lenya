@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.16 2003/06/06 17:28:33 andreas Exp $
+ * $Id: TaskAction.java,v 1.17 2003/06/30 08:53:45 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,9 +66,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.Event;
@@ -178,8 +178,8 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
         
-        PageEnvelope envelope = new PageEnvelope(publication, request);
-        Document document = new DefaultDocument(publication, envelope.getDocumentId());
+        PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        Document document = envelope.getDocument();
         
         if (factory.hasWorkflow(document)) {
             String eventName = request.getParameter("lenya.event");

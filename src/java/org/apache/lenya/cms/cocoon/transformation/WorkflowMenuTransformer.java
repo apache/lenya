@@ -54,6 +54,7 @@ import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.Event;
@@ -135,12 +136,12 @@ public class WorkflowMenuTransformer
         PageEnvelope envelope = null;
       
         try {
-            envelope = new PageEnvelope(publication, ObjectModelHelper.getRequest(objectModel));
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
       
-        Document document = new DefaultDocument(publication, envelope.getDocumentId());
+        Document document = envelope.getDocument();
         WorkflowFactory factory = WorkflowFactory.newInstance();
         
         setHasWorkflow(factory.hasWorkflow(document));

@@ -12,6 +12,7 @@ import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.rc.RCEnvironment;
 
@@ -32,7 +33,7 @@ public class PageEnvelopeAction
         Request request = ObjectModelHelper.getRequest(objectModel);
         PageEnvelope envelope = null; 
         try {
-          envelope = new PageEnvelope(objectModel);
+          envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         }
         catch (Exception e) {
           getLogger().error(e.getMessage(), e);
@@ -43,7 +44,7 @@ public class PageEnvelopeAction
         result.put(PageEnvelope.PUBLICATION_ID, envelope.getPublication().getId());
         result.put(PageEnvelope.CONTEXT, envelope.getContext());
         result.put(PageEnvelope.AREA, envelope.getArea());
-        result.put(PublishingEnvironment.PUBLICATION_PATH, envelope.getPublication().getEnvironment().getPublicationPath());
+        result.put(PublishingEnvironment.PUBLICATION_PATH, envelope.getPublication().getDirectory().getCanonicalPath());
         result.put(RCEnvironment.RCML_DIRECTORY, envelope.getRCEnvironment().getRCMLDirectory());
         result.put(RCEnvironment.BACKUP_DIRECTORY, envelope.getRCEnvironment().getBackupDirectory());
 
