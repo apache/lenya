@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.57 2003/10/13 16:17:41 michi Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.58 2003/10/17 04:58:19 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -32,10 +32,6 @@
         <map:mount check-reload="true" reload-method="synchron" src="doctypes.xmap" uri-prefix="lenya-document/"/>
       </map:match>
     </map:pipeline>
-
-
-
-
 
 
 
@@ -102,42 +98,6 @@
     </map:pipeline>
     <!-- /BX Editor: Entries -->
 
-
-
-
-
-
-    
-    <!-- Edit Article with Xopus2 -->
-    <map:pipeline>
-      
-      <map:match pattern="authoring/xopus2/**.xml">
-        
-        <map:act type="reserved-checkout">
-          <map:generate src="../../content/rc/{exception}.xsp" type="serverpages">
-            <map:parameter name="user" value="{user}"/>
-            <map:parameter name="filename" value="{filename}"/>
-            <map:parameter name="date" value="{date}"/>
-          </map:generate>
-          <map:transform src="../../xslt/rc/rco-exception.xsl"/>
-          <map:serialize type="html"/>
-        </map:act>
-        
-        <map:act src="authoring/{1}.xml" type="uriparametrizer">
-          <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
-          <map:aggregate element="lenya" label="aggregation">
-            <map:part src="cocoon:/lenyamenubar/authoring/article.xml"/>
-            <map:part element="cmsbody" src="content/authoring/{../1}.xml"/>
-          </map:aggregate>
-          <map:transform src="xslt/authoring/xopus2-{doctype}.xsl">
-            <map:parameter name="articleid" value="{../1}"/>
-          </map:transform>
-          <map:serialize type="html"/>
-        </map:act>
-        
-      </map:match>
-      
-    </map:pipeline>
     
     <!-- This is the pipeline that builds the page. It aggregates all
     the navigational elements (breadcrumb, tabs, menu) with the actual

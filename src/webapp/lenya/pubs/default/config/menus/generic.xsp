@@ -16,9 +16,7 @@
   
   <menu>
     <xsp:logic>
-      String bitflux_prefix = <xsp-request:get-context-path/> + "/" + <input:get-attribute as="string" module="page-envelope" name="publication-id"/> + "/bitflux";
-      String domain_prefix_bitflux = "" + <xsp-request:get-context-path/>; String replacementString = "/index.xml";
-      String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst(".html", replacementString);
+      String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst(".html", "/index.xml");
       String sourcesParameter = "sources=" + xmlSource;
       String urisParameter = "uris=" + <input:get-attribute as="string" module="page-envelope" name="document-url"/>;
       String docType = "";
@@ -72,13 +70,6 @@ else if (docType.equals("xhtml")) {
 </xsp:logic>
 <!--
         <block>
-          <item href="?lenya.step=open" uc:usecase="midas" wf:event="edit">Edit&#160;with&#160;Midas</item>
-          <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/authoring/xopus2<xsp:expr>xmlSource</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
-          <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/bitflux/index.html?url-xml=<xsp:expr>bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+<xsp-request:get-context-path/>+"/authoring"+<input:get-attribute as="string" module="page-envelope" name="document-url"/></xsp:expr></xsp:attribute>Edit with Bitflux</item>
-        </block>
--->
-<!--
-        <block>
           <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>HTML&#160;for&#160;BXE</item>
           <item><xsp:attribute name="href"><xsp:expr>documentId + "-config-bxeng.xml"</xsp:expr></xsp:attribute>Config&#160;for&#160;BXE</item>
           <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.xml"</xsp:expr></xsp:attribute>XML&#160;for&#160;BXE</item>
@@ -89,13 +80,6 @@ else if (docType.equals("xhtml")) {
       </menu>
       
       <menu label="Help" name="Tools">
-<!--
-        <block>
-          <item><xsp:attribute name="href">../xopus<xsp:expr><input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
-          <item href="../xopus/simple.xsd">View&#160;Xopus&#160;XSD</item>
-          <item href="../xopus/simple.xsl">View&#160;Xopus&#160;XSLT</item>
-        </block>
--->
         <block>
           <item href="?lenya.usecase=view-logs&amp;lenya.step=overview">View Task Logs</item>
           <item href="?lenya.usecase=schedule&amp;lenya.step=showscreen">Scheduler</item>
