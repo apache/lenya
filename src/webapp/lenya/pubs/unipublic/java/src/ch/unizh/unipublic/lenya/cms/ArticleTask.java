@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleTask.java,v 1.16 2003/04/24 13:54:03 gregor Exp $
+ * $Id: ArticleTask.java,v 1.17 2003/04/28 10:08:15 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,6 +58,7 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.publishing.DefaultFilePublisher;
 import org.apache.lenya.cms.task.AbstractTask;
 
 import org.apache.lenya.util.DateUtil;
@@ -377,7 +378,8 @@ public class ArticleTask extends AbstractTask {
             taskParameters.merge(getParameters());
             parameterize(taskParameters);
 
-            String sourcesString = getParameters().getParameter("sources");
+            String sourcesString =
+		getParameters().getParameter(DefaultFilePublisher.PARAMETER_SOURCES);
             StringTokenizer st = new StringTokenizer(sourcesString, ",");
             String[] sources = new String[st.countTokens()];
             int i = 0;
