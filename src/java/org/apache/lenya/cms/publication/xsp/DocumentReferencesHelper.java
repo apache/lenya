@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.2 2003/09/30 14:33:09 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.3 2003/10/02 12:34:53 egli Exp $
 <License>
 
  ============================================================================
@@ -60,6 +60,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
@@ -72,17 +73,22 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.PathToDocumentIdMapper;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.SiteTree;
+import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.search.Grep;
 
 /**
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DocumentReferencesHelper {
 
     private PageEnvelope pageEnvelope = null;
+
+    private static Pattern internalLinkPattern =
+        Pattern.compile("href=\"(/[-a-zA-Z0-9_/]+)");
 
     /**
      * Create a new DocumentReferencesHelper
@@ -173,5 +179,42 @@ public class DocumentReferencesHelper {
         String prefix = pageEnvelope.getContext();
 
         return prefix + builder.buildCanonicalUrl(pub, area, documentId);
+    }
+
+    /**
+     * Find all internal references in the current document to documents which have
+     * not been published yet.
+     * 
+     * @return an <code>array</code> of document-ids of references from the 
+     * current document to documents which have not been published yet.
+     *
+     * @throws ProcessingException if the current document cannot be opened.
+     */
+    public String[] getInternalReferences() throws ProcessingException {
+        ArrayList unpublishedReferences = new ArrayList();
+        SiteTree sitetree;
+        try {
+            sitetree =
+                pageEnvelope.getPublication().getSiteTree(
+                    Publication.LIVE_AREA);
+            String[] internalLinks =
+                Grep.findPattern(
+                    pageEnvelope.getDocument().getFile(),
+                    internalLinkPattern,
+                    1);
+            for (int i = 0; i < internalLinks.length; i++) {
+                String docId = internalLinks[i];
+                if (sitetree.getNode(docId) == null) {
+                    // the docId has not been published
+                    unpublishedReferences.add(docId);
+                }
+            }
+        } catch (SiteTreeException e) {
+            throw new ProcessingException(e);
+        } catch (IOException e) {
+            throw new ProcessingException(e);
+        }
+        return (String[])unpublishedReferences.toArray(
+            new String[unpublishedReferences.size()]);
     }
 }
