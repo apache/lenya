@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.18 2003/07/22 09:37:55 gregor Exp $
+$Id: Publication.java,v 1.19 2003/07/30 15:03:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,7 @@ import org.apache.log4j.Category;
 import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.IOException; 
 import java.util.ArrayList;
 import java.util.Arrays;
 

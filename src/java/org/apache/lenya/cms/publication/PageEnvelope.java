@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.34 2003/07/25 15:22:10 gregor Exp $
+$Id: PageEnvelope.java,v 1.35 2003/07/30 15:03:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -62,8 +62,6 @@ import org.apache.lenya.cms.rc.RCEnvironment;
 
 import org.apache.log4j.Category;
 
-import sun.security.action.GetLongAction;
-
 import java.io.File;
 
 import java.util.Map;
@@ -86,7 +84,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_FILE = "document-file";
     public static final String DOCUMENT_PATH = "document-path";
     public static final String DOCUMENT_LANGUAGE = "document-language";
-	public static final String DOCUMENT_ABSTRACT = "document-abstract";
+	public static final String DOCUMENT_LANGUAGES = "document-languages";
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
     public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
@@ -190,8 +188,8 @@ public class PageEnvelope {
                     + "/"
                     + getPublication().getId()
                     + "/"
-                    + getArea()
-                    + getDocumentId())) {
+                    + document.getArea()
+                    + document.getId())) {
             throw new PageEnvelopeException(createExceptionMessage(request));
         }
     }
@@ -210,9 +208,9 @@ public class PageEnvelope {
             + "\n  Publication ID: "
             + getPublication().getId()
             + "\n  Area: "
-            + getArea()
+            + document.getArea()
             + "\n  Document ID: "
-            + getDocumentId();
+            + document.getId();
     }
 
     /**
@@ -241,45 +239,6 @@ public class PageEnvelope {
         return context;
     }
 
-    /**
-     * Returns the area (authoring/live).
-     * @return a <code>String</code> value
-     */
-    public String getArea() {
-        return getDocument().getArea();
-    }
-
-	/**
-	 * Returns the abstract.
-	 * @return a <code>String</code> value
-	 */
-	public String getDocumentAbstract() {
-			return getDocument().getAbstract();
-	}
-
-    /**
-     * Returns the document-id.
-     * @return a <code>String</code> value
-     */
-    public String getDocumentId() {
-        return getDocument().getId();
-    }
-
-    /**
-     * Returns the document URL (without prefix and area).
-     * @return a <code>String</code> value
-     */
-    public String getDocumentURL() {
-        return getDocument().getDocumentUrl();
-    }
-
-    /**
-     * Returns the file representing the document.
-     * @return a <code>File<code> value
-     */
-    public File getDocumentFile() {
-        return getDocument().getFile();
-    }
 
     /**
      * Returns the document-path.
@@ -288,77 +247,9 @@ public class PageEnvelope {
     public String getDocumentPath() {
 
         return getPublication().getPathMapper().getPath(
-            getDocumentId(),
+		    getDocument().getId(),
             getDocument().getLanguage());
     }
-
-	/**
-	 * Returns the DC title for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCTitle() throws PageEnvelopeException {
-		try {
-			return getDocument().getDublinCore().getTitle();
-		} catch (PublicationException e) {
-			throw new PageEnvelopeException(e);
-		}
-	}
-
-	/**
-	 * Returns the DC subject for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCSubject() throws PageEnvelopeException {
-		try {
-			return getDocument().getDublinCore().getSubject();
-		} catch (PublicationException e) {
-			throw new PageEnvelopeException(e);
-		}
-	}
-
-	/**
-	 * Returns the DC creator for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCCreator() throws PageEnvelopeException {
-		try {
-			return getDocument().getDublinCore().getCreator();
-		} catch (PublicationException e) {
-			throw new PageEnvelopeException(e);
-		}
-	}
-
-	/**
-	 * Returns the DC description for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCDescription() throws PageEnvelopeException {
-		try {
-			return getDocument().getDublinCore().getDescription();
-		} catch (PublicationException e) {
-			throw new PageEnvelopeException(e);
-		}
-	}
-
-	/**
-	 * Returns the DC rights for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCRights() throws PageEnvelopeException {
-		try {
-			return getDocument().getDublinCore().getRights();
-		} catch (PublicationException e) {
-			throw new PageEnvelopeException(e);
-		}
-	}
-
-	/**
-	 * Returns the last modified date for a document
-	 * @return a <code>String<code> value
-	 */
-	public Date getDocumentLastModified() {
-		return getDocument().getLastModified();
-	}
 
     /**
      * The names of the page envelope parameters.
@@ -373,7 +264,7 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_URL,
             PageEnvelope.DOCUMENT_PATH,
             PageEnvelope.DOCUMENT_LANGUAGE,
-			PageEnvelope.DOCUMENT_ABSTRACT,
+			PageEnvelope.DOCUMENT_LANGUAGES,
             PageEnvelope.DOCUMENT_DC_TITLE,
             PageEnvelope.DOCUMENT_DC_CREATOR,
             PageEnvelope.DOCUMENT_DC_SUBJECT,

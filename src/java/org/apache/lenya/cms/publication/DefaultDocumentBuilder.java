@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.7 2003/07/29 15:39:37 andreas Exp $
+$Id: DefaultDocumentBuilder.java,v 1.8 2003/07/30 15:03:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -92,24 +92,24 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
         String area = publicationURI.split("/")[1];
 
-        String documentUrl = publicationURI.substring(("/" + area).length());
+        String documentURL = publicationURI.substring(("/" + area).length());
         
-        String originalUrl = documentUrl;
+        String originalURL = documentURL;
 
-        String extension = getExtension(documentUrl);
+        String extension = getExtension(documentURL);
         String fullExtension = "".equals(extension) ? "" : ("." + extension);
-        documentUrl = documentUrl.substring(0, documentUrl.length() - fullExtension.length());
+        documentURL = documentURL.substring(0, documentURL.length() - fullExtension.length());
 
-        String language = getLanguage(documentUrl);
+        String language = getLanguage(documentURL);
         String fullLanguage = "".equals(language) ? "" : ("_" + language);
-        documentUrl = documentUrl.substring(0, documentUrl.length() - fullLanguage.length());
+        documentURL = documentURL.substring(0, documentURL.length() - fullLanguage.length());
 
         if ("".equals(language)) {
             language = publication.getDefaultLanguage();
         }
 
 
-        String documentId = documentUrl;
+        String documentId = documentURL;
 
         if (!documentId.startsWith("/")) {
             throw new DocumentBuildException("Document ID [" + documentId +
@@ -118,7 +118,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
         DefaultDocument document = new DefaultDocument(publication, documentId, area, language);
         document.setExtension(extension);
-        document.setDocumentUrl(originalUrl);
+        document.setDocumentURL(originalURL);
 
         return document;
     }

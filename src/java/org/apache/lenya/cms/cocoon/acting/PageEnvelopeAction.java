@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeAction.java,v 1.11 2003/07/23 13:21:30 gregor Exp $
+$Id: PageEnvelopeAction.java,v 1.12 2003/07/30 15:03:25 gregor Exp $
 <License>
 
  ============================================================================
@@ -105,7 +105,7 @@ public class PageEnvelopeAction extends AbstractAction {
 
         result.put(PageEnvelope.PUBLICATION_ID, envelope.getPublication().getId());
         result.put(PageEnvelope.CONTEXT, envelope.getContext());
-        result.put(PageEnvelope.AREA, envelope.getArea());
+        result.put(PageEnvelope.AREA, envelope.getDocument().getArea());
         result.put(PublishingEnvironment.PUBLICATION_PATH,
             envelope.getPublication().getDirectory().getCanonicalPath());
         result.put(RCEnvironment.RCML_DIRECTORY, envelope.getRCEnvironment().getRCMLDirectory());

@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.11 2003/07/25 15:22:10 gregor Exp $
+$Id: Document.java,v 1.12 2003/07/30 15:03:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ import java.util.Date;
 /**
  * A CMS document.
  *
- * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public interface Document {
     /**
@@ -81,7 +81,7 @@ public interface Document {
      * /{publication-id}/{area}{document-id}{language-suffix}.{extension}
      * @return A string.
      */
-    String getCompleteUrl();
+    String getCompleteURL();
 
     /**
      * Returns the URL of this document:
@@ -89,7 +89,7 @@ public interface Document {
      * The URL always starts with a slash (/).
      * @return A string.
      */
-    String getDocumentUrl();
+    String getDocumentURL();
 
 	/**
 	 * Returns the dublin core class for this document.
@@ -104,10 +104,10 @@ public interface Document {
     String getLanguage();
 
 	/**
-	 * Returns the abstract of this document.
-	 * @return A string denoting the abstract.
+	 * Returns all the languages this document is available in.
+	 * @return An array of strings denoting the languages.
 	 */
-	String getAbstract();
+	String[] getLanguages();
 
 	/**
 	 * Returns the date of the last modification of this document.

@@ -1,5 +1,5 @@
 /*
-$Id: PolicyHelper.java,v 1.2 2003/07/30 13:19:22 andreas Exp $
+$Id: PolicyHelper.java,v 1.3 2003/07/30 15:03:25 gregor Exp $
 <License>
 
  ============================================================================
@@ -170,7 +170,7 @@ public class PolicyHelper {
             throw new ProcessingException(e);
         }
         String url =
-            "/" + envelope.getPublication().getId() + "/" + area + envelope.getDocumentId();
+            "/" + envelope.getPublication().getId() + "/" + area + envelope.getDocument().getId();
         return url;
     }
 

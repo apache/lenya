@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.5 2003/07/24 18:39:24 gregor Exp $
+$Id: DublinCore.java,v 1.6 2003/07/30 15:03:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -62,10 +62,8 @@ import org.apache.lenya.xml.DocumentHelper;
 
 import java.io.File;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
+import org.w3c.dom.Node;
 
 /**
  * A publication.
@@ -75,7 +73,6 @@ import org.w3c.dom.Text;
 public class DublinCore {
 	private Document cmsdocument;
 	private File infofile;
-	private String p;
     private NodeList nodelist;
     private String string;	
 
@@ -88,7 +85,6 @@ public class DublinCore {
     protected DublinCore(Document mydocument) {
     	this.cmsdocument = mydocument;
     	this.infofile = cmsdocument.getPublication().getPathMapper().getFile(cmsdocument.getPublication(), cmsdocument.getPublication().AUTHORING_AREA, cmsdocument.getId(), cmsdocument.getLanguage());
-        this.p = infofile.getPath();
     }
 
 	/**
@@ -131,12 +127,27 @@ public class DublinCore {
 	private String getDCNode(String node) {
 			try {
 				nodelist = DocumentHelper.readDocument(infofile).getElementsByTagNameNS(DC_NAMESPACE, node);
-				string = nodelist.item(0).getFirstChild().getNodeValue();
+				try {
+					string = nodelist.item(0).getFirstChild().getNodeValue();
+				} catch (Exception e) {
+								string = "";
+				}
 			} catch (Exception e) {
 				string = e.toString();
 			}
 			
 			return string;
+		}
+
+	private void setDCNode(String node, String text) {
+		Node oldnode;
+		Node newnode;
+			try {
+				nodelist = DocumentHelper.readDocument(infofile).getElementsByTagNameNS(DC_NAMESPACE, node);
+				oldnode = nodelist.item(0).getFirstChild();
+			} catch (Exception e) {
+				string = e.toString();
+			}
 		}
 
 	/**

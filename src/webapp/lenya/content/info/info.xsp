@@ -28,14 +28,23 @@
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
     <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
-  </xsp:structure>                                                                                                                          
-
+  </xsp:structure>
+    
 <lenya-info:info>
   <lenya-info:overview>
         <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
-		<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-abstract"/></lenya-info:abstract>
+		<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></lenya-info:abstract>
   		<lenya-info:status></lenya-info:status>
         <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
+    <xsp:logic>
+      String[] documentlanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
+      StringBuffer str = new StringBuffer();
+      for (int i = 0; i &lt; documentlanguages.length; i++) {
+       str.append(documentlanguages[i] +" ");
+      }
+      
+    </xsp:logic>    		
+    	<lenya-info:languages><xsp:expr>str</xsp:expr></lenya-info:languages>	  
    		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
    		<lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
   		<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
@@ -57,8 +66,7 @@
    		<wf:version date="(?)" event="publish" state="review" user="gregor"/>
   </lenya-info:workflow>  
   <rc:revisions>
-  
-  <xsp:logic>
+   <xsp:logic>
     String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
     Session session=request.getSession(true);
     session.setAttribute("org.apache.lenya.cms.info.target",docId);
@@ -77,7 +85,7 @@
 
       RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
 
-      String filename=publication.getEnvironment().getAuthoringPath() +docId + "/index_" + (String)<input:get-attribute module="page-envelope" as="object" name="document-language"/> + ".xml";
+      String filename= "content/authoring" +docId + "/index_" + (String)<input:get-attribute module="page-envelope" as="object" name="document-language"/> + ".xml";
 
 
       org.w3c.dom.Document rcmlDoc=null;
@@ -94,9 +102,9 @@
         org.w3c.dom.Element time = (org.w3c.dom.Element) timeElements.item(i);
         time.setAttribute("humanreadable", new Date(new Long(time.getFirstChild().getNodeValue()).longValue()).toString());
       }
-      
+            
     </xsp:logic>
-     <xsp:expr>rootE</xsp:expr>   
+    	<xsp:expr>rootE</xsp:expr>
    </rc:revisions>
    
     <xsp:logic>

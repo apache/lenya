@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.16 2003/07/25 15:22:11 gregor Exp $
+$Id: PageEnvelopeModule.java,v 1.17 2003/07/30 15:03:25 gregor Exp $
 <License>
 
  ============================================================================
@@ -113,7 +113,7 @@ public class PageEnvelopeModule extends AbstractInputModule {
 
         try {
             if (name.equals(PageEnvelope.AREA)) {
-                value = envelope.getArea();
+                value = envelope.getDocument().getArea();
             } else if (name.equals(PageEnvelope.CONTEXT)) {
                 value = envelope.getContext();
             } else if (name.equals(PageEnvelope.PUBLICATION_ID)) {
@@ -121,17 +121,17 @@ public class PageEnvelopeModule extends AbstractInputModule {
             } else if (name.equals(PageEnvelope.PUBLICATION)) {
                 value = envelope.getPublication();
             } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
-                value = envelope.getDocumentId();
+                value = envelope.getDocument().getId();
             } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
-                value = envelope.getDocumentURL();
+                value = envelope.getDocument().getDocumentURL();
             } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
                 value = envelope.getDocumentPath();
             } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
-                value = envelope.getDocumentFile();
+                value = envelope.getDocument().getFile();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
                 value = envelope.getDocument().getLanguage();
-			} else if (name.equals(PageEnvelope.DOCUMENT_ABSTRACT)) {
-				value = envelope.getDocument().getAbstract();
+			} else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
+				value = envelope.getDocument().getLanguages();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
                 value = envelope.getDocument().getDublinCore().getTitle();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.18 2003/07/29 15:39:37 andreas Exp $
+$Id: DefaultDocument.java,v 1.19 2003/07/30 15:03:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,8 @@ $Id: DefaultDocument.java,v 1.18 2003/07/29 15:39:37 andreas Exp $
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import org.apache.lenya.util.RegexFilter;
+
 import org.apache.lenya.xml.DocumentHelper;
 
 import org.w3c.dom.NodeList;
@@ -65,7 +67,7 @@ import java.util.Date;
 /**
  * A typical CMS document.
  *
- * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class DefaultDocument implements Document {
 	private String id;
@@ -74,6 +76,7 @@ public class DefaultDocument implements Document {
 	private NodeList nodelist;
 	
 	private static final String PAGEENVELOPE_NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
+	private static final String FILENAMEPATTERN = "index_.*\\.xml";
 
     /**
      * Creates a new instance of DefaultDocument.
@@ -149,28 +152,6 @@ public class DefaultDocument implements Document {
 		return new Date(getFile().lastModified());
 	}
 
-	private String getPageEnvelopeNode(String node) {
-		String string;
-			try {
-				nodelist = DocumentHelper.readDocument(getFile()).getElementsByTagNameNS(PAGEENVELOPE_NAMESPACE, node);
-				try {
-					string = nodelist.item(0).getFirstChild().getNodeValue();
-				} catch (Exception e) {
-								string = "";
-				}
-			} catch (Exception e) {
-				string = e.toString();
-			}
-			
-			return string;
-		}
-
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getLastModified()
-	 */
-	public String getAbstract() {
-		return getPageEnvelopeNode("abstract");
-	}
 
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDublinCore()
@@ -197,6 +178,21 @@ public class DefaultDocument implements Document {
         return language;
     }
 
+	/**
+	 * @see org.apache.lenya.cms.publication.Document#getLanguage()
+	 */
+	public String[] getLanguages() {
+		String[] filelist, finallist;
+		filelist = getFile().getParentFile().list(new RegexFilter(FILENAMEPATTERN));
+		finallist = new String[filelist.length];
+		for (int y=0; y<filelist.length; y++) {
+			finallist[y] = filelist[y].substring(6, 8);
+			} 	
+		return finallist;	
+	}
+
+
+
     /**
      * Sets the language of this document.
      * @param language The language.
@@ -216,14 +212,14 @@ public class DefaultDocument implements Document {
     }
 
     /**
-     * @see Document#getCompleteUrl(String)
+     * @see Document#getCompleteURL(String)
      */
-    public String getCompleteUrl() {
+    public String getCompleteURL() {
         String languageSuffix = "".equals(getLanguage()) ? "" : ("_" + getLanguage());
 
         String extensionSuffix = "".equals(getExtension()) ? "" : ("." + getExtension());
 
-        return "/" + getPublication().getId() + "/" + getArea() + getDocumentUrl();
+        return "/" + getPublication().getId() + "/" + getArea() + getDocumentURL();
     }
 
     /**
@@ -253,22 +249,22 @@ public class DefaultDocument implements Document {
         this.extension = extension;
     }
 
-    private String documentUrl;
+    private String documentURL;
     
     /**
      * Sets the document URL.
      * @param url The document URL (without publication ID and area).
      */
-    public void setDocumentUrl(String url) {
+    public void setDocumentURL(String url) {
         assert url != null;
-        this.documentUrl = url;
+        this.documentURL = url;
     }
     
     /**
-     * @see org.apache.lenya.cms.publication.Document#getDocumentUrl()
+     * @see org.apache.lenya.cms.publication.Document#getDocumentURL()
      */
-    public String getDocumentUrl() {
-        return documentUrl;
+    public String getDocumentURL() {
+        return documentURL;
     }
     
     

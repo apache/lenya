@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.10 2003/07/29 16:28:02 andreas Exp $
+ $Id: info.xsl,v 1.11 2003/07/30 15:03:24 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -93,7 +93,7 @@
    <tr><td>Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
    <tr><td>Status:</td><td><xsl:value-of select="lenya-info:status"/></td></tr>
    <tr><td>Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
-   <tr><td>Other Languages:</td><td></td></tr>
+   <tr><td>Other Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
    <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr>
    <tr><td>Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
    <tr><td>Document ID:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
@@ -142,12 +142,12 @@
 					<tr>
 						<td>
 							<xsl:element name="a">
-							<xsl:attribute name="href">?lenya.usecase=&amp;lenya.step=rollback&amp;documentid=&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
+							<xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;documentid=<xsl:value-of select="lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
 
 						</td>
 						<td>
 							<xsl:element name="a">
-							<xsl:attribute name="href">?lenya.usecase=&amp;lenya.step=view&amp;documentid=&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+							<xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;documentid=<xsl:value-of select="lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
 
 						</td>
 						<xsl:apply-templates select="Time"/>
