@@ -34,11 +34,11 @@ import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 /**
  * Class to resolve the document type for a document.
  * 
- * @version $Id:$
+ * @version $Id: DocumentTypeResolverImpl.java 152682 2005-02-08 18:13:39Z
+ *          gregor $
  */
 public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serviceable,
         Contextualizable, DocumentTypeResolver {
-    
 
     protected static final String URI_PARAMETER_DOCTYPE = "doctype";
 
@@ -76,11 +76,11 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
 
             String source = document.getArea() + document.getCanonicalDocumentURL();
 
-            Map objectModel = ContextHelper.getObjectModel(this.context);
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            map = parameterizer.parameterize(filterURI(request.getRequestURI()),
-                    filterURI(source),
-                    parameters);
+            Request request = ContextHelper.getRequest(this.context);
+            String context = request.getContextPath();
+            String webappUrl = document.getCanonicalWebappURL();
+            String url = context + webappUrl;
+            map = parameterizer.parameterize(filterURI(url), filterURI(source), parameters);
             String name = (String) map.get(URI_PARAMETER_DOCTYPE);
             documentType = DocumentTypeBuilder.buildDocumentType(name, document.getPublication());
 
