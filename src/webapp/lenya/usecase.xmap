@@ -275,7 +275,11 @@
               <map:parameter name="document-id" value="{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}"/>
               <map:act type="task">
                 <map:parameter name="task-id" value="create"/>
-                <map:redirect-to uri="{request:requestURI}"/>
+                <map:generate type="serverpages" src="{fallback:content/util/redirect-document.xsp}">
+                  <map:parameter name="document-id" value="{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}"/>
+                </map:generate>
+                <map:transform src="{fallback:xslt/util/redirect-document.xsl}"/>
+                <map:serialize/>
               </map:act>
               <map:call resource="cms-screen">
                 <map:parameter name="publication-id" value="{../../1}"/>
