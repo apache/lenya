@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: profile.xsl,v 1.5 2004/04/28 15:00:06 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -86,21 +86,6 @@
                 <input class="lenya-form-element" name="description" type="text" value="{description}"/>
               </td>
             </tr>
-<!--            
-            <SCRIPT>
-            	<xsl:comment>
-            	function check_num(obj) {
-            	  var value = parseInt(obj.value);
-            	  if (value &amp;&amp; 0 &lt;= value &amp;&amp; value &lt;= 255) {
-                  obj.value = "" + parseInt(obj.value);
-            	  }
-            	  else {
-            	    obj.value = "0";
-            	  }
-            	}
-            	</xsl:comment>
-            </SCRIPT>
--->            
             <tr>
             	<td class="lenya-entry-caption"><i18n:text>Network Address</i18n:text></td>
             	<td>

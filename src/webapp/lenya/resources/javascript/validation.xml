@@ -68,4 +68,13 @@ function validContent(formField,fieldLabel)
 	return result;
 }
 
+function check_num(obj) {
+  var value = parseInt(obj.value);
+  if (value &amp;&amp; 0 &lt;= value &amp;&amp; value &lt;= 255) {
+  obj.value = "" + parseInt(obj.value);
+  }
+  else {
+    obj.value = "0";
+  }
+}
 </script>
