@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.16 2004/01/21 16:18:24 edith Exp $
+$Id: SiteTreeNode.java,v 1.17 2004/02/04 09:54:24 egli Exp $
 <License>
 
  ============================================================================
@@ -62,8 +62,8 @@ import java.util.List;
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
- * @author $Author: edith $
- * @version $Revision: 1.16 $
+ * @author $Author: egli $
+ * @version $Revision: 1.17 $
  */
 public interface SiteTreeNode {
 
@@ -86,6 +86,13 @@ public interface SiteTreeNode {
      * @return A sitetree node.
      */
     SiteTreeNode getParent(String language);
+
+    /**
+     * Get the absolute id of this node.
+     * 
+     * @return  the absolute id.
+     */
+    String getAbsoluteId();
 
     /**
      * Get the absolute parent-id of this node.
