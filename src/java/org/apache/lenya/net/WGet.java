@@ -11,6 +11,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.regexp.RE;
+import org.apache.regexp.RESyntaxException;
 
 /**
  * @author Michael Wechner
@@ -91,5 +93,18 @@ public class WGet{
       }
     FileOutputStream out=new FileOutputStream(file.getAbsolutePath());
     out.write(bytes);
+    }
+/**
+ *
+ */
+  public String grep(){
+    try{
+      RE regexp=new RE("src=\"*\"");
+      boolean matched=regexp.match("src=\"/wyona-cms/unipublic/images.gif\"");
+      return regexp.getParen(0);
+      }
+    catch(RESyntaxException e){
+      return null;
+      }
     }
   }
