@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentLanguagesHelper.java,v 1.4 2003/10/29 15:33:02 andreas Exp $ <License>
+ * $Id: DocumentLanguagesHelper.java,v 1.5 2003/10/30 15:18:35 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -47,7 +47,6 @@ import java.util.Map;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
