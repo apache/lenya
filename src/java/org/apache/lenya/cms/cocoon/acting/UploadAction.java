@@ -1,5 +1,5 @@
 /*
-$Id: UploadAction.java,v 1.2 2003/10/21 15:29:14 gregor Exp $
+$Id: UploadAction.java,v 1.3 2003/10/22 19:28:38 gregor Exp $
 <License>
 
  ============================================================================
@@ -249,7 +249,7 @@ public class UploadAction extends AbstractConfigurableAction {
         } 
         // must be a content upload then
         else {
-			assetFile = new File(document.getPublication().getDirectory()+getPathFromPublication().replace('/', File.separatorChar), part.getFileName());
+			assetFile = new File(document.getFile().getParent(), part.getFileName());
             getLogger().debug("assetFile: "+assetFile);
         }
         

@@ -432,7 +432,7 @@
           <map:match pattern="upload" type="step">
             <map:act type="upload">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-assets&amp;lenya.step=showscreen&amp;lenya.area={request-param:lenya.area}"/>
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
             </map:act>
             <map:generate src="{fallback:content/authoring/asset.xsp}" type="serverpages"/>
             <map:transform src="{fallback:xslt/authoring/asset.xsl}">
