@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.16 2003/08/05 16:26:01 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.17 2003/08/15 13:10:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -63,9 +63,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac2.Authorizer;
-import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -104,7 +102,6 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
         String url = requestUri.substring(context.length());
 
-        Role[] roles = PolicyAuthorizer.getRoles(request);
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
 
@@ -124,7 +121,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
                         authorized = false;
 
-                        Situation situation = factory.buildSituation(roles);
+                        Situation situation = factory.buildSituation(request);
                         Event[] events = instance.getExecutableEvents(situation);
                         int i = 0;
 
