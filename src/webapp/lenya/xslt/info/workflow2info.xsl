@@ -1,34 +1,35 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: workflow2info.xsl,v 1.3 2004/02/11 13:32:27 gregor Exp $
+ $Id: workflow2info.xsl,v 1.4 2004/02/25 13:49:23 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
    xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
    >
   
-<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
 
 <xsl:template match="wf:history">
 	<lenya-info:info>
 		<lenya-info:workflow>
-			<h2>Variables</h2>
+			<h2><i18n:text>Variables</i18n:text></h2>
 			<table class="lenya-table">
-				<tr><th>Name</th><th>Value</th></tr>
+				<tr><th><i18n:text>Name</i18n:text></th><th><i18n:text>Value</i18n:text></th></tr>
 				<xsl:apply-templates select="wf:variable"/>
 			</table>
-			<h2>History</h2>
+			<h2><i18n:text>History</i18n:text></h2>
 			<table class="lenya-table">
 				<tr>
-					<th>Date</th>
-					<th>Event</th>
-					<th>State</th>
-					<th>User</th>
-					<th>IP Address</th>
+					<th><i18n:text>Date</i18n:text></th>
+					<th><i18n:text>Event</i18n:text></th>
+					<th><i18n:text>State</i18n:text></th>
+					<th><i18n:text>User</i18n:text></th>
+					<th><i18n:text>IP Address</i18n:text></th>
 				</tr>
 				<xsl:apply-templates select="wf:version">
 				    <xsl:sort select="@date" order="descending"/>
@@ -40,9 +41,9 @@
 
 <xsl:template match="wf:version">
 	<tr>
-		<td><xsl:value-of select="@date"/></td>
+		<td><i18n:date src-pattern="dd.MM.yyyy HH:mm:ss" pattern="yyyy-M-dd HH:mm:ss"><xsl:value-of select="@date"/></i18n:date></td>
 		<td><xsl:value-of select="@event"/></td>
-		<td><xsl:value-of select="@state"/></td>
+		<td><i18n:text><xsl:value-of select="@state"/></i18n:text></td>
 		<td>
 			<span style="white-space: nobreak">
 			<xsl:value-of select="wf:identity/wf:user/@id"/>

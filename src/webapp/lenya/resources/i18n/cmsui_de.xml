@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.41 2004/02/25 12:52:54 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.42 2004/02/25 13:49:23 roku Exp $ 
    
 -->
 
@@ -62,7 +62,8 @@
   <message key="Rename">Umbenennen</message>
   <message key="Modify">&#196;ndern</message>
   <message key="Document">Dokument</message>
-
+  <message key="Date">Datum</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -225,5 +226,13 @@
   <message key="cut-doc">Ausschneiden von Dokument {0}</message>
   <message key="cut-doc-to-clip?">Wollen Sie das Dokument {0} ausschneiden und in die Zwischenablage verschieben? Sie k&#246;nnen das Dokument sp&#228;ter an gew&#252;nschter Stelle einf&#252;gen.</message>
 
+  <!-- Info workflow  --> 
+   <message key="Value">Wert</message>
+   <message key="Event">Ereignis</message>
+   <message key="Variables">Variablen</message>
+   <message key="History">Verlauf</message>
+  <message key="State">Status</message>
+  <message key="IP Address">IP Adresse</message>   
+  
 </catalogue>
 

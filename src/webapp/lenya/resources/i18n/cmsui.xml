@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.36 2004/02/25 12:52:54 roku Exp $
+   $Id: cmsui.xml,v 1.37 2004/02/25 13:49:23 roku Exp $
    
 -->
 
@@ -62,6 +62,7 @@
   <message key="Rename">Rename</message>
   <message key="Modify">Modify</message>
   <message key="Document">Document</message>
+  <message key="Date">Date</message>
   
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
@@ -223,5 +224,13 @@ c
   <message key="Cut Document">Cut Document</message>
   <message key="cut-doc">Cut document {0}</message>
   <message key="cut-doc-to-clip?">Do you want to cut the document {0}and move it to the clipboard? You can paste the document later at the location of your choosing.</message>
+  
+  <!-- Info workflow  --> 
+   <message key="Value">Value</message>
+   <message key="Event">Event</message>
+   <message key="Variables">Variables</message>
+   <message key="History">History</message>
+  <message key="State">State</message>   
+  <message key="IP Address">IP Address</message>   
   
 </catalogue>
