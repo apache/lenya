@@ -76,7 +76,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.36 2004/02/16 10:43:03 gregor Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.37 2004/02/16 11:06:04 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when 
  * namespaces are not declared within the root element. Unfortunately the XSLTs 
@@ -305,32 +305,39 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
  
     /**
      * xupdate:update
-     * FIXME: updating attributes doesn't work this way
      * FIXME: Updating the "parent" element doesn't work this way
      */
     private String update(Request request, String pname, String select, NodeList selectionNodeList) {
-        // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new, remove original and replace temporary tagID by original tagID
-        Node nodeToCopy = selectionNodeList.item(0);
-        String namespace = nodeToCopy.getNamespaceURI();
-        log.debug(".update(): Update Node (namespace): " + namespace);
-        String namespaceAttribute = "";
-        if (namespace != null) {
-            namespaceAttribute = " namespace=\"" + namespace + "\"";
-        }
-        // WARNING: getAttributes adds the attribute tagID with value "temp"
-        XUpdateAttributes xa = getAttributes(nodeToCopy);
-        String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\"" + namespaceAttribute  + ">" + xa.xupdateAttrExpr + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
-        log.debug(".update(): Update Node (insert-after): " + xupdateInsertAfter);
-        String xupdateRemove = "<xupdate:remove select=\"" + select  + " \"/>";
-        log.debug(".update(): Update Node (remove): " + xupdateRemove);
-        String xupdateUpdateAttribute = "<xupdate:update select=\"" + new XPath(select).removePredicates(select) + "[@tagID='temp']/@tagID"  + " \">" + xa.tagID  + "</xupdate:update>";
-        log.debug(".update(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
-        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + xupdateUpdateAttribute  + "</xupdate:modifications>";
+        log.debug("Update node: " + select);
 
-/*
-        String xupdateUpdate = pname + request.getParameter(pname) + "</xupdate:update>";
-        return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>";
-*/
+        Node nodeToCopy = selectionNodeList.item(0);
+        if (nodeToCopy.getNodeType() == Node.ATTRIBUTE_NODE) {
+            log.debug("Update attribute: " + select);
+
+            String xupdateUpdate = pname + request.getParameter(pname) + "</xupdate:update>";
+            return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateUpdate + "</xupdate:modifications>";
+        } else {
+            log.debug("Update element: " + select);
+            // NOTE: Lexus seems to have trouble with mixed content. As Workaround we insert-after new, remove original and replace temporary tagID by original tagID
+
+            String namespace = nodeToCopy.getNamespaceURI();
+            String namespaceAttribute = "";
+            if (namespace != null) {
+                namespaceAttribute = " namespace=\"" + namespace + "\"";
+            }
+            // WARNING: getAttributes adds the attribute tagID with value "temp"
+            XUpdateAttributes xa = getAttributes(nodeToCopy);
+            String xupdateInsertAfter = "<xupdate:insert-after select=\"" + select  + " \"><xupdate:element name=\"" + new XPath(select).getNameWithoutPredicates()  + "\"" + namespaceAttribute  + ">" + xa.xupdateAttrExpr + request.getParameter(pname)  + "</xupdate:element></xupdate:insert-after>";
+            log.debug(".update(): Update Node (insert-after): " + xupdateInsertAfter);
+
+            String xupdateRemove = "<xupdate:remove select=\"" + select  + " \"/>";
+            log.debug(".update(): Update Node (remove): " + xupdateRemove);
+
+            String xupdateUpdateAttribute = "<xupdate:update select=\"" + new XPath(select).removePredicates(select) + "[@tagID='temp']/@tagID"  + " \">" + xa.tagID  + "</xupdate:update>";
+            log.debug(".update(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
+
+            return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + xupdateInsertAfter + xupdateRemove + xupdateUpdateAttribute  + "</xupdate:modifications>";
+        }
     }
  
     /**
