@@ -178,20 +178,15 @@
 
 <target name = "copyDocument" depends="newcopydocumentid, authdocumentpaths">
   <echo>Copy Content</echo>
-  <copy todir="${file.secdocumentdir}" flatten="true">
+  <copy todir="${file.secdocumentdir}">
     <fileset dir="${file.firstdocumentdir}"/>
   </copy>
   
   <echo>Copy Resources</echo>
-  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}" flatten="true">
-    <fileset dir="${pub.dir}/">
-      <include name="${authoring.resource.dir}/${node.firstdocumentid}/*"/>
-      <exclude name="${authoring.resource.dir}/*"/>  
-    </fileset>
+  <mkdir dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}"/>
+  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}">
+    <fileset dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}/"/>
   </copy>
-
-  <echo>Copy Meta </echo>
-  <!-- To Do -->
 
   <echo>Copy Workflow</echo>
   <!-- To Do -->
@@ -204,47 +199,33 @@
   <insertcopynode
     firstdocumentid="${node.firstdocumentid}"
     secdocumentid="${node.newdocumentid}"
-    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+    absolutefirsttreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+    absolutesectreepath="${pub.dir}/${authoring.dir}/${sitetree}"
   />
- 
 </target>
 
 <target name = "move">
   <echo>Copy Content</echo>
-  <copy todir="${file.secdocumentdir}" flatten="true">
+  <copy todir="${file.secdocumentdir}">
     <fileset dir="${file.firstdocumentdir}"/>
   </copy>
   
-  
   <echo>Copy Resources</echo>
-  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}" flatten="true">
-    <fileset dir="${pub.dir}/">
-      <include name="${authoring.resource.dir}/${node.firstdocumentid}/*"/>
-      <exclude name="${authoring.resource.dir}/*"/>  
-    </fileset>
+  <mkdir dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}"/>
+  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}">
+    <fileset dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}/"/>
   </copy>
 
-  <echo>Copy Meta </echo>
-  <!-- To Do -->
-
   <echo>Copy Revision</echo>
-  <echo>from ${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}/</echo>
-  <echo>to ${pub.dir}/${rcml.dir}/${authoring.dir}/${node.newdocumentid}</echo>
-  <copy todir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.newdocumentid}" flatten="true">
-    <fileset dir="${pub.dir}/">
-      <include name="${rcml.dir}/${authoring.dir}/${node.firstdocumentid}/*"/>
-      <exclude name="${rcml.dir}/${authoring.dir}/*"/>  
-      <exclude name="${rcml.dir}/*"/>  
-    </fileset>
+  <mkdir dir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}"/>
+  <copy todir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.newdocumentid}">
+    <fileset dir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}/"/>
   </copy>
 
   <echo>Copy Backups</echo>
-  <copy todir="${pub.dir}/${rcbak.dir}/${authoring.dir}/${node.newdocumentid}" flatten="true">
-    <fileset dir="${pub.dir}/">
-      <include name="${rcbak.dir}/${authoring.dir}/${node.firstdocumentid}/*"/>
-      <exclude name="${rcbak.dir}/${authoring.dir}/*"/>  
-      <exclude name="${rcbak.dir}/*"/>  
-    </fileset>
+  <mkdir dir="${pub.dir}/${rcbak.dir}/${authoring.dir}${node.firstdocumentid}"/>
+  <copy todir="${pub.dir}/${rcbak.dir}/${authoring.dir}/${node.newdocumentid}">
+    <fileset dir="${pub.dir}/${rcbak.dir}/${authoring.dir}${node.firstdocumentid}/"/>
   </copy>
 
   <echo>Copy Workflow</echo>
@@ -254,11 +235,11 @@
   <echo> the tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
 
   <taskdef name="movenode" classname="org.apache.lenya.cms.ant.MoveNode"/>
-
   <movenode
     firstdocumentid="${node.firstdocumentid}"
     secdocumentid="${node.newdocumentid}"
-    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+    absolutefirsttreepath="${pub.dir}/${authoring.dir}/${sitetree}"
+    absolutesectreepath="${pub.dir}/${authoring.dir}/${sitetree}"
   />
 
   <echo> Delete document with id ${node.firstdocumentid}</echo> 
@@ -268,9 +249,6 @@
 
   <echo>Delete Resources</echo>
   <delete dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}" includeemptydirs="true"/>
-
-  <echo>Delete Meta </echo>
-  <!-- To Do -->
 
   <echo>Delete Revision</echo>
   <delete dir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}"/>
