@@ -1151,7 +1151,7 @@
           
           <map:match pattern="rename" type="step">
             <map:act type="task">
-              <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/"/>
+              <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/{request-param:properties.node.secdocumentid}"/>
             </map:act>
           </map:match>
           
