@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RevisionControllerAction.java,v 1.34 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: RevisionControllerAction.java,v 1.35 2004/08/16 12:14:13 andreas Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -88,6 +88,7 @@ public class RevisionControllerAction extends AbstractAction {
             document = envelope.getDocument();
         } catch (Exception e) {
             getLogger().error("Resolving page envelope failed: ", e);
+            throw e;
         }
 
         //get Parameters for RC
