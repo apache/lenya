@@ -18,3 +18,28 @@
   NOTE: PREFIX is not the string "PREFIX". Instead use the
         filesystem path under which Tomcat should be installed.
         For instance use "/usr/local" for PREFIX above.
+
+
+  Cocoon Performance
+  ------------------
+
+  1) Set all "check-reload" attributes within all sitemaps to "false"
+  2) Set all "log-level" attributes within WEB-INF/logkit.xconf to "ERROR"
+
+
+  Tomact Performance
+  ------------------
+
+  1) Set attribute "reloadable" of Context wyona-cms to "false" within conf/server.xml
+
+
+  Reconfigure Ports
+  -----------------
+
+  1) Tomcat port: server.xml (default: 8080)
+  2) Catalina port: server.xml (default: 8008)
+  3) Tomcat shutdown port: server.xml (default: 8005)
+  4) HypersonicSQL DB port: cocoon.xconf (default: 9002)
+
+  NOTE: /usr/local/bin/nmap localhost -p 1-65535
+        (http://www.insecure.org/nmap/index.html)
