@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.16 2003/03/14 16:07:02 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/03/18 17:31:35 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -11,7 +11,11 @@
     <map:generators default="file">
       <map:generator  name="request" src="org.apache.cocoon.generation.RequestGenerator"/>
     </map:generators>
-    <map:transformers default="xslt"/>
+    <map:transformers default="xslt">
+      <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer" logger="oscom.sitemap.transformer.xlink">
+        <publication type="oscom"/>
+      </map:transformer>
+    </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard">
