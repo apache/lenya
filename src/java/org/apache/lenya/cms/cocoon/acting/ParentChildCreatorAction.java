@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.20 2003/02/20 13:40:40 gregor Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.21 2003/02/26 10:15:12 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,7 +62,7 @@ import org.dom4j.XPath;
 
 import org.dom4j.io.SAXReader;
 
-import org.wyona.cms.authoring.AbstractParentChildCreator;
+import org.wyona.cms.authoring.ParentChildCreatorInterface;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -143,9 +143,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         short childType;
 
         if (childtype.equals("branch")) {
-            childType = AbstractParentChildCreator.BRANCH_NODE;
+            childType = ParentChildCreatorInterface.BRANCH_NODE;
         } else if (childtype.equals("leaf")) {
-            childType = AbstractParentChildCreator.LEAF_NODE;
+            childType = ParentChildCreatorInterface.LEAF_NODE;
         } else {
             getLogger().error("No such child type: " + childtype);
 
@@ -170,7 +170,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         }
 
         // Get creator
-        AbstractParentChildCreator creator = null;
+        ParentChildCreatorInterface creator = null;
         String absoluteDoctypesPath = sitemapParentPath + doctypesPath;
         Document doctypesDoc = new SAXReader().read("file:" + absoluteDoctypesPath +
                 "doctypes.xconf");
@@ -179,14 +179,16 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         if (creator_src != null) {
             getLogger().info(".act(): Creator found for \"" + doctype + "\": " +
-                creator_src.getName() + " " + creator_src.getPath() + " " + creator_src.getValue());
-            creator = (AbstractParentChildCreator) Class.forName(creator_src.getValue())
-                                                        .newInstance();
+                creator_src.getName() + " " + creator_src.getPath() + " " +
+		creator_src.getValue());
+	    // now get the constructor that accepts the configuration
+	    
+	    Class creatorClass = Class.forName(creator_src.getValue());
+	    creator = (ParentChildCreatorInterface) creatorClass.newInstance();
         } else {
             getLogger().warn(".act(): No creator found for \"" + doctype +
                 "\". DefaultParentChildreator will be taken.");
-            creator = (AbstractParentChildCreator) Class.forName(
-                    "org.wyona.cms.authoring.DefaultParentChildCreator").newInstance();
+            creator = new org.wyona.cms.authoring.DefaultCreator();
         }
 
         getLogger().debug(".act(): Creator : " + creator.getClass().getName());
@@ -194,7 +196,11 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         // Init creator
         org.dom4j.Node creatorNode = doctypesDoc.selectSingleNode("/doctypes/doc[@type='" +
                 doctype + "']/creator");
-        creator.init(creatorNode);
+
+	// FIXME: the config for the doctype should of course be read
+	// from the doctypes file
+	Configuration doctypeConf = null;
+	creator.init(doctypeConf);
 
         // Transaction should actually be started here!
         // Read tree
@@ -235,7 +241,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         // Set child type: branch or leaf
         childType = creator.getChildType(childType);
 
-        if (childType == AbstractParentChildCreator.BRANCH_NODE) {
+        if (childType == ParentChildCreatorInterface.BRANCH_NODE) {
             childtype = "branch";
         } else {
             childtype = "leaf";
@@ -270,28 +276,23 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         // Create actual document
         try {
             creator.create(new File(absoluteDoctypesPath + "samples"),
-                new File(sitemapParentPath + docsPath + parentid), childid, childType, childname);
+			   new File(sitemapParentPath + docsPath + parentid),
+			   childid, childType, childname, parameters);
         } catch (Exception e) {
             getLogger().error(".act(): Creator throwed exception: " + e);
         }
 
         // Redirect to referer
-        if (7 > 1) {
-            String parent_uri = (String) session.getAttribute(
-                    "org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
-            getLogger().info(".act(): Child added");
+	String parent_uri = (String) session.getAttribute(
+            "org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
+	getLogger().info(".act(): Child added");
 
-            HashMap actionMap = new HashMap();
-            actionMap.put("parent_uri", parent_uri);
-            session.removeAttribute(
-                "org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
+	HashMap actionMap = new HashMap();
+	actionMap.put("parent_uri", parent_uri);
+	session.removeAttribute(
+            "org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
 
-            return actionMap;
-        }
-
-        getLogger().error(".act(): No child added (very strange)!");
-
-        return null;
+	return actionMap;
     }
 
     /**
@@ -305,8 +306,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
      *
      * @return DOCUMENT ME!
      */
-    public boolean validate(String parentid, String childid, String childname, String childtype,
-        String doctype) {
+    public boolean validate(String parentid,
+			    String childid, String childname, String childtype,
+			    String doctype) {
         getLogger().debug(".validate(): parentid=" + parentid + " ; childid=" + childid +
             " ; childname=" + childname + " ; childtype=" + childtype + " ; doctype=" + doctype);
 
