@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.excalibur.source.Source;
@@ -59,7 +61,7 @@ public class PageEnvelope {
      */
     public PageEnvelope(Publication publication, Request request)
         throws PageEnvelopeException, ProcessingException, SAXException, IOException {
-            
+
         assert publication != null;
         assert request != null;
 
@@ -78,6 +80,13 @@ public class PageEnvelope {
         context = request.getContextPath();
     }
 
+    public PageEnvelope(Map objectModel)
+        throws ProcessingException, PageEnvelopeException, SAXException, IOException {
+        this(
+            PublicationFactory.getPublication(objectModel),
+            ObjectModelHelper.getRequest(objectModel));
+    }
+
     /**
      * Creates a new instance of PageEnvelope
      * @param resolver a <code>SourceResolver</code> value
@@ -86,6 +95,7 @@ public class PageEnvelope {
      * @exception ProcessingException if an error occurs
      * @exception SAXException if an error occurs
      * @exception IOException if an error occurs
+     * @deprecated This constructor does not work outside a publication directory. Use {@link #PageEnvelope(Map)} instead!
      */
     public PageEnvelope(SourceResolver resolver, Request request)
         throws PageEnvelopeException, ProcessingException, SAXException, IOException {
