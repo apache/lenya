@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- $Id: authoring-sitemap.xmap,v 1.23 2003/02/05 11:59:40 gregorcms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -475,22 +476,10 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
-				<!-- Error handling -->
-		
+			<!-- Error handling -->
 			<map:handle-errors>
-				<map:aggregate element="wyona" label="gregor">
-					<map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
-					<map:part src="docs/publication/authoring/error.html" element="wrapper"/>
-					<map:part src="docs/publication/authoring/small-preview.xml"/>
-					<map:part src="docs/publication/authoring/sitetree.xml"/>
-					<map:part src="cocoon:/today"/>
-				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/Authoring/wrapper.xsl">
-					<map:parameter name="id" value="/error.html"/>
-				</map:transform>
-				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
 				<map:serialize type="html"/>
-</map:handle-errors>
+			</map:handle-errors>
 		</map:pipeline>
 	</map:pipelines>
 </map:sitemap>
