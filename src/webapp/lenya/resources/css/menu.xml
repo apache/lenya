@@ -52,6 +52,10 @@ table.lenya-menubar-menu img {border:0px}
     color: #AAAAAA;
 }
 
+.lenya-menubar-highlight {
+    color: #BAFF00;
+}
+
 #menuFile {left:14px;}
 #menuSearch {left:114px;}
 #menuHelp {left:214px;}
