@@ -19,6 +19,7 @@ package org.apache.lenya.cms.task;
 
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
@@ -27,12 +28,8 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowEngine;
-import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 import org.apache.log4j.Logger;
 
 /**
@@ -41,6 +38,7 @@ import org.apache.log4j.Logger;
 public class WorkflowInvoker extends ParameterWrapper {
 
     private static Logger log = Logger.getLogger(WorkflowInvoker.class);
+    private ServiceManager manager;
 
     /**
      * <code>ROLES</code> The roles
@@ -93,9 +91,11 @@ public class WorkflowInvoker extends ParameterWrapper {
      * Ctor.
      * 
      * @param parameters A map containing the prefixed parameters.
+     * @param manager The service manager.
      */
-    public WorkflowInvoker(Map parameters) {
+    public WorkflowInvoker(Map parameters, ServiceManager manager) {
         super(parameters);
+        this.manager = manager;
     }
 
     /**
@@ -176,7 +176,6 @@ public class WorkflowInvoker extends ParameterWrapper {
     }
 
     private Document document;
-    private boolean doTransition = false;
 
     /**
      * Initializes the workflow invoker.
@@ -192,14 +191,12 @@ public class WorkflowInvoker extends ParameterWrapper {
         } else {
             log.debug("Workflow event: [" + eventName + "]");
             // check for workflow instance first (task can initialize the workflow history)
-            WorkflowFactory factory = WorkflowFactory.newInstance();
             try {
                 DocumentIdentityMap map = new DocumentIdentityMap();
                 this.document = map.getFactory().getFromURL(publication, webappUrl);
             } catch (DocumentBuildException e) {
                 throw new ExecutionException(e);
             }
-            this.doTransition = factory.hasWorkflow(this.document);
         }
     }
 
@@ -208,24 +205,18 @@ public class WorkflowInvoker extends ParameterWrapper {
      * @throws ExecutionException when something went wrong.
      */
     public void invokeTransition() throws ExecutionException {
-        if (this.doTransition) {
 
-            try {
-                WorkflowFactory factory = WorkflowFactory.newInstance();
-                WorkflowEngine engine = new WorkflowEngineImpl();
-                Situation situation = factory.buildSituation(getRoleIDs(), getUserId(),
-                        getMachineIp());
-                Workflow workflow = factory.getWorkflow(this.document);
-
-                log.debug("Invoking transition.");
-                engine.invoke(this.document, workflow, situation, getEventName());
-                log.debug("Invoking transition completed.");
-
-            } catch (Exception e) {
-                throw new ExecutionException(e);
+        WorkflowManager wfManager = null;
+        try {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            wfManager.invoke(this.document, getEventName());
+        } catch (Exception e) {
+            throw new ExecutionException(e);
+        } finally {
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
-
     }
 
     /**

@@ -77,6 +77,8 @@
 
   <target name="test">
     <echo>This is a test of the AntTask: ${text}</echo>
+    <taskdef name="ant-test" classname="org.apache.lenya.cms.ant.TestTask"/>
+    <ant-test/>
   </target>
 
 

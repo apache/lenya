@@ -28,6 +28,7 @@ import java.util.List;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
@@ -39,12 +40,9 @@ import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowEngine;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 import org.apache.log4j.Logger;
 
 /**
@@ -158,23 +156,18 @@ public abstract class PublicationTask extends AbstractTask {
             log.debug("Checking workflow of document [" + document + "].");
         }
 
-        boolean canFire = true;
-
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        if (factory.hasWorkflow(document)) {
-            try {
-                Situation situation = getSituation();
-                Workflow workflow = factory.getWorkflow(document);
-                WorkflowEngine engine = new WorkflowEngineImpl();
-                canFire = engine.canInvoke(document, workflow, situation, getEventName());
-            } catch (final ParameterException e) {
-                throw new ExecutionException(e);
-            } catch (final WorkflowException e) {
-                throw new ExecutionException(e);
-            }
-
+        WorkflowManager wfManager = null;
+        try {
+            wfManager = (WorkflowManager) getServiceManager().lookup(WorkflowManager.ROLE);
+            return wfManager.canInvoke(document, getEventName());
+        } catch (Exception e) {
+            throw new ExecutionException(e);
         }
-        return canFire;
+        finally {
+            if (wfManager != null) {
+                getServiceManager().release(wfManager);
+            }
+        }
     }
 
     /**
@@ -183,11 +176,18 @@ public abstract class PublicationTask extends AbstractTask {
      * @throws ParameterException when something went wrong.
      */
     protected Situation getSituation() throws ParameterException {
-        WorkflowFactory workflowFactory = WorkflowFactory.newInstance();
-        String userId = getParameters().getParameter(PARAMETER_USER_ID);
-        String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
-        Situation situation = workflowFactory.buildSituation(getRoleIDs(), userId, machineIp);
-        return situation;
+        WorkflowResolver wfResolver = null;
+        try {
+            wfResolver = (WorkflowResolver) getServiceManager().lookup(WorkflowResolver.ROLE);
+            return wfResolver.getSituation();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (wfResolver != null) {
+                getServiceManager().release(wfResolver);
+            }
+        }
     }
 
     /**
@@ -201,26 +201,16 @@ public abstract class PublicationTask extends AbstractTask {
             log.debug("Trying to execute workflow on document [" + document.getId() + "].");
         }
 
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        if (factory.hasWorkflow(document)) {
-
-            try {
-                String userId = getParameters().getParameter(PARAMETER_USER_ID);
-                String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
-
-                Workflow workflow = factory.getWorkflow(document);
-                Situation situation = factory.buildSituation(getRoleIDs(), userId, machineIp);
-                WorkflowEngine engine = new WorkflowEngineImpl();
-                engine.invoke(document, workflow, situation, getEventName());
-            } catch (final ParameterException e) {
-                throw new ExecutionException(e);
-            } catch (final WorkflowException e) {
-                throw new ExecutionException(e);
-            }
-
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("No workflow associated with document.");
+        WorkflowManager wfManager = null;
+        try {
+            wfManager = (WorkflowManager) getServiceManager().lookup(WorkflowManager.ROLE);
+            wfManager.invoke(document, getEventName());
+        } catch (Exception e) {
+            throw new ExecutionException(e);
+        }
+        finally {
+            if (wfManager != null) {
+                getServiceManager().release(wfManager);
             }
         }
 

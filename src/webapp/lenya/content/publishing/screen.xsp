@@ -34,10 +34,6 @@
     <xsp:include>org.apache.lenya.cms.publication.DocumentIdentityMap</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.util.DocumentReferencesHelper</xsp:include>
-    <xsp:include>org.apache.lenya.cms.workflow.CMSVersion</xsp:include>
-    <xsp:include>org.apache.lenya.cms.workflow.WorkflowFactory</xsp:include>
-    <xsp:include>org.apache.lenya.workflow.impl.History</xsp:include>
-    <xsp:include>org.apache.lenya.workflow.impl.Version</xsp:include>
   </xsp:structure>
 
   <usecase:publish>
@@ -81,46 +77,6 @@
          throw new ProcessingException(e);
      }
    </xsp:logic>
-
-    
-    <not:users>
-    <xsp:logic>
-        try {
-        
-          String userId = null;
-          
-          if (WorkflowFactory.newInstance().hasWorkflow(document)) {
-                History history = WorkflowFactory.getHistory(document);
-                Version[] versions = history.getVersions();
-                
-                int i = versions.length - 1;
-                while (userId == null &amp;&amp; i &gt;= 0) {
-                        if (versions[i].getEvent() != null &amp;&amp;
-                            versions[i].getEvent().getName().equals("submit")) {
-                                userId = ((CMSVersion) versions[i]).getUserId();
-                        }
-                        i--;
-                }
-          }
-        
-          if (userId != null) {
-                UserManager userManager = (UserManager)
-                    <input:get-attribute module="access-control" as="object" name="user-manager"/>;
-                User user = userManager.getUser(userId);
-                <not:user>
-                    <xsp:attribute name="id"><xsp:expr>user.getId()</xsp:expr></xsp:attribute>
-                    <xsp:attribute name="name"><xsp:expr>user.getName()</xsp:expr></xsp:attribute>
-                    <xsp:attribute name="email"><xsp:expr>user.getEmail()</xsp:expr></xsp:attribute>
-                </not:user>
-          }
-        }
-        catch (Exception e) {
-            throw new ProcessingException(e);
-        }
-        
-    </xsp:logic>
-    
-    </not:users>
 
     <xsp:logic>
 	  DocumentReferencesHelper helper = new DocumentReferencesHelper(document.getIdentityMap(), objectModel);

@@ -23,8 +23,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -55,9 +54,8 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 
             Document srcDoc;
             Document destDoc;
-            WorkflowFactory factory = WorkflowFactory.newInstance();
 
-            log("init workflow history");
+            WorkflowManager wfManager = null;
             try {
                 srcDoc = getIdentityMap().getFactory().get(getPublication(),
                         getFirstarea(),
@@ -67,30 +65,19 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
                         getSecarea(),
                         destDocumentid,
                         language);
-            } catch (DocumentBuildException e) {
-                throw new BuildException(e);
-            }
-
-            log("move workflow history of " + srcDoc.getFile().getAbsolutePath() + " to "
-                    + destDoc.getFile().getAbsolutePath());
-            try {
-                if (factory.hasWorkflow(srcDoc)) {
-                    log("has workflow");
-                    /*
-                     * WorkflowInstance sourceInstance =
-                     * factory.buildExistingInstance(srcDoc); String
-                     * workflowName = sourceInstance.getWorkflow().getName();
-                     * 
-                     * WorkflowInstance destInstance =
-                     * factory.buildNewInstance(destDoc, workflowName);
-                     * destInstance.getHistory().replaceWith(sourceInstance.getHistory());
-                     * 
-                     * sourceInstance.getHistory().delete(); log("workflow
-                     * moved");
-                     */
-                }
+                
+                log("move workflow history of " + srcDoc.getFile().getAbsolutePath() + " to "
+                        + destDoc.getFile().getAbsolutePath());
+                
+                wfManager = (WorkflowManager) getServiceManager().lookup(WorkflowManager.ROLE);
+                wfManager.moveHistory(srcDoc, destDoc);
             } catch (Exception e) {
                 throw new BuildException(e);
+            }
+            finally {
+                if (wfManager != null) {
+                    getServiceManager().release(wfManager);
+                }
             }
         }
     }

@@ -59,7 +59,7 @@ public class TaskJob extends ServletJob {
         taskParameters.putAll(wrapperMap);
         wrapperMap.putAll(taskParameters.getPrefixedMap());
         
-        DefaultTaskWrapper wrapper = new DefaultTaskWrapper(wrapperMap);
+        DefaultTaskWrapper wrapper = new DefaultTaskWrapper(wrapperMap, null);
         return wrapper.getParameters();
     }
 
@@ -105,7 +105,7 @@ public class TaskJob extends ServletJob {
         log.info("Executing job");
         JobDetail jobDetail = context.getJobDetail();
         
-        DefaultTaskWrapper wrapper = new DefaultTaskWrapper(jobDetail.getJobDataMap());
+        DefaultTaskWrapper wrapper = new DefaultTaskWrapper(jobDetail.getJobDataMap(), null);
         try {
             wrapper.execute();
         } catch (ExecutionException e) {
@@ -145,7 +145,7 @@ public class TaskJob extends ServletJob {
     public Element save(NamespaceHelper helper, JobDetail jobDetail) throws SchedulerException {
         
         Element jobElement = super.save(helper, jobDetail);
-        TaskWrapper wrapper = new DefaultTaskWrapper(jobDetail.getJobDataMap());
+        TaskWrapper wrapper = new DefaultTaskWrapper(jobDetail.getJobDataMap(), null);
         jobElement.appendChild(wrapper.save(helper));
         
         return jobElement;

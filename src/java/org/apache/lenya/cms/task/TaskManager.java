@@ -28,6 +28,7 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
@@ -66,23 +67,29 @@ public class TaskManager implements Configurable {
 
     // maps task-ids to tasks
     private Map tasks = new HashMap();
+    
+    private ServiceManager manager;
 
     /**
      * Creates a new TaskManager object.
+     * @param manager The service manager to use.
      */
-    public TaskManager() {
-        // do nothing
+    public TaskManager(ServiceManager manager) {
+        this.manager = manager;
     }
 
     /**
      * Creates a new instance of TaskManager
      * @param publicationPath path to publication
+     * @param manager The service manager to use.
      * @throws ConfigurationException if the configuration failed.
      * @throws SAXException when parsing the config file failed.
      * @throws IOException when an I/O error occured.
      */
-    public TaskManager(String publicationPath)
+    public TaskManager(String publicationPath, ServiceManager manager)
         throws ConfigurationException, SAXException, IOException {
+        this(manager);
+        
         String configurationFilePath = publicationPath + CONFIGURATION_FILE;
         log.debug("Loading tasks: " + configurationFilePath);
 
@@ -101,8 +108,14 @@ public class TaskManager implements Configurable {
                     + configurationFile.getAbsolutePath()
                     + "] does not exist.");
         }
-        this.tasks.put(EMTPY_TASK, new EmptyTask());
-        this.tasks.put(ANT_TASK, new AntTask());
+        
+        Task empty = new EmptyTask();
+        empty.service(this.manager);
+        this.tasks.put(EMTPY_TASK, empty);
+        
+        Task ant = new AntTask();
+        ant.service(this.manager);
+        this.tasks.put(ANT_TASK, ant);
     }
 
     /**
@@ -124,6 +137,7 @@ public class TaskManager implements Configurable {
 
             Task task =
                 TaskFactory.getInstance().createTask(taskConfigurations[i]);
+            task.service(this.manager);
             this.tasks.put(taskId, task);
         }
     }

@@ -20,6 +20,7 @@
 package org.apache.lenya.cms.task;
 
 import org.apache.avalon.framework.parameters.Parameterizable;
+import org.apache.avalon.framework.service.ServiceManager;
 
 /**
  * A Task is a command that can be executed. <br/>
@@ -93,4 +94,10 @@ public interface Task extends Parameterizable {
      * @return #SUCCESS for success, #FAILURE for failure
      */
     int getResult();
+    
+    /**
+     * Passes the service manager to the task.
+     * @param manager The service manager.
+     */
+    void service(ServiceManager manager);
 }

@@ -42,7 +42,7 @@ public class TaskSequence extends AbstractTask {
      * @throws ConfigurationException if an error occurs
      */
     public void init(Configuration configuration) throws ConfigurationException {
-        this.taskManager = new TaskManager();
+        this.taskManager = new TaskManager(getServiceManager());
         this.taskManager.configure(configuration);
 
         // create task list

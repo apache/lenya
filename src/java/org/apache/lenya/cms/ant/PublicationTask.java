@@ -32,13 +32,12 @@ import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.task.AntTask;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 /**
  * Abstract base class for publication-dependent Ant tasks. It requires some
  * project parameters that are set by the AntTask.
  */
-public abstract class PublicationTask extends Task {
+public abstract class PublicationTask extends LenyaTask {
     /** Creates a new instance of PublicationTask */
     public PublicationTask() {
         // do nothing

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.AbstractAction;
+import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -35,7 +35,7 @@ import org.apache.lenya.cms.task.TaskWrapper;
 /**
  * An action that executes a task.
  */
-public class TaskAction extends AbstractAction {
+public class TaskAction extends ServiceableAction {
     
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
@@ -48,7 +48,7 @@ public class TaskAction extends AbstractAction {
         Parameters parameters)
         throws java.lang.Exception {
 
-        TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
+        TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters, this.manager);
         wrapper.execute();
 
         Request request = ObjectModelHelper.getRequest(objectModel);

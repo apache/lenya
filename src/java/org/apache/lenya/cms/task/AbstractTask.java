@@ -21,6 +21,7 @@ package org.apache.lenya.cms.task;
 
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceManager;
 
 
 /**
@@ -28,6 +29,25 @@ import org.apache.avalon.framework.parameters.Parameters;
  */
 public abstract class AbstractTask implements Task {
     private Parameters parameters = new Parameters();
+    
+    private ServiceManager manager;
+    
+    /**
+     * Ctor.
+     */
+    public AbstractTask() {
+    }
+    
+    /**
+     * @param manager The service manager to use.
+     */
+    public void service(ServiceManager manager) {
+        this.manager = manager;
+    }
+    
+    protected ServiceManager getServiceManager() {
+        return this.manager;
+    }
 
     /**
      * Get parameters of the task

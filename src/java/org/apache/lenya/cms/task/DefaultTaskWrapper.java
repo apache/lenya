@@ -32,6 +32,7 @@ import java.util.Properties;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Role;
@@ -54,19 +55,24 @@ public class DefaultTaskWrapper implements TaskWrapper {
         new TaskWrapperParameters(getParameterObject());
     private TaskParameters taskParameters = new TaskParameters(getParameterObject());
 
+    private ServiceManager manager;
+    
     /**
      * Default ctor for subclasses.
+     * @param manager The service manager to use.
      */
-    protected DefaultTaskWrapper() {
-	    // do nothing
+    protected DefaultTaskWrapper(ServiceManager manager) {
+        this.manager = manager;
     }
 
     /**
      * Ctor to be called when all task wrapper parameters are known.
      * All keys and values must be strings or string arrays.
      * @param _parameters The prefixed parameters.
+     * @param manager The service manager to use.
      */
-    public DefaultTaskWrapper(Map _parameters) {
+    public DefaultTaskWrapper(Map _parameters, ServiceManager manager) {
+        this(manager);
         log.debug("Creating");
 
         List keys = new ArrayList();
@@ -227,12 +233,12 @@ public class DefaultTaskWrapper implements TaskWrapper {
 
         Publication publication = getTaskParameters().getPublication();
 
-        WorkflowInvoker workflowInvoker = new WorkflowInvoker(getParameters());
+        WorkflowInvoker workflowInvoker = new WorkflowInvoker(getParameters(), this.manager);
         workflowInvoker.setup(publication, getWrapperParameters().getWebappUrl());
 
         Task task;
         try {
-            manager = new TaskManager(publication.getDirectory().getAbsolutePath());
+            manager = new TaskManager(publication.getDirectory().getAbsolutePath(), this.manager);
             task = manager.getTask(taskId);
 
             Properties properties = new Properties();

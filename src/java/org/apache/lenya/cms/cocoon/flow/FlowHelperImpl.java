@@ -25,78 +25,56 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.Machine;
-import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowEngine;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
- * Flowscript utility class. The FOM_Cocoon object is not passed in the
- * constructor to avoid errors. This way, not the initial, but the current
- * FOM_Cocoon object is used by the methods.
+ * Flowscript utility class. The FOM_Cocoon object is not passed in the constructor to avoid errors.
+ * This way, not the initial, but the current FOM_Cocoon object is used by the methods.
  */
-public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
+public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Serviceable {
 
     /**
      * Ctor.
      */
     public FlowHelperImpl() {
-	    // do nothing
+        // do nothing
     }
 
     /**
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getSituation(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
      */
     public Situation getSituation(FOM_Cocoon cocoon) throws AccessControlException {
-        Request request = ObjectModelHelper.getRequest(cocoon.getObjectModel());
-        Session session = request.getSession();
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-
-        String userId = "";
-        String ipAddress = "";
-
-        User user = identity.getUser();
-        if (user != null) {
-            userId = user.getId();
+        Situation situation;
+        WorkflowResolver resolver = null;
+        try {
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            situation = resolver.getSituation();
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.manager.release(resolver);
         }
-
-        Machine machine = identity.getMachine();
-        if (machine != null) {
-            ipAddress = machine.getIp();
-        }
-
-        Role[] roles = PolicyAuthorizer.getRoles(request);
-        String[] roleIds = new String[roles.length];
-        for (int i = 0; i < roles.length; i++) {
-            roleIds[i] = roles[i].getId();
-        }
-
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        Situation situation = factory.buildSituation(roleIds, userId, ipAddress);
         return situation;
     }
 
@@ -175,12 +153,20 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
      */
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
-        
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        Document document = getPageEnvelope(cocoon).getDocument();
-        Workflow workflow = factory.getWorkflow(document);
-        WorkflowEngine engine = new WorkflowEngineImpl();
-        engine.invoke(document, workflow, getSituation(cocoon), event);
+
+        WorkflowManager wfManager = null;
+        try {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            Document document = getPageEnvelope(cocoon).getDocument();
+            wfManager.invoke(document, event);
+        } catch (Exception e) {
+            throw new WorkflowException(e);
+        } finally {
+            if (wfManager != null) {
+                this.manager.release(wfManager);
+            }
+        }
+
     }
 
     /**
@@ -213,5 +199,14 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
         final String filename = pageEnvelope.getDocument().getFile().getCanonicalPath()
                 .substring(publication.getDirectory().getCanonicalPath().length());
         getRevisionController(cocoon).reservedCheckIn(filename, identity.getUser().getId(), backup);
+    }
+
+    private ServiceManager manager;
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 }

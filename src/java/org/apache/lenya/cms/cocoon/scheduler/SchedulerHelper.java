@@ -65,7 +65,7 @@ public class SchedulerHelper {
         Map map = new HashMap();
 
         try {
-            TaskWrapper wrapper = new CocoonTaskWrapper(this.objectModel, this.parameters);
+            TaskWrapper wrapper = new CocoonTaskWrapper(this.objectModel, this.parameters, null);
 
             this.logger.debug("Adding task wrapper parameters");
             Map wrapperParameters = wrapper.getParameters();

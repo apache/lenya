@@ -19,17 +19,10 @@
 
 package org.apache.lenya.cms.task;
 
-
 /**
  * A command line task
  */
 public class CommandLineTask extends AbstractTask {
-    /**
-     * Creates a new CommandLineTask object.
-     */
-    public CommandLineTask() {
-	    // do nothing
-    }
 
     /** 
      * Execute the task. All parameters must have been set with parameterize().

@@ -25,13 +25,12 @@ import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task which implements the SiteTreeNodeVisitor for the operation move a
- * document. (Visitor pattern)
+ * Ant task which implements the SiteTreeNodeVisitor for the operation move a document. (Visitor
+ * pattern)
  */
 public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVisitor {
 
@@ -126,7 +125,6 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 
             Document document;
             Document newDocument;
-            WorkflowFactory factory = WorkflowFactory.newInstance();
 
             log("move workflow history");
             try {
@@ -141,24 +139,17 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }
+            WorkflowManager wfManager = null;
             try {
-                if (factory.hasWorkflow(document)) {
-                    /*
-                     * WorkflowInstance sourceInstance =
-                     * factory.buildExistingInstance(document); String
-                     * workflowName = sourceInstance.getWorkflow().getName();
-                     * 
-                     * WorkflowInstance destInstance =
-                     * factory.buildNewInstance(newDocument, workflowName);
-                     * destInstance.getHistory().replaceWith(sourceInstance.getHistory());
-                     * 
-                     * sourceInstance.getHistory().delete();
-                     */
-                }
+                wfManager = (WorkflowManager) getServiceManager().lookup(WorkflowManager.ROLE);
+                wfManager.moveHistory(document, newDocument);
             } catch (Exception e) {
                 throw new BuildException(e);
+            } finally {
+                if (wfManager != null) {
+                    getServiceManager().release(wfManager);
+                }
             }
-
         }
     }
 
