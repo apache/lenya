@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xslt.xsl,v 1.5 2004/03/13 12:42:17 gregor Exp $ -->
+<!-- $Id: menu2xslt.xsl,v 1.6 2004/04/17 14:58:21 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
@@ -44,7 +44,7 @@
     <html>
       <head>
         <xso:call-template name="title"/>
-        <script src="{$contextprefix}/lenya/menu/menu.js" type="text/javascript"/>
+        <script src="{$contextprefix}/lenya/menu/menu.js" type="text/javascript"> </script>
         <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
         <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
       </head>
