@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Link Management</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Christian Egli" email="egli@apache.org"/>
+    </authors>
+  </header>
+
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+
+      <p>Link Managements deals with internal links, i.e. documents
+      that refer to other documents within the same publication. These
+      links might have to be changed</p>
+      <ol>
+	<li>if a document not yet live,</li>
+	<li>if it is withdrawn from live or </li>
+	<li>if its document-id has changed because it is moved to a
+        different location within the site tree.</li>
+	<li>references in authoring have to link to documents in
+	<code>authoring</code>, however once they are published they
+	need to refer to documents in <code>live</code></li>
+      </ol>
+
+      <p>These four cases have to be dealt with seperately.</p>
+      <section>
+	<title>A document is not yet live</title>
+	<p>This case can happen if the user tries to publish a
+	document which has a reference to another document which has
+	not been published yet. The reference will be stale as the
+	refered document is not in the live area yet. A warning will
+	be issued during the publishing process.</p>
+      </section>
+
+      <section>
+	<title>A document is withdrawn from live</title>
+	<p>If a document which is has references to it is withdrawn
+	from the live area the references will be stale, as the
+	refered document is no longer available in the live area. A
+	warning will be issued during the deactivation process.</p>
+      </section>
+
+      <section>
+	<title>A document-id changes</title>
+	<p>If a document is moved within the site tree such that it
+	changes its document-id (e.g. cut a document and paste it
+	somewhere else in the hierarchy in the site area) then all
+	references to this document have to be changed. This is done
+	transparently in the course of the paste.</p>
+      </section>
+
+      <section>
+	<title>Rewrite internal links in live</title>
+	<p>Internal links refer to documents in authoring as long as
+	they are not published. However as soon as they are published,
+	i.e. reside in the live area their references have to go to
+	documents in the live area. A transformer takes care of
+	rewriting the internal links.</p>
+      </section>
+    </section>
+
+    <section>
+      <title>Implementation</title> <p>The implementation is pretty
+      straight-forward and is mostly handled in XSPs and associated
+      helper classes. The heavy lifting us done is the class
+      <code>Grep</code> and the helper class
+      <code>DocumentReferencesHelper</code>. The <code>Grep</code>
+      class can traverse the repository and find references to the
+      current document or can also find references from the current
+      document to other documents. A transformer
+      (SimpleLinkRewritingTransformer) is used to rewrite the internal
+      links in the live area.</p>
+
+      <section>
+	<title>A document is not yet live</title>
+
+	<p>This is implemented as an extension to the publish xsp. It
+	  queries the <code>DocumentReferencesHelper</code> (using the
+	  <code>getInternalReferences</code> method) to ask if there
+	  are references from the current document to other documents
+	  which have not been published yet. The
+	  <code>DocumentReferencesHelper</code> in turn uses the
+	  <code>Grep#findPattern</code> method to search the current
+	  document for patterns of a reference. The pattern is defined
+	  in <code>DocumentReferencesHelper#getInternalLinkPattern</code>.</p>
+      </section>
+
+      <section>
+	<title>A document is withdrawn from live</title>
+
+	<p>This is implemented as an extension to the deactivate
+	  xsp. It queries the <code>DocumentReferencesHelper</code>
+	  (using the <code>getReferences</code> method) to ask if any
+	  other documents refer to the current document. The
+	  <code>DocumentReferencesHelper</code> in turn uses the
+	  <code>Grep#find</code> method to search the repository for
+	  documents which contain a patterns of a reference. The
+	  pattern is defined in
+	  <code>DocumentReferencesHelper#getReferencesSearchString()</code>.</p>
+      </section>
+
+      <section>
+	<title>A document-id changes</title>
+
+	<p>This is implemented with an ant task
+	  (<code>org.apache.lenya.cms.ant.LinkRewriteTask</code>)
+	  which traverses the repository and pipes all documents
+	  through an XSLT stylesheet
+	  (<code>unizh/pubs/unizh/xslt/linkRewrite.xsl</code>) to
+	  modify all references to the document that changed its
+	  document-id.
+	</p>
+      </section>
+
+      <section>
+	<title>Rewrite internal links in live</title>
+
+	<p>The
+	  <code>org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer</code>
+	  transformer takes care of rewriting internal links to ensure
+	  they refer to the appropriate area.
+	</p>
+      </section>
+
+    </section>
+
+    <section>
+      <title>Involved classes, XSPs and XSLTs</title>
+
+      <p>The following classes, XSPs and XSLTs are involved in link
+      management:</p>
+      <dl>
+	<dt>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</dt>
+	<dd>A helper class for the publish and deactivate
+	xsps. Defines the regular expressions for internal links. Has
+	methods to deteremine all references from the current document
+	to other documents (<code>getInternalReferences</code>) and to
+	determine all references from other documents to the current
+	document (<code>getReferences</code>).</dd>
+	<dt>org.apache.lenya.search.Grep</dt>
+	<dd>User by <code>DocumentReferencesHelper</code> to search
+	for patterns in a file or in a directory tree.</dd> 
+	<dt>org.apache.lenya.cms.ant.LinkRewriteTask</dt>
+	<dd>An ant task that upon change of a document-id pipes all
+	documents of the repository through a XSLT stylesheet which
+	rewrites internal links that were refering to the old
+	document-id to refere to the new one.</dd> 
+	<dt>org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer</dt>
+	<dd>A transformer that rewrites internal links for the
+	appropriate area.</dd>
+	<dt>$publication-id/config/tasks/targets.xml</dt>
+	<dd>Defines the <code>move-and-rewrite</code> the link
+	rewriting in the case of a paste, i.e. when a document-id has changed.</dd> 
+	<dt>unizh/pubs/unizh/xslt/linkRewrite.xsl</dt>
+	<dd>The XSLT transformation used by
+	<code>LinkRewriteTask</code> to actually rewrite the internal links.</dd>
+	<dt>src/webapp/lenya/content/publishing/screen.xsp, src/webapp/lenya/xslt/publishing/publish-screen.xsl</dt>
+	<dd>Query the <code>DocumentReferencesHelper</code> to display
+	a warning in case the current document contains references to
+	documents which have not been published yet.</dd>
+	<dt>src/webapp/lenya/content/info/deactivate.xsp, src/webapp/lenya/xslt/info/deactivate.xsl</dt>
+	<dd>Query the <code>DocumentReferencesHelper</code> to display
+	a warning in case there are links to the current document
+	which is about to be deactivated.</dd>
+      </dl>
+    </section>
+  </body>
+</document>
