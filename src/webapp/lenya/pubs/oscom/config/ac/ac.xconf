@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<access-controller type="sitemap">
-  <accreditable-manager>
-    <parameter name="directory" value="context:///lenya/pubs/oscom/config/ac/passwd"/>
-  </accreditable-manager>
-</access-controller>

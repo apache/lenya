@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<crawler>
-  <base-url href="http://127.0.0.1:48080/lenya/unipublic/index.html"/>
-  <scope-url href="http://127.0.0.1:48080/lenya/unipublic/"/>
-  <user-agent>lenya</user-agent>
-  <uri-list src="../../resources/search/lucene/uris.txt"/>
-  <htdocs-dump-dir src="../../resources/search/lucene/htdocs_dump"/>
-</crawler>
