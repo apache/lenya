@@ -111,15 +111,6 @@
       <publication type=""/>
     </map:transformer>
 
-    <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
-        <catalogues default="cmsui">
-          <catalogue id="cmsui" name="cmsui" location="resources/i18n"/>           
-        </catalogues>
-        <untranslated-text>untranslated</untranslated-text>
-        <!-- cache-at-startup Should be true in non development/debug mode -->
-        <cache-at-startup>false</cache-at-startup>
-      </map:transformer>
-
     <!-- NOTE: XSLTC is now the default processor. If you use Xalan extensions, use the "xalan" transformer. -->
     <map:transformer logger="sitemap.transformer.xslt" name="xslt" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
       <use-request-parameters>false</use-request-parameters>
@@ -695,7 +686,11 @@
       <!-- lenya-page/{publication-id}/{complete-area}/... -->
       <map:match pattern="lenya-page/*/*/**">
       	<map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
-      	
+        
+        <map:transform type="i18n">      
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>      	
+        
       	<map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/">
           <map:transform type="workflowmenu"/>
         </map:act>
