@@ -18,7 +18,7 @@
 <!-- $Id: index_en.xml 42703 2004-03-13 12:57:53Z gregor $ -->
 
 <wf:history xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0" workflow="workflow.xml">
-<wf:version date="23.10.2003 15:03:10" state="authoring">
+<wf:version date="2003-10-23 15:03:10" state="authoring">
 <wf:identity>
 <wf:user id="lenya"/>
 <wf:machine ip-address="127.0.0.1"/>
