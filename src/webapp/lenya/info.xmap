@@ -41,6 +41,8 @@
     <map:pipeline>
       <map:match pattern="menus/info.xml">
 	    <map:generate type="serverpages" src="content/menus/info.xsp"/>
+	    <map:transform type="usecasemenu"/>
+	    <map:transform type="workflowmenu"/>
 	    <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
