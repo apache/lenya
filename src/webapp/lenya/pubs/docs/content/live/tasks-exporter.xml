@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-    Document   : tasks-publishingtask.xml
-    Created on : November 13, 2002, 5:43 PM
-    Author     : ah
-    Description:
-        Purpose of the document follows.
--->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
 
@@ -20,26 +13,26 @@
 </header> 
 <body> 
 
-<s1 title="The StaticHTMLExporter Task"> 
+<section><title>The StaticHTMLExporter Task</title> 
 <p>
 The StaticHTMLExporter is a task that downloads HTML pages from a server and
 saves them as HTML files. It needs the following
 parameters:
 </p>
 <ul>
- <li><code><strong>server-uri</strong></code>: the server uri, e. g. <code>http://authoring.yourdomain.com</code></li>
- <li><code><strong>server-port</strong></code>: the server port, e. g. 8080</li>
- <li><code><strong>publication-id</strong></code>: the publication id</li>
- <li><code><strong>export-path-prefix</strong></code>: the path to save the files to</li>
- <li><code><strong>uris</strong></code>: a comma-separated list of uris to download (without server + port)</li>
- <li><code><strong>substitute-regexp</strong></code>: a regular expression to substitute a part of the path</li>
+ <li><strong>server-uri</strong>: the server uri, e. g. <code>http://authoring.yourdomain.com</code></li>
+ <li><strong>server-port</strong>: the server port, e. g. 8080</li>
+ <li><strong>publication-id</strong>: the publication id</li>
+ <li><strong>export-path-prefix</strong>: the path to save the files to</li>
+ <li><strong>uris</strong>: a comma-separated list of uris to download (without server + port)</li>
+ <li><strong>substitute-regexp</strong>: a regular expression to substitute a part of the path</li>
 </ul>
 <p>
 Usually, the path information is read
 from the <code>[publication-directory]/docs/publication/publication.xconf</code> file:
 </p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 <publication>
   ...
   <export>
@@ -47,16 +40,16 @@ from the <code>[publication-directory]/docs/publication/publication.xconf</code>
     <substitution regexp="s/\/wyona-cms\/unipublic//g"/>
   </export>
 </publication>
-]]>
-</source>
+
+]]></source>
 
 <p>
 You can override the paths in the task configuration file <code>tasks.xconf</code>,
 e. g. to use several publishers to publish into different directories:
 </p>
 
-<source>
-<![CDATA[
+<source><![CDATA[
+
 <tasks>
 
   <task id="export-pending" class="org.wyona.cms.publishing.StaticHTMLExporter">
@@ -70,9 +63,9 @@ e. g. to use several publishers to publish into different directories:
   </task>
 
 </tasks>
-]]>
-</source>
 
-</s1>
+]]></source>
+
+</section>
 </body>
 </document>

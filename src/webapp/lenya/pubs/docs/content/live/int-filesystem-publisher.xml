@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
@@ -11,9 +12,9 @@
 	 </authors> 
   </header> 
   <body> 
-   <s1 title="Filesystem Publisher"> 
+   <section><title>Filesystem Publisher</title> 
 
-   <s2 title="Introduction"> 
+   <section><title>Introduction</title> 
     <p>
 You can use this publisher when you run everything on one
 machine. Everything means the administrator's view, the editor's view
@@ -23,22 +24,21 @@ the reader's view on another machine (DMZ). In this case you have to use a
 more advanced publisher, which is able to replicate the data by scp, rysnc (ssh)
 or for instance http-upload.
     </p>
-   </s2>
+   </section>
 
-   <s2 title="Customizing the Menu">
+   <section><title>Customizing the Menu</title>
      <p>
 Normally the "Menus" can be found at docs/publication/menus
      </p>
-   </s2>
+   </section>
                                                                                                                                             
-   <s2 title="Sitemap"> 
+   <section><title>Sitemap</title> 
      <p>
      </p>  
      <ol>
        <li>reference to the action:
-         <p>
-           <source>
-<![CDATA[
+           <code><![CDATA[
+
 <map:actions>
   <map:action name="publisher" src="org.wyona.cms.cocoon.acting.PublisherAction">
     <authoring href="docs/publication/authoring/"/>
@@ -47,27 +47,23 @@ Normally the "Menus" can be found at docs/publication/menus
     <tree-live href="docs/publication/live/tree.xml"/>
   </map:action>
 </map:actions>
-]]>
-           </source>
-         </p>
+
+           ]]></code>
        </li> 
        <li>"Publish-Screen": generation of a publish-screen with a servepage, docs/wyona/cms/publish/publish-screen.xsp and the stylesheet stylesheets/wyona/cms/publish/main.xsl :
-         <p>
-           <source>
-<![CDATA[
+           <code><![CDATA[
+
      <map:match pattern="authoring/wyona/publishScreen*">
        <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
        <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>                                                                                                                           
-]]>
-           </source>                                                                                                                        
-         </p>
-       </li>
+
+           ]]></code>                                                                                                                        
+        </li>
        <li>call of the publish action
-         <p>
-           <source>
-<![CDATA[
+           <code><![CDATA[
+
      </map:match>
      <map:match pattern="authoring/wyona/publish*">
        <map:act type="publisher">
@@ -75,26 +71,25 @@ Normally the "Menus" can be found at docs/publication/menus
        </map:act>
        <map:redirect-to uri="publishScreen?status=failed" session="true"/>
      </map:match>
-]]>
-           </source>
-         </p>
+
+           ]]></code>
        </li>
      </ol> 
-   </s2>
+   </section>
    
-   <s2 title="Customizing the Publish Screen">
+   <section><title>Customizing the Publish Screen</title>
      <p>
 Copy the generic XSLT: ../../stylesheets/cms/Page/Publish/main.xsl " into the publication's stylesheet directory "stylesheets/cms/Page/Publish/....xsl ". Don't forget to change the sitemap appropriately. 
      </p>
-   </s2>
+   </section>
                                                                                                                                             
-   <s2 title="Configuration"> 
+   <section><title>Configuration</title> 
      <p>
 The filesystem publisher has to know the filesystem path of the authoring area and
 the live area. These two paths are set within the sitemap:
      </p>
-     <source>
-<![CDATA[
+     <source><![CDATA[
+
 <map:actions>
   <map:action name="" src="">
     <authoring href="docs/publication/authoring/"/>
@@ -103,19 +98,19 @@ the live area. These two paths are set within the sitemap:
     <tree-live href="docs/publication/live/tree.xml"/>
   </map:action>
 </map:actions>
-]]>
-     </source>
+
+     ]]></source>
    <p>
 NOTE: "authoring" and "live" are required parameters, "tree-authoring" and "tree-live" are not required parameters.
    </p>
-   </s2>
+   </section>
 
-   <s2 title="Publisher-Action">
+   <section><title>Publisher-Action</title>
      <p>
       Finally the Java Class  org.wyona.cms.cocoon.acting.PublisherAction has to be extended.
      </p>
-   </s2>
+   </section>
                                                                                                                                             
-   </s1>
+   </section>
   </body>
 </document>

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Release Manager</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
     </authors>
   </header>
   <body>
-    <s1 title="Building Cocoon">
-      <s2 title="CVS">
+    <section><title>Building Cocoon</title>
+      <section><title>CVS</title>
 <p>Login:</p>
 <ul>
 <li>cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login</li>
@@ -27,29 +28,28 @@
 <ul>
 <li>cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic -q update -d -P</li>
 </ul>
-      </s2>
+      </section>
 
-      <s2 title="Compiling/Building">
+      <section><title>Compiling/Building</title>
 <ul>
 <li>export JAVA_HOME=/usr/local/jdk1.3.1</li>
 <li>./build.sh clean</li>
 <li>./build.sh -Dinclude.webapp.libs=yes -Dinclude.scratchpad.libs=yes webapp</li>
 </ul>
 <note>The Sun transaction library <link href="http://java.sun.com/products/jta/">jta.jar</link> has to be copied to lib/local</note>
-      </s2>
+      </section>
 
-      <s2 title="Installing">
+      <section><title>Installing</title>
 <ul>
 <li>rm ../../jakarta-tomcat-4.0.4-b3/webapps/cocoon.war</li>
 <li>rm -r ../../jakarta-tomcat-4.0.4-b3/webapps/cocoon</li>
 <li>rm -r ../../jakarta-tomcat-4.0.4-b3/work/Standalone/localhost/cocoon</li>
 <li>cp build/cocoon/cocoon.war ../../jakarta-tomcat-4.0.4-b3/webapps/.</li>
 </ul>
-      </s2>
-    </s1>
+      </section>
+    </section>
 
-<s1 title="Overwriting Cocoon">
-<p>
+<section><title>Overwriting Cocoon</title>
 <ol>
   <li><code>src/cocoon/WEB-INF/web.xml</code> (Scheduler Servlet, Test ProxyGenerator Servlet)</li>
   <li><code>src/cocoon/WEB-INF/logkit.xconf</code> (Log-Level changed from DEBUG to WARN)</li>
@@ -58,17 +58,13 @@
   <li><code>src/webapp/sitemap.xmap</code> (build.xml: exclude)</li>
   <li><code>src/webapp/WEB-INF/cocoon.xconf</code> (build.xml: exclude)</li>
 </ol>
-</p>
-</s1>
+</section>
 
-<s1 title="Excluding">
-<p>
+<section><title>Excluding</title>
 <ol>
   <li><code>javac.jar</code> (build.xml: exclude: Java Compiler for Compiling XSP)</li>
   <li><code>servlet.jar</code> (build.xml: exclude: Servlet API to compile Servlets)</li>
 </ol>
-</p>
-</s1>
+</section>
   </body>
 </document>
-

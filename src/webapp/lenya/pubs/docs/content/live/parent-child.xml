@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Parent-Child Content Creator</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="" email=""/>
       <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
     </authors>
   </header>
   <body>
-    <s1 title="Parent-Child Content Creator">
-      <s2 title="Use-Cases">
+    <section><title>Parent-Child Content Creator</title>
+      <section><title>Use-Cases</title>
         <ol>
           <li>Create</li>
           <li>Delete</li>
           <li>Move</li>
         </ol>
-      </s2>
-      <s2 title="Create: Input Fields">
-      
-      <source>
-      <figure src="images/parent-child-image.png" alt="" align="left"/>
-      </source>
-      </s2>
+      </section>
+      <section><title>Create: Input Fields</title>
+ <figure src="images/parent-child-image.png" alt=""/>
+      </section>
       
       
       
-      <s2 title="Doctype Sample/Template (Based on Doctype Schema)">
+      <section><title>Doctype Sample/Template (Based on Doctype Schema)</title>
 <p> When the child is created, the systems takes a sample of the
 appropriate doctype and makes a copy of that sample, such that
 the user has a starting point for editing.
-
-<!-- <h3>Bread Crumb</h3> -->
-<!-- /Department/Physical Chemistry/Members/Linus Pauling -->
 </p>    
-    </s2>
-      <s2 title="Sitemap XML">
-        <source>
-          <![CDATA[
+    </section>
+      <section><title>Sitemap XML</title>
+        <source><![CDATA[
+          
 <?xml version="1.0"?>
 
 <tree>
@@ -64,12 +59,12 @@ the user has a starting point for editing.
     </branch>
   </branch>
 </tree>
-          ]]>
-        </source>
-      </s2>									       
-      <s2 title="Parent-Child XML">
-        <source>
-          <![CDATA[
+          
+        ]]></source>
+      </section>									       
+      <section><title>Parent-Child XML</title>
+        <source><![CDATA[
+          
 <?xml version="1.0"?>
 
 <parentchild relURI="g06" doctype="Group" name="Polymer Chemistry">
@@ -85,19 +80,18 @@ the user has a starting point for editing.
     <child type="leaf" relURI="related" doctype="Generic" name="Related Topics"/>
   </children>
 </parentchild>
-          ]]>
-        </source>
-      </s2>									       
-      <s2 title="Related Resources">
+          
+        ]]></source>
+      </section>									       
+      <section><title>Related Resources</title>
         <p>
-	<fork href="http://www.xmldb.org" target=" ">XMLDB</fork><br />
-        <fork href="http://archive.covalent.net/xml/cocoon-users/2001/09/0294/DBAdderTest.java" target="_blank">Action Example</fork><br />
-        <fork href="http://www.xmldb.org" target="_blank">org.apache.cocoon.generation.XMLDBGenerator</fork><br />
-        <fork href="http://www.xmldb.org/xupdate/xupdate-wd.html" target="_blank">XUpdate</fork><br />
-        <fork href="http://www.dbxml.org" target="_blank">XIndice (dbXML)</fork><br />
+	<fork href="http://www.xmldb.org">XMLDB</fork><br/>
+        <fork href="http://archive.covalent.net/xml/cocoon-users/2001/09/0294/DBAdderTest.java">Action Example</fork><br/>
+        <fork href="http://www.xmldb.org">org.apache.cocoon.generation.XMLDBGenerator</fork><br/>
+        <fork href="http://www.xmldb.org/xupdate/xupdate-wd.html">XUpdate</fork><br/>
+        <fork href="http://www.dbxml.org">XIndice (dbXML)</fork><br/>
 	</p>
-      </s2>
-    </s1>
+      </section>
+    </section>
   </body>
 </document>
-

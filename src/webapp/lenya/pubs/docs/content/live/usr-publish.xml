@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
-    <title>User's Guide -> Authoring -> Publishing  Content</title>
-    <version></version>
-    <type></type>
+    <title>User's Guide -&gt; Authoring -&gt; Publishing  Content</title>
+    <version/>
+    <type/>
     <authors>
       <person name="" email=""/>
       <person name="" email=""/>
     </authors>
   </header>
   <body>
-    <s1 title="Publishing Content">
+    <section><title>Publishing Content</title>
         <p>
           To be documented soon 
 	</p>
-    </s1>
+    </section>
   </body>
 </document>

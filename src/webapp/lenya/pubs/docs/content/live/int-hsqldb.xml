@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
@@ -10,9 +11,9 @@
 	 </authors> 
   </header> 
   <body> 
-   <s1 title="HSQL Database"> 
+   <section><title>HSQL Database</title> 
 
-   <s2 title="Introduction"> 
+   <section><title>Introduction</title> 
     <p>
 HSQLDB is a relational database engine written in Java, with a JDBC driver, supporting 
 a subset of ANSI-92 SQL. It offers a small (about 100k), fast database engine which offers 
@@ -20,114 +21,107 @@ both in memory and disk based tables. This product includes Hypersonic SQL.
 The project is currently hosted at <fork href="http://sourceforge.net/projects/hsqldb">Sourceforge</fork>.
 The database is shipped with Cocoon (WEB-INF/lib/hsqldb-1.61.jar) and automatically started on port 9002 (default).
     </p>
-   </s2>
+   </section>
 
-   <s2 title="Tutorial"> 
+   <section><title>Tutorial</title> 
     <p>
 <fork href="http://www.mycgiserver.com/~buman/tutorial.html">Buman</fork> (Link: http://www.mycgiserver.com/~buman/tutorial.html)
     </p>
-   </s2>
+   </section>
 
-   <s2 title="Configuration"> 
+   <section><title>Configuration</title> 
     <p>
 The database connection can be configured within WEB-INF/cocoon.xconf and WEB-INF/web.xml
     </p>
-   </s2>
+   </section>
 
-   <s2 title="Data"> 
+   <section><title>Data</title> 
     <p>
 Cocoon keeps the Database Data at WEB-INF/db/
     </p>
-   </s2>
+   </section>
 
-   <s2 title="Dump the Database"> 
+   <section><title>Dump the Database</title> 
     <p>
 You can dump the database by using the class org.hsqldb.util.DatabaseManager (don't forget to
-set the CLASSPATH: WEB-INF/lib/hsqldb-1.61.jar):
-<source>
+set the CLASSPATH: WEB-INF/lib/hsqldb-1.61.jar):</p>
+<source><![CDATA[
 java org.hsqldb.util.DatabaseManager
-</source>
-The default connection parameters are:
-<source>
+]]></source><p>
+The default connection parameters are:</p>
+<source><![CDATA[
 Type: HSQL Database Engine In-Memory
 Driver: org.hsqldb.jdbcDriver
 URL: jdbc:hsqldb:hsql://localhost:9002
 User: sa
 Password:
-</source>
-You can dump the database by executing the SQL query:
-<source>
+]]></source>
+<p>You can dump the database by executing the SQL query:</p>
+<source><![CDATA[
 SCRIPT `hsqldb-dump.txt`
-</source>
+]]></source><p>
 the database will be dumped into the file hsqldb-dump.txt located
-relative to the directory from where you started the DatabaseManager.
-    </p>
-   </s2>
+relative to the directory from where you started the DatabaseManager.</p>
+   </section>
 
-   <s2 title="Insert data into the Database"> 
+   <section><title>Insert data into the Database</title> 
 <p>
 To insert data quickly into HSQLDB you can also use the DatabaseManager as mentioned above.
 You can also modify the file WEB-INF/db/cocoondb.script directly, but then you have
 to restart HSQLDB respectively Cocoon to see modifications.
 </p>
     <p>
-Create new table:
-<source>
+Create new table:</p>
+<source><![CDATA[
 CREATE TABLE related_projects (id INTEGER PRIMARY KEY,name VARCHAR(128))
-</source>
-    </p>
-
+]]></source>
     <p>
-Insert into table:
-<source>
+Insert into table:</p>
+<source><![CDATA[
 INSERT INTO related_projects VALUES (1,'Cocoon')
-</source>
-    </p>
-
+]]></source>
     <p>
-Select from table:
-<source>
+Select from table:</p>
+<source><![CDATA[
 SELECT * FROM related_projects
-</source>
-    </p>
-   </s2>
+]]></source>
+   </section>
    
-   </s1>
+   </section>
 
-   <s1 title="ESQL"> 
+   <section><title>ESQL</title> 
 
-   <s2 title="Mixed Content"> 
+   <section><title>Mixed Content</title> 
     <p>
 You can retrieve "mixed content" (e.g. XHTML) from a table field by using the statement esql:get-xml, but
 you have to take care that the "mixed content" is well-formed XML, which means you
-have two possibilites. Either
-<source>
-<![CDATA[
+have two possibilites. Either</p>
+<source><![CDATA[
+
 ESQL command:
 <esql:get-xml column="description"/>
 
 Content of table field "description":
 '<description><organization href="http://www.oscom.org">OSCOM</organization> is dedicated to Open Source Content Management</description>'
-]]>
-</source>
-or
-<source>
-<![CDATA[
+
+]]></source>
+<p>or</p>
+<source><![CDATA[
+
 ESQL command:
 <esql:get-xml column="description" root="description"/>
 
 Content of table field "description":
 '<organization href="http://www.oscom.org">OSCOM</organization> is dedicated to Open Source Content Management'
-]]>
-</source>
-The result in both cases will be
-<source>
-<![CDATA[
+
+]]></source>
+<p>The result in both cases will be</p>
+<source><![CDATA[
+
 <description><organization href="http://www.oscom.org">OSCOM</organization> is dedicated to Open Source Content Management</description>
-]]>
-</source>
-    </p>
-   </s2>
-   </s1>
+
+]]></source>
+   </section>
+   </section>
   </body>
 </document>

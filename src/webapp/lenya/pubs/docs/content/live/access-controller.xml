@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
@@ -11,9 +12,10 @@
 	 </authors> 
   </header> 
   <body> 
-   <s1 title="Authorization and Authentication"> 
-
-   <s2 title="Introduction"> 
+   <section>
+<title>Authorization and Authentication</title> 
+   <section>
+<title>Introduction</title> 
     <p>
 You can use this publisher when you run everything on one
 machine. Everything means the administrator's view, the editor's view
@@ -23,15 +25,15 @@ the reader's view on another machine (DMZ). In this case you have to use a
 more advanced publisher, which is able to replicate the data by scp, rysnc (ssh)
 or for instance http-upload.
     </p>
-   </s2>
+   </section>
 
-   <s2 title="Configuration"> 
+   <section><title>Configuration</title> 
      <p>
 The filesystem publisher has to know the filesystem path of the authoring area and
 the live area. These two paths are set within the sitemap:
      </p>
-     <source>
-<![CDATA[
+     <source><![CDATA[
+
 <map:actions>
   <map:action name="" src="">
     <authoring href="docs/publication/authoring/"/>
@@ -40,21 +42,21 @@ the live area. These two paths are set within the sitemap:
     <tree-live href="docs/publication/live/tree.xml"/>
   </map:action>
 </map:actions>
-]]>
-     </source>
+
+     ]]></source>
    <p>
 NOTE: "authoring" and "live" are required parameters, "tree-authoring" and "tree-live" are not required parameters.
    </p>
-   </s2>
+   </section>
 
-   <s2 title="Required Files"> 
+   <section><title>Required Files</title> 
 <ol>
   <li>wyona/cms/docs/cms/publish-screen.xsp</li>
   <li>wyona/cms/stylesheets/cms/Page/Publish/main.xsl</li>
 </ol>
-   </s2>
+   </section>
 
 
-   </s1>
+   </section>
   </body>
 </document>

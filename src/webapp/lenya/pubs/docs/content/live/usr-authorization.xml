@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Authorization and Authentication</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="" email=""/>
       <person name="" email=""/>
     </authors>
   </header>
   <body>
-    <s1 title="Authorization and Authentication">
+    <section><title>Authorization and Authentication</title>
       <anchor id="login"/> 
-      <s2 title="Logging In">
+      <section><title>Logging In</title>
         <p>
 	  To log in, just enter your username and password. The CMS will check
           your personal details and give you access based on the role you are
           assigned. (Note: for the prototype, you can try usr="wyona" and pwd="levi",
           without the quotes)
 	</p>
-      </s2>
+      </section>
       <anchor id="switch"/> 
-      <s2 title="Switching Users">
+      <section><title>Switching Users</title>
         <p>
 	  To be documented soon
 	</p>
-      </s2>
+      </section>
       <anchor id="logout"/> 
-      <s2 title="Logging Out">
+      <section><title>Logging Out</title>
         <p>
  	  To be documented soon
 	</p>
-      </s2>
+      </section>
       <anchor id="chgpwd"/> 
-      <s2 title="Changing Password">
+      <section><title>Changing Password</title>
         <p>
 	  To be documented soon
 	</p>
-      </s2>
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    </s1>
+      </section>
+    </section>
   </body>
 </document>

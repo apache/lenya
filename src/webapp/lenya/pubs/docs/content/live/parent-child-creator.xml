@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
@@ -11,41 +12,36 @@
 	 </authors> 
   </header> 
   <body> 
-   <s1 title="Parent-Child Creator"> 
+   <section><title>Parent-Child Creator</title> 
 
-   <s2 title="Introduction"> 
+   <section><title>Introduction</title> 
     <p>
 The Parent-Child Creator is a concrete implementation of the ResourceCreator pattern.
     </p>
-   </s2>
+   </section>
 
-   <s2 title="Customizing the Menu"> 
+   <section><title>Customizing the Menu</title> 
      <p>
-Normally the "Menus" can be found at <i>docs/publication/menus</i>.
+Normally the "Menus" can be found at <em>docs/publication/menus</em>.
      </p>  
-   </s2>
+   </section>
 
-   <s2 title="Sitemap"> 
-     <p>
-     </p>  
+   <section><title>Sitemap</title> 
      <ol>
        <li>Definition of Action:
-         <p>
-           <source>
-<![CDATA[
+           <code><![CDATA[
+
 <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
   <tree-authoring href="docs/publication/authoring/tree.xml"/>
   <docs href="docs/publication/authoring"/>
   <doctypes href="docs/publication/doctypes/"/>
 </map:action>
-]]>
-           </source>
-         </p>
+
+           ]]></code>
        </li> 
        <li>"Create-Screen":
-         <p>
-           <source>
-<![CDATA[
+           <code><![CDATA[
+
 <map:pipeline>
   <map:match pattern="wyona/ParentChildScreenNewArticle*">
     <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
@@ -53,14 +49,12 @@ Normally the "Menus" can be found at <i>docs/publication/menus</i>.
     <map:serialize type="html"/>
   </map:match>
 </map:pipeline>
-]]>
-           </source>                                                                                                                        
-         </p>
+
+           ]]></code>                                                                                                                        
        </li>
        <li>"Create-Action":
-         <p>
-           <source>
-<![CDATA[
+           <code><![CDATA[
+
 <map:pipeline>
   <map:match pattern="wyona/create*">
     <map:act type="parent-child">
@@ -69,18 +63,17 @@ Normally the "Menus" can be found at <i>docs/publication/menus</i>.
     <map:redirect-to uri="ParentChildScreenNewArticle?status=failed" session="true"/>
   </map:match>
 </map:pipeline>
-]]>
-           </source>
-         </p>
+
+           ]]></code>
        </li>
      </ol> 
-   </s2>
+   </section>
 
-   <s2 title="Customizing the Create Screen"> 
+   <section><title>Customizing the Create Screen</title> 
      <p>
 Copy the generic XSLT "../../stylesheets/cms/Page/parent-child.xsl" into the publication's stylesheet directory "stylesheets/cms/Page/parent-child-new-article.xsl". Don't forget to change the sitemap appropriately. The following parameters have to exist: parentid (generated via XSP), childid (not-empty String, no whitespace), childname (non-empty String), childtype (leaf or branch), doctype (e.g. Article). Exp:
      </p>  
-         <p>
+<source><![CDATA[
 <form>
  <table>
  <tr><td>parent:</td><td>Hidden</td></tr>
@@ -98,23 +91,18 @@ Copy the generic XSLT "../../stylesheets/cms/Page/parent-child.xsl" into the pub
  </tr>
 </table>
 </form>
-         </p>                                                                                                                               
-<p>
-      <source>
-      <figure src="images/parent-child-image.png" alt="" align="left"/>
-      </source>
-</p>
-   </s2>
+]]></source>
 
-   <s2 title="Configuration"> 
+<figure src="images/parent-child-image.png" alt=""/>
+
+   </section>
+
+   <section><title>Configuration</title> 
      <ol>
        <li> doctypes.xconf
-         <p>
          The different doctypes are configured in a file doctypes.xconf: WYONA_CMS/src/webapp/wyona/cms/pubs/*publication*/docs/publication/doctypes/doctypes.xconf. Given are their children and their creator. 
-         </p>  
-         <p>
-           <source>
-<![CDATA[
+           <code><![CDATA[
+
 <?xml version="1.0"?>
 
 <doctypes>
@@ -131,20 +119,18 @@ Copy the generic XSLT "../../stylesheets/cms/Page/parent-child.xsl" into the pub
   </children>
 </doc>
 </doctypes>
-]]>
-           </source>
-         </p>
+
+           ]]></code>
        </li>
      </ol>   
-   </s2>
+   </section>
 
-   <s2 title="Tree: tree.xml"> 
+   <section><title>Tree: tree.xml</title> 
      <p>
 The document tree.xml has to exist and the branches as well! Please see definition of Action.
      </p>  
-         <p>
-           <source>
-<![CDATA[
+           <source><![CDATA[
+
 <?xml version="1.0"?>
 
 <!-- CAUTION: this tree is handcrafted -->
@@ -162,18 +148,16 @@ The document tree.xml has to exist and the branches as well! Please see definiti
     </branch>
   </branch>
 </tree>
-]]>
-           </source>
-         </p>
-   </s2>
 
-   <s2 title="Extend Java Class AbstractParentChildCreator"> 
+           ]]></source>
+   </section>
+
+   <section><title>Extend Java Class AbstractParentChildCreator</title> 
      <p>
 Finally the Java class AbstractParentChildCreator has to be extended.
      </p>  
-         <p>
-           <source>
-<![CDATA[
+           <source><![CDATA[
+
 package ch.unizh.unipublic.wyona.cms.authoring;
     
 import java.io.File;
@@ -207,18 +191,16 @@ public class NewArticleCreator extends AbstractParentChildCreator{
     log.warn("NewArticleCreator.create() has been called.");
     }
   }
-]]>
-           </source>
-         </p>
-   </s2>
 
-   <s2 title="Sample: sample.xml">
+           ]]></source>
+   </section>
+
+   <section><title>Sample: sample.xml</title>
      <p>
 When the child is created, the systems takes a sample of the appropriate doctype and makes a copy of that sample, such that the user has a starting point for editing.
      </p>
-     <p> 
-       <source>
-<![CDATA[
+       <source><![CDATA[
+
 <?xml version="1.0"?>
  
 <article>
@@ -237,20 +219,18 @@ When the child is created, the systems takes a sample of the appropriate doctype
    </body>
    <comments/>
 </article>                                                                                                                                  
-]]>
-       </source>
-     </p>
-   </s2>
 
-      <s2 title="Bread-Crumb Path">
+       ]]></source>
+   </section>
+
+      <section><title>Bread-Crumb Path</title>
 <p>
 You can now easily extract 
 a bread-crumb path and the siblings from the tree. More details can be found within 
 the publication "Materials Science" (ethz-mat).
 </p>
-<p>
-        <source>
-          <![CDATA[
+<source><![CDATA[
+          
 <?xml version="1.0"?>
 
 <parentchild relURI="g06" doctype="Group" name="Polymer Chemistry">
@@ -266,11 +246,10 @@ the publication "Materials Science" (ethz-mat).
     <child type="leaf" relURI="related" doctype="Generic" name="Related Topics"/>
   </children>
 </parentchild>
-          ]]>
-        </source>
-</p>
-      </s2>
+          
+        ]]></source>
+      </section>
 
-   </s1>
+   </section>
   </body>
 </document>

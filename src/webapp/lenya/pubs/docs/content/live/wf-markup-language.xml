@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Workflow</title>
     <version>2002.11.29</version>
-    <type></type>
+    <type/>
     <authors>
       <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
       <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
     </authors>
   </header>
   <body>
-    <s1 title="Workflow Markup Language">
+    <section><title>Workflow Markup Language</title>
 <p>
 The workflow of each "file" is described within a corresponding <link href="cm-markup-language.html">"CMML-File"</link>.
 The various workflows are defined by the following configuration file:
 </p>
-      <s2 title="workflow.xconf">
-        <source>
-          <![CDATA[
+      <section><title>workflow.xconf</title>
+        <source><![CDATA[
+          
 <?xml version"1.0"?>
 <wf>
 
@@ -96,20 +97,18 @@ The various workflows are defined by the following configuration file:
   </assign-workflow>
 
 </wf>
-	  ]]>
-        </source>
-      </s2>									       
-    </s1>
+	  
+        ]]></source>
+      </section>									       
+    </section>
 
-<s1 title="Related Links">
+<section><title>Related Links</title>
 <ol>
   <li><link href="http://www.wfmc.org/standards/docs.htm">WfMC</link></li>
   <li><link href="http://www.openflow.it/wwwopenflow/EN/Overview/wfmc_html">WfMC within Zope</link></li>
   <li><link href="http://www.opensymphony.com/osworkflow/">OSWorkflow</link></li>
   <li><link href="http://werkflow.werken.com/">werkflow</link></li>
 </ol>
-</s1>
+</section>
   </body>
 </document>
-
-

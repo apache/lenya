@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
@@ -10,15 +11,14 @@
 	 </authors> 
   </header> 
   <body> 
-   <s1 title="Access Controlling"> 
+   <section><title>Access Controlling</title> 
 
-   <s2 title="/webapps/ROOT/WEB-INF/web.xml"> 
+   <section><title>/webapps/ROOT/WEB-INF/web.xml</title> 
 <p>
 Add security-constraint
 </p>
-    <p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 <web-app>
   <security-constraint>
     <web-resource-collection>
@@ -34,41 +34,38 @@ Add security-constraint
     <realm-name>Xopus</realm-name>
   </login-config>
 </web-app>
-]]>
-</source>
-    </p>
-   </s2>
 
-   <s2 title="/conf/tomcat-users.xml">
+]]></source>
+   </section>
+
+   <section><title>/conf/tomcat-users.xml</title>
     <p>
     Add user, role, password
     </p>
-    <p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 <tomcat-users>
   <user name="tomcat" password="tomcat" roles="tomcat" />
   <user name="role1"  password="tomcat" roles="role1"  />
   <user name="both"   password="tomcat" roles="tomcat,role1" />
   <user name="wyona"  password="levi"   roles="xopus" />
 </tomcat-users>
-]]>
-</source>
-    </p>
-   </s2>
 
-   <s2 title="Stop and Start Tomcat">
+]]></source>
+   </section>
+
+   <section><title>Stop and Start Tomcat</title>
     <p>
     shutdown.sh/startup.sh
     </p>
-   </s2>
+   </section>
 
-   <s2 title="More Information">
+   <section><title>More Information</title>
     <p>
 http://www.onjava.com/pub/a/onjava/2001/07/24/tomcat.html
     </p>
-   </s2>
+   </section>
 
-   </s1>
+   </section>
   </body>
 </document>

@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Document Collection Creator</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="" email=""/>
       <person name="" email=""/>
     </authors>
   </header>
   <body>
-    <s1 title="Document Collection Creator">
-      <s2 title="">
+    <section><title>Document Collection Creator</title>
+      <section><title/>
         <p>
-Examples:<br />
-Magazine Issue (Cover, Columns, Articles, Preview, Contents)<br />
+Examples:<br/>
+Magazine Issue (Cover, Columns, Articles, Preview, Contents)<br/>
 Dossier (Overview, Chapter, Articles)
         </p>
-      </s2>
-    </s1>
+      </section>
+    </section>
   </body>
 </document>

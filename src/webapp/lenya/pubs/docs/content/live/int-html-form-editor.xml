@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Making a document editable with the HTML Form Editor</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="" email=""/>
       <person name="" email=""/>
     </authors>
   </header>
   <body>
-    <s1 title="Making a document editable with the HTML Form Editor">
+    <section><title>Making a document editable with the HTML Form Editor</title>
         <p>
-        There are two things todo:
+        There are two things todo:</p>
        <ol>
        <li>Create a descriptor file:<br/>
            In the case of the publication "Materials Science" the
@@ -25,7 +26,6 @@
           menu files are located at <code>docs/ethz/mat/menu/</code>
         </li>
         </ol>
-        </p>
-    </s1>
+    </section>
   </body>
 </document>

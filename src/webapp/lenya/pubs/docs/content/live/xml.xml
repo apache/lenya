@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-    Document   : tasks-publishingtask.xml
-    Created on : November 13, 2002, 5:43 PM
-    Author     : ah
-    Description:
-        Purpose of the document follows.
--->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
 
@@ -20,135 +13,112 @@
 </header> 
 <body> 
 
-<s1 title="Working with XML Documents"> 
+<section><title>Working with XML Documents</title> 
 
 <p>
 The XML utility classes are:
 </p>
+<source><![CDATA[
 
-<p>
-<source>
-<![CDATA[
 import org.wyona.xml.DocumentHelper;
 import org.wyona.xml.NamespaceHelper;
-]]>
-</source>
-</p>
 
-<s2 title="Creating a Document">
+]]></source>
+<section><title>Creating a Document</title>
 <p>
 Use the following code to create a document with a given
 document element. A xmlns:svg="http://www.w3.org/2000/svg" attribute
 is added to the document element.
 </p>
-<p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 Document document = DocumentHelper.createDocument(
     "http://www.w3.org/2000/svg",
     "svg:svg",
     null);     // no document type
-]]>
-</source>
-</p>
-</s2>
+
+]]></source>
+</section>
 
 
-<s2 title="Reading a document from a file">
-<p>
-<source>
-<![CDATA[
+<section><title>Reading a document from a file</title>
+<source><![CDATA[
+
 File file = ...;
 Document document = DocumentHelper.readDocument(file);
-]]>
-</source>
-</p>
-</s2>
 
-<s2 title="Writing a document from a file">
+]]></source>
+</section>
+
+<section><title>Writing a document from a file</title>
 <p>
 Use the following code to write a document to a
 file. The INDENT output property of the transformer is
 set to "yes".
 </p>
-<p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 Document document = ...;
 File file = ...;
 DocumentHelper.writeDocument(document, file);
-]]>
-</source>
-</p>
-</s2>
 
-</s1>
+]]></source>
+</section>
 
-<s1 title="Working with Namespaces">
+</section>
 
-<s2 title="Creating a NamespaceHelper">
+<section><title>Working with Namespaces</title>
+
+<section><title>Creating a NamespaceHelper</title>
 <p>
 Create a namespace helper with a new document:
 </p>
+<source><![CDATA[
 
-<p>
-<source>
-<![CDATA[
 NamespaceHelper helper = new NamespaceHelper(
     "http://www.w3.org/2000/svg",    // namespace URI
     "svg",                           // prefix
     "svg");                          // local name of document element
-]]>
-</source>
-</p>
+
+]]></source>
 
 <p>
 Create a namespace helper for an existing document:
 </p>
+<source><![CDATA[
 
-<p>
-<source>
-<![CDATA[
 Document document = ...;
 NamespaceHelper helper = new NamespaceHelper(
     "http://www.w3.org/2000/svg",    // namespace URI
     "svg",                           // prefix
     document);                       // document
-]]>
-</source>
-</p>
-</s2>
 
-<s2 title="Creating Elements">
+]]></source>
+</section>
+
+<section><title>Creating Elements</title>
 
 <p>
 Create an empty element:
 </p>
+<source><![CDATA[
 
-<p>
-<source>
-<![CDATA[
 // create <svg:ellipse> element
 Element element = helper.createElement("ellipse");
-]]>
-</source>
-</p>
 
+]]></source>
 <p>
 Create an element containing a text node:
 </p>
+<source><![CDATA[
 
-<p>
-<source>
-<![CDATA[
 // create <svg:text>Hello World!</svg:text> element
 Element element = helper.createElement("text", "Hello World!");
-]]>
-</source>
-</p>
-</s2>
 
-</s1>
+]]></source>
+</section>
+
+</section>
 
 </body>
 </document>

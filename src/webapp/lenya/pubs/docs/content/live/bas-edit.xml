@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
     <title>Wyona Concepts</title>
-    <version></version> 
-    <type></type> 
+    <version/> 
+    <type/> 
     <authors>
       <person name="" email=""/> 
       <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
@@ -12,7 +13,7 @@
   </header> 
   <body>
 
-<s1 title="Making content editable">
+<section><title>Making content editable</title>
 
 <p>To edit the content managed by the CMS, several types and brands
 of editors can (and will) be used. The best way to provide editor connectivity would be 
@@ -22,22 +23,22 @@ an interface based on the MVC design: the content to be edited is presented to t
 as a triplet of xml, xsl and xsd data, representing content, style and structure, respectively.
 Some more details:</p>
 <ul>
-  <li><b>Content (XML):</b> This is the content to be edited, and could be an XML, XSL or 
+  <li><strong>Content (XML):</strong> This is the content to be edited, and could be an XML, XSL or 
   XSD content, depending on the role of the editor; e.g. the designer, that needs to edit XSL
   content, will call an editor to edit a stylesheet, and the contents of the stylesheet to be edited
   are sent to this editor as the Content (or XML) part of the call. As all of XML, XSL and XSD files
   are actually XML files, this is straightforward.</li>
-  <li><b>Style (XSL):</b> This stylesheet will provide information for the representaion of the content
-  in the <b>editor</b>. If the content to be edited is an XML file, this stylesheet might be
+  <li><strong>Style (XSL):</strong> This stylesheet will provide information for the representaion of the content
+  in the <strong>editor</strong>. If the content to be edited is an XML file, this stylesheet might be
   very similar or even identical to the stylesheet used for "normal" representation of this content,
   but, in principle, could be something totally different, a stylesheet prepared only for editing purposes,
   that represents the content of the first file in a way to the editor, that makes most sense for it's
   editing. An example: if the file (content, the first file in the triplet) to be edited was a 
   stylesheet itself, this stylesheet (style, the second file in the triplet) could be used to group
   and highlight stylesheet elements visually, to make editing them easier.</li>
-  <li><b>Structure (XSD):</b> This file is a schema, providing information about the structure of the
+  <li><strong>Structure (XSD):</strong> This file is a schema, providing information about the structure of the
   content to be edited to the editor, so that the edited contents can be validated.</li>
 </ul>
-</s1>
+</section>
 </body>
 </document>

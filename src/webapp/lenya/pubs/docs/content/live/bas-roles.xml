@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
     <title>Wyona Concepts</title>
-    <version></version> 
-    <type></type> 
+    <version/> 
+    <type/> 
     <authors>
       <person name="" email=""/> 
       <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
@@ -13,7 +14,7 @@
   <body>
 
 
-    <s1 title="Roles of the Wyona Users"> 
+    <section><title>Roles of the Wyona Users</title> 
 
 <p>
   All users of the Wyona-CMS have roles assigned to their usernames. These roles 
@@ -24,16 +25,16 @@
 <p>
   All roles belong to one of these main groups:</p>
 <ol>
-  <li><jump href="bas-roles.html" anchor="roles_admin">Administrators</jump></li>
-  <li><jump href="bas-roles.html" anchor="roles_author">Authors</jump></li>
-  <li><jump href="bas-roles.html" anchor="roles_designer">Designers</jump></li>
-  <li><jump href="bas-roles.html" anchor="roles_publisher">Publishers</jump></li>
+  <li><jump href="bas-roles.html#roles_admin">Administrators</jump></li>
+  <li><jump href="bas-roles.html#roles_author">Authors</jump></li>
+  <li><jump href="bas-roles.html#roles_designer">Designers</jump></li>
+  <li><jump href="bas-roles.html#roles_publisher">Publishers</jump></li>
 </ol>
 
 <anchor id="roles_admin"/>
-<s2 title="Administrators">
-<p align="justify">
-  Administrators are responsible for:
+<section><title>Administrators</title>
+<p>
+  Administrators are responsible for:</p>
   <ul>
     <li>Maintaining users and their profiles (e.g. assigned roles)</li>
     <li>Maintaining the site/publication description</li>
@@ -44,46 +45,45 @@
       <li>...</li>
     </ul>
   </ul>
-</p>
-<p align="justify">
+<p>
   For most/all of these tasks, specific configuration pages are provided
-  whithin the Wyona-CMS's <i>Administration Block</i> to shield the 
+  whithin the Wyona-CMS's <em>Administration Block</em> to shield the 
   administrator from the internals of xml/xsl technologies and the
   Cocoon environment.
 </p>
-</s2>
+</section>
 
 <anchor id="roles_author"/>
-<s2 title="Authors">
+<section><title>Authors</title>
 <p>
   Authors are the users responsible for content creation and management, they use
   the specific editors to maintain the content in a controlled and consistant way.
   Typically, authors are never confronted with design choices and/or xml/xsl documents, 
   they only work whithin the Wyona-CMS environment, i.e. a www-browser. The content
-  is first placed in a staging context, waiting for a <a href="#roles_publisher">
-  publisher</a> to publish it so that it can be viewed by external viewers of
+  is first placed in a staging context, waiting for a <link href="#roles_publisher">
+  publisher</link> to publish it so that it can be viewed by external viewers of
   the publication.
 </p>
-</s2>
+</section>
 <anchor id="roles_designer"/>
-<s2 title="Designers">
+<section><title>Designers</title>
 <p>
   Designers are users responsible for maintaining the layout and style of the
   publication. Typically, they work directly with the xsl and css files
   used to transform the publication for presentation (e.g. in a browser), as
   well as the required graphic files. All these files are located in a separate
   branch of the application tree for convenience (see also 
-  <a href="#directories">Directory structure</a> below). To simplify the 
-  designer's work, a <i>"publication explorer"</i> could be provided, that helps
+  <link href="#directories">Directory structure</link> below). To simplify the 
+  designer's work, a <em>"publication explorer"</em> could be provided, that helps
   to navigate the publishing tree (by reading sitedef.xml) and to identify the content
   files and their structure (by reading the page descriptor files), and that 
   can be linked to any xml/xsl-editor.
 </p>
-</s2>
+</section>
 
 <anchor id="roles_publisher"/>
-<s2 title="Publishers">
-<p align="justify">
+<section><title>Publishers</title>
+<p>
   Publishers are users that have permission to add staged content to the live
   publication. This role group is primarily introduced for workflow management
   purposes. In practice, publisher roles will be combined with author roles to 
@@ -91,8 +91,8 @@
   and editing activities.
 </p>
 
-</s2>
-    </s1>
+</section>
+    </section>
 
   </body>
 </document>

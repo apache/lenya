@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
     <title>Wyona Concepts</title>
-    <version></version> 
-    <type></type> 
+    <version/> 
+    <type/> 
     <authors>
       <person name="" email=""/> 
       <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
@@ -12,7 +13,7 @@
   </header> 
   <body>
 
-    <s1 title="Configuration and Customization">
+    <section><title>Configuration and Customization</title>
 
 <p>
   All configuration files have their own living spaces both in the generic 
@@ -21,7 +22,7 @@
   inherited from the CMS directory, where default behaviour is defined.
 </p>
 
-    </s1>
+    </section>
 
     </body>
 

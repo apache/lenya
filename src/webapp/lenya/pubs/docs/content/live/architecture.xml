@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Architecture</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
     </authors>
   </header>
   <body>
-    <s1 title="The Big Picture">
-<s2 title="Overview">
+    <section><title>The Big Picture</title>
+<section><title>Overview</title>
 <p>
 The roles of each component (Cocoon, Slide, Wyona) are described below the overview.
 </p>
@@ -19,8 +20,8 @@ The roles of each component (Cocoon, Slide, Wyona) are described below the overv
 <p>
 NOTE: Slide is not used so far, but is intended to be used.
 </p>
-        <source>
-          <![CDATA[
+        <source><![CDATA[
+          
 
 
 +-----------------------------------------+
@@ -54,19 +55,19 @@ NOTE: Slide is not used so far, but is intended to be used.
 +-------------------------------------------+
 
 
-	  ]]>
-        </source>
-</s2>
+	  
+        ]]></source>
+</section>
 
-<s2 title="What is the role of Cocoon">
+<section><title>What is the role of Cocoon</title>
 <p>
 At the moment Cocoon is used as XML Publishing Framework. Cocoon's "pipeline processor"
 controls the interaction between XML and XSLT and provides a mechanismn to map requests to pipelines.
 More information can be found at the Cocoon <link href="http://xml.apache.org/cocoon/">website</link>.
 </p>
-</s2>
+</section>
 
-<s2 title="What is the role of Slide">
+<section><title>What is the role of Slide</title>
 <p>
 Slide provides a Content Management Framework based on a Java API, which
 is similar to <link href="http://www.jcp.org/jsr/detail/170.jsp">JSR 170</link>.
@@ -74,9 +75,9 @@ It can be used as a Data Abstraction Layer accessing various types of content re
 Slide has implemented a WebDAV servlet which iteracts with Slide's CM API.
 More information can be found at the Slide <link href="http://jakarta.apache.org/slide/">website</link>.
 </p>
-</s2>
+</section>
 
-<s2 title="What is the role of Wyona">
+<section><title>What is the role of Wyona</title>
 <p>
 Wyona had it's own "Pipeline and XInclude Processor" when it was started in autumn 1999.
 In the meantime Cocoon and Slide have emerged and developed into powerful frameworks.
@@ -86,6 +87,7 @@ how to integrate Slide.
 Beside the features of Cocoon and Slide,
 there are still many features needed to provide a usable Content Management System.
 Wyona is providing the following additional features:
+</p>
 <ol>
 <li>Authoring/Staging user interfaces for authors and editors</li>
 <li>Administrator interface (User/Group/Policies management, Monitoring, etc.)</li>
@@ -101,9 +103,7 @@ Wyona is providing the following additional features:
 <li>Access Controlling (Wyona and Cocoon and Slide have each it's own Access Controller!)</li>
 <li>etc.</li>
 </ol>
-</p>
-</s2>
-    </s1>
+</section>
+    </section>
   </body>
 </document>
-

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
 	 <title>HTTP Upload: Multimedia (Image, Audio, Video)</title>
-	 <version></version> 
-	 <type></type> 
+	 <version/> 
+	 <type/> 
 	 <authors>
            <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
            <person name="Christian Egli" email="christian.egli@wyona.org"/>
 	 </authors> 
   </header> 
   <body> 
-   <s1 title="Meta Data"> 
+   <section><title>Meta Data</title> 
     <p>
 The HTTP Upload Image Creator is a concrete implementation of the ResourceCreator pattern.
     </p>
 
-   <s2 title="Example"> 
-	<p>
-           <source>
-<![CDATA[
+   <section><title>Example</title> 
+           <source><![CDATA[
+
 
 <?xml version="1.0" encoding="utf-8"?>
 
@@ -35,14 +35,13 @@ The HTTP Upload Image Creator is a concrete implementation of the ResourceCreato
 </instance>
 </XPSMediaObject>
 
-]]>
-           </source>
-	</p>
+
+           ]]></source>
 	<p>
-	  According to Dublin Core (http://dublincore.org/documents/dces/)
-	  <source>
-	    <![CDATA[
-<?xml version="1.0" encoding="UTF-8"?>
+	  According to Dublin Core (http://dublincore.org/documents/dces/)</p>
+	  <source><![CDATA[
+	    
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
   <dc:metadata> 
     
@@ -168,16 +167,15 @@ The HTTP Upload Image Creator is a concrete implementation of the ResourceCreato
 <!--               a service providing such information. Rights information -->
 <!--               often encompasses Intellectual Property Rights (IPR), -->
 <!--               Copyright, and various Property Rights. -->
-<!--               If the Rights element is absent, no assumptions can be made -->
+<!--               If the Rights element is absent, no assumptions can be]]><![CDATA[ made -->
 <!--               about the status of these and other rights with respect to -->
 <!--               the resource. -->
 
   </dc:metadata>
 </metadata>
-	    ]]>
-	  </source>
-	</p>
-      </s2>
-    </s1>
+	    
+	  ]]></source>
+      </section>
+    </section>
   </body>
 </document>

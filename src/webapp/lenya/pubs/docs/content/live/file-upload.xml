@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
-  <document>
+<document>
   <header>
     <title>File Upload</title>
     <version>1.0</version>
@@ -8,17 +9,17 @@
     <authors>
       <person name="Christian Egli" email="christian.egli@wyona.org"/>
     </authors>
-    <notice></notice>
-    <abstract></abstract>
+    <notice/>
+    <abstract/>
   </header>
   <body>
-    <s1 title="File Upload">
-      <s2 title="What is it?">
+    <section><title>File Upload</title>
+      <section><title>What is it?</title>
 	<p>The file upload in wyona allows the user to upload arbitrary
 	  files to the web server. It is implemented as a cocoon
 	  action.</p>
-      </s2>
-    <s2 title="How does it work">
+      </section>
+    <section><title>How does it work</title>
       <p>The basic idea of how it works is as follows:</p>
       <ol>
 	<li>You have a link in your existing document which invokes
@@ -42,8 +43,8 @@
 	original document where the image is now inserted (with
 	appropriate caption, alt tag, etc.).</li> 
       </ol>
-    </s2>
-    <s2 title="How to use it in my publication?">
+    </section>
+    <section><title>How to use it in my publication?</title>
       <p>In order to use the file upload action for your own
       publication you have to do the following:</p>
       <ol>
@@ -53,13 +54,13 @@
 	<code>upload-image.xsl</code> and
 	<code>upload-image.xsp</code></li>
       </ol>
-      <s3 title="Sitemap">
+      <section><title>Sitemap</title>
 	<p>You need to configure the action in your sitemap and you
 	need to add a pipeline which invokes the action.</p>
 
-	<s4 title="actions">
-	  <source>
-	    <![CDATA[
+	<section><title>actions</title>
+	  <source><![CDATA[
+	    
 <map:actions>
 
 [...]
@@ -70,12 +71,12 @@
     <insert-image-before value="false" />
   </map:action>
 </map:actions>
-]]>
-	  </source>
-	</s4>
-	<s4 title="pipeline">
-	  <source>
-	    <![CDATA[
+
+	  ]]></source>
+	</section>
+	<section><title>pipeline</title>
+	  <source><![CDATA[
+	    
 <map:match pattern="upload">
   <map:act type="file-upload">
     <!-- if the action suceeds it returns the referer and we
@@ -88,51 +89,51 @@
   <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
   <map:serialize type="html"/>
 </map:match>
-]]>
-	  </source>
-	</s4>
-      </s3>
 
-      <s3 title="request form">
+	  ]]></source>
+	</section>
+      </section>
+
+      <section><title>request form</title>
 	<p>The request is generated in the html form which is
 	generated using upload-image.xsl and upload-image.xsp. Adapt
 	those if you have different requirements. Make sure you comply
 	with the interfaces outlined below.</p>
 
-	<s4 title="Upload form">
+	<section><title>Upload form</title>
 	  <p>The outline form provides the user with the ability to
 	  enter a filename and additional information (according to
 	  dublin core) pertaining to this file. </p>
-	</s4>
+	</section>
 
-      </s3>
-      <s3 title="Interfaces">
+      </section>
+      <section><title>Interfaces</title>
 	  <p>The file upload has two interfaces. The configuration
 	  interface via the action parameters and the http post
 	  parameters which are passed to the action.</p>
-	<s4 title="Sitemap config parameters">
+	<section><title>Sitemap config parameters</title>
 	  <dl>
 	    <dt>images-dir</dt>
 	    <dd>
-	      <source>&lt;images-dir href="resources/images" /&gt;</source>
-	      <p>store the upload images at this path (relative to the
-	      publication). </p>
+	      <![CDATA[<images-dir href="resources/images" />]]>
+	      store the upload images at this path (relative to the
+	      publication).
 	    </dd>
 	    <dt>images-dir</dt>
-	    <dd><source>&lt;meta-dir href="docs/metaDir" /&gt;</source>
-	      <p>store the xml files containing the meta information
+	    <dd><![CDATA[<meta-dir href="docs/metaDir" />]]>
+store the xml files containing the meta information
 	      (dublin core) for the uploaded file at this
-	      path(relative to the publication).</p>
+	      path(relative to the publication).
 	    </dd>
 	    <dt>insert-image-before</dt>
-	    <dd><source>&lt;insert-image-before value="false" /&gt;</source>
-	      <p>Insert the media tag before the xpath if true
-	      (default). Insert after otherwise.</p>
+	    <dd><![CDATA[<insert-image-before value="false" />]]>
+Insert the media tag before the xpath if true
+	      (default). Insert after otherwise.
 	      </dd>
 	  </dl>
-	</s4>
+	</section>
 
-	<s4 title="Http Request parameters">
+	<section><title>Http Request parameters</title>
 	  <p>The following http request parameters are expected from
 	  the action. All parameters are of type <code>text</code>
 	  except for the parameter uploadFile which is obvioulsly of
@@ -141,24 +142,24 @@
 	  <p>Mandatory parameters:</p>
 	  <dl>
 	    <dt>uploadFile</dt>
-	    <dd><p>The file to upload.</p></dd>
+	    <dd>The file to upload.</dd>
 	    <dt>xpath</dt>
-	    <dd><p>The location at which the image is to be inserted
-	    in the document that requested the image upload.</p></dd>
+	    <dd>The location at which the image is to be inserted
+	    in the document that requested the image upload.</dd>
 	    <dt>documentid</dt>
-	    <dd><p>The document id of the document that requested the
+	    <dd>The document id of the document that requested the
 	    image upload. This is used to find the xml document where
 	    the media tag has to be inserted at the lopcation given by
-	    the <code>xpath</code>.</p></dd>
+	    the <code>xpath</code>.</dd>
 	    <dt>referer</dt>
-	    <dd><p>The url of the document that requested the image
+	    <dd>The url of the document that requested the image
 	    upload. This is used to redirect back to it once the image
-	    upload is done.</p></dd>
+	    upload is done.</dd>
 	  </dl>
 	<p>Optional parameters:</p>
 	  <dl>
 	    <dt>insertBefore</dt>
-	    <dd><p>Values <code>true</code> or <code>false</code>. Defines if the media element is inserted before or after the given xpath. Overwrites the sitemap configuration parameter <code>insert-image-before</code> if present.</p></dd>
+	    <dd>Values <code>true</code> or <code>false</code>. Defines if the media element is inserted before or after the given xpath. Overwrites the sitemap configuration parameter <code>insert-image-before</code> if present.</dd>
 	  </dl>
 	  <p>Dublin Core meta data parameters (optional): <br/>
 	  All these parameters are stored
@@ -166,79 +167,79 @@
 	  Core for an explanation of these parameters.</p> 
 	  <dl>
 	    <dt>title</dt>
-	    <dd><p>Currently also used as alt tag for the image</p></dd>
+	    <dd>Currently also used as alt tag for the image</dd>
 	    <dt>creator</dt>
-	    <dd><p>Currently also used as authorline tag for the image</p></dd>
+	    <dd>Currently also used as authorline tag for the image</dd>
 	    <dt>subject</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>description</dt>
-	    <dd><p>Currently also used as media-caption tag for the image</p></dd>
+	    <dd>Currently also used as media-caption tag for the image</dd>
 	    <dt>publisher</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>contributor</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>date</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>type</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>format</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>identifier</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>source</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>language</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>relation</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>coverage</dt>
-	    <dd></dd>
+	    <dd/>
 	    <dt>rights</dt>
-	    <dd><p>Currently also used as copyright tag for the image</p></dd>
+	    <dd>Currently also used as copyright tag for the image</dd>
 	  </dl>
-	</s4>
-      </s3>
-    </s2>
-    <s2 title="How to customize">
+	</section>
+      </section>
+    </section>
+    <section><title>How to customize</title>
       <p>The easiest way to customize the file upload is probably
       using the action parameters in the sitemap. The other more
       powerful possibility is of course subclassing.</p> 
-      <s3 title="action parameters">
+      <section><title>action parameters</title>
 	<p>Use the action parameters to change where you want to store
 	the images or the meta data files.</p>
-      </s3>
-      <s3 title="subclassing">
+      </section>
+      <section><title>subclassing</title>
 	<p>You might want to subclass the
 	<code>ArticleImageUploadCreatorAction</code> e.g. to add a
 	different media tag or to have the images stored in a
 	different path.</p>
-      </s3>
-    </s2>
-    <s2 title="Limitations/Bugs">
+      </section>
+    </section>
+    <section><title>Limitations/Bugs</title>
 
       <dl>
 	<dt>Mime Type</dt>
-	  <dd><p>The mime type of the uploaded file is not recognized
-	  properly.</p></dd> 
+	  <dd>The mime type of the uploaded file is not recognized
+	  properly.</dd> 
 
 	<dt>Validation</dt>
-	<dd><p>(*cough*) There is practically no validation of the
-	request parameters. This is a potential security problem.</p></dd>
+	<dd>(*cough*) There is practically no validation of the
+	request parameters. This is a potential security problem.</dd>
 
 	<dt>wyona integration</dt>
-	<dd><p>Uploading an image and inserting it in a document is
+	<dd>Uploading an image and inserting it in a document is
 	editing this document. It should therefore be integrated with
-	the revision controler.</p></dd>
+	the revision controler.</dd>
 
 	<dt>not very generic</dt>
-	<dd><p>The insertMediaTag method is very specific for the
-	unipublic publication. It should be made more generic.</p></dd>
+	<dd>The insertMediaTag method is very specific for the
+	unipublic publication. It should be made more generic.</dd>
       </dl>
-    </s2>
-    </s1>
+    </section>
+    </section>
     
   </body>
   <footer>
-    <legal></legal>
+    <legal/>
   </footer>
   </document>

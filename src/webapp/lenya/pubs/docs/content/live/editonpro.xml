@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>RealObjects edit-on Pro Editor</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="" email=""/>
       <person name="" email=""/>
     </authors>
   </header>
   <body>
-    <s1 title="RealObjects edit-on Pro Editor">
+    <section><title>RealObjects edit-on Pro Editor</title>
       <p>
         Unfortunately this editor is not Open Source, but
         you will find a trial version at <link href="http://www.realobjects.de">http://www.realobjects.de</link>.
       </p>
       <p>
-        You have to place the "edit-on Pro" code into some directory of your web-server.<br />
+        You have to place the "edit-on Pro" code into some directory of your web-server.<br/>
         For instance: 
       </p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 $PREFIX/jakarta-tomcat-4.0/webapps/ROOT/editonpro
-]]>
-</source>
+
+]]></source>
       <p>
         Then you have to tell the CMS where it can find this code. In the case of the
         Materials Science Publication this is done by an XSLT-variable:
       </p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 $PREFIX/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/ethz-mat/stylesheets/Configuration/read.xsl
-]]>
-</source>
-    </s1>
+
+]]></source>
+    </section>
   </body>
 </document>
-

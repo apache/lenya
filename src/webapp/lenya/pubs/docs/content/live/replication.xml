@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
 <document>
 	<header>
 		<title>Replication</title>
@@ -9,25 +11,23 @@
 		</authors>
 	</header>
 	<body>
-		<s1 title="Secure Copy">
+		<section><title>Secure Copy</title>
 			<p>
 The shell script uses secure copy for replicating the files from the authoring to the live server.
 In order that the live server is trusting the authoring server one has to generate public keys.
 Note that we assume the use of SSH 2.
 </p>
-			<s2 title="Key Generation">
-				<p>
+			<section><title>Key Generation</title>
 					<ol>
 						<li>ssh-keygen -t dsa (Don't enter a passphrase, just hit enter. The file ~/.ssh/id_dsa.pub should be generated)</li>
 						<li>scp ~/.ssh/id_dsa.pub remoteuser@remotehost:.ssh/authorized_keys (if authorized_keys does already exist on the remote server, then only add the key from id_dsa.pub)</li>
 					</ol>
-				</p>
-			</s2>
-		</s1>
-		<s1 title="Shell Script">
+			</section>
+		</section>
+		<section><title>Shell Script</title>
 			<p>
 Use the shell script <code>wyona/cms/bin/replicate.sh</code> to copy the exported static files to the remote host.
 </p>
-		</s1>
+		</section>
 	</body>
 </document>

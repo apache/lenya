@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
 <document>
   <header>
     <title>Coding Guidelines for Lenya</title>
@@ -9,13 +11,15 @@
     </authors>
   </header>
   <body>
-    <s1 title="Introduction">
+    <section>
+      <title>Introduction</title>
       <p>
 	We use coding standards to be able to write code easy to
 	understand, to maintain, and to enhance.
       </p>
-    </s1>
-    <s1 title="Java Code">
+    </section>
+    <section>
+      <title>Java Code</title>
       <p>
 	Generaly we stick with standards. In the case of coding
 	standards we simply use the guidelines from Sun.
@@ -29,15 +33,14 @@
         href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html</link></li>
         <li>Thou shalt not produce any code containing tab-stops.</li>
       </ul>
-    </s1>
-    <s1 title="XML and XSP">
+    </section>
+    <section>
+      <title>XML and XSP</title>
       <p>
 	The only restriction we impose on XML, XSLT and XSP code is
 	that the indenting is 2 spaces. Again please no tab stops.
       </p>
-    </s1>
-
-
+    </section>
   </body>
 </document>
 

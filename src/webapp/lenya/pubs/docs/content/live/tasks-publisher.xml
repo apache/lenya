@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-    Document   : tasks-publishingtask.xml
-    Created on : November 13, 2002, 5:43 PM
-    Author     : ah
-    Description:
-        Purpose of the document follows.
--->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
 
@@ -20,26 +13,26 @@
 </header> 
 <body> 
 
-<s1 title="The DefaultFilePublisher Task"> 
+<section><title>The DefaultFilePublisher Task</title> 
 <p>
 The DefaultFilePublisher is a task that copies XML source files from
 the authoring directory to another location, usually the live directory.
 It needs the following parameters:
 </p>
 <ul>
- <li><code><strong>publication-id</strong></code>: the publication identifier</li>
- <li><code><strong>authoring-path</strong></code>: the authoring path</li>
- <li><code><strong>tree-authoring-path</strong></code>: the location of the <code>tree.xml</code> file</li>
- <li><code><strong>live-path</strong></code>: the live path</li>
- <li><code><strong>tree-live-path</strong></code>: the location of the <code>tree.xml</code> file</li>
- <li><code><strong>sources</strong></code>: a comma-separated list of files to publish</li>
+ <li><strong>publication-id</strong>: the publication identifier</li>
+ <li><strong>authoring-path</strong>: the authoring path</li>
+ <li><strong>tree-authoring-path</strong>: the location of the <code>tree.xml</code> file</li>
+ <li><strong>live-path</strong>: the live path</li>
+ <li><strong>tree-live-path</strong>: the location of the <code>tree.xml</code> file</li>
+ <li><strong>sources</strong>: a comma-separated list of files to publish</li>
 </ul>
 <p>
 All paths are relative to the publication directory. Usually, the path information is read
 from the <code>[publication-directory]/docs/publication/publication.xconf</code> file:
 </p>
-<source>
-<![CDATA[
+<source><![CDATA[
+
 <publication>
   <authoring>
     <documents href="docs/publication/authoring"/>
@@ -51,16 +44,16 @@ from the <code>[publication-directory]/docs/publication/publication.xconf</code>
   </live>
   ...
 </publication>
-]]>
-</source>
+
+]]></source>
 
 <p>
 You can override the paths in the task configuration file <code>tasks.xconf</code>,
 e. g. to use several publishers to publish into different directories:
 </p>
 
-<source>
-<![CDATA[
+<source><![CDATA[
+
 <tasks>
 
   <task id="publish-test" class="org.wyona.cms.publishing.DefaultFilePublisher">
@@ -76,12 +69,12 @@ e. g. to use several publishers to publish into different directories:
   </task>
 
 </tasks>
-]]>
-</source>
+
+]]></source>
 <p>
 The remaining parameters, <code>publication-id</code> and <code>sources</code>, are
 passed to the task as request parameters.
 </p>
-</s1>
+</section>
 </body>
 </document>

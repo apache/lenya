@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
 <header>
     <title>Content Management Markup Language</title>
     <version>2002.01.20</version>
-    <type></type>
+    <type/>
     <authors>
       <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
       <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
     </authors>
 </header>
 <body>
-	<s1 title="Content Management Markup Language">
+	<section><title>Content Management Markup Language</title>
 	<p>
 	The revision and workflow of each "file" is described by a corresponding "CMML-File".
 	The various workflows are configured by the file <link href="wf-markup-language.html">workflow.xconf</link>.
 	</p>
-		<s2 title="example.cmml">
-		<source>
-		<![CDATA[
+		<section><title>example.cmml</title>
+		<source><![CDATA[
+		
 <?xml version"1.0"?>
 <cm>
   <mime type="xml"/>
@@ -77,11 +77,10 @@
     <expire-date>1003757300954</expire-date>
   </scheduling>
 </cm>
-		]]>
-		</source>
-		</s2>
-<br/>
-		<s2 title="Explanation">
+		
+		]]></source>
+		</section>
+		<section><title>Explanation</title>
 		<ol>
 		  <li>At 22:45:14 the user "wyona" is checking in a new article, which was
 		      probably written with some third-party editor.</li>
@@ -95,7 +94,7 @@
 		  <li>At 7:49:16 the user "levi" sets the workflow on 'ready to publish'.</li>
 		  <li>At 7:50:23 the user "levi" is publishing the article.</li>
 		</ol>
-		</s2>									       
-	</s1>
+		</section>									       
+	</section>
 </body>
 </document>

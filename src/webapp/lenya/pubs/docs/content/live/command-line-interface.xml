@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
   <header> 
@@ -10,21 +11,19 @@
 	 </authors> 
   </header> 
   <body> 
-   <s1 title="org.apache.cocoon.Main"> 
+   <section><title>org.apache.cocoon.Main</title> 
 
-   <s2 title="Usage"> 
+   <section><title>Usage</title> 
 <p>
 Get the Usage by running
 </p>
-    <p>
-<source>
-<![CDATA[
-java org.apache.cocoon.Main --help
-]]>
-</source>
-    </p>
-   </s2>
+<source><![CDATA[
 
-   </s1>
+java org.apache.cocoon.Main --help
+
+]]></source>
+   </section>
+
+   </section>
   </body>
 </document>

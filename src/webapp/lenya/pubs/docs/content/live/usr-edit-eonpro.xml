@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document>
   <header>
     <title>Edit-On Pro</title>
-    <version></version>
-    <type></type>
+    <version/>
+    <type/>
     <authors>
       <person name="" email=""/>
       <person name="" email=""/>
     </authors>
   </header>
   <body>
-    <s1 title="Edit-On Pro">
+    <section><title>Edit-On Pro</title>
         <p>
 	 Not yet implemented in this version.
         </p>
-    </s1>
+    </section>
   </body>
 </document>
