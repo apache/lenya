@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReTokenizeFile.java,v 1.20 2004/07/12 03:28:22 michi Exp $  */
+/* $Id: ReTokenizeFile.java,v 1.21 2004/07/12 09:04:09 michi Exp $  */
 
 package org.apache.lenya.lucene;
 
@@ -103,7 +103,13 @@ public class ReTokenizeFile {
             file = new File(file.getAbsolutePath() + ".txt");
         }
         
-        String html = readFileWithEncoding(file);
+        String content = readFileWithEncoding(file);
+
+	//log.debug(content);
+
+	content = removeTags(content);
+
+	//log.debug(content);
         
         
         /*java.io.Reader reader = new HTMLParser(file).getReader();
@@ -122,7 +128,7 @@ public class ReTokenizeFile {
         int index = -1;
 
         for (int i = 0; i < words.length; i++) {
-            index = html.toLowerCase().indexOf(words[i].toLowerCase());
+            index = content.toLowerCase().indexOf(words[i].toLowerCase());
 
             if (index >= 0) {
                 int start = index - offset;
@@ -133,11 +139,11 @@ public class ReTokenizeFile {
 
                 int end = index + words[i].length() + offset;
 
-                if (end >= html.length()) {
-                    end = html.length() - 1;
+                if (end >= content.length()) {
+                    end = content.length() - 1;
                 }
 
-                return html.substring(start, end);
+                return content.substring(start, end);
             }
         }
 
@@ -145,19 +151,26 @@ public class ReTokenizeFile {
     }
 
     /**
-     * DOCUMENT ME!
+     * Remove tags
      *
-     * @param string DOCUMENT ME!
+     * @param string Content with tags
      *
-     * @return DOCUMENT ME!
+     * @return Content without tags
      */
-    public String tidy(String string) {
-        StringTokenizer st = new StringTokenizer(string, "<>&");
-
+    public String removeTags(String string) {
         StringBuffer sb = new StringBuffer("");
 
-        while (st.hasMoreElements()) {
-            sb.append(st.nextToken());
+        boolean tag = false;
+
+        for (int i = 0; i < string.length(); i++) {
+            char ch = string.charAt(i);
+	    if (ch == '<') {
+                tag = true;
+            } else if (ch == '>') {
+                tag = false;
+            } else {
+                if (!tag) sb.append(string.charAt(i));
+            }
         }
 
         return sb.toString();
