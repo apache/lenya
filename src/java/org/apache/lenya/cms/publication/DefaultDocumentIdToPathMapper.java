@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.20 2004/01/07 18:15:50 egli Exp $ <License>
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.21 2004/01/08 09:46:00 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -50,6 +50,9 @@ import java.io.File;
 public class DefaultDocumentIdToPathMapper
     implements DocumentIdToPathMapper, PathToDocumentIdMapper {
     	
+    public static final String BASE_FILENAME_PREFIX = "index";
+    public static final String BASE_FILENAME_SUFFIX = ".xml";
+
     /**
 	 * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication,
 	 *      java.lang.String, java.lang.String, java.lang.String)
@@ -101,7 +104,7 @@ public class DefaultDocumentIdToPathMapper
         if (language != null && !"".equals(language)) {
             languageSuffix = "_" + language;
         }
-        return "index" + languageSuffix + ".xml";
+        return BASE_FILENAME_PREFIX + languageSuffix + BASE_FILENAME_SUFFIX;
     }
 
     /**
@@ -150,16 +153,15 @@ public class DefaultDocumentIdToPathMapper
     public String getLanguage(File file) {
         String fileName = file.getName();
         String language = null;
-        String fileNameSuffix = ".xml";
-        String fileNamePrefix = "index";
+
         // check if the file is of the form index.html or index_en.html
 
-        if (fileName.startsWith(fileNamePrefix)
-            && fileName.endsWith(fileNameSuffix)) {
+        if (fileName.startsWith(BASE_FILENAME_PREFIX)
+            && fileName.endsWith(BASE_FILENAME_SUFFIX)) {
             String languageSuffix =
                 fileName.substring(
-                    fileNamePrefix.length(),
-                    fileName.indexOf(fileNameSuffix));
+                    BASE_FILENAME_PREFIX.length(),
+                    fileName.indexOf(BASE_FILENAME_SUFFIX));
             if (languageSuffix.length() > 0) {
                 // trim the leading '_'
                 language = languageSuffix.substring(1);
