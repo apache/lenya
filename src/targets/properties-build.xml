@@ -23,10 +23,7 @@
     Properties Targets
   </description>
 
-  <!-- ============================================================ -->
-  <!-- Set up some global properties                                -->
-  <!-- ============================================================ -->
-
+  <!-- Set up some global properties -->
   <!--
   Give user a chance to override without editing build.properties
   (local.build.properties takes precedence)
@@ -114,11 +111,7 @@
   <!-- hsqldb database config files directory -->
   <property name="src.database.dir" value="src/webapp/WEB-INF/db"/>
 
-  
-  <!-- ============================================================ -->
-  <!-- Set up classpath                                             -->
-  <!-- ============================================================ -->
-  
+  <!-- Set up classpath -->
   <path id="classpath">
     <fileset dir="${lib.dir}">
       <include name="*.jar"/>

@@ -23,10 +23,7 @@
     Export Targets
   </description>
 
-  <!-- ============================================================ -->
-  <!-- Produce the webapp                                           -->
-  <!-- ============================================================ -->
-
+<!-- Export the webapp -->
 <target name="export" depends="webapp" description="Exports a publication to static HTML.">
   <property name="publication" value=""/>
   <property name="publication.dir" value="${build.webapp}/lenya/pubs/${publication}"/>

@@ -23,9 +23,7 @@
     Initialization Targets
   </description>
 
-  <!-- ============================================================ -->
-  <!-- Initialization target                                        -->
-  <!-- ============================================================ -->
+  <!-- Initialization target -->
   <target name="init">
     <tstamp>
       <format property="SNAPSHOT_STAMP" pattern="yyyyMMddhhmmss"/>
@@ -40,46 +38,40 @@
     <property name="snapshot.src.dir" value="${dist.root}/${snapshot.src.name}"/>
   </target>
 
+  <!-- Build ant tasks used during the Lenya build -->
   <target name="build-custom-tasks" depends="init">
-    <mkdir dir="${build.dir}/tools/anttasks"/>
-    <javac srcdir="src/java"
-           destdir="${build.dir}/tools/anttasks"
+    <javac srcdir="${tools.tasks.dest}"
+           destdir="${tools.tasks.dest}"
            debug="${debug}"
            optimize="{optimize}"
            deprecation="${deprecation}"
            target="${target.vm}"
            nowarn="${nowarn}"
-           includes="org/apache/lenya/cms/ant/**"
            classpathref="classpath"
            source="1.4"/>
 
-    <taskdef name="copyJavaSources" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
-    <taskdef name="bulkCopy" classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
-    <taskdef name="copyPubs"        classpath="${build.dir}/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
+    <taskdef name="copyJavaSources" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="bulkCopy" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
+    <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
   </target>
 
-  <!-- ============================================================ -->
-  <!-- Prepares the build webapp directory                          -->
-  <!-- ============================================================ -->
+  <!-- Prepare the build webapp directory -->
   <target name="check-cocoon" depends="init" unless="gump.skipcocoonbuild">
     <echo>Check if Cocoon has been built: ${cocoon.src.dir}/build/webapp</echo>
     <available file="${cocoon.src.dir}/build/webapp" type="dir" property="cocoon.build.webapp.dir.exists"/>
-    <!--<fail unless="cocoon.build.webapp.dir.exists" message="Cocoon needs to be built first!"/>-->
     <antcall target="build-cocoon"/>
   </target>
 
+  <!-- Build Cocoon with our properties -->
   <target name="build-cocoon" depends="init" unless="cocoon.build.webapp.dir.exists">
-    <!-- Building Cocoon with our properties -->
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
     </copy>
     <ant dir="${cocoon.src.dir}" inheritall="false"/>
   </target>
 
-  <!-- ============================================================ -->
-  <!-- copy the bulk of the cocoon webapp to our destination        -->
-  <!-- ============================================================ -->
+  <!-- Copy the bulk of the cocoon webapp to our destination -->
   <target name="prepare-cocoon" depends="check-cocoon" unless="gump.skipcocoonbuild">
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
     <copy todir="${build.webapp}" filtering="off">
@@ -89,18 +81,18 @@
         <exclude name="test-suite/**"/>
         <exclude name="legal/**"/>
         <exclude name="WEB-INF/db/**"/>
+        <exclude name="WEB-INF/xconf/**"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
-        <exclude name="WEB-INF/logkit.xconf"/>
-        <exclude name="WEB-INF/web.xml"/>
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
 
+    <!-- patch sitemap.xmap -->
     <xpatch file="${build.webapp}/sitemap.xmap" 
             includes="src/confpatch/*.xmap"/> 
 
     <!-- patch cocoon.xconf -->
-    <xslt
+  	<xslt
         in="${cocoon.webapp.dir}/WEB-INF/cocoon.xconf"
         out="${build.webapp}/WEB-INF/cocoon.xconf"
         style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
@@ -110,31 +102,12 @@
     </xslt>
     
     <!-- patch logkit.xconf -->
-    <xslt
-        in="${cocoon.webapp.dir}/WEB-INF/logkit.xconf"
-        out="${build.webapp}/WEB-INF/logkit.xconf"
-        style="${src.webapp.dir}/WEB-INF/logkit-xconf.xsl"
-        >
-      <outputproperty name="indent" value="yes"/>
-    </xslt>
+    <xpatch file="${build.webapp}/WEB-INF/logkit.xconf"
+        includes="src/confpatch/logkit-*.xconf"/> 
     
     <!-- patch web.xml -->
-    <xslt
-        in="${cocoon.webapp.dir}/WEB-INF/web.xml"
-        out="${build.webapp}/WEB-INF/web.xml"
-        style="${src.webapp.dir}/WEB-INF/web-xml.xsl"
-        force="false"
-        >
-      <param name="enableUploads" expression="${enable.uploads}"/>
-      <xmlcatalog>
-        <dtd 
-          publicId="-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-          location="${src.webapp.dir}/WEB-INF/entities/web-app_2_3.dtd"/>
-      </xmlcatalog>
-      <outputproperty name="indent" value="yes"/>
-    </xslt>
-
-    <!-- patch sitemap.xmap -->
+    <xpatch file="${build.webapp}/WEB-INF/web.xml" 
+            includes="src/confpatch/*.xweb"/> 
 
     <!-- Copy Entities 
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="${src.entities.dir}" builddir="${build.webapp}/${build.entities.dir}" />    
@@ -146,9 +119,7 @@
     <mkdir dir="${build.webapp}"/>
   </target>
 
-  <!-- ============================================================ -->
-  <!-- Prepares the source code                                     -->
-  <!-- ============================================================ -->
+  <!-- Prepare the source code -->
   <target name="prepare-src" depends="prepare, build-custom-tasks">
     <!-- Copy java source files from ${java.dir} to ${build.src} -->
     <copy todir="${build.src}" filtering="on">

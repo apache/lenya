@@ -23,18 +23,14 @@
     Documentation Targets
   </description>
 
-  <!-- ============================================================ -->
-  <!-- Set a variable if javadoc is already up-to-date.             -->
-  <!-- ============================================================ -->
+  <!-- Set a variable if javadoc is already up-to-date -->
   <target name="javadocs_check">
     <uptodate property="javadocs.notrequired" targetfile="${dist.bin.javadocs}/packages.html" >
       <srcfiles dir="${build.src}" includes="**/*.java"/>
     </uptodate>
   </target>
 
-  <!-- =================================================================== -->
-  <!-- If javadoc is already up-to-date, print a message saying so.        -->
-  <!-- =================================================================== -->
+  <!-- If javadoc is already up-to-date, print a message saying so -->
   <target name="javadocs_done" if="javadocs.notrequired">
     <echo message="-------------------------------------------------------------"/>
     <echo message="  Not rebuilding Javadocs, as they are up-to-date:"/>
@@ -43,10 +39,7 @@
     <echo message="-------------------------------------------------------------"/>
   </target>
 
-  <!-- ============================================================ -->
-  <!-- Creates the API documentation                                -->
-  <!-- ============================================================ -->
-
+  <!-- Creates the API documentation -->
   <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done" unless="javadocs.notrequired" description="Generates the API documentation">
     <mkdir dir="${dist.bin.javadocs}"/>
     <javadoc packagenames="${packages}"

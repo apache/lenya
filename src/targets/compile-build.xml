@@ -23,14 +23,12 @@
     Compilation Targets
   </description>
 
-  <!-- ============================================================ -->
-  <!-- The main compilation target                                  -->
-  <!-- ============================================================ -->
+  <!-- The main compilation target -->
   <target name="compile" depends="prepare-src"
           description="Compile the sources">
-    <mkdir dir="${build.dest}"/>
+    <mkdir dir="${build.webapp}/WEB-INF/classes"/>
     <javac srcdir="${build.src}"
-           destdir="${build.dest}"
+           destdir="${build.webapp}/WEB-INF/classes"
            debug="${debug}"
            optimize="${optimize}"
            deprecation="${deprecation}"
@@ -41,18 +39,12 @@
     </javac>
   </target>
 
-
-
-
-  <!-- ============================================================ -->
   <!-- The compilation target with deprecation on -->
-  <!-- ============================================================ -->
   <target name="deprecation" depends="prepare-src"
           description="Compile the sources with deprecation messages">
-    <delete dir="${build.dest}"/>
-    <mkdir dir="${build.dest}"/>
+    <mkdir dir="${build.webapp}/WEB-INF/classes"/>
     <javac srcdir="${build.src}"
-           destdir="${build.dest}"
+           destdir="${build.webapp}/WEB-INF/classes"
            debug="${debug}"
            optimize="${optimize}"
            deprecation="on"
@@ -63,9 +55,7 @@
     </javac>
   </target>
 
-  <!-- ============================================================ -->
-  <!-- The XSP compilation target                                  -->
-  <!-- ============================================================ -->
+  <!-- The XSP compilation target -->
   <target name="compile-xsp" depends="prepare-src"
           description="Compile the XSP sources">
     <mkdir dir="${build.dir}/work"/>
