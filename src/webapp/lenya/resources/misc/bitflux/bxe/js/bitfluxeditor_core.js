@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: bitfluxeditor_core.js,v 1.5 2002/11/23 11:47:33 felixcms Exp $
+// $Id: bitfluxeditor_core.js,v 1.6 2003/01/21 17:00:55 gregorcms Exp $
 
 /**
  * @file
@@ -147,44 +147,64 @@ function BX_schema_loaded(e) {
             if (appinfo_node.namespaceURI == "http://bitfluxeditor.org/schema/1.0") {
                 switch(appinfo_node.localName) {
                 case "returnelement":
-                    BX_elements[name]["returnElement"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+	                    BX_elements[name]["returnElement"] = appinfo_node.firstChild.data;
+					}
                     break;
                 case "name":
-                    BX_elements[name]["name"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+	                    BX_elements[name]["name"] = appinfo_node.firstChild.data;
+					}
                     break;
                 case "noaddparas":
-                    BX_elements[name]["noAddParas"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+	                    BX_elements[name]["noAddParas"] = appinfo_node.firstChild.data;
+					}
                     break;
                 case "originalname":
-                    BX_elements[name]["originalName"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+    	                BX_elements[name]["originalName"] = appinfo_node.firstChild.data;
+					}
                     break;
                 case "requiredattributes":
-                    BX_elements[name]["requiredAttributes"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+    	                BX_elements[name]["requiredAttributes"] = appinfo_node.firstChild.data;
+					}
                     break;
                 case "addalso":
-                    BX_elements[name]["addAlso"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+    	                BX_elements[name]["addAlso"] = appinfo_node.firstChild.data;
+					}
                     break;
                 case "altmenu":
-                    BX_elements[name]["altMenu"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+    	                BX_elements[name]["altMenu"] = appinfo_node.firstChild.data;
+					}
                     break;
 				case "afteremptylineelement":
-					BX_elements[name]["afterEmptyLineElement"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+						BX_elements[name]["afterEmptyLineElement"] = appinfo_node.firstChild.data;
+					}
                     break;
 				case "afteremptylineparent":
-					BX_elements[name]["afterEmptyLineParent"] = appinfo_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+						BX_elements[name]["afterEmptyLineParent"] = appinfo_node.firstChild.data;
+					}
                     break;
 
 
                 case "insertafter":
-                    insertafter_result = BX_xml_getChildNodesByTagName("bxe:element",appinfo_node,nsResolver);
-                    if ( insertafter_node = insertafter_result.iterateNext()) {
-                        var inserttext = insertafter_node.firstChild.data;
+					if (appinfo_node.firstChild) {
+    	                insertafter_result = BX_xml_getChildNodesByTagName("bxe:element",appinfo_node,nsResolver);
+        	            if ( insertafter_node = insertafter_result.iterateNext()) {
+            	            var inserttext = insertafter_node.firstChild.data;
 
-                        while (insertafter_node = insertafter_result.iterateNext()) {
-                            inserttext += " | " + insertafter_node.firstChild.data;
-                        }
-                        BX_elements[name]["insertAfter"] = inserttext;
-                    }
+                	        while (insertafter_node = insertafter_result.iterateNext()) {
+                    	        inserttext += " | " + insertafter_node.firstChild.data;
+                        	}
+	                        BX_elements[name]["insertAfter"] = inserttext;
+    	                }
+					}
                 }
             }
         }
@@ -1314,7 +1334,7 @@ function BX_updateButtons(again) {
 
     var first = 1;
 
-    while(startNode && startNode.parentNode && startNode.parentNode.nodeName.toLowerCase() != "body" && startNode.parentNode.getAttribute("name") != "bitfluxspan") {
+    while(startNode && startNode.parentNode && startNode.parentNode.parentNode.nodeName.toLowerCase() != "html" && startNode.parentNode.getAttribute("name") != "bitfluxspan") {
 
         startNode = startNode.parentNode;
 
@@ -1355,7 +1375,8 @@ function BX_updateButtons(again) {
     var startNodeId = startNode.getAttribute("id");
 
     
-    if  (startNode && startNode.nodeName.toLowerCase() == "body") {
+    if  (startNode && startNode.parentNode.nodeName.toLowerCase() == "html" ) {
+
         infotext = "Not Editable";
         var editnode = BX_cursor_moveToNextEditable(firstnode);
 
@@ -1376,7 +1397,7 @@ function BX_updateButtons(again) {
         document.addEventListener("keypress",BX_keypress,false);
     }
     BX_innerHTML(BX_infotext_tags,infotext + "<br/>");
-    if (startNode.nodeName.toLowerCase() != "body") {
+    if (startNode.parentNode.nodeName.toLowerCase() != "html") {
         BX_infobar_printAttributes(firstnode);
     }
     BX_infobar.style.visibility = "visible";
@@ -1708,7 +1729,7 @@ function BX_splitNode(id) {
 function BX_getParentNode(startNode,nodename) {
 
     var thisNodeName = "";
-    while(startNode && startNode.parentNode && startNode.parentNode.nodeName != "body" && startNode.parentNode.getAttribute("name") != "bitfluxspan") {
+    while(startNode && startNode.parentNode && startNode.parentNode.parentNode.nodeName != "html" && startNode.parentNode.getAttribute("name") != "bitfluxspan") {
         startNode = startNode.parentNode;
         thisNodeName = startNode.nodeName;
         var tags = nodename.split(" | ");
@@ -2348,7 +2369,7 @@ function BX_errorMessage(e) {
             BX_innerHTML(BX_error_window.document,"");
             BX_error_window.document.writeln("<pre>");
             mes += "UserAgent: "+navigator.userAgent +"\n";
-            mes += "bitfluxeditor.js Info: $Revision: 1.5 $  $Name:  $  $Date: 2002/11/23 11:47:33 $ \n";
+            mes += "bitfluxeditor.js Info: $Revision: 1.6 $  $Name:  $  $Date: 2003/01/21 17:00:55 $ \n";
             BX_error_window.document.writeln(mes);
             mes = "\nError Object:\n\n";
             for (var b in e) {
@@ -2384,7 +2405,7 @@ function BX_errorMessage(e) {
 
 function BX_find_bitfluxspanNode(node ) {
 
-    while(node && node.nodeName == "#text" || (node.nodeName != "body" && node.getAttribute("name") != "bitfluxspan")) {
+    while(node && node.nodeName == "#text" || (node.parentNode.nodeName != "html" && node.getAttribute("name") != "bitfluxspan")) {
         node = node.parentNode;
     }
     if (node.getAttribute("name") == "bitfluxspan") {
