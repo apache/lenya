@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.16 2004/01/08 14:15:40 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.17 2004/02/06 19:37:20 gregor Exp $ -->
 
-<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">
 <lenya:name>OSCOM</lenya:name>
 <lenya:version>1.2</lenya:version>
 <lenya:description>OSCOM is an international, not-for-profit organization dedicated to Open Source
