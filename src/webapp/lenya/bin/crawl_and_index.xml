@@ -14,14 +14,13 @@
 <target name="init">
   <echo message="INFO: Init"/>
 
-  <property name="lenya.dir" value="/home/username/src/cocoon-lenya"/>
+  <property name="lenya.dir" value="/home/USERNAME/src/cocoon-lenya"/>
   <!--<property name="lenya.dir" value="../../../.."/>-->
   <!--<property name="lenya.dir" value="."/>-->
   
   <!-- Dummy arguments -->
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
   <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
-  <property name="debug" value="false"/>
   <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene"/>
   <!-- /Dummy arguments -->
 
@@ -29,10 +28,10 @@
 
   <path id="class.path">
     <pathelement path="${lenya.dir.web-inf}/classes"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/xercesImpl-2.5.0.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xercesImpl-2.6.1.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/xml-apis.jar"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/xalan-2.5.1.jar"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/log4j-1.2.3.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xalan-2.5.2.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/log4j-1.2.7.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/excalibur-io-1.1.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/lucene-1.3.jar"/>
     <pathelement path="${lenya.dir.web-inf}/lib/websphinx.jar"/>
@@ -62,22 +61,20 @@
 <target name="index" description="Index hypertext documents" depends="init">
   <echo>INFO: Index hypertext documents</echo>
 
+  <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
+    <arg value="index"/>
+    <arg value="${lucene.xconf}"/>
+  </exec>
+
+<!-- FIXME: Linkage problem -->
+<!--
   <java classname="org.apache.lenya.lucene.IndexConfiguration">
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
 
-  <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
-    <arg value="index"/>
-    <arg value="${lucene.xconf}"/>
-    <arg value="${debug}"/>
-  </exec>
-
-<!-- FIXME: Linkage problem -->
-<!--
   <java classname="org.apache.lenya.lucene.index.Index">
     <arg value="${lucene.xconf}"/>
-    <arg value="${debug}"/>
     <classpath refid="class.path"/>
   </java>
 -->

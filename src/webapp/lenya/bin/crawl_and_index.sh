@@ -8,9 +8,9 @@ WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
 #symlink the xpdf directory to the version you have
-XPDF=$HOME/bin/xpdf/pdftotext
+XPDF=$HOME/build/xpdf-2.03-linux/pdftotext
 
-CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.5.0.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar
+CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar
 
 echo "INFO: classpath = $CLASSPATH"
 
@@ -24,14 +24,14 @@ case "$1" in
         echo ""
         CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.3.jar
         echo "INFO: classpath = $CLASSPATH"
+        echo ""
 
         LUCENE_CONF=$2
 
-        DEBUG=true
-
         echo "INFO: lucene.xconf = $LUCENE_CONF"
         $JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexConfiguration $LUCENE_CONF
-        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF $DEBUG
+        echo ""
+        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF
 
         ###$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
 	;;
