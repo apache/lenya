@@ -68,13 +68,13 @@
       
       <!-- Flow callbacks -->
       <map:match pattern="sitetree_link_library_template">
-        <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/sitetree_link_library.xml.jx}" type="jx">
+        <map:generate src="fallback://resources/kupu/apache-lenya/kupu/imagedrawer/sitetree_link_library.xml.jx" type="jx">
           <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images/right_arrow.png"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>      
       <map:match pattern="publication_image_library_template">
-        <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/publication_image_library.xml.jx}" type="jx">
+        <map:generate src="fallback://resources/kupu/apache-lenya/kupu/imagedrawer/publication_image_library.xml.jx" type="jx">
           <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
         </map:generate>
         <map:serialize type="xml"/>
@@ -85,7 +85,7 @@
           <map:part element="original" 
               src="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
         </map:aggregate>              
-        <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/kupusave.xsl}"/>
+        <map:transform src="fallback://resources/kupu/apache-lenya/lenya/kupusave.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>   
@@ -110,8 +110,8 @@
                 <map:call resource="style-cms-page"/>
               </map:act>
               <map:generate 
-                src="{fallback:resources/kupu/apache-lenya/kupu/kupumacros.html}"/>
-              <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/kupumacros.xsl}">
+                src="fallback://resources/kupu/apache-lenya/kupu/kupumacros.html"/>
+              <map:transform src="fallback://resources/kupu/apache-lenya/lenya/kupumacros.xsl">
                 <map:parameter name="contentfile" 
                   value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=content"/>
                 <map:parameter name="context-prefix" value="{request:contextPath}"/>
@@ -144,7 +144,7 @@
           <map:match pattern="*/authoring/**">
             <map:generate src="{global:basedir}/pubs/{1}/content/authoring/{page-envelope:document-path}"/>
             <map:transform 
-              src="{fallback:resources/kupu/apache-lenya/lenya/content2edit.xsl}">
+              src="fallback://resources/kupu/apache-lenya/lenya/content2edit.xsl">
               <map:parameter name="css" 
                 value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
             </map:transform>
@@ -155,7 +155,7 @@
         
         <!-- Kupu Image Drawer -->
         <map:match pattern="*drawerxsl" type="step">
-          <map:generate type="jx" src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl}">
+          <map:generate type="jx" src="fallback://resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl">
             <!-- We need to use the hole uri schem i.e. http://servername:port/, since IE xslt processor  
                  throws an access violation upon loading of xslts from the internet.
              -->
@@ -166,7 +166,7 @@
         </map:match>
         
         <map:match pattern="image_libraries" type="step">
-          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/imagelibraries.xml.jx}" type="jx">
+          <map:generate src="fallback://resources/kupu/apache-lenya/kupu/imagedrawer/imagelibraries.xml.jx" type="jx">
             <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=publication_image_library"/>
             <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=page_image_library"/>
             <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
@@ -174,7 +174,7 @@
           <map:serialize type="xml"/>
         </map:match>
         <map:match pattern="link_libraries" type="step">
-          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/linklibraries.xml.jx}" type="jx">
+          <map:generate src="fallback://resources/kupu/apache-lenya/kupu/imagedrawer/linklibraries.xml.jx" type="jx">
             <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=sitetree_link_library"/>
             <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=other_link_library"/>
             <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
@@ -183,8 +183,8 @@
         </map:match>
                   
         <map:match pattern="page_image_library" type="step">
-          <map:generate src="{fallback:content/info/assets.xsp}" type="serverpages"/>
-          <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/pageassets2kupulibrary.xsl}">
+          <map:generate src="fallback://content/info/assets.xsp" type="serverpages"/>
+          <map:transform src="fallback://resources/kupu/apache-lenya/lenya/pageassets2kupulibrary.xsl">
             <map:parameter name="iconUrl" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
             <map:parameter name="resource-path-url" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-id}/"/>
           </map:transform>
@@ -201,7 +201,7 @@
         </map:match>
         
         <map:match pattern="*_library" type="step">
-          <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}_library.xml.jx}" type="jx"/>
+          <map:generate src="fallback://resources/kupu/apache-lenya/kupu/imagedrawer/{1}_library.xml.jx" type="jx"/>
           <map:serialize type="xml"/>
         </map:match>
         <!-- /Kupu Image Drawer -->  

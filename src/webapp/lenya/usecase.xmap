@@ -105,7 +105,7 @@
             <map:generate src="config/notification/notification.xconf"/>
           </map:otherwise>      
         </map:select>
-        <map:transform src="{fallback:lenya/xslt/notification/notification2message.xsl}">
+        <map:transform src="fallback://lenya/xslt/notification/notification2message.xsl">
           <map:parameter name="usecase" value="{2}"/>
         </map:transform>
         <map:serialize type="xml"/>
@@ -114,7 +114,7 @@
       <!-- notification/{publication-id}/{usecase}.xsl -->
       <map:match pattern="notification/*/*.xsl">
         <map:generate src="cocoon:/notification/{1}/{2}.xml"/>
-        <map:transform src="{fallback:lenya/xslt/notification/message2xslt.xsl}">
+        <map:transform src="fallback://lenya/xslt/notification/message2xslt.xsl">
           <map:parameter name="usecase" value="{2}"/>
           <map:parameter name="server-uri" value="http://{request:serverName}:{request:serverPort}"/>
           <map:parameter name="document-url" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
@@ -153,8 +153,8 @@
           
           <!-- show scheduler screen -->
           <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="{fallback:lenya/content/scheduler/screen.xsp}"/>
-            <map:transform src="{fallback:lenya/xslt/scheduler/screen.xsl}">
+            <map:generate type="serverpages" src="fallback://lenya/content/scheduler/screen.xsp"/>
+            <map:transform src="fallback://lenya/xslt/scheduler/screen.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/schedule.xsl"/>
@@ -177,8 +177,8 @@
           
           <map:match pattern="overview" type="step">
             <map:generate src="pubs/{../../1}/logs/tasks" type="directory"/>
-            <map:transform src="{fallback:lenya/xslt/logs/directory2html.xsl}"/>
-            <map:transform src="{fallback:lenya/xslt/util/page2xhtml.xsl}">
+            <map:transform src="fallback://lenya/xslt/logs/directory2html.xsl"/>
+            <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
             </map:transform>
             <map:serialize/>
@@ -190,9 +190,9 @@
               <map:parameter name="parameters" value="true"/>
               <map:generate src="pubs/{../../../1}/logs/tasks/{logfile}"/>
             </map:act>
-            <map:transform src="{fallback:lenya/xslt/logs/antlog2html.xsl}"/>
-            <map:transform src="{fallback:lenya/xslt/logs/antlog2page.xsl}"/>
-            <map:transform src="{fallback:lenya/xslt/util/page2xhtml.xsl}">
+            <map:transform src="fallback://lenya/xslt/logs/antlog2html.xsl"/>
+            <map:transform src="fallback://lenya/xslt/logs/antlog2page.xsl"/>
+            <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
             </map:transform>
             <map:serialize/>
@@ -206,8 +206,8 @@
         <!-- Submit -->
         <map:match pattern="submit" type="usecase">
           <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="{fallback:lenya/content/publishing/submit-screen.xsp}"/>
-            <map:transform src="{fallback:lenya/xslt/publishing/submit-screen.xsl}">
+            <map:generate type="serverpages" src="fallback://lenya/content/publishing/submit-screen.xsp"/>
+            <map:transform src="fallback://lenya/xslt/publishing/submit-screen.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/submit.xsl"/>
@@ -219,8 +219,8 @@
         <!-- Reject -->
         <map:match pattern="reject" type="usecase">
           <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="{fallback:lenya/content/publishing/reject-screen.xsp}"/>
-            <map:transform src="{fallback:lenya/xslt/publishing/reject-screen.xsl}">
+            <map:generate type="serverpages" src="fallback://lenya/content/publishing/reject-screen.xsp"/>
+            <map:transform src="fallback://lenya/xslt/publishing/reject-screen.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/reject.xsl"/>
@@ -233,8 +233,8 @@
         <map:match pattern="publish" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="{fallback:lenya/content/publishing/screen.xsp}"/>
-            <map:transform src="{fallback:lenya/xslt/publishing/publish-screen.xsl}">
+            <map:generate type="serverpages" src="fallback://lenya/content/publishing/screen.xsp"/>
+            <map:transform src="fallback://lenya/xslt/publishing/publish-screen.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/publish.xsl"/>
@@ -243,8 +243,8 @@
           </map:match>
           
           <map:match pattern="show-referenced-documents" type="step">
-            <map:generate src="{fallback:lenya/content/publishing/referenced-documents.xsp}" type="serverpages"/>
-            <map:transform type="xalan" src="{fallback:lenya/xslt/publishing/referenced-documents.xsl}">
+            <map:generate src="fallback://lenya/content/publishing/referenced-documents.xsp" type="serverpages"/>
+            <map:transform type="xalan" src="fallback://lenya/xslt/publishing/referenced-documents.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:serialize type="text"/>
@@ -267,8 +267,8 @@
         <map:match pattern="create" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="{fallback:lenya/content/authoring/create.xsp}"/>
-            <map:transform src="{fallback:lenya/xslt/authoring/create.xsl}">
+            <map:generate type="serverpages" src="fallback://lenya/content/authoring/create.xsp"/>
+            <map:transform src="fallback://lenya/xslt/authoring/create.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
@@ -282,8 +282,8 @@
                 <map:parameter name="task-id" value="create"/>
                 <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
               </map:act>
-              <map:generate type="serverpages" src="{fallback:lenya/content/authoring/create.xsp}"/>
-              <map:transform src="{fallback:lenya/xslt/authoring/create.xsl}">
+              <map:generate type="serverpages" src="fallback://lenya/content/authoring/create.xsp"/>
+              <map:transform src="fallback://lenya/xslt/authoring/create.xsl">
                 <map:parameter name="use-request-parameters" value="true"/>
               </map:transform>
               <map:call resource="style-cms-page"/>
@@ -298,8 +298,8 @@
         <map:match pattern="create-language" type="usecase">
 
           <map:match pattern="showscreen" type="step">
-            <map:generate type="serverpages" src="{fallback:lenya/content/authoring/create-language.xsp}"/>
-            <map:transform src="{fallback:lenya/xslt/authoring/create-language.xsl}">
+            <map:generate type="serverpages" src="fallback://lenya/content/authoring/create-language.xsp"/>
+            <map:transform src="fallback://lenya/xslt/authoring/create-language.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
@@ -429,7 +429,7 @@
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="form" value="{request-param:form}"/>
               </map:transform>
-              <map:transform src="{fallback:lenya/xslt/authoring/edit/form-layout.xsl}">
+              <map:transform src="fallback://lenya/xslt/authoring/edit/form-layout.xsl">
                 <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
                 <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
               </map:transform>
@@ -455,7 +455,7 @@
                   <map:parameter name="form" value="{request-param:form}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:transform>
-                <map:transform src="{fallback:lenya/xslt/authoring/edit/form-layout.xsl}">
+                <map:transform src="fallback://lenya/xslt/authoring/edit/form-layout.xsl">
                   <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
                   <map:parameter name="edit" value="{editSelect}"/>
                   <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
@@ -631,8 +631,8 @@
               <map:otherwise>
               </map:otherwise>
             </map:select>
-            <map:generate type="serverpages" src="{fallback:lenya/content/info/assets.xsp}"/>
-            <map:transform src="{fallback:lenya/xslt/authoring/asset.xsl}">
+            <map:generate type="serverpages" src="fallback://lenya/content/info/assets.xsp"/>
+            <map:transform src="fallback://lenya/xslt/authoring/asset.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
@@ -648,8 +648,8 @@
               <map:parameter name="task-id" value="{request-param:task-id}"/>
               <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=info-assets&amp;lenya.step=showscreen"/>
             </map:act>
-            <map:generate src="{fallback:lenya/content/authoring/asset.xsp}" type="serverpages"/>
-            <map:transform src="{fallback:lenya/xslt/authoring/asset.xsl}">
+            <map:generate src="fallback://lenya/content/authoring/asset.xsp" type="serverpages"/>
+            <map:transform src="fallback://lenya/xslt/authoring/asset.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
               <map:parameter name="error" value="true"/>
             </map:transform>
@@ -682,8 +682,8 @@
               <map:transform src="xslt/rc/rco-exception.xsl"/>
               <map:serialize/>
             </map:act>
-            <map:generate src="{fallback:lenya/content/authoring/asset.xsp}" type="serverpages"/>
-            <map:transform src="{fallback:lenya/xslt/authoring/asset.xsl}">
+            <map:generate src="fallback://lenya/content/authoring/asset.xsp" type="serverpages"/>
+            <map:transform src="fallback://lenya/xslt/authoring/asset.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
               <map:parameter name="error" value="true"/>
             </map:transform>
@@ -870,8 +870,8 @@
         <map:match pattern="deactivate" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:generate src="{fallback:lenya/content/info/deactivate.xsp}" type="serverpages"/>
-            <map:transform src="{fallback:lenya/xslt/info/deactivate.xsl}">
+            <map:generate src="fallback://lenya/content/info/deactivate.xsp" type="serverpages"/>
+            <map:transform src="fallback://lenya/xslt/info/deactivate.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/deactivate.xsl"/>

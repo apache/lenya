@@ -38,7 +38,7 @@
           <map:generate type="serverpages" src="../../content/rc/view.xsp">
           </map:generate>
           <map:transform src="../../xslt/rc/toDoc.xsl"/>
-        <map:transform src="{fallback:xslt/{../3}2xhtml.xsl}">
+        <map:transform src="fallback://xslt/{../3}2xhtml.xsl">
           <map:parameter name="rendertype" value="{1}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
         </map:transform>
@@ -49,8 +49,8 @@
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
       <map:match pattern="*/*/*/**.xml">
-        <map:generate src="{fallback:content/{2}/{4}.xml}"/>
-        <map:transform src="{fallback:xslt/{3}2xhtml.xsl}">
+        <map:generate src="fallback://content/{2}/{4}.xml"/>
+        <map:transform src="fallback://xslt/{3}2xhtml.xsl">
           <map:parameter name="rendertype" value="{1}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
         </map:transform>

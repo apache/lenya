@@ -5,5 +5,7 @@
 >
   
 <xsl:import href="page2xhtml.xsl"/>
-  
+<!--
+<xsl:import href="fallback://xslt/page2xhtml.xsl"/>
+-->
 </xsl:stylesheet>

@@ -21,7 +21,6 @@
 
   <map:components>
     <map:generators default="file"/>
-    <map:transformers default="xslt"/>
     <map:serializers default="html"/>
     <map:readers default="resource"/>
     <map:matchers default="wildcard"/>
@@ -208,7 +207,7 @@
     <!-- Search with Lucene -->
     <map:pipeline>
       <map:match pattern="*/search-*/lucene*">
-        <map:mount uri-prefix="" src="{fallback:lenya/lucene.xmap}" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="" src="fallback://lenya/lucene.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       <map:handle-errors>
         <map:select type="exception">
@@ -276,7 +275,7 @@
         <map:select type="request-parameter">
           <map:parameter name="parameter-name" value="uiml"/>
           <map:when test="xul">
-            <map:transform src="{fallback:lenya/xslt/menu/menu2xul.xsl}">
+            <map:transform src="fallback://lenya/xslt/menu/menu2xul.xsl">
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="publicationid" value="{1}"/>
               <map:parameter name="completearea" value="{2}"/>
@@ -290,7 +289,7 @@
             </map:transform>
           </map:when>
           <map:otherwise>
-            <map:transform src="{fallback:lenya/xslt/menu/menu2xhtml.xsl}">
+            <map:transform src="fallback://lenya/xslt/menu/menu2xhtml.xsl">
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="publicationid" value="{1}"/>
               <map:parameter name="completearea" value="{2}"/>
@@ -310,7 +309,7 @@
         <map:select type="request-parameter">
           <map:parameter name="parameter-name" value="uiml"/>
           <map:when test="xul">
-            <map:transform src="{fallback:lenya/xslt/menu/menu2xsltwithxul.xsl}">
+            <map:transform src="fallback://lenya/xslt/menu/menu2xsltwithxul.xsl">
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="publicationid" value="{1}"/>
               <map:parameter name="area" value="{2}"/>
@@ -318,7 +317,7 @@
             </map:transform>
           </map:when>
           <map:otherwise>
-            <map:transform src="{fallback:lenya/xslt/menu/menu2xslt.xsl}">
+            <map:transform src="fallback://lenya/xslt/menu/menu2xslt.xsl">
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="publicationid" value="{1}"/>
               <map:parameter name="area" value="{2}"/>
@@ -339,7 +338,7 @@
       
       <!-- menu-xml/{publication-id}/... -->
       <map:match pattern="menu-xml/*/**" internal-only="true">
-        <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="menu-xml/{1}/" src="fallback://menus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- navigation -->
@@ -349,7 +348,7 @@
 
       <!-- uri-parameter/{publication-id}/{parameter}/{area}/{uri} -->
       <map:match pattern="uri-parameter/*/*/*/**">
-        <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="{fallback:parameter-{2}.xmap}" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="fallback://parameter-{2}.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
       <!-- Access Control Policies -->
