@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.40 2003/11/29 00:14:25 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.41 2003/12/09 14:34:31 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -144,16 +144,23 @@
     <!-- Feeds -->
     <map:pipeline>
       <map:match pattern="*/feeds/*/index.xml">
-        <map:generate type="directory" src="content/{1}/entries">
-          <map:parameter name="depth" value="4"/>
-          <map:parameter name="reverse" value="true"/>
-        </map:generate>
-        <map:transform src="xslt/feed/xinclude.xsl">
-          <map:parameter name="feedid" value="{2}"/>
-        </map:transform>
-        <map:transform type="xlink">
-          <map:parameter name="href" value="content/{1}/dummy.xml"/>
-        </map:transform>
+        <map:act type="resource-exists">
+          <map:parameter name="url" value="content/{1}/entries"/>
+	
+          <map:generate type="directory" src="content/{../1}/entries">
+            <map:parameter name="depth" value="4"/>
+            <map:parameter name="reverse" value="true"/>
+          </map:generate>
+          <map:transform src="xslt/feed/xinclude.xsl">
+            <map:parameter name="feedid" value="{../2}"/>
+          </map:transform>
+          <map:transform type="xlink">
+            <map:parameter name="href" value="content/{../1}/dummy.xml"/>
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:act>
+
+        <map:generate src="content/{1}/feeds/all/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/feeds/*/lenya-page-body.xml">
@@ -209,9 +216,7 @@
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/archive.xml"/>
         <map:serialize type="html"/>
       </map:match>
-      <map:handle-errors type="500">
-        <map:serialize type="xml"/>
-      </map:handle-errors>
+      <map:handle-errors type="500"/>
     </map:pipeline>
 
   </map:pipelines>
