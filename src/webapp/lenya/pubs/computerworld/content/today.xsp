@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp">
+	<!--logic tag that identifies embedded logic in the page-->
+	<today>
+		<xsp:logic>Date genText = new Date();</xsp:logic>
+		<xsp:expr>genText</xsp:expr>
+	</today>
+</xsp:page>

@@ -15,11 +15,11 @@
 
 <!-- Replaces the html code of the editable section by the bitflux specific code -->
 <xsl:template match="*[@bxe-editable='small-preview']">
-	<preview contentEditable="true">
+	<small-preview contentEditable="true">
                 <xslout:for-each select="small-preview">
   			<xslout:apply-templates/>
                 </xslout:for-each>
-	</preview>
+	</small-preview>
 </xsl:template>
 
 <xsl:template match="small-preview">

@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
-<Articles>
-	<Article id="1">1 hier steht der titel</Article>
-</Articles>
+<articles>
+	<article id="1">titel vom 1</article>
+	<article id="2">titel vom 2</article>
+</articles>

@@ -85,7 +85,7 @@ style="background-image:url(/img/layout/trans1x1.gif)">
 width="300" height="11" alt="" /></td>
 <td align="right" valign="middle" height="18"
 style="background-image:url(/img/layout/trans1x1.gif)">
-<span class="txt-s-black">Montag, 9. Dezember
+<span class="txt-s-black"  id="today">Montag, 9. Dezember
 2002&#160;</span></td>
 </tr>
 </table>
@@ -159,8 +159,7 @@ height="20" /></td>
 
 <tr bgcolor="#000000">
 <td colspan="2" height="21" valign="middle"><span
-class="txt-m-white"><b><i>&#160;News vom (date
-today)</i></b></span></td>
+class="txt-m-white"><b><i>&#160;News vom <span id="today">date today</span></i></b></span></td>
 </tr>
 
 <span id="headlines" bxe-editable='headlines'>

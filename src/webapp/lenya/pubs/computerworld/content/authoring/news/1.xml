@@ -11,7 +11,7 @@
 		</media>
 	</head>
 	<body>
-		<p>1 hier kommt der lauftext.</p>
-		<p>1 mehrere absaetze sind moeglich.</p>
+		<para>1 hier kommt der lauftext.</para>
+		<para>1 mehrere absaetze sind moeglich.</para>
 	</body>
 </article>

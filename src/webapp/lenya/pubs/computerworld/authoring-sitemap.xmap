@@ -360,6 +360,7 @@
 		</map:pipeline>
 		<!-- Article Main -->
 		<map:pipeline>
+		<!--
 			<map:match pattern="*/index.html">
 				<map:aggregate element="wyona">
 					<map:part src="cocoon:/menus/{1}/article.xml"/>
@@ -375,7 +376,8 @@
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
 				<map:serialize type="html"/>
-			</map:match>
+			</map:match> 
+			-->
 			<!-- Detail Article view -->
 			<map:match pattern="news/**.html">
 				<map:aggregate element="wyona" label="gregor">

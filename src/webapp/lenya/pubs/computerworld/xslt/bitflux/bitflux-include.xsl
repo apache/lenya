@@ -7,19 +7,6 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml"
      because Bitflux can only handle elements with unique names
 -->
 
-<!-- Because there are two elements "block" in body and in related-content -->
-  <xsl:template match="related-content/block">
-	  <xsl:element name="rcblock">
-	  	<xsl:for-each select="@*">
-	        <xsl:copy/>
-	      </xsl:for-each>
-	 <xsl:call-template name="generateID"/>
-
-
-		<xsl:apply-templates/>
-	</xsl:element>
-	
-  </xsl:template>
 
 <!-- Images can only be displayed having the img tag -->
 <xsl:template match="media-reference">
@@ -30,28 +17,15 @@ xmlns:xhtml="http://www.w3.org/1999/xhtml"
         </xsl:for-each>
 
         <xsl:call-template name="generateID"/>
+        <xhtml:img src="/img/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
+<!--
         <xhtml:img src="{$url-back}/{@source}" bxe_temporaryelement="yes" bxe_internalid="yes" id="img_{generate-id()}">
-
+-->
 
             </xhtml:img>        
         <xsl:apply-templates />
     </xsl:copy>
 
 </xsl:template>  
-
-<!-- Because there are two elements called "title" in Dossier -->
-  <xsl:template match="head/title">
-          <xsl:element name="dos_title">
-                <xsl:for-each select="@*">
-                <xsl:copy/>
-              </xsl:for-each>
-         <xsl:call-template name="generateID"/>
-
-
-                <xsl:apply-templates/>
-        </xsl:element>
-
-  </xsl:template>
-
 
 </xsl:stylesheet>

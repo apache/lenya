@@ -592,7 +592,7 @@ border="0" /> </td>
 
   <xsl:template match="body">
     <body contentEditable="true">
-      <xsl:for-each select="p">
+      <xsl:for-each select=".">
         <xsl:apply-templates/>
       </xsl:for-each>
     </body>
