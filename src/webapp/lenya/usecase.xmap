@@ -12,6 +12,7 @@
     <map:actions>
       <map:action name="save" logger="sitemap.action.save" src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
       <map:action name="asset-upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.AssetUploadAction" />
+      <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
     </map:actions>
 
     <map:selectors>
@@ -21,9 +22,9 @@
         <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
         <exception class="org.apache.cocoon.ResourceNotFoundException" name="resourcenotfound"/>
         <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException"
-	  name="parent-node-not-found"/>
-<!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
-<!--         <exception class="org.apache.lenya.cms.publication.SiteTreeException" name="sitetree"/> -->
+          name="parent-node-not-found"/>
+        <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
+        <!--         <exception class="org.apache.lenya.cms.publication.SiteTreeException" name="sitetree"/> -->
       </map:selector>
     </map:selectors>
     
@@ -76,13 +77,13 @@
       </map:select>
       
     </map:resource>
-      
+    
     <map:resource name="cms-screen">
-    	<map:call resource="cms-screen-xml">
-    		<map:parameter name="publication-id" value="{publication-id}"/>
-    		<map:parameter name="serverpage" value="{serverpage}"/>
-    		<map:parameter name="stylesheet" value="{stylesheet}"/>
-    	</map:call>
+      <map:call resource="cms-screen-xml">
+        <map:parameter name="publication-id" value="{publication-id}"/>
+        <map:parameter name="serverpage" value="{serverpage}"/>
+        <map:parameter name="stylesheet" value="{stylesheet}"/>
+      </map:call>
       <map:call resource="style-cms-page"/>
     </map:resource>
     
@@ -98,34 +99,34 @@
     <!-- =================================================================== -->
     
     <map:pipeline>
-    	
-    	<!-- notification/{publication-id}/{usecase}.xml -->
-    	<map:match pattern="notification/*/*.xml">
-    		<map:select type="resource-exists">
-    			<map:when test="lenya/pubs/{1}/config/notification/notification.xconf">
+      
+      <!-- notification/{publication-id}/{usecase}.xml -->
+      <map:match pattern="notification/*/*.xml">
+        <map:select type="resource-exists">
+          <map:when test="lenya/pubs/{1}/config/notification/notification.xconf">
             <map:generate src="pubs/{1}/config/notification/notification.xconf"/>
-    			</map:when>
-    			<map:otherwise>
+          </map:when>
+          <map:otherwise>
             <map:generate src="config/notification/notification.xconf"/>
-    			</map:otherwise>	
-    		</map:select>
-    		<map:transform src="xslt/notification/notification2message.xsl">
-    			<map:parameter name="usecase" value="{2}"/>
-    		</map:transform>
-    		<map:serialize type="xml"/>
-    	</map:match>
-    	
-    	<!-- notification/{publication-id}/{usecase}.xsl -->
-    	<map:match pattern="notification/*/*.xsl">
-    		<map:generate src="cocoon:/notification/{1}/{2}.xml"/>
-    		<map:transform src="xslt/notification/message2xslt.xsl">
-    			<map:parameter name="usecase" value="{2}"/>
-    			<map:parameter name="server-uri" value="http://{request:serverName}:{request:serverPort}"/>
-    			<map:parameter name="document-url" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
-    		</map:transform>
-    		<map:serialize type="xml"/>
-    	</map:match>
-    	
+          </map:otherwise>      
+        </map:select>
+        <map:transform src="xslt/notification/notification2message.xsl">
+          <map:parameter name="usecase" value="{2}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- notification/{publication-id}/{usecase}.xsl -->
+      <map:match pattern="notification/*/*.xsl">
+        <map:generate src="cocoon:/notification/{1}/{2}.xml"/>
+        <map:transform src="xslt/notification/message2xslt.xsl">
+          <map:parameter name="usecase" value="{2}"/>
+          <map:parameter name="server-uri" value="http://{request:serverName}:{request:serverPort}"/>
+          <map:parameter name="document-url" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
     </map:pipeline>
     
     <!-- =================================================================== -->
@@ -139,18 +140,18 @@
         
         <!-- mount publication-specific usecase sitemap -->
         <map:match type="usecase" pattern="*">
-        <map:act src="pubs/{../1}/usecase-{1}.xmap" type="resource-exists">
-          <map:mount check-reload="true" reload-method="synchron" src="pubs/{../../1}/usecase-{../1}.xmap" uri-prefix="{../../1}"/>
-        </map:act>
+          <map:act src="pubs/{../1}/usecase-{1}.xmap" type="resource-exists">
+            <map:mount check-reload="true" reload-method="synchron" src="pubs/{../../1}/usecase-{../1}.xmap" uri-prefix="{../../1}"/>
+          </map:act>
         </map:match>
         
         <!-- Scheduler -->
         <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
         <map:match pattern="schedule" type="usecase">
-        	
-        	<!-- show scheduler screen -->
+          
+          <!-- show scheduler screen -->
           <map:match pattern="showscreen" type="step">
-          	<map:generate src="cocoon://scheduler/publication/{../../1}"/>
+            <map:generate src="cocoon://scheduler/publication/{../../1}"/>
             <map:transform src="xslt/scheduler/scheduler-page.xsl">
               <map:parameter name="context-prefix" value="{request:contextPath}"/>
               <map:parameter name="publication-id" value="{../../1}"/>
@@ -161,11 +162,11 @@
           </map:match>
           
           <!-- other steps: add job (redirect to page) -->
-         	<map:generate src="cocoon://scheduler/publication/{../1}"/>
-					<map:transform src="xslt/util/redirect.xsl">
-						<map:parameter name="url" value="{request:requestURI}"/>
-					</map:transform>
-					<map:serialize/>
+          <map:generate src="cocoon://scheduler/publication/{../1}"/>
+          <map:transform src="xslt/util/redirect.xsl">
+            <map:parameter name="url" value="{request:requestURI}"/>
+          </map:transform>
+          <map:serialize/>
           
         </map:match>
         
@@ -312,121 +313,123 @@
           </map:match>
           
           <map:match pattern="create" type="step">
-            <map:act type="task">
-              <map:parameter name="task-id" value="create"/>
-              <!-- if the action suceeds redirect to the requestURI -->
-              <map:redirect-to uri="{request:requestURI}"/>
+            <!-- Make sure the child-id doesn't exist yet -->
+            <map:act type="document-id-exists">
+              <map:parameter name="document-id" value="{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}"/>
+              <map:act type="task">
+                <map:parameter name="task-id" value="create"/>
+                <map:redirect-to uri="{request:requestURI}"/>
+              </map:act>
+              <map:call resource="cms-screen">
+                <map:parameter name="publication-id" value="{../../1}"/>
+                <map:parameter name="serverpage" value="authoring/create.xsp"/>
+                <map:parameter name="stylesheet" value="authoring/create.xsl"/>
+              </map:call>
             </map:act>
-            <!-- otherwise the action could not validate some of the -->
-            <!-- input and we present the upload form again -->
-            <map:call resource="cms-screen">
-              <map:parameter name="publication-id" value="{../../1}"/>
-              <map:parameter name="serverpage" value="authoring/create.xsp"/>
-              <map:parameter name="stylesheet" value="authoring/create.xsl"/>
-            </map:call>
+            <map:redirect-to uri="{request:requestURI}?lenya.usecase=create&amp;lenya.step=showscreen&amp;status=duplicate-id"/>
           </map:match>
           
         </map:match>
-	
+        
 
 
-      <!-- ************************************************************** -->
-      <!-- ** HTML Form Editor                                         ** -->
-      <!-- **                                                          ** -->
-      <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
-      <!-- **       publication specific DocumentIdToPathMapper which  ** -->
-      <!-- **       is configured within config/publication.xconf      ** -->
-      <!-- ************************************************************** -->
-      <map:match pattern="edit" type="usecase">
-        <map:match pattern="open" type="step">
-          <map:match pattern="*/authoring/**.html">
-            <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-            <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
-            <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-              <map:parameter name="source" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
-            </map:transform>
-            <map:transform type="write-source"/>
-            <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
-            <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
-              <map:parameter name="docid" value="{page-envelope:document-path}"/>
-              <map:parameter name="doctype" value="{request-param:doctype}"/>
-            </map:transform>
-            <map:serialize type="html" />
-          </map:match>
-        </map:match>
-
-        <map:match pattern="close" type="step">
-          <map:match pattern="*/authoring/**.html">
-            <map:act type="save">
-              <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
-
-              <!-- Continue editing: Insert, Delete, etc. -->
-              <map:generate src="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
-              <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
-
+        <!-- ************************************************************** -->
+        <!-- ** HTML Form Editor                                         ** -->
+        <!-- **                                                          ** -->
+        <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
+        <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+        <!-- **       is configured within config/publication.xconf      ** -->
+        <!-- ************************************************************** -->
+        <map:match pattern="edit" type="usecase">
+          <map:match pattern="open" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
               <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
               <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-                <map:parameter name="source" value="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
+                <map:parameter name="source" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
               </map:transform>
               <map:transform type="write-source"/>
               <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
-
-              <map:transform src="pubs/{../1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
+              <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="doctype" value="{request-param:doctype}"/>
-                <map:parameter name="message" value="{message}"/>
               </map:transform>
               <map:serialize type="html" />
-            </map:act>
+            </map:match>
+          </map:match>
 
-            <!-- Stop Editing: Save and Cancel -->
-            <map:generate src="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
-            <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
+          <map:match pattern="close" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:act type="save">
+                <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
 
-            <!-- Save: Overwrite original file (FIXME: Cancel should not overwrite original file) -->
-            <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-              <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-            </map:transform>
-            <map:transform type="write-source"/>
-            <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-              <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
-            </map:transform>
-            <map:serialize type="html" />
+                <!-- Continue editing: Insert, Delete, etc. -->
+                <map:generate src="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
+                <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
+
+                <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
+                <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+                  <map:parameter name="source" value="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
+                </map:transform>
+                <map:transform type="write-source"/>
+                <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
+
+                <map:transform src="pubs/{../1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
+                  <map:parameter name="docid" value="{page-envelope:document-path}"/>
+                  <map:parameter name="doctype" value="{request-param:doctype}"/>
+                  <map:parameter name="message" value="{message}"/>
+                </map:transform>
+                <map:serialize type="html" />
+              </map:act>
+
+              <!-- Stop Editing: Save and Cancel -->
+              <map:generate src="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
+              <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
+
+              <!-- Save: Overwrite original file (FIXME: Cancel should not overwrite original file) -->
+              <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+                <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+              </map:transform>
+              <map:transform type="write-source"/>
+              <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+                <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
+              </map:transform>
+              <map:serialize type="html" />
+            </map:match>
           </map:match>
         </map:match>
-      </map:match>
-      <!-- ************************************************************** -->
-      <!-- ********  /HTML Form Editor *********************************** -->
-      <!-- ************************************************************** -->
+        <!-- ************************************************************** -->
+        <!-- ********  /HTML Form Editor *********************************** -->
+        <!-- ************************************************************** -->
 
-	<!-- This matcher is very specific for unipublic and should -->
-	<!-- probably go away -->
-	<map:match pattern="upload" type="usecase">
+        <!-- This matcher is very specific for unipublic and should -->
+        <!-- probably go away -->
+        <map:match pattern="upload" type="usecase">
 
-	  <map:match pattern="showscreen" type="step">
-	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
-	    <map:transform src="xslt/authoring/upload-image.xsl"/>
-	    <map:serialize/>
-	  </map:match>
+          <map:match pattern="showscreen" type="step">
+            <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
+            <map:transform src="xslt/authoring/upload-image.xsl"/>
+            <map:serialize/>
+          </map:match>
 
-	  <map:match type="step" pattern="showteaserscreen">
-	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
-	    <map:transform src="xslt/authoring/upload-teaserimage.xsl"/>
-	    <map:serialize/>
-	  </map:match>
+          <map:match type="step" pattern="showteaserscreen">
+            <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
+            <map:transform src="xslt/authoring/upload-teaserimage.xsl"/>
+            <map:serialize/>
+          </map:match>
 
-	  <map:match type="step" pattern="upload">
-	    <map:act type="file-upload">
-	      <map:redirect-to uri="{request:requestURI}"/>
-	    </map:act>
-	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
-	    <map:transform src="xslt/authoring/upload-image.xsl"/>
-	    <map:serialize/>
-	  </map:match>
-	</map:match>
+          <map:match type="step" pattern="upload">
+            <map:act type="file-upload">
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
+            <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
+            <map:transform src="xslt/authoring/upload-image.xsl"/>
+            <map:serialize/>
+          </map:match>
+        </map:match>
 
-	<!-- This is the generic asset upload matcher and should be -->
-	<!-- used for all publiations --> 
+        <!-- This is the generic asset upload matcher and should be -->
+        <!-- used for all publiations --> 
         <map:match pattern="asset" type="usecase">
 
           <map:match pattern="showscreen" type="step">
@@ -454,10 +457,10 @@
           <map:match pattern="upload-and-insert" type="step">
             <map:act type="asset-upload">
               <map:parameter name="task-id" value="{request-param:task-id}"/>
-	      <map:act type="task">
-		<map:parameter name="task-id" value="{request-param:task-id}"/>
-		<map:redirect-to session="true" uri="{request:requestURI}"/>
-	      </map:act>
+              <map:act type="task">
+                <map:parameter name="task-id" value="{request-param:task-id}"/>
+                <map:redirect-to session="true" uri="{request:requestURI}"/>
+              </map:act>
             </map:act>
           </map:match>
 
@@ -546,8 +549,8 @@
             </map:act>
           </map:match>
 
-	</map:match>
-          
+        </map:match>
+        
         
         <!-- Info area use cases start here -->
         
@@ -614,7 +617,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/archive.xsp" type="serverpages"/>
             <map:transform src="xslt/info/archive.xsl">
-            	<map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -633,7 +636,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/restore.xsp" type="serverpages"/>
             <map:transform src="xslt/info/restore.xsl">
-            	<map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -693,7 +696,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/deactivate.xsp" type="serverpages"/>
             <map:transform src="xslt/info/deactivate.xsl">
-            	<map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/deactivate.xsl"/>
             <map:call resource="style-cms-page"/>
@@ -713,7 +716,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/delete.xsp" type="serverpages"/>
             <map:transform src="xslt/info/delete.xsl">
-            	<map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -821,14 +824,14 @@
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:act>
         </map:match>
-          
+        
       </map:match>
       
       <map:handle-errors type="500">
         <map:select type="exception">
           <map:when test="parent-node-not-found">
-	    <map:transform src="xslt/exception/parent-node-not-found.xsl"/>
-	    <map:call resource="style-cms-page"/>
+            <map:transform src="xslt/exception/parent-node-not-found.xsl"/>
+            <map:call resource="style-cms-page"/>
           </map:when>
         </map:select>
         <map:serialize type="html"/>
