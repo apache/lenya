@@ -15,32 +15,32 @@
         "http://apache.org/cocoon/lenya/sitetree/1.0
         ../../resources/entities/sitetree.xsd">
     
-  <node id="index">
+  <node id="index" href="index.html">
     <label xml:lang="en">Home</label>
     <label xml:lang="de">Home</label>
   </node>
   
-  <node id="users">
+  <node id="users" href="users.html">
     <label xml:lang="en">Users</label>
     <label xml:lang="de">Users</label>
   </node>
 
-  <node id="groups">
+  <node id="groups" href="groups.html">
     <label xml:lang="en">Groups</label>
     <label xml:lang="de">Groups</label>
   </node>
   
-  <node id="ipranges">
+  <node id="ipranges" href="ipranges.html">
     <label xml:lang="en">IP Ranges</label>
     <label xml:lang="de">IP Ranges</label>
   </node>
   
-  <node id="content">
+  <node id="content" href="content.html">
     <label xml:lang="en">Content</label>
     <label xml:lang="de">Content</label>
   </node>
 
-  <node id="status">
+  <node id="status" href="status.html">
     <label xml:lang="en">Cocoon and Server Status</label>
     <label xml:lang="de">Cocoon and Server Status</label>
   </node>
