@@ -1,5 +1,5 @@
 /*
- * $Id: Main.java,v 1.6 2003/03/07 15:30:37 michi Exp $
+ * $Id: Main.java,v 1.7 2003/03/27 13:25:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,14 +46,11 @@ package org.lenya.lucene;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.Iterator;
-
-
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class Main {
     /**

@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLDocument.java,v 1.14 2003/03/18 07:43:42 michi Exp $
+ * $Id: HTMLDocument.java,v 1.15 2003/03/27 13:25:40 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,6 @@ package org.lenya.lucene;
 import org.apache.lucene.document.*;
 
 import org.lenya.lucene.html.HTMLParser;
-import org.lenya.lucene.html.HtmlDocument;
 
 import java.io.*;
 

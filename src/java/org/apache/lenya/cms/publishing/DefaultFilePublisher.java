@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.10 2003/03/19 14:26:11 egli Exp $
+ * $Id: DefaultFilePublisher.java,v 1.11 2003/03/27 13:25:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,7 +44,6 @@
 package org.lenya.cms.publishing;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.excalibur.io.FileUtil;
 
 import org.apache.log4j.Category;
 import org.lenya.cms.task.ExecutionException;

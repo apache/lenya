@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.17 2003/03/18 07:39:26 michi Exp $
+ * $Id: EditorMainAction.java,v 1.18 2003/03/27 13:25:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -56,7 +56,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.Source;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.xml.AbstractXMLConsumer;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -75,7 +74,7 @@ import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
 
 /**
- * $Id: EditorMainAction.java,v 1.17 2003/03/18 07:39:26 michi Exp $
+ * $Id: EditorMainAction.java,v 1.18 2003/03/27 13:25:39 gregor Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22

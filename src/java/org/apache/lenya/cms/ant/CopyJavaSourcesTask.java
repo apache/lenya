@@ -1,5 +1,5 @@
 /*
- * $Id: CopyJavaSourcesTask.java,v 1.5 2003/03/07 15:30:36 michi Exp $
+ * $Id: CopyJavaSourcesTask.java,v 1.6 2003/03/27 13:25:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,11 +46,9 @@ import org.apache.tools.ant.types.Path;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.StringTokenizer;
 

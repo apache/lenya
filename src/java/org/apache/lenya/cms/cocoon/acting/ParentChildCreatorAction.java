@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorAction.java,v 1.26 2003/03/06 20:45:41 gregor Exp $
+ * $Id: ParentChildCreatorAction.java,v 1.27 2003/03/27 13:25:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,11 +43,7 @@
  */
 package org.lenya.cms.cocoon.acting;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;

@@ -1,5 +1,5 @@
 /*
- * $Id: ResourcePublishingEnvironment.java,v 1.1 2003/03/19 14:26:11 egli Exp $
+ * $Id: ResourcePublishingEnvironment.java,v 1.2 2003/03/27 13:25:39 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,13 +43,10 @@
  */
 package org.lenya.cms.publishing;
 
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Category;
 
-import java.io.File;
 
 
 /**
