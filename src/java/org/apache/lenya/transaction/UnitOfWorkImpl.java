@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.lenya.ac.Identity;
 
 /**
  * Default implementation of a unit of work.
@@ -103,6 +104,22 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             Transactionable t = (Transactionable) i.next();
             t.delete();
         }
+    }
+    
+    private Identity identity;
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#getIdentity()
+     */
+    public Identity getIdentity() {
+        return this.identity;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#setIdentity(org.apache.lenya.ac.Identity)
+     */
+    public void setIdentity(Identity identity) {
+        this.identity = identity;
     }
 
 }

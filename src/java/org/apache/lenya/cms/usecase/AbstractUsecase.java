@@ -29,7 +29,11 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.transaction.AbstractOperation;
 
@@ -414,6 +418,10 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         super.initialize();
         this.documentIdentityMap = new DocumentIdentityMap(this.manager, getLogger());
         getUnitOfWork().addIdentityMap(this.documentIdentityMap);
+        Request request = ContextHelper.getRequest(this.context);
+        Session session = request.getSession(true);
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        getUnitOfWork().setIdentity(identity);
     }
 
     /**

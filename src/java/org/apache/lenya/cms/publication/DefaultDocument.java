@@ -32,9 +32,12 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.History;
@@ -501,40 +504,69 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.transaction.Transactionable#checkin()
      */
     public void checkin() throws TransactionException {
-        // TODO Auto-generated method stub
+        checkin(true);
+    }
+    
+    protected void checkin(boolean backup) throws TransactionException {
+        try {
+            String fileName = getFile().getCanonicalPath();
+            String userName = getUserName();
+            getRevisionController().reservedCheckIn(fileName, userName, backup);
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
+    }
 
+    /**
+     * @return The username of the unit of work's identity.
+     */
+    protected String getUserName() {
+        String userName = null;
+        User user = getIdentityMap().getUnitOfWork().getIdentity().getUser();
+        if (user != null) {
+            userName = user.getName();
+        }
+        return userName;
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkout()
      */
     public void checkout() throws TransactionException {
-        // TODO Auto-generated method stub
-
+        try {
+            String fileName = getFile().getCanonicalPath();
+            String userName = getUserName();
+            getRevisionController().reservedCheckOut(fileName, userName);
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
      */
     public boolean isCheckedOut() throws TransactionException {
-        // TODO Auto-generated method stub
-        return false;
+        try {
+            String fileName = getFile().getCanonicalPath();
+            String userName = getUserName();
+            return !getRevisionController().canCheckOut(fileName, userName);
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws TransactionException {
-        // TODO Auto-generated method stub
-
+        checkout();
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#unlock()
      */
     public void unlock() throws TransactionException {
-        // TODO Auto-generated method stub
-
+        checkin(false);
     }
 
     /**
@@ -578,6 +610,28 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.transaction.Transactionable#create()
      */
     public void create() throws TransactionException {
+    }
+
+    private RevisionController revisionController;
+
+    protected RevisionController getRevisionController() throws TransactionException {
+        if (this.revisionController == null) {
+            try {
+                String publicationPath = getPublication().getDirectory().getCanonicalPath();
+                RCEnvironment rcEnvironment = RCEnvironment.getInstance(getPublication()
+                        .getServletContext().getCanonicalPath());
+                String rcmlDirectory = publicationPath + File.separator
+                        + rcEnvironment.getRCMLDirectory();
+                String backupDirectory = publicationPath + File.separator
+                        + rcEnvironment.getBackupDirectory();
+
+                this.revisionController = new RevisionController(rcmlDirectory, backupDirectory,
+                        publicationPath);
+            } catch (IOException e) {
+                throw new TransactionException(e);
+            }
+        }
+        return this.revisionController;
     }
 
 }

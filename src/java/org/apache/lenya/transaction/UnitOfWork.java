@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.transaction;
 
+import org.apache.lenya.ac.Identity;
+
 /**
  * This is a "Unit of Work" object (see "Unit of Work" pattern by Martin Fowler, 
  * <a href="http://www.martinfowler.com/eaaCatalog/unitOfWork.html">
@@ -70,4 +72,14 @@ public interface UnitOfWork {
      * @throws TransactionException if an error occurs.
      */
     void commit() throws TransactionException;
+    
+    /**
+     * @return The identity.
+     */
+    Identity getIdentity();
+    
+    /**
+     * @param identity The identity.
+     */
+    void setIdentity(Identity identity);
 }
