@@ -1,5 +1,5 @@
 /*
-$Id: ArticleImageUploadCreatorAction.java,v 1.35 2003/07/04 13:15:47 egli Exp $
+$Id: ArticleImageUploadCreatorAction.java,v 1.36 2003/07/04 15:53:14 egli Exp $
 <License>
 
  ============================================================================
@@ -68,7 +68,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.servlet.multipart.Part;
 
-import org.apache.excalibur.source.Source;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -196,12 +197,11 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
         Request request = ObjectModelHelper.getRequest(objectModel);
         Context context = ObjectModelHelper.getContext(objectModel);
 
-        // find the absolute path (so we know where to put images and
-        // meta data)
-        Source inputSource = resolver.resolveURI("");
-        String sitemapPath = inputSource.getURI();
-        sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
-        getLogger().debug("sitemapPath: " + sitemapPath);
+        PageEnvelope pageEnvelope =
+            PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        String publicationPath =
+            pageEnvelope.getPublication().getDirectory().getAbsolutePath();
+        getLogger().debug("sitemapPath: " + publicationPath);
 
         Properties properties = new Properties(default_properties);
         byte[] buf = new byte[4096];
@@ -312,9 +312,9 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
         }
 
         String imagePath =
-            getImagePath(sitemapPath, recourcesRoot, documentId, fileName);
+            getImagePath(publicationPath, recourcesRoot, documentId, fileName);
 
-        getLogger().debug("sitemapPath: " + sitemapPath);
+        getLogger().debug("sitemapPath: " + publicationPath);
         getLogger().debug("imagePath: " + imagePath);
 
         File dir = (new File(imagePath)).getParentFile();
@@ -336,28 +336,11 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
             read = in.read(buf);
         }
 
-        /*
-                    if (obj instanceof FilePartFile) {
-                        ((FilePartFile) obj).getFile().renameTo(new File(imagePath));
-                    } else {
-                        FileOutputStream out = new FileOutputStream(imagePath);
-                        InputStream in = ((FilePart) obj).getInputStream();
-                        int read = in.read(buf);
-        
-                        while (read > 0) {
-                            out.write(buf, 0, read);
-                            read = in.read(buf);
-                        }
-        
-                        out.close();
-                    }
-        */
-
         // create an extra file containing the meta description for
         // the image.
         String metaDataFilePath =
             getMetaDataPath(
-                sitemapPath,
+                publicationPath,
                 metaRoot,
                 documentId,
                 fileName + ".meta");
@@ -366,7 +349,10 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
         // insert <media> tags at the location sepecified by the
         // cpath in the original document (the referer)
         insertMediaTag(
-            sitemapPath + docsRoot + File.separator + documentId,
+	    // FIXME: the appending of "xml" is a gross hack which
+	    // only works for unipublic and needs to be solved
+	    // properly with the documentIdToPathMapper.
+            publicationPath + File.separator + docsRoot + File.separator + documentId + ".xml",
             imageXPath,
             fileName,
             dublinCoreParams);
@@ -375,10 +361,10 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
     }
 
     /**
-     * Describe <code>createMetaData</code> method here.
+     * Create the meta data file given the dublin core parameters.
      *
-     * @param metaDataFilePathName a <code>String</code> value
-     * @param dublinCoreParams a <code>HashMap</code> value
+     * @param metaDataFilePathName the file name where the meta data file is to be created
+     * @param dublinCoreParams a <code>Map</code> containing the dublin core values
      *
      * @exception IOException if an error occurs
      */
@@ -396,7 +382,7 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
             String tagValue = (String) dublinCoreParams.get(tagName);
             root.addElement(tagName).addText(tagValue);
         }
-
+	
         File parentDir = (new File(metaDataFilePathName)).getParentFile();
 
         if (!parentDir.exists()) {
@@ -431,8 +417,8 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
         // read the document
         SAXReader reader = new SAXReader();
 
-        Document document = reader.read(requestingDocumentPath);
         getLogger().debug("insertMediaTag:" + requestingDocumentPath);
+        Document document = reader.read(requestingDocumentPath);
 
         // create the media element
         Element mediaTag = DocumentHelper.createElement("media");
