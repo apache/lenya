@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.2 2003/06/10 13:05:36 gregor Exp $
+ $Id: rename.xsl,v 1.3 2003/06/10 17:10:19 gregor Exp $
  -->
 
 
@@ -34,7 +34,7 @@
     <form method="post">
       <xsl:attribute name="action"></xsl:attribute>
       <p>
-	Rename <xsl:value-of select="documentid"/> to 
+	Rename <xsl:value-of select="document-id"/> to 
       </p>
       <input type="text" name="name" value=""/>
       <input type="submit" value="Rename"/>

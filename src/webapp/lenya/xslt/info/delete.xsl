@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: delete.xsl,v 1.2 2003/06/10 13:05:36 gregor Exp $
+ $Id: delete.xsl,v 1.3 2003/06/10 17:10:19 gregor Exp $
  -->
 
 
@@ -34,7 +34,7 @@
     <form method="post">
       <xsl:attribute name="action"></xsl:attribute>
       <p>
-	Do you really want to delete <xsl:value-of select="documentid"/>?
+	Do you really want to delete <xsl:value-of select="document-id"/>?
       </p>
       <input type="submit" value="Delete"/>
       <input type="submit" value="Cancel"/>

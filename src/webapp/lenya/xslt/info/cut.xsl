@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: cut.xsl,v 1.2 2003/06/10 13:05:36 gregor Exp $
+ $Id: cut.xsl,v 1.3 2003/06/10 17:10:19 gregor Exp $
  -->
 
 
@@ -34,7 +34,7 @@
     <form method="post">
       <xsl:attribute name="action"></xsl:attribute>
       <p>
-	Do you really want to cut <xsl:value-of select="documentid"/>? It will be placed on the clipboard,
+	Do you really want to cut <xsl:value-of select="document-id"/>? It will be placed on the clipboard,
 	ready to be pasted at the location of your choosing.
       </p>
       <input type="submit" value="Cut"/>
