@@ -16,10 +16,6 @@
         <live href="docs/publication/live/"/>
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
-<!--
-        <tree-authoring href="docs/cms/authoring/tree.xml"/>
-        <tree-live href="docs/cms/live/tree.xml"/>
--->
       </map:action>
     </map:actions>
     <map:selectors default="browser">
