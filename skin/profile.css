@@ -35,6 +35,7 @@ a.external  {
 }
   
   
+  
 #top          { background-color: #ffffff;}  
  
 #top .header .current { background-color: #E5E4D9;} 
@@ -47,24 +48,24 @@ a.external  {
 #tabs li a:visited { color: #000000; }
 #tabs li a:hover { color: #000000; }
 
-#level2tabs       { background-color: #E5E4D9 ;} 
+#level2tabs       { background-color: #000000 ;} 
 #level2tabs a:link {  color: #000000;  }
 #level2tabs a:visited { color: #000000; }
 #level2tabs a:hover { color: #000000; }
 
 .heading { background-color: #E5E4D9;} 
 
-.boxed { background-color: #E5E4D9;} 
-.underlined_5 	{border-bottom: solid 5px #E5E4D9;}
-.underlined_10 	{border-bottom: solid 10px #E5E4D9;}
+.boxed { background-color: #000000;} 
+.underlined_5 	{border-bottom: solid 5px #000000;}
+.underlined_10 	{border-bottom: solid 10px #000000;}
 table caption { 
-background-color: #E5E4D9; 
-color: #000000;
+background-color: #000000; 
+color: #ffffff;
 }
 
 #publishedStrip { 
-color: #FFFFFF;
-background: #E5E4D9; 
+color: #ffffff;
+background: #000000; 
 }
 
 #publishedStrip { 
