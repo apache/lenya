@@ -411,16 +411,21 @@ width="24" height="16" border="0" /></td>
 
 
 <!--
+<xsl:template name="body">
+BODY
+</xsl:template>
+
 <xsl:template name="html-title">
 OSCOM - Open Source Content Management
 </xsl:template>
--->
 
-<!--
 <xsl:template name="admin-url">
 <xsl:param name="prefix"/>
 <a class="breadcrumb"><xsl:attribute name="href"><xsl:value-of select="$prefix"/>/matrix/index.html</xsl:attribute>Lenya</a>
 </xsl:template>
 -->
+
+
+
 
 </xsl:stylesheet>

@@ -4,7 +4,7 @@
 
 <xi:include href="navigation.xml"/>
 
-<xi:include href="home.xml#xpointer(/home/html)"/>
+<body xlink:href="home.xml#xpointer(/home/html)" xlink:show="embed" xmlns:xlink="http://www.w3c.org/2002/xmlns/xlink"/>
 <!--
 <xi:include href="home.xml#xpointer(/home/about)"/>
 <xi:include href="home.xml#xpointer(/home/features)"/>
@@ -17,6 +17,7 @@
     <xi:include href="/news.rss" xml:base="cocoon:"/>
   </lenyasite>
 -->
+<!--
   <cmsinfosite name="OSCOM Blog">
     <xi:include href="rss-rdf/oscom.rdf"/>
   </cmsinfosite>
@@ -29,6 +30,7 @@
   <site name="CMSWatch">
     <xi:include href="rss-rdf/cmswatch.xml"/>
   </site>
+-->
 </news>
 
 </oscom>

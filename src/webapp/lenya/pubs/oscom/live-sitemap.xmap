@@ -233,6 +233,9 @@
       <map:match pattern="**.xml">
         <map:generate type="file-nolabel" src="content/{1}.xml"/>
         <map:transform type="xinclude"/>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="content/{1}.xml"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       <!-- /XML -->

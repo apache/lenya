@@ -3,7 +3,6 @@
 <home>
 <html>
 <body>
-<font face="verdana">
 <!--
 <a href="conferences/berkeley2002/index.html"><img src="images/banner.gif" border="0"/></a>
 <br />
@@ -25,6 +24,7 @@ We want to show the world that there are already great and easy-to-use
 open source content management solutions out there.
 </p>
 
+<!--
 <h3>Third Open Source Content Management Conference</h3>
 <p>
 Due to the great success of the first and second conference
@@ -60,7 +60,7 @@ Swiss Federal Institute of Technology (<a href="http://www.ethz.ch">ETH</a>), Z&
 The presentations can be downloaded from <a href="http://www.oscom.org/conferences/zurich2002/agenda.html">here</a>.
 Peace and respects to everyone who helped to organize and attended the conference.
 </p>
-</font>
+-->
 </body>
 </html>
 

@@ -90,45 +90,6 @@ For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing l
 </xsl:template>
 
 <xsl:template match="related-content">
- <table cellpadding="0" cellspacing="0" border="0" width="150">
-<!--
-  <tr>
-    <td bgcolor="{$tablecolor}">&#160;</td>
-    <td bgcolor="{$tablecolor}">
-      <p>
-        <font face="verdana" color="white">
-        Related Links
-        </font>
-      </p>
-    </td>
-  </tr>
--->
-  <tr>
-    <td>&#160;</td>
-<td>
-<font face="verdana" size="-2">
-<div class="nnbe" style="padding-left: 10px;"><a class="nnbr" target="_blank" href="http://www.cms-list.org">cms-list</a></div>
-<br/><br/>
-<a target="_blank" href="http://www.cmsinfo.org">cmsinfo.org</a>
-<br/><br/>
-<a target="_blank" href="http://www.cmswatch.com/ContentManagement/Products/">CMS Watch</a>
-<br/><br/>
-<a target="_blank" href="http://www.contentmanager.eu.com/links/a4.htm">contentmanagement.eu.com</a>
-<br/><br/>
-<a target="_blank" href="http://www.contentmanager.de/itguide/produktvergleich_cms_opensource.html">contentmanager.de</a>
-<br/><br/>
-<a target="_blank" href="http://www.content-wire.com">Content-Wire</a>
-<br/><br/>
-<a target="_blank" href="http://www.clueful.com.au/cgi-bin/cmsdirectory/browse/Products%3aFree%20systems">Clueful Consulting</a>
-<br/><br/>
-<a target="_blank" href="http://www.steptwo.com.au/cm/vendors/list/index.html">Step Two</a>
-</font>
-</td>
-  </tr>
- </table>
-</xsl:template>
-
-<xsl:template match="related-content">
  <table cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td>&#160;</td>
@@ -163,6 +124,14 @@ For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing l
 
 <div class="nnbe" style="padding-left: 10px;">
 <a class="nnbr" target="_blank" href="http://www.steptwo.com.au/cm/vendors/list/index.html">Step Two</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.la-grange.net/cms">La-Grange.Net</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.cmsreview.com/cmslisting.html">CMS Review</a>
 </div>
 
 </td>
