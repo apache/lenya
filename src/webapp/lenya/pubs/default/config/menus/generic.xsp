@@ -184,8 +184,8 @@
               &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
               &amp;&amp; Publication.AUTHORING_AREA.equals(area)
               &amp;&amp; !"/index".equals(<input:get-attribute module="sitetree" as="string" name="document-id"/>)) {
-            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=up</xsp:attribute><i18n:text>Move up</i18n:text></item>
-            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=down</xsp:attribute><i18n:text>Move down</i18n:text></item>
+            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=up</xsp:attribute><i18n:text>Move Up</i18n:text></item>
+            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=down</xsp:attribute><i18n:text>Move Down</i18n:text></item>
           }
           else {
             <item><i18n:text>Move Up</i18n:text></item>
