@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+  <header>
+    <title>Namespaces</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+    </authors>
+  </header>
+  <body>
+  
+<section><title>Namespaces Used in Lenya</title>
+
+<dl>
+
+<dt>http://www.lenya.org/2003/cms-page</dt>
+<dd>The layout of a CMS page.</dd>
+
+<dt>http://www.lenya.org/2002/sch</dt>
+<dd>Scheduler data.</dd>
+
+</dl>
+
+</section>
+  </body>
+</document>
