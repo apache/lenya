@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.10 2004/05/14 23:53:28 michi Exp $ -->
+<!-- $Id: dist-build.xml,v 1.11 2004/05/24 10:10:35 roku Exp $ -->
 
 <project name="dist">
 
@@ -23,8 +23,10 @@
     Distribution Targets
   </description>
 
+  <target name="dist" depends="clean,dist-src,dist-bin" description="Build all distribution relevant tarballs"/>
+
   <!--
-  The dist target prepares the binary distribution tarball for
+  This target prepares the binary distribution tarball for
   end users. It forces a complete rebuild of everything through its
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
@@ -68,7 +70,7 @@
   </target>
 
   <!--
-  The dist target prepares the binary distribution tarball for
+  This target prepares the binary distribution tarball for
   end users. It forces a complete rebuild of everything through its
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
@@ -120,7 +122,7 @@
 
 
   <!--
-  The dist target prepares the binary distribution tarball for
+  This target prepares the source distribution tarball for
   end users. It forces a complete rebuild of everything through its
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
