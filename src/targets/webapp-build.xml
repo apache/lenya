@@ -84,11 +84,11 @@
         property="${cocoon.xconf.md5}"
         verifyProperty="cocoon.xconf.isEqual"/>
     <condition property="cocoon.xconf.copy">
-      <istrue value="${cocoon.xconf.isEqual}"/>
+      <isfalse value="${cocoon.xconf.isEqual}"/>
     </condition>
     <antcall target="copy-cocoon.xconf"/>
-    <antcall target="delete-cocoon.xconf.ant_patch"/>
-            
+    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
+             
     <!-- Patch web.xml -->
     <!--
     <echo>INFO: Patch web.xml</echo>
@@ -193,11 +193,6 @@
     <copy
        file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
        toFile="${build.webapp}/WEB-INF/cocoon.xconf"/>
-  </target>
-  <!-- ... or delete patch file -->
-  <target name="delete-cocoon.xconf.ant_patch" unless="cocoon.xconf.copy">
-    <echo>INFO: Discard patched cocoon.xconf.</echo>
-    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
   </target>
 
   <!--
