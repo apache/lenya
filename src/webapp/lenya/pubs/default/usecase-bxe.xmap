@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+	<!-- =========================== Components ================================ -->
+	<map:components>
+		<map:generators default="file"/>
+		<map:transformers default="xslt"/>
+		<map:readers default="resource"/>
+		<map:serializers default="html"/>
+		<map:matchers default="wildcard"/>
+		<map:actions/>
+		
+		<map:selectors>
+      <map:selector name="request-method" logger="sitemap.selector.request-method"
+        src="org.apache.cocoon.selection.RequestMethodSelector"/>
+		</map:selectors>
+		
+	</map:components>
+	
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:select type="parameter">
+        <map:parameter name="statusCode" value="{statusCode}"/>
+        <map:when test="">
+          <map:serialize/>
+        </map:when>
+        <map:otherwise>
+          <map:serialize status-code="{statusCode}"/>
+        </map:otherwise>
+      </map:select>
+    </map:resource>
+  </map:resources>
+
+	<!-- =========================== Pipelines ================================ -->
+	
+	<map:pipelines>
+	  
+    <map:pipeline type="noncaching">
+      
+      <map:match type="usecase" pattern="bxe">
+        
+      <map:match type="step" pattern="open">
+        <map:act type="reserved-checkout">
+          <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="date" value="{date}"/>
+          </map:generate>
+          <map:transform src="../../xslt/rc/rco-exception.xsl"/>
+          <map:call resource="style-cms-page"/>
+          <map:serialize type="html"/>
+        </map:act>
+        <map:aggregate element="bxeng">
+          <map:part src="../../resources/misc/bxeng/index.xhtml"/>
+          <map:part src="resources/misc/bxeng/{page-envelope:document-type}-namespaces.xml"/>
+        </map:aggregate>
+        <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
+        <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
+          <map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=config"/>
+        </map:transform>
+        <map:serialize type="xhtml-iso-8859-1"/>
+      </map:match>
+      
+      <map:match pattern="**/*.html">
+        <!-- configuration -->
+        <map:match type="step" pattern="config">
+          <map:generate src="../../resources/misc/bxeng/inc/config.xml"/>
+          <map:transform src="../../xslt/bxeng/config-xml.xsl">
+            <map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=xml"/>
+            
+  <!--      Instead of an xsl we use the xhtml file to provide the basic layout
+            <map:parameter name="BX_xslfile" value="{2}.xsl"/>
+  -->
+            <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html"/>
+            <map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}.rng"/>
+            <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/page.css"/>
+            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin"/>
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:match>
+      </map:match>
+      
+      <map:match pattern="*/**.html">
+      
+      <!-- /GET and PUT -->
+      <map:match type="step" pattern="xml">      
+        <map:select type="request-method">
+          
+          <map:when test="PUT">
+	        <map:act type="reserved-checkout-test">
+    	      <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+        	    <map:parameter name="user" value="{user}"/>
+            	<map:parameter name="filename" value="{filename}"/>
+	            <map:parameter name="date" value="{date}"/>
+    	      </map:generate>
+        	  <map:transform src="../../xslt/rc/rco-exception.xsl"/>
+	          <map:call resource="style-cms-page"/>
+    	      <map:serialize type="html"/>
+        	</map:act>
+            <map:generate type="stream"/>
+            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="content/{page-envelope:area}/{page-envelope:document-path}"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:act type="workflow">
+              <map:parameter name="area" value="{page-envelope:area}"/>
+              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
+              <map:parameter name="event" value="edit"/>
+            </map:act>
+            <map:serialize type="xml" status-code="204"/>
+          </map:when>
+          
+          <map:otherwise> <!-- GET -->
+            <map:generate src="content/authoring/{page-envelope:document-path}"/>
+            <map:serialize type="xml"/>
+          </map:otherwise>
+          
+        </map:select>
+      </map:match>
+      <!-- /GET and PUT -->
+      
+      </map:match> <!-- uri pattern -->
+      
+      <!--
+      <map:match type="step" pattern="xsl">
+        <map:generate src="xslt/content-bxeng.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      -->
+      
+      </map:match> <!-- usecase -->
+
+      <map:handle-errors type="500"/>
+      
+    </map:pipeline>
+    
+	</map:pipelines>
+	
+</map:sitemap>

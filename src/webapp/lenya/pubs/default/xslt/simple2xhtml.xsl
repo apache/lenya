@@ -22,10 +22,12 @@
         
 <xsl:template match="/">
   <div id="body">
-    <h1><xsl:apply-templates select="simple:simple-document/lenya:meta/dc:title"/></h1>
+    <h1 bxe_xpath="/simple:simple-document/lenya:meta/dc:title"><xsl:apply-templates select="simple:simple-document/lenya:meta/dc:title"/></h1>
     <xsl:apply-templates select="simple:simple-document/simple:body/simple:subtitle"/>
     <xsl:apply-templates select="simple:simple-document/lenya:header/lenya:abstract"/>
-    <xsl:apply-templates select="simple:simple-document/simple:body/*[local-name() != 'subtitle']"/>
+    <div bxe_xpath="/simple:simple-document/simple:body">
+      <xsl:apply-templates select="simple:simple-document/simple:body/*[local-name() != 'subtitle']"/>
+    </div>
   </div>
 </xsl:template>
 

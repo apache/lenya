@@ -17,7 +17,7 @@
 
         
 <xsl:template match="/xhtml:html">
-  <div id="body">
+  <div id="body" bxe_xpath="/xhtml:html/xhtml:body">
     <xsl:apply-templates select="xhtml:body/node()"/>
   </div>
 </xsl:template>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         >
+
+<!-- Dublin Core Schema -->
+
+<define name="dublincore">
+  <interleave>
+    
+  <optional><element name="dc:title"><text/></element></optional>
+  <optional><element name="dc:creator"><text/></element></optional>
+  <optional><element name="dc:subject"><text/></element></optional>
+  <optional><element name="dc:description"><text/></element></optional>
+  <optional><element name="dc:publisher"><text/></element></optional>
+  <optional><element name="dc:contributor"><text/></element></optional>
+  <optional><element name="dc:date"><text/></element></optional>
+  <optional><element name="dc:type"><text/></element></optional>
+  <optional><element name="dc:format"><text/></element></optional>
+  <optional><element name="dc:identifier"><text/></element></optional>
+  <optional><element name="dc:source"><text/></element></optional>
+  <optional><element name="dc:language"><text/></element></optional>
+  <optional><element name="dc:relation"><text/></element></optional>
+  <optional><element name="dc:coverage"><text/></element></optional>
+  <optional><element name="dc:rights"><text/></element></optional>
+  
+  <optional><element name="dcterms:audience"><text/></element></optional>
+  <optional><element name="dcterms:alternative"><text/></element></optional>
+  <optional><element name="dcterms:tableOfContents"><text/></element></optional>
+  <optional><element name="dcterms:abstract"><text/></element></optional>
+  <optional><element name="dcterms:created"><text/></element></optional>
+  <optional><element name="dcterms:valid"><text/></element></optional>
+  <optional><element name="dcterms:available"><text/></element></optional>
+  <optional><element name="dcterms:issued"><text/></element></optional>
+  <optional><element name="dcterms:modified"><text/></element></optional>
+  <optional><element name="dcterms:extent"><text/></element></optional>
+  <optional><element name="dcterms:medium"><text/></element></optional>
+  <optional><element name="dcterms:isVersionOf"><text/></element></optional>
+  <optional><element name="dcterms:hasVersion"><text/></element></optional>
+  <optional><element name="dcterms:isReplacedBy"><text/></element></optional>
+  <optional><element name="dcterms:replaces"><text/></element></optional>
+  <optional><element name="dcterms:isRequiredBy"><text/></element></optional>
+  <optional><element name="dcterms:requires"><text/></element></optional>
+  <optional><element name="dcterms:isPartOf"><text/></element></optional>
+  <optional><element name="dcterms:hasPart"><text/></element></optional>
+  <optional><element name="dcterms:isReferencedBy"><text/></element></optional>
+  <optional><element name="dcterms:references"><text/></element></optional>
+  <optional><element name="dcterms:isFormatOf"><text/></element></optional>
+  <optional><element name="dcterms:hasFormat"><text/></element></optional>
+  <optional><element name="dcterms:conformsTo"><text/></element></optional>
+  <optional><element name="dcterms:spatial"><text/></element></optional>
+  <optional><element name="dcterms:temporal"><text/></element></optional>
+  <optional><element name="dcterms:mediator"><text/></element></optional>
+  <optional><element name="dcterms:dateAccepted"><text/></element></optional>
+  <optional><element name="dcterms:dateCopyrighted"><text/></element></optional>
+  <optional><element name="dcterms:dateSubmitted"><text/></element></optional>
+  <optional><element name="dcterms:educationLevel"><text/></element></optional>
+  <optional><element name="dcterms:accessRights"><text/></element></optional>
+  <optional><element name="dcterms:bibliographicCitation"><text/></element></optional>
+  
+  </interleave>
+</define>
+
+</grammar>

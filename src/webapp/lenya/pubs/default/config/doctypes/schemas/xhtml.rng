@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--+
+    | UniZH XHTML doctype
+    +-->
+
+<grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:unizh="http://unizh.ch/doctypes/elements/1.0"
+         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         >
+
+<include href="lenya.rng"/>
+
+
+<!-- include original XHTML transitional schema -->
+<include href="xhtml/xhtml-strict.rng">
+
+  <define name="html">
+    <element name="html">
+      <ref name="html.attlist"/>
+      <ref name="lenya.meta"/>
+      <ref name="head"/>
+      <ref name="body"/>
+    </element>
+  </define>
+
+  <define name="html.attlist">
+    <ref name="XHTML.version.attrib"/>
+    <ref name="I18n.attrib"/>
+    <ref name="dummy.attlist"/>
+  </define>
+
+</include>
+
+
+<!-- additional block elements -->
+<define name="Block.class" combine="choice">
+  <choice>
+    <ref name="lenya.asset"/>
+  </choice>
+</define>
+
+
+</grammar>
