@@ -15,23 +15,35 @@
   limitations under the License.
 -->
 
-<!-- $Id: download.xhtml,v 1.10 2004/05/19 15:45:13 gregor Exp $ -->
+<!-- $Id$ -->
     
-<page:page  
+<page:page
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
 
-<page:title>It seems that Bitflux Editor is not installed on your server</page:title>
+<page:title>Loading BXE failed!</page:title>
 <page:body>
 <div class="lenya-box">
-<br />Please <a href="http://bxe.oscom.org/download/">download Bitflux Editor</a> and copy the
-    contents of the tarball to the <em>webapps/lenya/lenya/resources/bxeng</em> directory.
+<p>
+It seems that either BXE is not installed or the wrong version of BXE is installed on your server (No such file bxeLoader.js).
+</p>
+
+<p>
+Please <a href="http://bxe.oscom.org/download/">download BXE</a> (recommended version 1.0.x) and copy the
+contents of the tarball to the <em>webapps/lenya/lenya/resources/bxeng</em> directory.
+</p>
+
+<p>
+If you use Jetty, copy the contents of the tarball to the <em>build/lenya/webapps/lenya/resources/bxeng</em> directory.
+</p>
+
 <p>
 No further setup is required.
-<br /><br />
-If you use Jetty, copy the contents of the tarball to the <em>build/lenya/webapps/lenya/resources/bxeng</em> directory.
-<br /><br />
-Many thanks to the <a href="http://bxe.oscom.org">Bitflux Editor community</a> for making this great tool available.
 </p>
+
+<p>
+Many thanks to the <a href="http://bxe.oscom.org">BXE community</a> for making this great tool available.
+</p>
+
 </div>
-      </page:body>
-    </page:page>
+</page:body>
+</page:page>
