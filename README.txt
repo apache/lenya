@@ -2,6 +2,16 @@
   W Y O N A    C O N T E N T - M A N A G E M E N T - S Y S T E M
   ==============================================================
 
+  Prerequisite
+  ------------
+
+  You need to have an installed Apache Ant 1.4. 
+  
+  Point your favorite browser to http://jakarta.apache.org/ant and get a 
+  version 1.4 or greater distribution and installation instructions there.
+
+     [unix]  
+
   Installation
   ------------
 
