@@ -160,6 +160,13 @@
         <map:serialize type="html"/>
       </map:match>
 
+      <!-- Speakers -->
+      <map:match pattern="authoring/**/speakers.html">
+        <map:generate src="cocoon:/authoring/{1}/speakers.xml"/>
+        <map:transform src="stylesheets/publication/Page/Speakers/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
       <!-- Generic (XHTML) -->
       <map:match pattern="authoring/**.html">
         <map:generate src="cocoon:/authoring/{1}.xml"/>
