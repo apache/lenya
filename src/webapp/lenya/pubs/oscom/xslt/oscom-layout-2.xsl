@@ -345,7 +345,7 @@ width="24" height="16" border="0" /></td>
 <table width="770" border="0" cellspacing="0" cellpadding="0">
 <tbody>
 <tr>
-<td class="footer" valign="top">&#169;2002-2003 OSCOM.
+<td class="footer" valign="top">&#169;2002-2004 OSCOM.
 <!-- @UPDATING_DATE@ --><br />
  <!-- <a href="http://alpha.oscom.org/" class="breadcrumb">@BREADCRUMB_PATH@</a> --> <!--
 <a href="http://alpha.oscom.org/" class="breadcrumb">Home</a>
@@ -357,7 +357,7 @@ width="24" height="16" border="0" /></td>
 <td align="right" valign="top" class="footer">
 <!-- Admin interface link -->
 <xsl:call-template name="admin-url">
-<xsl:with-param name="prefix" select="'http://oscom.wyona.org:18080/lenya/oscom/authoring'"/>
+<xsl:with-param name="prefix" select="'http://www.oscom.org:8080/lenya/oscom/authoring'"/>
 </xsl:call-template>
 <!-- /Admin interface link --></td>
 </tr>
