@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  This xsp merges a pub local i18n catalogue file with the global catalog file.
+  If a pub local catalogue exists, it is inserted first in order to override global messages.
+  
+  See the I18NTransformer for more details about catalog files and i18n messages.
+  
+  $Id$   
+-->
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+>
+
+  <xsp:structure>
+    <xsp:include>java.io.File</xsp:include>
+  </xsp:structure>
+
+  <catalogue>
+    <xsp:logic>
+      if(new File(parameters.getParameter("pub-catalogue-location", "null") + parameters.getParameter("catalogue-file", "null")).exists()) 
+      {
+          <xi:include >
+            <xsp:attribute name="href">../../pubs/default/lenya/resources/i18n/<xsp:expr>parameters.getParameter("catalogue-file", "null").substring(1)</xsp:expr>#xpointer(//message)</xsp:attribute>
+          </xi:include>          
+      }
+      
+     <xi:include >
+        <xsp:attribute name="href"><xsp:expr>parameters.getParameter("catalogue-file", "null").substring(1)</xsp:expr>#xpointer(//message)</xsp:attribute>
+      </xi:include>
+    </xsp:logic> 
+  </catalogue>
+  
+</xsp:page>
