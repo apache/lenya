@@ -15,12 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: bxeng.xsl,v 1.4 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
  xmlns:echo="http://purl.org/atom/ns#"
 >
-<xsl:output method="xml" encoding="iso-8859-1" />
 
 <xsl:template match="/">
     <div>Echo/Atom</div>
