@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lucene.xml,v 1.8 2004/03/13 12:42:20 gregor Exp $ -->
+<!-- $Id: lucene.xml,v 1.9 2004/04/03 23:51:32 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -131,11 +131,33 @@ ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/username/sr
 ]]>
 </source>
 <p>
-or
+whereas the lucene.xconf has the following elements
 </p>
 <source>
 <![CDATA[
-/usr/local/j2sdk1.4.2/bin/java -classpath build/lenya/webapp/WEB-INF/classes:build/lenya/webapp/WEB-INF/lib/log4j-1.2.7.jar:build/lenya/webapp/WEB-INF/lib/xercesImpl-2.5.0.jar:build/lenya/webapp/WEB-INF/lib/xml-apis.jar:build/lenya/webapp/WEB-INF/lib/lucene-1.3.jar:build/lenya/webapp/WEB-INF/lib/excalibur-io-1.1.jar org.apache.lenya.lucene.index.Index src/webapp/lenya/pubs/oscom/config/search/lucene-cmfsMatrix.xconf true
+<lucene>
+  <update-index type="new"/>
+  <!--
+  <update-index type="incremental"/>
+  -->
+
+  <index-dir src="../../work/search/lucene/index/index"/>
+    <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump"/>
+
+    <indexer class="org.apache.lenya.lucene.index.DefaultIndexer"/>
+<!--
+    <indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
+      <configuration src="cmfs-luceneDoc.xconf"/>
+      <extensions src="xml"/>
+    </indexer>
+-->
+<!--
+    <indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
+      <configuration src="cmfs-luceneDoc.xconf"/>
+      <filter class="foo.bar.FileFilter"/>
+    </indexer>
+-->
+</lucene>
 ]]>
 </source>
 </section>
