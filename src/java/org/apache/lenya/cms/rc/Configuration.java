@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.5 2003/02/17 12:55:18 egli Exp $
+ * $Id: Configuration.java,v 1.6 2003/02/27 17:35:56 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,12 +59,6 @@ public class Configuration {
     public String rcmlDirectory = null;
     public String backupDirectory = null;
 
-    public String mountPoints = null;
-    public String password = null;
-    public String servlet = null;
-    public String xslt = null;
-    public String xslt_rcmlrollback = null;
-
     /**
      * Creates a new Configuration object.
      */
@@ -81,13 +75,7 @@ public class Configuration {
         rcmlDirectory = properties.getProperty("rcmlDirectory");
         backupDirectory = properties.getProperty("backupDirectory");
 
-        mountPoints = properties.getProperty("mountPoints");
-        password = properties.getProperty("password");
-        servlet = properties.getProperty("servlet");
-
-        xslt = properties.getProperty("xslt");
-        xslt_rcmlrollback = properties.getProperty("xslt_rcmlrollback");
-    }
+       }
 
     /**
      * DOCUMENT ME!
@@ -99,11 +87,5 @@ public class Configuration {
         log.debug("rcmlDirectory: " + conf.rcmlDirectory);
         log.debug("backupDirectory: " + conf.backupDirectory);
 
-        log.debug("mountPoints :" + conf.mountPoints);
-        log.debug("password :" + conf.password);
-        log.debug("servlet :" + conf.servlet);
-
-        log.debug("xslt :" + conf.xslt);
-        log.debug("xslt_rcmlrollback :" + conf.xslt_rcmlrollback);
     }
 }

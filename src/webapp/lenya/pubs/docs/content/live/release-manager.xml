@@ -51,7 +51,7 @@
 <s1 title="Overwriting Cocoon">
 <p>
 <ol>
-  <li><code>src/cocoon/WEB-INF/web.xml</code> (Scheduler Servlet, Test ProxyGenerator Servlet, RCServlet)</li>
+  <li><code>src/cocoon/WEB-INF/web.xml</code> (Scheduler Servlet, Test ProxyGenerator Servlet)</li>
   <li><code>src/cocoon/WEB-INF/logkit.xconf</code> (Log-Level changed from DEBUG to WARN)</li>
   <li><code>src/cocoon/WEB-INF/db/cocoondb.script</code> (Related Projects Data)</li>
   <li><code>src/cocoon/WEB-INF/lib/commons-httpclient.jar</code> (NoSuchMethodError, setRequestBody)</li>
