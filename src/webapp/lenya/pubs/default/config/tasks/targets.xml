@@ -218,16 +218,6 @@
     <echo>the document id for the copy is now ${node.newdocumentid}</echo>
   </target>
 
-  <target name = "newnamedocumentid">
-    <taskdef name="computerenamedocumentid" classname="org.apache.lenya.cms.ant.ComputeRenameDocumentId"/>
-    <computerenamedocumentid
-      area="authoring"
-      firstdocumentid="${node.firstdocumentid}"
-      secdocumentid="${node.secdocumentid}"
-      />
-    <echo>the document id for the renamed file is now ${node.newdocumentid}</echo>
-  </target>
-  
   <taskdef name="computearchivedocumentid" classname="org.apache.lenya.cms.ant.ComputeArchiveDocumentId"/>
   
   <target name = "newarchivedocumentid">
@@ -450,12 +440,6 @@
     secareaproperties, newcopydocumentid, firstdocumentpath,
     secdocumentpath, move, rewrite-links">
   <echo>moveDocument</echo> 
-</target>
-
-<target name = "renameDocument" depends="firstareaproperties,
-    secareaproperties, newnamedocumentid, firstdocumentpath,
-    secdocumentpath, move, rewrite-links">
-  <echo>renameDocument</echo> 
 </target>
 
 <target name = "setIdentifier">
