@@ -279,7 +279,7 @@
   </usecases>
 
   <component role="org.apache.cocoon.components.cron.CronJob/usecase"
-             class="org.apache.lenya.cms.usecase.UsecaseCronJob"
+             class="org.apache.lenya.cms.usecase.scheduling.UsecaseCronJob"
              logger="cron.usecase"/>
              
   </xsl:copy>

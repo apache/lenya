@@ -32,6 +32,7 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.workflow.WorkflowException;
 
@@ -60,8 +61,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * Checks if the workflow event is supported and the parent of the document
-     * exists in the live area.
+     * Checks if the workflow event is supported and the parent of the document exists in the live
+     * area.
      * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -125,11 +126,22 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             deleteParameter(SCHEDULE);
             String dateString = getParameterAsString(SCHEDULE_TIME);
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            UsecaseScheduler scheduler = null;
             try {
-                Date date = format.parse(dateString);
-                schedule(date);
-            } catch (ParseException e) {
-                addErrorMessage("The scheduler date must be of the form 'yyyy-MM-dd hh:mm:ss'.");
+                Date date = null;
+                try {
+                    date = format.parse(dateString);
+                } catch (ParseException e) {
+                    addErrorMessage("The scheduler date must be of the form 'yyyy-MM-dd hh:mm:ss'.");
+                }
+                if (date != null) {
+                    scheduler = (UsecaseScheduler) this.manager.lookup(UsecaseScheduler.ROLE);
+                    scheduler.schedule(this, date);
+                }
+            } finally {
+                if (scheduler != null) {
+                    this.manager.release(scheduler);
+                }
             }
         } else {
             super.doExecute();
@@ -169,8 +181,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * Publishes a document or the subtree below a document, based on the
-     * parameter SUBTREE.
+     * Publishes a document or the subtree below a document, based on the parameter SUBTREE.
      * @param document The document.
      */
     protected void publishAll(Document document) {
