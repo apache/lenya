@@ -162,7 +162,7 @@ public class AntTask
     public static final String TARGET = "target";
     public static final String ANT_PREFIX = "ant";
     public static final String PROPERTIES_PREFIX = "properties";
-    public static final String DEFAULT_BUILDFILE = "config/tasks.xml";
+    public static final String DEFAULT_BUILDFILE = "config/tasks/targets.xml";
     public static final String LOG_PATH = "logs/tasks/".replace('/', File.separatorChar);
 
     /**

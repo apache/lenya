@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.10 2003/03/06 20:45:53 gregor Exp $
+ * $Id: DocumentHelper.java,v 1.11 2003/04/09 15:57:14 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,7 +66,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 /**
@@ -263,4 +265,21 @@ public class DocumentHelper {
         }
         return (Element[]) childElements.toArray(new Element[childElements.size()]);
     }
+    
+    /**
+     * Returns the text inside an element. Only the child text nodes of this
+     * element are collected.
+     * @param element The element.
+     * @return The text inside the element.
+     */
+    public static String getSimpleElementText(Element element) {
+      StringBuffer buffer = new StringBuffer();
+      NodeList children = element.getChildNodes();
+      for(int i=0; i<children.getLength(); i++) {
+         Node child = children.item(i);
+         if (child instanceof Text)
+            buffer.append(child.getNodeValue());
+      }
+      return buffer.toString();
+   }
 }

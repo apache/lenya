@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.10 2003/04/03 19:23:46 andreas Exp $
+ * $Id: PublishingEnvironment.java,v 1.11 2003/04/09 15:57:13 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -264,6 +264,8 @@ public class PublishingEnvironment implements Configurable {
      * @return DOCUMENT ME!
      */
     public static String getPublicationPath(String servletContextPath, String publicationId) {
+        if (!servletContextPath.endsWith(File.separator))
+            servletContextPath += File.separator;
         return servletContextPath + PUBLICATION_PREFIX + publicationId + File.separator;
     }
 }

@@ -17,10 +17,12 @@
       <xsl:apply-templates select="@*"/>
 
       <xsp:structure>
-        <xsp:include>org.lenya.cms.ac.Identity</xsp:include>
         <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+        <xsp:include>org.apache.cocoon.environment.Source</xsp:include>
+        <xsp:include>org.lenya.cms.ac.Identity</xsp:include>
+        <xsp:include>org.lenya.cms.publication.Publication</xsp:include>
       </xsp:structure>
-
+      
       <xsl:apply-templates/>
     </xsp:page>
   </xsl:template>
@@ -75,8 +77,41 @@
          <xsp:content><referer><xsp:expr>xsp_lenya_session.getAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri")</xsp:expr></referer></xsp:content>
        }
     }
+    
+        Publication xspUtilPublication = null;
+        String xspUtilServletContextPath = null;
+        {
+            Source inputSource = resolver.resolve("");
+            String publicationPath = inputSource.getSystemId();
+            String directories[] = publicationPath.split("/");
+            String publicationId = directories[directories.length - 1];
+            String path = publicationPath.substring(
+                0, publicationPath.indexOf("/lenya/pubs/" + publicationId));
+            path = path.replaceAll("file:/", "");
+            path = path.replace('/', File.separatorChar);
+            
+            xspUtilServletContextPath = path;
+            xspUtilPublication = new Publication(publicationId, path);
+        }
+    
   </xsp:logic>
 </xsl:template>
+
+
+<xsl:template match="xsp-lenya:publication-id">
+  <xsp:expr>xspUtilPublication.getId()</xsp:expr>
+</xsl:template>
+
+
+<xsl:template match="xsp-lenya:servlet-context-path">
+  <xsp:expr>xspUtilServletContextPath</xsp:expr>
+</xsl:template>
+
+
+<xsl:template match="xsp-lenya:publication">
+  xspUtilPublication
+</xsl:template>
+
 
 <xsl:template match="@*|node()" priority="-1">
  <xsl:copy>
