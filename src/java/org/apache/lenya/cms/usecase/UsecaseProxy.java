@@ -31,6 +31,7 @@ public class UsecaseProxy {
 
     private Map parameters = new HashMap();
     private String name;
+    private String sourceUrl;
 
     /**
      * Ctor.
@@ -46,6 +47,7 @@ public class UsecaseProxy {
         
         this.errorMessages = usecase.getErrorMessages();
         this.infoMessages = usecase.getInfoMessages();
+        this.sourceUrl = usecase.getSourceURL();
     }
 
     /**
@@ -54,6 +56,7 @@ public class UsecaseProxy {
      */
     public void setup(Usecase usecase) {
         usecase.setName(this.name);
+        usecase.setSourceURL(this.sourceUrl);
 
         String[] names = getParameterNames();
         for (int i = 0; i < names.length; i++) {
