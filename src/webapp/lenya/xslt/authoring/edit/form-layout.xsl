@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: form-layout.xsl,v 1.17 2004/04/26 14:57:25 michi Exp $ -->
+<!-- $Id: form-layout.xsl,v 1.18 2004/04/27 21:38:39 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -121,9 +121,23 @@
 </tr>
 </xsl:template>
 
+<xsl:template match="insert-before" mode="nodes">
+    <tr>
+      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT BEFORE" name="insert-before"/></td>
+      <td colspan="2" style="background-color: #DCDBBF">
+        <select name="&lt;xupdate:insert-before select=&quot;{@select}&quot;/&gt;" size="1">
+            <option value="null">Choose element ...</option>
+          <xsl:for-each select="element">
+            <option value="{@xupdate}"><xsl:value-of select="@name"/></option>
+          </xsl:for-each>
+        </select>
+      </td>
+    </tr>
+</xsl:template>
+
 <xsl:template match="insert-after" mode="nodes">
     <tr>
-      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT" name="insert-after"/></td>
+      <td style="background-color: #BFBFA2"><input type="submit" value="INSERT AFTER" name="insert-after"/></td>
       <td colspan="2" style="background-color: #DCDBBF">
         <select name="&lt;xupdate:insert-after select=&quot;{@select}&quot;/&gt;" size="1">
             <option value="null">Choose element ...</option>

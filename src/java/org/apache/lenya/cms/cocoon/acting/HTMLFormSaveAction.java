@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLFormSaveAction.java,v 1.47 2004/04/26 15:46:15 gregor Exp $  */
+/* $Id: HTMLFormSaveAction.java,v 1.48 2004/04/27 21:38:39 michi Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -225,6 +225,18 @@ public Map act(
                                         pname.substring(
                                             0,
                                             pname.length() - 2));
+                            // insert-before: in case of select/option
+                            } else if (
+                                pname.indexOf("xupdate:insert-before") > 0
+                                    && pname.endsWith("/>")) {
+                                if (!request
+                                    .getParameter(pname)
+                                    .equals("null")) {
+                                    xupdateModifications =
+                                        insertBefore(
+                                            request.getParameter(pname));
+                                }
+                            // insert-before: in case of image
                             } else if (
                                 pname.indexOf("xupdate:insert-before") > 0
                                     && pname.endsWith(">.x")) {
@@ -233,10 +245,10 @@ public Map act(
                                         pname.substring(
                                             0,
                                             pname.length() - 2));
+                            // insert-after: in case of select/option
                             } else if (
                                 pname.indexOf("xupdate:insert-after") > 0
                                     && pname.endsWith("/>")) {
-                                // FIXME: Not sure why this is here.
                                 if (!request
                                     .getParameter(pname)
                                     .equals("null")) {
@@ -244,6 +256,7 @@ public Map act(
                                         insertAfter(
                                             request.getParameter(pname));
                                 }
+                            // insert-after: in case of image
                             } else if (
                                 pname.indexOf("xupdate:insert-after") > 0
                                     && pname.endsWith(">.x")) {
@@ -277,7 +290,7 @@ public Map act(
 
                             // now run the assembled xupdate query
                             if (xupdateModifications != null) {
-                                log.debug("Execute XUpdate Modifications: " + xupdateModifications);
+                                log.info("Execute XUpdate Modifications: " + xupdateModifications);
                                 xq.setQString(xupdateModifications);
                                 xq.execute(document);
                             } else {
