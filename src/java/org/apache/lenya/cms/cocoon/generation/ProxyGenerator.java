@@ -32,6 +32,7 @@ import java.net.MalformedURLException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
+import org.apache.cocoon.environment.Request;
 
 /**
  * @author Michael Wechner
@@ -66,16 +67,26 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
  * Generate XML data.
  */
   public void generate() throws SAXException{
-    HttpRequest httpRequest = (HttpRequest)objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
 
-    String submitMethod=httpRequest.getMethod();
+/*      
+    HttpRequest httpRequest
+        = (HttpRequest) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
+*/
+    Request request
+        = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
+    
+    String submitMethod = request.getMethod();
 
 
         Parser parser = null;
         try{
           // DEBUG
           if(submitMethod.equals("POST")){
-            java.io.InputStream is=intercept(httpRequest.getInputStream());
+              
+              // FIXME: Andreas
+              if (request instanceof HttpRequest) {
+                java.io.InputStream is = intercept(((HttpRequest) request).getInputStream());
+              }
             //log.debug("HTTP method: "+submitMethod);
             }
           else if(submitMethod.equals("GET")){
@@ -86,15 +97,15 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             }
 
           // Forward "InputStream", Parameters, QueryString to Servlet
-          URL url=createURL(httpRequest);
+          URL url=createURL(request);
           //log.debug(".generate(): Remote URL: "+url);
           org.apache.commons.httpclient.HttpMethod httpMethod=null;
           if(submitMethod.equals("POST")){
             httpMethod=new PostMethod();
-            Enumeration params=httpRequest.getParameterNames();
+            Enumeration params=request.getParameterNames();
             while(params.hasMoreElements()){
               String paramName=(String)params.nextElement();
-              String[] paramValues=httpRequest.getParameterValues(paramName);
+              String[] paramValues=request.getParameterValues(paramName);
               for(int i=0;i<paramValues.length;i++){
                 ((PostMethod)httpMethod).setParameter(paramName,paramValues[i]);
                 }
@@ -102,11 +113,11 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             }
           else if(submitMethod.equals("GET")){
             httpMethod=new org.apache.commons.httpclient.methods.GetMethod();
-            httpMethod.setQueryString(httpRequest.getQueryString());
+            httpMethod.setQueryString(request.getQueryString());
             }
 
           // Copy/clone Cookies
-          Cookie[] cookies=httpRequest.getCookies();
+          Cookie[] cookies=request.getCookies();
           org.apache.commons.httpclient.Cookie[] transferedCookies=null;
           if(cookies != null){
           transferedCookies=new org.apache.commons.httpclient.Cookie[cookies.length];
@@ -186,7 +197,8 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 /**
  *
  */
-  private URL createURL(HttpRequest request) throws MalformedURLException{
+//  private URL createURL(HttpRequest request) throws MalformedURLException{
+  private URL createURL(Request request) throws MalformedURLException{
     URL url=null;
     try{
       url=new URL(this.src);

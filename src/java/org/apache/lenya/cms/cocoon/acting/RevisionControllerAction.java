@@ -14,6 +14,7 @@ import org.apache.cocoon.util.Tokenizer;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.cocoon.environment.ObjectModelHelper;
 
 import org.wyona.cms.ac.Identity;
 import org.wyona.cms.rc.RevisionController;
@@ -60,7 +61,7 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
     // /Initialize Revision Controller
 
     // Get request object
-    Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
+    Request request = ObjectModelHelper.getRequest(objectModel);
     if(request == null){
       getLogger().error ("No request object");
       return null;
