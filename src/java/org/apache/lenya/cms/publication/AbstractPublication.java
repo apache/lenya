@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractPublication.java,v 1.19 2004/04/30 14:06:31 andreas Exp $  */
+/* $Id: AbstractPublication.java,v 1.20 2004/05/21 12:26:05 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -42,7 +42,13 @@ public abstract class AbstractPublication implements Publication {
             LIVE_AREA,
             ADMIN_AREA,
             ARCHIVE_AREA,
-            TRASH_AREA };
+            TRASH_AREA,
+            INFO_AREA_PREFIX + AUTHORING_AREA,
+            INFO_AREA_PREFIX + STAGING_AREA,
+            INFO_AREA_PREFIX + LIVE_AREA,
+            INFO_AREA_PREFIX + ARCHIVE_AREA,
+            INFO_AREA_PREFIX + TRASH_AREA
+        };
 
     private String id;
     private PublishingEnvironment environment;
