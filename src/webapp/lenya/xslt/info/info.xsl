@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.58 2004/03/16 11:12:15 gregor Exp $ -->
+<!-- $Id: info.xsl,v 1.59 2004/04/02 13:12:53 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -161,12 +161,12 @@
         <tr><td class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td><td><textarea id="dc:description" name="properties.save.meta.description" rows="3" class="lenya-form-element"><xsl:value-of select="dc:description"/></textarea></td></tr>
         <tr><td class="lenya-entry-caption"><i18n:text>Publisher</i18n:text>:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
         <tr><td class="lenya-entry-caption"><i18n:text>Rights</i18n:text>:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
-        <tr><td class="lenya-entry-caption"><i18n:text>Date of creation</i18n:text>:</td><td><xsl:value-of select="dc:date"/></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Creation Date</i18n:text>:</td><td><xsl:value-of select="dc:date"/></td></tr>
         <tr><td class="lenya-entry-caption"><i18n:text>Creator</i18n:text>:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
         <tr><td/><td><br/>
               <xsl:choose>
-                <xsl:when test="$area = 'authoring'"><input type="submit" value="Update Metadata"/></xsl:when>
-                <xsl:otherwise><input type="submit" disabled="disabled" value="Update Metadata"/></xsl:otherwise>
+                <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="Save"/></xsl:when>
+                <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="Save"/></xsl:otherwise>
               </xsl:choose>              
         </td></tr>
       </table>
