@@ -6,12 +6,13 @@
 >
 
 <xsl:param name="relative2root"/>
+<xsl:param name="contextprefix"/>
 
 <xsl:template match="cmsbody">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="service.edit" type="application/x.atom+xml" href="introspection.xml" title="AtomAPI"/>
-<link rel="stylesheet" type="text/css" href="css/styles.css" title="default css"/>
+<link rel="stylesheet" type="text/css" href="{$contextprefix}/blog/live/css/styles.css" title="default css"/>
 <title>
   <xsl:value-of select="echo:feed/echo:title"/>
 </title>
@@ -56,13 +57,6 @@
 </td>
 
 <td valign="top" id="sidebar" width="30%">
-
-<!--
-<div class="sidebar-title">Archives&#160;by&#160;Date</div>
-<div class="sidebar-content">
-<a href="{$relative2root}/2003/07/">July 2003</a>
-</div>
--->
 
 <xsl:apply-templates select="sidebar/block" mode="atom"/>
 </td>
