@@ -19,7 +19,7 @@
 			<map:serializer name="html" src="org.apache.cocoon.serialization.HTMLSerializer"/>
 		</map:serializers>
 		<map:matchers default="wildcard">
-			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcherFactory"/>
+			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
 		</map:matchers>
 		<!-- =========================== Actions ================================ -->
 		<map:actions>
@@ -52,13 +52,9 @@
 				<map:generate src="docs/publication/authoring/news/{1}.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
-			<map:match pattern="article.xml">
-				<map:generate src="docs/publication/authoring/news/1.xml"/>
-				<map:serialize type="xml"/>
-			</map:match>
 			<map:match pattern="stylesheets/article.xsl">
 				<map:generate src="docs/publication/authoring/index.html"/>
-				<map:transform src="stylesheets/publication/Page/Article/Authoring/bitflux.xsl"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/article-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/article.xsd">
@@ -114,64 +110,27 @@
 			</map:match>
 		</map:pipeline>
 		<!-- /GET -->
-		<map:pipeline>
+<!--		<map:pipeline> -->
 			<!-- POST (in the case of Bitflux the action only is used for saving and NOT for opening) -->
 			<!-- Save Article -->
-			<map:match pattern="save/*">
-				<map:act type="xopushandler">
-					<map:parameter name="save-filename" value="{1}"/>
-					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
-					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
-					<!-- Is not needed since Bitflux uses the request parameter "url-back" to do the redirecton
-               We only send a "status ok" back to Bitflux
-          <map:generate src="{reqFilePath}"/>
-          <map:transform src="xopus_response.xsl">
-            <map:parameter name="reqId" value="{reqId}"/>
-            <map:parameter name="reqType" value="{reqType}"/>
-            <map:parameter name="reqFile" value="{reqFile}"/>
-            <map:parameter name="fileType" value="{fileType}"/>
-          </map:transform>
-          -->
-					<map:serialize type="xml"/>
-				</map:act>
-				<map:generate src="xopus_error.xml"/>
-				<map:serialize type="xml"/>
-			</map:match>
 			<!-- Save Generic -->
-			<map:match pattern="save/*">
+
+<!--			<map:match pattern="save/*">
 				<map:act type="xopushandler">
-					<map:parameter name="save-filename" value="{1}"/>
+					<map:parameter name="save-filename" value="{1}"/> -->
 					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
-					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+<!--					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
 					<map:serialize type="xml"/>
 				</map:act>
 				<map:generate src="xopus_error.xml"/>
 				<map:serialize type="xml"/>
-			</map:match>
+			</map:match> -->
 			<!-- Error handling -->
-			<map:handle-errors>
+<!--			<map:handle-errors>
 				<map:transform src="context://stylesheets/system/error2html.xsl"/>
 				<map:serialize status-code="500"/>
 			</map:handle-errors>
-		</map:pipeline>
+		</map:pipeline> -->
 		<!-- /POST -->
-		<!-- Authoring crap -->
-		<map:pipeline>
-			<map:match pattern="authoring-index">
-				<map:aggregate element="wyona" label="gregor">
-					<map:part src="cocoon:/menus/front.xml"/>
-					<map:part element="cmsbody" src="docs/publication/authoring/index.html"/>
-					<map:part src="docs/publication/live/preview.xml"/>
-					<!--			<map:part src="docs/publication/authoring/navigation.xml"/> -->
-					<map:part src="cocoon://all-headlines"/>
-				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/Authoring/main.xsl"/>
-				<map:serialize type="html"/>
-			</map:match>
-			<map:match pattern="menus/front.xml">
-				<map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
-				<map:serialize type="xml"/>
-			</map:match>
-		</map:pipeline>
 	</map:pipelines>
 </map:sitemap>

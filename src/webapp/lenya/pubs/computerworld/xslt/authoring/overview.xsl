@@ -14,7 +14,7 @@
 		<xsl:apply-templates/>
 	</xsl:template>
 	-->
-	<xsl:template match="cmsbody/articles">
+	<xsl:template match="wyona/cmsbody/articles">
 		<html>
 			<head>
 				<title/>
