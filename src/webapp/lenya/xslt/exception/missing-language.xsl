@@ -31,7 +31,7 @@
   
   <xsl:template match="available-languages/available-language">
     <li>
-      <xsl:value-of select="."/>
+      <a><xsl:attribute name="href"><xsl:value-of select="url"/></xsl:attribute><xsl:value-of select="language"/></a>
     </li>
   </xsl:template>
 
