@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
+$Id: FilePublication.java,v 1.1 2003/11/26 18:22:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,45 +53,79 @@ $Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.file;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.lenya.cms.publication.AbstractPublication;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentSet;
+import org.apache.lenya.cms.publication.PublicationException;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * A file-based publication.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class DocumentBuildException extends PublicationException {
+public class FilePublication extends AbstractPublication {
+
     /**
-     * Constructor.
+     * Ctor.
+     * @param id The publication ID.
+     * @param servletContextPath The servlet context path.
+     * @throws PublicationException when something went wrong.
      */
-    public DocumentBuildException() {
-        super();
+    public FilePublication(String id, String servletContextPath) throws PublicationException {
+        super(id, servletContextPath);
     }
 
     /**
-     * Constructor.
-     * @param message A message.
+     * Returns the directory where documents of a certain area are located.
+     * @param area
+     * @return
      */
-    public DocumentBuildException(String message) {
-        super(message);
+    protected File getAreaDirectory(String area) {
+        File areaDirectory = new File(getDirectory(), "content" + File.separator + area);
+        return areaDirectory;
     }
 
     /**
-     * Constructor.
-     * @param cause The cause of the exception.
+     * @see org.apache.lenya.cms.publication.AbstractPublication#copyDocumentToArea(org.apache.lenya.cms.publication.Document, java.lang.String)
      */
-    public DocumentBuildException(Throwable cause) {
-        super(cause);
+    public void copyDocumentToArea(Document document, String destinationArea)
+        throws PublicationException {
+        Document destinationDocument = cloneDocument(document, destinationArea);
+        copyDocument(document, destinationDocument);
     }
 
     /**
-     * Constructor.
-     * @param message A message.
-     * @param cause The cause of the exception.
+     * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
      */
-    public DocumentBuildException(String message, Throwable cause) {
-        super(message, cause);
+    public void copyDocument(Document sourceDocument, Document destinationDocument)
+        throws PublicationException {
+        File file = sourceDocument.getFile();
+        File destinationDirectory = destinationDocument.getFile().getParentFile();
+        try {
+            if (!destinationDirectory.isDirectory()) {
+                destinationDirectory.mkdirs();
+            }
+            FileUtil.copyFileToDirectory(file, destinationDirectory);
+        } catch (IOException e) {
+            throw new PublicationException(e);
+        }
     }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#copyDocumentSetToArea(org.apache.lenya.cms.publication.DocumentSet, java.lang.String)
+     */
+    public void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
+        throws PublicationException {
+        Document[] documents = documentSet.getDocuments();
+        for (int i = 0; i < documents.length; i++) {
+            copyDocumentToArea(documents[i], destinationArea);
+        }
+    }
+
 }

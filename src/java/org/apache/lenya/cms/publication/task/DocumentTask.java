@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
+$Id: DocumentTask.java,v 1.1 2003/11/26 18:22:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,45 +53,63 @@ $Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.task;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.task.ExecutionException;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Abstract super class for document-based tasks.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class DocumentBuildException extends PublicationException {
+public abstract class DocumentTask extends PublicationTask {
+
+    public static final String PARAMETER_DOCUMENT_ID = "document-id";
+    public static final String PARAMETER_DOCUMENT_AREA = "document-area";
+    public static final String PARAMETER_DOCUMENT_LANGUAGE = "document-language";
+
     /**
-     * Constructor.
+     * Returns the document specified using the default document parameters
+     * ({@link #PARAMETER_DOCUMENT_ID}, {@link #PARAMETER_DOCUMENT_AREA}, {@link #PARAMETER_DOCUMENT_LANGUAGE}).
+     * @return A document.
+     * @throws ExecutionException when something went wrong.
      */
-    public DocumentBuildException() {
-        super();
+    protected Document getDocument() throws ExecutionException {
+        Document document;
+        try {
+            String id = getParameters().getParameter(PARAMETER_DOCUMENT_ID);
+            String area = getParameters().getParameter(PARAMETER_DOCUMENT_AREA);
+            String language = getParameters().getParameter(PARAMETER_DOCUMENT_LANGUAGE);
+            document = getDocument(id, area, language);
+        } catch (Exception e) {
+            throw new ExecutionException(e);
+        }
+        return document;
     }
 
     /**
-     * Constructor.
-     * @param message A message.
+     * Creates a document.
+     * @param documentId The document ID.
+     * @param area The area.
+     * @param language The language.
+     * @return A document.
+     * @throws ExecutionException when something went wrong.
      */
-    public DocumentBuildException(String message) {
-        super(message);
+    protected Document getDocument(String documentId, String area, String language)
+        throws ExecutionException {
+        Publication publication = getPublication();
+        DocumentBuilder builder = publication.getDocumentBuilder();
+        String url = builder.buildCanonicalUrl(publication, area, documentId, language);
+        Document document;
+        try {
+            document = builder.buildDocument(publication, url);
+        } catch (Exception e) {
+            throw new ExecutionException(e);
+        }
+        return document;
     }
 
-    /**
-     * Constructor.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Constructor.
-     * @param message A message.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.20 2003/09/08 19:29:54 andreas Exp $
+$Id: PublicationFactory.java,v 1.21 2003/11/26 18:22:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 
+import org.apache.lenya.cms.publication.file.FilePublication;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Category;
 
@@ -128,7 +129,7 @@ public final class PublicationFactory {
         if (keyToPublication.containsKey(key)) {
             publication = (Publication) keyToPublication.get(key);
         } else {
-            publication = new Publication(id, servletContextPath);
+            publication = new FilePublication(id, servletContextPath);
             keyToPublication.put(key, publication);
         }
 

@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
+$Id: PublicationTask.java,v 1.1 2003/11/26 18:22:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,45 +53,37 @@ $Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.task;
 
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.task.AbstractTask;
+import org.apache.lenya.cms.task.ExecutionException;
+import org.apache.lenya.cms.task.Task;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Abstract super class for publication-based tasks.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class DocumentBuildException extends PublicationException {
-    /**
-     * Constructor.
-     */
-    public DocumentBuildException() {
-        super();
-    }
+public abstract class PublicationTask extends AbstractTask {
 
     /**
-     * Constructor.
-     * @param message A message.
+     * Returns the publication used by this task.
+     * @return A publication.
+     * @throws ExecutionException when an error occurs.
      */
-    public DocumentBuildException(String message) {
-        super(message);
+    protected Publication getPublication() throws ExecutionException {
+        Publication publication;
+        try {
+            String publicationId = getParameters().getParameter(Task.PARAMETER_PUBLICATION_ID);
+            String servletContextPath =
+                getParameters().getParameter(Task.PARAMETER_SERVLET_CONTEXT);
+            publication = PublicationFactory.getPublication(publicationId, servletContextPath);
+        } catch (Exception e) {
+            throw new ExecutionException(e);
+        }
+        return publication;
     }
 
-    /**
-     * Constructor.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Constructor.
-     * @param message A message.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.31 2003/09/12 10:00:42 egli Exp $
+$Id: DefaultDocument.java,v 1.32 2003/11/26 18:22:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -274,7 +274,7 @@ public class DefaultDocument implements Document {
      * @param area A string.
      */
     protected void setArea(String area) {
-        assert Publication.isValidArea(area);
+        assert AbstractPublication.isValidArea(area);
         this.area = area;
     }
 

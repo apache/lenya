@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
+$Id: CopyDocumentToArea.java,v 1.1 2003/11/26 18:22:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,45 +53,33 @@ $Id: DocumentBuildException.java,v 1.4 2003/11/26 18:22:47 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.publication.task;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.task.ExecutionException;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * Copies a document to another area.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class DocumentBuildException extends PublicationException {
-    /**
-     * Constructor.
-     */
-    public DocumentBuildException() {
-        super();
-    }
+public class CopyDocumentToArea extends DocumentTask {
+    
+    public static final String PARAMETER_DESTINATION_AREA = "destination-area";
 
     /**
-     * Constructor.
-     * @param message A message.
+     * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
-    public DocumentBuildException(String message) {
-        super(message);
+    public void execute(String servletContextPath) throws ExecutionException {
+        
+        Document document = getDocument();
+        String area;
+        try {
+            area = getParameters().getParameter(PARAMETER_DESTINATION_AREA);
+            getPublication().copyDocumentToArea(document, area);
+        } catch (Exception e) {
+            throw new ExecutionException(e);
+        }
     }
 
-    /**
-     * Constructor.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Constructor.
-     * @param message A message.
-     * @param cause The cause of the exception.
-     */
-    public DocumentBuildException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
