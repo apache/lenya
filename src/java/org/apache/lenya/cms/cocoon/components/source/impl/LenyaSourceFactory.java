@@ -43,9 +43,6 @@ import org.apache.lenya.cms.publication.Publication;
 
 /**
  * A factory for the lenya protocol.
- *
- * @author <a href="mailto:jmetzner@apache.org">Jan Metzner</a>
- * @version $$
  */
 public class LenyaSourceFactory 
     extends AbstractLogEnabled 
