@@ -61,11 +61,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     private String doctypesPath = null;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param conf DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
@@ -77,17 +73,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
@@ -241,13 +227,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
             allParameters.put(sessionAttributeName, session.getAttribute(sessionAttributeName));
         }
 
-        try {
-            creator.create(new File(absoluteDoctypesPath + "samples"),
-                new File(sitemapParentPath + docsPath + parentid), childid, childType, childname, language,
+        creator.create(new File(absoluteDoctypesPath + "samples"),
+            new File(sitemapParentPath + docsPath + parentid), childid, childType, childname, language,
                 allParameters);
-        } catch (Exception e) {
-            getLogger().error(".act(): Creator threw exception: " + e);
-        }
 
         // Redirect to referer
         String parent_uri = (String) session.getAttribute(
