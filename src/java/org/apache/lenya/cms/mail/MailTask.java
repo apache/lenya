@@ -7,10 +7,12 @@
 package org.wyona.cms.mail;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.lang.LinkageError;
 import java.util.Arrays;
@@ -118,76 +120,7 @@ public class MailTask
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 
                 
-// <debug>                                
-                
-                String factoryId = "javax.xml.parsers.DocumentBuilderFactory";
-                
-                log.debug(
-                    "\n---------------------------" +
-                    "\n- DocumentBuilderFactory: " +
-                        System.getProperty(factoryId) +
-                    "\n---------------------------");
-                
-                String javah=System.getProperty( "java.home" );
-                String configFile = javah + File.separator +
-                    "lib" + File.separator + "jaxp.properties";
-                File f=new File( configFile );
-                if( f.exists()) {
-                    Properties props=new Properties();
-                    props.load( new FileInputStream(f));
-                    String factoryClassName = props.getProperty(factoryId);
-                    log.debug(
-                        "\n---------------------------" +
-                        "\n- DocumentBuilderFactory (2): " + factoryClassName +
-                        "\n---------------------------");
-                }
-
-                
-                ClassLoader classLoader = findClassLoader();
-        String serviceId = "META-INF/services/" + factoryId;
-        // try to find services in CLASSPATH
-        try {
-            InputStream is=null;
-            if (classLoader == null) {
-                is=ClassLoader.getSystemResourceAsStream( serviceId );
-            } else {
-                is=classLoader.getResourceAsStream( serviceId );
-            }
-        
-            if( is!=null ) {
-                BufferedReader rd =
-                    new BufferedReader(new InputStreamReader(is, "UTF-8"));
-        
-                String factoryClassName = rd.readLine();
-                rd.close();
-
-                if (factoryClassName != null &&
-                    ! "".equals(factoryClassName)) {
-                    log.debug(
-                        "\n---------------------------" +
-                        "\n- DocumentBuilderFactory (3): " + factoryClassName +
-                        "\n---------------------------");
-                }
-            }
-        } catch( Exception ex ) {
-        }
-
-        
-                org.apache.xerces.jaxp.DocumentBuilderFactoryImpl factoryImpl
-                 = (org.apache.xerces.jaxp.DocumentBuilderFactoryImpl) factory;
-//                factoryImpl.getAttribute("org.apache.xerces.xni.parser.XMLParserConfiguration);
-                    log.debug(
-                        "\n---------------------------" +
-                        "\n- DOMImplementation: " + builder.getDOMImplementation().getClass().getName() +
-                        "\n---------------------------");
-        
-        
-// </debug>                
-                
                 Document document = builder.parse(uri);
-                dumpTree(document);
-                
-                
                 Element root = (Element) document.getChildNodes().item(0);
 /*
                 log.debug(
@@ -240,29 +173,6 @@ public class MailTask
         }
     }        
     
-    public void dumpTree(Document document) {
-        log.error(
-            "\n-------------------------------------------------" +
-            "\n DUMP:" +
-            dumpNode(document, 0)
-            +
-            "\n-------------------------------------------------"
-            );
-    }
-    
-    public String dumpNode(Node node, int depth) {
-        String s = "\n";
-        for (int i = 0; i < depth; i++)
-            s += "  ";
-        s += node.toString() + " - " + node.getNodeValue();
-        NodeList children = node.getChildNodes();
-        for (int i = 0; i < children.getLength(); i++) {
-            Node child = children.item(i);
-            s += dumpNode(child, depth + 1);
-        }
-        return s;
-    }
-        
     public void sendMail(String host, String from, String to, String cc, String subject, String body) {
         log.debug(
             "\nTrying to send mail:" +
@@ -316,10 +226,11 @@ public class MailTask
             Transformer transformer = tFactory.newTransformer();
 
             DOMSource source = new DOMSource(text);
-            StringWriter writer = new StringWriter();
-            StreamResult result = new StreamResult(writer);
+            
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            StreamResult result = new StreamResult(stream);
             transformer.transform(source, result);
-            return writer.toString();
+            return stream.toString();
         }
         catch(Exception e) {
             log.error("Failed: ", e);
@@ -328,68 +239,4 @@ public class MailTask
     }
     
     
-    /**
-     * Figure out which ClassLoader to use.  For JDK 1.2 and later use the
-     * context ClassLoader if possible.  Note: we defer linking the class
-     * that calls an API only in JDK 1.2 until runtime so that we can catch
-     * LinkageError so that this code will run in older non-Sun JVMs such
-     * as the Microsoft JVM in IE.
-     */
-    private static ClassLoader findClassLoader()
-        throws ConfigurationError
-    {
-        ClassLoader classLoader;
-        try {
-            // Construct the name of the concrete class to instantiate
-            Class clazz = Class.forName(MailTask.class.getName()
-                                        + "$ClassLoaderFinderConcrete");
-            ClassLoaderFinder clf = (ClassLoaderFinder) clazz.newInstance();
-            classLoader = clf.getContextClassLoader();
-        } catch (LinkageError le) {
-            // Assume that we are running JDK 1.1, use the current ClassLoader
-            classLoader = MailTask.class.getClassLoader();
-        } catch (ClassNotFoundException x) {
-            // This case should not normally happen.  MS IE can throw this
-            // instead of a LinkageError the second time Class.forName() is
-            // called so assume that we are running JDK 1.1 and use the
-            // current ClassLoader
-            classLoader = MailTask.class.getClassLoader();
-        } catch (Exception x) {
-            // Something abnormal happened so throw an error
-            throw new ConfigurationError(x.toString(), x);
-        }
-        return classLoader;
-    }
-
-    /*
-     * The following nested classes allow getContextClassLoader() to be
-     * called only on JDK 1.2 and yet run in older JDK 1.1 JVMs
-     */
-
-    private static abstract class ClassLoaderFinder {
-        abstract ClassLoader getContextClassLoader();
-    }
-
-    static class ClassLoaderFinderConcrete extends ClassLoaderFinder {
-        ClassLoader getContextClassLoader() {
-            return Thread.currentThread().getContextClassLoader();
-        }
-    }
-    static class ConfigurationError extends Error {
-        private Exception exception;
-
-        /**
-         * Construct a new instance with the specified detail string and
-         * exception.
-         */
-        ConfigurationError(String msg, Exception x) {
-            super(msg);
-            this.exception = x;
-        }
-
-        Exception getException() {
-            return exception;
-        }
-    }
-
 }
