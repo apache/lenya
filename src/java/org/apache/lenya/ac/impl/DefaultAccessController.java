@@ -1,21 +1,21 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Copyright 1999-2004 The Apache Software Foundation
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *  
  */
 
-/* $Id: DefaultAccessController.java,v 1.6 2004/05/10 10:15:21 gregor Exp $  */
+/* $Id: DefaultAccessController.java,v 1.7 2004/07/13 08:14:12 andreas Exp $ */
 
 package org.apache.lenya.ac.impl;
 
@@ -53,26 +53,22 @@ import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.PolicyManager;
 
-public class DefaultAccessController
-    extends AbstractLogEnabled
-    implements AccessController, Configurable, Serviceable, Disposable, ItemManagerListener {
+public class DefaultAccessController extends AbstractLogEnabled implements AccessController,
+        Configurable, Serviceable, Disposable, ItemManagerListener {
 
     protected static final String AUTHORIZER_ELEMENT = "authorizer";
     protected static final String TYPE_ATTRIBUTE = "type";
     protected static final String ACCREDITABLE_MANAGER_ELEMENT = "accreditable-manager";
     protected static final String POLICY_MANAGER_ELEMENT = "policy-manager";
-    private static final String  REGEX="([0-9]{1,3}\\.){3}[0-9]{1,3}";
-    
+
+    private static final String REGEX = "([0-9]{1,3}\\.){3}[0-9]{1,3}";
     private ServiceSelector accreditableManagerSelector;
     private AccreditableManager accreditableManager;
-
     private ServiceSelector authorizerSelector;
     private Map authorizers = new HashMap();
     private List authorizerKeys = new ArrayList();
-
     private ServiceSelector policyManagerSelector;
     private PolicyManager policyManager;
-
     private Authenticator authenticator;
 
     /**
@@ -120,7 +116,7 @@ public class DefaultAccessController
 
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
-                        "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
+                            "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
                 }
 
                 i++;
@@ -162,7 +158,7 @@ public class DefaultAccessController
      * @throws ParameterException when an error occurs during parameterization.
      */
     public static void configureOrParameterize(Component component, Configuration configuration)
-        throws ConfigurationException, ParameterException {
+            throws ConfigurationException, ParameterException {
         if (component instanceof Configurable) {
             ((Configurable) component).configure(configuration);
         }
@@ -181,21 +177,21 @@ public class DefaultAccessController
      * @throws ParameterException when something went wrong.
      */
     protected void setupAccreditableManager(Configuration configuration)
-        throws ConfigurationException, ServiceException, ParameterException {
+            throws ConfigurationException, ServiceException, ParameterException {
 
-        Configuration accreditableManagerConfiguration =
-            configuration.getChild(ACCREDITABLE_MANAGER_ELEMENT, false);
+        Configuration accreditableManagerConfiguration = configuration.getChild(
+                ACCREDITABLE_MANAGER_ELEMENT, false);
         if (accreditableManagerConfiguration != null) {
-            String accreditableManagerType =
-                accreditableManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
+            String accreditableManagerType = accreditableManagerConfiguration
+                    .getAttribute(TYPE_ATTRIBUTE);
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
             }
 
-            accreditableManagerSelector =
-                (ServiceSelector) manager.lookup(AccreditableManager.ROLE + "Selector");
-            accreditableManager =
-                (AccreditableManager) accreditableManagerSelector.select(accreditableManagerType);
+            accreditableManagerSelector = (ServiceSelector) manager.lookup(AccreditableManager.ROLE
+                    + "Selector");
+            accreditableManager = (AccreditableManager) accreditableManagerSelector
+                    .select(accreditableManagerType);
             accreditableManager.addItemManagerListener(this);
             configureOrParameterize(accreditableManager, accreditableManagerConfiguration);
         }
@@ -209,8 +205,8 @@ public class DefaultAccessController
      * @throws ServiceException when something went wrong.
      * @throws ParameterException when something went wrong.
      */
-    protected void setupAuthorizers(Configuration configuration)
-        throws ServiceException, ConfigurationException, ParameterException {
+    protected void setupAuthorizers(Configuration configuration) throws ServiceException,
+            ConfigurationException, ParameterException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
         if (authorizerConfigurations.length > 0) {
             authorizerSelector = (ServiceSelector) manager.lookup(Authorizer.ROLE + "Selector");
@@ -237,17 +233,17 @@ public class DefaultAccessController
      * @throws ServiceException when something went wrong.
      * @throws ParameterException when something went wrong.
      */
-    protected void setupPolicyManager(Configuration configuration)
-        throws ServiceException, ConfigurationException, ParameterException {
-        Configuration policyManagerConfiguration =
-            configuration.getChild(POLICY_MANAGER_ELEMENT, false);
+    protected void setupPolicyManager(Configuration configuration) throws ServiceException,
+            ConfigurationException, ParameterException {
+        Configuration policyManagerConfiguration = configuration.getChild(POLICY_MANAGER_ELEMENT,
+                false);
         if (policyManagerConfiguration != null) {
             String policyManagerType = policyManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Adding policy manager type: [" + policyManagerType + "]");
             }
-            policyManagerSelector =
-                (ServiceSelector) manager.lookup(PolicyManager.ROLE + "Selector");
+            policyManagerSelector = (ServiceSelector) manager.lookup(PolicyManager.ROLE
+                    + "Selector");
             policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
             configureOrParameterize(policyManager, policyManagerConfiguration);
         }
@@ -342,7 +338,7 @@ public class DefaultAccessController
         }
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing [" + this +"]");
+            getLogger().debug("Disposing [" + this + "]");
         }
     }
 
@@ -392,18 +388,18 @@ public class DefaultAccessController
         if (!hasValidIdentity(session)) {
             Identity identity = new Identity();
             String remoteAddress = request.getRemoteAddr();
-	    String clientAddress = request.getHeader("x-forwarded-for");
+            String clientAddress = request.getHeader("x-forwarded-for");
 
-	    if (clientAddress != null) { 
-		Pattern p = Pattern.compile(REGEX);
-		Matcher m = p.matcher(clientAddress);
-	       
-		if (m.find()) {
-		    remoteAddress=m.group();
-		}
-	    }
+            if (clientAddress != null) {
+                Pattern p = Pattern.compile(REGEX);
+                Matcher m = p.matcher(clientAddress);
 
-	    getLogger().info("Remote Address to use: [" + remoteAddress +"]");
+                if (m.find()) {
+                    remoteAddress = m.group();
+                }
+            }
+
+            getLogger().info("Remote Address to use: [" + remoteAddress + "]");
 
             Machine machine = new Machine(remoteAddress);
             IPRange[] ranges = accreditableManager.getIPRangeManager().getIPRanges();
@@ -419,8 +415,8 @@ public class DefaultAccessController
     }
 
     /**
-     * Checks if the session contains an identity that is not null and belongs to the used access
-     * controller.
+     * Checks if the session contains an identity that is not null and belongs
+     * to the used access controller.
      * 
      * @param session The current session.
      * @return A boolean value.
