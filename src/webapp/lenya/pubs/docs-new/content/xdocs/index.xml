@@ -10,6 +10,9 @@
 		</authors>
 	</header>
 	<body>
+<p>
+Apache Lenya is a Cocoon subproject under incubation.
+</p>	  
 		<p>
 Apache Lenya is a Java-based <link href="http://www.opensource.org">Open-Source</link>
 Content Management System. It
