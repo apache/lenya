@@ -11,6 +11,8 @@ WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 XPDF=`grep xpdf.bin $DIRNAME/search.properties | grep -v "#" | sed -e 's/xpdf.bin=//'`
 
+JAVA_XMX=64M
+
 CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar:$LIB_DIR/websphinx.jar
 
 echo "INFO: classpath = $CLASSPATH"
@@ -48,7 +50,7 @@ case "$1" in
         $JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexConfiguration $LUCENE_CONF
         echo ""
 	echo "INFO: Create index:"
-        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF
+        $JAVA -Xmx$JAVA_XMX -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF
 
         ###$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
 	;;
