@@ -81,7 +81,7 @@ public class ReTokenizeFile {
      * @throws Exception if an error occurs
      */
     public String reTokenize(File file) throws Exception {
-        TokenStream ts = new StandardAnalyzer().tokenStream(new HTMLParser(file).getReader());
+        TokenStream ts = new StandardAnalyzer().tokenStream("",new HTMLParser(file).getReader());
 
         Token token = null;
 
@@ -100,7 +100,6 @@ public class ReTokenizeFile {
      * @return The excerpt
      * @throws FileNotFoundException if the file cannot be found
      * @throws IOException if an IO error occurs
-     *
      */
     public String getExcerpt(File file, String[] words)
         throws FileNotFoundException, IOException {
