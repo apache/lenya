@@ -682,6 +682,17 @@
       </map:pipeline>
 
 
+      <!-- Edit XHTML with Midas -->
+      <map:pipeline>
+        <map:match type="usecase" pattern="midas">
+          <map:read src="lenya/resources/misc/midas/midas.html" mime-type="text/html"/>
+        </map:match>
+        <map:match pattern="**/midas_files/**">
+          <map:read src="lenya/resources/misc/midas/midas_files/{2}"/>
+        </map:match>
+      </map:pipeline>
+
+
       <!-- Publications -->
 <!-- FIXME: Some publications still use "" and "index.html" as live entry point -->
 <!--
