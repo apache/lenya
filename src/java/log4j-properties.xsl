@@ -16,7 +16,7 @@
 -->
 
 <!--
-    $Id: log4j-properties.xsl,v 1.12 2004/03/26 18:40:32 egli Exp $
+    $Id: log4j-properties.xsl,v 1.13 2004/04/03 23:28:45 michi Exp $
     Description: Create log4j.properties file
 -->
 
@@ -64,6 +64,8 @@ log4j.appender.A1.layout.ConversionPattern=%-4r %d [%t] %-5p %c.%M():%L %x - %m%
 
 #log4j.category.org.apache.lenya.cms.cocoon.transformation.IncludeTransformer=DEBUG
 #log4j.category.org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper=DEBUG
+log4j.category.org.apache.lenya.lucene.index.AbstractIndexer=INFO
+log4j.category.org.apache.lenya.lucene.index.IndexInformation=INFO
 </xsl:template>
 
 </xsl:stylesheet> 
