@@ -320,18 +320,16 @@
 
 
       <!-- ************************************************************** -->
-      <!-- ********  HTML Form Editor *********************************** -->
+      <!-- ** HTML Form Editor                                         ** -->
+      <!-- **                                                          ** -->
+      <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
+      <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+      <!-- **       is configured within config/publication.xconf      ** -->
       <!-- ************************************************************** -->
       <map:match pattern="edit" type="usecase">
         <map:match pattern="open" type="step">
           <map:match pattern="*/authoring/**.html">
-<!--
-            <map:generate src="pubs/{1}/content/authoring/{2}/index_de.xml"/>
--->
             <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-<!--
-            <map:generate src="pubs/{1}/content/authoring/{2}.xml"/>
--->
             <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
             <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
               <map:parameter name="source" value="pubs/{1}/work/editor/authoring/{2}.xml"/>
@@ -815,7 +813,6 @@
       </map:match>
       
       <map:handle-errors type="500">
-<!--
         <map:select type="exception">
           <map:when test="parent-node-not-found">
 	    <map:transform src="xslt/exception/parent_node_not_found.xsl"/>
@@ -830,8 +827,7 @@
 	    <map:call resource="style-cms-page"/>
 	  </map:when>
         </map:select>
--->
-        <map:serialize type="xml"/>
+        <map:serialize type="html"/>
       </map:handle-errors>
       
     </map:pipeline>
