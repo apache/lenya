@@ -28,7 +28,7 @@
       <input type="hidden" name="insertBefore" value="{insertBefore}"/>
       <table border="0">
 	<tr>
-	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile"/></td>
+	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile" size="80"/></td>
 	</tr>
 	<tr>
 	  <td>Identifier&#160;</td><td><input type="text" name="identifier"/>&#160;&#160;<i>(optional)</i></td>
@@ -39,10 +39,10 @@
 	<tr><td>&#160;</td></tr>
 	<tr><td colspan="2"><h3>Metadata (Dublin Core)</h3></td></tr>
 	<tr>
-  <td>Author (Creator)&#160;</td><td><input type="text" name="creator" size="40"/>&#160;&#160;<i>(optional)</i></td>
+  <td>Author (Creator)&#160;</td><td><input type="text" name="creator" size="80"/>&#160;&#160;<i>(optional)</i></td>
 	</tr>
 	<tr>
-	  <td>Alt-Text (Image Title)&#160;</td><td><input type="text" name="title" size="40"/>&#160;&#160;<i>(optional)</i></td>
+	  <td>Alt-Text (Image Title)&#160;</td><td><input type="text" name="title" size="80"/>&#160;&#160;<i>(optional)</i></td>
 	</tr>
 <!--
 	<tr>
@@ -50,7 +50,7 @@
 	</tr>
 -->
 	<tr>
-	  <td>Caption (Image Description)&#160;</td><td><input type="text" name="description" size="40"/>&#160;&#160;<i>(optional)</i></td>
+	  <td>Caption (Image Description)&#160;</td><td><textarea name="description" cols="60" rows="3"/>&#160;&#160;<i>(optional)</i></td>
 	</tr>
 <!--
 	<tr>
@@ -59,7 +59,7 @@
 -->
 	<tr><td>&#160;</td></tr>
 	<tr>
-	  <td><input type="submit" value="Upload"/><input type="reset" value="Reset"/></td>
+	  <td colspan="2"><input type="submit" value="Upload"/><input type="reset" value="Reset"/></td>
 	</tr>
       </table>
     </form>
