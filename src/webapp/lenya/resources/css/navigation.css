@@ -51,7 +51,7 @@
 
 .menublock-1 .menublock-2 { display: none; }
 
-.menublock-selected-1 .menuitem-1 { }
+.menublock-selected-1 .menuitem-1 { font-weight: bold; }
 
 .menuitem-1 {
     padding: 0px;
