@@ -516,7 +516,7 @@
         <map:redirect-to uri="index.html"/>
       </map:match>
       <map:match pattern="index.html">
-        <map:aggregate element="lenya" label="aggregate">
+        <map:aggregate element="lenya" ns="http://lenya.org/2003/publication" prefix="lenya" label="aggregate">
           <map:part src="cocoon:/publications.xml"/>
           <map:part src="lenya/content/introduction.xml"/>
         </map:aggregate>
