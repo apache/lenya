@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TwoNodesTask.java,v 1.3 2003/07/09 12:02:19 egli Exp $
 <License>
 
  ============================================================================
@@ -60,12 +60,6 @@ import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import org.xml.sax.SAXException;
-
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 
 /**
  * Abstract base class for Ant tasks, which manipulates two nodes of the same tree.
@@ -91,8 +85,9 @@ public abstract class TwoNodesTask extends Task {
     }
 
     /**
-     * set the value of the absolute path of the tree
-     * @param string
+     * Set the value of the absolute path of the tree
+     * 
+     * @param string the absolute path of the tree
      */
     public void setAbsolutetreepath(String string) {
         absolutetreepath = string;
@@ -107,40 +102,46 @@ public abstract class TwoNodesTask extends Task {
     }
 
     /**
-     * set the value of the document-id corresponding to the first node
-     * @param string
+     * Set the value of the document-id corresponding to the first node
+     * 
+     * @param string the document-id
      */
     public void setFirstdocumentid(String string) {
         firstdocumentid = string;
     }
 
     /**
-     * return the document-id corresponding to the 2.node
-     * @return newdocumentid
+     * Return the document-id corresponding to the 2nd node.
+     * 
+     * @return newdocumentid the document-id
      */
     protected String getSecdocumentid() {
         return secdocumentid;
     }
 
     /**
-     * set the value of the document-id corresponding to the 2.node
-     * @param string
+     * Set the value of the document-id corresponding to the 2nd node.
+     * 
+     * @param string the second document-id
      */
     public void setSecdocumentid(String string) {
         secdocumentid = string;
     }
 
     /**
-     * copy a node of a tree and insert this in the same tree
-     * @param documentid : id of the copied document
-     * @param newdocumentid : id of the new document
+     * Copy a node of a tree and insert this in the same tree.
+     * 
+     * @param firstdocumentid : id of the copied document
+     * @param secdocumentid : id of the new document
      * @param absolutetreepath : absolute path of the tree
+     * 
+     * @throws SiteTreeException if an error occurs
      */
     public abstract void manipulateTree(String firstdocumentid, String secdocumentid,
         String absolutetreepath)
-        throws ParserConfigurationException, SAXException, IOException, SiteTreeException;
+        throws SiteTreeException;
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {

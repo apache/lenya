@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: InsertCopyNode.java,v 1.3 2003/07/09 12:00:39 egli Exp $
 <License>
 
  ============================================================================
@@ -64,6 +64,7 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 
 /**
@@ -84,13 +85,14 @@ public class InsertCopyNode extends TwoNodesTask {
      * @param firstdocumentid : document-id of the copied document
      * @param secdocumentid : document-id of the new document
      * @param absolutetreepath : absolute path of the tree
-      */
-    public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutetreepath)
-        throws ParserConfigurationException, SAXException, IOException, SiteTreeException {
+     *
+     * @throws SiteTreeException if there are problems with creating or saving the site tree.  
+     */
+    public void manipulateTree(String firstdocumentid, String secdocumentid, String absolutetreepath) throws SiteTreeException {
         DefaultSiteTree tree = null;
 
-        try {
-            tree = new DefaultSiteTree(absolutetreepath);
+            try {
+                tree = new DefaultSiteTree(absolutetreepath);
 
             SiteTreeNode node = tree.getNode(firstdocumentid);
 
@@ -101,9 +103,15 @@ public class InsertCopyNode extends TwoNodesTask {
                 throw new SiteTreeException("Node " + node + " couldn't be found");
             }
 
-            tree.save();
-        } catch (Exception e) {
-            throw new SiteTreeException(e);
-        }
+                tree.save();
+			} catch (ParserConfigurationException e) {
+				throw new SiteTreeException("Exception when creating the site tree", e);
+			} catch (SAXException e) {
+				throw new SiteTreeException("Exception when creating the site tree", e);
+			} catch (IOException e) {
+				throw new SiteTreeException("Exception when saving the tree file", e);
+            } catch (TransformerException e) {
+				throw new SiteTreeException("Exception when saving the tree file", e);
+            }
     }
 }
