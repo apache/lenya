@@ -38,6 +38,13 @@
   <!-- =========================== Resources ================================ -->
   <map:resources>
     
+    <map:resource name="style-cms-page">
+      <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize/>
+    </map:resource>
+    
     <map:resource name="scheduler-page">
       <map:aggregate element="scheduler" label="aggregation" ns="http://www.lenya.org/2002/sch" prefix="sch">
         <map:part src="cocoon:/document-types/{publication-id}"/>
@@ -59,10 +66,7 @@
         <map:parameter name="use-request-parameters" value="true"/>
         <map:parameter name="document-id" value="{page-envelope:document-id}"/>
       </map:transform>
-      <map:transform src="xslt/util/page2xhtml.xsl">
-        <map:parameter name="context-prefix" value="{request:contextPath}"/>
-      </map:transform>
-      <map:serialize type="html"/>
+      <map:call resource="style-cms-page"/>
     </map:resource>
     
     <map:resource name="usecase-create">
@@ -550,7 +554,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/ac/user-admin.xsp" type="serverpages"/>
             <map:transform src="xslt/ac/user-admin.xsl"/>
-            <map:serialize/>
+            <map:call resource="style-cms-page"/>
           </map:match>
           
         </map:match>
@@ -560,7 +564,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/ac/user-add.xsp" type="serverpages"/>
             <map:transform src="xslt/ac/user-add.xsl"/>
-            <map:serialize/>
+            <map:call resource="style-cms-page"/>
           </map:match>
           
           <map:match pattern="add" type="step">
@@ -577,7 +581,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/ac/user-modify.xsp" type="serverpages"/>
             <map:transform src="xslt/ac/user-modify.xsl"/>
-            <map:serialize/>
+            <map:call resource="style-cms-page"/>
           </map:match>
           
           <map:match pattern="modify" type="step">
@@ -594,7 +598,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/ac/user-modify.xsp" type="serverpages"/>
             <map:transform src="xslt/ac/user-delete.xsl"/>
-            <map:serialize/>
+            <map:call resource="style-cms-page"/>
           </map:match>
           
           <map:match pattern="delete" type="step">
