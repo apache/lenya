@@ -15,39 +15,40 @@
  *
  */
 
-/* $Id: JavaFilenameFilter.java,v 1.9 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class JavaFilenameFilter implements FilenameFilter {
+    
+    protected static final String[] SUFFIXES = { "java", "properties", "xsl" };
 
-	/**
-	 *  (non-Javadoc)
-	 * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
-	 */
+    /**
+     *  (non-Javadoc)
+     * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
+     */
     public boolean accept(File dir, String name) {
+        boolean accept = true;
         if (new File(dir, name).isFile()) {
             String suffix = getExtension(name);
-            if (suffix.equals("java") || suffix.equals("properties")) {
-                return true;
-            } else {
-                return false;
+            if (!Arrays.asList(SUFFIXES).contains(suffix)) {
+                accept = false;
             }
-        } else {
-            return true;
         }
+        return accept;
     }
 
-	/**
-	 * Get the extension
-	 * 
-	 * @param filename the file name from which the extension is extracted
-	 * @return the extension
-	 */
+    /**
+     * Get the extension
+     * 
+     * @param filename the file name from which the extension is extracted
+     * @return the extension
+     */
     static public String getExtension(String filename) {
         StringTokenizer st = new StringTokenizer(filename, ".");
         st.nextToken();
