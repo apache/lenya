@@ -9,20 +9,19 @@
       <parameter name="tree-live-path" value="content/live/tree.xml"/>
     </task>
     <task id="export" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
-<!--
-      <parameter name="export-path" value="resources/export/pending"/>
-      <parameter name="substitute-regexp" value="s/\/lenya\/oscom//g"/>
--->
+      <parameter name="export-path" value="work/export/pending"/>
+      <parameter name="substitute-regexp" value="/lenya/oscom/live/"/>
+      <parameter name="substitute-replacement" value="/"/>
       <parameter name="my-server-port" value="1313"/>
     </task>
   </task>
 
   <task id="export" class="org.apache.lenya.cms.publishing.StaticHTMLExporter">
     <label>Export</label>
-<!--
-    <parameter name="export-path" value="resources/export/pending"/>
-    <parameter name="substitute-regexp" value="s/\/lenya\/oscom//g"/>
--->
+    <parameter name="export-path" value="work/export/pending"/>
+    <parameter name="substitute-regexp" value="/lenya/oscom/live/"/>
+    <parameter name="substitute-replacement" value="/"/>
+    <parameter name="my-server-port" value="1313"/>
   </task>
     
   <task id="command-line" class="org.apache.lenya.cms.task.CommandLineTask">
