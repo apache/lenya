@@ -64,16 +64,39 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 
 	Map map = new HashMap();
 	
+        /*
 	if (this.getLogger().isDebugEnabled()) {
 	    this.getLogger().debug("processing file " + src);
 	}
-        
+
         Request request = ObjectModelHelper.getRequest(objectModel);
+        
+        String requestUri = request.getRequestURI();
+        
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("request URI (not processed): " + requestUri);
+        }
+        
+        String servletPath = request.getServletPath();
+        if (requestUri.startsWith(servletPath)) {
+            requestUri = requestUri.substring(0, servletPath.length());
+        }
+        
+        if (requestUri.startsWith("/")) {
+            requestUri = requestUri.substring(0, 1);
+        }
+        
+        String publicationId = requestUri.substring(0, requestUri.indexOf("/"));
+        requestUri = requestUri.substring(0, publicationId.length());
+        
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("request URI (processed): " + requestUri);
+        }
+        */
         
         String parameterNames[] = parameters.getNames();
         for (int i = 0; i < parameterNames.length; i++) {
-	    String parameterSrc = parameters.getParameter(parameterNames[i])
-                + request.getRequestURI();
+	    String parameterSrc = parameters.getParameter(parameterNames[i]) + "/" + src;
 	    inputSource = resolver.resolveURI(parameterSrc);
 	    
 	    if (this.getLogger().isDebugEnabled()) {
