@@ -15,12 +15,14 @@
  *
  */
 
-/* $Id: OneFormEditorSaveAction.java,v 1.1 2004/04/26 10:18:28 michi Exp $  */
+/* $Id: OneFormEditorSaveAction.java,v 1.2 2004/05/15 17:11:03 egli Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,15 +32,17 @@ import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.log4j.Category;
 
 /**
  *
  */
-public class OneFormEditorSaveAction extends AbstractConfigurableAction implements ThreadSafe {
+public class OneFormEditorSaveAction
+    extends AbstractConfigurableAction
+    implements ThreadSafe {
     Category log = Category.getInstance(OneFormEditorSaveAction.class);
 
     /**
@@ -62,36 +66,43 @@ public class OneFormEditorSaveAction extends AbstractConfigurableAction implemen
         Parameters parameters)
         throws Exception {
 
-        HttpRequest request = (HttpRequest) ObjectModelHelper.getRequest(objectModel);
-
+        HttpRequest request = (HttpRequest)ObjectModelHelper.getRequest(objectModel);
 
         // Get namespaces
         String namespaces = removeRedundantNamespaces(request.getParameter("namespaces"));
         log.debug(namespaces);
 
-
         // Aggregate content
-        String encoding = parameters.getParameter("encoding");
-        String content = "<?xml version=\"1.0\" encoding=\"" + encoding  + "\"?>\n" +addNamespaces(namespaces, request.getParameter("content"));
-        log.debug(content);
-
+        String encoding = request.getCharacterEncoding();
+        String content =
+            "<?xml version=\"1.0\" encoding=\""
+                + encoding
+                + "\"?>\n"
+                + addNamespaces(namespaces, request.getParameter("content"));
 
         // Save file temporarily
-	File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
-        File file = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("file"));
-        log.debug(file);
+        File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
+        File file =
+            new File(
+                sitemap.getAbsolutePath()
+                    + File.separator
+                    + parameters.getParameter("file"));
+
         File parentFile = new File(file.getParent());
         if (!parentFile.exists()) {
             parentFile.mkdirs();
-            log.warn("Directory has been created: " + parentFile);
         }
-        FileWriter fw = new FileWriter(file);
-        fw.write(content, 0, content.length());
-        fw.close();
-
+		FileOutputStream fileoutstream = new FileOutputStream(file);
+        Writer writer = new OutputStreamWriter(fileoutstream, encoding);
+        writer.write(content, 0, content.length());
+        writer.close();
 
         // Validate
-        File schema = new File(sitemap.getAbsolutePath() + File.separator + parameters.getParameter("schema"));
+        File schema =
+            new File(
+                sitemap.getAbsolutePath()
+                    + File.separator
+                    + parameters.getParameter("schema"));
         if (schema.isFile()) {
             String message = RelaxNG.validate(schema, file);
             if (message != null) {
@@ -101,12 +112,12 @@ public class OneFormEditorSaveAction extends AbstractConfigurableAction implemen
                 return hmap;
             }
         } else {
-            log.warn("Will not be validated. No such schema: " + schema.getAbsolutePath());
+            log.warn(
+                "Will not be validated. No such schema: " + schema.getAbsolutePath());
         }
-
 
         return null;
-        }
+    }
 
     /**
      * Remove redundant namespaces
@@ -114,12 +125,12 @@ public class OneFormEditorSaveAction extends AbstractConfigurableAction implemen
     private String removeRedundantNamespaces(String namespaces) {
         String[] namespace = namespaces.split(" ");
 
-	String ns = "";
+        String ns = "";
         for (int i = 0; i < namespace.length; i++) {
             if (ns.indexOf(namespace[i]) < 0) {
-               ns = ns + " " + namespace[i];
+                ns = ns + " " + namespace[i];
             } else {
-               log.debug("Redundant namespace: " + namespace[i]);
+                log.debug("Redundant namespace: " + namespace[i]);
             }
         }
         return ns;
