@@ -1,5 +1,5 @@
 /*
-$Id: ResourcesManager.java,v 1.2 2003/08/19 15:29:11 egli Exp $
+$Id: ResourcesManager.java,v 1.3 2003/08/22 18:57:30 egli Exp $
 <License>
 
  ============================================================================
@@ -64,18 +64,16 @@ import java.io.FilenameFilter;
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
  */
 public class ResourcesManager {
-    
-    private File resourcesPath = null;
-    
-    public static final String RESOURCES_PREFIX = "resources";  
-    
 
+    private File resourcesPath = null;
+
+    public static final String RESOURCES_PREFIX = "resources";
 
     /**
      * Create a new instance of Resources.
      * 
      * @param document the document for which the resources are managed
-     */    
+     */
     public ResourcesManager(Document document) {
         File publicationPath = document.getPublication().getDirectory();
         resourcesPath =
@@ -86,7 +84,7 @@ public class ResourcesManager {
                     + document.getArea()
                     + document.getId().replace('/', File.separatorChar));
     }
-    
+
     /**
      * Get the path to the resources.
      * 
@@ -95,14 +93,21 @@ public class ResourcesManager {
     public File getPath() {
         return resourcesPath;
     }
-    
+
     /**
      * Get all resources for the associated document.
      * 
      * @return all resources of the associated document
      */
     public File[] getResources() {
-        FilenameFilter filter = null;
+
+        // filter the meta files out. We only want to see the "real" resources.
+        FilenameFilter filter = new FilenameFilter() {
+
+            public boolean accept(File dir, String name) {
+                return !name.endsWith(".meta");
+            }
+        };
         return resourcesPath.listFiles(filter);
     }
 }
