@@ -35,7 +35,7 @@
     <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/matrix/"+projectid+".html"</xsp:expr>?documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-        <item uc:usecase="edit" href="?lenya.step=open">Edit&#160;with&#160;Forms</item>
+        <item uc:usecase="edit" href="?lenya.step=open&amp;doctype=cmfs">Edit&#160;with&#160;Forms</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/matrix/"+projectid+".html"</xsp:expr>?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;sources=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
       </block>
