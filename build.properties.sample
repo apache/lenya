@@ -38,13 +38,12 @@ cache.dir=/usr/local/tomcat/work/Standalone/localhost/lenya
 
 
 #------------------------------------------------------------------------------------
-# HSQL-DB server port
+# HSQL-DB server port (default is 9002)
 
 #hsqldb-server.port=9002
 
 
 #------------------------------------------------------------------------------------
-# Enable multipart requests
-# NOTE: this property has not been implemented yet; web.xml needs to be edited manually
+# Enable multipart requests (default is false)
 
-enable.uploads=false
+#enable.uploads=false
