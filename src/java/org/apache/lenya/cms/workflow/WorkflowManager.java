@@ -17,7 +17,6 @@
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.workflow.WorkflowException;
 
@@ -70,7 +69,7 @@ public interface WorkflowManager {
      *             <code>true</code> and a document does not support the
      *             workflow event.
      */
-    void invokeOnAll(DocumentSet documentSet, String event, boolean force) throws WorkflowException;
+    void invoke(DocumentSet documentSet, String event, boolean force) throws WorkflowException;
 
     /**
      * Checks if an event can be invoked on a document.
@@ -86,7 +85,7 @@ public interface WorkflowManager {
      * @param event The event.
      * @return if an error occurs.
      */
-    boolean canInvokeOnAll(DocumentSet documents, String event);
+    boolean canInvoke(DocumentSet documents, String event);
 
     /**
      * Copies the workflow history from one document to another.
