@@ -1,0 +1,433 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Mulitilingual Document handling</title>
+<link type="text/css" href="../../../skin/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!--================= start Banner ==================-->
+<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--================= start Group Logo ==================-->
+<td valign="bottom" bgcolor="#FFFFFF">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png"></a>
+</div>
+<span class="textheader">Apache Cocoon</span>
+<!--================= start Tabs ==================-->
+<div class="tab">
+<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="10" valign="bottom">
+<div class="tab-separator">
+<img alt="" width="10" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../installation/index.html"><font face="Arial, Helvetica, Sans-serif">Installation</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a href="../../index.html"><font color="#000000">Documentation</font></a>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<!--================= end Tabs ==================-->
+</td>
+<!--================= end Group Logo ==================-->
+<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<div style="padding: 10px" class="headerlogo">
+<a href="http://cocoon.apache.org/lenya"><img border="0" class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png"></a>
+</div>
+<div class="tab-separator"></div>
+</td>
+<!--================= end Project Logo ==================-->
+</tr>
+</table>
+<!--================= end Banner ==================-->
+<div class="tab-bar">
+<img alt="" height="5" src="../../../skin/images/spacer.gif"></div>
+<!--================= start Menu, NavBar, Content ==================-->
+<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
+<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<!--================= start left top NavBar ==================-->
+<!--================= end left top NavBar ==================-->
+<td valign="top">
+<div class="tab-subbar">
+<img width="10" height="5" alt="" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="top">
+<!--================= start Menu items ==================-->
+<div class="menu">
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<div class="menutitle">Integrator/Dev Guide</div>
+<div class="menuitemgroup">
+<div class="menutitle">Components</div>
+<div class="menuitemgroup">
+<div class="menutitle">Multilingual Documents</div>
+<div class="menuitemgroup">
+<div class="menupage">
+<div class="menupagetitle">Multilingual Document Handling</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a href="#Implementation">Implementation</a>
+</div>
+<div class="menupageitem">
+<a href="#Involved+classes%2C+XSPs+and+XSLTs">Involved classes, XSPs and XSLTs</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--================= end Menu items ==================-->
+</td><td valign="top">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr>
+<td></td><td height="5"><img alt="" width="150" height="1" src="../../../skin/images/spacer.gif"></td><td></td>
+</tr>
+</table>
+</td><td valign="top" width="100%">
+<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" colspan="3">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<!--================= start Content==================-->
+<tr>
+<td align="left" width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td><td align="left" width="100%">
+<div class="content">
+<table cellspacing="0" cellpadding="0" class="title">
+<tr>
+<td valign="middle">
+<h1>Mulitilingual Document handling</h1>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="multilingual.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+</tr>
+</table>
+    
+    
+<a name="N101C9"></a><a name="Introduction"></a>
+<h3>Introduction</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>Mulitilingual Document handling deals with documents of
+      different languages. This affects virtually every part of Lenya,
+      namely many aspects of work flow such as creation, publication,
+      deactivation, deletion. It also affects access control, meta
+      data, etc.</p>
+<p>The multilingual capabilities are not a mandatory feature of
+      Lenya. You can easily create monolingual publication by simply
+      replacing a few properties in
+      <span class="codefrag">publication.xconf</span>.</p>
+<p>The multilingual capabilities are deeply ingrained in the
+      core of Lenya and as such a conceptual overview has to delve
+      into many areas of Lenya. The main parts of the multilingual
+      capabilities are as follows:</p>
+<dl>
+	
+<dt>Site tree</dt>
+	
+<dd>The <a href="../publication/siteTree.html">site
+	tree</a> contains information about documents. It has been
+	expanded to also contain information about different language
+	versions of the same document. Different language versions of
+	the same document share the same
+	<span class="codefrag">document-id</span>.</dd>
+
+	
+<dt>Default language</dt> 
+	
+<dd>A publication has a default language. This is the language
+	in which the document is created. However it is not
+	necessarily the case that there is always a document version
+	in the default language as the user is allowed to remove any
+	language version even the one for the default language.<br>
+	If you specify an URL without a language suffix you are
+	redirected to the default language document.</dd>
+
+	
+<dt>publication.xconf</dt>
+	
+<dd>This is where the available languages and the default
+	language are specified.</dd>
+
+	
+<dt>page-envelope</dt> 
+	
+<dd>The <a href="../publication/pageenvelopemodule.html">page
+	envelope</a> exports document specific information such as
+	document-id via an input module. Naturally language specific
+	information for the current document is also available via the
+	page envelope.
+	</dd>
+
+	
+<dt>Redirection</dt>
+	
+<dd>If you request a document <span class="codefrag">foo.html</span> in a
+	multilingual publication you will internally be redirected to
+	<span class="codefrag">foo_en.html</span> if "en" is the default language.</dd>
+
+	
+<dt>Special cases</dt>
+	
+<dd>Some special care has to be taken when removing language
+	versions. The current implementation does not allow the user
+	to remove all language versions of a document. There always
+	has to be at least one language version.
+	</dd>
+      
+</dl>
+</div>
+
+    
+<a name="N10216"></a><a name="Implementation"></a>
+<h3>Implementation</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p></p>
+<a name="N1021E"></a><a name="Site+tree"></a>
+<h4>Site tree</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>The site tree contains nodes for each document. Each node
+	can contain multiple <span class="codefrag">label</span> nodes for each
+	language version of the document.</p>
+<pre class="code">
+&lt;node id="doctypes"&gt;
+	&lt;label xml:lang="de"&gt;Dokumenttypen&lt;/label&gt;
+	&lt;label xml:lang="en"&gt;Document types&lt;/label&gt;
+	&lt;node id="1column"&gt;
+		&lt;label xml:lang="de"&gt;1 Spalte&lt;/label&gt;
+	&lt;/node&gt;
+&lt;/node&gt;
+</pre>
+<p>The classe <span class="codefrag">SiteTree</span> and
+	<span class="codefrag">SiteTreeNode</span> provide interfaces to the nodes and
+	the corresponding label nodes.</p>
+</div>
+<a name="N10239"></a><a name="publication.xconf"></a>
+<h4>publication.xconf</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>The <span class="codefrag">languages</span> node in
+	<span class="codefrag">publication.xconf</span> defines the languages that are
+	available for this publication and also defines the default language.</p>
+<pre class="code">
+&lt;languages&gt;
+  &lt;language default="true"&gt;de&lt;/language&gt;
+  &lt;language&gt;en&lt;/language&gt;
+&lt;/languages&gt;
+</pre>
+<p>This information is available via the
+	<span class="codefrag">Publication</span> class
+	(<span class="codefrag">getDefaultLanguage()</span> and
+	<span class="codefrag">getLanguages()</span> methods).</p>
+</div>
+<a name="N1025A"></a><a name="page-envelope"></a>
+<h4>page-envelope</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>The <a href="../publication/pageenvelopemodule.html">page-envelope
+	input module</a> exports language related information,
+	namely <span class="codefrag">default-language</span>,
+	<span class="codefrag">document-label</span>, <span class="codefrag">document-language</span>,
+	<span class="codefrag">document-languages</span> and
+	<span class="codefrag">document-languages-csv</span>.</p>
+</div>
+<a name="N10277"></a><a name="Redirection"></a>
+<h4>Redirection</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>The <span class="codefrag">DefaultDocumentBuilder</span> which implements the
+	<span class="codefrag">DocumentBuilder</span> interface, takes care of
+	redirecting language agnostic URLs (such as
+	<span class="codefrag">foo.html</span>) to language aware links
+	(<span class="codefrag">foo_en.html</span>), i.e. language agnostic links are
+	redirected to the language aware link with the default language.</p>
+</div>
+<a name="N1028D"></a><a name="Addition+and+removal"></a>
+<h4>Addition and removal</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>More language versions are added with the "Create new
+	language version" screen. Existing language versions can be
+	removed with the "Remove Language" screen. These screens are
+	generated by <span class="codefrag">create-language.xsp</span>,
+	<span class="codefrag">create-language.xsl</span>, <span class="codefrag">removelabel.xsp</span>
+	and <span class="codefrag">removelabel.xsl</span>.</p>
+<p>The creation of a new language version is done via the
+	<span class="codefrag">create-language</span> target which uses the
+	<span class="codefrag">InsertLabelTask</span> ant task to insert a label in the
+	site tree.</p>
+<p>The removal of a language version is done via the
+	<span class="codefrag">remove-language</span> target, which uses the
+	<span class="codefrag">RemoveLabelTask</span> ant task (which removes the label
+	from the site tree).</p>
+</div>
+</div>
+
+    
+<a name="N102B6"></a><a name="Involved+classes%2C+XSPs+and+XSLTs"></a>
+<h3>Involved classes, XSPs and XSLTs</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>The following classes, XSPs and XSLTs are involved in
+      multilingual document handling:</p>
+<dl>
+	
+<dt>org.apache.lenya.cms.publication.SiteTree and org.apache.lenya.cms.publication.SiteTreeNode</dt>
+	
+<dd>These interfaces provide acces to the label nodes.</dd>
+	
+<dt>org.apache.lenya.cms.publication.Publication</dt>
+	
+<dd>Provides access to the default language and to all
+	available languages.</dd>
+	
+<dt>org.apache.lenya.cms.publication.PageEnvelope</dt>
+	
+<dd>Exports language related information such as
+	<span class="codefrag">default-language</span>, <span class="codefrag">document-language</span>,
+	etc.</dd>
+	
+<dt>org.apache.lenya.cms.publication.DefaultDocumentBuilder</dt>
+	
+<dd>Builds a document with the given language. The default
+	implementation also takes care of redirecting
+	<span class="codefrag">foo.html</span> to <span class="codefrag">foo_en.html</span>.</dd>
+<!-- 	FIXME: move this to the core -->
+	
+<dt>$publication-id/lenya/content/authoring/create-language.xsp,
+	$publication-id/lenya/xslt/authoring/create-language.xsl
+	</dt>
+	
+<dd>Generate the "Create new language version" screen.</dd>
+	
+<dt>src/webapp/lenya/content/authoring/removelabel.xsp, src/webapp/lenya/xslt/authoring/removelabel.xsl
+	</dt>
+	
+<dd>Generate the "Remove Language" screen.</dd>
+	
+<dt>org.apache.lenya.cms.ant.InsertLabelTask</dt>
+	
+<dd>Ant task to add a label to the site tree.</dd>
+	
+<dt>org.apache.lenya.cms.ant.RemoveLabelTask</dt>
+	
+<dd>Ant task to remove a label from the site tree.</dd>
+	
+<dt>$publication-id/config/tasks/targets.xml</dt>
+	
+<dd>Defines the <span class="codefrag">create-language</span> and the
+	<span class="codefrag">remove-language</span> target which
+	handle the addition and removal of language versions of a document.</dd>  
+      
+</dl>
+</div>
+  
+</div>
+</td><td width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td>
+</tr>
+<!--================= end Content==================-->
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<!--================= end Menu, NavBar, Content ==================-->
+<!--================= start Footer ==================-->
+<div class="footer">
+<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+<td colspan="2" height="1"><img height="1" width="1" alt="" src="../../../skin/images/spacer.gif"><a href="../../../skin/images/label.gif"></a><a href="../../../skin/images/page.gif"></a><a href="../../../skin/images/chapter.gif"></a><a href="../../../skin/images/chapter_open.gif"></a><a href="../../../skin/images/current.gif"></a></td>
+</tr>
+<tr>
+<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
+                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
+                <br>
+<script type="text/javascript" language="JavaScript"><!--
+                  document.write(" - "+"Last Published: " + document.lastModified);
+                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../../../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../../../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+</tr>
+</table>
+</div>
+<!--================= end Footer ==================-->
+</body>
+</html>
