@@ -129,11 +129,10 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         int languageSeparatorIndex = url.lastIndexOf("_");
         if (languageSeparatorIndex > -1) {
             String suffix = url.substring(languageSeparatorIndex + 1);
-            if (suffix.length() <= 4) {
+            if (suffix.length() <= 5) {
                 language = suffix;
             }
         }
-        
         return language;
     }
 
