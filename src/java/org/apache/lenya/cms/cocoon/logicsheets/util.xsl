@@ -38,7 +38,7 @@
     } catch (Exception e) {}
     
     String xspUtilServletContextPath = null;
-    {
+    try {
         Source inputSource = resolver.resolveURI("");
         String publicationPath = inputSource.getURI();
         String directories[] = publicationPath.split("/");
@@ -52,7 +52,7 @@
         publicationPath = publicationPath.replace('/', File.separatorChar);
         
         xspUtilServletContextPath = path;
-    }
+    } catch(Exception e) {}
     
     Date xsp_lenya_server_time = new Date();
     String xsp_lenya_context = request.getContextPath();
@@ -79,6 +79,7 @@
 	<context_prefix><xsp:expr>xsp_lenya_context_prefix</xsp:expr></context_prefix>
 	<sitemap_uri><xsp:expr>xsp_lenya_sitemap_uri</xsp:expr></sitemap_uri>
 	<prefix><xsp:expr>xsp_lenya_prefix</xsp:expr></prefix>
+	<servlet_context_path><xsp:expr>xspUtilServletContextPath</xsp:expr></servlet_context_path>
       </xsp:content>
 
     Session xsp_lenya_session = request.getSession(false);
