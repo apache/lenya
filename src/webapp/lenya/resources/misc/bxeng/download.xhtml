@@ -5,19 +5,12 @@
 <page:title>It seems that Bitflux Editor is not installed on your server</page:title>
 <page:body>
 <div class="lenya-box">
-Lenya is expecting a <i>bxeng</i> directory within your <i>webapps/ROOT</i> directory.
-<br />
-<br />Please download and install Bitflux Editor as follows
-<br /><br />
-<code>cd $TOMCAT/webapps/ROOT</code>
-<br />
-<code>cvs -d :pserver:anonymous@cvs.bitflux.ch:/var/lib/cvs/editor co bxeng</code>
-<br /><br />
-(No password required)
+<br />Please <a href="http://bitflux.org/download/bxe-0.9.1.tgz">download Bitflux Editor</a> and copy the
+    contents of the tarball to the <i>webapps/lenya/lenya/resources/bxeng</i> directory.
 <p>
 No further setup is required.
 <br /><br />
-Note that if you use Jetty, you will have to adjust paths because Lenya runs in the ROOT context.
+If you use Jetty, copy the contents of the tarball to the <i>build/lenya/webapps/lenya/resources/bxeng</i> directory.
 <br /><br />
 Many thanks to the <a href="http://www.bitfluxeditor.org">Bitflux Editor community</a> for making this great tool available.
 </p>
