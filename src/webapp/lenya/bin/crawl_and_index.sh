@@ -36,13 +36,6 @@ case "$1" in
 
         ###$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
 	;;
-    crawl)
-        echo ""
-        echo "=========================================================="
-        echo "Target: $1"
-        echo "=========================================================="
-        echo ""
-	;;
     xpdf)
         echo ""
         echo "=========================================================="
@@ -60,7 +53,7 @@ case "$1" in
         fi
 	;;
     *)
-        echo "Usage: $0 {crawl|index|xpdf}"
+        echo "Usage: $0 {index|xpdf}"
         exit 1
         ;;
 esac
