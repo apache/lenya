@@ -9,7 +9,10 @@
 </xsl:template>
 
 <xsl:template match="feed">
-<feed xmlns:echo="http://example.com/newformat#">
+<feed xmlns:echo="http://example.com/newformat#" version="{echo:feed/@version}">
+<!--
+<feed xmlns:echo="http://purl.org/atom/ns#" version="{echo:feed/@version}">
+-->
 <xsl:copy-of select="echo:feed/echo:title"/>
 <xsl:copy-of select="echo:feed/echo:subtitle"/>
 <xsl:copy-of select="echo:feed/echo:link"/>

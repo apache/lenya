@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
-<feed xmlns="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
+<feed xmlns="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="0.2">
+<!--
+<feed xmlns="http://purl.org/atom/ns#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="0.2">
+-->
   <title>Lenya's Weblog</title>
   <link>http://bob.blog/</link>
 
