@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTreeNodeImpl.java,v 1.2 2003/05/13 14:40:08 egli Exp $
+ * $Id: SiteTreeNodeImpl.java,v 1.3 2003/05/14 13:55:11 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -76,11 +76,18 @@ public class SiteTreeNodeImpl
 
     public String getParentId() {
 	Node parent = node.getParentNode();
-	if (parent == null) {
-	    return "/";
-	} else {
-	    return parent.getAttributes().getNamedItem(ID_ATTRIBUTE_NAME).getNodeValue();
-	}
+        if (parent == null) {
+          return "/";
+        }
+        NamedNodeMap attributes = parent.getAttributes();
+        if (attributes == null) {  
+          return "/";
+        }
+        Node idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
+        if (idAttribute == null) {
+          return "/";
+        }
+        return idAttribute.getNodeValue();
     }
 
     public String getId() {
