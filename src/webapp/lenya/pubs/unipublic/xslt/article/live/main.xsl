@@ -120,102 +120,13 @@ Programm</a></td>
 
 <p class="art-title1"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head/hedline/hl1"/></p>
 
-<p class="art-lead">In der Vorlesungsreihe &#171;Inventur im
-Museum&#187; des Musikwissenschaftlichen Seminars wird unser
-musikalischer Kanon hinterfragt. Gastreferenten aus Deutschland und
-der Schweiz sezieren jeweils ein &#171;grosses&#187; Werk. Zum
-Auftakt konfrontierte Hans-Joachim Hinrichsen gewohnte
-H&#246;rweisen von Bruckners &#171;Achter&#187; mit neuen
-T&#246;nen.</p>
+<p class="art-lead"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head/abstract"/> </p>
 
-<p class="art-author">Von Sabine Witt</p>
+<p class="art-author"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head/byline"/></p>
 
-<table border="0" cellpadding="0" cellspacing="0" width="250">
-<tr>
-<td><img src="{$unipublic}/magazin/gesellschaft/2002/0515/notizen.jpg" width="250" height="166" border="0" alt="Notizen"/></td>
-</tr>
+<xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.content/block"/>
 
-<tr>
-<td class="img-author">Bilder: Sabine Witt</td>
-</tr>
-</table>
-
-<p>&#220;ber Bruckner l&#228;sst sich gut n&#246;rgeln: zu schwer,
-pathetisch und noch schlimmer ndash; zum musikgeschichtlichen
-Kanon geh&#246;rend. Dass da kein Aufschrei der Emp&#246;rung von
-Fachkolleginnen und -kollegen oder vom Publikum erfolgte, erstaunte
-Musikprofessor Hans-Joachim Hinrichsen einigermassen, als er am
-Dienstagabend in der Universit&#228;t &#252;ber Bruckners Achte
-Sinfonie referierte. Er bestritt den Auftakt zur &#246;ffentlichen
-Ringvorlesung &#171;Inventur im Museum. Musikalische Meisterwerke
-neu geh&#246;rt&#187;, die er gemeinsam mit seinem Kollegen
-Professor Laurenz L&#252;tteken organisiert hat. Das Konzept, den
-Kanon zu hinterfragen und ihn gleichzeitig zu reproduzieren, ist
-eine beabsichtigte Provokation.</p>
-
-<p>Laurenz L&#252;tteken sprach in der Einleitung vom Dilemma der
-aus dem Angels&#228;chsischen her&#252;bergeschwappten Debatte, die
-den Kanon, anstatt ihn zu durchbrechen noch forciert hat. Der
-hartn&#228;ckige Versuch, Franz Schubert Homosexualit&#228;t
-nachzuweisen, sei beispielsweise nur noch Ausdruck methodischer
-Trostlosigkeit.</p>
-
-<table border="0" cellpadding="0" cellspacing="0" width="354">
-<tr>
-<td valign="bottom"><img src="{$unipublic}/magazin/gesellschaft/2002/0515/bruckner.gif" width="154" height="300" border="0" alt="Bruckner"/></td>
-<td class="img-text" valign="bottom">&#160;</td>
-<td class="img-text" valign="bottom">Anton Bruckner <span class= "img-author">(Silhouette von Otto Boehler, zVg)</span></td>
-</tr>
-</table>
-
-<p><span class="art-title3">Bruckner, ein Minimalist</span><br />
- Hinrichsens Vortrag zielte darauf ab, Bruckners sichere
-Verankerung in unserem &#171;germanozentrischen&#187; Kanon zu
-hinterfragen und neu zu begr&#252;nden. Mit Noten- und
-H&#246;rbeispielen f&#252;hrte er das Typische an Bruckners
-Sinfonik vor und an Besonderheiten deren Zuspitzung in der
-&#171;Achten&#187;: Transformationen ziehen sich als roter Faden
-durch die Sinfonie und sind als solche pr&#228;zise kalkuliert.
-Gegen alle Voreingenommenheit, bedingt durch die
-Rezeptionsgeschichte und Auff&#252;hrungspraxis, demonstrierte
-Hinrichsen Bruckners Musik als souver&#228;ne und sogar
-minimalistische Inszenierung. Er wies besonders auf Stellen hin,
-derentwegen Bruckners Musik traditionell zur Projektionsfl&#228;che
-f&#252;r Sehns&#252;chte, &#220;bersinnliches und Naturmystisches
-gemacht wird.</p>
-
-<table border="0" cellpadding="0" cellspacing="0" width="250">
-<tr>
-<td><img src="{$unipublic}/magazin/gesellschaft/2002/0515/hinrichsen.jpg" width="250" height="188" border="0" alt="Hinrichsen"/></td>
-</tr>
-
-<tr>
-<td class="img-text">Professor Hans-Joachim Hinrichsen</td>
-</tr>
-</table>
-
-<p><span class="art-title3">Bedenkliche
-Auff&#252;hrungspraxis</span><br />
-Der Vortrag und die anschliessende kurze Diskussion gaben nicht nur
-neue H&#246;rimpulse, sondern auch einen Einblick in die
-musikwissenschaftliche Arbeitsweise. Aus dem Vergleich der beiden
-Fassungen der Achten Sinfonie  Bruckner fertigte eine
-zweite, weil er die Dirigenten nicht zur Auff&#252;hrung der ersten
-bewegen konnte  leitete der Musikphilologe Hinrichsen
-Bruckners Innovation ab. Gegen&#252;ber der heutigen
-Auff&#252;hrungspraxis meldeten sowohl Hinrichsen als auch
-L&#252;tteken philologische Bedenken an. Denn heute wird die so
-genannte Originalfassung von Robert Haas aus dem Jahre 1927
-favorisiert, die eine Mischung aus Bruckners beiden Fassungen ist.
-Massgeblich dazu beigetragen haben die bedeutenden
-Bruckner-Interpreten G&#252;nter Wand und Pierre Boulez.</p>
-
-<p>Die Vorlesungsreihe richtet sich ausdr&#252;cklich an ein
-&#246;ffentliches Publikum, wie Hinrichsen und L&#252;tteken
-versicherten. Das haben sie auch den Gastreferenten aus der Schweiz
-und Deutschland so vermittelt.  Falls man dennoch nicht
-jedes &#252;ber die Musik gemachte Wort versteht, so spricht doch
-die Musik zumindest ihre eigene Sprache.</p>
+<!--<p><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.content/block/p"/></p>-->
 
 <p class="art-author">Sabine Witt ist Redaktorin des
 &#171;unijournals&#187; und freie Journalistin.</p>
@@ -240,7 +151,38 @@ Anfang<br />
 </center>
 </body>
 </html>
+</xsl:template>
 
+<xsl:template match="block">
+<xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="hl2">
+<span class="art-title3"><xsl:value-of select="."/></span><br />
+</xsl:template>
+
+<xsl:template match="p">
+<p><xsl:apply-templates/></p>
+</xsl:template>
+
+<!--<xsl:template match="media/@media-type[text()='image']">-->
+<xsl:template match="media">
+<table border="0" cellpadding="0" cellspacing="0" width="250">
+<tr>
+<td>
+<xsl:apply-templates select="media-reference" mode="image"/>
+</td></tr>
+<tr>
+<td class="img-text"><xsl:value-of select="media-caption"/></td>
+</tr>
+<tr>
+<td class="img-author">Bilder: Sabine Witt</td>
+</tr>
+</table>
+</xsl:template>
+
+<xsl:template match="media-reference" mode="image">
+<img src="{@source}" alt="{@alternate-text}" />
 </xsl:template>
 
 </xsl:stylesheet>
