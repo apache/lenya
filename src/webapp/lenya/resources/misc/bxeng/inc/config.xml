@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.4 2003/08/19 17:06:53 michi Exp $ -->
+<!-- $Id: config.xml,v 1.5 2003/08/21 21:46:08 michi Exp $ -->
 <config>
     <files>
         <input>
@@ -13,6 +13,9 @@
             <!-- The RelaxNG (XML Schema) -->
             <file name="BX_validationfile">relaxng.xml</file>
         </input>
+        <output>
+            <file name="BX_exitdestination">index.html</file>
+         </output>
         
         <!-- You can't provide a different "method" than http.get for the following files -->
         <css>
