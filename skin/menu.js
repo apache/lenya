@@ -18,10 +18,6 @@
  *
  * Typical usage:
  * <script type="text/javascript" language="JavaScript" src="menu.js"></script>
- *
- *@author     <a href="mailto:nicolaken@apache.org">Nicola Ken Barozzi</a>
- *@created    July 21, 2003
- *@version    1.0
  */
 
 if (document.getElementById){ 
