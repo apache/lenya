@@ -26,9 +26,7 @@
 	</div>
 	
 	<div style="position:absolute;top:60px;left:0px;z-index:1">
-	  <!--<iframe id="page" name="page" src="{$context_prefix}{live_uri}"> -->
 	  <xsl:apply-templates select="cmsbody"/>
-	  <!--</iframe> -->
 	</div>
 	<script type="text/javascript">
 	  initialize(); 
