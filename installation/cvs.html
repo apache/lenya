@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Lenya CVS Guide</title>
+<link type="text/css" href="../skin/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!--================= start Banner ==================-->
+<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--================= start Group Logo ==================-->
+<td valign="bottom" bgcolor="#FFFFFF">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../images/cocoon-project-logo-big.png"></a>
+</div>
+<span class="textheader">Apache Cocoon</span>
+<!--================= start Tabs ==================-->
+<div class="tab">
+<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="10" valign="bottom">
+<div class="tab-separator">
+<img alt="" width="10" src="../skin/images/spacer.gif"></div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td style="background-image: url(../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a href="index.html"><font color="#000000">Installation</font></a>
+</div>
+</td><td style="background-image: url(../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../docs/index.html"><font face="Arial, Helvetica, Sans-serif">Documentation</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<!--================= end Tabs ==================-->
+</td>
+<!--================= end Group Logo ==================-->
+<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<div style="padding: 10px" class="headerlogo">
+<a href="http://www.lenya.org"><img border="0" class="logoImage" alt="Lenya" src="../images/apache-lenya-light.png"></a>
+</div>
+<div class="tab-separator"></div>
+</td>
+<!--================= end Project Logo ==================-->
+</tr>
+</table>
+<!--================= end Banner ==================-->
+<div class="tab-bar">
+<img alt="" height="5" src="../skin/images/spacer.gif"></div>
+<!--================= start Menu, NavBar, Content ==================-->
+<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
+<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<!--================= start left top NavBar ==================-->
+<!--================= end left top NavBar ==================-->
+<td valign="top">
+<div class="tab-subbar">
+<img width="10" height="5" alt="" src="../skin/images/spacer.gif"></div>
+</td><td valign="top">
+<!--================= start Menu items ==================-->
+<div class="menu">
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="prerequisites.html">Prerequisites</a>
+</div>
+<div class="menutitle">Download Lenya</div>
+<div class="menuitemgroup">
+<div class="menupage">
+<div class="menupagetitle">CVS</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#CVS+at+Wyona">CVS at Wyona</a>
+</div>
+<div class="menupageitem">
+<a href="#CVS+at+Apache">CVS at Apache</a>
+</div>
+<div class="menupageitem">
+<a href="#CVS+Tips">CVS Tips</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="download.html">Nightly Snapshots</a>
+</div>
+</div>
+<div class="menutitle">Install Lenya</div>
+<div class="menuitemgroup">
+<div class="menuitem">
+<a href="source_version.html">Source Version</a>
+</div>
+</div>
+</div>
+</div>
+<!--================= end Menu items ==================-->
+</td><td valign="top">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr>
+<td></td><td height="5"><img alt="" width="150" height="1" src="../skin/images/spacer.gif"></td><td></td>
+</tr>
+</table>
+</td><td valign="top" width="100%">
+<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" colspan="3">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<!--================= start Content==================-->
+<tr>
+<td align="left" width="10"><img width="10" height="1" alt="" src="../skin/images/spacer.gif"></td><td align="left" width="100%">
+<div class="content">
+<table cellspacing="0" cellpadding="0" class="title">
+<tr>
+<td valign="middle">
+<h1>Lenya CVS Guide</h1>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="cvs.pdf"><img alt="PDF" src="../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+</tr>
+</table> 
+
+
+<a name="N101CC"></a><a name="CVS+at+Wyona"></a>
+<h3>CVS at Wyona</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The CVS command line for the Wyona CVS server:
+</p>
+<pre class="code">
+cvs -d :pserver:anonymous@cvs.wyona.org:/usr/local/repositories checkout lenya
+</pre>
+</div>
+
+
+<a name="N101DB"></a><a name="CVS+at+Apache"></a>
+<h3>CVS at Apache</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The CVS command line for the Apache CVS server (<strong>Note:</strong> This module has not been populated yet):
+</p>
+<pre class="code">
+cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login
+(password: anoncvs)
+cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic checkout cocoon-lenya
+</pre>
+</div>
+
+
+<a name="N101ED"></a><a name="CVS+Tips"></a>
+<h3>CVS Tips</h3>
+<div style="margin-left: 0 ; border: 2px">
+<ul>
+    
+<li>Please make sure that you use the -kb option when adding binary files, 
+        e.g. jar's, to the cvs. If not, it can cause a lot of trouble for 
+        windows users (because of the line feed conversion).
+    </li>
+    
+<li>
+
+<p>
+We sometimes seem to have problems when directories with wrong
+permissions are added to the repository (see the thread on the users
+list).
+</p>
+
+<p>
+The basic problem is the directories need to be g+w and need to be
+owned by group cvs-wyona.
+</p>
+
+<p>
+If these conditions aren't meet people will encounter problems with
+CVS being unable to create lock files in these directories.
+</p>
+
+<p>
+The solution to this is the sticky bit on directories. It makes sure
+that all files (and hence directories) created inherit the group
+from the parent directory. This is already in place.
+</p>
+
+<p>
+To solve the problem log into the cvs repository, cd to the
+repository and do
+</p>
+
+<p>
+
+<span class="codefrag">
+find . -type d -exec chmod g+s {} \;
+</span>
+
+</p>
+
+<p>
+As a reminder here's a excerpt from the CVS info pages:
+</p>
+    
+</li>
+  
+</ul>
+<pre class="code">
+&gt;    CVS tries to set up reasonable file permissions for new directories
+&gt; that are added inside the tree, but you must fix the permissions
+&gt; manually when a new directory should have different permissions than its
+&gt; parent directory.  If you set the `CVSUMASK' environment variable that
+&gt; will control the file permissions which CVS uses in creating directories
+&gt; and/or files in the repository.  `CVSUMASK' does not affect the file
+&gt; permissions in the working directory; such files have the permissions
+&gt; which are typical for newly created files, except that sometimes CVS
+&gt; creates them read-only (see the sections on watches, *Note Setting a
+&gt; watch::; -r, *Note Global options::; or `CVSREAD', *Note Environment
+&gt; variables::).
+&gt; 
+&gt;    Note that using the client/server CVS (*note Remote repositories::),
+&gt; there is no good way to set `CVSUMASK'; the setting on the client
+&gt; machine has no effect.  If you are connecting with `rsh', you can set
+&gt; `CVSUMASK' in `.bashrc' or `.cshrc', as described in the documentation
+&gt; for your operating system.  This behavior might change in future
+&gt; versions of CVS; do not rely on the setting of `CVSUMASK' on the client
+&gt; having no effect.
+</pre>
+</div>
+
+
+</div>
+</td><td width="10"><img width="10" height="1" alt="" src="../skin/images/spacer.gif"></td>
+</tr>
+<!--================= end Content==================-->
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<!--================= end Menu, NavBar, Content ==================-->
+<!--================= start Footer ==================-->
+<div class="footer">
+<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+<td colspan="2" height="1"><img height="1" width="1" alt="" src="../skin/images/spacer.gif"><a href="../skin/images/label.gif"></a><a href="../skin/images/page.gif"></a><a href="../skin/images/chapter.gif"></a><a href="../skin/images/chapter_open.gif"></a><a href="../skin/images/current.gif"></a></td>
+</tr>
+<tr>
+<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
+                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
+                <br>
+<script type="text/javascript" language="JavaScript"><!--
+                  document.write(" - "+"Last Published: " + document.lastModified);
+                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+</tr>
+</table>
+</div>
+<!--================= end Footer ==================-->
+</body>
+</html>

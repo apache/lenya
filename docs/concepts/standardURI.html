@@ -1,0 +1,867 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>URI Scheme</title>
+<link type="text/css" href="../../skin/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!--================= start Banner ==================-->
+<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--================= start Group Logo ==================-->
+<td valign="bottom" bgcolor="#FFFFFF">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../../images/cocoon-project-logo-big.png"></a>
+</div>
+<span class="textheader">Apache Cocoon</span>
+<!--================= start Tabs ==================-->
+<div class="tab">
+<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="10" valign="bottom">
+<div class="tab-separator">
+<img alt="" width="10" src="../../skin/images/spacer.gif"></div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../installation/index.html"><font face="Arial, Helvetica, Sans-serif">Installation</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a href="../index.html"><font color="#000000">Documentation</font></a>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<!--================= end Tabs ==================-->
+</td>
+<!--================= end Group Logo ==================-->
+<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<div style="padding: 10px" class="headerlogo">
+<a href="http://www.lenya.org"><img border="0" class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png"></a>
+</div>
+<div class="tab-separator"></div>
+</td>
+<!--================= end Project Logo ==================-->
+</tr>
+</table>
+<!--================= end Banner ==================-->
+<div class="tab-bar">
+<img alt="" height="5" src="../../skin/images/spacer.gif"></div>
+<!--================= start Menu, NavBar, Content ==================-->
+<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
+<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<!--================= start left top NavBar ==================-->
+<!--================= end left top NavBar ==================-->
+<td valign="top">
+<div class="tab-subbar">
+<img width="10" height="5" alt="" src="../../skin/images/spacer.gif"></div>
+</td><td valign="top">
+<!--================= start Menu items ==================-->
+<div class="menu">
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<div class="menutitle">Concepts and Best Practises</div>
+<div class="menuitemgroup">
+<div class="menuitem">
+<a href="siteTree.html">Site tree</a>
+</div>
+<div class="menuitem">
+<a href="pageEnvelope.html">Page envelope</a>
+</div>
+<div class="menuitem">
+<a href="navigation.html">Navigation</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">URI Scheme</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a href="#uri_definition">URI definition</a>
+</div>
+<div class="menupageitem">
+<a href="#Static+URIs-N10269">Static URIs</a>
+</div>
+<div class="menupageitem">
+<a href="#Dynamic+URIs-N10280">Dynamic URIs</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a href="static-resources.html">Serving static resources</a>
+</div>
+<div class="menutitle">Tasks</div>
+<div class="menuitemgroup">
+<div class="menuitem">
+<a href="tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a href="tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a href="tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a href="tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div class="menutitle">Included tasks</div>
+<div class="menuitemgroup">
+<div class="menuitem">
+<a href="tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a href="tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a href="tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a href="tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--================= end Menu items ==================-->
+</td><td valign="top">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr>
+<td></td><td height="5"><img alt="" width="150" height="1" src="../../skin/images/spacer.gif"></td><td></td>
+</tr>
+</table>
+</td><td valign="top" width="100%">
+<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" colspan="3">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<!--================= start Content==================-->
+<tr>
+<td align="left" width="10"><img width="10" height="1" alt="" src="../../skin/images/spacer.gif"></td><td align="left" width="100%">
+<div class="content">
+<table cellspacing="0" cellpadding="0" class="title">
+<tr>
+<td valign="middle">
+<h1>URI Scheme</h1>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="standardURI.pdf"><img alt="PDF" src="../../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+</tr>
+</table> 
+
+    
+<a name="N101D0"></a><a name="Introduction"></a>
+<h3>Introduction</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>We want to standardize CMS functionality across different
+      publications so that we can consolidate them in a standard root
+      sitemap.</p>
+<p>In order to achieve this one precondition is to standardize
+      on the URIs how the CMS functionality is invoked.</p>
+<p>There are different ways to achieve this. We either reserve
+      part of the URI space (e.g. /lenya/foo) or we reserve part of
+      the request parameter space (e.g. /foo?lenya=bar)</p>
+<a name="N101DF"></a><a name="Dynamic+URIs"></a>
+<h4>Dynamic URIs</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>We decided to go mostly for the second solution so that we
+	  can leave the URI space as required by the publication and use
+	  request parameters to invoke CMS actions.</p>
+<p>We define two standard request parameters which we use to
+	  invoke all CMS actions in a standard way:</p>
+<dl>
+	  
+<dt>
+<span class="codefrag">lenya.usecase</span>
+</dt>
+	  
+<dd>The name of the use case, e.g. "publish"</dd>
+	  
+<dt>
+<span class="codefrag">lenya.step</span>
+</dt>
+	  
+<dd>Each use case can have multiple steps,
+	    e.g. "showscreen"</dd> 
+	
+</dl>
+</div>
+<a name="N101FD"></a><a name="Static+URIs"></a>
+<h4>Static URIs</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>There are also some static URIs that are needed for the Lenya
+	  CMS. They are mostly internal pipelines for resources such as
+	  the menu, css or support files for Xopus and Bitflux
+	  editors.</p>
+<p>There is currently no consistent standard as to under which
+	  URI space these resources should be located. Some are
+	  residing in <span class="codefrag">/xopus/**</span> or
+	  <span class="codefrag">/bitflux/**</span> and others are in
+	  <span class="codefrag">/lenya/**</span>.</p>
+</div>
+</div>
+
+    
+<a name="N10214"></a><a name="uri_definition"></a>
+<h3>URI definition</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>Given the URI
+      <span class="codefrag">/lenya/computerworld/authoring/news/foo.html</span> we
+      define the following parts:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	
+<tr>
+	  
+<th colspan="1" rowspan="1">URI fragment</th>
+	  <th colspan="1" rowspan="1">Name</th>
+	
+</tr>
+	
+<tr>
+	  
+<td colspan="1" rowspan="1">lenya</td>
+	  <td colspan="1" rowspan="1"><span class="codefrag">context-prefix</span></td>
+	
+</tr>
+	
+<tr>
+	  
+<td colspan="1" rowspan="1">computerworld</td>
+	  <td colspan="1" rowspan="1"><span class="codefrag">publication-id</span></td>
+	
+</tr>
+	
+<tr>
+	  
+<td colspan="1" rowspan="1">authoring</td>
+	  <td colspan="1" rowspan="1"><span class="codefrag">area</span></td>
+	
+</tr>
+	
+<tr>
+	  
+<td colspan="1" rowspan="1">news/foo</td>
+	  <td colspan="1" rowspan="1"><span class="codefrag">document-id</span></td>
+	
+</tr>
+      
+</table>
+</div>
+
+    
+<a name="N10269"></a><a name="Static+URIs-N10269"></a>
+<h3>Static URIs</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>Currently different fragments of the URI space are reserved
+	(e.g. <span class="codefrag">/xopus/**</span>, <span class="codefrag">/bitflux/**</span> and
+	everything under <span class="codefrag">/lenya/**</span> that hasn't been
+	defined previously).</p>
+<div class="frame fixme">
+<div class="label">Fixme (
+               ce
+
+               )</div>
+<div class="content">The reserved URI space needs to be
+      consolidated and standardized.</div>
+</div>
+</div>
+    
+<a name="N10280"></a><a name="Dynamic+URIs-N10280"></a>
+<h3>Dynamic URIs</h3>
+<div style="margin-left: 0 ; border: 2px">
+<a name="N10286"></a><a name="Overview+of+use+cases"></a>
+<h4>Overview of use cases</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>The following use cases are known:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	  
+<tr>
+	    
+<th colspan="1" rowspan="1">Use case</th>
+	    <th colspan="1" rowspan="1"><span class="codefrag">lenya.usecase=</span></th>
+	    <th colspan="1" rowspan="1"><span class="codefrag">lenya.step=</span></th>
+	    <th colspan="1" rowspan="1">Comment</th>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Publish</td>
+	    <td colspan="1" rowspan="1">publish</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Confirm the publication of this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">publish</td>
+	    <td colspan="1" rowspan="1">Publish this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Create</td>
+	    <td colspan="1" rowspan="1">create</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Show a form allowing to specify the parameters for
+	    creation of a document</td> 
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">create</td>
+	    <td colspan="1" rowspan="1">Create the document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Resource upload</td>
+	    <td colspan="1" rowspan="1">upload</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Show a form allowing to specify the parameters for
+	      uploading of a resource</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">upload</td>
+	    <td colspan="1" rowspan="1">Upload the resource</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Rollback</td>
+	    <td colspan="1" rowspan="1">rollback</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Show a list of all versions of this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">view</td>
+	    <td colspan="1" rowspan="1">View a particular version of this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">rollback</td>
+	    <td colspan="1" rowspan="1">Roll back to a particular version of this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Checkin</td>
+	    <td colspan="1" rowspan="1">checkin</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Confirm the checkin of this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">checkin</td>
+	    <td colspan="1" rowspan="1"></td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Checkout</td>
+	    <td colspan="1" rowspan="1">checkout</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Confirm the checkout of this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">checkout</td>
+	    <td colspan="1" rowspan="1"></td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Schedule</td>
+	    <td colspan="1" rowspan="1">schedule</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Show a list of all task scheduled for this document</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">add</td>
+	    <td colspan="1" rowspan="1">Add a new task</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">modify</td>
+	    <td colspan="1" rowspan="1">Modify an existing task</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">delete</td>
+	    <td colspan="1" rowspan="1">Delete an existing task</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Edit</td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">User Admin</td>
+	    <td colspan="1" rowspan="1">user-admin</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Show an overview page listing all users</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">add</td>
+	    <td colspan="1" rowspan="1">Add a user</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">modify</td>
+	    <td colspan="1" rowspan="1">Modify a user</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1"></td>
+	    <td colspan="1" rowspan="1">delete</td>
+	    <td colspan="1" rowspan="1">Delete a user</td>
+	  
+</tr>
+	  
+<tr>
+	    
+<td colspan="1" rowspan="1">Logout</td>
+	    <td colspan="1" rowspan="1">logout</td>
+	    <td colspan="1" rowspan="1">showscreen</td>
+	    <td colspan="1" rowspan="1">Confirm the logout</td>
+	  
+</tr>
+          
+<tr>
+            
+<td colspan="1" rowspan="1">View Logs</td>
+            <td colspan="1" rowspan="1">view-logs</td>
+            <td colspan="1" rowspan="1">overview</td>
+            <td colspan="1" rowspan="1">Show the logfile list for this publication</td>
+          
+</tr>
+          
+<tr>
+            
+<td colspan="1" rowspan="1">&nbsp;</td>
+            <td colspan="1" rowspan="1">&nbsp;</td>
+            <td colspan="1" rowspan="1">log</td>
+            <td colspan="1" rowspan="1">Show a single logfile</td>
+          
+</tr>
+	
+</table>
+<div class="frame fixme">
+<div class="label">Fixme (
+               ce
+
+               )</div>
+<div class="content">Can the authenticate process done in a
+	  similar way?</div>
+</div>
+</div>
+<a name="N104D0"></a><a name="Use+cases"></a>
+<h4>Use cases</h4>
+<div style="margin-left: 0 ; border: 2px">
+<a name="N104D6"></a><a name="Resource+upload"></a>
+<h5>Resource upload</h5>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+<span class="codefrag">lenya.usecase=upload</span>
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	    
+<tr>
+	      
+<th colspan="1" rowspan="1"><span class="codefrag">lenya.step=</span></th>
+	      <th colspan="1" rowspan="1">additional parameters</th>
+	      <th colspan="1" rowspan="1">sample value</th>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">showscreen</td>
+	      <td colspan="1" rowspan="1">xpath</td>
+	      <td colspan="1" rowspan="1">/NewsML/body.content/block[1]/*[1]</td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">insertBefore [optional]</td>
+	      <td colspan="1" rowspan="1">true</td>
+	    
+</tr>
+	    
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">upload</td>
+	      <td colspan="1" rowspan="1">documentid</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">xpath</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">insertBefore [optional]</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">uploadFile</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">identifier [optional]</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="2" rowspan="1">All Dublin core identifiers are also accepted</td>
+	    
+</tr>
+	  
+</table>
+<div class="frame fixme">
+<div class="label">Fixme (
+               ce
+
+               )</div>
+<div class="content">We assume that we can get the documentid
+	    from the request URI (given the standardized <a href="#uri_definition">URI definition</a>). Is this
+	    ok?</div>
+</div>
+</div>
+<a name="N1057F"></a><a name="Create"></a>
+<h5>Create</h5>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+<span class="codefrag">lenya.usecase=create</span>
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	    
+<tr>
+	      
+<th colspan="1" rowspan="1"><span class="codefrag">lenya.step=</span></th>
+	      <th colspan="1" rowspan="1">additional parameters</th>
+	      <th colspan="1" rowspan="1">sample value</th>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">showscreen</td>
+	      <td colspan="1" rowspan="1">parentid</td>
+	      <td colspan="1" rowspan="1">/dossiers/2003</td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">doctype</td>
+	      <td colspan="1" rowspan="1">Dossier</td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">create</td>
+	      <td colspan="1" rowspan="1">parentid</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">childid</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1">doctype</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	  
+</table>
+</div>
+<a name="N105F4"></a><a name="Rollback"></a>
+<h5>Rollback</h5>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+<span class="codefrag">lenya.usecase=rollback</span>
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	    
+<tr>
+	      
+<th colspan="1" rowspan="1"><span class="codefrag">lenya.step=</span></th>
+	      <th colspan="1" rowspan="1">additional parameters</th>
+	      <th colspan="1" rowspan="1">sample value</th>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">showscreen</td>
+	      <td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">view</td>
+	      <td colspan="1" rowspan="1">version</td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	  
+</table>
+</div>
+<a name="N10636"></a><a name="View+Logs"></a>
+<h5>View Logs</h5>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+<span class="codefrag">lenya.usecase=view-logs</span>
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+	    
+<tr>
+	      
+<th colspan="1" rowspan="1"><span class="codefrag">lenya.step=</span></th>
+	      <th colspan="1" rowspan="1">additional parameters</th>
+	      <th colspan="1" rowspan="1">sample value</th>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">overview</td>
+	      <td colspan="1" rowspan="1"></td>
+	      <td colspan="1" rowspan="1"></td>
+	    
+</tr>
+	    
+<tr>
+	      
+<td colspan="1" rowspan="1">log</td>
+	      <td colspan="1" rowspan="1">logfile</td>
+	      <td colspan="1" rowspan="1">2003-05-13-18-34-00-314.xml</td>
+	    
+</tr>
+	  
+</table>
+</div>
+<div class="frame fixme">
+<div class="label">Fixme (
+               ce
+
+               )</div>
+<div class="content">Add remaining use cases</div>
+</div>
+</div>
+</div>
+  
+</div>
+</td><td width="10"><img width="10" height="1" alt="" src="../../skin/images/spacer.gif"></td>
+</tr>
+<!--================= end Content==================-->
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<!--================= end Menu, NavBar, Content ==================-->
+<!--================= start Footer ==================-->
+<div class="footer">
+<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+<td colspan="2" height="1"><img height="1" width="1" alt="" src="../../skin/images/spacer.gif"><a href="../../skin/images/label.gif"></a><a href="../../skin/images/page.gif"></a><a href="../../skin/images/chapter.gif"></a><a href="../../skin/images/chapter_open.gif"></a><a href="../../skin/images/current.gif"></a></td>
+</tr>
+<tr>
+<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
+                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
+                <br>
+<script type="text/javascript" language="JavaScript"><!--
+                  document.write(" - "+"Last Published: " + document.lastModified);
+                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+</tr>
+</table>
+</div>
+<!--================= end Footer ==================-->
+</body>
+</html>
