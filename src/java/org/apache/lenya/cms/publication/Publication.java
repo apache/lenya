@@ -17,7 +17,7 @@ import org.apache.lenya.cms.publishing.PublishingEnvironment;
 public class Publication {
     
     /** Creates a new instance of Publication */
-    public Publication(String id, String servletContextPath) {
+    protected Publication(String id, String servletContextPath) {
         
         assert id != null;
         this.id = id;
