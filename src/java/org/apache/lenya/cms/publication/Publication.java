@@ -16,6 +16,9 @@ import org.apache.lenya.cms.publishing.PublishingEnvironment;
  */
 public class Publication {
     
+    public static final String AUTHORING_AREA = "authoring";
+    public static final String LIVE_AREA = "live";
+    
     /** Creates a new instance of Publication */
     protected Publication(String id, String servletContextPath) {
         
@@ -71,6 +74,21 @@ public class Publication {
      */
     public File getDirectory() {
         return new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
+    }
+    
+    private DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
+    
+    public void setPathMapper(DefaultDocumentIdToPathMapper mapper) {
+        assert mapper != null;
+        this.mapper = mapper;
+    }
+    
+    /**
+     * Returns the path mapper.
+     * @return
+     */
+    public DocumentIdToPathMapper getPathMapper() {
+        return mapper;
     }
 
 }
