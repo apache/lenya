@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: InetAddressUtil.java,v 1.11 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id: InetAddressUtil.java,v 1.12 2004/05/17 16:34:02 michi Exp $  */
 
 package org.apache.lenya.net;
 
@@ -60,6 +60,9 @@ public class InetAddressUtil {
         int networkPart = getClassPart(network, part);
         int netmaskPart = getClassPart(netmask, part);
         int ipPart = getClassPart(ip, part);
+
+        // Treat 255.255.255.255 exceptionally
+        if (netmaskPart == 255 && networkPart == ipPart) return true;
 
         int firstHostAddress = networkPart + 1;
         int broadcastAddress = networkPart + (256 - netmaskPart - 1);
