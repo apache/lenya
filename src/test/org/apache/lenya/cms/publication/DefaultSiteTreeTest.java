@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.1 2003/07/08 09:31:24 egli Exp $
+$Id: DefaultSiteTreeTest.java,v 1.2 2003/07/08 09:53:11 egli Exp $
 <License>
 
  ============================================================================
@@ -160,32 +160,77 @@ public class DefaultSiteTreeTest extends TestCase {
 	/**
 	 * Test addLabel
 	 * 
-	 * @throws SiteTreeException
+	 * @throws SiteTreeException if an error occurs
 	 */
     final public void testAddLabel() throws SiteTreeException {
 		Label label = new Label("Tutorial", null);
 		Label[] labels = null;
 
 		siteTree.addLabel("/foo/bar", label);
-		labels = siteTree.getNode("foo/bar").getLabels();
+		labels = siteTree.getNode("/foo/bar").getLabels();
 		assertEquals(labels.length, 3);
 		label = siteTree.getNode("/foo/bar").getLabel("");
 		assertNotNull(label);
 		assertEquals(label.getLabel(), "Tutorial");
     }
 
+	/**
+	 * Test removeLabel
+	 *
+	 */
     final public void testRemoveLabel() {
-        //TODO Implement removeLabel().
+		assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 2);
+		
+		Label label = new Label("Stab", "de");
+		siteTree.removeLabel("/foo/bar", label);
+		assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 1);
+		
+		assertEquals(siteTree.getNode("/foo/bar").getLabels()[0], new Label("Bar", "en"));
+		
+		siteTree.addLabel("/foo/bar", label);
+		assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 2);
     }
 
-    final public void testRemoveNode() {
-        //TODO Implement removeNode().
+	/**
+	 * Test removeNode
+	 * 
+	 * @throws SiteTreeException if an error occurs
+	 */
+    final public void testRemoveNode() throws SiteTreeException {
+    	Label label1 = new Label("Hi", "en");
+    	Label label2 = new Label("Ho", "en");
+    	Label[] labels1 = { label1, label2};
+    	
+    	siteTree.addNode("/hi", labels1, null, null, false);
+
+		Label label3 = new Label("Ha", "en");
+		Label label4 = new Label("He", "en");
+		Label[] labels2 = { label1, label2};
+
+		siteTree.addNode("/hi/ho", labels2, null, null, false);
+		
+		assertNotNull(siteTree.getNode("/hi/ho"));
+		
+		siteTree.removeNode("/hi");
+		
+		assertNull(siteTree.getNode("/hi/ho"));
+		assertNull(siteTree.getNode("/hi"));
     }
 
+	/**
+	 * Test getNode
+	 *
+	 */
     final public void testGetNode() {
-        //TODO Implement getNode().
+		assertNotNull(siteTree.getNode("/foo/bar"));
+		
+		assertNull(siteTree.getNode("/foo/baz"));
     }
 
+	/**
+	 * Test save
+	 *
+	 */
     final public void testSave() {
         //TODO Implement save().
     }
