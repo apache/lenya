@@ -72,9 +72,49 @@
         
         
     </files>
-
+    <options> 
+    <option name="autoParaElementName">p</option>
+    <option name="autoParaElementNamespace">http://www.w3.org/1999/xhtml</option>
+    <option name="showSplashScreen">true</option>
+    <option name="mergeDifferentBlocksOnDelete">true</option>
+    </options>
+<!-- here we define the buttons for the top button bar -->
     <buttons>
+    
+    <!-- The location of the image for the buttons
+           if none is provided, the images/buttons.png is taken 
+    <location src="../../images/bxe.png"/>
+    -->
+     <!-- the dimension tag is for defining the dimensions of your button image and how
+            large each button is. -->
     <dimension  width="120" height="140" buttonwidth="20" buttonheight="20"/>
+    <!-- For each button, we need a definition
+    attributes:  
+        col: in which column the button is in the button image
+        row: in which row the button is in the button image
+        name: the name of the button, this has to be unique and is used as tool tip at the moment
+        ns: a namespace associated to the button (usually the namespace of the element to be inserted)
+        type: The type of the "event" which should happen
+            "function": This function will be called, when the button is clicked
+            "insertElement": This element will be inserted
+            "event": This event will be triggered
+            
+            If there's no "type" attribute, but a "action" attribute, the event in the action attribute
+            will be triggered. 
+            
+            If type "event" or the action attribute is defined, the event gets the value of @name as parameter.
+        examples: 
+        - inserts the element xhtml:strong at cursor position 
+          <button name="strong" col="1" row="1" type="insertElement" ns="http://www.w3.org/1999/xhtml">b</button>
+        - calls the function DoSomething(), when clicked
+          <button name="strong" col="1" row="1" type="function">DoSomething</button>
+        - triggers the event ToggleTextClass (and makes the selection bold in this example)
+          the 2 examples are the same, the later is here for backwards compatibility.
+          <button name="strong" col="1" row="1" type="event" ns="http://www.w3.org/1999/xhtml">ToggleTextClass</button>
+          <button name="strong" col="1" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+          
+    -->
+
         <button name="strong" col="1" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
         <button name="em" col="0" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
 
@@ -104,8 +144,4 @@
         <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0" type="popup">?lenya.usecase=bxeng&amp;lenya.step=asset-upload-show</element>
         <element name="a" ns="http://www.w3.org/1999/xhtml" precheck="bxe_checkIfNotALink" type="popup">?lenya.usecase=bxeng&amp;lenya.step=link-show</element>
     </callbacks>
-    <options>
-     <option name="autoParaElementName">p</option>
-     <option name="autoParaElementNamespace">http://www.w3.org/1999/xhtml</option>
-    </options>
 </config>
