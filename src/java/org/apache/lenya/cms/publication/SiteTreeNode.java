@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.11 2003/09/17 18:54:33 edith Exp $
+$Id: SiteTreeNode.java,v 1.12 2003/09/18 11:50:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,8 +60,8 @@ package org.apache.lenya.cms.publication;
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
- * @author $Author: edith $
- * @version $Revision: 1.11 $
+ * @author $Author: andreas $
+ * @version $Revision: 1.12 $
  */
 public interface SiteTreeNode {
 
@@ -176,4 +176,12 @@ public interface SiteTreeNode {
      * @throws DocumentException if an error occurs
      */
     void acceptSubtree(SiteTreeNodeVisitor visitor) throws DocumentException;
+
+    /**
+     * Sets a label of an this node. If the label does not exist, it is added.
+     * Otherwise, the existing label is replaced.
+     * 
+     * @param label the label to add
+     */
+    void setLabel(Label label);
 }

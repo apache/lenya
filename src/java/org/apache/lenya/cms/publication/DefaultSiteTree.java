@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.33 2003/09/17 18:55:29 edith Exp $
+$Id: DefaultSiteTree.java,v 1.34 2003/09/18 11:50:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -596,6 +596,16 @@ public class DefaultSiteTree implements SiteTree {
 			throw new SiteTreeException(
 				"The saving of document [" + document.getLocalName() + "] failed");
 		}
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTree#setLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
+     */
+    public void setLabel(String documentId, Label label) {
+        SiteTreeNode node = getNode(documentId);
+        if (node != null) {
+            node.setLabel(label);
+        }
     }
 
 

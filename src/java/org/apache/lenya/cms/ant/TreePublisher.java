@@ -1,5 +1,5 @@
 /*
-$Id: TreePublisher.java,v 1.10 2003/09/17 19:00:15 edith Exp $
+$Id: TreePublisher.java,v 1.11 2003/09/18 11:50:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,9 @@ $Id: TreePublisher.java,v 1.10 2003/09/17 19:00:15 edith Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publishing.ParentNodeNotFoundException;
@@ -125,8 +125,8 @@ public class TreePublisher extends PublicationTask {
      */
     public void publish(String documentId, String language)
         throws PublishingException {
-        DefaultSiteTree authoringTree = null;
-        DefaultSiteTree liveTree = null;
+        SiteTree authoringTree = null;
+        SiteTree liveTree = null;
 
         try {
             authoringTree =
@@ -173,7 +173,7 @@ public class TreePublisher extends PublicationTask {
                             // if the node already exists in the live
                             // tree simply insert the label in the
                             // live tree
-                            liveTree.addLabel(documentId, label);
+                            liveTree.setLabel(documentId, label);
                         } else {
                             // if the node doesn't exist, add it and
                             // add the specified label to it.

@@ -1,5 +1,5 @@
 /*
-$Id: SiteTree.java,v 1.17 2003/09/17 18:55:29 edith Exp $
+$Id: SiteTree.java,v 1.18 2003/09/18 11:50:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,8 +57,8 @@ package org.apache.lenya.cms.publication;
 /**
  * DOCUMENT ME!
  *
- * @author $Author: edith $
- * @version $Revision: 1.17 $
+ * @author $Author: andreas $
+ * @version $Revision: 1.18 $
  */
 public interface SiteTree {
 	
@@ -165,6 +165,7 @@ public interface SiteTree {
      * @throws SiteTreeException if the addition failed
 	 */
 	void addNode(SiteTreeNode node, String refDocumentId)  throws SiteTreeException;
+    
 	/**
 	 * Add a label to an existing node
 	 * 
@@ -173,6 +174,15 @@ public interface SiteTree {
 	 */
 	void addLabel(String documentId, Label label);
 	
+    /**
+     * Sets a label of an existing node. If the label does not exist, it is added.
+     * Otherwise, the existing label is replaced.
+     * 
+     * @param documentId the document-id to which the label is to be added.
+     * @param label the label to add
+     */
+    void setLabel(String documentId, Label label);
+    
 	/**
 	 * Remove a label from a node
 	 * 
