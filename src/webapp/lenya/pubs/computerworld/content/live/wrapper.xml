@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <html>
 <head>
 <title>Computerworld.ch: Home</title>
@@ -16,7 +15,7 @@ content="Die Schweizer Website f&#252;r Informatik Technologie und Internet" />
 <meta name="language" content="de-ch" />
 </head>
 <body bgcolor="#FFFFFF">
-<a id="" name=""></a> 
+<a id="" name="" /> 
 
 <div align="center">
 <center>
@@ -43,12 +42,12 @@ height="1" /></td>
 <!-- BANNER TABLE BEGINS HERE -->
 <table border="0" cellpadding="0" cellspacing="0" width="740">
 <tr>
-<td width="468" height="60" align="left" bgcolor="#FFFFFF" id="b468"></td>
+<td width="468" height="60" align="left" id="b468" />
 <td width="38" height="60" align="center"><a
-href="mailto:anzeigen@idg.ch"><img border="0"
-src="/img/layout/werbung.gif" width="38" height="60" /></a></td>
-<td width="234" height="60" align="right" bgcolor="#FFFFFF" id="b120"></td>
-</tr>
+href="http://www.idg.ch/tarife/computerworld/" target="_blank"><img
+border="0" src="/img/layout/werbung.gif" width="38"
+height="60" /></a></td>
+<td width="234" height="60" align="right" id="b120" /></tr>
 </table>
 
 <!-- BANNER TABLE ENDS HERE -->
@@ -60,26 +59,37 @@ width="1" height="11" /></td>
 </tr>
 
 <tr>
-<td></td>
+<td valign="middle" width="340" height="59"
+style="background-image:url(/img/layout/trans1x1.gif)"
+rowspan="2"><img border="0" src="/img/layout/cw-logo.gif"
+width="340" height="55" alt="Computerworld" /></td>
+<td align="right" valign="middle" width="400" height="41"
+style="background-image:url(/img/layout/trans1x1.gif)">
+<!-- PROMOTIONS TABLE BEGINS HERE -->
+<table border="0" cellpadding="0" cellspacing="0" summary="">
+<tr>
+<td width="75">&#160;</td>
+<td width="75" valign="middle"><a
+href="http://www.idg.ch/computerworld/abo/" class="txt-link-red"
+target="_blank"><img border="0"
+src="/img/layout/cw-gerollt.gif" width="75" height="30"
+alt="Computerworld Abo" /></a></td>
+<td width="250" valign="middle"><a
+href="http://www.idg.ch/computerworld/abo/" class="txt-link-red"
+target="_blank">&#160;&#160;&#187;&#160;Abonnieren Sie jetzt
+doppelt und alles einfach!&#160;</a> </td>
+</tr>
+</table>
+
+<!-- PROMOTIONS TABLE ENDS HERE -->
+</td>
 </tr>
 
 <tr>
-<td valign="bottom" height="41"
-style="background-image:url(/img/layout/trans1x1.gif)"><img
-border="0" src="/img/layout/cw-logo.gif" width="300" height="41"
-alt="Computerworld" /></td>
-<td align="right" valign="middle" height="41"
-style="background-image:url(/img/layout/trans1x1.gif)">&#160;</td>
-</tr>
-
-<tr>
-<td align="left" valign="middle" height="18"
-style="background-image:url(/img/layout/trans1x1.gif)"><img
-border="0" src="/img/layout/cw-desc.gif" width="300" height="11"
-alt="" /></td>
 <td align="right" valign="middle" height="18"
-style="background-image:url(/img/layout/trans1x1.gif)"><span
-class="txt-s-black"><span id="today">Montag, 9. Dezember 2002&#160;</span></span></td>
+style="background-image:url(/img/layout/trans1x1.gif)">
+<span class="txt-s-black"><span id="today">Montag, 9. Dezember
+2002&#160;</span></span> </td>
 </tr>
 </table>
 
@@ -107,7 +117,7 @@ height="1" /></td>
 src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 <td width="140" valign="top" bgcolor="#EFEFE7">
 <!-- LEFT NAVIGATION TABLE BEGINS HERE -->
-<span id="navigation" bxe-editable='navigation'></span> 
+<span id="navigation" bxe-editable="navigation" /> 
 
 <table border="0" cellpadding="0" cellspacing="0" width="140">
 <tr>
@@ -116,11 +126,18 @@ width="1" height="10" /></td>
 </tr>
 
 <!-- AKTUELL NAVPOINT =======================================================-->
+<!-- BANNER 140 x 140 
+                <tr>
+                    <td width="140"><a href="" class="txt-s-black"><img border="0" src="" alt=""></a></td>
+                </tr>
+                <tr>
+                    <td colspan="2" height="20" valign="middle"><img border="0" src="img/layout/line-nav140x1.gif" width="140" height="1"></td>
+                </tr>
+            -->
 <tr>
 <td colspan="2"><!-- COMPUTERWORLD MAGAZIN FORECAST BEGINS HERE -->
-<span id=""></span> 
-<!-- COMPUTERWORLD MAGAZIN FORECAST ENDS HERE -->
-</td>
+<span id="" /> <!-- COMPUTERWORLD MAGAZIN FORECAST ENDS HERE -->
+ </td>
 </tr>
 </table>
 
@@ -134,24 +151,13 @@ width="5" height="1" /></td>
 <td width="440" valign="top">
 <!-- MOEGLICHER ORT FUER RECTANGLE BANNER -->
 <!-- AKTUELLE AUSGABE TABLE BEGINS HERE -->
-<span id="preview" bxe-editable='preview'></span> 
-<!-- AKTUELLE AUSGABE TABLE ENDS HERE -->
-<!-- NEWS TABLE BEGINS HERE -->
-<span id="content" bxe-editable='content'></span> 
-
-<table border="0" cellpadding="0" cellspacing="0" width="440">
-<tr>
-<td height="20" colspan="2"><img src="/img/layout/trans1x1.gif"
-width="1" height="20" /></td>
-</tr>
-</table>
-
-<!-- NEWS TABLE BEGINS HERE -->
+<span id="content" bxe-editable="preview" /> 
+<!-- NEWS TABLE ENDS HERE -->
 <!-- COPYRIGHT ALL RIGHTS TABLE BEGINS HERE -->
 <table border="0" cellpadding="0" cellspacing="0" width="440">
 <tr>
-<td height="30"><img src="/img/layout/trans1x1.gif" width="1"
-height="30" /></td>
+<td height="20"><img src="/img/layout/trans1x1.gif" width="1"
+height="20" /></td>
 </tr>
 
 <tr>
@@ -173,8 +179,8 @@ width="440" height="1" /></td>
 </tr>
 
 <tr>
-<td height="15"><img src="/img/layout/trans1x1.gif" width="1"
-height="15" /></td>
+<td height="20"><img src="/img/layout/trans1x1.gif" width="1"
+height="20" /></td>
 </tr>
 </table>
 
@@ -190,8 +196,8 @@ src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 <!-- SKYSCRAPER BANNER BEGINS HERE -->
 <table border="0" cellpadding="0" cellspacing="0" width="148">
 <tr>
-<td width="148" height="400" bgcolor="#EFEFE7" valign="middle" id="b148">
-</td>
+<td width="148" height="400" valign="top"><span
+class="txt-s-red">&#160;Skyscraper 148 x 400 / 800</span></td>
 </tr>
 </table>
 
@@ -215,8 +221,8 @@ height="1" /></td>
 src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 <td width="140" bgcolor="#EFEFE7" align="center" valign="middle"><a
 href="http://www.idg.ch/" target="_blank"><img border="0"
-src="/img/layout/idg-logo.gif" width="60" height="21" alt="IDG" />
-</a></td>
+src="/img/layout/idg-logo.gif" width="60" height="21"
+alt="IDG" /></a></td>
 <td width="1" bgcolor="#EFEFE7"><img border="0"
 src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
 <td width="5" bgcolor="#EFEFE7"><img border="0"
@@ -234,7 +240,7 @@ International Data Group</span></td>
 href="http://www.pcwelt.de/" class="txt-s-black"
 target="_blank">Deutschland</a>&#160;| <a
 href="http://www.computerwelt.at/" class="txt-s-black"
-target="_blank">&#246;sterreich</a>&#160;| <a
+target="_blank">&#214;sterreich</a>&#160;| <a
 href="http://www.pcadvisor.co.uk/" class="txt-s-black"
 target="_blank">England</a>&#160;| <a
 href="http://www.computerworld.com/" class="txt-s-black"
@@ -243,8 +249,8 @@ class="txt-s-black" target="_blank">France</a>&#160;| <a
 href="http://www.itworldcanada.com" class="txt-s-black"
 target="_blank">Canda</a>&#160;| <a href="http://www.idg.co.jp/"
 class="txt-s-black" target="_blank">Japan</a>&#160;| <a
-href="http://www.computerworld@idg.com.sg/" class="txt-s-black"
-target="_blank">Singapour</a>&#160;| <a
+href="http://cio.idg.se/" class="txt-s-black"
+target="_blank">Sweden</a>&#160;| <a
 href="http://www.computerworld.com.br" class="txt-s-black"
 target="_blank">Brasil</a></span></td>
 </tr>
@@ -254,10 +260,9 @@ target="_blank">Brasil</a></span></td>
 src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
 <td width="1" bgcolor="#EFEFE7"><img border="0"
 src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
-<td width="148" bgcolor="#EFEFE7"><img border="0"
-src="/img/layout/trans1x1.gif" width="148" height="1" /></td>
-<td width="1" bgcolor="#ABAAA5"><img border="0"
-src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
+<td width="148" align="center" bgcolor="#EFEFE7"><a target="_blank" href="http://www.wyona.org"><img border="0"
+src="/img/layout/wyona-logo.gif" alt="This Website is powered by Wyona CMS" /></a></td>
+<td width="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 <!-- BOTTOM TABLE ENDS HERE -->
 </tr>
 

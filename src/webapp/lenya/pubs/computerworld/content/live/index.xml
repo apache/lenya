@@ -45,7 +45,7 @@ height="1" /></td>
 <td width="468" height="60" align="left" id="b468" />
 <td width="38" height="60" align="center"><a
 href="http://www.idg.ch/tarife/computerworld/" target="_blank"><img
-border="0" src="img/layout/werbung.gif" width="38"
+border="0" src="/img/layout/werbung.gif" width="38"
 height="60" /></a></td>
 <td width="234" height="60" align="right" id="b120" /></tr>
 </table>
@@ -60,11 +60,11 @@ width="1" height="11" /></td>
 
 <tr>
 <td valign="middle" width="340" height="59"
-style="background-image: url('/img/layout/trans1x1.gif')"
+style="background-image:url(/img/layout/trans1x1.gif)"
 rowspan="2"><img border="0" src="/img/layout/cw-logo.gif"
 width="340" height="55" alt="Computerworld" /></td>
 <td align="right" valign="middle" width="400" height="41"
-style="background-image: url('/img/layout/trans1x1.gif')">
+style="background-image:url(/img/layout/trans1x1.gif)">
 <!-- PROMOTIONS TABLE BEGINS HERE -->
 <table border="0" cellpadding="0" cellspacing="0" summary="">
 <tr>
@@ -87,7 +87,7 @@ doppelt und alles einfach!&#160;</a> </td>
 
 <tr>
 <td align="right" valign="middle" height="18"
-style="background-image: url('/img/layout/trans1x1.gif')">
+style="background-image:url(/img/layout/trans1x1.gif)">
 <span class="txt-s-black"><span id="today">Montag, 9. Dezember
 2002&#160;</span></span> </td>
 </tr>
@@ -276,10 +276,9 @@ target="_blank">Brasil</a></span></td>
 src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
 <td width="1" bgcolor="#EFEFE7"><img border="0"
 src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
-<td width="148" bgcolor="#EFEFE7"><img border="0"
-src="/img/layout/trans1x1.gif" width="148" height="1" /></td>
-<td width="1" bgcolor="#ABAAA5"><img border="0"
-src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
+<td width="148" align="center" bgcolor="#EFEFE7"><a target="_blank" href="http://www.wyona.org"><img border="0"
+src="/img/layout/wyona-logo.gif" alt="This Website is powered by Wyona CMS" /></a></td>
+<td width="1" bgcolor="#ABAAA5"><img border="0" src="/img/layout/dbrown1x1.gif" width="1" height="1" /></td>
 <!-- BOTTOM TABLE ENDS HERE -->
 </tr>
 
