@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 
 <introspection xmlns="http://purl.org/atom/ns#">
+  <create-entry>http://127.0.0.1:8080/lenya/blog/authoring/feeds/all/index.html?doctype=entry&amp;lenya.usecase=create&amp;lenya.step=showscreen</create-entry>
   <search-entries>http://127.0.0.1:8080/lenya/blog/atomapi/search?atom-all</search-entries>
+  <edit-entry>http://127.0.0.1:8080/lenya/blog/authoring/entries/2004/02/17/test/index.html</edit-entry>
 </introspection>
