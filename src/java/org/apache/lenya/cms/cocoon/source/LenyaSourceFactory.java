@@ -40,91 +40,96 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 
-
 /**
  * A factory for the Lenya protocol.
- * @version $Id$
+ * @version $Id:$
  */
-public class LenyaSourceFactory extends AbstractLogEnabled 
-implements SourceFactory, ThreadSafe, Contextualizable, Serviceable, Configurable {
-    
+public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
+        Contextualizable, Serviceable, Configurable {
+
     protected static final String SCHEME = "lenya:";
-    
+
     /** fallback if no configuration is available */
-    protected static final String DEFAULT_DELEGATION_SCHEME = "context:";    
-    protected static final String DEFAULT_DELEGATION_PREFIX = "/" + Publication.PUBLICATION_PREFIX_URI;
-    
+    protected static final String DEFAULT_DELEGATION_SCHEME = "context:";
+    protected static final String DEFAULT_DELEGATION_PREFIX = "/"
+            + Publication.PUBLICATION_PREFIX_URI;
+
     private Context context;
     private ServiceManager manager;
     private SourceResolver sourceResolver;
     private String delegationScheme;
     private String delegationPrefix;
-    
+
     /**
-     * Contextualizable, get the object model
+     * Used for resolving the object model.
+     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize( Context context ) throws ContextException {
+    public void contextualize(Context context) throws ContextException {
         this.context = context;
-    }    
-    
+    }
+
     /**
-     * Lookup the SlideRepository.
-     * 
-     * @param manager ServiceManager.
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {
         //this.sourceResolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
         this.manager = manager;
     }
-    
-    public void configure(Configuration configuration)
-        throws ConfigurationException {
-        this.delegationScheme = configuration.getAttribute("scheme", DEFAULT_DELEGATION_SCHEME);
-        this.delegationPrefix = configuration.getAttribute("prefix", DEFAULT_DELEGATION_PREFIX);
-    }    
 
     /**
-     * Get a <code>Source</code> object.
-     * @param parameters This is optional.
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration configuration) throws ConfigurationException {
+        this.delegationScheme = configuration.getAttribute("scheme", DEFAULT_DELEGATION_SCHEME);
+        this.delegationPrefix = configuration.getAttribute("prefix", DEFAULT_DELEGATION_PREFIX);
+    }
+
+    /**
+     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(final String location, final Map parameters)
-        throws MalformedURLException, IOException, SourceException {
-        
+            throws MalformedURLException, IOException, SourceException {
+
         try {
-            this.sourceResolver = (SourceResolver) manager.lookup(org.apache.excalibur.source.SourceResolver.ROLE);
+            this.sourceResolver = (SourceResolver) manager
+                    .lookup(org.apache.excalibur.source.SourceResolver.ROLE);
         } catch (ServiceException e) {
             throw new SourceException(e.getMessage());
         }
-        
+
         String path = location.substring(SCHEME.length());
-        
+
         if (!path.startsWith("//")) {
-            
-            Map objectModel = ContextHelper.getObjectModel( this.context );
+
+            Map objectModel = ContextHelper.getObjectModel(this.context);
             try {
-                PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance(); 
-                
+                PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
+
                 if (pageEnvelopeFactory != null) {
                     PageEnvelope pageEnvelope = pageEnvelopeFactory.getPageEnvelope(objectModel);
-                
+
                     if (pageEnvelope != null) {
                         String publicationID = pageEnvelope.getPublication().getId();
                         String area = pageEnvelope.getDocument().getArea();
-                        path = "/" + publicationID + "/" + Publication.CONTENT_PATH + "/" + area + path;
-                        
+                        path = "/" + publicationID + "/" + Publication.CONTENT_PATH + "/" + area
+                                + path;
+
                     }
-                }                
+                }
             } catch (PageEnvelopeException e) {
-                throw new SourceException("Cannot attach publication-id and/or area to "+path, e);
+                throw new SourceException("Cannot attach publication-id and/or area to " + path, e);
             }
         }
-        
+
         path = this.delegationScheme + this.delegationPrefix + path;
-        
+
         return sourceResolver.resolveURI(path);
     }
-    
+
+    /**
+     * Does nothing beacuse the delegated factory does this.
+     * @see org.apache.excalibur.source.SourceFactory#release(org.apache.excalibur.source.Source)
+     */
     public void release(Source source) {
-        // do nothing beacuse the deligated factory does this.
-    }    
+    }
 }
