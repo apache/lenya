@@ -3,9 +3,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:sch="http://www.wyona.org/2002/sch">
   
-  <xsl:template match="sch:tasks">
+  <xsl:template match="sch:jobs">
     <xsl:copy>
-      <xsl:for-each select="sch:task">
+      <xsl:for-each select="sch:job">
 	<xsl:sort data-type="number" order="ascending" select="sch:trigger/sch:parameter[@name='year']/@value"/>
 	<xsl:sort data-type="number" order="ascending" select="sch:trigger/sch:parameter[@name='month']/@value"/>
 	<xsl:sort data-type="number" order="ascending" select="sch:trigger/sch:parameter[@name='day']/@value"/>
