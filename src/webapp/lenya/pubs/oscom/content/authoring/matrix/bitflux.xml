@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>bitflux</id>
+  <system_name>Bitflux</system_name>
+  <system_version>1.0</system_version>
+  <system_startdate>Fall 1999</system_startdate>
+  <main_url>http://www.bitflux.org</main_url>
+  <license>
+    <license_name>GNU General Public License (GPL)</license_name>
+    <license_description></license_description>
+    <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
+  </license>
+</system>

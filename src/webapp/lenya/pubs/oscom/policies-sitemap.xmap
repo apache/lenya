@@ -14,6 +14,10 @@
        <map:generate src="docs/publication/access-control/policies/weekly-column.acml"/>
        <map:serialize type="xml"/>
      </map:match>
+     <map:match pattern="authoring/matrix/*.acml">
+       <map:generate src="docs/publication/access-control/policies/axkit.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
      <map:match pattern="authoring/navigation.xml.acml">
        <map:generate src="docs/publication/access-control/policies/navigation.acml"/>
        <map:serialize type="xml"/>

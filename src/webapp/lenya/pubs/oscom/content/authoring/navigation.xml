@@ -8,6 +8,7 @@
   <leaf name="Tokyo"/>
 </branch>
 <leaf name="CMF/S&#160;Overview" href="overview.html"/>
+<leaf name="Overview (XML)" href="matrix/index.xml"/>
 <leaf name="Editor&#160;Overview"/>
 <leaf name="Glossary" href="glossary.html"/>
 <branch name="Interop" href="interop.html">

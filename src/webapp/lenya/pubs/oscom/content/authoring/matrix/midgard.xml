@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="framework">
+  <id>midgard</id>
+  <system_name>Midgard</system_name>
+  <main_url>http://www.midgard-project.org/</main_url>
+  <faq_url><![CDATA[http://www.midgard-project.org/faq/]]></faq_url>
+  <license>
+    <license_name>GNU Lesser General Public License (LGPL)</license_name>
+    <license_description>core libraries</license_description>
+    <license_url>http://www.gnu.org/licenses/licenses.html#LGPL</license_url>
+  </license>
+</system>

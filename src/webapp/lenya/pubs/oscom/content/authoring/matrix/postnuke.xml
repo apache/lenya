@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>postnuke</id>
+  <system_name>Postnuke</system_name>
+  <main_url>http://www.postnuke.com/</main_url>
+  <faq_url><![CDATA[http://centre.ics.uci.edu/~grape/modules.php?op=modload&amp;name=FAQ&amp;file=index]]></faq_url>
+  <license>
+    <license_name>GNU General Public License (GPL)</license_name>
+    <license_description></license_description>
+    <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
+  </license>
+</system>

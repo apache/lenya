@@ -39,7 +39,10 @@
 <xsl:template match="system">
   <tr>
    <td>&#160;</td>
+   <td height="20"><font size="-1"><a href="matrix/{id}.html"><xsl:value-of select="system_name"/></a></font></td>
+<!--
    <td height="20"><font size="-1"><a href="{main_url}"><xsl:value-of select="system_name"/></a></font></td>
+-->
    <td>&#160;</td>
    <td>&#160;</td>
    <td>&#160;</td>
