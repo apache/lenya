@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.28 2002/12/23 00:28:41 michicms Exp $
+   @version CVS $Id: build.xml,v 1.29 2002/12/31 17:07:24 michicms Exp $
 
 -->
 
@@ -484,9 +484,14 @@
   <!-- ============================================================ -->
   <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
     <copy todir="${install.dir}" filtering="off">
-      <fileset dir="${build.webapp}"/>
+      <fileset dir="${build.webapp}" excludes="${target.install.excludes}">
+<!--
+        <exclude name="**/authoring/**"/>
+        <exclude name="**/live/**"/>
+-->
+      </fileset>
     </copy>
-    <echo>INFO: install.dir=${install.dir}</echo>
+    <echo>INFO: Copy From build.webapp=${build.webapp} To install.dir=${install.dir}</echo>
   </target>
 
   <!-- ============================================================ -->
@@ -504,7 +509,17 @@
   <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
     <!-- Empty server cache - this directory is set in the "build.properties" file -->
     <delete dir="${cache.dir}"/>
-    <delete dir="${install.dir}"/>
+    <delete includeEmptyDirs="true">
+      <fileset dir="${install.dir}" excludes="${target.reset.excludes}">
+<!--
+      <fileset dir="${install.dir}" excludes="**/authoring/**,**/live/**">
+-->
+<!--
+        <exclude name="**/authoring/**"/>
+        <exclude name="**/live/**"/>
+-->
+      </fileset>
+    </delete>
   </target>
 
 </project>

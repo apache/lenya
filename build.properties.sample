@@ -10,3 +10,9 @@ install.dir=/usr/local/tomcat/webapps/wyona-cms
 
 cache.dir=/usr/local/tomcat/work/localhost/wyona-cms
 
+# Files and directories which should be excluded during 'install' and 'reset'
+# Comma- or space-separated list of patterns
+# All files are included when commented
+
+#target.install.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**
+#target.reset.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**
