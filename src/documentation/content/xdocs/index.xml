@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $ -->
+<!-- $Id: index.xml,v 1.2 2004/07/30 22:50:28 thorsten Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document>
@@ -56,7 +56,7 @@ Thank you very much for your suggestions and contributions.
 					<link href="site:release1.2">Press release 1.2</link>
 				</li>
 				<li>
-					<link href="site:install-overview">Download and Install</link>
+					<link href="site:download">Download and Install</link>
 				</li>
 			</ul>
 		</section>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: site.xml,v 1.4 2004/07/27 19:41:17 thorsten Exp $ -->
+<!-- $Id: site.xml,v 1.5 2004/07/30 22:50:28 thorsten Exp $ -->
 
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
     <project-information href="" label="Project" tab="project">
@@ -61,7 +61,7 @@
                         <accr-mng href="accreditablemanagers.html" 
                             label="Accreditable&#160;Managers"/>
                         <ssl href="ssl.html" label="SSL Encryption"/>
-                        <ac-faq href="faq.html" label="FAQ"/>
+                        
                     </accesscontrol>
                     <authoring href="authoring/" labe="Authoring">
                         <namespaces href="adding-document-creator.html" 
