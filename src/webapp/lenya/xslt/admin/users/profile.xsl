@@ -75,7 +75,7 @@
 						 <input class="lenya-form-element" name="userid" type="text" value="{normalize-space(.)}"/>
 					 </xsl:when>
 					 <xsl:otherwise>
-						 <xsl:value-of select="id"/>
+						 <xsl:value-of select="."/>
 					 </xsl:otherwise>
 				 </xsl:choose>
 			</td>
@@ -94,12 +94,14 @@
   
   
   <xsl:template match="fullname">
-		<tr>
-			<td class="lenya-entry-caption">Name</td>
-			<td>
-				<input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
-			</td>
-		</tr>
+    <xsl:if test="not(../@ldap = 'true')">
+      <tr>
+        <td class="lenya-entry-caption">Name</td>
+        <td>
+          <input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
+        </td>
+      </tr>
+    </xsl:if>
   </xsl:template>
   
   
