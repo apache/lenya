@@ -1,4 +1,4 @@
-// $Id: tree.js,v 1.10 2003/08/21 09:12:09 gregor Exp $
+// $Id: tree.js,v 1.11 2003/09/19 12:19:21 andreas Exp $
 //**************************************************************** 
 // TreeView by Marcelino Martins http://www.treeview.net
 //**************************************************************** 
@@ -934,8 +934,8 @@ function PersistentFolderOpening()
             nodeObj.forceOpeningOfAncestorFolders()
             clickOnNodeObj(nodeObj);
           }
-          else
-            alert("Internal id is not pointing to a folder anymore. Consider using external IDs")
+//          else 
+//            alert("Internal id is not pointing to a folder anymore. Consider using external IDs")
       }
     }
   }
