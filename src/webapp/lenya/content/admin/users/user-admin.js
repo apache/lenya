@@ -215,7 +215,7 @@ function user_add_user() {
 	add_user(false);
 }
 
-function validate(userManager, ldap, userId, email, password, confirmPassword, messages, ldapId, configDir) {
+function validate(userManager, ldap, userId, email, password, confirmPassword, ldapId, configDir) {
     
 	messages = new Packages.java.util.ArrayList();
 	
@@ -237,7 +237,6 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
     }
     
 	if (ldap) {
-	    configDir = new Packages.java.io.File(configDir);
 	    var ldapUser = new Packages.org.apache.lenya.ac.ldap.LDAPUser(configDir);
 	    if (!ldapUser.existsUser(ldapId)) {
 	    	messages.add("This LDAP user ID does not exist.");
@@ -315,7 +314,8 @@ function add_user(ldap) {
 			password = cocoon.request.get("new-password");
 			confirmPassword = cocoon.request.get("confirm-password");
 			
-			var configDir = userManager.getConfigurationDirectory();
+		    var configDir = userManager.getConfigurationDirectory();
+
 			messages = validate(userManager, ldap, userId, email, password, confirmPassword, ldapId, configDir);
 			
 			if (messages.isEmpty()) {
