@@ -3,12 +3,16 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:sch="http://www.wyona.org/2002/sch" version="1.0">
   
+  <xsl:import href="../util/page-util.xsl"/>
+
   <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
   <xsl:param name="task.sources"/>
   <xsl:param name="task.uris"/>
   <xsl:param name="documentUri"/>
   <xsl:param name="documentType"/>
+
+  <xsl:variable name="separator" select="','"/>
 
   <!-- FIXME -->
   <xsl:variable name="context_prefix">/wyona-cms/<xsl:value-of select="/sch:scheduler/sch:current-date/sch:publication-id"/></xsl:variable>
@@ -66,13 +70,9 @@
 
   <!--   Generate the necessary form to scheduler new jobs -->
   <xsl:template name="schedulerForm">
-    <tr bgcolor="#EEEEEE">
-      <td>
-	<font size="2" face="Verdana, Arial, Helvetica, sans-serif">
-	  Add new job
-	</font>
-      </td>
+    <tr>
       <form method="POST">
+        <td />
 	<xsl:attribute name="action">
 	  <xsl:value-of select="$context_prefix"/><xsl:text>/scheduler/docid/</xsl:text><xsl:value-of select="$documentUri"/>
 	</xsl:attribute>
@@ -136,16 +136,32 @@
     </tr>
   </xsl:template>
   
+  <!-- navigation menu -->
+  <xsl:template name="navigation-menu">
+    <div class="menu">
+        <xsl:variable name="menu-separator" select="'&#160;&#160;|&#160;&#160;'"/>
+        <a href="{$context_prefix}/authoring/{$documentUri}">
+          <strong>Back to page</strong>
+        </a>
+        <xsl:value-of select="$menu-separator"/>
+        <a href="{$context_prefix}/scheduler/docid/{$documentUri}?task.sources={$task.sources}&amp;task.uris={$task.uris}&amp;documentType={$documentType}&amp;documentUri={$documentUri}">
+          <strong>Refresh</strong>
+        </a>
+    </div>
+  </xsl:template>
+  
   <xsl:template match="sch:scheduler">
     <html>
       <head>
 	<title>Scheduler</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <xsl:call-template name="include-css">
+          <xsl:with-param name="context-prefix" select="$context_prefix"/>
+        </xsl:call-template>
       </head>
       
       <body>
-
-
+<!--      <body marginwidth="20" marginheight="20" topmargin="20" leftmargin="20">-->
 <!--
 <p>
       DEBUG: Current Time: <xsl:value-of select="/sch:scheduler/sch:current-date/sch:day"/><br />
@@ -161,47 +177,75 @@
         </ul>
 -->
         <xsl:apply-templates select="sch:exception"/>
-	<font face="Verdana, Arial, Helvetica, sans-serif" size="2"> 
-	  <h1>Scheduler</h1>
-	  <h3>Schedule tasks for this page/document:
-            <a href="{$context_prefix}/authoring/{$documentUri}">
-              <xsl:value-of select="$documentUri"/>
-            </a>
-          </h3>
-	  <table width="100%" height="3" border="0" cellpadding="2" cellspacing="0">
+        <h1>Scheduler</h1>
+        <xsl:call-template name="navigation-menu"/>
+        <table border="0" cellpadding="5" cellspacing="0">
+          <tr>
+            <td>
+        <table border="0" cellpadding="3" cellspacing="0">
+          <tr>
+            <td>
+                <strong>Document<xsl:text/>
+                <xsl:if test="contains($task.sources, $separator)">s</xsl:if>:&#160;
+                </strong>
+                <xsl:text/>
+            </td>
+            <td>
+                <ul>
+                  <xsl:call-template name="print-list">
+                    <xsl:with-param name="list-string" select="$task.sources"/>
+                  </xsl:call-template>
+                </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <strong>Page<xsl:text/>
+                <xsl:if test="contains($task.uris, $separator)">s</xsl:if>:</strong>
+                <xsl:text/>
+             </td>
+             <td>
+                <ul>
+                  <xsl:call-template name="print-list">
+                    <xsl:with-param name="list-string" select="$task.uris"/>
+                  </xsl:call-template>
+                </ul>
+             </td>
+           </tr>
+         </table>
+             </td>
+           </tr>
+         </table>
+         <br />
+	  <table width="100%" height="3" border="0" cellpadding="0" cellspacing="0">
 	    <tr> 
-	      <td bgcolor="#EEEEEE">
-<!-- 		<strong> -->
-<!-- 		  <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> -->
-<!-- 		    Page/Document -->
-<!-- 		  </font> -->
-<!-- 		</strong> -->
-	      </td>
-	      <td bgcolor="#EEEEEE">
-		<strong>
-		  <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
-		    Job
-		  </font>
-		</strong>
-	      </td>
-	      <td bgcolor="#EEEEEE">
-		<strong>
-		  <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
-		    Day
-		  </font>
-		</strong>
-	      </td>
-	      <td bgcolor="#EEEEEE">
-		<strong>
-		  <font size="2" face="Verdana, Arial, Helvetica, sans-serif">
-		    Time
-		  </font>
-		</strong>
-	      </td>
-	      <td bgcolor="#EEEEEE">&#160;</td>
-	      <td bgcolor="#EEEEEE">&#160;</td>
+              <td class="table-head"><div class="menu">Add new job</div></td>
+	      <td class="table-head">Task</td>
+	      <td class="table-head">Day</td>
+	      <td class="table-head">Time</td>
+	      <td class="table-head">&#160;</td>
+	      <td class="table-head">&#160;</td>
 	    </tr>
+            <xsl:call-template name="table-separator-space"/>
 	    <xsl:call-template name="schedulerForm"/>
+            <tr>
+              <td colspan="6">&#160;</td>
+            </tr>
+            <tr>
+              <td class="table-head">
+<!--                    <xsl:if test="position()=1">-->
+                    <div class="menu">
+                        Edit existing jobs
+                    </div>
+<!--                    </xsl:if>-->
+              </td>
+	      <td class="table-head">Task</td>
+	      <td class="table-head">Day</td>
+	      <td class="table-head">Time</td>
+	      <td class="table-head">&#160;</td>
+	      <td class="table-head">&#160;</td>
+	    </tr>
+            <xsl:call-template name="table-separator-space"/>
 	    <xsl:for-each select="sch:publication">
 	      <xsl:for-each select="sch:jobs">
 		<xsl:for-each select="sch:job">
@@ -215,15 +259,10 @@
                       <input type="hidden" name="documentType" value="{$documentType}"/>
                       <input type="hidden" name="task.sources" value="{$task.sources}"/>
                       <input type="hidden" name="task.uris" value="{$task.uris}"/>
-		      <td bgcolor="#CCCCCC">
-			<xsl:if test="position()=1">
-			  <font face="Verdana, Arial, Helvetica, sans-serif" size="2"> 
-			    Edit existing job
-			  </font>
-			</xsl:if>
+		      <td>
 			<xsl:apply-templates select="sch:parameter"/>
-		      </td>
-		      <td bgcolor="#CCCCCC">
+                      </td>
+		      <td>
                         <xsl:call-template name="tasks">
                           <xsl:with-param name="current-task-id"
                               select="sch:task/sch:parameter[@name='id']/@value"/>
@@ -232,40 +271,60 @@
                       <xsl:choose>
                         <xsl:when test="sch:trigger">
                           <xsl:apply-templates select="sch:trigger"/>
-                          <td bgcolor="#CCCCCC">
+                          <td>
                             <input type="submit" name="Action" value="Modify"/>
                           </td>
                         </xsl:when>
                         <xsl:otherwise>
-                          <td colspan="2" bgcolor="#CCCCCC">
+                          <td colspan="2">
                             <p>The job date has expired.</p>
                           </td>
-                          <td bgcolor="#CCCCCC">&#160;</td>
+                          <td>&#160;</td>
                         </xsl:otherwise>
                       </xsl:choose>
-                      <td bgcolor="#CCCCCC">
+                      <td>
                         <input type="submit" name="Action" value="Delete"/>
                       </td>
 		    </form>
 		  </tr>
+                  <xsl:call-template name="table-separator"/>
 		</xsl:for-each>
 	      </xsl:for-each>
 	    </xsl:for-each>
 	  </table>
-	</font>
       </body>
     </html>
   </xsl:template>
 
+  <xsl:template name="table-separator-space">
+    <xsl:param name="background" select="'White'"/>
+    <tr>
+      <td colspan="6" bgcolor="{$background}">
+        <img src="{$context_prefix}/images/util/pixel.gif" width="1" height="5"/>
+      </td>
+    </tr>
+  </xsl:template>
+  
+  <xsl:template name="table-separator">
+    <xsl:call-template name="table-separator-space"/>
+    <tr height="1">
+      <td />
+      <td class="table-separator" colspan="5">
+        <img src="{$context_prefix}/images/util/pixel.gif"/>
+      </td>
+    </tr>
+    <xsl:call-template name="table-separator-space"/>
+  </xsl:template>
+  
   <xsl:template match="sch:trigger">
-    <td bgcolor="#CCCCCC">
+    <td>
       <font size="2"> 
         <xsl:apply-templates select="sch:parameter[@name='day']"/>
         <xsl:apply-templates select="sch:parameter[@name='month']"/>
         <xsl:apply-templates select="sch:parameter[@name='year']"/>
       </font>
     </td>
-    <td bgcolor="#CCCCCC">
+    <td>
       <font size="2"> 
         <xsl:apply-templates select="sch:parameter[@name='hour']"/>
         : 
