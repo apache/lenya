@@ -18,6 +18,12 @@
 
   <map:pipelines>
     <map:pipeline>
+      <map:match pattern="introduction.html">
+        <map:read src="resources/publication/html/documentation/index.html" mime-type="text/html"/>
+      </map:match>
+    </map:pipeline>    
+
+    <map:pipeline>
       <map:match pattern="http/slashdot.rdf">
         <map:generate src="http://www.slashdot.org/slashdot.rdf"/>
         <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
@@ -59,13 +65,28 @@
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
+      <map:match pattern="images/**.gif">
+        <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
       <!-- images jpg -->
       <map:match pattern="live/images/**.jpg">
         <map:read src="resources/publication/images/live/{1}.jpg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
+      <map:match pattern="images/**.jpg">
+        <map:read src="resources/publication/images/live/{1}.jpg" mime-type="images/jpeg">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
       <map:match pattern="live/images/**.jpeg">
+        <map:read src="resources/publication/images/live/{1}.jpeg" mime-type="images/jpeg">
+          <map:parameter name="expires" value="2000000000"/>
+        </map:read>
+      </map:match>
+      <map:match pattern="images/**.jpeg">
         <map:read src="resources/publication/images/live/{1}.jpeg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
@@ -79,12 +100,23 @@
       </map:match>
 
       <!-- Homepage -->
+      <map:match pattern="live/">
+        <map:generate src="cocoon:/live/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Home/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
       <map:match pattern="live/index.html">
         <map:generate src="cocoon:/live/index.xml"/>
-<!--
-        <map:generate src="docs/publication/live/index.xml"/>
-        <map:transform type="xinclude"/>
--->
+        <map:transform src="stylesheets/publication/Page/Home/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="">
+        <map:generate src="cocoon:/live/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Home/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:generate src="cocoon:/live/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Home/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
