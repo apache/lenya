@@ -25,7 +25,7 @@
   </td>
 -->
   <td valign="top" bgcolor="white" width="388" class="art-text" id_xopus="body" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
-    <div class="art-date"><xsl:apply-templates select="../../../NewsLines/DateLine" mode="article"/></div>
+    <div class="art-date"><xsl:apply-templates select="../../../../NewsManagement/PublishDate" mode="article"/></div>
     <div class="art-pretitle"><xsl:apply-templates select="head/hedline/dossier"/></div>
     <div class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></div>
     <div class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </div>
@@ -52,7 +52,7 @@
   </tr>
 </xsl:template>
 
-<xsl:template match="DateLine" mode="article">
+<xsl:template match="PublishDate" mode="article">
   <xsl:value-of select="@day"/>.<xsl:value-of select="@month"/>.<xsl:value-of select="@year"/>
 </xsl:template>
 

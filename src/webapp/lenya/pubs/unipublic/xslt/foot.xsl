@@ -11,7 +11,7 @@
      <div align="left"><a href="#topofpage"><font size="1">zum Anfang<br /> <br />
       </font></a> <img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
       <font size="1"><xsl:apply-templates select="CopyrightLine" mode="copyright"/>
-      <xsl:apply-templates select="DateLine" mode="article"/>,
+      <xsl:apply-templates select="../../NewsManagement/RevisionDate"/>,
       <a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">Impressum</a>
       </font></div>
     </td>
@@ -43,4 +43,8 @@
   </tr>
 </xsl:template>
 
+<xsl:template match="RevisionDate">
+  <xsl:value-of select="@day"/>.<xsl:value-of select="@month"/>.<xsl:value-of select="@year"/>
+</xsl:template>
+                                                                                                                                            
 </xsl:stylesheet>
