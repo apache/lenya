@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.1 2003/04/08 14:08:56 gregor Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.2 2003/04/10 22:47:49 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -19,6 +19,7 @@
     <map:actions>
 <!-- FIXME: Factor out to root sitemap -->
       <map:action name="task" logger="sitemap.action.task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
+      <map:action name="page-envelope" logger="sitemap.action.page-envelope" src="org.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
     </map:actions>
   </map:components>
 
@@ -40,8 +41,8 @@
     <!-- CSS -->
 <!-- FIXME: Factor out to root sitemap -->
     <map:pipeline>
-      <map:match pattern="**css/**.css">
-        <map:read src="../ina/resources/css/live/{2}.css" mime-type="text/css" />
+      <map:match pattern="css/**.css">
+        <map:read src="resources/css/{1}.css" mime-type="text/css"/>
       </map:match>
     </map:pipeline>
 
@@ -65,6 +66,34 @@
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
+    
+    
+    
+    
+    <map:pipeline>
+      <map:match pattern="**/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+    </map:pipeline>
+    
+    <map:pipeline>
+      <map:match pattern="**.html">
+        <map:act type="page-envelope">
+          <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
+            <map:part src="cocoon://navigation/{publication-id}/tabs/{../1}.html.xml"/>
+            <map:part src="cocoon://navigation/{publication-id}/menu/{../1}.html.xml"/>
+          </map:aggregate>
+          <map:transform src="xslt/page2xhtml.xsl">
+            <map:parameter name="root" value="{context}/{publication-id}/"/>
+          </map:transform>
+        </map:act>
+        <map:serialize type="xhtml"/>
+      </map:match>
+    </map:pipeline>
+    
+    
+    
+    
 
     <!-- Redirect to introduction -->
 <!-- FIXME: Factor out to root sitemap -->
@@ -75,7 +104,7 @@
       <map:match pattern="index.html">
         <map:redirect-to uri="introduction.html"/>
       </map:match>
-    </map:pipeline>    
+    </map:pipeline>
 
   </map:pipelines>
 </map:sitemap>
