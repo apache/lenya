@@ -55,12 +55,7 @@ $Id
 */
 package org.apache.lenya.cms.ac;
 
-import junit.framework.TestCase;
-
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
 import java.io.File;
 
 
@@ -70,6 +65,7 @@ import java.io.File;
  *
  */
 public class GroupManagerTest extends AccessControlTest {
+
     /**
      * Constructor for GroupManagerTest.
      * @param arg0

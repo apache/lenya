@@ -56,9 +56,6 @@ $Id
 package org.apache.lenya.cms.ac;
 
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
 import java.io.File;
 
 
@@ -68,6 +65,7 @@ import java.io.File;
  *
  */
 public class UserManagerTest extends AccessControlTest {
+
     /**
      * Constructor for UserManagerTest.
      * @param arg0
@@ -86,16 +84,18 @@ public class UserManagerTest extends AccessControlTest {
         junit.textui.TestRunner.run(UserManagerTest.class);
     }
 
-    /*
-     * @see TestCase#setUp()
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
     protected void setUp() throws Exception {
         super.setUp();
     }
 
-    /*
-     * @see TestCase#tearDown()
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see junit.framework.TestCase#tearDown()
+	 */
     protected void tearDown() throws Exception {
         super.tearDown();
     }
