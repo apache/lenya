@@ -3,8 +3,14 @@
   <title>unipublic</title>
 </head>
 <body bgcolor="#ffffff">
-<h2>Newspaper</h2>
+<h2>Newspaper/Magazine</h2>
 <h1>unipublic</h1>
+
+<p>
+We have to thank Roger Stupf and Thomas Poppenwimmer from University of Zurich, that
+we can publish the XML and XSLT of this publication.
+We hope deeply that they will receive the appropriate ROI.
+</p>
 
 <ol>
   <li>Users (We are currently implementing a wizard to set initial users and corresponding passwords)
@@ -22,19 +28,38 @@
 -->
   <li>Information Architecture
     <ol>
+      <li>Pages
+        <ol>
+          <li><a href="article.html">Article</a> (<a href="magazin/gesundheit/2002/0508/index.xml">XML</a>, <a href="magazin/gesundheit/2002/0508/index.html">HTML</a>)
+          <li>Section/Annual Index (<a href="magazin/gesundheit/2002/index.xml">XML</a>, <a href="magazin/gesundheit/2002/index.html">HTML</a>)</li>
+          <li>Frontpage/Home (<a href="index.xml">XML</a>, <a href="index.html">HTML</a>)</li>
+        </ol>
+      </li>
       <li>Document Types
         <ol>
-          <li><a href="article.html">Article</a> (<a href="magazin/gesundheit/2002/0492/index.xml">XML</a>, <a href="magazin/gesundheit/2002/0492/index.html">HTML</a>) (<a href="http://www.newsml.org/NewsMLweb/webpage.xml">NewsML</a>, <a href="http://www.nitf.org">NITF</a>, UPML)</li>
-          <li>Section</li>
-          <li>Frontpage</li>
+          <li>Article</li>
+          <li>Section/Annual Index</li>
+          <li>Frontpage/Home (<a href="index.xml">XML</a>)</li>
+          <li>Headlines (<a href="frontpage/headlines.xml">XML</a>, <a href="headlines.xml">XML</a>)</li>
+          <li>Webperlen (<a href="frontpage/webperls.xml">XML</a>)</li>
+          <li>Service (<a href="frontpage/service.xml">XML</a>)</li>
+          <li>Navigation (<a href="navigation">XML</a>)</li>
+          <li>Dossier Teaser (<a href="dossier">XML</a>)</li>
         </ol>
       </li>
-<!--
-      <li>Document Collections
+      <li>Collections
         <ol>
-          <li>Group</li>
+          <li>Site</li>
+          <li>Channel</li>
+          <li>Section</li>
+          <li>Year</li>
+          <li>Dossiers</li>
+          <li>Dossier</li>
+          <li>Newsletter</li>
         </ol>
       </li>
+
+<!--
       <li>Use Cases
         <ol>
           <li>Create Group</li>

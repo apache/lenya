@@ -101,6 +101,7 @@
         <map:serialize type="html"/>
       </map:match>
 
+<!--
       <map:match pattern="navigation">
         <map:generate src="docs/publication/live/navigation.xml"/>
         <map:serialize type="xml"/>
@@ -117,7 +118,16 @@
         </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>
+-->
 
+      <map:match pattern="headlines.xml">
+        <map:generate src="docs/publication/live/frontpage/headlines.xml"/>
+        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+        <map:transform type="xinclude"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+<!--
       <map:match pattern="service">
         <map:generate src="docs/publication/live/frontpage/service.xml"/>
         <map:serialize type="xml"/>
@@ -134,11 +144,14 @@
         </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>
+-->
 
       <map:match pattern="index.xml">
         <map:generate src="docs/publication/live/frontpage/index.xml"/>
         <map:transform type="xinclude"/>
+<!--
         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+-->
         <map:serialize type="xml"/>
       </map:match>
 
@@ -178,6 +191,18 @@
         <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+      <map:match pattern="*/*/*/index.html">
+        <!--<map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>-->
+        <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
+        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+        </map:transform>
+        <map:transform type="xinclude"/>
+        <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
 
       <!-- Article -->
       <map:match pattern="*/*/*/*/">
@@ -189,6 +214,11 @@
         <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
+
+      <map:match pattern="**.xml">
+        <map:generate src="docs/publication/live/{1}.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
     </map:pipeline>
- </map:pipelines>
+  </map:pipelines>
 </map:sitemap>

@@ -1,10 +1,17 @@
 <?xml version="1.0"?>
-<Frontpage>
-<Articles>
-  <Article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
-  <Article channel="magazin" section="gesundheit" year="2002" dir="0465"/>
-  <Article channel="magazin" section="geist" year="2002" dir="0470"/>
-  <Article channel="magazin" section="umwelt" year="2002" dir="0385"/>
-  <Article channel="magazin" section="recht" year="2002" dir="0413"/>
-</Articles>
-</Frontpage>
+
+<Page>
+<Content xmlns:xi="http://www.w3.org/2001/XInclude">
+  <FirstColumn>
+    <xi:include href="navigation.xml" xml:base="cocoon:"/>
+    <xi:include href="frontpage/dossier.xml" xml:base="cocoon:"/>
+  </FirstColumn>
+  <MainColumn>
+    <xi:include href="headlines.xml" xml:base="cocoon:"/>
+  </MainColumn>
+  <LastColumn>
+    <xi:include href="frontpage/service.xml" xml:base="cocoon:"/>
+    <xi:include href="frontpage/webperls.xml" xml:base="cocoon:"/>
+  </LastColumn>
+</Content>
+</Page>
