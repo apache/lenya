@@ -48,7 +48,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author andreas
@@ -68,9 +68,17 @@ public class PolicyAuthorizer implements Authorizer {
      * Template method, override {@link #setup(Map)} to setup your authorizer.
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, java.lang.String, java.util.Map)
      */
-    public boolean authorize(Identity identity, PageEnvelope envelope, Request request)
+    public boolean authorize(Identity identity, Publication publication, Request request)
         throws AccessControlException {
-        Policy policy = getAccessController().getPolicy(envelope);
+            
+        String requestUri = request.getRequestURI();
+        String context = request.getContextPath();
+        if (context == null) {
+            context = "";
+        }
+        String url = requestUri.substring(context.length());
+            
+        Policy policy = getAccessController().getPolicy(publication, url);
         Role roles[] = policy.getRoles(identity);
         return roles.length > 0;
     }

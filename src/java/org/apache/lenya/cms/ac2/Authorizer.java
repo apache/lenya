@@ -47,7 +47,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author andreas
@@ -60,12 +60,12 @@ public interface Authorizer {
     /**
      * Authorizes an identity at a URL.
      * @param identity The identity.
-     * @param envelope The envelope of the page to be accessed.
+     * @param publication The publication of the page to be accessed.
      * @param request The request.
      * @return <code>true</code> if the identity is authorized, <code>false</code> otherwise. 
      * @throws AccessControlException when something went wrong.
      */
-    boolean authorize(Identity identity, PageEnvelope envelope, Request request) throws AccessControlException;
+    boolean authorize(Identity identity, Publication publication, Request request) throws AccessControlException;
     
     /**
      * Configures this authorizer.

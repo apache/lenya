@@ -49,7 +49,7 @@ import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.GroupManager;
 import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.UserManager;
-import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author andreas
@@ -89,11 +89,12 @@ public interface AccessController {
     
     /**
      * Returns the policy for a given page.
-     * @param envelope The envelope of the page.
+     * @param publication The publication.
+     * @param url The url: /{area}/...
      * @return The policy.
      * @throws AccessControlException when something went wrong.
      */
-    Policy getPolicy(PageEnvelope envelope) throws AccessControlException;
+    Policy getPolicy(Publication publication, String url) throws AccessControlException;
     
     /**
      * Configures this access controller.

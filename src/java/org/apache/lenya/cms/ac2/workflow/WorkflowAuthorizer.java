@@ -51,9 +51,10 @@ import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyAuthorizer;
-import org.apache.lenya.cms.publication.DefaultDocument;
+import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
@@ -73,36 +74,50 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
     /**
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, org.apache.lenya.cms.publication.PageEnvelope, org.apache.cocoon.environment.Request)
      */
-    public boolean authorize(Identity identity, PageEnvelope envelope, Request request)
+    public boolean authorize(Identity identity, Publication publication, Request request)
         throws AccessControlException {
 
         boolean authorized = true;
+        
+        String requestUri = request.getRequestURI();
+        String context = request.getContextPath();
+        if (context == null) {
+            context = "";
+        }
+        String url = requestUri.substring(context.length());
 
         String event = request.getParameter(EVENT_PARAMETER);
-        Document document =
-            new DefaultDocument(envelope.getPublication(), envelope.getDocumentId());
+        Document document;
+        try {
+            document = DefaultDocumentBuilder.getInstance().buildDocument(publication, url);
+        } catch (DocumentBuildException e) {
+            throw new AccessControlException(e);
+        }
         
         try {
                 
             WorkflowFactory factory = WorkflowFactory.newInstance();
-            WorkflowInstance instance = factory.buildInstance(document);
-            Policy policy = getAccessController().getPolicy(envelope);
-            Role[] roles = policy.getRoles(identity);
-            saveRoles(request, roles);
+            
+            if (factory.hasWorkflow(document)) {
+                WorkflowInstance instance = factory.buildInstance(document);
+                Policy policy = getAccessController().getPolicy(publication, url);
+                Role[] roles = policy.getRoles(identity);
+                saveRoles(request, roles);
     
-            if (event != null) {
-                authorized = false;
-                Situation situation = factory.buildSituation(roles);
-                Event[] events = instance.getExecutableEvents(situation);
-                int i = 0;
-                while (!authorized && i < events.length) {
-                    if (events[i].getName().equals(event)) {
-                        authorized = true;
+                if (event != null) {
+                    authorized = false;
+                    Situation situation = factory.buildSituation(roles);
+                    Event[] events = instance.getExecutableEvents(situation);
+                    int i = 0;
+                    while (!authorized && i < events.length) {
+                        if (events[i].getName().equals(event)) {
+                            authorized = true;
+                        }
+                        i++;
                     }
-                    i++;
                 }
             }
-
+            
         } catch (WorkflowException e) {
             throw new AccessControlException(e);
         }

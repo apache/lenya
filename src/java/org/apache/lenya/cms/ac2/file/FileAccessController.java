@@ -55,7 +55,7 @@ import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.PolicyManager;
 import org.apache.lenya.cms.ac2.URLPolicy;
 import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author andreas
@@ -130,17 +130,17 @@ public class FileAccessController implements AccessController {
     /**
      * @see org.apache.lenya.cms.ac2.AccessController#getPolicy(java.lang.String)
      */
-    public Policy getPolicy(PageEnvelope envelope) throws AccessControlException {
-        assert envelope != null;
+    public Policy getPolicy(Publication publication, String url) throws AccessControlException {
+        assert publication != null;
         if (getConfigurationDirectory() == null) {
             if (configurationDirectoryPath == null) {
                 throw new AccessControlException("Configuration directory not set!");
             }
             File directory =
-                new File(envelope.getPublication().getDirectory(), configurationDirectoryPath);
+                new File(publication.getDirectory(), configurationDirectoryPath);
             setConfigurationDirectory(directory);
         }
-        return getPolicy(envelope.getDocumentURL());
+        return getPolicy(url);
     }
     
     /**
