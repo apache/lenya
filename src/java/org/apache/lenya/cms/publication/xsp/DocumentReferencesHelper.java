@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.14 2004/01/07 13:33:44 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.15 2004/01/08 14:54:22 egli Exp $
 <License>
 
  ============================================================================
@@ -78,13 +78,17 @@ import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.search.Grep;
 
+import org.apache.log4j.Category;
+
 /**
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class DocumentReferencesHelper {
+
+    private static final Category log = Category.getInstance(DocumentReferencesHelper.class);
 
     private PageEnvelope pageEnvelope = null;
 
@@ -185,13 +189,66 @@ public class DocumentReferencesHelper {
                         publication.getContentDirectory(area),
                         getReferencesSearchString());
                 for (int i = 0; i < inconsistentFiles.length; i++) {
+                    // for performance reasons the getReferencesSearchString() is 
+                    // constructed in a way such that it will catch all files which 
+                    // have a link to any language version of the current document.
+                    // That's why we need to do some additional tests for each hit. 
+                    String languageOfCurrentDocument =
+                        pageEnvelope.getDocument().getLanguage();
+                    String defaultLanguage =
+                        pageEnvelope.getPublication().getDefaultLanguage();
+                    Pattern referencesSearchStringWithLanguage =
+                        Pattern.compile(
+                            getReferencesSearchString()
+                                + "_"
+                                + languageOfCurrentDocument);
+                    Pattern referencesSearchStringWithOutLanguage =
+                        Pattern.compile(
+                            getReferencesSearchString() + "\\.html");
+                    log.debug(
+                        "languageOfCurrentDocument: "
+                            + languageOfCurrentDocument);
+                    log.debug("defaultLanguage: " + defaultLanguage);
+                    log.debug(
+                        "referencesSearchStringWithOutLanguage: "
+                            + referencesSearchStringWithOutLanguage.pattern());
+                    log.debug(
+                        "referencesSearchStringWithLanguage: "
+                            + referencesSearchStringWithLanguage.pattern());
+                    // a link is indeed to the current document if the following conditions
+                    // are met:
+                    // 1. the link is to foo_xx and the language of the current 
+                    //    document is xx.
+                    // 2. or the link is to foo.html and the language of the current 
+                    //    document is the default language.
+                    // Now negate the expression because we continue if above (1) and (2) are
+                    // false, and you'll get the following if statement
+                    if (!Grep
+                        .containsPattern(
+                            inconsistentFiles[i],
+                            referencesSearchStringWithLanguage)
+                        && !(Grep
+                            .containsPattern(
+                                inconsistentFiles[i],
+                                referencesSearchStringWithOutLanguage)
+                            && languageOfCurrentDocument.equals(
+                                defaultLanguage))) {
+                        // the reference foo_xx is neither to the language of the current 
+                        // document.
+                        // nor is the reference foo.html and the current document is in the 
+                        // default language.
+                        // So the reference is of no importance to us, skip 
+                        continue;
+                    }
 
                     documentId =
                         fileMapper.getDocumentId(
                             publication,
                             area,
                             inconsistentFiles[i]);
+                    log.debug("documentId: " + documentId);
                     language = fileMapper.getLanguage(inconsistentFiles[i]);
+                    log.debug("language: " + language);
 
                     String url = null;
                     if (language != null) {
@@ -201,12 +258,14 @@ public class DocumentReferencesHelper {
                                 area,
                                 documentId,
                                 language);
+                        log.debug("url: " + url);
                     } else {
                         url =
                             builder.buildCanonicalUrl(
                                 publication,
                                 area,
                                 documentId);
+                        log.debug("url: " + url);
                     }
                     documents.add(builder.buildDocument(publication, url));
                 }
@@ -253,11 +312,13 @@ public class DocumentReferencesHelper {
                 String docId = internalLinks[i];
                 String language = null;
 
+                log.debug("docId: " + docId);
                 if (internalLinksLanguages[i] != null) {
                     // trim the leading '_'
                     language = internalLinksLanguages[i].substring(1);
                 }
 
+                log.debug("language: " + language);
                 SiteTreeNode documentNode = sitetree.getNode(docId);
 
                 if (language == null) {
@@ -268,8 +329,10 @@ public class DocumentReferencesHelper {
                             + pageEnvelope.getDocument().getArea()
                             + docId
                             + ".html";
-                    language = builder.buildDocument(publication, url).getLanguage();
+                    language =
+                        builder.buildDocument(publication, url).getLanguage();
                 }
+                log.debug("language: " + language);
                 if (documentNode == null
                     || documentNode.getLabel(language) == null) {
                     // the docId has not been published for the given language
@@ -281,12 +344,14 @@ public class DocumentReferencesHelper {
                                 Publication.AUTHORING_AREA,
                                 docId,
                                 language);
+                        log.debug("url: " + url);
                     } else {
                         url =
                             builder.buildCanonicalUrl(
                                 publication,
                                 Publication.AUTHORING_AREA,
                                 docId);
+                        log.debug("url: " + url);
                     }
                     unpublishedReferences.add(
                         builder.buildDocument(publication, url));
