@@ -286,5 +286,62 @@ Server: Apache Coyote/1.0
 </source>
 </section>
 
+<section>
+<title>PUT</title>
+<p>
+The WebDAV client will send a PUT in order to copy a document onto the server.
+</p>
+
+<source>
+<![CDATA[
+Request
+=======
+
+PUT /lenya/blog/webdav/entries/2003/08/29/levi/index.xml HTTP/1.1
+Host: 127.0.0.1
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.4b) Gecko/20030507
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+Content-Type: text/xml
+Content-Length: 1641
+Cookie: JSESSIONID=1CF7F4C27B737E3603FFC2D4D4C137CE
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<echo:entry xmlns:echo="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
+    <echo:title>Lenya</echo:title>
+
+    <echo:created>2003-08-29T01:46:45</echo:created>
+    <echo:issued>2003-08-29T01:46:45</echo:issued>
+    <echo:modified>2003-08-29T01:46:45</echo:modified>
+
+    <echo:content mode="escaped" type="text/plain" lang="en-us">
+      Plain Text
+    </echo:content>
+
+    <ent:topic id="introductory">Hello</ent:topic>
+</echo:entry>
+
+
+
+Response
+========
+
+HTTP/1.1 204 No Content
+Date: Mon, 18 Aug 2003 14:22:47 GMT
+Server: Apache/2.0.46 (Unix) DAV/2
+Content-Length: 0
+Keep-Alive: timeout=15, max=100
+Connection: Keep-Alive
+Content-Type: text/xml
+]]>
+</source>
+</section>
+
+
 </body>
 </document>
