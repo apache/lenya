@@ -14,7 +14,21 @@
 <body> 
 
 <section>
-<title>Proxying Apache Lenya</title>
+<title>Apache 2: Enabling</title>
+<p>
+To enable mod_proxy for Apache 2: 
+</p>
+<source>
+<![CDATA[
+./configure --prefix=/usr/local/httpd-2.0.48 --enable-proxy
+make
+make install
+]]>
+</source>
+</section>
+
+<section>
+<title>Configuration</title>
 <p>In order to run a Lenya site dynamically, add the following to your Apache httpd.conf file 
 after making sure that you have the mod_proxy module installed:</p>
 <source>
@@ -30,6 +44,13 @@ after making sure that you have the mod_proxy module installed:</p>
 </VirtualHost>
 ]]>
 </source>
+</section>
+
+<section>
+<title>Related Links</title>
+<p>
+http://wiki.cocoondev.org/Wiki.jsp?page=ApacheModProxy
+</p>
 </section>
 </body>
 </document>
