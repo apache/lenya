@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UploadAction.java,v 1.7 2004/03/15 14:58:28 michi Exp $  */
+/* $Id: UploadAction.java,v 1.8 2004/08/23 14:38:30 andreas Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -180,6 +180,7 @@ public class UploadAction extends AbstractConfigurableAction {
             || FileUtil.getExtension(fileName).equals("")) {
             // the file name contains characters which mean trouble 
             // and are therefore not allowed.
+            getLogger().warn("The filename [" + fileName + "] is not valid for an asset.");
             return null;
         }
         String mimeType = part.getMimeType();
