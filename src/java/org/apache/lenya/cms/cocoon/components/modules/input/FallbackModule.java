@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.io.File;
@@ -44,6 +42,8 @@ import org.apache.excalibur.source.SourceUtil;
  * Example: <code>{fallback:xslt/style.xsl}</code> looks if
  * <code>lenya/pubs/(publication-id)/lenya/xslt/style.xsl</code> exists, and if not, it uses
  * <code>lenya/xslt/style.xsl</code>.
+ * 
+ * @version $Id:$
  */
 public class FallbackModule extends AbstractPageEnvelopeModule implements Serviceable {
 
