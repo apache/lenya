@@ -1,5 +1,5 @@
 /*
-$Id: PolicyAuthorizer.java,v 1.14 2003/08/05 16:26:01 andreas Exp $
+$Id: PolicyAuthorizer.java,v 1.15 2003/09/12 16:46:50 andreas Exp $
 <License>
 
  ============================================================================
@@ -202,7 +202,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         if (roleList == null) {
             throw new AccessControlException("Request does not contain roles!");
         }
-
+        
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
         return roles;
     }

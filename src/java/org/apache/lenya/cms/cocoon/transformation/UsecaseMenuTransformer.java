@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.4 2003/08/22 16:37:24 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.5 2003/09/12 16:49:08 andreas Exp $
 <License>
 
  ============================================================================
@@ -151,6 +151,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
         try {
             roles = PolicyAuthorizer.getRoles(request);
+
             publication = PublicationFactory.getPublication(objectModel);
             selector =
                 (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
