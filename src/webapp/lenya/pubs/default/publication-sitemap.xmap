@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.67 2004/03/08 14:14:20 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.68 2004/03/12 14:00:56 egli Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -90,6 +90,12 @@
           <map:parameter name="document-id" value="{page-envelope:document-id}"/>
           <map:parameter name="document-type" value="{page-envelope:document-type}"/>
         </map:transform>
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{1}"/>
+          <map:when test="view">
+	      <map:transform type="link-rewrite"/>
+          </map:when>
+        </map:select>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
