@@ -8,4 +8,4 @@ fi
 
 echo "INFO: Batch File: $BATCH_FILE"
 
-sftp -b $1 uptest@ftp.unizh.ch
+sftp -b $1 user@host.com
