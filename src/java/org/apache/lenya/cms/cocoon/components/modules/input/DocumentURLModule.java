@@ -23,9 +23,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 
 /**
@@ -40,9 +37,7 @@ import org.apache.lenya.cms.publication.util.DocumentHelper;
  * 
  * @version: $Id$
  */
-public class DocumentURLModule extends AbstractPageEnvelopeModule implements Serviceable {
-
-    private ServiceManager manager;
+public class DocumentURLModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -91,13 +86,6 @@ public class DocumentURLModule extends AbstractPageEnvelopeModule implements Ser
             throws ConfigurationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel) };
         return objects;
-    }
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
 }

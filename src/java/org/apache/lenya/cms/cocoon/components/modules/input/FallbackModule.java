@@ -26,9 +26,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
@@ -43,11 +40,9 @@ import org.apache.excalibur.source.SourceUtil;
  * <code>lenya/pubs/(publication-id)/lenya/xslt/style.xsl</code> exists, and if not, it uses
  * <code>lenya/xslt/style.xsl</code>.
  * 
- * @version $Id:$
+ * @version $Id$
  */
-public class FallbackModule extends AbstractPageEnvelopeModule implements Serviceable {
-
-    private ServiceManager manager;
+public class FallbackModule extends AbstractPageEnvelopeModule {
 
     private String[] baseUris;
 
@@ -222,17 +217,4 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
         return objects;
     }
 
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
-    /**
-     * @return Returns the service manager.
-     */
-    public ServiceManager getServiceManager() {
-        return manager;
-    }
 }

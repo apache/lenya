@@ -170,6 +170,13 @@ public interface Publication {
      */
     void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
         throws PublicationException;
+    
+    /**
+     * Adds a document.
+     * @param document The document.
+     * @throws PublicationException if the document is already contained.
+     */
+    void addDocument(Document document) throws PublicationException;
         
     /**
      * Deletes a document.

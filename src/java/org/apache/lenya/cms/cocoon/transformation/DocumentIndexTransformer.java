@@ -19,7 +19,6 @@
 
 package org.apache.lenya.cms.cocoon.transformation;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,111 +124,111 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     public void startElement(String uri, String localName, String raw, Attributes attr)
             throws SAXException {
 
-        if (uri != null && uri.equals(namespace) && cIncludeNamespace != null
-                && localName.equals(CHILDREN_ELEMENT)) {
+        try {
+            if (uri != null && uri.equals(namespace) && cIncludeNamespace != null
+                    && localName.equals(CHILDREN_ELEMENT)) {
 
-            if (getLogger().isInfoEnabled()) {
-                getLogger().info("Inserting index");
-            }
-
-            String cIncludePrefix = "";
-            if (!this.cIncludeNamespace.equals("")) {
-                cIncludePrefix = "ci:";
-            }
-
-            String documentId = document.getId();
-            String language = document.getLanguage();
-            String defaultLanguage = publication.getDefaultLanguage();
-            SiteTreeNode[] children = siteTree.getNode(documentId).getChildren();
-
-            super.startElement(uri, localName, raw, attr);
-
-            for (int i = 0; i < children.length; i++) {
-                String childId = documentId + "/" + children[i].getId();
-
-                //get child document with the same language than the parent document
-                Document doc;
-                try {
-                    doc = this.identityMap.getFactory().get(area, childId, language);
-                } catch (DocumentBuildException e) {
-                    throw new SAXException(e);
+                if (getLogger().isInfoEnabled()) {
+                    getLogger().info("Inserting index");
                 }
-                String url = doc.getCanonicalWebappURL();
-                File file = doc.getFile();
 
-                if (!file.exists()) {
-                    //get first the child document in the default language and then in any other
-                    // existent language
-                    getLogger().debug(
-                            "There is no child file " + file.getAbsolutePath()
-                                    + " in the same language as the parent document [" + language
-                                    + "]");
+                String cIncludePrefix = "";
+                if (!this.cIncludeNamespace.equals("")) {
+                    cIncludePrefix = "ci:";
+                }
 
-                    //available language
-                    String[] availableLanguages = null;
+                String documentId = document.getId();
+                String language = document.getLanguage();
+                String defaultLanguage = publication.getDefaultLanguage();
+                SiteTreeNode[] children = siteTree.getNode(documentId).getChildren();
+
+                super.startElement(uri, localName, raw, attr);
+
+                for (int i = 0; i < children.length; i++) {
+                    String childId = documentId + "/" + children[i].getId();
+
+                    //get child document with the same language than the parent document
+                    Document doc;
                     try {
-                        availableLanguages = doc.getLanguages();
-                    } catch (DocumentException e) {
+                        doc = this.identityMap.getFactory().get(area, childId, language);
+                    } catch (DocumentBuildException e) {
                         throw new SAXException(e);
                     }
+                    String url = doc.getCanonicalWebappURL();
 
-                    List languages = new ArrayList();
-                    for (int l = 0; l < availableLanguages.length; l++) {
-                        if (availableLanguages[l].equals(language)) {
-                            getLogger().debug(
-                                    "Do nothing because language was already tested: ["
-                                            + availableLanguages[l] + "]");
-                        } else if (availableLanguages[l].equals(defaultLanguage)) {
-                            languages.add(0, availableLanguages[l]);
-                        } else {
-                            languages.add(availableLanguages[l]);
-                        }
-                    }
+                    if (!doc.exists()) {
+                        //get first the child document in the default language and then in any
+                        // other
+                        // existent language
+                        getLogger().debug(
+                                "There is no child document [" + doc
+                                        + "] in the same language as the parent document ["
+                                        + language + "]");
 
-                    int j = 0;
-                    while (!file.exists() && j < languages.size()) {
-                        String newlanguage = (String) languages.get(j);
+                        //available language
+                        String[] availableLanguages = null;
                         try {
-                            doc = this.identityMap.getFactory().get(area, childId, newlanguage);
-                        } catch (DocumentBuildException e) {
+                            availableLanguages = doc.getLanguages();
+                        } catch (DocumentException e) {
                             throw new SAXException(e);
                         }
-                        url = doc.getCanonicalWebappURL();
-                        file = doc.getFile();
 
-                        j++;
+                        List languages = new ArrayList();
+                        for (int l = 0; l < availableLanguages.length; l++) {
+                            if (availableLanguages[l].equals(language)) {
+                                getLogger().debug(
+                                        "Do nothing because language was already tested: ["
+                                                + availableLanguages[l] + "]");
+                            } else if (availableLanguages[l].equals(defaultLanguage)) {
+                                languages.add(0, availableLanguages[l]);
+                            } else {
+                                languages.add(availableLanguages[l]);
+                            }
+                        }
+
+                        int j = 0;
+                        while (!doc.exists() && j < languages.size()) {
+                            String newlanguage = (String) languages.get(j);
+                            try {
+                                doc = this.identityMap.getFactory().get(area, childId, newlanguage);
+                            } catch (DocumentBuildException e) {
+                                throw new SAXException(e);
+                            }
+                            url = doc.getCanonicalWebappURL();
+
+                            j++;
+                        }
                     }
-                }
 
-                if (file.exists()) {
-                    //create the tags for the child
-                    String path;
-                    try {
-                        path = file.getCanonicalPath();
-                    } catch (IOException e) {
-                        throw new SAXException(e);
+                    if (doc.exists()) {
+                        //create the tags for the child
+                        String sourceUri = doc.getSourceURI();
+
+                        AttributesImpl attribute = new AttributesImpl();
+                        attribute.addAttribute("", "href", "href", "", url);
+                        super.startElement(NAMESPACE, "child", PREFIX + "child", attribute);
+
+                        AttributesImpl attributes = new AttributesImpl();
+                        attributes.addAttribute("", "src", "src", "", sourceUri);
+                        attributes.addAttribute("", "element", "element", "", "included");
+
+                        super.startElement(this.cIncludeNamespace, "include", cIncludePrefix
+                                + "include", attributes);
+                        super.endElement(this.cIncludeNamespace, "include", cIncludePrefix
+                                + "include");
+                        super.endElement(NAMESPACE, "child", PREFIX + "child");
+                    } else {
+                        //do nothing for this child
+                        getLogger().warn(
+                                "There are no existing file for the child with id " + childId);
                     }
 
-                    AttributesImpl attribute = new AttributesImpl();
-                    attribute.addAttribute("", "href", "href", "", url);
-                    super.startElement(NAMESPACE, "child", PREFIX + "child", attribute);
-
-                    AttributesImpl attributes = new AttributesImpl();
-                    attributes.addAttribute("", "src", "src", "", path);
-                    attributes.addAttribute("", "element", "element", "", "included");
-
-                    super.startElement(this.cIncludeNamespace, "include", cIncludePrefix
-                            + "include", attributes);
-                    super.endElement(this.cIncludeNamespace, "include", cIncludePrefix + "include");
-                    super.endElement(NAMESPACE, "child", PREFIX + "child");
-                } else {
-                    //do nothing for this child
-                    getLogger().warn("There are no existing file for the child with id " + childId);
                 }
-
+            } else {
+                super.startElement(uri, localName, raw, attr);
             }
-        } else {
-            super.startElement(uri, localName, raw, attr);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
         }
 
     }

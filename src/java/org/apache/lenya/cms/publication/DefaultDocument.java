@@ -20,13 +20,13 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
-import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 
@@ -213,8 +213,7 @@ public class DefaultDocument implements Document {
         try {
             SiteManager siteManager = getPublication().getSiteManager(getIdentityMap());
             if (siteManager != null) {
-                Label label = siteManager.getLabel(this);
-                labelString = label.getLabel();
+                labelString = siteManager.getLabel(this);
             }
         } catch (SiteException e) {
             throw new DocumentException(e);
@@ -390,6 +389,17 @@ public class DefaultDocument implements Document {
      */
     public String getCanonicalDocumentURL() {
         return getDocumentURL();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
+     */
+    public String getSourceURI() {
+        try {
+            return "file:/" + getFile().getCanonicalPath();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

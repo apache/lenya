@@ -140,7 +140,6 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         filename = filename.substring(publicationPath.length());
-        getLogger().debug("Filename: " + filename);
 
         username = null;
 

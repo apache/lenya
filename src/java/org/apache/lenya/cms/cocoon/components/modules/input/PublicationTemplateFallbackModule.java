@@ -20,9 +20,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
@@ -31,8 +28,7 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 /**
  * @version $Id:$
  */
-public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModule implements
-        Serviceable {
+public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModule {
 
     /**
      * Ctor.
@@ -86,15 +82,6 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
         String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
                 + publication.getId() + "/lenya";
         return publicationUri;
-    }
-
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
 }

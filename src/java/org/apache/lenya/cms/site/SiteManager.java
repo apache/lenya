@@ -64,6 +64,13 @@ public interface SiteManager {
      * @throws SiteException if an error occurs.
      */
     Document[] getRequiringResources(Document resource) throws SiteException;
+    
+    /**
+     * Adds a document to the site structure.
+     * @param document The document to add.
+     * @throws SiteException if the document is already contained.
+     */
+    void add(Document document) throws SiteException;
 
     /**
      * Checks if the site structure contains a certain resource in a certain area.
@@ -103,7 +110,15 @@ public interface SiteManager {
      * @return A label.
      * @throws SiteException if an error occurs.
      */
-    Label getLabel(Document document) throws SiteException;
+    String getLabel(Document document) throws SiteException;
+    
+    /**
+     * Sets the label of a certain document.
+     * @param document The document.
+     * @param label The label.
+     * @throws SiteException if an error occurs.
+     */
+    void setLabel(Document document, String label) throws SiteException;
 
     /**
      * Returns all documents in a certain area.
@@ -118,4 +133,5 @@ public interface SiteManager {
      * @param map A resource identity map.
      */
     void setIdentityMap(DocumentIdentityMap map);
+    
 }

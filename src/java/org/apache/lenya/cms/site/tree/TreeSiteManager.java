@@ -257,7 +257,29 @@ public class TreeSiteManager extends AbstractSiteManager {
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getLabel(org.apache.lenya.cms.publication.Document)
      */
-    public Label getLabel(Document document) throws SiteException {
+    public String getLabel(Document document) throws SiteException {
+        Label label = getLabelObject(document);
+        return label.getLabel();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#setLabel(org.apache.lenya.cms.publication.Document,
+     *      java.lang.String)
+     */
+    public void setLabel(Document document, String label) throws SiteException {
+        Label labelObject = getLabelObject(document);
+        labelObject.setLabel(label);
+        SiteTree tree = getTree(document.getArea());
+        tree.save();
+    }
+
+    /**
+     * Returns the label object of a document.
+     * @param document The document.
+     * @return A label.
+     * @throws SiteException if an error occurs.
+     */
+    protected Label getLabelObject(Document document) throws SiteException {
         Label label = null;
         SiteTree siteTree = getTree(document.getArea());
         if (siteTree != null) {
@@ -267,6 +289,11 @@ public class TreeSiteManager extends AbstractSiteManager {
             }
             label = node.getLabel(document.getLanguage());
         }
+
+        if (label == null) {
+            throw new SiteException("The label of document [" + document + "] is null!");
+        }
+
         return label;
     }
 
@@ -286,6 +313,22 @@ public class TreeSiteManager extends AbstractSiteManager {
         } catch (DocumentBuildException e) {
             throw new SiteException(e);
         }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
+     */
+    public void add(Document document) throws SiteException {
+
+        if (contains(document)) {
+            throw new SiteException("The document [" + document + "] is already contained!");
+        }
+        SiteTree tree = getTree(document.getArea());
+
+        Label label = new Label("", document.getLanguage());
+        Label[] labels = { label };
+        tree.addNode(document.getId(), labels, null, null, false);
+        tree.save();
     }
 
 }

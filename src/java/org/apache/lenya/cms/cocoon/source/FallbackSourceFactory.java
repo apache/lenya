@@ -25,31 +25,27 @@ import java.util.Map;
 
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.Constants;
-import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Context;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
+import org.apache.lenya.cms.usecase.AbstractOperation;
 
 /**
  * Source factory following the fallback principle.
  * 
  * @version $Id:$
  */
-public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
+public class FallbackSourceFactory extends AbstractOperation implements SourceFactory,
         Serviceable, Contextualizable, URIAbsolutizer {
 
     /**
@@ -94,8 +90,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         try {
             templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
-            Map objectModel = ContextHelper.getObjectModel(this.context);
-            Publication pub = PublicationFactory.getPublication(objectModel);
+            Publication pub = getUnitOfWork().getIdentityMap().getPublication();
             templateManager.setup(pub);
 
             ExistingSourceResolver resolver = new ExistingSourceResolver();
@@ -149,6 +144,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {
+        super.service(manager);
         this.manager = manager;
     }
 

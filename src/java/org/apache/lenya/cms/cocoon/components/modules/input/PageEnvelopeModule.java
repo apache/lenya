@@ -29,8 +29,6 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
@@ -44,9 +42,7 @@ import org.apache.lenya.cms.publication.PageEnvelope;
  * 
  * @see org.apache.lenya.cms.publication.PageEnvelope
  */
-public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
-
-    private ServiceManager manager;
+public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 
     protected static final String URI_PARAMETER_DOCTYPE = "doctype";
 
@@ -187,13 +183,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
         return objects;
     }
 
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-    
     /**
      * uri will be filtered by certain rules 
      * i.e. session information encoded within the uri will be removed.

@@ -22,19 +22,16 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Abstract superclass for classes which need access to the page envelope.
  */
-public abstract class AbstractPageEnvelopeModule extends AbstractInputModule {
+public abstract class AbstractPageEnvelopeModule extends OperationModule {
     
     /**
      * Get the the page envelope for the given objectModel.
@@ -55,8 +52,7 @@ public abstract class AbstractPageEnvelopeModule extends AbstractInputModule {
         }
 
         try {
-            Publication pub = PublicationFactory.getPublication(objectModel);
-            DocumentIdentityMap map = new DocumentIdentityMap(pub);
+            DocumentIdentityMap map = getUnitOfWork().getIdentityMap();
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (Exception e) {
             throw new ConfigurationException("Resolving page envelope failed: ", e);

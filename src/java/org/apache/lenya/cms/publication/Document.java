@@ -162,8 +162,8 @@ public interface Document {
     /**
      * Returns the file for this document.
      * @return A file object.
-    File getFile();
      */
+    File getFile();
 
     /**
      * Returns the extension in the URL.
@@ -197,5 +197,11 @@ public interface Document {
      * @return A document identity map.
      */
     DocumentIdentityMap getIdentityMap();
+    
+    /**
+     * Returns the URI to resolve the document's source.
+     * @return A string.
+     */
+    String getSourceURI();
     
 }

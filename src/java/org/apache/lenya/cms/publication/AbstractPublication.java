@@ -311,6 +311,12 @@ public abstract class AbstractPublication implements Publication {
     }
 
     /**
+     * @see org.apache.lenya.cms.publication.Publication#addDocument(org.apache.lenya.cms.publication.Document)
+     */
+    public void addDocument(Document document) throws PublicationException {
+        getSiteManager(document.getIdentityMap()).add(document);
+    }
+    /**
      * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
      * to implement access to a custom repository.
      * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document,

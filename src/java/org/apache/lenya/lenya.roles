@@ -78,4 +78,20 @@
   	    shorthand="publication-template-manager"
   	    default-class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"/>
         
+  <role name="org.apache.lenya.cms.usecase.UnitOfWork"
+  	    shorthand="unit-of-work"
+  	    default-class="org.apache.lenya.cms.usecase.UnitOfWorkImpl"/>
+        
+  <role name="org.apache.lenya.cms.usecase.Operation"
+  	    shorthand="operation"
+  	    default-class="org.apache.lenya.cms.usecase.AbstractOperation"/>
+        
+  <role name="org.apache.lenya.cms.usecase.UsecaseSelector"
+        shorthand="usecases"
+        default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector"/>
+
+  <role name="org.apache.lenya.cms.usecase.UsecaseResolver"
+  	    shorthand="usecase-resolver"
+  	    default-class="org.apache.lenya.cms.usecase.UsecaseResolverImpl"/>
+        
 </role-list>
