@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.3 2003/04/11 11:20:07 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.4 2003/04/11 15:39:51 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -20,6 +20,9 @@
 <!-- FIXME: Factor out to root sitemap -->
       <map:action name="task" logger="sitemap.action.task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
       <map:action name="page-envelope" logger="sitemap.action.page-envelope" src="org.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
+      <map:action name="uriparametrizer"
+	src="org.lenya.cms.cocoon.acting.URIParametrizerAction"
+	logger="sitemap.action.uriparametrizer"/>
     </map:actions>
   </map:components>
 
@@ -77,6 +80,21 @@
     </map:pipeline>
     
     <map:pipeline>
+      <map:match pattern="article/**.html">
+        <map:act type="page-envelope">
+          <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
+            <map:part src="cocoon://navigation/{publication-id}/tabs/{../1}.html.xml"/>
+            <map:part src="cocoon://navigation/{publication-id}/menu/{../1}.html.xml"/>
+          </map:aggregate>
+          <map:transform src="xslt/page2xhtml.xsl">
+            <map:parameter name="root" value="{context}/{publication-id}/"/>
+          </map:transform>
+        </map:act>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    
+    <map:pipeline>
       <map:match pattern="**.html">
         <map:act type="page-envelope">
           <map:aggregate element="page" prefix="page" ns="http://www.lenya.org/2003/page">
@@ -87,10 +105,18 @@
             <map:parameter name="root" value="{context}/{publication-id}/"/>
           </map:transform>
         </map:act>
-        <map:serialize type="xhtml"/>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
     
+    <map:match pattern="test">
+      <map:act type="page-envelope">
+	<map:act type="uriparametrizer" src="cocoon://uri-parameter/{publication-id}/sourceType">
+	  <map:generate src="cocoon:/{doctype}/{path}"/>
+	</map:act>
+      </map:act>
+      <map:serialize type="xhtml">
+    </map:match>
 
     <!-- Redirect to introduction -->
 <!-- FIXME: Factor out to root sitemap -->
