@@ -62,6 +62,10 @@
         <item href="index.xml">Feed</item>
         <item href="lenya-page-body.xml">Body</item>
       </block>
+      <block>
+        <item href="/lenya/blog/atomapi/">introspection</item>
+        <item href="/lenya/blog/atomapi/search?atom-all">atom-all</item>
+      </block>
     </menu>
   </menus>
 
