@@ -15,7 +15,7 @@ import org.quartz.Trigger;
  * functionality to serialize the list of jobs as xml.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: SchedulerXMLAdaptor.java,v 1.1 2002/08/23 06:45:20 michicms Exp $
+ * @version CVS $Id: SchedulerXMLAdaptor.java,v 1.2 2002/10/06 23:36:39 michicms Exp $
  */
 public class SchedulerXMLAdaptor extends SchedulerAdaptor {
 
@@ -94,6 +94,7 @@ public class SchedulerXMLAdaptor extends SchedulerAdaptor {
 		docID = jobDataMap.getString(DOCID);
 // 		if (docID == null) docID = "";
 		jobID = jobDataMap.getString(JOBID);
+		String sentence = jobDataMap.getString("sentence");
 		
 		if (previousPublicationID.equals(publicationID) == false) {
 		    if (previousPublicationID.equals("") == false) {
@@ -128,10 +129,9 @@ public class SchedulerXMLAdaptor extends SchedulerAdaptor {
 			  nextFireTime.get(Calendar.DAY_OF_MONTH) + "T" +
 			  nextFireTime.get(Calendar.HOUR_OF_DAY) + ":" +
 			  nextFireTime.get(Calendar.MINUTE));
-		writer.println("<sch:parameter name=\"docid\" value=\"" +
-			       docID + "\"/>");
-		writer.println("<sch:parameter name=\"jobid\" value=\"" +
-			       jobID + "\"/>");
+		writer.println("<sch:parameter name=\"docid\" value=\"" + docID + "\"/>");
+		writer.println("<sch:parameter name=\"jobid\" value=\"" + jobID + "\"/>");
+		writer.println("<sch:parameter name=\"sentence\" value=\"" + sentence + "\"/>");
 		writer.println("</sch:task>");
 	    }
 	    writer.println("</sch:tasks>");

@@ -9,7 +9,7 @@ import org.quartz.*;
  * A simple wrapper around a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: SchedulerAdaptor.java,v 1.2 2002/08/30 13:43:18 michicms Exp $
+ * @version CVS $Id: SchedulerAdaptor.java,v 1.3 2002/10/06 23:36:39 michicms Exp $
  */
 public class SchedulerAdaptor {
 
@@ -150,23 +150,65 @@ public class SchedulerAdaptor {
 		  ft + " & repeat: " + trigger.getRepeatCount() +
 		  "/" + trigger.getRepeatInterval());
     }
+/**
+ * Add Cron Job
+ * For "cronExpression" please see org.quartz.CronTrigger Java API (http://quartz.sourceforge.net/javadoc/index.html)
+ */
+  public void addJob(String context,String uri,String jobClassName,String cronExpression) throws SchedulerException, ClassNotFoundException{
+    log.info("------- Add Cron Job -----------------");
 
-    /**
-     * Modify an existing job.
-     *
-     * With the current implementation the job is deleted and
-     * recreated, i.e. the jobID will change.
-     *
-     * @param jobID the identifier for this job
-     * @param context the publication for which this job is scheduled
-     * @param uri the uri on which this job is acting on
-     * @param jobClassName the class which implements the
-     * 			   org.quartz.Job interface which will be
-     * 			   invoked at <code>startTime</code> 
-     * @param startTime the time at which the job will be triggered
-     *
-     * @exception SchedulerException if an error occurs
-     */
+    String uniqueJobID = "job" + uri + System.currentTimeMillis();
+    String uniqueTriggerID = "trigger" + uri + System.currentTimeMillis();
+	
+    // FIXME: Make sure that a class exists for scheduleJobName
+    JobDetail job;
+    try{
+      job = new JobDetail(uniqueJobID, context, Class.forName(jobClassName));
+      } 
+    catch(ClassNotFoundException e){
+      log.error(".addJob(): Class: " + jobClassName + " not found." + e.getMessage());
+      throw e;
+      } 
+    catch(ExceptionInInitializerError e) {
+      log.error("InitializerError for class: " + jobClassName + e.getMessage());
+      return;
+      } 
+    catch (LinkageError e) {
+      log.error("LinkageError for class: " + jobClassName + e.getMessage());
+      return;
+      }
+
+
+    JobDataMap jobData = new JobDataMap();
+    jobData.put(DOCID, uri);
+    jobData.put(JOBID, uniqueJobID);
+    jobData.put("sentence","Hello World");
+    job.setJobDataMap(jobData);
+
+    try{
+      Trigger trigger = new CronTrigger(uniqueTriggerID, "triggerName", uniqueJobID, context, cronExpression);
+      Date ft = sched.scheduleJob(job, trigger);
+      }
+    catch(Exception e){
+      log.error(".addJob(): "+e);
+      }
+    }
+/**
+ * Modify an existing job.
+ *
+ * With the current implementation the job is deleted and
+ * recreated, i.e. the jobID will change.
+ *
+ * @param jobID the identifier for this job
+ * @param context the publication for which this job is scheduled
+ * @param uri the uri on which this job is acting on
+ * @param jobClassName the class which implements the
+ * 			   org.quartz.Job interface which will be
+ * 			   invoked at <code>startTime</code> 
+ * @param startTime the time at which the job will be triggered
+ *
+ * @exception SchedulerException if an error occurs
+ */
     public void modifyJob(String jobID,
 			   String context, String uri,
 			   String jobClassName,

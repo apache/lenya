@@ -65,6 +65,14 @@
 	      Publish Page
 	    </option>
 	    <option>
+	      <xsl:attribute name="value">org.wyona.cms.scheduler.RSSFetchJob</xsl:attribute>
+	      Fetch RSS
+	    </option>
+	    <option>
+	      <xsl:attribute name="value">org.wyona.cms.scheduler.CommandLineJob</xsl:attribute>
+	      pwd
+	    </option>
+	    <option>
 	      <xsl:attribute name="value">ArchiveJob</xsl:attribute>
 	      Archive Page
 	    </option>
@@ -121,7 +129,7 @@
 	<font face="Verdana, Arial, Helvetica, sans-serif" size="2"> 
 	  <h1>Scheduler</h1>
 	  <h3>Schedule tasks for this page/document</h3>
-	  <p>Page/Document: <xsl:value-of select="$documentID"/></p>
+	  <p><a href="/wyona-cms/unipublic/authoring/{$documentID}"><xsl:value-of select="$documentID"/></a></p>
 	  <table width="100%" height="3" border="0" cellpadding="2" cellspacing="0">
 	    <tr> 
 	      <td bgcolor="#EEEEEE">

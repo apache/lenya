@@ -28,7 +28,7 @@ import org.quartz.utils.*;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.2 2002/08/30 13:43:18 michicms Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.3 2002/10/06 23:36:39 michicms Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -51,6 +51,35 @@ public class LoadQuartzServlet extends HttpServlet {
  
     public void process() throws ServletException, SchedulerException  {
 	sched = new SchedulerXMLAdaptor();
+
+
+        // <Add persistent jobs>
+        // FIXME: Read from file. This is just an example yet
+        Date startTime = null;
+        try{
+/*
+          // Add Simple Job
+	  startTime = new GregorianCalendar(Integer.parseInt("2002"),
+                                Integer.parseInt("10")-1,
+                                Integer.parseInt("6"),
+                                Integer.parseInt("23"),
+                                Integer.parseInt("30")).getTime();
+          sched.addJob("no_pub_id","no_doc_id","org.wyona.cms.scheduler.CommandLineJob",startTime);
+*/
+
+          // Add Cron Job (seconds,minutes,hours,day of month,months,day of week)
+          //sched.addJob("no_pub_id","no_doc_id","org.wyona.cms.scheduler.CommandLineJob","0 * * * * ?");
+          sched.addJob("no_pub_id","no_doc_id","org.wyona.cms.scheduler.HelloWorldJob","30 * * * * ?");
+          }
+        catch(NumberFormatException e){
+          log.error(".process(): "+e);
+          }
+        catch(ClassNotFoundException e){
+          log.error(".process(): "+e);
+          }
+        // </Add persistent jobs>
+
+
 
 	try {
 	    ShutdownHook();
