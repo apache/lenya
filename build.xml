@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.25 2002/06/24 14:29:43 michicms Exp $
+   @version CVS $Id: build.xml,v 1.26 2002/07/12 15:41:59 michicms Exp $
 
 -->
 
@@ -360,6 +360,7 @@
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
         <include name="**/*"/>
+        <!-- servlet.jar is used to build Wyona, but for deployment the servlet.jar from the servlet engine will be taken -->
         <exclude name="servlet.jar"/>
       </fileset>
     </copy>
