@@ -163,5 +163,15 @@
       </map:match>
     </map:pipeline>
 
+    <!-- Redirect non-usecase pages to tab.overview usecase -->    
+    <map:pipeline>
+      <map:select type="parameter">
+        <map:parameter name="parameter-selector-test" value="{request-param:lenya.usecase}"/>
+        <map:when test="">
+          <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=tab.overview"/>
+        </map:when>
+      </map:select>
+    </map:pipeline>
+
   </map:pipelines>
 </map:sitemap>
