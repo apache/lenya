@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuilder.java,v 1.4 2003/07/23 13:21:11 gregor Exp $
+$Id: DocumentBuilder.java,v 1.5 2003/08/20 15:05:11 edith Exp $
 <License>
 
  ============================================================================
@@ -84,5 +84,24 @@ public interface DocumentBuilder {
      */    
     boolean isDocument(Publication publication, String url)
         throws DocumentBuildException;
+        
+	/**
+	 * builds a url corresponding to a cms document from the publication, the area, the document id, the language
+	 * @param publication The publication the document belongs to.
+	 * @param area The area the document belongs to.
+	 * @param documentid The document id of the document.
+	 * @param language The language of the document.
+	 * @return a String The builded url
+	 */
+	String buildCanonicalUrl(Publication publication, String area, String documentid, String language);
+        
+	/**
+	 * builds a url corresponding to a cms document from the publication, the area, the document id
+	 * @param publication The publication the document belongs to.
+	 * @param area The area the document belongs to.
+	 * @param documentid The document id of the document.
+	 * @return a String The builded url
+	 */
+	String buildCanonicalUrl(Publication publication, String area, String documentid);
     
 }
