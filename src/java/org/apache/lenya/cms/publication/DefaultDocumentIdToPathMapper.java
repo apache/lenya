@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.15 2003/10/29 15:31:12 andreas Exp $ <License>
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.16 2003/10/31 15:10:46 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -126,5 +126,29 @@ public class DefaultDocumentIdToPathMapper
         } else {
             throw new DocumentDoesNotExistException("No document associated with file" + fileName);
         }
+    }
+    
+    /**
+     * Returns the language for a certain file
+     * 
+     * @param file the document file
+     * 
+     * @return the language for the given document file
+     */
+    public String getLanguage(File file) {
+        String fileName = file.getAbsolutePath();
+        String language = null;
+        // check if the file is of the form index.html or index_en.html
+        if (fileName.startsWith("index") && fileName.endsWith(".html")) {
+            String languageSuffix =
+                fileName.substring(
+                    "index".length() - 1,
+                    fileName.indexOf(".html"));
+            if (languageSuffix.length() > 0) {
+                // trim the leading '_'
+                language = languageSuffix.substring(1);
+            }
+        }
+        return language;
     }
 }

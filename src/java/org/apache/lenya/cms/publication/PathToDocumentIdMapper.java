@@ -1,5 +1,5 @@
 /*
-$Id: PathToDocumentIdMapper.java,v 1.1 2003/09/30 09:04:57 egli Exp $
+$Id: PathToDocumentIdMapper.java,v 1.2 2003/10/31 15:10:46 egli Exp $
 <License>
 
  ============================================================================
@@ -79,4 +79,14 @@ public interface PathToDocumentIdMapper {
      */
     String getDocumentId(Publication publication, String area, File file)
         throws DocumentDoesNotExistException;
+        
+    /**
+     * Returns the language for a given file
+     * 
+     * @param file the document file
+     * 
+     * @return the language for the given document file
+     */
+    public String getLanguage(File file);
+
 }
