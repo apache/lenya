@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: usecase-bxeng.xmap,v 1.5 2004/02/04 20:31:16 gregor Exp $ -->
+<!-- $Id: usecase-bxeng.xmap,v 1.6 2004/02/05 12:28:48 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
 	<!-- =========================== Components ================================ -->
@@ -43,7 +43,7 @@
     
     <map:resource name="cms-screen-xml">
           <map:generate src="../../content/{serverpage}" type="serverpages"/>
-          <map:transform src="lenya/xslt/{stylesheet}">
+          <map:transform src="../../xslt/{stylesheet}">
             <map:parameter name="use-request-parameters" value="true"/>
           </map:transform>      
     </map:resource>
