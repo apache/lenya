@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <access-controller type="publication-file">
+	<authorizer type="usecase">
+		<config-file src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
+	</authorizer>
   <accreditable-manager>
     <parameter name="directory" value="context:///lenya/pubs/default/config/ac/passwd"/>
   </accreditable-manager>
