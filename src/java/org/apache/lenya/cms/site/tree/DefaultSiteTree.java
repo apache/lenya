@@ -121,7 +121,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * Checks if the tree file has been modified externally and reloads the site
      * tree.
      */
-    protected void checkModified() {
+    protected synchronized void checkModified() {
         if (this.area.equals(Publication.LIVE_AREA) && this.treefile.isFile()
                 && this.treefile.lastModified() > this.lastModified) {
 
@@ -143,7 +143,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @return the new site document
      * @throws ParserConfigurationException if an error occurs
      */
-    public Document createDocument() throws ParserConfigurationException {
+    public synchronized Document createDocument() throws ParserConfigurationException {
         this.document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
 
         Element root = this.document.getDocumentElement();
@@ -162,7 +162,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @param ids list of node ids
      * @return the node that matches the path given in the list of ids
      */
-    protected Node findNode(Node node, List ids) {
+    protected synchronized Node findNode(Node node, List ids) {
 
         checkModified();
 
@@ -380,7 +380,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @return the Node if there is a Node for the given document-id, null
      *         otherwise
      */
-    private Node getNodeInternal(String documentId) {
+    private synchronized Node getNodeInternal(String documentId) {
         StringTokenizer st = new StringTokenizer(documentId, "/");
         ArrayList ids = new ArrayList();
 
@@ -395,7 +395,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#getNode(java.lang.String)
      */
-    public SiteTreeNode getNode(String documentId) {
+    public synchronized SiteTreeNode getNode(String documentId) {
         assert documentId != null;
 
         SiteTreeNode treeNode = null;
