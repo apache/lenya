@@ -18,7 +18,7 @@
 							<xsl:value-of select="p"/>
 							<br/>
 						</span>
-						<a href="magazine/" class="txt-link-red">
+						<a href="/abo/magazine/index.html" class="txt-link-red">
 							<img border="0" src="/img/layout/arrow-red.gif" width="9" height="7" alt="»"/>weiter</a>
 					</td>
 				</tr>
@@ -33,7 +33,7 @@
 	</xsl:template>
 	
 	<xsl:template match="media" mode="small-preview">
-		<a href="magazine/">
+		<a href="/abo/magazine/index.html">
 			<img border="0" src="/img/{media-reference/@source}" width="42" height="42" alt="{media-reference/@alternate-text}"/>
 		</a>
 	</xsl:template>

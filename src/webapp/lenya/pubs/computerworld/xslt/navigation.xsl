@@ -83,7 +83,7 @@
 		<td colspan="2" height="20" valign="middle"><img border="0" src="/img/layout/line-nav140x1.gif" width="140" height="1" /></td>
 	</tr>
 	<tr>
-		<td colspan="2"><a href="magazine/"><img border="0" src="/img/layout/magazine.gif" width="140" height="18" alt="Magazine" /></a></td>
+		<td colspan="2"><a href="{$prefix}/abo/magazine/index.html"><img border="0" src="/img/layout/magazine.gif" width="140" height="18" alt="Magazine" /></a></td>
 	</tr>
 	<tr>
 		<td colspan="2">
