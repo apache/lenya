@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.14 2003/04/28 09:25:54 gregor Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.15 2003/04/29 15:03:34 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -51,7 +51,7 @@
     <map:pipeline>
     <map:match pattern="**.html">
       <map:act type="page-envelope">
-	<map:act type="uriparametrizer">
+	<map:act type="uriparametrizer" src="{../1}.html">
           <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
           <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
 	  <map:generate src="cocoon://{../publication-id}/{../area}/{doctype}/{document-id}"/>

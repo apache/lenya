@@ -8,10 +8,10 @@
 
 root { }
 
-.tabs { padding-top: .5em; font-family: Verdana, Arial, Sans-serif; padding-top: .5em; background-color: #EEEEFF; }
+.tabs { font-family: Verdana, Arial, Sans-serif; font-size: 80%; border-bottom: solid 5px #AAAAFF;}
 
-.tab { padding: .2em; background-color: #CCCCFF; }
-.tab-selected { padding: .2em; background-color: #AAAAFF; }
+.tab { padding-left: .5em; padding-right: .5em; background-color: #CCCCFF; }
+.tab-selected { padding-left: .5em; padding-right: .5em; background-color: #AAAAFF; font-weight: bold; }
 
 .menu { padding: 1em; font-family: Verdana, Arial, Sans-serif; background-color: #EEEEFF; }
 .menuitem-1 { font-weight: bold; margin-top: 1em; }
