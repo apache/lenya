@@ -17,7 +17,6 @@
 
 <xmap xpath="/sitemap/components/actions" unless="/sitemap/components/actions/action[@name = 'authenticator']">
    <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction" logger="lenya.sitemap.action.authorizer"/>
-   <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
    <map:action name="language-exists" logger="lenya.sitemap.action.language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
    <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
    <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" src="org.apache.cocoon.acting.RequestParameterExistsAction" />
