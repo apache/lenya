@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.202 2004/04/04 08:36:52 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.203 2004/04/04 16:58:27 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -378,13 +378,13 @@
 
         </map:match>
         
-        <!-- ************************************************************** -->
-        <!-- ** Kupu                                                                              
-        <!-- **                                                                                       
-        <!-- ** NOTE: page-envelope:document-path depends on the       
-        <!-- **           publication-specific DocumentIdToPathMapper which  
-        <!-- **           is configured within config/publication.xconf      
-        <!-- ************************************************************** -->
+        <!-- ************************************************************** 
+         ** Kupu                                                                              
+         **                                                                                       
+         ** NOTE: page-envelope:document-path depends on the       
+         **           publication-specific DocumentIdToPathMapper which  
+         **           is configured within config/publication.xconf      
+         ************************************************************** -->
         <map:match pattern="kupu" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
