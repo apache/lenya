@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlSitetreeTransformer.java,v 1.4 2004/02/18 09:08:45 andreas Exp $
+$Id: AccessControlSitetreeTransformer.java,v 1.5 2004/02/18 10:30:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -94,7 +94,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * with a <code>protected="true"</code> attribute.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.4 2004/02/18 09:08:45 andreas Exp $
+ * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.5 2004/02/18 10:30:41 andreas Exp $
  */
 public class AccessControlSitetreeTransformer
     extends AbstractSAXTransformer
@@ -195,6 +195,7 @@ public class AccessControlSitetreeTransformer
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Disposing transformer");
         }
+        Object manager = this.manager;
         if (componentSelector != null) {
             if (acResolver != null) {
                 componentSelector.release(acResolver);
