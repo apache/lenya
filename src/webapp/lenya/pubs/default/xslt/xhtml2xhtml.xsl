@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml2xhtml.xsl,v 1.11 2004/08/11 12:58:39 michi Exp $ -->
+<!-- $Id: xhtml2xhtml.xsl,v 1.12 2004/08/27 07:24:17 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -26,7 +26,7 @@
     exclude-result-prefixes="xhtml lenya"
     >
 
-<xsl:param name="rendertype" select=""/>
+<xsl:param name="rendertype" select="''"/>
 <xsl:param name="nodeid"/>
 
 <xsl:template match="/xhtml:html">
