@@ -28,6 +28,11 @@
     <parameter name="target" value="moveDocument"/>
   </task>
 
+  <task id="renameDocument" class="org.apache.lenya.cms.task.AntTask">
+    <label>RenameDocument</label>
+    <parameter name="target" value="renameDocument"/>
+  </task>
+
   <task id="deactivateDocument" class="org.apache.lenya.cms.task.AntTask">
     <label>DeactivateDocument</label>
     <parameter name="target" value="deactivateDocument"/>
