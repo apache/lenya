@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.16 2003/07/23 13:21:50 gregor Exp $
+$Id: WorkflowMenuTransformer.java,v 1.17 2003/08/05 11:58:56 andreas Exp $
 <License>
 
  ============================================================================
@@ -80,10 +80,10 @@ import java.util.Map;
 
 
 /**
+ * This transformer disables menu items (by removing the href attribute)
+ * which are not allowed with respect to the current workflow state.
+ * 
  * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     public static final String MENU_ELEMENT = "menu";

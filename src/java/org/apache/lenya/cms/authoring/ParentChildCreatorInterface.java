@@ -1,5 +1,5 @@
 /*
-$Id: ParentChildCreatorInterface.java,v 1.11 2003/07/30 15:30:06 egli Exp $
+$Id: ParentChildCreatorInterface.java,v 1.12 2003/08/05 11:57:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -84,9 +84,9 @@ public interface ParentChildCreatorInterface {
     short LEAF_NODE = 0;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param doctypeConf DOCUMENT ME!
+     * Configures the Creator, based on a configuration file.
+     * 
+     * @param doctypeConf A configuration.
      */
     void init(Configuration doctypeConf);
 

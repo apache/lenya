@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreator.java,v 1.23 2003/07/31 17:09:56 egli Exp $
+$Id: DefaultCreator.java,v 1.24 2003/08/05 11:57:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -85,7 +85,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
     private String sampleMetaName = null;
 
     /**
-     * DOCUMENT ME!
+     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration)
      *
      * @param conf DOCUMENT ME!
      */
@@ -115,7 +115,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
     }
 
     /**
-     * Generate a three id.
+     * Generate a tree id by returning the child ID.
      *
      * @param childId a <code>String</code> value
      * @param childType a <code>short</code> value
@@ -130,7 +130,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
     }
 
     /**
-     * Return the child type.
+     * Return the child type by simply returning the child type.
      *
      * @param childType a <code>short</code> value
      *
