@@ -15,15 +15,16 @@
  *
  */
 
-/* $Id: XPSInclude.java,v 1.10 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
 import java.util.Vector;
 
-public interface XPSInclude {
+public interface XInclude {
     /**
-     * DOCUMENT ME!
+     * The Lenya XInclude implementation. It improves on the Cocoon implementation by supporting nested includes and
+     * better error handling.
      *
      * @param args DOCUMENT ME!
      * @param parentInfo DOCUMENT ME!

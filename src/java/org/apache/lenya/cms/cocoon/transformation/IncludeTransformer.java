@@ -52,7 +52,7 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
 
 	/**
 	 *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.cocoon.transformation.AbstractDOMTransformer#transform(org.w3c.dom.Document)
+	 * @see org.apache.cocoon.transformation.AbstractDOMTransformer#transform(org.w3c.dom.Document)
 	 */
     protected Document transform(Document doc) {
         try {
@@ -83,10 +83,10 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
             getLogger().debug("COCOON_BASE_REQUEST: " + cocoon_base_request);
 
             if (href != null) {
-                return new org.apache.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + href,
+                return new org.apache.lenya.xml.XIncludeImpl().assemble(doc, sitemapPath + href,
                     cocoon_base_request);
             } else {
-                return new org.apache.lenya.xml.XPSAssembler().assemble(doc,
+                return new org.apache.lenya.xml.XIncludeImpl().assemble(doc,
                     sitemapPath + sitemap_uri, cocoon_base_request);
             }
         } catch (Exception e) {

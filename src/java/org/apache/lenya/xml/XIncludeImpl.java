@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XPSAssembler.java,v 1.23 2004/04/20 13:37:02 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -41,8 +41,8 @@ import org.w3c.dom.NodeList;
 /**
  * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  */
-public class XPSAssembler implements XPSInclude {
-    static Category log = Category.getInstance(XPSAssembler.class);
+public class XIncludeImpl implements XInclude {
+    static Category log = Category.getInstance(XIncludeImpl.class);
     DOMParserFactory dpf = null;
     XPointerFactory xpf = null;
     Configuration conf = null;
@@ -50,9 +50,9 @@ public class XPSAssembler implements XPSInclude {
     String XPSEXCEPTION_ELEMENT_NAME = "XPSEXCEPTION"; // better would be a namespace xps:XLinkException
 
     /**
-     * Creates a new XPSAssembler object.
+     * Creates a new XIncludeImpl object.
      */
-    public XPSAssembler() {
+    public XIncludeImpl() {
         dpf = new DOMParserFactory();
         xpf = new XPointerFactory();
         conf = new Configuration();
@@ -67,44 +67,13 @@ public class XPSAssembler implements XPSInclude {
     }
 
     /**
-     * Creates a new XPSAssembler object.
+     * Creates a new XIncludeImpl object.
      *
      * @param includeoption DOCUMENT ME!
      */
-    public XPSAssembler(String includeoption) {
+    public XIncludeImpl(String includeoption) {
         this();
         conf.INCLUDE = includeoption;
-    }
-
-    /**
-     * Usage of XPSAssembler
-     *
-     * @param args URI
-     */
-    public static void main(String[] args) {
-        XPSAssembler xpsa = new XPSAssembler();
-
-        if (args.length != 1) {
-            System.err.println("Usage:");
-            System.err.println(" java " + xpsa.getClass().getName() + " \"../x/xps/samples/tbs/xml/invoices/invoice.xml\"");
-            System.err.println(" java " + xpsa.getClass().getName() + " \"file:/...\"");
-            System.err.println(" java " + xpsa.getClass().getName() + " \"http://localhost/...\"");
-
-            return;
-        }
-
-        String cocoon = null; // e.g. http://127.0.0.1:8080/lenya/nwt
-        Document document = xpsa.assemble(args[0], cocoon);
-
-        try {
-            OutputStream out = System.out;
-            new DOMWriter(out, "utf-8").printWithoutFormatting(document);
-
-            System.out.print("\n");
-            out.flush();
-        } catch (Exception e) {
-            System.err.println(xpsa.getClass().getName() + ".main(): " + e);
-        }
     }
 
     /**
@@ -471,7 +440,7 @@ public class XPSAssembler implements XPSInclude {
                     newChildren = include(arguments, currentInfo);
                 } else {
                     Class includeClass = Class.forName(includeClassName);
-                    XPSInclude xpsInclude = (XPSInclude) includeClass.newInstance();
+                    XInclude xpsInclude = (XInclude) includeClass.newInstance();
                     newChildren = xpsInclude.include(arguments, currentInfo);
                 }
             } catch (Exception e) {
