@@ -37,14 +37,26 @@ public class HTML{
     try{
       HTML html=new HTML(args[0]);
 
-      List img_src_list=html.getImageSrcs();
-      Iterator iterator=img_src_list.iterator();
-      while(iterator.hasNext()){
-        System.out.println((String)iterator.next());
+      List img_src_list=html.getImageSrcs(false);
+      System.out.println("<im src");
+      Iterator img_src_iterator=img_src_list.iterator();
+      while(img_src_iterator.hasNext()){
+        System.out.println((String)img_src_iterator.next());
         }
 
-      html.getAnchorHRefs();
-      html.getLinkHRefs();
+      List a_href_list=html.getAnchorHRefs(false);
+      System.out.println("<a href");
+      Iterator a_href_iterator=a_href_list.iterator();
+      while(a_href_iterator.hasNext()){
+        System.out.println((String)a_href_iterator.next());
+        }
+
+      List link_href_list=html.getLinkHRefs(false);
+      System.out.println("<link href");
+      Iterator link_href_iterator=link_href_list.iterator();
+      while(link_href_iterator.hasNext()){
+        System.out.println((String)link_href_iterator.next());
+        }
       }
     catch(Exception e){
       System.err.println(".main(): "+e);
@@ -65,16 +77,30 @@ public class HTML{
 /**
  *
  */
-  public List getAnchorHRefs(){
+  public List getAnchorHRefs(boolean duplicate){
     List list=new ArrayList();
-    System.out.println(".getAnchorHRefs(): INFO: Extract Links");
+    //System.out.println(".getAnchorHRefs(): INFO: Extract Links");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
       // Extract <a href="">content</a>
       SimpleAttributeSet sas=(SimpleAttributeSet)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Tag.A);
       if(sas != null){
-        System.out.println(".getAnchorHRefs(): <a href=\"\">content</a>: "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
+        String href=(String)sas.getAttribute(javax.swing.text.html.HTML.Attribute.HREF);
+        //System.out.println(".getAnchorHRefs(): <a href=\"\">content</a>: "+href);
+
+        if(!duplicate){
+          if(!list.contains(href)){
+            list.add(href);
+            }
+          else{
+            //System.out.println(".getAnchorHRefs(): List already contains: "+href);
+            }
+          }
+        else{
+          list.add(href);
+          }
+
         }
       }
     return list;
@@ -82,15 +108,28 @@ public class HTML{
 /**
  *
  */
-  public List getLinkHRefs(){
+  public List getLinkHRefs(boolean duplicate){
     List list=new ArrayList();
-    System.out.println(".getLinkHRefs(): INFO: Extract Links");
+    //System.out.println(".getLinkHRefs(): INFO: Extract Links");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
       // Extract <link href=""/>
       if(element.getName().equals("link")){
-        System.out.println(".getLinkHRefs(): <link href=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
+        String href=(String)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.HREF);
+        //System.out.println(".getLinkHRefs(): <link href=\"\"/>: "+href);
+
+        if(!duplicate){
+          if(!list.contains(href)){
+            list.add(href);
+            }
+          else{
+            //System.out.println(".getLinkHRefs(): List already contains: "+href);
+            }
+          }
+        else{
+          list.add(href);
+          }
         }
       }
     return list;
@@ -98,17 +137,29 @@ public class HTML{
 /**
  *
  */
-  public List getImageSrcs(){
+  public List getImageSrcs(boolean duplicate){
     List list=new ArrayList();
-    System.out.println(".getImageSrcs(): INFO: Extract Sources");
+    //System.out.println(".getImageSrcs(): INFO: Extract Sources");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
       // Extract <im src=""/>
       if(element.getName().equals("img")){
         String src=(String)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.SRC);
-        System.out.println(".getImageSrcs(): <im src=\"\"/>: "+src);
-        list.add(src);
+        //System.out.println(".getImageSrcs(): <im src=\"\"/>: "+src);
+
+        if(!duplicate){
+          if(!list.contains(src)){
+            list.add(src);
+            }
+          else{
+            //System.out.println(".getImageSrcs(): List already contains: "+src);
+            }
+          }
+        else{
+          list.add(src);
+          }
+
         }
       }
     return list;

@@ -6,9 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -121,44 +125,25 @@ public class WGet{
   public byte[] downloadUsingHttpClient(URL url,String prefixSubstitute) throws IOException, HttpException{
     log.debug(".downloadUsingHttpClient(): "+url);
 
-
-/*
-    HttpURLConnection httpConnection=(HttpURLConnection)url.openConnection();
-    InputStream in=httpConnection.getInputStream();
-    byte[] buffer=new byte[1024];
-    int bytes_read;
-    ByteArrayOutputStream bufferOut=new ByteArrayOutputStream();
-    while((bytes_read=in.read(buffer)) != -1){
-      bufferOut.write(buffer,0,bytes_read);
-      }
-    byte[] sresponse=bufferOut.toByteArray();
-    httpConnection.disconnect();
-*/
-    
-/*
-    HttpClient httpClient=new HttpClient();
-
-    HttpMethod httpMethod=new GetMethod();
-    //httpMethod.setRequestHeader("Content-type","text/plain");
-    httpMethod.setPath(url.getPath());
-
-    httpClient.startSession(url);
-    httpClient.executeMethod(httpMethod);
-    byte[] sresponse=httpMethod.getResponseBody();
-    httpClient.endSession();
-*/
-
-
     byte[] sresponse=getResource(url);
-    log.debug(".downloadUsingHttpClient(): Response from remote server: "+new String(sresponse));
+    //log.debug(".downloadUsingHttpClient(): Response from remote server: "+new String(sresponse));
 
     File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
     saveToFile(file.getAbsolutePath(),sresponse);
 
     substitutePrefix(file.getAbsolutePath(),prefixSubstitute);
 
-    getLinks(url);
-    getMoreLinks(url);
+    List links=getLinks(url);
+    if(links != null){
+      Iterator iterator=links.iterator();
+      while(iterator.hasNext()){
+        String link=(String)iterator.next();
+        URL child_url=new URL(org.wyona.util.URLUtil.complete(url.toString(),link));
+        log.debug(".downloadUsingHttpClient(): Child URL: "+child_url);
+        byte[] child_sresponse=getResource(child_url);
+        saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
+        }
+      }
 
     return sresponse;
     }
@@ -179,19 +164,6 @@ public class WGet{
       }
     byte[] sresponse=bufferOut.toByteArray();
     httpConnection.disconnect();
-    
-/*
-    HttpClient httpClient=new HttpClient();
-
-    HttpMethod httpMethod=new GetMethod();
-    //httpMethod.setRequestHeader("Content-type","text/plain");
-    httpMethod.setPath(url.getPath());
-
-    httpClient.startSession(url);
-    httpClient.executeMethod(httpMethod);
-    byte[] sresponse=httpMethod.getResponseBody();
-    httpClient.endSession();
-*/
 
     //log.debug(".getResource(): Response from remote server: "+new String(sresponse));
     return sresponse;
@@ -199,6 +171,7 @@ public class WGet{
 /**
  *
  */
+/*
   public URL[] getLinks(URL url) throws IOException, HttpException{
     log.debug(".getLinks(): "+url);
 
@@ -221,22 +194,30 @@ public class WGet{
 
     return null;
     }
+*/
 /**
  *
  */
-  public URL[] getMoreLinks(URL url) throws IOException{
-    log.debug(".getMoreLinks(): "+url);
+  public List getLinks(URL url) throws IOException{
+    log.debug(".getLinks(): "+url);
+    List links=null;
 
-    org.wyona.search.crawler.ContentHandler handler=new org.wyona.search.crawler.HTMLHandler();
-    handler.parse(((HttpURLConnection)url.openConnection()).getInputStream());
-    java.util.List links=handler.getLinks();
-
-    java.util.Iterator iterator=links.iterator();
-    while(iterator.hasNext()){
-      log.debug(".getMoreLinks(): Another Link: "+(String)iterator.next());
+    try{
+      org.wyona.util.HTML html=new org.wyona.util.HTML(url.toString());
+      links=html.getImageSrcs(false);
+      }
+    catch(Exception e){
+      log.error(".getLinks(): "+e);
       }
 
-    return null;
+    if(links != null){
+      Iterator iterator=links.iterator();
+      while(iterator.hasNext()){
+        log.debug(".getLinks(): Another Link: "+(String)iterator.next());
+        }
+      }
+
+    return links;
     }
 /**
  *
