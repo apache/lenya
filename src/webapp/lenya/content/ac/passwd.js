@@ -16,10 +16,10 @@ function passwd() {
 
       var resolver = cocoon.environment.getObjectModel().get("source-resolver");
       var sitemapPath = resolver.resolve("").getSystemId().substring(5);
-      var publicationId = "oscom";
       var session = cocoon.request.getSession(false);
+      var authenticatorId = session.getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
       var identityFromSession = session.getAttribute("org.lenya.cms.ac.Identity");
-      var filename = sitemapPath + "pubs/" + publicationId + "/content/ac/passwd/" + identityFromSession.getUsername() + ".iml";
+      var filename = sitemapPath + "pubs/" + authenticatorId + "/content/ac/passwd/" + identityFromSession.getUsername() + ".iml";
       var identity = new Packages.org.lenya.cms.ac.Identity(filename);
       if (identity.changePassword(oldpassword, newpassword, confirmednewpassword)) {
           break;
