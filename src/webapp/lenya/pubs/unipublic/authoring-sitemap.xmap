@@ -17,11 +17,8 @@
     <map:matchers default="wildcard"/>
     <map:actions>
       <map:action name="revision-controller" src="org.wyona.cms.cocoon.acting.RevisionControllerAction" logger="sitemap.action.revision-controller">
-<!--
-        <authenticator type="unipublic"/>
-        <policies>unipublic/policies/</policies>
-        <public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
--->
+        <rcmlDirectory href="docs/publication/rcml"/>
+        <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
     </map:actions>
     <map:selectors/>
@@ -202,10 +199,15 @@
       <!-- Article -->
       <map:match pattern="rc/*/*/*/*/index.xml">
         <map:act type="revision-controller">
-          <map:generate src="docs/publication/live/{../1}/{../2}/articles/{../3}/{../4}/index.xml"/>
+<!--
+          <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
+-->
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkout-exception.xsp">
+            <map:parameter name="user" value="{user}"/>
+          </map:generate>
           <map:serialize type="xml"/>
         </map:act>
-        <map:generate src="cocoon:/index.xml"/>
+        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 <!--

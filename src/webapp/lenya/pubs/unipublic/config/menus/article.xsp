@@ -36,6 +36,7 @@
         <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
 -->
         <item href="index.xml">View&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rc/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkout&#160;XML</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/stylesheets/article.xsl</xsp:attribute>View&#160;Bitflux&#160;XSLT</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/schemas/article.js</xsp:attribute>View&#160;Bitflux&#160;XSD/JS</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/css/article.css</xsp:attribute>View&#160;Bitflux&#160;CSS</item>

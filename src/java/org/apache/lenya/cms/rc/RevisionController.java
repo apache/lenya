@@ -143,15 +143,28 @@ public class RevisionController
 /**
  *
  */
+	public RevisionController(String rcmlDirectory,String backupDirectory) {
+		this.rcmlDirectory = rcmlDirectory;
+		this.backupDir = backupDirectory;
+		rootDir = "";
+	}
+/**
+ *
+ */
      public RevisionController(String rootDir)
           {
           this();
           this.rootDir=rootDir;
           }
-
-
-
-
+/**
+ * Shows Configuration
+ */
+  public String toString(){
+    return "rcmlDir="+rcmlDirectory+" , rcbakDir="+backupDir;
+    }
+/**
+ *
+ */
 	public RCML getRCML(String source) 
 			throws FileNotFoundException, IOException, Exception {
 		
