@@ -15,16 +15,18 @@
  *
  */
 
-/* $Id: RelaxNG.java,v 1.6 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.thaiopensource.util.PropertyMapBuilder;
 import com.thaiopensource.validate.SchemaReader;
@@ -42,10 +44,10 @@ public class RelaxNG {
     static Category log = Category.getInstance(RelaxNG.class);
 
     /**
-     *
+     *  
      */
     public static void main(String[] args) {
-        if(args.length == 0) {
+        if (args.length == 0) {
             System.out.println("Usage: relaxng.rng sample.xml");
             return;
         }
@@ -63,18 +65,39 @@ public class RelaxNG {
     }
 
     /**
-     *
+     * Validates an XML file against a schema.
+     * @param schema The schema file.
+     * @param xml The XML file.
+     * @return A string. FIXME: what does this mean?
+     * @throws Exception if an error occurs.
      */
     public static String validate(File schema, File xml) throws Exception {
-        InputSource in = ValidationDriver.uriOrFileInputSource(schema.getAbsolutePath());
+
+        InputSource schemaInputSource = ValidationDriver.uriOrFileInputSource(schema
+                .getAbsolutePath());
+        InputSource xmlInputSource = ValidationDriver.uriOrFileInputSource(xml.getAbsolutePath());
+
+        return validate(schemaInputSource, xmlInputSource);
+    }
+
+    /**
+     * Validates an XML input source against a schema.
+     * @param schemaInputSource The schema input source.
+     * @param xmlInputSource The XML input source.
+     * @return A string.
+     * @throws Exception if an error occurs.
+     */
+    private static String validate(InputSource schemaInputSource, InputSource xmlInputSource)
+            throws Exception {
         PropertyMapBuilder properties = new PropertyMapBuilder();
-	    ByteArrayOutputStream error = new ByteArrayOutputStream();
-        ErrorHandlerImpl eh = new ErrorHandlerImpl(new BufferedWriter(new OutputStreamWriter(error)));
+        ByteArrayOutputStream error = new ByteArrayOutputStream();
+        ErrorHandlerImpl eh = new ErrorHandlerImpl(
+                new BufferedWriter(new OutputStreamWriter(error)));
         ValidateProperty.ERROR_HANDLER.put(properties, eh);
         SchemaReader schemaReader = new AutoSchemaReader();
         ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), schemaReader);
-        if (driver.loadSchema(in)) {
-            if (driver.validate(ValidationDriver.uriOrFileInputSource(xml.getAbsolutePath()))) {
+        if (driver.loadSchema(schemaInputSource)) {
+            if (driver.validate(xmlInputSource)) {
                 log.debug("" + error);
                 return null;
             } else {
@@ -85,4 +108,5 @@ public class RelaxNG {
             throw new Exception("Could not load schema!\n" + error);
         }
     }
+
 }
