@@ -7,6 +7,10 @@
 <xsl:variable name="navbarcolor">#3366cc</xsl:variable>
 -->
 <xsl:variable name="navbarcolor">#ffc36b</xsl:variable>
+<xsl:variable name="imagesPrefix">go/oscom-proposals_files</xsl:variable>
+<!--
+<xsl:variable name="imagesPrefix">oscom-proposals_files</xsl:variable>
+-->
 
 <xsl:template match="oscom">
 <html>
@@ -170,11 +174,11 @@ content="text/html; charset=iso-latin-1" />
 <tr>
 <td valign="bottom" class="sitelogoarea">
 <a href="http://www.oscom.org/">
-  <img src="oscom-proposals_files/oscom-logo.png" width="329" height="54" alt="OSCOM - Open Source Content Management" border="0" />
+  <img src="{$imagesPrefix}/oscom-logo.png" width="329" height="54" alt="OSCOM - Open Source Content Management" border="0" />
 </a>
 </td>
 <td valign="middle">
-  <img src="oscom-proposals_files/spacer.gif" width="100" height="1" border="0" />
+  <img src="{$imagesPrefix}/spacer.gif" width="100" height="1" border="0" />
 </td>
 <td valign="middle">
 <!-- We can put topical banners here -->
@@ -183,7 +187,7 @@ content="text/html; charset=iso-latin-1" />
 <input type="text" name="queryString" class="search" size="15"/>&#160;<input type="submit" name="find" value="Go" class="searchsubmit" />
 </form>
 <!--
-<img src="oscom-proposals_files/spacer.gif" width="1" height="1" border="0" />
+<img src="{$imagesPrefix}/spacer.gif" width="1" height="1" border="0" />
 -->
 </td>
 </tr>
@@ -209,14 +213,14 @@ content="text/html; charset=iso-latin-1" />
   <a href="/index.html" class="navigationwhite">Home</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
   <a href="/Conferences/" class="navigationwhite">Conferences</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
 
@@ -226,7 +230,7 @@ content="text/html; charset=iso-latin-1" />
   </a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
 
@@ -235,7 +239,7 @@ content="text/html; charset=iso-latin-1" />
   <a href="/Projects/" class="navigationwhite">Projects</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
 
@@ -244,7 +248,7 @@ content="text/html; charset=iso-latin-1" />
   <a href="/Mailing%20lists/" class="navigationwhite">Mailing lists</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
 
@@ -252,14 +256,14 @@ content="text/html; charset=iso-latin-1" />
   <a href="http://blog.oscom.org/" class="navigationwhite">Blog</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
   <a href="/Organization/" class="navigationwhite">Organization</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 
 </tr>
@@ -273,7 +277,7 @@ content="text/html; charset=iso-latin-1" />
 
 <tr>
 <td valign="top" width="100%" bgcolor="#ffa500"><img
-src="oscom-proposals_files/spacer.gif" width="760" height="1"
+src="{$imagesPrefix}/spacer.gif" width="760" height="1"
 border="0" /></td>
 </tr>
 </tbody>
@@ -298,7 +302,7 @@ border="0" /></td>
 </table>
 </td>
 <!--right column: navigation-->
-<td valign="top"><img src="oscom-proposals_files/spacer.gif"
+<td valign="top"><img src="{$imagesPrefix}/spacer.gif"
 width="24" height="16" border="0" /></td>
 <td valign="top" align="left" width="200" class="rightbar">
 <!-- @NAVIGATION@ -->
@@ -316,7 +320,7 @@ width="24" height="16" border="0" /></td>
 <!--
 @ADD_BANNER@
 -->
-<img src="oscom-proposals_files/oscom3.png" border="0" alt="OSCOM3, May 2003, Cambridge/Boston, MA" title="OSCOM3, May 2003, Cambridge/Boston, MA" width="152" height="35"/>
+<img src="{$imagesPrefix}/oscom3.png" border="0" alt="OSCOM3, May 2003, Cambridge/Boston, MA" title="OSCOM3, May 2003, Cambridge/Boston, MA" width="152" height="35"/>
   </a>
 </p>
 
@@ -381,7 +385,7 @@ width="24" height="16" border="0" /></td>
   </a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 </xsl:template>
 
@@ -401,7 +405,7 @@ width="24" height="16" border="0" /></td>
   </a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="oscom-proposals_files/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
 </td>
 </xsl:template>
 

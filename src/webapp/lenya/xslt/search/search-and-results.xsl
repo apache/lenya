@@ -3,6 +3,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 
+<!--
+<xsl:variable name="uriName">lucene</xsl:variable>
+-->
+<xsl:variable name="uriName">go</xsl:variable>
+
 <xsl:template match="search-and-results">
 <html>
 <head>
@@ -179,7 +184,7 @@ Result Pages
       <xsl:value-of select="position()"/>
     </xsl:when>
     <xsl:otherwise>
-      <a href="lucene?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}"><xsl:value-of select="position()"/></a>
+      <a href="{$uriName}?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}"><xsl:value-of select="position()"/></a>
     </xsl:otherwise>
   </xsl:choose>
   <xsl:text> </xsl:text>
@@ -189,11 +194,11 @@ Result Pages
 </xsl:template>
 
 <xsl:template match="page" mode="next">
-[<a href="lucene?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}">Next</a>&gt;&gt;]
+[<a href="{$uriName}?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}">Next</a>&gt;&gt;]
 </xsl:template>
 
 <xsl:template match="page" mode="previous">
-[&lt;&lt;<a href="lucene?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}">Previous</a>]
+[&lt;&lt;<a href="{$uriName}?publication-id={../../../search/publication-id}&amp;queryString={../../../search/query-string}&amp;sortBy={../../../search/sort-by}&amp;start={@start}&amp;end={@end}">Previous</a>]
 </xsl:template>
 
 <xsl:template match="@*|node()">
