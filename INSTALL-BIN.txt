@@ -1,0 +1,18 @@
+
+  W Y O N A    C O N T E N T - M A N A G E M E N T - S Y S T E M
+  ==============================================================
+
+  Installation
+  ------------
+
+  cp cocoon.war PREFIX/jakarta-tomcat-4.0/webapps/.
+  export JAVA_HOME=/usr/local/IBMJava2-13
+  export CATALINA_HOME=PREFIX/jakarta-tomcat-4.0
+  PREFIX/jakarta-tomcat-4.0/bin/startup.sh
+  (Wait a few seconds)
+  lynx http://localhost:8080/cocoon/
+  (Wait a few seconds or minutes)
+
+  NOTE: PREFIX is not the string "PREFIX". Instead use the
+        filesystem path under which Tomcat should be installed.
+        For instance use "/usr/local" for PREFIX above.
