@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IterativeHTMLCrawler.java,v 1.23 2004/03/01 16:18:19 gregor Exp $  */
+/* $Id: IterativeHTMLCrawler.java,v 1.24 2004/03/05 11:00:06 michi Exp $  */
 
 package org.apache.lenya.search.crawler;
 
@@ -51,6 +51,35 @@ public class IterativeHTMLCrawler {
     private RobotExclusion robot;
 
     /**
+     * Command line interface
+     *
+     * @param args Configuration file crawler.xconf
+     */
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
+
+            return;
+        }
+
+        try {
+            if (args.length == 1) {
+                CrawlerConfiguration ce = new CrawlerConfiguration(args[0]);
+                new IterativeHTMLCrawler(new File(args[0])).crawl(new URL(ce.getBaseURL()), ce.getScopeURL());
+	    } else {
+                System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
+/*
+                new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),
+                    ce.resolvePath(ce.getHTDocsDumpDir()), ce.getUserAgent()).crawl(new URL(
+                        ce.getBaseURL()), ce.getScopeURL());
+*/
+            }
+        } catch (MalformedURLException e) {
+            log.error("" + e);
+        }
+    }
+
+    /**
      * Creates a new IterativeHTMLCrawler object.
      *
      * @param url_list_file File where all dumped files will be listed
@@ -62,36 +91,35 @@ public class IterativeHTMLCrawler {
         this.html_dump_directory = html_dump_directory;
 
         robot = new RobotExclusion(userAgent);
-        robot.addLocalEntries("cocoon.apache.org", new File("/home/USERNAME/src/cocoon-lenya/robots.txt"));
     }
 
     /**
-     * Command line interface
+     * Creates a new IterativeHTMLCrawler object.
      *
-     * @param args Configuration file crawler.xconf
+     * @param config Configuration File
      */
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
+    public IterativeHTMLCrawler(File config) {
+        CrawlerConfiguration ce = new CrawlerConfiguration(config.getAbsolutePath());
 
-            return;
-        }
 
-        try {
-            CrawlerConfiguration ce = new CrawlerConfiguration(args[0]);
-            new IterativeHTMLCrawler(ce.resolvePath(ce.getURIList()),
-                ce.resolvePath(ce.getHTDocsDumpDir()), ce.getUserAgent()).crawl(new URL(
-                    ce.getBaseURL()), ce.getScopeURL());
-        } catch (MalformedURLException e) {
-            log.error("" + e);
+        this.url_list_file = ce.resolvePath(ce.getURIList());
+        this.html_dump_directory = ce.resolvePath(ce.getHTDocsDumpDir());
+
+        robot = new RobotExclusion(ce.getUserAgent());
+
+        String robots_file = ce.getRobotsFile();
+        String robots_domain = ce.getRobotsDomain();
+        if (robots_file != null && robots_domain != null) {
+            log.debug(robots_file + " " + robots_domain);
+            robot.addLocalEntries(robots_domain, new File(ce.resolvePath(robots_file)));
         }
     }
 
     /**
-     * DOCUMENT ME!
+     * Crawl
      *
-     * @param start DOCUMENT ME!
-     * @param scope DOCUMENT ME!
+     * @param start Start crawling at this URL
+     * @param scope Limit crawling to this scope
      */
     public void crawl(URL start, String scope) {
         scopeURL = new String[1];
@@ -143,7 +171,7 @@ public class IterativeHTMLCrawler {
                             dumpHTDoc(urlToCrawl);
                         }
                     } catch (MalformedURLException e) {
-                        log.error("" + e + " " + urlCandidate);
+                        log.warn("" + e + " " + urlCandidate);
                     }
                 }
             }

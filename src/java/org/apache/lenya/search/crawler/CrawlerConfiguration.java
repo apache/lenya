@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CrawlerConfiguration.java,v 1.8 2004/03/01 16:18:19 gregor Exp $  */
+/* $Id: CrawlerConfiguration.java,v 1.9 2004/03/05 11:00:06 michi Exp $  */
 
 package org.apache.lenya.search.crawler;
 
@@ -41,6 +41,8 @@ public class CrawlerConfiguration {
     private String scope_url;
     private String uri_list;
     private String htdocs_dump_dir;
+    private String robots_file;
+    private String robots_domain;
 
     /**
      * Creates a new CrawlerConfiguration object.
@@ -108,13 +110,24 @@ public class CrawlerConfiguration {
             System.out.println(ce.resolvePath(parameter));
 
             parameter = ce.getHTDocsDumpDir();
-            System.out.println(parameter);
+            System.out.println("htdocs-dump-dir/@src: " + parameter);
             System.out.println(ce.resolvePath(parameter));
+
+            parameter = ce.getRobotsFile();
+            if (parameter != null) {
+                System.out.println("robots/@src: " + parameter);
+                System.out.println(ce.resolvePath(parameter));
+            }
+
+            parameter = ce.getRobotsDomain();
+            if (parameter != null) {
+                System.out.println("robots/@domain: " + parameter);
+            }
         }
     }
 
     /**
-     * DOCUMENT ME!
+     * Extract parameters from configuration
      *
      * @param configuration DOCUMENT ME!
      *
@@ -128,6 +141,10 @@ public class CrawlerConfiguration {
         user_agent = du.getElementValue(root, new XPath("user-agent"));
         uri_list = du.getAttributeValue(root, new XPath("uri-list/@src"));
         htdocs_dump_dir = du.getAttributeValue(root, new XPath("htdocs-dump-dir/@src"));
+        if (du.elementExists(root, new XPath("robots"))) {
+            robots_file = du.getAttributeValue(root, new XPath("robots/@src"));
+            robots_domain = du.getAttributeValue(root, new XPath("robots/@domain"));
+        }
     }
 
     /**
@@ -175,9 +192,9 @@ public class CrawlerConfiguration {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get htdocs-dump-dir/@src
      *
-     * @return DOCUMENT ME!
+     * @return htdocs-dump-dir/@src
      */
     public String getHTDocsDumpDir() {
         log.debug(".getHTDocsDumpDir(): " + htdocs_dump_dir);
@@ -186,11 +203,33 @@ public class CrawlerConfiguration {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get robots/@src
      *
-     * @param path DOCUMENT ME!
+     * @return robots/@src
+     */
+    public String getRobotsFile() {
+        log.debug(robots_file);
+
+        return robots_file;
+    }
+
+    /**
+     * Get robots/@domain
      *
-     * @return DOCUMENT ME!
+     * @return robots/@domain
+     */
+    public String getRobotsDomain() {
+        log.debug(robots_domain);
+
+        return robots_domain;
+    }
+
+    /**
+     * Resolve path
+     *
+     * @param path Original path
+     *
+     * @return Resolved path
      */
     public String resolvePath(String path) {
         if (path.indexOf(File.separator) == 0) {
