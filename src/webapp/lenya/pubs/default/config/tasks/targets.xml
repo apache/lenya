@@ -207,7 +207,7 @@
     <xslt in="${document.file}"
       out="${temp.file}" 
       force="true"
-      style="${pub.dir}/../unizh/xslt/authoring/addMetaData.xsl">
+      style="${pub.dir}/../../xslt/authoring/addMetaData.xsl">
       <param name="title" expression="${create.title}"/>
       <param name="creator" expression="${create.creator}"/>
       <param name="subject" expression="${create.subject}"/>
@@ -283,7 +283,7 @@
     <xslt in="${document.old.file}"
       out="${document.new.file}" 
       force="true"
-      style="${pub.dir}/../unizh/xslt/authoring/addMetaData.xsl">
+      style="${pub.dir}/../../xslt/authoring/addMetaData.xsl">
       <param name="title" expression="${create.title}"/>
       <param name="creator" expression="${create.creator}"/>
       <param name="subject" expression="${create.subject}"/>
@@ -613,7 +613,7 @@
     <taskdef name="linkRewrite" classname="org.apache.lenya.cms.ant.LinkRewriteTask"/>
     
     <linkRewrite baseDir="${pub.dir}/${authoring.dir}"
-      stylesheet="${pub.dir}/../unizh/xslt/linkRewrite.xsl"
+      stylesheet="${pub.dir}/../../xslt/linkRewrite.xsl"
       area="${authoring.area}"
       oldDocumentId="${node.firstdocumentid}"
       newDocumentId="${node.newdocumentid}"/>
