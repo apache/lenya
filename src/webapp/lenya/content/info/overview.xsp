@@ -94,6 +94,7 @@
 						<!-- <lenya-info:lastmodifiedby></lenya-info:lastmodifiedby> -->
 						<lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
 						<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
+						<lenya-info:resource-type><input:get-attribute module="page-envelope" as="object" name="document-type"/></lenya-info:resource-type>
 						<lenya-info:area></lenya-info:area>
 						<lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
 						<lenya-info:is-live><input:get-attribute module="workflow" as="string" name="variable.is_live"/></lenya-info:is-live>

@@ -108,6 +108,7 @@
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
    <tr><td class="lenya-entry-caption"><i18n:text>Last modified</i18n:text>:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
    <tr><td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Resource Type</i18n:text>:</td><td><xsl:value-of select="lenya-info:resource-type"/></td></tr>
    <tr><td class="lenya-entry-caption"><i18n:text>Visibility in navigation</i18n:text>:</td><td><i18n:text><xsl:value-of select="lenya-info:visibleinnav"/></i18n:text></td></tr>
    </table>
   </xsl:when>
@@ -185,6 +186,7 @@
     <table class="lenya-table">
       <tr>
         <th><i18n:text>Assets</i18n:text></th>
+        <th><i18n:text>Preview</i18n:text></th>
         <th><i18n:text>Title</i18n:text></th>
         <th><i18n:text>File Size</i18n:text></th>
         <th><i18n:text>Creation Date</i18n:text></th>
@@ -194,6 +196,11 @@
         <xsl:sort select="dc:title"/>
         <tr>
           <td><xsl:value-of select="dc:source"/></td>
+          <td>        
+            <xsl:if test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png'">
+                <img src="../authoring/{../lenya-info:documentnodeid}/{dc:source}" style="height: 32px; vertical-align: middle;"/>&#160;
+            </xsl:if>
+           </td>
           <td><xsl:value-of select="dc:title"/></td>
           <td align="right"><xsl:value-of select="dc:extent"/> kB</td>
           <td align="right"><xsl:value-of select="dc:date"/></td>
