@@ -63,7 +63,6 @@ import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
@@ -173,10 +172,6 @@ public class WorkflowTest extends TestCase {
 
             System.out.println();
 
-            Group group = new Group("test-group");
-
-            //group.addRole(role);
-            //user.addGroup(group);
             Situation situation = null;
 
             try {

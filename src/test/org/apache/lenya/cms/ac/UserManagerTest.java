@@ -120,13 +120,13 @@ public class UserManagerTest extends AccessControlTest {
         File configDir = getConfigurationDirectory();
 
         String userName = "alice";
-        String editorGroupName = "editorGroup";
-        String adminGroupName = "adminGroup";
-        String editorRoleName = "editorRole";
-        String adminRoleName = "adminRole";
+        String editorGroupId = "editorGroup";
+        String adminGroupId = "adminGroup";
+        String editorRoleId = "editorRole";
+        String adminRoleId = "adminRole";
 
-        FileRole editorRole = new FileRole(configDir, editorRoleName);
-        FileRole adminRole = new FileRole(configDir, adminRoleName);
+        FileRole editorRole = new FileRole(configDir, editorRoleId);
+        FileRole adminRole = new FileRole(configDir, adminRoleId);
 
         User user = new FileUser(configDir, userName, "Alice in Wonderland", "alice@test.com",
                 "secret");
@@ -134,12 +134,12 @@ public class UserManagerTest extends AccessControlTest {
         editorRole.save();
         adminRole.save();
 
-        FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
+        FileGroup editorGroup = new FileGroup(configDir, editorGroupId);
 
         //		editorGroup.addRole(editorRole);
         editorGroup.add(user);
 
-        FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
+        FileGroup adminGroup = new FileGroup(configDir, adminGroupId);
 
         //		adminGroup.addRole(editorRole);
         //		adminGroup.addRole(adminRole);
@@ -156,10 +156,10 @@ public class UserManagerTest extends AccessControlTest {
         groupManager = GroupManager.instance(configDir);
         assertNotNull(groupManager);
 
-        Group fetchedGroup = groupManager.getGroup(editorGroupName);
+        Group fetchedGroup = groupManager.getGroup(editorGroupId);
         assertTrue(editorGroup.equals(fetchedGroup));
 
-        fetchedGroup = groupManager.getGroup(adminGroupName);
+        fetchedGroup = groupManager.getGroup(adminGroupId);
         assertTrue(adminGroup.equals(fetchedGroup));
     }
 
@@ -171,7 +171,7 @@ public class UserManagerTest extends AccessControlTest {
     final public void testGetUser() throws AccessControlException {
         File configDir = getConfigurationDirectory();
         UserManager manager = null;
-        String userName = "test-user";
+        String userName = "testuser";
         FileUser user = new FileUser(configDir, userName, "Alice in Wonderland",
                 "alice@wonderland.com", "secret");
         manager = (UserManager) UserManager.instance(configDir);

@@ -113,10 +113,10 @@ public class RoleManagerTest extends AccessControlTest {
     final public void testAddRole() throws AccessControlException {
         File configDir = getConfigurationDirectory();
         String name = "test";
-        Role role = new Role(name);
         RoleManager manager = null;
         manager = RoleManager.instance(configDir);
         assertNotNull(manager);
+        Role role = new FileRole(manager.getConfigurationDirectory(), name);
         manager.add(role);
 
         assertTrue(manager.getRoles().hasNext());
@@ -128,7 +128,7 @@ public class RoleManagerTest extends AccessControlTest {
     final public void testRemoveRole() {
         File configDir = getConfigurationDirectory();
         String name = "test2";
-        Role role = new Role(name);
+        Role role = new FileRole(configDir, name);
         RoleManager manager = null;
 
         try {

@@ -101,14 +101,14 @@ public class FileGroupTest extends AccessControlTest {
      */
     final public void testFileGroup()
         throws AccessControlException, ConfigurationException, SAXException, IOException {
-        String groupName = "testGroup";
-        String roleName = "testRole";
+        String groupId = "testGroup";
+        String roleId = "testRole";
         File configurationDirectory = getConfigurationDirectory();
 
         System.out.println("Configuration directory: " + configurationDirectory);
 
-        FileGroup group = new FileGroup(configurationDirectory, groupName);
-        FileRole role = new FileRole(configurationDirectory, roleName);
+        FileGroup group = new FileGroup(configurationDirectory, groupId);
+        FileRole role = new FileRole(configurationDirectory, roleId);
 
         //		group.addRole(role);
         role.save();
@@ -117,7 +117,7 @@ public class FileGroupTest extends AccessControlTest {
         File path = null;
         path = RoleManager.instance(configurationDirectory).getConfigurationDirectory();
 
-        File groupFile = new File(path, groupName + GroupManager.SUFFIX);
+        File groupFile = new File(path, groupId + GroupManager.SUFFIX);
         assertNotNull(groupFile);
         assertTrue(groupFile.exists());
 
@@ -131,7 +131,7 @@ public class FileGroupTest extends AccessControlTest {
         newGroup.configure(config);
         assertNotNull(newGroup);
 
-        assertTrue(newGroup.getName().equals(groupName));
+        assertTrue(newGroup.getId().equals(groupId));
 
         /*
                 int roleCount = 0;

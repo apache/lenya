@@ -125,14 +125,14 @@ public class FileRoleTest extends AccessControlTest {
     /**
      * DOCUMENT ME!
      */
-    final public void testGetName() {
-        String name = "test";
+    final public void testGetId() {
+        String id = "test";
         File configDir = getConfigurationDirectory();
-        FileRole role = new FileRole(configDir, name);
-        assertTrue(role.getName().equals(name));
+        FileRole role = new FileRole(configDir, id);
+        assertTrue(role.getId().equals(id));
     }
 
-    /*
+    /**
      * Test for boolean equals(Object)
      */
     final public void testEqualsObject() {

@@ -169,6 +169,8 @@ public class FileUserTest extends AccessControlTest {
         editorGroup.save();
         adminGroup.save();
         user.save();
+        UserManager manager = UserManager.instance(configDir);
+        manager.add(user);
 
         return user;
     }
@@ -250,7 +252,7 @@ public class FileUserTest extends AccessControlTest {
 
         for (int i = 0; i < groups.length; i++) {
             groupCount += 1;
-            assertTrue(getGroups().containsKey(groups[i].getName()));
+            assertTrue(getGroups().containsKey(groups[i].getId()));
         }
 
         assertEquals(groupCount, getGroups().size());
@@ -282,6 +284,7 @@ public class FileUserTest extends AccessControlTest {
 
         assertNotNull(manager.getUser(id));
         user.delete();
+        manager.remove(user);
         assertNull(manager.getUser(id));
     }
 
