@@ -66,7 +66,9 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
             Publication[] pubs = factory.getPublications(this.manager);
             List templates = new ArrayList();
             for (int i = 0; i < pubs.length; i++) {
-                templates.add(pubs[i].getId());
+                if (pubs[i].supportsTemplating()) {
+                    templates.add(pubs[i].getId());
+                }
             }
             setParameter(AVAILABLE_TEMPLATES, templates);
 

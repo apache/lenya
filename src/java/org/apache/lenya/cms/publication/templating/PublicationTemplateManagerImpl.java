@@ -17,13 +17,10 @@
 
 package org.apache.lenya.cms.publication.templating;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -31,8 +28,6 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.publication.PublicationImpl;
 
 /**
  * Manager for publication templates.
@@ -45,54 +40,18 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
     private Publication publication;
 
-    private static final String ELEMENT_TEMPLATES = "templates";
-    private static final String ELEMENT_TEMPLATE = "template";
-    private static final String ATTRIBUTE_ID = "id";
 
     /**
      * Ctor.
      */
     public PublicationTemplateManagerImpl() {
-	    // do nothing
     }
-
-    private Publication[] templatePublications;
 
     /**
      * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#setup(org.apache.lenya.cms.publication.Publication)
      */
     public void setup(Publication _publication) throws ConfigurationException {
         this.publication = _publication;
-
-        File configFile = new File(_publication.getDirectory(), PublicationImpl.CONFIGURATION_FILE);
-        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
-
-        try {
-            Configuration config = builder.buildFromFile(configFile);
-            Configuration templatesConfig = config.getChild(ELEMENT_TEMPLATES);
-            if (templatesConfig != null) {
-                List templates = new ArrayList();
-                Configuration[] templateConfigs = templatesConfig.getChildren(ELEMENT_TEMPLATE);
-                for (int i = 0; i < templateConfigs.length; i++) {
-                    String templateId = templateConfigs[i].getAttribute(ATTRIBUTE_ID);
-                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                    Publication template = factory.getPublication(templateId, _publication
-                            .getServletContext().getAbsolutePath());
-                    templates.add(template);
-                }
-                this.templatePublications = (Publication[]) templates
-                        .toArray(new Publication[templates.size()]);
-            }
-        } catch (Exception e) {
-            throw new ConfigurationException("Setting up templates failed: ", e);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#getTemplates()
-     */
-    public Publication[] getTemplates() {
-        return this.templatePublications;
     }
 
     /**
@@ -220,7 +179,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
         publications.add(getPublication());
 
-        Publication[] templates = getTemplates();
+        Publication[] templates = getPublication().getTemplates();
         for (int i = 0; i < templates.length; i++) {
             publications.add(templates[i]);
         }

@@ -28,8 +28,8 @@ import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * A page envelope carries a set of information that are needed during the
- * presentation of a document.
+ * A page envelope carries a set of information that are needed during the presentation of a
+ * document.
  */
 public class PageEnvelope {
     /**
@@ -54,8 +54,8 @@ public class PageEnvelope {
      */
     public static final String PUBLICATION = "publication";
     /**
-     * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's
-     * languages, comma-seperated
+     * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's languages,
+     * comma-seperated
      */
     public static final String PUBLICATION_LANGUAGES_CSV = "publication-languages-csv";
     /**
@@ -95,8 +95,8 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_URL = "document-url";
     /**
-     * <code>DOCUMENT_URL_WITHOUT_LANGUAGE</code> The URL of the current
-     * document without a language extension.
+     * <code>DOCUMENT_URL_WITHOUT_LANGUAGE</code> The URL of the current document without a
+     * language extension.
      */
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     /**
@@ -116,23 +116,21 @@ public class PageEnvelope {
      */
     public static final String DOCUMENT_LANGUAGE = "document-language";
     /**
-     * <code>DOCUMENT_LANGUAGES</code> The languages the current document is
-     * available in
+     * <code>DOCUMENT_LANGUAGES</code> The languages the current document is available in
      */
     public static final String DOCUMENT_LANGUAGES = "document-languages";
     /**
-     * <code>DOCUMENT_LANGUAGES_CSV</code> The languages the current document
-     * is available in, comma-seperated
+     * <code>DOCUMENT_LANGUAGES_CSV</code> The languages the current document is available in,
+     * comma-seperated
      */
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
     /**
-     * <code>DOCUMENT_LASTMODIFIED</code> The last modified date of the
-     * current document
+     * <code>DOCUMENT_LASTMODIFIED</code> The last modified date of the current document
      */
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
     /**
-     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix of the
-     * publication, used for navigation
+     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix of the publication, used for
+     * navigation
      */
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
     /**
@@ -151,7 +149,7 @@ public class PageEnvelope {
     private String context;
     private String area;
     private Publication publication;
-    
+
     /**
      * Constructor.
      */
@@ -167,32 +165,10 @@ public class PageEnvelope {
      */
     public PageEnvelope(DocumentIdentityMap map, Map objectModel) throws PageEnvelopeException {
         this.identityMap = map;
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        String webappURI;
-        try {
-
-            this.context = request.getContextPath();
-            if (this.context == null) {
-                this.context = "";
-            }
-
-            webappURI = ServletHelper.getWebappURI(request);
-
-            URLInformation info = new URLInformation(webappURI);
-            this.area = info.getArea();
-
-            this.publication = PublicationFactory.getInstance(new ConsoleLogger())
-                    .getPublication(objectModel);
-
-            if (map.getFactory().isDocument(publication, webappURI)) {
-                Document _document = map.getFactory().getFromURL(publication, webappURI);
-                setDocument(_document);
-            }
-
-        } catch (Exception e) {
-            throw new PageEnvelopeException(e);
-        }
+        this.objectModel = objectModel;
     }
+
+    private Map objectModel;
 
     private DocumentIdentityMap identityMap;
 
@@ -221,6 +197,24 @@ public class PageEnvelope {
      * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
+        if (this.publication == null) {
+            Request request = ObjectModelHelper.getRequest(this.objectModel);
+            String webappURI = ServletHelper.getWebappURI(request);
+            try {
+                Publication pub = PublicationFactory.getInstance(new ConsoleLogger())
+                        .getPublication(this.objectModel);
+                if (pub.exists()) {
+                    this.publication = pub;
+                    if (getIdentityMap().getFactory().isDocument(publication, webappURI)) {
+                        Document _document = getIdentityMap().getFactory().getFromURL(publication,
+                                webappURI);
+                        setDocument(_document);
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         return this.publication;
     }
 
@@ -228,6 +222,12 @@ public class PageEnvelope {
      * @return The current area.
      */
     public String getArea() {
+        if (this.area == null) {
+            Request request = ObjectModelHelper.getRequest(this.objectModel);
+            String webappURI = ServletHelper.getWebappURI(request);
+            URLInformation info = new URLInformation(webappURI);
+            this.area = info.getArea();
+        }
         return this.area;
     }
 
@@ -246,6 +246,13 @@ public class PageEnvelope {
      * @return a <code>String</code> value
      */
     public String getContext() {
+        if (this.context == null) {
+            Request request = ObjectModelHelper.getRequest(this.objectModel);
+            this.context = request.getContextPath();
+            if (this.context == null) {
+                this.context = "";
+            }
+        }
         return this.context;
     }
 
@@ -268,11 +275,23 @@ public class PageEnvelope {
     private Document document;
 
     /**
-     * Returns the document or <code>null</code> if the current URL does not
-     * represent a document.
+     * Returns the document or <code>null</code> if the current URL does not represent a document.
      * @return A document
      */
     public Document getDocument() {
+        if (this.document == null) {
+            Request request = ObjectModelHelper.getRequest(this.objectModel);
+            String webappUrl = ServletHelper.getWebappURI(request);
+
+            DocumentFactory factory = getIdentityMap().getFactory();
+            try {
+                if (factory.isDocument(getPublication(), webappUrl)) {
+                    this.document = getIdentityMap().getFromURL(getPublication(), webappUrl);
+                }
+            } catch (final DocumentBuildException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return this.document;
     }
 

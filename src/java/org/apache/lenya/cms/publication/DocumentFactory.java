@@ -48,7 +48,12 @@ public class DocumentFactory {
      */
     public boolean isDocument(Publication publication, String webappUrl)
             throws DocumentBuildException {
-        return publication.getDocumentBuilder().isDocument(publication, webappUrl);
+        if (publication.exists()) {
+            return publication.getDocumentBuilder().isDocument(publication, webappUrl);
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -133,8 +138,7 @@ public class DocumentFactory {
     /**
      * Returns the parent of a document.
      * @param document A document.
-     * @param defaultDocumentId The document ID to use if the document has no
-     *            parent.
+     * @param defaultDocumentId The document ID to use if the document has no parent.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */

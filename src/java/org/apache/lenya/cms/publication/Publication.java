@@ -184,4 +184,14 @@ public interface Publication {
      */
     Proxy getProxy(Document document, boolean isSslProtected);
     
+    /**
+     * @return The templates of the publication.
+     */
+    Publication[] getTemplates();
+    
+    /**
+     * @return if the publication can be used as a template.
+     */
+    boolean supportsTemplating();
+    
 }

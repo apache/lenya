@@ -76,8 +76,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     /**
-     * Creates a new document object. Override this method to create specific
-     * document objects, e.g., for different document IDs.
+     * Creates a new document object. Override this method to create specific document objects,
+     * e.g., for different document IDs.
      * @param map The identity map.
      * @param publication The publication.
      * @param area The area.
@@ -93,8 +93,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     /**
-     * Removes all "."-separated extensions from a URL (e.g.,
-     * <code>/foo.print.html</code> is transformed to <code>/foo</code>).
+     * Removes all "."-separated extensions from a URL (e.g., <code>/foo.print.html</code> is
+     * transformed to <code>/foo</code>).
      * @param url The URL to trim.
      * @return A URL string.
      */

@@ -17,7 +17,7 @@
 
 <!-- $Id$ -->
 
-<publication>
+<publication supports-templating="true">
   <languages>
     <language default="true">en</language>
     <language>de</language>

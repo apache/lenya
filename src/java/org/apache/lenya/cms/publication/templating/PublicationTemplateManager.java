@@ -48,12 +48,6 @@ public interface PublicationTemplateManager {
     void setup(Publication publication) throws ConfigurationException;
 
     /**
-     * Returns the template publications of a publication in order of their priority.
-     * @return An array of publications.
-     */
-    Publication[] getTemplates();
-
-    /**
      * <p>
      * Visits the versions of a source in traversing order.
      * The source doesn't have to exist to be visited.

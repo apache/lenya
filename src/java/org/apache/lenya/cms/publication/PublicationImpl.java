@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -63,50 +64,17 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator
             + "publication.xconf";
 
-    /**
-     * <code>ELEMENT_PATH_MAPPER</code> The path mapper element
-     */
-    String ELEMENT_PATH_MAPPER = "path-mapper";
-    /**
-     * <code>ELEMENT_DOCUMENT_BUILDER</code> The document buider element
-     */
-    String ELEMENT_DOCUMENT_BUILDER = "document-builder";
-    /**
-     * <code>ELEMENT_SITE_STRUCTURE</code> The site structure element
-     */
-    String ELEMENT_SITE_STRUCTURE = "site-structure";
-    /**
-     * <code>ATTRIBUTE_TYPE</code> The type attribute
-     */
-    String ATTRIBUTE_TYPE = "type";
-    /**
-     * <code>ATTRIBUTE_SRC</code> The src attribute
-     */
-    String ATTRIBUTE_SRC = "type";
-    /**
-     * <code>LANGUAGES</code> The languages
-     */
-    String LANGUAGES = "languages";
-    /**
-     * <code>LANGUAGE</code> The language
-     */
-    String LANGUAGE = "language";
-    /**
-     * <code>DEFAULT_LANGUAGE_ATTR</code> The default language attribute
-     */
-    String DEFAULT_LANGUAGE_ATTR = "default";
-    /**
-     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix
-     */
-    String BREADCRUMB_PREFIX = "breadcrumb-prefix";
-    /**
-     * <code>SSL_PREFIX</code> The SSL prefix
-     */
-    String SSL_PREFIX = "ssl-prefix";
-    /**
-     * <code>LIVE_MOUNT_POINT</code> The live mount point
-     */
-    String LIVE_MOUNT_POINT = "live-mount-point";
+    private static final String ELEMENT_TEMPLATES = "templates";
+    private static final String ELEMENT_TEMPLATE = "template";
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ELEMENT_PATH_MAPPER = "path-mapper";
+    private static final String ELEMENT_DOCUMENT_BUILDER = "document-builder";
+    private static final String ELEMENT_SITE_STRUCTURE = "site-structure";
+    private static final String ATTRIBUTE_TYPE = "type";
+    private static final String ATTRIBUTE_SUPPORTS_TEMPLATING = "supports-templating";
+    private static final String LANGUAGES = "languages";
+    private static final String DEFAULT_LANGUAGE_ATTR = "default";
+    private static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
 
     /**
      * Creates a new instance of Publication
@@ -135,8 +103,13 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         File configFile = getConfigurationFile();
 
         if (!configFile.exists()) {
+            getLogger()
+                    .error("Config file [" + configFile.getAbsolutePath() + "] does not exist: ",
+                            new RuntimeException());
             throw new RuntimeException("The configuration file [" + configFile
                     + "] does not exist!");
+        } else {
+            getLogger().debug("Configuration file [" + configFile + "] exists.");
         }
 
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
@@ -206,6 +179,23 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
                             + ssl + "]");
                 }
             }
+
+            Configuration templatesConfig = config.getChild(ELEMENT_TEMPLATES);
+            if (templatesConfig != null) {
+                PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+                Configuration[] templateConfigs = templatesConfig.getChildren(ELEMENT_TEMPLATE);
+                this.templates = new Publication[templateConfigs.length];
+                for (int i = 0; i < templateConfigs.length; i++) {
+                    String templateId = templateConfigs[i].getAttribute(ATTRIBUTE_ID);
+                    Publication template = factory.getPublication(templateId, getServletContext()
+                            .getAbsolutePath());
+                    this.templates[i] = template;
+                }
+            }
+
+            this.supportsTemplating = config
+                    .getAttributeAsBoolean(PublicationImpl.ATTRIBUTE_SUPPORTS_TEMPLATING, false);
+
         } catch (final Exception e) {
             throw new RuntimeException("Problem with config file: " + configFile.getAbsolutePath(),
                     e);
@@ -432,5 +422,26 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      */
     public boolean exists() {
         return getConfigurationFile().exists();
+    }
+
+    private Publication[] templates;
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getTemplates()
+     */
+    public Publication[] getTemplates() {
+        loadConfiguration();
+        List list = Arrays.asList(this.templates);
+        return (Publication[]) list.toArray(new Publication[list.size()]);
+    }
+
+    private boolean supportsTemplating = false;
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#supportsTemplating()
+     */
+    public boolean supportsTemplating() {
+        loadConfiguration();
+        return this.supportsTemplating;
     }
 }
