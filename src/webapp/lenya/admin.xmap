@@ -14,7 +14,9 @@
 
   <map:flow language="JavaScript">
     <map:script src="content/ac/passwd.js"/>
+    <map:script src="content/admin/access-control.js"/>
     <map:script src="content/admin/users/user-admin.js"/>
+    <map:script src="content/admin/groups/group-admin.js"/>
   </map:flow>
 
   <map:pipelines>
