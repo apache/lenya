@@ -23,10 +23,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   name="">
   
-    <!-- 
-		These are the tabs. Make sure that each of them has the correct id,
-		target and corresponding number in the Tab() call.
-	 -->
+	<div class="lenya-tabs">
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td>
@@ -59,6 +56,22 @@
             </jx:otherwise>
           </jx:choose>
         </td>
+        
+        <jx:set var="contextPath" value="${request.contextPath}"/>
+        <jx:set var="requestURI" value="${request.requestURI}"/>
+        <jx:set var="steps" value="${requestURI.substring(contextPath.length()).split('/')}"/>
+        <jx:set var="urlPrefix" value="${contextPath + steps[1]}"/>
+        
+        <td>
+          <a class="lenya-tablink" href="/${urlPrefix}/admin/content.html"><i18n:text>Delete Trash</i18n:text></a>
+        </td>
+        <td>
+          <a class="lenya-tablink" href="/${urlPrefix}/admin/lucene.html"><i18n:text>Search</i18n:text></a>
+        </td>
+        <td>
+          <a class="lenya-tablink" href="/${urlPrefix}/admin/status.html"><i18n:text>Cocoon and Server Status</i18n:text></a>
+        </td>
       </tr>
     </table>
+  </div>
 </jx:template>
