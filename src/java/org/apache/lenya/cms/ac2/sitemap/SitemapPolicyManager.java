@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.3 2003/07/14 18:07:01 andreas Exp $
+$Id: SitemapPolicyManager.java,v 1.4 2003/07/15 12:30:08 egli Exp $
 <License>
 
  ============================================================================
@@ -59,14 +59,12 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.DefaultPolicy;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyManager;
-import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author andreas
@@ -119,7 +117,7 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
     }
 
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.ac2.PolicyManager#buildURLPolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
      */
     public DefaultPolicy buildURLPolicy(AccreditableManager controller, String url) throws AccessControlException {
@@ -128,7 +126,7 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
     }
 
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.ac2.PolicyManager#buildSubtreePolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
      */
     public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url) throws AccessControlException {
@@ -137,7 +135,7 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
     }
 
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.ac2.PolicyManager#saveURLPolicy(java.lang.String, org.apache.lenya.cms.ac2.DefaultPolicy)
      */
     public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
@@ -146,7 +144,7 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
     }
 
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.ac2.PolicyManager#saveSubtreePolicy(java.lang.String, org.apache.lenya.cms.ac2.DefaultPolicy)
      */
     public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
