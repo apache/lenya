@@ -59,7 +59,14 @@
       <div class="lenya-box-body">  
 	<form action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
-	  <input type="hidden" name="lenya.step" value="upload-and-insert"/>
+	  <xsl:choose>
+	    <xsl:when test="$insert = 'true'">
+	      <input type="hidden" name="lenya.step" value="upload-and-insert"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <input type="hidden" name="lenya.step" value="upload"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	  <input type="hidden" name="task-id" value="insert-asset"/>
 	  <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
 	  <input type="hidden" name="properties.insert.asset.insertBefore" value="{$insertBefore}"/>
