@@ -65,11 +65,20 @@
     <classpath refid="class.path"/>
   </java>
 
+  <exec executable="/home/username/src/cocoon-lenya/src/webapp/lenya/bin/crawl_and_index.sh">
+    <arg value="index"/>
+    <arg value="${lucene.xconf}"/>
+    <arg value="${debug}"/>
+  </exec>
+
+<!-- FIXME: Linkage problem -->
+<!--
   <java classname="org.apache.lenya.lucene.index.Index">
     <arg value="${lucene.xconf}"/>
     <arg value="${debug}"/>
     <classpath refid="class.path"/>
   </java>
+-->
 
 <!--
   <java classname="org.apache.lenya.lucene.IndexHTML">
