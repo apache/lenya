@@ -21,7 +21,6 @@ package org.apache.lenya.ac;
  * A user type to be supported by the UserManager
  * Note: the types are configured through access control (ac.xconf)
  * 
- * FIXME: jwkaltz@yahoo.com please add parameter descriptions to getters and setters.
  * @version $Id:$
  */
 public class UserType  {
@@ -49,7 +48,8 @@ public class UserType  {
     }
 
     /**
-     * Get the key
+     * Get the key to be used for this type. 
+     * This key can be used for a dictionary entry for the user interface.
      *
      * @return a <code>String</code>
      */
@@ -58,7 +58,8 @@ public class UserType  {
     }
     
     /**
-     * Set the key
+     * Set the key to be used for this type. 
+     * This key can be used for a dictionary entry for the user interface.
      *
      * @param key the new key
      */
@@ -67,16 +68,24 @@ public class UserType  {
     }
     
     /**
-     * Get the className
+     * Get the name of the class responsible for implementing this
+     * type of user. Note that in current version, this field is for
+     * information only; in later versions, it might be used for
+     * introspection and dynamic script creation.
      *
-     * @return a <code>String</code>
+     * @see org.apache.lenya.ac.file.FileUser
+     * @see org.apache.lenya.ac.ldap.LDAPUser
+     * @return a <code>String</code> the name of the class
      */
     public String getClassName() {
 	  return className;
     }
     
     /**
-     * Set the className
+     * Set the name of the class responsible for implementing this
+     * type of user. Note that in current version, this field is for
+     * information only; in later versions, it might be used for
+     * introspection and dynamic flowscript creation.
      *
      * @param className the new className
      */
@@ -85,16 +94,22 @@ public class UserType  {
     }
     
     /**
-     * Get the createUseCase
+     * Get the createUseCase name to be used when a user of this type
+     * is to be created. 
+     * This name will be used in the flowscript (currently: user-admin.js),
+     * in order to distinguish between different types.
      *
-     * @return a <code>String</code>
+     * @return a <code>String</code> the name of the use case in the flowscript
      */
     public String getCreateUseCase() {
 	  return createUseCase;
     }
     
     /**
-     * Set the createUseCase
+     * Set the createUseCase name to be used when a user of this type
+     * is to be created. 
+     * This name will be used in the flowscript (currently: user-admin.js),
+     * in order to distinguish between different types.
      *
      * @param createUseCase the new createUseCase
      */
