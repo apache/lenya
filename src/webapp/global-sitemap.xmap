@@ -672,6 +672,18 @@
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
+      <!-- menus -->
+      <map:match pattern="menu/**">
+      	<map:generate src="cocoon:/menu-xml/{1}"/>
+        <map:transform type="workflowmenu"/>
+        <map:transform type="usecasemenu"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="menu-xml/*/**" internal-only="true">
+        <map:mount uri-prefix="menu-xml/{1}/" src="lenya/pubs/{1}/menus.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      
       <!-- navigation -->
       <map:match pattern="navigation/**">
         <map:mount uri-prefix="navigation" src="lenya/navigation.xmap" check-reload="true" reload-method="synchron"/>
