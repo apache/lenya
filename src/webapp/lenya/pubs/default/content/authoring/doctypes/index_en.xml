@@ -32,7 +32,7 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
   <body>
     <h1>Document Type Examples</h1>
 
-    <p>The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a>.
+    <p>The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a>.</p>
     
     <p>The XHTML Doctype is for situations where
     users ask for complete freedom on what information can be inserted
