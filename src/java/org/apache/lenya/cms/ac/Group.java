@@ -1,5 +1,5 @@
 /*
- * $Id: Group.java,v 1.4 2003/06/03 16:37:39 egli Exp $
+ * $Id: Group.java,v 1.5 2003/06/24 17:44:26 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -61,9 +61,14 @@ import java.util.Set;
 public class Group {
 	
 	private String name;
-	protected Set roles = new HashSet();
-	protected Set users = new HashSet();
+	private Set roles = new HashSet();
+	private Set users = new HashSet();
 
+	/**
+	 * Create a group
+	 * 
+	 * @param name the name for this group
+	 */
 	public Group(String name) {
 		this.name = name;
 	}
@@ -71,7 +76,7 @@ public class Group {
 	/**
 	 * Get the name of this group
 	 * 
-	 * @return
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
@@ -80,12 +85,17 @@ public class Group {
 	/**
 	 * Get all roles of this group
 	 * 
-	 * @return 
+	 * @return an <code>Iterator</code>
 	 */
 	public Iterator getRoles() {
 		return roles.iterator();
 	}
 
+	/**
+	 * Get all users
+	 * 
+	 * @return an <code>Iterator</code>
+	 */
 	public Iterator getUsers() {
 		return users.iterator();
 	}
@@ -93,7 +103,7 @@ public class Group {
 	/**
 	 * Set the name of this group
 	 * 
-	 * @param string
+	 * @param string whith which the name is replaced
 	 */
 	public void setName(String string) {
 		name = string;
@@ -102,7 +112,7 @@ public class Group {
 	/**
 	 * Add a role to this group
 	 * 
-	 * @param role
+	 * @param role the role that is to be added
 	 */
 	public void addRole(Role role) {
         assert role != null;
@@ -113,23 +123,36 @@ public class Group {
 	/**
 	 * Remove a role from this group
 	 * 
-	 * @param role
+	 * @param role the role that is to be removed
 	 */
 	public void removeRole(Role role) {
 		roles.remove(role);
 		role.removeGroup(this);
 	}
 	
+	/**
+	 * Add a user to this group
+	 * 
+	 * @param user the user that is to be added
+	 */
 	public void addUser(User user) {
 		users.add(user);
 	}
 	
+	/**
+	 * Remove the given user from the group.
+	 * 
+	 * @param user the user that is to be removed
+	 */
 	public void removeUser(User user) {
 		users.remove(user);
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * Is this group equal to an object
+	 * 
+	 * @param obj the object that the Group is compared to
+	 * @return true if the object is also of type Group and has the same name.
 	 */
 	public boolean equals(Object obj) {
 		if (obj instanceof Group) {
@@ -138,7 +161,7 @@ public class Group {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {

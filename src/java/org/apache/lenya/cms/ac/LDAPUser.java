@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.4 2003/06/24 14:33:08 felix Exp $
+ * $Id: LDAPUser.java,v 1.5 2003/06/24 17:44:26 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -95,11 +95,12 @@ public class LDAPUser extends FileUser {
     private String ldapId;
 
     /**
-     * @param publication
-     * @param id
-     * @param fullName
-     * @param email
-     * @param password
+     * Create an LDAPUser
+     * 
+     * @param publication where the user will be attached to
+     * @param id user id of LDAPUser
+     * @param email of LDAPUser
+     * @param ldapId of LDAPUser
      */
     public LDAPUser(
         Publication publication,
@@ -117,9 +118,11 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * @param publication
-     * @param config
-     * @throws ConfigurationException
+     * Create a new LDAPUser from a configuration
+     * 
+     * @param publication where the user will be attached to
+     * @param config the <code>Configuration</code> specifying the user details
+     * @throws ConfigurationException if the user could not be instantiated
      */
     public LDAPUser(Publication publication, Configuration config)
         throws ConfigurationException {
@@ -133,7 +136,7 @@ public class LDAPUser extends FileUser {
         }
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.ac.FileUser#createConfiguration()
      */
     protected Configuration createConfiguration() {
@@ -148,20 +151,24 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * @return
+     * Get the ldap id
+     * 
+     * @return the ldap id
      */
     public String getLdapId() {
         return ldapId;
     }
 
     /**
-     * @param string
+     * Set the ldap id
+     * 
+     * @param string the new ldap id
      */
     public void setLdapId(String string) {
         ldapId = string;
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.ac.User#authenticate(java.lang.String)
      */
     public boolean authenticate(String password) {
@@ -184,7 +191,7 @@ public class LDAPUser extends FileUser {
         return true;
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.ac.User#getFullName()
      */
     public String getFullName() {
@@ -220,31 +227,45 @@ public class LDAPUser extends FileUser {
         }
     }
 
-    /* 
+    /** 
      * LDAP Users fetch their full name information from the LDAP server,
      * so we don't store it locally. Since we only have read access we basically
      * can't set the full name, i.e. any request to change the full name 
      * is ignored.
+     * 
+     * @param string is ignored
      */
     public void setFullName(String string) {
         // we do not have write access to LDAP, so we ignore 
         // change request to the full name.
     }
 
-    /* 
+    /** 
      * The LDAPUser doesn't store any passwords as they are handled by LDAP
+     * 
+     * @param plainTextPassword is ignored
      */
     public void setPassword(String plainTextPassword) {
         encryptedPassword = null;
     }
 
-    /* 
+    /** 
      * The LDAPUser doesn't store any passwords as they are handled by LDAP
+     * 
+     * @param encryptedPassword is ignored
      */
     protected void setEncryptedPassword(String encryptedPassword) {
         encryptedPassword = null;
     }
 
+	/**
+	 * Connect to the LDAP server
+	 * 
+	 * @param principal the principal string for the LDAP connection
+	 * @param credentials the credentials for the LDAP connection
+	 * @return a <code>LdapContext</code>
+	 * @throws NamingException if there are problems establishing the Ldap connection
+	 */
     private LdapContext bind(String principal, String credentials)
         throws NamingException {
         Hashtable env = new Hashtable();
@@ -274,10 +295,21 @@ public class LDAPUser extends FileUser {
         return ctx;
     }
 
+	/**
+	 * Close the connection to the LDAP server
+	 * 
+	 * @param ctx the context that was returned from the bind
+	 * @throws NamingException if there is a problem communicating to the LDAP server
+	 */
     private void close(Context ctx) throws NamingException {
         ctx.close();
     }
 
+	/**
+	 * Read the properties
+	 * 
+	 * @throws IOException if the properties cannot be found.
+	 */
     private void readProperties() throws IOException {
         // create and load default properties
         File propertiesFile =

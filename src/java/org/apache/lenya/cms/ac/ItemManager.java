@@ -1,5 +1,5 @@
 /*
- * $Id: ItemManager.java,v 1.4 2003/06/04 13:19:13 egli Exp $
+ * $Id: ItemManager.java,v 1.5 2003/06/24 17:44:26 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -68,7 +68,7 @@ import org.apache.log4j.Category;
  * 
  */
 public abstract class ItemManager {
-	static Category log = Category.getInstance(ItemManager.class);
+	static final Category log = Category.getInstance(ItemManager.class);
 
 	public static final String PATH =
 		"config" + File.separator + "ac" + File.separator + "passwd";
@@ -76,6 +76,12 @@ public abstract class ItemManager {
 	private Set items = null;
 	private Publication publication = null;
 
+	/**
+	 * Create a new ItemManager
+	 * 
+	 * @param publication where the items are fetched from
+	 * @throws AccessControlException if the item manager cannot be instantiated
+	 */
 	protected ItemManager(Publication publication)
 		throws AccessControlException {
 
@@ -131,15 +137,30 @@ public abstract class ItemManager {
 		}
 	}
 
-
+	/**
+	 * get all items
+	 * 
+	 * @return an <code>Iterator</code>
+	 */
 	public Iterator getItems() {
 		return items.iterator();
 	}
 
+	/**
+	 * Add an Item to this manager
+	 * 
+	 * @param item to be added
+	 */
 	public void add(Object item) {
 		items.add(item);
 	}
 
+	/**
+	 * 
+	 * Remove an item from this manager
+	 * 
+	 * @param item to be removed
+	 */
 	public void remove(Object item) {
 		items.remove(item);
 	}
@@ -148,6 +169,7 @@ public abstract class ItemManager {
 		return new File(publication.getDirectory(), PATH);
 	}
 	
+
 	protected abstract FileFilter getFileFilter();
 	
 	/**
