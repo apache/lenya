@@ -54,6 +54,11 @@
         <item>Edit&#160;with&#160;Epoz</item>
 -->
       </block>
+<!--
+      <block>
+        <item uc:usecase="rollback" href="?lenya.step=showscreen">Revisions</item>
+      </block>
+-->
       <block>
         <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute>Publish</item>
       </block>

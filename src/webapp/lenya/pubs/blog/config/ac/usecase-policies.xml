@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+<!--
+  <usecase id="rollback">
+    <role id="editor"/>
+  </usecase>
+-->
+<!--
   <usecase id="create">
     <role id="editor"/>
   </usecase>
@@ -10,4 +16,5 @@
   <usecase id="publish">
     <role id="editor"/>
   </usecase>
+-->
 </usecases>
