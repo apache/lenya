@@ -103,7 +103,7 @@
   
   <xsl:template match="machines">
 		<tr>
-			<td class="lenya-entry-caption" valign="top">IP Ranges:</td>
+			<td class="lenya-entry-caption" valign="top">IP&#160;Ranges:</td>
 			<td>
 				<xsl:apply-templates select="member">
 					<xsl:sort/>
