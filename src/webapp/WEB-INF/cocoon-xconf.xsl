@@ -278,6 +278,10 @@
     <component-instance name="tab.workflow" logger="lenya.site" class="org.apache.lenya.cms.workflow.usecases.History"/>
   </usecases>
 
+  <component role="org.apache.cocoon.components.cron.CronJob/usecase"
+             class="org.apache.lenya.cms.usecase.UsecaseCronJob"
+             logger="cron.usecase"/>
+             
   </xsl:copy>
 
 </xsl:template>

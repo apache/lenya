@@ -18,14 +18,19 @@ package org.apache.lenya.cms.usecase;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.components.cron.CronJob;
+import org.apache.cocoon.components.cron.JobScheduler;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
@@ -414,6 +419,60 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      */
     public boolean isInteractive() {
         return true;
+    }
+    
+    protected void schedule(Date date) {
+        
+        JobScheduler scheduler = null;
+        try {
+            scheduler = (JobScheduler) this.manager.lookup(JobScheduler.ROLE);
+            
+            Parameters parameters = new Parameters();
+            String[] names = getParameterNames();
+            for (int i = 0; i < names.length; i++) {
+                parameters.setParameter(names[i], getParameterAsString(names[i]));
+            }
+            
+            Map objects = new HashMap();
+            objects.put(UsecaseCronJob.USECASE_NAME, getName());
+            objects.put(UsecaseCronJob.SOURCE_URL, getSourceURL());
+            
+            String role = CronJob.class.getName() + "/usecase";
+            scheduler.fireJobAt(date, "foo", role, parameters, objects);
+            
+        } catch (Exception e) {
+            getLogger().error("Could not create job: ", e);
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (scheduler != null) {
+                this.manager.release(scheduler);
+            }
+        }
+    }
+    
+    private String name;
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#setName(java.lang.String)
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#getName()
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#getParameterNames()
+     */
+    public String[] getParameterNames() {
+        Set keys = this.parameters.keySet();
+        return (String[]) keys.toArray(new String[keys.size()]);
     }
 
 }

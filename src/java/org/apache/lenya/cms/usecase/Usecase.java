@@ -52,6 +52,11 @@ public interface Usecase {
      * @return A string or <code>null</code> if the parameter was not set.
      */
     String getParameterAsString(String name);
+    
+    /**
+     * @return The parameter names.
+     */
+    String[] getParameterNames();
 
     /**
      * Sets a parameter from the form. This method is called for parts in
@@ -131,5 +136,15 @@ public interface Usecase {
      *         be shown.
      */
     boolean isInteractive();
+    
+    /**
+     * @param name The name of this usecase.
+     */
+    void setName(String name);
+    
+    /**
+     * @return The name of this usecase.
+     */
+    String getName();
 
 }

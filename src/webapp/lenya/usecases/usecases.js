@@ -61,6 +61,7 @@ function executeUsecase() {
 	var usecaseName = cocoon.request.getParameter("lenya.usecase");
 	var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
 	var usecase = usecaseResolver.resolve(usecaseName);
+	usecase.setName(usecaseName);
 	
 	var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
 	var envelope = flowHelper.getPageEnvelope(cocoon);
@@ -70,7 +71,7 @@ function executeUsecase() {
 	passRequestParameters(flowHelper, usecase);
 	usecase.checkPreconditions();
 
-    if (usecase.isInteractive()) {
+    if (usecase.isInteractive() && !cocoon.request.getParameter("lenya.schedule")) {
 		var view = selectView(usecaseName);
 		var ready = false;
 		while (!ready) {
