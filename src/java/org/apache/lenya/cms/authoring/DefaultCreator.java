@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreator.java,v 1.21 2003/07/23 13:21:20 gregor Exp $
+$Id: DefaultCreator.java,v 1.22 2003/07/30 15:30:06 egli Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,6 @@ import java.io.File;
 
 import java.util.Map;
 
-
 /**
  * DOCUMENT ME!
  *
@@ -79,7 +78,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
     public static final String RESOURCE_META_NAME = "resource-meta-name";
     public static final String SAMPLE_NAME = "sample-name";
     public static final String SAMPLE_META_NAME = "sample-meta-name";
-    
+
     private String resourceName = null;
     private String resourceMetaName = null;
     private String sampleResourceName = null;
@@ -100,15 +99,18 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         }
 
         if (conf.getChild(RESOURCE_META_NAME, false) != null) {
-            resourceMetaName = conf.getChild(RESOURCE_META_NAME).getValue("index-meta.xml");
+            resourceMetaName =
+                conf.getChild(RESOURCE_META_NAME).getValue("index-meta.xml");
         }
 
         if (conf.getChild(SAMPLE_NAME, false) != null) {
-            sampleResourceName = conf.getChild(SAMPLE_NAME).getValue("sampleindex.xml");
+            sampleResourceName =
+                conf.getChild(SAMPLE_NAME).getValue("sampleindex.xml");
         }
 
         if (conf.getChild(SAMPLE_META_NAME, false) != null) {
-            sampleMetaName = conf.getChild(SAMPLE_META_NAME).getValue("samplemeta.xml");
+            sampleMetaName =
+                conf.getChild(SAMPLE_META_NAME).getValue("samplemeta.xml");
         }
     }
 
@@ -165,17 +167,25 @@ public class DefaultCreator implements ParentChildCreatorInterface {
       * @param childId DOCUMENT ME!
       * @param childType DOCUMENT ME!
       * @param childName the name of the child
+      * @param language for which the document is created
       * @param parameters additional parameters that can be considered when 
       *  creating the child
       *
       * @throws Exception DOCUMENT ME!
       */
-    public void create(File samplesDir, File parentDir, String childId, short childType,
-        String childName, Map parameters) throws Exception {
+    public void create(
+        File samplesDir,
+        File parentDir,
+        String childId,
+        short childType,
+        String childName,
+        String language,
+        Map parameters)
+        throws Exception {
         // Set filenames
         String id = generateTreeId(childId, childType);
-        String filename = getChildFileName(parentDir, id);
-        String filenameMeta = getChildMetaFileName(parentDir, id);
+        String filename = getChildFileName(parentDir, id, language);
+        String filenameMeta = getChildMetaFileName(parentDir, id, language);
 
         String doctypeSample = samplesDir + File.separator + sampleResourceName;
         String doctypeMeta = samplesDir + File.separator + sampleMetaName;
@@ -220,57 +230,73 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         }
     }
 
-	/**
-	 * Apply some transformation on the newly created child.
-	 * 
-	 * @param doc the xml document
-	 * @param childId the id of the child
-	 * @param childType the type of child
-	 * @param childName the name of the child
-	 * @param parameters additional parameters that can be used in the transformation
-	 * 
-	 * @throws Exception if the transformation fails
-	 */
-    protected void transformXML(Document doc, String childId, short childType, String childName,
-        Map parameters) throws Exception {
-    }
+    /**
+     * Apply some transformation on the newly created child.
+     * 
+     * @param doc the xml document
+     * @param childId the id of the child
+     * @param childType the type of child
+     * @param childName the name of the child
+     * @param parameters additional parameters that can be used in the transformation
+     * 
+     * @throws Exception if the transformation fails
+     */
+    protected void transformXML(
+        Document doc,
+        String childId,
+        short childType,
+        String childName,
+        Map parameters)
+        throws Exception {}
 
-	/**
-	 * Apply some transformation on the meta file of newly created child.
-	 * 
-	 * @param doc the xml document
-	 * @param childId the id of the child
-	 * @param childType the type of child
-	 * @param childName the name of the child
-	 * @param parameters additional parameters that can be used in the transformation
-	 * 
-	 * @throws Exception if the transformation fails
-	 */
-    protected void transformMetaXML(Document doc, String childId, short childType,
-        String childName, Map parameters) throws Exception {
-    }
+    /**
+     * Apply some transformation on the meta file of newly created child.
+     * 
+     * @param doc the xml document
+     * @param childId the id of the child
+     * @param childType the type of child
+     * @param childName the name of the child
+     * @param parameters additional parameters that can be used in the transformation
+     * 
+     * @throws Exception if the transformation fails
+     */
+    protected void transformMetaXML(
+        Document doc,
+        String childId,
+        short childType,
+        String childName,
+        Map parameters)
+        throws Exception {}
 
-	/**
-	 * Get the file name of the child
-	 * 
-	 * @param parentDir the parent directory
-	 * @param childId the id of the child
-	 * 
-	 * @return the file name of the child
-	 */
-    protected String getChildFileName(File parentDir, String childId) {
+    /**
+     * Get the file name of the child
+     * 
+     * @param parentDir the parent directory
+     * @param childId the id of the child
+     * @param language for which the document is created
+     * 
+     * @return the file name of the child
+     */
+    protected String getChildFileName(
+        File parentDir,
+        String childId,
+        String language) {
         return null;
     }
 
-	/**
-	 * Get the file name of the meta file
-	 * 
-	 * @param parentDir the parent directory
-	 * @param childId the id of the child
-	 * 
-	 * @return the name of the meta file
-	 */
-    protected String getChildMetaFileName(File parentDir, String childId) {
+    /**
+     * Get the file name of the meta file
+     * 
+     * @param parentDir the parent directory
+     * @param childId the id of the child
+     * @param language for which the document is created
+     * 
+     * @return the name of the meta file
+     */
+    protected String getChildMetaFileName(
+        File parentDir,
+        String childId,
+        String language) {
         return null;
     }
 }

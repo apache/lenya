@@ -1,5 +1,5 @@
 /*
-$Id: DefaultLeafCreator.java,v 1.10 2003/07/23 13:21:20 gregor Exp $
+$Id: DefaultLeafCreator.java,v 1.11 2003/07/30 15:30:06 egli Exp $
 <License>
 
  ============================================================================
@@ -59,14 +59,14 @@ import org.apache.log4j.Category;
 
 import java.io.File;
 
-
 /**
  * DOCUMENT ME!
  *
  * @author Christian Egli
  */
 public class DefaultLeafCreator extends DefaultCreator {
-    private static Category log = Category.getInstance(DefaultLeafCreator.class);
+    private static Category log =
+        Category.getInstance(DefaultLeafCreator.class);
 
     /**
      * Return the child type.
@@ -84,14 +84,20 @@ public class DefaultLeafCreator extends DefaultCreator {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
      */
-    protected String getChildFileName(File parentDir, String childId) {
-        return parentDir + File.separator + childId + ".xml";
+    protected String getChildFileName(
+        File parentDir,
+        String childId,
+        String language) {
+        return parentDir + File.separator + childId + "_" + language + ".xml";
     }
 
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String)
      */
-    protected String getChildMetaFileName(File parentDir, String childId) {
-        return parentDir + File.separator + childId + "-meta.xml";
+    protected String getChildMetaFileName(
+        File parentDir,
+        String childId,
+        String language) {
+        return parentDir + File.separator + childId + "-meta" + "_" + language + ".xml";
     }
 }

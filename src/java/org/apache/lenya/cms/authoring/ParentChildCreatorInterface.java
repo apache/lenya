@@ -1,5 +1,5 @@
 /*
-$Id: ParentChildCreatorInterface.java,v 1.10 2003/07/23 13:21:20 gregor Exp $
+$Id: ParentChildCreatorInterface.java,v 1.11 2003/07/30 15:30:06 egli Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,6 @@ import java.io.File;
 
 import java.util.Map;
 
-
 /**
  * DOCUMENT ME!
  *
@@ -120,8 +119,7 @@ public interface ParentChildCreatorInterface {
      * @return a <code>String</code> value
      * @exception Exception if an error occurs
      */
-    String generateTreeId(String childId, short childType)
-        throws Exception;
+    String generateTreeId(String childId, short childType) throws Exception;
 
     /**
      * Create a new document.
@@ -131,10 +129,18 @@ public interface ParentChildCreatorInterface {
      * @param childId the document id of the new document
      * @param childType the type of the new document.
      * @param childName the name of the new document.
+     * @param language for which the document is created.
      * @param parameters additional parameters that can be used when creating the child
      * 
      * @exception Exception if an error occurs
      */
-    void create(File samplesDir, File parentDir, String childId, short childType, String childName,
-        Map parameters) throws Exception;
+    void create(
+        File samplesDir,
+        File parentDir,
+        String childId,
+        short childType,
+        String childName,
+        String language,
+        Map parameters)
+        throws Exception;
 }

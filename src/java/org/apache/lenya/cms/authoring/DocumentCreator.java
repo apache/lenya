@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreator.java,v 1.3 2003/07/15 13:45:15 egli Exp $
+$Id: DocumentCreator.java,v 1.4 2003/07/30 15:30:06 egli Exp $
 <License>
 
  ============================================================================
@@ -66,7 +66,6 @@ import java.io.File;
 
 import java.util.Collections;
 
-
 /**
  * @author andreas
  *
@@ -87,9 +86,17 @@ public class DocumentCreator {
      *
      * @throws CreatorException DOCUMENT ME!
      */
-    public void create(Publication publication, File authoringDirectory, String treeFileName,
-        String parentId, String childId, String childName, String childTypeString,
-        String documentTypeName, String language) throws CreatorException {
+    public void create(
+        Publication publication,
+        File authoringDirectory,
+        String treeFileName,
+        String parentId,
+        String childId,
+        String childName,
+        String childTypeString,
+        String documentTypeName,
+        String language)
+        throws CreatorException {
         short childType;
 
         if (childTypeString.equals("branch")) {
@@ -97,10 +104,15 @@ public class DocumentCreator {
         } else if (childTypeString.equals("leaf")) {
             childType = ParentChildCreatorInterface.LEAF_NODE;
         } else {
-            throw new CreatorException("No such child type: " + childTypeString);
+            throw new CreatorException(
+                "No such child type: " + childTypeString);
         }
 
-        if (!validate(parentId, childId, childName, childTypeString, documentTypeName)) {
+        if (!validate(parentId,
+            childId,
+            childName,
+            childTypeString,
+            documentTypeName)) {
             throw new CreatorException("Exception: Validation of parameters failed");
         }
 
@@ -108,7 +120,10 @@ public class DocumentCreator {
         DocumentType type;
 
         try {
-            type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
+            type =
+                DocumentTypeBuilder.buildDocumentType(
+                    documentTypeName,
+                    publication);
         } catch (DocumentTypeBuildException e) {
             throw new CreatorException(e);
         }
@@ -118,7 +133,8 @@ public class DocumentCreator {
         DefaultSiteTree siteTree;
 
         try {
-            siteTree = new DefaultSiteTree(new File(authoringDirectory, treeFileName));
+            siteTree =
+                new DefaultSiteTree(new File(authoringDirectory, treeFileName));
         } catch (Exception e) {
             throw new CreatorException(e);
         }
@@ -127,17 +143,27 @@ public class DocumentCreator {
         labels[0] = new Label(childName, language);
 
         try {
-            siteTree.addNode(parentId, creator.generateTreeId(childId, childType), labels);
+            siteTree.addNode(
+                parentId,
+                creator.generateTreeId(childId, childType),
+                labels);
         } catch (Exception e) {
             throw new CreatorException(e);
         }
 
-        File doctypesDirectory = new File(publication.getDirectory(),
+        File doctypesDirectory =
+            new File(
+                publication.getDirectory(),
                 DocumentTypeBuilder.DOCTYPE_DIRECTORY);
 
         try {
-            creator.create(new File(doctypesDirectory, "samples"),
-                new File(authoringDirectory, parentId), childId, childType, childName,
+            creator.create(
+                new File(doctypesDirectory, "samples"),
+                new File(authoringDirectory, parentId),
+                childId,
+                childType,
+                childName,
+                language,
                 Collections.EMPTY_MAP);
         } catch (Exception e) {
             throw new CreatorException(e);
@@ -162,8 +188,14 @@ public class DocumentCreator {
      *
      * @return DOCUMENT ME!
      */
-    public boolean validate(String parentid, String childid, String childname, String childtype,
+    public boolean validate(
+        String parentid,
+        String childid,
+        String childname,
+        String childtype,
         String doctype) {
-        return (childid.indexOf(" ") == -1) && (childid.length() > 0) && (childname.length() > 0);
+        return (childid.indexOf(" ") == -1)
+            && (childid.length() > 0)
+            && (childname.length() > 0);
     }
 }

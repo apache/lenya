@@ -1,5 +1,5 @@
 /*
-$Id: ParentChildCreatorAction.java,v 1.32 2003/07/23 13:21:30 gregor Exp $
+$Id: ParentChildCreatorAction.java,v 1.33 2003/07/30 15:30:06 egli Exp $
 <License>
 
  ============================================================================
@@ -167,6 +167,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         }
 
         String doctype = request.getParameter("doctype");
+		String language = request.getParameter("language");
 
         if (!validate(parentid, childid, childname, childtype, doctype)) {
             getLogger().error("Exception: Validation of parameters failed");
@@ -344,7 +345,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         try {
             creator.create(new File(absoluteDoctypesPath + "samples"),
-                new File(sitemapParentPath + docsPath + parentid), childid, childType, childname,
+                new File(sitemapParentPath + docsPath + parentid), childid, childType, childname, language,
                 allParameters);
         } catch (Exception e) {
             getLogger().error(".act(): Creator threw exception: " + e);

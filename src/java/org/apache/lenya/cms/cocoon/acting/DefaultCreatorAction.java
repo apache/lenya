@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreatorAction.java,v 1.8 2003/07/23 13:21:30 gregor Exp $
+$Id: DefaultCreatorAction.java,v 1.9 2003/07/30 15:30:06 egli Exp $
 <License>
 
  ============================================================================
@@ -92,7 +92,7 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
@@ -162,7 +162,8 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         }
 
         String doctype = request.getParameter("doctype");
-
+		String language = request.getParameter("language");
+		
         if (!validate(parentid, childid, childname, childtype, doctype)) {
             getLogger().error("Exception: Validation of parameters failed");
 
@@ -280,7 +281,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         try {
             creator.create(new File(absoluteDoctypesPath + "samples"),
                 new File(publication.getDirectory(), docsPath + parentid), childid, childType,
-                childname, allParameters);
+                childname, language, allParameters);
         } catch (Exception e) {
             getLogger().error(".act(): Creator threw exception: " + e);
         }
