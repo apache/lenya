@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.4 2003/06/02 17:17:37 egli Exp $
+ * $Id: UserManager.java,v 1.5 2003/06/10 13:53:17 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -102,6 +102,7 @@ public class UserManager extends ItemManager {
 			User element = (User) iter.next();
 			if (element.getId().equals(userId)) {
 				user = element;
+				break;
 			}
 		}
 		return user;
