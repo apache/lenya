@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: webdav.xmap,v 1.4 2003/08/27 22:28:38 michi Exp $ -->
+<!-- CVS: $Id: webdav.xmap,v 1.5 2004/01/19 17:01:16 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -21,7 +21,7 @@
         <map:generate type="directory" src="content/authoring/entries/{1}/"/>
         <map:transform src="../../xslt/util/propfind.xsl">
           <map:parameter name="depth" value="{2}"/>
-          <map:parameter name="href" value="/lenya/blog/webdav/entries/{1}/"/>
+          <map:parameter name="href" value="{request:contextPath}/blog/webdav/entries/{1}/"/>
         </map:transform>
         <map:serialize type="xml" status-code="207"/>
       </map:match>
@@ -31,7 +31,7 @@
             <map:generate type="directory" src="content/authoring/entries/{1}/"/>
             <map:transform src="../../xslt/util/propfind.xsl">
               <map:parameter name="depth" value="{request-header:Depth}"/>
-              <map:parameter name="href" value="/lenya/blog/webdav/entries/{1}/"/>
+              <map:parameter name="href" value="{request:contextPath}/blog/webdav/entries/{1}/"/>
             </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>
