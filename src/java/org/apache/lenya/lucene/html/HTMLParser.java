@@ -18,44 +18,69 @@ public class HTMLParser implements HTMLParserConstants {
   PipedReader pipeIn = null;
   PipedWriter pipeOut;
 
+  int MAX_WAIT=1000;
+/**
+ *
+ */
   public HTMLParser(File file) throws FileNotFoundException {
     this(new FileInputStream(file));
-  }
-
+    }
+/**
+ *
+ */
   public String getTitle() throws IOException, InterruptedException {
-    if (pipeIn == null)
-      getReader();                                // spawn parsing thread
-    while (true) {
-      synchronized(this) {
-        if (titleComplete || (length > SUMMARY_LENGTH))
-          break;
-        wait(10);
-      }
-    }
-    return title.toString().trim();
-  }
+    if (pipeIn == null) getReader();       // spawn parsing thread
 
-  public String getSummary() throws IOException, InterruptedException {
-    if (pipeIn == null)
-      getReader();                                // spawn parsing thread
-    while (true) {
-      synchronized(this) {
-        if (summary.length() >= SUMMARY_LENGTH)
-          break;
+    int elapsedMillis=0;
+    while (true){
+      synchronized(this){
+        if(titleComplete || (length > SUMMARY_LENGTH)) break;
         wait(10);
+
+        elapsedMillis=elapsedMillis+10;
+        if(elapsedMillis > MAX_WAIT) break;
+        }
       }
+
+    return title.toString().trim();
     }
-    if (summary.length() > SUMMARY_LENGTH)
-      summary.setLength(SUMMARY_LENGTH);
+/**
+ *
+ */
+  public String getSummary() throws IOException, InterruptedException {
+    System.out.println("HTMLParser().getSummary()");
+
+    if(pipeIn == null) getReader();   // spawn parsing thread
+
+    int elapsedMillis=0;
+    while (true){
+      synchronized(this){
+        if(summary.length() >= SUMMARY_LENGTH){
+          break;
+          }
+        System.out.println("HTMLParser().getSummary(): Current length: "+summary.length());
+        System.out.println("HTMLParser().getSummary(): wait(10)");
+
+        wait(10);
+
+        elapsedMillis=elapsedMillis+10;
+        if(elapsedMillis > MAX_WAIT) break;
+        }
+      }
+
+    if(summary.length() > SUMMARY_LENGTH) summary.setLength(SUMMARY_LENGTH);
 
     String sum = summary.toString().trim();
     String tit = getTitle();
     if (sum.startsWith(tit))
-      return sum.substring(tit.length());
+      //return sum.substring(tit.length());
+      return sum;
     else
       return sum;
   }
-
+/**
+ *
+ */
   public Reader getReader() throws IOException {
     if (pipeIn == null) {
       pipeIn = new PipedReader();
@@ -67,8 +92,11 @@ public class HTMLParser implements HTMLParserConstants {
 
     return pipeIn;
   }
-
+/**
+ *
+ */
   void addToSummary(String text) {
+    System.out.println("HTMLParser.addToSummary(): Current length: "+summary.length()+" ("+text+")");
     if (summary.length() < SUMMARY_LENGTH) {
       summary.append(text);
       if (summary.length() >= SUMMARY_LENGTH) {
@@ -78,12 +106,22 @@ public class HTMLParser implements HTMLParserConstants {
       }
     }
   }
-
+/**
+ *
+ */
+  void addToTitle(String text){
+    System.out.println("HTMLParser.addToTitle(): Current length: "+title.length()+" ("+text+")");
+    title.append(text);
+    }
+/**
+ *
+ */
   void addText(String text) throws IOException {
     if (inScript)
       return;
     if (inTitle)
-      title.append(text);
+      //title.append(text);
+      addToTitle(text);
     else {
       addToSummary(text);
       if (!titleComplete && !title.equals("")) {  // finished title
@@ -99,13 +137,16 @@ public class HTMLParser implements HTMLParserConstants {
 
     afterSpace = false;
   }
-
+/**
+ *
+ */
   void addSpace() throws IOException {
     if (inScript)
       return;
     if (!afterSpace) {
       if (inTitle)
-        title.append(" ");
+        //title.append(" ");
+        addToTitle(" ");
       else
         addToSummary(" ");
 
