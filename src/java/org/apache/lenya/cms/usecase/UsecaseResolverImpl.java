@@ -76,5 +76,12 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
             this.manager.release(this.selector);
         }
     }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.UsecaseResolver#isRegistered(java.lang.String)
+     */
+    public boolean isRegistered(String name) throws ServiceException {
+        return this.selector.isSelectable(name);
+    }
     
 }

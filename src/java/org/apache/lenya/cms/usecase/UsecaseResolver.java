@@ -39,6 +39,14 @@ public interface UsecaseResolver {
     Usecase resolve(String name) throws ServiceException;
     
     /**
+     * Checks if a certain usecase is registered.
+     * @param name The usecase name.
+     * @return A boolean value.
+     * @throws ServiceException if an error occurs.
+     */
+    boolean isRegistered(String name) throws ServiceException;
+    
+    /**
      * Releases a usecase object.
      * @param usecase The usecase object.
      * @throws ServiceException if an error occurs.
