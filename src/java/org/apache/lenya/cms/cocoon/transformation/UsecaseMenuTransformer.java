@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.10 2004/02/12 10:30:12 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.11 2004/02/12 10:31:33 andreas Exp $
 <License>
 
  ============================================================================
@@ -197,6 +197,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
      */
     public void dispose() {
         getLogger().debug("Disposing transformer");
+        Object manager = this.manager;
         if (componentSelector != null) {
             if (acResolver != null) {
                 componentSelector.release(acResolver);
