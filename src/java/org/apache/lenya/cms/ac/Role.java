@@ -31,6 +31,7 @@ public class Role {
     }
     
     public void addGroup(Group group) {
+        assert group != null;
     	groups.add(group);
     }
     
@@ -48,9 +49,6 @@ public class Role {
         if (otherObject instanceof Role) {
             Role otherRole = (Role) otherObject;
             equals = getName().equals(otherRole.getName());
-        }
-        else {
-            equals = super.equals(otherObject);
         }
         
         return equals;

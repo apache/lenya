@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.4 2003/05/30 10:45:00 egli Exp $
+ * $Id: User.java,v 1.5 2003/05/30 15:25:53 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -141,6 +141,7 @@ public abstract class User {
 	 * @param set
 	 */
 	public void addGroup(Group group) {
+        assert group != null;
 		groups.add(group);
 		group.addUser(this);
 	}

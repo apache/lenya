@@ -1,5 +1,5 @@
 /*
- * $Id: Group.java,v 1.1 2003/05/28 14:45:18 egli Exp $
+ * $Id: Group.java,v 1.2 2003/05/30 15:25:53 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -101,6 +101,7 @@ public class Group {
 	 * @param role
 	 */
 	public void addRole(Role role) {
+        assert role != null;
 		roles.add(role);
 		role.addGroup(this);
 	}
