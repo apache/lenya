@@ -26,7 +26,7 @@
   </xsl:template>
   
   <xsl:template match="user">
-    <form method="post" action="">
+    <form method="GET" action="">
       <input type="hidden" name="lenya.usecase" value="user-add"/>
       <input type="hidden" name="lenya.step" value="add"/>
 
