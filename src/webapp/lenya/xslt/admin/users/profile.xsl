@@ -59,6 +59,11 @@
                 <input name="cancel" type="submit" value="Cancel"/>
               </td>
             </tr>
+            <tr>
+                <td class="lenya-entry-caption">
+                    <span class="lenya-required">*</span> required fields
+                </td>
+            </tr>                
           </table>
         </form>
       </div>
@@ -74,7 +79,7 @@
   <xsl:template match="id">
 		<tr>
 			
-			<td class="lenya-entry-caption">User&#160;ID</td>
+			<td class="lenya-entry-caption">User&#160;ID&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				 <xsl:choose>
 					 <xsl:when test="../@new = 'true'">
@@ -91,7 +96,7 @@
   
   <xsl:template match="ldapid">
 		<tr>
-			<td class="lenya-entry-caption">LDAP&#160;ID</td>
+			<td class="lenya-entry-caption">LDAP&#160;ID&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input class="lenya-form-element" name="fullname" type="text" value="{normalize-space(.)}"/>
 			</td>
@@ -113,7 +118,7 @@
   
   <xsl:template match="email">
 		<tr>
-			<td class="lenya-entry-caption">E-Mail</td>
+			<td class="lenya-entry-caption">E-Mail&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input class="lenya-form-element" name="email" type="text" value="{normalize-space(.)}"/>
 			</td>
@@ -133,7 +138,7 @@
 	
 	<xsl:template match="password">
 		<tr>
-			<td class="lenya-entry-caption">Password</td>
+			<td class="lenya-entry-caption">Password&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input type="password" class="lenya-form-element" name="new-password" value="{normalize-space(.)}"/>
 			</td>
@@ -143,7 +148,7 @@
 	
 	<xsl:template match="confirm-password">
 		<tr>
-			<td class="lenya-entry-caption">Confirm&#160;password</td>
+			<td class="lenya-entry-caption">Confirm&#160;password&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input type="password" class="lenya-form-element" name="confirm-password" value="{normalize-space(.)}"/>
 			</td>

@@ -113,3 +113,6 @@ td.lenya-frontpage {
     padding: 0px 10px 5px 10px;
 }
 
+.lenya-admin-required {
+	color: Red;
+}
