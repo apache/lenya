@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.15 2004/01/16 17:19:03 gregor Exp $
+ $Id: rename.xsl,v 1.16 2004/01/26 17:40:41 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -67,6 +67,7 @@ function validateForm(theForm)
           </xsl:call-template>
           <input type="hidden" name="lenya.usecase" value="rename"/>
           <input type="hidden" name="lenya.step" value="rename"/>
+          <input type="hidden" name="parenturl" value="{parent-url}"/>
           
           <table class="lenya-table-noborder">
             <tr>

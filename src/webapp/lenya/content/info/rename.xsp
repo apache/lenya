@@ -10,6 +10,7 @@
 <xsp:structure>
   <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.DocumentHelper</xsp:include>
 </xsp:structure>
 
 <page>
@@ -18,6 +19,9 @@
         Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
         SiteTreeNode node = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="authoring-node"/>;
         String refDocumentId = node.getNextSiblingDocumentId(); 
+        DocumentHelper documentHelper = new DocumentHelper(objectModel);
+        String parentUrl = documentHelper.getCompleteParentUrl();
+        <parent-url><xsp:expr>parentUrl</xsp:expr></parent-url>
     </xsp:logic>
     <request-uri><xsp-request:get-uri/></request-uri>
     <destination-id><input:get-attribute module="page-envelope" as="string" name="document-node-id"/></destination-id>
