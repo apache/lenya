@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.34 2003/09/18 11:50:42 andreas Exp $
+$Id: DefaultSiteTree.java,v 1.35 2003/09/19 10:56:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -445,27 +445,23 @@ public class DefaultSiteTree implements SiteTree {
         }
 
         Node node = findNode(document.getDocumentElement(), ids);
-
-        if (node == null) {
-            return null;
-        }
-
         return node;
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.publication.SiteTree#getNode(java.lang.String)
      */
     public SiteTreeNode getNode(String documentId) {
         assert documentId != null;
+        
+        SiteTreeNode treeNode = null;
 
         Node node = getNodeInternal(documentId);
-
-        if (node == null) {
-            return null;
+        if (node != null) {
+            treeNode = new SiteTreeNodeImpl(node);
         }
 
-        return new SiteTreeNodeImpl(node);
+        return treeNode;
     }
 
     /**
