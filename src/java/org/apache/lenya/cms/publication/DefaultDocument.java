@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.36 2003/12/04 18:07:14 andreas Exp $
+$Id: DefaultDocument.java,v 1.37 2003/12/11 16:55:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,6 +65,7 @@ import java.util.Date;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class DefaultDocument implements Document {
+    
     private String id;
     private Publication publication;
     private DublinCore dublincore;
@@ -87,6 +88,8 @@ public class DefaultDocument implements Document {
 
     /**
      * Creates a new instance of DefaultDocument.
+     * The language of the document is the default language of
+     * the publication.
      * @param publication The publication the document belongs to.
      * @param id The document ID (starting with a slash).
      * @param area The area.
@@ -100,6 +103,7 @@ public class DefaultDocument implements Document {
         this.publication = publication;
 
         setArea(area);
+        setLanguage(publication.getDefaultLanguage());
 
         this.dublincore = new DublinCoreProxy(this);
 

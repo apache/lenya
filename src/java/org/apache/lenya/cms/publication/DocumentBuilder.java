@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuilder.java,v 1.9 2003/12/04 14:17:21 andreas Exp $
+$Id: DocumentBuilder.java,v 1.10 2003/12/11 16:55:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -73,17 +73,6 @@ public interface DocumentBuilder {
      * @throws DocumentBuildException when something went wrong.
      */
     Document buildDocument(Publication publication, String url)
-        throws DocumentBuildException;
-    
-    /**
-     * Builds a collection document.
-     * 
-     * @param publication The publication the document belongs to.
-     * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
-     * @return A collection.
-     * @throws DocumentBuildException when something went wrong.
-     */
-    Collection buildCollection(Publication publication, String url)
         throws DocumentBuildException;
     
     /**

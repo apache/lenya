@@ -1,5 +1,5 @@
 /*
-$Id: CollectionImpl.java,v 1.4 2003/12/10 09:41:22 andreas Exp $
+$Id: CollectionImpl.java,v 1.5 2003/12/11 16:55:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,6 +64,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.log4j.Category;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -73,6 +74,8 @@ import org.xml.sax.SAXException;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
+    
+    private static final Category log = Category.getInstance(CollectionImpl.class);
 
     /**
      * Ctor.
@@ -84,7 +87,6 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     protected CollectionImpl(Publication publication, String id, String area)
         throws DocumentException {
         super(publication, id, area);
-        load();
     }
 
     /**
@@ -98,23 +100,32 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     protected CollectionImpl(Publication publication, String id, String area, String language)
         throws DocumentException {
         super(publication, id, area, language);
-        load();
     }
 
-    private List documents = new ArrayList();
+    private List documentsList = new ArrayList();
+    
+    /**
+     * Returns the list that holds the documents. Use this method to invoke lazy loading.
+     * @return A list.
+     * @throws DocumentException when something went wrong.
+     */
+    protected List documents() throws DocumentException {
+        load();
+        return documentsList;
+    }
 
     /**
      * @see org.apache.lenya.cms.publication.Collection#getDocuments()
      */
     public Document[] getDocuments() throws DocumentException {
-        return (Document[]) documents.toArray(new Document[documents.size()]);
+        return (Document[]) documents().toArray(new Document[documents().size()]);
     }
 
     /**
      * @see org.apache.lenya.cms.publication.Collection#add(org.apache.lenya.cms.publication.Document)
      */
     public void add(Document document) throws DocumentException {
-        documents.add(document);
+        documents().add(document);
         save();
     }
 
@@ -122,7 +133,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @see org.apache.lenya.cms.publication.Collection#add(int, org.apache.lenya.cms.publication.Document)
      */
     public void add(int position, Document document) throws DocumentException {
-        documents.add(position, document);
+        documents().add(position, document);
         save();
     }
 
@@ -130,11 +141,11 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @see org.apache.lenya.cms.publication.Collection#remove(org.apache.lenya.cms.publication.Document)
      */
     public void remove(Document document) throws DocumentException {
-        if (!documents.contains(document)) {
+        if (!documents().contains(document)) {
             throw new DocumentException(
                 "Collection [" + this +"] does not contain document [" + document + "]");
         }
-        documents.remove(document);
+        documents().remove(document);
         save();
     }
 
@@ -146,6 +157,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected void load() throws DocumentException {
         if (!isLoaded) {
+            log.debug("Loading: ", new DocumentException());
             NamespaceHelper helper;
             try {
                 helper = getNamespaceHelper();
@@ -154,17 +166,10 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 Element[] documentElements =
                     helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
 
-                DocumentBuilder builder = getPublication().getDocumentBuilder();
                 for (int i = 0; i < documentElements.length; i++) {
-                    String documentId = documentElements[i].getAttribute(ATTRIBUTE_ID);
-                    String url =
-                        builder.buildCanonicalUrl(
-                            getPublication(),
-                            getArea(),
-                            documentId,
-                            getLanguage());
-                    Document document = builder.buildDocument(getPublication(), url);
-                    documents.add(document);
+                    Element documentElement = documentElements[i];
+                    Document document = loadDocument(documentElement);
+                    documentsList.add(document);
                 }
             } catch (DocumentException e) {
                 throw e;
@@ -173,6 +178,25 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             }
             isLoaded = true;
         }
+    }
+
+    /**
+     * Loads a document from an XML element.
+     * @param documentElement The XML element.
+     * @return A document.
+     * @throws DocumentBuildException when something went wrong.
+     */
+    protected Document loadDocument(Element documentElement) throws DocumentBuildException {
+        DocumentBuilder builder = getPublication().getDocumentBuilder();
+        String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
+        String url =
+            builder.buildCanonicalUrl(
+                getPublication(),
+                getArea(),
+                documentId,
+                getLanguage());
+        Document document = builder.buildDocument(getPublication(), url);
+        return document;
     }
 
     /**
@@ -191,8 +215,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             Document[] documents = getDocuments();
 
             for (int i = 0; i < documents.length; i++) {
-                Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
-                documentElement.setAttribute(ATTRIBUTE_ID, documents[i].getId());
+                Element documentElement = createDocumentElement(documents[i], helper);
                 collectionElement.appendChild(documentElement);
             }
 
@@ -203,6 +226,19 @@ public class CollectionImpl extends DefaultDocument implements Collection {
         } catch (Exception e) {
             throw new DocumentException(e);
         }
+    }
+
+    /**
+     * Creates an element to store a document.
+     * @param helper The namespace helper of the document.
+     * @return An XML element.
+     * @throws DocumentException when something went wrong.
+     */
+    protected Element createDocumentElement(Document document, NamespaceHelper helper)
+        throws DocumentException {
+        Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
+        documentElement.setAttribute(ATTRIBUTE_ID, document.getId());
+        return documentElement;
     }
 
     /**
@@ -236,25 +272,26 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @see org.apache.lenya.cms.publication.Collection#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document document) throws DocumentException {
-        return documents.contains(document);
+        return documents().contains(document);
     }
 
     /**
      * @see org.apache.lenya.cms.publication.Collection#clear()
      */
     public void clear() throws DocumentException {
-        documents.clear();
+        documents().clear();
     }
 
     /**
      * @see org.apache.lenya.cms.publication.Collection#getFirstPosition(org.apache.lenya.cms.publication.Document)
      */
     public int getFirstPosition(Document document) throws DocumentException {
+        load();
         if (!contains(document)) {
             throw new DocumentException(
                 "The collection [" + this +"] does not contain the document [" + document + "]");
         }
-        return documents.indexOf(document);
+        return documents().indexOf(document);
     }
 
 }

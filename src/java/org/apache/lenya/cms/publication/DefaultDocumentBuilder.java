@@ -42,7 +42,7 @@ package org.apache.lenya.cms.publication;
 
 /**
  * @author andreas
- * @version $Id: DefaultDocumentBuilder.java,v 1.26 2003/12/04 14:17:21 andreas Exp $
+ * @version $Id: DefaultDocumentBuilder.java,v 1.27 2003/12/11 16:55:41 andreas Exp $
  *  
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
@@ -98,7 +98,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         }
 
         DefaultDocument document =
-            new DefaultDocument(publication, documentId, info.getArea(), language);
+            createDocument(publication, info.getArea(), documentId, language);
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
 
@@ -106,25 +106,24 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCollection(org.apache.lenya.cms.publication.Publication, java.lang.String)
+     * Creates a new document object.
+     * Override this method to create specific document objects,
+     * e.g., for different document IDs.
+     * @param publication The publication.
+     * @param area The area. 
+     * @param documentId The document ID.
+     * @param language The language.
+     * @return A document.
+     * @throws DocumentException when something went wrong.
      */
-    public Collection buildCollection(Publication publication, String url)
+    protected DefaultDocument createDocument(
+        Publication publication,
+        String area,
+        String documentId,
+        String language)
         throws DocumentBuildException {
-        Document document = buildDocument(publication, url);
-        CollectionImpl collection;
-        try {
-            collection =
-                new CollectionImpl(
-                    publication,
-                    document.getId(),
-                    document.getArea(),
-                    document.getLanguage());
-        } catch (DocumentException e) {
-            throw new DocumentBuildException(e);
-        }
-        collection.setExtension(document.getExtension());
-        collection.setDocumentURL(document.getDocumentURL());
-        return collection;
+        DefaultDocument document = new DefaultDocument(publication, documentId, area, language);
+        return document;
     }
 
     /**
