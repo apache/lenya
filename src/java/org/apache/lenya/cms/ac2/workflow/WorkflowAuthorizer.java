@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.9 2003/07/14 14:35:34 egli Exp $
+$Id: WorkflowAuthorizer.java,v 1.10 2003/07/14 18:06:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -116,7 +116,7 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
             throw new AccessControlException(e);
         }
 
-        Policy policy = policyManager.getPolicy(accessController, publication, url);
+        Policy policy = policyManager.getPolicy(accessController, url);
         Role[] roles = policy.getRoles(identity);
         saveRoles(request.getSession(), roles);
         
