@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.35 2003/09/03 10:55:53 andreas Exp $
+ $Id: info.xsl,v 1.36 2003/09/04 15:22:24 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -16,6 +16,8 @@
 <xsl:import href="../util/page-util.xsl"/>
 
 <xsl:param name="tab"/>
+<xsl:param name="documentid"/>
+<xsl:param name="languageexists"/>
 
 <xsl:template match="lenya-info:info">    
     <html>
@@ -30,22 +32,19 @@
 		These are the tabs. Make sure that each of them has the correct id,
 		target and corresponding number in the Tab() call.
 	 -->
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td>
-				<table border="0" cellpadding="0" cellspacing="0">
-					<tr>
-						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">overview</xsl:with-param></xsl:call-template>Overview</a></td>
-						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">meta</xsl:with-param></xsl:call-template>Meta</a></td>
-						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template>Assets</a></td>
-						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a></td>
-						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a></td>
-						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC Auth</a></td>
-						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC Live</a></td>
-					</tr>
-				</table>
-			</td>
-			<td></td>
+			<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">overview</xsl:with-param></xsl:call-template>Overview</a></td>
+			<xsl:if test="$languageexists = 'true'">
+				<xsl:if test="$documentid != '/'">
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">meta</xsl:with-param></xsl:call-template>Meta</a></td>
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template>Assets</a></td>
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a></td>
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a></td>
+				</xsl:if>
+				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC Auth</a></td>
+				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC Live</a></td>
+			</xsl:if>
 		</tr>
 	</table>
 	
@@ -78,18 +77,41 @@
 </xsl:template>
 
 <xsl:template match="lenya-info:overview">
+	<xsl:choose>
+	<xsl:when test="dc:title">
    <table class="lenya-table-noborder">
    <tr><td class="lenya-entry-caption">Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
    <tr><td class="lenya-entry-caption">Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
    <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:value-of select="lenya-info:workflow-state"/></td></tr>
    <tr><td class="lenya-entry-caption">Live:</td><td><xsl:value-of select="lenya-info:is-live"/></td></tr>
    <tr><td class="lenya-entry-caption">Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
-   <tr><td class="lenya-entry-caption">Available Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
+   <tr><td class="lenya-entry-caption">Available Languages:</td><td><xsl:apply-templates select="lenya-info:languages"/></td></tr>
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
    <tr><td class="lenya-entry-caption">Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
    <tr><td class="lenya-entry-caption">Document ID:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
    </table>
+  </xsl:when>
+  <xsl:when test="$languageexists = 'false'">
+  	This document is not available in this language.<br/><br/>
+  	Available Languages: <xsl:apply-templates select="lenya-info:languages"/>
+  </xsl:when>
+  <xsl:otherwise>No overview available.</xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
+
+
+<xsl:template match="lenya-info:overview/lenya-info:languages">
+	<xsl:apply-templates select="lenya-info:language"/>
+</xsl:template>
+
+<xsl:template match="lenya-info:language">
+	<xsl:choose>
+		<xsl:when test="normalize-space(../../dc:language) = normalize-space(.)"><xsl:value-of select="normalize-space(.)"/></xsl:when>
+		<xsl:otherwise><a href="{@href}?lenya.usecase=info-overview&amp;lenya.step=showscreen"><xsl:value-of select="normalize-space(.)"/></a></xsl:otherwise>
+	</xsl:choose>
+	<xsl:text> </xsl:text>
+</xsl:template>
+
 
   <xsl:template match="lenya-info:meta">
     <form>

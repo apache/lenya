@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.24 2003/09/03 16:23:57 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.25 2003/09/04 15:22:24 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -13,7 +13,6 @@
 
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
-<xsl:param name="area"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
    
@@ -31,45 +30,70 @@ PERSERVESTATE = 1
 HIGHLIGHT = 1
 HIGHLIGHT_BG = "#DDDCCF;"
 HIGHLIGHT_COLOR = "#666666;"
-foldersTree = gFld("&lt;strong&gt;<xsl:value-of select="$publicationid"/>&lt;/strong&gt;", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen")
+foldersTree = gFld("&lt;strong&gt;<xsl:value-of select="$publicationid"/>&lt;/strong&gt;", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen")
 		<xsl:apply-templates select="s:site"/>
 
 //Set this string if Treeview and other configuration files may also be loaded in the same session
-foldersTree.treeID = "t2" 
-</xsl:template>    
+foldersTree.treeID = "t2"
+</xsl:template>
 
 <xsl:template match="s:site">
-    <xsl:param name="parentPath"/>
-    <xsl:param name="lenyaarea"><xsl:value-of select="translate(@label, 'ALT', 'alt')"/></xsl:param>
-     <xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:when>
-<xsl:otherwise>insDoc(foldersTree, gLnk("S", "&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:otherwise></xsl:choose>
-<xsl:apply-templates>
-            <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
-            <xsl:with-param name="lenyaarea"><xsl:value-of select="$lenyaarea"/></xsl:with-param>
-</xsl:apply-templates>   
+  <xsl:param name="parentPath"/>
+  <xsl:variable name="suffix">
+  	<xsl:if test="not($chosenlanguage = $defaultlanguage)">_<xsl:value-of select="$chosenlanguage"/></xsl:if>
+  	<xsl:text>.html</xsl:text>
+  </xsl:variable>
+  
+  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/', @area, '/', $suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
+  <xsl:choose>
+  	<xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$link"/>"))</xsl:when>
+    <xsl:otherwise>insDoc(foldersTree, gLnk("S", "&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$link"/>"))</xsl:otherwise>
+  </xsl:choose>
+  <xsl:apply-templates>
+    <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
+  </xsl:apply-templates>   
 </xsl:template>
 
 <xsl:template match="s:node">
-    <xsl:param name="parentPath"/>
-    <xsl:param name="lenyaarea"/>
+  <xsl:param name="parentPath"/>
+  <xsl:variable name="tree-area" select="ancestor::s:site/@area"/>
+  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/', $tree-area, '/', @basic-url, @suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
+  <xsl:variable name="exists-language" select="s:label[lang($chosenlanguage)]"/>
+  <xsl:variable name="no-language-pre"><xsl:if test="not($exists-language)">&lt;span style='color: #AAAAAA'&gt;</xsl:if></xsl:variable>
+  <xsl:variable name="no-language-post"><xsl:if test="not($exists-language)">&lt;/span&gt;</xsl:if></xsl:variable>
 
-<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:value-of select="generate-id(..)"/>, gFld("&#160;<xsl:call-template name="getLabels"/>&#160;", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:when>
-  <xsl:otherwise>insDoc(<xsl:value-of select="generate-id(..)"/>, gLnk("S", "&#160;<xsl:call-template name="getLabels"/>&#160;", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:otherwise></xsl:choose>
-<xsl:apply-templates>
-<xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
-<xsl:with-param name="lenyaarea"><xsl:value-of select="$lenyaarea"/></xsl:with-param>
-</xsl:apply-templates>
+  <xsl:choose>
+  	<xsl:when test="descendant::s:node">
+  		<xsl:value-of select="generate-id(.)"/>
+  		= insFld(
+  			   <xsl:value-of select="generate-id(..)"/>,
+           gFld("&#160;<xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/>&#160;",
+           "<xsl:value-of select="$link"/>")
+      );
+    </xsl:when>
+    <xsl:otherwise>
+    	insDoc(<xsl:value-of select="generate-id(..)"/>,
+    	       gLnk(
+    	           "S",
+    	           "&#160;<xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabels"/><xsl:value-of select="$no-language-post"/>&#160;",
+    	           "<xsl:value-of select="$link"/>")
+      );
+      </xsl:otherwise>
+  </xsl:choose>
+  <xsl:apply-templates>
+    <xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
+  </xsl:apply-templates>
 </xsl:template>
 
 <xsl:template name="getLabels">
-   <xsl:choose>
-      <xsl:when test="s:label[lang($chosenlanguage)]">
-      	<xsl:value-of select="s:label[lang($chosenlanguage)]"/>
-      </xsl:when>
-      <xsl:otherwise>
-      	<xsl:value-of select="s:label[lang($defaultlanguage)]"/>
-      </xsl:otherwise>
-   </xsl:choose>	
+  <xsl:choose>
+    <xsl:when test="s:label[lang($chosenlanguage)]">
+    	<xsl:value-of select="s:label[lang($chosenlanguage)]"/>
+    </xsl:when>
+    <xsl:otherwise>
+    	<xsl:value-of select="s:label[lang($defaultlanguage)]"/>
+    </xsl:otherwise>
+  </xsl:choose>	
 </xsl:template>
 
 <xsl:template match="s:label"/>

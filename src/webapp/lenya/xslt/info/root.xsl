@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.25 2003/09/03 16:23:57 andreas Exp $
+ $Id: root.xsl,v 1.26 2003/09/04 15:22:24 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -69,31 +69,25 @@ function findIDbyLink(srclink)
 
 <body>
 <div id="lenya-info-body">
-<table border="0" cellpadding="0" cellspacing="0">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
-<td valign="top">
+<td valign="top" width="20%">
 <div id="lenya-info-treecanvas">
 <!-- Build the tree. -->
 
-	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+	<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td>
-				<table border="0" cellpadding="0" cellspacing="0">
-					<tr>
-						<td><a id="de">
-							<xsl:call-template name="activate">
-								<xsl:with-param name="tablanguage">de</xsl:with-param>
-							</xsl:call-template>
-						</a></td>
-						<td><a id="en">
-							<xsl:call-template name="activate">
-								<xsl:with-param name="tablanguage">en</xsl:with-param>
-							</xsl:call-template>
-						</a></td>
-					</tr>
-				</table>
-			</td>
-			<td></td>
+			<td><a id="de">
+				<xsl:call-template name="activate">
+					<xsl:with-param name="tablanguage">de</xsl:with-param>
+				</xsl:call-template>
+			</a></td>
+			<td><a id="en">
+				<xsl:call-template name="activate">
+					<xsl:with-param name="tablanguage">en</xsl:with-param>
+				</xsl:call-template>
+			</a></td>
 		</tr>
 	</table>
 
@@ -115,9 +109,14 @@ function findIDbyLink(srclink)
     </div>
 </div>
 </td>	
-<td valign="top">
+<td valign="top" width="80%">
 <div id="lenya-info-content">
-	<strong>URL:&#160;&#160;</strong><xsl:value-of select="$documenturl"/><br/><br/>
+	
+	<xsl:variable name="url">
+		/<xsl:value-of select="$area"/><xsl:if test="$documentid != '/'"><xsl:value-of select="$documenturl"/></xsl:if>
+	</xsl:variable>
+	
+	<strong>URL:&#160;&#160;</strong><xsl:value-of select="$url"/><br/><br/>
 	
 	<xsl:copy-of select="*"/>
 </div>

@@ -418,6 +418,7 @@
       <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction" logger="lenya.sitemap.action.authorizer"/>
       <map:action name="authenticator" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthenticatorAction" logger="lenya.sitemap.action.authenticator"/>
       
+      <map:action logger="lenya.sitemap.action.language-exists" name="language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
    </map:actions>
 
   <!--+

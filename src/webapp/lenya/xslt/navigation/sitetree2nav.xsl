@@ -35,7 +35,7 @@
 <xsl:template match="tree:site">
 
   <nav:site>
-    <xsl:copy-of select="@label"/> 
+    <xsl:copy-of select="@*"/> 
     <xsl:apply-templates/>
   </nav:site>
 
@@ -72,7 +72,8 @@ Apply nodes recursively
     <xsl:variable name="suffix">
       <xsl:if test="not(@href)">
          <xsl:choose>
-            <xsl:when test="not($defaultlanguage = $chosenlanguage) and tree:label[lang($chosenlanguage)]">
+<!--            <xsl:when test="not($defaultlanguage = $chosenlanguage) and tree:label[lang($chosenlanguage)]">-->
+            <xsl:when test="not($defaultlanguage = $chosenlanguage)">
       	       <xsl:text>_<xsl:value-of select="$chosenlanguage"/></xsl:text>
             </xsl:when>
             <xsl:otherwise>
