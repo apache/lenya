@@ -26,6 +26,14 @@
   </map:resources>
 
   <map:pipelines>
+    <!-- Workflow History -->
+    <map:pipeline>
+      <map:match pattern="workflow-history/**">
+        <map:generate src="pubs/{page-envelope:publication-id}/config/workflow/history/{1}"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
     <!-- Menus -->
     <map:pipeline>
       <map:match pattern="menus/info.xml">
