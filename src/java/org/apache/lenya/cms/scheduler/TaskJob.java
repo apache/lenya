@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.9 2003/02/07 12:14:21 ah Exp $
+ * $Id: TaskJob.java,v 1.10 2003/02/11 19:51:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -52,16 +52,12 @@ import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.log4j.Category;
 
-import org.dom4j.DocumentFactory;
-import org.dom4j.Element;
-
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import org.wyona.cms.publishing.PublishingEnvironment;
-import org.wyona.cms.scheduler.xml.SchedulerXMLFactory;
 import org.wyona.cms.task.AbstractTask;
 import org.wyona.cms.task.Task;
 import org.wyona.cms.task.TaskManager;
@@ -75,6 +71,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import org.w3c.dom.Element;
+import org.wyona.xml.NamespaceHelper;
 
 
 /**
@@ -83,7 +81,8 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author <a href="mailto:ah@wyona.org">Andreas Hartmann</a>
  */
-public class TaskJob extends ServletJob {
+public class TaskJob
+        extends ServletJob {
     public static final String TASK_ID = "id";
     public static final String TASK_PREFIX = "task";
     static Category log = Category.getInstance(TaskJob.class);
@@ -213,20 +212,19 @@ public class TaskJob extends ServletJob {
      */
     public JobDetail load(Element jobElement, String servletContext) {
         JobDataMap map = new JobDataMap();
-
-        Element taskElement = jobElement.element(SchedulerXMLFactory.getQName("task"));
+        NamespaceHelper helper = SchedulerWrapper.getNamespaceHelper();
+        Element taskElement = helper.getFirstChild(jobElement, "task");
 
         JobDataMapWrapper taskMap = new JobDataMapWrapper(map, TASK_PREFIX);
 
         String debugString = "\n----------------------------------" + "\nRestoring tasks:" +
             "\n----------------------------------" + "\nTask parameters:";
 
-        List parameterElements = taskElement.elements(SchedulerXMLFactory.getQName("parameter"));
+        Element[] parameterElements = helper.getChildren(taskElement, "parameter");
 
-        for (Iterator i = parameterElements.iterator(); i.hasNext();) {
-            Element parameterElement = (Element) i.next();
-            String key = parameterElement.attribute("name").getValue();
-            String value = parameterElement.attribute("value").getValue();
+        for (int i = 0; i < parameterElements.length; i++) {
+            String key = parameterElements[i].getAttribute("name");
+            String value = parameterElements[i].getAttribute("value");
             taskMap.put(key, value);
             debugString = debugString + "\n" + key + " = " + value;
         }
@@ -240,12 +238,11 @@ public class TaskJob extends ServletJob {
 
         JobDataMapWrapper jobMap = new JobDataMapWrapper(map, SchedulerWrapper.JOB_PREFIX);
 
-        parameterElements = jobElement.elements(SchedulerXMLFactory.getQName("parameter"));
+        parameterElements = helper.getChildren(jobElement, "parameter");
 
-        for (Iterator i = parameterElements.iterator(); i.hasNext();) {
-            Element parameterElement = (Element) i.next();
-            String key = parameterElement.attribute("name").getValue();
-            String value = parameterElement.attribute("value").getValue();
+        for (int i = 0; i < parameterElements.length; i++) {
+            String key = parameterElements[i].getAttribute("name");
+            String value = parameterElements[i].getAttribute("value");
             jobMap.put(key, value);
             debugString = debugString + "\n" + key + " = " + value;
         }
@@ -275,27 +272,25 @@ public class TaskJob extends ServletJob {
      *
      * @return DOCUMENT ME!
      */
-    public Element save(JobDetail jobDetail) {
-        DocumentFactory factory = DocumentFactory.getInstance();
-        Element jobElement = SchedulerXMLFactory.createElement("job");
+    public Element save(NamespaceHelper helper, JobDetail jobDetail) {
+        Element jobElement = helper.createElement("job");
         JobDataMap map = jobDetail.getJobDataMap();
 
         JobDataMapWrapper jobMap = new JobDataMapWrapper(map, SchedulerWrapper.JOB_PREFIX);
         JobDataMapWrapper taskMap = new JobDataMapWrapper(map, TASK_PREFIX);
 
         // task parameters
-        Element taskElement = SchedulerXMLFactory.createElement("task");
-        jobElement.add(taskElement);
+        Element taskElement = helper.createElement("task");
+        jobElement.appendChild(taskElement);
 
         Parameters taskParameters = taskMap.getParameters();
         String[] names = taskParameters.getNames();
 
         for (int i = 0; i < names.length; i++) {
-            Element parameterElement = SchedulerXMLFactory.createElement("parameter");
-            taskElement.add(parameterElement);
-            parameterElement.add(factory.createAttribute(parameterElement, "name", names[i]));
-            parameterElement.add(factory.createAttribute(parameterElement, "value",
-                    taskMap.get(names[i])));
+            Element parameterElement = helper.createElement("parameter");
+            taskElement.appendChild(parameterElement);
+            parameterElement.setAttribute("name", names[i]);
+            parameterElement.setAttribute("value", taskMap.get(names[i]));
         }
 
         // job parameters
@@ -303,11 +298,10 @@ public class TaskJob extends ServletJob {
         names = jobParameters.getNames();
 
         for (int i = 0; i < names.length; i++) {
-            Element parameterElement = SchedulerXMLFactory.createElement("parameter");
-            jobElement.add(parameterElement);
-            parameterElement.add(factory.createAttribute(parameterElement, "name", names[i]));
-            parameterElement.add(factory.createAttribute(parameterElement, "value",
-                    jobMap.get(names[i])));
+            Element parameterElement = helper.createElement("parameter");
+            jobElement.appendChild(parameterElement);
+            parameterElement.setAttribute("name", names[i]);
+            parameterElement.setAttribute("value", jobMap.get(names[i]));
         }
 
         return jobElement;

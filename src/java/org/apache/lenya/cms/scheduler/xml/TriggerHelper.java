@@ -1,5 +1,5 @@
 /*
- * $Id: TriggerHelper.java,v 1.5 2003/02/07 12:14:21 ah Exp $
+ * $Id: TriggerHelper.java,v 1.6 2003/02/11 19:51:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,15 +45,9 @@ package org.wyona.cms.scheduler.xml;
 
 import org.apache.log4j.Category;
 
-import org.dom4j.Attribute;
-import org.dom4j.DocumentFactory;
-import org.dom4j.Element;
-
 import org.quartz.CronTrigger;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
-
-import org.wyona.cms.scheduler.xml.SchedulerXMLFactory;
 
 import java.text.ParseException;
 
@@ -62,6 +56,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+import org.w3c.dom.Element;
+import org.wyona.cms.scheduler.SchedulerWrapper;
+import org.wyona.xml.NamespaceHelper;
 
 
 /**
@@ -92,21 +89,22 @@ public class TriggerHelper {
      * @return DOCUMENT ME!
      */
     public static Trigger createTrigger(Element element, String jobName, String jobGroup) {
-        if (!element.getName().equals("trigger")) {
+        if (!element.getLocalName().equals("trigger")) {
             throw new IllegalArgumentException();
         }
 
-        String triggerType = element.attribute(TRIGGER_TYPE).getValue();
+        String triggerType = element.getAttribute(TRIGGER_TYPE);
+        
+        NamespaceHelper helper = SchedulerWrapper.getNamespaceHelper();
 
         // SimpleTrigger
         if (triggerType.equals(ONCE)) {
-            List parameterElements = element.elements(SchedulerXMLFactory.getQName("parameter"));
+            Element parameterElements[] = helper.getChildren(element, "parameter");
             GregorianCalendar date = new GregorianCalendar();
 
-            for (Iterator i = parameterElements.iterator(); i.hasNext();) {
-                Element parameterElement = (Element) i.next();
-                String name = parameterElement.attribute("name").getValue();
-                String value = parameterElement.attribute("value").getValue();
+            for (int i = 0; i < parameterElements.length; i++) {
+                String name = parameterElements[i].getAttribute("name");
+                String value = parameterElements[i].getAttribute("value");
 
                 if (name.equals(YEAR)) {
                     date.set(Calendar.YEAR, Integer.parseInt(value));
@@ -138,10 +136,9 @@ public class TriggerHelper {
 
         // CronTrigger
         if (triggerType.equals(REPEATED)) {
-            List parameterElements = element.elements(SchedulerXMLFactory.getQName("parameter"));
-            Element parameterElement = (Element) parameterElements.iterator().next();
-            String name = parameterElement.attribute("name").getValue();
-            String value = parameterElement.attribute("value").getValue();
+            Element parameterElements[] = helper.getChildren(element, "parameter");
+            String name = parameterElements[0].getAttribute("name");
+            String value = parameterElements[0].getAttribute("value");
             String cron_expression;
 
             if (name.equals(CRON_EXPRESSION)) {
@@ -202,10 +199,9 @@ public class TriggerHelper {
      *
      * @return DOCUMENT ME!
      */
-    public static Element createElement(Trigger trigger) {
-        DocumentFactory factory = DocumentFactory.getInstance();
-        Element triggerElement = SchedulerXMLFactory.createElement("trigger");
-        triggerElement.add(factory.createAttribute(triggerElement, "type", ONCE));
+    public static Element createElement(NamespaceHelper helper, Trigger trigger) {
+        Element triggerElement = helper.createElement("trigger");
+        triggerElement.setAttribute("type", ONCE);
 
         if (trigger == null) {
             return triggerElement;
@@ -214,35 +210,30 @@ public class TriggerHelper {
         GregorianCalendar startTime = new GregorianCalendar();
         startTime.setTime(trigger.getStartTime());
 
-        Element yearElement = SchedulerXMLFactory.createElement("parameter");
-        yearElement.add(factory.createAttribute(yearElement, "name", YEAR));
-        yearElement.add(factory.createAttribute(yearElement, "value",
-                Integer.toString(startTime.get(Calendar.YEAR))));
-        triggerElement.add(yearElement);
+        Element yearElement = helper.createElement("parameter");
+        yearElement.setAttribute("name", YEAR);
+        yearElement.setAttribute("value", Integer.toString(startTime.get(Calendar.YEAR)));
+        triggerElement.appendChild(yearElement);
 
-        Element monthElement = SchedulerXMLFactory.createElement("parameter");
-        monthElement.add(factory.createAttribute(monthElement, "name", MONTH));
-        monthElement.add(factory.createAttribute(monthElement, "value",
-                Integer.toString(startTime.get(Calendar.MONTH) + 1)));
-        triggerElement.add(monthElement);
+        Element monthElement = helper.createElement("parameter");
+        monthElement.setAttribute("name", MONTH);
+        monthElement.setAttribute("value", Integer.toString(startTime.get(Calendar.MONTH) + 1));
+        triggerElement.appendChild(monthElement);
 
-        Element dayElement = SchedulerXMLFactory.createElement("parameter");
-        dayElement.add(factory.createAttribute(dayElement, "name", DAY));
-        dayElement.add(factory.createAttribute(dayElement, "value",
-                Integer.toString(startTime.get(Calendar.DAY_OF_MONTH))));
-        triggerElement.add(dayElement);
+        Element dayElement = helper.createElement("parameter");
+        dayElement.setAttribute("name", DAY);
+        dayElement.setAttribute("value", Integer.toString(startTime.get(Calendar.DAY_OF_MONTH)));
+        triggerElement.appendChild(dayElement);
 
-        Element hourElement = SchedulerXMLFactory.createElement("parameter");
-        hourElement.add(factory.createAttribute(hourElement, "name", HOUR));
-        hourElement.add(factory.createAttribute(hourElement, "value",
-                Integer.toString(startTime.get(Calendar.HOUR_OF_DAY))));
-        triggerElement.add(hourElement);
+        Element hourElement = helper.createElement("parameter");
+        hourElement.setAttribute("name", HOUR);
+        hourElement.setAttribute("value", Integer.toString(startTime.get(Calendar.HOUR_OF_DAY)));
+        triggerElement.appendChild(hourElement);
 
-        Element minuteElement = SchedulerXMLFactory.createElement("parameter");
-        minuteElement.add(factory.createAttribute(minuteElement, "name", MINUTE));
-        minuteElement.add(factory.createAttribute(minuteElement, "value",
-                Integer.toString(startTime.get(Calendar.MINUTE))));
-        triggerElement.add(minuteElement);
+        Element minuteElement = helper.createElement("parameter");
+        minuteElement.setAttribute("name", MINUTE);
+        minuteElement.setAttribute("value", Integer.toString(startTime.get(Calendar.MINUTE)));
+        triggerElement.appendChild(minuteElement);
 
         return triggerElement;
     }

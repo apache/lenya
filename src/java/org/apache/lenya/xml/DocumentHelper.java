@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.4 2003/02/07 18:40:23 ah Exp $
+ * $Id: DocumentHelper.java,v 1.5 2003/02/11 19:51:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,6 +45,7 @@ package org.wyona.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,14 +83,13 @@ import org.xml.sax.SAXException;
 public class DocumentHelper {
 
     /**
-     * Creates a validating and namespace-aware DocumentBuilder.
+     * Creates a non-validating and namespace-aware DocumentBuilder.
      *
      * @return A new DocumentBuilder object.
      * @throws ParserConfigurationException
      */
     public static DocumentBuilder createBuilder() throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setValidating(true);
         factory.setNamespaceAware(true);
 
         return factory.newDocumentBuilder();
@@ -166,15 +166,34 @@ public class DocumentHelper {
     public static void writeDocument(Document document, File file)
             throws TransformerConfigurationException, TransformerException, IOException {
                 
+        file.createNewFile();
+        DOMSource source = new DOMSource(document);
+        StreamResult result = new StreamResult(file);
+        getTransformer().transform(source, result);
+    }
+    
+    /** Writes a document to a writer.
+     *
+     * @param document The document to write.
+     * @param writer The writer to write the document to.
+     * @throws IOException
+     * @throws TransformerConfigurationException
+     * @throws TransformerException
+     */    
+    public static void writeDocument(Document document, Writer writer)
+            throws TransformerConfigurationException, TransformerException, IOException {
+                
+        DOMSource source = new DOMSource(document);
+        StreamResult result = new StreamResult(writer);
+        getTransformer().transform(source, result);
+    }
+    
+    protected static Transformer getTransformer()
+            throws TransformerConfigurationException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        
-        file.createNewFile();
-
-        DOMSource source = new DOMSource(document);
-        StreamResult result = new StreamResult(file);
-        transformer.transform(source, result);
+        return transformer;
     }
     
     /**
@@ -193,6 +212,34 @@ public class DocumentHelper {
     }
     
     
+    /**
+     * Returns the first child element of an element that belong to a certain namespace
+     * or <code>null</code> if none exists.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @return The first child element or <code>null</code> if none exists.
+     */    
+    public static Element getFirstChild(Element element, String namespaceUri) {
+        return getFirstChild(element, namespaceUri, "*");
+    }
+    
+    /**
+     * Returns the first child element of an element that belongs to a certain namespace
+     * and has a certain local name or <code>null</code> if none exists.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @return The child elements.
+     * @param localName The local name of the children.
+     * @return The child element or <code>null</code> if none exists.
+     */    
+    public static Element getFirstChild(Element element, String namespaceUri, String localName) {
+        Element children[] = getChildren(element, namespaceUri, localName);
+        if (children.length > 0)
+            return children[0];
+        else
+            return null;
+    }
+
     /**
      * Returns all child elements of an element that belong to a certain namespace.
      * @param element The parent element.

@@ -1,5 +1,5 @@
 /*
- * $Id: SchedulerWrapper.java,v 1.5 2003/02/07 12:14:21 ah Exp $
+ * $Id: SchedulerWrapper.java,v 1.6 2003/02/11 19:51:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,17 +53,6 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 
 import org.apache.log4j.Category;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentFactory;
-import org.dom4j.Element;
-import org.dom4j.Namespace;
-import org.dom4j.QName;
-
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
-
 import org.quartz.CronTrigger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -77,7 +66,6 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.scheduler.TaskJob;
-import org.wyona.cms.scheduler.xml.SchedulerXMLFactory;
 import org.wyona.cms.scheduler.xml.TriggerHelper;
 
 import java.io.File;
@@ -93,6 +81,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.wyona.xml.DocumentHelper;
+import org.wyona.xml.NamespaceHelper;
 
 
 /**
@@ -263,8 +255,6 @@ public class SchedulerWrapper {
 
         log.debug("\nUpdating jobs file:\n" + jobsFile.getPath());
 
-        OutputFormat format = OutputFormat.createPrettyPrint();
-
         try {
             File directory = jobsFile.getParentFile();
 
@@ -274,11 +264,8 @@ public class SchedulerWrapper {
             }
 
             jobsFile.createNewFile();
-
-            XMLWriter writer = new XMLWriter(new FileWriter(jobsFile), format);
-            writer.write(getSnapshot(publicationId));
-            writer.close();
-        } catch (IOException e) {
+            DocumentHelper.writeDocument(getSnapshot(publicationId), jobsFile);
+        } catch (Exception e) {
             log.error("Writing job snapshot failed: ", e);
         }
     }
@@ -300,14 +287,13 @@ public class SchedulerWrapper {
         }
     }
 
-    protected Element getTriggerTypes() {
+    protected Element getTriggerTypes(NamespaceHelper helper) {
         try {
             Configuration configuration = getSchedulerConfiguration();
             Configuration[] triggerConfigurations = configuration.getChild(TRIGGERS_ELEMENT)
                                                                  .getChildren(TRIGGER_ELEMENT);
 
-            DocumentFactory factory = DocumentFactory.getInstance();
-            Element triggersElement = SchedulerXMLFactory.createElement("triggers");
+            Element triggersElement = helper.createElement("triggers");
 
             for (int i = 0; i < triggerConfigurations.length; i++) {
                 Configuration conf = triggerConfigurations[i];
@@ -315,10 +301,10 @@ public class SchedulerWrapper {
                 String className = conf.getAttribute(CLASS_ATTRIBUTE);
                 String title = conf.getChild(TITLE_ELEMENT).getValue();
 
-                Element triggerElement = SchedulerXMLFactory.createElement("trigger");
-                triggerElement.add(factory.createAttribute(triggerElement, "name", type));
-                triggerElement.add(factory.createAttribute(triggerElement, "src", className));
-                triggersElement.add(triggerElement);
+                Element triggerElement = helper.createElement("trigger");
+                triggerElement.setAttribute("name", type);
+                triggerElement.setAttribute("src", className);
+                triggersElement.appendChild(triggerElement);
             }
 
             return triggersElement;
@@ -352,23 +338,23 @@ public class SchedulerWrapper {
         return null;
     }
 
-    protected Element getJobsElement(String jobGroup) throws SchedulerException {
-        DocumentFactory factory = DocumentFactory.getInstance();
-        Element jobsElement = SchedulerXMLFactory.createElement("jobs");
+    protected Element getJobsElement(NamespaceHelper helper, String jobGroup)
+            throws SchedulerException {
+        Element jobsElement = helper.createElement("jobs");
 
         String[] jobNames = getScheduler().getJobNames(jobGroup);
 
         for (int nameIndex = 0; nameIndex < jobNames.length; nameIndex++) {
             JobDetail jobDetail = getScheduler().getJobDetail(jobNames[nameIndex], jobGroup);
 
-            Element jobElement = createJob(jobDetail).save(jobDetail);
-            jobsElement.add(jobElement);
+            Element jobElement = createJob(jobDetail).save(helper, jobDetail);
+            jobsElement.appendChild(jobElement);
 
             Trigger trigger = getTrigger(jobNames[nameIndex], jobGroup);
 
             if (trigger != null) {
-                Element triggerElement = TriggerHelper.createElement(trigger);
-                jobElement.add(triggerElement);
+                Element triggerElement = TriggerHelper.createElement(helper, trigger);
+                jobElement.appendChild(triggerElement);
             }
         }
 
@@ -407,13 +393,12 @@ public class SchedulerWrapper {
         GregorianCalendar nextFireTime;
         JobDataMap jobDataMap;
 
-        DocumentFactory factory = DocumentFactory.getInstance();
-
-        Element root = SchedulerXMLFactory.createElement("scheduler");
-        Document document = factory.createDocument(root);
+        NamespaceHelper helper = getNamespaceHelper();
+        Document document = helper.getDocument();
+        Element root = document.getDocumentElement();
 
         // print a list of all available trigger types
-        root.add(getTriggerTypes());
+        root.appendChild(getTriggerTypes(helper));
 
         // print a list of all available tasks
         // root.add(TaskJob.getTasks(getServletContextPath(), jobGroup));
@@ -421,13 +406,12 @@ public class SchedulerWrapper {
         String[] jobGroupNames = getScheduler().getJobGroupNames();
 
         for (int groupIndex = 0; groupIndex < jobGroupNames.length; groupIndex++) {
-            Element publicationElement = SchedulerXMLFactory.createElement("publication");
-            publicationElement.add(factory.createAttribute(publicationElement, "name",
-                    jobGroupNames[groupIndex]));
-            root.add(publicationElement);
+            Element publicationElement = helper.createElement("publication");
+            publicationElement.setAttribute("name", jobGroupNames[groupIndex]);
+            root.appendChild(publicationElement);
 
-            Element jobsElement = getJobsElement(jobGroupNames[groupIndex]);
-            publicationElement.add(jobsElement);
+            Element jobsElement = getJobsElement(helper, jobGroupNames[groupIndex]);
+            publicationElement.appendChild(jobsElement);
         }
 
         return document;
@@ -445,21 +429,17 @@ public class SchedulerWrapper {
         File jobsFile = getJobsFile(publicationId);
 
         if (jobsFile.exists()) {
-            SAXReader reader = new SAXReader();
-
             try {
-                Document document = reader.read(jobsFile);
+                Document document = DocumentHelper.readDocument(jobsFile);
+                Element schedulerElement = document.getDocumentElement();
+                NamespaceHelper helper = getNamespaceHelper(document);
 
-                Element schedulerElement = document.getRootElement();
-                Element publicationElement = schedulerElement.element(SchedulerXMLFactory.getQName(
-                            "publication"));
-                Element jobsElement = publicationElement.element(SchedulerXMLFactory.getQName(
-                            "jobs"));
-                List jobElements = jobsElement.elements(SchedulerXMLFactory.getQName("job"));
+                Element publicationElement = helper.getFirstChild(schedulerElement, "publication");
+                Element jobsElement = helper.getFirstChild(publicationElement, "jobs");
+                Element[] jobElements = helper.getChildren(jobsElement, "job");
 
-                for (Iterator i = jobElements.iterator(); i.hasNext();) {
-                    Element jobElement = (Element) i.next();
-                    restoreJob(jobElement);
+                for (int i = 0; i < jobElements.length; i++) {
+                    restoreJob(jobElements[i]);
                 }
             } catch (Exception e) {
                 log.error("Restoring jobs failed: ", e);
@@ -471,15 +451,14 @@ public class SchedulerWrapper {
         log.debug("\n Restoring job ");
 
         String className = null;
+        
+        NamespaceHelper helper = getNamespaceHelper();
+        Element parameterElements[] = helper.getChildren(jobElement, "parameter");
 
-        List parameterElements = jobElement.elements(SchedulerXMLFactory.getQName("parameter"));
-
-        for (Iterator i = parameterElements.iterator(); i.hasNext();) {
-            Element parameterElement = (Element) i.next();
-            String key = parameterElement.attribute("name").getValue();
-
+        for (int i = 0; i < parameterElements.length; i++) {
+            String key = parameterElements[i].getAttribute("name");
             if ((key).equals(JOB_CLASS)) {
-                className = parameterElement.attribute("value").getValue();
+                className = parameterElements[i].getAttribute("value");
             }
         }
 
@@ -494,7 +473,7 @@ public class SchedulerWrapper {
 
         JobDetail jobDetail = job.load(jobElement, getServletContextPath());
 
-        Element triggerElement = jobElement.element(SchedulerXMLFactory.getQName("trigger"));
+        Element triggerElement = helper.getFirstChild(jobElement, "trigger");
 
         if (triggerElement != null) {
             Trigger trigger = TriggerHelper.createTrigger(triggerElement, jobDetail.getName(),
@@ -514,4 +493,29 @@ public class SchedulerWrapper {
             addJob(jobDetail);
         }
     }
+    
+    /** The namespace for the <code>jobs.xml</code> file. */
+    public static final String NAMESPACE = "http://www.wyona.org/2002/sch";
+    
+    /**
+     * Returns a scheduler namespace helper for a document.
+     */
+    public static NamespaceHelper getNamespaceHelper(Document document) {
+        return new NamespaceHelper(NAMESPACE, "sch", document);
+    }
+    
+    /**
+     * Returns a new scheduler namespace helper with an document containing
+     * a &lt;sch:scheduler&gt; element.
+     */
+    public static NamespaceHelper getNamespaceHelper() {
+        try {
+            return new NamespaceHelper(NAMESPACE, "sch", "scheduler");
+        }
+        catch (Exception e) {
+            log.error("Could not create namespace helper: ", e);
+            return null;
+        }
+    }
+    
 }

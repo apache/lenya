@@ -1,5 +1,5 @@
 /*
- * $Id: ServletJob.java,v 1.3 2003/02/07 12:14:21 ah Exp $
+ * $Id: ServletJob.java,v 1.4 2003/02/11 19:51:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,13 +45,12 @@ package org.wyona.cms.scheduler;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.dom4j.DocumentFactory;
-import org.dom4j.Element;
-
 import org.quartz.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import org.w3c.dom.Element;
+import org.wyona.xml.NamespaceHelper;
 
 
 /**
@@ -79,5 +78,5 @@ public abstract class ServletJob implements Job {
      *
      * @return DOCUMENT ME!
      */
-    public abstract Element save(JobDetail jobDetail);
+    public abstract Element save(NamespaceHelper helper, JobDetail jobDetail);
 }

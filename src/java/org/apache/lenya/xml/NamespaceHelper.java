@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceHelper.java,v 1.2 2003/02/07 16:38:28 ah Exp $
+ * $Id: NamespaceHelper.java,v 1.3 2003/02/11 19:51:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -183,6 +183,28 @@ public class NamespaceHelper {
         Text textNode = getDocument().createTextNode(text);
         element.appendChild(textNode);
         return element;
+    }
+    
+    /**
+     * Returns all children of an element with a local name in the namespace
+     * of this NamespaceHelper.
+     *
+     * @param element The parent element.
+     * @param localName The local name of the children to return.
+     */
+    public Element[] getChildren(Element element, String localName) {
+        return DocumentHelper.getChildren(element, getNamespaceURI(), localName);
+    }
+
+    /**
+     * Returns the first childr of an element with a local name in the namespace
+     * of this NamespaceHelper or <code>null</code> if none exists.
+     *
+     * @param element The parent element.
+     * @param localName The local name of the children to return.
+     */
+    public Element getFirstChild(Element element, String localName) {
+        return DocumentHelper.getFirstChild(element, getNamespaceURI(), localName);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.14 2003/02/07 12:14:21 ah Exp $
+ * $Id: LoadQuartzServlet.java,v 1.15 2003/02/11 19:51:09 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,9 +45,6 @@ package org.wyona.cms.scheduler;
 
 import org.apache.log4j.Category;
 
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
-
 import org.quartz.*;
 import org.quartz.SchedulerFactory;
 
@@ -81,13 +78,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.wyona.xml.DocumentHelper;
 
 
 /**
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.14 2003/02/07 12:14:21 ah Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.15 2003/02/11 19:51:09 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -316,12 +314,9 @@ public class LoadQuartzServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         response.setContentType("text/xml");
 
-        OutputFormat format = OutputFormat.createPrettyPrint();
-        XMLWriter xmlWriter = new XMLWriter(writer, format);
-
         try {
-            xmlWriter.write(getScheduler().getSnapshot(publicationId));
-        } catch (SchedulerException e) {
+            DocumentHelper.writeDocument(getScheduler().getSnapshot(publicationId), writer);
+        } catch (Exception e) {
             log.error("Can't create job snapshot: ", e);
         }
     }
