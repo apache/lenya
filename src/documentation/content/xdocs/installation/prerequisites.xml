@@ -46,13 +46,19 @@ ones.
   <li>
     <p>
     <strong>Apache Cocoon</strong> (required: Cocoon 2.1.5)<br/>
-    <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
+    <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>Note that Cocoon is needed when 
+    building the source version of Lenya, but the resulting Lenya webapp is completely self contained 
+    and therefore it does not need the Cocoon webapp to be installed. See the 
+        <link href="http://wiki.apache.org/cocoon-lenya/FAQ">FAQ</link> for details of configuration 
+    changes required when running multiple Cocoon based applications.
     </p>
   </li>
   <li>
     <p>
     <strong>(optional) Apache Tomcat</strong> for JDK 1.4 (recommended: 5.0.28 or newer)<br/>
-    <link href="http://jakarta.apache.org/site/binindex.cgi">Tomcat release builds</link><br/>
+    <link href="http://jakarta.apache.org/site/binindex.cgi">Tomcat release builds</link> Note that
+        Lenya ships with <link href="http://jetty.mortbay.org/jetty/">Jetty</link> and therefore does not 
+        need a servlet container to be installed.<br/>
     </p>
   </li>
 </ul>
