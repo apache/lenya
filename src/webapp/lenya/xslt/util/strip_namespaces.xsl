@@ -15,17 +15,24 @@
   limitations under the License.
 -->
 
+<!--
+The XHTML namespace is declared as the default namespace
+to cause the stylesheet to output XHTML using the empty string
+as namespace prefix (<html> instead of <xhtml:html>).
+-->
+
 <!-- $Id$ -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns="http://www.w3.org/1999/xhtml">
   
   <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
   
   <xsl:template match="*">
-    <!-- remove element prefix (if any) -->
-    <xsl:element name="{local-name()}" namespace="{namespace-uri()}">
+    <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </xsl:element>
+    </xsl:copy>
   </xsl:template>
   
 </xsl:stylesheet>
