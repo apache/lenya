@@ -39,28 +39,26 @@
 	</xsl:otherwise>
       </xsl:choose>
       <div class="lenya-box-body">  
-	<form method="GET" action="">
+	<form action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
-	  <input type="hidden" name="lenya.step" value="create"/>
+	  <input type="hidden" name="lenya.step" value="upload"/>
 	  <table class="lenya-table-noborder">
 	    <tr>
 	      <td class="lenya-form-caption">Select File:</td><td><input class="lenya-form-element" type="file" name="properties.asset.file"/></td>
-	    </tr>
-	    <tr>
-	      <td class="lenya-form-caption">Identifier:</td><td><input class="lenya-form-element" type="text" name="properties.asset.identifier"/></td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>
 	      <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator"/></td>
+	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="hidden" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/><xsl:value-of select="/usecase:asset/usecase:creator"/></td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Subject:</td><td><input class="lenya-form-element" type="text" name="properties.asset.subject"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Date:</td><td><input class="lenya-form-element" type="text" name="properties.asset.date" value="{/usecase:asset/usecase:date}" readonly="true"/></td>
+	      <td class="lenya-form-caption">Date:</td><td><input
+	      class="lenya-form-element" type="hidden" name="properties.asset.date" value="{/usecase:asset/usecase:date}"/><xsl:value-of select="/usecase:asset/usecase:date"/></td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights"/></td>
