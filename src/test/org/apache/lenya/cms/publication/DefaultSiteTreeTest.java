@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.2 2003/07/08 09:53:11 egli Exp $
+$Id: DefaultSiteTreeTest.java,v 1.3 2003/07/08 10:10:36 egli Exp $
 <License>
 
  ============================================================================
@@ -130,8 +130,8 @@ public class DefaultSiteTreeTest extends TestCase {
 		Label label = new Label("Tutorial", null);
 		Label[] labels = { label };
 
-		siteTree.addNode("/tutorial", labels, null, null, false);
-		SiteTreeNode node =  siteTree.getNode("/tutorial");
+		siteTree.addNode("/foo", "tutorial", labels);
+		SiteTreeNode node =  siteTree.getNode("/foo/tutorial");
 		assertNotNull(node);
 		assertEquals(node.getId(), "tutorial");
     }
@@ -145,16 +145,34 @@ public class DefaultSiteTreeTest extends TestCase {
 
     /**
      * Test for void addNode(String, Label[], String, String, boolean)
+     * 
+     * @throws SiteTreeException if an error occurs
      */
-    final public void testAddNodeStringLabelArrayStringStringboolean() {
-        //TODO Implement addNode().
+    final public void testAddNodeStringLabelArrayStringStringboolean() throws SiteTreeException {
+		Label label1 = new Label("Doh", "en");
+		Label label2 = new Label("Ding", "en");
+		Label[] labels = { label1, label2};
+
+		siteTree.addNode("/foo/ding", labels, null, null, false);
+		
+		assertNotNull(siteTree.getNode("/foo/ding"));
+		assertEquals(siteTree.getNode("/foo/ding").getId(), "ding");
     }
 
     /**
      * Test for void addNode(String, String, Label[], String, String, boolean)
+     * 
+     * @throws SiteTreeException if an error occurs
      */
-    final public void testAddNodeStringStringLabelArrayStringStringboolean() {
-        //TODO Implement addNode().
+    final public void testAddNodeStringStringLabelArrayStringStringboolean() throws SiteTreeException {
+		Label label1 = new Label("Doh", "en");
+		Label label2 = new Label("Ding", "en");
+		Label[] labels = { label1, label2};
+
+		siteTree.addNode("/foo", "baz", labels, null, null, false);
+		
+		assertNotNull(siteTree.getNode("/foo/baz"));
+		assertEquals(siteTree.getNode("/foo/baz").getId(), "baz");		
     }
 
 	/**
