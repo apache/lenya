@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.45 2003/03/18 15:22:47 gregor Exp $
+   @version CVS $Id: build.xml,v 1.46 2003/03/18 15:27:28 gregor Exp $
 
 -->
 
@@ -166,8 +166,8 @@
     <property name="fullname" value="Lenya CMS"/>
     <property name="Name"     value="Lenya"/>
     <property name="name"     value="lenya:cms"/>
-    <property name="version"  value="2.1-dev"/>
-    <property name="short.version" value="2.1"/>
+    <property name="version"  value="0.8-dev"/>
+    <property name="short.version" value="0.8"/>
     <property name="release"  value="1th"/>
     <property name="year"     value="1999-2002"/>
 
@@ -179,12 +179,9 @@
     <property name="deprecation"    value="off"/>
     <property name="nowarn"         value="on"/>
     <property name="build.compiler" value="classic"/>
-    <property name="target.vm"      value="1.2"/>
+    <property name="target.vm"      value="1.4"/>
 
     <property name="packages"      value="*.*"/>
-<!--
-    <property name="packages"      value="org.lenya.*,org.w3c.*,ch.ethz.*,ch.unizh.*"/>
--->
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
     <property name="today"         value="${TODAY}"/>
@@ -307,14 +304,6 @@
     </copy>
     <echo>INFO: Copy java source files from ${pubs.root.dirs} to ${build.src}</echo>
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.src}" />
-<!--
-    <copy todir="${build.src}" filtering="on">
-      <fileset dir="${pubs.dir}" includes="*/java/src/**" excludes="CVS/**" />
-      <mapper type="regexp" from="(.*)/java/src/(.*)" to="\2">
-      </mapper>
-    </copy>
--->
-
   </target>
 
 
@@ -595,10 +584,6 @@
   <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
     <copy todir="${install.dir}" filtering="off">
       <fileset dir="${build.webapp}" excludes="${target.install.excludes}">
-<!--
-        <exclude name="**/authoring/**"/>
-        <exclude name="**/live/**"/>
--->
       </fileset>
     </copy>
     <echo>INFO: Copy From build.webapp=${build.webapp} To install.dir=${install.dir}</echo>
