@@ -26,6 +26,7 @@ import javax.mail.internet.MimeMessage;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -229,8 +230,9 @@ public class MailTask
             
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             StreamResult result = new StreamResult(stream);
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.transform(source, result);
-            return stream.toString();
+            return stream.toString("ISO-8859-1");
         }
         catch(Exception e) {
             log.error("Failed: ", e);
