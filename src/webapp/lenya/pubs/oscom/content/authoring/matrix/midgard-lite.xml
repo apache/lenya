@@ -6,7 +6,7 @@
   <system_name>Midgard Lite</system_name>
   <main_url>http://www.midgard-project.org/developer/downloads/midgard-lite/</main_url>
   <license>
-    <license_name>GNU Lesser General Public License (LGPL)</license_name>
-    <license_url>http://www.gnu.org/licenses/licenses.html#LGPL</license_url>
+    <license_name>GNU General Public License (GPL)</license_name>
+    <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
   </license>
 </system>

@@ -4,11 +4,11 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:variable name="mbarcolor">#ffa500</xsl:variable>
 <!--
+<xsl:variable name="mbarcolor">#ffa500</xsl:variable>
 <xsl:variable name="mbarcolor">#3366cc</xsl:variable>
-<xsl:variable name="mbarcolor">#000000</xsl:variable>
 -->
+<xsl:variable name="mbarcolor">#000000</xsl:variable>
 
 <xsl:template name="body">
 <font face="verdana">
