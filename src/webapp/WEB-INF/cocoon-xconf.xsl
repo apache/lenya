@@ -50,6 +50,7 @@
       <input-module name="session-attr"/>
       <input-module name="defaults"/>
       <input-module name="page-envelope"/>
+      <input-module name="access-control"/>
     </component-instance>
       
     <component-instance
@@ -58,6 +59,9 @@
       
     <component-instance logger="core.modules.input" name="page-envelope"
         class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
+
+    <component-instance logger="core.modules.input" name="access-control"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
     
   </xsl:copy>
 </xsl:template>
