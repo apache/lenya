@@ -5,6 +5,7 @@
 <xsl:param name="BX_xmlfile"/>
 <xsl:param name="BX_xhtmlfile"/>
 <xsl:param name="BX_xslfile"/>
+<xsl:param name="BX_validationfile"/>
 <xsl:param name="css"/>
 <xsl:param name="BX_exitdestination"/>
 
@@ -21,6 +22,12 @@
 <xsl:template match="files/input/file[@name = 'BX_xslfile']">
   <xsl:if test="$BX_xslfile">
     <file name="BX_xslfile"><xsl:value-of select="$BX_xslfile"/></file>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="files/input/file[@name = 'BX_validationfile']">
+  <xsl:if test="$BX_validationfile">
+    <file name="BX_validationfile"><xsl:value-of select="$BX_validationfile"/></file>
   </xsl:if>
 </xsl:template>
 
