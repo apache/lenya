@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.6 2003/07/17 16:24:19 andreas Exp $
+$Id: DefaultAccessController.java,v 1.7 2003/07/24 18:36:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -327,7 +327,7 @@ public class DefaultAccessController
      * Returns the policy manager.
      * @return A policy manager.
      */
-    protected PolicyManager getPolicyManager() {
+    public PolicyManager getPolicyManager() {
         return policyManager;
     }
 

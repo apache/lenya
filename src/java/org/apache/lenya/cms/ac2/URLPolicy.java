@@ -1,5 +1,5 @@
 /*
-$Id: URLPolicy.java,v 1.9 2003/07/23 13:21:23 gregor Exp $
+$Id: URLPolicy.java,v 1.10 2003/07/24 18:36:36 andreas Exp $
 <License>
 
  ============================================================================
@@ -97,39 +97,13 @@ public class URLPolicy implements Policy {
 	 * @see org.apache.lenya.cms.ac2.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
 	 */
 	public Role[] getRoles(Identity identity) throws AccessControlException {
-		Set roles = new HashSet();
-		Policy urlPolicy =
-			getPolicyManager().buildURLPolicy(
-				getAccessController(),
-				getUrl());
-		addRoles(urlPolicy, identity, roles);
-
-		String url = "";
-		String[] directories = getUrl().split("/");
         
-        for (int i = 0; i < directories.length; i++) {
-            url += directories[i] + "/";
-            addRoles(identity, url, roles);
+        Set roles = new HashSet();
+        Policy[] policies = getPolicyManager().getPolicies(getAccessController(), getUrl());
+        for (int i = 0; i < policies.length; i++) {
+            addRoles(policies[i], identity, roles);
         }
-
 		return (Role[]) roles.toArray(new Role[roles.size()]);
-	}
-
-	/**
-	 * Adds roles of a certain URL to a set.
-	 * @param identity The identity.
-	 * @param url The URL.
-	 * @param roles The roles set.
-	 * @throws AccessControlException when something went wrong.
-	 */
-	protected void addRoles(Identity identity, String url, Set roles)
-		throws AccessControlException {
-		addRoles(
-			getPolicyManager().buildSubtreePolicy(
-				getAccessController(),
-				url),
-			identity,
-			roles);
 	}
 
 	/**
@@ -167,5 +141,5 @@ public class URLPolicy implements Policy {
 	public AccreditableManager getAccessController() {
 		return controller;
 	}
-
+    
 }

@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.1 2003/07/17 16:24:19 andreas Exp $
+$Id: PolicyBuilder.java,v 1.2 2003/07/24 18:36:35 andreas Exp $
 <License>
 
  ============================================================================
@@ -224,6 +224,14 @@ public class PolicyBuilder {
         for (int i = 0; i < credentials.length; i++) {
             Accreditable accreditable = credentials[i].getAccreditable();
             Element accreditableElement = save(accreditable, helper);
+            
+            Role[] roles = credentials[i].getRoles();
+            for (int j = 0; j < roles.length; j++) {
+                Element roleElement = helper.createElement(ROLE_ELEMENT);
+                roleElement.setAttribute(ID_ATTRIBUTE, roles[j].getId());
+                accreditableElement.appendChild(roleElement);
+            }
+            
             helper.getDocument().getDocumentElement().appendChild(accreditableElement);
         }
 

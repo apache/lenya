@@ -1,5 +1,5 @@
 /*
-$Id: InheritingPolicyManager.java,v 1.1 2003/07/17 16:24:19 andreas Exp $
+$Id: InheritingPolicyManager.java,v 1.2 2003/07/24 18:36:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -82,6 +82,16 @@ public interface InheritingPolicyManager extends PolicyManager {
     * @throws AccessControlException when something went wrong.
     */
     DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url)
+        throws AccessControlException;
+        
+    /**
+     * Returns the existing policies for all URL steps, beginning with the root policy.
+     * @param controller The accreditable manager to use.
+     * @param url The URL inside the web application.
+     * @return An array of policies.
+     * @throws AccessControlException when something went wrong.
+     */
+    DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
         throws AccessControlException;
 
     /**

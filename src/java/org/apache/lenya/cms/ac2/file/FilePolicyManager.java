@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.11 2003/07/21 13:39:04 andreas Exp $
+$Id: FilePolicyManager.java,v 1.12 2003/07/24 18:36:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -79,6 +79,8 @@ import org.w3c.dom.Document;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -202,6 +204,9 @@ public class FilePolicyManager
     protected void savePolicy(String url, DefaultPolicy policy, String filename)
         throws AccessControlException {
 
+        String key = getCacheKey(url);
+        cache.remove(key);
+
         Document document = PolicyBuilder.getInstance().savePolicy(policy);
         File file = getPolicyFile(url, filename);
 
@@ -223,12 +228,7 @@ public class FilePolicyManager
     public Policy getPolicy(AccreditableManager controller, String url)
         throws AccessControlException {
 
-        String key;
-        try {
-            key = getPoliciesDirectory().getCanonicalPath() + ":" + url;
-        } catch (IOException e) {
-            throw new AccessControlException(e);
-        }
+        String key = getCacheKey(url);
         Policy policy = (Policy) cache.get(key);
         if (policy == null) {
             policy = new URLPolicy(controller, url, this);
@@ -236,6 +236,22 @@ public class FilePolicyManager
         }
 
         return policy;
+    }
+
+    /**
+     * Creates a cache key for a URL.
+     * @param url The url.
+     * @return A string value.
+     * @throws AccessControlException if something went wrong.
+     */
+    protected String getCacheKey(String url) throws AccessControlException {
+        String key;
+        try {
+            key = getPoliciesDirectory().getCanonicalPath() + ":" + url;
+        } catch (IOException e) {
+            throw new AccessControlException(e);
+        }
+        return key;
     }
 
     protected static final String DIRECTORY_PARAMETER = "directory";
@@ -318,6 +334,29 @@ public class FilePolicyManager
                 "Policies directory invalid: [" + directory.getAbsolutePath() + "]");
         }
         policiesDirectory = directory;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#getPolicies(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     */
+    public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
+        throws AccessControlException {
+
+        List policies = new ArrayList();
+
+        Policy policy = buildURLPolicy(controller, url);
+        policies.add(policy);
+
+        String[] directories = url.split("/");
+        url = "";
+
+        for (int i = 0; i < directories.length; i++) {
+            url += directories[i] + "/";
+            policy = buildSubtreePolicy(controller, url);
+            policies.add(policy);
+        }
+
+        return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
     }
 
 }

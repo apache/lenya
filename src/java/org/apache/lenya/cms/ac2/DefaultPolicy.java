@@ -1,5 +1,5 @@
 /*
-$Id: DefaultPolicy.java,v 1.3 2003/07/11 13:24:37 andreas Exp $
+$Id: DefaultPolicy.java,v 1.4 2003/07/24 18:36:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,15 @@ $Id: DefaultPolicy.java,v 1.3 2003/07/11 13:24:37 andreas Exp $
 */
 package org.apache.lenya.cms.ac2;
 
+import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
-
 
 /**
  * A DefaultPolicy is the own policy of a certain URL (not merged).
@@ -68,7 +71,8 @@ import java.util.Set;
  * @author andreas
  */
 public class DefaultPolicy implements Policy {
-    private Set credentials = new HashSet();
+
+    private Map accreditableToCredential = new HashMap();
 
     /**
      * Adds a credential to this policy.
@@ -76,8 +80,54 @@ public class DefaultPolicy implements Policy {
      */
     public void addCredential(Credential credential) {
         assert credential != null;
-        assert !credentials.contains(credential);
-        credentials.add(credential);
+        assert !accreditableToCredential.containsKey(credential.getAccreditable());
+        accreditableToCredential.put(credential.getAccreditable(), credential);
+    }
+
+    /**
+     * Adds a role to this policy for a certain accreditable and a certain role.
+     * If a credenital exists for the accreditable, the role is added to this credential.
+     * Otherwise, a new credential is created.
+     * @param accreditable An accreditable.
+     * @param role A role.
+     */
+    public void addRole(Accreditable accreditable, Role role) {
+        assert accreditable != null;
+        assert role != null;
+
+        Credential credential = getCredential(accreditable);
+        if (credential == null) {
+            credential = new Credential(accreditable);
+            addCredential(credential);
+        }
+        if (!credential.contains(role)) {
+            credential.addRole(role);
+        }
+    }
+
+    /**
+     * Removes a role from this policy for a certain accreditable and a certain role.
+     * @param accreditable An accreditable.
+     * @param role A role.
+     * @throws AccessControlException if the accreditable-role pair is not contained.
+     */
+    public void removeRole(Accreditable accreditable, Role role) throws AccessControlException {
+        assert accreditable != null;
+        assert role != null;
+        Credential credential = getCredential(accreditable);
+        if (credential == null) {
+            throw new AccessControlException(
+                "No credential for accreditable [" + accreditable + "] [" + accreditableToCredential.keySet().size() + "]");
+        }
+        if (!credential.contains(role)) {
+            throw new AccessControlException(
+                "Credential for accreditable ["
+                    + accreditable
+                    + "] does not contain role ["
+                    + role
+                    + "]");
+        }
+        credential.removeRole(role);
     }
 
     /**
@@ -85,7 +135,8 @@ public class DefaultPolicy implements Policy {
      * @return An array of credentials.
      */
     public Credential[] getCredentials() {
-        return (Credential[]) credentials.toArray(new Credential[credentials.size()]);
+        Collection values = accreditableToCredential.values();
+        return (Credential[]) values.toArray(new Credential[values.size()]);
     }
 
     /**
@@ -109,5 +160,14 @@ public class DefaultPolicy implements Policy {
         }
 
         return (Role[]) roles.toArray(new Role[roles.size()]);
+    }
+
+    /**
+     * Returns the credential for a certain accreditable.
+     * @param accreditable An accreditable.
+     * @return A credential.
+     */
+    protected Credential getCredential(Accreditable accreditable) {
+        return (Credential) accreditableToCredential.get(accreditable);
     }
 }

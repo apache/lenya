@@ -1,5 +1,5 @@
 /*
-$Id: Credential.java,v 1.4 2003/07/23 13:21:23 gregor Exp $
+$Id: Credential.java,v 1.5 2003/07/24 18:36:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -111,7 +111,8 @@ public class Credential {
      * @param role The role to remove.
      */
     public void removeRole(Role role) {
-        assert (role != null) && roles.contains(role);
+        assert role != null;
+        assert roles.contains(role);
         roles.remove(role);
     }
 
@@ -128,5 +129,14 @@ public class Credential {
      */
     public String toString() {
         return "[credential of: " + getAccreditable() + "]";
+    }
+    
+    /**
+     * Returns if a role is contained.
+     * @param role A role.
+     * @return A boolean value.
+     */
+    public boolean contains(Role role) {
+        return roles.contains(role);
     }
 }
