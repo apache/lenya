@@ -1,5 +1,5 @@
 /*
-$Id: TaskManager.java,v 1.17 2003/07/09 13:44:51 egli Exp $
+$Id
 <License>
 
  ============================================================================
@@ -61,12 +61,13 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 
 import org.apache.log4j.Category;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * DOCUMENT ME!
@@ -77,8 +78,13 @@ public class TaskManager implements Configurable {
     private static Category log = Category.getInstance(TaskManager.class);
     public static final String TASK_ELEMENT = "task";
     public static final String TASK_ID_ATTRIBUTE = "id";
-    public static final String CONFIGURATION_FILE = File.separator + "config" + File.separator +
-        "tasks" + File.separator + "tasks.xconf";
+    public static final String CONFIGURATION_FILE =
+        File.separator
+            + "config"
+            + File.separator
+            + "tasks"
+            + File.separator
+            + "tasks.xconf";
 
     // maps task-ids to tasks
     private Map tasks = new HashMap();
@@ -94,22 +100,28 @@ public class TaskManager implements Configurable {
      *
      * @param publicationPath path to publication,
      */
-    public TaskManager(String publicationPath) {
+    public TaskManager(String publicationPath)
+        throws ConfigurationException, SAXException, IOException {
         String configurationFilePath = publicationPath + CONFIGURATION_FILE;
         log.debug("Loading tasks: " + configurationFilePath);
 
         File configurationFile = new File(configurationFilePath);
 
-        try {
-            DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
-            Configuration configuration = builder.buildFromFile(configurationFile);
+        if (configurationFile.isFile()) {
+            DefaultConfigurationBuilder builder =
+                new DefaultConfigurationBuilder();
+            Configuration configuration =
+                builder.buildFromFile(configurationFile);
             configure(configuration);
 
-            tasks.put(EMTPY_TASK, new EmptyTask());
-            tasks.put(ANT_TASK, new AntTask());
-        } catch (Exception e) {
-            log.error("Cannot load task configuration! ", e);
+        } else {
+            log.info(
+                "Task configuration not loaded - file ["
+                    + configurationFile.getAbsolutePath()
+                    + "] does not exist.");
         }
+        tasks.put(EMTPY_TASK, new EmptyTask());
+        tasks.put(ANT_TASK, new AntTask());
     }
 
     public static final String EMTPY_TASK = "empty";
@@ -127,14 +139,17 @@ public class TaskManager implements Configurable {
         log.debug("Creating tasks:");
 
         // create task list
-        Configuration[] taskConfigurations = configuration.getChildren(TASK_ELEMENT);
+        Configuration[] taskConfigurations =
+            configuration.getChildren(TASK_ELEMENT);
 
         // set task IDs
         for (int i = 0; i < taskConfigurations.length; i++) {
-            String taskId = taskConfigurations[i].getAttribute(TASK_ID_ATTRIBUTE);
+            String taskId =
+                taskConfigurations[i].getAttribute(TASK_ID_ATTRIBUTE);
             log.debug("Creating task '" + taskId + "'");
 
-            Task task = TaskFactory.getInstance().createTask(taskConfigurations[i]);
+            Task task =
+                TaskFactory.getInstance().createTask(taskConfigurations[i]);
             tasks.put(taskId, task);
         }
     }
@@ -159,7 +174,8 @@ public class TaskManager implements Configurable {
      */
     public Task getTask(String taskId) throws ExecutionException {
         if (!tasks.containsKey(taskId)) {
-            throw new ExecutionException("Task with ID '" + taskId + "' not found!");
+            throw new ExecutionException(
+                "Task with ID '" + taskId + "' not found!");
         }
 
         return (Task) tasks.get(taskId);
