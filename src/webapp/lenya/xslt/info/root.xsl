@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.30 2003/09/12 09:40:39 andreas Exp $
+ $Id: root.xsl,v 1.31 2004/02/13 23:58:56 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -115,13 +115,6 @@ function findIDbyLink(srclink)
 </td>	
 <td valign="top" width="80%">
 <div id="lenya-info-content">
-	
-	<xsl:variable name="url">
-		/<xsl:value-of select="$area"/><xsl:if test="$documentid != '/'"><xsl:value-of select="$documenturl"/></xsl:if>
-	</xsl:variable>
-	
-	<strong>URL:&#160;&#160;</strong><xsl:value-of select="$url"/><br/><br/>
-	
 	<xsl:copy-of select="*"/>
 </div>
 </td>
