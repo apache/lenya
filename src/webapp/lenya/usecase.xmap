@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.212 2004/05/26 15:13:29 michi Exp $ -->
+<!-- $Id: usecase.xmap,v 1.213 2004/06/01 17:36:00 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -626,17 +626,11 @@
                 <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
                 <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{request-param:form}.rng"/>
                 <map:parameter name="unnumberTagsXSL" value="xslt/authoring/edit/unnumberTags.xsl"/>
+                <map:parameter name="numberTagsXSL" value="xslt/authoring/edit/numberTags.xsl"/>
 
                 <!-- Continue editing: Insert, Delete, etc. -->
                 <map:generate src="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
-                <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
 
-                <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
-                <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-                  <map:parameter name="source" value="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
-                </map:transform>
-                <map:transform type="write-source"/>
-                <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
                 <map:transform src="pubs/{../1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                   <map:parameter name="docid" value="{page-envelope:document-path}"/>
                   <map:parameter name="form" value="{request-param:form}"/>

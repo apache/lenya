@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLFormSaveAction.java,v 1.48 2004/04/27 21:38:39 michi Exp $  */
+/* $Id: HTMLFormSaveAction.java,v 1.49 2004/06/01 17:36:00 michi Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -29,6 +29,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -120,6 +122,11 @@ public Map act(
             sitemap.getAbsolutePath()
                 + File.separator
                 + parameters.getParameter("unnumberTagsXSL"));
+    File numberTagsXSL =
+        new File(
+            sitemap.getAbsolutePath()
+                + File.separator
+                + parameters.getParameter("numberTagsXSL"));
 
     Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -327,7 +334,8 @@ public Map act(
                     log.warn("No such schema: " + schema.getAbsolutePath());
                 }
 
-                DocumentHelper.writeDocument(document, file);
+                Document renumberedDocument = renumberDocument(document, unnumberTagsXSL, numberTagsXSL);
+                DocumentHelper.writeDocument(renumberedDocument, file);
 
                 // check to see if we save and exit
                 if (request.getParameter("save") != null) {
@@ -615,6 +623,47 @@ private String validateDocument(
         log.error(e);
         return "" + e;
         }
+    }
+
+/**
+ * Renumber document
+ */
+private Document renumberDocument(
+    Document doc,
+    File unnumberTagsXSL,
+    File numberTagsXSL) {
+
+    try {
+    DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
+    parserFactory.setValidating(false);
+    parserFactory.setNamespaceAware(true);
+    parserFactory.setIgnoringElementContentWhitespace(true);
+    DocumentBuilder builder = parserFactory.newDocumentBuilder();
+
+    TransformerFactory tf = TransformerFactory.newInstance();
+
+    // Remove tagIDs
+    Transformer ut =
+        tf.newTransformer(new StreamSource(unnumberTagsXSL));
+    Document unnumberedDocument = builder.newDocument();
+    ut.transform(
+        new DOMSource(doc),
+        new DOMResult(unnumberedDocument));
+
+    // Add tagIDs
+    Transformer nt =
+        tf.newTransformer(new StreamSource(numberTagsXSL));
+    Document renumberedDocument = builder.newDocument();
+    nt.transform(
+        new DOMSource(unnumberedDocument),
+        new DOMResult(renumberedDocument));
+
+    return renumberedDocument;
+    } catch (Exception e) {
+        log.error("" + e);
+    }
+
+    return null;
     }
 
     /**
