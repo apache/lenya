@@ -10,7 +10,7 @@
   <xsl:call-template name="page"/>
 </xsl:template>
 
-<xsl:include href="../../page.xsl"/>
+<xsl:include href="../../page_wyona.xsl"/>
 
 <xsl:template name="cmsbody">
  <table border="0" cellspacing="0" cellpadding="0" width="100%">
