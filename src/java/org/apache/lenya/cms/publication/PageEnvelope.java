@@ -47,6 +47,12 @@ public class PageEnvelope {
     private File documentPath;
 
     /**
+     * Constructor.
+     */
+    protected PageEnvelope() {
+    }
+
+    /**
      * Creates a new instance of PageEnvelope from a sitemap inside a publication.
      * @param publication The publication the page belongs to.
      * @param request The request that calls the page.
@@ -54,66 +60,86 @@ public class PageEnvelope {
      * @exception ProcessingException if an error occurs
      * @exception SAXException if an error occurs
      * @exception IOException if an error occurs
+     * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
-    public PageEnvelope(Publication publication, Request request)
-        throws PageEnvelopeException {
+    public PageEnvelope(Publication publication, Request request) throws PageEnvelopeException {
 
         assert publication != null;
         assert request != null;
 
-        try {        
+        try {
             this.publication = publication;
             String requestURI = request.getRequestURI();
             context = request.getContextPath();
             if (context == null) {
                 context = "";
             }
-        
+
             String webappURI = requestURI.substring(context.length());
             String publicationURI = webappURI.substring(("/" + publication.getId()).length());
-        
+
             area = publicationURI.split("/")[1];
-        
+
             documentUrl = publicationURI.substring(("/" + area).length());
             documentId = computeDocumentId(documentUrl);
-            
-			DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
-			documentPath = mapper.getFile(publication, area, documentId, "de");
-            
+
+            DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
+            documentPath = mapper.getFile(publication, area, documentId, "de");
+
             rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new PageEnvelopeException(createExceptionMessage(request), e);
         }
-        
+
         // plausibility check
-        if (!request.getRequestURI().startsWith(getContext() + "/" + getPublication().getId() + "/" + getArea() + getDocumentId())) {
-            throw  new PageEnvelopeException(createExceptionMessage(request));
+        if (!request
+            .getRequestURI()
+            .startsWith(
+                getContext()
+                    + "/"
+                    + getPublication().getId()
+                    + "/"
+                    + getArea()
+                    + getDocumentId())) {
+            throw new PageEnvelopeException(createExceptionMessage(request));
         }
     }
-    
-	protected String createExceptionMessage(Request request) {
+
+    protected String createExceptionMessage(Request request) {
         return "Resolving page envelope failed:"
-                    + "\n  URI: " + request.getRequestURI()
-                    + "\n  Context: " + getContext()
-                    + "\n  Publication ID: " + getPublication().getId()
-                    + "\n  Area: " + getArea()
-                    + "\n  Document ID: " + getDocumentId();
+            + "\n  URI: "
+            + request.getRequestURI()
+            + "\n  Context: "
+            + getContext()
+            + "\n  Publication ID: "
+            + getPublication().getId()
+            + "\n  Area: "
+            + getArea()
+            + "\n  Document ID: "
+            + getDocumentId();
     }
 
     /**
      * Creates a page envelope from an object model.
      * @param objectModel The object model.
-     * @throws ProcessingException
-     * @throws PageEnvelopeException
-     * @throws SAXException
-     * @throws IOException
+     * @throws PageEnvelopeException when something went wrong.
+     * @deprecated Performance problems. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
-    public PageEnvelope(Map objectModel)
-        throws PageEnvelopeException {
+    public PageEnvelope(Map objectModel) throws PageEnvelopeException {
         this(
             PublicationFactory.getPublication(objectModel),
             ObjectModelHelper.getRequest(objectModel));
+    }
+    
+    /**
+     * Creates a page envelope from an object model.
+     * @param objectModel The object model.
+     * @param createdByFactory A dummy parameter to allow creating an additional
+     * protected constructor that is not deprecated.
+     * @throws PageEnvelopeException when something went wrong.
+     */
+    protected PageEnvelope(Map objectModel, boolean createdByFactory) throws PageEnvelopeException {
+        this(objectModel);
     }
 
     /**
@@ -124,9 +150,7 @@ public class PageEnvelope {
      * @exception ProcessingException if an error occurs
      * @exception SAXException if an error occurs
      * @exception IOException if an error occurs
-     * @deprecated This constructor does not work outside a publication directory. Use {@link #PageEnvelope(Map)} instead!
-     * 
-     * 
+     * @deprecated This constructor does not work outside a publication directory. Use {@link PageEnvelopeFactory#getPageEnvelope(Map)} instead.
      */
     public PageEnvelope(SourceResolver resolver, Request request)
         throws PageEnvelopeException, ProcessingException, SAXException, IOException {
@@ -187,7 +211,7 @@ public class PageEnvelope {
         if (startOfSuffix > -1) {
             documentURL = documentURL.substring(0, startOfSuffix);
         }
-        
+
         return documentURL;
     }
 
@@ -239,25 +263,74 @@ public class PageEnvelope {
         return documentUrl;
     }
 
-	/**
-	 * Returns the document-path.
-	 * @return a <code>String<code> value
-	 */
-	public File getDocumentPath() {
-		return documentPath;
-	}
-	
+    /**
+     * Returns the document-path.
+     * @return a <code>String<code> value
+     */
+    public File getDocumentPath() {
+        return documentPath;
+    }
+
     /**
      * The names of the page envelope parameters.
      */
-	public static final String[] PARAMETER_NAMES =
-		{
-			PageEnvelope.AREA,
-			PageEnvelope.CONTEXT,
-			PageEnvelope.PUBLICATION_ID,
-			PageEnvelope.PUBLICATION,
-			PageEnvelope.DOCUMENT_ID,
-			PageEnvelope.DOCUMENT_URL,
-			PageEnvelope.DOCUMENT_PATH };
+    public static final String[] PARAMETER_NAMES =
+        {
+            PageEnvelope.AREA,
+            PageEnvelope.CONTEXT,
+            PageEnvelope.PUBLICATION_ID,
+            PageEnvelope.PUBLICATION,
+            PageEnvelope.DOCUMENT_ID,
+            PageEnvelope.DOCUMENT_URL,
+            PageEnvelope.DOCUMENT_PATH };
+
+    /**
+     * @param string The area.
+     */
+    protected void setArea(String string) {
+        area = string;
+    }
+
+    /**
+     * @param string The context.
+     */
+    protected void setContext(String string) {
+        context = string;
+    }
+
+    /**
+     * @param string The document ID.
+     */
+    protected void setDocumentId(String string) {
+        documentId = string;
+    }
+
+    /**
+     * @param file The document path.
+     */
+    protected void setDocumentPath(File file) {
+        documentPath = file;
+    }
+
+    /**
+     * @param string The document URL.
+     */
+    protected void setDocumentUrl(String string) {
+        documentUrl = string;
+    }
+
+    /**
+     * @param publication The publication.
+     */
+    protected void setPublication(Publication publication) {
+        this.publication = publication;
+    }
+
+    /**
+     * @param environment The revision control environment.
+     */
+    protected void setRcEnvironment(RCEnvironment environment) {
+        rcEnvironment = environment;
+    }
 
 }
