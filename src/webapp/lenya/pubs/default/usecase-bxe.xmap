@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 -->
 
 <!-- $Id$ -->
-
+<!-- 
+  This sitemap handles the interaction between the Bitflux Editor and Lenya
+-->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <!-- =========================== Resources ================================ -->
@@ -68,7 +70,13 @@
   <map:pipelines>
 	  
     <map:pipeline type="noncaching">
-      
+
+      <!--
+         This reads the data that BXE posts when the user saves changes,      
+         applies a transformation and provides the data as XML
+         TODO: document why the special transformation is needed, either here
+         or in the change-object-path-back.xsl stylesheet.
+       -->
       <map:match pattern="request2document">
         <map:generate type="stream"/>
         <map:transform src="../../xslt/bxe/change-object-path-back.xsl">
@@ -225,7 +233,14 @@
         <map:match type="step" pattern="config">
           <map:generate src="../../resources/misc/bxe/inc/config.xml"/>
           <map:transform src="../../xslt/bxe/config-xml.xsl">
+
+            <!-- Parameter BX_xmlfile:
+                 defines the Lenya URL with which BXE interacts, to
+                 1. get the document contents (by issuing a GET to this URL),
+                 2. save the changed contents (by issuing a PUT to this URL)
+              -->
             <map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=xml"/>
+
             <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
             
   <!--      Instead of an xsl we use the xhtml file to provide the basic layout
@@ -248,8 +263,13 @@
       
       <map:match pattern="*/**.html">
       
-      <!-- /GET and PUT -->
       <map:match type="step" pattern="xml">      
+        <!--+
+            | This step handles the exchange of XML contents between BXE and Lenya.
+            | When BXE sends a GET request, it is requesting the contents of the
+            | document. When BXE sends a PUT request, it is sending the contents
+            | back to Lenya.
+            +-->
         <map:select type="request-method">
           
           <map:when test="PUT">
@@ -285,7 +305,7 @@
           
         </map:select>
       </map:match>
-      <!-- /GET and PUT -->
+      <!-- step xml -->
       
       </map:match> <!-- uri pattern -->
             
