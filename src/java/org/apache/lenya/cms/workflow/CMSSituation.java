@@ -1,5 +1,5 @@
 /*
-$Id: CMSSituation.java,v 1.8 2003/09/01 17:01:48 andreas Exp $
+$Id: CMSSituation.java,v 1.9 2004/02/10 15:32:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,7 +68,7 @@ public class CMSSituation implements Situation {
      * Returns the machine IP address.
      * @return A string.
      */
-    protected String getMachineIp() {
+    public String getMachineIp() {
         return machineIp;
     }
 
@@ -76,7 +76,7 @@ public class CMSSituation implements Situation {
      * Returns the user ID.
      * @return A string.
      */
-    protected String getUserId() {
+    public String getUserId() {
         return userId;
     }
 
