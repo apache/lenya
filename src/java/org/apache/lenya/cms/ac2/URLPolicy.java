@@ -78,7 +78,7 @@ public class URLPolicy implements Policy {
 	 * @param manager The policy manager.
 	 */
 	public URLPolicy(
-		AccessController controller,
+		AccreditableManager controller,
 		Publication publication,
 		String url,
 		PolicyManager manager) {
@@ -98,7 +98,7 @@ public class URLPolicy implements Policy {
 	private String url;
 	private PolicyManager policyManager;
 	private Publication publication;
-	private AccessController controller;
+	private AccreditableManager controller;
 
 	/**
 	 * @see org.apache.lenya.cms.ac2.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
@@ -181,7 +181,7 @@ public class URLPolicy implements Policy {
 	 * Returns the access controller.
 	 * @return An access controller.
 	 */
-	public AccessController getAccessController() {
+	public AccreditableManager getAccessController() {
 		return controller;
 	}
 

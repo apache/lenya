@@ -69,7 +69,7 @@ import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.GroupManager;
 import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.UserManager;
-import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccreditableManager;
 
 import java.io.File;
 import java.net.URI;
@@ -80,23 +80,23 @@ import java.net.URI;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class FileAccessController
+public class FileAccreditableManager
     extends AbstractLogEnabled
-    implements AccessController, Parameterizable, Serviceable {
+    implements AccreditableManager, Serviceable {
     /**
-     * Creates a new FileAccessController.
+     * Creates a new FileAccreditableManager.
      * If you use this constructor, you have to set the configuration directory either
      * by calling {@link #setConfigurationDirectory(File)} or by calling
      * {@link #configure(Configuration)}.
      */
-    public FileAccessController() {
+    public FileAccreditableManager() {
     }
 
     /**
      * Creates a new FileAccessController based on a configuration directory.
      * @param configurationDirectory The configuration directory.
      */
-    public FileAccessController(File configurationDirectory) {
+    public FileAccreditableManager(File configurationDirectory) {
         assert configurationDirectory != null;
         assert configurationDirectory.exists();
         assert configurationDirectory.isDirectory();
@@ -142,21 +142,21 @@ public class FileAccessController
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessController#getUserManager()
+     * @see org.apache.lenya.cms.ac2.AccreditableManager#getUserManager()
      */
     public UserManager getUserManager() throws AccessControlException {
         return UserManager.instance(getAccreditableConfigurationDirectory());
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessController#getGroupManager()
+     * @see org.apache.lenya.cms.ac2.AccreditableManager#getGroupManager()
      */
     public GroupManager getGroupManager() throws AccessControlException {
         return GroupManager.instance(getAccreditableConfigurationDirectory());
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessController#getRoleManager()
+     * @see org.apache.lenya.cms.ac2.AccreditableManager#getRoleManager()
      */
     public RoleManager getRoleManager() throws AccessControlException {
         return RoleManager.instance(getAccreditableConfigurationDirectory());
@@ -168,9 +168,11 @@ public class FileAccessController
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void parameterize(Parameters parameters) throws ParameterException {
-        configurationDirectoryPath = parameters.getParameter(DIRECTORY);
-        getLogger().debug(
-            "Configuration directory: [" + configurationDirectoryPath + "]");
+        if (parameters.isParameter(DIRECTORY)) {
+            configurationDirectoryPath = parameters.getParameter(DIRECTORY);
+            getLogger().debug(
+                "Configuration directory: [" + configurationDirectoryPath + "]");
+        }
     }
 
     private String configurationDirectoryPath = "config/ac";

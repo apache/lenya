@@ -14,17 +14,24 @@
 
 <role-list>
 
-  <role name="org.apache.lenya.cms.ac2.AccessController"
-        shorthand="access-controller"
-        default-class="org.apache.lenya.cms.ac2.file.FileAccessController"/>
+  <role name="org.apache.lenya.cms.ac2.AccreditableManagerSelector"
+        shorthand="accreditable-managers"
+        default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
+    <hint shorthand="file" class="org.apache.lenya.cms.ac2.file.FileAccreditableManager"/>
+  </role>
     
   <role name="org.apache.lenya.cms.ac2.AuthorizerSelector"
         shorthand="authorizers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-        
     <hint shorthand="policy" class="org.apache.lenya.cms.ac2.PolicyAuthorizer"/>
     <hint shorthand="workflow" class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer"/>
-        
+  </role>
+  
+  <role name="org.apache.lenya.cms.ac2.PolicyManagerSelector"
+        shorthand="policy-managers"
+        default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
+    <hint shorthand="file" class="org.apache.cms.ac2.file.FilePolicyManager"/>
+    <hint shorthand="sitemap" class="org.apache.cms.ac2.sitemap.SitemapPolicyManager"/>
   </role>
 
 </role-list>

@@ -55,12 +55,13 @@ $Id
 */
 package org.apache.lenya.cms.ac2.file;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.Accreditable;
 import org.apache.lenya.cms.ac2.Credential;
 import org.apache.lenya.cms.ac2.DefaultPolicy;
@@ -86,7 +87,7 @@ import javax.xml.parsers.ParserConfigurationException;
  * A PolicyBuilder is used to build policies.
  * @author andreas
  */
-public class FilePolicyManager implements PolicyManager {
+public class FilePolicyManager extends AbstractLogEnabled implements PolicyManager {
     
 	/**
 	 * Creates a new PolicyBuilder.
@@ -103,7 +104,7 @@ public class FilePolicyManager implements PolicyManager {
 	 * @return A policy.
 	 * @throws AccessControlException when something went wrong.
 	 */
-	protected DefaultPolicy buildPolicy(AccessController controller, File file)
+	protected DefaultPolicy buildPolicy(AccreditableManager controller, File file)
 		throws AccessControlException {
 		assert(null != file) && file.isFile();
 
@@ -161,7 +162,7 @@ public class FilePolicyManager implements PolicyManager {
 	 * @throws AccessControlException when something went wrong.
 	 */
 	protected Accreditable getAccreditable(
-		AccessController controller,
+		AccreditableManager controller,
 		String elementName,
 		String id)
 		throws AccessControlException {
@@ -179,7 +180,7 @@ public class FilePolicyManager implements PolicyManager {
 
 		if (accreditable == null) {
 			throw new AccessControlException(
-				"Unknown accreditable [" + elementName + "]");
+				"Unknown accreditable [" + elementName + "] with ID [" + id + "]");
 		}
 
 		return accreditable;
@@ -203,7 +204,7 @@ public class FilePolicyManager implements PolicyManager {
 	 * @see org.apache.lenya.cms.ac2.PolicyManager#buildURLPolicy(org.apache.lenya.cms.publication.Publication, java.lang.String)
 	 */
 	public DefaultPolicy buildURLPolicy(
-		AccessController controller,
+		AccreditableManager controller,
 		Publication publication,
 		String url)
 		throws AccessControlException {
@@ -215,7 +216,7 @@ public class FilePolicyManager implements PolicyManager {
 	 * @see org.apache.lenya.cms.ac2.PolicyManager#buildSubtreePolicy(org.apache.lenya.cms.publication.Publication, java.lang.String)
 	 */
 	public DefaultPolicy buildSubtreePolicy(
-		AccessController controller,
+		AccreditableManager controller,
 		Publication publication,
 		String url)
 		throws AccessControlException {
@@ -232,7 +233,7 @@ public class FilePolicyManager implements PolicyManager {
 	 * @throws AccessControlException when something went wrong.
 	 */
 	protected DefaultPolicy buildPolicy(
-		AccessController controller,
+		AccreditableManager controller,
 		Publication publication,
 		String url,
 		String policyFilename)
@@ -394,9 +395,9 @@ public class FilePolicyManager implements PolicyManager {
 	private static Map cache = new CacheMap(CACHE_CAPACITY);
 
 	/**
-	 * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(AccessController, Publication, java.lang.String)
+	 * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(AccreditableManager, Publication, java.lang.String)
 	 */
-	public Policy getPolicy(AccessController controller, Publication publication, String url)
+	public Policy getPolicy(AccreditableManager controller, Publication publication, String url)
 		throws AccessControlException {
 		assert publication != null;
 

@@ -60,7 +60,7 @@ import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyAuthorizer;
@@ -90,7 +90,7 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, org.apache.lenya.cms.publication.PageEnvelope, org.apache.cocoon.environment.Request)
      */
     public boolean authorize(
-        AccessController accessController,
+        AccreditableManager accessController,
         PolicyManager policyManager,
         Identity identity,
         Publication publication,

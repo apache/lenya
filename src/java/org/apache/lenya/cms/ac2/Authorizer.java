@@ -68,6 +68,8 @@ import org.apache.lenya.cms.publication.Publication;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface Authorizer extends Component {
+    
+    public static final String ROLE = Authorizer.class.getName();
 
     /**
      * Authorizes an identity at a URL.
@@ -80,7 +82,7 @@ public interface Authorizer extends Component {
      * @throws AccessControlException when something went wrong.
      */
     boolean authorize(
-        AccessController accessController,
+        AccreditableManager accessController,
         PolicyManager policyManager,
         Identity identity,
         Publication publication,

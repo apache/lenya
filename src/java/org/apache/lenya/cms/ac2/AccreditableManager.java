@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.7 2003/07/10 16:44:32 andreas Exp $
+$Id
 <License>
 
  ============================================================================
@@ -53,80 +53,46 @@ $Id: DelegatingAuthorizerAction.java,v 1.7 2003/07/10 16:44:32 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.ac2;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.component.Component;
+import org.apache.avalon.framework.parameters.Parameterizable;
 
-import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
-
-import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
-import java.util.Map;
+import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.GroupManager;
+import org.apache.lenya.cms.ac.RoleManager;
+import org.apache.lenya.cms.ac.UserManager;
 
 
 /**
- * AuthorizerAction that delegates the authorizing to an AccessController.
- * 
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @author andreas
+ *
+ * To change the template for this generated type comment go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
+public interface AccreditableManager extends Component, Parameterizable {
     
-    public static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
-    private String accessControllerId;
+    String ROLE = AccreditableManager.class.getName();
     
     /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     * Returns the user manager of this access controller.
+     * @return A user manager.
+     * @throws AccessControlException when something went wrong.
      */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-        Configuration accessControllerConfiguration = conf.getChild(ACCESS_CONTROLLER_ELEMENT);
-        accessControllerId = accessControllerConfiguration.getValue();
-    }
+    UserManager getUserManager() throws AccessControlException;
 
     /**
-     * @see org.apache.lenya.cms.cocoon.acting.AbstractAuthorizerAction#authorize(org.apache.cocoon.environment.Request, java.util.Map)
+     * Returns the group manager of this access controller.
+     * @return A group manager.
+     * @throws AccessControlException when something went wrong.
      */
-    public boolean authorize(Request request, Map ignore)
-        throws Exception {
-            
-        AccessController accessController = null;
-        boolean authorized;
-        try {
-            accessController = (AccessController) manager.lookup(AccessController.ROLE + "/" + accessControllerId);
-            authorized = accessController.authorize(getPublication(), request);
-        }
-        finally {
-            if (accessController != null) {
-                manager.release(accessController);
-            }
-        }
-        return authorized;
-    }
+    GroupManager getGroupManager() throws AccessControlException;
 
     /**
-     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     * Returns the role manager of this access controller.
+     * @return A role manager.
+     * @throws AccessControlException when something went wrong.
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
-        publication = PublicationFactory.getPublication(objectModel);
+    RoleManager getRoleManager() throws AccessControlException;
 
-        return super.act(redirector, resolver, objectModel, src, parameters);
-    }
-
-    private Publication publication;
-
-    /**
-     * Returns the envelope of the current page.
-     * @return A page envelope.
-     */
-    protected Publication getPublication() {
-        return publication;
-    }
-    
 }

@@ -80,7 +80,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, java.lang.String, java.util.Map)
      */
     public boolean authorize(
-        AccessController accessController,
+        AccreditableManager accessController,
         PolicyManager policyManager,
         Identity identity,
         Publication publication,

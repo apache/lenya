@@ -55,6 +55,7 @@ $Id
 */
 package org.apache.lenya.cms.ac2;
 
+import org.apache.avalon.framework.component.Component;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Publication;
 
@@ -65,7 +66,10 @@ import org.apache.lenya.cms.publication.Publication;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface PolicyManager {
+public interface PolicyManager extends Component {
+    
+    public static final String ROLE = PolicyManager.class.getName();
+    
     /**
      * Builds the URL policy for a URL in a certain publication.
      * @param controller The access controller to use.
@@ -74,7 +78,7 @@ public interface PolicyManager {
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    DefaultPolicy buildURLPolicy(AccessController controller, Publication publication, String url) throws AccessControlException;
+    DefaultPolicy buildURLPolicy(AccreditableManager controller, Publication publication, String url) throws AccessControlException;
 
     /**
      * Builds the subtree policy for a URL.
@@ -84,7 +88,7 @@ public interface PolicyManager {
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    DefaultPolicy buildSubtreePolicy(AccessController controller, Publication publication, String url) throws AccessControlException;
+    DefaultPolicy buildSubtreePolicy(AccreditableManager controller, Publication publication, String url) throws AccessControlException;
 
     /**
      * Saves a URL policy.
@@ -114,7 +118,7 @@ public interface PolicyManager {
 	 * @return The policy.
 	 * @throws AccessControlException when something went wrong.
 	 */
-	Policy getPolicy(AccessController controller, Publication publication, String url)
+	Policy getPolicy(AccreditableManager controller, Publication publication, String url)
 		throws AccessControlException;
 
 }

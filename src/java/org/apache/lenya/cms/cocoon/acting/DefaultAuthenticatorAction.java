@@ -58,11 +58,8 @@ package org.apache.lenya.cms.cocoon.acting;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
-import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.Identity;
-
-import java.io.File;
 
 import java.util.Map;
 
@@ -87,9 +84,6 @@ public class DefaultAuthenticatorAction extends UserAuthenticatorAction {
 
         if (authenticated) {
             Identity identity = new Identity();
-
-            File publicationDir = getPublication().getDirectory();
-            File configDir = new File(publicationDir, ItemManager.PATH);
 
             User user = getUser(username);
             identity.addIdentifiable(user);

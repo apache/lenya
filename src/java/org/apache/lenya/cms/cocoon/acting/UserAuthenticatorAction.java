@@ -70,6 +70,7 @@ import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.DefaultAccessController;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
@@ -172,7 +173,7 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
     }
     
     /**
-     * Returns a user for a username using the AccessController of this action.
+     * Returns a user for a username using the AccreditableManager of this action.
      * @param username A string.
      * @return A user.
      */
@@ -184,10 +185,12 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
             
         try {
             controller = (AccessController) manager.lookup(AccessController.ROLE + suffix);
-            user = controller.getUserManager().getUser(username);
+            user = ((DefaultAccessController) controller).getAccreditableManager().getUserManager().getUser(username);
         }
         finally {
-            manager.release(controller);
+            if (controller != null) {
+                manager.release(controller);
+            }
         }
         
         return user;
