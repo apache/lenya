@@ -3,7 +3,7 @@
 ======================================================================
 OSCOM CMS List
 
-$Id: overview-body.xml,v 1.2 2002/08/30 08:34:47 michicms Exp $
+$Id: overview-body.xml,v 1.3 2002/10/04 23:22:27 michicms Exp $
 ======================================================================
 -->
 <oscom topic="system overviews">
@@ -51,9 +51,12 @@ $Id: overview-body.xml,v 1.2 2002/08/30 08:34:47 michicms Exp $
     <license_url>http://www.opensource.org/licenses/gpl-license.html</license_url>
   </license>
 </system>
+
+
+
 <system type="cms">
   <id>9</id>
-  <system_name>cofax</system_name>
+  <system_name>Cofax</system_name>
   <main_url>http://www.cofax.org/</main_url>
   <faq_url><![CDATA[http://www.cofax.org/site/about.jsp]]></faq_url>
   <license>
@@ -62,6 +65,10 @@ $Id: overview-body.xml,v 1.2 2002/08/30 08:34:47 michicms Exp $
     <license_url>http://www.cofax.org/site/docs/license.jsp</license_url>
   </license>
 </system>
+
+
+
+
 <system type="cms">
   <id>17</id>
   <system_name>jahia portal server</system_name>
@@ -116,9 +123,27 @@ license.</license_description>
 <license_url>http://www.fsf.org/licenses/licenses.html#LGPL</license_url>
   </license>
 </system>
+
+
+<system type="cms">
+  <id>phpcms</id>
+  <system_name>phpCMS</system_name>
+  <main_url>http://mcyra.homeip.net/index.htm</main_url>
+<!--
+  <faq_url><![CDATA[http://phpnuke.org/modules.php?name=FAQ]]></faq_url>
+-->
+  <license>
+    <license_name>GNU General Public License (GPL)</license_name>
+    <license_description></license_description>
+    <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
+  </license>
+</system>
+
+
+
 <system type="cms">
   <id>13</id>
-  <system_name>phpnuke</system_name>
+  <system_name>PHP-Nuke</system_name>
   <main_url>http://phpnuke.org/</main_url>
   <faq_url><![CDATA[http://phpnuke.org/modules.php?name=FAQ]]></faq_url>
   <license>
@@ -127,6 +152,10 @@ license.</license_description>
     <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
   </license>
 </system>
+
+
+
+
 <system type="cms">
   <system_name>phpSlash</system_name>
   <main_url>http://www.phpSlash.org</main_url>
@@ -161,6 +190,9 @@ license.</license_description>
     <license_url>http://www.gnu.org/copyleft/gpl.html</license_url>
   </license>
 </system>
+
+
+
 <system type="cms">
   <system_name>Plone</system_name>
   <main_url>http://www.plone.org</main_url>
@@ -168,9 +200,13 @@ license.</license_description>
     <license_name>BSD License</license_name>
   </license>
 </system>
+
+
+
+
 <system type="cms">
   <id>14</id>
-  <system_name>postnuke</system_name>
+  <system_name>Postnuke</system_name>
   <main_url>http://www.postnuke.com/</main_url> 
   <faq_url><![CDATA[http://centre.ics.uci.edu/~grape/modules.php?op=modload&amp;name=FAQ&amp;file=index]]></faq_url>
   <license>
@@ -179,6 +215,9 @@ license.</license_description>
     <license_url>http://www.gnu.org/licenses/licenses.html#GPL</license_url>
   </license>
 </system>
+
+
+
 <system type="cms">
   <system_name>Silva</system_name>
   <main_url>http://www.infrae.nl/products/silva</main_url>
@@ -187,6 +226,9 @@ license.</license_description>
     <license_url>http://www.zope.org/Members/faassen/Silva/LICENSE.txt</license_url>
   </license>
 </system>
+
+
+
 
 <system type="cms">
   <id>15</id>
@@ -197,6 +239,9 @@ license.</license_description>
     <license_url>http://www.wyona.org/license.html</license_url>
   </license>
 </system>
+
+
+
 <system type="framework">
   <id>1</id>
   <system_name>AxKit</system_name>
@@ -208,6 +253,9 @@ license.</license_description>
     <license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
   </license>
 </system>
+
+
+
 <system type="framework">
   <id>2</id>
   <system_name>Cocoon</system_name>
@@ -219,6 +267,9 @@ license.</license_description>
     <license_url>http://xml.apache.org/cocoon/license.html</license_url>
   </license>
 </system>
+
+
+
 <system type="framework">
   <id>10</id>
   <system_name>mason</system_name>
@@ -230,9 +281,12 @@ license.</license_description>
     <license_url>http://www.masonhq.com/about/license.html</license_url>
   </license>
 </system>
+
+
+
 <system type="framework">
   <id>3</id>
-  <system_name>midgard</system_name>
+  <system_name>Midgard</system_name>
   <main_url>http://www.midgard-project.org/</main_url>
   <faq_url><![CDATA[http://www.midgard-project.org/faq/]]></faq_url>
   <license>
@@ -256,6 +310,9 @@ license.</license_description>
     <license_url>http://www.gnu.org/licenses/licenses.html#FDL</license_url>
   </license>
 </system>
+
+
+
 <system type="framework">
   <id>4</id>
   <system_name>Slide</system_name>
@@ -267,6 +324,9 @@ license.</license_description>
     <license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
   </license>
 </system>
+
+
+
 <system type="framework">
   <id>5</id>
   <system_name>tea</system_name>
@@ -278,6 +338,9 @@ license.</license_description>
     <license_url>http://opensource.go.com/license.html</license_url>
   </license>
 </system>
+
+
+
 <system type="framework">
   <id>6</id>
   <system_name>WebDAV</system_name>
@@ -287,6 +350,10 @@ license.</license_description>
     <license_name>IETF Proposed Standard</license_name>
   </license>
 </system>
+
+
+
+
 <system type="framework">
   <id>7</id>
   <system_name>Zope</system_name>
