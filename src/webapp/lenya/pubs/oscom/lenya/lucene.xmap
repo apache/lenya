@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: lucene.xmap,v 1.1 2003/11/10 17:19:39 michi Exp $ -->
+<!-- CVS: $Id: lucene.xmap,v 1.2 2003/11/14 21:03:23 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -15,7 +15,7 @@
           <map:parameter name="max-hits-per-page" value="5"/>
           <map:parameter name="max-pages" value="7"/>
 
-          <map:parameter name="number-of-pubs" value="4"/>
+          <map:parameter name="number-of-pubs" value="5"/>
 
           <map:parameter name="pub0-id" value="all"/>
           <map:parameter name="pub0-name" value="All OSCOM"/>
@@ -41,6 +41,13 @@
           <map:parameter name="pub3-index-dir" value="../work/search/lucene/index/index-lists"/>
           <map:parameter name="pub3-excerpt-dir" value="../work/search/lucene/htdocs_dump/lists.oscom.org"/>
           <map:parameter name="pub3-prefix" value="http://lists.oscom.org"/>
+
+
+          <map:parameter name="pub4-id" value="matrix"/>
+          <map:parameter name="pub4-name" value="Matrix"/>
+          <map:parameter name="pub4-index-dir" value="../work/search/lucene/index/index-cmfsMatrix"/>
+          <map:parameter name="pub4-excerpt-dir" value="../content/authoring/matrix"/>
+          <map:parameter name="pub4-prefix" value="http://hugo"/>
 
         </map:generate>
         <map:serialize type="xml"/>
