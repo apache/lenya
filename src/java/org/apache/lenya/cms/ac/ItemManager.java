@@ -1,5 +1,5 @@
 /*
- * $Id: ItemManager.java,v 1.5 2003/06/24 17:44:26 egli Exp $
+ * $Id: ItemManager.java,v 1.6 2003/06/25 08:56:32 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -165,15 +165,27 @@ public abstract class ItemManager {
 		items.remove(item);
 	}
 	
+	/**
+	 * Get the path where the items are located.
+	 * 
+	 * @return a <code>File</code>
+	 */
 	public File getPath() {
 		return new File(publication.getDirectory(), PATH);
 	}
 	
-
+	/**
+	 * Get a file filter which filters for files containing items.
+	 *  
+	 * @return a <code>FileFilter</code>
+	 */
 	protected abstract FileFilter getFileFilter();
 	
 	/**
-	 * @return
+	 * Items are attached to a publication. Get the publication
+	 * to which the items are attached to.
+	 * 
+	 * @return a <code>Publication</code>
 	 */
 	public Publication getPublication() {
 		return publication;

@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.14 2003/06/12 15:46:06 egli Exp $
+ * $Id: User.java,v 1.15 2003/06/25 08:56:32 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,18 +62,19 @@ import org.apache.log4j.Category;
 public abstract class User {
 	private Category log = Category.getInstance(User.class);
 	
-	protected String id;
-	protected String fullName;
-	protected String email;
-	protected String encryptedPassword;
-	protected Set groups = new HashSet();
+	private String id;
+	private String fullName;
+	private String email;
+	private String encryptedPassword;
+	private Set groups = new HashSet();
 
-	/**
-	 * Create a User instance
-	* @param id
-	* @param fullName
-	* @param email
-	* @param password
+   /**
+	* Create a User instance
+	* 
+	* @param id the user id
+	* @param fullName the full name of the user
+	* @param email the users email address
+	* @param password the users password
 	*/
 	public User(String id, String fullName, String email, String password) {
 		this.id = id;
@@ -83,49 +84,61 @@ public abstract class User {
 	}
 
 	/**
-	 * @return
+	 * Get the email address
+	 * 
+	 * @return a <code>String</code>
 	 */
 	public String getEmail() {
 		return email;
 	}
 
 	/**
-	 * @return
+	 * Get the full name
+	 * 
+	 * @return a <code>String</code>
 	 */
 	public String getFullName() {
 		return fullName;
 	}
 
 	/**
-	 * @return
+	 * Get all groups
+	 * 
+	 * @return an <code>Iterator</code>
 	 */
 	public Iterator getGroups() {
 		return groups.iterator();
 	}
 
 	/**
-	 * @return
+	 * Get the user id
+	 * 
+	 * @return the user id
 	 */
 	public String getId() {
 		return id;
 	}
 
 	/**
-	 * @param string
-	 */
-	public void setEmail(String string) {
-		email = string;
-	}
-
-	/**
-	 * @param string
-	 */
-	public void setFullName(String string) {
-		fullName = string;
-	}
-
-	/**
+	 * Set the email address
 	 * 
+	 * @param email the new email address
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * Set the full name
+	 * 
+	 * @param name the new full name
+	 */
+	public void setFullName(String name) {
+		fullName = name;
+	}
+
+	/**
+	 * Remove all groups
 	 */
 	public void removeAllGroups() {
 		for (Iterator iter = groups.iterator(); iter.hasNext();) {
@@ -136,7 +149,9 @@ public abstract class User {
 	}
 
 	/**
-	 * @param set
+	 * Add the specified group to this user
+	 * 
+	 * @param group which is to be added
 	 */
 	public void addGroup(Group group) {
 		assert group != null;
@@ -145,7 +160,9 @@ public abstract class User {
 	}
 
 	/**
-	 * @param set
+	 * Remove the specified group from this user
+	 * 
+	 * @param group which is to be removed
 	 */
 	public void removeGroup(Group group) {
 		groups.remove(group);
@@ -153,7 +170,9 @@ public abstract class User {
 	}
 
 	/**
-	 * @param plainTextPassword
+	 * Set the password
+	 * 
+	 * @param plainTextPassword the password in plain text
 	 */
 	public void setPassword(String plainTextPassword) {
 		encryptedPassword = Password.encrypt(plainTextPassword);
@@ -164,26 +183,38 @@ public abstract class User {
 	 * being encrypted again. Some subclass might have knowledge of the encrypted
 	 * password and needs to be able to set it.
 	 * 
-	 * @param encryptedPassword
+	 * @param encryptedPassword the encrypted password
 	 */
 	protected void setEncryptedPassword(String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
 	}
 	
 	/**
-	 * @param publication
-	 * @throws AccessControlException
+	 * Get the encrypted password
+	 * 
+	 * @return the encrypted password
+	 */
+	protected String getEncryptedPassword() {
+		return encryptedPassword;
+	}
+	
+	/**
+	 * Save the user
+	 * 
+	 * @throws AccessControlException if the save failed
 	 */
 	public abstract void save() throws AccessControlException;
 
 	/**
+	 * Delete a user
 	 * 
+	 * @throws AccessControlException if the delete failed
 	 */
 	public void delete() throws AccessControlException {
 		removeAllGroups();
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
@@ -193,7 +224,7 @@ public abstract class User {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
@@ -205,8 +236,8 @@ public abstract class User {
 	 * the given password and comparing this to the 
 	 * encryptedPassword.
 	 * 
-	 * @param password
-	 * @return true if the given passwprd matches the password for this user
+	 * @param password to authenticate with
+	 * @return true if the given password matches the password for this user
 	 */
 	public boolean authenticate(String password) {
 		log.debug("Password: " + password);

@@ -1,5 +1,5 @@
 /*
- * $Id: FileRole.java,v 1.3 2003/06/03 13:45:48 egli Exp $
+ * $Id: FileRole.java,v 1.4 2003/06/25 08:56:32 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,8 +69,12 @@ public class FileRole extends Role {
 	public static final String CLASS_ATTRIBUTE = "class";
 
 	private Publication publication;
+	
 	/**
-	 * @param name
+	 * Create a new instance of <code>FileRole</code>
+	 * 
+	 * @param publication to which the role is to be attached
+	 * @param name name of the role
 	 */
 	public FileRole(Publication publication, String name) {
 		super(name);
@@ -78,8 +82,11 @@ public class FileRole extends Role {
 	}
 
 	/**
-	 * @param config
-	 * @throws ConfigurationException
+	 * Create a new instance of <code>FileRole</code>
+	 * 
+	 * @param publication to which the role is to be attached
+	 * @param config containing the role details
+	 * @throws ConfigurationException if the <code>FileRole</code> could not be instantiated
 	 */
 	public FileRole(Publication publication, Configuration config) throws ConfigurationException {
 		super(config.getAttribute(NAME_ATTRIBUTE));
@@ -87,8 +94,9 @@ public class FileRole extends Role {
 	}
 	
 	/**
-	 * @param publication
-	 * @throws AccessControlException
+	 * Save the role
+	 * 
+	 * @throws AccessControlException if the save fails
 	 */
 	public void save() throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
@@ -104,12 +112,14 @@ public class FileRole extends Role {
 	}
 
 	/**
-	 * @return
+	 * Create a configuration containing the role details
+	 * 
+	 * @return a <code>Configuration</code>
 	 */
 	private Configuration createConfiguration() {
 		
 		DefaultConfiguration config = new DefaultConfiguration(GROUP);
-		config.setAttribute(NAME_ATTRIBUTE, name);
+		config.setAttribute(NAME_ATTRIBUTE, getName());
 		config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
 		return config;
 	}

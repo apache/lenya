@@ -1,5 +1,5 @@
 /*
- * $Id: FileGroup.java,v 1.4 2003/06/03 16:30:16 egli Exp $
+ * $Id: FileGroup.java,v 1.5 2003/06/25 08:56:32 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -76,13 +76,23 @@ public class FileGroup extends Group {
 	private Publication publication;
 
 	/**
-	 * @param name
+	 * Create a new instance of <code>FileGroup</code>
+	 * 
+	 * @param publication to which the group will be attached to
+	 * @param name the name of the group
 	 */
 	public FileGroup(Publication publication, String name) {
 		super(name);
 		this.publication = publication;
 	}
 
+	/**
+	 * Create a new instance of <code>FileGroup</code>
+	 * 
+	 * @param publication to which the group will be attached to
+	 * @param config containing the group details
+	 * @throws ConfigurationException if the instantiation fails
+	 */
 	public FileGroup(Publication publication, Configuration config)
 		throws ConfigurationException {
 		super(config.getAttribute(NAME_ATTRIBUTE));
@@ -114,6 +124,11 @@ public class FileGroup extends Group {
 		}
 	}
 	
+	/**
+	 * Save this group
+	 * 
+	 * @throws AccessControlException if the save failed
+	 */
 	public void save() throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
@@ -128,7 +143,9 @@ public class FileGroup extends Group {
 	}
 
 	/**
-	 * @return
+	 * Create a configuration containing the group details
+	 * 
+	 * @return a <code>Configuration</code>
 	 */
 	private Configuration createConfiguration() {
 		

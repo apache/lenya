@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.5 2003/06/24 17:44:26 egli Exp $
+ * $Id: LDAPUser.java,v 1.6 2003/06/25 08:56:32 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -246,7 +246,7 @@ public class LDAPUser extends FileUser {
      * @param plainTextPassword is ignored
      */
     public void setPassword(String plainTextPassword) {
-        encryptedPassword = null;
+    	setEncryptedPassword(null);
     }
 
     /** 

@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.16 2003/06/19 13:55:38 egli Exp $
+ * $Id: FileUser.java,v 1.17 2003/06/25 08:56:32 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -80,11 +80,13 @@ public class FileUser extends User {
 	private Publication publication;
 
 	/**
-	 * @param publication
-	 * @param id
-	 * @param fullName
-	 * @param email
-	 * @param password
+	 * Create a FileUser
+	 * 
+	 * @param publication where the user will be attached to
+	 * @param id the user id
+	 * @param fullName the full name of the user
+	 * @param email the users email address
+	 * @param password the users password
 	 */
 	public FileUser(
 		Publication publication,
@@ -96,6 +98,13 @@ public class FileUser extends User {
 		this.publication = publication;
 	}
 
+	/**
+	 * Create a FileUser.
+	 * 
+	 * @param publication where the user will be attached to
+	 * @param config where the user details are specified 
+	 * @throws ConfigurationException if the necessary details aren't specified in the config
+	 */
 	public FileUser(Publication publication, Configuration config)
 		throws ConfigurationException {
 		super(
@@ -137,26 +146,30 @@ public class FileUser extends User {
 		}
 	}
 
+
 	/**
-	 * @return
-	 */
-	protected Configuration createConfiguration() {
+	 * Create a configuration from the current user details. Can
+	 * be used for saving.
+	 * 
+     * @return a <code>Configuration</code>
+     */
+    protected Configuration createConfiguration() {
 
 		DefaultConfiguration config = new DefaultConfiguration(ID);
-		config.setAttribute(ID_ATTRIBUTE, id);
+		config.setAttribute(ID_ATTRIBUTE, getId());
 		config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
 		DefaultConfiguration child = null;
 		// add fullname node
 		child = new DefaultConfiguration(FULL_NAME);
-		child.setValue(fullName);
+		child.setValue(getFullName());
 		config.addChild(child);
 		// add email node
 		child = new DefaultConfiguration(EMAIL);
-		child.setValue(email);
+		child.setValue(getEmail());
 		config.addChild(child);
 		// add password node
 		child = new DefaultConfiguration(PASSWORD);
-		child.setValue(encryptedPassword);
+		child.setValue(getEncryptedPassword());
 		child.setAttribute(PASSWORD_ATTRIBUTE, "md5");
 		config.addChild(child);
 		// add group nodes
@@ -172,7 +185,7 @@ public class FileUser extends User {
 		return config;
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see org.apache.lenya.cms.ac.User#save()
 	 */
 	public void save() throws AccessControlException {
@@ -191,7 +204,7 @@ public class FileUser extends User {
 		}
 	}
 
-	/* (non-Javadoc)
+	/** (non-Javadoc)
 	 * @see org.apache.lenya.cms.ac.User#delete()
 	 */
 	public void delete() throws AccessControlException {
@@ -204,7 +217,9 @@ public class FileUser extends User {
 	}
 
     /**
-     * @return
+     * Get the publication where this FileUser is attached to.
+     * 
+     * @return the <code>Publication</code>
      */
     protected Publication getPublication() {
         return publication;
