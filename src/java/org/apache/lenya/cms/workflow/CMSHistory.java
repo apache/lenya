@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CMSHistory.java,v 1.24 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: CMSHistory.java,v 1.25 2004/08/02 12:29:25 andreas Exp $  */
 
 package org.apache.lenya.cms.workflow;
 
@@ -24,6 +24,7 @@ import java.io.File;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.FileUtil;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.History;
@@ -53,8 +54,8 @@ public class CMSHistory extends History {
     public static final String NAME_ATTRIBUTE = "name";
     public static final String IP_ATTRIBUTE = "ip-address";
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.workflow.History#createVersionElement(org.apache.lenya.xml.NamespaceHelper, org.apache.lenya.workflow.Situation)
+    /**
+     * @see org.apache.lenya.workflow.impl.History#createVersionElement(org.apache.lenya.xml.NamespaceHelper, org.apache.lenya.workflow.Situation)
      */
     protected Element createVersionElement(NamespaceHelper helper, Situation situation) {
         Element element = super.createVersionElement(helper, situation);
@@ -130,7 +131,9 @@ public class CMSHistory extends History {
     }
 
     /**
-     * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
+     * Returns the history file for a certain document.
+     * @param document The document.
+     * @return A file.
      */
     protected File getHistoryFile(Document document) {
         File historyFile =
@@ -213,4 +216,15 @@ public class CMSHistory extends History {
         return getHistoryPath(getDocument());
     }
 
+    /**
+     * Additionally to deleting the workflow history, the parent directories
+     * are deleted up to the workflow history directory.
+     * @see org.apache.lenya.workflow.impl.History#delete()
+     */
+    public void delete() throws WorkflowException {
+        super.delete();
+        
+        File stopDirectory = new File(getDocument().getPublication().getDirectory(), HISTORY_PATH);
+        FileUtil.deleteParentDirs(getHistoryFile(), stopDirectory);
+    }
 }
