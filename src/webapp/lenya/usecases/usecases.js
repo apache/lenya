@@ -57,8 +57,9 @@ function selectView(usecaseName) {
 /* Returns the query string to attach to the target URL. This is used in the site area. */
 function getTargetQueryString(usecaseName) {
 	var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
+	var queryString = "";
 	if (isTabUsecase) {
-		var queryString = "?lenya.usecase=" + usecaseName;
+		queryString = "?lenya.usecase=" + usecaseName;
 	}
 	return queryString;
 }
