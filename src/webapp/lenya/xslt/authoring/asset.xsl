@@ -103,7 +103,7 @@
 	    <tr><td>&#160;</td></tr>
             <xsl:if test="$insert = 'true'">
               <tr>
-                <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption"/></td>
+                <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
               </tr>
             </xsl:if>
 	    <xsl:if test="$insertimage = 'true'">
@@ -165,7 +165,7 @@
 		</tr>
 		<tr><td>&#160;</td></tr>
 		<tr>
-		  <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption"/></td>
+		  <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Deault Caption"/></td>
 		</tr>
 		<xsl:if test="$insertimage = 'true'">
 		  <tr>
