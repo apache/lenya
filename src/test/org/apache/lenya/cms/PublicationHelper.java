@@ -1,5 +1,5 @@
 /*
-$Id: PublicationHelper.java,v 1.4 2003/07/15 14:46:09 egli Exp $
+$Id: PublicationHelper.java,v 1.5 2003/08/21 14:26:10 egli Exp $
 <License>
 
  ============================================================================
@@ -67,6 +67,13 @@ import java.util.List;
  *
  */
 public class PublicationHelper {
+    
+    /**
+     * Constructor for PublicationHelper.
+     *
+     */
+    protected PublicationHelper() {}
+    
     /**
      * Initializes the object with the first parameters from the command line arguments
      * <code>args</code>. The remainder of the array is returned.
