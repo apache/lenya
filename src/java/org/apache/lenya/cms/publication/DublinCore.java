@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.8 2003/07/30 15:29:33 gregor Exp $
+$Id: DublinCore.java,v 1.9 2003/07/31 14:38:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,6 @@ import org.apache.lenya.xml.DocumentHelper;
 import java.io.File;
 
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 
 /**
  * A publication.
@@ -100,6 +99,7 @@ public class DublinCore {
 	 * @param title the title
 	 */
 	public void setTitle(String title) {
+		setDCNode("title", title);
 	}
 
 	/**
@@ -115,6 +115,7 @@ public class DublinCore {
 	 * @param creator the Creator
 	 */
 	public void setCreator(String creator) {
+		setDCNode("creator", creator);
 	}
 
 	/**
@@ -140,11 +141,12 @@ public class DublinCore {
 		}
 
 	private void setDCNode(String node, String text) {
-		Node oldnode;
-		Node newnode;
+		org.w3c.dom.Document document;
 			try {
-				nodelist = DocumentHelper.readDocument(infofile).getElementsByTagNameNS(DC_NAMESPACE, node);
-				oldnode = nodelist.item(0).getFirstChild();
+				document = DocumentHelper.readDocument(infofile);
+				nodelist = document.getElementsByTagNameNS(DC_NAMESPACE, node);
+				nodelist.item(0).getFirstChild().setNodeValue(text);
+			    DocumentHelper.writeDocument(document, infofile);
 			} catch (Exception e) {
 				string = e.toString();
 			}
@@ -156,6 +158,7 @@ public class DublinCore {
 	 * @param subject the subject
 	 */
 	public void setSubject(String subject) {
+		setDCNode("subject", subject);
 	}
 
 	/**
@@ -171,6 +174,7 @@ public class DublinCore {
 	 * @param description the description
 	 */
 	public void setDescription(String description) {
+		setDCNode("description", description);
 	}
 
 	/**
@@ -186,6 +190,7 @@ public class DublinCore {
 	 * @param rights the rights
 	 */
 	public void setRights(String rights) {
+		setDCNode("rights", rights);
 	}
 
 
