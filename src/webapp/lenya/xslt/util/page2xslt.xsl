@@ -15,12 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xslt.xsl,v 1.4 2004/03/13 12:42:09 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     >
 
 <xsl:param name="contextprefix"/>
