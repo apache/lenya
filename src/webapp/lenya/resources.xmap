@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: resources.xmap,v 1.9 2004/03/13 12:57:53 gregor Exp $ -->
+<!-- $Id: resources.xmap,v 1.10 2004/04/13 14:33:44 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:components/>
@@ -46,16 +46,6 @@
           </map:match>
 
       <!-- Lenya Publications -->      
-          <!-- matches pub-id/area/css/*.css -->
-          <map:match pattern="*/*/css/*.css">
-            <map:read src="pubs/{1}/resources/css/{3}.css" mime-type="text/css" />
-          </map:match>
-
-          <!-- matches pub-id/area/javascript/**.js -->
-          <map:match pattern="*/*/javascript/**.js">
-            <map:read src="pubs/{1}/resources/javascript/{3}.js" mime-type="application/javascript" />
-          </map:match>
-
           <!-- matches pub-id/area/**.jpg -->
           <map:match pattern="*/*/**.jpg">
             <map:read src="pubs/{1}/resources/{2}/{3}.jpg" mime-type="image/jpeg" />
