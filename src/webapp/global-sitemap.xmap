@@ -839,6 +839,11 @@
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
         </map:act>
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url" value="lenya/pubs/{1}/resources/shared/{3}"/>
+          <map:parameter name="type" value="file"/>
+          <map:mount uri-prefix="" src="lenya/resources-shared.xmap" check-reload="true" reload-method="synchron"/>
+        </map:act>
       </map:match>
       
       <!-- lenya/{file} -->

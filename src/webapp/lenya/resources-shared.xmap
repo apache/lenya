@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:components/>
+
+  <map:pipelines>
+    <map:pipeline>
+      
+      <!-- Lenya Publications -->
+      
+          <!-- matches pub-id/area/css/*.css -->
+          <map:match pattern="*/*/css/*.css">
+            <map:read src="pubs/{1}/resources/shared/css/{3}.css" mime-type="text/css" />
+          </map:match>
+
+          <!-- matches pub-id/area/javascript/**.js -->
+          <map:match pattern="*/*/javascript/**.js">
+            <map:read src="pubs/{1}/resources/shared/javascript/{3}.js" mime-type="application/javascript" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.jpg -->
+          <map:match pattern="*/*/**.jpg">
+            <map:read src="pubs/{1}/resources/shared/{3}.jpg" mime-type="image/jpeg" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.gif -->
+          <map:match pattern="*/*/**.gif">
+            <map:read src="pubs/{1}/resources/shared/{3}.gif" mime-type="image/gif" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.png -->
+          <map:match pattern="*/*/**.png">
+            <map:read src="pubs/{1}/resources/shared/{3}.png" mime-type="image/png" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.tar.gz -->
+          <map:match pattern="*/*/**.tar.gz">
+            <map:read src="pubs/{1}/resources/shared/{3}.tar.gz" mime-type="application/x-gtar" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.pdf -->
+          <map:match pattern="*/*/**.pdf">
+            <map:read src="pubs/{1}/resources/shared/{3}.pdf" mime-type="application/pdf" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.doc -->
+          <map:match pattern="*/*/**.doc">
+            <map:read src="pubs/{1}/resources/shared/{3}.doc" mime-type="application/msword" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.dot -->
+          <map:match pattern="*/*/**.dot">
+            <map:read src="pubs/{1}/resources/shared/{3}.dot" mime-type="application/msword" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.rtf -->
+          <map:match pattern="*/*/**.rtf">
+            <map:read src="pubs/{1}/resources/shared/{3}.rtf" mime-type="application/rtf" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.txt -->
+          <map:match pattern="*/*/**.txt">
+            <map:read src="pubs/{1}/resources/shared/{3}.txt" mime-type="text/plain" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.asc -->
+          <map:match pattern="*/*/**.asc">
+            <map:read src="pubs/{1}/resources/shared/{3}.asc" mime-type="text/plain" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.ascii -->
+          <map:match pattern="*/*/**.ascii">
+            <map:read src="pubs/{1}/resources/shared/{3}.ascii" mime-type="text/plain" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.xls -->
+          <map:match pattern="*/*/**.xls">
+            <map:read src="pubs/{1}/resources/shared/{3}.xls" mime-type="application/vnd.ms-excel" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.xlt -->
+          <map:match pattern="*/*/**.xlt">
+            <map:read src="pubs/{1}/resources/shared/{3}.xlt" mime-type="application/vnd.ms-excel" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.ppt -->
+          <map:match pattern="*/*/**.ppt">
+            <map:read src="pubs/{1}/resources/shared/{3}.ppt" mime-type="application/vnd.ms-powerpoint" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.pot -->
+          <map:match pattern="*/*/**.pot">
+            <map:read src="pubs/{1}/resources/shared/{3}.pot" mime-type="application/vnd.ms-powerpoint" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.swf -->
+          <map:match pattern="*/*/**.swf">
+            <map:read src="pubs/{1}/resources/shared/{3}.swf" mime-type="application/x-shockwave-flash" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.tif -->
+          <map:match pattern="*/*/**.tif">
+            <map:read src="pubs/{1}/resources/shared/{3}.tif" mime-type="image/tiff" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.eps -->
+          <map:match pattern="*/*/**.eps">
+            <map:read src="pubs/{1}/resources/shared/{3}.eps" mime-type="application/postscript" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.pct -->
+          <map:match pattern="*/*/**.pct">
+            <map:read src="pubs/{1}/resources/shared/{3}.pct" mime-type="application/x-ms-word" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.m3u -->
+          <map:match pattern="*/*/**.m3u">
+            <map:read src="pubs/{1}/resources/shared/{3}.m3u" mime-type="application/x-mpegurl" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.kar -->
+          <map:match pattern="*/*/**.kar">
+            <map:read src="pubs/{1}/resources/shared/{3}.kar" mime-type="audio/midi" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.mid -->
+          <map:match pattern="*/*/**.mid">
+            <map:read src="pubs/{1}/resources/shared/{3}.mid" mime-type="audio/midi" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.smf -->
+          <map:match pattern="*/*/**.smf">
+            <map:read src="pubs/{1}/resources/shared/{3}.smf" mime-type="application/vnd.stardivision.math" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.mp3 -->
+          <map:match pattern="*/*/**.mp3">
+            <map:read src="pubs/{1}/resources/shared/{3}.mp3" mime-type="audio/mpeg" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.swa -->
+          <map:match pattern="*/*/**.swa">
+            <map:read src="pubs/{1}/resources/shared/{3}.swa" mime-type="audio/x-swa" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.mpg -->
+          <map:match pattern="*/*/**.mpg">
+            <map:read src="pubs/{1}/resources/shared/{3}.mpg" mime-type="video/mpeg" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.mpv -->
+          <map:match pattern="*/*/**.mpv">
+            <map:read src="pubs/{1}/resources/shared/{3}.mpv" mime-type="video/mpeg" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.mp4 -->
+          <map:match pattern="*/*/**.mp4">
+            <map:read src="pubs/{1}/resources/shared/{3}.mp4" mime-type="video/mpeg" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.mov -->
+          <map:match pattern="*/*/**.mov">
+            <map:read src="pubs/{1}/resources/shared/{3}.mov" mime-type="video/quicktime" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.bin -->
+          <map:match pattern="*/*/**.bin">
+            <map:read src="pubs/{1}/resources/shared/{3}.bin" mime-type="application/mac-binhex40" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.sea -->
+          <map:match pattern="*/*/**.sea">
+            <map:read src="pubs/{1}/resources/shared/{3}.sea" mime-type="application/sea" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.hqx -->
+          <map:match pattern="*/*/**.hqx">
+            <map:read src="pubs/{1}/resources/shared/{3}.hqx" mime-type="application/mac-binhex40" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.sit -->
+          <map:match pattern="*/*/**.sit">
+            <map:read src="pubs/{1}/resources/shared/{3}.sit" mime-type="application/x-stuffit" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.zip -->
+          <map:match pattern="*/*/**.zip">
+            <map:read src="pubs/{1}/resources/shared/{3}.zip" mime-type="application/zip" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.jmx -->
+          <map:match pattern="*/*/**.jmx">
+            <map:read src="pubs/{1}/resources/shared/{3}.jmx" mime-type="application/x-ms-word" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.jcl -->
+          <map:match pattern="*/*/**.jcl">
+            <map:read src="pubs/{1}/resources/shared/{3}.jcl" mime-type="application/x-ms-word" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.qz -->
+          <map:match pattern="*/*/**.qz">
+            <map:read src="pubs/{1}/resources/shared/{3}.qz" mime-type="application/x-ms-word" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.jbc -->
+          <map:match pattern="*/*/**.jbc">
+            <map:read src="pubs/{1}/resources/shared/{3}.jbc" mime-type="application/x-ms-word" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.jmt -->
+          <map:match pattern="*/*/**.jmt">
+            <map:read src="pubs/{1}/resources/shared/{3}.jmt" mime-type="application/x-ms-word" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.cfg -->
+          <map:match pattern="*/*/**.cfg">
+            <map:read src="pubs/{1}/resources/shared/{3}.cfg" mime-type="application/x-ms-word" />
+          </map:match>
+
+<!-- matches pub-id/area/**.* this fallback may not work very well, but better than a 404
+          <map:match pattern="*/*/**.*">
+            <map:read src="pubs/{1}/resources/shared/{3}.*" mime-type="application/x-ms-word" />
+          </map:match>
+-->
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>
