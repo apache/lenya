@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsl,v 1.31 2004/05/26 21:40:17 gregor Exp $ -->
+<!-- $Id: search-and-results.xsl,v 1.32 2004/05/26 22:23:37 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0" 
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
@@ -168,7 +168,9 @@
                 </xsl:when>
                 <xsl:when test="uri">
                     <td> <strong><a><xsl:attribute name="href"><xsl:value-of 
-                        select="/search-and-results/search/publication-prefix"/><xsl:value-of 
+                        select="$contextprefix"/>/<xsl:value-of 
+                        select="/search-and-results/configuration/publication/@pid"/>/<xsl:value-of 
+                        select="$area"/><xsl:value-of 
                         select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates 
                         select="title"/></a></strong> <br />
                         <xsl:apply-templates 
