@@ -144,11 +144,17 @@
         }
 
       String fields_para = request.getParameter(publication_id + ".fields");
-      //String fields_para = <!--<xsp-request:get-parameter name="fields" default="null"/>-->;
+      if (fields_para == null) { // all indices have the same fields
+          fields_para = request.getParameter("dummy-index-id.fields");
+      }
 
-      field = fields_para;
-      fields = new String[1];
-      fields[0] = field;
+      if (fields_para != null) {
+          field = fields_para;
+          fields = new String[1];
+          fields[0] = field;
+      }
+
+
 /*
       if(fields_para.equals("title")){
         fields=new String[1];
