@@ -61,7 +61,8 @@
       </values>
     </component-instance>
 
-    <component-instance logger="core.modules.input" name="forrest" class="org.apache.cocoon.components.modules.input.ChainMetaModule">
+    <component-instance logger="core.modules.input" name="forrest"
+      class="org.apache.cocoon.components.modules.input.ChainMetaModule">
       <input-module name="request-param"/>
       <input-module name="request-attr"/>
       <input-module name="session-attr"/>
@@ -76,6 +77,9 @@
       
     <component-instance logger="sitemap.modules.input.page-envelope" name="page-envelope"
         class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
+
+    <component-instance logger="sitemap.modules.input.dublincore" name="dublincore"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.DublinCoreModule"/>
 
     <component-instance logger="core.modules.input.access-control" name="access-control"
         class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
