@@ -140,7 +140,7 @@ public class Deactivate extends PublicationTask {
         getPublication().deleteDocument(liveDocument);
 
         if (!liveDocument.existsInAnyLanguage()) {
-            ResourcesManager resourcesManager = new ResourcesManager(liveDocument);
+            ResourcesManager resourcesManager = liveDocument.getResourcesManager();
             resourcesManager.deleteResources();
         }
 
