@@ -1,5 +1,5 @@
 /*
-$Id: UserAuthenticatorAction.java,v 1.10 2003/09/02 18:22:37 andreas Exp $
+$Id: UserAuthenticatorAction.java,v 1.11 2003/10/29 00:25:01 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,25 +55,23 @@ $Id: UserAuthenticatorAction.java,v 1.10 2003/09/02 18:22:37 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.Map;
+
 import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.parameters.Parameters;
-
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.AccessControllerResolver;
 import org.apache.lenya.cms.ac2.DefaultAccessController;
-
 import org.w3c.dom.Document;
-
-import java.util.Map;
 
 
 /**
@@ -148,7 +146,7 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
      * @throws AccessControlException if there was a problem creating the access controler.
      * @throws ComponentException if the access control manager component cannot be found.
      */
-    protected User getUser(String username) throws AccessControlException, ComponentException {
+    protected User getUser(String username) throws AccessControlException, ComponentException, ServiceException {
         User user;
         AccessControllerResolver resolver = null;
         AccessController accessController = null;
