@@ -17,20 +17,19 @@
 
 <!-- $Id: site.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
+<site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" >
     <project-information href="" label="Project" tab="project">
         <index_pm href="index.html" label="About"/>
         <changes href="changes.html" label="Changes"/>
         <charter href="charter.html" label="Charter"/>
         <history href="history.html" label="History"/>
-        <screenshots href="screenshots.html" label="Screenshots"/>
         <node-d href="roadmap.html" label="Roadmap"/>
         <node-i href="license.html" label="License"/>
         <resolution href="resolution.html" label="Resolution"/>
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
-      <docu1.4 href="1_4/" label="Version 1.4" tab="1.4">
-        <index_1_4 href="index.html" label="Lenya 1.4 (dev)"/>
+      <docu1.4 href="1_4/" label="Version 1.4" target="1.4" tab="1_4">
+      	<index_pm href="index.html" label="Index"/>
 <!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
           <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
 -->          <installation href="installation/" label="Installation">
@@ -38,17 +37,12 @@
               <cvs href="subversion.html" label="Subversion Access"/>
               <install href="source_version.html" label="Installation Instructions"/>
           </installation>
-          <concepts href="concepts/" label="Concepts">
-            <usecase-framework href="usecase-framework/" label="Usecase Framework">
-              <usecase-framework-index href="index.html" label="Usecase Framework"/>
-            </usecase-framework>
-          </concepts>
           <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
       </docu1.4>
   <!--    <documentation href="docs/" label="Documentation" tab="docs">
         <index_doc href="index.html" label="Documentation" wholesite="true"/>
--->        <docu1.2.x href="1_2_x/" label="Version 1.2" tab="1.2">
-             <index_1_2 href="index.html" label="Lenya 1.2.x"/>
+-->        <docu1.2.x href="1_2_x/" label="Version 1.2" target="1.2" tab="1_2">
+			<index_pm href="index.html" label="Index"/>
 <!--          <whole_docu href="../documentation-1-2.pdf" label="1.2 PDF docs (all in one)" />
           <whole_docu href="../documentation-1-2.html" label="1.2 HTML docs (all in one)" />
 -->          <installation12 href="installation/" label="Installation">
@@ -184,7 +178,6 @@
     <images href="images/">
         <live href="live/">
             <navigation.img href="navigation.png"/>
-            <usecase-framework-architecture.img href="usecase-framework-architecture.png"/>
         </live>
     </images>
     <external-refs>
@@ -202,7 +195,6 @@
         <lenya href="http://lenya.apache.org"/>
         <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
         <cvs.asf href="http://svn.apache.org/"/>
-        <bxe href="http://bxe.oscom.org"/>
         <forrest.apache.org href="http://forrest.apache.org/">
             <forrest.build href="build.html"/>
             <forrest.install href="docs/your-project.html#installing"/>
