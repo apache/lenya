@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.22 2004/01/07 13:22:42 egli Exp $
+$Id: SiteTreeNodeImpl.java,v 1.23 2004/01/21 16:18:24 edith Exp $
 <License>
 
  ============================================================================
@@ -73,8 +73,8 @@ import java.util.List;
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: egli $
- * @version $Revision: 1.22 $
+ * @author $Author: edith $
+ * @version $Revision: 1.23 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -398,6 +398,36 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         }
     }
 
+    /**
+     * (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#acceptSubtree(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
+     */
+    public void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException {
+      List orderedNodes = this.postOrder();
+      for (int i = 0; i < orderedNodes.size(); i++) {
+          SiteTreeNode node = (SiteTreeNode)orderedNodes.get(i);
+          node.accept(visitor);  
+      }
+    }
+
+    /**
+     *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTreeNode#postOrder()
+	 */
+	public List postOrder(){
+        List list = new ArrayList();
+        SiteTreeNode[] children = this.getChildren();
+        if (children == null) {
+            log.info("The node " + this.getId() + " has no children");
+        } else {
+            for (int i = 0; i < children.length; i++) {
+                List orderedChildren = children[i].postOrder();
+                list.addAll(orderedChildren);
+            }
+        }
+        list.add(this);   
+		return list;
+    }
     /**
      * @see org.apache.lenya.cms.publication.SiteTreeNode#setLabel(org.apache.lenya.cms.publication.Label)
      */

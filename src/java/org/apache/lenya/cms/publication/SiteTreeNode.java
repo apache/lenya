@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.15 2003/09/23 13:46:02 edith Exp $
+$Id: SiteTreeNode.java,v 1.16 2004/01/21 16:18:24 edith Exp $
 <License>
 
  ============================================================================
@@ -55,13 +55,15 @@ $Id: SiteTreeNode.java,v 1.15 2003/09/23 13:46:02 edith Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import java.util.List;
+
 /**
  * This interface is a wrapper around the more general w3c.Node which
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
  * @author $Author: edith $
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public interface SiteTreeNode {
 
@@ -206,10 +208,25 @@ public interface SiteTreeNode {
     void acceptSubtree(SiteTreeNodeVisitor visitor) throws DocumentException;
 
     /**
+     * Traverse in a reverse way the node ant its children and call the
+     * accept method.
+     * @param visitor The visitor.
+     * 
+     * @throws DocumentException if an error occurs
+	 */
+	void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException; 
+    /**
      * Sets a label of an this node. If the label does not exist, it is added.
      * Otherwise, the existing label is replaced.
      * 
      * @param label the label to add
      */
     void setLabel(Label label);
+
+	/**
+     * Give a list of the children and this node in a post order way
+	 * @return The list
+	 */
+	List postOrder();
+    
 }
