@@ -12,21 +12,10 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
-						</xsp:attribute>Authoring Home
-						</item>
-				</block>
-				<block>
-					<item>
-						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/"+articleId+"&amp;task-id=publish</xsp:attribute>Publish&#160;this Page
 					</item>
 				</block>
 				<block>
-					<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
--->
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
@@ -35,14 +24,15 @@
 			<menu name="Edit" label="Search">
 				<block>
 				</block>
-				<!--
-				<block>
-					<item href="/wyona-cms/lucene/create">Create&#160;Lucene&#160;Index</item>
-					<item href="/wyona-cms/lucene/search">Search&#160;with&#160;Lucene</item>
-				</block>
--->
 			</menu>
 			<menu name="Tools" label="Help">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+						</xsp:attribute>Authoring Home
+						</item>
+				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
@@ -55,14 +45,6 @@
 						Scheduler&#160;Admin
 					</item>
 				</block>
-				<!--
-				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr>
-						</xsp:attribute>Rollback</item>
-				</block>
--->
 			</menu>
 			<menu name="Help" label="Debug">
 				<block>
