@@ -163,7 +163,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
       }
 
     // Add node: branch or leaf
-    parent_element.addElement(childtype).addAttribute("relURI",creator.generateTreeId(childid,childType)).addAttribute("doctype",doctype).addAttribute("menuName",childname);
+    parent_element.addElement(childtype).addAttribute("relURI",creator.generateTreeId(childid,childType)).addAttribute("doctype",doctype).addAttribute("menuName",creator.getChildName(childname));
     getLogger().debug("Tree has been modified: "+doc.asXML());
 
     // Write new tree

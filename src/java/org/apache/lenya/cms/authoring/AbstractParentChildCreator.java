@@ -24,6 +24,19 @@ public abstract class AbstractParentChildCreator {
      * @exception Exception if an error occurs
      */
     public abstract short getChildType(short childType) throws Exception;
+      
+    /**
+     * Create Child Name for tree entry
+     * @param childname a <code>String</code> value
+     * @return a <code>String</code> for Child Name for tree entry
+     * @exception Exception if an error occurs
+     */
+    public String getChildName(String childname) throws Exception{
+      if(childname.length() != 0){
+        return childname;
+        }
+      return "abstract_default"; 
+      }
     
     /**
      * Generate a Tree Id.

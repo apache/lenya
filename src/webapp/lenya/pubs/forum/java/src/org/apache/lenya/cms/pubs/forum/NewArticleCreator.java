@@ -24,6 +24,12 @@ public class NewArticleCreator extends AbstractParentChildCreator{
     return AbstractParentChildCreator.BRANCH_NODE;
     }
 /**
+ * Does anybody care?
+ */
+  public String getChildName(String childname) throws Exception{
+    return childname+"levi";
+    }
+/**
  *
  */
   public String generateTreeId(String childId,short childType) throws Exception{
@@ -49,6 +55,25 @@ public class NewArticleCreator extends AbstractParentChildCreator{
     //eid.remove(org.dom4j.DocumentHelper.createText("@ID@"));
     eid.addText(id);
     log.error(eid.getPath()+" "+eid.getText());
+
+    // Replace year
+    Element eyear=(Element)doc.selectSingleNode("/article/meta/date/year");
+    log.debug(eyear.getPath()+" "+eyear.getText());
+    //eid.remove(org.dom4j.DocumentHelper.createText("@ID@"));
+    eyear.addText("2002");
+    log.debug(eyear.getPath()+" "+eyear.getText());
+
+    // Replace hour 
+    Element ehour=(Element)doc.selectSingleNode("/article/meta/date/hour");
+    log.debug(ehour.getPath()+" "+ehour.getText());
+    ehour.addText("01");
+    log.debug(ehour.getPath()+" "+ehour.getText());
+
+    // Replace minute 
+    Element eminute=(Element)doc.selectSingleNode("/article/meta/date/minute");
+    log.debug(eminute.getPath()+" "+eminute.getText());
+    eminute.addText("28");
+    log.debug(eminute.getPath()+" "+eminute.getText());
 
     // Write file
     File parent=new File(new File(filename).getParent());
