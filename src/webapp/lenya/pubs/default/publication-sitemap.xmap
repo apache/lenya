@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.55 2003/10/06 12:45:13 michi Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.56 2003/10/06 14:54:11 michi Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -40,7 +40,7 @@
 
 
     <!-- BX Editor: Entries -->
-    <map:pipeline>
+    <map:pipeline type="noncaching">
       <map:match pattern="**/*-bxeng.html">
         <map:act type="resource-exists" src="../../../../ROOT/bxeng/index.html"> <!-- Check for BXENG -->
           <map:aggregate element="bxeng">
@@ -49,7 +49,7 @@
           </map:aggregate>
           <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
           <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
-            <map:parameter name="configfile" value="./{2}-config-bxeng.xml"/>
+            <map:parameter name="configfile" value="./{../2}-config-bxeng.xml"/>
           </map:transform>
           <map:serialize type="xhtml-iso-8859-1"/>
         </map:act>
@@ -57,7 +57,7 @@
         <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
-    <map:pipeline>
+    <map:pipeline type="noncaching">
       <map:match pattern="**/*-config-bxeng.xml">
         <map:generate src="../../resources/misc/bxeng/inc/config.xml"/>
         <map:transform src="../../xslt/bxeng/config-xml.xsl">
@@ -76,7 +76,7 @@
           <map:when test="PUT">
             <map:generate type="stream"/>
             <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
-              <map:parameter name="source" value="content/{1}/{2}/index_{3}.xml"/>
+              <map:parameter name="source" value="content/{1}/{2}/{2}_{3}.xml"/>
             </map:transform>
             <map:transform type="write-source"/>
             <map:serialize type="xml" status-code="204"/>
