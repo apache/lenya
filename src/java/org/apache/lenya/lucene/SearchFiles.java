@@ -1,5 +1,5 @@
 /*
-$Id: SearchFiles.java,v 1.10 2003/07/23 13:21:26 gregor Exp $
+$Id: SearchFiles.java,v 1.11 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,10 @@ $Id: SearchFiles.java,v 1.10 2003/07/23 13:21:26 gregor Exp $
 */
 package org.apache.lenya.lucene;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -63,10 +67,6 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
 
 
 class SearchFiles {

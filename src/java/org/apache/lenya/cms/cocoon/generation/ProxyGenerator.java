@@ -1,5 +1,5 @@
 /*
-$Id: ProxyGenerator.java,v 1.19 2003/07/23 13:21:47 gregor Exp $
+$Id: ProxyGenerator.java,v 1.20 2004/02/02 02:50:41 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,36 +55,29 @@ $Id: ProxyGenerator.java,v 1.19 2003/07/23 13:21:47 gregor Exp $
 */
 package org.apache.lenya.cms.cocoon.generation;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Enumeration;
+
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.cocoon.environment.Cookie;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpRequest;
-
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.methods.PostMethod;
-
 import org.apache.excalibur.xml.sax.SAXParser;
-
 import org.apache.log4j.Category;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import java.util.Enumeration;
 
 
 /**

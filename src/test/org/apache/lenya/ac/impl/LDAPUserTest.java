@@ -55,8 +55,9 @@ $Id
 */
 package org.apache.lenya.ac.impl;
 
-import org.apache.avalon.framework.configuration.ConfigurationException;
+import java.io.File;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileGroup;
@@ -67,8 +68,6 @@ import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
-
-import java.io.File;
 
 /**
  * @author egli

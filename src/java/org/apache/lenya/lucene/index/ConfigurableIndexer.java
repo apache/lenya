@@ -54,17 +54,10 @@
 */
 package org.apache.lenya.lucene.index;
 
-import org.apache.lenya.xml.DocumentHelper;
-
-import org.apache.log4j.Category;
-
-import org.w3c.dom.Element;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.StringWriter;
 import java.io.Writer;
-
 import java.net.URI;
 import java.net.URL;
 
@@ -74,11 +67,15 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.log4j.Category;
+import org.w3c.dom.Element;
+
 
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: ConfigurableIndexer.java,v 1.11 2003/11/26 00:31:12 michi Exp $
+ * @version $Id: ConfigurableIndexer.java,v 1.12 2004/02/02 02:50:38 stefano Exp $
  */
 public class ConfigurableIndexer extends AbstractIndexer {
     Category log = Category.getInstance(ConfigurableIndexer.class);

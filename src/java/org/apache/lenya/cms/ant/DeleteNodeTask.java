@@ -1,5 +1,5 @@
 /*
-$Id: DeleteNodeTask.java,v 1.2 2003/08/12 10:06:41 egli Exp $
+$Id: DeleteNodeTask.java,v 1.3 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,6 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-
 import org.apache.tools.ant.BuildException;
 
 

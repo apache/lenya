@@ -54,21 +54,18 @@
 */
 package org.apache.lenya.cms.rc;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Vector;
+
 import org.apache.lenya.util.XPSFileOutputStream;
 import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMWriter;
 import org.apache.lenya.xml.XPointerFactory;
-
 import org.apache.log4j.Category;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.util.Vector;
 
 
 /**
@@ -77,7 +74,7 @@ import java.util.Vector;
  * @author Michael Wechner
  * @author Marc Liyanage
  * @author Edith Chevrier
- * @version $Id: RCML.java,v 1.20 2003/12/18 17:01:18 edith Exp $
+ * @version $Id: RCML.java,v 1.21 2004/02/02 02:50:36 stefano Exp $
  */
 public class RCML {
     private static Category log = Category.getInstance(RCML.class);

@@ -1,5 +1,5 @@
 /*
-$Id: TaskSequence.java,v 1.13 2003/07/09 13:44:51 egli Exp $
+$Id: TaskSequence.java,v 1.14 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,6 @@ package org.apache.lenya.cms.task;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.log4j.Category;
 
 

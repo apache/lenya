@@ -54,18 +54,17 @@
 */
 package org.apache.lenya.xml;
 
-import org.apache.log4j.Category;
-
 import java.net.URL;
-
 import java.util.Properties;
+
+import org.apache.log4j.Category;
 
 
 /**
  * Reads xpsconf.properties
  *
  * @author Michael Wechner
- * @version $Id: Configuration.java,v 1.16 2004/01/16 09:19:42 gregor Exp $
+ * @version $Id: Configuration.java,v 1.17 2004/02/02 02:50:36 stefano Exp $
  * @deprecated replaced by config/ directory
  */
 public class Configuration {

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.36 2003/09/23 13:50:40 edith Exp $
+$Id: DefaultSiteTree.java,v 1.37 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,23 +55,8 @@ $Id: DefaultSiteTree.java,v 1.36 2003/09/23 13:50:40 edith Exp $
 */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-
-import org.apache.log4j.Category;
-import org.apache.xpath.XPathAPI;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -79,11 +64,22 @@ import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.log4j.Category;
+import org.apache.xpath.XPathAPI;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);

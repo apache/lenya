@@ -1,5 +1,5 @@
 /*
-$Id: DublinCoreTest.java,v 1.1 2003/08/28 09:56:22 egli Exp $
+$Id: DublinCoreTest.java,v 1.2 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -56,10 +56,10 @@ $Id: DublinCoreTest.java,v 1.1 2003/08/28 09:56:22 egli Exp $
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.PublicationHelper;
-
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
+
+import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * 

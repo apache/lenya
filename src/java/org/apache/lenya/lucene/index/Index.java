@@ -1,5 +1,5 @@
 /*
-$Id: Index.java,v 1.9 2003/11/13 22:55:17 michi Exp $
+$Id: Index.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,17 +55,15 @@ $Id: Index.java,v 1.9 2003/11/13 22:55:17 michi Exp $
 */
 package org.apache.lenya.lucene.index;
 
+import java.io.File;
+import java.util.Date;
+
 import org.apache.lenya.lucene.IndexConfiguration;
 import org.apache.lenya.util.DebugConfiguration;
 import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.XPath;
-
 import org.w3c.dom.Document;
-
-import java.io.File;
-
-import java.util.Date;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreator.java,v 1.5 2003/08/07 16:48:05 egli Exp $
+$Id: DocumentCreator.java,v 1.6 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,16 +55,15 @@ $Id: DocumentCreator.java,v 1.5 2003/08/07 16:48:05 egli Exp $
 */
 package org.apache.lenya.cms.authoring;
 
+import java.io.File;
+import java.util.Collections;
+
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
-
-import java.io.File;
-
-import java.util.Collections;
 
 /**
  * @author andreas

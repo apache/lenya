@@ -1,5 +1,5 @@
 /*
-$Id: Stack.java,v 1.11 2003/07/23 13:21:14 gregor Exp $
+$Id: Stack.java,v 1.12 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,7 @@ $Id: Stack.java,v 1.11 2003/07/23 13:21:14 gregor Exp $
 */
 package org.apache.lenya.util;
 
-import java.util.*;
+import java.util.Vector;
 
 
 /**

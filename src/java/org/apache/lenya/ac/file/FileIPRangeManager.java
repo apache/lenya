@@ -44,8 +44,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.lenya.ac.*;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.IPRange;
+import org.apache.lenya.ac.IPRangeManager;
+import org.apache.lenya.ac.Item;
 
 /**
  * Manager for IP address ranges.

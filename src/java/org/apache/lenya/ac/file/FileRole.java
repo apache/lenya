@@ -1,5 +1,5 @@
 /*
-$Id: FileRole.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
+$Id: FileRole.java,v 1.2 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,16 +55,16 @@ $Id: FileRole.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
 */
 package org.apache.lenya.ac.file;
 
+import java.io.File;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
-import org.apache.lenya.ac.impl.ItemConfiguration;
 import org.apache.lenya.ac.impl.AbstractRole;
-
-import java.io.File;
+import org.apache.lenya.ac.impl.ItemConfiguration;
 
 
 /**

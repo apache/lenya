@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.23 2003/12/12 16:00:07 andreas Exp $
+$Id: PublicationFactory.java,v 1.24 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,21 +55,20 @@ $Id: PublicationFactory.java,v 1.23 2003/12/12 16:00:07 andreas Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
-
 import org.apache.lenya.cms.publication.file.FilePublication;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Category;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Factory for creating publication objects.

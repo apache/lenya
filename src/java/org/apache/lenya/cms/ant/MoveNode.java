@@ -1,5 +1,5 @@
 /*
-$Id: MoveNode.java,v 1.7 2003/09/23 13:50:40 edith Exp $
+$Id: MoveNode.java,v 1.8 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id: MoveNode.java,v 1.7 2003/09/23 13:50:40 edith Exp $
 package org.apache.lenya.cms.ant;
 
 import java.util.StringTokenizer;
-
 
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;

@@ -54,15 +54,16 @@
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.io.File;
+import java.util.Map;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
@@ -72,18 +73,13 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-
 import org.apache.log4j.Category;
-
-import java.io.File;
-
-import java.util.Map;
 
 /**
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: RevisionControllerAction.java,v 1.31 2003/12/03 15:29:58 michi Exp $
+ * @version $Id: RevisionControllerAction.java,v 1.32 2004/02/02 02:50:37 stefano Exp $
  */
 public class RevisionControllerAction extends AbstractAction {
     Category log = Category.getInstance(RevisionControllerAction.class);

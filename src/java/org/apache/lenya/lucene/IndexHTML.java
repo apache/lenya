@@ -1,5 +1,5 @@
 /*
-$Id: IndexHTML.java,v 1.17 2003/07/23 13:21:26 gregor Exp $
+$Id: IndexHTML.java,v 1.18 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,21 +55,23 @@ $Id: IndexHTML.java,v 1.17 2003/07/23 13:21:26 gregor Exp $
 */
 package org.apache.lenya.lucene;
 
+import java.io.File;
+import java.util.Date;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.*;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TermEnum;
 import org.apache.lucene.util.Arrays;
-
-import java.io.File;
-
-import java.util.Date;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class IndexHTML {
     private boolean deleting = false; // true during deletion pass

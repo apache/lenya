@@ -1,5 +1,5 @@
 /*
-$Id: ResourceFilePublisher.java,v 1.6 2003/07/23 13:21:09 gregor Exp $
+$Id: ResourceFilePublisher.java,v 1.7 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,20 +55,15 @@ $Id: ResourceFilePublisher.java,v 1.6 2003/07/23 13:21:09 gregor Exp $
 */
 package org.apache.lenya.cms.publishing;
 
-import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.lenya.cms.task.ExecutionException;
-
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import java.lang.IllegalArgumentException;
-
 import java.util.StringTokenizer;
+
+import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.lenya.cms.task.ExecutionException;
+import org.apache.log4j.Category;
 
 
 /**

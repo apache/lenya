@@ -1,5 +1,5 @@
 /*
-$Id: ResourcePublishingEnvironment.java,v 1.6 2003/07/23 13:21:09 gregor Exp $
+$Id: ResourcePublishingEnvironment.java,v 1.7 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -57,7 +57,6 @@ package org.apache.lenya.cms.publishing;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-
 import org.apache.log4j.Category;
 
 

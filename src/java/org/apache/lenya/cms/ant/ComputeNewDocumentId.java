@@ -1,5 +1,5 @@
 /*
-$Id: ComputeNewDocumentId.java,v 1.4 2003/09/23 09:18:10 edith Exp $
+$Id: ComputeNewDocumentId.java,v 1.5 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -57,7 +57,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.UniqueDocumentId;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;

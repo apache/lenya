@@ -1,5 +1,5 @@
 /*
-$Id: FileItemManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
+$Id: FileItemManager.java,v 1.2 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,24 +55,22 @@ $Id: FileItemManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
 */
 package org.apache.lenya.ac.file;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-
-import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Item;
-import org.apache.lenya.ac.ItemManagerListener;
-import org.apache.lenya.ac.impl.*;
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.FileFilter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.ItemManagerListener;
+import org.apache.lenya.ac.impl.ItemConfiguration;
+import org.apache.log4j.Category;
 
 
 /**

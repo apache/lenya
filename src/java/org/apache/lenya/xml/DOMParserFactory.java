@@ -54,24 +54,30 @@
 */
 package org.apache.lenya.xml;
 
-import org.apache.lenya.xml.parser.Parser;
-
-import org.apache.log4j.Category;
-
-import org.w3c.dom.*;
-
-import org.xml.sax.SAXException;
-
-import java.io.*;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.util.Properties;
+
+import org.apache.lenya.xml.parser.Parser;
+import org.apache.log4j.Category;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 
 /**
  * Utility class for creating DOM documents
  *
  * @author Michael Wechner
- * @version $Id: DOMParserFactory.java,v 1.17 2003/12/04 14:16:57 andreas Exp $
+ * @version $Id: DOMParserFactory.java,v 1.18 2004/02/02 02:50:36 stefano Exp $
  * @deprecated replaced by DocumentHelper
  */
 public class DOMParserFactory {

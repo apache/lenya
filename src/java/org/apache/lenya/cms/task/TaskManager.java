@@ -1,5 +1,5 @@
 /*
-$Id: TaskManager.java,v 1.20 2003/09/05 14:40:46 andreas Exp $
+$Id: TaskManager.java,v 1.21 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,19 +55,17 @@ $Id: TaskManager.java,v 1.20 2003/09/05 14:40:46 andreas Exp $
 */
 package org.apache.lenya.cms.task;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-
 import org.apache.log4j.Category;
 import org.xml.sax.SAXException;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * DOCUMENT ME!

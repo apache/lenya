@@ -55,22 +55,18 @@ $Id
 */
 package org.apache.lenya.ac.file;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
-import org.apache.lenya.ac.file.FileGroup;
-import org.apache.lenya.ac.file.FileGroupManager;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
-
 import org.xml.sax.SAXException;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * @author egli

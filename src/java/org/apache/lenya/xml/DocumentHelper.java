@@ -54,26 +54,12 @@
 */
 package org.apache.lenya.xml;
 
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
-import org.xml.sax.SAXException;
-
-import org.apache.xml.resolver.tools.CatalogResolver;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
-
 import java.net.URI;
 import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,12 +74,22 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.xml.resolver.tools.CatalogResolver;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
+
 
 /**
  * Various utility methods to work with JAXP.
  *
  * @author Andreas Hartmann
- * @version $Id: DocumentHelper.java,v 1.22 2003/12/03 11:18:13 edith Exp $
+ * @version $Id: DocumentHelper.java,v 1.23 2004/02/02 02:50:36 stefano Exp $
  */
 public class DocumentHelper {
     /**

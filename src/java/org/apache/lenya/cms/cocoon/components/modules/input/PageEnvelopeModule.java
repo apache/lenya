@@ -54,25 +54,24 @@
 */
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Input module wrapping the page envelope. This module provides publication
@@ -81,7 +80,7 @@ import java.util.Map;
  * @see org.apache.lenya.cms.publication.PageEnvelope
  * 
  * @author  Andreas Hartmann
- * @version $Id: PageEnvelopeModule.java,v 1.33 2004/01/26 10:21:38 michi Exp $
+ * @version $Id: PageEnvelopeModule.java,v 1.34 2004/02/02 02:50:40 stefano Exp $
  */
 public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
 

@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.1 2003/11/13 16:07:03 andreas Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.2 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -64,8 +64,9 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
-import org.apache.lenya.ac.*;
-import org.apache.lenya.ac.impl.*;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;

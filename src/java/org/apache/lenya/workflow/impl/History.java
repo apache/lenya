@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.15 2004/01/21 18:06:24 edith Exp $
+$Id: History.java,v 1.16 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,22 +55,6 @@ $Id: History.java,v 1.15 2004/01/21 18:06:24 edith Exp $
 */
 package org.apache.lenya.workflow.impl;
 
-import org.apache.lenya.workflow.BooleanVariable;
-import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.State;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.lenya.workflow.WorkflowListener;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-
-import org.apache.xpath.XPathAPI;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -82,6 +66,20 @@ import java.util.Date;
 import java.util.List;
 
 import javax.xml.transform.TransformerException;
+
+import org.apache.lenya.workflow.BooleanVariable;
+import org.apache.lenya.workflow.Event;
+import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.State;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.WorkflowListener;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.xpath.XPathAPI;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author andreas

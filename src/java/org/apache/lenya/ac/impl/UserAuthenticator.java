@@ -1,5 +1,5 @@
 /*
-$Id: UserAuthenticator.java,v 1.1 2003/11/13 16:07:08 andreas Exp $
+$Id: UserAuthenticator.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,11 @@ package org.apache.lenya.ac.impl;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.ac.*;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Authenticator;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
 
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>

@@ -62,12 +62,11 @@ import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
-
 import org.apache.tools.ant.BuildException;
 
 /**
  * @author andreas
- * @version $Id: InitWorkflowHistoryTask.java,v 1.9 2003/10/21 09:51:54 andreas Exp $
+ * @version $Id: InitWorkflowHistoryTask.java,v 1.10 2004/02/02 02:50:40 stefano Exp $
  *
  */
 public class InitWorkflowHistoryTask extends PublicationTask {

@@ -54,23 +54,29 @@
 */
 package org.apache.lenya.xml.parser;
 
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.Reader;
+
 import org.apache.lenya.xml.DOMWriter;
-
-import org.apache.xerces.dom.*;
-
-//import org.apache.xerces.impl.xs.dom.DOMParser;
+import org.apache.xerces.dom.CDATASectionImpl;
+import org.apache.xerces.dom.CommentImpl;
+import org.apache.xerces.dom.DocumentImpl;
+import org.apache.xerces.dom.ElementImpl;
+import org.apache.xerces.dom.TextImpl;
 import org.apache.xerces.parsers.DOMParser;
-
-import org.w3c.dom.*;
-
-import java.io.*;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 
 /**
  * Xerces Parser Implementation
  *
  * @author Michael Wechner
- * @version $Id: XercesParser.java,v 1.14 2003/12/04 14:16:57 andreas Exp $
+ * @version $Id: XercesParser.java,v 1.15 2004/02/02 02:50:41 stefano Exp $
  */
 public class XercesParser implements Parser {
     /**

@@ -1,5 +1,5 @@
 /*
-$Id: HTMLDocument.java,v 1.18 2003/07/23 13:21:26 gregor Exp $
+$Id: HTMLDocument.java,v 1.19 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,13 @@ $Id: HTMLDocument.java,v 1.18 2003/07/23 13:21:26 gregor Exp $
 */
 package org.apache.lenya.lucene;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.lenya.lucene.html.HTMLParser;
-
-import org.apache.lucene.document.*;
-
-import java.io.*;
+import org.apache.lucene.document.DateField;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
 
 
 /**

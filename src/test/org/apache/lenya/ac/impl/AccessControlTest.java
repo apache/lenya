@@ -63,11 +63,11 @@ import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.file.FileAccreditableManager;
+import org.apache.lenya.ac.file.FilePolicyManager;
 import org.apache.lenya.cms.ExcaliburTest;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
-import org.apache.lenya.ac.file.FileAccreditableManager;
-import org.apache.lenya.ac.file.FilePolicyManager;
 
 /**
  * @author andreas

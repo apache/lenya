@@ -1,5 +1,5 @@
 /*
-$Id: TidyCommandLine.java,v 1.9 2003/07/23 13:21:14 gregor Exp $
+$Id: TidyCommandLine.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,22 +55,21 @@ $Id: TidyCommandLine.java,v 1.9 2003/07/23 13:21:14 gregor Exp $
 */
 package org.apache.lenya.util;
 
-import org.w3c.tidy.Tidy;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-
 import java.net.URL;
+
+import org.w3c.tidy.Tidy;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class TidyCommandLine {
     /**

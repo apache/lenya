@@ -54,16 +54,16 @@
 */
 package org.apache.lenya.cms.rc;
 
-import org.apache.log4j.Category;
-
 import java.util.Properties;
+
+import org.apache.log4j.Category;
 
 
 /**
  * Reads conf.properties
  *
  * @author Michael Wechner
- * @version $Id: Configuration.java,v 1.14 2003/12/15 16:22:33 michi Exp $
+ * @version $Id: Configuration.java,v 1.15 2004/02/02 02:50:36 stefano Exp $
  */
 public class Configuration {
     private static Category log = Category.getInstance(Configuration.class);

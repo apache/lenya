@@ -1,5 +1,5 @@
 /*
-$Id: HTMLHandler.java,v 1.9 2003/07/23 13:21:14 gregor Exp $
+$Id: HTMLHandler.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: HTMLHandler.java,v 1.9 2003/07/23 13:21:14 gregor Exp $
 */
 package org.apache.lenya.util;
 
-import org.apache.log4j.Category;
-
 import java.util.ArrayList;
 
 import javax.swing.text.MutableAttributeSet;
@@ -64,12 +62,14 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 
+import org.apache.log4j.Category;
+
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class HTMLHandler extends ParserCallback {
     Category log = Category.getInstance(HTMLHandler.class);

@@ -1,5 +1,5 @@
 /*
-$Id: IndexInformation.java,v 1.5 2003/07/23 13:21:27 gregor Exp $
+$Id: IndexInformation.java,v 1.6 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,23 +55,20 @@ $Id: IndexInformation.java,v 1.5 2003/07/23 13:21:27 gregor Exp $
 */
 package org.apache.lenya.lucene.index;
 
-import org.apache.lenya.util.CommandLineLogger;
-
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
-
 import java.io.File;
 import java.io.FileFilter;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.apache.lenya.util.CommandLineLogger;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
 
 
 /**
@@ -210,7 +207,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.5 $
+     * @version $Revision: 1.6 $
      */
     public class CreateHandler extends AbstractIndexIteratorHandler {
         /** Handles a file.
@@ -225,7 +222,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.5 $
+     * @version $Revision: 1.6 $
      */
     public class UpdateHandler extends AbstractIndexIteratorHandler {
         /** Handles a new document.

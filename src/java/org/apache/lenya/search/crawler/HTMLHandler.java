@@ -1,5 +1,5 @@
 /*
-$Id: HTMLHandler.java,v 1.9 2003/07/23 13:21:37 gregor Exp $
+$Id: HTMLHandler.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -58,10 +58,8 @@ package org.apache.lenya.search.crawler;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +74,7 @@ import javax.swing.text.html.parser.ParserDelegator;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public final class HTMLHandler extends ParserCallback implements ContentHandler {
     private static final char space = ' ';

@@ -57,14 +57,13 @@ package org.apache.lenya.lucene.parser;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-
 import java.net.URI;
 
 
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: HTMLParser.java,v 1.5 2003/12/02 22:24:57 michi Exp $
+ * @version $Id: HTMLParser.java,v 1.6 2004/02/02 02:50:38 stefano Exp $
  */
 public interface HTMLParser {
     void parse(File file) throws ParseException;

@@ -1,5 +1,5 @@
 /*
-$Id: FileDocument.java,v 1.9 2003/07/23 13:21:26 gregor Exp $
+$Id: FileDocument.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,16 +55,15 @@ $Id: FileDocument.java,v 1.9 2003/07/23 13:21:26 gregor Exp $
 */
 package org.apache.lenya.lucene;
 
-import org.apache.lucene.document.DateField;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import org.apache.lucene.document.DateField;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
 
 /**
  * A utility for making Lucene Documents from a File.

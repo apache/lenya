@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.15 2004/01/08 14:54:22 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.16 2004/02/02 02:50:41 stefano Exp $
 <License>
 
  ============================================================================
@@ -77,14 +77,13 @@ import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.search.Grep;
-
 import org.apache.log4j.Category;
 
 /**
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class DocumentReferencesHelper {
 

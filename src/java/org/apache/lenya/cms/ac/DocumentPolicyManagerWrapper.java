@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentPolicyManagerWrapper.java,v 1.1 2003/11/13 16:07:03 andreas Exp $ <License>
+ * $Id: DocumentPolicyManagerWrapper.java,v 1.2 2004/02/02 02:50:38 stefano Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -54,8 +54,14 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
-import org.apache.lenya.ac.*;
-import org.apache.lenya.ac.impl.*;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.impl.DefaultAccessController;
+import org.apache.lenya.ac.impl.DefaultPolicy;
+import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;

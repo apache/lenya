@@ -1,5 +1,5 @@
 /*
-$Id: Entities.java,v 1.8 2003/07/23 13:21:17 gregor Exp $
+$Id: Entities.java,v 1.9 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,14 +55,14 @@ $Id: Entities.java,v 1.8 2003/07/23 13:21:17 gregor Exp $
 */
 package org.apache.lenya.lucene.html;
 
-import java.util.*;
+import java.util.Hashtable;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class Entities {
     static final Hashtable decoder = new Hashtable(300);

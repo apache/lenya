@@ -1,5 +1,5 @@
 /*
-$Id: CrawlerConfiguration.java,v 1.5 2003/07/23 13:21:37 gregor Exp $
+$Id: CrawlerConfiguration.java,v 1.6 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,18 +55,15 @@ $Id: CrawlerConfiguration.java,v 1.5 2003/07/23 13:21:37 gregor Exp $
 */
 package org.apache.lenya.search.crawler;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import java.io.File;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.XPath;
-
 import org.apache.log4j.Category;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import java.io.File;
 
 
 /**

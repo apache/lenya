@@ -1,5 +1,5 @@
 /*
-$Id: LanguageExistsAction.java,v 1.2 2003/09/03 12:07:03 egli Exp $
+$Id: LanguageExistsAction.java,v 1.3 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,11 @@ $Id: LanguageExistsAction.java,v 1.2 2003/09/03 12:07:03 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Redirector;
@@ -65,11 +70,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Action that checks the sitetree if there is a node with the 

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowBuilder.java,v 1.11 2003/10/02 15:27:42 andreas Exp $
+$Id: WorkflowBuilder.java,v 1.12 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,13 @@ $Id: WorkflowBuilder.java,v 1.11 2003/10/02 15:27:42 andreas Exp $
 */
 package org.apache.lenya.workflow.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
@@ -62,20 +69,10 @@ import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.log4j.Category;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
 import org.xml.sax.SAXException;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
  *

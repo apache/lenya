@@ -1,5 +1,5 @@
 /*
-$Id: AbstractAuthorizerAction.java,v 1.15 2003/08/28 10:07:51 andreas Exp $
+$Id: AbstractAuthorizerAction.java,v 1.16 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,13 @@ $Id: AbstractAuthorizerAction.java,v 1.15 2003/08/28 10:07:51 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
@@ -67,23 +69,18 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.sitemap.PatternException;
-
 import org.apache.lenya.util.Stack;
-
 import org.apache.regexp.RE;
 import org.apache.regexp.RECompiler;
 import org.apache.regexp.REProgram;
 import org.apache.regexp.RESyntaxException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.15 2003/08/28 10:07:51 andreas Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.16 2004/02/02 02:50:37 stefano Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {

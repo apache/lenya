@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreatorTask.java,v 1.6 2003/08/07 16:48:05 egli Exp $
+$Id: DocumentCreatorTask.java,v 1.7 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,11 @@ $Id: DocumentCreatorTask.java,v 1.6 2003/08/07 16:48:05 egli Exp $
 */
 package org.apache.lenya.cms.ant;
 
+import java.io.File;
+
 import org.apache.lenya.cms.authoring.CreatorException;
 import org.apache.lenya.cms.authoring.DocumentCreator;
-
 import org.apache.tools.ant.BuildException;
-
-import java.io.File;
 
 /**
  * @author andreas

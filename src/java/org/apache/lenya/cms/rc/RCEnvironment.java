@@ -1,5 +1,5 @@
 /*
-$Id: RCEnvironment.java,v 1.5 2003/07/14 14:24:20 egli Exp $
+$Id: RCEnvironment.java,v 1.6 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,15 +55,14 @@ $Id: RCEnvironment.java,v 1.5 2003/07/14 14:24:20 egli Exp $
 */
 package org.apache.lenya.cms.rc;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.log4j.Category;
 
 
 /**

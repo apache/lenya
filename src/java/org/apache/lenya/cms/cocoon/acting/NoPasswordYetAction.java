@@ -1,5 +1,5 @@
 /*
-$Id: NoPasswordYetAction.java,v 1.10 2003/07/23 13:21:30 gregor Exp $
+$Id: NoPasswordYetAction.java,v 1.11 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,25 +55,23 @@ $Id: NoPasswordYetAction.java,v 1.10 2003/07/23 13:21:30 gregor Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 
-import java.io.File;
-
-import java.util.HashMap;
-import java.util.Map;
-
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class NoPasswordYetAction extends AbstractAction {
     /**

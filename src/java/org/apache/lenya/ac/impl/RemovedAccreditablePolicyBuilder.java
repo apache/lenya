@@ -1,5 +1,5 @@
 /*
-$Id: RemovedAccreditablePolicyBuilder.java,v 1.1 2003/11/13 16:07:07 andreas Exp $
+$Id: RemovedAccreditablePolicyBuilder.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,12 @@ $Id: RemovedAccreditablePolicyBuilder.java,v 1.1 2003/11/13 16:07:07 andreas Exp
 */
 package org.apache.lenya.ac.impl;
 
-import org.apache.lenya.ac.*;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.IPRange;
+import org.apache.lenya.ac.User;
 
 /**
  * A PolicyBuilder which can be used after an accreditable was removed.

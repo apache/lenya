@@ -1,5 +1,5 @@
 /*
-$Id: AbstractUser.java,v 1.1 2003/11/13 16:07:08 andreas Exp $
+$Id: AbstractUser.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,10 +55,9 @@ $Id: AbstractUser.java,v 1.1 2003/11/13 16:07:08 andreas Exp $
 */
 package org.apache.lenya.ac.impl;
 
-import org.apache.lenya.ac.*;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Password;
-
+import org.apache.lenya.ac.User;
 import org.apache.log4j.Category;
 
 /**

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreatorAction.java,v 1.10 2003/09/04 12:36:37 egli Exp $
+$Id: DefaultCreatorAction.java,v 1.11 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,13 +55,17 @@ $Id: DefaultCreatorAction.java,v 1.10 2003/09/04 12:36:37 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -69,30 +73,21 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-
 import org.dom4j.Attribute;
 import org.dom4j.Document;
-
 import org.dom4j.io.SAXReader;
-
-import java.io.File;
-
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction
     implements Configurable {

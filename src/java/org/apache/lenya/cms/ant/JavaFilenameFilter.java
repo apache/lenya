@@ -56,13 +56,12 @@ package org.apache.lenya.cms.ant;
 
 import java.io.File;
 import java.io.FilenameFilter;
-
 import java.util.StringTokenizer;
 
 
 /**
  * @author Michael Wechner
- * @version $Id: JavaFilenameFilter.java,v 1.7 2003/11/16 18:46:16 michi Exp $
+ * @version $Id: JavaFilenameFilter.java,v 1.8 2004/02/02 02:50:40 stefano Exp $
  */
 public class JavaFilenameFilter implements FilenameFilter {
 

@@ -1,5 +1,5 @@
 /*
-$Id: DOMWriter.java,v 1.12 2003/07/23 13:21:29 gregor Exp $
+$Id: DOMWriter.java,v 1.13 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,13 +55,19 @@ $Id: DOMWriter.java,v 1.12 2003/07/23 13:21:29 gregor Exp $
 */
 package org.apache.lenya.xml;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.Vector;
+
 import org.apache.log4j.Category;
-
-import org.w3c.dom.*;
-
-import java.io.*;
-
-import java.util.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 /**

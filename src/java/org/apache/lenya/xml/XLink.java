@@ -1,5 +1,5 @@
 /*
-$Id: XLink.java,v 1.7 2003/07/23 13:21:29 gregor Exp $
+$Id: XLink.java,v 1.8 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,10 @@ $Id: XLink.java,v 1.7 2003/07/23 13:21:29 gregor Exp $
 */
 package org.apache.lenya.xml;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.16 2003/09/02 18:22:37 andreas Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.17 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,18 +55,16 @@ $Id: DelegatingAuthorizerAction.java,v 1.16 2003/09/02 18:22:37 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.util.Collections;
+import java.util.Map;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-
 import org.apache.lenya.util.Stack;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * AuthorizerAction that delegates the authorizing to an AccessController.

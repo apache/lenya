@@ -1,5 +1,5 @@
 /*
-$Id: PublicationTask.java,v 1.8 2003/10/22 16:28:26 egli Exp $
+$Id: PublicationTask.java,v 1.9 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,16 +55,15 @@ $Id: PublicationTask.java,v 1.8 2003/10/22 16:28:26 egli Exp $
 */
 package org.apache.lenya.cms.ant;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.task.AntTask;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Abstract base class for publication-dependent Ant tasks.

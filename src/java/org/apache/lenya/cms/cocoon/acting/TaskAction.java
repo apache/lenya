@@ -1,5 +1,5 @@
 /*
-$Id: TaskAction.java,v 1.25 2003/08/25 15:39:50 andreas Exp $
+$Id: TaskAction.java,v 1.26 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,20 +55,18 @@ $Id: TaskAction.java,v 1.25 2003/08/25 15:39:50 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-
 import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
 import org.apache.lenya.cms.task.TaskWrapper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * An action that executes a task.

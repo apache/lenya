@@ -1,5 +1,5 @@
 /*
-$Id: PublisherTest.java,v 1.5 2003/08/08 17:05:33 egli Exp $
+$Id: PublisherTest.java,v 1.6 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,19 +55,17 @@ $Id: PublisherTest.java,v 1.5 2003/08/08 17:05:33 egli Exp $
 */
 package org.apache.lenya.cms.task;
 
+import java.io.File;
+import java.io.IOException;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
-
-import java.io.File;
-import java.io.IOException;
 
 
 /**

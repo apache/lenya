@@ -54,23 +54,6 @@
 */
 package org.apache.lenya.lucene.index;
 
-import org.apache.lenya.lucene.parser.HTMLParser;
-import org.apache.lenya.lucene.parser.HTMLParserFactory;
-import org.apache.lenya.lucene.parser.StringCleaner;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-
-import org.apache.log4j.Category;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import org.xml.sax.InputSource;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -78,7 +61,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-
 import java.lang.reflect.Method;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -90,11 +72,24 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.lenya.lucene.parser.HTMLParser;
+import org.apache.lenya.lucene.parser.HTMLParserFactory;
+import org.apache.lenya.lucene.parser.StringCleaner;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.log4j.Category;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: ConfigurableDocumentCreator.java,v 1.8 2003/11/13 23:23:36 michi Exp $
+ * @version $Id: ConfigurableDocumentCreator.java,v 1.9 2004/02/02 02:50:38 stefano Exp $
  */
 public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
     Category log = Category.getInstance(ConfigurableDocumentCreator.class);

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.26 2003/11/13 16:11:40 andreas Exp $
+$Id: WorkflowFactory.java,v 1.27 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,10 +55,12 @@ $Id: WorkflowFactory.java,v 1.26 2003/11/13 16:11:40 andreas Exp $
 */
 package org.apache.lenya.cms.workflow;
 
+import java.io.File;
+import java.util.Map;
+
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
@@ -69,14 +71,13 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.LanguageVersions;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.workflow.*;
+import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.impl.History;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
-
-import java.io.File;
-
-import java.util.Map;
 
 /**
  *

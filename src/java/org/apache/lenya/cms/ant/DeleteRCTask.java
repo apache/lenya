@@ -1,5 +1,5 @@
 /*
-$Id: DeleteRCTask.java,v 1.2 2004/01/21 18:04:55 edith Exp $
+$Id: DeleteRCTask.java,v 1.3 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -58,10 +58,10 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**

@@ -54,16 +54,16 @@
 */
 package org.apache.lenya.xml.xpointer;
 
-import org.w3c.dom.Node;
-
 import java.util.Vector;
+
+import org.w3c.dom.Node;
 
 
 /**
  * XPointer interface
  *
  * @author Michael Wechner
- * @version $Id: XPointer.java,v 1.11 2003/12/08 18:03:44 michi Exp $
+ * @version $Id: XPointer.java,v 1.12 2004/02/02 02:50:38 stefano Exp $
  */
 public interface XPointer {
 	

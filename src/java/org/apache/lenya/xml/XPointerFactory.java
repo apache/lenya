@@ -54,22 +54,24 @@
 */
 package org.apache.lenya.xml;
 
-import org.apache.lenya.xml.xpointer.*;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Properties;
+import java.util.Vector;
 
+import org.apache.lenya.xml.xpointer.XPointer;
 import org.apache.log4j.Category;
-
-import org.w3c.dom.*;
-
-import java.io.*;
-
-import java.util.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author Michael Wechner, lenya
- * @version $Id: XPointerFactory.java,v 1.15 2004/01/12 17:56:21 michi Exp $
+ * @version $Id: XPointerFactory.java,v 1.16 2004/02/02 02:50:36 stefano Exp $
  */
 public class XPointerFactory {
     static Category log = Category.getInstance(XPointerFactory.class);

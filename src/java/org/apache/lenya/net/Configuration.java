@@ -54,18 +54,17 @@
 */
 package org.apache.lenya.net;
 
-import org.apache.log4j.Category;
-
 import java.net.URL;
-
 import java.util.Properties;
+
+import org.apache.log4j.Category;
 
 
 /**
  * Read configuration
  *
  * @author Michael Wechner
- * @version $Id: Configuration.java,v 1.15 2003/12/15 17:31:49 michi Exp $
+ * @version $Id: Configuration.java,v 1.16 2004/02/02 02:50:40 stefano Exp $
  */
 public class Configuration {
     static Category log = Category.getInstance(Configuration.class);

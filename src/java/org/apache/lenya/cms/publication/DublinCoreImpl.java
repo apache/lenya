@@ -54,9 +54,6 @@
 */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -66,6 +63,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -74,7 +73,7 @@ import org.xml.sax.SAXException;
  * This class uses the dublin core specification from 2003-03-04.
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
- * @version $Id: DublinCoreImpl.java,v 1.4 2004/01/30 18:36:53 andreas Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.5 2004/02/02 02:50:39 stefano Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;

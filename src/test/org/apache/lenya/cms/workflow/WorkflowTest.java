@@ -55,9 +55,10 @@ $Id
 */
 package org.apache.lenya.cms.workflow;
 
+import java.io.File;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import junit.textui.TestRunner;
 
 import org.apache.lenya.ac.AccessControlException;
@@ -79,8 +80,6 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-
-import java.io.File;
 
 /**
  * @author andreas

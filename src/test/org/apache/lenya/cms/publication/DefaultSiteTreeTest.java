@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTreeTest.java,v 1.9 2003/09/23 13:50:40 edith Exp $
+$Id: DefaultSiteTreeTest.java,v 1.10 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -61,9 +61,9 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.xml.sax.SAXException;
-
 import junit.framework.TestCase;
+
+import org.xml.sax.SAXException;
 
 /**
  * 

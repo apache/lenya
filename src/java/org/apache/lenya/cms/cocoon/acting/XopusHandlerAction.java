@@ -1,5 +1,5 @@
 /*
-$Id: XopusHandlerAction.java,v 1.35 2003/11/13 16:08:49 andreas Exp $
+$Id: XopusHandlerAction.java,v 1.36 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,17 @@ $Id: XopusHandlerAction.java,v 1.35 2003/11/13 16:08:49 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -70,28 +75,17 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.cocoon.util.PostInputStream;
-
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
-
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.lenya.xml.DOMWriter;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Interfaces with Xopus: handles the requests and replies to them

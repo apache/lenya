@@ -1,5 +1,5 @@
 /*
-$Id: InsertCopyNode.java,v 1.8 2003/09/23 13:50:40 edith Exp $
+$Id: InsertCopyNode.java,v 1.9 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,12 @@ $Id: InsertCopyNode.java,v 1.8 2003/09/23 13:50:40 edith Exp $
 */
 package org.apache.lenya.cms.ant;
 
+import java.util.StringTokenizer;
+
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-
-import java.util.StringTokenizer;
 
 /**
  * Ant task that copies a node of a tree and inserts it in  tree

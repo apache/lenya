@@ -1,5 +1,5 @@
 /*
-$Id: XPSFileOutputStream.java,v 1.11 2003/10/01 09:28:40 edith Exp $
+$Id: XPSFileOutputStream.java,v 1.12 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,14 +55,13 @@ $Id: XPSFileOutputStream.java,v 1.11 2003/10/01 09:28:40 edith Exp $
 */
 package org.apache.lenya.util;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.log4j.Category;
 
 
 /**

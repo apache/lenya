@@ -1,5 +1,5 @@
 /*
-$Id: XPSInclude.java,v 1.8 2003/07/23 13:21:29 gregor Exp $
+$Id: XPSInclude.java,v 1.9 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,7 @@ $Id: XPSInclude.java,v 1.8 2003/07/23 13:21:29 gregor Exp $
 */
 package org.apache.lenya.xml;
 
-import java.util.*;
+import java.util.Vector;
 
 
 /**

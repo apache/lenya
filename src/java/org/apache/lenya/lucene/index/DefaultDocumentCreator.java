@@ -54,18 +54,17 @@
 */
 package org.apache.lenya.lucene.index;
 
+import java.io.File;
+
 import org.apache.lenya.lucene.parser.HTMLParser;
 import org.apache.lenya.lucene.parser.HTMLParserFactory;
-
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-
-import java.io.File;
 
 
 /**
  * @author Andreas Hartmann
- * @version $Id: DefaultDocumentCreator.java,v 1.7 2003/12/02 22:24:57 michi Exp $
+ * @version $Id: DefaultDocumentCreator.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
  */
 public class DefaultDocumentCreator extends AbstractDocumentCreator {
 

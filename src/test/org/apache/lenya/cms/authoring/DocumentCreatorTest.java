@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreatorTest.java,v 1.6 2003/08/08 10:37:41 egli Exp $
+$Id: DocumentCreatorTest.java,v 1.7 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,10 +55,11 @@ $Id: DocumentCreatorTest.java,v 1.6 2003/08/08 10:37:41 egli Exp $
 */
 package org.apache.lenya.cms.authoring;
 
+import java.io.File;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
@@ -66,8 +67,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-
-import java.io.File;
 
 
 /**

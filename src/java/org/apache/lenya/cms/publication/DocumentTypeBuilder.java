@@ -1,5 +1,5 @@
 /*
-$Id: DocumentTypeBuilder.java,v 1.8 2003/07/23 13:21:11 gregor Exp $
+$Id: DocumentTypeBuilder.java,v 1.9 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,11 @@ $Id: DocumentTypeBuilder.java,v 1.8 2003/07/23 13:21:11 gregor Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-
-import java.io.File;
 
 
 /**

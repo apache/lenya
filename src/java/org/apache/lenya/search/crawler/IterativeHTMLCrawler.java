@@ -1,5 +1,5 @@
 /*
-$Id: IterativeHTMLCrawler.java,v 1.17 2003/07/23 13:21:37 gregor Exp $
+$Id: IterativeHTMLCrawler.java,v 1.18 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: IterativeHTMLCrawler.java,v 1.17 2003/07/23 13:21:37 gregor Exp $
 */
 package org.apache.lenya.search.crawler;
 
-import websphinx.RobotExclusion;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -64,19 +62,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.util.StringTokenizer;
+
+import websphinx.RobotExclusion;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class IterativeHTMLCrawler {
     java.util.Vector urlsToCrawl;

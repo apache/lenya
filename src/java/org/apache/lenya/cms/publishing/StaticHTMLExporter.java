@@ -54,17 +54,13 @@
 */
 package org.apache.lenya.cms.publishing;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.lenya.cms.task.ExecutionException;
-
-import org.apache.log4j.Category;
-
 import java.io.File;
-
 import java.net.URL;
-
 import java.util.StringTokenizer;
+
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.lenya.cms.task.ExecutionException;
+import org.apache.log4j.Category;
 
 
 /**
@@ -79,7 +75,7 @@ import java.util.StringTokenizer;
  * the path<br/>
  *
  * @author <a href="mailto:andreas.hartmann@lenya.com">Andreas Hartmann</a>
- * @version $Id: StaticHTMLExporter.java,v 1.18 2004/01/21 21:54:15 michi Exp $
+ * @version $Id: StaticHTMLExporter.java,v 1.19 2004/02/02 02:50:39 stefano Exp $
  */
 public class StaticHTMLExporter extends AbstractExporter {
     private static Category log = Category.getInstance(StaticHTMLExporter.class);

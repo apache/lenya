@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultPolicy.java,v 1.1 2003/11/13 16:07:08 andreas Exp $ <License>
+ * $Id: DefaultPolicy.java,v 1.2 2004/02/02 02:50:39 stefano Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -40,14 +40,18 @@
  */
 package org.apache.lenya.ac.impl;
 
-import org.apache.lenya.ac.*;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.Role;
 
 /**
  * A DefaultPolicy is the own policy of a certain URL (not merged).

@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeFactory.java,v 1.8 2003/12/12 16:00:07 andreas Exp $
+$Id: PageEnvelopeFactory.java,v 1.9 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,10 +55,10 @@ $Id: PageEnvelopeFactory.java,v 1.8 2003/12/12 16:00:07 andreas Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import java.util.Map;
+
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-
-import java.util.Map;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
-$Id: TriggerHelper.java,v 1.17 2004/01/07 18:37:23 andreas Exp $
+$Id: TriggerHelper.java,v 1.18 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,24 +55,20 @@ $Id: TriggerHelper.java,v 1.17 2004/01/07 18:37:23 andreas Exp $
 */
 package org.apache.lenya.cms.scheduler.xml;
 
-import org.apache.lenya.cms.scheduler.SchedulerStore;
-import org.apache.lenya.util.NamespaceMap;
-import org.apache.lenya.xml.NamespaceHelper;
-
-import org.apache.log4j.Category;
-
-import org.quartz.CronTrigger;
-import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
-
-import org.w3c.dom.Element;
-
 import java.io.IOException;
 import java.text.ParseException;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import org.apache.lenya.cms.scheduler.SchedulerStore;
+import org.apache.lenya.util.NamespaceMap;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.log4j.Category;
+import org.quartz.CronTrigger;
+import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
+import org.w3c.dom.Element;
 
 
 /**

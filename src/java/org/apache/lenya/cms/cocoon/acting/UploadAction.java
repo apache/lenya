@@ -1,5 +1,5 @@
 /*
-$Id: UploadAction.java,v 1.4 2003/10/22 19:37:01 gregor Exp $
+$Id: UploadAction.java,v 1.5 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,28 +55,10 @@ $Id: UploadAction.java,v 1.4 2003/10/22 19:37:01 gregor Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.AbstractConfigurableAction;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.servlet.multipart.Part;
-
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-import org.w3c.dom.Element;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -86,6 +68,22 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
+
+import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.cocoon.acting.AbstractConfigurableAction;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.ResourcesManager;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.w3c.dom.Element;
 
 /**
  * The class <code>UploadAction</code> implements an action that allows for

@@ -54,22 +54,22 @@
 */
 package org.apache.lenya.cms.publication;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.log4j.Category;
+
 /**
  * A publication.
  *
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
- * @version $Id: AbstractPublication.java,v 1.11 2004/01/19 18:00:48 andreas Exp $
+ * @version $Id: AbstractPublication.java,v 1.12 2004/02/02 02:50:39 stefano Exp $
  */
 public abstract class AbstractPublication implements Publication {
     private static Category log = Category.getInstance(AbstractPublication.class);

@@ -1,5 +1,5 @@
 /*
- * $Id: FileAccreditableManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $ <License>
+ * $Id: FileAccreditableManager.java,v 1.2 2004/02/02 02:50:40 stefano Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -40,6 +40,9 @@
  */
 package org.apache.lenya.ac.file;
 
+import java.io.File;
+import java.net.URI;
+
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -48,16 +51,12 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.GroupManager;
 import org.apache.lenya.ac.IPRangeManager;
 import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.impl.AbstractAccreditableManager;
-
-import java.io.File;
-import java.net.URI;
 
 /**
  * File-based accreditable manager.

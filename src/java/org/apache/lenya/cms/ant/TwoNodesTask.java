@@ -1,5 +1,5 @@
 /*
-$Id: TwoNodesTask.java,v 1.5 2003/08/19 13:11:26 edith Exp $
+$Id: TwoNodesTask.java,v 1.6 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id: TwoNodesTask.java,v 1.5 2003/08/19 13:11:26 edith Exp $
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.SiteTreeException;
-
 import org.apache.tools.ant.BuildException;
 
 

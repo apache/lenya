@@ -55,21 +55,18 @@ $Id
 */
 package org.apache.lenya.cms.task;
 
+import java.io.File;
+import java.util.StringTokenizer;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
 import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-
-import java.io.File;
-
-import java.util.StringTokenizer;
 
 
 /**

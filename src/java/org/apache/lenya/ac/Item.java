@@ -1,5 +1,5 @@
 /*
-$Id: Item.java,v 1.1 2003/11/13 16:07:02 andreas Exp $
+$Id: Item.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,10 +55,10 @@ $Id: Item.java,v 1.1 2003/11/13 16:07:02 andreas Exp $
 */
 package org.apache.lenya.ac;
 
+import java.io.File;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-
-import java.io.File;
 
 
 /**

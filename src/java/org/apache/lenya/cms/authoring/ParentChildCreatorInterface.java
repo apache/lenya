@@ -1,5 +1,5 @@
 /*
-$Id: ParentChildCreatorInterface.java,v 1.12 2003/08/05 11:57:40 andreas Exp $
+$Id: ParentChildCreatorInterface.java,v 1.13 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,10 @@ $Id: ParentChildCreatorInterface.java,v 1.12 2003/08/05 11:57:40 andreas Exp $
 */
 package org.apache.lenya.cms.authoring;
 
-import org.apache.avalon.framework.configuration.Configuration;
-
 import java.io.File;
-
 import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configuration;
 
 /**
  * DOCUMENT ME!

@@ -1,5 +1,5 @@
 /*
-$Id: StaticHTMLExporter.java,v 1.6 2003/07/23 13:21:23 gregor Exp $
+$Id: StaticHTMLExporter.java,v 1.7 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,14 +55,12 @@ $Id: StaticHTMLExporter.java,v 1.6 2003/07/23 13:21:23 gregor Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publishing.ExportException;
-
-import org.apache.tools.ant.BuildException;
-
 import java.io.File;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.apache.lenya.cms.publishing.ExportException;
+import org.apache.tools.ant.BuildException;
 
 
 /**

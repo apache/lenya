@@ -1,5 +1,5 @@
 /*
-$Id: FileUtil.java,v 1.11 2003/08/07 09:06:55 egli Exp $
+$Id: FileUtil.java,v 1.12 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: FileUtil.java,v 1.11 2003/08/07 09:06:55 egli Exp $
 */
 package org.apache.lenya.util;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -64,8 +62,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.StringTokenizer;
+
+import org.apache.log4j.Category;
 
 
 /**

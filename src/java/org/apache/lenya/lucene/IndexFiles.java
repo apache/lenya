@@ -1,5 +1,5 @@
 /*
-$Id: IndexFiles.java,v 1.9 2003/07/23 13:21:26 gregor Exp $
+$Id: IndexFiles.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,11 @@ $Id: IndexFiles.java,v 1.9 2003/07/23 13:21:26 gregor Exp $
 */
 package org.apache.lenya.lucene;
 
+import java.io.File;
+import java.util.Date;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexWriter;
-
-import java.io.File;
-
-import java.util.Date;
 
 
 class IndexFiles {

@@ -54,13 +54,12 @@
 */
 package org.apache.lenya.cms.publishing;
 
+import java.io.File;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-
 import org.apache.log4j.Category;
-
-import java.io.File;
 
 
 /**
@@ -68,7 +67,7 @@ import java.io.File;
  *
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: PublishingEnvironment.java,v 1.24 2004/01/16 09:19:42 gregor Exp $
+ * @version $Id: PublishingEnvironment.java,v 1.25 2004/02/02 02:50:39 stefano Exp $
  */
 public class PublishingEnvironment implements Configurable {
     private static Category log = Category.getInstance(PublishingEnvironment.class);

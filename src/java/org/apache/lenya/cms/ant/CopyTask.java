@@ -1,5 +1,5 @@
 /*
-$Id: CopyTask.java,v 1.6 2003/07/15 13:08:31 egli Exp $
+$Id: CopyTask.java,v 1.7 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,13 +55,12 @@ $Id: CopyTask.java,v 1.6 2003/07/15 13:08:31 egli Exp $
 */
 package org.apache.lenya.cms.ant;
 
+import java.io.File;
+import java.util.StringTokenizer;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
-
-import java.io.File;
-
-import java.util.StringTokenizer;
 
 
 /**

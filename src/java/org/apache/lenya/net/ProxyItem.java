@@ -1,5 +1,5 @@
 /*
-$Id: ProxyItem.java,v 1.9 2003/07/23 13:21:40 gregor Exp $
+$Id: ProxyItem.java,v 1.10 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,10 @@ $Id: ProxyItem.java,v 1.9 2003/07/23 13:21:40 gregor Exp $
 */
 package org.apache.lenya.net;
 
-import org.apache.lenya.xml.*;
-
-import org.apache.regexp.*;
-
-import org.w3c.dom.*;
+import org.apache.lenya.xml.XPointerFactory;
+import org.apache.regexp.RE;
+import org.apache.regexp.RESyntaxException;
+import org.w3c.dom.Element;
 
 
 /**

@@ -58,8 +58,8 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.lenya.ac.*;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.net.InetAddressUtil;
 import org.apache.log4j.Category;
@@ -70,7 +70,7 @@ import org.apache.log4j.Category;
  * 
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: AbstractIPRange.java,v 1.1 2003/11/13 16:07:08 andreas Exp $
+ * @version $Id: AbstractIPRange.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
  */
 public abstract class AbstractIPRange extends AbstractGroupable implements IPRange {
 

@@ -54,16 +54,21 @@
 */
 package org.apache.lenya.xml.parser;
 
-import org.w3c.dom.*;
+import java.io.InputStream;
+import java.io.Reader;
 
-import java.io.*;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 
 /**
  * DOM Parser interface
  *
  * @author Michael Wechner
- * @version $Id: Parser.java,v 1.12 2003/12/04 14:16:57 andreas Exp $
+ * @version $Id: Parser.java,v 1.13 2004/02/02 02:50:41 stefano Exp $
  */
 public interface Parser {
     /**

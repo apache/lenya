@@ -57,12 +57,9 @@ package org.apache.lenya.cms.cocoon.transformation;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-
 import org.apache.excalibur.source.Source;
-
 import org.w3c.dom.Document;
 
 
@@ -70,7 +67,7 @@ import org.w3c.dom.Document;
  * Wrapper for XLink/XInclude Processor
  *
  * @author Michael Wechner
- * @version $Id: IncludeTransformer.java,v 1.15 2003/08/13 16:24:11 michi Exp $
+ * @version $Id: IncludeTransformer.java,v 1.16 2004/02/02 02:50:40 stefano Exp $
  */
 public class IncludeTransformer extends AbstractDOMTransformer implements Configurable {
     private String domain = "127.0.0.1";

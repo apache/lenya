@@ -54,22 +54,22 @@
 */
 package org.apache.lenya.xml.xpointer;
 
-import org.apache.lenya.xml.*;
+import java.util.Vector;
 
+import org.apache.lenya.xml.DOMParserFactory;
 import org.apache.log4j.Category;
-
 import org.apache.xpath.XPathAPI;
-
-import org.w3c.dom.*;
-
-import java.util.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 /**
  * XPointer implementation
  *
  * @author Michael Wechner
- * @version $Id: XalanXPointer.java,v 1.15 2003/12/20 23:45:04 michi Exp $
+ * @version $Id: XalanXPointer.java,v 1.16 2004/02/02 02:50:38 stefano Exp $
  */
 public class XalanXPointer implements XPointer {
     private static Category log = Category.getInstance(XalanXPointer.class);

@@ -1,5 +1,5 @@
 /*
-$Id: SMTP.java,v 1.10 2003/07/23 13:21:40 gregor Exp $
+$Id: SMTP.java,v 1.11 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -59,13 +59,17 @@ $Id: SMTP.java,v 1.10 2003/07/23 13:21:40 gregor Exp $
  */
 package org.apache.lenya.net;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.ConnectException;
+import java.net.Socket;
+import java.util.StringTokenizer;
+
 import org.apache.log4j.Category;
-
-import java.io.*;
-
-import java.net.*;
-
-import java.util.*;
 
 
 /**

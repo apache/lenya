@@ -55,15 +55,16 @@ $Id
 */
 package org.apache.lenya.ac.impl;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.textui.TestRunner;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.PublicationHelper;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author andreas

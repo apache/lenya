@@ -58,14 +58,14 @@
  */
 package org.apache.lenya.xml;
 
-import org.w3c.dom.Node;
-
 import java.util.StringTokenizer;
+
+import org.w3c.dom.Node;
 
 
 /**
  * @author Michael Wechner
- * @version $Id: XPath.java,v 1.6 2003/10/14 23:02:16 michi Exp $
+ * @version $Id: XPath.java,v 1.7 2004/02/02 02:50:36 stefano Exp $
  */
 public class XPath {
     String xpath = null;

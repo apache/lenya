@@ -1,5 +1,5 @@
 /*
-$Id: AbstractRole.java,v 1.1 2003/11/13 16:07:07 andreas Exp $
+$Id: AbstractRole.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,7 @@ $Id: AbstractRole.java,v 1.1 2003/11/13 16:07:07 andreas Exp $
 */
 package org.apache.lenya.ac.impl;
 
-import org.apache.lenya.ac.*;
+import org.apache.lenya.ac.Role;
 
 
 /**

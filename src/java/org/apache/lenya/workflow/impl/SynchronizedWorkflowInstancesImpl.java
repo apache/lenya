@@ -1,5 +1,5 @@
 /*
-$Id: SynchronizedWorkflowInstancesImpl.java,v 1.1 2003/10/10 16:42:14 andreas Exp $
+$Id: SynchronizedWorkflowInstancesImpl.java,v 1.2 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -59,10 +59,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.lenya.workflow.*;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.State;
+import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.log4j.Category;

@@ -1,5 +1,5 @@
 /*
-$Id: ReTokenizeFile.java,v 1.15 2003/07/23 13:21:26 gregor Exp $
+$Id: ReTokenizeFile.java,v 1.16 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,22 +55,22 @@ $Id: ReTokenizeFile.java,v 1.15 2003/07/23 13:21:26 gregor Exp $
 */
 package org.apache.lenya.lucene;
 
-import org.apache.lenya.lucene.html.HTMLParser;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
+import org.apache.lenya.lucene.html.HTMLParser;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-
-import java.io.*;
-
-import java.util.StringTokenizer;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class ReTokenizeFile {
     /**

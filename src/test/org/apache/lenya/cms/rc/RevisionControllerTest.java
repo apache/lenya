@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerTest.java,v 1.3 2004/01/08 09:37:30 egli Exp $
+$Id: RevisionControllerTest.java,v 1.4 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,10 @@ $Id: RevisionControllerTest.java,v 1.3 2004/01/08 09:37:30 egli Exp $
 */
 package org.apache.lenya.cms.rc;
 
-import junit.framework.TestCase;
-
 import java.io.FileNotFoundException;
-
 import java.io.IOException;
+
+import junit.framework.TestCase;
 
 /**
  * @author Gregor J. Rothfuss gregor@apache.org

@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.23 2004/01/21 16:18:24 edith Exp $
+$Id: SiteTreeNodeImpl.java,v 1.24 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,26 +55,24 @@ $Id: SiteTreeNodeImpl.java,v 1.23 2004/01/21 16:18:24 edith Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-
 import org.apache.log4j.Category;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Concrete implementation of the <code>SiteTreeNode</code> interface.
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: edith $
- * @version $Revision: 1.23 $
+ * @author $Author: stefano $
+ * @version $Revision: 1.24 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);

@@ -1,5 +1,5 @@
 /*
-$Id: PreParser.java,v 1.4 2003/07/23 13:21:21 gregor Exp $
+$Id: PreParser.java,v 1.5 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,11 @@ $Id: PreParser.java,v 1.4 2003/07/23 13:21:21 gregor Exp $
 */
 package org.apache.lenya.lucene.parser;
 
-import org.apache.lenya.util.CommandLineLogger;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+
+import org.apache.lenya.util.CommandLineLogger;
 
 
 /**

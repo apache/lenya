@@ -56,7 +56,6 @@ package org.apache.lenya.lucene.parser;
 
 import java.io.Reader;
 import java.io.StringReader;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -71,7 +70,7 @@ import org.apache.log4j.Category;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: SwingHTMLHandler.java,v 1.9 2003/12/02 22:29:46 michi Exp $
+ * @version $Id: SwingHTMLHandler.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
  */
 public class SwingHTMLHandler extends ParserCallback {
     Category log = Category.getInstance(SwingHTMLHandler.class);
@@ -430,7 +429,7 @@ public class SwingHTMLHandler extends ParserCallback {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.9 $
+     * @version $Revision: 1.10 $
      */
     public class TagStack {
         private List tags = new ArrayList();
@@ -503,7 +502,7 @@ public class SwingHTMLHandler extends ParserCallback {
          * DOCUMENT ME!
          *
          * @author $author$
-         * @version $Revision: 1.9 $
+         * @version $Revision: 1.10 $
          */
         public class UnderflowException extends Exception {
             /**

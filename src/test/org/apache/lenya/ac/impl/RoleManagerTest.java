@@ -1,5 +1,5 @@
 /*
-$Id: RoleManagerTest.java,v 1.1 2003/11/13 16:13:29 andreas Exp $
+$Id: RoleManagerTest.java,v 1.2 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,13 +55,13 @@ $Id: RoleManagerTest.java,v 1.1 2003/11/13 16:13:29 andreas Exp $
 */
 package org.apache.lenya.ac.impl;
 
+import java.io.File;
+
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.file.FileRole;
 import org.apache.lenya.ac.file.FileRoleManager;
 import org.apache.lenya.cms.PublicationHelper;
-
-import java.io.File;
 
 /**
  * @author egli

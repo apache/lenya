@@ -54,22 +54,20 @@
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.SourceResolver;
-
-import org.apache.lenya.cms.rc.FileReservedCheckInException;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.cms.rc.FileReservedCheckInException;
 
 
 /**
  * Checkin document
  *
  * @author Edith Chevrier
- * @version $Id: ReservedCheckinAction.java,v 1.13 2003/12/20 23:44:12 michi Exp $
+ * @version $Id: ReservedCheckinAction.java,v 1.14 2004/02/02 02:50:37 stefano Exp $
  */
 public class ReservedCheckinAction extends RevisionControllerAction {
     /**

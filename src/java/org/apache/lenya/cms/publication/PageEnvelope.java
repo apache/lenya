@@ -41,20 +41,19 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Map;
+
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.util.ServletHelper;
-
-import java.util.Map;
 
 /**
  * A page envelope carries a set of information that are needed during the presentation of a
  * document.
  * 
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
- * @version $Id: PageEnvelope.java,v 1.54 2004/01/26 10:21:38 michi Exp $ <License>
+ * @version $Id: PageEnvelope.java,v 1.55 2004/02/02 02:50:39 stefano Exp $ <License>
  */
 public class PageEnvelope {
     public static final String PUBLICATION_ID = "publication-id";

@@ -59,7 +59,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URLConnection;
@@ -68,7 +67,7 @@ import java.net.URLConnection;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: PDFParserWrapper.java,v 1.5 2003/12/03 11:15:05 michi Exp $
+ * @version $Id: PDFParserWrapper.java,v 1.6 2004/02/02 02:50:38 stefano Exp $
  */
 public class PDFParserWrapper extends AbstractHTMLParser {
     /** Creates a new instance of PDFParserWrapper */

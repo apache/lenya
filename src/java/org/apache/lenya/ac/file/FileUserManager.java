@@ -1,5 +1,5 @@
 /*
-$Id: FileUserManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
+$Id: FileUserManager.java,v 1.2 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -56,12 +56,13 @@ $Id: FileUserManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
 package org.apache.lenya.ac.file;
 
 import java.io.File;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.lenya.ac.*;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
 
 /**
  * Describe class <code>UserManager</code> here.

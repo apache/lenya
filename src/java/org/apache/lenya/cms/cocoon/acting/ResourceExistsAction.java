@@ -1,5 +1,5 @@
 /*
-$Id: ResourceExistsAction.java,v 1.5 2003/07/23 13:21:30 gregor Exp $
+$Id: ResourceExistsAction.java,v 1.6 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,20 +55,16 @@ $Id: ResourceExistsAction.java,v 1.5 2003/07/23 13:21:30 gregor Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
+import java.net.URL;
+import java.util.Map;
+
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
-
 import org.apache.cocoon.acting.ComposerAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-
 import org.apache.excalibur.source.Source;
-
-import java.io.File;
-
-import java.net.URL;
-
-import java.util.Map;
 
 
 /**
@@ -87,7 +83,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:balld@apache.org">Donald Ball</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: ResourceExistsAction.java,v 1.5 2003/07/23 13:21:30 gregor Exp $
+ * @version CVS $Id: ResourceExistsAction.java,v 1.6 2004/02/02 02:50:37 stefano Exp $
  */
 public class ResourceExistsAction extends ComposerAction implements ThreadSafe {
     /**

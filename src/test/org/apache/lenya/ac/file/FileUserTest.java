@@ -1,5 +1,5 @@
 /*
-$Id: FileUserTest.java,v 1.1 2003/11/13 16:13:30 andreas Exp $
+$Id: FileUserTest.java,v 1.2 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,20 +55,16 @@ $Id: FileUserTest.java,v 1.1 2003/11/13 16:13:30 andreas Exp $
 */
 package org.apache.lenya.ac.file;
 
-import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Group;
-import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.file.FileGroup;
-import org.apache.lenya.ac.file.FileUser;
-import org.apache.lenya.ac.file.FileUserManager;
-import org.apache.lenya.ac.impl.AccessControlTest;
-import org.apache.lenya.cms.PublicationHelper;
-
 import java.io.File;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.cms.PublicationHelper;
 
 
 /**

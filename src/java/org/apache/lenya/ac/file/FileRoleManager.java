@@ -1,5 +1,5 @@
 /*
-$Id: FileRoleManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
+$Id: FileRoleManager.java,v 1.2 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -56,12 +56,13 @@ $Id: FileRoleManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $
 package org.apache.lenya.ac.file;
 
 import java.io.File;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.lenya.ac.*;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.RoleManager;
 
 /**
  * @author egli

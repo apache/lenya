@@ -1,5 +1,5 @@
 /*
-$Id: URLPolicy.java,v 1.1 2003/11/13 16:07:07 andreas Exp $
+$Id: URLPolicy.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,15 @@ $Id: URLPolicy.java,v 1.1 2003/11/13 16:07:07 andreas Exp $
 */
 package org.apache.lenya.ac.impl;
 
-import org.apache.lenya.ac.*;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.Role;
 
 /**
  * A policy at a certain URL. The final policy is computed by merging the subtree

@@ -1,5 +1,5 @@
 /*
-$Id: AbstractAuthenticatorAction.java,v 1.16 2003/07/23 13:21:30 gregor Exp $
+$Id: AbstractAuthenticatorAction.java,v 1.17 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,20 +55,19 @@ $Id: AbstractAuthenticatorAction.java,v 1.16 2003/07/23 13:21:30 gregor Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.cocoon.acting.AbstractComplementaryConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**

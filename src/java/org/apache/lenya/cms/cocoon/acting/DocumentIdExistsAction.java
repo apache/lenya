@@ -1,5 +1,5 @@
 /*
-$Id: DocumentIdExistsAction.java,v 1.1 2003/09/18 08:10:54 egli Exp $
+$Id: DocumentIdExistsAction.java,v 1.2 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,9 @@ $Id: DocumentIdExistsAction.java,v 1.1 2003/09/18 08:10:54 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
@@ -66,9 +69,6 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeException;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Action that checks the sitetree if there is a node with the 

@@ -1,5 +1,5 @@
 /*
-$Id: SSI.java,v 1.5 2003/07/23 13:21:14 gregor Exp $
+$Id: SSI.java,v 1.6 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,12 @@ $Id: SSI.java,v 1.5 2003/07/23 13:21:14 gregor Exp $
 */
 package org.apache.lenya.util;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 /*

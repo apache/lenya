@@ -54,21 +54,18 @@
 */
 package org.apache.lenya.lucene.index;
 
-import org.apache.lenya.util.CommandLineLogger;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.util.Arrays;
 
+import org.apache.lenya.util.CommandLineLogger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
-
 import org.w3c.dom.Element;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-
-import java.util.Arrays;
 
 
 /**
@@ -78,7 +75,7 @@ import java.util.Arrays;
  *
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: AbstractIndexer.java,v 1.9 2003/11/26 00:31:12 michi Exp $
+ * @version $Id: AbstractIndexer.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
  */
 public abstract class AbstractIndexer implements Indexer {
     private CommandLineLogger logger = new CommandLineLogger(getClass());
@@ -272,7 +269,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.9 $
+     * @version $Revision: 1.10 $
      */
     public class IndexHandler extends AbstractIndexIteratorHandler {
         /**
@@ -325,7 +322,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.9 $
+     * @version $Revision: 1.10 $
      */
     public class CreateIndexHandler extends IndexHandler {
         /**
@@ -351,7 +348,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.9 $
+     * @version $Revision: 1.10 $
      */
     public class UpdateIndexHandler extends IndexHandler {
         /**

@@ -54,16 +54,16 @@
 */
 package org.apache.lenya.lucene.parser;
 
-import org.apache.lenya.util.CommandLineLogger;
-
 import java.io.File;
+
+import org.apache.lenya.util.CommandLineLogger;
 
 
 /**
  * Factory to create HTML parsers that are used for indexing HTML.
  *
  * @author Andreas Hartmann
- * @version $Id: HTMLParserFactory.java,v 1.7 2003/12/02 22:24:57 michi Exp $
+ * @version $Id: HTMLParserFactory.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
  */
 public class HTMLParserFactory {
     /**

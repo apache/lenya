@@ -54,15 +54,15 @@
 */
 package org.apache.lenya.lucene.index;
 
-import org.w3c.dom.Element;
-
 import java.io.File;
+
+import org.w3c.dom.Element;
 
 
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: Indexer.java,v 1.7 2003/11/13 22:55:17 michi Exp $
+ * @version $Id: Indexer.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
  */
 public interface Indexer {
     /**

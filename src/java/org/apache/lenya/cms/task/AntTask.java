@@ -1,5 +1,5 @@
 /*
-$Id: AntTask.java,v 1.17 2003/10/22 16:28:26 egli Exp $
+$Id: AntTask.java,v 1.18 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,26 +55,22 @@ $Id: AntTask.java,v 1.17 2003/10/22 16:28:26 egli Exp $
 */
 package org.apache.lenya.cms.task;
 
-import org.apache.avalon.framework.parameters.ParameterException;
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.lenya.util.NamespaceMap;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.ProjectHelper;
-import org.apache.tools.ant.XmlLogger;
-
 import java.io.File;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.util.NamespaceMap;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.XmlLogger;
 
 /**
  * An object of this class is used to execute Ant tasks.

@@ -1,5 +1,5 @@
 /*
-$Id: PublicationHelper.java,v 1.5 2003/08/21 14:26:10 egli Exp $
+$Id: PublicationHelper.java,v 1.6 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,12 @@ $Id: PublicationHelper.java,v 1.5 2003/08/21 14:26:10 egli Exp $
 */
 package org.apache.lenya.cms;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author andreas

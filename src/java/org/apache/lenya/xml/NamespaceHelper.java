@@ -1,5 +1,5 @@
 /*
-$Id: NamespaceHelper.java,v 1.15 2003/09/17 18:58:23 edith Exp $
+$Id: NamespaceHelper.java,v 1.16 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,11 @@ $Id: NamespaceHelper.java,v 1.15 2003/09/17 18:58:23 edith Exp $
 */
 package org.apache.lenya.xml;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 
 /**

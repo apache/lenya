@@ -1,5 +1,5 @@
 /*
-$Id: MailTask.java,v 1.32 2003/07/23 13:21:52 gregor Exp $
+$Id: MailTask.java,v 1.33 2004/02/02 02:50:41 stefano Exp $
 <License>
 
  ============================================================================
@@ -57,23 +57,19 @@ package org.apache.lenya.cms.mail;
 
 
 //import com.sun.mail.smtp.SMTPMessage;
-import org.apache.avalon.framework.parameters.Parameters;
+import java.net.URL;
+import java.util.Arrays;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.net.SMTP;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-
 import org.apache.log4j.Category;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
-
-import java.net.URL;
-
-import java.util.Arrays;
 
 
 /*

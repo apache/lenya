@@ -54,28 +54,26 @@
 */
 package org.apache.lenya.util;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-
 import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.log4j.Category;
 
 /**
  * Similar to the UNIX sed
  *
  * @author Michael Wechner
- * @version $Id: SED.java,v 1.1 2004/01/18 12:22:41 michi Exp $
+ * @version $Id: SED.java,v 1.2 2004/02/02 02:50:37 stefano Exp $
  */
 public class SED {
     static Category log = Category.getInstance(SED.class);

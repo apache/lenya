@@ -1,5 +1,5 @@
 /*
-$Id: DocumentCreator.java,v 1.4 2003/07/23 13:21:27 gregor Exp $
+$Id: DocumentCreator.java,v 1.5 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,9 @@ $Id: DocumentCreator.java,v 1.4 2003/07/23 13:21:27 gregor Exp $
 */
 package org.apache.lenya.lucene.index;
 
-import org.apache.lucene.document.Document;
-
 import java.io.File;
+
+import org.apache.lucene.document.Document;
 
 
 /**

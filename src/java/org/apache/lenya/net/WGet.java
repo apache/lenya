@@ -54,28 +54,26 @@
 */
 package org.apache.lenya.net;
 
-import org.apache.log4j.Category;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.log4j.Category;
 
 
 /**
  * Similar to the UNIX wget
  *
  * @author Michael Wechner
- * @version $Id: WGet.java,v 1.30 2004/01/20 18:10:02 gregor Exp $
+ * @version $Id: WGet.java,v 1.31 2004/02/02 02:50:40 stefano Exp $
  */
 public class WGet {
     static Category log = Category.getInstance(WGet.class);

@@ -54,20 +54,11 @@
 */
 package org.apache.lenya.lucene.index;
 
-import org.apache.lenya.util.CommandLineLogger;
-
-import org.apache.lucene.document.DateField;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.index.TermEnum;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -77,10 +68,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lenya.util.CommandLineLogger;
+import org.apache.lucene.document.DateField;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TermEnum;
+
 
 /**
  * @author Andreas Hartmann
- * @version $Id: IndexIterator.java,v 1.7 2004/01/09 13:21:34 gregor Exp $
+ * @version $Id: IndexIterator.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
  */
 public class IndexIterator {
     /** Creates a new instance of IndexItertor */

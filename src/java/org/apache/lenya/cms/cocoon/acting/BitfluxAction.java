@@ -1,5 +1,5 @@
 /*
-$Id: BitfluxAction.java,v 1.17 2003/11/13 16:08:49 andreas Exp $
+$Id: BitfluxAction.java,v 1.18 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,13 +55,19 @@ $Id: BitfluxAction.java,v 1.17 2003/11/13 16:08:49 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -73,27 +79,15 @@ import org.apache.cocoon.serialization.Serializer;
 import org.apache.cocoon.util.IOUtils;
 import org.apache.cocoon.util.PostInputStream;
 import org.apache.cocoon.xml.dom.DOMStreamer;
-
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.xml.dom.DOMParser;
-
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.rc.RevisionController;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Interfaces with Bitflux editor: handles the requests and replies to them

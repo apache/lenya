@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
+$Id: WorkflowImpl.java,v 1.7 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,15 +55,15 @@ $Id: WorkflowImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
 */
 package org.apache.lenya.workflow.impl;
 
-import org.apache.lenya.workflow.State;
-import org.apache.lenya.workflow.Transition;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowException;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.lenya.workflow.State;
+import org.apache.lenya.workflow.Transition;
+import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowException;
 
 
 /**

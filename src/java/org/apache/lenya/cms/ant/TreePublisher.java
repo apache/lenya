@@ -1,5 +1,5 @@
 /*
-$Id: TreePublisher.java,v 1.11 2003/09/18 11:50:42 andreas Exp $
+$Id: TreePublisher.java,v 1.12 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,6 @@ import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publishing.ParentNodeNotFoundException;
 import org.apache.lenya.cms.publishing.PublishingException;
-
 import org.apache.tools.ant.BuildException;
 
 /**

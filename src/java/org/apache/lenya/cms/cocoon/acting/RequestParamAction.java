@@ -1,5 +1,5 @@
 /*
-$Id: RequestParamAction.java,v 1.9 2003/07/23 13:21:30 gregor Exp $
+$Id: RequestParamAction.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -59,17 +59,16 @@ package org.apache.lenya.cms.cocoon.acting;
 /*
  * Standard imports
  */
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
-
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -112,7 +111,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:Marcus.Crafter@osa.de">Marcus Crafter</a>
  * @author <a href="mailto:tcurdt@dff.st">Torsten Curdt</a>
- * @version CVS $Id: RequestParamAction.java,v 1.9 2003/07/23 13:21:30 gregor Exp $
+ * @version CVS $Id: RequestParamAction.java,v 1.10 2004/02/02 02:50:37 stefano Exp $
  */
 public class RequestParamAction extends org.apache.cocoon.acting.ComposerAction
     implements ThreadSafe {

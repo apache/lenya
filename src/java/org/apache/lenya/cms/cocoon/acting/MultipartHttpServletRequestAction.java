@@ -1,5 +1,5 @@
 /*
-$Id: MultipartHttpServletRequestAction.java,v 1.4 2003/07/23 13:21:30 gregor Exp $
+$Id: MultipartHttpServletRequestAction.java,v 1.5 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,21 +55,21 @@ $Id: MultipartHttpServletRequestAction.java,v 1.4 2003/07/23 13:21:30 gregor Exp
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
-
 import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.servlet.multipart.Part;
-
-import java.io.*;
-
-import java.util.*;
 
 
 /**

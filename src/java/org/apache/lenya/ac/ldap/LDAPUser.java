@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.2 2003/11/24 14:06:49 andreas Exp $ <License>
+ * $Id: LDAPUser.java,v 1.3 2004/02/02 02:50:41 stefano Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -42,16 +42,6 @@
  */
 package org.apache.lenya.ac.ldap;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.DefaultConfiguration;
-
-import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.file.*;
-import org.apache.log4j.Category;
-
-import com.sun.jndi.ldap.LdapCtxFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -66,6 +56,15 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
+
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfiguration;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.file.FileUser;
+import org.apache.log4j.Category;
+
+import com.sun.jndi.ldap.LdapCtxFactory;
 
 /**
  * @author egli

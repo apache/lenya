@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeAction.java,v 1.14 2003/08/28 13:49:08 egli Exp $
+$Id: PageEnvelopeAction.java,v 1.15 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,14 +55,14 @@ $Id: PageEnvelopeAction.java,v 1.14 2003/08/28 13:49:08 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.rc.RCEnvironment;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**

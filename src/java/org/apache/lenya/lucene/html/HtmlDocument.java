@@ -1,5 +1,5 @@
 /*
-$Id: HtmlDocument.java,v 1.9 2003/07/23 13:21:18 gregor Exp $
+$Id: HtmlDocument.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -59,19 +59,6 @@ package org.apache.lenya.lucene.html;
 // Imports commented out since there is a name clash and fully
 // qualified class names will be used in the code.  Imports are
 // left for ease of maintenance.
-import org.apache.lucene.document.Field;
-
-//import org.apache.lucene.document.Document;
-import org.w3c.dom.Attr;
-
-//import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
-import org.w3c.tidy.Tidy;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,6 +66,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+
+import org.apache.lucene.document.Field;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+import org.w3c.tidy.Tidy;
 
 
 /**

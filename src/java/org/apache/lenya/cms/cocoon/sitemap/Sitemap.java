@@ -1,5 +1,5 @@
 /*
-$Id: Sitemap.java,v 1.11 2003/08/28 14:08:12 egli Exp $
+$Id: Sitemap.java,v 1.12 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,11 @@ $Id: Sitemap.java,v 1.11 2003/08/28 14:08:12 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.sitemap;
 
+import java.io.File;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
-
 import org.dom4j.io.SAXReader;
-
-import java.io.File;
 
 
 /**

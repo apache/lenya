@@ -1,5 +1,5 @@
 /*
-$Id: ParserThread.java,v 1.9 2003/07/23 13:21:18 gregor Exp $
+$Id: ParserThread.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,7 @@ $Id: ParserThread.java,v 1.9 2003/07/23 13:21:18 gregor Exp $
 */
 package org.apache.lenya.lucene.html;
 
-import java.io.*;
+import java.io.IOException;
 
 
 class ParserThread extends Thread {

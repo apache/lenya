@@ -54,22 +54,20 @@
 */
 package org.apache.lenya.xml;
 
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.util.Vector;
+
+import org.apache.log4j.Category;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: XPSSourceInformation.java,v 1.16 2004/01/07 15:38:30 michi Exp $
+ * @version $Id: XPSSourceInformation.java,v 1.17 2004/02/02 02:50:36 stefano Exp $
  */
 public class XPSSourceInformation {
     static Category log = Category.getInstance(XPSSourceInformation.class);

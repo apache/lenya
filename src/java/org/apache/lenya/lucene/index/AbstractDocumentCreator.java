@@ -1,5 +1,5 @@
 /*
-$Id: AbstractDocumentCreator.java,v 1.5 2003/07/23 13:21:27 gregor Exp $
+$Id: AbstractDocumentCreator.java,v 1.6 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,11 +55,11 @@ $Id: AbstractDocumentCreator.java,v 1.5 2003/07/23 13:21:27 gregor Exp $
 */
 package org.apache.lenya.lucene.index;
 
+import java.io.File;
+
 import org.apache.lucene.document.DateField;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-
-import java.io.File;
 
 
 /**

@@ -1,5 +1,5 @@
 /*
-$Id: ServletJob.java,v 1.15 2004/01/07 18:37:23 andreas Exp $
+$Id: ServletJob.java,v 1.16 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,17 +55,16 @@ $Id: ServletJob.java,v 1.15 2004/01/07 18:37:23 andreas Exp $
 */
 package org.apache.lenya.cms.scheduler;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Category;
-
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
 import org.w3c.dom.Element;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Scheduling job that uses an HttpServletRequest to obtain its Job data.

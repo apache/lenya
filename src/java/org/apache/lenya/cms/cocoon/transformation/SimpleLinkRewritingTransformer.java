@@ -1,5 +1,5 @@
 /*
-$Id: SimpleLinkRewritingTransformer.java,v 1.3 2003/10/31 10:46:40 egli Exp $
+$Id: SimpleLinkRewritingTransformer.java,v 1.4 2004/02/02 02:50:40 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,11 @@ $Id: SimpleLinkRewritingTransformer.java,v 1.3 2003/10/31 10:46:40 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.transformation;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractTransformer;
@@ -67,10 +70,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
-
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This is a simple transformer which rewrites &lt;a

@@ -59,7 +59,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URLConnection;
@@ -70,7 +69,7 @@ import javax.swing.text.html.parser.ParserDelegator;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: SwingHTMLParser.java,v 1.7 2003/12/02 22:24:57 michi Exp $
+ * @version $Id: SwingHTMLParser.java,v 1.8 2004/02/02 02:50:38 stefano Exp $
  */
 public class SwingHTMLParser extends AbstractHTMLParser {
     /** Creates a new instance of SwingHTMLParser */

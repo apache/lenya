@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreator.java,v 1.24 2003/08/05 11:57:40 andreas Exp $
+$Id: DefaultCreator.java,v 1.25 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,17 +55,13 @@ $Id: DefaultCreator.java,v 1.24 2003/08/05 11:57:40 andreas Exp $
 */
 package org.apache.lenya.cms.authoring;
 
-import org.apache.avalon.framework.configuration.Configuration;
-
-import org.apache.lenya.xml.DocumentHelper;
-
-import org.apache.log4j.Category;
-
-import org.w3c.dom.Document;
-
 import java.io.File;
-
 import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.log4j.Category;
+import org.w3c.dom.Document;
 
 /**
  * DOCUMENT ME!

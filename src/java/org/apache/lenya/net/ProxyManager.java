@@ -54,15 +54,15 @@
 */
 package org.apache.lenya.net;
 
-import org.apache.lenya.xml.*;
-
-import org.apache.log4j.Category;
-
-import org.w3c.dom.*;
-
 import java.io.File;
 import java.util.Properties;
 import java.util.Vector;
+
+import org.apache.lenya.xml.DOMParserFactory;
+import org.apache.lenya.xml.XPointerFactory;
+import org.apache.log4j.Category;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 
 /**
@@ -71,7 +71,7 @@ import java.util.Vector;
  *
  * @author Philipp Klaus
  * @author Michael Wechner
- * @version $Id: ProxyManager.java,v 1.13 2003/12/15 17:31:49 michi Exp $
+ * @version $Id: ProxyManager.java,v 1.14 2004/02/02 02:50:40 stefano Exp $
  */
 public class ProxyManager {
     static Category log = Category.getInstance(ProxyManager.class);

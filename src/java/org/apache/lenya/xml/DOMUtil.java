@@ -54,17 +54,15 @@
 */
 package org.apache.lenya.xml;
 
-import org.apache.log4j.Category;
+import java.io.StringReader;
+import java.util.Vector;
 
+import org.apache.log4j.Category;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import java.io.StringReader;
-
-import java.util.Vector;
 
 
 /**
@@ -72,7 +70,7 @@ import java.util.Vector;
  * FIXME: Merge classes or extend functionality
  *
  * @author Michael Wechner
- * @version $Id: DOMUtil.java,v 1.11 2003/08/13 09:46:00 michi Exp $
+ * @version $Id: DOMUtil.java,v 1.12 2004/02/02 02:50:36 stefano Exp $
  */
 public class DOMUtil {
     static Category log = Category.getInstance(DOMUtil.class);

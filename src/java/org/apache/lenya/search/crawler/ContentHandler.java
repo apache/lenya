@@ -1,5 +1,5 @@
 /*
-$Id: ContentHandler.java,v 1.9 2003/07/30 15:13:14 egli Exp $
+$Id: ContentHandler.java,v 1.10 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id: ContentHandler.java,v 1.9 2003/07/30 15:13:14 egli Exp $
 package org.apache.lenya.search.crawler;
 
 import java.io.InputStream;
-
 import java.util.List;
 
 
@@ -64,7 +63,7 @@ import java.util.List;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public interface ContentHandler {
     /**

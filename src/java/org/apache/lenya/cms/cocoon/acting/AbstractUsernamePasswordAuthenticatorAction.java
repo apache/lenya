@@ -1,5 +1,5 @@
 /*
-$Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.14 2003/07/23 13:21:30 gregor Exp $
+$Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.15 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,9 @@ $Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.14 2003/07/23 13:21:30
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.cocoon.environment.Request;
-
 import java.util.Map;
+
+import org.apache.cocoon.environment.Request;
 
 
 /**

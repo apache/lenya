@@ -1,5 +1,5 @@
 /*
-$Id: FileRoleTest.java,v 1.1 2003/11/13 16:13:30 andreas Exp $
+$Id: FileRoleTest.java,v 1.2 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,12 +55,11 @@ $Id: FileRoleTest.java,v 1.1 2003/11/13 16:13:30 andreas Exp $
 */
 package org.apache.lenya.ac.file;
 
+import java.io.File;
+
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.file.FileRole;
-import org.apache.lenya.ac.file.FileRoleManager;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
-import java.io.File;
 
 
 /**

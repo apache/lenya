@@ -1,5 +1,5 @@
 /*
-$Id: TestProxyGeneratorServlet.java,v 1.1 2003/12/09 16:56:33 gregor Exp $
+$Id: TestProxyGeneratorServlet.java,v 1.2 2004/02/02 02:51:51 stefano Exp $
 <License>
 
  ============================================================================
@@ -57,7 +57,6 @@ package org.apache.lenya.cms.cocoon.generation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;

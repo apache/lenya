@@ -54,6 +54,8 @@
 */
 package org.apache.lenya.cms.workflow;
 
+import java.io.File;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
@@ -63,14 +65,11 @@ import org.apache.lenya.workflow.impl.History;
 import org.apache.lenya.workflow.impl.Version;
 import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 import org.apache.lenya.xml.NamespaceHelper;
-
 import org.w3c.dom.Element;
-
-import java.io.File;
 
 /**
  * @author andreas
- * @version $Id: CMSHistory.java,v 1.22 2003/12/05 17:27:09 andreas Exp $
+ * @version $Id: CMSHistory.java,v 1.23 2004/02/02 02:50:40 stefano Exp $
  *
  */
 public class CMSHistory extends History {

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInstanceImpl.java,v 1.10 2003/10/02 15:27:42 andreas Exp $
+$Id: WorkflowInstanceImpl.java,v 1.11 2004/02/02 02:50:38 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,15 @@ $Id: WorkflowInstanceImpl.java,v 1.10 2003/10/02 15:27:42 andreas Exp $
 */
 package org.apache.lenya.workflow.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.BooleanVariable;
 import org.apache.lenya.workflow.BooleanVariableInstance;
@@ -67,15 +76,6 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.WorkflowListener;
 import org.apache.log4j.Category;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 /**

@@ -55,25 +55,22 @@ $Id
 */
 package org.apache.lenya.cms.task;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.util.GregorianCalendar;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import junit.textui.TestRunner;
 
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
-
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.xml.sax.SAXException;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-
-import java.util.GregorianCalendar;
 
 
 /**

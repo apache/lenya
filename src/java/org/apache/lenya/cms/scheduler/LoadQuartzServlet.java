@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.35 2004/01/09 11:14:40 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.36 2004/02/02 02:50:39 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,26 +55,10 @@ $Id: LoadQuartzServlet.java,v 1.35 2004/01/09 11:14:40 andreas Exp $
 */
 package org.apache.lenya.cms.scheduler;
 
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
-import org.apache.lenya.util.NamespaceMap;
-import org.apache.lenya.xml.DocumentHelper;
-
-import org.apache.log4j.Category;
-
-import org.quartz.SchedulerException;
-
-import org.w3c.dom.Document;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -91,11 +75,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
+import org.apache.lenya.util.NamespaceMap;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.log4j.Category;
+import org.quartz.SchedulerException;
+import org.w3c.dom.Document;
+
 /**
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.35 2004/01/09 11:14:40 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.36 2004/02/02 02:50:39 stefano Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);

@@ -1,5 +1,5 @@
 /*
-$Id: ReservedCheckoutTestAction.java,v 1.1 2003/09/30 13:22:53 edith Exp $
+$Id: ReservedCheckoutTestAction.java,v 1.2 2004/02/02 02:50:37 stefano Exp $
 <License>
 
  ============================================================================
@@ -55,17 +55,15 @@ $Id: ReservedCheckoutTestAction.java,v 1.1 2003/09/30 13:22:53 edith Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**

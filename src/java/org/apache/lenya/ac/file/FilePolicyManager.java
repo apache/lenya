@@ -1,5 +1,5 @@
 /*
- * $Id: FilePolicyManager.java,v 1.1 2003/11/13 16:07:04 andreas Exp $ <License>
+ * $Id: FilePolicyManager.java,v 1.2 2004/02/02 02:50:40 stefano Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -40,6 +40,14 @@
  */
 package org.apache.lenya.ac.file;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;
@@ -54,24 +62,15 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.cache.CachingException;
+import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.ac.impl.PolicyBuilder;
 import org.apache.lenya.ac.impl.RemovedAccreditablePolicyBuilder;
 import org.apache.lenya.ac.impl.URLPolicy;
-import org.apache.lenya.ac.cache.CachingException;
-import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.xml.DocumentHelper;
-
 import org.w3c.dom.Document;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A PolicyBuilder is used to build policies.

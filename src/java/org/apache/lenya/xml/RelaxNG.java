@@ -1,5 +1,10 @@
 package org.apache.lenya.xml;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.OutputStreamWriter;
+
 import org.xml.sax.InputSource;
 
 import com.thaiopensource.util.PropertyMapBuilder;
@@ -8,11 +13,6 @@ import com.thaiopensource.validate.ValidateProperty;
 import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
-
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.OutputStreamWriter;
 
 /**
  * Validate XML Document with RELAX NG Schema

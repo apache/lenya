@@ -55,24 +55,29 @@
 package org.apache.lenya.xml;
 
 
-import org.apache.lenya.net.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
+import org.apache.lenya.net.ProxyManager;
 import org.apache.log4j.Category;
-
-import org.w3c.dom.*;
-
-import java.io.*;
-
-import java.net.*;
-
-import java.util.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 
 /**
  * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  *
  * @author Michael Wechner
- * @version $Id: XPSAssembler.java,v 1.19 2004/01/07 15:38:30 michi Exp $
+ * @version $Id: XPSAssembler.java,v 1.20 2004/02/02 02:50:36 stefano Exp $
  */
 public class XPSAssembler implements XPSInclude {
     static Category log = Category.getInstance(XPSAssembler.class);
