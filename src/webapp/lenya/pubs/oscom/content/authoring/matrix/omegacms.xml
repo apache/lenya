@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>omegacms</id>
+  <editor email="support@omegacms.com">Support</editor>
+  <system_name>OmegaCMS</system_name>
+  <description>
+OmegaCMS Toolkit helps you build a state of the art 
+dynamically generated, easy to update website faster 
+and easier while not constraining the look and feel of your site.
+OmegaCMS Toolkit generates Java business objects and browser-based 
+administration tools for content entry, customized to the needs and workflow of your site.
+  </description>
+  <main_url>http://www.omegacms.com</main_url>
+  <license>
+    <license_name>BSD-style License</license_name>
+    <license_url>http://www.omegacms.com/license.txt</license_url>
+  </license>
+</system>
