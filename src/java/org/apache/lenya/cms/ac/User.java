@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.10 2003/06/04 13:19:57 egli Exp $
+ * $Id: User.java,v 1.11 2003/06/06 13:58:49 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -134,10 +134,21 @@ public abstract class User {
 	}
 
 	/**
+	 * 
+	 */
+	public void removeAllGroups() {
+		for (Iterator iter = groups.iterator(); iter.hasNext();) {
+			Group group = (Group) iter.next();
+			group.removeUser(this);
+		}
+		groups.clear();
+	}
+
+	/**
 	 * @param set
 	 */
 	public void addGroup(Group group) {
-        assert group != null;
+		assert group != null;
 		groups.add(group);
 		group.addUser(this);
 	}
@@ -161,8 +172,14 @@ public abstract class User {
 	 * @param publication
 	 * @throws AccessControlException
 	 */
-	public abstract void save()
-		throws AccessControlException;
+	public abstract void save() throws AccessControlException;
+
+	/**
+	 * 
+	 */
+	public void delete() throws AccessControlException {
+		removeAllGroups();
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)

@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.8 2003/06/05 12:00:50 egli Exp $
+ * $Id: FileUser.java,v 1.9 2003/06/06 13:58:49 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,7 +66,7 @@ import org.apache.log4j.Category;
  */
 public class FileUser extends User {
 	private Category log = Category.getInstance(FileUser.class);
-	
+
 	public static final String ID = "identity";
 	public static final String FULL_NAME = "fullname";
 	public static final String EMAIL = "email";
@@ -78,7 +78,7 @@ public class FileUser extends User {
 	public static final String CLASS_ATTRIBUTE = "class";
 
 	private Publication publication;
-	
+
 	/**
 	 * @param id
 	 */
@@ -86,7 +86,6 @@ public class FileUser extends User {
 		super(id);
 		this.publication = publication;
 	}
-	
 
 	/**
 	 * @param publication
@@ -102,7 +101,7 @@ public class FileUser extends User {
 		String email,
 		String password) {
 		super(id, fullName, email, password);
-		this.publication = publication;	
+		this.publication = publication;
 	}
 
 	public FileUser(Publication publication, Configuration config)
@@ -143,7 +142,6 @@ public class FileUser extends User {
 		}
 	}
 
-
 	/**
 	 * @return
 	 */
@@ -165,10 +163,10 @@ public class FileUser extends User {
 		child = new DefaultConfiguration(PASSWORD);
 		child.setValue(email);
 		child.setAttribute(PASSWORD_ATTRIBUTE, "md5");
-		config.addChild(child);		
+		config.addChild(child);
 		// add group nodes
 		child = new DefaultConfiguration(GROUPS);
-		config.addChild(child);		
+		config.addChild(child);
 
 		Iterator groupsIter = getGroups();
 		while (groupsIter.hasNext()) {
@@ -193,6 +191,20 @@ public class FileUser extends User {
 		} catch (Exception e) {
 			throw new AccessControlException(e);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.apache.lenya.cms.ac.User#delete()
+	 */
+	public void delete() throws AccessControlException {
+		super.delete();
+
+		UserManager manager = UserManager.instance(publication);
+
+		manager.remove(this);
+		File xmlPath = manager.getPath();
+		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
+		xmlfile.delete();
 	}
 
 }
