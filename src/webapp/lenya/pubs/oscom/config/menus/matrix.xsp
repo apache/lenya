@@ -24,7 +24,7 @@
 <!--
         <item href="/wyona-cms/bitfluxeditor/weekly-column.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
 -->
-        <item><xsp:attribute name="href"><xsp:expr>"wyona/publishScreen?docid=/wyona-cms/oscom/matrix/"+projectid+".html,/wyona-cms/oscom/matrix/index.html&amp;docids=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/wyona/publishScreen?docid=/wyona-cms/oscom/matrix/"+projectid+".html,/wyona-cms/oscom/matrix/index.html&amp;docids=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
       </block>
       <separator>
         <item>-----------------</item>

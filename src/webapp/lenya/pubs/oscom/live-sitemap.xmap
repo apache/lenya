@@ -195,8 +195,10 @@
         <map:transform src="stylesheets/publication/Page/Glossary/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+   </map:pipeline>
 
-      <!-- CM/F Overview -->
+   <map:pipeline>
+      <!-- CMS/F Overview -->
       <map:match pattern="live/overview.html">
         <map:generate src="cocoon:/live/overview.xml"/>
         <!--<map:generate src="http://www.oscom.org/syndication/overviews.xml"/>-->
@@ -209,7 +211,26 @@
         <map:transform src="stylesheets/publication/Page/Overview/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+   </map:pipeline>
 
+   <!-- CMS/F Projects -->
+   <map:pipeline>
+      <map:match pattern="matrix/*.html">
+        <map:generate type="serverpages" src="docs/publication/live/matrix-envelope.xsp">
+          <map:parameter name="projectid" value="{1}"/>
+        </map:generate>
+        <map:transform type="xinclude"/>
+        <map:transform src="stylesheets/publication/Page/Matrix/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:transform src="../../stylesheets/cms/Page/Exception/not_published_yet.xsl"/>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+   </map:pipeline>
+
+   <map:pipeline>
       <!-- Generic (XHTML) -->
       <map:match pattern="conferences/berkeley2002/**.html">
         <map:generate src="cocoon:/live/conferences/sanfrancisco2002/{1}.xml"/>
@@ -238,5 +259,7 @@
         <map:serialize type="xml"/>
       </map:match>
    </map:pipeline>
+
+
  </map:pipelines>
 </map:sitemap>
