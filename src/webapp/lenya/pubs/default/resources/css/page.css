@@ -22,9 +22,9 @@ root { }
 /* menu */
 
 #menu {
+/*    border: dotted 1px Navy; */
     float: left;
     width: 20%;
-    border: none;
     font-family: Verdana, Arial, Sans-serif;
     background-color: #EEEEEE;
     margin-top: 10px;
@@ -34,12 +34,29 @@ root { }
     text-decoration: none;
 }
 
-.menuitem-1 { font-weight: bold; padding: .5em; font-size: 80%; }
-.menuitem-2 { padding-left: 1em; padding-right: .5em; font-size: 70%; }
-.menuitem-3 { padding-left: 1.5em; padding-right: .5em; font-size: 60%; }
-.menuitem-selected-1 { background-color: #E0E0E0; color: Navy; font-weight: bold; padding: .5em; font-size: 80%; }
-.menuitem-selected-2 { background-color: #E0E0E0; color: Navy; font-weight: bold; padding-left: 1em; font-weight: bold; font-size: 70%; padding-right: .5em; }
-.menuitem-selected-3 { background-color: #E0E0E0; color: Navy; font-weight: bold; padding-left: 1.5em; font-size: 60%; padding-right: .5em; }
+#menu a:hover {
+    text-decoration: underline;
+}
+
+.menublock-1 { padding: .5em; color: #909090 }
+.menublock-selected-1 { padding: .5em; color: Navy; }
+.menublock-1 a { color: #909090; }
+.menublock-1 a:visited { }
+
+.menublock-1 .menublock-2 { display: none; }
+
+.menublock-selected-1 .menuitem-1 { }
+.menublock-selected-1 .menuitem-1 { border-bottom: dotted 1px Navy; }
+.menublock-1          .menuitem-1 { border-bottom: dotted 1px #909090; }
+
+.menuitem-1 { font-weight: bold; padding-top: 2px; padding-bottom: 2px; font-size: 80%; }
+.menuitem-2 { padding-left: 20px; padding-top: 2px; padding-bottom: 2px; font-size: 70%; }
+.menuitem-2 a { color: #9090C0; }
+.menuitem-3 { padding-left: 1.5em; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; font-size: 60%; }
+
+.menuitem-selected-1 { border-bottom: dotted 1px Navy; font-weight: bold; padding-top: 2px; padding-bottom: 2px; font-size: 80%; }
+.menuitem-selected-2 { padding-left: 20px; margin-top: 2px; margin-bottom: 2px; font-size: 70%; }
+.menuitem-selected-3 { padding-left: 1.5em; font-size: 60%; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; }
 
 /* breadcrumb */
 
@@ -52,6 +69,8 @@ root { }
 #main { float: left; width: 70%; margin: 10px; border: none; }
 
 h1 { font-size: 140%; }
+h2 { font-size: 100%; }
+h3 { font-size: 80%; }
 p { font-size: 80%; }
 li { font-size: 80%; }
 
