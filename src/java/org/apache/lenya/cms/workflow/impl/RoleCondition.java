@@ -6,6 +6,7 @@
 
 package org.apache.lenya.cms.workflow.impl;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class RoleCondition implements Condition {
         CMSSituation situationImpl = (CMSSituation) situation;
         User user = situationImpl.getUser();
         Iterator userGroups = user.getGroups();
-        Set userRoles = null;
+        Set userRoles = new HashSet();
         
         while (userGroups.hasNext()) {
         	Iterator groupRoles = ((Group)userGroups.next()).getRoles();
