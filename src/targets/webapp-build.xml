@@ -36,6 +36,13 @@
             includes="*/config/cocoon.xconf"
             addComments="true"/>
             
+    <!-- Patch publication tests -->
+    <echo>INFO: Patch publication tests</echo>
+    <xpatch file="./src/targets/publication-test-build.xml"
+            srcdir="${build.webapp}/lenya/pubs" 
+            includes="*/targets/test-build.xconf"
+            addComments="true"/>
+            
     <!-- create directory classes within webapp -->
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
 

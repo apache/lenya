@@ -6,7 +6,7 @@
                        |  Apache Lenya Build System |
                        * =========================== *
 
-       CVS $Id: build.xml,v 1.59 2003/09/26 11:23:32 andreas Exp $:
+       CVS $Id: build.xml,v 1.60 2004/01/12 16:53:10 andreas Exp $:
 
     History
     =======
@@ -31,6 +31,7 @@
   <!ENTITY dist-targets        SYSTEM "./src/targets/dist-build.xml">
   <!ENTITY export-targets      SYSTEM "./src/targets/export-build.xml">
   <!ENTITY publication-targets SYSTEM "./src/targets/publication-build.xml">
+  <!ENTITY publication-tests   SYSTEM "./src/targets/publication-test-build.xml">
   <!-- =================================================================== -->
 
 ]>
@@ -59,6 +60,8 @@
   <!-- Export targets          -->  &export-targets;
   <!-- =================================================================== -->
   <!-- Publication targets     -->  &publication-targets;
+  <!-- =================================================================== -->
+  <!-- Publication tests       -->  &publication-tests;
   <!-- =================================================================== -->
 
 </project>

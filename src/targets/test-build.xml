@@ -32,13 +32,15 @@
   </target>
   
   <!-- prepares the tests. -->
-  <target name="tests.prepare">
+  <target name="tests.prepare" depends="build-custom-tasks">
     <mkdir dir="${build.test}"/>
 
     <!-- Copy test files to build test dir -->
     <copy todir="${build.test}" filtering="on">
       <fileset dir="${src.test}" excludes="**/*.java"/>
     </copy>
+
+    <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/test" builddir="${src.test}" />
 
     <!-- Compile tests -->
     <javac srcdir="${src.test}"
@@ -65,8 +67,8 @@
   			test.creator,
   			test.publisher,
   			test.accesscontrol,
-			test.deactivate,
-  			test.publication"
+        test.deactivate,
+        test.publications"
   />
 
   
