@@ -5,7 +5,7 @@
 pubs.root.dirs=src/webapp/lenya/pubs:/home/lenya/src/lenya-pubs
 
 # The original, unmodified and expanded cocoon webapp directory
-src.cocoon.dir=../xml-cocoon2/build/webapp
+src.cocoon.dir=../cocoon-2.1/build/webapp
 
 # Where the 'install' build target should put the webapp context
 # Either use an absolute path or a relative one based on the current directory
