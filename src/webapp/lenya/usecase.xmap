@@ -4,7 +4,9 @@
   <!-- =========================== Components ================================ -->
   <map:components>
     
-    <map:generators default="file"/>
+    <map:generators default="file">
+      <map:generator label="content,data" logger="sitemap.generator.epozstream" name="epozstream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.lenya.cms.cocoon.generation.StreamGenerator"/>
+    </map:generators>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
     <map:serializers default="xhtml">
@@ -39,6 +41,7 @@
         <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
         <!--         <exception class="org.apache.lenya.cms.publication.SiteTreeException" name="sitetree"/> -->
       </map:selector>
+      <map:selector name="request-method" logger="sitemap.selector.request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
     </map:selectors>
     
   </map:components>
@@ -142,12 +145,19 @@
       </map:match>
       
     </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="epoz-stream">
+        <map:generate type="epozstream"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
     
     <!-- =================================================================== -->
     <!-- Usecase Pipelines -->
     <!-- =================================================================== -->
     
-    <map:pipeline>
+    <map:pipeline type="noncaching">
       
       <!-- {publication-id}/{area}/{uri}-->
       <map:match pattern="*/*/**">
@@ -344,9 +354,27 @@
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
               <map:act type="resource-exists" src="../../ROOT/epoz/common/epozeditor.js"> <!-- Check for Epoz -->
-	        <map:generate src="resources/misc/epoz/epozmacros.html"/>
+
+                <map:act type="reserved-checkout">
+                  <map:generate type="serverpages" src="content/rc/{exception}.xsp">
+                    <map:parameter name="user" value="{user}"/>
+                    <map:parameter name="filename" value="{filename}"/>
+                    <map:parameter name="date" value="{date}"/>
+                  </map:generate>
+                  <map:transform src="xslt/rc/rco-exception.xsl"/>
+                  <map:call resource="style-cms-page"/>
+                  <map:serialize type="html"/>
+                </map:act>
+
+                <map:generate src="resources/misc/epoz/epozmacros.html"/>
                 <map:transform src="xslt/authoring/edit/epozmacros-xhtml.xsl">
                   <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=content"/>
+
+                  <map:parameter name="document-path" value="{page-envelope:document-path}"/>
+                  <map:parameter name="root" value="{page-envelope:context-prefix}"/>
+                  <map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=save"/>
+                  <map:parameter name="reload-on-save" value="1"/>
+                  <map:parameter name="use-css" value="1"/>
                 </map:transform>
 	        <map:serialize type="html"/>
               </map:act>
@@ -358,13 +386,81 @@
           <map:match pattern="content" type="step">
             <map:match pattern="*/authoring/**.html">
 	      <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-	      <map:serialize type="html"/>
-	      <!--
-	      <map:serialize type="xhtml-iso-8859-1"/>
-	      -->
+              <map:transform src="xslt/authoring/edit/epozcontent-xhtml.xsl">
+                <map:parameter name="css" value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
+              </map:transform>
+	      <map:serialize type="xhtml"/>
             </map:match>
           </map:match>
+
+          <!-- 
+               Epoz uses PUT to transmitt the edited file for save.
+               The problem is, Epoz removes namespace information. 
+               That means we can not use the StreamGenerator, because 
+               it complains about an unbound element.			
+          -->
+          <map:match pattern="save" type="step">
+            <map:select type="request-method">  
+              <map:when test="PUT">
+
+                <map:act type="reserved-checkout-test">
+                  <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+                    <map:parameter name="user" value="{user}"/>
+                    <map:parameter name="filename" value="{filename}"/>
+                    <map:parameter name="date" value="{date}"/>
+                  </map:generate>
+                  <map:transform src="../../xslt/rc/rco-exception.xsl"/>
+                  <map:call resource="style-cms-page"/>
+                  <map:serialize type="html"/>
+                </map:act>
+
+                <map:aggregate element="edit-envelope">
+                  <map:part element="edited" src="cocoon:/epoz-stream"/>
+                  <map:part element="original" src="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+                </map:aggregate>
+                <map:transform src="xslt/authoring/edit/epozsave-xhtml.xsl"/>
+
+                <map:act type="reserved-checkin">
+                  <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                    <map:parameter name="user" value="{user}"/>
+                    <map:parameter name="filename" value="{filename}"/>
+                    <map:parameter name="checkType" value="{checkType}"/>
+                    <map:parameter name="date" value="{date}"/>
+                  </map:generate>
+                  <map:transform src="xslt/rc/rco-exception.xsl"/>
+                  <map:serialize/>
+                </map:act>
+
+                <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+                  <map:parameter name="source" value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+<!--
+                  <map:parameter name="source" value="test-epoz.xml"/>
+-->
+                </map:transform>
+                <map:transform type="write-source"/>
+			
+                <!-- Trigger worklfow with *edit* action -->
+                <map:act type="workflow">
+                  <map:parameter name="area" value="{page-envelope:area}"/>
+                  <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+                  <map:parameter name="language" value="{page-envelope:document-language}"/>
+                  <map:parameter name="event" value="edit"/>
+                </map:act> 
+
+                <map:serialize type="xml" status-code="204"/>
+              </map:when>						
+            </map:select>  				
+          </map:match>
+
         </map:match>
+
+<!-- Defined outside of usecase pipeline. See above. -->
+<!--
+        <map:match pattern="epoz-stream">
+          <map:generate type="epozstream"/>
+          <map:serialize type="xml"/>
+        </map:match>
+-->
         <!-- ************************************************************** -->
         <!-- ********  /Epoz Editor *************************************** -->
         <!-- ************************************************************** -->
