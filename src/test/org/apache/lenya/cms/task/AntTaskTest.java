@@ -90,6 +90,8 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Creates a new AntTaskTest object.
+     * 
+     * @param test the test
      */
     public AntTaskTest(String test) {
         super(test);
@@ -120,6 +122,8 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Creates a test suite.
+     * 
+     * @return the test suite
      */
     public static Test getSuite() {
         return new TestSuite(AntTaskTest.class);
@@ -128,6 +132,8 @@ public class AntTaskTest extends TestCase {
     /**
      * Tests the AntTask class.
      * Template method, please override {@link #evaluateTest()} and {@link #getTarget()} and {@link #prepareTest()}.
+     * 
+     * @throws Exception if an error occurs
      */
     public final void testAntTask() throws Exception {
         prepareTest();
@@ -145,10 +151,13 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Tests an AntTask.
-     * @param taskId The ID of the task to test.
-     * @throws ExecutionException
-     * @throws IOException
-     * @throws ParameterException
+     * @param target the target of the task to test.
+     * 
+     * @throws ExecutionException if an error occurs
+     * @throws IOException if an error occurs
+     * @throws ParameterException if an error occurs
+     * @throws SAXException if an error occurs
+     * @throws ConfigurationException if an error occurs
      */
     protected void doTest(String target) throws ExecutionException, ParameterException, ConfigurationException, SAXException, IOException {
         System.out.println("Testing target [" + target + "]:");
@@ -192,7 +201,7 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Override this method to prepare your test.
-    * @throws Exception
+    * @throws Exception if an error occurs
      */
     protected void prepareTest() throws Exception {
         System.out.println("prepare");
@@ -200,19 +209,19 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Override this method to add your test evaluation code.
-     * @throws Exception
+     * @throws Exception if an error occurs
      */
     protected void evaluateTest() throws Exception {
         System.out.println("evaluate");
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
         if (PublicationHelper.getPublication() == null) {
             String[] args = {
-                "/home/edith/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya", "test"
+                "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya", "test"
             };
             PublicationHelper.extractPublicationArguments(args);
         }
