@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.2 2003/05/30 20:33:10 andreas Exp $
+ * $Id: FileUser.java,v 1.3 2003/06/02 09:28:43 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -53,9 +53,9 @@ import java.io.File;
 import java.util.Iterator;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.w3c.dom.Document;
 
 /**
  * @author egli
@@ -73,11 +73,6 @@ public class FileUser extends User {
 	public static final String PASSWORD_ATTRIBUTE = "type";
 	public static final String ID_ATTRIBUTE = "id";
 	public static final String CLASS_ATTRIBUTE = "class";
-	public static final String NAMESPACE_URI = "";
-
-	private Document document;
-	private File xmlfile;
-	private DefaultConfiguration config;
 
 	/**
 	 * @param id
@@ -85,12 +80,23 @@ public class FileUser extends User {
 	public FileUser(String id) {
 		super(id);
 	}
+	
+	public FileUser(Configuration config) throws ConfigurationException {
+		id = config.getAttribute(ID);
+		setEmail(config.getValue(EMAIL));
+		setFullName(config.getValue(FULL_NAME));
+		setPassword(config.getValue(PASSWORD));
+		Configuration[] groups = config.getChildren(GROUPS);
+		//		for (int i = 0; i < groups.length; i++) {
+		//			Configuration group = groups[i];
+		//		}
+	}
 
 
 	/**
 	 * @return
 	 */
-	protected Configuration createDocument() {
+	protected Configuration createConfiguration() {
 
 		DefaultConfiguration config = new DefaultConfiguration(ID);
 		config.setAttribute(ID_ATTRIBUTE, id);
@@ -128,19 +134,14 @@ public class FileUser extends User {
 	public void save() throws AccessControlException {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
+		Configuration config = createConfiguration();
+		// TODO where do I get the file from?
+		File xmlfile = null;
 		try {
 			serializer.serializeToFile(xmlfile, config);
 		} catch (Exception e) {
 			throw new AccessControlException(e);
 		}
-	}
-
-	/* (non-Javadoc)
-	 * @see org.apache.lenya.cms.ac.User#configure(org.apache.avalon.framework.configuration.Configuration)
-	 */
-	public void configure(Configuration config) {
-		this.config.addAll(config);
-		
 	}
 
 }
