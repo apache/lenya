@@ -69,6 +69,7 @@ public class Login extends AccessControlUsecase {
     protected void doExecute() throws Exception {
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);
+        request.getSession(true);
         if (getAccessController().authenticate(request)) {
         	setTargetURL(request.getRequestURI());
 		} else {
