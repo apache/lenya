@@ -89,8 +89,9 @@
 	      <tr>
 		<td colspan="2" class="lenya-form-caption">
 		  <span	class="lenya-form-message-error">The file name
-		  of the file you are trying to upload contains characters
-		  which are not allowed, such as spaces or umlauts.
+		  of the file you are trying to upload either has no
+		  extension, or contains characters which are not
+		  allowed, such as spaces or umlauts. 
 		  </span>
 		</td>
 	      </tr>

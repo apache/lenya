@@ -1,5 +1,5 @@
 /*
-$Id: AssetUploadAction.java,v 1.3 2003/10/13 13:19:41 egli Exp $
+$Id: AssetUploadAction.java,v 1.4 2003/10/13 15:05:17 egli Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id: AssetUploadAction.java,v 1.3 2003/10/13 13:19:41 egli Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -197,7 +198,8 @@ public class AssetUploadAction extends AbstractConfigurableAction {
         Part part = (Part)request.get(UPLOADASSET_PARAM_NAME);
 
         String fileName = part.getFileName();
-        if (!fileName.matches(FILE_NAME_REGEXP)) {
+        if (!fileName.matches(FILE_NAME_REGEXP)
+            || FileUtil.getExtension(fileName).equals("")) {
             // the file name contains characters which mean trouble 
             // and are therefore not allowed.
             return null;
