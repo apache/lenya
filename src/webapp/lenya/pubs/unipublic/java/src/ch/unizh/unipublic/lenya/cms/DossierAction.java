@@ -1,5 +1,5 @@
 /*
- * $Id: DossierAction.java,v 1.4 2003/02/07 12:14:06 ah Exp $
+ * $Id: DossierAction.java,v 1.5 2003/02/17 10:57:12 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -126,7 +126,6 @@ public class DossierAction extends AbstractComplementaryConfigurableAction {
 
         String publicationPrefix = PublishingEnvironment.PUBLICATION_PREFIX;
 
-        //        String contextPath = publicationPath.replaceFirst(publicationPrefix, "");
         String contextPath = publicationPath.substring(0,
                 publicationPath.length() - publicationPrefix.length());
 
@@ -345,7 +344,6 @@ public class DossierAction extends AbstractComplementaryConfigurableAction {
             SAXReader reader = new SAXReader();
             Document document = reader.read(new File(path));
 
-            //            String backupPath = path.replaceAll(".xml", "_backup.xml");
             String backupPath = path.substring(0, path.length() - 4);
             backupPath += "_backup.xml";
             writeDocument(backupPath, document);

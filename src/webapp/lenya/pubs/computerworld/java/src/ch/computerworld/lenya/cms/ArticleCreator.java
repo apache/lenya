@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.2 2003/02/07 12:14:05 ah Exp $
+ * $Id: ArticleCreator.java,v 1.3 2003/02/17 10:57:12 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -153,7 +153,5 @@ public class ArticleCreator extends AbstractParentChildCreator {
         FileWriter fileWriter = new FileWriter(filename);
         doc.write(fileWriter);
         fileWriter.close();
-
-        //copyFile(new File(doctypeSample),new File(filename));
     }
 }
