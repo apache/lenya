@@ -59,6 +59,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.apache.lenya.net.InetAddressUtil;
+import org.apache.log4j.Category;
 
 /**
  * A range of IP addresses, expressed by a network address and a
@@ -66,9 +67,11 @@ import org.apache.lenya.net.InetAddressUtil;
  * 
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: IPRange.java,v 1.5 2003/08/04 13:48:03 egli Exp $
+ * @version $Id: IPRange.java,v 1.6 2003/10/20 17:03:20 andreas Exp $
  */
 public abstract class IPRange extends AbstractGroupable {
+	
+	private static final Category log = Category.getInstance(IPRange.class);
 
     /**
      * Ctor.
@@ -219,6 +222,7 @@ public abstract class IPRange extends AbstractGroupable {
      * @return A boolean value.
      */
     public boolean contains(Machine machine) {
+    	log.debug("Checking IP range: [" + getId() + "]");
         return InetAddressUtil.contains(networkAddress, subnetMask, machine.getAddress());
     }
 }
