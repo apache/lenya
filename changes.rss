@@ -1,888 +1,780 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Readded dependency on Lucene block as the Lenya search XSP relies on it. Diff
-         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-              by 
-              gregor
-              :
-              [1.4] 
-            Renamed XPSInclude to XInclude and XPSAssembler to XIncludeImpl. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Removed obsolete xhtml-iso serializer from the blog sitemap. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Changed ant install to build install in the install instructions. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Readded dependency on Lucene block as the Lenya search XSP relies on it. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Made install instructions clearer, thanks to a patch by Hubertus Groepper. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32768 Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Fixed the creator test by changing the resource type to xhtml. Diff
-         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-              by 
-              gregor
-              :
-              [1.4] 
-            Added new compile-xsp target to precompile XSP. This can be used to detect errors in XSP files that would otherwise go unnoticed. This uses code submitted by Simon Mieth (http://issues.apache.org/bugzilla/show_bug.cgi?id=29360) Diff
-         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-              by 
-              gregor
-              :
-              [1.4] 
-            Added new compile-xsp target to precompile XSP. This can be used to detect errors in XSP files that would otherwise go unnoticed. This uses code submitted by Simon Mieth (http://issues.apache.org/bugzilla/show_bug.cgi?id=29360) Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title> add</title><link>changes.html</link><description> add
               by 
               roku
-              :
-              [1.2] 
-            Fixed path to legal dir Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              roku
-              :
-              [1.2] 
-            Added kupu to be build for dist-bin target.
- Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              roku
-              :
-              [1.2] 
-            * Fixed target dist-bin ; removed copying of endorsed libs, since the
-folder does not exist anymore
-* excluded dist folder from copy process
-
- Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              roku
-              :
-              [1.2] 
-            Changing to kupu 1.2 branch.
-Guido Wesdorp created it yesterday from trunk.
- Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Removed empty promise from the code. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Removed empty promise from the code. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Added resource type to the site area overview tab. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=32615 Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              michi
-              :
-              [1.4] 
-            do not build Cocoon every time during Lenya build Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              michi
-              :
-              [1.4] 
-            hardcoded 127.0.0.1 address replaced by server name Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Removed setLanguageTabs() Javascript function from the site tree. It was no longer needed and caused problems with some language settings. Also made the sitetree code more defensive to get rid of some Javascript errors in the insert link popup. Thanks to Josias Thoeny for reporting. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Removed setLanguageTabs() Javascript function from the site tree. It was no longer needed and caused problems with some language settings. Also made the sitetree code more defensive to get rid of some Javascript errors in the insert link popup. Thanks to Josias Thoeny for reporting. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Improved the warning message if Kupu is not installed correctly. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Improved the warning message if Kupu is not installed correctly. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Added fallback:// protocol to more pipelines. This enables to easily overwrite the look and feel of Lenya by providing custom stylesheets. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Switched from deprecated resolver.resolve() to resolver.resolveURI() Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Switched from deprecated resolver.resolve() to resolver.resolveURI() Diff
-         </description></item><item><title>Docs </title><link>changes.html</link><description>Docs 
-              by 
-              gregor
-              :
-              [Docs] 
-            Substantially extended the Lenya proxying howto, and enabled the section on resource types. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Improved the Lucene documentation. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Updated install instructions to reflect that Cocoon 2.1.6 is now the required version. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Set cocoon.src.dir to cocoon-2.1.6 by default Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Added two live sites to the list. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Removed support for hsqldb Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Removed support for hsqldb Diff
-         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-              by 
-              gregor
-              :
-              [1.4] 
-            Added preview for images to asset upload screens and asset lists. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Removed support for hsqldb Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Removed support for hsqldb Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Moved styling information from inline to CSS. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Moved styling information from inline to CSS. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Make building of Cocoon condidational to allow Gump to sidestep it. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Made the start page for the export target valid. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Made the start page for the export target valid. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Removed reliance of export targets on Tomcat. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Removed reliance of export targets on Tomcat. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Made Identity serializable (forward-ported from 1.2 branch) Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Removed spurious debugging statements and improved language Diff
-         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
-              by 
-              gregor
-              :
-              [1.2] 
-            Removed the links sample page from the default publication until the doctype is completed. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Changed text of the login screen to explicitly mention both default users. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32570 Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Changed text of the login screen to explicitly mention both default users. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32570 Diff
-         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-              by 
-              gregor
-              :
-              [1.4] 
-            Added patch by Marc Kuester to enable per-doctype CSS. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29325 Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Fixed a typo in the documentation. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Changed property name from "gump.build" to "gump.skipcocoonbuild" to avoid clashes. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Make building of Cocoon condidational to allow Gump to sidestep it. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Added support for Macromedia Flash to the insert image screen. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Added support for Macromedia Flash to the insert image screen. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              thorsten
-              :
-              [Docs] 
-            changed install note for forrest Diff
-         </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
-              by 
-              thorsten
-              :
-              [Site] 
-            deployed the site with last changes Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              michi
-              :
-              [1.2] 
-            String fixed such that it actually compiles because I mixed up versions Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Apply patch by Hubertus Groepper to better describe the patch preparation procedure. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              michi
-              :
-              [1.2] 
-            hardcoded 127.0.0.1 replaced by serverName such also WebLogic Server works re Scheduling Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              michi
-              :
-              [1.2] 
-            name fixed Diff
-         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
-              by 
-              edith
-              :
-              [1.2] 
-            The namespaces are needed in order that the XPSAssembler work with the new xalan Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              edith
-              :
-              [1.2] 
-            The namespaces are needed in order that the XPSAssembler work with the new xalan Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Apply patch by Doug Chestnut to make BXE work with 2.1.6. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32574 Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Clarified install instructions. Thanks to Martin Luethi. Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            The XML serializer is now set to UTF-8 by default, therefore cleaning out references to xml-utf-8 serializers. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=32554, thanks to Doug Chestnut. Diff
-         </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
-              by 
-              thorsten
-              :
-              [Site] 
-            deployed changes that have been done by committers that not have deployed the site afterwards Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              tschlabach
-              :
-              [Docs] 
-            removed "&lt;strong&gt;" for Torsten Schlabach afert having read at the bottom of the page what the type means Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              tschlabach
-              :
-              [Docs] 
-            added "Torsten Schlabach" (tschlabach at apache.org) to the list of active committers Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              andreas
-              :
-              [Docs] 
-            added unibe.ch Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              andreas
-              :
-              [1.4] 
-            using xsl:element again since it works at least with Xalan Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Fixed undeclared variables in flowscript. Thanks to Doug Chestnut and Jeremy Torres. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32544 Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Fixed undeclared variables in flowscript. Thanks to Doug Chestnut and Jeremy Torres. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32544 Diff
-         </description></item><item><title> update</title><link>changes.html</link><description> update
-              by 
-              michi
               :
               [] 
-            debugging improved Diff
-         </description></item><item><title> update</title><link>changes.html</link><description> update
+            Tagging 1.2.2
+ Diff
+         </description></item><item><title> </title><link>changes.html</link><description> 
+              by 
+              roku
+              :
+              [] 
+            Preparing re-tagging
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+             Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              roku
+              :
+              [1.4] 
+            Fixed asset conversion whitespace problem Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Fixed asset conversion whitespace problem Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              roku
+              :
+              [1.4] 
+            Fixed objct conversion. See bug #33661 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+             Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Fixed broken link Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Moving to latest kupu 1.2. fix; Fixed img @src, since we use Lenya asset stuff
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Fixed object2xhtml conversion; Object with a leading / in @data ar used as-is.
+This is needed if a page references assets from another page. Diff
+         </description></item><item><title> add</title><link>changes.html</link><description> add
+              by 
+              roku
+              :
+              [] 
+            Tagging 1.2.2 based on BRANCHES/BRANCH_1_2_X
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Grumml, corrected kupu revision
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Corrected svn:externals url for kupu
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Corrected revision numbers
+ Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Prepare 1.2.2 tag; revert after the release
+See #33658 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Incremented version number to 1.2.2 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Prepare 1.2.2 tag; revert after the release Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Set -r for svn:externals for the 1.2.2 release; do not forget to revert
+after the release
+ Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              roku
+              :
+              [1.4] 
+            Added note from where to download xsltproc.
+Unfortuately, it is not fotting to the build process to include a build kupu in the src dist.
+So, for 1.2.2, kupu still needs to be build, which requires xsltproc to be installed Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Enhanced xsltproc download note Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Added note from where to download xsltproc.
+Unfortuately, it is not fotting to the build process to include a build kupu in the src dist.
+So, for 1.2.2, kupu still needs to be build, which requires xsltproc to be installed Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Rewrote menu javascript code to avoid crashes on Linux. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33643 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               michi
               :
-              [] 
-            logging off added Diff
+              [1.2] 
+            failure message of loading BXE improved Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Fixed compilation errors for the unit tests Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made Link insertion into BXE work with XMLHTTP sitetree. Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              edith
+              michi
               :
               [1.2] 
-            Fix the uri, because the publication id has no / Diff
+            thanks to Linczak, Jonathan W. the root is not doubled anymore when creating a document Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            added initial version of LinkRewriter Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Added version attribute to generated stylesheets Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               andreas
               :
               [1.2] 
-            allowing 5-character language extensions instead of 4-character Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+            link rewriting: take care of context prefix, don't try to rewrite external links Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            link rewriting: use document builder to match rewritable URLs Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            added link-attribute configuration Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            added link-attribute configuration Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            Thanks to Gregor Imboden and Andreas Hartmann the editing re Workflow triggering is again backwards compatible for documents without a workflow Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
-              [Docs] 
-            Extended BXE documentation. Diff
+              [1.2] 
+            Fixed link rewriting to make sure that links to sub URLs are rewritten. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29861 Thanks to Thomas Comiotto for the patch. Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added XMLUnit for the XML tests Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Updated tests to use ContainerTestCase and related Cocoon helper classes Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Fix setup method of DocumentIndexTransformer to work with Cocoon 2.1.6 Diff
+            Declared flowscript variables excplictly. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=33577 Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
               [1.2] 
-            Fix setup method of DocumentIndexTransformer to work with Cocoon 2.1.6 Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            New live site added. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Live site added. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Add mising keys Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Add &amp;#160; Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Use the same key as i18n files Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Improved the BXE documentation. Diff
+            Declared flowscript variables excplictly. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=33577 Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
               [1.4] 
-            Fix typo. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+            Added XSD schema for workflow Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
-              [Docs] 
-            Language improvements Diff
+              [1.2] 
+            Added XSD schema for workflow Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            added missing href attribute to menu item Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            applying workflowmenu and usecasemenu transformations is not necessary here Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            check if current URL represents document before accessing document Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            check if current URL represents document before accessing document Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            check if current URL represents document before resolving according values Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            get area from URL instead of document, add DOCUMENT_TYPE to parameter list Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            check if URL represents document before resolving workflow Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            don't apply WF transformation for non-document URLs Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            isDocument = false for admin area Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              roku
+              :
+              [1.2] 
+            Useability fix: Only display tab as link, if tab if not the current nav:node Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Changed test defaults to use existing publications and doctypes Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              roku
+              :
+              [1.4] 
+            Merged from 1.2.x:
+Useability fix: Only display tab as link, if tab if not the current nav:node Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added a ConsoleLogger() to make test cases run again Diff
+         </description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed DocumentCreator test Diff
+         </description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed DocumentCreator test Diff
+         </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Renamed libraries to have their version in the name Diff
          </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
               by 
               gregor
               :
               [1.2] 
-            Made search.properties work out of the box. Diff
+            Renamed libraries to have their version in the name Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Switched to BXE 1.1 and Kupu 1.2 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Switched to BXE 1.1 and Kupu 1.2 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Switched to BXE 1.1 and Kupu 1.2 Diff
          </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
               by 
               gregor
               :
               [1.4] 
-            Made search.properties work out of the box. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Expanded Lucene documentation. Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Replace references to cocoon-lenya Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Improve usability of edit menu. Thanks to Jean-Pierre LeJacq. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32514 Diff
+            Moved to a more recent version of xmldb-xupdate Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Improve usability of edit menu. Thanks to Jean-Pierre LeJacq. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32514 Diff
+            Started to use the (much more recent) Quartz from the Cocoon cron block in lieu of the library we shipped before. Our version did not implement methods that some of our code was expecting. Also fixed the scheduler XSP to get past compilation errors. Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Set default publication serialization to html to deal with rendering problems from spurious namespace definitions when using XHTML. Diff
+            Changed string concatenation to use a StringBuffer Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Fixed edit flowscript to no longer use the getSourceURI method. Thanks to Doug Chestnut. Diff
+            Fixed Eclipse warnings Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Switch to HTML / XHTML / XML serializers from the serializers block. This improves compliance with UTF-8 and fixes various serialization bugs. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            We don't use pizza compiler. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Fix typo Diff
-         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
-              by 
-              antonio
-              :
-              [1.2] 
-            Use cocoon log4j Diff
-         </description></item><item><title>1.2 </title><link>changes.html</link><description>1.2 
-              by 
-              antonio
-              :
-              [1.2] 
-            We don't include xalan in the distribution Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Use cocoon XConfToolTask.class Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Remove unused local variables. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Fix lenya wiki link Diff
+            Fixed resource leaks with not properly closing Streams Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Adapted published check to API changes in 1.4. Thanks to Doug Chestnut. Diff
+            Made exceptions final Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Set encoding to UTF-8 for admin pipelines Diff
+            Made exceptions final Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Remove encoding from stylesheet Diff
+            Fixed resource leaks with not properly closing Streams Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
               [1.4] 
-            Set enable.uploads=false Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Eclipse project now use cocoon 2.1.6 Diff
+            Removed unneeded Log4J Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
               [1.4] 
-            Update info based in cocoon 2.1.6 Diff
+            Fixed Eclipse warnings Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
               [1.4] 
-            Set java 1.4 as source vm Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Remove trailing spaces Diff
+            Replaced deprecated tokenStream(Reader) with tokenStream(String, Reader) Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
               [1.4] 
-            Comment hsqldb port variable. It is not needed. Diff
+            Cleaned up Eclipse warnings Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
               [1.4] 
-            Allow to run in cygwin Diff
+            Made insert link popup work again by switching to XHTML serialization. Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
               [1.4] 
-            Use issue.apache.org + remove trailing spaces. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+            Added the workflow menu transformer to the blog publication Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
-              antonio
+              gregor
               :
-              [1.2] 
-            Remove unused imports. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Fix typo. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            must return a value. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Define xalan as the default xslt tranformer again (run with cocoon-2.1.6) Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Remove unused imports. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Remove unused import Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Comment hsqldb port variable. Set cocon dir to 2.1.6 Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Update info based in cocoon 2.16 Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Set java 1.4 as source vm Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Allow to run in cygwin Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              antonio
-              :
-              [1.2] 
-            Use issue.apache.org Diff
+              [1.4] 
+            Added a single-step workflow definition to the blog publication Diff
          </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
               by 
-              roku
+              gregor
               :
               [1.4] 
-            Added kupu build script Diff
+            Added a single-step workflow definition to the blog publication Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              michi
+              :
+              [Docs] 
+            enable proxy notes for Apache 2 added Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Changed enum variables to improve compatibility with JDK 1.5 Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              roku
+              gregor
               :
               [1.2] 
-            formatting Diff
+            Changed enum variables to improve compatibility with JDK 1.5 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            check if current URL represents a document before calling setDocument() Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made images and asset titles visible in the forms editor. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29139 Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              roku
+              gregor
               :
               [1.2] 
-            - Print out error and fail if xsltproc is not available
-- Removed redundant call of make on windows Diff
+            Made images and asset titles visible in the forms editor. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29139 Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              roku
+              edith
               :
               [1.2] 
-            Added note for xsltproc Diff
+            set the date of publication, the publisher and the date of modification when a document is published Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              edith
+              :
+              [1.2] 
+            introduce method for the checkIn/Out of document; needed when the publication of a document to set the date, publisher, ... Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              edith
+              :
+              [1.2] 
+            set the date of publication, the publisher and the date of modification when a document is published: user-name and user-email parameters needed; check if the document can be checkout Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              michi
+              :
+              [1.4] 
+            thanks to Josias Thoeny XMLHTTP has been implemented for the sitetree of the default publication Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Fixed problem where IndexInformation.index was never written, and cleaned the source up a bit. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made anonymous classes final inner classes Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added svn properties Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Cleaned up source code to deal with Eclipse warnings and Findbug reports. This adds javadocs to all public methods, fixes some resource leaks (Findbugs term: OS), replaces string concatenation with StringBuffer (SBSC), avoids catch (Exception e) (REC), avoids hiding of internal variables by parameter names, makes variable access explicit, and uses entrySet instead of keySet (WMI). Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Use XML serializer for XHTML until Xalan doctype problems are resolved. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33431 Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Updated install instructions with patch from Hubertus Groepper. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33392 Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added a note about web.app.server Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            fixed wrong author email address Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              michi
+              :
+              [Docs] 
+            reset into clean integrated Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            reset target integrated into clean target Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              michi
+              :
+              [Docs] 
+            install target removed from source build instruction Diff
+         </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              michi
+              :
+              [1.2] 
+            notes added about building and patching Cocoon Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            versions updated Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            install target removed from build instruction Diff
+         </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              michi
+              :
+              [1.2] 
+            thanks to Josias Thoeny the DOMStreamer is working also for default namespaces with attributes in the root element Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed label attribute from menu (no longer needed) Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Re-enabled view task log usecase Diff
+         </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added empty tasks log directory to make view-logs usecase work Diff
+         </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added empty tasks log directory to make view-logs usecase work Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Updated the blog menus to use uc attributes and I18n. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=27832 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Updated the blog menus to use uc attributes and I18n. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=27832 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed dead code Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Fix dubious code to use a locale for toUpperCase / toLowerCase methods Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Added a note on proxy configuration to publication.xconf Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added a note on proxy configuration to publication.xconf Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Changed seperate to separate throughout. Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            thanks to Josias softlinks for the content and resources directory should be possible Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            caching of default publication back ported Diff
+         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Enabled roundtripping of images between BXE and Kupu. Note that this change requires at least Kupu revision 8795 to work. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29164 Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Enabled roundtripping of images between BXE and Kupu. Note that this change requires at least Kupu revision 8795 to work. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29164 Diff
+         </description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed empty directories Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed xlink tranformer definition Diff
+         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Updated proxying instructions with notes about Jetty Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               roku
               :
               [1.4] 
-            Added note for xsltproc Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              roku
-              :
-              [1.4] 
-            Updated svn:external prop for bxe Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              roku
-              :
-              [1.2] 
-            Updated svn:external prop for bxe Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              roku
-              :
-              [1.2] 
-            Updated svn:external prop for bxe Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              egli
-              :
-              [1.2] 
-            When saving in Xopus the workflow state is now set back to
-"authoring". This is similar to the behaviour in bitflux.
+            If the current sitree node does not exist in the displayed document's language
+Continue with next node. This is a quick fix for bug #32808.
+Next step would be to offer all links to the available languages.
  Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              andreas
+              roku
               :
               [1.2] 
-            avoid arrayindexoutofboundsexception (URL length check) Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              andreas
-              :
-              [1.4] 
-            check wellformedness Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              andreas
-              :
-              [1.4] 
-            calling super.setup() to avoid NPE in startPrefixMapping() Diff
+            If the current sitree node does not exist in the displayed document's language
+Continue with next node. This is a quick fix for bug #32808.
+Next step would be to offer all links to the available languages.
+ Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              andreas
+              michi
               :
               [1.2] 
-            calling super.setup() to avoid NPE in startPrefixMapping() Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              andreas
-              :
-              [1.2] 
-            adding missing 18n namespace declaration Diff
-         </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-              by 
-              gregor
-              :
-              [Docs] 
-            Expanded the Xopus integration documentation. Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-              by 
-              gregor
-              :
-              [1.2] 
-            Improved Xopus installation instructions Diff
+            form encoding fixed Diff
          </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
               by 
               gregor
               :
               [1.4] 
-            Improved Xopus installation instructions Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              andreas
-              :
-              [1.4] 
-            removed unnecessary component declarations Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              andreas
-              :
-              [1.4] 
-            fixed XLink namespace URI Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              andreas
-              :
-              [1.4] 
-            fixed XLink namespace URI Diff
+            Replaced ASL 1.1 with ASL 2.0 and set svn properties Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              andreas
+              gregor
               :
               [1.2] 
-            fixed XLink namespace URI Diff
+            Improved sample documents in the default publication with metadata. Diff
+         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Improved sample documents in the default publication with metadata. Diff
          </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
-              andreas
+              gregor
               :
               [1.2] 
-            fixed XLink namespace URI Diff
+             Diff
          </description></item></channel></rss>
