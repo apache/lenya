@@ -16,7 +16,7 @@
   <xsl:template match="/usecase:removelabel">
     
     <page:page>
-      <page:title>Remove Label</page:title>
+      <page:title>Remove Language</page:title>
       <page:body>
 	<p>
 	  <form action="">
@@ -28,7 +28,7 @@
 	      <xsl:with-param name="prefix" select="''"/>
 	    </xsl:call-template>
 	    
-	    <div class="menu">Do you really want to remove the label '<xsl:value-of select="$label"/>' (Language: <xsl:value-of select="$language"/>) from document '<xsl:value-of select="$document-id"/>'?</div>
+	    <div class="menu">Do you really want to remove the "<xsl:value-of select="$language"/>" language version from document '<xsl:value-of select="$document-id"/>' (cannot be undone)?</div>
 	    
 	    <input type="submit" value="YES, remove label"/>
             &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
