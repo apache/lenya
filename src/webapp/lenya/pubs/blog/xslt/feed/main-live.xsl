@@ -4,8 +4,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
-<xsl:variable name="doctype">feed</xsl:variable>
-
 <xsl:include href="../../../../xslt/menu/live-root.xsl"/>
 
 <xsl:include href="../global.xsl"/>

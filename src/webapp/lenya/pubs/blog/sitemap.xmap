@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.28 2003/08/31 19:47:13 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.29 2003/09/01 07:22:01 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -69,7 +69,9 @@
           <map:part src="cocoon:/{1}/menubar/entry.xml"/>
           <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
         </map:aggregate>
-        <map:transform src="xslt/entry/main-{1}.xsl"/>
+        <map:transform src="xslt/entry/main-{1}.xsl">
+          <map:parameter name="relative2root" value="../../../../.."/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">
@@ -152,7 +154,9 @@
           <map:part src="cocoon:/{1}/menubar/feed.xml"/>
           <map:part src="cocoon:/{1}/feeds/{2}/lenya-page-body.xml"/>
         </map:aggregate>
-        <map:transform src="xslt/feed/main-{1}.xsl"/>
+        <map:transform src="xslt/feed/main-{1}.xsl">
+          <map:parameter name="relative2root" value="../.."/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">
@@ -193,7 +197,9 @@
           <map:part src="cocoon:/{1}/menubar/archive.xml"/>
           <map:part src="cocoon:/{1}/{2}/{3}/lenya-page-body.xml"/>
         </map:aggregate>
-        <map:transform src="xslt/feed/main-{1}.xsl"/>
+        <map:transform src="xslt/feed/main-{1}.xsl">
+          <map:parameter name="relative2root" value="../.."/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">

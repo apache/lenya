@@ -5,6 +5,8 @@
   xmlns:echo="http://example.com/newformat#"
 >
 
+<xsl:param name="relative2root"/>
+
 <xsl:template match="cmsbody">
 <html>
 <head>
@@ -18,13 +20,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
 <td colspan="2" id="title">
-  <a>
-    <xsl:attribute name="href">
-      <xsl:choose>
-        <xsl:when test="$doctype='entry'">../../../../../index.html</xsl:when>
-        <xsl:otherwise>../../index.html</xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
+  <a href="{$relative2root}/index.html">
     <!-- FIXME: namespace -->
     <xsl:value-of select="feed/title"/><xsl:value-of select="feed/echo:title"/>
   </a>
@@ -47,23 +43,9 @@
 <td valign="top" id="sidebar" width="30%">
 
 <!--
-<div class="sidebar-title">Feeds</div>
-<div class="sidebar-content">
-<a href="index.xml">Echo Feed</a>
-<br />RSS Feed
-</div>
-
 <div class="sidebar-title">Archives&#160;by&#160;Date</div>
 <div class="sidebar-content">
-August 2003
-<br />July 2003
-<br />June 2003
-<br />May 2003
-<br />April 2003
-<br />March 2003
-<br />February 2003
-<br />January 2003
-<br />December 2002
+<a href="{$relative2root}/2003/07/">July 2003</a>
 </div>
 -->
 
