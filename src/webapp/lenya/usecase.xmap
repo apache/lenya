@@ -89,7 +89,7 @@
       
       <!-- use publication-specific schema if available -->
       <map:select type="resource-exists">
-        <map:when test="lenya/pubs/{publication-id}/lenya/content/{serverpage}">
+        <map:when test="pubs/{publication-id}/lenya/content/{serverpage}">
           <map:generate src="pubs/{publication-id}/lenya/content/{serverpage}" type="serverpages"/>
         </map:when>
         <map:otherwise>
@@ -98,7 +98,7 @@
       </map:select>
       
       <map:select type="resource-exists">
-        <map:when test="lenya/pubs/{publication-id}/lenya/xslt/{stylesheet}">
+        <map:when test="pubs/{publication-id}/lenya/xslt/{stylesheet}">
           <map:transform type="xalan" src="pubs/{publication-id}/lenya/xslt/{stylesheet}">
             <map:parameter name="use-request-parameters" value="true"/>
           </map:transform>
@@ -138,7 +138,7 @@
       <!-- notification/{publication-id}/{usecase}.xml -->
       <map:match pattern="notification/*/*.xml">
         <map:select type="resource-exists">
-          <map:when test="lenya/pubs/{1}/config/notification/notification.xconf">
+          <map:when test="pubs/{1}/config/notification/notification.xconf">
             <map:generate src="pubs/{1}/config/notification/notification.xconf"/>
           </map:when>
           <map:otherwise>

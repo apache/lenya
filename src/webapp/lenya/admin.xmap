@@ -39,7 +39,7 @@
     
     <map:resource name="fallback-generation">
       <map:select type="resource-exists">
-        <map:when test="/lenya/pubs/{page-envelope:publication-id}/lenya/content/admin/{serverpage}.xsp">
+        <map:when test="pubs/{page-envelope:publication-id}/lenya/content/admin/{serverpage}.xsp">
           <map:generate type="serverpages" src="pubs/{page-envelope:publication-id}/lenya/content/admin/{serverpage}.xsp"/>
         </map:when>
         <map:otherwise>
@@ -50,7 +50,7 @@
     
     <map:resource name="fallback-transformation">
       <map:select type="resource-exists">
-        <map:when test="/lenya/pubs/{page-envelope:publication-id}/lenya/xslt/admin/{stylesheet}.xsl">
+        <map:when test="pubs/{page-envelope:publication-id}/lenya/xslt/admin/{stylesheet}.xsl">
           <map:transform src="pubs/{page-envelope:publication-id}/lenya/xslt/admin/{stylesheet}.xsl"/>
         </map:when>
         <map:otherwise>
