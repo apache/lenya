@@ -7,23 +7,30 @@
 <xsl:import href="../../../../../xslt/authoring/edit/form.xsl"/>
 
 <xsl:template match="system">
-<node name="Project Name">
+<node name="Project Name" select="/system/system_name[@tagID='{system_name/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/system_name[@tagID='{system_name/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="system_name" /></xsl:attribute></input></content>
 </node>
 
-<node name="Description">
-  <content><textarea name="&lt;xupdate:update select=&quot;/system/description[@tagID='{description/@tagID}']&quot;&gt;" cols="40" rows="5"><xsl:apply-templates select="description/node()" mode="mixedcontent"/></textarea></content>
+<node name="Description" select="/system/description[@tagID='{description/@tagID}']">
+  <content>
+    <textarea name="&lt;xupdate:update select=&quot;/system/description[@tagID='{description/@tagID}']&quot;&gt;" cols="40" rows="5">
+      <xsl:copy-of select="description/node()"/>
+<!--
+      <xsl:apply-templates select="description/node()" mode="mixedcontent"/>
+-->
+    </textarea>
+  </content>
 </node>
 
-<node name="Home">
+<node name="Home" select="/system/main_url[@tagID='{main_url/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/main_url[@tagID='{main_url/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="main_url" /></xsl:attribute></input></content>
 </node>
 
-<node name="License Name">
+<node name="License Name" select="/system/license/license_name[@tagID='{license/license_name/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/license/license_name[@tagID='{license/license_name/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="license/license_name" /></xsl:attribute></input></content>
 </node>
 
-<node name="License URL">
+<node name="License URL" select="/system/license/license_url[@tagID='{license/license_url/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/license/license_url[@tagID='{license/license_url/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="license/license_url" /></xsl:attribute></input></content>
 </node>
 
@@ -54,7 +61,7 @@
 
 
 <xsl:template match="programming-language">
-<node name="Programming Language">
+<node name="Programming Language" select="/system/programming-language[@tagID='{@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/programming-language[@tagID='{@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="." /></xsl:attribute></input></content>
 </node>
 </xsl:template>
@@ -69,10 +76,10 @@
 <node name="Info">
   <action><delete value="true" name="&lt;xupdate:remove select=&quot;/system/related-info/info-item[@tagID='{@tagID}']&quot;/&gt;"/></action>
 </node>
-<node name="Title">
+<node name="Title" select="/system/related-info/info-item/title[@tagID='{title/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/related-info/info-item/title[@tagID='{title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="title" /></xsl:attribute></input></content>
 </node>
-<node name="URL">
+<node name="URL" select="/system/related-info/info-item/uri[@tagID='{uri/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/related-info/info-item/uri[@tagID='{uri/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="uri" /></xsl:attribute></input></content>
 </node>
 <node name="Info">
@@ -91,10 +98,10 @@
 <node name="Feature">
   <action><delete value="true" name="&lt;xupdate:remove select=&quot;/system/features/feature[@tagID='{@tagID}']&quot;/&gt;"/></action>
 </node>
-<node name="Feature Title">
+<node name="Feature Title" select="/system/features/feature/title[@tagID='{title/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/features/feature/title[@tagID='{title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="title" /></xsl:attribute></input></content>
 </node>
-<node name="Feature Description">
+<node name="Feature Description" select="/system/features/feature/description[@tagID='{description/@tagID}']">
   <content><textarea name="&lt;xupdate:update select=&quot;/system/features/feature/description[@tagID='{description/@tagID}']&quot;&gt;" cols="40" rows="3"><xsl:value-of select="description" /></textarea></content>
 </node>
 <node name="Feature">
