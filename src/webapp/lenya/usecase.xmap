@@ -710,11 +710,6 @@
                 
                 <map:generate src="content/util/empty.xml"/>
                 <map:transform src="xslt/authoring/edit/xopus-xhtml.xsl">
-                  <!--
-                  <map:parameter name="xml" value="{request:contextPath}/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xml"/>
-                  <map:parameter name="xsd" value="{request:contextPath}/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xsd&amp;doctype={request-param:doctype}"/>
-                  <map:parameter name="xslt" value="{request:contextPath}/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xslt&amp;doctype={request-param:doctype}"/>
-                  -->
                   <map:parameter name="contextPrefix" value="{request:contextPath}"/>
                   <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
                   <map:parameter name="completeArea" value="authoring"/>

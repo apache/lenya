@@ -4,12 +4,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
-<!--
-<xsl:param name="xml"/>
-<xsl:param name="xsd"/>
-<xsl:param name="xslt"/>
--->
-
 <xsl:param name="documentType"/>
 <xsl:param name="documentUrl"/>
 <xsl:param name="publicationId"/>
@@ -67,52 +61,4 @@
 </html>
 </xsl:template>
 
-<!--
-<xsl:template match="*[@context = 'lenya']/@src | *[@context = 'lenya']/@xml | *[@context = 'lenya']/@xsl | *[@context = 'lenya']/@xsd">
-  <xsl:attribute name="{local-name(.)}"><xsl:value-of select="$lenyacontext"/><xsl:value-of select="."/></xsl:attribute>
-</xsl:template>
-
-
-<xsl:template match="*[@context = 'xopus']/@src | *[@context = 'xopus']/@xml | *[@context = 'xopus']/@xsl | *[@context = 'xopus']/@xsd">
-  <xsl:attribute name="{local-name(.)}">/<xsl:value-of select="$xopuscontext"/><xsl:value-of select="."/></xsl:attribute>
-</xsl:template>
--->
-
-<!--
-<xsl:template match="head/script/@src">
-  <xsl:attribute name="src"><xsl:value-of select="$xopuscontext"/>/xopus/xopus.js</xsl:attribute>
-</xsl:template>
-
-<xsl:template match="body/div/xml/pipeline/@xml">
-  <xsl:attribute name="xml"><xsl:value-of select="$xml"/></xsl:attribute>
-</xsl:template>
-
-<xsl:template match="body/div/xml/pipeline/@xsd">
-  <xsl:attribute name="xsd"><xsl:value-of select="$xsd"/></xsl:attribute>
-</xsl:template>
-
-<xsl:template match="body/div/xml/pipeline/view[@id='defaultView']/transform[last()]/@xsl">
-  <xsl:attribute name="xsl"><xsl:value-of select="$xslt"/></xsl:attribute>
-</xsl:template>
-
-<xsl:template match="transform[@type='prepareinclude']">
-  <transform xsl="/{$xopuscontext}/xopusPlugins/preparexinclude.xsl"/>
-</xsl:template>
-
-
-<xsl:template match="body/div/xml/pipeline/view[@id='defaultView']/transform">
-  <xsl:copy>
-    <xsl:apply-templates select="@*|node()"/>
-    <param name="contextprefix"><xsl:value-of select="$contextprefix"/></param>
-    <param name="publicationid"><xsl:value-of select="$publicationid"/></param>
-    <param name="completearea"><xsl:value-of select="$completearea"/></param>
-  </xsl:copy>
-</xsl:template>
-
-<xsl:template match="@*|node()">
-  <xsl:copy>
-    <xsl:apply-templates select="@*|node()"/>
-  </xsl:copy>
-</xsl:template>
--->
 </xsl:stylesheet>
