@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImplTest.java,v 1.2 2003/09/12 17:37:47 egli Exp $
+$Id: SiteTreeNodeImplTest.java,v 1.3 2004/02/04 10:24:00 egli Exp $
 <License>
 
  ============================================================================
@@ -123,11 +123,11 @@ public class SiteTreeNodeImplTest extends TestCase {
     }
 
     /**
-     * Test getAbsoluteParentId
+     * Test getAbsoluteId
      * 
      */
-    final public void testGetAbsoluteParentId() {
-        assertEquals(node.getAbsoluteParentId(), "/foo");
+    final public void testGetAbsoluteId() {
+        assertEquals(node.getAbsoluteId(), "/foo/bar");
     }
 
     /**
