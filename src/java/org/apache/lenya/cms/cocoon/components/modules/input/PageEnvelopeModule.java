@@ -68,6 +68,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
 import org.apache.lenya.cms.publication.DublinCore;
@@ -81,7 +82,7 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
  * @see org.apache.lenya.cms.publication.PageEnvelope
  * 
  * @author  Andreas Hartmann
- * @version $Id: PageEnvelopeModule.java,v 1.35 2004/02/20 10:50:15 andreas Exp $
+ * @version $Id: PageEnvelopeModule.java,v 1.36 2004/02/25 16:09:44 egli Exp $
  */
 public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
 
@@ -132,6 +133,11 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                 value = envelope.getPublication().getId();
             } else if (name.equals(PageEnvelope.PUBLICATION)) {
                 value = envelope.getPublication();
+            } else if (name.equals(PageEnvelope.PUBLICATION_LANGUAGES_CSV)) {
+                value =
+                    StringUtils.join(
+                        envelope.getPublication().getLanguages(),
+                        ',');
             } else if (name.equals(PageEnvelope.DOCUMENT)) {
                 value = envelope.getDocument();
             } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
@@ -159,15 +165,10 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
                 value = envelope.getDocument().getLanguages();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
-                String[] languages = envelope.getDocument().getLanguages();
-                String csv = "";
-                for (int i = 0; i < languages.length; i++) {
-                    if (i > 0) {
-                        csv += ",";
-                    }
-                    csv += languages[i];
-                }
-                value = csv;
+                value =
+                    StringUtils.join(
+                        envelope.getDocument().getLanguages(),
+                        ',');
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
                 value =
                     envelope.getDocument().getDublinCore().getFirstValue(DublinCore.ELEMENT_TITLE);
