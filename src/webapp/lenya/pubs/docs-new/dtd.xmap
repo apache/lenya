@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:components>
+    <map:generators default="file">
+      <map:generator name="nekodtd" src="org.apache.forrest.components.generator.XNIConfigurableFileGenerator" />
+    </map:generators>
+    <map:serializers default="html"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:matchers default="wildcard"/>
+    <map:selectors default="browser"/>
+  </map:components>
+
+  <map:resources>
+  </map:resources>
+
+  <map:pipelines>
+    <map:pipeline>
+
+      <map:match pattern="**.dtdx.xml">
+        <map:generate type="nekodtd" src="resources/schema/dtd/{1}.dtd">
+          <map:parameter name="config-class" value="org.cyberneko.dtd.DTDConfiguration" />
+        </map:generate>
+        <map:transform src="resources/stylesheets/dtdx2flat.xsl" />
+        <map:transform src="resources/stylesheets/flat2document.xsl" />
+        <map:transform type="idgen" />
+        <map:serialize type="xml"/>
+      </map:match>
+
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>

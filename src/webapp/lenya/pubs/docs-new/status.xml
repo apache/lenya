@@ -1,0 +1,992 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="./tools/stylesheets/status.xsl"?>
+<status>
+
+  <developers>
+    <!-- in fifo order -->
+    <person name="Stefano Mazzocchi"    email="stefano@apache.org"      id="SM" />
+    <person name="Sam Ruby"             email="rubys@apache.org"        id="SR" />
+    <person name="John Morrison"        email="morrijr@apache.org"      id="JM" />
+    <person name="David Crossley"       email="crossley@apache.org"     id="DC" />
+    <person name="Steven Noels"         email="stevenn@apache.org"      id="SN" />
+    <person name="Nicola Ken Barozzi"   email="nicolaken@apache.org"    id="NKB"/>
+    <person name="Konstantin Piroumian" email="kpiroumian@apache.org"   id="KP" />
+    <person name="Bert Van Kets"        email="bert@apache.org"         id="BK" />
+    <person name="Marc Portier"         email="mpo@apache.org"          id="MP" />
+    <person name="Jeff Turner"          email="jefft@apache.org"        id="JT" />
+
+    <person name="Volunteer needed"   email="forrest-dev@xml.apache.org" id="open"/>
+  </developers>
+
+  <!-- ===================================================================== -->
+  <!-- CHANGES                                                               -->
+  <!-- ===================================================================== -->
+
+  <changes>
+    <release version="0.5-dev" date="unreleased">
+      <action dev="JT" type="fix" context="core">
+        Get images in PDFs working with FOP 0.20.x.  This requires the user to
+        download jimi.jar from <link
+          href="http://java.sun.com/products/jimi/">Sun</link> and place it in
+        the <code>lib/core</code> (src distro) or <code>WEB-INF/lib</code>
+        (binary distro) directory.
+      </action>
+      <action dev="NKB" type="fix" context="skins">
+       On krysalis skin: fixed print css, also using text instead of
+       logos and adding the footer, and changed link colors to blues and
+       red for active links.
+      </action>
+      <action dev="NKB" type="update" context="skins">
+       On krysalis skin: fixed left navigation bar icons and sizing using divs
+       instead of list elements, made all links underlined,
+       added space to the bottom of the page text, and changed font
+       increase-decrease links to buttons.
+      </action>
+      <action dev="NKB" type="add" context="skins">
+       On krysalis skin: users can select font size, reworked left-bar inclusion
+       of page section titles, made them only one level deep, moved buttons after
+       the left navbar, added publish date on top right navbar. 
+       For both Forrest and krysalis skins, added single background pixel line below
+       unselected tabs and made selected tab more prominent.
+      </action>
+      <action dev="JT" type="fix" context="core" due-to="Juan Jose Pablos"
+        due-to-email="cheche@che-che.com">
+        Fixed <code>java.lang.NoClassDefFoundError:
+          javax/servlet/ServletInputStream</code> error.
+      </action>
+      <action dev="NKB" type="update" context="skins">
+        Enabled multiple output links on each page (print - pdf - xml)
+        They can be enabled by adding the relative disable-*-link elements
+        and setting them to false.
+      </action>    
+      <action dev="JT" type="fix" context="core">
+        Allow users to determine which URLs Forrest should ignore, by overriding
+        <code>stylesheets/filterlinks.xsl</code> (and other stylesheets in that
+        directory).
+      </action>
+      <action dev="JT" type="update" context="core">
+        Upgraded to 2003-03-11 version of Cocoon
+      </action>
+      <action dev="JT" type="fix" context="schemas">
+        Docbook stylesheet improvements.
+      </action>
+      <action dev="NKB" type="update" context="forrestbar">
+        Forrestbar is now 
+        <link href="http://www.mozilla.org/projects/phoenix/">Phoenix</link> compatible.
+      </action>
+      <action dev="NKB" type="update" context="forrestbar">
+        Added links for both possible local forrests (port 8080 and 8888),
+        and make them configurable in properties.xml.
+        Thanks to Mark Vovsi for pointing it out.
+      </action>
+      <action dev="JT" type="fix" context="shbat">
+        Fix a bug with forrest.antproxy.xml introduced in 0.4, which caused
+        unresolved '${project.home}' variables.
+      </action>
+       <!-- NKB Temporarily commented out, needs fix
+      <action dev="NKB" type="add" context="webapp">
+        Added the printer-friendly and xml-source links to the page.
+        Included new icons for it in the process.
+      </action>
+      -->
+      <action dev="NKB" type="update" context="webapp">
+        Refactored the "transform-to-document" sitemap resource to do the
+        the xinclude,  linkrewriter, and idgen steps.
+      </action>
+      <action dev="NKB" type="add" context="webapp">
+        Added XInclude capability  to the documents. Remember to 
+        disable validations for files with xincludes as the xinclude is not
+        performed during validation.
+      </action>
+      <action dev="NKB" type="add" context="schemas">
+        Added DocBook 4.2 and simplified DocBook 1.0 to the schemas and
+        to the validation catalogue.
+        Added Docbook and simplified Docbook rendering capability for documents.
+      </action>
+    </release>
+    <release version="0.4" date="2003-02-12">
+      <action dev="JT" type="fix" context="skins">
+        Use meaningful fragment identifiers in krysalis-skin.
+       </action>
+      <action dev="JT" type="fix" context="skins">
+        Correctly ignore @role='pdf' credits in HTML
+      </action>
+      <action dev="NKB" type="fix" context="skins">
+        krysalis-site skin now works better with multi-level menus.
+      </action>
+      <action dev="NKB" type="update" context="skins">
+        Added the CSS validation logo, fixed all skins' CSS to validate,
+        minor fixes due to the switch to full HTML-loose DTD.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        Normalize space in acronym titles.
+      </action>
+      <action dev="MP" type="fix" context="forrestbot">
+        Make the forrestbot shell script work under Cygwin.
+      </action>
+      <action dev="JT" type="fix" context="forrestbot">
+        Got skins working in the forrestbot.
+      </action>
+      <action dev="JT" type="add" context="shbat">
+        Added a minimal template skin.
+      </action>
+      <action dev="NKB" type="fix" context="shbat" due-to="Berin Loritsch"
+        due-to-email="bloritsch@apache.org">
+        The problem with starting a new forked JVM is that all 
+        properties get lost.  This makes it able to use one forrest.properties
+        for all multiple projects, and just create the docs from there. 
+      </action>
+      <action dev="JT" type="fix" context="webapp" due-to="Bernhard Brandmair"
+        due-to-email="Bernhard.Brandmair@integral.com">
+        The menu is now limited to only pages in the current subdirectory and
+        below. 
+      </action>
+      <action dev="NKB" type="fix" context="webapp" due-to="Cathy Zura"
+        due-to-email="czura@optonline.net">
+        Added the cwiki stylesheets that were missing and an example in the
+        fresh site seed.
+      </action>
+      <action dev="NKB" type="update" context="skins" >
+        Make the forrest-site and krysalis-site skins more printer friendly by
+        using CSS media type to hide navigations. the avalon-tigris skin already
+        works well, the forrest-site one still needs tweaking.
+      </action>
+      <action dev="NKB" type="update" context="webapp" >
+        Use full loose DTD specification for html pages.
+        This also makes the avalon-tigris skin show the same in Mozilla and IE.
+      </action>
+      <action dev="NKB" type="update" context="webapp" >
+        Switched all loglevels to ERROR.
+      </action>
+      <action dev="NKB" type="update" context="docs" >
+        Added page for ForrestBar on the site with a simple link and an autoinstall link
+        to the forrestbar.xpi generated by Gump every day.
+      </action>
+      <action dev="JT" type="fix" context="core">
+        Correctly serve swf files.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        Fix <code>site:</code> and <code>ext:</code> rewriting in book.xml,
+        ihtml, ehtml and cwiki files in subdirectories.
+      </action>
+    </release>
+
+    <release version="0.3" date="2003-01-30">
+      <action dev="JT" type="fix" context="skins">
+        If <code>build/webapp/content/xdocs/*</code> is more recent than
+        <code>src/*</code> equivalent, <code>forrest webapp</code> won't clobber
+        it.  A new <code>forrest backcopy</code> command will copy
+        <code>build/webapp/content/xdocs</code> content back to
+        <code>src/documentation/content/xdocs</code>.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        <code>forrest-site</code> skin is now HTML 4.0.1 compliant.  The
+        compliancy validator logo can be switched off with a
+        <code>skinconf.xml</code> element.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        Indirectly referenced files in skins (eg images in
+        CSS<code>url()</code>'s) are now copied across to the rendered site.
+        Previously, we relied on spidering to cover the URI space, which has
+        proved insufficient.
+      </action>
+      <action dev="JT" type="update" context="skins">
+        Lots of FAQ improvements:
+        <ul>
+          <li>
+            Improved URI space by using <code>@id</code> attributes as the
+            #fragment-identifier for &lt;faq&gt; and &lt;part&gt; elements.
+          </li>
+          <li>Number FAQ entries and categories</li>
+          <li>Added back-links from FAQ entries to the menu</li>
+          <li>Process tags in &lt;question&gt; in menu entries</li>
+          <li>Indent FAQ text</li>
+          <li>FAQ sample added to seed project</li>
+        </ul>
+        Thanks to Joerg Pietschmann and Ralf Hauser for the suggestions.
+      </action>
+      <action dev="NKB" type="update" context="skins" due-to="Stefan Michels"
+        due-to-email="stephan@apache.org">
+        On avalon-tigris skin it's now possible to add a mysite.css file
+        to customize the style. An example that can be used is from
+        chaperon.sf.net.
+        Also added a rounded corner to paragraphs, and many minor fixes. 
+      </action>
+      <action dev="NKB" type="update" context="skins">
+        Fixed the annoying link highlighting on the krysalis skin 
+        due to the border. Removed the border, now it highlights fine.
+      </action>
+      <action dev="JT" type="add" context="schemas">
+        Added &lt;acronym&gt; tag.
+      </action>
+      <action dev="JT" type="add" context="shbat">
+        Added a means to override the check for existing content: 
+        <source>forrest seed -Dskip.contentcheck=yes</source>
+        Thanks to Tom Klaasen.
+      </action>
+      <action dev="NKB" type="add" context="webapp">
+        Added the possibility to use svg files instead png images.
+        That is, if an image is found in the images dir that is svg and
+        the browsers requests a png with the same name, the png is created
+        from the svg automatically with batik.
+      </action> 
+      <action dev="NKB" type="add" context="webapp">
+        Added the possibility to use wiki files in xdocs instead of xml files.
+        They must have a .cwiki extension, and follow the chaperon wiki format ATM.
+      </action> 
+      <action dev="NKB" type="update" context="editor">
+        Updated part of the editor so that it now can save files in wiki format.
+        Still needs more work.
+      </action> 
+      <action dev="NKB" type="update" context="webapp">
+        Updated Batik Block so that now PNGs can be created correctly from SVG.
+      </action> 
+      <action dev="NKB" type="add" context="forrestbar">
+        Added "Edit Page" button to edit the current page in Composer.
+        Still needs an icon.
+      </action> 
+      <action dev="NKB" type="add" context="webapp">
+        Added the possibility to use html files in xdocs instead of xml files.
+        They must have an .ihtml extension.
+      </action> 
+      <action dev="JT" type="fix" context="core">
+        HTML fragment identifiers for sections are now meaningfully named, based
+        on the section title, rather than <code>document-id()</code>-generated
+        characters.
+      </action>
+      <action dev="JT" type="fix" context="shbat">
+        Fixed site regeneration bugs where changing the skin in
+        <code>forrest.properties</code> had no effect after the first build.
+      </action>
+      <action dev="JT" type="add" context="skins">
+        Added copyright statement to PDF footer (10pt, light-grey text).  if a
+        skinconf.xml 'credit' element has a role='pdf' attribute, this text will
+        be used instead. Thanks to Keiron Liddle.
+      </action>
+      <action dev="JT" type="fix" context="shbat">
+        Now all files in <code>src/documentation/content</code> (except xdocs)
+        and <code>src/documentation/resources/images</code> are copied across
+        when Forrest generates a static site.  This fixes the problem when an
+        unparseable file links to another, and Cocoon can't crawl (and hence
+        copy) the linked-to file.  An example of this are CSS
+        <code>url('foo.png')</code> image refs (so krysalis-site will now work
+        properly).  Also, large batches of pregenerated files like Javadocs will
+        now be copied across instead of individually traversed.
+      </action>
+      <action dev="JT" type="add" context="core">
+        New <code>site.xml</code> file in content/xdocs.  This is used to
+        implement &lt;link href="site:internalURI"&gt; 'semantic' links,
+        &lt;link href="ext:externalURI"&gt; aliases to external links, and
+        renders <code>book.xml</code> files obsolete.  See <link
+          href="site:linking">Menus and Linking</link> for more info.
+      </action> 
+       <action dev="DC" type="update" context="forrestbot">
+       Updated some documentation, especially
+       <link href="forrestbot-intro.html">Forrestbot Introduction</link>
+      </action> 
+      <action dev="NKB" type="fix" context="shbat">
+        Now files present in the content dir are correctly linked and
+        copied verbatim by the CLI. The wellknown files are given with the
+        correct mime-type, and links in html and xml are followed. 
+      </action> 
+      <action dev="JT" type="update" context="code">
+        Update to 2002-12-26 Cocoon.
+      </action> 
+      <action dev="NKB" type="update" context="forrestbar">
+        Tweaked forrestbar, added a sub-project menu for Jakarta, fixed 
+        download link and added submenu for tools and gump.
+      </action> 
+      <action dev="NKB" type="update" context="skins">
+        Added rss capability to changes generation.
+      </action> 
+      <action dev="NKB" type="update" context="skins">
+        Added latest krysalis-site skin, using common templates where possible.
+        There is a changes2rss stylesheet that still needs sitemap changes to run.
+      </action> 
+      <action dev="NKB" type="update" context="skins">
+        Now even the selected tab retains a link, to be able to easily select
+        the main page of that tab even if it is "current".
+      </action>    
+      <action dev="JT" type="fix" context="skins" due-to="Nick Chalko"
+        due-to-email="nick@chalko.com">
+        Fixed a bug in the search form where there was no space between search
+        term and 'site:' term.  Search form also no longer requires Javascript.
+      </action>
+      <action dev="JT" type="update" context="skins">
+        Allow special handling of tab hrefs with #anchor references in them.  By
+        default, such menu links are always clickable.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        Fixed a bug where the no menu entry is 'selected' when in subdirectories.
+      </action>       
+      <action dev="NKB" type="update" context="skins">
+        Updated avalon-tigris skin by merging what was in CVS here and
+        what was used in Avalon with its Cocoon-generated site.  
+        The visual effect is the same to the current framework and Exalibur
+        Avalon sites.
+      </action>       
+      <action dev="NKB" type="fix" context="shbat">
+        Now error reporting in shbat CLI runs should work and show the cause of the error;
+        before it was just reporting [broken link].
+      </action>    
+      <action dev="NKB" type="update" context="code">
+        Updated latest Cocoon jars: chain metamodule name set to "forrest",
+        and it is used instead of the default one.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        Fixed a bug where multiple menu entries are highlighted if the filenames
+        share a common prefix.
+      </action>
+      <action dev="DC" type="add" context="build">
+        Allow configuration of a project local-catalog and the entity resolver
+        verbosity level, via forrest.properties configuration. This replaces
+        tokens in the default cocoon.xconf
+      </action>
+      <action dev="JT" type="fix" context="shbat" due-to="Omar Belhaj"
+        due-to-email="belhaj@online.no">
+        Fixed a bug in forrest.bat, which would fail if run from a different
+        drive to that Forrest was installed in.
+      </action>
+      <action dev="JT" type="fix" context="webapp">
+        Fix bug where the webapp would break due to missing XML jars under JDK
+        1.2/1.3.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        Moved credit and host logos to bottom left corner on forrest-site skin.
+      </action>
+      <action dev="JT" type="fix" context="seed">
+        Make the seed project use the correct 'built with Apache Forrest' logo
+        instead of Cocoon + Centipede logos.
+      </action>
+      <action dev="JT" type="update" context="skins">
+        Rewrite skins to share a common block of XSLT, which is used via
+        &lt;xsl:import&gt;. This should make skin maintenance much easier.
+      </action>
+      <action dev="JT" type="remove" context="skins">
+        Removed the 'basic' skin, to be shortly replaced with something much more
+        maintainable.
+      </action>
+      <action dev="JT" type="remove" context="skins" issue-ref="skin_images">
+        Removed some images (built-with-cocoon.gif, centipede-logo-small.gif)
+        from the skins, and moved them to
+        <code>src/documentation/resources/images</code>, as they are
+        Forrest-specific.
+      </action>
+      <action dev="NKB" type="update" context="docs">
+        Added enhancements to status.xml to comply with the needs for a complete status file,
+        like other "STATUS" text files at Apache.
+        Stylesheets not yet done.
+      </action>     
+      <action dev="NKB" type="update" context="forrestbar">
+        Added buttons for nightly Gump runs and local forrest. Corrected and completed
+        existing interface, and made buttons flat (the bar is slimmer too).
+        We need icons for the new buttons.
+      </action> 
+    </release>
+    <release version="0.2" date="2002-11-16">
+      <action dev="DC" type="fix" context="validation">
+        Fixed bug where validation of xdocs was not descending into
+        sub-directories.
+      </action> 
+      <action dev="JT" type="fix" context="skins">
+        Fixed bug where changes to the breadcrumb links in skinconf.xml were
+        ignored until the Forrest binary was rebuilt, or the project
+        <code>build/tmp/</code> deleted.
+      </action> 
+      <action dev="JT" type="fix" context="webapp">
+        Webapp now works under JDK 1.3 (parsers weren't being copied)
+      </action> 
+    </release>
+    <release version="0.2rc1" date="2002-11-13">
+      <action dev="NKB" type="update" context="utils">
+        Added a convert dir in the resources with stylesheets and buildfile
+        to help convert Anakia and Maven-based sites.
+      </action>    
+      <!--
+      <action dev="NKB" type="update" context="webapp">
+        Now Forrest will look for xdocs in the content dir first, and fallback to 
+        the legacy xdocs dir.
+      </action> 
+      -->
+      <action dev="JT" type="add" context="build">
+        Validate project sitemaps and choice of skin
+      </action> 
+      <action dev="DC" type="add" context="validation">
+        Validation of important core configuration files at build-time using
+        RELAX NG.
+      </action> 
+      <action dev="DC" type="add" context="docs">
+        New document <link href="community/index.html">Community Resources</link>
+        including draft "Apache Statistics".
+      </action> 
+      <action dev="JT" type="fix" context="skins">
+        Fixed selected menu link (meant to be inactive and yellow)
+      </action> 
+      <action dev="JT" type="add" context="skins">
+        Now an id attribute on any XML element below &lt;body&gt; will be rendered
+        as an anchor which can be linked to.
+      </action> 
+      <action dev="JT" type="fix" context="webapp">
+        Fixed webapp redirect problems under Tomcat and (sometimes) under Jetty.
+      </action> 
+      <action type="add" context="webapp" dev="NKB">
+        Added alpha system for editing content in the webapp.
+        To try it do "forrest run" and point the browser to http://localhost:8888/edit/  .
+      </action>   
+      <action dev="JT" type="add" context="skins" due-to="Peter Donald"
+        due-to-email="peter@apache.org">
+        Added avalon-tigris skin.
+      </action> 
+      <action dev="JT" type="remove" context="skins">
+        Removed unmaintained skins: avalon-site, jakarta-site, xml-apache-site,
+      </action> 
+      <action dev="NKB" type="update" context="webapp">
+        Removed the dependency that the default "site" target had on clean-site.
+        It means that running  "forrest" will not delete the current files in ./build/site/** .
+      </action> 
+      <action dev="NKB" type="update" context="webapp">
+        Now Cocoon serves a file directly if the filename matches
+        the one in ./src/documentation/contents/** .
+      </action>      
+      <action dev="NKB" type="update" context="webapp">
+        Put the internal matches in a separate pipeline with internal-only="true".
+      </action>      
+      <action dev="NKB" type="fix" context="shbat">
+        Now site builds do not delete files in build/site that are included in the 
+        Ant list of default excludes, like CVS info.
+      </action>   
+      <action dev="NKB" type="add" context="edit">
+        Included Jetty in the shbat distro.
+        type "forrest run" to have the ./build/webapp dir contents be run
+        in a local web server, starting from http://localhost:8888/index.html .
+      </action>
+      <action dev="JT" type="add" context="skins" due-to="Kevin Ross"
+        due-to-email="Kevin.Ross@iVerticalLeap.com">
+        Added a docbook2document.xsl stylesheet to library/xslt.
+      </action>
+      <action dev="JT" type="add" context="validation">
+        XML validation is now fully configurable through a hierarchical set of
+        <code>forrest.validation.*{includes,excludes,failonerror}</code>
+        properties.
+      </action>
+      <action dev="JT" type="add" context="validation">
+        Validate XSLTs in user skins and <code>resources/stylesheets</code>
+        directories.
+      </action>
+      <action dev="DC" type="add" context="docs">
+        Added new document <link href="compliance.html">Standards Compliance</link>
+        Thanks to Robert Koberg.
+      </action>
+      <action dev="DC" type="add" context="validation">
+        Added Jing "RELAX NG validator in Java" and initial grammar for
+        skinconf.xml files. These config files now get validated during the build.
+      </action>
+      <action dev="JT" type="add" context="skins">
+        Enhanced forrest-site skin's tabs.  Any URL (not just directories) can now
+        be tabbed with a new 'href' attribute. There is an improved 'longest match'
+        algorithm for deciding which tab is on which is more robust than the old
+        one.
+      </action>
+      <action dev="JT" type="fix" context="skins">
+        Fixed a bug where having a tabs.xml link to a file not otherwise mentioned
+        in book.xml caused a broken link.  See
+        <link
+          href="http://marc.theaimsgroup.com/?t=103607092100004&amp;r=1&amp;w=2">forrest-dev
+          discussion</link>
+      </action>
+      <action dev="JT" type="fix" context="docs">
+        Fixed all broken links in the Forrest site.
+      </action>
+      <action dev="JT" type="fix" context="docs">
+        Simplified the sitemap-stylesheet contract.  Instead of 'dir' and
+        'resource' parameters with varying meaning, there is just one 'path'
+        parameter.
+      </action>
+      <action dev="JT" type="add" context="docs">
+        Allow user to specify what XML files to validate via
+        <code>forrest.validate.{includes,excludes}</code> properties.
+      </action>
+      <action dev="JT" type="fix" context="docs">
+        Fixed broken PDFs in most subdirectories.
+      </action>
+      <action dev="JT" type="add" context="shbat">
+        Added a subdirectory to the template site and fixed all broken links.
+      </action>
+      <action dev="JT" type="add" context="shbat">
+        XML doc files are now validated before rendering with the 'validate'
+        target.  Uses OASIS catalogs provided by Forrest, optionally augmented by
+        user project catalogs.
+      </action>
+      <action dev="JT" type="fix" context="shbat">
+        shbat distribution no longer requires Ant to be preinstalled.  Now, nothing
+        but a Java installation is needed.
+      </action>
+      <action dev="JT" type="fix" context="build">
+        Building Forrest no longer requires a network connection (for downloading
+        Centipede).  It is buildable by typing 'ant' or with the provided build
+        scripts.
+      </action>
+      <action dev="JT" type="fix" context="shbat">
+        Fixed ClassNotFoundException when running on JDK1.4.x
+      </action>
+      <action dev="JT" type="fix" context="schemas">
+        Allow <code>xml:space='preserve'</code> attribute on &lt;p&gt; element, which preserves
+        space without the changed font and block display that &lt;code&gt; uses.
+      </action>
+      <action dev="JT" type="fix" context="code">
+        Fixed a bug where the log files weren't being created. Thanks to Vladimir
+        Bossicard for reporting.
+      </action>
+      <action dev="JT" type="add" context="code">
+        User projects can now override the default cocoon.xconf and logkit.xconf files,
+        by placing these files in src/documentation/conf
+      </action>
+      <action dev="JT" type="fix" context="docs">
+        PDFs for faq, changes and todo now work.
+      </action>
+      <action dev="JT" type="fix" context="build">
+        "Change History" images (update.jpg, add.jpg etc) are now provided by
+        default by Forrest (in images/), and need not be supplied by user projects.
+      </action>
+      <action dev="JT" type="add" context="build">
+        User projects can now add custom classes and jars to Forrest doc builds.
+        Useful for custom sitemap components, or overriding Forrest-provided jars.
+      </action>
+      <action dev="JT" type="update" context="build">
+        The locations where Forrest expects doc files to be is now configurable via
+        properties, that can be set in forrest.properties.
+      </action>
+      <action dev="JT" type="update" context="build">
+        User projects may now specify their own sitemap, overriding the
+        Forrest-provided one.
+      </action>
+      <action dev="JT" type="fix" context="docs">
+        Made forrest-site skin fully generic, usable with any project. Skins are
+        configured through an external 'skinconf.xml' file, specified by the
+        project. 
+      </action>
+      <action dev="JT" type="fix" context="docs">
+        Fixed bug where multiple copies of the same image where generated, one for
+        each directory. Now all image links are page-relative, leading to a single
+        copy.
+      </action>
+      <action dev="JT" type="fix" context="docs">
+        Fixed tab links, which were previously hardcoded and forrest-specific. They
+        are now page-relative. tabs.xml file entries no longer have to end in
+        '/'.
+      </action>
+      <action dev="DC" type="add" context="docs">
+        Added new document <link href="your-project.html">Your Project
+          - getting started with using Forrest</link>
+      </action>
+      <action dev="NKB" type="add" context="docs">
+        Added to the &quot;forrest-site&quot; skin the ability to split source code
+        larger than 80 chars in two or more lines.
+      </action>
+      <action dev="DC" type="add" context="docs" due-to="Bert Van Kets">
+        Replace the &quot;forrest-site&quot; skin with the new &quot;bert&quot;
+        skin.
+      </action>
+      <action dev="SN" type="add" context="build" due-to="Marc Portier" due-to-email="mpo@outerthought.org">
+        Added the forrestbot - infrastructure and configuration for remote project building.
+      </action>
+      <action dev="NKB" type="add" context="docs" due-to="Leo Simons">
+        Added breadcrumb trail script from the Avalon site skin.
+      </action>
+      <action dev="NKB" type="update" context="build">
+        Updated Cocoon to 2.1-dev to use xsltc and new CLI status messages.
+        Logs are in the <code>build/work/WEB-INF/logs</code> directory and the 
+        list of broken links is in the <code>build</code> directory.
+      </action>
+      <action dev="SN" type="add" context="code">
+        added NekoDTD-based DTD documentation using a custom Cocoon Generator
+      </action>
+      <action dev="NKB" type="add" context="code">
+        <link href="http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=102471820523388">draft forrest toolbar for Mozilla</link>
+      </action>
+      <action dev="SN" type="add" due-to="Marc Portier" due-to-email="mpo@outerthought.org" context="code">
+        Initial import of <link href="libre-intro.html">Libre</link>
+        facility - replacement for */book.xml
+      </action>
+      <action dev="SN" type="add" context="build">
+        Added a draft DTD for the Gump Descriptor forrest.xgump
+      </action>
+      <action dev="NKB" type="add" context="build">
+        Forrest website is being automatically built and published to krysalis.org
+      </action>
+      <action dev="BK" type="add" context="design">
+        Designed a new skin for the Forrest documents. Particular attention to
+        cross-browser issues.
+      </action>
+      <action dev="DC" type="add" context="docs">
+        Added initial &quot;Dream List&quot; by harvesting statements from the
+        forrest-dev mail list.
+      </action>
+      <action dev="NKB" type="add" context="build">
+        Added simple xsl stylesheet for forrest.xgump.
+        In IE6 and Mozilla 6 it renders using this, in older ones it uses the
+        more simplifies CSS version.
+      </action>
+      <action dev="NKB" type="add" context="build">
+        Added Forrest to Gump runs.
+      </action>
+      <action dev="NKB" type="add" context="docs">
+        Added preliminary version of a scarab-like skin.
+      </action>
+      <action dev="NKB" type="add" context="build">
+        Added simple css stylesheet for forrest.xgump.
+        In IE and Mozilla 6 it renders.
+      </action>
+      <action dev="NKB" type="add" context="docs">
+        Fixed links in Forrest home page and added: contributing, mailing list,
+        list archives, who we are.
+      </action>
+      <action dev="NKB" type="update" context="build">
+        Updated Centipede stuff to latest changes:
+        - added lib/endorsed dir for endorsed jars that are put in global calsspath
+        - changed the build scripts to not make direct reference to jar files
+        - added "examples" dir in src and creation of examples jar in buils
+        - added "testmodule" target to be run before committing stuff
+        - added "gump" build to be run by Gump
+      </action>
+      <action dev="NKB" type="add" context="build">
+        Merged forrest needed info in forrest.xgump.
+      </action>
+      <action dev="NKB" type="update" context="build">
+        Updated project descriptor: now it should be usable by Gump.
+        Added basic Forrest descriptor.
+      </action>
+      <action dev="NKB" type="add" context="code">
+        Refactored site generation stuff to use skins; still need to integrate with xforrest descriptor.
+        Added jakarta-site, xml-apache-site, cocoon-printer skins.
+      </action>
+      <action dev="SN" type="add" context="build">
+        Imported Centipede as a build system.
+      </action>
+      <action dev="DC" type="update" due-to="Steven Noels" due-to-email="stevenn@outerthought.org" context="docs">
+        Ensure that initial DTDs are valid and that the initial XML instances can be
+        validated using these DTDs and OASIS Catalogs.
+      </action>
+      <action dev="SM" type="add" context="admin">
+        Initial Import
+      </action>
+    </release>
+  </changes>
+
+
+  <!-- ===================================================================== -->
+  <!-- TODO                                                                  -->
+  <!-- ===================================================================== -->
+
+  <todo>
+    <actions priority="high">
+
+      <action context="code" dev="SN">
+        Standardize the work on
+        the rest of the DTDs that will be required by Forrest.
+      </action>
+      <action context="code" dev="open">
+        Ensure that PHP-like stuff can be enbedded easily in Forrest files and
+        document it.
+      </action>    
+      <action context="code" dev="NKB">
+        Finalise the project-definition DTDs, like status.xml and module.xml;
+        try to come up with a common format with others on community.at.apache.org.
+      </action>    
+      <action context="code" dev="open">
+        The document-v11 DTD needs to rationalise the use of link|jump|fork
+        elements and clarify their use in the documentation.
+        See email discussion -
+        <link href="http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=102328646710432">DTD/XSLT mods: link and jump</link> and
+        <link href="http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=102339964119473">DTD questions</link>
+        Eventually move to something more similar to xhtml 1.1 or 2-draft.
+        Nicola Ken suggests adding 'a' as an altrernative tag for 'link'.
+      </action>
+      <action context="code" dev="open">
+        Fix or work around the
+        <link href="http://marc.theaimsgroup.com/?t=104065768300003&amp;r=1&amp;w=2">images-in-PDF problem </link>
+        by using latest FOP and Cocoon from CVS.
+      </action>
+      <action context="code" dev="open">
+        Images (&lt;figure&gt;) are not yet handled by the PDF generation.
+        see <code>skins/forrest-site/xslt/fo/document2fo.xsl</code> and email
+        <link href="http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=102725960101549">Re: document2Fo.xsl</link>
+        and 
+        <link href="http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=103009053230213">Re: Images not appearing in PDF's</link>
+      </action>      
+      <action context="code" dev="open">
+        Fix the logging (logkit.xconf) to stop Cocoon generating 370k (!) of
+       logs per page rendered.
+      </action>
+      <action context="code" dev="open">
+         Fix whatever it is that causes Jisp to fill error.log with these:
+         <code>
+           ERROR   (2002-12-25) 23:15.44:410   [core.store.persistent] (/forrest/community/index.html) Thread-13/JispFilesystemStore: get(..): Exception
+             com.coyotegulch.jisp.DatabaseException: no indexes associated with this database
+             at com.coyotegulch.jisp.IndexedObjectDatabase.&lt;clinit&gt;(IndexedObjectDatabase.java:88)
+             at org.apache.cocoon.components.store.JispFilesystemStore.initialize(JispFilesystemStore.java:237)
+             at org.apache.avalon.excalibur.component.DefaultComponentFactory.newInstance(DefaultComponentFactory.java:275)
+             at org.apache.avalon.excalibur.component.ThreadSafeComponentHandler.initialize(ThreadSafeComponentHandler.java:98)
+             at org.apache.avalon.excalibur.component.ExcaliburComponentManager.initialize(ExcaliburComponentManager.java:513)
+             at org.apache.cocoon.Cocoon.initialize(Cocoon.java:288)
+         </code>  
+      </action>
+    </actions>
+
+    <actions priority="medium">
+      <action context="code" dev="NKB">
+        Finish the RSS feed for status.xml.
+        Aggregate status.xml and project.xml to have all needed project data.
+      </action>    
+      <action context="webapp" dev="open">
+        Continue development of the editing system in the webapp.
+        Needs bugfixes, xml2wiki stylesheet and enhancements to the wiki grammer 
+        especially to define sections and titles.
+      </action>      
+      <action context="docs" dev="open">
+        Add stylesheets to render the enhanced status.xml file contents.
+      </action>     
+      <action context="code" dev="open">
+        Allow the obfuscation of mailto links to be configurable.
+      </action>     
+      <action context="docs" dev="open">
+        Add a document about authoring in XML for beginners..
+      </action>   
+      <action context="code" dev="JT">
+        In skinconf.xml, change 'disable-search' to 'enable-search'.
+      </action>
+      <action context="code" dev="NKB">
+        Enhance the initial forrest toolbar for Mozilla.
+        See email discussion <link href="http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=102471820523388">draft forrest toolbar for Mozilla</link>.
+      </action>
+      <action context="code" dev="open">
+        Optimise the CLI to deal with Javadocs, and other large sets of
+        pre-generated content.  For example the Javadocs are placed in
+        src/documentation/content/javadocs, they will be traversed, but far too
+        slowly to be of practical use.
+     </action>      
+     <action context="code" dev="NKB">
+        Make a CSS Generator and a stylesheet to serialize it to text.
+     </action>       
+      <action context="code" dev="open">
+        Simplify the sitemap.  It is getting rather complex, and as the source
+        of Forrest's power we need it to be accessible to newcomers.
+        I'd suggest moving all the stuff specific to Forrest's site
+        (apachestats, community/revision stuff, libre, .dtdx, editor) out into
+        a Forrest site-specific sitemap.xmap.  Move anything else that can be
+        moved into subsitemaps.  Perhaps using XML entities to suck in bits of
+        sitemap would be a decent way to manage future sitemap complexity, at
+        least until Cocoon Blocks arrive.  Perhaps we can add XInclude support
+        to the sitemap?
+      </action>  
+      <action context="code" dev="open">
+        Fix things so docs can be edited in src/*, and have the changes appear
+        immediately in the webapp.  Involves creating/using an InputModule for
+        passing 'forrest.skin' and other properties to the sitemap, so we can
+        avoid the @skin@ hack, and a bit of forrest.build.xml hacking.  There
+        are some @tokens@ in a forrest-site CSS file that also need some sort
+        of in-place modification.  Perhaps a @token@-to-value Transformer could
+        be the same ${variable}-to-value Transformer mentioned in the RT [3].
+      </action>  
+      <action context="code" dev="open">
+        Act on <link href="http://marc.theaimsgroup.com/?t=104099660500001&amp;r=1&amp;w=2">'Entities in XML docs' RT</link>.
+        I can implement Stefano's
+        suggested solution quite easily, but is such limited functionality
+        worth the cost of introducing a proprietary ${variable} syntax? Maybe..
+        Best short-term alternative seems to be using the XNI XInclude
+        processor for pre-validation inclusion.
+      </action>  
+      <action context="code" dev="open">
+        Finish linkmaps, currently sitting in LINKMAP_BRANCH, I'd like to make
+        site.xml much more LSB-like, with file/folder element names and RDF
+        file metadata.
+      </action>  
+      <action context="code" dev="open">
+        Skinify Miles Elam's forrest.iguanacharlie.com CSS mockup.  The rounded
+        tabs would require the CSS image traversal fix, but it's not essential.
+      </action>  
+      <action context="code" dev="open">
+        Schema issues.  There are lots of change requests (see
+        etc/DTD_DEFICIENCIES.txt) and an immediate need for some sort of DTD
+        versioning policy.
+      </action>  
+      <action context="code" dev="open">
+        Docs.  A lot of the info on the website is outdated.  With metadata
+        from site.xml, it would at least be possible to indicate how old the
+        doc is, and perhaps indicate its relevance from a small controlled
+        vocabulary.
+      </action>  
+    </actions>
+
+    <actions priority="low">
+      <action context="code" dev="open">
+        Define a simple mechanism for staging.
+      </action>     
+      <action context="code" dev="NKB">
+        Add the PATCHQUEUE system to Forrest, as used by cocoon-dev.at.xml.apache.org
+      </action>       
+      <action context="design" dev="open">
+        Develop a mechanism for supporting legacy URLs.
+        See email discussion -
+        <link href="http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=102390892524750">redirects with static sites</link>
+      </action>   
+      <action context="code" dev="open">
+        Continue the development of the new
+        <link href="libre-intro.html">Libre</link>
+        facility - replacement for */book.xml
+      </action>
+      <action context="docs" dev="open">
+        Start a community doc where we list such
+        tools as forrestbar, config files for XMetaL, etc.
+      </action>
+      <action context="code" dev="open">
+        Migrate to a decent schema language, primarily so that we can use
+        namespaces in XML docs, allowing things like XInclude, 
+        <link href="http://www.xml.com/pub/a/2002/10/30/rdf-friendly.html">in-line metadata</link>,
+        in-line SVG, Jelly snippets, or anything else users can make a
+        Transformer for.
+      </action>
+      <action context="code" dev="open">
+        Streamline the process of adding support for new schemas.  Ideally we'd
+        have an auto-download system, eg 'forrest-update docbook' would fetch
+        and install the Docbook DTDs, create catalog entries, sitemap mods etc.
+      </action>
+      <action context="code" dev="open">
+        Create a forrest-users list, so we can have flaming rows on forrest-dev
+        over arcana without annoying users :)
+      </action>
+      <action context="code" dev="open">
+        Create a Forrest Maven plugin.  This is probably the biggest single way
+        to widen Forrest's exposure and attract new users.
+      </action>
+    </actions>    
+  </todo>
+  <!--
+  <wishlist>
+    <action context="..." dev="...">...</action>
+  </wishlist>
+  -->
+
+
+  <!-- ===================================================================== -->
+  <!-- ISSUES                                                                -->
+  <!-- ===================================================================== -->
+
+  <issues>
+    <pending><!--
+     <issue date="...">
+       <ref>http://...</ref>
+       <ref>./src/...</ref>
+       <descr>...</descr>
+     </issue>
+     -->
+    </pending>
+    
+    <voting>
+     <issue date="20021204">
+       <descr>Make all DTD removals to necessarily need a version change.</descr>
+       <ref>http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=103897161523879&amp;w=2</ref>
+       <ref>http://marc.theaimsgroup.com/?l=forrest-dev&amp;m=103899964318989&amp;w=2</ref>
+       <votes>
+         <vote person-id="NKB" vote="+1"/>      
+         <vote person-id="JT" vote="+1"/>
+       </votes>
+     </issue>
+
+    </voting>
+
+    <resolved>
+    <!--
+    <issue date="...">
+       <votes>
+         <vote person-id="..." vote=""/>
+         ...
+       <votes>
+       <ref>http://...</ref>
+       <ref>./src/...</ref>
+       <descr>...</descr>
+    </issue>
+    -->
+    </resolved>
+
+    <compatibility-breaks>
+      <issue id="skin_images" date="2002-11-17">
+        <synopsis>
+          Images removed from default Forrest <code>forrest-site</code>
+          and <code>avalon-tigris</code> skins
+        </synopsis>
+        <affected date="2002-11-05">
+          Users of these skins who may use the deleted images in a
+          project-specific <code>skinconf.xml</code> file.  Many earlier users of
+          Forrest fall into this category, as these images were in the default
+          skinconf.xml in pre-0.2 versions of Forrest.
+        </affected>
+        <description>
+          <p>
+            Removed these files, as they were Forrest-site-specific and not used
+            directly in skins:
+          </p>
+          <p xml:space="preserve">
+            src/resources/skins/avalon-tigris/images/ant_logo_small.gif
+            src/resources/skins/avalon-tigris/images/built-with-cocoon.gif
+            src/resources/skins/avalon-tigris/images/centipede-logo-small.gif
+            src/resources/skins/avalon-tigris/images/add.gif
+            src/resources/skins/avalon-tigris/images/remove.gif
+            src/resources/skins/avalon-tigris/images/update.gif
+            src/resources/skins/basic/images/ant_logo_medium.gif
+            src/resources/skins/basic/images/built-with-cocoon.gif
+            src/resources/skins/basic/images/krysalis-compatible.jpg
+            src/resources/skins/forrest-site/images/built-with-cocoon.gif
+            src/resources/skins/forrest-site/images/centipede-logo-small.gif
+          </p>
+        </description>
+        <fix>
+          If your project's skinconf.xml uses
+          <code>skin/images/built-with-cocoon.gif</code>,
+          <code>skin/images/centipede-logo-small.gif</code> or
+          <code>skin/images/ant_logo_small.gif</code>,
+          please:
+          <ul>
+            <li>
+              Copy the referenced images into your project's
+              <code>src/documentation/resources/images</code> directory, or
+              wherever the <code>project.images-dir</code> property points.
+            </li>
+            <li>
+              Change the skinconf.xml reference from <code>skin/images</code> to
+              <code>images</code>.
+            </li>
+          </ul>
+          <p>
+            The removal of {add,remove,update}.jpg images should have no effect.
+          </p>
+        </fix>
+      </issue>
+
+
+      <issue id="skin_images" date="2003-03-18">
+        <synopsis>
+          The pdf link on the document pages now appears only if 
+          explicitly stated in the skinconf.xml file.
+        </synopsis>
+        <affected date="2003-03-18">
+          All users that use and want to keep the pdf version of each page.
+        </affected>
+        <description>
+          <p>
+            Added mandatory 'disable-pdf-link' element in skinconf.xml
+          </p>
+        </description>
+        <fix>
+          To keep pdf links on each page, add a 'disable-pdf-link' 
+          in skinconf.xml set to false, as for other similar links 
+          (consistent behaviour). To make the file validate, please use
+          the page DTD contained in the forrest distro in 
+          ./src/resources/conf/skinconf.xml
+        </fix>
+      </issue>      
+    </compatibility-breaks>
+  </issues>
+
+</status>
+
