@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsp,v 1.16 2004/07/12 03:28:22 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page language="java"
           xmlns:xsp="http://apache.org/xsp"
@@ -130,8 +130,8 @@
   <search-and-results>
     <xsp:logic>
       // Get sitemap path
-      org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
-      String sitemapPath=input_source.getSystemId();
+      org.apache.excalibur.source.Source input_source=this.resolver.resolveURI("");
+      String sitemapPath=input_source.getURI();
       sitemapPath=sitemapPath.substring(5); // Remove "file:" protocol
 
 
