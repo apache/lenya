@@ -42,4 +42,5 @@
   <target name="clean" depends="init" description="Cleans the build directories">
     <delete dir="${build.dir}"/>
     <delete dir="${build.root}/tools"/>
+    <delete dir="${build.root}/test"/>
   </target>

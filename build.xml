@@ -6,7 +6,7 @@
                        |  Apache Lenya Build System |
                        * =========================== *
 
-       CVS $Id: build.xml,v 1.55 2003/04/16 16:59:33 gregor Exp $:
+       CVS $Id: build.xml,v 1.56 2003/04/16 19:38:39 michi Exp $:
 
     History
     =======
@@ -32,7 +32,7 @@
 
 ]>
 
-<project default="webapp" basedir="." name="Apache Lenya">
+<project default="webapp" basedir="." name="lenya">
 
   <!-- ==================  Apache Lenya targets  ======================== -->
 
