@@ -24,7 +24,7 @@
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
     xmlns:dc="http://purl.org/dc/elements/1.1/"
-    exclude-result-prefixes="page xhtml"
+    exclude-result-prefixes="page xhtml dc lenya"
     >
     
     
