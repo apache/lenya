@@ -13,7 +13,14 @@
           <xsl:for-each select="Sections/Section">
             <xsl:variable name="sectiontext"><xsl:value-of select="."/></xsl:variable>
             <tr>
-              <td align="right"><a href="{$unipublic}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+              <xsl:choose>
+                <xsl:when test="@highlighted='true'">
+                  <td align="right"><a href="{$unipublic}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_light_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+                </xsl:when>
+                <xsl:otherwise>
+                  <td align="right"><a href="{$unipublic}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+                </xsl:otherwise>
+              </xsl:choose>
             </tr>
             <tr>
               <td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
