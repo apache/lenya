@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.lenya.org/2003/simple-document" xmlns:s="http://www.lenya.org/2003/simple-document" xmlns:lenya="http://lenya.org/2003/">
+<xs:schema xmlns:bxe="http://bitfluxeditor.org/schema/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.lenya.org/2003/simple-document" xmlns:s="http://www.lenya.org/2003/simple-document" xmlns:lenya="http://lenya.org/2003/">
   <xs:import namespace="http://lenya.org/2003/" schemaLocation="lenya.xsd"/>
   <xs:element name="simple-document">
 		<xs:annotation>
