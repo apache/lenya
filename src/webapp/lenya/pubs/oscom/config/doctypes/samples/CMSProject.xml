@@ -2,7 +2,10 @@
 
 <system type="cms">
   <id/>
-  <editor email="editor@lenya.org">editor</editor>
+  <editor>
+    <name>editor</name>
+    <email>editor@lenya.org</email>
+  </editor>
   <system_name/>
   <description>
 CMS Description
