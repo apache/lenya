@@ -1,5 +1,5 @@
 /*
-$Id: Machine.java,v 1.4 2003/07/23 19:18:17 andreas Exp $
+$Id: ServletHelper.java,v 1.1 2003/07/23 19:18:17 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,120 +53,26 @@ $Id: Machine.java,v 1.4 2003/07/23 19:18:17 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.ac;
+package org.apache.lenya.util;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import org.apache.lenya.cms.ac2.Accreditable;
-import org.apache.lenya.cms.ac2.Identifiable;
+import org.apache.cocoon.environment.Request;
 
 /**
  * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class Machine implements Identifiable {
+public class ServletHelper {
 
     /**
-     * Creates a new machine object.
-     * @param ip The IP address.
+     * Returns the URL inside the web application (without the context prefix). 
+     * @param request The request.
+     * @return A string.
      */
-    public Machine(String ip) throws AccessControlException {
-        setAddress(getAddress(ip));
-    }
-
-    private InetAddress address;
-
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
-    public boolean equals(Object otherObject) {
-        boolean equals = false;
-
-        if (otherObject instanceof Machine) {
-            Machine otherMachine = (Machine) otherObject;
-            equals = getAddress().equals(otherMachine.getAddress());
+    public static String getWebappURI(Request request) {
+        String context = request.getContextPath();
+        if (context == null) {
+            context = "";
         }
-
-        return equals;
-    }
-
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode() {
-        return getAddress().hashCode();
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac2.Accreditable#getAccreditables()
-     */
-    public Accreditable[] getAccreditables() {
-        Accreditable[] accreditables = { this };
-        return accreditables;
-    }
-
-    /**
-     * Returns the IP address.
-     * @return The IP address.
-     */
-    public String getIp() {
-        return toString();
-    }
-
-    /**
-     * Converts a string to an IP addres.
-     * @param string
-     * @return
-     * @throws UnknownHostException
-     */
-    protected static InetAddress getAddress(String string)
-        throws AccessControlException {
-        String[] strings = string.split("\\.");
-
-        InetAddress address;
-        try {
-            byte[] numbers = new byte[strings.length];
-            for (int i = 0; i < strings.length; i++) {
-                int number = Integer.parseInt(strings[i]);
-                if (number > 127) {
-                    number = number - 256;
-                }
-                numbers[i] = (byte) number;
-            }
-
-            address = InetAddress.getByAddress(numbers);
-        } catch (Exception e) {
-            throw new AccessControlException(
-                "Failed to convert address [" + string + "]: ",
-                e);
-        }
-        return address;
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-        return getAddress().toString();
-    }
-
-    /**
-     * Returns the IP address.
-     * @return An IP address.
-     */
-    public InetAddress getAddress() {
-        return address;
-    }
-
-    /**
-     * Sets the IP address.
-     * @param address An IP address.
-     */
-    public void setAddress(InetAddress address) {
-        this.address = address;
-    }
-
+        String url = request.getRequestURI().substring(context.length());
+        return url;
+    } 
 }

@@ -1,5 +1,5 @@
 /*
-$Id: IPRange.java,v 1.1 2003/07/22 17:01:34 andreas Exp $
+$Id: IPRange.java,v 1.2 2003/07/23 19:18:17 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,8 @@ $Id: IPRange.java,v 1.1 2003/07/22 17:01:34 andreas Exp $
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * A range of IP addresses.
@@ -68,6 +70,14 @@ public abstract class IPRange extends AbstractGroupable {
      * Ctor.
      */    
     public IPRange() {
+        try {
+            byte[] address = { 127, 0, 0, 1 };
+            networkAddress = InetAddress.getByAddress(address);
+            byte[] mask = { -1, -1, -1, 0 };
+            subnetMask = InetAddress.getByAddress(mask);
+        }
+        catch (UnknownHostException ignore) {
+        }
     }
 
     /**
@@ -119,5 +129,72 @@ public abstract class IPRange extends AbstractGroupable {
     public void delete() throws AccessControlException {
         removeFromAllGroups();
     }
-
+    
+    private InetAddress networkAddress;
+    
+    /**
+     * Sets the network address.
+     * @param address A string, e.g. 192.168.0.32
+     * @throws UnknownHostException when the conversion of the String to an
+     * InetAddress failed.
+     */
+    public void setNetworkAddress(String address) throws AccessControlException {
+        networkAddress = Machine.getAddress(address);
+    }
+    
+    /**
+     * Sets the network address.
+     * @param address A byte array of the length 4.
+     * @throws UnknownHostException when the conversion of the byte array to an
+     * InetAddress failed.
+     */
+    public void setNetworkAddress(byte[] address) throws AccessControlException {
+        try {
+            networkAddress = InetAddress.getByAddress(address);
+        } catch (UnknownHostException e) {
+            throw new AccessControlException("Failed to convert address [" + address + "]: ", e);
+        }
+    }
+    
+    /**
+     * Returns the network address.
+     * @return An InetAddress value.
+     */
+    public InetAddress getNetworkAddress() {
+        return networkAddress;
+    }
+    
+    private InetAddress subnetMask;
+    
+    /**
+     * Sets the subnet mask.
+     * @param mask A string, e.g. 192.168.0.32
+     * @throws UnknownHostException when the conversion of the String to an
+     * InetAddress failed.
+     */
+    public void setSubnetMask(String mask) throws AccessControlException {
+        subnetMask = Machine.getAddress(mask);
+    }
+    
+    /**
+     * Sets the subnet mask.
+     * @param mask A byte array of the length 4.
+     * @throws UnknownHostException when the conversion of the byte array to an
+     * InetAddress failed.
+     */
+    public void setSubnetMask(byte[] mask) throws AccessControlException {
+        try {
+            subnetMask = InetAddress.getByAddress(mask);
+        } catch (UnknownHostException e) {
+            throw new AccessControlException("Failed to convert mask [" + mask + "]: ", e);
+        }
+    }
+    
+    /**
+     * Returns the subnet mask.
+     * @return An InetAddress value.
+     */
+    public InetAddress getSubnetMask() {
+        return subnetMask;
+    }
 }
