@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.12 2003/07/24 18:36:37 andreas Exp $
+$Id: FilePolicyManager.java,v 1.13 2003/08/07 10:23:02 andreas Exp $
 <License>
 
  ============================================================================
@@ -181,6 +181,7 @@ public class FilePolicyManager
      * @throws AccessControlException when something went wrong.
      */
     public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
+        getLogger().debug("Saving URL policy for URL [" + url + "]");
         savePolicy(url, policy, URL_FILENAME);
     }
 
@@ -191,6 +192,7 @@ public class FilePolicyManager
      * @throws AccessControlException when something went wrong.
      */
     public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
+        getLogger().debug("Saving subtree policy for URL [" + url + "]");
         savePolicy(url, policy, SUBTREE_FILENAME);
     }
 
@@ -203,7 +205,7 @@ public class FilePolicyManager
      */
     protected void savePolicy(String url, DefaultPolicy policy, String filename)
         throws AccessControlException {
-
+            
         String key = getCacheKey(url);
         cache.remove(key);
 
