@@ -78,7 +78,7 @@ public class SiteTreeGenerator extends ServiceableGenerator
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
         throws ProcessingException, SAXException, IOException
     {
-        log.error("setup");
+        log.debug("setup");
         try {
             Publication publication = PublicationFactory.getPublication(objectModel);
             area = par.getParameter(AREA_PARAMETER);
@@ -96,7 +96,7 @@ public class SiteTreeGenerator extends ServiceableGenerator
      * @see org.apache.cocoon.generation.Generator#generate()
      */
     public void generate() throws SAXException {
-        log.error("generate");
+        log.debug("generate");
         // Start the document and set the namespace.
         this.contentHandler.startDocument();
         // Default namespace.
@@ -156,7 +156,7 @@ public class SiteTreeGenerator extends ServiceableGenerator
      * Recycle the generator
      */
     public void recycle() {
-        log.error("recycle");
+        log.debug("recycle");
         super.recycle();
         sitetree = null;
         area = null;
