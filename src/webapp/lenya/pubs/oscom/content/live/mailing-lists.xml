@@ -18,29 +18,32 @@
  <list>
    <name>Participants</name>
    <description>To be informed on news about the
-   next conference in San Francisco</description>
+   next conference in Berkeley, California, USA</description>
    <address>participants@oscom.org</address>
    <public>http://www.oscom.org/mailman/listinfo/participants</public>
    <admin>http://www.oscom.org/mailman/admin/participants</admin>
+ </list>
+ <list>
+   <name>SlideML</name>
+   <description>
+To discuss the syntax and usage of SlideML - More information
+can be found at <a href="http://www.bitflux.ch/slideml/slideml.html">http://www.bitflux.ch/slideml/slideml.html</a>
+   </description>
+   <address>participants@oscom.org</address>
+   <public>http://www.oscom.org/mailman/listinfo/slideml</public>
+   <admin>http://www.oscom.org/mailman/admin/slideml</admin>
  </list>
 </public>
 
 <private>
  <list>
    <name>Speakers (San Francisco)</name>
-<!--
-   <description/>
--->
    <address>speakers@oscom.org</address>
    <public>http://www.oscom.org/mailman/listinfo/speakers</public>
    <admin>http://www.oscom.org/mailman/admin/speakers</admin>
  </list>
-
  <list>
    <name>Organization Committee (San Francisco)</name>
-<!--
-   <description/>
--->
    <address>oc-1@oscom.org</address>
    <public>http://www.oscom.org/mailman/listinfo/oc-1</public>
    <admin>http://www.oscom.org/mailman/admin/oc-1</admin>

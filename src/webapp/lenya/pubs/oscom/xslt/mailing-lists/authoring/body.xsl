@@ -13,7 +13,7 @@
  <h3>Mailing Lists</h3>
 <p>
 There are several OSCOM mailing lists available.<br />
-NOTE: Only the public list is shown live.
+NOTE: Only the public lists are shown live.
 </p>
  <h4>Public List</h4>
  <xsl:apply-templates select="public/list"/>
@@ -36,6 +36,10 @@ NOTE: Only the public list is shown live.
 <xsl:template match="description">
 <br />
 <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="a">
+<xsl:copy-of select="."/>
 </xsl:template>
  
 </xsl:stylesheet>  

@@ -12,8 +12,7 @@
  <font face="verdana">
  <h3>Mailing Lists</h3>
 <p>
-<!--There are several OSCOM mailing lists available.-->
-There are currently two OSCOM mailings lists available.
+There are currently three OSCOM mailings lists available.
 </p>
  <!--<h4>Public Lists</h4>-->
  <xsl:apply-templates select="public/list"/>
@@ -40,6 +39,10 @@ There are currently two OSCOM mailings lists available.
 <xsl:template match="description">
 <br />
 <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="a">
+<xsl:copy-of select="."/>
 </xsl:template>
  
 </xsl:stylesheet>  
