@@ -72,7 +72,7 @@ import java.util.*;
  * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  *
  * @author Michael Wechner
- * @version $Id: XPSAssembler.java,v 1.18 2003/12/15 16:22:34 michi Exp $
+ * @version $Id: XPSAssembler.java,v 1.19 2004/01/07 15:38:30 michi Exp $
  */
 public class XPSAssembler implements XPSInclude {
     static Category log = Category.getInstance(XPSAssembler.class);
@@ -326,7 +326,8 @@ public class XPSAssembler implements XPSInclude {
         sourceInfo.addChild(currentInfo);
 
         if (currentInfo.checkLoop(sourceInfo, currentInfo.url)) {
-            log.warn("EXCEPTION: Loop detected: " + sourceInfo.url.getFile());
+            log.warn("Loop detected: " + sourceInfo.url.getFile() + " " + currentInfo.url.getFile());
+            //currentInfo.logLoop(sourceInfo, currentInfo.url);
             return null;
         }
 

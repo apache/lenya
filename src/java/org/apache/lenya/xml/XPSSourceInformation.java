@@ -1,5 +1,4 @@
 /*
-$Id: XPSSourceInformation.java,v 1.15 2003/07/23 13:21:29 gregor Exp $
 <License>
 
  ============================================================================
@@ -70,7 +69,7 @@ import java.util.Vector;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version 2002.5.30
+ * @version $Id: XPSSourceInformation.java,v 1.16 2004/01/07 15:38:30 michi Exp $
  */
 public class XPSSourceInformation {
     static Category log = Category.getInstance(XPSSourceInformation.class);
@@ -238,7 +237,7 @@ public class XPSSourceInformation {
     }
 
     /**
-     * DOCUMENT ME!
+     * Check for XInclude Loops
      *
      * @param xpssf DOCUMENT ME!
      * @param url DOCUMENT ME!
