@@ -15,9 +15,6 @@
     exclude-result-prefixes="nav"
     >
     
-<xsl:param name="url"/>
-<xsl:param name="chosenlanguage"/>
-<xsl:param name="defaultlanguage"/>
 
 <xsl:template match="nav:site">
   <div id="menu">
@@ -71,14 +68,7 @@
 
 
 <xsl:template match="nav:label">
-  <xsl:choose>
-    <xsl:when test="parent::nav:node/child::nav:label[@xml:lang = $chosenlanguage]">
-      <xsl:value-of select="self::*[lang($chosenlanguage)]"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="self::*[lang($defaultlanguage)]"/>
-    </xsl:otherwise>
-  </xsl:choose>	
+  <xsl:value-of select="."/>
 </xsl:template>
     
     

@@ -142,7 +142,11 @@ Apply nodes recursively
     
     <xsl:attribute name="href"><xsl:value-of select="concat($path-to-context, $canonical-url)"/></xsl:attribute>
     
-    <xsl:apply-templates>
+    <xsl:apply-templates select="tree:label[lang($existinglanguage)]">
+      <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
+    </xsl:apply-templates>
+    
+    <xsl:apply-templates select="tree:node">
       <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
     </xsl:apply-templates>
     
