@@ -40,19 +40,7 @@
     </head>
     <body>
     
-      <table width="100%" border="0" cellpadding="10" cellspacing="0">
-        <tr>
-          <td class="lenya-header">
-            <h1><xsl:value-of select="page:title"/></h1>
-          </td>
-          <td class="lenya-project-logo">
-            <img src="{$contextprefix}/lenya/images/project-logo-small.png" alt="Apache Lenya Project Logo"/>
-          </td>
-        </tr>
-      </table>
-      <div class="lenya-page-subtitle">
-        Open Source Content Management System
-      </div>
+      <xsl:apply-templates select="page:title"/>
       <table class="lenya-body" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <xsl:if test="//xhtml:div[@class = 'lenya-sidebar']">
@@ -67,6 +55,23 @@
       </table>
     </body>
   </html>
+</xsl:template>
+
+
+<xsl:template match="page:title">
+  <table width="100%" border="0" cellpadding="10" cellspacing="0">
+    <tr>
+      <td class="lenya-header">
+        <h1><xsl:value-of select="."/></h1>
+      </td>
+      <td class="lenya-project-logo">
+        <img src="{$contextprefix}/lenya/images/project-logo-small.png" alt="Apache Lenya Project Logo"/>
+      </td>
+    </tr>
+  </table>
+  <div class="lenya-page-subtitle">
+    Open Source Content Management System
+  </div>
 </xsl:template>
 
 
