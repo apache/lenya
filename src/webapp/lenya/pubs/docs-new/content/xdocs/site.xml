@@ -47,9 +47,9 @@
         <node-50 href="development.html" label="Developing Tasks"/>
       </node-40>
     </concepts>
-    <specs href="customization/" label="Customization">
+    <customization href="customization/" label="Customization">
       <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
-    </specs>
+    </customization>
     <specs href="specs/" label="Specifications">
       <namespaces href="namespaces.html" label="Namespaces"/>
     </specs>
@@ -57,6 +57,9 @@
       <sitetree-proposal href="siteTree.html" label="Site tree"/>
       <openoffice href="openoffice.html" label="OpenOffice"/>
     </proposals>
+    <misc href="misc/" label="Miscellaneous">
+      <namespaces href="webdav.html" label="WebDAV Servers"/>
+    </misc>
   </documentation>
   
   <community href="community/" label="Community">

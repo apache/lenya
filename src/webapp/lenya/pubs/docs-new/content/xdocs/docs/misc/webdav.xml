@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>WebDAV Servers</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Apache module</title>
+<p>
+Download the Apache Web Server and WebDAV module source code from the Apache website, e.g. <code>apache_1.3.24.tar.gz</code> and <code>mod_dav-1.0.3-1.3.6.tar.gz</code>.
+Configure and compile mod_dav:
+<source>
+<![CDATA[
+cd /home/michiii/src/mod_dav-1.0.3-1.3.6
+./configure --with-apache=/home/michiii/src/apache_1.3.24
+make
+make install
+cd /home/michiii/src/apache_1.3.24
+find . -name "*dav*" -print
+./configure --prefix=/usr/local/apache --activate-module=src/modules/dav/libdav.a
+(./configure --prefix=/usr/local/apache --enable-module=proxy --activate-module=src/modules/dav/libdav.a)
+make
+make install
+]]>
+</source>
+</p>
+
+<p>
+You need to reconfigure <code>httpd.conf</code>, e.g.:
+<source>
+<![CDATA[
+#
+DAVLockDB /home/michi/build/apache/logs/mod_dav_log
+<Directory "/home/michiii/build/apache/htdocs">
+    DAV On
+]]>
+</source>
+</p>
+
+<p>
+To see the files open "Konqueror" and type <code>webdav://127.0.0.1:8080</code>.
+</p>
+
+<p>
+More info on <code>mod_dav</code> can be found at <link href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</link>.
+</p>
+</section>
+
+<section>
+<title>Tomcat</title>
+<p>
+Point your WebDAV client to <code>http://127.0.0.1:8080/webdav/</code>.
+The webdav context is DAV enabled, but has been set up in read-only mode for safety reasons.
+It can be put in read-write mode by editing the web application descriptor file <code>/webapps/webdav/WEB-INF/web.xml</code>.
+<source>
+<![CDATA[
+<!-- Uncomment this to enable read and write access -->
+<init-param>
+  <param-name>readonly</param-name>
+  <param-value>false</param-value>
+</init-param>
+]]>
+</source>
+</p>
+</section>
+
+<section>
+<title>Apache Jakarta Slide</title>
+<p>
+Point your WebDAV client to <code>http://127.0.0.1:8080/slide/</code>.
+<source>
+<![CDATA[
+...
+]]>
+</source>
+</p>
+</section>
+
+</body>
+</document>
