@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<xmap remove="/sitemap/pipelines" xpath="/sitemap" insert-after="/sitemap/resources">
+<!-- =========================== Pipelines ================================= -->
+
+  <map:pipelines>
+
+    <!-- I18N  -->
+    <map:pipeline>
+      <map:match pattern="i18n-catalogue/**">
+        <map:mount uri-prefix="" src="lenya/i18n.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>  
+        
+      <!-- Lenya GUI screen -->
+      <map:match pattern="lenya-screen.xsl">
+        <map:generate src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
+        <map:transform src="lenya/xslt/util/page2xslt.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+          
+      <map:match type="usecase" pattern="login">
+        
+        <map:match type="step" pattern="showscreen">
+          <map:generate type="serverpages" src="fallback://lenya/content/ac/login.xsp"/>
+          <map:transform src="fallback://lenya/xslt/ac/login.xsl">
+            <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
+          </map:transform>
+          <map:call resource="style-cms-page"/>
+        </map:match>
+        
+        <map:match type="step" pattern="login">
+          <map:act type="authenticator">
+            <map:redirect-to uri="{request:requestURI}" session="true"/>
+          </map:act>
+          <map:redirect-to uri="{request:requestURI}?lenya.usecase=login&amp;lenya.step=showscreen&amp;status=failed" session="true"/>
+        </map:match>
+        
+      </map:match>
+      
+      <map:match type="usecase" pattern="logout">
+        <map:generate type="serverpages" src="fallback://lenya/content/ac/logout.xsp"/>
+        <map:transform src="fallback://lenya/xslt/ac/logout.xsl">
+          <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+          <map:call resource="style-cms-page"/>
+      </map:match>
+      
+
+    <!-- favicon -->
+    <map:match pattern="favicon.ico">
+      <map:read mime-type="image/x-icon" src="lenya/resources/images/lenya.ico"/>
+    </map:match>
+
+    <!-- images -->
+    <map:match pattern="images/*.gif">
+      <map:read mime-type="images/gif" src="resources/images/{1}.gif"/>
+    </map:match>
+
+    <!-- CSS stylesheets -->
+    <map:match pattern="styles/*.css">
+      <map:read mime-type="text/css" src="resources/styles/{1}.css"/>
+    </map:match>
+
+    <!-- JavaScript scripts -->
+    <map:match pattern="scripts/*.js">
+      <map:read mime-type="text/javascript" src="resources/scripts/{1}.js"/>
+    </map:match>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+
+    </map:pipeline>
+
+    <map:pipeline internal-only="true">
+      <map:match pattern="**">
+        <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+
+    </map:pipeline>
+      
+    <map:pipeline>
+      <map:match pattern="**">
+        <map:act type="authorizer">
+          <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        </map:act>
+        <map:redirect-to uri="{request:requestURI}?lenya.usecase=login&amp;lenya.step=showscreen" session="true"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+
+    </map:pipeline>
+
+  </map:pipelines></xmap>

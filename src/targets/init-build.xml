@@ -82,8 +82,17 @@
   <!-- ============================================================ -->
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
-  <target name="prepare-cocoon" depends="init">
-    <echo>INFO: exclude: sitemap.xmap</echo>
+  <target name="build-cocoon" depends="init, build-custom-tasks">
+    <echo>Building Cocoon with our properties</echo>
+    <copy todir="${cocoon.src.dir}" filtering="off">
+      <fileset dir="${src.cocoon.properties.dir}"/>
+    </copy>
+    <ant dir="${cocoon.src.dir}" inheritall="false"/>
+    <xpatch file="${cocoon.webapp.dir}/sitemap.xmap" 
+            includes="src/confpatch/*.xmap"/> 
+  </target>
+
+  <target name="prepare-cocoon" depends="init, build-cocoon">
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/web.xml</echo>
@@ -91,7 +100,10 @@
     <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
-        <exclude name="sitemap.xmap"/>
+        <exclude name="*.xml"/>
+        <exclude name="*.xslt"/>
+        <exclude name="test-suite"/>
+        <exclude name="legal"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
         <exclude name="WEB-INF/logkit.xconf"/>
         <exclude name="WEB-INF/web.xml"/>
@@ -138,6 +150,8 @@
       </xmlcatalog>
       <outputproperty name="indent" value="yes"/>
     </xslt>
+
+    <!-- patch sitemap.xmap -->
 
     <!-- patch lucene -->
     <echo message="INFO: Use our own Lucene"/>

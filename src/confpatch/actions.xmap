@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<xmap xpath="/sitemap/components/actions" unless="/sitemap/components/actions/action[@name = 'authenticator']">
+   <map:action name="authenticator" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthenticatorAction" logger="lenya.sitemap.action.authenticator"/>
+   <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction" logger="lenya.sitemap.action.authorizer"/>
+   <map:action name="default-create" src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction" logger="sitemap.action.default-create">
+     <tree-authoring href="content/authoring/sitetree.xml"/>
+     <docs href="content/authoring"/>
+     <doctypes href="config/doctypes/"/>
+   </map:action>
+   <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
+   <map:action name="language-exists" logger="lenya.sitemap.action.language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
+   <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
+   <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
+     <tree-authoring href="content/authoring/tree.xml"/>
+     <docs href="content/authoring"/>
+     <doctypes href="config/doctypes/"/>
+   </map:action>
+   <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" src="org.apache.cocoon.acting.RequestParameterExistsAction" />
+   <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
+   <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>
+   <map:action name="reserved-checkout-test" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutTestAction" logger="sitemap.action.reserved-checkout-test"/>
+   <map:action name="resource-exists" logger="sitemap.action.resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
+   <map:action name="resource-exists-enhanced" logger="sitemap.action.resource-exists-enhanced" src="org.apache.lenya.cms.cocoon.acting.ResourceExistsAction"/>
+   <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
+   <map:action name="save" logger="sitemap.action.save" src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
+   <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
+   <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction">
+     <resources-root href="resources/images/live"/>
+     <docs-root href="content/authoring"/>
+     <meta-root href="content/authoring/"/>
+      <insert-image-before value="false"/>
+   </map:action>
+   <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
+   <map:action name="validate" logger="sitemap.action.validateAction" src="org.apache.lenya.cms.cocoon.acting.ValidateAction" />
+   <map:action name="workflow" logger="sitemap.action.workflow" src="org.apache.lenya.cms.cocoon.acting.WorkflowInvokerAction"/>
+   <map:action name="session-propagator" logger="sitemap.action.session-propagator" src="org.apache.cocoon.acting.SessionPropagatorAction"/>
+</xmap>
