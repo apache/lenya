@@ -8,6 +8,9 @@
   <xsl:call-template name="page"/>
 </xsl:template>
 
-<xsl:include href="page.xsl"/>
+<!--
+<xsl:include href="page_q42.xsl"/>
+-->
+<xsl:include href="page_wyona.xsl"/>
  
 </xsl:stylesheet>  

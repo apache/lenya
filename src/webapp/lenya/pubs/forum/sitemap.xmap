@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.1 2002/06/03 09:46:44 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.2 2002/06/24 12:46:04 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -48,6 +48,9 @@
     <map:pipeline>
       <map:match pattern="introduction.html">
         <map:read src="resources/publication/html/index.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="customizing.html">
+        <map:read src="resources/publication/html/customizing.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>    
 

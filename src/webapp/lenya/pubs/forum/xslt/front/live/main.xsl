@@ -10,6 +10,9 @@
   <xsl:apply-templates select="front"/>
 </xsl:template>
 
-<xsl:include href="../body.xsl"/>
+<!--
+<xsl:include href="../body_q42.xsl"/>
+-->
+<xsl:include href="../body_wyona.xsl"/>
  
 </xsl:stylesheet>  
