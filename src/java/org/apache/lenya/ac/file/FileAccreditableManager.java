@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileAccreditableManager.java,v 1.4 2004/03/08 16:48:21 gregor Exp $  */
+/* $Id: FileAccreditableManager.java,v 1.5 2004/08/16 15:48:37 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -40,23 +40,22 @@ import org.apache.lenya.ac.impl.AbstractAccreditableManager;
 /**
  * File-based accreditable manager.
  */
-public class FileAccreditableManager
-    extends AbstractAccreditableManager
-    implements Serviceable, Parameterizable {
+public class FileAccreditableManager extends AbstractAccreditableManager implements Serviceable,
+        Parameterizable {
 
     /**
-	 * Creates a new FileAccreditableManager. If you use this constructor, you have to set the
-	 * configuration directory either by calling {@link #setConfigurationDirectory(File)}or by
-	 * calling {@link #configure(Configuration)}.
-	 */
+     * Creates a new FileAccreditableManager. If you use this constructor, you have to set the
+     * configuration directory either by calling {@link #setConfigurationDirectory(File)}or by
+     * calling {@link #parameterize(Parameters)}.
+     */
     public FileAccreditableManager() {
     }
 
     /**
-	 * Creates a new FileAccessController based on a configuration directory.
-	 * 
-	 * @param configurationDirectory The configuration directory.
-	 */
+     * Creates a new FileAccessController based on a configuration directory.
+     * 
+     * @param configurationDirectory The configuration directory.
+     */
     public FileAccreditableManager(File configurationDirectory) {
         assert configurationDirectory != null;
         assert configurationDirectory.exists();
@@ -67,11 +66,11 @@ public class FileAccreditableManager
     private File configurationDirectory;
 
     /**
-	 * Returns the configuration directory.
-	 * 
-	 * @return The configuration directory.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Returns the configuration directory.
+     * 
+     * @return The configuration directory.
+     * @throws AccessControlException when something went wrong.
+     */
     public File getConfigurationDirectory() throws AccessControlException {
 
         if (configurationDirectory == null) {
@@ -86,7 +85,7 @@ public class FileAccreditableManager
             try {
 
                 getLogger().debug(
-                    "Configuration directory Path: [" + configurationDirectoryPath + "]");
+                        "Configuration directory Path: [" + configurationDirectoryPath + "]");
 
                 resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
                 source = resolver.resolveURI(configurationDirectoryPath);
@@ -112,8 +111,8 @@ public class FileAccreditableManager
     protected static final String DIRECTORY = "directory";
 
     /**
-	 * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-	 */
+     * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
+     */
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(DIRECTORY)) {
             configurationDirectoryPath = parameters.getParameter(DIRECTORY);
@@ -124,16 +123,16 @@ public class FileAccreditableManager
     private String configurationDirectoryPath;
 
     /**
-	 * Sets the configuration directory.
-	 * 
-	 * @param file The configuration directory.
-	 * 
-	 * @throws AccessControlException if an error occurs
-	 */
+     * Sets the configuration directory.
+     * 
+     * @param file The configuration directory.
+     * 
+     * @throws AccessControlException if an error occurs
+     */
     public void setConfigurationDirectory(File file) throws AccessControlException {
         if (file == null || !file.isDirectory()) {
-            throw new AccessControlException(
-                "Configuration directory [" + file + "] does not exist!");
+            throw new AccessControlException("Configuration directory [" + file
+                    + "] does not exist!");
         }
         configurationDirectory = file;
     }
@@ -141,49 +140,48 @@ public class FileAccreditableManager
     private ServiceManager manager;
 
     /**
-	 * Set the global component manager.
-	 * 
-	 * @param manager The global component manager
-	 * @exception ComponentException
-	 * @throws ServiceException when something went wrong.
-	 */
+     * Set the global component manager.
+     * 
+     * @param manager The global component manager
+     * @throws ServiceException when something went wrong.
+     */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
 
     /**
-	 * Returns the service manager.
-	 * 
-	 * @return A service manager.
-	 */
+     * Returns the service manager.
+     * 
+     * @return A service manager.
+     */
     protected ServiceManager getManager() {
         return manager;
     }
 
     /**
-	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
-	 */
+     * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
+     */
     protected GroupManager initializeGroupManager() throws AccessControlException {
         return FileGroupManager.instance(getConfigurationDirectory());
     }
 
     /**
-	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
-	 */
+     * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
+     */
     protected IPRangeManager initializeIPRangeManager() throws AccessControlException {
         return FileIPRangeManager.instance(getConfigurationDirectory());
     }
 
     /**
-	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
-	 */
+     * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
+     */
     protected RoleManager initializeRoleManager() throws AccessControlException {
         return FileRoleManager.instance(getConfigurationDirectory());
     }
 
     /**
-	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
-	 */
+     * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
+     */
     protected UserManager initializeUserManager() throws AccessControlException {
         return FileUserManager.instance(getConfigurationDirectory());
     }
