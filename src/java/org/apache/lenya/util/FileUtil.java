@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: FileUtil.java,v 1.17 2004/07/23 12:32:57 roku Exp $  */
-
 package org.apache.lenya.util;
 
 import java.io.File;
@@ -30,16 +28,15 @@ import java.util.StringTokenizer;
 
 import org.apache.log4j.Category;
 
-
 /**
- * DOCUMENT ME!
+ * @version $Id: FileUtil.java,v 1.18 2004/07/30 14:14:00 roku Exp $
  */
-public class FileUtil {
+public final class FileUtil {
     private static Category log = Category.getInstance(FileUtil.class);
-    
+
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
@@ -70,7 +67,8 @@ public class FileUtil {
 
         if (args[0].equals("--concatPath")) {
             // FIXME:
-            File file = org.apache.lenya.util.FileUtil.file("/root/temp/jpf-1.9/java/lenya/x/xps/samples/invoices/invoices",
+            File file = org.apache.lenya.util.FileUtil.file(
+                    "/root/temp/jpf-1.9/java/lenya/x/xps/samples/invoices/invoices",
                     "../addresses/lenya.xml");
             System.out.println(file.getAbsolutePath());
         } else {
@@ -79,15 +77,15 @@ public class FileUtil {
 
     /**
      * Copying a file
-     *
+     * 
      * @param source_name DOCUMENT ME!
      * @param destination_name DOCUMENT ME!
-     *
+     * 
      * @throws FileNotFoundException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
     public static void copy(String source_name, String destination_name)
-        throws FileNotFoundException, IOException {
+            throws FileNotFoundException, IOException {
         InputStream source = new FileInputStream(source_name);
         File destination_file = new File(destination_name);
         File parent = new File(destination_file.getParent());
@@ -105,27 +103,26 @@ public class FileUtil {
             destination.write(bytes_buffer, 0, bytes_read);
         }
     }
-    
+
     /**
      * Copy a single File or a complete Directory including its Contents.
-     *
+     * 
      * @param src the source File.
      * @param dest the destiantion File.
-     *
+     * 
      * @throws FileNotFoundException if the source File does not exists.
      * @throws IOException if an error occures in the io system.
      */
-    public static void copy(File src, File dest)
-        throws FileNotFoundException, IOException {
-        
+    public static void copy(File src, File dest) throws FileNotFoundException, IOException {
+
         if (src.isFile()) {
             copySingleFile(src, dest);
         } else {
             File[] contents = src.listFiles();
-            
-            if(contents == null)
+
+            if (contents == null)
                 return;
-            
+
             dest.mkdirs();
 
             for (int i = 0; i < contents.length; i++) {
@@ -134,31 +131,30 @@ public class FileUtil {
             }
         }
     }
-    
+
     /**
      * Copy a single File.
-     *
+     * 
      * @param src the source File.
      * @param dest the destiantion File.
-     *
+     * 
      * @throws FileNotFoundException if the source File does not exists.
      * @throws IOException if an error occures in the io system.
      */
-    protected static void copySingleFile(File src, File dest)
-        throws FileNotFoundException, IOException {
+    protected static void copySingleFile(File src, File dest) throws FileNotFoundException,
+            IOException {
 
         dest.getParentFile().mkdirs();
-        dest.createNewFile();        
+        dest.createNewFile();
         org.apache.avalon.excalibur.io.FileUtil.copyFile(src, dest);
-    }    
-    
+    }
 
     /**
      * Returns a file by specifying an absolute directory name and a relative file name
-     *
+     * 
      * @param absoluteDir DOCUMENT ME!
      * @param relativeFile DOCUMENT ME!
-     *
+     * 
      * @return DOCUMENT ME!
      */
     public static File file(String absoluteDir, String relativeFile) {
@@ -170,10 +166,10 @@ public class FileUtil {
     /**
      * Returns an absolute file name by specifying an absolute directory name and a relative file
      * name
-     *
+     * 
      * @param absoluteDir DOCUMENT ME!
      * @param relativeFile DOCUMENT ME!
-     *
+     * 
      * @return DOCUMENT ME!
      */
     public static String fileName(String absoluteDir, String relativeFile) {
@@ -210,10 +206,10 @@ public class FileUtil {
     /**
      * Returns an absolute file name by specifying an absolute directory name and a relative file
      * name
-     *
+     * 
      * @param absoluteFile DOCUMENT ME!
      * @param relativeFile DOCUMENT ME!
-     *
+     * 
      * @return DOCUMENT ME!
      */
     public static String concat(String absoluteFile, String relativeFile) {
@@ -224,5 +220,28 @@ public class FileUtil {
         }
 
         return fileName(absoluteFile, relativeFile);
+    }
+
+    /**
+     * Deletes all dirs up to stop dir or if dirs in hirachy are not empty.
+     * 
+     * @param start File to delete the parents of. The File itself is not deleted.
+     * @param stop Stop deleting at this dir. This dir is not deleted.
+     * @throws IllegalArgumentException If stop is not a dir or start is not a descending sibling of
+     *                   stop dir.
+     */
+    public static void deleteParentDirs(File start, File stop) throws IllegalArgumentException {
+        if (!stop.isDirectory())
+            throw new IllegalArgumentException("Start dir '" + start.getAbsolutePath()
+                    + "' is not a directory");
+        if (!start.getAbsolutePath().startsWith(stop.getAbsolutePath()))
+            throw new IllegalArgumentException("Start dir '" + start.getAbsolutePath()
+                    + "' is not a descending sibling of stop directory '" + stop.getAbsolutePath()
+                    + "'.");
+
+        File parent = start.getParentFile();
+
+        while (!parent.equals(stop) && parent.delete())
+            parent = parent.getParentFile();
     }
 }
