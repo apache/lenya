@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<catalogue
+    xml:lang="en"
+>
+  <message key="Submit">Submit</message>
+  <message key="submit">submit</message>
+  
+</catalogue>
