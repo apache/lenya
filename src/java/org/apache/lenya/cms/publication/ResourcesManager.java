@@ -1,5 +1,5 @@
 /*
-$Id: ResourcesManager.java,v 1.1 2003/08/19 12:29:07 egli Exp $
+$Id: ResourcesManager.java,v 1.2 2003/08/19 15:29:11 egli Exp $
 <License>
 
  ============================================================================
@@ -82,6 +82,8 @@ public class ResourcesManager {
             new File(
                 publicationPath,
                 RESOURCES_PREFIX
+                    + File.separator
+                    + document.getArea()
                     + document.getId().replace('/', File.separatorChar));
     }
     
