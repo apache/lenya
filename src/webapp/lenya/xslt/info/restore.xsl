@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: restore.xsl,v 1.2 2003/09/05 14:42:59 andreas Exp $
+ $Id: restore.xsl,v 1.3 2003/09/22 15:32:22 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -12,6 +12,8 @@
    >
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  
+  <xsl:param name="lenya.event"/>
   
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="dest-document-id"><xsl:value-of select="/page/info/dest-document-id"/></xsl:variable>
@@ -49,6 +51,7 @@
           <xsl:attribute name="action"></xsl:attribute>
           <input type="hidden" name="lenya.usecase" value="restore"/>
           <input type="hidden" name="lenya.step" value="restore"/>
+          <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
           <xsl:call-template name="task-parameters">
             <xsl:with-param name="prefix" select="''"/>
