@@ -49,7 +49,7 @@
   <property name="dist.bin.dir" value="${dist.root}/${fullname}"/>
 
   <!-- The javadoc destination directory -->
-  <property name="dist.bin.javadocs" value="${build.webapp}/lenya/pubs/docs/resources/html/javadoc"/>
+  <property name="dist.bin.javadocs" value="${build.webapp}/lenya/pubs/docs-new/resources/html/apidocs"/>
 
   <!-- The filename of the final end-user war package -->
   <property name="dist.bin.warfile" value="${dist.bin.dir}/${ant.project.name}.war"/>
