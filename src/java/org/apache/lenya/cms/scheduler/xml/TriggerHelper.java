@@ -85,11 +85,11 @@ public class TriggerHelper {
                 date, null, 0, 0);
     }
     
-/**
- * @author Michael Wechner
- * Create CronTrigger
- * @param cron_expression Seconds, Minutes, Hours, Day of Month, Months, Day of Week (e.g. 34 * * * * ?)
- */
+    /**
+     * author Michael Wechner
+     * Create CronTrigger
+     * @param cron_expression Seconds, Minutes, Hours, Day of Month, Months, Day of Week (e.g. 34 * * * * ?)
+     */
     public static Trigger createCronTrigger(String jobName, String jobGroup, String cron_expression) {
         try{
           return new CronTrigger(createUniqueTriggerId(), "triggerGroup1", jobName, jobGroup, cron_expression);

@@ -1,15 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <newsletter>
-	<email>
-		<to>unipublic@unizh.ch</to>
-		<cc></cc>
-		<subject>Newsletter 1/2003</subject>
-	</email>
-	<title>Newsletter-Titel</title>
-	<abstract>Das ist ein Beispiel-Newsletter.</abstract>
-<articles>
-  <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
-  <article channel="magazin" section="geist" year="2002" dir="0470"/>
-</articles>
-	<footer>Und das ist die Fusszeile.</footer>
+  <email>
+<!--    <to>ah@wyona.com, felix.maeder@wyona.com</to>-->
+    <to>ah@wyona.com</to>
+    <cc>andreas.hartmann@wyona.org</cc>
+    <subject>Newsletter 1/2003 - sent by Wyona</subject>
+  </email>
+  <title>Newsletter-Titel</title>
+  <abstract>Das ist ein Beispiel-Newsletter.</abstract>
+  <articles>
+    <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
+    <article channel="magazin" section="geist" year="2002" dir="0470"/>
+  </articles>
+  <footer>------------------------------------------------------------<br/>
+unipublic - das Online-Magazin der Universität Zürich<br/>
+http://www.unipublic.unizh.ch<br/>
+unipublic@unicom.unizh.ch<br/>
+<br/>
+Sie erhalten dieses Mail, weil Sie sich in die Mailing-Liste<br/>
+unipublic der Universität Zürich eingetragen haben. Wenn Sie<br/>
+keine weiteren Newsletters erhalten wollen, senden Sie bitte<br/>
+ein Mail an unipublic@unicom.unizh.ch.<br/>
+------------------------------------------------------------</footer>
 </newsletter>

@@ -42,6 +42,11 @@
   
   -->
 
+  <!-- send newsletter -->
+  <task id="send-newsletter" class="">
+    <label>Send Newsletter</label>
+  </task>
+  
   <!-- hello world task -->
     
   <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">

@@ -74,8 +74,8 @@ public class ArticleTask
                 log.info("Article prepared: " + sourceFile);
             }
             catch (Exception e) {
-                log.error("EXCEPTION: Article not prepared: "
-                    + sourceFile + " " + e);
+                log.error("EXCEPTION: Article not prepared ("
+                    + sourceFile + "): ", e);
             }
         }
                 
@@ -117,50 +117,86 @@ public class ArticleTask
         String year=st.nextToken();
         String dir=st.nextToken();
 
-        //headlines in domain 
-        // FIXME    headlinesPath=domainPath+conf.getChild("headlines").getAttribute("href");
-        String headlinesFilename=domainPath+"frontpage/headlines.xml";
-        log.debug("headlines filename "+headlinesFilename);
-        Document doc=new SAXReader().read("file:"+headlinesFilename);
-
-        //insert the article at the top
-        DocumentHelper documentHelper = new DocumentHelper();
-        DOM4JUtil du = new DOM4JUtil();
-
-        Element newArticleE=(Element)doc.selectSingleNode("/Articles/Article[@dir='"+dir+"'][@section='"+section+"']"); 
+        Document headlinesDocument = getDocument(domainPath + "frontpage/headlines.xml");
+        insertElement(headlinesDocument, "/Articles", "Article",
+            channel, section, year, dir, title);
+        writeDocument(domainPath + "frontpage/headlines.xml", headlinesDocument);
         
-        if (newArticleE != null) {
-          log.info("the article  "+dir+" is already on the frontpage");
-          newArticleE.setText(title);
-        } else {
-          newArticleE = documentHelper.createElement("Article");
-          newArticleE.addAttribute("channel", channel);
-          newArticleE.addAttribute("section", section);
-          newArticleE.addAttribute("year", year);
-          newArticleE.addAttribute("dir", dir);
-          newArticleE.setText(title);
-          Element articleE=(Element)doc.selectSingleNode("/Articles/Article[1]"); 
-          du.insertElementBefore(articleE, newArticleE);
-        }
-
+        Document newsletterDocument = getDocument(domainPath + "newsletter/index.xml");
+        insertElement(newsletterDocument, "/newsletter/articles", "article",
+            channel, section, year, dir, title);
+        writeDocument(domainPath + "newsletter/index.xml", newsletterDocument);
+        
+    }
+    
+    void writeDocument(String fileName, Document document) {
         // write the headlines
-        File parent=new File(new File( headlinesFilename).getParent());
+        File parent=new File(new File(fileName).getParent());
         if(!parent.exists()){
-          parent.mkdirs();
-          }
+            parent.mkdirs();
+        }
 
         OutputFormat format = OutputFormat.createPrettyPrint();
         try {
           XMLWriter writer = new XMLWriter(
                              new BufferedOutputStream(
-                             new FileOutputStream(headlinesFilename)), format);
-          writer.write(doc);
+                             new FileOutputStream(fileName)), format);
+          writer.write(document);
           writer.close();
         } catch (Exception e) {
           log.debug(e);
         }                                                                                                                                     
     }                                                                                                                                       
 
+    protected Document getDocument(String filePath) {
+        //headlines in domain 
+        // FIXME    headlinesPath=domainPath+conf.getChild("headlines").getAttribute("href");
+        String filename = filePath;
+        log.debug("filename: " + filename);
+        
+        try {
+            Document document = new SAXReader().read("file:" + filename);
+            return document;
+        }
+        catch(Exception e) {
+            log.error("Can't get document: ", e);
+            return null;
+        }
+    }
+    
+    protected void insertElement(
+            Document document,
+            String parentXPath,
+            String elementName,
+            String channel,
+            String section,
+            String year,
+            String dir,
+            String title) {
+                
+        DocumentHelper documentHelper = new DocumentHelper();
+                
+        Element newArticleElement
+            = (Element) document.selectSingleNode(
+                parentXPath + "/" + elementName + "[@dir='" + dir + "'][@section='" + section + "']"); 
+        
+        if (newArticleElement != null) {
+          log.info("the article  "+dir+" is already on the frontpage");
+          newArticleElement.setText(title);
+        } else {
+          newArticleElement = documentHelper.createElement(elementName);
+          newArticleElement.addAttribute("channel", channel);
+          newArticleElement.addAttribute("section", section);
+          newArticleElement.addAttribute("year", year);
+          newArticleElement.addAttribute("dir", dir);
+          newArticleElement.setText(title);
+          Element articlesElement = (Element) document.selectSingleNode(parentXPath); 
+          List children = articlesElement.elements();
+          children.add(0, newArticleElement);
+        }
+
+    }
+    
     /** set the published date to the article, only one time 
      *  @param filename Filename of the article
      */

@@ -1,0 +1,47 @@
+
+body {
+  margin: 20pt;
+}
+
+h1 {
+  font-family: Verdana, sans-serif;
+  color: Navy;
+}
+
+p {
+  font-family: Verdana, sans-serif;
+  font-size: small;
+}
+
+li {
+  font-family: Verdana, sans-serif;
+  font-size: small;
+}
+
+td {
+  font-family: Verdana, sans-serif;
+  font-size: small;
+}
+
+.menu {
+  font-family: Verdana, sans-serif;
+  color: Navy;
+  font-size: small;
+  padding-left: 8pt;
+  padding-top: 3pt;
+  padding-bottom: 3pt;
+  padding-right: 8pt;
+  background-color: #E0E0E0
+}
+
+.table-head {
+  font-family: Verdana, sans-serif;
+  font-size: small;
+  margin: 5pt;
+  background-color: #E0E0E0;
+  color: Navy;
+}
+
+.table-separator {
+  background-color: #D0D0D0;
+}

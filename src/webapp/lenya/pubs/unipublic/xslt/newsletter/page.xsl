@@ -48,7 +48,7 @@
                    <xsl:apply-templates select="articles" />
                    
                    <code>
-                     <xsl:value-of select="footer" />
+                     <xsl:apply-templates select="footer" />
                    </code>
                 </div>
              </td>
@@ -99,6 +99,10 @@
         <xsl:apply-templates/>
     </td>
   </tr>
+</xsl:template>
+
+<xsl:template match="br">
+  <xsl:copy/>
 </xsl:template>
 
 </xsl:stylesheet>
