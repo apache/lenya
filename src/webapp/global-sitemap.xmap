@@ -742,6 +742,13 @@
         </map:handle-errors>
       </map:pipeline>
       <!-- /Edit XHTML with Midas -->
+      
+      <!-- Scheduler -->
+      <map:pipeline>
+      	<map:match pattern="scheduler/**">
+          <map:mount uri-prefix="scheduler/" src="lenya/scheduler.xmap" check-reload="true" reload-method="synchron"/>
+      	</map:match>
+      </map:pipeline>
 
       <!-- Info usecases -->
       <map:pipeline>
