@@ -1,0 +1,6 @@
+#
+# [Feed-URL],[File-PATH],[Feed-URL],[File-PATH],...
+# NOTE: No whitespace after and before colons!
+#
+#feeds=http://www.oscom.org/planet-oscom/rss.xml,oscom.xml,http://www.cmswatch.com/RSS/cmswatch.xml,cmswatch.xml
+feeds=http://www.cmswatch.com/RSS/cmswatch.xml,cmswatch.xml
