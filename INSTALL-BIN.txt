@@ -4,18 +4,8 @@
    +----------------------+
 
 
-1) Copy the war file into the webapps directory of your servlet container
 
-2) Set your JAVA_HOME environment, e.g.
+1) Start up Lenya by executing lenya.bat on Windows or lenya.sh on Unix.
 
-   [unix] 
-   export JAVA_HOME=/usr/local/j2sdk1.4.2   
 
-3) Copy endorsed libraries
-
-4) Start up your servlet engine, e.g.
-
-   [unix]
-   /usr/local/jakarta-tomcat-4.1.24-LE-jdk14/bin/startup.sh
-
-5) Open http://localhost:8080/lenya/ with your browser
+2) Open http://localhost:8888/ with your browser
