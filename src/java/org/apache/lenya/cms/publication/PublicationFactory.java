@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.18 2003/08/27 16:56:29 egli Exp $
+$Id: PublicationFactory.java,v 1.19 2003/08/31 13:04:03 andreas Exp $
 <License>
 
  ============================================================================
@@ -63,6 +63,8 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 
 import org.apache.lenya.util.ServletHelper;
+import org.apache.log4j.Category;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -73,6 +75,8 @@ import java.util.Map;
  * @author  andreas
  */
 public final class PublicationFactory {
+
+    private static Category log = Category.getInstance(PublicationFactory.class);
 
     /**
      * Create a new <code>PublicationFactory</code>.
@@ -169,19 +173,10 @@ public final class PublicationFactory {
     public static Publication getPublication(Request request, Context context)
         throws PublicationException {
 
-        String contextPath = request.getContextPath();
-
-        if (contextPath == null) {
-            contextPath = "";
-        }
-
-        String webappUri = request.getRequestURI().substring(contextPath.length());
-
-        String publicationId = webappUri.split("/")[1];
-        assert !"".equals(publicationId);
-
+        log.debug("Creating publication from Cocoon object model");
+        String webappUrl = ServletHelper.getWebappURI(request);
         String servletContextPath = context.getRealPath("");
-        return getPublication(publicationId, servletContextPath);
+        return getPublication(webappUrl, new File(servletContextPath));
     }
 
     /**
@@ -193,9 +188,10 @@ public final class PublicationFactory {
      */
     public static Publication getPublication(String webappUrl, File servletContext)
         throws PublicationException {
+        log.debug("Creating publication from webapp URL and servlet context");
 
+        log.debug("    Webapp URL:       [" + webappUrl + "]");
         String publicationId = getPublicationId(webappUrl);
-
         Publication publication = getPublication(publicationId, servletContext.getAbsolutePath());
         return publication;
     }
@@ -217,6 +213,8 @@ public final class PublicationFactory {
         }
 
         String publicationId = url.substring(0, slashIndex);
+        assert !"".equals(publicationId);
+        log.debug("    Publication ID:   [" + publicationId + "]");
         return publicationId;
     }
 
@@ -233,12 +231,17 @@ public final class PublicationFactory {
         }
 
         File publicationDirectory =
-            new File(servletContextPath + File.separator + Publication.PUBLICATION_PREFIX + File.separator + id);
-            
+            new File(
+                servletContextPath
+                    + File.separator
+                    + Publication.PUBLICATION_PREFIX
+                    + File.separator
+                    + id);
+
         boolean exists = true;
         exists = exists && publicationDirectory.isDirectory();
         exists = exists && new File(publicationDirectory, Publication.CONFIGURATION_FILE).exists();
-            
+
         return exists;
     }
 
@@ -251,6 +254,7 @@ public final class PublicationFactory {
      */
     public static Publication getPublication(SourceResolver resolver, Request request)
         throws PublicationException {
+        log.debug("Creating publication from resolver and request");
         Publication publication;
         String webappUri = ServletHelper.getWebappURI(request);
         Source source = null;
