@@ -13,8 +13,8 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:dcterms="http://purl.org/dc/terms/"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  exclude-result-prefixes="xhtml"
-  >
+  exclude-result-prefixes="xhtml dcterms"
+ >
 
   <xsl:param name="creator"/>
   <xsl:param name="title"/>
