@@ -124,7 +124,7 @@ function userChangePassword(checkPassword) {
 			if (cocoon.request.get("submit")) {	    
 			    oldPassword = cocoon.request.get("old-password");
 			    newPassword = cocoon.request.get("new-password");
-                password = new Packages.java.lang.String(newPassword);
+            	var password = new Packages.java.lang.String(newPassword);
 			    confirmPassword = cocoon.request.get("confirm-password");
 			    
 			    if (checkPassword && !user.authenticate(oldPassword)) {
@@ -209,6 +209,7 @@ function userChangeGroups() {
 				user.removeFromAllGroups();
 
 		var testGroups = groupManager.getGroups();
+        var i = 0;
         for (i = 0; i < testGroups.length; i++) {
             if (testGroups[i].contains(user)) throw new Packages.java.lang.Exception(group + ":" + user);
         }
@@ -245,10 +246,10 @@ function userAddUser() {
 
 function validate(userManager, ldap, userId, email, password, confirmPassword, ldapId, configDir) {
     
-	messages = new Packages.java.util.ArrayList();
+	var messages = new Packages.java.util.ArrayList();
 	
-    userid = new Packages.java.lang.String(email);
-    email = new Packages.java.lang.String(email);
+    var userid = new Packages.java.lang.String(email);
+    var email = new Packages.java.lang.String(email);
     
     var existingUser = userManager.getUser(userId);
 			
@@ -272,7 +273,7 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, l
 	}
 	
 	else {
-    	password = new Packages.java.lang.String(password);
+    	var password = new Packages.java.lang.String(password);
 	    confirmPassword = new Packages.java.lang.String(confirmPassword);
     
 		if (!password.equals(confirmPassword)) {
