@@ -101,9 +101,11 @@
 	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights"/></td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
-	    <tr>
-	      <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption"/></td>
-	    </tr>
+            <xsl:if test="$insert = 'true'">
+              <tr>
+                <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption"/></td>
+              </tr>
+            </xsl:if>
 	    <xsl:if test="$insertimage = 'true'">
 	      <tr>
 		<td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/></td>
