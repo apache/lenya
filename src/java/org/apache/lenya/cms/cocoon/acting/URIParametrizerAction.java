@@ -26,8 +26,6 @@ import org.apache.log4j.Category;
 public class URIParametrizerAction extends ConfigurableComposerAction  {
     static Category log = Category.getInstance(URIParametrizerAction.class);
 
-    private Map parameters;
-
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
 
 	boolean inParamElement = false;
@@ -59,29 +57,8 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 	}
     }
 
-    /**
-     * Describe <code>configure</code> method here.
-     *
-     * @param conf a <code>Configuration</code> value
-     *
-     * @exception ConfigurationException if an error occurs
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-	
-	Configuration[] parameterConfigs = null;
-	this.parameters = new HashMap();
-
-	parameterConfigs = conf.getChildren("parameter");
-	for (int i = 0; i < parameterConfigs.length; i++) {
-	    parameters.put(parameterConfigs[i].getAttribute("name"),
-			   parameterConfigs[i].getAttribute("src"));
-	}
-    }
-
-
     public Map act (Redirector redirector, SourceResolver resolver,
-		    Map objectModel, String src, Parameters par) throws Exception {
+		    Map objectModel, String src, Parameters parameters) throws Exception {
 	Source inputSource = null;
 	URIParametrizerConsumer xmlConsumer = new URIParametrizerConsumer();
 
@@ -91,18 +68,18 @@ public class URIParametrizerAction extends ConfigurableComposerAction  {
 	    this.getLogger().debug("processing file " + src);
 	    this.getLogger().debug("file resolved to " + inputSource.getURI());
 	}
-
-	Iterator parameterMappings = this.parameters.keySet().iterator();
-	while (parameterMappings.hasNext()) {
-	    String parameterName = (String)parameterMappings.next();
-	    String parameterSrc = (String)parameters.get(parameterName);
-		
+        
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        
+        String parameterNames[] = parameters.getNames();
+        for (int i = 0; i < parameterNames.length; i++) {
+	    String parameterSrc = parameters.getParameter(parameterNames[i])
+                + request.getRequestURI();
 	    inputSource = resolver.resolveURI(parameterSrc);
-
 	    resolver.toSAX(inputSource, xmlConsumer);
-	
-	    map.put(parameterName, xmlConsumer.getParameter());
-	}
+	    map.put(parameterNames[i], xmlConsumer.getParameter());
+        }
+
 	return map;
     }
 }
