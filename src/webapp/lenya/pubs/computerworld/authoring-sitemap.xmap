@@ -386,7 +386,7 @@
 			</map:match>
 			<!-- Catch-all matcher -->
 			<map:match pattern="news/">
-				<map:redirect-to uri="/wyona-cms/computerworld/index.html" session="true"/>
+				<map:redirect-to uri="/wyona-cms/computerworld/authoring/index.html" session="true"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Samples for resource/document creation -->
@@ -402,7 +402,7 @@
 				<map:generate src="docs/publication/authoring/{1}.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
-						<!-- Fallback matcher (for wraping files) -->
+			<!-- Fallback matcher (for wraping files) -->
 			<map:match pattern="**">
 				<map:aggregate element="wyona" label="gregor">
 					<map:part src="cocoon:/menus/static/{1}"/>
