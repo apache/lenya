@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.1 2003/02/07 15:48:08 ah Exp $
+ * $Id: DocumentHelper.java,v 1.2 2003/02/07 16:38:28 ah Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,6 +45,7 @@ package org.wyona.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 
@@ -126,6 +127,20 @@ public class DocumentHelper {
             throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder builder = createBuilder();
         return builder.parse(file);
+    }
+    
+    /**
+     * Reads a document from a URI.
+     * @return A document.
+     * @param uri The URI to load the document from.
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    public static Document readDocument(URI uri)
+            throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilder builder = createBuilder();
+        return builder.parse(uri.toString());
     }
     
     /** Writes a document to a file. A new file is created if it does not exist.

@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceHelper.java,v 1.1 2003/02/07 15:48:08 ah Exp $
+ * $Id: NamespaceHelper.java,v 1.2 2003/02/07 16:38:28 ah Exp $
  * <License>
  * The Apache Software License
  *
@@ -64,7 +64,8 @@ public class NamespaceHelper {
     private Document document;
 
     /**
-     * Creates a new instance of NamespaceHelper using an existing document.
+     * Creates a new instance of NamespaceHelper using an existing document. The
+     * document is not affected. If you omit the prefix, the default namespace is used.
      *
      * @param document The document.
      * @param namespaceUri The namespace URI.
@@ -77,8 +78,17 @@ public class NamespaceHelper {
     }
 
     /**
+     * <p>
      * Creates a new instance of NamespaceHelper. A new document is created
      * using a document element in the given namespace with the given prefix.
+     * If you omit the prefix, the default namespace is used.
+     * </p>
+     * <p>
+     * NamespaceHelper("http://www.w3.org/2000/svg", "svg", "svg"):<br/>
+     * &lt;?xml version="1.0"&gt;<br/>
+     * &lt;svg:svg xmlns:svg="http://www.w3.org/2000/svg"&gt;<br/>
+     * &lt;/svg:svg&gt;
+     * </p>
      *
      * @param localName The local name of the document element.
      * @param namespaceUri The namespace URI.
@@ -139,23 +149,34 @@ public class NamespaceHelper {
     }
     
     /**
+     * <p>
      * Creates an element within the namespace of this NamespaceHelper object with
-     * a given local name containing a text node.
+     * a given local name containing a text node.<br/>
+     * </p>
+     * <p>
+     * <code>createElement("text")</code>: <code>&lt;prefix:text/&gt;<code>.
+     * </p>
      *
-     * @param localName DOCUMENT ME!
-     * @return DOCUMENT ME!
+     * @param localName The local name of the element.
+     * @return A new element.
      */
     public Element createElement(String localName) {
         return getDocument().createElementNS(getNamespaceURI(), getQualifiedName(localName));
     }
 
     /**
+     * <p>
      * Creates an element within the namespace of this NamespaceHelper object with
      * a given local name containing a text node.
+     * </p>
+     * <p>
+     * <code>createElement("text", "Hello World!")</code>:
+     * <code>&lt;prefix:text&gt;Hello World!&lt;/prefix:text&gt;</code>.
+     * </p>
      *
-     * @param localName DOCUMENT ME!
-     * @param text DOCUMENT ME!
-     * @return DOCUMENT ME!
+     * @param localName The local name of the element.
+     * @param text The text for the text node inside the element.
+     * @return A new element containing a text node.
      */
     protected Element createElement(String localName, String text) {
         Element element = createElement(localName);
