@@ -7,7 +7,7 @@
       <doc type="simple"/>
       <doc type="xhtml"/>
     </children>
-    <creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator">
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>simple.xml</sample-name>
     </creator>
     <tasks>
@@ -20,7 +20,7 @@
       <doc type="simple"/>
       <doc type="xhtml"/>
     </children>
-    <creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator">
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>xhtml.xml</sample-name>
     </creator>
     <tasks>
