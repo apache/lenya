@@ -17,7 +17,7 @@
 In Lenya CMS, a <strong>task</strong> is used to implement a process
 which can be invoked by the user. Tasks are triggered
 from the sitemap using a <link href="taskaction.html"><code>TaskAction</code></link>
-or <link href="scheduling">scheduled </link>using a <code>TaskJob</code>.
+or <link href="scheduling">scheduled</link> using a <code>TaskJob</code>.
 </p>
 <p>
 Typical tasks are
