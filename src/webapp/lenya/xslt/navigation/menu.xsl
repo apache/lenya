@@ -45,14 +45,14 @@
 
 
 <xsl:template name="item">
-  <xsl:choose>
-    <xsl:when test="@current = 'true'">
-      <xsl:call-template name="item-selected"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:call-template name="item-default"/>
-    </xsl:otherwise>
-  </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="@current = 'true'">
+        <xsl:call-template name="item-selected"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="item-default"/>
+      </xsl:otherwise>
+    </xsl:choose>
 </xsl:template>
 
 
@@ -71,14 +71,14 @@
 
 
 <xsl:template match="nav:label">
-   <xsl:choose>
-      <xsl:when test="parent::nav:node/child::nav:label[@xml:lang = $chosenlanguage]">
-      	<xsl:value-of select="self::*[lang($chosenlanguage)]"/>
-      </xsl:when>
-      <xsl:otherwise>
-      	<xsl:value-of select="self::*[lang($defaultlanguage)]"/>
-      </xsl:otherwise>
-   </xsl:choose>	
+  <xsl:choose>
+    <xsl:when test="parent::nav:node/child::nav:label[@xml:lang = $chosenlanguage]">
+      <xsl:value-of select="self::*[lang($chosenlanguage)]"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="self::*[lang($defaultlanguage)]"/>
+    </xsl:otherwise>
+  </xsl:choose>	
 </xsl:template>
     
     
