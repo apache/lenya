@@ -1,5 +1,5 @@
 /*
-$Id: ServletJob.java,v 1.11 2003/07/23 13:21:32 gregor Exp $
+$Id: ServletJob.java,v 1.12 2003/08/18 12:23:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,37 +57,47 @@ package org.apache.lenya.cms.scheduler;
 
 import org.apache.lenya.xml.NamespaceHelper;
 
-import org.quartz.*;
-
+import org.quartz.Job;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.SchedulerException;
 import org.w3c.dom.Element;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
- * DOCUMENT ME!
- *
- * @author ah
+ * Scheduling job that uses an HttpServletRequest to obtain its Job data.
+ * @author Andreas Hartmann
  */
 public abstract class ServletJob implements Job {
+
     /**
      * Creates the job data from an HTTP request.
-     *
-     * @return DOCUMENT ME!
+     * @param servletContextPath The servlet context path.
+     * @param request The request.
+     * @return A job data map.
+     * @throws SchedulerException when something went wrong.
      */
-    public abstract JobDataMap createJobData(String servletContextPath, HttpServletRequest request);
+    public abstract JobDataMap createJobData(String servletContextPath, HttpServletRequest request)
+        throws SchedulerException;
 
     /**
      * Loads the job data from an XML element.
-     *
-     * @return DOCUMENT ME!
+     * @param element An XML element.
+     * @param servletContext The servlet context path.
+     * @return A job detail object.
+     * @throws SchedulerException when something went wrong.
      */
-    public abstract JobDetail load(Element element, String servletContext);
+    public abstract JobDetail load(Element element, String servletContext)
+        throws SchedulerException;
 
     /**
      * Saves the job data to an XML element.
-     *
-     * @return DOCUMENT ME!
+     * @param helper The namespace helper of the document the element shall belong to.
+     * @param jobDetail The job detail to save.
+     * @return An XML element.
+     * @throws SchedulerException when something went wrong.
      */
-    public abstract Element save(NamespaceHelper helper, JobDetail jobDetail);
+    public abstract Element save(NamespaceHelper helper, JobDetail jobDetail)
+        throws SchedulerException;
 }

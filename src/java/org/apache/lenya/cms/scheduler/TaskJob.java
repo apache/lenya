@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.26 2003/07/23 13:21:32 gregor Exp $
+$Id: TaskJob.java,v 1.27 2003/08/18 12:23:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -77,12 +77,12 @@ import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.SchedulerException;
 
 import org.w3c.dom.Element;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 /**
  * A TaskJob is a Job that executes a Task. The task ID is obtained from the <code>task.id</code>
@@ -95,15 +95,17 @@ public class TaskJob extends ServletJob {
     public static final String TASK_PREFIX = "task";
     private static Category log = Category.getInstance(TaskJob.class);
 
-	/**
-	 * Get the parameters.
-	 * 
-	 * @param servletContextPath ther servlet-context
-	 * @param request the request
-	 * 
-	 * @return the parameters
-	 */
-    protected Parameters getParameters(String servletContextPath, HttpServletRequest request) {
+    /**
+     * Get the parameters.
+     * 
+     * @param servletContextPath ther servlet-context
+     * @param request the request
+     * 
+     * @return the parameters
+     * @throws SchedulerException when something went wrong.
+     */
+    protected Parameters getParameters(String servletContextPath, HttpServletRequest request)
+        throws SchedulerException {
         String taskId = request.getParameter(JobDataMapWrapper.getFullName(TASK_PREFIX, TASK_ID));
 
         assert taskId != null;
@@ -114,23 +116,27 @@ public class TaskJob extends ServletJob {
         String contextPath = request.getContextPath();
         log.debug("Context path: " + contextPath);
 
-        // the publicationID is fetched from the session
-        String publicationId = (String) request.getSession().getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
+        String publicationId = request.getParameter(LoadQuartzServlet.PARAMETER_PUBLICATION_ID);
+        log.debug("Publication ID: " + publicationId);
 
-        assert publicationId != null;
-        assert !"".equals(publicationId);
+        if (publicationId == null) {
+            throw new SchedulerException("Publication ID must not be null!");
+        }
 
         Parameters parameters = new Parameters();
 
         parameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT, servletContextPath);
         parameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath() + "/");
-        parameters.setParameter(Task.PARAMETER_SERVER_PORT,
+        parameters.setParameter(
+            Task.PARAMETER_SERVER_PORT,
             Integer.toString(request.getServerPort()));
-        log.debug("\n-----------------------------------------------" +
-            "\n- Server port from request: " + request.getServerPort() +
-            "\n-----------------------------------------------");
+        log.debug("-----------------------------------------------");
+        log.debug("- Server port from request: " + request.getServerPort());
+        log.debug("-----------------------------------------------");
         parameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
         parameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publicationId);
+        
+        log.debug("Request Parameters: ");
 
         // Add Request Parameters
         Parameters requestParameters = new Parameters();
@@ -141,6 +147,7 @@ public class TaskJob extends ServletJob {
             if (name.startsWith(TASK_PREFIX + JobDataMapWrapper.SEPARATOR)) {
                 String shortName = JobDataMapWrapper.getShortName(TASK_PREFIX, name);
                 requestParameters.setParameter(shortName, request.getParameter(name));
+                log.debug(shortName + " = " + request.getParameter(name));
             }
         }
 
@@ -151,14 +158,16 @@ public class TaskJob extends ServletJob {
     }
 
     /**
-     * DOCUMENT ME!
+     * Creates the job data for a job.
      *
-     * @param servletContextPath DOCUMENT ME!
-     * @param request DOCUMENT ME!
+     * @param servletContextPath The servlet context path.
+     * @param request The request.
      *
-     * @return DOCUMENT ME!
+     * @return A job data map.
+     * @throws SchedulerException when something went wrong.
      */
-    public JobDataMap createJobData(String servletContextPath, HttpServletRequest request) {
+    public JobDataMap createJobData(String servletContextPath, HttpServletRequest request)
+        throws SchedulerException {
         Parameters parameters = getParameters(servletContextPath, request);
 
         log.debug("Creating job data map:");
@@ -198,8 +207,12 @@ public class TaskJob extends ServletJob {
         //------------------------------------------------------------
         String taskId = map.get(TASK_ID);
 
-        log.debug("\n-----------------------------------" + "\n Executing task '" + taskId + "'" +
-            "\n-----------------------------------");
+        log.debug(
+            "\n-----------------------------------"
+                + "\n Executing task '"
+                + taskId
+                + "'"
+                + "\n-----------------------------------");
 
         String contextPath = map.get(Task.PARAMETER_SERVLET_CONTEXT);
         String publicationId = map.get(Task.PARAMETER_PUBLICATION_ID);
@@ -207,7 +220,7 @@ public class TaskJob extends ServletJob {
         Publication publication;
         TaskManager manager;
         try {
-        	publication = PublicationFactory.getPublication(publicationId, contextPath);
+            publication = PublicationFactory.getPublication(publicationId, contextPath);
             manager = new TaskManager(publication.getDirectory().getAbsolutePath());
         } catch (Exception e) {
             throw new JobExecutionException(e, false);
@@ -239,8 +252,11 @@ public class TaskJob extends ServletJob {
 
         JobDataMapWrapper taskMap = new JobDataMapWrapper(map, TASK_PREFIX);
 
-        String debugString = "\n----------------------------------" + "\nRestoring tasks:" +
-            "\n----------------------------------" + "\nTask parameters:";
+        String debugString =
+            "\n----------------------------------"
+                + "\nRestoring tasks:"
+                + "\n----------------------------------"
+                + "\nTask parameters:";
 
         Element[] parameterElements = helper.getChildren(taskElement, "parameter");
 
@@ -253,8 +269,12 @@ public class TaskJob extends ServletJob {
 
         // replace servlet-context parameter with actual servlet context
         taskMap.put(AbstractTask.PARAMETER_SERVLET_CONTEXT, servletContext);
-        debugString = debugString + "\nReplacing: " + AbstractTask.PARAMETER_SERVLET_CONTEXT +
-            " = " + servletContext;
+        debugString =
+            debugString
+                + "\nReplacing: "
+                + AbstractTask.PARAMETER_SERVLET_CONTEXT
+                + " = "
+                + servletContext;
 
         debugString = debugString + "\nJob parameters:";
 

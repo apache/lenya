@@ -1,5 +1,5 @@
 /*
-$Id: ServletJobFactory.java,v 1.9 2003/07/23 13:21:33 gregor Exp $
+$Id: ServletJobFactory.java,v 1.10 2003/08/18 12:23:32 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,22 +64,24 @@ import org.apache.log4j.Category;
 
 
 /**
- * DOCUMENT ME!
+ * Factory for building serlvet jobs.
  *
- * @author ah
+ * @author Andreas Hartmann
  */
 public final class ServletJobFactory {
+    
+    /**
+     * Ctor.
+     */
     private ServletJobFactory() {
     }
 
     private static Category log = Category.getInstance(ServletJobFactory.class);
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param jobClassName DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Creates a job.
+     * @param jobClassName The name of the Java class used to instanciate the job object.
+     * @return A servlet job.
      */
     public static ServletJob createJob(String jobClassName) {
         try {
@@ -94,11 +96,11 @@ public final class ServletJobFactory {
     }
 
     /**
-     * DOCUMENT ME!
+     * Creates a job. 
      *
-     * @param cl DOCUMENT ME!
+     * @param cl The Java class used to instanciate the job object.
      *
-     * @return DOCUMENT ME!
+     * @return A servlet job.
      */
     public static ServletJob createJob(Class cl) {
         try {
