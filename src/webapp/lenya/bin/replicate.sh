@@ -193,7 +193,7 @@ if [ -d $REPLICATION_DIR_3 ];then
     fi
     if [ -d $TEMP_DIR ];then
 ##      cp -r $TEMP_DIR/* $RDOCS_3_2/.
-      $SCP -r $TEMP_DIR/* $RU_3_2@$RH_2_2:$RDOCS_3_2/.
+      $SCP -r $TEMP_DIR/* $RU_3_2@$RH_3_2:$RDOCS_3_2/.
     fi
 
 
