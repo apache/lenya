@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseAuthorizer.java,v 1.1 2003/07/17 16:24:20 andreas Exp $
+$Id: UsecaseAuthorizer.java,v 1.2 2003/07/29 14:27:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,9 +56,169 @@ $Id: UsecaseAuthorizer.java,v 1.1 2003/07/17 16:24:20 andreas Exp $
 
 package org.apache.lenya.cms.ac2.usecase;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.environment.Request;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccreditableManager;
+import org.apache.lenya.cms.ac2.Authorizer;
+import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.cms.ac2.PolicyManager;
+import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class UsecaseAuthorizer {
+public class UsecaseAuthorizer
+    extends AbstractLogEnabled
+    implements Authorizer, Configurable, Serviceable {
+        
+    public static final String USECASE_PARAMETER = "lenya.usecase";
+
+    /**
+     * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.AccreditableManager, org.apache.lenya.cms.ac2.PolicyManager, org.apache.lenya.cms.ac2.Identity, org.apache.cocoon.environment.Request)
+     */
+    public boolean authorize(
+        AccreditableManager accreditableManager,
+        PolicyManager policyManager,
+        Identity identity,
+        Request request)
+        throws AccessControlException {
+            
+        String usecase = request.getParameter(USECASE_PARAMETER);
+        boolean authorized = true;
+        
+        if (usecase != null) {
+            
+            getLogger().debug("Authorizing usecase [" + usecase + "]");
+            
+            if (usecaseToRoles.containsKey(usecase)) {
+                
+                getLogger().debug("Roles for usecase found.");
+                
+                Set usecaseRoles = getRoleIDs(usecase);
+                
+                String url = ServletHelper.getWebappURI(request);
+                Role[] roles = policyManager.getPolicy(accreditableManager, url).getRoles(identity);
+                
+                int i = 0;
+                authorized = false;
+                while (!authorized && i < roles.length) {
+                    authorized = usecaseRoles.contains(roles[i].getId());
+                    getLogger().debug("Authorization for role [" + roles[i].getId() + "] is [" + authorized + "]");
+                    i++;
+                }
+            }
+            else {
+                getLogger().debug("No roles for usecase found. Granting access.");
+            }
+        }
+        else {
+            getLogger().debug("No usecase to authorize. Granting access.");
+        }
+        
+        return authorized;
+    }
+
+    private String configurationPath;
+
+    protected static final String FILE_ELEMENT = "config-file";
+    protected static final String SRC_ATTRIBUTE = "src";
+    protected static final String USECASES_ELEMENT = "usecases";
+    protected static final String USECASE_ELEMENT = "usecase";
+    protected static final String ROLE_ELEMENT = "role";
+    protected static final String ID_ATTRIBUTE = "id";
+    
+    // maps usecase IDs to Sets of role IDs
+    private Map usecaseToRoles = new HashMap();
+
+    /**
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration config) throws ConfigurationException {
+        Configuration fileConfig = config.getChild(FILE_ELEMENT, false);
+        
+        if (fileConfig != null) {
+            configurationPath = fileConfig.getAttribute(SRC_ATTRIBUTE);
+        
+            SourceResolver resolver = null;
+
+            try {
+                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+                Source source = resolver.resolveURI(configurationPath);
+
+                Document document =
+                    DocumentHelper.readDocument(source.getInputStream());
+                NamespaceHelper helper =
+                    new NamespaceHelper(
+                        AccessController.NAMESPACE,
+                        AccessController.DEFAULT_PREFIX,
+                        document);
+                assert document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
+                    
+                Element[] usecaseElements = helper.getChildren(document.getDocumentElement(), USECASE_ELEMENT);
+                for (int i = 0; i < usecaseElements.length; i++) {
+                    String usecaseId = usecaseElements[i].getAttribute(ID_ATTRIBUTE);
+                    Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
+                    Set roleIds = new HashSet();
+                    for (int j = 0; j < roleElements.length; j++) {
+                        roleIds.add(roleElements[i].getAttribute(ID_ATTRIBUTE));
+                    }
+                    usecaseToRoles.put(usecaseId, roleIds);
+                }
+
+            } catch (Exception e) {
+                throw new ConfigurationException("Building usecase role configuration failed: ", e);
+            } finally {
+                if (resolver != null) {
+                    manager.release(resolver);
+                }
+            }
+        }
+    }
+
+    private ServiceManager manager;
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
+    
+    /**
+     * Returns the role names that are allowed to execute a certain usecase.
+     * @param usecaseId The usecase ID.
+     * @return A set.
+     */
+    protected Set getRoleIDs(String usecaseId) {
+        Set usecaseRoles;
+        if (usecaseToRoles.containsKey(usecaseId)) {
+            usecaseRoles = (Set) usecaseToRoles.get(usecaseId);
+        }
+        else {
+            usecaseRoles = Collections.EMPTY_SET;
+        }
+        return usecaseRoles;
+    }
 
 }
