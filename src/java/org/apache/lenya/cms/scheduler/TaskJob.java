@@ -23,6 +23,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.wyona.cms.publishing.PublishingEnvironment;
 import org.wyona.cms.scheduler.xml.SchedulerXMLFactory;
+import org.wyona.cms.task.AbstractTask;
 import org.wyona.cms.task.Task;
 import org.wyona.cms.task.TaskManager;
 
@@ -147,7 +148,7 @@ public class TaskJob
         task.execute(contextPath);
     }
     
-    public JobDetail load(Element jobElement) {
+    public JobDetail load(Element jobElement, String servletContext) {
         
         JobDataMap map = new JobDataMap();
         
@@ -170,6 +171,10 @@ public class TaskJob
             debugString = debugString + "\n" + key + " = " + value;
         }
 
+        // replace servlet-context parameter with actual servlet context
+        taskMap.put(AbstractTask.PARAMETER_SERVLET_CONTEXT, servletContext);
+        debugString = debugString + "\nReplacing: " + AbstractTask.PARAMETER_SERVLET_CONTEXT + " = " + servletContext;
+
         debugString = debugString +
             "\nJob parameters:";
         
@@ -183,7 +188,7 @@ public class TaskJob
             jobMap.put(key, value);
             debugString = debugString + "\n" + key + " = " + value;
         }
-
+        
         log.debug(debugString);
         
         Class cl = null;

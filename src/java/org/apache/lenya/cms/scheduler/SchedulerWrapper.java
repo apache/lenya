@@ -436,7 +436,7 @@ public class SchedulerWrapper {
             log.error("Could not restore job: ", e);
         }
         
-        JobDetail jobDetail = job.load(jobElement);
+        JobDetail jobDetail = job.load(jobElement, getServletContextPath());
         
         Element triggerElement = jobElement.element(
             SchedulerXMLFactory.getQName("trigger"));

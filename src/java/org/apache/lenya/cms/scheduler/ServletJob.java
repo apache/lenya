@@ -30,7 +30,7 @@ public abstract class ServletJob
     /**
      * Loads the job data from an XML element.
      */
-    public abstract JobDetail load(Element element);
+    public abstract JobDetail load(Element element, String servletContext);
 
     /**
      * Saves the job data to an XML element.
