@@ -34,7 +34,7 @@
 	
 	<xsl:template match="media" mode="small-preview">
 		<a href="/abo/magazine/index.html">
-			<img border="0" src="/img/{media-reference/@source}" width="42" height="42" alt="{media-reference/@alternate-text}"/>
+			<img border="0" src="/img/{media-reference/@source}" width="42" alt="{media-reference/@alternate-text}"/>
 		</a>
 	</xsl:template>
 </xsl:stylesheet>
