@@ -20,15 +20,12 @@ package org.apache.lenya.lucene;
 import java.io.File;
 
 import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.lenya.xml.DOMUtil;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.XPath;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Category;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
- * @version $Id:$
+ * @version $Id$
  */
 public class IndexConfiguration {
     static Category log = Category.getInstance(IndexConfiguration.class);
@@ -47,8 +44,9 @@ public class IndexConfiguration {
 
         try {
             File configFile = new File(configurationFilePath);
-            Document document = DocumentHelper.readDocument(configFile);
-            configure(document.getDocumentElement());
+            DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+            Configuration config = builder.buildFromFile(configFile);
+            configure(config);
         } catch (Exception e) {
             log.error("Cannot load publishing configuration! ", e);
             System.err.println("Cannot load publishing configuration! ");
@@ -85,16 +83,14 @@ public class IndexConfiguration {
 
     /**
      * Configures this object.
-     * @param root The document element of the configuration XML.
+     * @param config The configuration.
      * @throws Exception if an error occurs.
      */
-    public void configure(Element root) throws Exception {
-        DOMUtil du = new DOMUtil();
-        updateIndexType = du.getAttributeValue(root, new XPath("update-index/@type"));
-        indexDir = du.getAttributeValue(root, new XPath("index-dir/@src"));
-        htdocsDumpDir = du.getAttributeValue(root, new XPath("htdocs-dump-dir/@src"));
-
-        String indexerClassName = du.getAttributeValue(root, new XPath("indexer/@class"));
+    protected void configure(Configuration config) throws Exception {
+        updateIndexType = config.getChild("update-index").getAttribute("type");
+        indexDir = config.getChild("index-dir").getAttribute("src");
+        htdocsDumpDir = config.getChild("htdocs-dump-dir").getAttribute("src");
+        String indexerClassName = config.getChild("indexer").getAttribute("class");
         indexerClass = Class.forName(indexerClassName);
 
         if (log.isDebugEnabled()) {
