@@ -22,7 +22,14 @@
     
     <xsp:logic>
       String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
-      String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
+      
+      String documentId =
+          <input:get-attribute module="page-envelope" as="string" name="context-prefix"/>
+          + "/"
+          + <input:get-attribute module="page-envelope" as="string" name="publication-id"/>
+          + "/authoring"
+          + <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
+          
       String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
     </xsp:logic>
     
