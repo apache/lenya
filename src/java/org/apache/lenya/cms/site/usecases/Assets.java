@@ -117,7 +117,8 @@ public class Assets extends SiteUsecase {
         try {
         	this.resourcesManager.addResource(file, metadata);
         } catch (final Exception e) {
-            addErrorMessage("The resource could not be added.");
+            getLogger().error("The resource could not be added: ", e);
+            addErrorMessage("The resource could not be added (see log files for details).");
         }
     }
 
