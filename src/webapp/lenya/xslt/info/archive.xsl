@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: archive.xsl,v 1.10 2003/09/30 14:24:57 egli Exp $
+ $Id: archive.xsl,v 1.11 2003/10/26 19:15:01 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -49,6 +49,8 @@
           <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
           <input type="hidden" name="properties.firstarea" value="{$area}"/>
           <input type="hidden" name="properties.secarea" value="archive"/>
+
+          <input type="hidden" name="parenturl" value="{parent-url}"/>
           
           <table class="lenya-table-noborder">
             <tr>

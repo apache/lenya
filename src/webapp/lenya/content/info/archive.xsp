@@ -9,6 +9,7 @@
 
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
   </xsp:structure>
   
@@ -19,6 +20,11 @@
       <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
       <task-id>archiveDocument</task-id>
       <xsp:logic>
+        
+        DocumentHelper documentHelper = new DocumentHelper(objectModel);
+        String parentUrl = documentHelper.getCompleteParentUrl();
+        <parent-url><xsp:expr>parentUrl</xsp:expr></parent-url>
+        
 	DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
 	String[] references = helper.getReferences(Publication.LIVE_AREA);
 	if (references.length &gt; 0) {
