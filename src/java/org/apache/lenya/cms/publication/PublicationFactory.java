@@ -36,18 +36,14 @@ public final class PublicationFactory {
         assert objectModel != null;
         
         Request request = ObjectModelHelper.getRequest(objectModel);
-        String uri = request.getRequestURI();
         String contextPath = request.getContextPath();
-        String webappUri = uri.substring(contextPath.length() + 1);
+        if (contextPath == null) {
+            contextPath = "";
+        }
+        String webappUri = request.getRequestURI().substring(contextPath.length());
         
-        String publicationId;
-        int slashIndex = webappUri.indexOf("/");
-        if (slashIndex > -1) {
-            publicationId = webappUri.substring(0, slashIndex);
-        }
-        else {
-            publicationId = webappUri;
-        }
+        String publicationId = webappUri.split("/")[1];
+        assert !"".equals(publicationId);
         
         Context context = ObjectModelHelper.getContext(objectModel);
         String servletContextPath = context.getRealPath("");
