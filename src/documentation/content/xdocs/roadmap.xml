@@ -86,7 +86,7 @@ used for bug fixes, e.g. 1.0.2.
 <ul>
 <li>Release 1.0 Summer 2003</li>
 <li>Release 1.2 Fall 2003</li>
-<li>Release 1.4 Spring 2004</li>
+<li>Release 1.4 Spring 2005</li>
 </ul>
 </section>
 
@@ -96,7 +96,6 @@ used for bug fixes, e.g. 1.0.2.
 </p>
 <ul>
 <li>Improve communication and collaboration with sister Apache projects</li>
-<li>Replace select org.wyona.* classes with Java 1.4 classes</li>
 </ul>
 </section>
 
