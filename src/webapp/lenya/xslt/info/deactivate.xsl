@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: deactivate.xsl,v 1.13 2003/10/14 12:26:13 edith Exp $
+ $Id: deactivate.xsl,v 1.14 2003/10/27 19:21:10 andreas Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -29,7 +29,6 @@
   <xsl:variable name="request-uri">
     <xsl:value-of select="/page/info/request-uri"/>
   </xsl:variable>
-  
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -82,10 +81,19 @@
       <not:notification>
         <not:textarea/>
       </not:notification>
-      
-      <sch:scheduler-form/>
-      
     </form>
+      
+    <sch:scheduler-form>
+      <sch:job tasklabel="Deactivate">
+        <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
+        <input type="hidden" name="properties.node.language" value="{$language}"/>
+        <input type="hidden" name="workflow.event" value="deactivate"/>
+        <input type="hidden" name="wrapper.task-id" value="deactivateDocument"/>
+      </sch:job>
+    </sch:scheduler-form>
+    
+    <a href="{$request-uri}"><input type="button" value="Back to Page"/></a>
+      
   </xsl:template>
   
   
