@@ -1,5 +1,5 @@
 /*
-$Id: AccessControllerResolver.java,v 1.5 2003/08/11 16:03:19 andreas Exp $
+$Id: AccessControllerResolver.java,v 1.6 2003/08/12 15:16:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,7 @@ import org.apache.lenya.cms.ac.AccessControlException;
 public interface AccessControllerResolver extends Component {
     
     String ROLE = AccessControllerResolver.class.getName();
-    String DEFAULT_RESOLVER = "composable";
+    String DEFAULT_RESOLVER = "publication";
 
     /**
      * Resolves an access controller for a certain URL.
