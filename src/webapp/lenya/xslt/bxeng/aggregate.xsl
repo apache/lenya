@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -17,7 +17,7 @@
 </xsl:template>
 
 <xsl:template match="xhtml:head">
-<head>
+<head xmlns="http://www.w3.org/1999/xhtml">
 <xsl:for-each select="/bxeng/namespaces/xmlns">
   <meta name="bxeNS" content="{.}"/>
 </xsl:for-each>
