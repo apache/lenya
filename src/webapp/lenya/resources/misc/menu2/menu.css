@@ -7,9 +7,9 @@ div                     { font-family:Verdana; }
 
 #tabrow td              { padding:4px 4px 0px 6px; }
 .tab, .tabselected      { position:relative; display:inline; padding:0px 3px 2px 3px; cursor:pointer; cursor:hand; border-style:solid; border-width:1px 1px 0px 1px; border-color:#FFFFFF #808080 #FFFFFF #FFFFFF; }
-.tab                    { font-size:90%;  top:0px; height:22px; }
-.tabselected            { font-size:100%; top:1px; height:25px; }
-#authoring              { background-color:lime; color:black; }
+.tab                    { font-size:80%;  top:0px; height:22px; }
+.tabselected            { font-size:90%; top:1px; height:25px; }
+#authoring              { background-color: #4F8DFF; color:black; }
 #admin                  { background-color:blue; color:white; }
 #live                   { background-color:red;  color:white; }
 
@@ -18,6 +18,7 @@ body.authoring #menurow td div,
 body.admin     #menurow td div { display:block; }
 body.live      #menurow td div { display:none; }
 #menubar                       { padding:2px 4px 2px 4px; }
+#lenyamenu {background-image:url(/lenya/lenya/menu2/media/gray-bg.gif);}
 
 #menurow    td,
 #contentrow td          { padding:4px 4px 4px 4px; border-style:solid; border-width:0px 1px 0px 1px; border-color:#FFFFFF #808080 #808080 #FFFFFF; }
@@ -25,7 +26,7 @@ body.live      #menurow td div { display:none; }
 #contentrow td          { border-bottom:solid 1px #808080; height:100%; }
 
 body.authoring #menurow   ,
-body.authoring #contentrow  { background-color:lime; }
+body.authoring #contentrow  { background-color: #4F8DFF; }
 body.admin     #menurow   ,
 body.admin     #contentrow  { background-color:blue; }
 body.live      #menurow   ,

@@ -10,12 +10,11 @@
 
 <xsl:apply-templates select="tabs" /> 
    <xsl:apply-templates select="menus" /> 
- alert("heloo"+tabDef);
 </script>
     <script language="JavaScript" src="/lenya/lenya/menu2/menu.js"></script> 
   </head>
   <body class="authoring">
-    <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%" id="lenyamenu">
       <tbody>
         <tr id="tabrow">
           <td id="tabs" valign="bottom"></td>
