@@ -423,6 +423,7 @@
       <map:match pattern="authoring/matrix/index.html">
         <map:generate src="cocoon:/authoring/overview.xml"/>
         <map:transform src="xslt/overview/authoring/main.xsl"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/authoring/overview.xml"/>
         <map:serialize type="html"/>
       </map:match>
       <!-- /CM/F Overview -->
@@ -438,31 +439,11 @@
       </map:match>
       <!-- Editor Overview -->
 
-      <!-- Board -->
-      <map:match pattern="authoring/board.html">
-        <map:generate src="cocoon:/authoring/board.xml"/>
-        <map:transform src="xslt/Board/authoring/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- News -->
-      <map:match pattern="authoring/news.html">
-        <map:generate src="cocoon:/authoring/news.xml"/>
-        <map:transform src="xslt/News/authoring/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- Weekly Column -->
-      <map:match pattern="authoring/weekly-column.html">
-        <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
-        <map:transform src="xslt/WeeklyColumn/authoring/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
       <!-- Matrix Project -->
       <map:match pattern="authoring/matrix/*.html">
         <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
         <map:transform src="xslt/matrix/authoring/main.xsl"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/authoring/matrix/{1}.xml"/>
         <map:serialize type="html"/>
       </map:match>
 

@@ -2,17 +2,12 @@
 
 <xsp:page 
   language="java" 
+  xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
-    xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-    xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
-    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
 >
-
-<xsp:structure>
-  <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-  <xsp:include>org.apache.lenya.cms.publication.PublicationFactory</xsp:include>
-</xsp:structure>
 
 <menu>
 
@@ -22,22 +17,25 @@
     <context-prefix><xsp-request:get-context-path/></context-prefix>
     <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
-    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/>.html</document-id>
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
-    <servlet-context-path><xsp:expr>((Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>).getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
+<!--
+    <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
     <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
+-->
   </url-info>
 
-  <live_uri>/matrix/index.html</live_uri>
+  <live_uri>/index.html</live_uri>
+
+  <tabs>
+    <tab label="info" show="false"/>
+  </tabs>
 
   <menus>
     <menu name="File" label="File">
       <block>
         <item href="ParentChildScreenNewCMS?parentid=/matrix">New&#160;CMS&#160;Project</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <block>
 <!--
         <item>Edit&#160;with&#160;Xopus2</item>
@@ -45,11 +43,8 @@
 -->
         <item href="../lenya/publishAllCMSProjectsScreen">Publish&#160;all&#160;projects</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/matrix/index.html?lenya.usecase=logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
       </block>
     </menu>
 
@@ -58,17 +53,15 @@
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
       </block>
+      <block>
+        <item href="../../search-live/lucene">Search&#160;with&#160;Lucene</item>
+      </block>
     </menu>
 
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <block>
         <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
       </block>
@@ -76,34 +69,7 @@
 
     <menu name="Debug" label="Debug">
       <block>
-        <item>View&#160;Page&#160;XML</item>
-        <item href="index.xml">View&#160;Body&#160;XML</item>
-      </block>
-<!--
-      <block>
-        <item href="weekly-column-page.xml">View&#160;Page&#160;XML</item>
-        <item href="weekly-column-body.xml">View&#160;Body&#160;XML</item>
-      </block>
--->
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-        <item>View&#160;Xopus&#160;XSLT</item>
-        <item>View&#160;Xopus&#160;XSD</item>
-      </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-<!--
-        <item href="../bitflux/home.xsl">View&#160;Bitflux&#160;XSLT</item>
-        <item href="../bitflux/home.xsd">View&#160;Bitflux&#160;XSD</item>
-        <item href="../bitflux/home.css">View&#160;Bitflux&#160;CSS</item>
--->
-        <item>View&#160;Bitflux&#160;XSLT</item>
-        <item>View&#160;Bitflux&#160;XSD</item>
-        <item>View&#160;Bitflux&#160;CSS</item>
+        <item href="index.xml">XML</item>
       </block>
     </menu>
   </menus>
