@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
 <doctypes>
 	<doc type="Article">
-		<tasks>
-			<task id="publish"/>
-		</tasks>
-	</doc>
-	<doc type="Article">
 		<creator src="ch.computerworld.wyona.cms.ArticleCreator"/>
 		<tasks>
 			<task id="publish-article"/>
@@ -22,4 +17,10 @@
 			<task id="publish"/>
 		</tasks>
 	</doc>
+        <doc type="Small-Preview">
+                <tasks>
+                        <task id="publish"/>
+                </tasks>
+        </doc>
+
 </doctypes>
