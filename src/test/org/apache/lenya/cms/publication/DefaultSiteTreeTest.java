@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultSiteTreeTest.java,v 1.11 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -29,24 +29,24 @@ import junit.framework.TestCase;
 import org.xml.sax.SAXException;
 
 public class DefaultSiteTreeTest extends TestCase {
-	
-	private DefaultSiteTree siteTree = null;
+    
+    private DefaultSiteTree siteTree = null;
 
-	/**
-	 * Constructor.
-	 * @param test The test.
-	 */
-	public DefaultSiteTreeTest(String test) {
+    /**
+     * Constructor.
+     * @param test The test.
+     */
+    public DefaultSiteTreeTest(String test) {
         super(test);
     }
 
-	/**
-	 * The main program.
-	 * The parameters are set from the command line arguments.
-	 *
-	 * @param args The command line arguments.
-	 */
-	public static void main(String[] args) {
+    /**
+     * The main program.
+     * The parameters are set from the command line arguments.
+     *
+     * @param args The command line arguments.
+     */
+    public static void main(String[] args) {
         junit.textui.TestRunner.run(DefaultSiteTreeTest.class);
     }
 
@@ -55,21 +55,21 @@ public class DefaultSiteTreeTest extends TestCase {
      */
     protected void setUp() throws Exception {
         super.setUp();
-		siteTree = new DefaultSiteTree("testTree.xml");
-		Label label = new Label("Foo", "en");
-		Label[] fooLabels = { label };
-		siteTree.addNode("/foo", fooLabels, null, null, false);
-		label = new Label("Home", "en");
-		Label[] homeLabels = { label };
-		siteTree.addNode("/index", homeLabels, null, null, false);
-		label = new Label("Bar", "en");
-		Label label_de = new Label("Stab", "de");
-		Label[] barLabels = { label, label_de };
-		siteTree.addNode("/foo/bar", barLabels, "http://exact.biz", "suffix", true);
-		label = new Label("Lala", "en");
-		Label[] lalaLabels = { label };
-		siteTree.addNode("/foo/lala", lalaLabels, null, null, false);
-	}
+        siteTree = new DefaultSiteTree("testTree.xml");
+        Label label = new Label("Foo", "en");
+        Label[] fooLabels = { label };
+        siteTree.addNode("/foo", fooLabels, true, null, null, false);
+        label = new Label("Home", "en");
+        Label[] homeLabels = { label };
+        siteTree.addNode("/index", homeLabels, true, null, null, false);
+        label = new Label("Bar", "en");
+        Label label_de = new Label("Stab", "de");
+        Label[] barLabels = { label, label_de };
+        siteTree.addNode("/foo/bar", barLabels, true, "http://exact.biz", "suffix", true);
+        label = new Label("Lala", "en");
+        Label[] lalaLabels = { label };
+        siteTree.addNode("/foo/lala", lalaLabels, true, null, null, false);
+    }
 
     /**
      * @see TestCase#tearDown()
@@ -98,13 +98,13 @@ public class DefaultSiteTreeTest extends TestCase {
      * @throws SiteTreeException if an error occurs
      */
     final public void testAddNodeStringStringLabelArray() throws SiteTreeException {
-		Label label = new Label("Tutorial", null);
-		Label[] labels = { label };
+        Label label = new Label("Tutorial", null);
+        Label[] labels = { label };
 
-		siteTree.addNode("/foo", "tutorial", labels);
-		SiteTreeNode node =  siteTree.getNode("/foo/tutorial");
-		assertNotNull(node);
-		assertEquals(node.getId(), "tutorial");
+        siteTree.addNode("/foo", "tutorial", labels);
+        SiteTreeNode node =  siteTree.getNode("/foo/tutorial");
+        assertNotNull(node);
+        assertEquals(node.getId(), "tutorial");
     }
 
     /**
@@ -120,14 +120,14 @@ public class DefaultSiteTreeTest extends TestCase {
      * @throws SiteTreeException if an error occurs
      */
     final public void testAddNodeStringLabelArrayStringStringboolean() throws SiteTreeException {
-		Label label1 = new Label("Doh", "en");
-		Label label2 = new Label("Ding", "en");
-		Label[] labels = { label1, label2};
+        Label label1 = new Label("Doh", "en");
+        Label label2 = new Label("Ding", "en");
+        Label[] labels = { label1, label2};
 
-		siteTree.addNode("/foo/ding", labels, null, null, false);
-		
-		assertNotNull(siteTree.getNode("/foo/ding"));
-		assertEquals(siteTree.getNode("/foo/ding").getId(), "ding");
+        siteTree.addNode("/foo/ding", labels, true, null, null, false);
+        
+        assertNotNull(siteTree.getNode("/foo/ding"));
+        assertEquals(siteTree.getNode("/foo/ding").getId(), "ding");
     }
 
     /**
@@ -136,117 +136,117 @@ public class DefaultSiteTreeTest extends TestCase {
      * @throws SiteTreeException if an error occurs
      */
     final public void testAddNodeStringStringLabelArrayStringStringboolean() throws SiteTreeException {
-		Label label1 = new Label("Doh", "en");
-		Label label2 = new Label("Ding", "en");
-		Label[] labels = { label1, label2};
+        Label label1 = new Label("Doh", "en");
+        Label label2 = new Label("Ding", "en");
+        Label[] labels = { label1, label2};
 
-		siteTree.addNode("/foo", "baz", labels, null, null, false);
-		
-		assertNotNull(siteTree.getNode("/foo/baz"));
-		assertEquals(siteTree.getNode("/foo/baz").getId(), "baz");		
+        siteTree.addNode("/foo", "baz", labels, true, null, null, false);
+        
+        assertNotNull(siteTree.getNode("/foo/baz"));
+        assertEquals(siteTree.getNode("/foo/baz").getId(), "baz");      
     }
 
-	/**
-	 * Test addLabel
-	 * 
-	 * @throws SiteTreeException if an error occurs
-	 */
+    /**
+     * Test addLabel
+     * 
+     * @throws SiteTreeException if an error occurs
+     */
     final public void testAddLabel() throws SiteTreeException {
-		Label label = new Label("Tutorial", null);
-		Label[] labels = null;
+        Label label = new Label("Tutorial", null);
+        Label[] labels = null;
 
-		siteTree.addLabel("/foo/bar", label);
-		labels = siteTree.getNode("/foo/bar").getLabels();
-		assertEquals(labels.length, 3);
-		label = siteTree.getNode("/foo/bar").getLabel("");
-		assertNotNull(label);
-		assertEquals(label.getLabel(), "Tutorial");
+        siteTree.addLabel("/foo/bar", label);
+        labels = siteTree.getNode("/foo/bar").getLabels();
+        assertEquals(labels.length, 3);
+        label = siteTree.getNode("/foo/bar").getLabel("");
+        assertNotNull(label);
+        assertEquals(label.getLabel(), "Tutorial");
     }
 
-	/**
-	 * Test removeLabel
-	 *
-	 */
+    /**
+     * Test removeLabel
+     *
+     */
     final public void testRemoveLabel() {
-		assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 2);
-		
-		Label label = new Label("Stab", "de");
-		siteTree.removeLabel("/foo/bar", label);
-		assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 1);
-		
-		assertEquals(siteTree.getNode("/foo/bar").getLabels()[0], new Label("Bar", "en"));
-		
-		siteTree.addLabel("/foo/bar", label);
-		assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 2);
+        assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 2);
+        
+        Label label = new Label("Stab", "de");
+        siteTree.removeLabel("/foo/bar", label);
+        assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 1);
+        
+        assertEquals(siteTree.getNode("/foo/bar").getLabels()[0], new Label("Bar", "en"));
+        
+        siteTree.addLabel("/foo/bar", label);
+        assertEquals(siteTree.getNode("/foo/bar").getLabels().length, 2);
     }
 
-	/**
-	 * Test removeNode
-	 * 
-	 * @throws SiteTreeException if an error occurs
-	 */
+    /**
+     * Test removeNode
+     * 
+     * @throws SiteTreeException if an error occurs
+     */
     final public void testRemoveNode() throws SiteTreeException {
-    	Label label1 = new Label("Hi", "en");
-    	Label label2 = new Label("Ho", "en");
-    	Label[] labels1 = { label1, label2};
-    	
-    	siteTree.addNode("/hi", labels1, null, null, false);
+        Label label1 = new Label("Hi", "en");
+        Label label2 = new Label("Ho", "en");
+        Label[] labels1 = { label1, label2};
+        
+        siteTree.addNode("/hi", labels1, true, null, null, false);
 
-		Label[] labels2 = { label1, label2};
+        Label[] labels2 = { label1, label2};
 
-		siteTree.addNode("/hi/ho", labels2, null, null, false);
-		
-		assertNotNull(siteTree.getNode("/hi/ho"));
-		
-		siteTree.removeNode("/hi");
-		
-		assertNull(siteTree.getNode("/hi/ho"));
-		assertNull(siteTree.getNode("/hi"));
+        siteTree.addNode("/hi/ho", labels2, true, null, null, false);
+        
+        assertNotNull(siteTree.getNode("/hi/ho"));
+        
+        siteTree.removeNode("/hi");
+        
+        assertNull(siteTree.getNode("/hi/ho"));
+        assertNull(siteTree.getNode("/hi"));
     }
 
-	/**
-	 * Test getNode
-	 *
-	 */
+    /**
+     * Test getNode
+     *
+     */
     final public void testGetNode() {
-		assertNotNull(siteTree.getNode("/foo/bar"));
-		
-		assertNull(siteTree.getNode("/foo/baz"));
+        assertNotNull(siteTree.getNode("/foo/bar"));
+        
+        assertNull(siteTree.getNode("/foo/baz"));
     }
 
-	/**
-	 * Test save
-	 *
-	 */
+    /**
+     * Test save
+     *
+     */
     final public void testSave() {
         //TODO Implement save().
     }
     
-	/**
-	 * Test moving a node up
-	 * 
-	 * @throws SiteTreeException if an error occurs
-	 * @throws IOException if an error occurs
-	 * @throws TransformerException if an error occurs
-	 */
-	final public void testMoveUp() throws SiteTreeException, IOException, TransformerException {
-		siteTree.moveUp("/foo/lala");
-		siteTree.save();
-		assertNotNull(siteTree.getNode("/foo/lala"));
-	}
-	
-	/**
-	 * Test moving a node down
-	 * 
-	 * @throws SiteTreeException if an error occurs
-	 * @throws IOException if an error occurs
-	 * @throws TransformerException if an error occurs
-	 */
-	final public void testMoveDown() throws SiteTreeException, IOException, TransformerException {
-		siteTree.moveDown("/foo");
-		siteTree.save();
-		assertNotNull(siteTree.getNode("/foo"));
-	}
+    /**
+     * Test moving a node up
+     * 
+     * @throws SiteTreeException if an error occurs
+     * @throws IOException if an error occurs
+     * @throws TransformerException if an error occurs
+     */
+    final public void testMoveUp() throws SiteTreeException, IOException, TransformerException {
+        siteTree.moveUp("/foo/lala");
+        siteTree.save();
+        assertNotNull(siteTree.getNode("/foo/lala"));
+    }
+    
+    /**
+     * Test moving a node down
+     * 
+     * @throws SiteTreeException if an error occurs
+     * @throws IOException if an error occurs
+     * @throws TransformerException if an error occurs
+     */
+    final public void testMoveDown() throws SiteTreeException, IOException, TransformerException {
+        siteTree.moveDown("/foo");
+        siteTree.save();
+        assertNotNull(siteTree.getNode("/foo"));
+    }
     
     /**
      * Test the import of a subtree
@@ -257,27 +257,27 @@ public class DefaultSiteTreeTest extends TestCase {
      * @throws IOException if an error occurs.
      * @throws TransformerException if an error occurs.
      */
-	final public void testImportSubtree() throws ParserConfigurationException, SAXException, SiteTreeException, IOException, TransformerException {
-		DefaultSiteTree newSiteTree = new DefaultSiteTree("importedTree.xml");
-		Label label = new Label("root", "en");
-		Label[] rootLabels = { label };
-		newSiteTree.addNode("/root", rootLabels, null, null, false);
-		label = new Label("foo", "en");
-		Label[] fooLabels = { label };
-		newSiteTree.addNode("/root/foo", fooLabels, null, null, false);
-		label = new Label("subtree", "en");
-		Label[] subtreeLabels = { label };
-		newSiteTree.addNode("/root/subtree", subtreeLabels, "http://exact.biz", "suffix", true);
-		label = new Label("child", "en");
-		Label[] childLabels = { label };
-		newSiteTree.addNode("/root/subtree/child", childLabels, null, null, false);
-		SiteTreeNode node=newSiteTree.getNode("/root/subtree");
-		assertNotNull(node);
-		SiteTreeNode parentNode=siteTree.getNode("/foo/lala");
-		assertNotNull(parentNode);
+    final public void testImportSubtree() throws ParserConfigurationException, SAXException, SiteTreeException, IOException, TransformerException {
+        DefaultSiteTree newSiteTree = new DefaultSiteTree("importedTree.xml");
+        Label label = new Label("root", "en");
+        Label[] rootLabels = { label };
+        newSiteTree.addNode("/root", rootLabels, true, null, null, false);
+        label = new Label("foo", "en");
+        Label[] fooLabels = { label };
+        newSiteTree.addNode("/root/foo", fooLabels, true, null, null, false);
+        label = new Label("subtree", "en");
+        Label[] subtreeLabels = { label };
+        newSiteTree.addNode("/root/subtree", subtreeLabels, true, "http://exact.biz", "suffix", true);
+        label = new Label("child", "en");
+        Label[] childLabels = { label };
+        newSiteTree.addNode("/root/subtree/child", childLabels, true, null, null, false);
+        SiteTreeNode node=newSiteTree.getNode("/root/subtree");
+        assertNotNull(node);
+        SiteTreeNode parentNode=siteTree.getNode("/foo/lala");
+        assertNotNull(parentNode);
         siteTree.importSubtree(parentNode,node, "subtree", null);
-		siteTree.save();
-		assertNotNull(siteTree.getNode("/foo/lala/subtree"));
-		assertNotNull(siteTree.getNode("/foo/lala/subtree/child"));
-	}
+        siteTree.save();
+        assertNotNull(siteTree.getNode("/foo/lala/subtree"));
+        assertNotNull(siteTree.getNode("/foo/lala/subtree/child"));
+    }
 }
