@@ -66,13 +66,7 @@ public class WorkflowUsecase extends AbstractUsecase {
         WorkflowFactory factory = WorkflowFactory.newInstance();
         try {
             WorkflowInstance instance = factory.buildInstance(document);
-            Event[] events = instance.getExecutableEvents(getSituation());
-            Event executableEvent = null;
-            for (int i = 0; i < events.length; i++) {
-                if (events[i].getName().equals(event)) {
-                    executableEvent = events[i];
-                }
-            }
+            Event executableEvent = getExecutableEvent(instance, event);
 
             if (executableEvent == null) {
                 throw new RuntimeException("The event [" + event
@@ -82,6 +76,24 @@ public class WorkflowUsecase extends AbstractUsecase {
         } catch (WorkflowException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Returns the event object if an event is exectuable.
+     * @param instance The workflow instance.
+     * @param event The name of the event.
+     * @return An event or <code>null</code> if the event is not executable.
+     * @throws WorkflowException if an error occurs.
+     */
+    protected Event getExecutableEvent(WorkflowInstance instance, String event) throws WorkflowException {
+        Event[] events = instance.getExecutableEvents(getSituation());
+        Event executableEvent = null;
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].getName().equals(event)) {
+                executableEvent = events[i];
+            }
+        }
+        return executableEvent;
     }
 
 }
