@@ -498,7 +498,6 @@
             <map:act type="session-propagator">
               <map:parameter name="org.apache.lenya.cms.info.firstdocid" value="{request-param:documentid}"/>
               <map:parameter name="org.apache.lenya.cms.info.action" value="{request-param:action}"/>
-              <map:parameter name="org.apache.lenya.cms.info.documentType" value="{doctype}"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>
