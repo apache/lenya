@@ -1,165 +1,171 @@
 /*
- * $Id: FileGroup.java,v 1.6 2003/06/25 14:38:29 andreas Exp $
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2003 Wyona. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment: "This product
- *    includes software developed by Wyona (http://www.wyona.com)"
- *
- * 4. The name "Lenya" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact contact@wyona.com
- *
- * 5. Products derived from this software may not be called "Lenya" nor
- *    may "Lenya" appear in their names without prior written permission
- *    of Wyona.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment: "This product includes software developed by Wyona
- *    (http://www.wyona.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY Wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS
- * OR IMPLIED, INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- * Wyona WILL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY YOU AS A RESULT
- * OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE FOR ANY SPECIAL,
- * INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF Wyona HAS BEEN
- * ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. Wyona WILL NOT BE LIABLE
- * FOR ANY THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
- 
-package org.apache.lenya.cms.ac;
+$Id
+<License>
 
-import java.io.File;
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
+package org.apache.lenya.cms.ac;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+
 import org.apache.log4j.Category;
+
+import java.io.File;
+
 
 /**
  * @author egli
- * 
- * 
+ *
+ *
  */
 public class FileGroup extends Group implements Item {
-	private static Category log = Category.getInstance(FileGroup.class);
-	
-	public static final String GROUP = "group";
-	public static final String ROLES = "roles";
-	public static final String ROLE = "role";
-	public static final String NAME_ATTRIBUTE = "name";
-	public static final String CLASS_ATTRIBUTE = "class";
-    
+    private static Category log = Category.getInstance(FileGroup.class);
+
+    public static final String GROUP = "group";
+    public static final String ROLES = "roles";
+    public static final String ROLE = "role";
+    public static final String NAME_ATTRIBUTE = "name";
+    public static final String CLASS_ATTRIBUTE = "class";
+
     /**
      * Creates a new FileGroup object.
      */
     public FileGroup() {
     }
 
-    /**	
+    /**
      * Create a new instance of <code>FileGroup</code>
      * @param configurationDirectory to which the group will be attached to
      * @param name the name of the group
-	 */
-	public FileGroup(File configurationDirectory, String name) {
-		super(name);
+         */
+    public FileGroup(File configurationDirectory, String name) {
+        super(name);
         setConfigurationDirectory(configurationDirectory);
-	}
+    }
 
     /**
      * Configures this file group.
      * @param config The configuration.
      * @throws ConfigurationException when something went wrong.
      */
-	public void configure(Configuration config)
-		throws ConfigurationException {
-            
-		setName(config.getAttribute(NAME_ATTRIBUTE));
+    public void configure(Configuration config) throws ConfigurationException {
+        setName(config.getAttribute(NAME_ATTRIBUTE));
 
-		Configuration[] rolesConfig = config.getChildren(ROLES);
-		if (rolesConfig.length == 1) {
-			Configuration[] roles = rolesConfig[0].getChildren(ROLE);
-			for (int i = 0; i < roles.length; i++) {
-				String roleName = roles[i].getValue();
-				RoleManager manager = null;
-				try {
-					manager = RoleManager.instance(getConfigurationDirectory());
-				} catch (AccessControlException e) {
-					throw new ConfigurationException(
-						"Exception when trying to fetch RoleManager for publication: "
-							+ getConfigurationDirectory(),
-						e);
-				}
-			}
+        Configuration[] rolesConfig = config.getChildren(ROLES);
 
-		} else {
-			// the Group should have a Roles node
-			log.error(
-				"The groups "
-					+ config.getAttribute(NAME_ATTRIBUTE)
-					+ "doesn't appear to have the mandatory roles node");
-		}
-	}
-	
-	/**
-	 * Save this group
-	 * 
-	 * @throws AccessControlException if the save failed
-	 */
-	public void save() throws AccessControlException {
-		DefaultConfigurationSerializer serializer =
-			new DefaultConfigurationSerializer();
-		Configuration config = createConfiguration();
-		File xmlPath = getConfigurationDirectory();
-		File xmlfile = new File(xmlPath, getName() + GroupManager.SUFFIX);
-		try {
-			serializer.serializeToFile(xmlfile, config);
-		} catch (Exception e) {
-			throw new AccessControlException(e);
-		}
-	}
+        if (rolesConfig.length == 1) {
+            Configuration[] roles = rolesConfig[0].getChildren(ROLE);
 
-	/**
-	 * Create a configuration containing the group details
-	 * 
-	 * @return a <code>Configuration</code>
-	 */
-	private Configuration createConfiguration() {
-		
-		DefaultConfiguration config = new DefaultConfiguration(GROUP);
-		config.setAttribute(NAME_ATTRIBUTE, getName());
-		config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
-		DefaultConfiguration child = null;
-		// add roles node
-		child = new DefaultConfiguration(ROLES);
-		config.addChild(child);		
+            for (int i = 0; i < roles.length; i++) {
+                String roleName = roles[i].getValue();
+                RoleManager manager = null;
 
-		return config;
-	}
-    
+                try {
+                    manager = RoleManager.instance(getConfigurationDirectory());
+                } catch (AccessControlException e) {
+                    throw new ConfigurationException(
+                        "Exception when trying to fetch RoleManager for publication: " +
+                        getConfigurationDirectory(), e);
+                }
+            }
+        } else {
+            // the Group should have a Roles node
+            log.error("The groups " + config.getAttribute(NAME_ATTRIBUTE) +
+                "doesn't appear to have the mandatory roles node");
+        }
+    }
+
+    /**
+     * Save this group
+     *
+     * @throws AccessControlException if the save failed
+     */
+    public void save() throws AccessControlException {
+        DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
+        Configuration config = createConfiguration();
+        File xmlPath = getConfigurationDirectory();
+        File xmlfile = new File(xmlPath, getName() + GroupManager.SUFFIX);
+
+        try {
+            serializer.serializeToFile(xmlfile, config);
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        }
+    }
+
+    /**
+     * Create a configuration containing the group details
+     *
+     * @return a <code>Configuration</code>
+     */
+    private Configuration createConfiguration() {
+        DefaultConfiguration config = new DefaultConfiguration(GROUP);
+        config.setAttribute(NAME_ATTRIBUTE, getName());
+        config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
+
+        DefaultConfiguration child = null;
+
+        // add roles node
+        child = new DefaultConfiguration(ROLES);
+        config.addChild(child);
+
+        return config;
+    }
+
     private File configurationDirectory;
-    
+
     /**
      * Returns the configuration directory.
      * @return A file object.
@@ -172,9 +178,7 @@ public class FileGroup extends Group implements Item {
      * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
      */
     public void setConfigurationDirectory(File configurationDirectory) {
-        assert configurationDirectory != null
-            && configurationDirectory.isDirectory();
+        assert (configurationDirectory != null) && configurationDirectory.isDirectory();
         this.configurationDirectory = configurationDirectory;
     }
-
 }
