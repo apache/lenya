@@ -453,7 +453,7 @@
       <!-- Editor Matrix Project -->
       <map:match pattern="authoring/editor-matrix/*.html">
         <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
-        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_editor.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
