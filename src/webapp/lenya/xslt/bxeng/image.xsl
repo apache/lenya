@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: image.xsl,v 1.9 2004/05/23 19:10:16 roku Exp $ -->
+<!-- $Id: image.xsl,v 1.10 2004/05/23 20:34:29 roku Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
@@ -94,11 +94,8 @@
                                 <tr>
                                     <td colspan="2" class="lenya-form-caption">
                                         <span class="lenya-form-message-error">
-                                            The file name of the file you are 
-                                            trying to upload either has no 
-                                            extension, or contains characters 
-                                            which are not allowed, such as 
-                                            spaces or umlauts. </span>
+                                          <i18n:text key="filename-format-exception"/>
+                                        </span>
                                     </td>
                                 </tr>
                             </xsl:if>
@@ -129,9 +126,10 @@
                                 <td class="lenya-form-caption"><i18n:text>Rights</i18n:text>:</td>
                                 <td>
                                     <input class="lenya-form-element" 
+                                        i18n:attr="value"
                                         type="text" 
                                         name="properties.asset.rights"
-                                        value="All rights reserved."/>
+                                        value="All rights reserved"/>
                                 </td>
                             </tr>
                             <tr>
@@ -158,8 +156,7 @@
                                     <tr>
                                         <td colspan="5" 
                                             class="lenya-form-caption">
-                                            <xsl:value-of select="dc:title"/>No 
-                                            Images available</td>
+                                            <xsl:value-of select="dc:title"/><i18n:text key="lenya.imageupload.info.noimages"/></td>
                                     </tr>
                                 </xsl:when>
                                 <xsl:otherwise>
@@ -184,7 +181,7 @@
                                                     <td>
                                                         <a 
                                                             href="javascript:insertImage('{dc:title}');">
-                                                             Insert</a>
+                                                             <i18n:text>Insert</i18n:text></a>
                                                     </td>
                                                 </tr>
                                                 <xsl:variable name="noimages">
@@ -202,8 +199,7 @@
                                                 <td colspan="5" 
                                                     class="lenya-form-caption"> 
                                                     <xsl:value-of 
-                                                    select="dc:title"/>No 
-                                                    Images available</td>
+                                                    select="dc:title"/><i18n:text key="lenya.imageupload.info.noimages"/></td>
                                             </tr>
                                         </xsl:when>
                                         <xsl:otherwise>
@@ -242,10 +238,7 @@
                                                     <input 
                                                     class="lenya-form-element" 
                                                     type="text" 
-                                                    name="link"/><br/>External 
-                                                    links have to start with 
-                                                    'http://', internal links 
-                                                    have to start with '/'</td>
+                                                    name="link"/><br/><i18n:text key="lenya.imageupload.links.hint"/></td>
                                             </tr>
                                         </xsl:otherwise>
                                     </xsl:choose>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.64 2004/05/23 19:10:16 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.65 2004/05/23 20:34:29 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -80,7 +80,10 @@
   <message key="Creation Date">Erstelldatum</message>
   <message key="File Size">Dateigrösse</message>
   <message key="Image">Bild</message>
-  
+  <message key="Link">Verweis</message>
+  <message key="Caption">Überschrift</message>
+  <message key="All rights reserved">Alle Rechte vorbehalten.</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} einreichen</message>
   <message key="submit-for-approval?">Möchten Sie {0} zur Durchsicht einreichen?</message>  
@@ -304,6 +307,8 @@
   <!-- Image Upload/Insert Dialog -->
   <message key="lenya.imageupload.title">Bild einfügen</message>
   <message key="lenya.imageupload.selectimage.label">Bild auswählen</message>
+  <message key="lenya.imageupload.info.noimages">Keine Bilder verfügbar.</message>
+  <message key="lenya.imageupload.links.hint">Externe Verweise müssen mit 'http://' und interne Verweise mit '/' beginnen.</message>  
 
 </catalogue>
 
