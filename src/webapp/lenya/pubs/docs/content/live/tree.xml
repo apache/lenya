@@ -218,6 +218,7 @@
       <leaf URL="http://xml.apache.org/cocoon/apidocs/index.html" doctype="HTML" menuName="Cocoon Overview"/>
       <leaf URL="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/http/package-summary.html" doctype="HTML" menuName="Servlet API"/>
       <leaf URL="http://www.dom4j.org/javadoc/index.html" doctype="HTML" menuName="dom4j"/>
+      <leaf URL="http://xml.apache.org/xalan-j/apidocs/org/w3c/dom/package-summary.html" doctype="HTML" menuName="org.w3c.dom"/>
       <leaf URL="http://quartz.sourceforge.net/javadoc/index.html" doctype="HTML" menuName="Quartz Scheduler"/>
       <leaf URL="http://java.sun.com/j2se/javadoc/index.html" doctype="HTML" menuName="Javadoc Tool Home Page"/>
     </branch>
