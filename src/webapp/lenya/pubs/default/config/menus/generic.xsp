@@ -81,8 +81,8 @@
           <item><i18n:text>Links Document</i18n:text></item>
         }
         else {
-          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
-          <item uc:usecase="create" uc:step="showscreen" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
+          <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
+          <item uc:usecase="site.create" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
         }
 	    }
 	  </xsp:logic>
@@ -92,20 +92,27 @@
 	<block>
 	  <xsp:logic>
 	    {
+
+ 	      String[] availableLanguages = (String[]) <input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
 	      if (isDocument
             &amp;&amp; Publication.AUTHORING_AREA.equals(area)
 	          ) {
-          <xsp:content>
-            <item uc:usecase="create-language" uc:step="showscreen" href="?"><i18n:text>New Language Version</i18n:text></item>
-          </xsp:content>
-	      }
-	      else {
-          <xsp:content>
-            <item><i18n:text>New Language Version</i18n:text></item>
-          </xsp:content>
-	      }
+	          
+            Document document = (Document) <input:get-attribute as="object" module="page-envelope" name="document"/>;
+    	      String[] allLanguages = document.getPublication().getLanguages();
+    	      
+	          if (availableLanguages.length &lt; allLanguages.length) {
+              <xsp:content>
+                <item uc:usecase="site.createLanguage" href="?"><i18n:text>New Language Version</i18n:text></item>
+              </xsp:content>
+    	      }
+    	      else {
+              <xsp:content>
+                <item><i18n:text>New Language Version</i18n:text></item>
+              </xsp:content>
+    	      }
+    	  }
 	    
-	      String[] availableLanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
 	      if (isDocument
             &amp;&amp; Publication.AUTHORING_AREA.equals(area)
 	          &amp;&amp; availableLanguages.length &gt; 1
