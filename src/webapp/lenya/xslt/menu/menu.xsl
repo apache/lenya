@@ -5,6 +5,8 @@
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
   >
   
+<xsl:param name="infoarea" select="''"/>
+  
   <xsl:template match="menu">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="menu">
       <tr>
@@ -41,14 +43,14 @@
           </xsl:variable>
           
           <a id="info-tab" href="{url-info/context-prefix}/{url-info/publication-id}/{url-info/area}{$document-url}?lenya.usecase=info-overview&amp;lenya.step=showscreen">
-            <xsl:choose><xsl:when test="url-info/area = 'info'">
+            <xsl:choose><xsl:when test="$infoarea = 'true'">
                 <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
               </xsl:when><xsl:otherwise>
                 <img border="0" src="/lenya/lenya/menu/images/info_inactive.gif" />
               </xsl:otherwise></xsl:choose>
           </a>
           <a id="authoring-tab" href="{url-info/context-prefix}/{url-info/publication-id}/authoring{$document-url}">
-            <xsl:choose><xsl:when test="url-info/area = 'authoring'">
+            <xsl:choose><xsl:when test="url-info/area = 'authoring' and not($infoarea = 'true')">
                 <img border="0" src="/lenya/lenya/menu/images/authoring_active.gif" />
               </xsl:when><xsl:otherwise>
                 <img border="0" src="/lenya/lenya/menu/images/authoring_inactive.gif" />

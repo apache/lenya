@@ -95,6 +95,7 @@
 							<map:part element="cmsbody" type="serverpages" src="cocoon:/tabs/{../1}"/>
 						</map:aggregate>
 						<map:transform src="xslt/info/root.xsl" label="content">
+							<map:parameter name="infoarea" value="true"/>
 							<map:parameter name="contextprefix" value="{request:contextPath}"/>
 							<map:parameter name="publicationid" value="{../../1}"/>
 							<map:parameter name="area" value="{../../2}"/>
