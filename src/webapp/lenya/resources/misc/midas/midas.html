@@ -9,6 +9,12 @@
 
 <body onload="Start()">
 
+<h2>Editing with Midas</h2>
+
+<p>
+<a href="http://mozilla.org/editor/midasdemo/index.html">Midas Demo</a>
+</p>
+
 <p>
 <b>Note:</b> The changing of text format (Heading, Paragraph, etc.) will only function
 properly on a 1.3b build dated after January 26, 2003. Thanks.
@@ -148,7 +154,7 @@ them for purposes of this demo, you need to
 <br>
 
 
-<iframe id="edit" width="100%" height="500" src="midas_files/content.html"></iframe>
+<iframe id="edit" width="640" height="200" src="midas_files/content.html"></iframe>
 
 
 <iframe width="250" height="170" id="colorpalette" src="midas_files/colors.html" style="visibility: hidden; position: absolute;"></iframe>
@@ -190,14 +196,14 @@ function readonly(source)
 </script>
 
 
+<br>
 
 
-<input type="checkbox" onclick="viewsource(this.checked)">
-View HTML Source
-<input checked="checked" type="checkbox" onclick="usecss(this.checked)">
-Use CSS
-<input type="checkbox" onclick="readonly(this.checked)">
-Read only
+<input type="checkbox" onclick="viewsource(this.checked)">View HTML Source
+
+<input checked="checked" type="checkbox" onclick="usecss(this.checked)">Use CSS
+
+<input type="checkbox" onclick="readonly(this.checked)">Read only
 
 
 
