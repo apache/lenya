@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: generic.xsp,v 1.71 2004/03/25 11:39:43 roku Exp $ -->
+<!-- $Id: generic.xsp,v 1.72 2004/04/29 14:34:25 gregor Exp $ -->
 
 <xsp:page 
     language="java" 
@@ -239,26 +239,30 @@
       </menu>
       
       <menu i18n:attr="name" name="Workflow" label="Help">
-	<block>
 	  <xsp:logic>
       {
         if (isDocument &amp;&amp; Publication.AUTHORING_AREA.equals(area)) {
+	<block>
           <item uc:usecase="submit" uc:step="showscreen" wf:event="submit" href="?"><i18n:text>Submit</i18n:text></item>
           <item uc:usecase="reject" uc:step="showscreen" wf:event="reject" href="?"><i18n:text>Reject</i18n:text></item>
           <item uc:usecase="publish" uc:step="showscreen" wf:event="publish"><xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;sources=<xsp:expr>xmlSource</xsp:expr>&amp;task-id=publish</xsp:attribute><i18n:text>Publish</i18n:text></item>
           <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument"><i18n:text>Deactivate</i18n:text></item>
+       </block><block>
           <item uc:usecase="schedule" uc:step="showscreen" href="?"><i18n:text>Schedule</i18n:text></item>
+	</block>
         }
         else {
+	<block>
           <item><i18n:text>Submit</i18n:text></item>
           <item><i18n:text>Reject</i18n:text></item>
           <item><i18n:text>Publish</i18n:text></item>
           <item><i18n:text>Deactivate</i18n:text></item>
+       </block><block>
           <item><i18n:text>Schedule</i18n:text></item>
+	</block>
         }
       }
 	  </xsp:logic>
-	</block>
       </menu>
 
       <menu i18n:attr="name" name="Help" label="Debug">
