@@ -18,8 +18,6 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.io.File;
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +34,8 @@ import org.apache.lenya.xml.DocumentHelper;
  * @version $Id: Assets.java 123984 2005-01-03 15:02:18Z andreas $
  */
 public class Assets extends SiteUsecase {
-	
-	private ResourcesManager resourcesManager = null;
+
+    private ResourcesManager resourcesManager = null;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
@@ -46,8 +44,8 @@ public class Assets extends SiteUsecase {
         super.doInitialize();
         this.resourcesManager = getSourceDocument().getResourcesManager();
     }
-            
-     /**
+
+    /**
      * Validates the request parameters.
      * @throws UsecaseException if an error occurs.
      */
@@ -58,7 +56,7 @@ public class Assets extends SiteUsecase {
             addErrorMessage("Please enter a title.");
         }
 
-   }
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
@@ -73,29 +71,33 @@ public class Assets extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
         File[] resources = this.resourcesManager.getResources();
-        
+
         if (resources != null) {
             Map[] assets = new Map[resources.length];
 
-            for(int i = 0; i < resources.length; i++) {    
+            for (int i = 0; i < resources.length; i++) {
                 Map asset = new HashMap();
                 String title = "";
                 String format = "";
                 org.w3c.dom.Document metaDoc;
                 try {
-                    metaDoc = DocumentHelper.readDocument(this.resourcesManager.getMetaFile(resources[i]));
-                    title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
-                    format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format").item(0).getChildNodes().item(0).getNodeValue();
-                } catch(final Exception e) { 
+                    metaDoc = DocumentHelper.readDocument(this.resourcesManager
+                            .getMetaFile(resources[i]));
+                    title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
+                            "title").item(0).getChildNodes().item(0).getNodeValue();
+                    format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
+                            "format").item(0).getChildNodes().item(0).getNodeValue();
+                } catch (final Exception e) {
                     throw new RuntimeException(e);
                 }
                 asset.put("source", resources[i].getName());
                 asset.put("title", title);
-                asset.put("date", DateFormat.getDateInstance().format(new Date(resources[i].lastModified())));
+                asset.put("date", DateFormat.getDateInstance().format(new Date(resources[i]
+                        .lastModified())));
                 asset.put("format", format);
-                asset.put("extent", new Long(resources[i].length()/1024));
+                asset.put("extent", new Long(resources[i].length() / 1024));
                 assets[i] = asset;
-            } 
+            }
             setParameter("assets", assets);
         }
     }
@@ -108,14 +110,14 @@ public class Assets extends SiteUsecase {
         String title = getParameterAsString("title");
         String creator = getParameterAsString("creator");
         String rights = getParameterAsString("rights");
-        Part file = (Part)getParameter("file");
+        Part file = getPart("file");
 
-        Map metadata = null;
-        metadata.put("title",title);
-        metadata.put("creator",creator);
-        metadata.put("rights",rights);
+        Map metadata = new HashMap();
+        metadata.put("title", title);
+        metadata.put("creator", creator);
+        metadata.put("rights", rights);
         try {
-        	this.resourcesManager.addResource(file, metadata);
+            this.resourcesManager.addResource(file, metadata);
         } catch (final Exception e) {
             getLogger().error("The resource could not be added: ", e);
             addErrorMessage("The resource could not be added (see log files for details).");
