@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.6 2003/08/13 00:51:31 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.7 2003/08/13 09:46:53 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -129,7 +129,12 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         } else if (name.equals("insert")) { // Insert Element
                             getLogger().error(".act(): Insert Element: " + request.getParameter("insert"));
                         } else if (name.equals("delete")) { // Delete Element
-                            getLogger().error(".act(): Delete Element: " + request.getParameter("delete"));
+                            String value = request.getParameter("delete");
+                            String xpath = value.substring(8, value.indexOf("["));
+                            String tagID = value.substring(value.indexOf("[") + 1, value.indexOf("]"));
+                            xpath = xpath + "[@tagID=\"" + tagID + "\"]";
+                            getLogger().error(".act() Delete Element: XPath: " + xpath);
+                            //DOMUtil.deleteElement(document, xpath);
                         }
                     }
 
