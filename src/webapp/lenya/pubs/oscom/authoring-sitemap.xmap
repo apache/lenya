@@ -65,13 +65,19 @@
         <map:serialize type="xml"/>
       </map:match>
 
+      <!-- XML Navigation -->
+      <map:match pattern="authoring/navigation.xml">
+        <map:generate src="docs/publication/authoring/navigation.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
       <!-- XML -->
       <map:match pattern="authoring/**.xml">
         <map:aggregate element="wyona">
           <map:part src="cocoon:/authoring/menus/{1}.xml"/>
           <map:part src="docs/publication/authoring/{1}.xml" element="cmsbody"/>
         </map:aggregate>
-        <!--<map:transform type="xinclude"/>-->
+        <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
 

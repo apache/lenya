@@ -2,7 +2,7 @@
 
 <oscom xmlns:xi="http://www.w3.org/2001/XInclude">
 
-<xi:include href="navigation.xml"/>
+<xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
 
 <about>
 <p>
@@ -45,25 +45,17 @@ There are also plans to organize one in Japan.
 </features>
 
 <news xmlns:xi="http://www.w3.org/2001/XInclude">
-  <!--<xi:include xml:base="http://www.freshmeat.net" href="/backend/fm.rdf"/>-->
-  <!--<xi:include xml:base="http://slashdot.org" href="/slashdot.xml"/>-->
-  <!--<xi:include xml:base="http://slashdot.org" href="/slashdot.rdf"/>-->
 <!--
-  <site name="OSCOM">
-    <xi:include href="rss-rdf/oscom.rdf"/>
-  </site>
--->
   <site name="Freshmeat">
     <xi:include href="rss-rdf/fm.rdf"/>
-    <!--<xi:include href="fm.rdf"/>-->
   </site>
   <site name="Slashdot">
     <xi:include href="rss-rdf/slashdot.rdf"/>
   </site>
   <site name="CMSWatch">
     <xi:include href="rss-rdf/cmswatch.xml"/>
-    <!--<xi:include xml:base="http://www.cmswatch.com" href="/RSS/cmswatch.xml"/>-->
   </site>
+-->
 </news>
 
 </oscom>

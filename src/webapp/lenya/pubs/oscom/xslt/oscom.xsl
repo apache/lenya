@@ -4,15 +4,6 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:variable name="tablecolor">orange</xsl:variable>
-<!-- context_prefix is just a temporary setting, will be given by general logicsheet -->
-<xsl:variable name="CONTEXT_PREFIX">/wyona-cms/oscom</xsl:variable>
-<xsl:variable name="images"><xsl:value-of select="$CONTEXT_PREFIX"/>/images</xsl:variable>
-
-<xsl:include href="navigation.xsl"/>
-<xsl:include href="oscom.xsl"/>
-
-<!--
 <xsl:template match="oscom">
 <html>
 <head><title>OSCOM - Open Source Content Management</title></head>
@@ -61,6 +52,5 @@
 <span status="200"/>
 </html>
 </xsl:template>
--->
  
 </xsl:stylesheet>  

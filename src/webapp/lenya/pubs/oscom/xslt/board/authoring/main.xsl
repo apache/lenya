@@ -10,7 +10,7 @@
   <xsl:apply-templates select="oscom"/>
 </xsl:template>
 
-<xsl:include href="../../html.xsl"/>
+<xsl:include href="../../html_authoring.xsl"/>
 <xsl:include href="../body.xsl"/>
  
 </xsl:stylesheet>  
