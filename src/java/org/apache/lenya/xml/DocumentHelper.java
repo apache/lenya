@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.13 2003/05/08 15:38:02 egli Exp $
+ * $Id: DocumentHelper.java,v 1.14 2003/05/12 17:23:27 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -189,8 +189,10 @@ public class DocumentHelper {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 	if (documentType != null) {
 	    transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, documentType.getPublicId());
+	    transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, documentType.getSystemId());
 	}
         return transformer;
     }
