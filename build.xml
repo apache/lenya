@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.22 2002/04/16 16:16:44 michicms Exp $
+   @version CVS $Id: build.xml,v 1.23 2002/05/30 21:44:45 michicms Exp $
 
 -->
 
@@ -346,7 +346,13 @@
         <include name="**/*.xsl"/>
       </fileset>
     </copy>
-    
+
+    <!-- now copy our properties -->
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>
     
     <!-- now copy any additional libraries in ./lib -->
     <mkdir dir="${build.webapp}/WEB-INF/lib"/>
