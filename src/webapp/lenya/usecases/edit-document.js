@@ -26,11 +26,13 @@ importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
 
 /**
  * Saves a Source to the document in the current PageEnvelope.
- * TODO: Use nobby's new usecase fw in 1.4 branch
+ * TODO: Use nobby's new usecase fw in 1.4 branch. Exception handling e.g. display appropriate error pages.
  * @param sourceUri An URI of a Source providing the edited document data
  * @param useBuffer If "true", the source Source is read into a buffer before it is written to its final destination.
  * @param workflowEvent Name of the workflow event to trigger. Default is "edit".
- * @param noWorkflow If true, no workflow event will be triggered.
+ * @param noWorkflow If true, no workflow event will be triggered. Default is false.
+ * @param noCheckin If true, the current document is not checked in. Default is false.
+ * @param backup If true, a new revision is created on checkin. Default is true.
  * @param status Default int value is 204. Used to set the response status.
  * @param noStatus If true, then no response status will be set.     
  */
@@ -42,11 +44,16 @@ function editDocument() {
         
         SourceUtil.copy(resolver, cocoon.parameters["sourceUri"], dstUri, _getParameter("useBuffer", "false") == "true");
 
+        if(_getParameter("noCheckin", "false") == "false")
+            flowHelper.reservedCheckIn(cocoon, _getParameter("backup", "true") == "true");
+
         if(_getParameter("noWorkflow", "false") == "false")
             flowHelper.triggerWorkflow(cocoon, _getParameter("workflowEvent", "edit"));
 
         if(_getParameter("noStatus", "false") == "false")
             cocoon.sendStatus(_getParameter("status", 204));
+        else
+            cocoon.redirectTo(_getParameter("redirectUrl", "FIXME"));
         
     } catch (exception) {
         cocoon.log.error("Can not edit doucment.", exception);
