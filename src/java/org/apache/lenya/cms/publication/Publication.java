@@ -26,6 +26,8 @@ public interface Publication {
     String TRASH_AREA = "trash";
     String ELEMENT_PATH_MAPPER = "path-mapper";
     String ELEMENT_DOCUMENT_BUILDER = "document-builder";
+    String ELEMENT_SITE_STRUCTURE = "site-structure";
+    String ATTRIBUTE_TYPE = "type";
     String LANGUAGES = "languages";
     String LANGUAGE = "language";
     String DEFAULT_LANGUAGE_ATTR = "default";

@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.7 2003/12/02 13:18:13 andreas Exp $
+$Id: AbstractPublication.java,v 1.8 2003/12/04 18:07:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -82,6 +82,7 @@ public abstract class AbstractPublication implements Publication {
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
     private HashMap siteTrees = new HashMap();
+    private boolean hasSitetree = true;
 
     /** 
      * Creates a new instance of Publication
@@ -127,7 +128,8 @@ public abstract class AbstractPublication implements Publication {
             }
 
             try {
-                Configuration documentBuilderConfiguration = config.getChild(ELEMENT_DOCUMENT_BUILDER, false);
+                Configuration documentBuilderConfiguration =
+                    config.getChild(ELEMENT_DOCUMENT_BUILDER, false);
                 if (documentBuilderConfiguration != null) {
                     documentBuilderClassName = documentBuilderConfiguration.getValue();
                     Class documentBuilderClass = Class.forName(documentBuilderClassName);
@@ -146,6 +148,15 @@ public abstract class AbstractPublication implements Publication {
                 this.languages.add(language);
                 if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null) != null) {
                     defaultLanguage = language;
+                }
+            }
+
+            Configuration siteStructureConfiguration =
+                config.getChild(ELEMENT_SITE_STRUCTURE, false);
+            if (siteStructureConfiguration != null) {
+                String siteStructureType = siteStructureConfiguration.getAttribute(ATTRIBUTE_TYPE);
+                if (!siteStructureType.equals("sitetree")) {
+                    hasSitetree = false;
                 }
             }
 
@@ -283,11 +294,13 @@ public abstract class AbstractPublication implements Publication {
 
         DefaultSiteTree sitetree = null;
 
-        if (siteTrees.containsKey(area)) {
-            sitetree = (DefaultSiteTree) siteTrees.get(area);
-        } else {
-            sitetree = new DefaultSiteTree(getDirectory(), area);
-            siteTrees.put(area, sitetree);
+        if (hasSitetree) {
+            if (siteTrees.containsKey(area)) {
+                sitetree = (DefaultSiteTree) siteTrees.get(area);
+            } else {
+                sitetree = new DefaultSiteTree(getDirectory(), area);
+                siteTrees.put(area, sitetree);
+            }
         }
         return sitetree;
     }
@@ -299,11 +312,11 @@ public abstract class AbstractPublication implements Publication {
      * @return A document builder.
      */
     public DocumentBuilder getDocumentBuilder() {
-        
+
         if (documentBuilder == null) {
             throw new IllegalStateException("The document builder was not defined in publication.xconf!");
         }
-        
+
         return documentBuilder;
     }
 
@@ -399,79 +412,93 @@ public abstract class AbstractPublication implements Publication {
 
         copyDocumentSource(sourceDocument, destinationDocument);
 
-        try {
-            SiteTree sourceTree = getSiteTree(sourceDocument.getArea());
-            SiteTree destinationTree = getSiteTree(destinationDocument.getArea());
+        copySiteStructure(sourceDocument, destinationDocument);
+    }
 
-            SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
-            if (sourceNode == null) {
-                throw new PublicationException(
-                    "The node for source document [" + sourceDocument.getId() + "] doesn't exist!");
-            } else {
+    /**
+     * Copies a document in the site structure.
+     * @param sourceDocument The source document.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException when something went wrong.
+     */
+    protected void copySiteStructure(Document sourceDocument, Document destinationDocument)
+        throws PublicationException {
+        if (hasSitetree) {
+            try {
+                SiteTree sourceTree = getSiteTree(sourceDocument.getArea());
+                SiteTree destinationTree = getSiteTree(destinationDocument.getArea());
 
-                SiteTreeNode[] siblings = sourceNode.getNextSiblings();
-                String parentId = sourceNode.getAbsoluteParentId();
-                SiteTreeNode sibling = null;
-                String siblingDocId = null;
-
-                // same document ID -> insert at the same position
-                if (sourceDocument.getId().equals(destinationDocument.getId())) {
-                    for (int i = 0; i < siblings.length; i++) {
-                        String docId = parentId + "/" + siblings[i].getId();
-                        sibling = destinationTree.getNode(docId);
-                        if (sibling != null) {
-                            siblingDocId = docId;
-                            break;
-                        }
-                    }
-                }
-
-                Label label = sourceNode.getLabel(sourceDocument.getLanguage());
-                if (label == null) {
-                    // the node that we're trying to publish
-                    // doesn't have this language
+                SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
+                if (sourceNode == null) {
                     throw new PublicationException(
-                        "The node "
+                        "The node for source document ["
                             + sourceDocument.getId()
-                            + " doesn't contain a label for language "
-                            + sourceDocument.getLanguage());
+                            + "] doesn't exist!");
                 } else {
-                    SiteTreeNode destinationNode =
-                        destinationTree.getNode(destinationDocument.getId());
-                    if (destinationNode == null) {
-                        Label[] labels = { label };
 
-                        if (siblingDocId == null) {
-                            destinationTree.addNode(
-                                destinationDocument.getId(),
-                                labels,
-                                sourceNode.getHref(),
-                                sourceNode.getSuffix(),
-                                sourceNode.hasLink());
-                        } else {
-                            destinationTree.addNode(
-                                destinationDocument.getId(),
-                                labels,
-                                sourceNode.getHref(),
-                                sourceNode.getSuffix(),
-                                sourceNode.hasLink(),
-                                siblingDocId);
+                    SiteTreeNode[] siblings = sourceNode.getNextSiblings();
+                    String parentId = sourceNode.getAbsoluteParentId();
+                    SiteTreeNode sibling = null;
+                    String siblingDocId = null;
+
+                    // same document ID -> insert at the same position
+                    if (sourceDocument.getId().equals(destinationDocument.getId())) {
+                        for (int i = 0; i < siblings.length; i++) {
+                            String docId = parentId + "/" + siblings[i].getId();
+                            sibling = destinationTree.getNode(docId);
+                            if (sibling != null) {
+                                siblingDocId = docId;
+                                break;
+                            }
                         }
+                    }
 
+                    Label label = sourceNode.getLabel(sourceDocument.getLanguage());
+                    if (label == null) {
+                        // the node that we're trying to publish
+                        // doesn't have this language
+                        throw new PublicationException(
+                            "The node "
+                                + sourceDocument.getId()
+                                + " doesn't contain a label for language "
+                                + sourceDocument.getLanguage());
                     } else {
-                        // if the node already exists in the live
-                        // tree simply insert the label in the
-                        // live tree
-                        destinationTree.setLabel(destinationDocument.getId(), label);
+                        SiteTreeNode destinationNode =
+                            destinationTree.getNode(destinationDocument.getId());
+                        if (destinationNode == null) {
+                            Label[] labels = { label };
+
+                            if (siblingDocId == null) {
+                                destinationTree.addNode(
+                                    destinationDocument.getId(),
+                                    labels,
+                                    sourceNode.getHref(),
+                                    sourceNode.getSuffix(),
+                                    sourceNode.hasLink());
+                            } else {
+                                destinationTree.addNode(
+                                    destinationDocument.getId(),
+                                    labels,
+                                    sourceNode.getHref(),
+                                    sourceNode.getSuffix(),
+                                    sourceNode.hasLink(),
+                                    siblingDocId);
+                            }
+
+                        } else {
+                            // if the node already exists in the live
+                            // tree simply insert the label in the
+                            // live tree
+                            destinationTree.setLabel(destinationDocument.getId(), label);
+                        }
                     }
                 }
+
+                destinationTree.save();
+            } catch (SiteTreeException e) {
+                throw new PublicationException(e);
             }
-
-            destinationTree.save();
-        } catch (SiteTreeException e) {
-            throw new PublicationException(e);
         }
-
     }
 
     /**
@@ -489,52 +516,61 @@ public abstract class AbstractPublication implements Publication {
      * @see org.apache.lenya.cms.publication.Publication#deleteDocument(org.apache.lenya.cms.publication.Document)
      */
     public void deleteDocument(Document document) throws PublicationException {
-
-        SiteTree tree;
-        try {
-            tree = getSiteTree(document.getArea());
-        } catch (SiteTreeException e) {
-            throw new PublicationException(e);
-        }
-
-        SiteTreeNode node = tree.getNode(document.getId());
-
-        if (node == null) {
-            throw new PublicationException(
-                "Sitetree node for document [" + document + "] does not exist!");
-        }
-
-        Label label = node.getLabel(document.getLanguage());
-
-        if (label == null) {
-            throw new PublicationException(
-                "Sitetree label for document ["
-                    + document
-                    + "] in language ["
-                    + document.getLanguage()
-                    + "]does not exist!");
-        }
-
-        if (node.getLabels().length == 1 && node.getChildren().length > 0) {
-            throw new PublicationException(
-                "Cannot delete last language version of document ["
-                    + document
-                    + "] because this node has children.");
-        }
-
-        node.removeLabel(label);
-
-        if (node.getLabels().length == 0) {
-            tree.removeNode(document.getId());
-        }
-
-        try {
-            tree.save();
-        } catch (SiteTreeException e) {
-            throw new PublicationException(e);
-        }
-
+        deleteFromSiteStructure(document);
         deleteDocumentSource(document);
+    }
+
+    /**
+     * Deletes a document from the site structure.
+     * @param document The document to remove.
+     * @throws PublicationException when something went wrong.
+     */
+    protected void deleteFromSiteStructure(Document document) throws PublicationException {
+        if (hasSitetree) {
+            SiteTree tree;
+            try {
+                tree = getSiteTree(document.getArea());
+            } catch (SiteTreeException e) {
+                throw new PublicationException(e);
+            }
+        
+            SiteTreeNode node = tree.getNode(document.getId());
+        
+            if (node == null) {
+                throw new PublicationException(
+                    "Sitetree node for document [" + document + "] does not exist!");
+            }
+        
+            Label label = node.getLabel(document.getLanguage());
+        
+            if (label == null) {
+                throw new PublicationException(
+                    "Sitetree label for document ["
+                        + document
+                        + "] in language ["
+                        + document.getLanguage()
+                        + "]does not exist!");
+            }
+        
+            if (node.getLabels().length == 1 && node.getChildren().length > 0) {
+                throw new PublicationException(
+                    "Cannot delete last language version of document ["
+                        + document
+                        + "] because this node has children.");
+            }
+        
+            node.removeLabel(label);
+        
+            if (node.getLabels().length == 0) {
+                tree.removeNode(document.getId());
+            }
+        
+            try {
+                tree.save();
+            } catch (SiteTreeException e) {
+                throw new PublicationException(e);
+            }
+        }
     }
 
     /**

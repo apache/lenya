@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.35 2003/12/04 16:06:10 andreas Exp $
+$Id: DefaultDocument.java,v 1.36 2003/12/04 18:07:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -194,12 +194,16 @@ public class DefaultDocument implements Document {
         SiteTree sitetree;
         try {
             sitetree = getPublication().getSiteTree(getArea());
-            SiteTreeNode node = sitetree.getNode(getId());
-            if (node != null) {
-                Label[] labels = node.getLabels();
-                for (int i = 0; i < labels.length; i++) {
-                    languages.add(labels[i].getLanguage());
+            if (sitetree != null) {
+                SiteTreeNode node = sitetree.getNode(getId());
+                if (node != null) {
+                    Label[] labels = node.getLabels();
+                    for (int i = 0; i < labels.length; i++) {
+                        languages.add(labels[i].getLanguage());
+                    }
                 }
+            } else {
+                languages.add(getLanguage());
             }
         } catch (SiteTreeException e) {
             throw new DocumentException(e);
@@ -221,15 +225,16 @@ public class DefaultDocument implements Document {
      * @see org.apache.lenya.cms.publication.Document#getLabel()
      */
     public String getLabel() throws DocumentException {
+        String label = "";
         try {
-            return getPublication()
-                .getSiteTree(getArea())
-                .getNode(getId())
-                .getLabel(getLanguage())
-                .getLabel();
+            SiteTree siteTree = getPublication().getSiteTree(getArea());
+            if (siteTree != null) {
+                label = siteTree.getNode(getId()).getLabel(getLanguage()).getLabel();
+            }
         } catch (SiteTreeException e) {
             throw new DocumentException(e);
         }
+        return label;
     }
 
     private String area;
@@ -316,18 +321,20 @@ public class DefaultDocument implements Document {
 
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.Document#exists()
-     * FIXME: Don't use getFile().exists() as basis for Document.exists()
      */
     public boolean exists() throws DocumentException {
         boolean exists;
         try {
             SiteTree sitetree = getPublication().getSiteTree(getArea());
-            SiteTreeNode node = sitetree.getNode(getId());
-            exists = (node != null) && (node.getLabel(getLanguage()) != null);
+            if (sitetree != null) {
+                SiteTreeNode node = sitetree.getNode(getId());
+                exists = (node != null) && (node.getLabel(getLanguage()) != null);
+            } else {
+                exists = getFile().exists();
+            }
         } catch (SiteTreeException e) {
             throw new DocumentException(e);
         }
-        exists = exists || getFile().exists();
         return exists;
     }
 
@@ -335,14 +342,19 @@ public class DefaultDocument implements Document {
      * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
      */
     public boolean existsInAnyLanguage() throws DocumentException {
-        SiteTree sitetree;
+        boolean exists = false;
         try {
-            sitetree = getPublication().getSiteTree(getArea());
-            SiteTreeNode node = sitetree.getNode(getId());
-            return (node != null);
+            SiteTree sitetree = getPublication().getSiteTree(getArea());
+            if (sitetree != null) {
+                SiteTreeNode node = sitetree.getNode(getId());
+                exists = node != null;
+            } else {
+                exists = getFile().exists();
+            }
         } catch (SiteTreeException e) {
             throw new DocumentException(e);
         }
+        return exists;
     }
 
     /**
