@@ -47,10 +47,10 @@ body.live      #contentrow  { background-color:red; }
 .menubutton             { background-image:none; }
 .menubuttonover         { background-image:url(/lenya/lenya/menu2/media/menubgover.gif); }
 
-.menu, .menuvisible     { position:absolute; z-index:20; float:left; background-image:url(/lenya/lenya/menu2/media/menuitembg.gif); }
+.menu, .menuvisible     { position:absolute; z-index:20; float:left; background-color:white; }
 .menu                   { display:none; border:none; }
 .menuvisible            { display:block; width:150px; border:solid 1px black; }
 .menuitem, .menuitemover{ padding:0px 3px 2px 3px; font-family:verdana; font-size:80%; cursor:pointer; cursor:hand; }
 .menuitem               { color:black; background-color:none; }
-.menuitemover           { color:red; background-color:white; }
+.menuitemover           { color:white; background-color:gray; }
 
