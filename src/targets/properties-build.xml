@@ -44,6 +44,19 @@
   <property name="version" value="1.4-dev"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
   <property name="distname" value="apache-${ant.project.name}-${version}"/>
+  <property name="Name"     value="Apache Lenya"/>
+  <property name="year"     value="1999-2004"/>
+
+  <property name="debug"          value="on"/>
+  <property name="optimize"       value="on"/>
+  <property name="deprecation"    value="off"/>
+  <property name="nowarn"         value="on"/>
+  <property name="target.vm"      value="1.4"/>
+
+  <property name="packages"      value="*.*"/>
+  <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
+
+  <property name="today"         value="${TODAY}"/>
 
   <!-- The libraries we use and which are not already included in the cocoon package -->
   <property name="lib.dir" value="lib"/>
@@ -95,8 +108,6 @@
   contents of the cocoon webapp are here
   -->
   <property name="src.webapp.dir" value="src/webapp"/>
-  <!-- documentation directory -->
-  <property name="src.documentation.dir" value="src/documentation"/>
   <property name="tools.tasks.dest" value="tools/anttasks"/>
   <!-- cocoon build properties directory -->
   <property name="src.cocoon.properties.dir" value="src/cocoon"/>
