@@ -54,3 +54,8 @@ cache.dir=/usr/local/tomcat/work/Standalone/localhost/lenya
 # Enable RollingFileAppender of log4j (default is false)
 
 #enable.log4j=true
+
+#------------------------------------------------------------------------------------
+# Anteater home directory
+
+#anteater.home=/usr/local/anteater

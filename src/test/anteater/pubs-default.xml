@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<target name="pubs.default">
+  <echo>Testing the default publication</echo>
+  
+  <property name="publication-id" value="default"/>
+  
+  <echo>Testing introduction</echo>
+  <httpRequest path="/${publication-id}/introduction.html">
+    <match>
+<!--      <responseCode value="200"/>-->
+      <regexp>Default Publication</regexp>
+    </match>
+  </httpRequest>
+  
+</target>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE project [
+  <!ENTITY default          SYSTEM "pubs-default.xml"> 
+]>
+
+<project name="Lenya Anteater Tests" default="tests">
+
+  &default;
+  
+  <taskdef resource="META-INF/Anteater.tasks"/>
+  <typedef resource="META-INF/Anteater.types"/>
+
+  <property name="default.port" value="8888"/>
+
+  <target name="tests"
+    depends="
+        pubs.default
+    "/>
+
+</project>
