@@ -46,7 +46,6 @@ package org.apache.lenya.cms.ac2.workflow;
 import java.util.Arrays;
 
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac2.Identity;
@@ -116,8 +115,7 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
      * @param roles The roles.
      */
     protected void saveRoles(Request request, Role[] roles) {
-        Session session = request.getSession(true);
-        session.setAttribute(Role.class.getName(), Arrays.asList(roles));
+        request.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
 
 }

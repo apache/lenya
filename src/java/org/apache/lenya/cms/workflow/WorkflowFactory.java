@@ -102,11 +102,7 @@ public class WorkflowFactory {
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession(true);
 
-        if (session == null) {
-            throw new WorkflowException("No session object available!");
-        }
-        
-        List roleList = (List) session.getAttribute(Role.class.getName());
+        List roleList = (List) request.getAttribute(Role.class.getName());
         if (roleList == null) {
             throw new WorkflowException("Session does not contain roles!");
         }
