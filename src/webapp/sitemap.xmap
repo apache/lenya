@@ -419,6 +419,15 @@
       | orthogonal to pipelines. Please refer to the docs.
       +-->
   <map:views>
+
+    <map:view name="first" from-position="first">
+      <map:serialize type="xml"/>
+    </map:view>
+
+    <map:view name="last" from-position="last">
+      <map:serialize type="xml"/>
+    </map:view>
+
     <map:view from-label="content" name="content">
       <map:serialize type="xml"/>
     </map:view>
@@ -506,7 +515,16 @@
 
 
 
-    <!-- Welcome to Lenya -->
+<!-- =========================== Lenya CMS ================================= -->
+
+
+<!-- =========================== Actions ================================= -->
+
+<!-- FIXME: move generic actions out of publication sitemaps, and offer overriding
+     capabilities. -->
+
+<!-- =========================== Pipelines ================================= -->
+
     <map:pipeline>
       <map:match pattern="publications.xml">
         <map:generate type="directory" src="lenya/pubs"/>
