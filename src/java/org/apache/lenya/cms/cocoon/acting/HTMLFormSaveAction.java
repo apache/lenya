@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.9 2003/08/13 15:23:55 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.10 2003/08/20 13:43:37 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -161,11 +161,15 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     }
                 } catch (Exception e) {
                     getLogger().error(".act(): Exception: " + e.getMessage(), e);
-                    return new HashMap();
+                    HashMap hmap = new HashMap();
+                    hmap.put("message", e.getMessage());
+                    return hmap;
                 }
             } else {
                 getLogger().error(".act(): No such file: " + file.getAbsolutePath());
-                return new HashMap();
+                HashMap hmap = new HashMap();
+                hmap.put("message", "No such file: " + file.getAbsolutePath());
+                return hmap;
             }
         }
     }

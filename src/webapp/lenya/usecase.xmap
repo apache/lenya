@@ -363,6 +363,7 @@
               <map:transform src="pubs/{../1}/xslt/editor/{request-param:doctype}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="doctype" value="{request-param:doctype}"/>
+                <map:parameter name="message" value="{message}"/>
               </map:transform>
               <map:serialize type="html" />
             </map:act>

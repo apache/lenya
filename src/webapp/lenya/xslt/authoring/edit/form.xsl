@@ -6,6 +6,7 @@
 
 <xsl:param name="docid"/>
 <xsl:param name="doctype"/>
+<xsl:param name="message"/>
 
 <xsl:template match="/">
 <html>
@@ -13,6 +14,14 @@
 <p>
 Edit Document <b><xsl:value-of select="$docid"/></b> (Document Type: <xsl:value-of select="$doctype"/>)
 </p>
+
+<xsl:if test="$message">
+<p>
+<font color="red"><b>Message:</b></font>
+<br /><xsl:value-of select="$message"/>
+<br />(Check log files for more details: lenya/WEB-INF/logs/*)
+</p>
+</xsl:if>
 
 <form method="post" action="?lenya.usecase=edit&amp;lenya.step=close&amp;doctype={$doctype}">
 <table border="1">
