@@ -796,11 +796,12 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/util/empty.xml"/>
             <map:transform src="xslt/info/rename-label.xsl">
-              <map:parameter name="request-uri" value="{request:requestURI}"/>
-              <map:parameter name="area" value="{../../2}"/>
+              <map:parameter name="requesturi" value="{request:requestURI}"/>
+              <map:parameter name="area" value="{page-envelope:area}"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="label" value="{page-envelope:document-label}"/>
-              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-              <map:parameter name="task-id" value="'rename-label'"/>
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="taskid" value="rename-label"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
