@@ -7,7 +7,7 @@
  * for the specific language governing permissions and limitations under the License.
  */
 
-/* $Id: UploadHelper.java,v 1.6 2004/08/16 12:11:31 andreas Exp $ */
+/* $Id$ */
 
 package org.apache.lenya.cms.authoring;
 
@@ -25,7 +25,7 @@ import java.io.OutputStream;
  * Helper class for uploading files.
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner </a>
- * @version $Id: UploadHelper.java,v 1.6 2004/08/16 12:11:31 andreas Exp $
+ * @version $Id$
  */
 public class UploadHelper {
 
@@ -55,8 +55,16 @@ public class UploadHelper {
      * @return <code>true</code> if the upload succeeded, <code>false</code> otherwise.
      */
     public boolean save(Part part) {
-
         File file = new File(directory, part.getFileName());
+        return save(part, file);
+    }
+
+    /**
+     * Save uploaded file
+     * @param part The part of the multipart request.
+     * @return <code>true</code> if the upload succeeded, <code>false</code> otherwise.
+     */
+    public boolean save(Part part, File file) {
         if (log.isDebugEnabled()) {
             log.debug("Uploading file: [" + file.getAbsolutePath() + "]");
         }
