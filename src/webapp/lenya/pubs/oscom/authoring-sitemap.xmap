@@ -23,6 +23,10 @@
         <docs href="docs/publication/authoring"/>
         <doctypes href="docs/publication/doctypes/"/>
       </map:action>
+      <map:action name="reserved-checkout" src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+        <rcmlDirectory href="docs/publication/rcml"/>
+        <backupDirectory href="docs/publication/rcbak"/>
+      </map:action>
     </map:actions>
     <map:selectors default="browser">
       <map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
@@ -60,6 +64,51 @@
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
+
+
+    <!-- Rollback -->
+    <map:pipeline>
+      <map:match pattern="authoring/revision/editor-matrix/*.html">
+        <map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
+          <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
+          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
+          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+          <map:parameter name="channel" value="channel"/>
+          <map:parameter name="section" value="section"/>
+          <map:parameter name="year" value="year"/>
+          <map:parameter name="articleId" value="articleId"/>
+        </map:generate>
+        <map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+<!--
+      <map:match pattern="view/*/*/*/*/index.xml">
+        <map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
+          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+        </map:generate>
+        <map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+           <map:parameter name="section" value="{2}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+-->
+
+<!--
+      <map:match pattern="rollback/*/*/*/*/index.xml">
+        <map:act type="rollback">
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+          <map:redirect-to uri="{location}" session="true"/>
+        </map:act>
+      </map:match>
+-->
+    </map:pipeline>
+    <!-- /Rollback -->
+
+
     <map:pipeline>
       <!-- images gif -->
 <!--
@@ -374,6 +423,17 @@
 
       <!-- Edit Editor Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/editor-matrix/*.html">
+        <map:act type="reserved-checkout">
+          <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="date" value="{date}"/>
+          </map:generate>
+          <map:transform src="../../stylesheets/cms/Page/rco-exception.xsl"/>
+          <map:serialize type="html"/>
+        </map:act>
+
         <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
         <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_editor_xopus2.xsl">
           <map:parameter name="projectid" value="{1}"/>

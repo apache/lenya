@@ -49,11 +49,25 @@
 <!-- /CMS/F Matrix Project -->
 
 <!-- Editor Matrix Project -->
+     <map:match pattern="**/editor-matrix/*.html.acml">
+       <map:generate src="docs/publication/access-control/policies/editor-matrix.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!--
      <map:match pattern="authoring/editor-matrix/*.html.acml">
        <map:generate src="docs/publication/access-control/policies/editor-matrix.acml"/>
        <map:serialize type="xml"/>
      </map:match>
      <map:match pattern="authoring/editor-matrix/body-*.xml.acml">
+       <map:generate src="docs/publication/access-control/policies/editor-matrix.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+     <map:match pattern="authoring/xopus2/editor-matrix/*.html.acml">
+       <map:generate src="docs/publication/access-control/policies/editor-matrix.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+-->
+     <map:match pattern="authoring/xopus/XopusInterface.acml">
        <map:generate src="docs/publication/access-control/policies/editor-matrix.acml"/>
        <map:serialize type="xml"/>
      </map:match>

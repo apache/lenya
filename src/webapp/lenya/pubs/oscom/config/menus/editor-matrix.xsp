@@ -19,14 +19,8 @@
   <menus>
     <menu name="File" label="File">
       <block>
-<!--
-        <item href="xopus2/weekly-column.html">Edit&#160;with&#160;Xopus2</item>
--->
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/xopus2/editor-matrix/"+projectid+".html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-        <item>Edit&#160;with&#160;Bitflux</item>
-<!--
-        <item href="/wyona-cms/bitfluxeditor/weekly-column.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
--->
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/editor-matrix/"+projectid+".html"</xsp:expr></xsp:attribute>Rollback</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/wyona/publishScreen?uris=/wyona-cms/oscom/editor-matrix/"+projectid+".html,/wyona-cms/oscom/editor-matrix/index.html&amp;sources=/editor-matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
       </block>
       <separator>

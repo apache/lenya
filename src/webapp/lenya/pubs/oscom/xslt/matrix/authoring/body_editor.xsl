@@ -38,7 +38,15 @@ No such type: <xsl:value-of select="@type"/>
 </xsl:template>
 
 <xsl:template match="license">
- License: <a href="{license_url}"><xsl:apply-templates select="license_name"/></a>
+ License: 
+<xsl:choose>
+<xsl:when test="license_url">
+<a href="{license_url}"><xsl:apply-templates select="license_name"/></a>
+</xsl:when>
+<xsl:otherwise>
+<xsl:apply-templates select="license_name"/>
+</xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 <xsl:template match="description">
