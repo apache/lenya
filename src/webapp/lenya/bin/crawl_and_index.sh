@@ -58,7 +58,8 @@ CLASSPATH=$CLASSPATH:$LENYA_PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
 echo $CLASSPATH
 echo $LUCENE_CONF
 $JAVA -cp $CLASSPATH org.lenya.lucene.IndexEnvironment $LUCENE_CONF
-$JAVA -cp $CLASSPATH org.lenya.lucene.IndexHTML $LUCENE_CONF
+#$JAVA -cp $CLASSPATH org.lenya.lucene.IndexHTML $LUCENE_CONF
+$JAVA -cp $CLASSPATH org.lenya.lucene.index.Index $LUCENE_CONF
 
 
 echo ""
