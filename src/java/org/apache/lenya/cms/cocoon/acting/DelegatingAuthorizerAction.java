@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.10 2003/07/17 16:24:18 andreas Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.11 2003/07/29 14:27:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,8 +64,8 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.Machine;
 import org.apache.lenya.util.Stack;
 
 import java.util.Collections;

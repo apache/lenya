@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.2 2003/07/24 18:36:35 andreas Exp $
+$Id: PolicyBuilder.java,v 1.3 2003/07/29 14:26:39 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Group;
+import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.xml.DocumentHelper;
