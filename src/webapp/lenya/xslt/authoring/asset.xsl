@@ -11,7 +11,7 @@
   <xsl:param name="insertimage"/>
   
   <xsl:param name="assetXPath"/>
-  <xsl:param name="insertBefore"/>
+  <xsl:param name="insertWhere"/>
 
   <xsl:template match="/">
     <page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
@@ -67,7 +67,7 @@
 	  </xsl:choose>
 	  <input type="hidden" name="task-id" value="insert-asset"/>
 	  <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
-	  <input type="hidden" name="properties.insert.asset.insertBefore" value="{$insertBefore}"/>
+	  <input type="hidden" name="properties.insert.asset.insertWhere" value="{$insertWhere}"/>
 	  <input type="hidden" name="properties.insert.asset.area" value="{/usecase:asset/usecase:area}"/>
 	  <input type="hidden" name="properties.insert.asset.document-id" value="{/usecase:asset/usecase:document-id}"/>
 	  <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
@@ -142,7 +142,7 @@
 	      <input type="hidden" name="lenya.step" value="insert"/>
 	      <input type="hidden" name="task-id" value="insert-asset"/>
 	      <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
-	      <input type="hidden" name="properties.insert.asset.insertBefore" value="{$insertBefore}"/>
+	      <input type="hidden" name="properties.insert.asset.insertWhere" value="{$insertWhere}"/>
 	      <xsl:choose>
 		<xsl:when test="$insertimage = 'true'">
 		  <input type="hidden" name="properties.insert.asset.insertTemplate" value="insertImg.xml"/>
