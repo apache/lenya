@@ -208,17 +208,11 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
 	
     userid = new Packages.java.lang.String(email);
     email = new Packages.java.lang.String(email);
-    password = new Packages.java.lang.String(password);
-    confirmPassword = new Packages.java.lang.String(confirmPassword);
     
     var existingUser = userManager.getUser(userId);
 			
 	if (existingUser != null) {
 		messages.add("This user already exists.");
-	}
-			
-	if (!ldap && !password.equals(confirmPassword)) {
-	   	messages.add("Password and confirmed password are not equal.");
 	}
 			
 	if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(userId)) {
@@ -229,12 +223,22 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
         messages.add("Please enter an e-mail address.");
     }
     
-    if (password.length() < 6) {
-        messages.add("The password must be at least six characters long.");
-    }
+	if (!ldap) {
+	
+    	password = new Packages.java.lang.String(password);
+	    confirmPassword = new Packages.java.lang.String(confirmPassword);
     
-    if (!password.matches(".*\\d.*")) {
-        messages.add("The password must contain at least one number.");
+		if (!password.equals(confirmPassword)) {
+		   	messages.add("Password and confirmed password are not equal.");
+		}
+			
+	    if (password.length() < 6) {
+    	    messages.add("The password must be at least six characters long.");
+	    }
+    
+	    if (!password.matches(".*\\d.*")) {
+    	    messages.add("The password must contain at least one number.");
+	    }
     }
     
     return messages;
