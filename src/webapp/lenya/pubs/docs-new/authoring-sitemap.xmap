@@ -60,8 +60,13 @@
 
     <map:pipeline>
       <map:match pattern="menus/**.xml">
-<!--        <map:generate type="serverpages" src="../../content/menus/authoring.xsp"/> -->
         <map:generate type="serverpages" src="content/menus/generic.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+<!-- test for new menubar -->
+      <map:match pattern="menus/new.xml">
+        <map:generate type="serverpages" src="content/menus/new.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
