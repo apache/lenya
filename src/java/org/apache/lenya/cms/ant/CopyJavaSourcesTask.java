@@ -1,5 +1,5 @@
 /*
-$Id: CopyJavaSourcesTask.java,v 1.14 2003/08/04 14:52:55 gregor Exp $
+$Id: CopyJavaSourcesTask.java,v 1.15 2003/08/06 09:18:25 egli Exp $
 <License>
 
  ============================================================================
@@ -125,9 +125,14 @@ public class CopyJavaSourcesTask extends Task {
         System.out.println("Copying " + numberOfFilesCopied + " files to " + absoluteBuildDir);
     }
 
-    /**
-     * Copies the directory "source" into the directory "destination"
-     */
+	/**
+	 * Copies the directory "source" into the directory "destination"
+	 * 
+	 * @param source from where the files are copied
+	 * @param destination to where the files are copied
+	 * @param twoTuple DOCUMENT ME!
+	 * @param filenameFilter for file filtering
+	 */
     static public void copyDir(File source, File destination, TwoTuple twoTuple,
         FilenameFilter filenameFilter) {
         File actualDestination = new File(destination, source.getName());

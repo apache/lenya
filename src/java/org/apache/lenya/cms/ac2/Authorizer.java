@@ -1,5 +1,5 @@
 /*
-$Id: Authorizer.java,v 1.10 2003/08/05 16:26:01 andreas Exp $
+$Id: Authorizer.java,v 1.11 2003/08/06 09:18:25 egli Exp $
 <License>
 
  ============================================================================
@@ -69,9 +69,6 @@ public interface Authorizer extends Component {
 
     /**
      * Authorizes an identity at a URL.
-     * @param accreditableManager The accreditable manager to use.
-     * @param policyManager The policy manager to use. 
-     * @param identity The identity.
      * @param request The request.
      * @return <code>true</code> if the identity is authorized, <code>false</code> otherwise.
      * @throws AccessControlException when something went wrong.
