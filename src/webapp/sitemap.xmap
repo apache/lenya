@@ -622,6 +622,13 @@
       </map:match>
     </map:pipeline>
 
+    <!-- Info Area -->
+    <map:pipeline>
+      <map:match pattern="*/info/**">
+        <map:mount uri-prefix="{1}/info" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+
     <!-- Search with Lucene -->
     <map:pipeline>
       <map:match pattern="lucene/**">

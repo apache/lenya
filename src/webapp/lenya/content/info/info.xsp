@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
+  xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+  xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
+  xmlns:dc="http://dc.org/2003/"
+>
+
+<lenya-:info>
+
+  <lenya-info:overview>
+        <dc:title></dc:title>
+  		<lenya-info:abstract></lenya-info:abstract>
+  		<lenya-info:status></lenya-info:status>
+        <dc:language></dc:language>
+   		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
+   		<lenya-info:lastmodified></lenya-info:lastmodified>
+  		<lenya-info:documentid></lenya-info:documentid>
+  </lenya-info:overview>  
+  <lenya-info:meta>  
+        <dc:title></dc:title>
+        <dc:creator></dc:creator>
+        <dc:subject></dc:subject>
+        <dc:description></dc:description>
+        <dc:date></dc:date>
+        <dc:rights/>
+  </lenya-info:meta>  
+  <lenya-info:assets>
+		<lenya-info:asset></lenya-info:asset>
+  </lenya-info:assets>  
+  <lenya-info:workflow>
+    	<wf:version date="(?)" state="redaktion" user="michael"/>
+   		<wf:version date="(?)" event="publish" state="review" user="gregor"/>
+  </lenya-info:workflow>  
+  <lenya-info:revisions>
+  </lenya-info:revisions>
+</lenya-info:info>
+
+</xsp:page>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: site.xsl,v 1.1 2003/06/04 15:08:44 gregor Exp $
+ $Id: info.xsl,v 1.1 2003/06/05 11:36:36 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:lenya-site="http://apache.org/cocoon/lenya/site/1.0"
+    xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
     xmlns:dc="http://dc.org/2003/"
@@ -14,7 +14,7 @@
     exclude-result-prefixes="nav"
     >
     
-<xsl:template match="lenya-site:site">    
+<xsl:template match="lenya-info:info">    
     <html>
 <head>
 	<title></title>
@@ -39,20 +39,20 @@
 	-->
 	<div id="contentblock1" class="lenya-tab">
           <table>
-              <xsl:apply-templates select="lenya-site:overview"/>
+              <xsl:apply-templates select="lenya-info:overview"/>
           </table>
 		</div>
 	<div id="contentblock2" class="lenya-tab">
           <form>
           <table>
-              <xsl:apply-templates select="lenya-site:meta"/>
+              <xsl:apply-templates select="lenya-info:meta"/>
           </table>
              <input type="submit" value="Update Metadata"/>
           </form>
 		</div>
 	<div id="contentblock3" class="lenya-tab">
           <table>
-              <xsl:apply-templates select="lenya-site:assets"/>
+              <xsl:apply-templates select="lenya-info:assets"/>
           </table>
           <form>
              <input type="file" name="asset" size="40" />
@@ -73,18 +73,18 @@
 </html>
 </xsl:template>
 
-<xsl:template match="lenya-site:overview">
+<xsl:template match="lenya-info:overview">
    <tr><td>Title:</td><td><xsl:valueof select="dc:title"/></td></tr>
-   <tr><td>Abstract:</td><td><xsl:valueof select="lenya-site:abstract"/></td></tr>
-   <tr><td>Status:</td><td><xsl:valueof select="lenya-site:status"/></td></tr>
+   <tr><td>Abstract:</td><td><xsl:valueof select="lenya-info:abstract"/></td></tr>
+   <tr><td>Status:</td><td><xsl:valueof select="lenya-info:status"/></td></tr>
    <tr><td>Language:</td><td><xsl:valueof select="dc:language"/></td></tr>
    <tr><td>Other Languages:</td><td></td></tr>
-   <tr><td>Last edited by:</td><td><xsl:valueof select="lenya-site:lastmodifiedby"/></td></tr>
-   <tr><td>Last modified:</td><td><xsl:valueof select="lenya-site:lastmodified"/></td></tr>
-   <tr><td>Document ID:</td><td><xsl:valueof select="lenya-site:documentid"/></td></tr>
+   <tr><td>Last edited by:</td><td><xsl:valueof select="lenya-info:lastmodifiedby"/></td></tr>
+   <tr><td>Last modified:</td><td><xsl:valueof select="lenya-info:lastmodified"/></td></tr>
+   <tr><td>Document ID:</td><td><xsl:valueof select="lenya-info:documentid"/></td></tr>
 </xsl:template>
 
-<xsl:template match="lenya-site:meta">
+<xsl:template match="lenya-info:meta">
    <tr><td>Title:</td><td><input type="text" id="dc:title"><xsl:attribute name="value"><xsl:valueof select="dc:title"/></xsl:attribute></input></td></tr>
    <tr><td>Creator:</td><td><input type="text" id="dc:creator"><xsl:attribute name="value"><xsl:valueof select="dc:creator"/></xsl:attribute></input></td></tr>
    <tr><td>Subject:</td><td><input type="text" id="dc:subject"><xsl:attribute name="value"><xsl:valueof select="dc:subject"/></xsl:attribute></input></td></tr>
@@ -93,8 +93,8 @@
    <tr><td>Rights:</td><td><input type="text" id="dc:rights"><xsl:attribute name="value"><xsl:valueof select="dc:rights"/></xsl:attribute></input></td></tr>
 </xsl:template>
 
-<xsl:template match="lenya-site:assets">
-   <xsl:foreach select="lenya-site:asset>
+<xsl:template match="lenya-info:assets">
+   <xsl:foreach select="lenya-info:asset>
       <tr><td><xsl:valueof select="."/></td><td><a href="">delete</a></td></tr>
    </xsl:foreach>
 </xsl:template>
