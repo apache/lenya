@@ -35,13 +35,13 @@
     <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/matrix/"+projectid+".html"</xsp:expr>?documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+<!--
+        <item href="?lenya.step=open&amp;doctype=cmfs">Edit&#160;with&#160;Forms</item>
+-->
         <item uc:usecase="edit" href="?lenya.step=open&amp;doctype=cmfs">Edit&#160;with&#160;Forms</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/matrix/"+projectid+".html"</xsp:expr>?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;sources=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/admin/passwd/index.html</xsp:attribute>Change&#160;Password</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
@@ -61,9 +61,6 @@
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <block>
         <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
       </block>
@@ -74,25 +71,9 @@
         <item><xsp:attribute name="href"><xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>View&#160;Page&#160;XML</item>
         <item><xsp:attribute name="href">body-<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>View&#160;Body&#160;XML</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <block>
         <item href="../../xopus/matrix.xsl">View&#160;Xopus&#160;XSLT</item>
         <item href="../../xopus/matrix.xsd">View&#160;Xopus&#160;XSD</item>
-      </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-<!--
-        <item href="../bitflux/home.xsl">View&#160;Bitflux&#160;XSLT</item>
-        <item href="../bitflux/home.xsd">View&#160;Bitflux&#160;XSD</item>
-        <item href="../bitflux/home.css">View&#160;Bitflux&#160;CSS</item>
--->
-        <item>View&#160;Bitflux&#160;XSLT</item>
-        <item>View&#160;Bitflux&#160;XSD</item>
-        <item>View&#160;Bitflux&#160;CSS</item>
       </block>
     </menu>
   </menus>
