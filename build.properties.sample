@@ -3,5 +3,4 @@
 # Where the 'install' build target should put the webapp context
 # Either use an absolute path or a relative one based on the current directory
 
-install.dir=/usr/local/tomcat/webapps/cocoon
-#install.dir=/usr/local/tomcat/webapps/wyona-cms
+install.dir=/usr/local/tomcat/webapps/wyona-cms

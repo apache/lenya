@@ -83,8 +83,8 @@
              "ls install.dir"
              vi /home/wyona/build/jakarta-tomcat-4.0/conf/server.xml
              To allow class reloading, insert the following line:
-             <Context path="/cocoon" docBase="cocoon" debug="0" reloadable="true" crossContext="true"/>
-             #<Context path="/wyona-cms" docBase="wyona-cms" debug="0" reloadable="true" crossContext="true"/>
+             <Context path="/wyona-cms" docBase="wyona-cms" debug="0" reloadable="true" crossContext="true"/>
+             #<Context path="/cocoon" docBase="cocoon" debug="0" reloadable="true" crossContext="true"/>
 
 
   7) Start Wyona
@@ -92,8 +92,8 @@
      [unix]  (/home/wyona/build/jakarta-tomcat-4.0/bin/shutdown.sh)
              (rm -r /home/wyona/build/jakarta-tomcat-4.0/work/*)
              /home/wyona/build/jakarta-tomcat-4.0/bin/startup.sh
-             lynx http://localhost:8080/cocoon/
-             #lynx http://localhost:8080/wyona-cms/
+             lynx http://localhost:8080/wyona-cms/
+             #lynx http://localhost:8080/cocoon/
 
 
   8) Start Hacking Wyona
@@ -105,8 +105,8 @@
              vi src/webapp/cocoon.xconf   (asynchron, synchron)
              ant
              tail -f build/webapp/WEB-INF/logs/*
-             lynx http://localhost:8080/cocoon/
-             #lynx http://localhost:8080/wyona-cms/
+             lynx http://localhost:8080/wyona-cms/
+             #lynx http://localhost:8080/cocoon/
 
 
   Notes 

@@ -5,12 +5,12 @@
   Installation
   ------------
 
-  cp cocoon.war PREFIX/jakarta-tomcat-4.0/webapps/.
+  cp wyona-cms.war PREFIX/jakarta-tomcat-4.0/webapps/.
   export JAVA_HOME=/usr/local/IBMJava2-13
   export CATALINA_HOME=PREFIX/jakarta-tomcat-4.0
   PREFIX/jakarta-tomcat-4.0/bin/startup.sh
   (Wait a few seconds)
-  lynx http://localhost:8080/cocoon/
+  lynx http://localhost:8080/wyona-cms/
   (Wait a few seconds or minutes)
 
   NOTE: PREFIX is not the string "PREFIX". Instead use the
