@@ -13,6 +13,8 @@
     
     when        Who               What
     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    2003-03-01  Michael Wechner   Custom Tasks
+    2002-02-05  Giacomo Pati      Revision
     2001-01-06  Marc Liyanage     Initial version
     
     
@@ -28,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.34 2003/02/24 15:00:39 michi Exp $
+   @version CVS $Id: build.xml,v 1.35 2003/03/01 23:01:48 michi Exp $
 
 -->
 
@@ -148,6 +150,7 @@
   </path>
 
 
+
   <!-- ============================================================ -->
   <!-- Targets                                                      -->
   <!-- ============================================================ -->
@@ -161,7 +164,7 @@
     </tstamp>
     
     <property name="fullname" value="Wyona CMS"/>
-    <property name="Name"     value="Wyona:CMS"/>
+    <property name="Name"     value="Lenya"/>
     <property name="name"     value="wyona:cms"/>
     <property name="version"  value="2.1-dev"/>
     <property name="short.version" value="2.1"/>
@@ -178,7 +181,10 @@
     <property name="build.compiler" value="classic"/>
     <property name="target.vm"      value="1.2"/>
 
+    <property name="packages"      value="*.*"/>
+<!--
     <property name="packages"      value="org.wyona.*,org.w3c.*,ch.ethz.*,ch.unizh.*"/>
+-->
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
     <property name="today"         value="${TODAY}"/>
@@ -187,6 +193,23 @@
     <property name="snapshot.src.dir" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}"/>
 
     <available file="${tools.jar}" property="tools.jar.present"/>
+  </target>
+
+  <target name="build-custom-tasks" depends="init">
+    <echo>INFO: Building Custom Tasks</echo>
+
+    <mkdir dir="tools/anttasks"/>
+    <javac srcdir="src/java"
+           destdir="tools/anttasks"
+           debug="${debug}"
+           optimize="{optimize}"
+           deprecation="${deprecation}"
+           target="${target.vm}"
+           nowarn="${nowarn}"
+           includes="org/wyona/cms/ant/**"
+           classpathref="classpath"/>
+
+    <taskdef name="copyJavaSources" classpath="tools/anttasks" classname="org.wyona.cms.ant.CopyJavaSourcesTask"/>
   </target>
 
   <!-- ============================================================ -->
@@ -251,21 +274,21 @@
   <!-- ============================================================ -->
   <!-- Prepares the source code                                     -->
   <!-- ============================================================ -->
-  <target name="prepare-src" depends="prepare">
+  <target name="prepare-src" depends="prepare, build-custom-tasks">
     <echo>INFO: Copy java source files from ${java.dir} to ${build.src}</echo>
     <copy todir="${build.src}" filtering="on">
       <fileset dir="${java.dir}">
       </fileset>
     </copy>
-    <echo>INFO: Copy java source files from ${pubs.dir} to ${build.src}</echo>
+    <echo>INFO: Copy java source files from ${pubs.root.dirs} to ${build.src}</echo>
+    <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.src}" />
+<!--
     <copy todir="${build.src}" filtering="on">
       <fileset dir="${pubs.dir}" includes="*/java/src/**" excludes="CVS/**" />
       <mapper type="regexp" from="(.*)/java/src/(.*)" to="\2">
-<!--
-        <classpath refid="/home/michiii/build/jakarta-ant-1.5.1/lib/optional.jar:/home/michiii/src/wyonacms/src/cocoon/WEB-INF/lib/jakarta-regexp-1.2.jar" />
--->
       </mapper>
     </copy>
+-->
   </target>
 
 
@@ -334,10 +357,8 @@
   <!-- Creates the API documentation                                -->
   <!-- ============================================================ -->
 
-  <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done"
-          unless="javadocs.notrequired"
-          description="Generates the API documentation">
-  <!--    <mkdir dir="${dist.bin.javadocs}"/>
+  <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done" unless="javadocs.notrequired" description="Generates the API documentation">
+    <mkdir dir="${dist.bin.javadocs}"/>
     <javadoc packagenames="${packages}"
              sourcepath="${build.src}"
              destdir="${dist.bin.javadocs}"
@@ -351,7 +372,6 @@
              stylesheetfile="${resource.dir}/javadoc.css">
       <classpath refid="classpath"/>
     </javadoc>
--->
   </target>
 
   <!-- ============================================================ -->
