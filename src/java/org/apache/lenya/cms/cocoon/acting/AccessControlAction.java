@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.3 2003/08/05 16:26:48 andreas Exp $
+$Id: AccessControlAction.java,v 1.4 2003/08/07 13:19:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -116,6 +116,7 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
             if (accessController == null) {
                 result = Collections.EMPTY_MAP;
             } else {
+                accessController.setupIdentity(request);
                 result = doAct(redirector, sourceResolver, objectModel, source, parameters);
             }
 

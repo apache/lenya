@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.13 2003/07/30 15:07:03 egli Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.14 2003/08/07 13:19:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -76,18 +76,6 @@ import java.util.Map;
  */
 public class DelegatingAuthorizerAction extends AccessControlAction {
 
-    /**
-     * Authorizes a request.
-     * @param request The request.
-     * @return <code>true</code if the request is authorized, <code>false</code> otherwise.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected boolean authorize(Request request) throws AccessControlException {
-
-        boolean authorized = getAccessController().authorize(request);
-        return authorized;
-    }
-
     private Map objectModel;
 
     /**
@@ -118,10 +106,9 @@ public class DelegatingAuthorizerAction extends AccessControlAction {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         
-        getAccessController().setupIdentity(request);
         setHistory(request);
 
-        boolean authorized = authorize(request);
+        boolean authorized = getAccessController().authorize(request);
 
         Map result = null;
         if (authorized) {

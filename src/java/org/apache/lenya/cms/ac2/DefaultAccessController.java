@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.10 2003/08/05 16:26:01 andreas Exp $
+$Id: DefaultAccessController.java,v 1.11 2003/08/07 13:19:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -352,7 +352,10 @@ public class DefaultAccessController
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessController#ownsIdenity(org.apache.lenya.cms.ac2.Identity)
+     * Checks if this identity was initialized by this access controller.
+     * @param identity An identity.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
      */
     public boolean ownsIdenity(Identity identity) throws AccessControlException {
         return identity.belongsTo(getAccreditableManager());
