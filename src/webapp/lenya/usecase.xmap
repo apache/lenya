@@ -693,7 +693,7 @@
         <map:match pattern="xopus" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
-              <map:act type="resource-exists" src="../../ROOT/XOPUS_PREFIX/xopus/xopus.js"> <!-- Check for Xopus -->
+              <map:act type="resource-exists" src="../../ROOT/{xopus:context}/xopus/xopus.js"> <!-- Check for Xopus -->
               
                 <map:act type="reserved-checkout">
                   <map:generate type="serverpages" src="content/rc/{exception}.xsp">
@@ -708,14 +708,19 @@
                   <map:call resource="style-cms-page"/>
                 </map:act>
                 
-                <map:generate src="resources/misc/xopus/index.html"/>
+                <map:generate src="content/util/empty.xml"/>
                 <map:transform src="xslt/authoring/edit/xopus-xhtml.xsl">
+                  <!--
                   <map:parameter name="xml" value="{request:contextPath}/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xml"/>
                   <map:parameter name="xsd" value="{request:contextPath}/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xsd&amp;doctype={request-param:doctype}"/>
                   <map:parameter name="xslt" value="{request:contextPath}/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xslt&amp;doctype={request-param:doctype}"/>
-                  <map:parameter name="contextprefix" value="{request:contextPath}"/>
-                  <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-                  <map:parameter name="completearea" value="authoring"/>
+                  -->
+                  <map:parameter name="contextPrefix" value="{request:contextPath}"/>
+                  <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
+                  <map:parameter name="completeArea" value="authoring"/>
+                  <map:parameter name="documentUrl" value="{page-envelope:document-url}"/>
+                  <map:parameter name="documentType" value="{request-param:doctype}"/>
+                  <map:parameter name="xopusContext" value="{xopus:context}"/>
                 </map:transform>
                 <!-- NOTE: IE or Xopus doesn't appreciate the DTD which is being inserted by Cocoon -->
                 <map:serialize type="html-no-dtd"/>

@@ -13,6 +13,7 @@
 
 <xsl:param name="forrest-publication"/>
 <xsl:param name="hsqldb-server-port"/>
+<xsl:param name="xopus-context"/>
 
 <xsl:template match="markup-languages/xsp-language/target-language[@name = 'java']">
   <xsl:copy>
@@ -52,6 +53,10 @@
         <skin>forrest-site</skin>
         -->
       </values>
+    </component-instance>
+
+    <component-instance name="xopus" class="org.apache.lenya.cms.cocoon.components.modules.input.XopusModule">
+      <context name="{$xopus-context}"/>
     </component-instance>
 
     <component-instance logger="core.modules.input" name="forrest" class="org.apache.cocoon.components.modules.input.ChainMetaModule">
