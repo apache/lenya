@@ -941,8 +941,6 @@
 	    <!--
 	    <map:generate src="{global:content-prefix}/authoring/{page-envelope:document-path}"/>
 	    -->
-	    <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
-	    <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
 	    <map:transform src="xslt/authoring/edit/oneform.xsl">
 	      <map:parameter name="docid" value="{page-envelope:document-path}"/>
 	    </map:transform>
