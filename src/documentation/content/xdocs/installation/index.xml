@@ -30,14 +30,11 @@
 
 <ul>
   <li>
-    <link href="prerequisites.html">Prerequisites</link>
-  </li>
-  <li>
     Download Lenya
     <ul>
-      <li><link href="subversion.html">Subversion</link></li>
+      <li><link href="ext:releases">Releases</link></li>
       <li><link href="ext:nightly.builds">Nightly Snapshots</link></li>
-      <li><link href="ext:incubator.lenya">Incubating-lenya-1.2</link></li>
+      <li><link href="subversion.html">Subversion</link></li>
     </ul>
   </li>
   <li>

@@ -27,7 +27,6 @@
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
     <installation href="installation/" label="Installation" tab="installation">
-        <prerequisites href="prerequisites.html" label="Prerequisites"/>
         <download href="index.html" label="Download"/>
         <cvs href="subversion.html" label="Subversion Access"/>
         <install href="source_version.html" label="Installation Instructions"/>
@@ -225,7 +224,7 @@
 			</cocoon.2.1>
 			<lenya href="lenya/"/>
 		</cocoon>
-		<cvs.asf href="http://cvs.apache.org/">
+		<cvs.asf href="http://svn.apache.org/">
 			<cvs.incubator href="dist/incubator/">
 				<incubator.lenya href="lenya/"/>
 			</cvs.incubator>
@@ -240,9 +239,10 @@
 				<issues.open.bugs.enhancement href="bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=Enhancement&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=short_desc&amp;type0-0-0=notsubstring&amp;value0-0-0=%5BPatch%5D&amp;field0-0-1=noop&amp;type0-0-1=noop&amp;value0-0-1=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time"/>
 			</issues.list>
 		</issues>
-		<nightly.builds href="http://cvs.wyona.org/nightly-builds/"/>
+		<nightly.builds href="http://svn.apache.org/snapshots/lenya/"/>
 		<nzz href="http://www.nzz.ch"/>
 		<opensource.org href="http://www.opensource.org/"/>
+		<releases href="http://www.apache.org/dyn/closer.cgi/lenya/"/>
 		<w3c href="http://www.w3c.org/">
 			<w3c.xml href="XML/"/>
 			<w3c.xslt href="TR/xslt/"/>

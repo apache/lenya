@@ -37,7 +37,7 @@
 Start the shell of your choice and enter:
 </p>
 <source>
-svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-trunk
+svn co http://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X lenya-1.2.x
 </source>
 </section>
 
@@ -47,18 +47,17 @@ svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-trunk
 Start the shell of your choice and enter:
 </p>
 <source>
-svn co http://svn.apache.org/repos/asf/incubator/lenya lenya
+svn co https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X lenya-1.2.x
 ssh -l username svn.apache.org
 svnpasswd username
 exit
-svn sw --relocate http://svn.apache.org/repos/asf/incubator/lenya https://svn.apache.org/repos/asf/incubator/lenya
 </source>
 </section>
 
 <section>
 <title>View Subversion</title>
 <p>
-<link href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</link>
+<link href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">http://svn.apache.org/viewcvs.cgi/lenya/#dirlist</link>
 </p>
 </section>
 
