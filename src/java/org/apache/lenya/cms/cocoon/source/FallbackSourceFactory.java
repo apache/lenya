@@ -29,7 +29,6 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.Constants;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Context;
@@ -49,7 +48,7 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
  * @version $Id:$
  */
 public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
-        Serviceable, Contextualizable, ThreadSafe, URIAbsolutizer {
+        Serviceable, Contextualizable, URIAbsolutizer {
 
     /**
      * Ctor.
@@ -63,23 +62,35 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
      */
     public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
+
         String resolvedUri = null;
 
         long startTime = new GregorianCalendar().getTimeInMillis();
 
         // Remove the protocol and the first '//'
         final int pos = location.indexOf("://");
-        final String path = location.substring(pos + 1);
+
+        if (pos == -1) {
+            throw new RuntimeException("The location [" + location
+                    + "] does not contain the string '://'");
+        }
+
+        final String path = location.substring(pos + 3);
+        
+        if (path.length() == 0) {
+            throw new RuntimeException("The path after the protocol must not be empty!");
+        }
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Location:     [" + location + "]");
-            getLogger().debug("Path:         [" + location + "]");
+            getLogger().debug("Path:         [" + path + "]");
         }
 
+        PublicationTemplateManager templateManager = null;
         SourceResolver sourceResolver = null;
         Source source;
         try {
-            PublicationTemplateManager templateManager = (PublicationTemplateManager) this.manager
+            templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
             Map objectModel = ContextHelper.getObjectModel(this.context);
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
@@ -88,22 +99,25 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             ExistingSourceResolver resolver = new ExistingSourceResolver();
             templateManager.visit(path, resolver);
             resolvedUri = resolver.getURI();
-            
+
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Resolved URI:  [" + resolvedUri + "]");
             }
-            
+
             if (resolvedUri == null) {
                 final String contextUri = "context://" + location.substring("fallback://".length());
                 resolvedUri = contextUri;
             }
-            
+
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = sourceResolver.resolveURI(resolvedUri);
 
         } catch (Exception e) {
             throw new RuntimeException("Resolving path [" + location + "] failed: ", e);
         } finally {
+            if (templateManager != null) {
+                this.manager.release(templateManager);
+            }
             if (sourceResolver != null) {
                 this.manager.release(sourceResolver);
             }
@@ -112,7 +126,10 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         if (getLogger().isDebugEnabled()) {
             long endTime = new GregorianCalendar().getTimeInMillis();
             long time = endTime - startTime;
-            getLogger().debug("Processing time: " + new SimpleDateFormat("hh:mm:ss.S").format(new Date(time)));
+            getLogger()
+                    .debug(
+                            "Processing time: "
+                                    + new SimpleDateFormat("hh:mm:ss.S").format(new Date(time)));
         }
 
         return source;
