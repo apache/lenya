@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-home.dir=/home/USERNAME
+webapp.dir=/usr/local/jakarta-tomcat-4.1.29/webapps/lenya
+#webapp.dir=/home/USERNAME/src/cocoon-lenya/build/lenya/webapp
 
 java.run=/usr/lib/j2sdk1.4/bin/java
 

@@ -18,11 +18,10 @@
 DIRNAME=`dirname $0`
 echo "INFO: dirname = $DIRNAME"
 
-HOME=`grep home.dir $DIRNAME/search.properties | grep -v "#" | sed -e 's/home.dir=//'`
-echo "INFO: HOME = $HOME"
+WEBAPP_DIR=`grep webapp.dir $DIRNAME/search.properties | grep -v "#" | sed -e 's/webapp.dir=//'`
+echo "INFO: WEBAPP_DIR = $WEBAPP_DIR"
 JAVA=`grep java.run $DIRNAME/search.properties | grep -v "#" | sed -e 's/java.run=//'`
 echo "INFO: JAVA = $JAVA"
-WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 XPDF=`grep xpdf.bin $DIRNAME/search.properties | grep -v "#" | sed -e 's/xpdf.bin=//'`
 
