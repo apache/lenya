@@ -24,12 +24,15 @@ import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+/**
+ * A filename filter for .java, .properties, .xml and .xsl files
+ * FIXME this class is named badly
+ */
 public class JavaFilenameFilter implements FilenameFilter {
     
-    protected static final String[] SUFFIXES = { "java", "properties", "xml", "xsl" };
+    private static final String[] SUFFIXES = { "java", "properties", "xml", "xsl" };
 
 	/**
-	 *  (non-Javadoc)
 	 * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
 	 */
     public boolean accept(File dir, String name) {
@@ -45,7 +48,6 @@ public class JavaFilenameFilter implements FilenameFilter {
 
 	/**
 	 * Get the extension
-	 * 
 	 * @param filename the file name from which the extension is extracted
 	 * @return the extension
 	 */

@@ -47,7 +47,7 @@ import org.apache.excalibur.source.Source;
  */
 public class ResourceExistsAction extends ServiceableAction implements ThreadSafe {
     /**
-     *
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
         Parameters parameters) throws Exception {

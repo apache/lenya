@@ -21,17 +21,19 @@ package org.apache.lenya.lucene.parser;
 
 import java.io.File;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Factory to create HTML parsers that are used for indexing HTML.
  */
 public class HTMLParserFactory {
     
-    public static Category log = Category.getInstance(HTMLParserFactory.class);
+   static private final Logger log = Logger.getLogger(HTMLParserFactory.class);
     
     /**
      * Returns an HTMLParser.
+     * @param file The file
+     * @return The HTMLParser
      */
     public static HTMLParser newInstance(File file) {
         HTMLParser parser = null;

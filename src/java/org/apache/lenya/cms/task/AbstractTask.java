@@ -23,38 +23,38 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 
+/**
+ * Abstract baseclass for Task
+ */
 public abstract class AbstractTask implements Task {
     private Parameters parameters = new Parameters();
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get parameters of the task
+     * @return The parameters
      */
     public Parameters getParameters() {
         Parameters params = new Parameters();
-        params = params.merge(parameters);
+        params = params.merge(this.parameters);
 
         return params;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param parameters DOCUMENT ME!
-     * 
+     * Set the parameters
+     * @param _parameters The parameters
      * @throws ParameterException if the parametrizing fails
      */
-    public void parameterize(Parameters parameters) throws ParameterException {
-        this.parameters = this.parameters.merge(parameters);
+    public void parameterize(Parameters _parameters) throws ParameterException {
+        this.parameters = this.parameters.merge(_parameters);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param label DOCUMENT ME!
+     * Set the label of the task
+     * @param label The label
      */
     public void setLabel(String label) {
+	    // do nothing
     }
     
     private int result = SUCCESS;
@@ -63,14 +63,14 @@ public abstract class AbstractTask implements Task {
      * @see org.apache.lenya.cms.task.Task#getResult()
      */
     public int getResult() {
-        return result;
+        return this.result;
     }
     
     /**
      * Sets the result of this task.
-     * @param result An integer ({@link Task#SUCCESS}, {@link Task#FAILURE}).
+     * @param _result An integer ({@link Task#SUCCESS}, {@link Task#FAILURE}).
      */
-    protected void setResult(int result) {
-        this.result = result;
+    protected void setResult(int _result) {
+        this.result = _result;
     }
 }

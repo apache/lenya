@@ -32,7 +32,27 @@ import java.io.Reader;
  * HTML Parser
  */
 public class HTMLParser implements HTMLParserConstants {
+    /**
+     * <code>SUMMARY_LENGTH</code> Contains the length of the summary.
+     */
     public static int SUMMARY_LENGTH = 200;
+    /**
+     * <code>token_source</code>
+     */
+    public HTMLParserTokenManager token_source;
+    /**
+     * <code>token</code>
+     */
+    public Token token;
+    /**
+     * <code>jj_nt</code>
+     */
+    public Token jj_nt;
+    /**
+     * <code>lookingAhead</code>
+     */
+    public boolean lookingAhead = false;
+
     StringBuffer title = new StringBuffer(SUMMARY_LENGTH);
     StringBuffer summary = new StringBuffer(SUMMARY_LENGTH * 2);
     int length = 0;
@@ -45,15 +65,11 @@ public class HTMLParser implements HTMLParserConstants {
     PipedReader pipeIn = null;
     PipedWriter pipeOut;
     int MAX_WAIT = 1000;
-    public HTMLParserTokenManager token_source;
     SimpleCharStream jj_input_stream;
-    public Token token;
-    public Token jj_nt;
     private int jj_ntk;
     private Token jj_scanpos;
     private Token jj_lastpos;
     private int jj_la;
-    public boolean lookingAhead = false;
     private int jj_gen;
     final private int[] jj_la1 = new int[13];
     final private int[] jj_la1_0 = {
@@ -70,81 +86,75 @@ public class HTMLParser implements HTMLParserConstants {
     private int jj_endpos;
 
     /**
-     * Creates a new HTMLParser object.
-     *
-     * @param file DOCUMENT ME!
-     * @throws FileNotFoundException DOCUMENT ME!
+     * Creates a new HTMLParser object from a file
+     * @param file The file
+     * @throws FileNotFoundException if the file was not found
      */
     public HTMLParser(File file) throws FileNotFoundException {
         this(new FileInputStream(file));
     }
 
     /**
-     * Creates a new HTMLParser object.
-     *
-     * @param stream DOCUMENT ME!
+     * Creates a new HTMLParser object from a stream
+     * @param stream The stream
      */
     public HTMLParser(java.io.InputStream stream) {
-        jj_input_stream = new SimpleCharStream(stream, 1, 1);
-        token_source = new HTMLParserTokenManager(jj_input_stream);
-        token = new Token();
-        jj_ntk = -1;
-        jj_gen = 0;
+        this.jj_input_stream = new SimpleCharStream(stream, 1, 1);
+        this.token_source = new HTMLParserTokenManager(this.jj_input_stream);
+        this.token = new Token();
+        this.jj_ntk = -1;
+        this.jj_gen = 0;
 
         for (int i = 0; i < 13; i++)
-            jj_la1[i] = -1;
+            this.jj_la1[i] = -1;
 
-        for (int i = 0; i < jj_2_rtns.length; i++)
-            jj_2_rtns[i] = new JJCalls();
+        for (int i = 0; i < this.jj_2_rtns.length; i++)
+            this.jj_2_rtns[i] = new JJCalls();
     }
 
     /**
-     * Creates a new HTMLParser object.
-     *
-     * @param stream DOCUMENT ME!
+     * Creates a new HTMLParser object from a reader
+     * @param stream The reader
      */
     public HTMLParser(java.io.Reader stream) {
-        jj_input_stream = new SimpleCharStream(stream, 1, 1);
-        token_source = new HTMLParserTokenManager(jj_input_stream);
-        token = new Token();
-        jj_ntk = -1;
-        jj_gen = 0;
+        this.jj_input_stream = new SimpleCharStream(stream, 1, 1);
+        this.token_source = new HTMLParserTokenManager(this.jj_input_stream);
+        this.token = new Token();
+        this.jj_ntk = -1;
+        this.jj_gen = 0;
 
         for (int i = 0; i < 13; i++)
-            jj_la1[i] = -1;
+            this.jj_la1[i] = -1;
 
-        for (int i = 0; i < jj_2_rtns.length; i++)
-            jj_2_rtns[i] = new JJCalls();
+        for (int i = 0; i < this.jj_2_rtns.length; i++)
+            this.jj_2_rtns[i] = new JJCalls();
     }
 
     /**
-     * Creates a new HTMLParser object.
-     *
-     * @param tm DOCUMENT ME!
+     * Creates a new HTMLParser object from a token manager
+     * @param tm The token manager
      */
     public HTMLParser(HTMLParserTokenManager tm) {
-        token_source = tm;
-        token = new Token();
-        jj_ntk = -1;
-        jj_gen = 0;
+        this.token_source = tm;
+        this.token = new Token();
+        this.jj_ntk = -1;
+        this.jj_gen = 0;
 
         for (int i = 0; i < 13; i++)
-            jj_la1[i] = -1;
+            this.jj_la1[i] = -1;
 
-        for (int i = 0; i < jj_2_rtns.length; i++)
-            jj_2_rtns[i] = new JJCalls();
+        for (int i = 0; i < this.jj_2_rtns.length; i++)
+            this.jj_2_rtns[i] = new JJCalls();
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws IOException DOCUMENT ME!
-     * @throws InterruptedException DOCUMENT ME!
+     * Get the title
+     * @return The title
+     * @throws IOException if an IO error occurs
+     * @throws InterruptedException if an error occurs
      */
     public String getTitle() throws IOException, InterruptedException {
-        if (pipeIn == null) {
+        if (this.pipeIn == null) {
             getReader(); // spawn parsing thread
         }
 
@@ -152,7 +162,7 @@ public class HTMLParser implements HTMLParserConstants {
 
         while (true) {
             synchronized (this) {
-                if (titleComplete || (length > SUMMARY_LENGTH)) {
+                if (this.titleComplete || (this.length > SUMMARY_LENGTH)) {
                     break;
                 }
 
@@ -160,39 +170,35 @@ public class HTMLParser implements HTMLParserConstants {
 
                 elapsedMillis = elapsedMillis + 10;
 
-                if (elapsedMillis > MAX_WAIT) {
+                if (elapsedMillis > this.MAX_WAIT) {
                     break;
                 }
             }
         }
 
-        return title.toString().trim();
+        return this.title.toString().trim();
     }
 
     /**
      * Get keywords
-     *
      * @return keywords
-     *
-     * @throws IOException DOCUMENT ME!
-     * @throws InterruptedException DOCUMENT ME!
+     * @throws IOException if an IO error occurs
+     * @throws InterruptedException if an error occurs
      */
     public String getKeywords() throws IOException, InterruptedException {
         return "";
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws IOException DOCUMENT ME!
-     * @throws InterruptedException DOCUMENT ME!
+     * Get the summary
+     * @return The summary
+     * @throws IOException if an IO error occurs
+     * @throws InterruptedException if an error occurs
      */
     public String getSummary() throws IOException, InterruptedException {
         System.out.println("HTMLParser().getSummary()");
 
-        if (pipeIn == null) {
+        if (this.pipeIn == null) {
             getReader(); // spawn parsing thread
         }
 
@@ -200,7 +206,7 @@ public class HTMLParser implements HTMLParserConstants {
 
         while (true) {
             synchronized (this) {
-                if (summary.length() >= SUMMARY_LENGTH) {
+                if (this.summary.length() >= SUMMARY_LENGTH) {
                     break;
                 }
 
@@ -208,50 +214,47 @@ public class HTMLParser implements HTMLParserConstants {
 
                 elapsedMillis = elapsedMillis + 10;
 
-                if (elapsedMillis > MAX_WAIT) {
+                if (elapsedMillis > this.MAX_WAIT) {
                     break;
                 }
             }
         }
 
-        if (summary.length() > SUMMARY_LENGTH) {
-            summary.setLength(SUMMARY_LENGTH);
+        if (this.summary.length() > SUMMARY_LENGTH) {
+            this.summary.setLength(SUMMARY_LENGTH);
         }
 
-        String sum = summary.toString().trim();
+        String sum = this.summary.toString().trim();
         String tit = getTitle();
 
         if (sum.startsWith(tit)) {
             return sum;
-        } else {
-            return sum;
         }
+        return sum;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws IOException DOCUMENT ME!
+     * Get a reader
+     * @return The reader
+     * @throws IOException if an IO error occurs
      */
     public Reader getReader() throws IOException {
-        if (pipeIn == null) {
-            pipeIn = new PipedReader();
-            pipeOut = new PipedWriter(pipeIn);
+        if (this.pipeIn == null) {
+            this.pipeIn = new PipedReader();
+            this.pipeOut = new PipedWriter(this.pipeIn);
 
             Thread thread = new ParserThread(this);
             thread.start(); // start parsing
         }
 
-        return pipeIn;
+        return this.pipeIn;
     }
 
     void addToSummary(String text) {
-        if (summary.length() < SUMMARY_LENGTH) {
-            summary.append(text);
+        if (this.summary.length() < SUMMARY_LENGTH) {
+            this.summary.append(text);
 
-            if (summary.length() >= SUMMARY_LENGTH) {
+            if (this.summary.length() >= SUMMARY_LENGTH) {
                 synchronized (this) {
                     notifyAll();
                 }
@@ -260,64 +263,63 @@ public class HTMLParser implements HTMLParserConstants {
     }
 
     void addToTitle(String text) {
-        title.append(text);
+        this.title.append(text);
     }
 
     void addText(String text) throws IOException {
-        if (inScript) {
+        if (this.inScript) {
             return;
         }
 
-        if (inTitle) {
+        if (this.inTitle) {
             addToTitle(text);
         } else {
             addToSummary(text);
 
-            if (!titleComplete && !title.equals("")) { // finished title
+            if (!this.titleComplete && !this.title.equals("")) { // finished title
 
                 synchronized (this) {
-                    titleComplete = true; // tell waiting threads
+                    this.titleComplete = true; // tell waiting threads
                     notifyAll();
                 }
             }
         }
 
-        length += text.length();
-        pipeOut.write(text);
+        this.length += text.length();
+        this.pipeOut.write(text);
 
-        afterSpace = false;
+        this.afterSpace = false;
     }
 
     void addSpace() throws IOException {
-        if (inScript) {
+        if (this.inScript) {
             return;
         }
 
-        if (!afterSpace) {
-            if (inTitle) {
+        if (!this.afterSpace) {
+            if (this.inTitle) {
                 addToTitle(" ");
             } else {
                 addToSummary(" ");
             }
 
-            String space = afterTag ? eol : " ";
-            length += space.length();
-            pipeOut.write(space);
-            afterSpace = true;
+            String space = this.afterTag ? this.eol : " ";
+            this.length += space.length();
+            this.pipeOut.write(space);
+            this.afterSpace = true;
         }
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @throws ParseException DOCUMENT ME!
-     * @throws IOException DOCUMENT ME!
+     * Implements HTMLDocument
+     * @throws ParseException if a parser error occurs
+     * @throws IOException if an IO error occurs
      */
     final public void HTMLDocument() throws ParseException, IOException {
         Token t;
 label_1: 
         while (true) {
-            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+            switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
             case TagName:
             case DeclName:
             case Comment1:
@@ -330,61 +332,54 @@ label_1:
                 break;
 
             default:
-                jj_la1[0] = jj_gen;
+                this.jj_la1[0] = this.jj_gen;
 
                 break label_1;
             }
 
-            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+            switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
             case TagName:
-                Tag();
-                afterTag = true;
-
+                tag();
+                this.afterTag = true;
                 break;
 
             case DeclName:
-                t = Decl();
-                afterTag = true;
-
+                t = decl();
+                this.afterTag = true;
                 break;
 
             case Comment1:
             case Comment2:
-                CommentTag();
-                afterTag = true;
-
+                commentTag();
+                this.afterTag = true;
                 break;
 
             case Word:
                 t = jj_consume_token(Word);
                 addText(t.image);
-                afterTag = false;
-
+                this.afterTag = false;
                 break;
 
             case Entity:
                 t = jj_consume_token(Entity);
                 addText(Entities.decode(t.image));
-                afterTag = false;
-
+                this.afterTag = false;
                 break;
 
             case Punct:
                 t = jj_consume_token(Punct);
                 addText(t.image);
-                afterTag = false;
-
+                this.afterTag = false;
                 break;
 
             case Space:
                 jj_consume_token(Space);
                 addSpace();
-                afterTag = false;
-
+                this.afterTag = false;
                 break;
 
             default:
-                jj_la1[1] = jj_gen;
+                this.jj_la1[1] = this.jj_gen;
                 jj_consume_token(-1);
                 throw new ParseException();
             }
@@ -394,49 +389,47 @@ label_1:
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @throws ParseException DOCUMENT ME!
-     * @throws IOException DOCUMENT ME!
+     * tag() callback
+     * @throws ParseException if a parser error occurs
+     * @throws IOException if an IO error occurs
      */
-    final public void Tag() throws ParseException, IOException {
+    final public void tag() throws ParseException, IOException {
         Token t1;
         Token t2;
         boolean inImg = false;
         t1 = jj_consume_token(TagName);
-        inTitle = t1.image.equalsIgnoreCase("<title"); // keep track if in <TITLE>
+        this.inTitle = t1.image.equalsIgnoreCase("<title"); // keep track if in <TITLE>
         inImg = t1.image.equalsIgnoreCase("<img"); // keep track if in <IMG>
 
-        if (inScript) { // keep track if in <SCRIPT>
-            inScript = !t1.image.equalsIgnoreCase("</script");
+        if (this.inScript) { // keep track if in <SCRIPT>
+            this.inScript = !t1.image.equalsIgnoreCase("</script");
         } else {
-            inScript = t1.image.equalsIgnoreCase("<script");
+            this.inScript = t1.image.equalsIgnoreCase("<script");
         }
 
 label_2: 
         while (true) {
-            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+            switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
             case ArgName:
-
                 break;
 
             default:
-                jj_la1[2] = jj_gen;
+                this.jj_la1[2] = this.jj_gen;
 
                 break label_2;
             }
 
             t1 = jj_consume_token(ArgName);
 
-            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+            switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
             case ArgEquals:
                 jj_consume_token(ArgEquals);
 
-                switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
                 case ArgValue:
                 case ArgQuote1:
                 case ArgQuote2:
-                    t2 = ArgValue();
+                    t2 = argValue();
 
                     if (inImg && t1.image.equalsIgnoreCase("alt") && (t2 != null)) {
                         addText("[" + t2.image + "]");
@@ -445,13 +438,13 @@ label_2:
                     break;
 
                 default:
-                    jj_la1[3] = jj_gen;
+                    this.jj_la1[3] = this.jj_gen;
                 }
 
                 break;
 
             default:
-                jj_la1[4] = jj_gen;
+                this.jj_la1[4] = this.jj_gen;
             }
         }
 
@@ -459,17 +452,15 @@ label_2:
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws ParseException DOCUMENT ME!
-     * @throws Error DOCUMENT ME!
+     * ArgValue() callback
+     * @return The token
+     * @throws ParseException if a parser error occurs
+     * @throws Error if an error occurs
      */
-    final public Token ArgValue() throws ParseException {
+    final public Token argValue() throws ParseException {
         Token t = null;
 
-        switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+        switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
         case ArgValue:
             t = jj_consume_token(ArgValue);
              {
@@ -481,7 +472,7 @@ label_2:
             break;
 
         default:
-            jj_la1[5] = jj_gen;
+            this.jj_la1[5] = this.jj_gen;
 
             if (jj_2_1(2)) {
                 jj_consume_token(ArgQuote1);
@@ -491,7 +482,7 @@ label_2:
                     return t;
                 }
             } else {
-                switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
                 case ArgQuote1:
                     jj_consume_token(ArgQuote1);
                     t = jj_consume_token(Quote1Text);
@@ -505,7 +496,7 @@ label_2:
                     break;
 
                 default:
-                    jj_la1[6] = jj_gen;
+                    this.jj_la1[6] = this.jj_gen;
 
                     if (jj_2_2(2)) {
                         jj_consume_token(ArgQuote2);
@@ -515,7 +506,7 @@ label_2:
                             return t;
                         }
                     } else {
-                        switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                        switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
                         case ArgQuote2:
                             jj_consume_token(ArgQuote2);
                             t = jj_consume_token(Quote2Text);
@@ -529,7 +520,7 @@ label_2:
                             break;
 
                         default:
-                            jj_la1[7] = jj_gen;
+                            this.jj_la1[7] = this.jj_gen;
                             jj_consume_token(-1);
                             throw new ParseException();
                         }
@@ -542,19 +533,17 @@ label_2:
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws ParseException DOCUMENT ME!
-     * @throws Error DOCUMENT ME!
+     * Decl() callback
+     * @return The token
+     * @throws ParseException if a parser error occurs
+     * @throws Error if an error occurs
      */
-    final public Token Decl() throws ParseException {
+    final public Token decl() throws ParseException {
         Token t;
         t = jj_consume_token(DeclName);
 label_3: 
         while (true) {
-            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+            switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
             case ArgName:
             case ArgEquals:
             case ArgValue:
@@ -564,12 +553,12 @@ label_3:
                 break;
 
             default:
-                jj_la1[8] = jj_gen;
+                this.jj_la1[8] = this.jj_gen;
 
                 break label_3;
             }
 
-            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+            switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
             case ArgName:
                 jj_consume_token(ArgName);
 
@@ -578,7 +567,7 @@ label_3:
             case ArgValue:
             case ArgQuote1:
             case ArgQuote2:
-                ArgValue();
+                argValue();
 
                 break;
 
@@ -588,7 +577,7 @@ label_3:
                 break;
 
             default:
-                jj_la1[9] = jj_gen;
+                this.jj_la1[9] = this.jj_gen;
                 jj_consume_token(-1);
                 throw new ParseException();
             }
@@ -604,23 +593,22 @@ label_3:
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @throws ParseException DOCUMENT ME!
+     * CommentTag() callback
+     * @throws ParseException if a parser error occurs
      */
-    final public void CommentTag() throws ParseException {
-        switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+    final public void commentTag() throws ParseException {
+        switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
         case Comment1:
             jj_consume_token(Comment1);
 label_4: 
             while (true) {
-                switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
                 case CommentText1:
 
                     break;
 
                 default:
-                    jj_la1[10] = jj_gen;
+                    this.jj_la1[10] = this.jj_gen;
 
                     break label_4;
                 }
@@ -636,13 +624,13 @@ label_4:
             jj_consume_token(Comment2);
 label_5: 
             while (true) {
-                switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                switch ((this.jj_ntk == -1) ? jj_ntk() : this.jj_ntk) {
                 case CommentText2:
 
                     break;
 
                 default:
-                    jj_la1[11] = jj_gen;
+                    this.jj_la1[11] = this.jj_gen;
 
                     break label_5;
                 }
@@ -655,15 +643,15 @@ label_5:
             break;
 
         default:
-            jj_la1[12] = jj_gen;
+            this.jj_la1[12] = this.jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
         }
     }
 
     final private boolean jj_2_1(int xla) {
-        jj_la = xla;
-        jj_lastpos = jj_scanpos = token;
+        this.jj_la = xla;
+        this.jj_lastpos = this.jj_scanpos = this.token;
 
         boolean retval = !jj_3_1();
         jj_save(0, xla);
@@ -672,8 +660,8 @@ label_5:
     }
 
     final private boolean jj_2_2(int xla) {
-        jj_la = xla;
-        jj_lastpos = jj_scanpos = token;
+        this.jj_la = xla;
+        this.jj_lastpos = this.jj_scanpos = this.token;
 
         boolean retval = !jj_3_2();
         jj_save(1, xla);
@@ -686,7 +674,7 @@ label_5:
             return true;
         }
 
-        if ((jj_la == 0) && (jj_scanpos == jj_lastpos)) {
+        if ((this.jj_la == 0) && (this.jj_scanpos == this.jj_lastpos)) {
             return false;
         }
 
@@ -694,7 +682,7 @@ label_5:
             return true;
         }
 
-        if ((jj_la == 0) && (jj_scanpos == jj_lastpos)) {
+        if ((this.jj_la == 0) && (this.jj_scanpos == this.jj_lastpos)) {
             return false;
         }
 
@@ -706,7 +694,7 @@ label_5:
             return true;
         }
 
-        if ((jj_la == 0) && (jj_scanpos == jj_lastpos)) {
+        if ((this.jj_la == 0) && (this.jj_scanpos == this.jj_lastpos)) {
             return false;
         }
 
@@ -714,7 +702,7 @@ label_5:
             return true;
         }
 
-        if ((jj_la == 0) && (jj_scanpos == jj_lastpos)) {
+        if ((this.jj_la == 0) && (this.jj_scanpos == this.jj_lastpos)) {
             return false;
         }
 
@@ -722,83 +710,80 @@ label_5:
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param stream DOCUMENT ME!
+     * Reinitialize the Parser
+     * @param stream The stream
      */
-    public void ReInit(java.io.InputStream stream) {
-        jj_input_stream.ReInit(stream, 1, 1);
-        token_source.ReInit(jj_input_stream);
-        token = new Token();
-        jj_ntk = -1;
-        jj_gen = 0;
+    public void reInit(java.io.InputStream stream) {
+        this.jj_input_stream.reInit(stream, 1, 1);
+        this.token_source.reInit(this.jj_input_stream);
+        this.token = new Token();
+        this.jj_ntk = -1;
+        this.jj_gen = 0;
 
         for (int i = 0; i < 13; i++)
-            jj_la1[i] = -1;
+            this.jj_la1[i] = -1;
 
-        for (int i = 0; i < jj_2_rtns.length; i++)
-            jj_2_rtns[i] = new JJCalls();
+        for (int i = 0; i < this.jj_2_rtns.length; i++)
+            this.jj_2_rtns[i] = new JJCalls();
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param stream DOCUMENT ME!
+     * Reinitialize the Parser
+     * @param stream The reader
      */
-    public void ReInit(java.io.Reader stream) {
-        jj_input_stream.ReInit(stream, 1, 1);
-        token_source.ReInit(jj_input_stream);
-        token = new Token();
-        jj_ntk = -1;
-        jj_gen = 0;
+    public void reInit(java.io.Reader stream) {
+        this.jj_input_stream.reInit(stream, 1, 1);
+        this.token_source.reInit(this.jj_input_stream);
+        this.token = new Token();
+        this.jj_ntk = -1;
+        this.jj_gen = 0;
 
         for (int i = 0; i < 13; i++)
-            jj_la1[i] = -1;
+            this.jj_la1[i] = -1;
 
-        for (int i = 0; i < jj_2_rtns.length; i++)
-            jj_2_rtns[i] = new JJCalls();
+        for (int i = 0; i < this.jj_2_rtns.length; i++)
+            this.jj_2_rtns[i] = new JJCalls();
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param tm DOCUMENT ME!
+     * Reinitialize the Parser
+     * @param tm The token manager
      */
-    public void ReInit(HTMLParserTokenManager tm) {
-        token_source = tm;
-        token = new Token();
-        jj_ntk = -1;
-        jj_gen = 0;
+    public void reInit(HTMLParserTokenManager tm) {
+        this.token_source = tm;
+        this.token = new Token();
+        this.jj_ntk = -1;
+        this.jj_gen = 0;
 
         for (int i = 0; i < 13; i++)
-            jj_la1[i] = -1;
+            this.jj_la1[i] = -1;
 
-        for (int i = 0; i < jj_2_rtns.length; i++)
-            jj_2_rtns[i] = new JJCalls();
+        for (int i = 0; i < this.jj_2_rtns.length; i++)
+            this.jj_2_rtns[i] = new JJCalls();
     }
 
     final private Token jj_consume_token(int kind) throws ParseException {
         Token oldToken;
 
-        if ((oldToken = token).next != null) {
-            token = token.next;
+        if ((oldToken = this.token).next != null) {
+            this.token = this.token.next;
         } else {
-            token = token.next = token_source.getNextToken();
+            this.token = this.token.next = this.token_source.getNextToken();
         }
 
-        jj_ntk = -1;
+        this.jj_ntk = -1;
 
-        if (token.kind == kind) {
-            jj_gen++;
+        if (this.token.kind == kind) {
+            this.jj_gen++;
 
-            if (++jj_gc > 100) {
-                jj_gc = 0;
+            if (++this.jj_gc > 100) {
+                this.jj_gc = 0;
 
-                for (int i = 0; i < jj_2_rtns.length; i++) {
-                    JJCalls c = jj_2_rtns[i];
+                for (int i = 0; i < this.jj_2_rtns.length; i++) {
+                    JJCalls c = this.jj_2_rtns[i];
 
                     while (c != null) {
-                        if (c.gen < jj_gen) {
+                        if (c.gen < this.jj_gen) {
                             c.first = null;
                         }
 
@@ -807,32 +792,32 @@ label_5:
                 }
             }
 
-            return token;
+            return this.token;
         }
 
-        token = oldToken;
-        jj_kind = kind;
+        this.token = oldToken;
+        this.jj_kind = kind;
         throw generateParseException();
     }
 
     final private boolean jj_scan_token(int kind) {
-        if (jj_scanpos == jj_lastpos) {
-            jj_la--;
+        if (this.jj_scanpos == this.jj_lastpos) {
+            this.jj_la--;
 
-            if (jj_scanpos.next == null) {
-                jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.getNextToken();
+            if (this.jj_scanpos.next == null) {
+                this.jj_lastpos = this.jj_scanpos = this.jj_scanpos.next = this.token_source.getNextToken();
             } else {
-                jj_lastpos = jj_scanpos = jj_scanpos.next;
+                this.jj_lastpos = this.jj_scanpos = this.jj_scanpos.next;
             }
         } else {
-            jj_scanpos = jj_scanpos.next;
+            this.jj_scanpos = this.jj_scanpos.next;
         }
 
-        if (jj_rescan) {
+        if (this.jj_rescan) {
             int i = 0;
-            Token tok = token;
+            Token tok = this.token;
 
-            while ((tok != null) && (tok != jj_scanpos)) {
+            while ((tok != null) && (tok != this.jj_scanpos)) {
                 i++;
                 tok = tok.next;
             }
@@ -842,42 +827,39 @@ label_5:
             }
         }
 
-        return (jj_scanpos.kind != kind);
+        return (this.jj_scanpos.kind != kind);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get the next token
+     * @return The token
      */
     final public Token getNextToken() {
-        if (token.next != null) {
-            token = token.next;
+        if (this.token.next != null) {
+            this.token = this.token.next;
         } else {
-            token = token.next = token_source.getNextToken();
+            this.token = this.token.next = this.token_source.getNextToken();
         }
 
-        jj_ntk = -1;
-        jj_gen++;
+        this.jj_ntk = -1;
+        this.jj_gen++;
 
-        return token;
+        return this.token;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param index DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get token at position
+     * @param index The position
+     * @return The token
      */
     final public Token getToken(int index) {
-        Token t = lookingAhead ? jj_scanpos : token;
+        Token t = this.lookingAhead ? this.jj_scanpos : this.token;
 
         for (int i = 0; i < index; i++) {
             if (t.next != null) {
                 t = t.next;
             } else {
-                t = t.next = token_source.getNextToken();
+                t = t.next = this.token_source.getNextToken();
             }
         }
 
@@ -885,11 +867,10 @@ label_5:
     }
 
     final private int jj_ntk() {
-        if ((jj_nt = token.next) == null) {
-            return (jj_ntk = (token.next = token_source.getNextToken()).kind);
-        } else {
-            return (jj_ntk = jj_nt.kind);
+        if ((this.jj_nt = this.token.next) == null) {
+            return (this.jj_ntk = (this.token.next = this.token_source.getNextToken()).kind);
         }
+        return (this.jj_ntk = this.jj_nt.kind);
     }
 
     private void jj_add_error_token(int kind, int pos) {
@@ -897,25 +878,25 @@ label_5:
             return;
         }
 
-        if (pos == (jj_endpos + 1)) {
-            jj_lasttokens[jj_endpos++] = kind;
-        } else if (jj_endpos != 0) {
-            jj_expentry = new int[jj_endpos];
+        if (pos == (this.jj_endpos + 1)) {
+            this.jj_lasttokens[this.jj_endpos++] = kind;
+        } else if (this.jj_endpos != 0) {
+            this.jj_expentry = new int[this.jj_endpos];
 
-            for (int i = 0; i < jj_endpos; i++) {
-                jj_expentry[i] = jj_lasttokens[i];
+            for (int i = 0; i < this.jj_endpos; i++) {
+                this.jj_expentry[i] = this.jj_lasttokens[i];
             }
 
             boolean exists = false;
 
-            for (java.util.Enumeration enum = jj_expentries.elements(); enum.hasMoreElements();) {
-                int[] oldentry = (int[]) (enum.nextElement());
+            for (java.util.Enumeration tEnum = this.jj_expentries.elements(); tEnum.hasMoreElements();) {
+                int[] oldentry = (int[]) (tEnum.nextElement());
 
-                if (oldentry.length == jj_expentry.length) {
+                if (oldentry.length == this.jj_expentry.length) {
                     exists = true;
 
-                    for (int i = 0; i < jj_expentry.length; i++) {
-                        if (oldentry[i] != jj_expentry[i]) {
+                    for (int i = 0; i < this.jj_expentry.length; i++) {
+                        if (oldentry[i] != this.jj_expentry[i]) {
                             exists = false;
 
                             break;
@@ -929,22 +910,21 @@ label_5:
             }
 
             if (!exists) {
-                jj_expentries.addElement(jj_expentry);
+                this.jj_expentries.addElement(this.jj_expentry);
             }
 
             if (pos != 0) {
-                jj_lasttokens[(jj_endpos = pos) - 1] = kind;
+                this.jj_lasttokens[(this.jj_endpos = pos) - 1] = kind;
             }
         }
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Generate a parse exception
+     * @return The exception
      */
     final public ParseException generateParseException() {
-        jj_expentries.removeAllElements();
+        this.jj_expentries.removeAllElements();
 
         boolean[] la1tokens = new boolean[27];
 
@@ -952,15 +932,15 @@ label_5:
             la1tokens[i] = false;
         }
 
-        if (jj_kind >= 0) {
-            la1tokens[jj_kind] = true;
-            jj_kind = -1;
+        if (this.jj_kind >= 0) {
+            la1tokens[this.jj_kind] = true;
+            this.jj_kind = -1;
         }
 
         for (int i = 0; i < 13; i++) {
-            if (jj_la1[i] == jj_gen) {
+            if (this.jj_la1[i] == this.jj_gen) {
                 for (int j = 0; j < 32; j++) {
-                    if ((jj_la1_0[i] & (1 << j)) != 0) {
+                    if ((this.jj_la1_0[i] & (1 << j)) != 0) {
                         la1tokens[j] = true;
                     }
                 }
@@ -969,47 +949,49 @@ label_5:
 
         for (int i = 0; i < 27; i++) {
             if (la1tokens[i]) {
-                jj_expentry = new int[1];
-                jj_expentry[0] = i;
-                jj_expentries.addElement(jj_expentry);
+                this.jj_expentry = new int[1];
+                this.jj_expentry[0] = i;
+                this.jj_expentries.addElement(this.jj_expentry);
             }
         }
 
-        jj_endpos = 0;
+        this.jj_endpos = 0;
         jj_rescan_token();
         jj_add_error_token(0, 0);
 
-        int[][] exptokseq = new int[jj_expentries.size()][];
+        int[][] exptokseq = new int[this.jj_expentries.size()][];
 
-        for (int i = 0; i < jj_expentries.size(); i++) {
-            exptokseq[i] = (int[]) jj_expentries.elementAt(i);
+        for (int i = 0; i < this.jj_expentries.size(); i++) {
+            exptokseq[i] = (int[]) this.jj_expentries.elementAt(i);
         }
 
-        return new ParseException(token, exptokseq, tokenImage);
+        return new ParseException(this.token, exptokseq, tokenImage);
     }
 
     /**
-     * DOCUMENT ME!
+     * Enable tracing
      */
     final public void enable_tracing() {
+        // do nothing
     }
 
     /**
-     * DOCUMENT ME!
+     * Disable tracing
      */
     final public void disable_tracing() {
+        // do nothing
     }
 
     final private void jj_rescan_token() {
-        jj_rescan = true;
+        this.jj_rescan = true;
 
         for (int i = 0; i < 2; i++) {
-            JJCalls p = jj_2_rtns[i];
+            JJCalls p = this.jj_2_rtns[i];
 
             do {
-                if (p.gen > jj_gen) {
-                    jj_la = p.arg;
-                    jj_lastpos = jj_scanpos = p.first;
+                if (p.gen > this.jj_gen) {
+                    this.jj_la = p.arg;
+                    this.jj_lastpos = this.jj_scanpos = p.first;
 
                     switch (i) {
                     case 0:
@@ -1028,13 +1010,13 @@ label_5:
             } while (p != null);
         }
 
-        jj_rescan = false;
+        this.jj_rescan = false;
     }
 
     final private void jj_save(int index, int xla) {
-        JJCalls p = jj_2_rtns[index];
+        JJCalls p = this.jj_2_rtns[index];
 
-        while (p.gen > jj_gen) {
+        while (p.gen > this.jj_gen) {
             if (p.next == null) {
                 p = p.next = new JJCalls();
 
@@ -1044,8 +1026,8 @@ label_5:
             p = p.next;
         }
 
-        p.gen = (jj_gen + xla) - jj_la;
-        p.first = token;
+        p.gen = (this.jj_gen + xla) - this.jj_la;
+        p.first = this.token;
         p.arg = xla;
     }
 

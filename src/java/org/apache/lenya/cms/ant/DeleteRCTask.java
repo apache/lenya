@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -44,8 +43,8 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 		super();
 	}
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	/** 
+	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
 		String publicationPath;
@@ -112,7 +111,6 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 			log("src area dir" + this.getSrcareadir());
 
 			//visit the destination tree
-			Publication publication = getPublication();
 			SiteTree tree = getSiteTree(this.getSecarea());
 			SiteTreeNode node = tree.getNode(this.getSecdocumentid());
 			node.acceptReverseSubtree(this);
@@ -125,42 +123,42 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 	 * @return The backup directory.
 	 */
 	public String getRcbakdir() {
-		return rcbakdir;
+		return this.rcbakdir;
 	}
 
 	/**
 	 * @return The rcml directory.
 	 */
 	public String getRcmldir() {
-		return rcmldir;
+		return this.rcmldir;
 	}
 
 	/**
 	 * @return The path of the area from the publication.
 	 */
 	public String getSrcareadir() {
-		return srcareadir;
+		return this.srcareadir;
 	}
 
 	/**
 	 * @param string The backup directory.
 	 */
 	public void setRcbakdir(String string) {
-		rcbakdir = string;
+		this.rcbakdir = string;
 	}
 
 	/**
 	 * @param string The rcml directory.
 	 */
 	public void setRcmldir(String string) {
-		rcmldir = string;
+		this.rcmldir = string;
 	}
 
 	/**
 	 * @param string The path of the area from the publication.
 	 */
 	public void setSrcareadir(String string) {
-		srcareadir = string;
+		this.srcareadir = string;
 	}
 
 }

@@ -14,6 +14,9 @@
  *  limitations under the License.
  *
  */
+
+/* @version $Id$ */
+
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.util.Map;
@@ -30,7 +33,7 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl;
 
 /**
- * @version $Id$
+ * Input module to resolve fallback usecases
  */
 public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements Serviceable {
 
@@ -53,7 +56,7 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
         String resolvedSitemapUri = null;
 
         try {
-            PublicationTemplateManager templateManager = (PublicationTemplateManager) this.manager
+            PublicationTemplateManager templateManager = (PublicationTemplateManager) this._manager
                     .lookup(PublicationTemplateManager.ROLE);
             PageEnvelope envelope = getEnvelope(objectModel);
             templateManager.setup(envelope.getPublication());
@@ -75,13 +78,13 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
         return resolvedSitemapUri;
     }
  
-    private ServiceManager manager;
+    private ServiceManager _manager;
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager mymanager) throws ServiceException {
+        this._manager = mymanager;
     }
 
 }

@@ -39,54 +39,49 @@ public class TreePublisher extends PublicationTask {
      * Creates a new instance of TreePublisher
      */
     public TreePublisher() {
+	    // do nothing
     }
 
     /**
      * Returns the document id
-     * 
-     * @return DOCUMENT ME!
+     * @return The document id
      */
     protected String getDocumentid() {
-        return documentid;
+        return this.documentid;
     }
 
     /**
      * Sets the document id
-     * 
-     * @param documentid DOCUMENT ME!
+     * @param _documentid The document id
      */
-    public void setDocumentid(String documentid) {
-        this.documentid = documentid;
+    public void setDocumentid(String _documentid) {
+        this.documentid = _documentid;
     }
 
     /**
      * Get the language of the document to be published
-     * 
      * @return a <code>String</code> containing the ISO string for this language, e.g. "de", "en"
      */
     public String getLanguage() {
-        return language;
+        return this.language;
     }
 
     /**
      * Set the language of the document to be published
-     * 
      * @param string the ISO string for this language, e.g. "de", "en"
      */
     public void setLanguage(String string) {
-        language = string;
+        this.language = string;
     }
 
     /**
      * adds a node for the published document in the live tree
-     * 
      * @param documentId The id of the published document
-     * @param language the language for which this document is to be published. Can be null if all
+     * @param _language the language for which this document is to be published. Can be null if all
      *            languages are to be published.
-     * 
      * @throws PublishingException if the publication failed.
      */
-    public void publish(String documentId, String language) throws PublishingException {
+    public void publish(String documentId, String _language) throws PublishingException {
         SiteTree authoringTree = null;
         SiteTree liveTree = null;
 
@@ -108,7 +103,7 @@ public class TreePublisher extends PublicationTask {
                 }
             }
 
-            if (language == null) {
+            if (_language == null) {
                 // no language was specified. Simply publish the
                 // node including all languages.
                 try {
@@ -121,7 +116,7 @@ public class TreePublisher extends PublicationTask {
                 // a language was specified. Let's see if this
                 // node even has an entry for the specified
                 // language.
-                Label label = authoringNode.getLabel(language);
+                Label label = authoringNode.getLabel(_language);
                 if (label != null) {
                     // check if this node has already been
                     // published
@@ -148,21 +143,21 @@ public class TreePublisher extends PublicationTask {
                     // the node that we're trying to publish
                     // doesn't have this language
                     throw new PublishingException("The node " + documentId
-                            + " doesn't contain a label for language " + language);
+                            + " doesn't contain a label for language " + _language);
                 }
             }
             liveTree.save();
-        } catch (PublishingException e) {
-            throw e;
-        } catch (Exception e) {
+        } catch (final ParentNodeNotFoundException e) {
+            throw new PublishingException("Couldn't publish to live tree :", e);
+        } catch (final SiteException e) {
+            throw new PublishingException("Couldn't publish to live tree :", e);
+        } catch (final PublishingException e) {
             throw new PublishingException("Couldn't publish to live tree :", e);
         }
     }
 
     /**
-     * Executes the task
-     * 
-     * @throws BuildException DOCUMENT ME!
+     * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
         try {
@@ -170,7 +165,8 @@ public class TreePublisher extends PublicationTask {
             log("language: " + getLanguage());
 
             publish(getDocumentid(), getLanguage());
-        } catch (Exception e) {
+        } catch (final PublishingException e) {
+            log("" +e.toString());
             throw new BuildException(e);
         }
     }

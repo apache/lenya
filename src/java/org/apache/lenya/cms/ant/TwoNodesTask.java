@@ -47,73 +47,73 @@ public abstract class TwoNodesTask extends PublicationTask {
 	 * @return String The area of the document of the first node.
 	 */
 	public String getFirstarea() {
-		return firstarea;
+		return this.firstarea;
 	}
 
 	/**
 	 * @return String The document-id corresponding to the first node.
 	 */
 	public String getFirstdocumentid() {
-		return firstdocumentid;
+		return this.firstdocumentid;
 	}
 
 	/**
 	 * @return String The area of the document of the second node.
 	 */
 	public String getSecarea() {
-		return secarea;
+		return this.secarea;
 	}
 
 	/**
 	 * @return String The document-id corresponding to the second node.
 	 */
 	public String getSecdocumentid() {
-		return secdocumentid;
+		return this.secdocumentid;
 	}
 
 	/**
 	 * @param string The area of the document of the first node.
 	 */
 	public void setFirstarea(String string) {
-		firstarea = string;
+		this.firstarea = string;
 	}
 
 	/**
 	 * @param string The document-id corresponding to the first node.
 	 */
 	public void setFirstdocumentid(String string) {
-		firstdocumentid = string;
+		this.firstdocumentid = string;
 	}
 
 	/**
 	 * @param string The area of the document of the second node.
 	 */
 	public void setSecarea(String string) {
-		secarea = string;
+		this.secarea = string;
 	}
 
 	/**
 	 * @param string The document-id corresponding to the second node.
 	 */
 	public void setSecdocumentid(String string) {
-		secdocumentid = string;
+		this.secdocumentid = string;
 	}
 
     /**
      * To be overriden.
      * Manipulation of two nodes . 
-     * @param firstdocumentid : id of the first document
-     * @param secdocumentid : id of the second document
-     * @param firstarea : area of the tree of the first node
-     * @param secarea : area of the tree of the 2nd node
+     * @param _firstdocumentid : id of the first document
+     * @param _secdocumentid : id of the second document
+     * @param _firstarea : area of the tree of the first node
+     * @param _secarea : area of the tree of the 2nd node
      * 
      * @throws SiteException if an error occurs
      */
-    public abstract void manipulateTree(String firstdocumentid, String secdocumentid,
-        String firstarea, String secarea)
+    public abstract void manipulateTree(String _firstdocumentid, String _secdocumentid,
+        String _firstarea, String _secarea)
         throws SiteException;
 
-    /** (non-Javadoc)
+    /** 
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {

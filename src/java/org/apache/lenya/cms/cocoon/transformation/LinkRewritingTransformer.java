@@ -36,12 +36,13 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
@@ -88,16 +89,16 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
      *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public void setup(SourceResolver resolver, Map objectModel, String source, Parameters parameters)
+    public void setup(SourceResolver _resolver, Map _objectModel, String _source, Parameters _parameters)
             throws ProcessingException, SAXException, IOException {
-        super.setup(resolver, objectModel, source, parameters);
+        super.setup(_resolver, _objectModel, _source, _parameters);
 
         try {
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(objectModel);
+            Publication pub = factory.getPublication(_objectModel);
             this.identityMap = new DocumentIdentityMap(pub);
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
-                    this.identityMap, objectModel);
+                    this.identityMap, _objectModel);
             this.currentDocument = envelope.getDocument();
 
         } catch (Exception e) {
@@ -109,7 +110,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             getLogger().debug("    Processed version:       [" + getCurrentDocument() + "]");
         }
 
-        Request request = ObjectModelHelper.getRequest(objectModel);
+        Request _request = ObjectModelHelper.getRequest(_objectModel);
 
         this.serviceSelector = null;
         this.acResolver = null;
@@ -124,7 +125,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
             }
-            String webappUrl = ServletHelper.getWebappURI(request);
+            String webappUrl = ServletHelper.getWebappURI(_request);
             AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
             if (accessController instanceof DefaultAccessController) {
                 DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
@@ -147,7 +148,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     /**
      * Returns the currently processed document.
-     * 
      * @return A document.
      */
     protected Document getCurrentDocument() {
@@ -162,8 +162,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     private String indent = "";
 
     /**
-     * (non-Javadoc)
-     * 
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
      *      java.lang.String, org.xml.sax.Attributes)
      */
@@ -187,18 +185,17 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                 Publication publication = getCurrentDocument().getPublication();
 
                 try {
-
                     newAttrs = new AttributesImpl(attrs);
 
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug(this.indent + "href URL: [" + href + "]");
                     }
 
-                    String context = this.request.getContextPath();
+                    String _context = this.request.getContextPath();
 
-                    if (href.startsWith(context + "/" + publication.getId())) {
+                    if (href.startsWith(_context + "/" + publication.getId())) {
 
-                        final String webappUrlWithAnchor = href.substring(context.length());
+                        final String webappUrlWithAnchor = href.substring(_context.length());
 
                         String anchor = null;
                         String webappUrl = null;
@@ -237,7 +234,13 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             }
                         }
                     }
-                } catch (Exception e) {
+                } catch (final DocumentBuildException e) {
+                    getLogger().error("startElement failed: ", e);
+                    throw new SAXException(e);
+                } catch (final DocumentException e) {
+                    getLogger().error("startElement failed: ", e);
+                    throw new SAXException(e);
+                } catch (final AccessControlException e) {
                     getLogger().error("startElement failed: ", e);
                     throw new SAXException(e);
                 }
@@ -267,10 +270,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * @param targetDocument The target document.
      * @param anchor The anchor (the string after the # character in the URL).
      * @throws AccessControlException when something went wrong.
-     * @throws PublicationException when something went wrong.
      */
     protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor)
-            throws AccessControlException, PublicationException {
+            throws AccessControlException {
+
         String webappUrl = targetDocument.getCanonicalWebappURL();
         Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
 
@@ -313,8 +316,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     }
 
     /**
-     * (non-Javadoc)
-     * 
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String,
      *      java.lang.String)
      */
@@ -353,7 +354,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.avalon.excalibur.pool.Recyclable#recycle()
      */
     public void recycle() {

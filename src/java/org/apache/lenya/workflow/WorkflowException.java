@@ -25,7 +25,7 @@ package org.apache.lenya.workflow;
  */
 public class WorkflowException extends Exception {
     /**
-     *
+     * Constructor
      */
     public WorkflowException() {
         super();
@@ -33,7 +33,6 @@ public class WorkflowException extends Exception {
 
     /**
      * Create a WorkflowException.
-     * 
      * @param message The message.
      */
     public WorkflowException(String message) {
@@ -42,7 +41,6 @@ public class WorkflowException extends Exception {
 
     /**
      * Create a WorkflowException.
-     * 
      * @param message The message.
      * @param cause The cause.
      */
@@ -52,7 +50,6 @@ public class WorkflowException extends Exception {
 
     /**
      * Create a WorkflowException.
-     * 
      * @param cause The cause.
      */
     public WorkflowException(Throwable cause) {

@@ -33,7 +33,7 @@ public class CachedObject {
      * @return An object.
      */
     public Object getValue() {
-        return value;
+        return this.value;
     }
 
     /**
@@ -41,17 +41,17 @@ public class CachedObject {
      * @return A source validity.
      */
     public SourceValidity getValidityObject() {
-        return validityObject;
+        return this.validityObject;
     }
 
     /**
      * Ctor.
      * @param validity The source validity.
-     * @param value The value.
+     * @param _value The value.
      */
-    public CachedObject(SourceValidity validity, Object value) {
+    public CachedObject(SourceValidity validity, Object _value) {
         this.validityObject = validity;
-        this.value = value;
+        this.value = _value;
     }
 
 }

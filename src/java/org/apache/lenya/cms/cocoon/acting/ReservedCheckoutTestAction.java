@@ -37,7 +37,7 @@ import org.apache.lenya.cms.rc.RCMLEntry;
 
 public class ReservedCheckoutTestAction extends RevisionControllerAction {
 
-    /** (non-Javadoc)
+    /**
 	 * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
 	 */
 	public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,

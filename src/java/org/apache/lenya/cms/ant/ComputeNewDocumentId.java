@@ -57,7 +57,7 @@ public class ComputeNewDocumentId extends PublicationTask {
 	 * @return string The area in which is the sitetree.
 	 */
 	public String getArea() {
-		return area;
+		return this.area;
 	}
 
 	/**
@@ -65,14 +65,14 @@ public class ComputeNewDocumentId extends PublicationTask {
 	 * @param string The area of the sitetree.
 	 */
 	public void setArea(String string) {
-		area = string;
+		this.area = string;
 	}
 
     /**
      * @return string The document id of the source 
      */
     protected String getFirstdocumentid() {
-        return firstdocumentid;
+        return this.firstdocumentid;
     }
 
     /**
@@ -80,7 +80,7 @@ public class ComputeNewDocumentId extends PublicationTask {
      * @param string The document id of the source
      */
     public void setFirstdocumentid(String string) {
-        firstdocumentid = string;
+        this.firstdocumentid = string;
     }
 
     /**
@@ -88,7 +88,7 @@ public class ComputeNewDocumentId extends PublicationTask {
      * or the new name in case of rename
      */
     protected String getSecdocumentid() {
-        return secdocumentid;
+        return this.secdocumentid;
     }
 
     /**
@@ -96,33 +96,33 @@ public class ComputeNewDocumentId extends PublicationTask {
      * or the new name in case of rename
      */
     public void setSecdocumentid(String string) {
-        secdocumentid = string;
+        this.secdocumentid = string;
     }
 
 	/**
 	 * Method to be overriden to compute the document id of the destination.
-	 * @param firstdocumentid The document id of the source.
-	 * @param secdocumentid Some string to characterize the destination (ex 
+	 * @param _firstdocumentid The document id of the source.
+	 * @param _secdocumentid Some string to characterize the destination (ex 
 	 * document id of parent, new name).
 	 * @return string. The new document id
 	 */
-	protected String compute(String firstdocumentid, String secdocumentid) {
-		return secdocumentid;
+	protected String compute(String _firstdocumentid, String _secdocumentid) {
+		return _secdocumentid;
 	}
 
     /**
      * Compute the unique document id: append a "_version number" to the id,
      * if there is already a node in the sitetree with this id.
      * @param documentid  The document id.
-     * @param area The area in which is the sitetree.
+     * @param _area The area in which is the sitetree.
      * @return newdocumentid The unique document id. 
      */
-	protected String computeUniqueId(String documentid, String area) {
+	protected String computeUniqueId(String documentid, String _area) {
 
 		Publication publication = getPublication();
 
 		UniqueDocumentId uniqueDocumentId = new UniqueDocumentId();
-        String newdocumentid = uniqueDocumentId.computeUniqueDocumentId(publication, area, documentid);
+        String newdocumentid = uniqueDocumentId.computeUniqueDocumentId(publication, _area, documentid);
 		return newdocumentid;
 
     }
@@ -132,9 +132,9 @@ public class ComputeNewDocumentId extends PublicationTask {
 	 * @param documentid The new document id.
 	 */
 	protected void setNewProperty(String documentid) {
-		Target target = getOwningTarget();
-		Project project = target.getProject();
-		project.setProperty("node.newdocumentid", documentid);
+		Target _target = getOwningTarget();
+		Project _project = _target.getProject();
+		_project.setProperty("node.newdocumentid", documentid);
 	}
 
     /**

@@ -23,6 +23,9 @@ import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.cms.ExcaliburTest;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * Test class for the Accreditable Manager
+ */
 public class AccreditableManagerTest extends ExcaliburTest {
 
     /**
@@ -58,10 +61,10 @@ public class AccreditableManagerTest extends ExcaliburTest {
         super.setUp();
 
         String role = AccreditableManager.ROLE + "Selector";
-        selector = (ComponentSelector) manager.lookup(role);
+        this.selector = (ComponentSelector) this.manager.lookup(role);
         
-        accreditableManager = (AccreditableManager) selector.select(HINT);
-        assertNotNull("AccreditableManager is null", accreditableManager);
+        this.accreditableManager = (AccreditableManager) this.selector.select(HINT);
+        assertNotNull("AccreditableManager is null", this.accreditableManager);
     }
 
     /**
@@ -69,10 +72,9 @@ public class AccreditableManagerTest extends ExcaliburTest {
      * @throws AccessControlException when something went wrong.
      */
     public void testAccreditableManager() throws AccessControlException {
-        assertNotNull(accreditableManager.getUserManager());
-        assertNotNull(accreditableManager.getGroupManager());
-        assertNotNull(accreditableManager.getRoleManager());
-        
+        assertNotNull(this.accreditableManager.getUserManager());
+        assertNotNull(this.accreditableManager.getGroupManager());
+        assertNotNull(this.accreditableManager.getRoleManager());
     }
 
 }

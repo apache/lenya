@@ -47,16 +47,17 @@ public class FileGroup extends AbstractGroup implements Item {
      * Creates a new FileGroup object.
      */
     public FileGroup() {
+	    // do nothing
     }
 
     /**
      * Create a new instance of <code>FileGroup</code>
-     * @param configurationDirectory to which the group will be attached to
+     * @param _configurationDirectory to which the group will be attached to
      * @param id the ID of the group
      */
-    public FileGroup(File configurationDirectory, String id) {
+    public FileGroup(File _configurationDirectory, String id) {
         super(id);
-        setConfigurationDirectory(configurationDirectory);
+        setConfigurationDirectory(_configurationDirectory);
     }
 
     /**
@@ -80,7 +81,6 @@ public class FileGroup extends AbstractGroup implements Item {
 
     /**
      * Save this group
-     * 
      * @throws AccessControlException if the save failed
      */
     public void save() throws AccessControlException {
@@ -102,7 +102,6 @@ public class FileGroup extends AbstractGroup implements Item {
 
     /**
      * Create a configuration containing the group details
-     * 
      * @return a <code>Configuration</code>
      */
     private Configuration createConfiguration() {
@@ -119,14 +118,14 @@ public class FileGroup extends AbstractGroup implements Item {
      * @return A file object.
      */
     protected File getConfigurationDirectory() {
-        return configurationDirectory;
+        return this.configurationDirectory;
     }
 
     /**
      * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
-    public void setConfigurationDirectory(File configurationDirectory) {
-        assert (configurationDirectory != null) && configurationDirectory.isDirectory();
-        this.configurationDirectory = configurationDirectory;
+    public void setConfigurationDirectory(File _configurationDirectory) {
+        assert (_configurationDirectory != null) && _configurationDirectory.isDirectory();
+        this.configurationDirectory = _configurationDirectory;
     }
 }

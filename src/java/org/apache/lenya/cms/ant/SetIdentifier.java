@@ -48,41 +48,39 @@ public class SetIdentifier extends PublicationTask {
      * @return String The area.
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * @return String The document-id.
      */
     public String getDocumentid() {
-        return documentid;
+        return this.documentid;
     }
 
     /**
      * @param string The area.
      */
     public void setArea(String string) {
-        area = string;
+        this.area = string;
     }
 
     /**
      * @param string The document-id.
      */
     public void setDocumentid(String string) {
-        documentid = string;
+        this.documentid = string;
     }
 
     /**
      * write the document id in the DC Identifier of a document corresponding to this url
      * @param document The document.
-     * 
-     * @throws DocumentBuildException when something went wrong when building the cms document.
      * @throws DocumentException when something went wrong when getting the DublinCore.
      */
     public void writeDCIdentifier(Document document)
-            throws DocumentBuildException, DocumentException {
+            throws DocumentException {
         DublinCore dublincore = document.getDublinCore();
-        dublincore.setValue("identifier", documentid);
+        dublincore.setValue("identifier", this.documentid);
         dublincore.save();
     }
 
@@ -96,18 +94,18 @@ public class SetIdentifier extends PublicationTask {
         String language = null;
         SiteTree tree;
 
-        tree = getSiteTree(area);
-        SiteTreeNode node = tree.getNode(documentid);
+        tree = getSiteTree(this.area);
+        SiteTreeNode node = tree.getNode(this.documentid);
         Label[] labels = node.getLabels();
 
         try {
             if (labels.length < 1) {
                 log("no languages found for the node with id : " + node.getId());
-                writeDCIdentifier(getIdentityMap().getFactory().get(area, documentid));
+                writeDCIdentifier(getIdentityMap().getFactory().get(this.area, this.documentid));
             } else {
                 for (int i = 0; i < labels.length; i++) {
                     language = labels[i].getLanguage();
-                    writeDCIdentifier(getIdentityMap().getFactory().get(area, documentid, language));
+                    writeDCIdentifier(getIdentityMap().getFactory().get(this.area, this.documentid, language));
                 }
             }
         } catch (DocumentException e1) {

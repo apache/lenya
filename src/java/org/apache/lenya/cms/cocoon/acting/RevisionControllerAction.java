@@ -86,14 +86,14 @@ public class RevisionControllerAction extends AbstractAction {
         String publicationPath = publication.getDirectory().getCanonicalPath();
         RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
                 .getCanonicalPath());
-        rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
-        backupDirectory = rcEnvironment.getBackupDirectory();
-        backupDirectory = publicationPath + File.separator + backupDirectory;
+        this.rcmlDirectory = rcEnvironment.getRCMLDirectory();
+        this.rcmlDirectory = publicationPath + File.separator + this.rcmlDirectory;
+        this.backupDirectory = rcEnvironment.getBackupDirectory();
+        this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
 
         // Initialize Revision Controller
-        rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
-        getLogger().debug("revision controller" + rc);
+        this.rc = new RevisionController(this.rcmlDirectory, this.backupDirectory, publicationPath);
+        getLogger().debug("revision controller" + this.rc);
 
         // /Initialize Revision Controller
         // Get session
@@ -134,55 +134,52 @@ public class RevisionControllerAction extends AbstractAction {
 
             Document srcDoc = map.getFactory().get(document.getArea(), documentid, language);
             File newFile = srcDoc.getFile();
-            filename = newFile.getCanonicalPath();
+            this.filename = newFile.getCanonicalPath();
 
         } else {
-            filename = document.getFile().getCanonicalPath();
+            this.filename = document.getFile().getCanonicalPath();
         }
 
-        filename = filename.substring(publicationPath.length());
+        this.filename = this.filename.substring(publicationPath.length());
 
-        username = null;
+        this.username = null;
 
         if (identity != null) {
             User user = identity.getUser();
             if (user != null) {
-                username = user.getId();
+                this.username = user.getId();
             }
         } else {
             getLogger().error(".act(): No identity yet");
         }
 
-        getLogger().debug(".act(): Username: " + username);
+        getLogger().debug(".act(): Username: " + this.username);
 
         return null;
     }
 
     /**
      * Get the filename.
-     * 
      * @return the filename
      */
     protected String getFilename() {
-        return filename;
+        return this.filename;
     }
 
     /**
      * Get the revision controller.
-     * 
      * @return the revision controller
      */
     protected RevisionController getRc() {
-        return rc;
+        return this.rc;
     }
 
     /**
      * Get the user name.
-     * 
      * @return the user name
      */
     protected String getUsername() {
-        return username;
+        return this.username;
     }
 
 }

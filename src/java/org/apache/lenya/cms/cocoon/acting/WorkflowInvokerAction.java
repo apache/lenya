@@ -45,9 +45,21 @@ import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
  */
 public class WorkflowInvokerAction extends ServiceableAction {
 
+    /**
+     * <code>AREA</code> The area
+     */
     public static final String AREA = "area";
+    /**
+     * <code>DOCUMENT_ID</code> The document id
+     */
     public static final String DOCUMENT_ID = "document-id";
+    /**
+     * <code>LANGUAGE</code> The language
+     */
     public static final String LANGUAGE = "language";
+    /**
+     * <code>EVENT</code> The event
+     */
     public static final String EVENT = "event";
 
     /**

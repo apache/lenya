@@ -27,12 +27,15 @@ import java.io.File;
 public abstract class AbstractHTMLParser implements HTMLParser {
     /** Creates a new instance of AbstractHTMLParser */
     public AbstractHTMLParser() {
+        // do nothing
     }
 
     /**
      * Parses a file.
+     * @param _file The file
+     * @throws ParseException if an error occurs
      */
-    public void parse(File file) throws ParseException {
-        parse(file.toURI());
+    public void parse(File _file) throws ParseException {
+        parse(_file.toURI());
     }
 }

@@ -29,7 +29,7 @@ import org.w3c.dom.Text;
 /**
  * A NamespaceHelper object simplifies the creation of elements in a certain
  * namespace. All elements are owned by a document that is passed to the
- * {@link #NamespaceHelper(Document, String, String)} constructor or created
+ * {@link #NamespaceHelper(String, String, Document)} constructor or created
  * using the {@link #NamespaceHelper(String, String, String)} constructor.
  */
 public class NamespaceHelper {
@@ -40,15 +40,14 @@ public class NamespaceHelper {
     /**
      * Creates a new instance of NamespaceHelper using an existing document. The
      * document is not affected. If you omit the prefix, the default namespace is used.
-     *
-     * @param document The document.
-     * @param namespaceUri The namespace URI.
-     * @param prefix The namespace prefix.
+     * @param _document The document.
+     * @param _namespaceUri The namespace URI.
+     * @param _prefix The namespace prefix.
      */
-    public NamespaceHelper(String namespaceUri, String prefix, Document document) {
-        this.namespaceUri = namespaceUri;
-        this.prefix = prefix;
-        this.document = document;
+    public NamespaceHelper(String _namespaceUri, String _prefix, Document _document) {
+        this.namespaceUri = _namespaceUri;
+        this.prefix = _prefix;
+        this.document = _document;
     }
 
     /**
@@ -63,70 +62,62 @@ public class NamespaceHelper {
      * &lt;svg:svg xmlns:svg="http://www.w3.org/2000/svg"&gt;<br/>
      * &lt;/svg:svg&gt;
      * </p>
-     *
      * @param localName The local name of the document element.
-     * @param namespaceUri The namespace URI.
-     * @param prefix The namespace prefix.
-     * 
+     * @param _namespaceUri The namespace URI.
+     * @param _prefix The namespace prefix.
      * @throws ParserConfigurationException if an error occured
      */
-    public NamespaceHelper(String namespaceUri, String prefix, String localName)
+    public NamespaceHelper(String _namespaceUri, String _prefix, String localName)
         throws ParserConfigurationException {
-        this.namespaceUri = namespaceUri;
-        this.prefix = prefix;
+        this.namespaceUri = _namespaceUri;
+        this.prefix = _prefix;
         setDocument(DocumentHelper.createDocument(getNamespaceURI(), getQualifiedName(localName),
                 null));
     }
 
     /**
      * Sets the document of this NamespaceHelper.
-     * 
-     * @param document the document
+     * @param _document the document
      */
-    protected void setDocument(Document document) {
-        this.document = document;
+    protected void setDocument(Document _document) {
+        this.document = _document;
     }
 
     /**
      * Returns the document that is used to create elements.
-     *
      * @return A document object.
      */
     public Document getDocument() {
-        return document;
+        return this.document;
     }
 
     /**
      * Returns the namespace URI of this NamespaceHelper.
-     *
      * @return The namespace URI.
      */
     public String getNamespaceURI() {
-        return namespaceUri;
+        return this.namespaceUri;
     }
 
     /**
      * Returns the namespace prefix that is used to create elements.
-     *
      * @return The namespace prefix.
      */
     public String getPrefix() {
-        return prefix;
+        return this.prefix;
     }
 
     /**
      * Returns the qualified name for a local name using the prefix of this
      * NamespaceHelper.
-     *
      * @param localName The local name.
      * @return The qualified name, i.e. prefix:localName.
      */
     public String getQualifiedName(String localName) {
         if (getPrefix().equals("")) {
             return localName;
-        } else {
-            return getPrefix() + ":" + localName;
         }
+        return getPrefix() + ":" + localName;
     }
 
     /**
@@ -137,7 +128,6 @@ public class NamespaceHelper {
      * <p>
      * <code>createElement("text")</code>: <code>&lt;prefix:text/&gt;<code>.
      * </p>
-     *
      * @param localName The local name of the element.
      * @return A new element.
      */
@@ -154,7 +144,6 @@ public class NamespaceHelper {
      * <code>createElement("text", "Hello World!")</code>:
      * <code>&lt;prefix:text&gt;Hello World!&lt;/prefix:text&gt;</code>.
      * </p>
-     *
      * @param localName The local name of the element.
      * @param text The text for the text node inside the element.
      * @return A new element containing a text node.
@@ -170,9 +159,7 @@ public class NamespaceHelper {
     /**
      * Returns all children of an element in the namespace
      * of this NamespaceHelper.
-     *
      * @param element The parent element.
-     * 
      * @return the children.
      */
     public Element[] getChildren(Element element) {
@@ -182,10 +169,8 @@ public class NamespaceHelper {
     /**
      * Returns all children of an element with a local name in the namespace
      * of this NamespaceHelper.
-     *
      * @param element The parent element.
      * @param localName The local name of the children to return.
-     * 
      * @return the children.
      */
     public Element[] getChildren(Element element, String localName) {
@@ -195,10 +180,8 @@ public class NamespaceHelper {
     /**
      * Returns the first childr of an element with a local name in the namespace
      * of this NamespaceHelper or <code>null</code> if none exists.
-     *
      * @param element The parent element.
      * @param localName The local name of the children to return.
-     * 
      * @return the first child.
      */
     public Element getFirstChild(Element element, String localName) {
@@ -208,10 +191,8 @@ public class NamespaceHelper {
 	/**
 	 * Returns the next siblings of an element with a local name in the namespace
 	 * of this NamespaceHelper or <code>null</code> if none exists.
-	 *
 	 * @param element The parent element.
 	 * @param localName The local name of the children to return.
-	 * 
 	 * @return the next siblings.
 	 */
 	public Element[] getNextSiblings(Element element, String localName) {

@@ -60,7 +60,7 @@ public abstract class AccessControlAction extends ConfigurableServiceableAction 
 
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
-        accessController = null;
+        this.accessController = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -68,7 +68,7 @@ public abstract class AccessControlAction extends ConfigurableServiceableAction 
 
         try {
             selector =
-                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+                (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE + "Selector");
                 
             getLogger().debug("Resolving AC resolver for type [" + AccessControllerResolver.DEFAULT_RESOLVER + "]");
             resolver =
@@ -77,12 +77,12 @@ public abstract class AccessControlAction extends ConfigurableServiceableAction 
             getLogger().debug("Resolved AC resolver [" + resolver + "]");
 
             String webappUrl = ServletHelper.getWebappURI(request);
-            accessController = resolver.resolveAccessController(webappUrl);
+            this.accessController = resolver.resolveAccessController(webappUrl);
 
-            if (accessController == null) {
+            if (this.accessController == null) {
                 result = Collections.EMPTY_MAP;
             } else {
-                accessController.setupIdentity(request);
+                this.accessController.setupIdentity(request);
                 result = doAct(redirector, sourceResolver, objectModel, source, parameters);
             }
 
@@ -91,7 +91,7 @@ public abstract class AccessControlAction extends ConfigurableServiceableAction 
                 if (resolver != null) {
                     selector.release(resolver);
                 }
-                manager.release(selector);
+                this.manager.release(selector);
             }
         }
         return result;
@@ -129,7 +129,7 @@ public abstract class AccessControlAction extends ConfigurableServiceableAction 
      * @return An access controller.
      */
     public AccessController getAccessController() {
-        return accessController;
+        return this.accessController;
     }
 
 }

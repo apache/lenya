@@ -19,7 +19,7 @@
 
 package org.apache.lenya.cms.scheduler;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -31,9 +31,10 @@ public final class ServletJobFactory {
      * Ctor.
      */
     private ServletJobFactory() {
+	    // do nothing
     }
 
-    private static Category log = Category.getInstance(ServletJobFactory.class);
+    private static Logger log = Logger.getLogger(ServletJobFactory.class);
 
     /**
      * Creates a job.
@@ -54,9 +55,7 @@ public final class ServletJobFactory {
 
     /**
      * Creates a job. 
-     *
      * @param cl The Java class used to instanciate the job object.
-     *
      * @return A servlet job.
      */
     public static ServletJob createJob(Class cl) {

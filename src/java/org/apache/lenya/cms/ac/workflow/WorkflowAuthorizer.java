@@ -27,14 +27,16 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Authorizer;
-import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
+import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * If the client requested invoking a workflow event, this authorizer checks if the current document
@@ -71,7 +73,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
         if (event != null) {
 
             try {
-                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
                 Publication publication = pubFactory.getPublication(resolver, request);
                 DocumentIdentityMap map = new DocumentIdentityMap(publication);
@@ -101,17 +103,23 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                         }
                     }
                 }
-
-            } catch (Exception e) {
+            } catch (final ServiceException e) {
+                throw new AccessControlException(e);
+            } catch (final DocumentBuildException e) {
+                throw new AccessControlException(e);
+            } catch (final PublicationException e) {
+                throw new AccessControlException(e);
+            } catch (final WorkflowException e) {
                 throw new AccessControlException(e);
             } finally {
                 if (resolver != null) {
-                    manager.release(resolver);
+                    this.manager.release(resolver);
                 }
                 if (workflowResolver != null) {
                     this.manager.release(workflowResolver);
                 }
             }
+
         }
 
         return authorized;
@@ -122,8 +130,8 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
 }

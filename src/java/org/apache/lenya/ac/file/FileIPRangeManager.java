@@ -38,6 +38,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
      * Ctor.
      */
     private FileIPRangeManager() {
+	    // do nothing
     }
 
     protected static final String SUFFIX = ".ipml";
@@ -52,8 +53,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
     private static Map instances = new HashMap();
 
     /**
-     * Describe <code>instance</code> method here.
-     * 
+     * Return an instance of FileIPRangeManager
      * @param configurationDirectory a directory
      * @param logger The logger.
      * @return an <code>IPRangeManager</code> value
@@ -80,7 +80,6 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
     /**
      * Get all IP ranges.
-     * 
      * @return an array of IP ranges.
      */
     public IPRange[] getIPRanges() {
@@ -94,7 +93,6 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
     /**
      * Add the given IP range
-     * 
      * @param range IP range that is to be added
      * @throws AccessControlException when the notification failed.
      */
@@ -104,7 +102,6 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
     /**
      * Remove the given IP range
-     * 
      * @param range IP range that is to be removed
      * @throws AccessControlException when the notification failed.
      */
@@ -114,7 +111,6 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
     /**
      * Get the IPRange with the given id.
-     * 
      * @param rangeId user id of requested IP range
      * @return the requested IP range or null if there is no IP range with the given id
      */

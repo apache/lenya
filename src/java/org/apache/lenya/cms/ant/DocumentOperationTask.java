@@ -19,12 +19,9 @@
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -47,28 +44,28 @@ public abstract class DocumentOperationTask extends PublicationTask implements S
      * @return String The area of the source.
      */
     public String getFirstarea() {
-        return firstarea;
+        return this.firstarea;
     }
 
     /**
      * @return String The document-id corresponding to the source.
      */
     public String getFirstdocumentid() {
-        return firstdocumentid;
+        return this.firstdocumentid;
     }
 
     /**
      * @param string The area of the source.
      */
     public void setFirstarea(String string) {
-        firstarea = string;
+        this.firstarea = string;
     }
 
     /**
      * @param string The document-id corresponding to the source.
      */
     public void setFirstdocumentid(String string) {
-        firstdocumentid = string;
+        this.firstdocumentid = string;
     }
 
     /**

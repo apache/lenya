@@ -62,6 +62,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
      * Ctor.
      */
     public FlowHelperImpl() {
+	    // do nothing
     }
 
     /**
@@ -141,6 +142,9 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
         return new DocumentHelper(cocoon.getObjectModel());
     }
 
+    /**
+     * <code>SEPARATOR</code> The separator
+     */
     public static final String SEPARATOR = ":";
 
     /**
@@ -186,7 +190,6 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
      */
     public RevisionController getRevisionController(FOM_Cocoon cocoon)
             throws PageEnvelopeException, IOException {
-        final RevisionController rc = null;
         final Publication publication = getPageEnvelope(cocoon).getPublication();
         final String publicationPath = publication.getDirectory().getCanonicalPath();
         final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication

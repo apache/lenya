@@ -41,10 +41,10 @@ public class ConfigurableAccessControllerResolver
         try {
             accessController =
                 (AccessController) getManager().lookup(
-                    AccessController.ROLE + "/" + accessControllerType);
+                    AccessController.ROLE + "/" + this.accessControllerType);
 
             if (accessController instanceof Configurable) {
-                ((Configurable) accessController).configure(accessControllerConfiguration);
+                ((Configurable) accessController).configure(this.accessControllerConfiguration);
             }
 
         } catch (Exception e) {
@@ -64,8 +64,8 @@ public class ConfigurableAccessControllerResolver
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        accessControllerConfiguration = configuration.getChild(ACCESS_CONTROLLER_ELEMENT);
-        accessControllerType = accessControllerConfiguration.getAttribute(TYPE_ATTRIBUTE);
+        this.accessControllerConfiguration = configuration.getChild(ACCESS_CONTROLLER_ELEMENT);
+        this.accessControllerType = this.accessControllerConfiguration.getAttribute(TYPE_ATTRIBUTE);
     }
 
 }

@@ -30,31 +30,109 @@ import org.apache.lenya.cms.site.SiteManager;
  */
 public interface Publication {
 
+    /**
+     * <code>AUTHORING_AREA</code> The authoring area
+     */
     String AUTHORING_AREA = "authoring";
+    /**
+     * <code>STAGING_AREA</code> The staging area
+     */
     String STAGING_AREA = "staging";
+    /**
+     * <code>LIVE_AREA</code> The live area
+     */
     String LIVE_AREA = "live";
+    /**
+     * <code>ADMIN_AREA</code> The admin area
+     */
     String ADMIN_AREA = "admin";
+    /**
+     * <code>ARCHIVE_AREA</code> The archive area
+     */
     String ARCHIVE_AREA = "archive";
+    /**
+     * <code>TRASH_AREA</code> The trash area
+     */
     String TRASH_AREA = "trash";
+    /**
+     * <code>ELEMENT_PATH_MAPPER</code> The path mapper element
+     */
     String ELEMENT_PATH_MAPPER = "path-mapper";
+    /**
+     * <code>ELEMENT_DOCUMENT_BUILDER</code> The document buider element
+     */
     String ELEMENT_DOCUMENT_BUILDER = "document-builder";
+    /**
+     * <code>ELEMENT_SITE_STRUCTURE</code> The site structure element
+     */
     String ELEMENT_SITE_STRUCTURE = "site-structure";
+    /**
+     * <code>ATTRIBUTE_TYPE</code> The type attribute
+     */
     String ATTRIBUTE_TYPE = "type";
+    /**
+     * <code>ATTRIBUTE_SRC</code> The src attribute
+     */
     String ATTRIBUTE_SRC = "type";
+    /**
+     * <code>LANGUAGES</code> The languages
+     */
     String LANGUAGES = "languages";
+    /**
+     * <code>LANGUAGE</code> The language
+     */
     String LANGUAGE = "language";
+    /**
+     * <code>DEFAULT_LANGUAGE_ATTR</code> The default language attribute
+     */
     String DEFAULT_LANGUAGE_ATTR = "default";
+    /**
+     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix
+     */
     String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+    /**
+     * <code>SSL_PREFIX</code> The SSL prefix
+     */
     String SSL_PREFIX = "ssl-prefix";
+    /**
+     * <code>LIVE_MOUNT_POINT</code> The live mount point
+     */
     String LIVE_MOUNT_POINT = "live-mount-point";
+    /**
+     * <code>PUBLICATION_PREFIX</code> The publication prefix
+     */
     String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
+    /**
+     * <code>PUBLICATION_PREFIX_URI</code> The publication prefix URI
+     */
     String PUBLICATION_PREFIX_URI = "lenya/pubs";
+    /**
+     * <code>CONFIGURATION_PATH</code> The configuration path
+     */
     String CONFIGURATION_PATH = "config";
+    /**
+     * <code>CONTENT_PATH</code> The content path
+     */
     String CONTENT_PATH = "content";
+    /**
+     * <code>PENDING_PATH</code> The pending path
+     */
     String PENDING_PATH = "pending";    
+    /**
+     * <code>DELETE_PATH</code> The delete path
+     */
     String DELETE_PATH = "delete";
+    /**
+     * <code>INFO_AREA_PREFIX</code> The info area prefix
+     */
     String INFO_AREA_PREFIX = "info-";
+    /**
+     * <code>SEARCH_AREA_PREFIX</code> The search area prefix
+     */
     String SEARCH_AREA_PREFIX = "search-";
+    /**
+     * <code>CONFIGURATION_FILE</code> The publication configuration file
+     */
     String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
 
     /**
@@ -78,51 +156,43 @@ public interface Publication {
 
     /**
      * Return the directory of a specific area.
-     * 
      * @param area a <code>File</code> representing the root of the area content directory.
-     * 
      * @return the directory of the given content area. 
      */
     File getContentDirectory(String area);
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param mapper DOCUMENT ME!
+     * Set the path mapper
+     * @param mapper The path mapper
      */
     void setPathMapper(DefaultDocumentIdToPathMapper mapper);
 
     /**
      * Returns the path mapper.
-     * 
      * @return a <code>DocumentIdToPathMapper</code>
      */
     DocumentIdToPathMapper getPathMapper();
 
     /**
      * Get the default language
-     * 
      * @return the default language
      */
     String getDefaultLanguage();
 
     /**
      * Set the default language
-     * 
      * @param language the default language
      */
     void setDefaultLanguage(String language);
 
     /**
      * Get all available languages for this publication
-     * 
      * @return an <code>Array</code> of languages
      */
     String[] getLanguages();
 
     /**
      * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger site
-     * 
      * @return the breadcrumb prefix
      */
     String getBreadcrumbPrefix();

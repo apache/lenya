@@ -26,10 +26,21 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
+/**
+ * Task Parameters
+ */
 public class TaskParameters extends ParameterWrapper {
+    /**
+     * <code>REQUIRED_KEYS</code> Required task parameters
+     */
     public static final String[] REQUIRED_KEYS = { Task.PARAMETER_SERVLET_CONTEXT,
             Task.PARAMETER_SERVER_URI, Task.PARAMETER_SERVER_PORT, Task.PARAMETER_CONTEXT_PREFIX,
             Task.PARAMETER_PUBLICATION_ID };
+    /**
+     * <code>PREFIX</code> The task prefix
+     */
+    public static final String PREFIX = "task";
+
 
     /**
      * Ctor.
@@ -38,8 +49,6 @@ public class TaskParameters extends ParameterWrapper {
     public TaskParameters(Map prefixedParameters) {
         super(prefixedParameters);
     }
-
-    public static final String PREFIX = "task";
 
     /**
      * @see org.apache.lenya.cms.task.ParameterWrapper#getPrefix()

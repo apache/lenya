@@ -39,6 +39,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Co
      * Ctor.
      */
     public UnitOfWorkImpl() {
+        // do nothing
     }
 
     private DocumentIdentityMap identityMap;
@@ -71,9 +72,9 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Co
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize(Context context)
+    public void contextualize(Context _context)
             throws ContextException {
-        this.context = context;
+        this.context = _context;
     }
 
     /** The environment context */

@@ -19,7 +19,6 @@
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -41,14 +40,14 @@ public class SiteTreeResetTask extends PublicationTask {
 	 * @return string The area the sitetree belongs to. 
 	 */
 	public String getArea() {
-		return area;
+		return this.area;
 	}
 
 	/**
 	 * @param string The area the sitetree belongs to.
 	 */
 	public void setArea(String string) {
-		area = string;
+		this.area = string;
 	}
 
     /** (non-Javadoc)
@@ -57,7 +56,6 @@ public class SiteTreeResetTask extends PublicationTask {
 	public void execute() throws BuildException {
 		try {
 			log("area : " + this.getArea());
-			Publication publication= getPublication();
 			SiteTree tree = getSiteTree(getArea());
            
 			SiteTreeNode node = tree.getNode("/");

@@ -21,6 +21,7 @@ package org.apache.lenya.lucene;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -34,14 +35,13 @@ import org.apache.lucene.document.Field;
  */
 public class FileDocument {
     private FileDocument() {
+        // do nothing
     }
 
     /**
      * Makes a document for a File.
-     *
      * <p>
      * The document has three fields:
-     *
      * <ul>
      * <li>
      * <code>path</code>--containing the pathname of the file, as a stored, tokenized field;
@@ -55,14 +55,11 @@ public class FileDocument {
      * </li>
      * </ul>
      * </p>
-     *
-     * @param f DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws java.io.FileNotFoundException DOCUMENT ME!
+     * @param f The file
+     * @return The document
+     * @throws FileNotFoundException if the file was not found
      */
-    public static Document Document(File f) throws java.io.FileNotFoundException {
+    public static Document document(File f) throws FileNotFoundException {
         // make a new, empty document
         Document doc = new Document();
 

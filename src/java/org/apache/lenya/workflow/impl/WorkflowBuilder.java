@@ -20,11 +20,8 @@
 package org.apache.lenya.workflow.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -38,7 +35,6 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Utility class to build a workflow schema from a file.
@@ -79,13 +75,9 @@ public class WorkflowBuilder extends AbstractLogEnabled {
      * @param name The workflow name.
      * @param document The XML document.
      * @return A workflow implementation.
-     * @throws ParserConfigurationException when something went wrong.
-     * @throws SAXException when something went wrong.
-     * @throws IOException when something went wrong.
      * @throws WorkflowException when something went wrong.
      */
-    protected WorkflowImpl buildWorkflow(String name, Document document) throws ParserConfigurationException,
-            SAXException, IOException, WorkflowException {
+    protected WorkflowImpl buildWorkflow(String name, Document document) throws WorkflowException {
 
         Element root = document.getDocumentElement();
         StateImpl initialState = null;

@@ -20,15 +20,19 @@
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor;
 import org.apache.tools.ant.BuildException;
+import org.quartz.SchedulerException;
 
 /**
  * Moves the scheduler entry for a document.
@@ -40,11 +44,11 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
      */
     public void execute() throws BuildException {
         try {
-            log("Document ID: [" + documentId + "]");
-            log("Area:        [" + area + "]");
+            log("Document ID: [" + this.documentId + "]");
+            log("Area:        [" + this.area + "]");
 
-            SiteTree tree = getSiteTree(area);
-            SiteTreeNode node = tree.getNode(documentId);
+            SiteTree tree = getSiteTree(this.area);
+            SiteTreeNode node = tree.getNode(this.documentId);
 
             node.acceptSubtree(this);
         } catch (Exception e) {
@@ -58,22 +62,22 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
      * @param string The area.
      */
     public void setArea(String string) {
-        area = string;
+        this.area = string;
     }
 
     /**
      * @param string The document-id.
      */
     public void setDocumentId(String string) {
-        documentId = string;
+        this.documentId = string;
     }
 
     /**
      * Sets the servlet context path.
-     * @param servletContextPath A string.
+     * @param _servletContextPath A string.
      */
-    public void setServletContextPath(String servletContextPath) {
-        this.servletContextPath = servletContextPath;
+    public void setServletContextPath(String _servletContextPath) {
+        this.servletContextPath = _servletContextPath;
     }
 
     /**
@@ -87,16 +91,21 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
             String language = labels[i].getLanguage();
 
             try {
-                Document document = getIdentityMap().getFactory().get(area, documentId, language);
+                Document document = getIdentityMap().getFactory().get(this.area, this.documentId, language);
 
-                String servletContext = new File(servletContextPath).getCanonicalPath();
+                String servletContext = new File(this.servletContextPath).getCanonicalPath();
                 log("Deleting scheduler entry for document [" + document + "]");
                 log("Resolving servlet [" + servletContext + "]");
 
                 LoadQuartzServlet servlet = LoadQuartzServlet.getServlet(servletContext);
                 servlet.deleteDocumentJobs(document);
-
-            } catch (Exception e) {
+            } catch (DocumentBuildException e) {
+                throw new DocumentException(e);
+            } catch (IOException e) {
+                throw new DocumentException(e);
+            } catch (SchedulerException e) {
+                throw new DocumentException(e);
+            } catch (PublicationException e) {
                 throw new DocumentException(e);
             }
 

@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
+import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 import org.apache.lenya.ac.Item;
@@ -34,11 +35,9 @@ import org.apache.lenya.cms.ac.cocoon.PolicyHelper;
 public class AccessControl extends AccessControlUsecase {
 
     private PolicyHelper helper = null;
-
     private Item[] items = null;
 
     private static String[] types = { "user", "group", "iprange", "role" };
-
     private static String[] operations = { "add", "delete" };
 
     /**
@@ -53,8 +52,8 @@ public class AccessControl extends AccessControlUsecase {
      */
     protected void doInitialize() {
         super.doInitialize();
-        try {
 
+        try {
             Role[] roles = getRoleManager().getRoles();
             String visitorRole = "";
             for (int i = 0; i < roles.length; i++) {
@@ -70,16 +69,16 @@ public class AccessControl extends AccessControlUsecase {
             // helper.setup(objectModel, this.manager, area);
 
             for (int i = 0; i < types.length; i++) {
-                Item[] items = null;
+                Item[] _items = null;
 
                 if (types[i].equals("user")) {
-                    items = getUserManager().getUsers();
+                    _items = getUserManager().getUsers();
                 } else if (types[i].equals("group")) {
-                    items = getGroupManager().getGroups();
+                    _items = getGroupManager().getGroups();
                 } else if (types[i].equals("iprange")) {
-                    items = getIpRangeManager().getIPRanges();
+                    _items = getIpRangeManager().getIPRanges();
                 } else if (types[i].equals("role")) {
-                    items = getRoleManager().getRoles();
+                    _items = getRoleManager().getRoles();
                 }
                 for (int j = 0; j < operations.length; j++) {
                     if (getParameterAsString(operations[j] + "_credential_" + types[i]) != null) {
@@ -87,9 +86,9 @@ public class AccessControl extends AccessControlUsecase {
 
                         String accreditableId = getParameterAsString("accreditable_id");
                         Item item = null;
-                        for (int k = 0; k < items.length; k++) {
-                            if (accreditableId.equals(items[k].getId())) {
-                                item = items[k];
+                        for (int k = 0; k < _items.length; k++) {
+                            if (accreditableId.equals(_items[k].getId())) {
+                                item = _items[k];
                             }
                         }
 
@@ -103,11 +102,11 @@ public class AccessControl extends AccessControlUsecase {
                     }
                 }
             }
-
-        } catch (Exception e) {
+        } catch (final ProcessingException e) {
             addErrorMessage("Could not read a value.");
             getLogger().error("Could not read value for AccessControl usecase. " + e.toString());
         }
+
     }
 
     /**
@@ -115,6 +114,7 @@ public class AccessControl extends AccessControlUsecase {
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
+	    // do nothing
     }
 
     /**

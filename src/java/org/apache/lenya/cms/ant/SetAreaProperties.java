@@ -40,41 +40,41 @@ public class SetAreaProperties extends Task {
      * @return String The area.
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
-     * @param area The area.
+     * @param _area The area.
      */
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String _area) {
+        this.area = _area;
     }
 
     /**
      * @return String The name of the property for the content directory.
      */
     public String getDirpropertyname() {
-        return dirpropertyname;
+        return this.dirpropertyname;
     }
 
     /**
-     * @param dirpropertyname The name of the property for the content directory.
+     * @param _dirpropertyname The name of the property for the content directory.
      */
-    public void setDirpropertyname(String dirpropertyname) {
-        this.dirpropertyname = dirpropertyname;
+    public void setDirpropertyname(String _dirpropertyname) {
+        this.dirpropertyname = _dirpropertyname;
     }
 
 	/**
 	 * Sets the properties dependent of the area for the project
-	 * @param area The area.
-	 * @param dirpropertyname The name of the property for the content directory.
+	 * @param _area The area.
+	 * @param _dirpropertyname The name of the property for the content directory.
 	 */
-	protected void setNewProperties(String area, String dirpropertyname) {
-		Target target = getOwningTarget();
-		Project project = target.getProject();
+	protected void setNewProperties(String _area, String _dirpropertyname) {
+		Target _target = getOwningTarget();
+		Project _project = _target.getProject();
 
-		String dirproperty = project.getProperty(area+".dir");
-		project.setProperty(dirpropertyname, dirproperty);
+		String dirproperty = _project.getProperty(_area+".dir");
+		_project.setProperty(_dirpropertyname, dirproperty);
 	}
 
 	/** 

@@ -31,7 +31,7 @@ import org.apache.lenya.cms.task.TaskParameters;
 import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -44,13 +44,11 @@ import org.w3c.dom.Element;
  * request parameter.
  */
 public class TaskJob extends ServletJob {
-    private static Category log = Category.getInstance(TaskJob.class);
+    private static Logger log = Logger.getLogger(TaskJob.class);
 
     /**
      * Un-prefix the parameters.
-     * 
      * @param wrapperMap the prefixed parameters.
-     * 
      * @return the parameters
      * @throws SchedulerException when something went wrong.
      */
@@ -67,10 +65,7 @@ public class TaskJob extends ServletJob {
 
     /**
      * Creates the job data for a job.
-     *
-     * @param servletContextPath The servlet context path.
      * @param request The request.
-     *
      * @return A job data map.
      * @throws SchedulerException when something went wrong.
      */
@@ -103,9 +98,7 @@ public class TaskJob extends ServletJob {
      * Called by the <code>{@link org.quartz.Scheduler}</code> when a <code>{@link
      * org.quartz.Trigger}</code> fires that is associated with the <code>Job</code>.
      * </p>
-     *
-     * @param context DOCUMENT ME!
-     *
+     * @param context The context
      * @throws JobExecutionException if there is an exception while executing the job.
      */
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -117,17 +110,16 @@ public class TaskJob extends ServletJob {
             wrapper.execute();
         } catch (ExecutionException e) {
         	log.error("Task execution failed: ", e);
+        	throw new JobExecutionException();
         }
     }
 
     /**
      * Loads a job details object from an XML element. 
-     *
      * @param jobElement The XML element.
      * @param jobGroup The job group the job belongs to.
      * @param servletContextPath The servlet context path.
      * @throws SchedulerException when something went wrong.
-     *
      * @return A job details object.
      */
     public JobDetail load(Element jobElement, String jobGroup, String servletContextPath) throws SchedulerException {
@@ -144,13 +136,11 @@ public class TaskJob extends ServletJob {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param jobDetail DOCUMENT ME!
+     * Save a job detail
+     * @param jobDetail The job detail to save
      * @param helper namespace helper
      * @throws SchedulerException when something went wrong.
-     *
-     * @return DOCUMENT ME!
+     * @return The job element
      */
     public Element save(NamespaceHelper helper, JobDetail jobDetail) throws SchedulerException {
         

@@ -32,7 +32,7 @@ public class StateImpl implements State {
      * @param stateId The state ID.
      */
     protected StateImpl(String stateId) {
-        id = stateId;
+        this.id = stateId;
     }
 
     private String id;
@@ -42,7 +42,7 @@ public class StateImpl implements State {
      * @return A string.
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**

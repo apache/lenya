@@ -31,10 +31,13 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
+/**
+ *
+ */
 public class SwingHTMLHandler extends ParserCallback {
-    Category log = Category.getInstance(SwingHTMLHandler.class);
+    private static final Logger log = Logger.getLogger(SwingHTMLHandler.class);
 
     /** 
      * Creates a new instance of SwingHTMLHandler
@@ -49,70 +52,71 @@ public class SwingHTMLHandler extends ParserCallback {
     private TagStack tagStack = new TagStack();
 
     protected TagStack getStack() {
-        return tagStack;
+        return this.tagStack;
     }
 
     private StringBuffer titleBuffer = new StringBuffer();
     private StringBuffer keywordsBuffer = new StringBuffer();
 
     /**
+     * @param data Data to append to the title
      *
      */
     protected void appendToTitle(char[] data) {
-        titleBuffer.append(data);
+        this.titleBuffer.append(data);
     }
 
     /**
      * Get title
      *
-     * @return DOCUMENT ME!
+     * @return The title of the HTML document
      */
     public String getTitle() {
-        debug("\n\nTitle: " + titleBuffer.toString());
+        debug("\n\nTitle: " + this.titleBuffer.toString());
 
-        return titleBuffer.toString();
+        return this.titleBuffer.toString();
     }
 
     /**
      * Get keywords
      *
-     * @return DOCUMENT ME!
+     * @return The keywords of the HTML document
      */
     public String getKeywords() {
-        log.debug("Keywords: " + keywordsBuffer.toString());
+        log.debug("Keywords: " + this.keywordsBuffer.toString());
 
-        return keywordsBuffer.toString();
+        return this.keywordsBuffer.toString();
     }
 
     private StringBuffer contentsBuffer = new StringBuffer();
 
     protected void appendToContents(char[] data) {
-        contentsBuffer.append(data);
+        this.contentsBuffer.append(data);
     }
 
     /**
-     * DOCUMENT ME!
+     * Obtain the reader
      *
-     * @return DOCUMENT ME!
+     * @return The reader
      */
     public Reader getReader() {
-        debug("\nContents: " + contentsBuffer.toString());
+        debug("\nContents: " + this.contentsBuffer.toString());
 
-        return new StringReader(contentsBuffer.toString());
+        return new StringReader(this.contentsBuffer.toString());
     }
 
     private boolean indexing;
 
     protected boolean isIndexing() {
-        return indexing;
+        return this.indexing;
     }
 
     protected void startIndexing() {
-        indexing = true;
+        this.indexing = true;
     }
 
     protected void stopIndexing() {
-        indexing = false;
+        this.indexing = false;
     }
 
     //-------------------------------------------------------------------------
@@ -121,13 +125,16 @@ public class SwingHTMLHandler extends ParserCallback {
 
     /**
      * Handles a start tag.
+     * @param tag The start tag
+     * @param attributes The attributes
+     * @param pos The position
      */
     public void handleStartTag(Tag tag, MutableAttributeSet attributes, int pos) {
         getStack().push(tag);
 
         // append whitespace
-        if (!contentsBuffer.toString().endsWith(" ")) {
-            contentsBuffer.append(" ");
+        if (!this.contentsBuffer.toString().endsWith(" ")) {
+            this.contentsBuffer.append(" ");
         }
 
         if (tag.equals(HTML.Tag.META)) {
@@ -145,11 +152,13 @@ public class SwingHTMLHandler extends ParserCallback {
 
     /**
      * Handles an end tag.
+     * @param tag The end tag
+     * @param pos The position
      */
     public void handleEndTag(Tag tag, int pos) {
         // append whitespace
-        if (!contentsBuffer.toString().endsWith(" ")) {
-            contentsBuffer.append(" ");
+        if (!this.contentsBuffer.toString().endsWith(" ")) {
+            this.contentsBuffer.append(" ");
         }
 
         if (isTagInitialized() && tag.equals(getLuceneTag())) {
@@ -173,15 +182,15 @@ public class SwingHTMLHandler extends ParserCallback {
     private boolean titleParsing;
 
     protected boolean isTitleParsing() {
-        return titleParsing;
+        return this.titleParsing;
     }
 
     protected void startTitleParsing() {
-        titleParsing = true;
+        this.titleParsing = true;
     }
 
     protected void stopTitleParsing() {
-        titleParsing = false;
+        this.titleParsing = false;
     }
 
     protected void handleTitleStartTag() {
@@ -195,44 +204,55 @@ public class SwingHTMLHandler extends ParserCallback {
     //-------------------------------------------------------------------------
     // Lucene metag tags
     //-------------------------------------------------------------------------
+    /**
+     * <code>LUCENE_TAG_NAME</code> The Lucene tag name
+     */
     public static final String LUCENE_TAG_NAME = "lucene-tag-name";
+    /**
+     * <code>LUCENE_CLASS_VALUE</code> The Lucene class value
+     */
     public static final String LUCENE_CLASS_VALUE = "lucene-class-value";
     private HTML.Tag luceneTag = null;
 
     /**
      * Sets the tag name used to avoid indexing.
+     * @param tag The tag
      */
     protected void setLuceneTag(HTML.Tag tag) {
         debug("Lucene tag:         " + tag);
-        luceneTag = tag;
+        this.luceneTag = tag;
     }
 
     /**
      * Returns the tag name used to avoid indexing.
+     * @return Tag name used to avoid indexing
      */
     protected HTML.Tag getLuceneTag() {
-        return luceneTag;
+        return this.luceneTag;
     }
 
     private String luceneClassValue = null;
 
     /**
      * Sets the value for the <code>class</code> attribute used to avoid indexing.
+     * @param value
      */
     protected void setLuceneClassValue(String value) {
         debug("Lucene class value: " + value);
-        luceneClassValue = value;
+        this.luceneClassValue = value;
     }
 
     /**
      * Returns the value for the <code>class</code> attribute used to avoid indexing.
+     * @return The value
      */
     protected String getLuceneClassValue() {
-        return luceneClassValue;
+        return this.luceneClassValue;
     }
 
     /**
      * Returns if the Lucene META tags are provided.
+     * @return Whether the Lucene Meta tags are provided
      */
     protected boolean isTagInitialized() {
         return (getLuceneTag() != null) && (getLuceneClassValue() != null);
@@ -240,6 +260,7 @@ public class SwingHTMLHandler extends ParserCallback {
 
     /**
      * Handles a META tag. This method checks for the Lucene configuration tags.
+     * @param attributes The attributes
      */
     protected void handleMetaTag(MutableAttributeSet attributes) {
         Object nameObject = attributes.getAttribute(HTML.Attribute.NAME);
@@ -266,7 +287,7 @@ public class SwingHTMLHandler extends ParserCallback {
             log.debug("Meta tag found: name = " + name);
             if (name.equals("keywords")) {
                 log.debug("Keywords found ...");
-                keywordsBuffer = new StringBuffer((String) contentObject);
+                this.keywordsBuffer = new StringBuffer((String) contentObject);
             }
         }
 
@@ -282,11 +303,13 @@ public class SwingHTMLHandler extends ParserCallback {
     private TagStack luceneStack = new TagStack();
 
     protected TagStack getLuceneStack() {
-        return luceneStack;
+        return this.luceneStack;
     }
 
     /**
      * Handles a Lucene index control start tag.
+     * @param tag The start tag
+     * @param attributes The attributes
      */
     protected void handleLuceneStartTag(HTML.Tag tag, MutableAttributeSet attributes) {
         Object valueObject = attributes.getAttribute(HTML.Attribute.CLASS);
@@ -311,9 +334,9 @@ public class SwingHTMLHandler extends ParserCallback {
             HTML.Tag stackTag = getStack().top();
 
             if (!getLuceneStack().isEmpty()) {
-                HTML.Tag luceneTag = getLuceneStack().top();
+                HTML.Tag _luceneTag = getLuceneStack().top();
 
-                if (stackTag == luceneTag) {
+                if (stackTag == _luceneTag) {
                     debug("");
                     debug("---------- Stopping indexing ----------");
                     getLuceneStack().pop();
@@ -327,19 +350,20 @@ public class SwingHTMLHandler extends ParserCallback {
 
     /**
      * Handles an end tag.
+     * @param tag The end tag
+     * @param attributes The attributes
+     * @param pos The position
      */
     public void handleSimpleTag(Tag tag, MutableAttributeSet attributes, int pos) {
         handleStartTag(tag, attributes, pos);
         handleEndTag(tag, pos);
     }
 
-    //-------------------------------------------------------------------------
-    // Text handling
-    //-------------------------------------------------------------------------
+    /**
+     * @see javax.swing.text.html.HTMLEditorKit.ParserCallback#handleText(char[], int)
+     */
     public void handleText(char[] data, int pos) {
-        //String string = new String(data);
-        //System.out.println(indent + string.substring(0, Math.min(20, string.length())) + " ...");
-        if (isDebug) {
+        if (this.isDebug) {
             System.out.println(".handleText(): data: " + new String(data));
         }
 
@@ -364,15 +388,17 @@ public class SwingHTMLHandler extends ParserCallback {
 
     /**
      * Logs a message.
+     * @param message The debug message
      */
     protected void debug(String message) {
-        if (isDebug) {
+        if (this.isDebug) {
             System.out.println(message);
         }
     }
 
     /**
      * Logs an exception.
+     * @param e The exception
      */
     protected void log(Exception e) {
         log("", e);
@@ -380,6 +406,8 @@ public class SwingHTMLHandler extends ParserCallback {
 
     /**
      * Logs an exception with a message.
+     * @param message The message
+     * @param e The exception
      */
     protected void log(String message, Exception e) {
         System.out.print(getClass().getName() + ": " + message + " ");
@@ -387,46 +415,46 @@ public class SwingHTMLHandler extends ParserCallback {
     }
 
     /**
-     * DOCUMENT ME!
+     * Constructor
      */
     public class TagStack {
         private List tags = new ArrayList();
 
         /**
-         * DOCUMENT ME!
+         * Push tag on the tag stack
          *
-         * @param tag DOCUMENT ME!
+         * @param tag The tag
          */
         public void push(HTML.Tag tag) {
-            tags.add(0, tag);
+            this.tags.add(0, tag);
         }
 
         /**
-         * DOCUMENT ME!
+         * Pop tag from the tag stack
          *
-         * @return DOCUMENT ME!
+         * @return Tag
          *
-         * @throws UnderflowException DOCUMENT ME!
+         * @throws UnderflowException if there are no more elements on the stack
          */
         public HTML.Tag pop() throws UnderflowException {
             HTML.Tag tag = top();
-            tags.remove(tag);
+            this.tags.remove(tag);
 
             return tag;
         }
 
         /**
-         * DOCUMENT ME!
+         * Returns the top tag on the tag stack
          *
-         * @return DOCUMENT ME!
+         * @return The top element
          *
-         * @throws UnderflowException DOCUMENT ME!
+         * @throws UnderflowException If there are no tags on the tag stack
          */
         public HTML.Tag top() throws UnderflowException {
             HTML.Tag tag = null;
 
-            if (!tags.isEmpty()) {
-                tag = (HTML.Tag) tags.get(0);
+            if (!this.tags.isEmpty()) {
+                tag = (HTML.Tag) this.tags.get(0);
             } else {
                 throw new UnderflowException();
             }
@@ -435,21 +463,21 @@ public class SwingHTMLHandler extends ParserCallback {
         }
 
         /**
-         * DOCUMENT ME!
+         * Checks if the tag stack is empty
          *
-         * @return DOCUMENT ME!
+         * @return A boolean
          */
         public boolean isEmpty() {
-            return tags.isEmpty();
+            return this.tags.isEmpty();
         }
 
         /**
-         * DOCUMENT ME!
+         * Prints out all elements of the tag stack
          */
         public void dump() {
             System.out.print("stack: ");
 
-            for (Iterator i = tags.iterator(); i.hasNext();) {
+            for (Iterator i = this.tags.iterator(); i.hasNext();) {
                 System.out.print(i.next() + ", ");
             }
 
@@ -457,7 +485,7 @@ public class SwingHTMLHandler extends ParserCallback {
         }
 
         /**
-         * DOCUMENT ME!
+         * The Underflow exception class
          */
         public class UnderflowException extends Exception {
             /**

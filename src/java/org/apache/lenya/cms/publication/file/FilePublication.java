@@ -45,8 +45,8 @@ public class FilePublication extends AbstractPublication {
 
     /**
      * Returns the directory where documents of a certain area are located.
-     * @param area
-     * @return
+     * @param area The area to return
+     * @return A file representing the area
      */
     protected File getAreaDirectory(String area) {
         File areaDirectory = new File(getDirectory(), "content" + File.separator + area);
@@ -81,7 +81,10 @@ public class FilePublication extends AbstractPublication {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#copyDocumentSetToArea(org.apache.lenya.cms.publication.DocumentSet, java.lang.String)
+     * @param documentSet Set of documents to be copied
+     * @param destinationArea Destination area for the copy
+     * @throws PublicationException
+     * @see org.apache.lenya.cms.publication.Publication#copyDocumentSetToArea(org.apache.lenya.cms.publication.util.DocumentSet, java.lang.String)
      */
     public void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
         throws PublicationException {

@@ -39,7 +39,7 @@ public class InitRCTask extends TwoDocumentsOperationTask {
     private RevisionController rc = null;
 
     /**
-     *  
+     * Constructor  
      */
     public InitRCTask() {
         super();
@@ -49,28 +49,28 @@ public class InitRCTask extends TwoDocumentsOperationTask {
      * @return String The backups' directory.
      */
     public String getRcbakDir() {
-        return rcbakDir;
+        return this.rcbakDir;
     }
 
     /**
      * @return String The rcml-files' directory.
      */
     public String getRcmlDir() {
-        return rcmlDir;
+        return this.rcmlDir;
     }
 
     /**
      * @param string The backup's directory.
      */
     public void setRcbakDir(String string) {
-        rcbakDir = string;
+        this.rcbakDir = string;
     }
 
     /**
      * @param string The rcml-files' directory.
      */
     public void setRcmlDir(String string) {
-        rcmlDir = string;
+        this.rcmlDir = string;
     }
 
     /**
@@ -91,7 +91,7 @@ public class InitRCTask extends TwoDocumentsOperationTask {
                 destDoc = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
                 String filename = destDoc.getFile().getCanonicalPath();
                 filename = filename.substring(publicationPath.length());
-                rc.reservedCheckIn(filename, getUserId(), true);
+                this.rc.reservedCheckIn(filename, getUserId(), true);
             }
         } catch (Exception e) {
             throw new BuildException(e);
@@ -101,7 +101,6 @@ public class InitRCTask extends TwoDocumentsOperationTask {
     /**
      * @see org.apache.tools.ant.Task#execute()
      */
-
     public void execute() throws BuildException {
         try {
             log("rcml dir" + this.getRcmlDir());
@@ -122,14 +121,14 @@ public class InitRCTask extends TwoDocumentsOperationTask {
      * @return String The user id.
      */
     public String getUserId() {
-        return userId;
+        return this.userId;
     }
 
     /**
      * @param string The user id.
      */
     public void setUserId(String string) {
-        userId = string;
+        this.userId = string;
     }
 
 }

@@ -26,6 +26,7 @@ import java.util.List;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 
 /**
@@ -70,7 +71,6 @@ public class OrderedDocumentSet extends DocumentSet {
     /**
      * This method throws an exception when a loop in the dependency graph
      * occurs.
-     * 
      * @see org.apache.lenya.cms.publication.util.DocumentSet#add(org.apache.lenya.cms.publication.Document)
      */
     public void add(Document document) {
@@ -96,7 +96,9 @@ public class OrderedDocumentSet extends DocumentSet {
                 throw new PublicationException(
                         "The dependence relation is not a strict partial order!");
             }
-        } catch (Exception e) {
+        } catch (final SiteException e) {
+            throw new RuntimeException(e);
+        } catch (final PublicationException e) {
             throw new RuntimeException(e);
         }
 

@@ -33,17 +33,7 @@ import org.apache.lenya.cms.rc.FileReservedCheckOutException;
 public class ReservedCheckoutAction extends RevisionControllerAction {
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     * 
-     * @return DOCUMENT ME!
-     * 
-     * @throws Exception DOCUMENT ME!
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
             Parameters parameters) throws Exception {

@@ -19,6 +19,9 @@
 
 package org.apache.lenya.cms.rc;
 
+/**
+ * A RCML entry
+ */
 public class RCMLEntry {
 	
     private String identity = null;
@@ -27,49 +30,44 @@ public class RCMLEntry {
 
     /**
      * Creates a new RCMLEntry object.
-     *
-     * @param identity DOCUMENT ME!
-     * @param time DOCUMENT ME!
+     * @param _identity The identity of the person for this RCML
+     * @param _time The time of the checkin / checkout
      */
-    public RCMLEntry(String identity, long time) {
-        this.identity = identity;
-        this.time = time;
+    public RCMLEntry(String _identity, long _time) {
+        this.identity = _identity;
+        this.time = _time;
     }
     
     /**
      * Get the identity.
-     *  
      * @return the identity
      */
     public String getIdentity() {
-        return identity;
+        return this.identity;
     }
 
     /**
      * Get the time.
-     * 
      * @return the time
      */
     public long getTime() {
-        return time;
+        return this.time;
     }
 
     /**
      * Get the type.
-     * 
      * @return the type
      */
     public short getType() {
-        return type;
+        return this.type;
     }
 
     /**
      * Set the type.
-     * 
      * @param s the type
      */
     protected void setType(short s) {
-        type = s;
+        this.type = s;
     }
 
 }

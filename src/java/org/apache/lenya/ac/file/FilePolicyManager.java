@@ -22,6 +22,7 @@ package org.apache.lenya.ac.file;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
@@ -64,15 +65,15 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * Creates a new FilePolicyManager.
      */
     public FilePolicyManager() {
+	    // do nothing
     }
 
     /**
      * Returns the source cache.
-     * 
      * @return A source cache.
      */
     protected SourceCache getCache() {
-        return cache;
+        return this.cache;
     }
 
     private SourceCache cache;
@@ -84,7 +85,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     /**
      * Builds the URL policy for a URL from a file. When the file is not present, an empty policy is
      * returned.
-     * 
      * @param controller The access controller to use.
      * @param url The URL inside the web application.
      * @return A policy.
@@ -98,7 +98,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     /**
      * Builds a subtree policy from a file. When the file is not present, an empty policy is
      * returned.
-     * 
      * @param controller The access controller to use.
      * @param url The URL inside the web application.
      * @return A policy.
@@ -111,7 +110,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Builds a policy from a file. When the file is not present, an empty policy is returned.
-     * 
      * @param controller The access controller to use.
      * @param url The url.
      * @param policyFilename The policy filename.
@@ -151,11 +149,9 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Returns the policy file URI for a URL and a policy filename.
-     * 
      * @param url The url to get the file for.
      * @param policyFilename The name of the policy file.
      * @return A String.
-     * 
      * @throws AccessControlException if an error occurs
      */
     protected String getPolicySourceURI(String url, String policyFilename)
@@ -174,7 +170,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Returns the policy file for a certain URL.
-     * 
      * @param url The URL to get the policy for.
      * @param policyFilename The policy filename.
      * @return A file.
@@ -193,7 +188,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Saves a URL policy.
-     * 
      * @param url The URL to save the policy for.
      * @param policy The policy to save.
      * @throws AccessControlException when something went wrong.
@@ -205,7 +199,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Saves a Subtree policy.
-     * 
      * @param url The url to save the policy for.
      * @param policy The policy to save.
      * @throws AccessControlException when something went wrong.
@@ -217,7 +210,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Saves a policy to a file.
-     * 
      * @param url The URL to save the policy for.
      * @param policy The policy.
      * @param filename The file.
@@ -232,7 +224,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Saves a policy to a file.
-     * 
      * @param policy The policy to save.
      * @param file The file.
      * @throws AccessControlException when an error occurs.
@@ -275,30 +266,28 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      */
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(DIRECTORY_PARAMETER)) {
-            policiesDirectoryUri = parameters.getParameter(DIRECTORY_PARAMETER);
+            this.policiesDirectoryUri = parameters.getParameter(DIRECTORY_PARAMETER);
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Policies directory URI: " + policiesDirectoryUri);
+                getLogger().debug("Policies directory URI: " + this.policiesDirectoryUri);
             }
         }
     }
 
     /**
      * Get the path to the policies directory.
-     * 
      * @return the path to the policies directory
-     * 
      * @throws AccessControlException if an error occurs
      */
     public File getPoliciesDirectory() throws AccessControlException {
 
-        if (policiesDirectory == null) {
+        if (this.policiesDirectory == null) {
             SourceResolver resolver = null;
             Source source = null;
             File directory;
 
             try {
                 resolver = (SourceResolver) getServiceManager().lookup(SourceResolver.ROLE);
-                source = resolver.resolveURI(policiesDirectoryUri);
+                source = resolver.resolveURI(this.policiesDirectoryUri);
                 getLogger().debug("Policies directory source: [" + source.getURI() + "]");
                 directory = new File(new URI(source.getURI()));
             } catch (Exception e) {
@@ -317,7 +306,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             setPoliciesDirectory(directory);
         }
 
-        return policiesDirectory;
+        return this.policiesDirectory;
     }
 
     /**
@@ -330,9 +319,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Sets the policies directory.
-     * 
      * @param directory The directory.
-     * 
      * @throws AccessControlException if the directory is not a directory
      */
     public void setPoliciesDirectory(File directory) throws AccessControlException {
@@ -341,7 +328,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             throw new AccessControlException("Policies directory invalid: ["
                     + directory.getAbsolutePath() + "]");
         }
-        policiesDirectory = directory;
+        this.policiesDirectory = directory;
     }
 
     /**
@@ -384,7 +371,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Removes an accreditable from all policies within a certain directory tree.
-     * 
      * @param manager The accreditable manager which owns the accreditable.
      * @param accreditable The accreditable to remove.
      * @param policyDirectory The directory where the policies are located.
@@ -417,8 +403,10 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
                 policy.removeRoles(accreditable);
                 savePolicy(policy, policyFiles[i]);
             }
-        } catch (Exception e) {
-            throw new AccessControlException(e);
+        } catch (final FileNotFoundException e1) {
+            throw new AccessControlException(e1);
+        } catch (final AccessControlException e1) {
+            throw new AccessControlException(e1);
         }
 
         File[] directories = policyDirectory.listFiles(new FileFilter() {
@@ -464,11 +452,10 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     /**
      * Returns the service manager.
-     * 
      * @return A service manager.
      */
     protected ServiceManager getServiceManager() {
-        return serviceManager;
+        return this.serviceManager;
     }
 
     /**

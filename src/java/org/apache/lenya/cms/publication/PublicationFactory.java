@@ -69,11 +69,8 @@ public final class PublicationFactory extends AbstractLogEnabled {
      * Creates a new publication.
      * The publication ID is resolved from the request URI.
      * The servlet context path is resolved from the context object.
-    
      * @param objectModel The object model of the Cocoon component.
-     * 
      * @return a <code>Publication</code>
-     * 
      * @throws PublicationException if there was a problem creating the publication.
      */
     public Publication getPublication(Map objectModel) throws PublicationException {
@@ -87,12 +84,9 @@ public final class PublicationFactory extends AbstractLogEnabled {
     /**
      * Create a new publication with the given publication-id and servlet context path.
      * These publications are cached and reused for similar requests.
-     *
      * @param id the publication id
      * @param servletContextPath the servlet context path of the publication
-     *
      * @return a <code>Publication</code>
-     * 
      * @throws PublicationException if there was a problem creating the publication.
      */
     public Publication getPublication(String id, String servletContextPath)
@@ -124,7 +118,6 @@ public final class PublicationFactory extends AbstractLogEnabled {
      * Generates a key to cache a publication.
      * The cache key is constructed using the canonical servlet context path
      * and the publication ID.
-     * 
      * @param publicationId The publication ID.
      * @param servletContextPath The servlet context path.
      * @return A cache key.
@@ -146,12 +139,9 @@ public final class PublicationFactory extends AbstractLogEnabled {
 
     /**
      * Creates a new publication based on a request and a context.
-     * 
      * @param request A request.
      * @param context A context.
-     * 
      * @return A publication.
-     * 
      * @throws PublicationException if there was a problem creating the publication.
      */
     public Publication getPublication(Request request, Context context)

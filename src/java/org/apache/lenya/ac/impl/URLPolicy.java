@@ -38,15 +38,15 @@ public class URLPolicy implements Policy {
     /**
      * Returns the resulting policy for a certain URL.
      * @param controller The acccess controller.
-     * @param url The URL.
+     * @param _url The URL.
      * @param manager The policy manager.
      */
-    public URLPolicy(AccreditableManager controller, String url, InheritingPolicyManager manager) {
-        assert url != null;
-        this.url = url;
+    public URLPolicy(AccreditableManager controller, String _url, InheritingPolicyManager manager) {
+        assert _url != null;
+        this.url = _url;
 
         assert manager != null;
-        policyManager = manager;
+        this.policyManager = manager;
 
         assert controller != null;
         this.accreditableManager = controller;
@@ -63,8 +63,8 @@ public class URLPolicy implements Policy {
      * @throws AccessControlException when something went wrong.
      */
     protected void obtainPolicies() throws AccessControlException {
-        if (policies == null) {
-            policies = getPolicyManager().getPolicies(getAccreditableManager(), getUrl());
+        if (this.policies == null) {
+            this.policies = getPolicyManager().getPolicies(getAccreditableManager(), getUrl());
         }
     }
 
@@ -86,8 +86,8 @@ public class URLPolicy implements Policy {
                 roles.add(visitorRole);
             }
         } else {
-            for (int i = 0; i < policies.length; i++) {
-                addRoles(policies[i], identity, roles);
+            for (int i = 0; i < this.policies.length; i++) {
+                addRoles(this.policies[i], identity, roles);
             }
         }
         return (AbstractRole[]) roles.toArray(new AbstractRole[roles.size()]);
@@ -161,7 +161,7 @@ public class URLPolicy implements Policy {
      * @return The URL of this policy.
      */
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
     /**
@@ -169,7 +169,7 @@ public class URLPolicy implements Policy {
      * @return A policy builder.
      */
     public InheritingPolicyManager getPolicyManager() {
-        return policyManager;
+        return this.policyManager;
     }
 
     /**
@@ -177,7 +177,7 @@ public class URLPolicy implements Policy {
      * @return An access controller.
      */
     public AccreditableManager getAccreditableManager() {
-        return accreditableManager;
+        return this.accreditableManager;
     }
 
     /**
@@ -191,8 +191,8 @@ public class URLPolicy implements Policy {
         boolean ssl = false;
 
         int i = 0;
-        while (!ssl && i < policies.length) {
-            ssl = ssl || policies[i].isSSLProtected();
+        while (!ssl && i < this.policies.length) {
+            ssl = ssl || this.policies[i].isSSLProtected();
             i++;
         }
 
@@ -206,8 +206,8 @@ public class URLPolicy implements Policy {
         boolean empty = true;
 
         int i = 0;
-        while (empty && i < policies.length) {
-            empty = empty && policies[i].isEmpty();
+        while (empty && i < this.policies.length) {
+            empty = empty && this.policies[i].isEmpty();
             i++;
         }
 

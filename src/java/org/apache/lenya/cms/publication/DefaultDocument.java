@@ -47,21 +47,21 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * Creates a new instance of DefaultDocument. The language of the document
      * is the default language of the publication.
      * @param map The identity map the document belongs to.
-     * @param id The document ID (starting with a slash).
-     * @param area The area.
+     * @param _id The document ID (starting with a slash).
+     * @param _area The area.
      */
-    protected DefaultDocument(DocumentIdentityMap map, String id, String area) {
-        if (id == null) {
+    protected DefaultDocument(DocumentIdentityMap map, String _id, String _area) {
+        if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
-        if (!id.startsWith("/")) {
+        if (!_id.startsWith("/")) {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
-        this.id = id;
+        this.id = _id;
 
         this.identityMap = map;
 
-        setArea(area);
+        setArea(_area);
         setLanguage(this.identityMap.getPublication().getDefaultLanguage());
 
         this.dublincore = new DublinCoreProxy(this);
@@ -71,22 +71,22 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * Creates a new instance of DefaultDocument.
      * 
      * @param map The identity map the document belongs to.
-     * @param id The document ID (starting with a slash).
-     * @param area The area.
-     * @param language the language
+     * @param _id The document ID (starting with a slash).
+     * @param _area The area.
+     * @param _language the language
      */
-    protected DefaultDocument(DocumentIdentityMap map, String id, String area, String language) {
-        if (id == null) {
+    protected DefaultDocument(DocumentIdentityMap map, String _id, String _area, String _language) {
+        if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
-        if (!id.startsWith("/")) {
+        if (!_id.startsWith("/")) {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
-        this.id = id;
+        this.id = _id;
 
         this.identityMap = map;
-        this.language = language;
-        setArea(area);
+        this.language = _language;
+        setArea(_area);
 
         this.dublincore = new DublinCoreProxy(this);
     }
@@ -95,14 +95,14 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getId()
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getName()
      */
     public String getName() {
-        String[] ids = id.split("/");
+        String[] ids = this.id.split("/");
         String nodeId = ids[ids.length - 1];
 
         return nodeId;
@@ -126,7 +126,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getDublinCore()
      */
     public DublinCore getDublinCore() {
-        return dublincore;
+        return this.dublincore;
     }
 
     /**
@@ -146,7 +146,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getLanguage()
      */
     public String getLanguage() {
-        return language;
+        return this.language;
     }
 
     /**
@@ -174,11 +174,11 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     /**
      * Sets the language of this document.
-     * @param language The language.
+     * @param _language The language.
      */
-    public void setLanguage(String language) {
-        assert language != null;
-        this.language = language;
+    public void setLanguage(String _language) {
+        assert _language != null;
+        this.language = _language;
     }
 
     /**
@@ -203,7 +203,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getArea()
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
@@ -216,13 +216,13 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     /**
      * Sets the area.
-     * @param area A string.
+     * @param _area A string.
      */
-    protected void setArea(String area) {
-        if (!AbstractPublication.isValidArea(area)) {
-            throw new IllegalArgumentException("The area [" + area + "] is not valid!");
+    protected void setArea(String _area) {
+        if (!AbstractPublication.isValidArea(_area)) {
+            throw new IllegalArgumentException("The area [" + _area + "] is not valid!");
         }
-        this.area = area;
+        this.area = _area;
     }
 
     private String extension = "html";
@@ -231,16 +231,16 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getExtension()
      */
     public String getExtension() {
-        return extension;
+        return this.extension;
     }
 
     /**
      * Sets the extension of the file in the URL.
-     * @param extension A string.
+     * @param _extension A string.
      */
-    protected void setExtension(String extension) {
-        assert extension != null;
-        this.extension = extension;
+    protected void setExtension(String _extension) {
+        assert _extension != null;
+        this.extension = _extension;
     }
 
     private String documentURL;
@@ -352,7 +352,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getCanonicalDocumentURL()
      */
     public String getCanonicalDocumentURL() {
-        return documentURL;
+        return this.documentURL;
     }
 
     /**

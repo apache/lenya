@@ -54,11 +54,11 @@ public class URIParametrizerAction extends ConfigurableServiceableAction {
         URIParameterizer parameterizer = null;
         Map map = null;
         try {
-            parameterizer = (URIParameterizer) manager.lookup(URIParameterizer.ROLE);
+            parameterizer = (URIParameterizer) this.manager.lookup(URIParameterizer.ROLE);
             map = parameterizer.parameterize(uri, src, parameters);
         } finally {
             if (parameterizer != null) {
-                manager.release(parameterizer);
+                this.manager.release(parameterizer);
             }
         }
 

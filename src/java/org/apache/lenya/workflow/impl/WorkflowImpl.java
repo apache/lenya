@@ -36,13 +36,13 @@ public class WorkflowImpl implements Workflow {
 
     /**
      * Creates a new instance of WorkflowImpl.
-     * @param name The name.
-     * @param initialState the initial state of the workflow.
+     * @param _name The name.
+     * @param _initialState the initial state of the workflow.
      */
-    protected WorkflowImpl(String name, StateImpl initialState) {
-        this.initialState = initialState;
-        this.name = name;
-        addState(initialState);
+    protected WorkflowImpl(String _name, StateImpl _initialState) {
+        this.initialState = _initialState;
+        this.name = _name;
+        addState(_initialState);
     }
 
     private State initialState;
@@ -54,7 +54,7 @@ public class WorkflowImpl implements Workflow {
      *  
      */
     public State getInitialState() {
-        return initialState;
+        return this.initialState;
     }
 
     private Set transitions = new HashSet();
@@ -65,7 +65,7 @@ public class WorkflowImpl implements Workflow {
      * @param state A state.
      */
     private void addState(StateImpl state) {
-        states.put(state.getId(), state);
+        this.states.put(state.getId(), state);
     }
 
     /**
@@ -73,7 +73,7 @@ public class WorkflowImpl implements Workflow {
      * @param transition The transition.
      */
     protected void addTransition(TransitionImpl transition) {
-        transitions.add(transition);
+        this.transitions.add(transition);
         addState(transition.getSource());
         addState(transition.getDestination());
     }
@@ -83,7 +83,7 @@ public class WorkflowImpl implements Workflow {
      * @return An array of transitions.
      */
     protected TransitionImpl[] getTransitions() {
-        return (TransitionImpl[]) transitions.toArray(new TransitionImpl[transitions.size()]);
+        return (TransitionImpl[]) this.transitions.toArray(new TransitionImpl[this.transitions.size()]);
     }
 
     /**
@@ -104,11 +104,11 @@ public class WorkflowImpl implements Workflow {
      */
     public Transition[] getLeavingTransitions(State state) {
         Set leavingTransitions = new HashSet();
-        TransitionImpl[] transitions = getTransitions();
+        TransitionImpl[] _transitions = getTransitions();
 
-        for (int i = 0; i < transitions.length; i++) {
-            if (transitions[i].getSource() == state) {
-                leavingTransitions.add(transitions[i]);
+        for (int i = 0; i < _transitions.length; i++) {
+            if (_transitions[i].getSource() == state) {
+                leavingTransitions.add(_transitions[i]);
             }
         }
 
@@ -122,7 +122,7 @@ public class WorkflowImpl implements Workflow {
      *         otherwise.
      */
     protected boolean containsState(State state) {
-        return states.containsValue(state);
+        return this.states.containsValue(state);
     }
 
     /**
@@ -130,21 +130,21 @@ public class WorkflowImpl implements Workflow {
      * @return An array of states.
      */
     protected StateImpl[] getStates() {
-        return (StateImpl[]) states.values().toArray(new StateImpl[states.size()]);
+        return (StateImpl[]) this.states.values().toArray(new StateImpl[this.states.size()]);
     }
 
     /**
      * Returns the state with a certain name.
-     * @param name The state name.
+     * @param _name The state name.
      * @return A state.
      * @throws WorkflowException when the state does not exist.
      */
-    protected StateImpl getState(String name) throws WorkflowException {
-        if (!states.containsKey(name)) {
-            throw new WorkflowException("Workflow does not contain the state '" + name + "'!");
+    protected StateImpl getState(String _name) throws WorkflowException {
+        if (!this.states.containsKey(_name)) {
+            throw new WorkflowException("Workflow does not contain the state '" + _name + "'!");
         }
 
-        return (StateImpl) states.get(name);
+        return (StateImpl) this.states.get(_name);
     }
 
     private Map events = new HashMap();
@@ -154,21 +154,21 @@ public class WorkflowImpl implements Workflow {
      * @param event An event.
      */
     protected void addEvent(EventImpl event) {
-        events.put(event.getName(), event);
+        this.events.put(event.getName(), event);
     }
 
     /**
      * Returns the event for a certain event name.
-     * @param name A string.
+     * @param _name A string.
      * @return The event with this name.
      * @throws WorkflowException when no event with the given name exists.
      */
-    public EventImpl getEvent(String name) throws WorkflowException {
-        if (!events.containsKey(name)) {
-            throw new WorkflowException("Workflow does not contain the event '" + name + "'!");
+    public EventImpl getEvent(String _name) throws WorkflowException {
+        if (!this.events.containsKey(_name)) {
+            throw new WorkflowException("Workflow does not contain the event '" + _name + "'!");
         }
 
-        return (EventImpl) events.get(name);
+        return (EventImpl) this.events.get(_name);
     }
 
     private Map variables = new HashMap();
@@ -178,21 +178,21 @@ public class WorkflowImpl implements Workflow {
      * @param variable A variable.
      */
     protected void addVariable(BooleanVariableImpl variable) {
-        variables.put(variable.getName(), variable);
+        this.variables.put(variable.getName(), variable);
     }
 
     /**
      * Returns the variable for a certain name.
-     * @param name The name of the variable.
+     * @param _name The name of the variable.
      * @return A variable.
      * @throws WorkflowException if no variable with the given name exists.
      */
-    public BooleanVariableImpl getVariable(String name) throws WorkflowException {
-        if (!variables.containsKey(name)) {
-            throw new WorkflowException("Workflow does not contain the variable '" + name + "'!");
+    public BooleanVariableImpl getVariable(String _name) throws WorkflowException {
+        if (!this.variables.containsKey(_name)) {
+            throw new WorkflowException("Workflow does not contain the variable '" + _name + "'!");
         }
 
-        return (BooleanVariableImpl) variables.get(name);
+        return (BooleanVariableImpl) this.variables.get(_name);
     }
 
     /**
@@ -200,7 +200,7 @@ public class WorkflowImpl implements Workflow {
      * @return An array of variables.
      */
     protected BooleanVariableImpl[] getVariables() {
-        return (BooleanVariableImpl[]) variables.values().toArray(new BooleanVariableImpl[variables
+        return (BooleanVariableImpl[]) this.variables.values().toArray(new BooleanVariableImpl[this.variables
                 .size()]);
     }
 
@@ -208,10 +208,10 @@ public class WorkflowImpl implements Workflow {
      * @see org.apache.lenya.workflow.Workflow#getVariableNames()
      */
     public String[] getVariableNames() {
-        BooleanVariableImpl[] variables = getVariables();
-        String[] names = new String[variables.length];
+        BooleanVariableImpl[] _variables = getVariables();
+        String[] names = new String[_variables.length];
         for (int i = 0; i < names.length; i++) {
-            names[i] = variables[i].getName();
+            names[i] = _variables[i].getName();
         }
         return names;
     }

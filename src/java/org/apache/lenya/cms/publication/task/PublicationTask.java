@@ -43,15 +43,14 @@ import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Abstract super class for publication-based tasks.
  */
 public abstract class PublicationTask extends AbstractTask {
 
-    private static final Category log = Category.getInstance(PublicationTask.class);
-
+    private static final Logger log = Logger.getLogger(PublicationTask.class);
     private DocumentIdentityMap map;
 
     /**
@@ -120,10 +119,25 @@ public abstract class PublicationTask extends AbstractTask {
         }
     }
 
+    /**
+     * <code>PARAMETER_WORKFLOW_EVENT</code> The workflow event parameter
+     */
     public static final String PARAMETER_WORKFLOW_EVENT = "workflow-event";
+    /**
+     * <code>PARAMETER_USER_ID</code> The user id parameter
+     */
     public static final String PARAMETER_USER_ID = "user-id";
+    /**
+     * <code>PARAMETER_IP_ADDRESS</code> The IP address parameter
+     */
     public static final String PARAMETER_IP_ADDRESS = "ip-address";
+    /**
+     * <code>PARAMETER_ROLE_IDS</code> The role ids parameter
+     */
     public static final String PARAMETER_ROLE_IDS = "role-ids";
+    /**
+     * <code>ROLE_SEPARATOR_REGEXP</code> The role separator regular expression
+     */
     public static final String ROLE_SEPARATOR_REGEXP = ",";
 
     /**
@@ -156,10 +170,14 @@ public abstract class PublicationTask extends AbstractTask {
                 if (event == null) {
                     canFire = false;
                 }
-
-            } catch (Exception e) {
+            } catch (final ParameterException e) {
+                throw new ExecutionException(e);
+            } catch (final ExecutionException e) {
+                throw new ExecutionException(e);
+            } catch (final WorkflowException e) {
                 throw new ExecutionException(e);
             }
+
         }
         return canFire;
     }
@@ -190,6 +208,7 @@ public abstract class PublicationTask extends AbstractTask {
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
         if (factory.hasWorkflow(document)) {
+            
             try {
                 String userId = getParameters().getParameter(PARAMETER_USER_ID);
                 String machineIp = getParameters().getParameter(PARAMETER_IP_ADDRESS);
@@ -213,9 +232,14 @@ public abstract class PublicationTask extends AbstractTask {
                 if (log.isDebugEnabled()) {
                     log.debug("Invoking transition completed.");
                 }
-            } catch (Exception e) {
+            } catch (final ParameterException e) {
+                throw new ExecutionException(e);
+            } catch (final ExecutionException e) {
+                throw new ExecutionException(e);
+            } catch (final WorkflowException e) {
                 throw new ExecutionException(e);
             }
+
         } else {
             if (log.isDebugEnabled()) {
                 log.debug("No workflow associated with document.");

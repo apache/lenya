@@ -31,33 +31,114 @@ import org.apache.lenya.util.ServletHelper;
  * document.
  */
 public class PageEnvelope {
+    /**
+     * The names of the page envelope parameters.
+     */
+    public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT,
+            PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION,
+            PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT,
+            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME,
+            PageEnvelope.DOCUMENT_LABEL, PageEnvelope.DOCUMENT_URL,
+            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE, PageEnvelope.DOCUMENT_PATH,
+            PageEnvelope.DOCUMENT_EXTENSION, PageEnvelope.DEFAULT_LANGUAGE,
+            PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
+            PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
+            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX };
+    /**
+     * <code>PUBLICATION_ID</code> The publication id
+     */
     public static final String PUBLICATION_ID = "publication-id";
+    /**
+     * <code>PUBLICATION</code> The publication
+     */
     public static final String PUBLICATION = "publication";
+    /**
+     * <code>PUBLICATION_LANGUAGES_CSV</code> A list of the publication's languages, comma-seperated
+     */
     public static final String PUBLICATION_LANGUAGES_CSV = "publication-languages-csv";
+    /**
+     * <code>CONTEXT</code> The context prefix
+     */
     public static final String CONTEXT = "context-prefix";
+    /**
+     * <code>AREA</code> The area
+     */
     public static final String AREA = "area";
+    /**
+     * <code>DEFAULT_LANGUAGE</code> The default language of the publication
+     */
     public static final String DEFAULT_LANGUAGE = "default-language";
+    /**
+     * <code>DOCUMENT</code> The current document
+     */
     public static final String DOCUMENT = "document";
+    /**
+     * <code>DOCUMENT_ID</code> The document id of the current document
+     */
     public static final String DOCUMENT_ID = "document-id";
+    /**
+     * <code>DOCUMENT_NAME</code> The name of the current document
+     */
     public static final String DOCUMENT_NAME = "document-name";
+    /**
+     * <code>DOCUMENT_TYPE</code> The type of the current document
+     */
     public static final String DOCUMENT_TYPE = "document-type";
+    /**
+     * <code>DOCUMENT_LABEL</code> The label of the current document
+     */
     public static final String DOCUMENT_LABEL = "document-label";
+    /**
+     * <code>DOCUMENT_URL</code> The URL of the current document
+     */
     public static final String DOCUMENT_URL = "document-url";
+    /**
+     * <code>DOCUMENT_URL_WITHOUT_LANGUAGE</code> The URL of the current document without a language extension.
+     */
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
+    /**
+     * <code>DOCUMENT_FILE</code> The file of the current document
+     */
     public static final String DOCUMENT_FILE = "document-file";
+    /**
+     * <code>DOCUMENT_PATH</code> The path of the current document
+     */
     public static final String DOCUMENT_PATH = "document-path";
+    /**
+     * <code>DOCUMENT_EXTENSION</code> The extension of the current document
+     */
     public static final String DOCUMENT_EXTENSION = "document-extension";
+    /**
+     * <code>DOCUMENT_LANGUAGE</code> The language of the current document
+     */
     public static final String DOCUMENT_LANGUAGE = "document-language";
+    /**
+     * <code>DOCUMENT_LANGUAGES</code> The languages the current document is available in
+     */
     public static final String DOCUMENT_LANGUAGES = "document-languages";
+    /**
+     * <code>DOCUMENT_LANGUAGES_CSV</code> The languages the current document is available in, comma-seperated
+     */
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
-
+    /**
+     * <code>DOCUMENT_LASTMODIFIED</code> The last modified date of the current document
+     */
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
-
+    /**
+     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix of the publication, used for navigation
+     */
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
-
+    /**
+     * <code>SSL_PREFIX</code> The SSL prefix of the publication
+     */
     public static final String SSL_PREFIX = "ssl-prefix";
-
+    /**
+     * <code>NAMESPACE</code> The page envelope namespace
+     */
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
+    /**
+     * <code>DEFAULT_PREFIX</code> The default prefix
+     */
     public static final String DEFAULT_PREFIX = "lenya";
 
     private String context;
@@ -66,11 +147,11 @@ public class PageEnvelope {
      * Constructor.
      */
     protected PageEnvelope() {
+	    // do nothing
     }
 
     /**
      * Creates a page envelope from an object model.
-     * 
      * @param map The identity map to use.
      * @param objectModel The object model.
      * @throws PageEnvelopeException when something went wrong.
@@ -81,14 +162,14 @@ public class PageEnvelope {
         String webappURI;
         try {
 
-            context = request.getContextPath();
-            if (context == null) {
-                context = "";
+            this.context = request.getContextPath();
+            if (this.context == null) {
+                this.context = "";
             }
 
             webappURI = ServletHelper.getWebappURI(request);
-            Document document = map.getFactory().getFromURL(webappURI);
-            setDocument(document);
+            Document _document = map.getFactory().getFromURL(webappURI);
+            setDocument(_document);
 
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
@@ -107,20 +188,18 @@ public class PageEnvelope {
 
     /**
      * Creates the message to report when creating the envelope failed.
-     * 
      * @param request The request.
      * @return A string.
      */
     protected String createExceptionMessage(Request request) {
         return "Resolving page envelope failed:" + "\n  URI: " + request.getRequestURI()
                 + "\n  Context: " + getContext() + "\n  Publication ID: "
-                + getPublication().getId() + "\n  Area: " + document.getArea()
-                + "\n  Document ID: " + document.getId();
+                + getPublication().getId() + "\n  Area: " + this.document.getArea()
+                + "\n  Document ID: " + this.document.getId();
     }
 
     /**
      * Returns the publication of this PageEnvelope.
-     * 
      * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
@@ -139,63 +218,44 @@ public class PageEnvelope {
 
     /**
      * Returns the context, e.g. "/lenya".
-     * 
      * @return a <code>String</code> value
      */
     public String getContext() {
-        return context;
+        return this.context;
     }
 
     /**
      * Returns the document-path.
-     * 
      * @return a <code>File<code> value
      */
     public String getDocumentPath() {
-
         return getPublication().getPathMapper().getPath(getDocument().getId(),
                 getDocument().getLanguage());
     }
 
     /**
-     * The names of the page envelope parameters.
-     */
-    public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT,
-            PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION,
-            PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT,
-            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME,
-            PageEnvelope.DOCUMENT_LABEL, PageEnvelope.DOCUMENT_URL,
-            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE, PageEnvelope.DOCUMENT_PATH,
-            PageEnvelope.DOCUMENT_EXTENSION, PageEnvelope.DEFAULT_LANGUAGE,
-            PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
-            PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
-            PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX };
-
-    /**
      * @param string The context.
      */
     protected void setContext(String string) {
-        context = string;
+        this.context = string;
     }
 
     private Document document;
 
     /**
      * Returns the document.
-     * 
      * @return A document
      */
     public Document getDocument() {
-        return document;
+        return this.document;
     }
 
     /**
      * Sets the document.
-     * 
-     * @param document A document.
+     * @param _document A document.
      */
-    public void setDocument(Document document) {
-        this.document = document;
+    public void setDocument(Document _document) {
+        this.document = _document;
     }
 
 }

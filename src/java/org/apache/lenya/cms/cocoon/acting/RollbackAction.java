@@ -30,19 +30,22 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 
 
+/**
+ * Action to roll back a document to a prior version
+ */
 public class RollbackAction extends RevisionControllerAction {
     /**
-     * DOCUMENT ME!
+     * This action rolls back a document to a prior version
      *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
+     * @param redirector The redirector
+     * @param resolver The resolver
+     * @param objectModel The object model
+     * @param src The source
+     * @param parameters The parameters
      *
-     * @return DOCUMENT ME!
+     * @return null on failure, the location of the redirect on success
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
@@ -55,7 +58,6 @@ public class RollbackAction extends RevisionControllerAction {
 
         if (request == null) {
             getLogger().error("No request object");
-
             return null;
         }
 
@@ -69,11 +71,9 @@ public class RollbackAction extends RevisionControllerAction {
             newtime = getRc().rollback(getFilename(), getUsername(), true, new Long(rollbackTime).longValue());
         } catch (FileNotFoundException e) {
             getLogger().error("Unable to roll back!" + e);
-
             return null;
         } catch (Exception e) {
             getLogger().error("Unable to roll back!" + e);
-
             return null;
         }
 

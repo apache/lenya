@@ -36,7 +36,7 @@ import javax.swing.text.html.parser.ParserDelegator;
 
 
 /**
- * DOCUMENT ME!
+ * The HTML handler
  */
 public final class HTMLHandler extends ParserCallback implements ContentHandler {
     private static final char space = ' ';
@@ -67,29 +67,25 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
      * Constructor - initializes variables
      */
     public HTMLHandler() {
-        contents = new StringBuffer();
-
-        links = new ArrayList();
-
-        published = -1;
+        this.contents = new StringBuffer();
+        this.links = new ArrayList();
+        this.published = -1;
 
         // 1996.07.10 15:08:56 PST
-        dateFormatter = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss z");
+        this.dateFormatter = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss z");
     }
 
     /**
-     * Parse Content. [24] 320:1
-     *
-     * @return DOCUMENT ME!
+     * Return the author
+     * @return The author
      */
     public String getAuthor() {
-        return author;
+        return this.author;
     }
 
     /**
      * Return categories (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * @return The categories
      */
     public String getCategories() {
         return this.categories;
@@ -97,8 +93,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return contents
-     *
-     * @return DOCUMENT ME!
+     * @return The contents
      */
     public String getContents() {
         return this.contents.toString();
@@ -106,8 +101,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return description (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * @return The description
      */
     public String getDescription() {
         return this.description;
@@ -115,8 +109,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return META HREF
-     *
-     * @return DOCUMENT ME!
+     * @return The Meta HREF
      */
     public String getHREF() {
         return this.href;
@@ -124,8 +117,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return keywords (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * @return The keywords
      */
     public String getKeywords() {
         return this.keywords;
@@ -133,17 +125,15 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return links
-     *
-     * @return DOCUMENT ME!
+     * @return The links
      */
     public List getLinks() {
-        return links;
+        return this.links;
     }
 
     /**
      * Return published date (from META tag)
-     *
-     * @return DOCUMENT ME!
+     * @return The published date
      */
     public long getPublished() {
         return this.published;
@@ -151,8 +141,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return boolean true if links are to be followed
-     *
-     * @return DOCUMENT ME!
+     * @return Whether to follow links
      */
     public boolean getRobotFollow() {
         return this.robotFollow;
@@ -160,8 +149,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return boolean true if this is to be indexed
-     *
-     * @return DOCUMENT ME!
+     * @return Whether to index
      */
     public boolean getRobotIndex() {
         return this.robotIndex;
@@ -169,8 +157,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Return page title
-     *
-     * @return DOCUMENT ME!
+     * @return The title
      */
     public String getTitle() {
         return this.title;
@@ -178,66 +165,58 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Handle Anchor <A HREF="~"></A> tags
-     *
-     * @param attribs DOCUMENT ME!
+     * @param attribs The list of attributes
      */
     public void handleAnchor(MutableAttributeSet attribs) {
-        String href = "";
+        String _href = "";
+        _href = (String) attribs.getAttribute(HTML.Attribute.HREF);
 
-        href = (String) attribs.getAttribute(HTML.Attribute.HREF);
-
-        if (href == null) {
+        if (_href == null) {
             return;
         }
 
-        links.add(href);
-
-        state = HREF;
+        this.links.add(_href);
+        this.state = HREF;
     }
 
     /**
-     * Closing tag
+     * Handle the Closing tag
      *
-     * @param tag DOCUMENT ME!
-     * @param pos DOCUMENT ME!
+     * @param tag The tag
+     * @param pos The position
      */
     public void handleEndTag(Tag tag, int pos) {
-        if (state == NONE) {
+        if (this.state == NONE) {
             return;
         }
 
         // In order of precedence == > && > ||
-        if ((state == TITLE) && tag.equals(HTML.Tag.TITLE)) {
-            state = NONE;
-
+        if ((this.state == TITLE) && tag.equals(HTML.Tag.TITLE)) {
+            this.state = NONE;
             return;
         }
 
-        if ((state == HREF) && tag.equals(HTML.Tag.A)) {
+        if ((this.state == HREF) && tag.equals(HTML.Tag.A)) {
             //links.add(linktext);
-            state = NONE;
-
+            this.state = NONE;
             return;
         }
 
-        if ((state == SCRIPT) && tag.equals(HTML.Tag.SCRIPT)) {
-            state = NONE;
-
+        if ((this.state == SCRIPT) && tag.equals(HTML.Tag.SCRIPT)) {
+            this.state = NONE;
             return;
         }
     }
 
     /**
      * Handle META tags
-     *
-     * @param attribs DOCUMENT ME!
+     * @param attribs The set of attributes
      */
     public void handleMeta(MutableAttributeSet attribs) {
         String name = "";
         String content = "";
 
         name = (String) attribs.getAttribute(HTML.Attribute.NAME);
-
         content = (String) attribs.getAttribute(HTML.Attribute.CONTENT);
 
         if ((name == null) || (content == null)) {
@@ -247,66 +226,59 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
         name = name.toUpperCase(Locale.ENGLISH);
 
         if (name.equals("DESCRIPTION")) {
-            description = content;
-
+            this.description = content;
             return;
         }
 
         if (name.equals("KEYWORDS")) {
-            keywords = content;
-
+            this.keywords = content;
             return;
         }
 
         if (name.equals("CATEGORIES")) {
-            categories = content;
-
+            this.categories = content;
             return;
         }
 
         if (name.equals("PUBLISHED")) {
             try {
-                published = dateFormatter.parse(content).getTime();
+                this.published = this.dateFormatter.parse(content).getTime();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             return;
         }
 
         if (name.equals("HREF")) {
-            href = content;
-
+            this.href = content;
             return;
         }
 
         if (name.equals("AUTHOR")) {
-            author = content;
-
+            this.author = content;
             return;
         }
 
         if (name.equals("ROBOTS")) {
             if (content.indexOf("noindex") != -1) {
-                robotIndex = false;
+                this.robotIndex = false;
             }
 
             if (content.indexOf("nofollow") != -1) {
-                robotFollow = false;
+                this.robotFollow = false;
             }
 
-            author = content;
-
+            this.author = content;
             return;
         }
     }
 
     /**
-     * Handle standalone tags
+     * Handle standalone tag
      *
-     * @param tag DOCUMENT ME!
-     * @param attribs DOCUMENT ME!
-     * @param pos DOCUMENT ME!
+     * @param tag The tag
+     * @param attribs The set of attributes
+     * @param pos The position
      */
     public void handleSimpleTag(Tag tag, MutableAttributeSet attribs, int pos) {
         if (tag.equals(HTML.Tag.META)) {
@@ -315,45 +287,42 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
     }
 
     /**
-     * Opening tag
+     * Handle Opening tag
      *
-     * @param tag DOCUMENT ME!
-     * @param attribs DOCUMENT ME!
-     * @param pos DOCUMENT ME!
+     * @param tag The tag
+     * @param attribs The set of attributes
+     * @param pos The position
      */
     public void handleStartTag(Tag tag, MutableAttributeSet attribs, int pos) {
         if (tag.equals(HTML.Tag.TITLE)) {
-            state = TITLE;
+            this.state = TITLE;
         } else if (tag.equals(HTML.Tag.A)) {
             handleAnchor(attribs);
         } else if (tag.equals(HTML.Tag.SCRIPT)) {
-            state = SCRIPT;
+            this.state = SCRIPT;
         }
     }
 
     /**
      * Handle page text
      *
-     * @param text DOCUMENT ME!
-     * @param pos DOCUMENT ME!
+     * @param text The text
+     * @param pos The position
      */
     public void handleText(char[] text, int pos) {
-        switch (state) {
+        switch (this.state) {
         case NONE:
-            contents.append(text);
-            contents.append(space);
-
+            this.contents.append(text);
+            this.contents.append(space);
             break;
 
         case TITLE:
-            title = new String(text);
-
+            this.title = new String(text);
             break;
 
         case HREF:
-            contents.append(text);
-            contents.append(space);
-
+            this.contents.append(text);
+            this.contents.append(space);
             //linktext = new String(text);
             break;
         }
@@ -361,8 +330,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
 
     /**
      * Parse Content.
-     *
-     * @param in DOCUMENT ME!
+     * @param in The input stream to parse
      */
     public void parse(InputStream in) {
         try {
@@ -375,32 +343,20 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
     }
 
     /**
-     * Return contents
+     * Reset private fields holding content
      */
     private void reset() {
-        title = null;
-
-        description = null;
-
-        keywords = null;
-
-        categories = null;
-
-        href = null;
-
-        author = null;
-
-        contents.setLength(0);
-
-        links = new ArrayList();
-
-        published = -1;
-
-        // Robot Instructions
-        robotIndex = true;
-
-        robotFollow = true;
-
-        state = NONE;
+        this.title = null;
+        this.description = null;
+        this.keywords = null;
+        this.categories = null;
+        this.href = null;
+        this.author = null;
+        this.contents.setLength(0);
+        this.links = new ArrayList();
+        this.published = -1;
+        this.robotIndex = true;
+        this.robotFollow = true;
+        this.state = NONE;
     }
 }

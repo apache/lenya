@@ -33,28 +33,33 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.DateField;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
 
+/**
+ * The index Iterator
+ */
 public class IndexIterator {
     
-    private static Category log = Category.getInstance(IndexIterator.class);
+    private static Logger log = Logger.getLogger(IndexIterator.class);
     
     /**
      * Creates a new instance of IndexItertor
+     * @param _index The index to use
+     * @param _filter The filter to use
      */
-    public IndexIterator(String index, FileFilter filter) {
-        this.filter = filter;
-        this.index = index;
+    public IndexIterator(String _index, FileFilter _filter) {
+        this.filter = _filter;
+        this.index = _index;
     }
 
     private String index;
 
     protected String getIndex() {
-        return index;
+        return this.index;
     }
 
     private FileFilter filter;
@@ -63,45 +68,44 @@ public class IndexIterator {
      * @return FileFilter
      */
     protected FileFilter getFilter() {
-        return filter;
+        return this.filter;
     }
 
     private List handlers = new ArrayList();
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param handler DOCUMENT ME!
+     * Adds a handler to the Iterator
+     * @param handler The handler to add
      */
     public void addHandler(IndexIteratorHandler handler) {
-        if (!handlers.contains(handler)) {
-            handlers.add(handler);
+        if (!this.handlers.contains(handler)) {
+            this.handlers.add(handler);
         }
     }
 
     protected void handleFile(File file) {
-        for (Iterator i = handlers.iterator(); i.hasNext();) {
+        for (Iterator i = this.handlers.iterator(); i.hasNext();) {
             IndexIteratorHandler handler = (IndexIteratorHandler) i.next();
             handler.handleFile(getReader(), file);
         }
     }
 
     protected void handleStaleDocument(Term term) {
-        for (Iterator i = handlers.iterator(); i.hasNext();) {
+        for (Iterator i = this.handlers.iterator(); i.hasNext();) {
             IndexIteratorHandler handler = (IndexIteratorHandler) i.next();
             handler.handleStaleDocument(getReader(), term);
         }
     }
 
     protected void handleUnmodifiedDocument(Term term, File file) {
-        for (Iterator i = handlers.iterator(); i.hasNext();) {
+        for (Iterator i = this.handlers.iterator(); i.hasNext();) {
             IndexIteratorHandler handler = (IndexIteratorHandler) i.next();
             handler.handleUnmodifiedDocument(getReader(), term, file);
         }
     }
 
     protected void handleNewDocument(Term term, File file) {
-        for (Iterator i = handlers.iterator(); i.hasNext();) {
+        for (Iterator i = this.handlers.iterator(); i.hasNext();) {
             IndexIteratorHandler handler = (IndexIteratorHandler) i.next();
             handler.handleNewDocument(getReader(), term, file);
         }
@@ -110,19 +114,18 @@ public class IndexIterator {
     private IndexReader reader;
 
     protected IndexReader getReader() {
-        return reader;
+        return this.reader;
     }
 
     /**
      * Iterate over all files within directory
-     *
-     * @param dumpDirectory Directory over which shall be iterated
+     * @param dumpDirectory Directory over which to iterate
      */
     public void iterate(File dumpDirectory) {
         log.info("Iterating files (" + dumpDirectory + ")");
 
         try {
-            reader = IndexReader.open(getIndex());
+            this.reader = IndexReader.open(getIndex());
 
             TermEnum iterator = enumerateUIDs(getReader());
 
@@ -147,13 +150,18 @@ public class IndexIterator {
             }
 
             iterator.close();
-            reader.close();
+            this.reader.close();
         } catch (IOException e) {
             log.error(e);
         }
     }
 
     /**
+     * Iterate over a file
+     * @param iterator The iterator to use
+     * @param file The file to iterate over
+     * @param dumpDirectory The dump directory to use
+     * @throws IOException if an IO error occurs
      *
      */
     protected void iterateFiles(TermEnum iterator, File file, File dumpDirectory)
@@ -188,21 +196,25 @@ public class IndexIterator {
 
     /**
      * Returns an term enumerator beginning with the first term that represents a UID field.
+     * @param _reader The reader to get the terms from
+     * @return The term enumerator
      */
-    protected TermEnum enumerateUIDs(IndexReader reader) {
-        TermEnum enum = null;
+    protected TermEnum enumerateUIDs(IndexReader _reader) {
+        TermEnum tEnum = null;
 
         try {
-            enum = reader.terms(new Term("uid", ""));
+            tEnum = _reader.terms(new Term("uid", ""));
         } catch (IOException e) {
             log.error("Term enumeration failed: ", e);
         }
             
-        return enum;
+        return tEnum;
     }
 
     /**
      * Returns if the term is not null and decribes a UID field.
+     * @param term The term
+     * @return Whether the term is not null and describes a UID field
      */
     protected static boolean isUIDTerm(Term term) {
         return (term != null) && term.field().equals("uid");
@@ -211,6 +223,9 @@ public class IndexIterator {
     /**
      * Returns <code>true</code> if the file described by uid has a bigger UID than the
      * file described by the existing UID term.
+     * @param term The term
+     * @param uid The UID
+     * @return Whether the file has a bigger UID
      */
     protected static boolean isStale(Term term, String uid) {
         return isUIDTerm(term) && (term.text().compareTo(uid) < 0);
@@ -219,6 +234,9 @@ public class IndexIterator {
     /**
      * Returns <code>true</code> if the file described by uid has the same UID as the
      * file described by the existing UID term.
+     * @param term The term
+     * @param uid The UID
+     * @return Whether the file has the same UID
      */
     protected static boolean hasEqualUID(Term term, String uid) {
         return isUIDTerm(term) && term.text().equals(uid);
@@ -226,10 +244,8 @@ public class IndexIterator {
 
     /**
      * Create a unique id
-     *
      * @param file file to index
      * @param dumpDir dump directory
-     *
      * @return id
      */
     public static String createID(File file, File dumpDir) {
@@ -237,21 +253,18 @@ public class IndexIterator {
             String id = file.getPath().substring(dumpDir.getPath().length());
             //id = id.replace(File.separatorChar, '\u0000'));
             return id;
-        } else {
-            log.warn("Length of dumping directory is less than length of file name! Absolute path is being returned as id.");
-            return file.getAbsolutePath();
         }
+        log.warn("Length of dumping directory is less than length of file name! Absolute path is being returned as id.");
+        return file.getAbsolutePath();
     }
 
     /**
      * Append path and date into a string in such a way that lexicographic sorting gives the same
      * results as a walk of the file hierarchy.  Thus null (\u0000) is used both to separate
      * directory components and to separate the path from the date.
-     *
-     * @param file DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param file The file
+     * @param htdocsDumpDir The dump directory to use
+     * @return The processed string
      */
     public static String createUID(File file, File htdocsDumpDir) {
         String requestURI = file.getPath().substring(htdocsDumpDir.getPath().length());
@@ -263,6 +276,8 @@ public class IndexIterator {
 
     /**
      * Converts a UID to a URL string.
+     * @param uid The UID
+     * @return The converted UID
      */
     public static String uid2url(String uid) {
         String url = uid.replace('\u0000', '/'); // replace nulls with slashes
@@ -275,6 +290,8 @@ public class IndexIterator {
 
     /**
      * Get Files and sorts by alphabet?
+     * @param dumpDirectory The dump directory to use
+     * @return The files
      */
     public File[] getFiles(File dumpDirectory) {
         List files = new ArrayList();
@@ -304,7 +321,9 @@ public class IndexIterator {
     }
 
     /**
-     * Collect files
+     * Collect files into a list
+     * @param file The file to collect
+     * @param files The list to collect the file into
      */
     protected void collectFiles(File file, List files) {
         if (file.isDirectory()) {
@@ -321,6 +340,10 @@ public class IndexIterator {
 
     /**
      * Traverse directory
+     * @param iterator The iterator to use
+     * @param file The file to start from
+     * @param dumpDirectory The dump directory to use
+     * @throws IOException if an IO error occurs
      */
     protected void traverse(TermEnum iterator, File file, File dumpDirectory) throws IOException {
         if (file.isDirectory()) {

@@ -24,6 +24,9 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 
+/**
+ * Interface for creation of hierarchial documents
+ */
 public interface ParentChildCreatorInterface {
     /**
      * Constant for a branch node. Branch nodes are somewhat related

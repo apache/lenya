@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.lenya.workflow.BooleanVariable;
@@ -43,8 +45,10 @@ import org.apache.lenya.workflow.WorkflowListener;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * <p>
@@ -59,24 +63,51 @@ import org.w3c.dom.Element;
  */
 public abstract class HistoryImpl implements History, WorkflowListener {
 
+    /**
+     * <code>WORKFLOW_ATTRIBUTE</code> The workflow attribute
+     */
     public static final String WORKFLOW_ATTRIBUTE = "workflow";
+    /**
+     * <code>HISTORY_ELEMENT</code> The history element
+     */
     public static final String HISTORY_ELEMENT = "history";
+    /**
+     * <code>VERSION_ELEMENT</code> The version element
+     */
     public static final String VERSION_ELEMENT = "version";
+    /**
+     * <code>STATE_ATTRIBUTE</code> The state attribute
+     */
     public static final String STATE_ATTRIBUTE = "state";
+    /**
+     * <code>EVENT_ATTRIBUTE</code> The event attribute
+     */
     public static final String EVENT_ATTRIBUTE = "event";
+    /**
+     * <code>VARIABLE_ELEMENT</code> The variable element
+     */
     public static final String VARIABLE_ELEMENT = "variable";
+    /**
+     * <code>NAME_ATTRIBUTE</code> The name attribute
+     */
     public static final String NAME_ATTRIBUTE = "name";
+    /**
+     * <code>VALUE_ATTRIBUTE</code> The value attribute
+     */
     public static final String VALUE_ATTRIBUTE = "value";
+    /**
+     * <code>DATE_ATTRIBUTE</code> The date attribute
+     */
     public static final String DATE_ATTRIBUTE = "date";
 
     /**
      * Creates a new history object. A new history file is created and
      * initialized.
-     * @param workflowId The workflow ID.
      * @param situation The current situation.
      * @throws WorkflowException when something went wrong.
      */
     public void initialize(Situation situation) throws WorkflowException {
+
         try {
             File file = getHistoryFile();
             file.getParentFile().mkdirs();
@@ -93,23 +124,33 @@ public abstract class HistoryImpl implements History, WorkflowListener {
             historyElement.appendChild(initialVersionElement);
 
             DocumentHelper.writeDocument(helper.getDocument(), file);
-        } catch (Exception e) {
+        } catch (DOMException e) {
+            throw new WorkflowException(e);
+        } catch (TransformerConfigurationException e) {
+            throw new WorkflowException(e);
+        } catch (IOException e) {
+            throw new WorkflowException(e);
+        } catch (ParserConfigurationException e) {
+            throw new WorkflowException(e);
+        } catch (WorkflowException e) {
+            throw new WorkflowException(e);
+        } catch (TransformerException e) {
             throw new WorkflowException(e);
         }
     }
 
     /**
      * Creates a new history object for a workflow instance.
-     * @param instance The workflow instance.
+     * @param _instance The workflow instance.
      * @throws WorkflowException if an error occurs.
      */
-    protected HistoryImpl(WorkflowInstanceImpl instance) throws WorkflowException {
-        this.instance = instance;
+    protected HistoryImpl(WorkflowInstanceImpl _instance) throws WorkflowException {
+        this.instance = _instance;
         if (isInitialized()) {
             NamespaceHelper helper = getNamespaceHelper();
-            restoreState(instance, helper);
-            restoreVariables(instance, helper);
-            instance.addWorkflowListener(this);
+            restoreState(_instance, helper);
+            restoreVariables(_instance, helper);
+            _instance.addWorkflowListener(this);
         }
     }
 
@@ -125,7 +166,11 @@ public abstract class HistoryImpl implements History, WorkflowListener {
         try {
             Document document = DocumentHelper.readDocument(getHistoryFile());
             helper = new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, document);
-        } catch (Exception e) {
+        } catch (final ParserConfigurationException e) {
+            throw new WorkflowException(e);
+        } catch (final SAXException e) {
+            throw new WorkflowException(e);
+        } catch (final IOException e) {
             throw new WorkflowException(e);
         }
         return helper;
@@ -177,16 +222,20 @@ public abstract class HistoryImpl implements History, WorkflowListener {
      * invocation.
      * @param helper The namespace helper of the history document.
      * @param situation The current situation.
-     * @param workflowId The workflow ID.
      * @return An XML element.
      * @throws WorkflowException when something went wrong.
      */
     protected Element createInitialVersionElement(NamespaceHelper helper, Situation situation)
             throws WorkflowException {
-        Element versionElement = createVersionElement(helper, situation);
+        Element versionElement;
+        try {
+            versionElement = createVersionElement(helper, situation);
 
-        StateImpl initialState = (StateImpl) instance.getWorkflow().getInitialState();
-        versionElement.setAttribute(STATE_ATTRIBUTE, initialState.getId());
+            StateImpl initialState = (StateImpl) this.instance.getWorkflow().getInitialState();
+            versionElement.setAttribute(STATE_ATTRIBUTE, initialState.getId());
+        } catch (final DOMException e) {
+            throw new WorkflowException(e);
+        }
 
         return versionElement;
     }
@@ -226,34 +275,46 @@ public abstract class HistoryImpl implements History, WorkflowListener {
     /**
      * Advances the workflow history when a tranistion was invoked.
      * 
-     * @param instance The workflow instance.
+     * @param _instance The workflow instance.
      * @param situation The situation before the transition.
      * @param event The invoked event.
      * @param resultingState The resulting state.
      * 
      * @throws WorkflowException when something went wrong.
      */
-    public void transitionFired(WorkflowInstance instance, Situation situation, String event,
+    public void transitionFired(WorkflowInstance _instance, Situation situation, String event,
             State resultingState) throws WorkflowException {
-        try {
-            this.lastState = resultingState;
-            org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(getHistoryFile());
-            Element root = xmlDocument.getDocumentElement();
+            try {
+                this.lastState = resultingState;
+                org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(getHistoryFile());
+                Element root = xmlDocument.getDocumentElement();
 
-            NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
-                    Workflow.DEFAULT_PREFIX, xmlDocument);
+                NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
+                        Workflow.DEFAULT_PREFIX, xmlDocument);
 
-            Element versionElement = createVersionElement(helper, (StateImpl) instance
-                    .getCurrentState(), situation, event);
+                Element versionElement = createVersionElement(helper, (StateImpl) _instance
+                        .getCurrentState(), situation, event);
 
-            root.appendChild(versionElement);
+                root.appendChild(versionElement);
 
-            saveVariables(helper);
+                saveVariables(helper);
 
-            DocumentHelper.writeDocument(xmlDocument, getHistoryFile());
-        } catch (Exception e) {
-            throw new WorkflowException(e);
-        }
+                DocumentHelper.writeDocument(xmlDocument, getHistoryFile());
+            } catch (final DOMException e) {
+                throw new WorkflowException(e);
+            } catch (final TransformerConfigurationException e) {
+                throw new WorkflowException(e);
+            } catch (final ParserConfigurationException e) {
+                throw new WorkflowException(e);
+            } catch (final SAXException e) {
+                throw new WorkflowException(e);
+            } catch (final IOException e) {
+                throw new WorkflowException(e);
+            } catch (final WorkflowException e) {
+                throw new WorkflowException(e);
+            } catch (final TransformerException e) {
+                throw new WorkflowException(e);
+            }
     }
 
     /**
@@ -261,7 +322,7 @@ public abstract class HistoryImpl implements History, WorkflowListener {
      * @param impl A workflow instance implementation.
      */
     public void setInstance(WorkflowInstanceImpl impl) {
-        instance = impl;
+        this.instance = impl;
     }
 
     /**
@@ -289,7 +350,7 @@ public abstract class HistoryImpl implements History, WorkflowListener {
                 }
 
                 element.setAttribute(VALUE_ATTRIBUTE, Boolean.toString(value));
-            } catch (TransformerException e) {
+            } catch (final TransformerException e) {
                 throw new WorkflowException(e);
             }
         }
@@ -297,11 +358,11 @@ public abstract class HistoryImpl implements History, WorkflowListener {
 
     /**
      * Restores the state variables of a workflow instance.
-     * @param instance The instance to restore.
+     * @param _instance The instance to restore.
      * @param helper The helper that wraps the history document.
      * @throws WorkflowException when something went wrong.
      */
-    protected void restoreVariables(WorkflowInstanceImpl instance, NamespaceHelper helper)
+    protected void restoreVariables(WorkflowInstanceImpl _instance, NamespaceHelper helper)
             throws WorkflowException {
         Element parent = helper.getDocument().getDocumentElement();
 
@@ -310,17 +371,17 @@ public abstract class HistoryImpl implements History, WorkflowListener {
         for (int i = 0; i < variableElements.length; i++) {
             String name = variableElements[i].getAttribute(NAME_ATTRIBUTE);
             String value = variableElements[i].getAttribute(VALUE_ATTRIBUTE);
-            instance.setValue(name, Boolean.valueOf(value).booleanValue());
+            _instance.setValue(name, Boolean.valueOf(value).booleanValue());
         }
     }
 
     /**
      * Restores the state of a workflow instance.
-     * @param instance The instance to restore.
+     * @param _instance The instance to restore.
      * @param helper The helper that wraps the history document.
      * @throws WorkflowException when something went wrong.
      */
-    protected void restoreState(WorkflowInstanceImpl instance, NamespaceHelper helper)
+    protected void restoreState(WorkflowInstanceImpl _instance, NamespaceHelper helper)
             throws WorkflowException {
         State state;
         Element[] versionElements = helper.getChildren(helper.getDocument().getDocumentElement(),
@@ -329,9 +390,9 @@ public abstract class HistoryImpl implements History, WorkflowListener {
         if (versionElements.length > 0) {
             Element lastElement = versionElements[versionElements.length - 1];
             String stateId = lastElement.getAttribute(STATE_ATTRIBUTE);
-            state = instance.getWorkflowImpl().getState(stateId);
+            state = _instance.getWorkflowImpl().getState(stateId);
         } else {
-            state = instance.getWorkflow().getInitialState();
+            state = _instance.getWorkflow().getInitialState();
         }
 
         this.lastState = state;
@@ -391,7 +452,7 @@ public abstract class HistoryImpl implements History, WorkflowListener {
             destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
             sourceStream.close();
             destinationStream.close();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new WorkflowException(e);
         } finally {
             try {
@@ -399,7 +460,7 @@ public abstract class HistoryImpl implements History, WorkflowListener {
                     sourceStream.close();
                 if (destinationStream != null)
                     destinationStream.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 throw new WorkflowException(e);
             }
         }

@@ -54,7 +54,7 @@ public class AccessControlUsecase extends AbstractUsecase {
     protected void doInitialize() {
         super.doInitialize();
         
-        accessController = null;
+        this.accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         
@@ -64,10 +64,10 @@ public class AccessControlUsecase extends AbstractUsecase {
                 (AccessControllerResolver) selector.select(
                     AccessControllerResolver.DEFAULT_RESOLVER);
 
-            accessController = resolver.resolveAccessController(getSourceURL());
+            this.accessController = resolver.resolveAccessController(getSourceURL());
 
             AccreditableManager accreditableManager =
-                ((DefaultAccessController) accessController).getAccreditableManager();
+                ((DefaultAccessController) this.accessController).getAccreditableManager();
 
             this.userManager = accreditableManager.getUserManager();
             this.groupManager = accreditableManager.getGroupManager();

@@ -36,28 +36,27 @@ public class Credential {
 
     /**
      * Creates a new credential object.
-     * @param accreditable The accreditable.
+     * @param _accreditable The accreditable.
      */
-    public Credential(Accreditable accreditable) {
-        setAccreditable(accreditable);
+    public Credential(Accreditable _accreditable) {
+        setAccreditable(_accreditable);
     }
 
     /**
      * Sets the accreditable for this credential.
-     * @param accreditable The accreditable.
+     * @param _accreditable The accreditable.
      */
-    protected void setAccreditable(Accreditable accreditable) {
-        assert accreditable != null;
-        this.accreditable = accreditable;
+    protected void setAccreditable(Accreditable _accreditable) {
+        assert _accreditable != null;
+        this.accreditable = _accreditable;
     }
 
     /**
      * Returns all roles of this credential.
-     *
      * @return An array of roles.
      */
     public Role[] getRoles() {
-        return (Role[]) roles.toArray(new Role[roles.size()]);
+        return (Role[]) this.roles.toArray(new Role[this.roles.size()]);
     }
 
     /**
@@ -66,8 +65,8 @@ public class Credential {
      */
     public void addRole(Role role) {
         assert role != null;
-        assert !roles.contains(role);
-        roles.add(role);
+        assert !this.roles.contains(role);
+        this.roles.add(role);
     }
 
     /**
@@ -76,8 +75,8 @@ public class Credential {
      */
     public void removeRole(Role role) {
         assert role != null;
-        assert roles.contains(role);
-        roles.remove(role);
+        assert this.roles.contains(role);
+        this.roles.remove(role);
     }
 
     /**
@@ -85,7 +84,7 @@ public class Credential {
      * @return An accreditable.
      */
     public Accreditable getAccreditable() {
-        return accreditable;
+        return this.accreditable;
     }
 
     /**
@@ -101,7 +100,7 @@ public class Credential {
      * @return A boolean value.
      */
     public boolean contains(Role role) {
-        return roles.contains(role);
+        return this.roles.contains(role);
     }
     
     /**
@@ -109,6 +108,6 @@ public class Credential {
      * @return A boolean value.
      */
     public boolean isEmpty() {
-    	return roles.isEmpty();
+    	return this.roles.isEmpty();
     }
 }

@@ -20,32 +20,34 @@
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.lucene.document.DateField;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
+/**
+ * Abstract document creator
+ */
 public class AbstractDocumentCreator implements DocumentCreator {
-    Category log = Category.getInstance(AbstractDocumentCreator.class);
+    private static final Logger log = Logger.getLogger(AbstractDocumentCreator.class);
 
     /** Creates a new instance of AbstractDocumentCreator */
     public AbstractDocumentCreator() {
+        // do nothing
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param file DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Returns a Lucene document
+     * @param file The file
+     * @param htdocsDumpDir The dump directory
+     * @return The Lucene document
+     * @throws IOException if an error occurs
      */
-    public Document getDocument(File file, File htdocsDumpDir)
-        throws Exception {
+    public Document getDocument(File file, File htdocsDumpDir) throws IOException {
+
         // make a new, empty document
         Document doc = new Document();
 
@@ -77,14 +79,14 @@ public class AbstractDocumentCreator implements DocumentCreator {
         doc.add(Field.Keyword("modified", DateField.timeToString(file.lastModified())));
 
         // Add the id as a field, so that index can be incrementally maintained.
-	String id = IndexIterator.createID(file, htdocsDumpDir);
+        String id = IndexIterator.createID(file, htdocsDumpDir);
         log.debug(id);
         doc.add(Field.Keyword("id", id));
 
         // Add the uid as a field, so that index can be incrementally maintained.
         // This field is not stored with document, it is indexed, but it is not
         // tokenized prior to indexing.
-	String uid = IndexIterator.createUID(file, htdocsDumpDir);
+        String uid = IndexIterator.createUID(file, htdocsDumpDir);
         log.debug(uid);
         doc.add(new Field("uid", uid, false, true, false));
 

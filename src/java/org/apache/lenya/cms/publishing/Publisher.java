@@ -26,7 +26,6 @@ package org.apache.lenya.cms.publishing;
 public interface Publisher {
     /**
      * Publish a document.
-     *
      * @param publicationPath path to the publication
      * @param authoringPath path to the authoring directory
      * @param treeAuthoringPath path to the authoring tree

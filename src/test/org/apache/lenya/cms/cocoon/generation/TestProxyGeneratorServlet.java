@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TestProxyGeneratorServlet.java,v 1.3 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.generation;
 
@@ -32,26 +32,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+/**
+ * Proxy Generator Servlet Test
+ */
 public class TestProxyGeneratorServlet extends HttpServlet {
     /**
-     * DOCUMENT ME!
-     *
-     * @param config DOCUMENT ME!
-     *
-     * @throws ServletException DOCUMENT ME!
+     * Initialize, given a servlet configuration
+     * @param config The configuration
+     * @throws ServletException if an error occurs
      */
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param request DOCUMENT ME!
-     * @param response DOCUMENT ME!
-     *
-     * @throws IOException DOCUMENT ME!
-     * @throws ServletException DOCUMENT ME!
+     * Get a request
+     * @param request The request to get
+     * @param response The response to put it in
+     * @throws IOException if an IO error occurs
+     * @throws ServletException if an error occurs
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
@@ -70,13 +69,11 @@ public class TestProxyGeneratorServlet extends HttpServlet {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param request DOCUMENT ME!
-     * @param response DOCUMENT ME!
-     *
-     * @throws ServletException DOCUMENT ME!
-     * @throws IOException DOCUMENT ME!
+     * Do a POST using the request and store the response in the response object
+     * @param request The request
+     * @param response The response
+     * @throws ServletException if an error occurs
+     * @throws IOException if an IO error occurs
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -95,11 +92,9 @@ public class TestProxyGeneratorServlet extends HttpServlet {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param request DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Return the information about a request: URI, Server name and port
+     * @param request The request
+     * @return The information (as XML)
      */
     public String getRequestInfo(HttpServletRequest request) {
         StringBuffer sb = new StringBuffer("");
@@ -111,11 +106,9 @@ public class TestProxyGeneratorServlet extends HttpServlet {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param request DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get all parameters from a request
+     * @param request The request
+     * @return The parameters (as XML)
      */
     public String getParameters(HttpServletRequest request) {
         StringBuffer sb = new StringBuffer("");
@@ -146,11 +139,9 @@ public class TestProxyGeneratorServlet extends HttpServlet {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param request DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get all session attributes of a request
+     * @param request The request
+     * @return The session attributes (in XML)
      */
     public String getSession(HttpServletRequest request) {
         StringBuffer sb = new StringBuffer("");
@@ -183,11 +174,9 @@ public class TestProxyGeneratorServlet extends HttpServlet {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param request DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Return all cookies of a request
+     * @param request The request
+     * @return The cookies (as XML)
      */
     public String getCookies(HttpServletRequest request) {
         StringBuffer sb = new StringBuffer("");

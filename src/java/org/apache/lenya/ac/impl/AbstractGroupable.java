@@ -35,6 +35,7 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
      * Ctor.
      */
     public AbstractGroupable() {
+	    // do nothing
     }
 
     private Set groups = new HashSet();
@@ -45,7 +46,7 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
     public void addedToGroup(Group group) {
         assert group != null;
         assert group.contains(this);
-        groups.add(group);
+        this.groups.add(group);
     }
 
     /**
@@ -54,24 +55,24 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
     public void removedFromGroup(Group group) {
         assert group != null;
         assert !group.contains(this);
-        groups.remove(group);
+        this.groups.remove(group);
     }
 
     /**
      * @see org.apache.lenya.ac.Groupable#getGroups()
      */
     public Group[] getGroups() {
-        return (Group[]) groups.toArray(new Group[groups.size()]);
+        return (Group[]) this.groups.toArray(new Group[this.groups.size()]);
     }
 
     /**
      * Removes this groupable from all its groups.
      */
     public void removeFromAllGroups() {
-        Group[] groups = getGroups();
+        Group[] _groups = getGroups();
 
-        for (int i = 0; i < groups.length; i++) {
-            groups[i].remove(this);
+        for (int i = 0; i < _groups.length; i++) {
+            _groups[i].remove(this);
         }
     }
 
@@ -82,10 +83,10 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
         Set accreditables = new HashSet();
         accreditables.add(this);
 
-        Group[] groups = getGroups();
+        Group[] _groups = getGroups();
 
-        for (int i = 0; i < groups.length; i++) {
-            Accreditable[] groupAccreditables = groups[i].getAccreditables();
+        for (int i = 0; i < _groups.length; i++) {
+            Accreditable[] groupAccreditables = _groups[i].getAccreditables();
             accreditables.addAll(Arrays.asList(groupAccreditables));
         }
 

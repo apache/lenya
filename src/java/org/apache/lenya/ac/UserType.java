@@ -32,39 +32,37 @@ public class UserType  {
      * Ctor.
      */
     public UserType() {
+	    // do nothing
     }
 
     /**
      * Ctor.
-     * 
-     * @param key The key.
-     * @param className The class name.
-     * @param createUseCase The create usecase.
+     * @param _key The key.
+     * @param _className The class name.
+     * @param _createUseCase The create usecase.
      */
-    public UserType(String key, String className, String createUseCase) {
-	  this.key = key;
-	  this.className = className;
-	  this.createUseCase = createUseCase;
+    public UserType(String _key, String _className, String _createUseCase) {
+	  this.key = _key;
+	  this.className = _className;
+	  this.createUseCase = _createUseCase;
     }
 
     /**
      * Get the key to be used for this type. 
      * This key can be used for a dictionary entry for the user interface.
-     *
      * @return a <code>String</code>
      */
     public String getKey() {
-	  return key;
+	  return this.key;
     }
     
     /**
      * Set the key to be used for this type. 
      * This key can be used for a dictionary entry for the user interface.
-     *
-     * @param key the new key
+     * @param _key the new key
      */
-    public void setKey(String key) {
-	  this.key = key;
+    public void setKey(String _key) {
+	  this.key = _key;
     }
     
     /**
@@ -72,13 +70,12 @@ public class UserType  {
      * type of user. Note that in current version, this field is for
      * information only; in later versions, it might be used for
      * introspection and dynamic script creation.
-     *
      * @see org.apache.lenya.ac.file.FileUser
      * @see org.apache.lenya.ac.ldap.LDAPUser
      * @return a <code>String</code> the name of the class
      */
     public String getClassName() {
-	  return className;
+	  return this.className;
     }
     
     /**
@@ -86,11 +83,10 @@ public class UserType  {
      * type of user. Note that in current version, this field is for
      * information only; in later versions, it might be used for
      * introspection and dynamic flowscript creation.
-     *
-     * @param className the new className
+     * @param _className the new className
      */
-    public void setClassName(String className) {
-	  this.className = className;
+    public void setClassName(String _className) {
+	  this.className = _className;
     }
     
     /**
@@ -98,11 +94,10 @@ public class UserType  {
      * is to be created. 
      * This name will be used in the flowscript (currently: user-admin.js),
      * in order to distinguish between different types.
-     *
      * @return a <code>String</code> the name of the use case in the flowscript
      */
     public String getCreateUseCase() {
-	  return createUseCase;
+	  return this.createUseCase;
     }
     
     /**
@@ -110,11 +105,10 @@ public class UserType  {
      * is to be created. 
      * This name will be used in the flowscript (currently: user-admin.js),
      * in order to distinguish between different types.
-     *
-     * @param createUseCase the new createUseCase
+     * @param _createUseCase the new createUseCase
      */
-    public void setCreateUseCase(String createUseCase) {
-	  this.createUseCase = createUseCase;
+    public void setCreateUseCase(String _createUseCase) {
+	  this.createUseCase = _createUseCase;
     }
     
 }

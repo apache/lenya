@@ -43,12 +43,12 @@ public class FileUserManager extends FileItemManager implements UserManager {
     /**
      * Create a UserManager
      * 
-     * @param userTypes The supported user types.
+     * @param _userTypes The supported user types.
      * @throws AccessControlException if the UserManager could not be instantiated.
      */
-    private FileUserManager(UserType[] userTypes)
+    private FileUserManager(UserType[] _userTypes)
             throws AccessControlException {
-        this.userTypes = new HashSet(Arrays.asList(userTypes));
+        this.userTypes = new HashSet(Arrays.asList(_userTypes));
     }
 
     /**
@@ -121,7 +121,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
      * @see org.apache.lenya.ac.UserManager#getUserTypes()
      */
     public UserType[] getUserTypes() {
-        return (UserType[]) userTypes.toArray(new UserType[userTypes.size()]);
+        return (UserType[]) this.userTypes.toArray(new UserType[this.userTypes.size()]);
     }
 
     protected static final String SUFFIX = ".iml";

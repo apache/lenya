@@ -33,7 +33,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 
 /**
- * Command Line Interface
+ * Command Line Interface for searching files
  */
 class SearchFiles {
 
@@ -91,6 +91,11 @@ class SearchFiles {
     }
 
     /**
+     * Seach the index directory for the specified string
+     * @param line The string
+     * @param index_directory The index directory
+     * @return A Hits object containing the matches
+     * @throws Exception if an error occurs
      *
      */
     public Hits search(String line, File index_directory) throws Exception {

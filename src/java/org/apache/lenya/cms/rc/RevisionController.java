@@ -24,25 +24,24 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Controller for the reserved check-in, check-out, the backup versions and the rollback 
  */
 public class RevisionController {
-    private static Category log = Category.getInstance(RevisionController.class);
+    private static Logger log = Logger.getLogger(RevisionController.class);
 
-    // System username. This is used for 
-    // - creating dummy checkin events in a new RCML file
-    //   when it is created on-the-fly
-    // - system override on checkin, i.e. you can force
-    //   a checkin into the repository if you use this
-    //   username as identity parameter to reservedCheckIn()
-    //
+    /**
+     * <code>systemUsername</code> The system user name. This is used for 
+     *  - creating dummy checkin events in a new RCML file
+     * when it is created on-the-fly
+     *  - system override on checkin, i.e. you can force
+     *  a checkin into the repository if you use this
+     *  username as identity parameter to reservedCheckIn()
+     */
     public static final String systemUsername = "System";
 
     private String rcmlDir = null;
@@ -64,26 +63,22 @@ public class RevisionController {
 
     /**
      * Shows Configuration
-     *
      * @return String The rcml directory, the backup directory, the publication directory
      */
     public String toString() {
-        return "rcmlDir=" + rcmlDir + " , rcbakDir=" + backupDir + " , rootDir=" + rootDir;
+        return "rcmlDir=" + this.rcmlDir + " , rcbakDir=" + this.backupDir + " , rootDir=" + this.rootDir;
     }
 
     /**
      * Get the RCML File for the file source
-     *
      * @param source The path of the file from the publication.
-     *
      * @return RCML The corresponding RCML file.
-     *
      * @throws FileNotFoundException if an error occurs
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
     public RCML getRCML(String source) throws FileNotFoundException, IOException, Exception {
-        return new RCML(rcmlDir, source, rootDir);
+        return new RCML(this.rcmlDir, source, this.rootDir);
     }
 
     /**
@@ -96,14 +91,14 @@ public class RevisionController {
      */
     public File reservedCheckOut(String source, String identity) throws Exception {
         
-        File file = new File(rootDir + source);
+        File file = new File(this.rootDir + source);
         /*
         if (!file.isFile()) {
             throw new FileNotFoundException(file.getAbsolutePath());
         }
         */
 
-        RCML rcml = new RCML(rcmlDir, source, rootDir);
+        RCML rcml = new RCML(this.rcmlDir, source, this.rootDir);
 
         RCMLEntry entry = rcml.getLatestEntry();
 
@@ -119,7 +114,7 @@ public class RevisionController {
         if ((entry != null)
             && (entry.getType() != RCML.ci)
             && !entry.getIdentity().equals(identity)) {
-            throw new FileReservedCheckOutException(rootDir + source, rcml);
+            throw new FileReservedCheckOutException(this.rootDir + source, rcml);
         }
 
         rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false);
@@ -135,7 +130,7 @@ public class RevisionController {
      * @throws Exception when something went wrong.
      */
     public boolean canCheckOut(String source, String identity) throws Exception {
-        RCML rcml = new RCML(rcmlDir, source, rootDir);
+        RCML rcml = new RCML(this.rcmlDir, source, this.rootDir);
 
         RCMLEntry entry = rcml.getLatestEntry();
 
@@ -170,136 +165,135 @@ public class RevisionController {
      */
     public long reservedCheckIn(String destination, String identity, boolean backup)
         throws FileReservedCheckInException, Exception {
-        RCML rcml = new RCML(rcmlDir, destination, rootDir);
+        FileInputStream in = null;
+        FileOutputStream out = null;
 
-        CheckOutEntry coe = rcml.getLatestCheckOutEntry();
-        CheckInEntry cie = rcml.getLatestCheckInEntry();
-
-        // If there has never been a checkout for this object
-        // *or* if the user attempting the checkin right now
-        // is the system itself, we will skip any checks and proceed
-        // right away to the actual checkin.
-        // In all other cases we enforce the revision control
-        // rules inside this if clause:
-        //
-        if (!((coe == null) || identity.equals(RevisionController.systemUsername))) {
-            /*
-             * Possible cases and rules:
-             *
-             * 1.) we were able to read the latest checkin and it is later than latest checkout
-             *     (i.e. there is no open checkout to match this checkin, an unusual case)
-             *     1.1.) identity of latest checkin is equal to current user
-             *           -> checkin allowed, same user may check in repeatedly
-             *     1.2.) identity of latest checkin is not equal to current user
-             *           -> checkin rejected, may not overwrite the revision which
-             *              another user checked in previously
-             * 2.) there was no checkin or the latest checkout is later than latest checkin
-             *     (i.e. there is an open checkout)
-             *     2.1.) identity of latest checkout is equal to current user
-             *           -> checkin allowed, user checked out and may check in again
-             *              (the most common case)
-             *     2.2.) identity of latest checkout is not equal to current user
-             *           -> checkin rejected, may not check in while another
-             *              user is working on this document
-             *
-             */
-            if ((cie != null) && (cie.getTime() > coe.getTime())) {
-                // We have case 1
-                if (!cie.getIdentity().equals(identity)) {
-                    // Case 1.2., abort...
-                    //
-                    throw new FileReservedCheckInException(rootDir + destination, rcml);
-                }
-            } else {
-                // Case 2
-                if (!coe.getIdentity().equals(identity)) {
-                    // Case 2.2., abort...
-                    //
-                    throw new FileReservedCheckInException(rootDir + destination, rcml);
-                }
-            }
-        }
-
-        File originalFile = new File(rootDir, destination);
+        RCML rcml;
         long time = new Date().getTime();
 
-        if (backup && originalFile.isFile()) {
-            File backupFile = new File(backupDir, destination + ".bak." + time);
-            File parent = new File(backupFile.getParent());
+        try {
+            rcml = new RCML(this.rcmlDir, destination, this.rootDir);
 
-            if (!parent.isDirectory()) {
-                parent.mkdirs();
+            CheckOutEntry coe = rcml.getLatestCheckOutEntry();
+            CheckInEntry cie = rcml.getLatestCheckInEntry();
+
+            // If there has never been a checkout for this object
+            // *or* if the user attempting the checkin right now
+            // is the system itself, we will skip any checks and proceed
+            // right away to the actual checkin.
+            // In all other cases we enforce the revision control
+            // rules inside this if clause:
+            //
+            if (!((coe == null) || identity.equals(RevisionController.systemUsername))) {
+                /*
+                 * Possible cases and rules:
+                 *
+                 * 1.) we were able to read the latest checkin and it is later than latest checkout
+                 *     (i.e. there is no open checkout to match this checkin, an unusual case)
+                 *     1.1.) identity of latest checkin is equal to current user
+                 *           -> checkin allowed, same user may check in repeatedly
+                 *     1.2.) identity of latest checkin is not equal to current user
+                 *           -> checkin rejected, may not overwrite the revision which
+                 *              another user checked in previously
+                 * 2.) there was no checkin or the latest checkout is later than latest checkin
+                 *     (i.e. there is an open checkout)
+                 *     2.1.) identity of latest checkout is equal to current user
+                 *           -> checkin allowed, user checked out and may check in again
+                 *              (the most common case)
+                 *     2.2.) identity of latest checkout is not equal to current user
+                 *           -> checkin rejected, may not check in while another
+                 *              user is working on this document
+                 *
+                 */
+                if ((cie != null) && (cie.getTime() > coe.getTime())) {
+                    // We have case 1
+                    if (!cie.getIdentity().equals(identity)) {
+                        // Case 1.2., abort...
+                        //
+                        throw new FileReservedCheckInException(this.rootDir + destination, rcml);
+                    }
+                } else {
+                    // Case 2
+                    if (!coe.getIdentity().equals(identity)) {
+                        // Case 2.2., abort...
+                        //
+                        throw new FileReservedCheckInException(this.rootDir + destination, rcml);
+                    }
+                }
             }
 
-            log.info(
-                "Backup: copy "
-                    + originalFile.getAbsolutePath()
-                    + " to "
-                    + backupFile.getAbsolutePath());
+            File originalFile = new File(this.rootDir, destination);
+ 
+            if (backup && originalFile.isFile()) {
+                File backupFile = new File(this.backupDir, destination + ".bak." + time);
+                File parent = new File(backupFile.getParent());
 
-            InputStream in = new FileInputStream(originalFile.getAbsolutePath());
+                if (!parent.isDirectory()) {
+                    parent.mkdirs();
+                }
 
-            OutputStream out = new FileOutputStream(backupFile.getAbsolutePath());
-            byte[] buffer = new byte[512];
-            int length;
+                log.debug(
+                    "Backup: copy "
+                        + originalFile.getAbsolutePath()
+                        + " to "
+                        + backupFile.getAbsolutePath());
 
-            while ((length = in.read(buffer)) != -1) {
-                out.write(buffer, 0, length);
+                in = new FileInputStream(originalFile.getAbsolutePath());
+                out = new FileOutputStream(backupFile.getAbsolutePath());
+                byte[] buffer = new byte[512];
+                int length;
+
+                while ((length = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, length);
+                }
             }
 
-            out.close();
+            rcml.checkOutIn(RCML.ci, identity, time, backup);
+            rcml.pruneEntries(this.backupDir);
+            rcml.write();
+
+        } catch (FileNotFoundException e) {
+            log.error("File not found" +e.toString());
+        } catch (IOException e) {
+            log.error("IO error " +e.toString());
+        } finally {
+	        if (in != null)
+	            in.close();
+	        if (out != null)
+	            out.close();
         }
-
-        rcml.checkOutIn(RCML.ci, identity, time, backup);
-        rcml.pruneEntries(backupDir);
-        rcml.write();
-
-        // FIXME: If we reuse the observer pattern as implemented in
-        // xps this would be the place to notify the observers,
-        // e.g. like so:
-        // 	StatusChangeSignalHandler.emitSignal("file:" + originalFile.getAbsolutePath(),
-        // 					     "reservedCheckIn");
         return time;
     }
 
     /**
      * Get the absolute path of a backup version  
-     *
      * @param time The time of the backup 
      * @param filename The path of the file from the {publication}
-     *
      * @return String The absolute path of the backup version
      */
     public String getBackupFilename(long time, String filename) {
-        File backup = new File(backupDir, filename + ".bak." + time);
-
+        File backup = new File(this.backupDir, filename + ".bak." + time);
         return backup.getAbsolutePath();
     }
 
     /**
      * Get the file of a backup version  
-     *
      * @param time The time of the backup 
      * @param filename The path of the file from the {publication}
-     *
      * @return File The file of the backup version
      */
     public File getBackupFile(long time, String filename) {
-        File backup = new File(backupDir, filename + ".bak." + time);
-
+        File backup = new File(this.backupDir, filename + ".bak." + time);
         return backup;
     }
 
     /**
      * Rolls back to the given point in time.  
-     *
      * @param destination File which will be rolled back
      * @param identity The identity of the user
      * @param backupFlag If true, a backup of the current version will be made before the rollback
      * @param time The time point of the desired version
-     *
      * @return long The time of the version to roll back to.
-     *
      * @exception FileReservedCheckInException if the current version couldn't be checked in again
      * @exception FileReservedCheckOutException if the current version couldn't be checked out
      * @exception FileNotFoundException if a file couldn't be found
@@ -311,41 +305,51 @@ public class RevisionController {
             FileReservedCheckOutException,
             FileNotFoundException,
             Exception {
-        // Make sure the old version exists
-        //
-        File backup = new File(backupDir, destination + ".bak." + time);
-        File current = new File(rootDir, destination);
+        
+        FileInputStream in = null;
+        FileOutputStream out = null;
 
-        if (!backup.isFile()) {
-            throw new FileNotFoundException(backup.getAbsolutePath());
+        try {
+            // Make sure the old version exists
+            File backup = new File(this.backupDir, destination + ".bak." + time);
+            File current = new File(this.rootDir, destination);
+
+            if (!backup.isFile()) {
+                throw new FileNotFoundException(backup.getAbsolutePath());
+            }
+
+            if (!current.isFile()) {
+                throw new FileNotFoundException(current.getAbsolutePath());
+            }
+
+            // Try to check out current version
+            reservedCheckOut(destination, identity);
+
+            // Now roll back to the old state
+            in = new FileInputStream(backup.getAbsolutePath());
+            out = new FileOutputStream(current.getAbsolutePath());
+            byte[] buffer = new byte[512];
+            int length;
+
+            while ((length = in.read(buffer)) != -1) {
+                out.write(buffer, 0, length);
+            }
+        } catch (FileNotFoundException e) {
+            log.error("File not found " +e.toString());
+        } catch (IOException e) {
+            log.error("IO error " +e.toString());
+        } catch (Exception e) {
+            log.error("Exception " +e.toString());
+        } finally {
+	        if (in != null)
+	            in.close();
+	        if (out != null)
+	            out.close();
         }
-
-        if (!current.isFile()) {
-            throw new FileNotFoundException(current.getAbsolutePath());
-        }
-
-        // Try to check out current version
-        //
-        reservedCheckOut(destination, identity);
-
-        // Now roll back to the old state
-        //
-        FileInputStream in = new FileInputStream(backup.getAbsolutePath());
-
-        FileOutputStream out = new FileOutputStream(current.getAbsolutePath());
-        byte[] buffer = new byte[512];
-        int length;
-
-        while ((length = in.read(buffer)) != -1) {
-            out.write(buffer, 0, length);
-        }
-
-        out.close();
 
         // Try to check back in, this might cause
         // a backup of the current version to be created if
         // desired by the user.
-        //
         long newtime = reservedCheckIn(destination, identity, backupFlag);
 
         return newtime;
@@ -353,41 +357,52 @@ public class RevisionController {
 
     /**
      * Delete the check in and roll back the file to the backup at time
-     *
      * @param time The time point of the back version we want to retrieve
      * @param destination The File for which we want undo the check in
-     *
      * @exception Exception FileNotFoundException if the back  version or the current version
      *            couldn't be found
      */
     public void undoCheckIn(long time, String destination) throws Exception {
-        File backup = new File(backupDir + "/" + destination + ".bak." + time);
-        File current = new File(rootDir + destination);
+        FileInputStream in = null;
+        FileOutputStream out = null;
 
-        RCML rcml = new RCML(rcmlDir, destination, rootDir);
+        try {
+            File backup = new File(this.backupDir + "/" + destination + ".bak." + time);
+            File current = new File(this.rootDir + destination);
+            RCML rcml = new RCML(this.rcmlDir, destination, this.rootDir);
 
-        if (!backup.isFile()) {
-            throw new FileNotFoundException(backup.getAbsolutePath());
+            if (!backup.isFile()) {
+                throw new FileNotFoundException(backup.getAbsolutePath());
+            }
+
+            if (!current.isFile()) {
+                throw new FileNotFoundException(current.getAbsolutePath());
+            }
+
+            in = new FileInputStream(backup.getAbsolutePath());
+            out = new FileOutputStream(current.getAbsolutePath());
+            byte[] buffer = new byte[512];
+            int length;
+
+            while ((length = in.read(buffer)) != -1) {
+                out.write(buffer, 0, length);
+            }
+
+            log.debug("Undo: copy " + backup.getAbsolutePath() + " " + current.getAbsolutePath());
+
+            rcml.deleteFirstCheckIn();
+        } catch (FileNotFoundException e) {
+            log.error("File not found " +e.toString());
+        } catch (IOException e) {
+            log.error("IO error " +e.toString());
+        } catch (Exception e) {
+            log.error("Exception " +e.toString());
+        } finally {
+	        if (in != null)
+	            in.close();
+	        if (out != null)
+	            out.close();
         }
-
-        if (!current.isFile()) {
-            throw new FileNotFoundException(current.getAbsolutePath());
-        }
-
-        FileInputStream in = new FileInputStream(backup.getAbsolutePath());
-
-        FileOutputStream out = new FileOutputStream(current.getAbsolutePath());
-        byte[] buffer = new byte[512];
-        int length;
-
-        while ((length = in.read(buffer)) != -1) {
-            out.write(buffer, 0, length);
-        }
-
-        log.info("Undo: copy " + backup.getAbsolutePath() + " " + current.getAbsolutePath());
-
-        rcml.deleteFirstCheckIn();
-        out.close();
     }
 
     /**

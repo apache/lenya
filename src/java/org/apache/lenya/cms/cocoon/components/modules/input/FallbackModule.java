@@ -46,6 +46,9 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
 
     private String[] baseUris;
 
+    /**
+     * <code>PATH_PREFIX</code> The path prefix from the webapp
+     */
     public static final String PATH_PREFIX = "lenya/";
 
     protected static final String ELEMENT_PATH = "directory";
@@ -63,7 +66,7 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
 
         SourceResolver resolver = null;
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             Source source = null;
             for (int i = 0; i < pathConfigs.length; i++) {
                 String uri = pathConfigs[i].getAttribute(ATTRIBUTE_SRC);
@@ -92,7 +95,7 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
             throw new ConfigurationException("Configuring failed: ", e);
         } finally {
             if (resolver != null) {
-                manager.release(resolver);
+                this.manager.release(resolver);
             }
         }
 
@@ -127,13 +130,13 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
 
         SourceResolver resolver = null;
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
-            String[] baseUris = getBaseURIs(objectModel);
+            String[] _baseUris = getBaseURIs(objectModel);
             Source source = null;
             int i = 0;
-            while (resolvedUri == null && i < baseUris.length) {
-                String uri = baseUris[i] + "/" + path;
+            while (resolvedUri == null && i < _baseUris.length) {
+                String uri = _baseUris[i] + "/" + path;
 
                 checkedUris += uri + "\n";
 
@@ -165,7 +168,7 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
             throw new ConfigurationException("Resolving attribute [" + path + "] failed: ", e);
         } finally {
             if (resolver != null) {
-                manager.release(resolver);
+                this.manager.release(resolver);
             }
         }
 
@@ -174,7 +177,7 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
             throw new ConfigurationException("Could not resolve file for path [" + path + "]."
                     + "\nChecked URIs:" + checkedUris);
             */
-            resolvedUri = baseUris[baseUris.length - 1] + "/" + path;
+            resolvedUri = this.baseUris[this.baseUris.length - 1] + "/" + path;
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("No URI resolved, choosing last defined URI: [" + resolvedUri + "]");
             }

@@ -19,11 +19,15 @@
 
 package org.apache.lenya.cms.task;
 
+/**
+ * The empty task
+ */
 public class EmptyTask extends AbstractTask {
 
-    /** (non-Javadoc)
+    /** 
      * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
     public void execute(String servletContextPath) throws ExecutionException {
+	    // do nothing
     }
 }

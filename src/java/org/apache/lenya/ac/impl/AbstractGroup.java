@@ -37,6 +37,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * Creates a new group.
      */
     public AbstractGroup() {
+	    // do nothing
     }
 
     /**
@@ -54,7 +55,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @return An array of {@link Groupable}s.
      */
     public Groupable[] getMembers() {
-        return (Groupable[]) members.toArray(new Groupable[members.size()]);
+        return (Groupable[]) this.members.toArray(new Groupable[this.members.size()]);
     }
 
     /**
@@ -62,8 +63,8 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param member The member to add.
      */
     public void add(Groupable member) {
-        assert (member != null) && !members.contains(member);
-        members.add(member);
+        assert (member != null) && !this.members.contains(member);
+        this.members.add(member);
         member.addedToGroup(this);
     }
 
@@ -72,8 +73,8 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @param member The member to remove.
      */
     public void remove(Groupable member) {
-        assert (member != null) && members.contains(member);
-        members.remove(member);
+        assert (member != null) && this.members.contains(member);
+        this.members.remove(member);
         member.removedFromGroup(this);
     }
     
@@ -81,9 +82,9 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * Removes all members from this group.
      */
     public void removeAllMembers() {
-        Groupable[] members = getMembers();
-        for (int i = 0; i < members.length; i++) {
-            remove(members[i]); 
+        Groupable[] _members = getMembers();
+        for (int i = 0; i < _members.length; i++) {
+            remove(_members[i]); 
         }
     }
 
@@ -93,7 +94,7 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
      * @return A boolean value.
      */
     public boolean contains(Groupable member) {
-        return members.contains(member);
+        return this.members.contains(member);
     }
 
     /**
@@ -106,7 +107,6 @@ public abstract class AbstractGroup extends AbstractItem implements Accreditable
     
     /**
      * Delete a group
-     *
      * @throws AccessControlException if the delete failed
      */
     public void delete() throws AccessControlException {

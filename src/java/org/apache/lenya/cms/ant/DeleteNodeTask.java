@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -42,20 +41,18 @@ public class DeleteNodeTask extends PublicationTask {
 
     /**
      * Get the area.
-     * 
      * @return the area.
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * Set the area.
-     * 
-     * @param area the area
+     * @param _area the area
      */
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String _area) {
+        this.area = _area;
     }
 
     /**
@@ -63,33 +60,32 @@ public class DeleteNodeTask extends PublicationTask {
      * @return string The document-id.
      */
     protected String getDocumentid() {
-        return documentid;
+        return this.documentid;
     }
 
     /**
      * Set the value of the document-id corresponding to the node to delete
-     * 
      * @param string The document-id.
      */
     public void setDocumentid(String string) {
-        documentid = string;
+        this.documentid = string;
     }
 
     /**
      * Delete a node of a tree.
      * 
-     * @param documentid The id of the document corresponding to the node to delete.
-     * @param area the areaof the tree
+     * @param _documentid The id of the document corresponding to the node to delete.
+     * @param _area the areaof the tree
      * 
      * @throws SiteException if an error occurs
      */
-    public void deleteNode(String documentid, String area)
+    public void deleteNode(String _documentid, String _area)
         throws SiteException {
 		SiteTree tree = null;
 
 	  	try {
-			tree = getSiteTree(area);
-			SiteTreeNode node = tree.removeNode(documentid);
+			tree = getSiteTree(_area);
+			SiteTreeNode node = tree.removeNode(_documentid);
 			if (node == null) {
 				throw new SiteException("Node " + node + " couldn't be removed");
 			} 
@@ -98,7 +94,7 @@ public class DeleteNodeTask extends PublicationTask {
 			throw new SiteException(e);
 		}
     }   
-    /** (non-Javadoc)
+    /**
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {

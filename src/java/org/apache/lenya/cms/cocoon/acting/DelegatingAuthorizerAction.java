@@ -74,6 +74,9 @@ public class DelegatingAuthorizerAction extends AccessControlAction {
         return result;
     }
 
+    /**
+     * <code>HISTORY</code> Name of the session attribute that holds the history
+     */
     public static final String HISTORY =
         DelegatingAuthorizerAction.class.getPackage().getName() + ".History";
 

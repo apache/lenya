@@ -18,17 +18,20 @@
 package org.apache.lenya.lucene;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
 /**
  * @version $Id$
  */
 public class IndexConfiguration {
-    static Category log = Category.getInstance(IndexConfiguration.class);
+    private final static Logger log = Logger.getLogger(IndexConfiguration.class);
     private String configurationFilePath;
     private String updateIndexType;
     private String indexDir;
@@ -37,20 +40,22 @@ public class IndexConfiguration {
 
     /**
      * Creates a new IndexConfiguration object.
-     * @param configurationFilePath The path of the configuration file.
+     * @param _configurationFilePath The path of the configuration file.
      */
-    public IndexConfiguration(String configurationFilePath) {
-        this.configurationFilePath = configurationFilePath;
+    public IndexConfiguration(String _configurationFilePath) {
+        this.configurationFilePath = _configurationFilePath;
 
         try {
-            File configFile = new File(configurationFilePath);
+            File configFile = new File(_configurationFilePath);
             DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
             Configuration config = builder.buildFromFile(configFile);
             configure(config);
-        } catch (Exception e) {
+        } catch (ConfigurationException e) {
             log.error("Cannot load publishing configuration! ", e);
-            System.err.println("Cannot load publishing configuration! ");
-            e.printStackTrace(System.err);
+        } catch (SAXException e) {
+            log.error("Cannot load publishing configuration! ", e);
+        } catch (IOException e) {
+            log.error("Cannot load publishing configuration! ", e);
         }
     }
 
@@ -84,21 +89,29 @@ public class IndexConfiguration {
     /**
      * Configures this object.
      * @param config The configuration.
-     * @throws Exception if an error occurs.
+     * @throws ConfigurationException if an error occurs.
      */
-    protected void configure(Configuration config) throws Exception {
-        updateIndexType = config.getChild("update-index").getAttribute("type");
-        indexDir = config.getChild("index-dir").getAttribute("src");
-        htdocsDumpDir = config.getChild("htdocs-dump-dir").getAttribute("src");
-        String indexerClassName = config.getChild("indexer").getAttribute("class");
-        indexerClass = Class.forName(indexerClassName);
+    protected void configure(Configuration config) throws ConfigurationException {
+        try {
+            this.updateIndexType = config.getChild("update-index").getAttribute("type");
+            this.indexDir = config.getChild("index-dir").getAttribute("src");
+            this.htdocsDumpDir = config.getChild("htdocs-dump-dir").getAttribute("src");
+            String indexerClassName = config.getChild("indexer").getAttribute("class");
+            this.indexerClass = Class.forName(indexerClassName);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Configuring indexer:"
-                    + "\nupdate index type:     " + updateIndexType
-                    + "\nindex directory:       " + indexDir
-                    + "\nhtdocs dump directory: " + htdocsDumpDir
-                    + "\nindexer class:         " + indexerClass.getName());
+            if (log.isDebugEnabled()) {
+                log.debug("Configuring indexer:"
+                        + "\nupdate index type:     " + this.updateIndexType
+                        + "\nindex directory:       " + this.indexDir
+                        + "\nhtdocs dump directory: " + this.htdocsDumpDir
+                        + "\nindexer class:         " + this.indexerClass.getName());
+            }
+        } catch (ConfigurationException e) {
+            log.error("Configuration error " +e.toString());
+            throw new ConfigurationException(e.toString());
+        } catch (ClassNotFoundException e) {
+            log.error("Class not found " +e.toString());
+            throw new ConfigurationException(e.toString());
         }
 
     }
@@ -108,7 +121,7 @@ public class IndexConfiguration {
      * @return A string.
      */
     public String getUpdateIndexType() {
-        return updateIndexType;
+        return this.updateIndexType;
     }
 
     /**
@@ -116,7 +129,7 @@ public class IndexConfiguration {
      * @return A string.
      */
     public String getIndexDir() {
-        return indexDir;
+        return this.indexDir;
     }
 
     /**
@@ -124,7 +137,7 @@ public class IndexConfiguration {
      * @return A string.
      */
     public String getHTDocsDumpDir() {
-        return htdocsDumpDir;
+        return this.htdocsDumpDir;
     }
 
     /**
@@ -132,7 +145,7 @@ public class IndexConfiguration {
      * @return A class.
      */
     public Class getIndexerClass() {
-        return indexerClass;
+        return this.indexerClass;
     }
 
     /**
@@ -145,6 +158,6 @@ public class IndexConfiguration {
         if (path.indexOf(File.separator) == 0) {
             return path;
         }
-        return FileUtil.catPath(configurationFilePath, path);
+        return FileUtil.catPath(this.configurationFilePath, path);
     }
 }

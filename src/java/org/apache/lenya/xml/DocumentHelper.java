@@ -56,7 +56,6 @@ import org.xml.sax.SAXException;
 public class DocumentHelper {
     /**
      * Creates a non-validating and namespace-aware DocumentBuilder.
-     *
      * @return A new DocumentBuilder object.
      * @throws ParserConfigurationException if an error occurs
      */
@@ -73,16 +72,13 @@ public class DocumentHelper {
     /**
      * Creates a document. A xmlns:prefix="namespaceUri" attribute is added to
      * the document element.
-     *
      * @param namespaceUri The namespace URL of the root element.
      * @param qualifiedName The qualified name of the root element.
      * @param documentType The type of document to be created or null. When doctype is not null,
      *        its Node.ownerDocument attribute is set to the document being created.
      * @return A new Document object.
-     * 
      * @throws DOMException if an error occurs
      * @throws ParserConfigurationException if an error occurs
-     * 
      * @see org.w3c.dom.DOMImplementation#createDocument(String, String, DocumentType)
      */
     public static Document createDocument(String namespaceUri, String qualifiedName,
@@ -108,7 +104,6 @@ public class DocumentHelper {
      * Reads a document from a file.
      * @return A document.
      * @param file The file to load the document from.
-     * 
      * @throws ParserConfigurationException if an error occurs
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
@@ -123,7 +118,6 @@ public class DocumentHelper {
      * Reads a document from a URL.
      * @return A document.
      * @param url The URL to load the document from.
-     * 
      * @throws ParserConfigurationException if an error occurs
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
@@ -138,7 +132,6 @@ public class DocumentHelper {
      * Reads a document from a URI.
      * @return A document.
      * @param uri The URI to load the document from.
-     * 
      * @throws ParserConfigurationException if an error occurs
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
@@ -153,7 +146,6 @@ public class DocumentHelper {
      * Reads a document from a string.
      * @return A document.
      * @param string The string to load the document from.
-     * 
      * @throws ParserConfigurationException if an error occurs
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
@@ -168,7 +160,6 @@ public class DocumentHelper {
      * Reads a document from an input stream.
      * @return A document.
      * @param stream The input stream to load the document from.
-     * 
      * @throws ParserConfigurationException if an error occurs
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
@@ -181,10 +172,8 @@ public class DocumentHelper {
 
     /** 
      * Writes a document to a file. A new file is created if it does not exist.
-     *
      * @param document The document to save.
      * @param file The file to save the document to.
-     * 
      * @throws IOException if an error occurs
      * @throws TransformerConfigurationException if an error occurs
      * @throws TransformerException if an error occurs
@@ -201,16 +190,13 @@ public class DocumentHelper {
 
     /** 
      * Writes a document to a writer.
-     *
      * @param document The document to write.
      * @param writer The writer to write the document to.
-     * 
-     * @throws IOException if an error occurs
      * @throws TransformerConfigurationException if an error occurs
      * @throws TransformerException if an error occurs
      */
     public static void writeDocument(Document document, Writer writer)
-        throws TransformerConfigurationException, TransformerException, IOException {
+        throws TransformerConfigurationException, TransformerException {
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(writer);
         getTransformer(document.getDoctype()).transform(source, result);
@@ -218,10 +204,8 @@ public class DocumentHelper {
 
 	/**
 	 * Get the tranformer.
-	 * 
 	 * @param documentType the document type
 	 * @return a transformer
-	 * 
 	 * @throws TransformerConfigurationException if an error occurs
 	 */
     protected static Transformer getTransformer(DocumentType documentType)
@@ -241,15 +225,11 @@ public class DocumentHelper {
 
     /**
      * Creates a document type.
-     * 
      * @param qualifiedName The qualified name of the document type.
      * @param publicId The public identifier.
      * @param systemId The system identifier.
-     * 
      * @return the document type
-     * 
      * @throws ParserConfigurationException if an error occurs
-     * 
      * @see org.w3c.dom.DOMImplementation#createDocumentType(java.lang.String, java.lang.String, java.lang.String)
      */
     public DocumentType createDocumentType(String qualifiedName, String publicId, String systemId)
@@ -273,11 +253,9 @@ public class DocumentHelper {
     /**
      * Returns the first child element of an element that belongs to a certain namespace
      * and has a certain local name or <code>null</code> if none exists.
-     * 
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
      * @param localName The local name of the children.
-     * 
      * @return The child element or <code>null</code> if none exists.
      */
     public static Element getFirstChild(Element element, String namespaceUri, String localName) {
@@ -285,9 +263,8 @@ public class DocumentHelper {
 
         if (children.length > 0) {
             return children[0];
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -310,10 +287,8 @@ public class DocumentHelper {
 
     /**
      * Returns all child elements of an element that belong to a certain namespace.
-     * 
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
-     * 
      * @return The child elements.
      */
     public static Element[] getChildren(Element element, String namespaceUri) {
@@ -323,11 +298,9 @@ public class DocumentHelper {
     /**
      * Returns all child elements of an element that belong to a certain namespace
      * and have a certain local name.
-     * 
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
      * @param localName The local name of the children.
-     * 
      * @return The child elements.
      */
     public static Element[] getChildren(Element element, String namespaceUri, String localName) {
@@ -366,7 +339,6 @@ public class DocumentHelper {
 
     /**
      * Replaces all child nodes of an element by a single text node.
-     * 
      * @param element The element.
      * @param text The text to insert.
      */
@@ -385,10 +357,8 @@ public class DocumentHelper {
 
 	/**
 	 * Returns all following sibling elements of an element that belong to a certain namespace.
-	 * 
 	 * @param element The parent element.
 	 * @param namespaceUri The namespace that the childen must belong to.
-	 * 
 	 * @return The following sibling elements.
 	 */
 	public static Element[] getNextSiblings(Element element, String namespaceUri) {
@@ -398,11 +368,9 @@ public class DocumentHelper {
 	/**
 	 * Returns all following sibling elements of an element that belong to a certain namespace.
 	 * and have a certain local name.
-	 * 
 	 * @param element The parent element.
 	 * @param namespaceUri The namespace that the childen must belong to.
 	 * @param localName The local name of the children.
-	 * 
 	 * @return The following sibling elements.
 	 */
 	public static Element[] getNextSiblings(Element element, String namespaceUri, String localName) {

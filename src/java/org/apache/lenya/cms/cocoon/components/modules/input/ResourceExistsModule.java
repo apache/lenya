@@ -49,7 +49,7 @@ public class ResourceExistsModule extends AbstractInputModule implements Service
         Source source = null;
         boolean exists = false;
         try {
-            source = resolver.resolveURI(resourceURI);
+            source = this.resolver.resolveURI(resourceURI);
             exists = source.exists();
         } catch (SourceNotFoundException e) {
             exists = false;
@@ -58,7 +58,7 @@ public class ResourceExistsModule extends AbstractInputModule implements Service
             exists = false;
         } finally {
             if (source != null) {
-                resolver.release(source);
+                this.resolver.release(source);
             }
         }
 
@@ -80,9 +80,9 @@ public class ResourceExistsModule extends AbstractInputModule implements Service
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-        this.resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
+        this.resolver = (SourceResolver) _manager.lookup(SourceResolver.ROLE);
     }
 
     /**

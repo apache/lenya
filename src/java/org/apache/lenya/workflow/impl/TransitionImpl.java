@@ -44,8 +44,8 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @param destinationState The destination state.
      */
     protected TransitionImpl(StateImpl sourceState, StateImpl destinationState) {
-        source = sourceState;
-        destination = destinationState;
+        this.source = sourceState;
+        this.destination = destinationState;
     }
 
     private List actions = new ArrayList();
@@ -56,7 +56,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @return An array of actions.
      */
     public Action[] getActions() {
-        return (Action[]) actions.toArray(new Action[actions.size()]);
+        return (Action[]) this.actions.toArray(new Action[this.actions.size()]);
     }
 
     /**
@@ -64,7 +64,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @param action The action.
      */
     public void addAction(Action action) {
-        actions.add(action);
+        this.actions.add(action);
     }
 
     private List conditions = new ArrayList();
@@ -74,7 +74,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @return An array of conditions.
      */
     public Condition[] getConditions() {
-        return (Condition[]) conditions.toArray(new Condition[conditions.size()]);
+        return (Condition[]) this.conditions.toArray(new Condition[this.conditions.size()]);
     }
 
     /**
@@ -82,7 +82,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @param condition The condition.
      */
     public void addCondition(Condition condition) {
-        conditions.add(condition);
+        this.conditions.add(condition);
     }
 
     private Event event;
@@ -92,7 +92,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @return An event.
      */
     public Event getEvent() {
-        return event;
+        return this.event;
     }
 
     /**
@@ -100,7 +100,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @param anEvent An event.
      */
     public void setEvent(Event anEvent) {
-        event = anEvent;
+        this.event = anEvent;
     }
 
     private StateImpl source;
@@ -110,7 +110,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @return A state.
      */
     public StateImpl getSource() {
-        return source;
+        return this.source;
     }
 
     private StateImpl destination;
@@ -120,7 +120,7 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @return A state.
      */
     public StateImpl getDestination() {
-        return destination;
+        return this.destination;
     }
 
     /** 
@@ -131,14 +131,14 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @return A boolean value.
      */
     public boolean canFire(Situation situation, WorkflowInstance instance) throws WorkflowException {
-        Condition[] conditions = getConditions();
+        Condition[] _conditions = getConditions();
         boolean canFire = true;
 
         int i = 0;
-        while (canFire && i < conditions.length) {
-            canFire = canFire && conditions[i].isComplied(situation, instance);
+        while (canFire && i < _conditions.length) {
+            canFire = canFire && _conditions[i].isComplied(situation, instance);
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Condition [" + conditions[i] + "] returns [" + canFire + "]");
+                getLogger().debug("Condition [" + _conditions[i] + "] returns [" + canFire + "]");
             }
             i++;
         }
@@ -150,34 +150,35 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String string = getEvent().getName() + " [";
-        Condition[] conditions = getConditions();
+        StringBuffer buf = new StringBuffer();
+        buf.append(getEvent().getName() + " [");
+        Condition[] _conditions = getConditions();
 
-        for (int i = 0; i < conditions.length; i++) {
+        for (int i = 0; i < _conditions.length; i++) {
             if (i > 0) {
-                string += ", ";
+                buf.append(", ");
             }
 
-            string += conditions[i].toString();
+            buf.append(_conditions[i].toString());
         }
 
-        string += "]";
+        buf.append("]");
 
-        Action[] actions = getActions();
+        Action[] _actions = getActions();
 
-        if (actions.length > 0) {
-            string += " / ";
+        if (_actions.length > 0) {
+            buf.append(" / ");
 
-            for (int i = 0; i < actions.length; i++) {
+            for (int i = 0; i < _actions.length; i++) {
                 if (i > 0) {
-                    string += ", ";
+                    buf.append(", ");
                 }
 
-                string += actions[i].toString();
+                buf.append(_actions[i].toString());
             }
         }
 
-        return string;
+        return buf.toString();
     }
 
     /**
@@ -185,15 +186,15 @@ public class TransitionImpl extends AbstractLogEnabled implements Transition {
      * @return A boolean value.
      */
     public boolean isSynchronized() {
-        return isSynchronized;
+        return this.isSynchronized;
     }
 
     /**
      * Sets if this transition is synchronized.
-     * @param isSynchronized A boolean value.
+     * @param _isSynchronized A boolean value.
      */
-    protected void setSynchronized(boolean isSynchronized) {
-        this.isSynchronized = isSynchronized;
+    protected void setSynchronized(boolean _isSynchronized) {
+        this.isSynchronized = _isSynchronized;
     }
 
 }

@@ -34,7 +34,7 @@ public class URLInformation {
      * @return A string.
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
 	/**
@@ -42,7 +42,7 @@ public class URLInformation {
 	 * @return A string.
 	 */
 	public String getCompleteArea() {
-		return completeArea;
+		return this.completeArea;
 	}
 
     /**
@@ -50,7 +50,7 @@ public class URLInformation {
      * @return A string.
      */
     public String getDocumentUrl() {
-        return documentUrl;
+        return this.documentUrl;
     }
 
     /**
@@ -58,7 +58,7 @@ public class URLInformation {
      * @return A string.
      */
     public String getPublicationId() {
-        return publicationId;
+        return this.publicationId;
     }
 
     /**
@@ -76,21 +76,21 @@ public class URLInformation {
         if (fragments.length > 1) {
             this.completeArea = fragments[1];
             
-            if (url.length() > (this.publicationId + "/" + completeArea).length()) {
-                this.documentUrl = url.substring((this.publicationId + "/" + completeArea).length());
+            if (url.length() > (this.publicationId + "/" + this.completeArea).length()) {
+                this.documentUrl = url.substring((this.publicationId + "/" + this.completeArea).length());
             }
             else {
                 this.documentUrl = "";
             }
             
-            if (completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
-				this.area = completeArea.substring(Publication.INFO_AREA_PREFIX.length());
+            if (this.completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
+				this.area = this.completeArea.substring(Publication.INFO_AREA_PREFIX.length());
             }
-            else if (completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
-                this.area = completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
+            else if (this.completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
+                this.area = this.completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
             }
             else {
-            	this.area = completeArea;
+            	this.area = this.completeArea;
             }
         }
     }

@@ -19,12 +19,14 @@
 
 package org.apache.lenya.cms.rc;
 
+/**
+ * A Checkout entry
+ */
 public class CheckOutEntry extends RCMLEntry {
     /**
      * Creates a new CheckOutEntry object.
-     *
-     * @param identity DOCUMENT ME!
-     * @param time DOCUMENT ME!
+     * @param identity The identity
+     * @param time The time
      */
     public CheckOutEntry(String identity, long time) {
         super(identity, time);

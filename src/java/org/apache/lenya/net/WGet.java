@@ -31,32 +31,31 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Category;
+import org.apache.lenya.util.SED;
+import org.apache.log4j.Logger;
 
 
 /**
- * Similar to the UNIX wget
+ * This class retrieves resources over HTTP, similar to the UNIX wget
  */
 public class WGet {
-    static Category log = Category.getInstance(WGet.class);
+    static Logger log = Logger.getLogger(WGet.class);
     String directory_prefix = null;
 
     /**
      * Creates a new WGet object.
      */
     public WGet() {
-        directory_prefix = System.getProperty("user.dir");
+        this.directory_prefix = System.getProperty("user.dir");
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
+     * Command line interface
+     * @param args Command line args
      */
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Usage: org.apache.lenya.net.WGet [URL] -P/home/lenya/download");
-
             return;
         }
 
@@ -70,48 +69,45 @@ public class WGet {
             }
 
             byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/default//g", "");
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             System.err.println(e);
-        } catch (Exception e) {
+        } catch (final IOException e) {
             System.err.println(e);
         }
     }
 
     /**
-     * -P
-     *
-     * @param directory_prefix DOCUMENT ME!
+     * Set the directory prefix (-P on the command line)
+     * @param _directory_prefix The prefix
      */
-    public void setDirectoryPrefix(String directory_prefix) {
-        this.directory_prefix = directory_prefix;
+    public void setDirectoryPrefix(String _directory_prefix) {
+        this.directory_prefix = _directory_prefix;
     }
 
     /**
+     * Downloads the specified resources and performs replacements.
      * @param url The url of the resource to download
      * @param prefixSubstitute Regexp which shall be replaced
      * @param substituteReplacement Replacement of the regexp
-     *
      * @return bytes of downloaded resource
-     *
      * @throws IOException URL might not exist
      */
     public byte[] download(URL url, String prefixSubstitute, String substituteReplacement)
         throws IOException {
         log.debug(".download(): " + url + " " + prefixSubstitute + " " + substituteReplacement);
-
         return downloadUsingHttpClient(url, prefixSubstitute, substituteReplacement);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param url DOCUMENT ME!
-     * @param prefixSubstitute DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Downloads the specified resources and performs replacements.
+     * @param url The url of the resource to download
+     * @param prefixSubstitute Regexp which shall be replaced
+     * @param substituteReplacement Replacement of the regexp
+     * @return bytes of downloaded resource
+     * @throws IOException
      */
     public byte[] downloadUsingHttpClient(URL url, String prefixSubstitute,
-        String substituteReplacement) {
+        String substituteReplacement) throws IOException {
         log.debug(".downloadUsingHttpClient(): " + url);
 
         byte[] sresponse = null;
@@ -120,23 +116,25 @@ public class WGet {
             sresponse = getResource(url);
 
             File file = new File(createFileName(url, prefixSubstitute, substituteReplacement));
-
             saveToFile(file.getAbsolutePath(), sresponse);
 
             substitutePrefix(file.getAbsolutePath(), prefixSubstitute, substituteReplacement);
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             log.error(".downloadUsingHttpClient(): ", e);
-        } catch (FileNotFoundException e) {
+            throw new IOException();
+        } catch (final FileNotFoundException e) {
             log.error(".downloadUsingHttpClient(): ", e);
-        } catch (IOException e) {
+            throw new IOException();
+        } catch (final IOException e) {
             log.error(".downloadUsingHttpClient(): ", e);
+            throw new IOException();
         }
 
         List links = null;
 
         try {
             links = getLinks(url);
-        } catch (IOException ioe) {
+        } catch (final IOException ioe) {
             log.error(".downloadUsingHttpClient(): ", ioe);
         }
 
@@ -153,7 +151,11 @@ public class WGet {
                     byte[] child_sresponse = getResource(child_url);
                     saveToFile(createFileName(child_url, prefixSubstitute, substituteReplacement),
                         child_sresponse);
-                } catch (Exception e) {
+                } catch (final MalformedURLException e) {
+                    log.error(".downloadUsingHttpClient(): ", e);
+                } catch (final FileNotFoundException e) {
+                    log.error(".downloadUsingHttpClient(): ", e);
+                } catch (final IOException e) {
                     log.error(".downloadUsingHttpClient(): ", e);
                 }
             }
@@ -163,7 +165,10 @@ public class WGet {
     }
 
     /**
-     *
+     * Get the specified resource over HTTP
+     * @param url The resource to get
+     * @return The resource
+     * @throws IOException if an error occurs
      */
     public byte[] getResource(URL url) throws IOException {
         log.debug(".getResource(): " + url);
@@ -185,21 +190,19 @@ public class WGet {
     }
 
     /**
-     *
+     * Returns the links in the document represented by a URL
+     * @param url The URL
+     * @return The list of Links
+     * @throws IOException if an error occurs
      */
     public List getLinks(URL url) throws IOException {
         log.debug(".getLinks(): Get links from " + url);
 
         List links = null;
 
-        try {
-            org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
-            links = html.getImageSrcs(false);
-            links.addAll(html.getLinkHRefs(false));
-        } catch (Exception e) {
-            log.error(".getLinks() Exception 423432: ", e);
-        }
-
+        org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
+        links = html.getImageSrcs(false);
+        links.addAll(html.getLinkHRefs(false));
         if (links != null) {
             log.debug(".getLinks(): Number of links found: " + links.size());
         }
@@ -209,22 +212,20 @@ public class WGet {
 
     /**
      * Substitute prefix, e.g. "/lenya/blog/live/" by "/"
-     *
      * @param filename Filename
      * @param prefixSubstitute Prefix which shall be replaced
      * @param substituteReplacement Prefix which is going to replace the original
-     *
-     * @throws IOException DOCUMENT ME!
+     * @throws IOException if an error occurs
      */
     public void substitutePrefix(String filename, String prefixSubstitute, String substituteReplacement) throws IOException {
         log.debug("Replace " + prefixSubstitute + " by " + substituteReplacement);
 
-	org.apache.lenya.util.SED.replaceAll(new File(filename), escapeSlashes(prefixSubstitute), escapeSlashes(substituteReplacement));
+        SED.replaceAll(new File(filename), escapeSlashes(prefixSubstitute), escapeSlashes(substituteReplacement));
     }
 
     /**
      * Escape slashes
-     *
+     * @param string The string to escape
      * @return String with escaped slashes
      */
     public String escapeSlashes(String string) {
@@ -237,49 +238,67 @@ public class WGet {
                 buffer.append(string.charAt(i));
             }
         }
-
         return buffer.toString();
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the directory prefix
+     * @return The directory prefix
      */
     public String toString() {
-        return "-P: " + directory_prefix;
+        return "-P: " + this.directory_prefix;
     }
 
     /**
-     *
+     * Saves the specified byte array into a file
+     * @param filename The filename to use
+     * @param bytes The byte stream
+     * @throws FileNotFoundException if the file could not be found
+     * @throws IOException if an IO error occurs
      */
-    public void saveToFile(String filename, byte[] bytes)
-        throws FileNotFoundException, IOException {
-        File file = new File(filename);
-        File parent = new File(file.getParent());
+    public void saveToFile(String filename, byte[] bytes) throws IOException {
+        FileOutputStream out = null;
 
-        if (!parent.exists()) {
-            log.warn(".saveToFile(): Directory will be created: " + parent.getAbsolutePath());
-            parent.mkdirs();
-        }
+		try {
+	        File file = new File(filename);
+	        File parent = new File(file.getParent());
 
-        FileOutputStream out = new FileOutputStream(file.getAbsolutePath());
-        out.write(bytes);
-        out.close();
+	        if (!parent.exists()) {
+	            log.info(".saveToFile(): Directory will be created: " + parent.getAbsolutePath());
+	            parent.mkdirs();
+	        }
+
+	        out = new FileOutputStream(file.getAbsolutePath());
+			out.write(bytes);
+		} catch (final FileNotFoundException e) {
+			log.error("file not found." + e.toString());
+			throw new IOException(e.toString());
+		} catch (final IOException e) {
+			log.error("IO error." + e.toString());
+			throw new IOException(e.toString());
+		} finally {
+			if (out != null)
+				out.close();
+		}
     }
 
     /**
+     * Create the file name given a URL
      * @param url URL of resource, which has been downloaded and shall be saved
+     * @param prefixSubstitute The prefix to be replaced
+     * @param substituteReplacement The replacement
      * @return Absolute substituted filename
      */
     public String createFileName(URL url, String prefixSubstitute, String substituteReplacement) {
-        File file = new File(directory_prefix + File.separator + url.getFile());
-
+        File file = new File(this.directory_prefix + File.separator + url.getFile());
         return file.getAbsolutePath().replaceAll(prefixSubstitute, substituteReplacement);
     }
 
     /**
-     *
+     * Run the WGet process
+     * @param command The command to run
+     * @return The byte stream
+     * @throws Exception if an error occurs
      */
     public byte[] runProcess(String command) throws Exception {
         Process process = Runtime.getRuntime().exec(command);

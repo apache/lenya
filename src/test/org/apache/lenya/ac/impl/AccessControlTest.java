@@ -57,7 +57,7 @@ public class AccessControlTest extends ExcaliburTest {
      * @return An access controller.
      */
     public DefaultAccessController getAccessController() {
-        return accessController;
+        return this.accessController;
     }
 
     protected static final String URL = "/test/authoring/index.html";
@@ -72,51 +72,49 @@ public class AccessControlTest extends ExcaliburTest {
 
         super.setUp();
 
-        accessControllerResolverSelector = (ComponentSelector) manager
+        this.accessControllerResolverSelector = (ComponentSelector) this.manager
                 .lookup(AccessControllerResolver.ROLE + "Selector");
-        assertNotNull(accessControllerResolverSelector);
+        assertNotNull(this.accessControllerResolverSelector);
 
-        accessControllerResolver = (AccessControllerResolver) accessControllerResolverSelector
+        this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector
                 .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
-        assertNotNull(accessControllerResolver);
+        assertNotNull(this.accessControllerResolver);
         getLogger().info(
-                "Using access controller resolver: [" + accessControllerResolver.getClass() + "]");
+                "Using access controller resolver: [" + this.accessControllerResolver.getClass() + "]");
 
-        accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) accessControllerResolver)
+        this.accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver)
                 .resolveAccessController(URL);
 
-        assertNotNull(accessController);
-        getLogger().info("Resolved access controller: [" + accessController.getClass() + "]");
+        assertNotNull(this.accessController);
+        getLogger().info("Resolved access controller: [" + this.accessController.getClass() + "]");
 
         File servletContext = PublicationHelper.getPublication().getServletContext();
-        ((FilePolicyManager) accessController.getPolicyManager())
+        ((FilePolicyManager) this.accessController.getPolicyManager())
                 .setPoliciesDirectory(servletContext);
 
-        accreditablesDirectory = new File(PublicationHelper.getPublication().getDirectory(),
+        this.accreditablesDirectory = new File(PublicationHelper.getPublication().getDirectory(),
                 "config/ac/passwd".replace('/', File.separatorChar));
-        ((FileAccreditableManager) accessController.getAccreditableManager())
-                .setConfigurationDirectory(accreditablesDirectory);
+        ((FileAccreditableManager) this.accessController.getAccreditableManager())
+                .setConfigurationDirectory(this.accreditablesDirectory);
 
     }
 
     /**
      * The teardown method for JUnit
-     * 
-     * @exception Exception Description of Exception
-     * @since
+     * @exception Exception if an error occurs
      */
     public void tearDown() throws Exception {
         super.tearDown();
 
-        if (accessControllerResolverSelector != null) {
-            if (accessControllerResolver != null) {
-                if (accessController != null) {
-                    accessControllerResolver.release(accessController);
+        if (this.accessControllerResolverSelector != null) {
+            if (this.accessControllerResolver != null) {
+                if (this.accessController != null) {
+                    this.accessControllerResolver.release(this.accessController);
                 }
-                accessControllerResolverSelector.release(accessControllerResolver);
+                this.accessControllerResolverSelector.release(this.accessControllerResolver);
             }
-            manager.release(accessControllerResolver);
+            this.manager.release(this.accessControllerResolver);
         }
     }
 
@@ -160,7 +158,7 @@ public class AccessControlTest extends ExcaliburTest {
      * @return A file.
      */
     protected File getAccreditablesDirectory() {
-        return accreditablesDirectory;
+        return this.accreditablesDirectory;
     }
 
 }

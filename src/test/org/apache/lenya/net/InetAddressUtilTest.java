@@ -18,15 +18,16 @@ package org.apache.lenya.net;
 import java.net.InetAddress;
 
 /**
- *
+ * Inet address util test
  */
 public class InetAddressUtilTest {
     /**
+     * @param args
      *
      */
     public static void main(String[] args) {
         if (args.length != 3) {
-            System.out.println("Usage: " + new InetAddressUtilTest().getClass().getName() + " network subnet ip");
+            System.out.println("Usage: InetAddressUtilTest network subnet ip");
             return;
         }
 

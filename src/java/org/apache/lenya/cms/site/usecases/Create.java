@@ -79,9 +79,9 @@ public abstract class Create extends DocumentUsecase {
         Document document = createDocument();
         Publication publication = document.getPublication();
 
-        SiteManager manager = publication.getSiteManager(document.getIdentityMap());
-        manager.add(document);
-        manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
+        SiteManager _manager = publication.getSiteManager(document.getIdentityMap());
+        _manager.add(document);
+        _manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
 
         WorkflowInstance instance = getWorkflowInstance(document);
         instance.getHistory().initialize(getSituation());

@@ -36,9 +36,7 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
- * 
- * To change the template for this generated type comment go to Window>Preferences>Java>Code
- * Generation>Code and Comments
+ *Document creator test 
  */
 public class DocumentCreatorTest extends TestCase {
     /**
@@ -51,7 +49,6 @@ public class DocumentCreatorTest extends TestCase {
 
     /**
      * The main program. The parameters are set from the command line arguments.
-     * 
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
@@ -74,7 +71,7 @@ public class DocumentCreatorTest extends TestCase {
      */
     public void testCreator() throws CreatorException, SiteException {
         Publication publication = PublicationHelper.getPublication();
-        DocumentCreator creator = new DocumentCreator();
+        DefaultCreator creator = new DefaultCreator();
         File authoringDirectory = new File(publication.getDirectory(), AUTHORING_DIR);
 
         creator.create(publication, authoringDirectory, AREA, PARENT_ID, CHILD_ID, CHILD_NAME,

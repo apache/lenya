@@ -31,7 +31,13 @@ package org.apache.lenya.workflow;
  * <li>state variables.</li>
  */
 public interface Workflow {
+    /**
+     * <code>NAMESPACE</code> Workflow namespace URI
+     */
     String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
+    /**
+     * <code>DEFAULT_PREFIX</code> Default workflow namespace prefix
+     */
     String DEFAULT_PREFIX = "wf";
     
     /**

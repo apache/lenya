@@ -31,20 +31,42 @@ import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
+/**
+ * The workflow invoker
+ */
 public class WorkflowInvoker extends ParameterWrapper {
 
-    private static Category log = Category.getInstance(WorkflowInvoker.class);
+    private static Logger log = Logger.getLogger(WorkflowInvoker.class);
 
+    /**
+     * <code>ROLES</code> The roles
+     */
     public static final String ROLES = "roles";
+    /**
+     * <code>USER_ID</code> The user id
+     */
     public static final String USER_ID = "user-id";
+    /**
+     * <code>MACHINE</code> The machine
+     */
     public static final String MACHINE = "machine";
+    /**
+     * <code>EVENT</code> The event
+     */
     public static final String EVENT = "event";
-
+    /**
+     * <code>PREFIX</code> The workflow namespace prefix
+     */
     public static final String PREFIX = "workflow";
-
+    /**
+     * <code>EVENT_REQUEST_PARAMETER</code> The workflow event request parameter
+     */
     public static final String EVENT_REQUEST_PARAMETER = "workflow.event";
+    /**
+     * <code>LENYA_EVENT_REQUEST_PARAMETER</code> The Lenya event request parameter
+     */
     public static final String LENYA_EVENT_REQUEST_PARAMETER = "lenya.event";
 
     /**
@@ -93,13 +115,14 @@ public class WorkflowInvoker extends ParameterWrapper {
      */
     public static void setRoles(NamespaceMap parameters, Role[] roles) {
 
-        String roleString = "";
+        StringBuffer buf = new StringBuffer();
         for (int i = 0; i < roles.length; i++) {
             if (i > 0) {
-                roleString += ",";
+                buf.append(",");
             }
-            roleString += roles[i].getId();
+            buf.append(roles[i].getId());
         }
+        String roleString = buf.toString();
         parameters.put(ROLES, roleString);
     }
 
@@ -128,7 +151,6 @@ public class WorkflowInvoker extends ParameterWrapper {
 
     /**
      * Returns the workflow event name.
-     * 
      * @return A string.
      */
     public String getEventName() {
@@ -137,7 +159,6 @@ public class WorkflowInvoker extends ParameterWrapper {
 
     /**
      * Returns the user ID.
-     * 
      * @return A string.
      */
     public String getUserId() {
@@ -146,7 +167,6 @@ public class WorkflowInvoker extends ParameterWrapper {
 
     /**
      * Returns the machine IP address.
-     * 
      * @return A string.
      */
     public String getMachineIp() {
@@ -173,26 +193,25 @@ public class WorkflowInvoker extends ParameterWrapper {
             WorkflowFactory factory = WorkflowFactory.newInstance();
             try {
                 DocumentIdentityMap map = new DocumentIdentityMap(publication);
-                document = map.getFactory().getFromURL(webappUrl);
+                this.document = map.getFactory().getFromURL(webappUrl);
             } catch (DocumentBuildException e) {
                 throw new ExecutionException(e);
             }
-            doTransition = factory.hasWorkflow(document);
+            this.doTransition = factory.hasWorkflow(this.document);
         }
     }
 
     /**
      * Invokes the transition.
-     * 
      * @throws ExecutionException when something went wrong.
      */
     public void invokeTransition() throws ExecutionException {
-        if (doTransition) {
+        if (this.doTransition) {
 
             try {
                 WorkflowFactory factory = WorkflowFactory.newInstance();
                 SynchronizedWorkflowInstances instance = factory
-                        .buildSynchronizedInstance(document);
+                        .buildSynchronizedInstance(this.document);
                 Situation situation = factory.buildSituation(getRoleIDs(), getUserId(),
                         getMachineIp());
 

@@ -21,6 +21,7 @@ package org.apache.lenya.ac.file;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -39,9 +40,8 @@ public class FileIPRange extends AbstractIPRange {
 
     /**
      * Main method.
-     * 
      * @param args The command-line arguments.
-     * @deprecated This should bemoved to a JUnit test.
+     * @deprecated This should be moved to a JUnit test.
      */
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -59,7 +59,9 @@ public class FileIPRange extends AbstractIPRange {
             } else {
                 System.out.println("false");
             }
-        } catch (Exception e) {
+        } catch (final UnknownHostException e) {
+            System.err.println(e);
+        } catch (final AccessControlException e) {
             System.err.println(e);
         }
     }
@@ -68,11 +70,11 @@ public class FileIPRange extends AbstractIPRange {
      * Ctor.
      */
     public FileIPRange() {
-    }
+	    // do nothing
+   }
 
     /**
      * Ctor.
-     * 
      * @param configurationDirectory The configuration directory.
      * @param id The IP range ID.
      */
@@ -96,7 +98,6 @@ public class FileIPRange extends AbstractIPRange {
 
     /**
      * Returns the configuration file.
-     * 
      * @return A file object.
      */
     protected File getFile() {
@@ -129,7 +130,6 @@ public class FileIPRange extends AbstractIPRange {
 
     /**
      * Create a configuration from the current user details. Can be used for saving.
-     * 
      * @return a <code>Configuration</code>
      */
     protected Configuration createConfiguration() {

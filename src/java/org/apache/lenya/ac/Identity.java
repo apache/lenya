@@ -22,6 +22,10 @@ package org.apache.lenya.ac;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Session;
@@ -29,13 +33,14 @@ import org.apache.cocoon.environment.Session;
 /**
  * Identity object. Used to store the authenticated accreditables in the session.
  */
-public class Identity extends AbstractLogEnabled implements Identifiable, java.io.Serializable {
+public class Identity extends AbstractLogEnabled implements Identifiable, Serializable {
     private Set identifiables = new HashSet();
 
     /**
      * Ctor.
      */
     public Identity() {
+	    // do nothing
     }
     
     /**
@@ -47,18 +52,23 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
 
     /**
      * In the case of Tomcat the object will be serialized to TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * @param out OutputStream to hold the serialized identity
+     * @throws IOException
      */
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+    private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        out.writeObject(identifiables);
+        out.writeObject(this.identifiables);
     }
 
     /**
      * In case of Tomcat the object will be restored from TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * @param in InputStream that holds the serialized identity
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        identifiables = (Set) in.readObject();
+        this.identifiables = (Set) in.readObject();
     }
 
     /**
@@ -66,7 +76,7 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      * @return An array of identifiables.
      */
     public Identifiable[] getIdentifiables() {
-        return (Identifiable[]) identifiables.toArray(new Identifiable[identifiables.size()]);
+        return (Identifiable[]) this.identifiables.toArray(new Identifiable[this.identifiables.size()]);
     }
 
     /**
@@ -76,13 +86,13 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
     public void addIdentifiable(Identifiable identifiable) {
         assert identifiable != null;
         assert identifiable != this;
-        assert !identifiables.contains(identifiable);
+        assert !this.identifiables.contains(identifiable);
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Adding identifiable: [" + identifiable + "]");
         }
 
-        identifiables.add(identifiable);
+        this.identifiables.add(identifiable);
     }
 
     /**
@@ -90,10 +100,10 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      */
     public Accreditable[] getAccreditables() {
         Set accreditables = new HashSet();
-        Identifiable[] identifiables = getIdentifiables();
+        Identifiable[] _identifiables = getIdentifiables();
 
-        for (int i = 0; i < identifiables.length; i++) {
-            Accreditable[] groupAccreditables = identifiables[i].getAccreditables();
+        for (int i = 0; i < _identifiables.length; i++) {
+            Accreditable[] groupAccreditables = _identifiables[i].getAccreditables();
             accreditables.addAll(Arrays.asList(groupAccreditables));
         }
 
@@ -104,14 +114,14 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String accrString = "";
+        StringBuffer buf = new StringBuffer();
         Accreditable[] accreditables = getAccreditables();
 
         for (int i = 0; i < accreditables.length; i++) {
-            accrString += (" " + accreditables[i]);
+            buf.append(" " + accreditables[i]);
         }
 
-        String string = "[identity:" + accrString + "]";
+        String string = "[identity:" + buf.toString() + "]";
 
         return string;
     }
@@ -120,18 +130,17 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      * Checks if this identity belongs to a certain accreditable manager.
      * @param manager The accreditable manager to check for.
      * @return A boolean value.
-     * 
      * @throws AccessControlException if an error occurs
      */
     public boolean belongsTo(AccreditableManager manager) throws AccessControlException {
 
         boolean belongs = true;
 
-        Identifiable identifiables[] = getIdentifiables();
+        Identifiable _identifiables[] = getIdentifiables();
         int i = 0;
-        while (belongs && i < identifiables.length) {
-            if (identifiables[i] instanceof User) {
-                User user = (User) identifiables[i];
+        while (belongs && i < _identifiables.length) {
+            if (_identifiables[i] instanceof User) {
+                User user = (User) _identifiables[i];
                 User otherUser = manager.getUserManager().getUser(user.getId());
                 belongs = belongs && user == otherUser;
             }
@@ -147,11 +156,11 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      */
     public User getUser() {
         User user = null;
-        Identifiable[] identifiables = getIdentifiables();
+        Identifiable[] _identifiables = getIdentifiables();
         int i = 0;
-        while (user == null && i < identifiables.length) {
-            if (identifiables[i] instanceof User) {
-                user = (User) identifiables[i];
+        while (user == null && i < _identifiables.length) {
+            if (_identifiables[i] instanceof User) {
+                user = (User) _identifiables[i];
             }
             i++;
         }
@@ -164,11 +173,11 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      */
     public Machine getMachine() {
         Machine machine = null;
-        Identifiable[] identifiables = getIdentifiables();
+        Identifiable[] _identifiables = getIdentifiables();
         int i = 0;
-        while (machine == null && i < identifiables.length) {
-            if (identifiables[i] instanceof Machine) {
-                machine = (Machine) identifiables[i];
+        while (machine == null && i < _identifiables.length) {
+            if (_identifiables[i] instanceof Machine) {
+                machine = (Machine) _identifiables[i];
             }
             i++;
         }
@@ -181,7 +190,7 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      * @return A boolean value.
      */
     public boolean contains(Identifiable identifiable) {
-        return identifiables.contains(identifiable);
+        return this.identifiables.contains(identifiable);
     }
 
     /**
@@ -199,8 +208,8 @@ public class Identity extends AbstractLogEnabled implements Identifiable, java.i
      * @param identifiable An identifiable.
      */
     public void removeIdentifiable(Identifiable identifiable) {
-        assert identifiables.contains(identifiable);
-        identifiables.remove(identifiable);
+        assert this.identifiables.contains(identifiable);
+        this.identifiables.remove(identifiable);
     }
 
 }

@@ -29,6 +29,7 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -37,14 +38,14 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.PathToDocumentIdMapper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.search.Grep;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Helper class for finding references to the current document.
  */
 public class DocumentReferencesHelper {
 
-    private static final Category log = Category.getInstance(DocumentReferencesHelper.class);
+    private static final Logger log = Logger.getLogger(DocumentReferencesHelper.class);
 
     private PageEnvelope pageEnvelope = null;
     private DocumentIdentityMap identityMap;
@@ -74,9 +75,9 @@ public class DocumentReferencesHelper {
      * @return the search string
      */
     protected String getReferencesSearchString() {
-        return "href\\s*=\\s*\"" + pageEnvelope.getContext() + "/"
-                + pageEnvelope.getPublication().getId() + "/"
-                + pageEnvelope.getDocument().getArea() + pageEnvelope.getDocument().getId();
+        return "href\\s*=\\s*\"" + this.pageEnvelope.getContext() + "/"
+                + this.pageEnvelope.getPublication().getId() + "/"
+                + this.pageEnvelope.getDocument().getArea() + this.pageEnvelope.getDocument().getId();
     }
 
     /**
@@ -103,9 +104,9 @@ public class DocumentReferencesHelper {
         // looks different.
 
         return Pattern
-                .compile("href\\s*=\\s*\"" + pageEnvelope.getContext() + "/"
-                        + pageEnvelope.getPublication().getId() + "/"
-                        + pageEnvelope.getDocument().getArea()
+                .compile("href\\s*=\\s*\"" + this.pageEnvelope.getContext() + "/"
+                        + this.pageEnvelope.getPublication().getId() + "/"
+                        + this.pageEnvelope.getDocument().getArea()
                         + "(/[-a-zA-Z0-9_/]+?)(_[a-z][a-z])?\\.html");
     }
 
@@ -121,7 +122,7 @@ public class DocumentReferencesHelper {
     public Document[] getReferences(String area) throws ProcessingException {
 
         ArrayList documents = new ArrayList();
-        Publication publication = pageEnvelope.getPublication();
+        Publication publication = this.pageEnvelope.getPublication();
         DocumentIdToPathMapper mapper = publication.getPathMapper();
         if (mapper instanceof PathToDocumentIdMapper) {
             PathToDocumentIdMapper fileMapper = (PathToDocumentIdMapper) mapper;
@@ -136,8 +137,8 @@ public class DocumentReferencesHelper {
                     // constructed in a way such that it will catch all files which
                     // have a link to any language version of the current document.
                     // That's why we need to do some additional tests for each hit.
-                    String languageOfCurrentDocument = pageEnvelope.getDocument().getLanguage();
-                    String defaultLanguage = pageEnvelope.getPublication().getDefaultLanguage();
+                    String languageOfCurrentDocument = this.pageEnvelope.getDocument().getLanguage();
+                    String defaultLanguage = this.pageEnvelope.getPublication().getDefaultLanguage();
                     Pattern referencesSearchStringWithLanguage = Pattern
                             .compile(getReferencesSearchString() + "_" + languageOfCurrentDocument);
                     Pattern referencesSearchStringWithOutLanguage = Pattern
@@ -178,7 +179,7 @@ public class DocumentReferencesHelper {
                     }
                     log.debug("language: " + language);
 
-                    documents.add(identityMap.getFactory().get(area, documentId, language));
+                    documents.add(this.identityMap.getFactory().get(area, documentId, language));
                 }
             } catch (IOException e) {
                 throw new ProcessingException(e);
@@ -203,12 +204,12 @@ public class DocumentReferencesHelper {
     public Document[] getInternalReferences() throws ProcessingException {
         ArrayList unpublishedReferences = new ArrayList();
         Pattern internalLinkPattern = getInternalLinkPattern();
-        Publication publication = pageEnvelope.getPublication();
+        Publication publication = this.pageEnvelope.getPublication();
         try {
-            String[] internalLinks = Grep.findPattern(pageEnvelope.getDocument().getFile(),
+            String[] internalLinks = Grep.findPattern(this.pageEnvelope.getDocument().getFile(),
                     internalLinkPattern, 1);
             String[] internalLinksLanguages = Grep.findPattern(
-                    pageEnvelope.getDocument().getFile(), internalLinkPattern, 2);
+                    this.pageEnvelope.getDocument().getFile(), internalLinkPattern, 2);
 
             for (int i = 0; i < internalLinks.length; i++) {
                 String docId = internalLinks[i];
@@ -225,7 +226,7 @@ public class DocumentReferencesHelper {
                 }
                 log.debug("language: " + language);
 
-                Document liveDocument = identityMap.getFactory().get(Publication.LIVE_AREA, docId,
+                Document liveDocument = this.identityMap.getFactory().get(Publication.LIVE_AREA, docId,
                         language);
                 if (!liveDocument.exists()) {
                     // the docId has not been published for the given language
@@ -233,14 +234,19 @@ public class DocumentReferencesHelper {
                     if (liveLanguage == null) {
                         liveLanguage = publication.getDefaultLanguage();
                     }
-                    unpublishedReferences.add(identityMap.getFactory().getLanguageVersion(
+                    unpublishedReferences.add(this.identityMap.getFactory().getLanguageVersion(
                             liveDocument, liveLanguage));
                 }
             }
-        } catch (Exception e) {
+        } catch (final DocumentBuildException e) {
+            throw new ProcessingException(e);
+        } catch (final DocumentException e) {
+            throw new ProcessingException(e);
+        } catch (final IOException e) {
             throw new ProcessingException(e);
         }
+
         return (Document[]) unpublishedReferences
-                .toArray(new Document[unpublishedReferences.size()]);
+            .toArray(new Document[unpublishedReferences.size()]);
     }
 }

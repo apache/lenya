@@ -36,9 +36,12 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
@@ -59,69 +62,85 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     private String namespace;
     private String cIncludeNamespace;
 
+    /**
+     * <code>CHILDREN_ELEMENT</code> The children element
+     */
     public static final String CHILDREN_ELEMENT = "children";
+    /**
+     * <code>ABSTRACT_ATTRIBUTE</code> The abstract attribute
+     */
     public static final String ABSTRACT_ATTRIBUTE = "abstract";
-
+    /**
+     * <code>NAMESPACE</code> The document index namespace
+     */
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/documentindex/1.0";
+    /**
+     * <code>PREFIX</code> The namespace prefix
+     */
     public static final String PREFIX = "index:";
 
     /**
-     * (non-Javadoc)
      * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
      */
-    public void parameterize(Parameters parameters) throws ParameterException {
-        this.namespace = parameters.getParameter("namespace", null);
-        this.cIncludeNamespace = parameters.getParameter("cIncludeNamespace", null);
+    public void parameterize(Parameters _parameters) throws ParameterException {
+        this.namespace = _parameters.getParameter("namespace", null);
+        this.cIncludeNamespace = _parameters.getParameter("cIncludeNamespace", null);
     }
 
     private Document document;
-
     private Publication publication;
-
     private String area;
-
     private DocumentBuilder builder;
-
     private SiteTree siteTree;
     private DocumentIdentityMap identityMap;
 
     /**
-     * (non-Javadoc)
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
      *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
+    public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters _parameters)
             throws ProcessingException, SAXException, IOException {
-        try {
 
-        	super.setup(resolver, objectModel, src, parameters);
+    	try {
+            super.setup(_resolver, _objectModel, src, _parameters);
 
-        	parameterize(parameters);
+            parameterize(_parameters);
 
             PageEnvelope envelope = null;
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(objectModel);
+            Publication pub = factory.getPublication(_objectModel);
             this.identityMap = new DocumentIdentityMap(pub);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
-                    objectModel);
+                    _objectModel);
 
             setDocument(envelope.getDocument());
-            setPublication(document.getPublication());
-            setArea(document.getArea());
-            setBuilder(document.getPublication().getDocumentBuilder());
+            setPublication(this.document.getPublication());
+            setArea(this.document.getArea());
+            setBuilder(this.document.getPublication().getDocumentBuilder());
 
-            TreeSiteManager manager = (TreeSiteManager) publication
+            TreeSiteManager _manager = (TreeSiteManager) this.publication
                     .getSiteManager(this.identityMap);
-            setSiteTree(manager.getTree(area));
-
-        } catch (Exception e) {
+            setSiteTree(_manager.getTree(this.area));
+        } catch (final ProcessingException e) {
+            throw new ProcessingException(e);
+        } catch (final ParameterException e) {
+            throw new ProcessingException(e);
+        } catch (final SiteException e) {
+            throw new ProcessingException(e);
+        } catch (final SAXException e) {
+            throw new ProcessingException(e);
+        } catch (final IOException e) {
+            throw new ProcessingException(e);
+        } catch (final PublicationException e) {
+            throw new ProcessingException(e);
+        } catch (final PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
+
 
     }
 
     /**
-     * (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
      *      java.lang.String, org.xml.sax.Attributes)
      */
@@ -129,7 +148,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             throws SAXException {
 
         try {
-            if (uri != null && uri.equals(namespace) && cIncludeNamespace != null
+            if (uri != null && uri.equals(this.namespace) && this.cIncludeNamespace != null
                     && localName.equals(CHILDREN_ELEMENT)) {
 
                 if (getLogger().isInfoEnabled()) {
@@ -141,10 +160,10 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     cIncludePrefix = "ci:";
                 }
 
-                String documentId = document.getId();
-                String language = document.getLanguage();
-                String defaultLanguage = publication.getDefaultLanguage();
-                SiteTreeNode[] children = siteTree.getNode(documentId).getChildren();
+                String documentId = this.document.getId();
+                String language = this.document.getLanguage();
+                String defaultLanguage = this.publication.getDefaultLanguage();
+                SiteTreeNode[] children = this.siteTree.getNode(documentId).getChildren();
 
                 super.startElement(uri, localName, raw, attr);
 
@@ -154,7 +173,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     //get child document with the same language than the parent document
                     Document doc;
                     try {
-                        doc = this.identityMap.getFactory().get(area, childId, language);
+                        doc = this.identityMap.getFactory().get(this.area, childId, language);
                     } catch (DocumentBuildException e) {
                         throw new SAXException(e);
                     }
@@ -173,7 +192,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         String[] availableLanguages = null;
                         try {
                             availableLanguages = doc.getLanguages();
-                        } catch (DocumentException e) {
+                        } catch (final DocumentException e) {
                             throw new SAXException(e);
                         }
 
@@ -194,8 +213,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         while (!doc.exists() && j < languages.size()) {
                             String newlanguage = (String) languages.get(j);
                             try {
-                                doc = this.identityMap.getFactory().get(area, childId, newlanguage);
-                            } catch (DocumentBuildException e) {
+                                doc = this.identityMap.getFactory().get(this.area, childId, newlanguage);
+                            } catch (final DocumentBuildException e) {
                                 throw new SAXException(e);
                             }
                             url = doc.getCanonicalWebappURL();
@@ -231,7 +250,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             } else {
                 super.startElement(uri, localName, raw, attr);
             }
-        } catch (DocumentException e) {
+        } catch (final DocumentException e) {
             throw new RuntimeException(e);
         }
 
@@ -241,42 +260,42 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
      * @return SiteTree The siteTree belonging to the area of the document
      */
     public SiteTree getSiteTree() {
-        return siteTree;
+        return this.siteTree;
     }
 
     /**
      * @param tree The siteTree of the area, which the document belongs.
      */
     public void setSiteTree(SiteTree tree) {
-        siteTree = tree;
+        this.siteTree = tree;
     }
 
     /**
      * @param string The area, which the document belongs.
      */
     public void setArea(String string) {
-        area = string;
+        this.area = string;
     }
 
     /**
-     * @param builder The document builder.
+     * @param _builder The document builder.
      */
-    public void setBuilder(DocumentBuilder builder) {
-        this.builder = builder;
+    public void setBuilder(DocumentBuilder _builder) {
+        this.builder = _builder;
     }
 
     /**
-     * @param document The document.
+     * @param _document The document.
      */
-    public void setDocument(Document document) {
-        this.document = document;
+    public void setDocument(Document _document) {
+        this.document = _document;
     }
 
     /**
-     * @param publication The publication, which the document belongs.
+     * @param _publication The publication, which the document belongs.
      */
-    public void setPublication(Publication publication) {
-        this.publication = publication;
+    public void setPublication(Publication _publication) {
+        this.publication = _publication;
     }
 
 }

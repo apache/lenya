@@ -32,8 +32,35 @@ import org.apache.lenya.workflow.impl.Version;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
+/**
+ * The CMS history
+ */
 public class CMSHistory extends HistoryImpl {
+    /**
+     * <code>HISTORY_PATH</code> The path to the workflow history
+     */
     public static final String HISTORY_PATH = "content/workflow/history";
+    /**
+     * <code>IDENTITY_ELEMENT</code> The identity element
+     */
+    public static final String IDENTITY_ELEMENT = "identity";
+    /**
+     * <code>USER_ELEMENT</code> The user element
+     */
+    public static final String USER_ELEMENT = "user";
+    /**
+     * <code>MACHINE_ELEMENT</code> The machine element
+     */
+    public static final String MACHINE_ELEMENT = "machine";
+    /**
+     * <code>ID_ATTRIBUTE</code> The id attribute
+     */
+    public static final String ID_ATTRIBUTE = "id";
+    /**
+     * <code>IP_ATTRIBUTE</code> The IP attribute
+     */
+    public static final String IP_ATTRIBUTE = "ip-address";
+
 
     /**
      * Creates a new CMSHistory object.
@@ -44,13 +71,6 @@ public class CMSHistory extends HistoryImpl {
     protected CMSHistory(WorkflowDocument workflowDocument) throws WorkflowException {
         super(workflowDocument);
     }
-
-    public static final String IDENTITY_ELEMENT = "identity";
-    public static final String USER_ELEMENT = "user";
-    public static final String MACHINE_ELEMENT = "machine";
-    public static final String ID_ATTRIBUTE = "id";
-    public static final String NAME_ATTRIBUTE = "name";
-    public static final String IP_ATTRIBUTE = "ip-address";
 
     /**
      * @see org.apache.lenya.workflow.impl.HistoryImpl#createVersionElement(org.apache.lenya.xml.NamespaceHelper,

@@ -32,7 +32,7 @@ public class EventImpl implements Event {
      * @param eventName The event name.
      */
     protected EventImpl(String eventName) {
-        name = eventName;
+        this.name = eventName;
     }
 
     private String name;
@@ -45,7 +45,7 @@ public class EventImpl implements Event {
         return getName();
     }
 
-    /* (non-Javadoc)
+    /** 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object otherObject) {
@@ -61,8 +61,8 @@ public class EventImpl implements Event {
         return equals;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
+    /**
+     * @see java.lang.Object#hashCode
      */
     public int hashCode() {
         return getName().hashCode();
@@ -72,6 +72,6 @@ public class EventImpl implements Event {
      * @see org.apache.lenya.workflow.Event#getName()
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 }

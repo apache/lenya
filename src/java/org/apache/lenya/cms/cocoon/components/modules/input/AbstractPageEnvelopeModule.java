@@ -35,11 +35,8 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
     
     /**
      * Get the the page envelope for the given objectModel.
-     * 
      * @param objectModel the objectModel for which the page enevelope is requested.
-     * 
      * @return a <code>PageEnvelope</code>
-     * 
      * @throws ConfigurationException if the page envelope could not be instantiated.
      */
     protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {

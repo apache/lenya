@@ -23,7 +23,7 @@ import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
+ * A helper class to implement a stack
  */
 
 // FIXME: this class seems pretty useless. Why not remove it?
@@ -32,31 +32,21 @@ public class Stack extends Vector {
 
     /**
      * Creates a new Stack object.
-     *
-     * @param maxsize DOCUMENT ME!
+     * @param _maxsize The maximum size of the stack
      */
-    public Stack(int maxsize) {
-        this.maxsize = maxsize;
+    public Stack(int _maxsize) {
+        this.maxsize = _maxsize;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param object DOCUMENT ME!
+     * Push an object on the stack
+     * @param object The object
      */
     public void push(Object object) {
         insertElementAt(object, 0);
 
-        if (size() == (maxsize + 1)) {
-            removeElementAt(maxsize);
+        if (size() == (this.maxsize + 1)) {
+            removeElementAt(this.maxsize);
         }
     }
 }

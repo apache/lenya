@@ -25,10 +25,10 @@ public class DocumentFactory {
 
     /**
      * Ctor.
-     * @param identityMap The identity map.
+     * @param _identityMap The identity map.
      */
-    protected DocumentFactory(DocumentIdentityMap identityMap) {
-        this.identityMap = identityMap;
+    protected DocumentFactory(DocumentIdentityMap _identityMap) {
+        this.identityMap = _identityMap;
     }
 
     /**

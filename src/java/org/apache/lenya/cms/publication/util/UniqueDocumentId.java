@@ -77,8 +77,7 @@ public class UniqueDocumentId {
 
                 while (node != null) {
                     version = version + 1;
-                    suffix = (new Integer(version)).toString();
-                    documentid = idwithoutsuffix + "-" + suffix;
+                    documentid = idwithoutsuffix + "-" + version;
                     node = tree.getNode(documentid);
                 }
             }

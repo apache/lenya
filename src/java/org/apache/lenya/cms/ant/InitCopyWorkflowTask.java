@@ -52,15 +52,15 @@ public class InitCopyWorkflowTask extends TwoDocumentsOperationTask {
 	 * @return A string.
 	 */
 	public String getMachineIp() {
-		return machineIp;
+		return this.machineIp;
 	}
 
 	/**
 	 * Sets the machine IP address from which the history was initialized.
-	 * @param machineIp A string.
+	 * @param _machineIp A string.
 	 */
-	public void setMachineIp(String machineIp) {
-		this.machineIp = machineIp;
+	public void setMachineIp(String _machineIp) {
+		this.machineIp = _machineIp;
 	}
 
 	/**
@@ -68,19 +68,20 @@ public class InitCopyWorkflowTask extends TwoDocumentsOperationTask {
 	 * @return A string.
 	 */
 	public String getUserId() {
-		return userId;
+		return this.userId;
 	}
 
 	/**
 	 * Sets the ID of the user who initialized the history.
-	 * @param userId A string.
+	 * @param _userId A string.
 	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserId(String _userId) {
+		this.userId = _userId;
 	}
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	/**
+	 * @param node The node to visit
+	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
 		Label[] labels = node.getLabels(); 

@@ -108,9 +108,7 @@ public class DocumentUsecase extends WorkflowUsecase {
         if (this.sourceDocument == null) {
             return super.getSourceURL();
         }
-        else {
-            return getSourceDocument().getCanonicalWebappURL();
-        }
+        return getSourceDocument().getCanonicalWebappURL();
     }
 
     /**

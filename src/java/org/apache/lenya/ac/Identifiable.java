@@ -23,4 +23,5 @@ package org.apache.lenya.ac;
  * A marker interface to mark an {@link Accreditable} as identifiable.
  */
 public interface Identifiable extends Accreditable {
+    // implement here
 }

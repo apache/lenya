@@ -48,10 +48,10 @@ public class DublinCoreProxy implements DublinCore {
      * @throws DocumentException when an error occurs.
      */
     protected DublinCoreImpl instance() throws DocumentException {
-        if (dcCore == null) {
-            dcCore = new DublinCoreImpl(this.cmsDocument);
+        if (this.dcCore == null) {
+            this.dcCore = new DublinCoreImpl(this.cmsDocument);
         }
-        return dcCore;
+        return this.dcCore;
     }
 
     /**

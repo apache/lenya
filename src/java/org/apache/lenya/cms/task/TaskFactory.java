@@ -20,25 +20,29 @@
 package org.apache.lenya.cms.task;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
+/**
+ * A Task factory
+ */
 public class TaskFactory {
 	
 	/**
 	 * Create a new instance of <code>TaskFactory</code>
-	 *
 	 */
     protected TaskFactory() {
+        // do nothing
     }
 
     private static TaskFactory factory;
-    private static Category log = Category.getInstance(TaskFactory.class);
+    private static Logger log = Logger.getLogger(TaskFactory.class);
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get an instance of the task factory
+     * @return A task factory
      */
     public static TaskFactory getInstance() {
         if (factory == null) {
@@ -49,13 +53,12 @@ public class TaskFactory {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Create a task
+     * @param configuration The configuration for the task
+     * @return The task
      */
     public Task createTask(Configuration configuration) {
+
         try {
             String className = configuration.getAttribute("class",
                     "org.apache.lenya.cms.task.TaskSequence");
@@ -71,9 +74,20 @@ public class TaskFactory {
             }
 
             return task;
-        } catch (Exception e) {
+        } catch (final ParameterException e) {
             log.error("Cannot create Task: ", e);
-
+            return null;
+        } catch (final ConfigurationException e) {
+            log.error("Cannot create Task: ", e);
+            return null;
+        } catch (final ClassNotFoundException e) {
+            log.error("Cannot create Task: ", e);
+            return null;
+        } catch (final InstantiationException e) {
+            log.error("Cannot create Task: ", e);
+            return null;
+        } catch (final IllegalAccessException e) {
+            log.error("Cannot create Task: ", e);
             return null;
         }
     }

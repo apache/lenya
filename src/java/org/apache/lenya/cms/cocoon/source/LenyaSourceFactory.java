@@ -37,8 +37,10 @@ import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
@@ -64,15 +66,15 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
      * Used for resolving the object model.
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
+    public void contextualize(Context _context) throws ContextException {
+        this.context = _context;
     }
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     /**
@@ -92,7 +94,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
         SourceResolver sourceResolver = null;
 
         try {
-            sourceResolver = (SourceResolver) manager
+            sourceResolver = (SourceResolver) this.manager
                     .lookup(org.apache.excalibur.source.SourceResolver.ROLE);
 
             String path = location.substring(SCHEME.length());
@@ -117,9 +119,12 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                                     + area + path;
                         }
                     }
-                } catch (Exception e) {
+                } catch (final PublicationException e1) {
                     throw new SourceException(
-                            "Cannot attach publication-id and/or area to " + path, e);
+                            "Cannot attach publication-id and/or area to " + path, e1);
+                } catch (final PageEnvelopeException e1) {
+                    throw new SourceException(
+                            "Cannot attach publication-id and/or area to " + path, e1);
                 }
             }
 
@@ -127,7 +132,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
 
             return sourceResolver.resolveURI(path);
             
-        } catch (ServiceException e) {
+        } catch (final ServiceException e) {
             throw new SourceException(e.getMessage(), e);
         } finally {
             this.manager.release(sourceResolver);
@@ -135,9 +140,10 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
     }
 
     /**
-     * Does nothing beacuse the delegated factory does this.
+     * Does nothing because the delegated factory does this.
      * @see org.apache.excalibur.source.SourceFactory#release(org.apache.excalibur.source.Source)
      */
     public void release(Source source) {
+	    // do nothing
     }
 }

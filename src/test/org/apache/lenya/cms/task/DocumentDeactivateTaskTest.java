@@ -38,8 +38,6 @@ import org.apache.lenya.cms.site.tree.TreeSiteManager;
  */
 public class DocumentDeactivateTaskTest extends AntTaskTest {
 
-    private long time = 0;
-
     /**
      * Creates a new DocumentDeactivateTaskTest object.
      * @param test The test.
@@ -58,7 +56,6 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
 
     /**
      * The main program for the DocumentDeactivateTaskTest class
-     * 
      * @param args The command line arguments
      */
     public static void main(String[] args) {
@@ -66,10 +63,22 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
         TestRunner.run(getSuite());
     }
 
+    /**
+     * <code>DOCUMENT_ID</code> The document id
+     */
     public static final String DOCUMENT_ID = "/tutorial";
+    /**
+     * <code>LANGUAGE</code> The language
+     */
     public static final String LANGUAGE = "en";
+    /**
+     * <code>AUTHORING_PATH</code> The authoring path
+     */
     public static final String AUTHORING_PATH = "content/authoring"
             .replace('/', File.separatorChar);
+    /**
+     * <code>LIVE_PATH</code> The live path
+     */
     public static final String LIVE_PATH = "content/live".replace('/', File.separatorChar);
 
     /**
@@ -91,18 +100,13 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.task.AntTaskTest#prepareTest()
      */
     protected void prepareTest() throws Exception {
-        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath() + File.separator;
-
         // TODO generate the resources
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.task.AntTaskTest#evaluateTest()
      */
     protected void evaluateTest() throws Exception {

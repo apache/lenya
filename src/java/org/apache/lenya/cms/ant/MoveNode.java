@@ -21,7 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import java.util.StringTokenizer;
 
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -33,7 +32,7 @@ public class MoveNode extends TwoNodesTask {
     private String refdocumentid;
 
     /**
-     *  
+     * Constructor 
      */
     public MoveNode() {
         super();
@@ -41,7 +40,6 @@ public class MoveNode extends TwoNodesTask {
 
     /**
      * Move a node.
-     * 
      * @param firstdocumentid The document-id of the document corresponding to the source node.
      * @param secdocumentid The document-id of the document corresponding to the destination node.
      * @param firstarea The area of the document corresponding to the source node.
@@ -51,18 +49,19 @@ public class MoveNode extends TwoNodesTask {
     public void manipulateTree(String firstdocumentid, String secdocumentid, String firstarea,
             String secarea) throws SiteException {
 
-        Publication publication = getPublication();
         SiteTree firsttree = getSiteTree(firstarea);
         SiteTree sectree = getSiteTree(secarea);
 
         String parentid = "";
+        StringBuffer buf = new StringBuffer();
         StringTokenizer st = new StringTokenizer(secdocumentid, "/");
         int length = st.countTokens();
 
         for (int i = 0; i < (length - 1); i++) {
-            parentid = parentid + "/" + st.nextToken();
+            buf.append("/" + st.nextToken());
         }
         String newid = st.nextToken();
+        parentid = buf.toString();
 
         SiteTreeNode node = firsttree.removeNode(firstdocumentid);
         if (node != null) {
@@ -90,7 +89,7 @@ public class MoveNode extends TwoNodesTask {
      *         node shoul be inserted. If null, the node is inserted at the end.
      */
     public String getRefdocumentid() {
-        return refdocumentid;
+        return this.refdocumentid;
     }
 
     /**
@@ -98,7 +97,7 @@ public class MoveNode extends TwoNodesTask {
      *            node shoul be inserted. If null, the node is inserted at the end.
      */
     public void setRefdocumentid(String string) {
-        refdocumentid = string;
+        this.refdocumentid = string;
     }
 
 }

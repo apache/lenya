@@ -37,6 +37,7 @@ import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
@@ -55,11 +56,10 @@ public class UsecaseAuthorizer
 
     /**
 	 * Returns the configuration source cache.
-	 * 
 	 * @return A source cache.
 	 */
     public SourceCache getCache() {
-        return cache;
+        return this.cache;
     }
 
     /**
@@ -85,29 +85,34 @@ public class UsecaseAuthorizer
         boolean authorized = true;
 
         SourceResolver resolver = null;
+
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             if (usecase != null) {
 
-                String configurationUri;
+                String _configurationUri;
                 if (getConfigurationURI() != null) {
-                    configurationUri = getConfigurationURI();
+                    _configurationUri = getConfigurationURI();
                 } else {
                     PublicationFactory factory = PublicationFactory.getInstance(getLogger());
                     Publication publication = factory.getPublication(resolver, request);
-                    configurationUri = getConfigurationURI(publication);
+                    _configurationUri = getConfigurationURI(publication);
                 }
 
                 Role[] roles = PolicyAuthorizer.getRoles(request);
-                authorized = authorizeUsecase(usecase, roles, configurationUri);
+                authorized = authorizeUsecase(usecase, roles, _configurationUri);
             } else {
                 getLogger().debug("No usecase to authorize. Granting access.");
             }
-        } catch (Exception e) {
+        } catch (final ServiceException e) {
+            throw new AccessControlException(e);
+        } catch (final PublicationException e) {
+            throw new AccessControlException(e);
+        } catch (final AccessControlException e) {
             throw new AccessControlException(e);
         } finally {
             if (resolver != null) {
-                manager.release(resolver);
+                this.manager.release(resolver);
             }
         }
 
@@ -119,11 +124,11 @@ public class UsecaseAuthorizer
 	 * 
 	 * @param usecase The usecase ID.
 	 * @param roles The roles of the current identity.
-	 * @param configurationUri The URI to retrieve the policy configuration from.
+	 * @param _configurationUri The URI to retrieve the policy configuration from.
 	 * @return A boolean value.
 	 * @throws AccessControlException when something went wrong.
 	 */
-    public boolean authorizeUsecase(String usecase, Role[] roles, String configurationUri)
+    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
         throws AccessControlException {
         getLogger().debug("Authorizing usecase [" + usecase + "]");
         boolean authorized = true;
@@ -131,13 +136,13 @@ public class UsecaseAuthorizer
         UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
         UsecaseRoles usecaseRoles;
         try {
-            usecaseRoles = (UsecaseRoles) getCache().get(configurationUri, builder);
+            usecaseRoles = (UsecaseRoles) getCache().get(_configurationUri, builder);
         } catch (CachingException e) {
             throw new AccessControlException(e);
         }
         
         if (usecaseRoles == null) {
-            throw new AccessControlException("Usecase policies configuration not found at [" + configurationUri + "]");
+            throw new AccessControlException("Usecase policies configuration not found at [" + _configurationUri + "]");
         }
         
         if (usecaseRoles.hasRoles(usecase)) {
@@ -165,10 +170,10 @@ public class UsecaseAuthorizer
     /**
 	 * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
 	 */
-    public void service(ServiceManager manager) throws ServiceException {
+    public void service(ServiceManager _manager) throws ServiceException {
         getLogger().debug("Servicing [" + getClass().getName() + "]");
-        this.manager = manager;
-        this.cache = (SourceCache) manager.lookup(SourceCache.ROLE);
+        this.manager = _manager;
+        this.cache = (SourceCache) _manager.lookup(SourceCache.ROLE);
     }
 
     /**
@@ -176,7 +181,7 @@ public class UsecaseAuthorizer
 	 */
     public void dispose() {
         if (getCache() != null) {
-            manager.release(getCache());
+            this.manager.release(getCache());
         }
     }
 
@@ -194,11 +199,10 @@ public class UsecaseAuthorizer
 
     /**
 	 * Returns the configuration URL.
-	 * 
 	 * @return The configuration URL.
 	 */
     public String getConfigurationURI() {
-        return configurationUri;
+        return this.configurationUri;
     }
 
     /**

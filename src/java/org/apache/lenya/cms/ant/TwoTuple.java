@@ -19,15 +19,27 @@
 
 package org.apache.lenya.cms.ant;
 
+/**
+ * Helper class to hold two values.
+ */
 public class TwoTuple {
+    /**
+     * <code>x</code> The x value
+     */
     public int x;
+    /**
+     * <code>y</code> The y value
+     */
     public int y;
 
     /**
-     *
+     * Constructor
+     * @param _x The x value
+     * @param _y The y value
+     * 
      */
-    public TwoTuple(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public TwoTuple(int _x, int _y) {
+        this.x = _x;
+        this.y = _y;
     }
 }

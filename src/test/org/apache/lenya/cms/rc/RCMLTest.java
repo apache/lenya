@@ -15,30 +15,33 @@
  *
  */
 
-/* $Id: RCMLTest.java,v 1.6 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.util.Date;
 
 import junit.framework.TestCase;
 
-import org.apache.lenya.xml.DOMParserFactory;
-import org.apache.lenya.xml.DOMWriter;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.apache.lenya.xml.DocumentHelper;
 
+/**
+ * RCML Test
+ */
 public class RCMLTest extends TestCase {
 
+	/**
+	 * <code>co</code> Checkout
+	 */
 	public static final short co = 0;
+	/**
+	 * <code>ci</code> Checkin
+	 */
 	public static final short ci = 1;
     
-	private File rcmlFile;
 	private Document document = null;
-	private boolean dirty = false;
-	private int maximalNumberOfEntries = 5;
 
     /**
      * Constructor.
@@ -66,7 +69,7 @@ public class RCMLTest extends TestCase {
 			RCML rcml = new RCML(args[0], args[1], args[2]);
 			rcml.checkOutIn(RCML.co, "michi", new Date().getTime(), false);
 
-			new DOMWriter(new PrintWriter(System.out)).print(this.document);
+			(new PrintWriter(System.out)).print(this.document);
 
 			CheckOutEntry coe = rcml.getLatestCheckOutEntry();
 			System.out.println("\n");
@@ -103,11 +106,6 @@ public class RCMLTest extends TestCase {
 		/**
 		 * initialise the RCML-document. Delete all entries
 		 */
-			DOMParserFactory dpf = new DOMParserFactory();
-			document = dpf.getDocument();
-
-			Element root = dpf.newElementNode(document, "XPSRevisionControl");
-			document.appendChild(root);
-
+        this.document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
     }
 }

@@ -17,11 +17,17 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
@@ -31,6 +37,7 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.PolicyBuilder;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * Policy manager based on Cocoon sitemaps.
@@ -66,8 +73,19 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
             source = resolver.resolveURI("cocoon://" + policyUrl);
             Document document = DocumentHelper.readDocument(source.getInputStream());
             policy = new PolicyBuilder(accreditableManager).buildPolicy(document);
-
-        } catch (Exception e) {
+        } catch (SourceNotFoundException e) {
+            throw new AccessControlException(e);
+        } catch (ServiceException e) {
+            throw new AccessControlException(e);
+        } catch (MalformedURLException e) {
+            throw new AccessControlException(e);
+        } catch (IOException e) {
+            throw new AccessControlException(e);
+        } catch (ParserConfigurationException e) {
+            throw new AccessControlException(e);
+        } catch (SAXException e) {
+            throw new AccessControlException(e);
+        } catch (AccessControlException e) {
             throw new AccessControlException(e);
         } finally {
             if (resolver != null) {
@@ -77,6 +95,7 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
                 getManager().release(resolver);
             }
         }
+
         return policy;
     }
 
@@ -85,8 +104,8 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     /**
@@ -94,23 +113,25 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
      * @return A service manager.
      */
     public ServiceManager getManager() {
-        return manager;
+        return this.manager;
     }
 
     /**
      * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager,
      *      org.apache.lenya.ac.Accreditable)
      */
-    public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
+    public void accreditableRemoved(AccreditableManager _manager, Accreditable accreditable)
             throws AccessControlException {
+	    // do nothing
     }
 
     /**
      * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager,
      *      org.apache.lenya.ac.Accreditable)
      */
-    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
+    public void accreditableAdded(AccreditableManager _manager, Accreditable accreditable)
             throws AccessControlException {
+	    // do nothing
     }
 
 }

@@ -34,7 +34,7 @@ public final class ServletHelper {
      * Ctor.
      */
     private ServletHelper() {
-
+        // do nothing
     }
 
     /**

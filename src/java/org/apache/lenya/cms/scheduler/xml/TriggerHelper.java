@@ -28,7 +28,7 @@ import java.util.GregorianCalendar;
 import org.apache.lenya.cms.scheduler.SchedulerStore;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
@@ -44,28 +44,57 @@ public final class TriggerHelper {
      * Ctor.
      */
     private TriggerHelper() {
+	    // do nothing
     }
 
-    private static Category log = Category.getInstance(TriggerHelper.class);
+    private static Logger log = Logger.getLogger(TriggerHelper.class);
+    /**
+     * <code>YEAR</code> The year
+     */
     public static final String YEAR = "year";
+    /**
+     * <code>MONTH</code> The month
+     */
     public static final String MONTH = "month";
+    /**
+     * <code>DAY</code> The day
+     */
     public static final String DAY = "day";
+    /**
+     * <code>HOUR</code> The hour
+     */
     public static final String HOUR = "hour";
+    /**
+     * <code>MINUTE</code> The minute
+     */
     public static final String MINUTE = "minute";
+    /**
+     * <code>TRIGGER_TYPE</code> The trigger type
+     */
     public static final String TRIGGER_TYPE = "type";
+    /**
+     * <code>ONCE</code> Once
+     */
     public static final String ONCE = "once";
+    /**
+     * <code>REPEATED</code> Repeated
+     */
     public static final String REPEATED = "repeated";
+    /**
+     * <code>CRON_EXPRESSION</code> The cron expression
+     */
     public static final String CRON_EXPRESSION = "expression";
     private static int id = 0;
+    /**
+     * <code>PREFIX</code> The prefix
+     */
     public static final String PREFIX = "trigger";
 
     /**
      * Creates a trigger from an XML element.
-     *
      * @param element The XML element.
      * @param jobName The job name.
      * @param jobGroup The job group.
-     *
      * @return A trigger.
      */
     public static Trigger createTrigger(Element element, String jobName, String jobGroup) {
@@ -74,7 +103,6 @@ public final class TriggerHelper {
         }
 
         String triggerType = element.getAttribute(TRIGGER_TYPE);
-
         NamespaceHelper helper = SchedulerStore.getNamespaceHelper();
 
         // SimpleTrigger
@@ -143,12 +171,10 @@ public final class TriggerHelper {
 
     /**
      * Creates a simple trigger.
-     *
      * @param jobName The job name.
      * @param jobGroup The job group.
      * @param date The trigger date.
-     *
-     * @return DOCUMENT ME!
+     * @return The trigger
      */
     public static Trigger createSimpleTrigger(String jobName, String jobGroup, Date date) {
         return new SimpleTrigger(createUniqueTriggerId(), "triggerGroup1", jobName, jobGroup, date,
@@ -157,12 +183,10 @@ public final class TriggerHelper {
 
     /**
      * Creates a cron trigger.
-     *
      * @param jobName The job name.
      * @param jobGroup The job group.
      * @param cron_expression Seconds, Minutes, Hours, Day of Month, Months, Day of Week (e.g. 34
      *        ?)
-     *
      * @return A trigger.
      */
     public static Trigger createCronTrigger(String jobName, String jobGroup, String cron_expression) {

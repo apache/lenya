@@ -29,6 +29,7 @@ public class PageEnvelopeFactory {
      * Creates a new PageEnvelopeFactory.
      */
     protected PageEnvelopeFactory() {
+	    // do nothing
     }
 
     private static PageEnvelopeFactory instance;

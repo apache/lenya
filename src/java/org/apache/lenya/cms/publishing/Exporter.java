@@ -26,16 +26,17 @@ import java.net.URL;
  */
 public interface Exporter {
     /**
-     * DOCUMENT ME!
+     * Export the specified publication as static HTML
      *
-     * @param serverURI DOCUMENT ME!
-     * @param serverPort DOCUMENT ME!
-     * @param publicationPath DOCUMENT ME!
-     * @param exportPathPrefix DOCUMENT ME!
-     * @param uris DOCUMENT ME!
-     * @param substituteExpression DOCUMENT ME!
+     * @param serverURI Domain name of the server
+     * @param serverPort Server port
+     * @param publicationPath Path to the publication
+     * @param exportPathPrefix prefix to use for the export
+     * @param uris starting URLs for the export
+     * @param substituteExpression expression to be substituted
+     * @param substituteReplacement replacement expression
+     * @throws ExportException
      *
-     * @throws Exception DOCUMENT ME!
      */
     void export(URL serverURI, int serverPort, String publicationPath, String exportPathPrefix,
         String[] uris, String substituteExpression, String substituteReplacement)

@@ -21,25 +21,30 @@ package org.apache.lenya.cms.publishing;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
- * DOCUMENT ME!
+ * Resource Publishing Environment
  *
  */
 public class ResourcePublishingEnvironment extends PublishingEnvironment {
-    private static Category log = Category.getInstance(ResourcePublishingEnvironment.class);
+    private static Logger log = Logger.getLogger(ResourcePublishingEnvironment.class);
+    /**
+     * <code>PARAMETER_RESOURCE_AUTHORING_PATH</code> Authoring path parameter
+     */
     public static final String PARAMETER_RESOURCE_AUTHORING_PATH = "resources-authoring-path";
+    /**
+     * <code>PARAMETER_RESOURCE_LIVE_PATH</code> Live path parameter
+     */
     public static final String PARAMETER_RESOURCE_LIVE_PATH = "resources-live-path";
     private String resourceAuthoringPath;
     private String resourceLivePath;
 
     /**
      * Creates a new ResourcePublishingEnvironment object.
-     *
-     * @param contextPath DOCUMENT ME!
-     * @param publicationId DOCUMENT ME!
+     * @param contextPath The context path
+     * @param publicationId The publication id
      */
     public ResourcePublishingEnvironment(String contextPath, String publicationId) {
         super(contextPath, publicationId);
@@ -47,19 +52,14 @@ public class ResourcePublishingEnvironment extends PublishingEnvironment {
 
     /**
      * Creates a new ResourcePublishingEnvironment object.
-     *
-     * @param publicationPath DOCUMENT ME!
+     * @param publicationPath The publication path
      */
     public ResourcePublishingEnvironment(String publicationPath) {
         super(publicationPath);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @throws org.apache.avalon.framework.configuration.ConfigurationException DOCUMENT ME!
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration)
         throws ConfigurationException {
@@ -77,37 +77,33 @@ public class ResourcePublishingEnvironment extends PublishingEnvironment {
 
     /**
      * Get the live resource path.
-     *
      * @return a <code>String</code> value
      */
     public String getResourceLivePath() {
-        return resourceLivePath;
+        return this.resourceLivePath;
     }
 
     /**
      * Set the live resource path.
-     *
      * @param path a <code>String</code> value
      */
     protected void setResourceLivePath(String path) {
-        resourceLivePath = path;
+        this.resourceLivePath = path;
     }
 
     /**
      * Get the authoring resource path.
-     *
      * @return a <code>String</code> value
      */
     public String getResourceAuthoringPath() {
-        return resourceAuthoringPath;
+        return this.resourceAuthoringPath;
     }
 
     /**
      * Set the authoring resource path.
-     *
      * @param path a <code>String</code> value
      */
     protected void setResourceAuthoringPath(String path) {
-        resourceAuthoringPath = path;
+        this.resourceAuthoringPath = path;
     }
 }

@@ -35,7 +35,6 @@ public interface WorkflowInstance {
 
     /**
      * Returns the current state of this WorkflowInstance.
-     * 
      * @return the current state
      */
     State getCurrentState();
@@ -57,7 +56,6 @@ public interface WorkflowInstance {
 
     /**
      * Indicates that the user invoked an event.
-     * 
      * @param situation The situation in which the event was invoked.
      * @param event The event that was invoked.
      * @throws WorkflowException if the event cannot be invoked in this situation.

@@ -138,10 +138,10 @@ public class LDAPUserTest extends AccessControlTest {
      */
     final public LDAPUser loadUser(String userName) throws AccessControlException {
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
+        FileUserManager _manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
                 getLogEnabledLogger());
 
-        return (LDAPUser) manager.getUser(userName);
+        return (LDAPUser) _manager.getUser(userName);
     }
 
 

@@ -24,7 +24,6 @@ import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -41,8 +40,10 @@ import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.util.LanguageVersions;
 import org.apache.lenya.workflow.Situation;
@@ -74,7 +75,7 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
      * @see org.apache.lenya.cms.workflow.WorkflowResolver#getSituation()
      */
     public Situation getSituation() {
-        Request request = ObjectModelHelper.getRequest(objectModel);
+        Request request = ObjectModelHelper.getRequest(this.objectModel);
         Session session = request.getSession(false);
 
         Situation situation = null;
@@ -142,8 +143,8 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
 
         DocumentTypeResolver doctypeResolver = null;
         WorkflowImpl workflow = null;
-        try {
 
+        try {
             doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
             DocumentType doctype = doctypeResolver.resolve(document);
 
@@ -158,7 +159,13 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
                 WorkflowBuilder builder = new WorkflowBuilder(getLogger());
                 workflow = builder.buildWorkflow(workflowFileName, workflowFile);
             }
-        } catch (Exception e) {
+        } catch (final ServiceException e) {
+            throw new RuntimeException(e);
+        } catch (final DocumentTypeBuildException e) {
+            throw new RuntimeException(e);
+        } catch (final PublicationException e) {
+            throw new RuntimeException(e);
+        } catch (final WorkflowException e) {
             throw new RuntimeException(e);
         } finally {
             if (doctypeResolver != null) {
@@ -174,8 +181,8 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     /**

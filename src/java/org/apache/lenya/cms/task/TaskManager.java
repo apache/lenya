@@ -28,13 +28,25 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
+/**
+ * The task manager
+ */
 public class TaskManager implements Configurable {
-    private static Category log = Category.getInstance(TaskManager.class);
+    private static Logger log = Logger.getLogger(TaskManager.class);
+    /**
+     * <code>TASK_ELEMENT</code> The task element
+     */
     public static final String TASK_ELEMENT = "task";
+    /**
+     * <code>TASK_ID_ATTRIBUTE</code> The task id attribute
+     */
     public static final String TASK_ID_ATTRIBUTE = "id";
+    /**
+     * <code>CONFIGURATION_FILE</code> The path to the configuration file
+     */
     public static final String CONFIGURATION_FILE =
         File.separator
             + "config"
@@ -43,6 +55,15 @@ public class TaskManager implements Configurable {
             + File.separator
             + "tasks.xconf";
 
+    /**
+     * <code>EMTPY_TASK</code> Constant for an empty task
+     */
+    public static final String EMTPY_TASK = "empty";
+    /**
+     * <code>ANT_TASK</code> Constant for an ant task
+     */
+    public static final String ANT_TASK = "ant";
+
     // maps task-ids to tasks
     private Map tasks = new HashMap();
 
@@ -50,11 +71,11 @@ public class TaskManager implements Configurable {
      * Creates a new TaskManager object.
      */
     public TaskManager() {
+        // do nothing
     }
 
     /**
      * Creates a new instance of TaskManager
-     *
      * @param publicationPath path to publication
      * @throws ConfigurationException if the configuration failed.
      * @throws SAXException when parsing the config file failed.
@@ -80,19 +101,12 @@ public class TaskManager implements Configurable {
                     + configurationFile.getAbsolutePath()
                     + "] does not exist.");
         }
-        tasks.put(EMTPY_TASK, new EmptyTask());
-        tasks.put(ANT_TASK, new AntTask());
+        this.tasks.put(EMTPY_TASK, new EmptyTask());
+        this.tasks.put(ANT_TASK, new AntTask());
     }
 
-    public static final String EMTPY_TASK = "empty";
-    public static final String ANT_TASK = "ant";
-
     /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration)
         throws ConfigurationException {
@@ -110,34 +124,30 @@ public class TaskManager implements Configurable {
 
             Task task =
                 TaskFactory.getInstance().createTask(taskConfigurations[i]);
-            tasks.put(taskId, task);
+            this.tasks.put(taskId, task);
         }
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Return all task ids
+     * @return The task ids
      */
     public String[] getTaskIds() {
-        return (String[]) tasks.keySet().toArray(new String[tasks.size()]);
+        return (String[]) this.tasks.keySet().toArray(new String[this.tasks.size()]);
     }
 
     /**
      * Get the task with a given task-id
-     *
      * @param taskId the task-id of the requested task
-     *
      * @return the task
-     * 
      * @throws ExecutionException if there is no task with the given task-id.
      */
     public Task getTask(String taskId) throws ExecutionException {
-        if (!tasks.containsKey(taskId)) {
+        if (!this.tasks.containsKey(taskId)) {
             throw new ExecutionException(
                 "Task with ID '" + taskId + "' not found!");
         }
 
-        return (Task) tasks.get(taskId);
+        return (Task) this.tasks.get(taskId);
     }
 }

@@ -23,4 +23,5 @@ package org.apache.lenya.workflow;
  * Workflow state.
  */
 public interface State {
+    // do nothing
 }

@@ -21,14 +21,26 @@ package org.apache.lenya.cms.task;
 
 import java.util.Map;
 
+/**
+ * The task wrapper parameters
+ */
 public class TaskWrapperParameters extends ParameterWrapper {
 
+    /**
+     * <code>TASK_ID</code> The task id
+     */
     public static final String TASK_ID = "task-id";
+    /**
+     * <code>WEBAPP_URL</code> The webapp URL
+     */
     public static final String WEBAPP_URL = "webapp-url";
+    /**
+     * <code>PREFIX</code> The prefix
+     */
+    public static final String PREFIX = "wrapper";
 
     protected static final String[] REQUIRED_KEYS = { TASK_ID, WEBAPP_URL };
 
-    public static final String PREFIX = "wrapper";
 
     /**
      * Ctor.

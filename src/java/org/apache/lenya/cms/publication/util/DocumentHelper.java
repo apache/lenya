@@ -32,6 +32,7 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -50,14 +51,14 @@ public class DocumentHelper {
     /**
      * Ctor.
      * 
-     * @param objectModel The Cocoon object model.
+     * @param _objectModel The Cocoon object model.
      */
-    public DocumentHelper(Map objectModel) {
-        this.objectModel = objectModel;
+    public DocumentHelper(Map _objectModel) {
+        this.objectModel = _objectModel;
         Publication publication;
         try {
             PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-            publication = factory.getPublication(objectModel);
+            publication = factory.getPublication(_objectModel);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
@@ -78,15 +79,16 @@ public class DocumentHelper {
             throws ProcessingException {
 
         String url = null;
+
         try {
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
-                    this.identityMap, objectModel);
+                    this.identityMap, this.objectModel);
 
             if (documentId == null) {
                 documentId = envelope.getDocument().getId();
             }
 
-            Request request = ObjectModelHelper.getRequest(objectModel);
+            Request request = ObjectModelHelper.getRequest(this.objectModel);
 
             if (documentArea == null) {
                 String webappUrl = ServletHelper.getWebappURI(request);
@@ -109,8 +111,9 @@ public class DocumentHelper {
             }
 
             url = contextPath + url;
-
-        } catch (Exception e) {
+        } catch (final DocumentBuildException e) {
+            throw new ProcessingException(e);
+        } catch (final PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
 
@@ -122,7 +125,6 @@ public class DocumentHelper {
      * Returns the complete URL of the parent document. If the document is a top-level document, the
      * /index document is chosen. If the parent does not exist in the appropriate language, the
      * default language is chosen.
-     * 
      * @return A string.
      * @throws ProcessingException when something went wrong.
      */
@@ -132,15 +134,17 @@ public class DocumentHelper {
         String contextPath;
         try {
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
-                    this.identityMap, objectModel);
+                    this.identityMap, this.objectModel);
             Document document = envelope.getDocument();
 
-            Request request = ObjectModelHelper.getRequest(objectModel);
+            Request request = ObjectModelHelper.getRequest(this.objectModel);
             contextPath = request.getContextPath();
 
             Document parent = this.identityMap.getFactory().getParent(document, "/index");
             parentUrl = parent.getCanonicalWebappURL();
-        } catch (Exception e) {
+        } catch (final DocumentBuildException e) {
+            throw new ProcessingException(e);
+        } catch (final PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
 

@@ -35,16 +35,17 @@ import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Validate XML Document with RELAX NG Schema
  */
 public class RelaxNG {
-    static Category log = Category.getInstance(RelaxNG.class);
+    private static final Logger log = Logger.getLogger(RelaxNG.class);
 
     /**
-     *  
+     * Command line interface
+     * @param args Command line args
      */
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -59,8 +60,8 @@ public class RelaxNG {
             } else {
                 System.out.println("Document not valid: " + message);
             }
-        } catch (Exception e) {
-            System.err.println("" + e);
+        } catch (IOException e) {
+            log.error("" +e.toString());
         }
     }
 
@@ -69,9 +70,9 @@ public class RelaxNG {
      * @param schema The schema file.
      * @param xml The XML file.
      * @return A string. FIXME: what does this mean?
-     * @throws Exception if an error occurs.
+     * @throws IOException if an error occurs.
      */
-    public static String validate(File schema, File xml) throws Exception {
+    public static String validate(File schema, File xml) throws IOException {
 
         InputSource schemaInputSource = ValidationDriver.uriOrFileInputSource(schema
                 .getAbsolutePath());
@@ -85,27 +86,34 @@ public class RelaxNG {
      * @param schemaInputSource The schema input source.
      * @param xmlInputSource The XML input source.
      * @return A string.
-     * @throws Exception if an error occurs.
+     * @throws IOException if an error occurs.
      */
     public static String validate(InputSource schemaInputSource, InputSource xmlInputSource)
-            throws Exception {
-        PropertyMapBuilder properties = new PropertyMapBuilder();
-        ByteArrayOutputStream error = new ByteArrayOutputStream();
-        ErrorHandlerImpl eh = new ErrorHandlerImpl(
-                new BufferedWriter(new OutputStreamWriter(error)));
-        ValidateProperty.ERROR_HANDLER.put(properties, eh);
-        SchemaReader schemaReader = new AutoSchemaReader();
-        ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), schemaReader);
-        if (driver.loadSchema(schemaInputSource)) {
-            if (driver.validate(xmlInputSource)) {
-                log.debug("" + error);
-                return null;
-            } else {
-                log.error("" + error);
-                return "" + error;
+            throws IOException {
+        ByteArrayOutputStream error;
+        try {
+            PropertyMapBuilder properties = new PropertyMapBuilder();
+            error = new ByteArrayOutputStream();
+            ErrorHandlerImpl eh = new ErrorHandlerImpl(
+                    new BufferedWriter(new OutputStreamWriter(error)));
+            ValidateProperty.ERROR_HANDLER.put(properties, eh);
+            SchemaReader schemaReader = new AutoSchemaReader();
+            ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), schemaReader);
+            if (driver.loadSchema(schemaInputSource)) {
+                if (driver.validate(xmlInputSource)) {
+                    log.debug("" + error);
+                    return null;
+                } 
+            	log.error("" + error);
+            	return "" + error;
             }
-        } else {
-            throw new Exception("Could not load schema!\n" + error);
+            throw new IOException("Could not load schema!\n" + error);
+        } catch (final SAXException e) {
+            log.error("" +e.toString());
+            throw new IOException("Could not load schema!\n" + e);
+        } catch (final IOException e) {
+            log.error("" +e.toString());
+            throw new IOException("Could not load schema!\n" + e);
         }
     }
 

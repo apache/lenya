@@ -40,11 +40,36 @@ import org.apache.lenya.cms.site.tree.TreeSiteManager;
  */
 public class DocumentMoveTaskTest extends AntTaskTest {
 
+    /**
+     * <code>FIRST_DOCUMENT_ID</code> The first document id
+     */
+    public static final String FIRST_DOCUMENT_ID = "/concepts";
+    /**
+     * <code>SEC_DOCUMENT_ID</code> The second document id
+     */
+    public static final String SEC_DOCUMENT_ID = "/features";
+    /**
+     * <code>AUTHORING_PATH</code> The authoring path
+     */
+    public static final String AUTHORING_PATH = "content/authoring"
+            .replace('/', File.separatorChar);
+    /**
+     * <code>AUTHORING_RESOURCE</code> The authoring resource path
+     */
+    public static final String AUTHORING_RESOURCE = "resources/authoring";
+    /**
+     * <code>RCML_DIR</code> The RCML path
+     */
+    public static final String RCML_DIR = "content/rcml";
+    /**
+     * <code>RCBAK_DIR</code> The RCBAK path
+     */
+    public static final String RCBAK_DIR = "content/rcbak";
+
     private long time = 0;
 
     /**
      * Creates a new DocumentMoveTaskTest object.
-     * 
      * @param test the test
      */
     public DocumentMoveTaskTest(String test) {
@@ -68,14 +93,6 @@ public class DocumentMoveTaskTest extends AntTaskTest {
         AntTaskTest.initialize(args);
         TestRunner.run(getSuite());
     }
-
-    public static final String FIRST_DOCUMENT_ID = "/concepts";
-    public static final String SEC_DOCUMENT_ID = "/features";
-    public static final String AUTHORING_PATH = "content/authoring"
-            .replace('/', File.separatorChar);
-    public static final String AUTHORING_RESOURCE = "resources/authoring";
-    public static final String RCML_DIR = "content/rcml";
-    public static final String RCBAK_DIR = "content/rcbak";
 
     /**
      * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
@@ -103,10 +120,6 @@ public class DocumentMoveTaskTest extends AntTaskTest {
     protected void prepareTest() throws Exception {
         File publicationDirectory = PublicationHelper.getPublication().getDirectory();
         String publicationPath = publicationDirectory.getAbsolutePath() + File.separator;
-        File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
-
-        // TODO generate the resources
-
         // generate the rcml and rcbak files
         File rcmlDirectory = new File(publicationPath, RCML_DIR);
         File rcbakDirectory = new File(publicationPath, RCBAK_DIR);
@@ -114,7 +127,7 @@ public class DocumentMoveTaskTest extends AntTaskTest {
                 rcbakDirectory.getAbsolutePath(), publicationPath);
         String filename = AUTHORING_PATH + FIRST_DOCUMENT_ID + File.separator + "index.xml";
         rc.reservedCheckOut(filename, "lenya");
-        time = rc.reservedCheckIn(filename, "lenya", true);
+        this.time = rc.reservedCheckIn(filename, "lenya", true);
     }
 
     /**
@@ -155,12 +168,12 @@ public class DocumentMoveTaskTest extends AntTaskTest {
         System.out.println("rcml file was deleted: " + firstRcmlFile.getAbsolutePath());
 
         File rcbakDirectory = new File(publicationPath, RCBAK_DIR);
-        String rcbakFilePath = filepath + ".bak." + time;
+        String rcbakFilePath = filepath + ".bak." + this.time;
         File rcbakFile = new File(rcbakDirectory, AUTHORING_PATH + rcbakFilePath);
         assertTrue(rcbakFile.exists());
         System.out.println("Backup was copied: " + rcbakFile.getAbsolutePath());
 
-        String firstRcbakFilePath = firstfilepath + ".bak." + time;
+        String firstRcbakFilePath = firstfilepath + ".bak." + this.time;
         File firstRcbakFile = new File(rcbakDirectory, AUTHORING_PATH + firstRcbakFilePath);
         assertFalse(firstRcbakFile.exists());
         System.out.println("Backup was deleted: " + firstRcbakFile.getAbsolutePath());

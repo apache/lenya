@@ -26,7 +26,7 @@ import org.apache.lenya.cms.PublicationHelper;
 /**
  * Group manager test.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class GroupManagerTest extends AccessControlTest {
 
@@ -39,9 +39,9 @@ public class GroupManagerTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Command line interface
      *
-     * @param args DOCUMENT ME!
+     * @param args command line args
      */
     public static void main(String[] args) {
         PublicationHelper.extractPublicationArguments(args);
@@ -49,19 +49,18 @@ public class GroupManagerTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @throws AccessControlException DOCUMENT ME!
+     * The test
+     * @throws AccessControlException if an error occurs
      */
     public final void testInstance() throws AccessControlException {
-        FileGroupManager manager = null;
+        FileGroupManager _manager = null;
         File configDir = getAccreditablesDirectory();
-        manager = FileGroupManager.instance(configDir, getLogEnabledLogger());
-        assertNotNull(manager);
+        _manager = FileGroupManager.instance(configDir, getLogEnabledLogger());
+        assertNotNull(_manager);
 
         FileGroupManager anotherManager = null;
         anotherManager = FileGroupManager.instance(configDir, getLogEnabledLogger());
         assertNotNull(anotherManager);
-        assertEquals(manager, anotherManager);
+        assertEquals(_manager, anotherManager);
     }
 }

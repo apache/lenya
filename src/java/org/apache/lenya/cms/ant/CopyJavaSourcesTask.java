@@ -21,6 +21,7 @@ package org.apache.lenya.cms.ant;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class CopyJavaSourcesTask extends Task {
         int numberOfFilesCopied = 0;
         TwoTuple twoTuple = new TwoTuple(numberOfDirectoriesCreated, numberOfFilesCopied);
 
-        String translatedBuildDir = Project.translatePath(buildDir);
+        String translatedBuildDir = Project.translatePath(this.buildDir);
         File absoluteBuildDir = null;
         if (translatedBuildDir != null && translatedBuildDir.startsWith(File.separator)) {
             absoluteBuildDir = new File(translatedBuildDir);
@@ -61,7 +62,7 @@ public class CopyJavaSourcesTask extends Task {
                     translatedBuildDir);
         }
        
-        StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(), File.pathSeparator);
+        StringTokenizer st = new StringTokenizer(this.pubsRootDirs.toString(), File.pathSeparator);
 
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
@@ -70,14 +71,14 @@ public class CopyJavaSourcesTask extends Task {
 
             if (path.isDirectory()) {
                 if (new File(path, "publication.xml").isFile()) {
-                    copyContentOfDir(new File(path, javaDir), absoluteBuildDir, twoTuple,
+                    copyContentOfDir(new File(path, this.javaDir), absoluteBuildDir, twoTuple,
                             new JavaFilenameFilter(), this);
                 } else {
                     // FIXME: Look for publications defined by the file "publication.xml"
                     String[] pubs = path.list();
 
                     for (int i = 0; i < pubs.length; i++) {
-                        File pubJavaDir = new File(path, new File(pubs[i], javaDir).toString());
+                        File pubJavaDir = new File(path, new File(pubs[i], this.javaDir).toString());
 
                         copyContentOfDir(pubJavaDir, absoluteBuildDir, twoTuple,
                                 new JavaFilenameFilter(), this);
@@ -97,6 +98,11 @@ public class CopyJavaSourcesTask extends Task {
 
     /**
      * Copies the directory "source" into the directory "destination"
+     * @param source The source directory
+     * @param destination The destination directory
+     * @param twoTuple The twoTuple to use
+     * @param filenameFilter The filename filter to apply
+     * @param client The client task
      */
     public static void copyDir(File source, File destination, TwoTuple twoTuple,
             FilenameFilter filenameFilter, Task client) {
@@ -107,6 +113,11 @@ public class CopyJavaSourcesTask extends Task {
 
     /**
      * Copies the content of a directory into another directory
+     * @param source The source directory
+     * @param destination The destination directory
+     * @param twoTuple The twoTuple to use
+     * @param filenameFilter The filename filter to use
+     * @param client The client task
      */
     public static void copyContentOfDir(File source, File destination, TwoTuple twoTuple,
             FilenameFilter filenameFilter, Task client) {
@@ -133,13 +144,15 @@ public class CopyJavaSourcesTask extends Task {
                                     + file, Project.MSG_ERR);
                 }
             }
-        } else {
-        }
+        } 
     }
 
     /**
      * Copies the content of a file into another file
+     * @param source The source file (not a directory!)
      * @param destination File (not a directory!)
+     * @param twoTuple The twoTuple to use
+     * @param client The client task
      */
     public static void copyFile(File source, File destination, TwoTuple twoTuple, Task client) {
         if (source.isFile()) {
@@ -163,6 +176,7 @@ public class CopyJavaSourcesTask extends Task {
             int bytesRead = -1;
             InputStream in = null;
             OutputStream out = null;
+
             try {
                 in = new FileInputStream(source);
                 out = new FileOutputStream(destination);
@@ -170,8 +184,11 @@ public class CopyJavaSourcesTask extends Task {
                 while ((bytesRead = in.read(buffer)) >= 0) {
                     out.write(buffer, 0, bytesRead);
                 }
-
-            } catch (Exception e) {
+            } catch (final FileNotFoundException e) {
+                StringWriter writer = new StringWriter();
+                e.printStackTrace(new PrintWriter(writer));
+                client.log("Exception caught: " + writer.toString());
+            } catch (final IOException e) {
                 StringWriter writer = new StringWriter();
                 e.printStackTrace(new PrintWriter(writer));
                 client.log("Exception caught: " + writer.toString());
@@ -183,12 +200,13 @@ public class CopyJavaSourcesTask extends Task {
                     if (in != null) {
                         in.close();
                     }
-                } catch (IOException e1) {
+                } catch (final IOException e1) {
                     StringWriter writer = new StringWriter();
                     e1.printStackTrace(new PrintWriter(writer));
                     client.log("Exception closing stream: " + writer.toString());
                 }
             }
+
             int numberOfFilesCopied = twoTuple.y;
             numberOfFilesCopied++;
             twoTuple.y = numberOfFilesCopied;
@@ -199,23 +217,26 @@ public class CopyJavaSourcesTask extends Task {
     }
 
     /**
-     *  
+     * Set the root publication root directories
+     * @param _pubsRootDirs The root directories
      */
-    public void setPubsRootDirs(Path pubsRootDirs) {
-        this.pubsRootDirs = pubsRootDirs;
+    public void setPubsRootDirs(Path _pubsRootDirs) {
+        this.pubsRootDirs = _pubsRootDirs;
     }
 
     /**
-     *  
+     * Set the java directory
+     * @param _javaDir The java directory
      */
-    public void setJavaDir(String javaDir) {
-        this.javaDir = javaDir;
+    public void setJavaDir(String _javaDir) {
+        this.javaDir = _javaDir;
     }
 
     /**
-     *  
+     * Set the build directory
+     * @param _buildDir The build directory
      */
-    public void setBuildDir(String buildDir) {
-        this.buildDir = buildDir;
+    public void setBuildDir(String _buildDir) {
+        this.buildDir = _buildDir;
     }
 }

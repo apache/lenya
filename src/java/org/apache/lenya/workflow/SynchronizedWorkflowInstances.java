@@ -52,12 +52,18 @@ public interface SynchronizedWorkflowInstances {
     
     /**
      * Returns all executable events.
+     * @param situation The situation
+     * @return The events
+     * @throws WorkflowException if an error occurs
      * @see org.apache.lenya.workflow.WorkflowInstance#getExecutableEvents(org.apache.lenya.workflow.Situation)
      */
     String[] getExecutableEvents(Situation situation) throws WorkflowException;
     
     /**
      * Invokes an event on all documents.
+     * @param situation The Situation
+     * @param event The event
+     * @throws WorkflowException if an error occurs
      * @see org.apache.lenya.workflow.WorkflowInstance#invoke(org.apache.lenya.workflow.Situation, String)
      */
     void invoke(Situation situation, String event) throws WorkflowException;

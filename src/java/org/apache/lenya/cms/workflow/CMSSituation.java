@@ -21,6 +21,9 @@ package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.workflow.Situation;
 
+/**
+ * The CMS situation
+ */
 public class CMSSituation implements Situation {
 
     /**
@@ -28,7 +31,7 @@ public class CMSSituation implements Situation {
      * @return A string.
      */
     public String getMachineIp() {
-        return machineIp;
+        return this.machineIp;
     }
 
     /**
@@ -36,37 +39,36 @@ public class CMSSituation implements Situation {
      * @return A string.
      */
     public String getUserId() {
-        return userId;
+        return this.userId;
     }
 
 	/**
 	 * Creates a new instance of Situation
-	 * @param roleIds The role IDs.
-     * @param userId The user ID.
-     * @param machineIp The machine IP address.
+	 * @param _roleIds The role IDs.
+     * @param _userId The user ID.
+     * @param _machineIp The machine IP address.
 	 */
-    protected CMSSituation(String[] roleIds, String userId, String machineIp) {
-        this.roleIds = roleIds;
-        this.userId = userId;
-        this.machineIp = machineIp;
+    protected CMSSituation(String[] _roleIds, String _userId, String _machineIp) {
+        this.roleIds = _roleIds;
+        this.userId = _userId;
+        this.machineIp = _machineIp;
     }
 
     private String[] roleIds;
 
     /**
      * Get the roles
-     * 
      * @return the roles
      */
     public String[] getRoleIds() {
-        return roleIds;
+        return this.roleIds;
     }
 
-    /** (non-Javadoc)
+    /** 
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "(roles: " + roleIds + ")";
+        return "(roles: " + this.roleIds + ")";
     }
     
     private String userId;

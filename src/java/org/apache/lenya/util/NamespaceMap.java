@@ -33,26 +33,29 @@ import java.util.Set;
  * through the mapper.
  */
 public class NamespaceMap {
+    /**
+     * <code>SEPARATOR</code> The seperator character
+     */
     public static final String SEPARATOR = ".";
     private Map map;
     private String prefix;
 
     /**
      * Creates a new NamespaceMap object.
-     * @param prefix The prefix.
+     * @param _prefix The prefix.
      */
-    public NamespaceMap(String prefix) {
-        this(new HashMap(), prefix);
+    public NamespaceMap(String _prefix) {
+        this(new HashMap(), _prefix);
     }
 
     /**
      * Creates a new NamespaceMap.
-     * @param map A map containing the prefixed key-value-pairs.
-     * @param prefix The prefix.
+     * @param _map A map containing the prefixed key-value-pairs.
+     * @param _prefix The prefix.
      */
-    public NamespaceMap(Map map, String prefix) {
-        this.map = map;
-        this.prefix = prefix;
+    public NamespaceMap(Map _map, String _prefix) {
+        this.map = _map;
+        this.prefix = _prefix;
     }
 
     /**
@@ -60,7 +63,7 @@ public class NamespaceMap {
      * @return A string.
      */
     public String getPrefix() {
-        return prefix;
+        return this.prefix;
     }
 
     /**
@@ -68,7 +71,7 @@ public class NamespaceMap {
      * @return The namespace prefix.
      */
     protected Map getMapObject() {
-        return map;
+        return this.map;
     }
 
     /**
@@ -135,12 +138,12 @@ public class NamespaceMap {
     
     /**
      * Puts all prefixed key-value-pairs of map into this map.
-     * @param map A map.
+     * @param _map A map.
      */
-    public void putAll(Map map) {
-        for (Iterator i = map.keySet().iterator(); i.hasNext(); ) {
+    public void putAll(Map _map) {
+        for (Iterator i = _map.keySet().iterator(); i.hasNext(); ) {
             String key = (String) i.next();
-            put(key, map.get(key));
+            put(key, _map.get(key));
         }
     }
     

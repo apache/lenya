@@ -37,10 +37,10 @@ public class ExistingSourceResolver implements SourceVisitor {
     
     /**
      * Returns the URI of the first existing source.
-     * @return
+     * @return The URI
      */
     public String getURI() {
-        return uri;
+        return this.uri;
     }
 
     /**

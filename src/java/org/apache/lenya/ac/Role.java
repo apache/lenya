@@ -24,4 +24,5 @@ package org.apache.lenya.ac;
  * @version $Id$
  */
 public interface Role extends Item {
+    // do nothing
 }

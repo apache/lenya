@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ExcaliburTest.java,v 1.2 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms;
 
@@ -23,7 +23,16 @@ import java.io.InputStream;
 
 import org.apache.avalon.excalibur.testcase.ExcaliburTestCase;
 
+/**
+ * Abstract base class for excalibur tests
+ */
 public abstract class ExcaliburTest extends ExcaliburTestCase {
+
+    /**
+     * <code>CONFIGURATION</code> The path to the configuration
+     */
+    public static final String CONFIGURATION = "/" +
+    ExcaliburTest.class.getPackage().getName().replace('.', '/') + "/lenya.xtest";
 
     /**
      * @param test The test.
@@ -31,9 +40,6 @@ public abstract class ExcaliburTest extends ExcaliburTestCase {
     public ExcaliburTest(String test) {
         super(test);
     }
-
-    public static final String CONFIGURATION = "/" +
-        ExcaliburTest.class.getPackage().getName().replace('.', '/') + "/lenya.xtest";
 
     /**
      * @see org.apache.avalon.excalibur.testcase.ExcaliburTestCase#prepare()

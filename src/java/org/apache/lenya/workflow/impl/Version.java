@@ -35,7 +35,7 @@ public class Version {
      * @return An event.
      */
     public Event getEvent() {
-        return event;
+        return this.event;
     }
 
     /**
@@ -43,17 +43,17 @@ public class Version {
      * @return A state.
      */
     public State getState() {
-        return state;
+        return this.state;
     }
 
     /**
      * Ctor.
-     * @param event The event that caused the version change.
-     * @param state The destination state.
+     * @param _event The event that caused the version change.
+     * @param _state The destination state.
      */
-    public Version(Event event, State state) {
-        this.event = event;
-        this.state = state;
+    public Version(Event _event, State _state) {
+        this.event = _event;
+        this.state = _state;
     }
 
 

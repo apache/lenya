@@ -29,21 +29,21 @@ public class Label {
     /**
      * Creates a new Label object with no language.
      *
-     * @param label the actual label
+     * @param _label the actual label
      */
-    protected Label(String label) {
-        this(label, null);
+    protected Label(String _label) {
+        this(_label, null);
     }
 
     /**
      * Creates a new Label object.
      *
-     * @param label the actual label
-     * @param language the language
+     * @param _label the actual label
+     * @param _language the language
      */
-    public Label(String label, String language) {
-        this.label = label;
-        this.language = language;
+    public Label(String _label, String _language) {
+        this.label = _label;
+        this.language = _language;
     }
 
     /**
@@ -52,16 +52,16 @@ public class Label {
      * @return the actual label as a String
      */
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     /**
      * Set the actual label of the label object.
      * 
-     * @param label The label.
+     * @param _label The label.
      */
-    public void setLabel(String label) {
-        this.label = label;
+    public void setLabel(String _label) {
+        this.label = _label;
     }
     /**
      * Get the language of this Label object 
@@ -70,7 +70,7 @@ public class Label {
      */
 
     public String getLanguage() {
-        return language;
+        return this.language;
     }
     
     

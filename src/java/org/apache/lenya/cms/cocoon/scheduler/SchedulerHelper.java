@@ -27,26 +27,32 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
 import org.apache.lenya.cms.scheduler.ServletJob;
+import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
 
+/**
+ * Scheduler helper
+ */
 public class SchedulerHelper {
 
     /**
      * Ctor.
-     * @param objectModel The Cocoon component object model.
-     * @param parameters The Cocoon component parameters.
-     * @param logger The logger to use.
+     * @param _objectModel The Cocoon component object model.
+     * @param _parameters The Cocoon component parameters.
+     * @param _logger The logger to use.
      */
-    public SchedulerHelper(Map objectModel, Parameters parameters, Logger logger) {
-        this.objectModel = objectModel;
-        this.parameters = parameters;
-        this.logger = logger;
+    public SchedulerHelper(Map _objectModel, Parameters _parameters, Logger _logger) {
+        this.objectModel = _objectModel;
+        this.parameters = _parameters;
+        this.logger = _logger;
     }
 
     private Logger logger;
@@ -63,27 +69,30 @@ public class SchedulerHelper {
         Map map = new HashMap();
 
         try {
-            TaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
+            TaskWrapper wrapper = new CocoonTaskWrapper(this.objectModel, this.parameters);
 
-            logger.debug("Adding task wrapper parameters");
+            this.logger.debug("Adding task wrapper parameters");
             Map wrapperParameters = wrapper.getParameters();
             map.putAll(wrapperParameters);
 
             NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
 
             PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-            Publication pub = factory.getPublication(objectModel);
+            Publication pub = factory.getPublication(this.objectModel);
             DocumentIdentityMap identityMap = new DocumentIdentityMap(pub);
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(identityMap,
-                    objectModel);
+                    this.objectModel);
 
             schedulerParameters.put(ServletJob.PARAMETER_DOCUMENT_URL, envelope.getDocument()
                     .getCanonicalWebappURL());
             schedulerParameters.put(LoadQuartzServlet.PARAMETER_PUBLICATION_ID, envelope
                     .getPublication().getId());
             map.putAll(schedulerParameters.getPrefixedMap());
-
-        } catch (Exception e) {
+        } catch (final ExecutionException e) {
+            throw new ProcessingException(e);
+        } catch (final PublicationException e) {
+            throw new ProcessingException(e);
+        } catch (final PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
 

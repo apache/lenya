@@ -26,14 +26,16 @@ package org.apache.lenya.lucene.parser;
 public class StringCleaner {
     /** Creates a new instance of StringCleaner */
     public StringCleaner() {
+        // do nothing
     }
 
     /**
      * Remove all non-word characters from a string.
+     * @param source The string to remove characters from
+     * @return The cleaned string
      */
     public static String clean(String source) {
         String result = "<![CDATA[" + source + "]]>";
-
         return result;
     }
 }

@@ -58,24 +58,40 @@ import org.w3c.dom.Element;
  * upload. An upload consists of a file upload plus optionally a file creation for the meta data of
  * the asset.
  * 
- * Also see org.apache.lenya.cms.authoring.UploadHelper
+ * Also @see org.apache.lenya.cms.authoring.UploadHelper
  */
 public class UploadAction extends AbstractConfigurableAction {
 
     private Document document;
     private PageEnvelope pageEnvelope;
 
+    /**
+     * <code>UPLOADASSET_PARAM_NAME</code> Asset data parameter
+     */
     public static final String UPLOADASSET_PARAM_NAME = "properties.asset.data";
+    /**
+     * <code>UPLOADASSET_PARAM_PREFIX</code> Prefix for all parameters
+     */
     public static final String UPLOADASSET_PARAM_PREFIX = "properties.asset.";
-
+    /**
+     * <code>UPLOADASSET_RETURN_FILESIZE</code> The file size
+     */
     public static final String UPLOADASSET_RETURN_FILESIZE = "file-size";
+    /**
+     * <code>UPLOADASSET_RETURN_MIMETYPE</code> The mime type
+     */
     public static final String UPLOADASSET_RETURN_MIMETYPE = "mime-type";
-
+    /**
+     * <code>CONTENT_PREFIX</code> The content prefix
+     */
     public static final String CONTENT_PREFIX = "content";
-
+    /**
+     * <code>FILE_NAME_REGEXP</code> The regular expression for valid asset names
+     */
     public static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
-
-    // optional parameters for meta data according to dublin core
+    /**
+     * <code>DUBLIN_CORE_PARAMETERS</code> optional parameters for meta data according to dublin core
+     */
     public static final String[] DUBLIN_CORE_PARAMETERS = { "title", "creator", "subject",
             "description", "publisher", "contributor", "date", "type", "format", "identifier",
             "source", "language", "relation", "coverage", "rights" };
@@ -103,8 +119,8 @@ public class UploadAction extends AbstractConfigurableAction {
         PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         Publication pub = factory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(pub);
-        pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
-        document = pageEnvelope.getDocument();
+        this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
+        this.document = this.pageEnvelope.getDocument();
 
         File assetFile;
 
@@ -142,7 +158,7 @@ public class UploadAction extends AbstractConfigurableAction {
         dublinCoreParams.put("extent", Integer.toString(fileSize));
 
         if (uploadType.equals("asset")) {
-            ResourcesManager resourcesMgr = new DefaultResourcesManager(document);
+            ResourcesManager resourcesMgr = new DefaultResourcesManager(this.document);
             assetFile = new File(resourcesMgr.getPath(), fileName);
 
             if (!resourcesMgr.getPath().exists()) {
@@ -157,7 +173,7 @@ public class UploadAction extends AbstractConfigurableAction {
         }
         // must be a content upload then
         else {
-            assetFile = new File(document.getFile().getParent(), fileName);
+            assetFile = new File(this.document.getFile().getParent(), fileName);
             getLogger().debug("assetFile: " + assetFile);
         }
 
@@ -216,7 +232,10 @@ public class UploadAction extends AbstractConfigurableAction {
      */
     protected Map getDublinCoreParameters(Request request) {
         HashMap dublinCoreParams = new HashMap();
-
+		String		key;
+		String		value;
+		Map.Entry	entry;
+		
         for (int i = 0; i < DUBLIN_CORE_PARAMETERS.length; i++) {
             String paramName = DUBLIN_CORE_PARAMETERS[i];
             String paramValue = request.getParameter(UPLOADASSET_PARAM_PREFIX + paramName);
@@ -228,10 +247,12 @@ public class UploadAction extends AbstractConfigurableAction {
             dublinCoreParams.put(paramName, paramValue);
         }
         
-        Iterator iter = dublinCoreParams.keySet().iterator();
+        Iterator iter = dublinCoreParams.entrySet().iterator();
         while (iter.hasNext()) {
-            String paramName = (String) iter.next();
-            getLogger().debug(paramName + ": " + dublinCoreParams.get(paramName));
+			entry 	= (Map.Entry)iter.next();
+			key 	= (String)entry.getKey();
+			value 	= (String)entry.getValue();
+            getLogger().debug(key + ": " + value);
         }
         
         return dublinCoreParams;
@@ -250,6 +271,9 @@ public class UploadAction extends AbstractConfigurableAction {
     protected void createMetaData(File metaDataFile, Map dublinCoreParams)
             throws TransformerConfigurationException, TransformerException, IOException,
             ParserConfigurationException {
+        Map.Entry entry;
+		String		key;
+		String		value;
 
         assert (metaDataFile.getParentFile().exists());
 
@@ -258,12 +282,13 @@ public class UploadAction extends AbstractConfigurableAction {
 
         Element root = helper.getDocument().getDocumentElement();
 
-        Iterator iter = dublinCoreParams.keySet().iterator();
+        Iterator iter = dublinCoreParams.entrySet().iterator();
 
         while (iter.hasNext()) {
-            String tagName = (String) iter.next();
-            String tagValue = (String) dublinCoreParams.get(tagName);
-            root.appendChild(helper.createElement(tagName, tagValue));
+			entry 	= (Map.Entry)iter.next();
+			key 	= (String)entry.getKey();
+			value 	= (String)entry.getValue();
+            root.appendChild(helper.createElement(key, value));
         }
 
         DocumentHelper.writeDocument(helper.getDocument(), metaDataFile);

@@ -40,7 +40,7 @@ import org.apache.tools.ant.BuildException;
 public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
     /**
-     *  
+     *  Constructor
      */
     public CopyResourcesTask() {
         super();
@@ -48,8 +48,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
     /**
      * Copy the resources files belongs to the documents corresponding to this node
-     * 
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) {
         String srcDocumentid = node.getAbsoluteId();

@@ -49,8 +49,8 @@ public class ComposableAccessControllerResolver
 
         try {
             
-            if (selector == null) {
-                selector =
+            if (this.selector == null) {
+                this.selector =
                     (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE + "Selector");
             }
 
@@ -60,7 +60,7 @@ public class ComposableAccessControllerResolver
 
                 getLogger().debug("Trying to resolve AC resolver for type [" + types[i] + "]");
                 AccessControllerResolver resolver =
-                    (AccessControllerResolver) selector.select(types[i]);
+                    (AccessControllerResolver) this.selector.select(types[i]);
                 controller = resolver.resolveAccessController(url);
                 setResolver(controller, resolver);
                 getLogger().debug("Resolved access controller [" + controller + "]");
@@ -83,7 +83,7 @@ public class ComposableAccessControllerResolver
         assert controller != null;
         AccessControllerResolver resolver = getResolver(controller);
         resolver.release(controller);
-        selector.release(resolver);
+        this.selector.release(resolver);
     }
 
     /**
@@ -94,7 +94,7 @@ public class ComposableAccessControllerResolver
      */
     protected AccessControllerResolver getResolver(AccessController controller) {
         AccessControllerResolver resolver =
-            (AccessControllerResolver) controllerToResolver.get(controller);
+            (AccessControllerResolver) this.controllerToResolver.get(controller);
         return resolver;
     }
     
@@ -105,7 +105,7 @@ public class ComposableAccessControllerResolver
      * @param resolver An AC resolver.
      */
     protected void setResolver(AccessController controller, AccessControllerResolver resolver) {
-        controllerToResolver.put(controller, resolver);
+        this.controllerToResolver.put(controller, resolver);
     }
 
     protected static final String RESOLVER_ELEMENT = "resolver";
@@ -119,9 +119,9 @@ public class ComposableAccessControllerResolver
      */
     public void configure(Configuration configuration) throws ConfigurationException {
         Configuration[] accessControllerConfigs = configuration.getChildren(RESOLVER_ELEMENT);
-        resolverTypes = new String[accessControllerConfigs.length];
+        this.resolverTypes = new String[accessControllerConfigs.length];
         for (int i = 0; i < accessControllerConfigs.length; i++) {
-            resolverTypes[i] = accessControllerConfigs[i].getAttribute(TYPE_ATTRIBUTE);
+            this.resolverTypes[i] = accessControllerConfigs[i].getAttribute(TYPE_ATTRIBUTE);
         }
     }
 
@@ -130,15 +130,15 @@ public class ComposableAccessControllerResolver
      * @return A string array.
      */
     protected String[] getResolverTypes() {
-        return resolverTypes;
+        return this.resolverTypes;
     }
 
     /**
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
-        if (selector != null) {
-            getManager().release(selector);
+        if (this.selector != null) {
+            getManager().release(this.selector);
         }
     }
 

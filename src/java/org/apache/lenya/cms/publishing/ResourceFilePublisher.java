@@ -27,7 +27,7 @@ import java.util.StringTokenizer;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.task.ExecutionException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -48,7 +48,7 @@ import org.apache.log4j.Category;
  * @deprecated use the publish ant task instead.
  */
 public class ResourceFilePublisher extends DefaultFilePublisher {
-    private static Category log = Category.getInstance(ResourceFilePublisher.class);
+    private static Logger log = Logger.getLogger(ResourceFilePublisher.class);
 
 	/**
 	 *  (non-Javadoc)

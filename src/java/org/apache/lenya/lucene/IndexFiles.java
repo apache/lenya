@@ -28,9 +28,8 @@ import org.apache.lucene.index.IndexWriter;
 
 class IndexFiles {
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
+     * The command line interface
+     * @param args command line args
      */
     public static void main(String[] args) {
         if (args.length != 2) {
@@ -71,12 +70,10 @@ class IndexFiles {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param writer DOCUMENT ME!
-     * @param file DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Index documents
+     * @param writer The writer
+     * @param file The file
+     * @throws Exception if an error occurs
      */
     public static void indexDocs(IndexWriter writer, File file)
         throws Exception {
@@ -87,7 +84,7 @@ class IndexFiles {
                 indexDocs(writer, new File(file, files[i]));
         } else {
             System.out.println("adding " + file);
-            writer.addDocument(FileDocument.Document(file));
+            writer.addDocument(FileDocument.document(file));
         }
     }
 }

@@ -19,14 +19,17 @@
 
 package org.apache.lenya.lucene.parser;
 
+/**
+ * Parse exception
+ */
 public class ParseException extends Exception {
     /** Creates a new instance of ParseException */
     public ParseException() {
+        // do nothing
     }
 
     /**
      * Creates a new ParseException object.
-     *
      * @param message the error message
      * @param cause the cause of the exception
      */
@@ -36,7 +39,6 @@ public class ParseException extends Exception {
 
     /**
      * Creates a new ParseException object.
-     *
      * @param message the error message
      */
     public ParseException(String message) {
@@ -45,7 +47,6 @@ public class ParseException extends Exception {
 
     /**
      * Creates a new ParseException object.
-     *
      * @param cause the cause of the exception
      */
     public ParseException(Throwable cause) {

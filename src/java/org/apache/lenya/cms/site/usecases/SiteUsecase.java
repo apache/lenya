@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
@@ -50,22 +51,23 @@ public class SiteUsecase extends DocumentUsecase {
      * may need to take special areas into acccount, such as info-authoring */
     protected void doInitialize() {
         super.doInitialize();
-        doc = getSourceDocument();
+        this.doc = getSourceDocument();
         try {
             if (hasWorkflow(getSourceDocument())) {
-                instance = getWorkflowInstance(getSourceDocument());
-                setParameter(STATE, instance.getCurrentState().toString());
-                String[] variableNames = instance.getWorkflow().getVariableNames();
+                this.instance = getWorkflowInstance(getSourceDocument());
+                setParameter(STATE, this.instance.getCurrentState().toString());
+                String[] variableNames = this.instance.getWorkflow().getVariableNames();
                 if (Arrays.asList(variableNames).contains(ISLIVE)) {
-                    setParameter("islive", Boolean.valueOf(instance.getValue(ISLIVE)));
+                    setParameter("islive", Boolean.valueOf(this.instance.getValue(ISLIVE)));
                 }
             } else {
                 setParameter("state", "");
             }
-        } catch (Exception e) {
+        } catch (final WorkflowException e) {
         	getLogger().error("Could not get workflow state.");
         	addErrorMessage("Could not get workflow state.");
         }
+
         setParameter(AREA, this.doc.getArea());
         setParameter(DOCUMENTID, this.doc.getId());
         setParameter(LANGUAGEEXISTS, "true");

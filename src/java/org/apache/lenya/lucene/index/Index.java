@@ -16,12 +16,16 @@
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.lucene.IndexConfiguration;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * Index.
@@ -31,10 +35,10 @@ import org.w3c.dom.Element;
 public class Index {
     /**
      * Command line interface
-     * 
      * @param argv Lucene Index Configuration
      */
     public static void main(String[] argv) {
+
         try {
             String index = "index";
             boolean create = false;
@@ -88,7 +92,15 @@ public class Index {
 
             System.out.print(end.getTime() - start.getTime());
             System.out.println(" total milliseconds");
-        } catch (Exception e) {
+        } catch (final InstantiationException e) {
+            e.printStackTrace(System.out);
+        } catch (final IllegalAccessException e) {
+            e.printStackTrace(System.out);
+        } catch (final ParserConfigurationException e) {
+            e.printStackTrace(System.out);
+        } catch (final SAXException e) {
+            e.printStackTrace(System.out);
+        } catch (final IOException e) {
             e.printStackTrace(System.out);
         }
     }
@@ -97,16 +109,28 @@ public class Index {
      * Get indexer from configuration.
      * @param luceneConfig The lucene configuration.
      * @return An indexer.
-     * @throws Exception if an error occurs.
+     * @throws IOException if an error occurs.
      */
-    public static Indexer getIndexer(String luceneConfig) throws Exception {
-        IndexConfiguration ie = new IndexConfiguration(luceneConfig);
-        Indexer indexer = (Indexer) ie.getIndexerClass().newInstance();
-        Document config = DocumentHelper.readDocument(new File(luceneConfig));
-        Element indexerElement = DocumentHelper.getFirstChild(config.getDocumentElement(), null,
-                "indexer");
-        indexer.configure(indexerElement, luceneConfig);
-
-        return indexer;
+    public static Indexer getIndexer(String luceneConfig) throws IOException {
+        try {
+            Indexer indexer;
+            IndexConfiguration ie = new IndexConfiguration(luceneConfig);
+            indexer = (Indexer) ie.getIndexerClass().newInstance();
+            Document config = DocumentHelper.readDocument(new File(luceneConfig));
+            Element indexerElement = DocumentHelper.getFirstChild(config.getDocumentElement(), null,
+                    "indexer");
+            indexer.configure(indexerElement, luceneConfig);
+            return indexer;
+        } catch (InstantiationException e) {
+            throw new IOException(e.toString());
+        } catch (IllegalAccessException e) {
+            throw new IOException(e.toString());
+        } catch (ParserConfigurationException e) {
+            throw new IOException(e.toString());
+        } catch (SAXException e) {
+            throw new IOException(e.toString());
+        } catch (IOException e) {
+            throw new IOException(e.toString());
+        }
     }
 }

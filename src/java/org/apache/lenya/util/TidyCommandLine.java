@@ -30,19 +30,16 @@ import org.w3c.tidy.Tidy;
 
 
 /**
- * DOCUMENT ME!
+ * A commend line interface to Tidy
  */
 public class TidyCommandLine {
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
+     * Command line interface
+     * @param args command line args
      */
     public static void main(String[] args) {
         if (args.length != 3) {
-            System.err.println("Usage: java " + new TidyCommandLine().getClass().getName() +
-                " http://www.lenya.org index.xhtml error.log");
-
+            System.err.println("Usage: java TidyCommandLine http://www.lenya.org index.xhtml error.log");
             return;
         }
 
@@ -54,14 +51,12 @@ public class TidyCommandLine {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param url DOCUMENT ME!
-     * @param file DOCUMENT ME!
-     * @param err DOCUMENT ME!
-     * @param xhtml DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Tidy the given URL and store it into a file
+     * @param url The URL
+     * @param file The file
+     * @param err The file to hold error messages
+     * @param xhtml Whether to produce XHTML
+     * @throws Exception if an error occurs
      */
     public void tidy(URL url, File file, File err, boolean xhtml)
         throws Exception {

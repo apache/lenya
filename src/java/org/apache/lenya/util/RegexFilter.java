@@ -32,14 +32,13 @@ public class RegexFilter implements FilenameFilter {
 
    /**
 	* constructor
-	*
-	* @param pattern Regex pattern applied to simple filename
+	* @param _pattern Regex pattern applied to simple filename
 	*/
-   public RegexFilter(String pattern)
+   public RegexFilter(String _pattern)
 	  {
-	  if (pattern != null)
+	  if (_pattern != null)
 		 {
-		 this.pattern = Pattern.compile(pattern);
+		 this.pattern = Pattern.compile(_pattern);
 		 }
 	  }
 
@@ -55,7 +54,7 @@ public class RegexFilter implements FilenameFilter {
 	  {
 	  if (!(new File(dir, name).isFile())) return false;
 
-	  if (pattern != null && !(pattern.matcher(name).matches())) return false;
+	  if (this.pattern != null && !(this.pattern.matcher(name).matches())) return false;
 	  
 	  return true;
 	  }

@@ -28,6 +28,9 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
 
+/**
+ * Task to copy files
+ */
 public class CopyTask extends Task {
     private Path pubsRootDirs;
     private Path toDir;
@@ -41,54 +44,54 @@ public class CopyTask extends Task {
         int numberOfFilesCopied = 0;
         TwoTuple twoTuple = new TwoTuple(numberOfDirectoriesCreated, numberOfFilesCopied);
 
-        StringTokenizer st = new StringTokenizer(pubsRootDirs.toString(), File.pathSeparator);
+        StringTokenizer st = new StringTokenizer(this.pubsRootDirs.toString(), File.pathSeparator);
 
-        log("Excludes " + excludes);
-        FilenameFilter filter = new SCMFilenameFilter(excludes);
+        log("Excludes " + this.excludes);
+        FilenameFilter filter = new SCMFilenameFilter(this.excludes);
 
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
 
             if (new File(pubsRootDir, "publication.xml").isFile()) {
-                CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(toDir.toString()),
+                CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()),
                     twoTuple, filter, this);
             } else {
                 // FIXME: Look for publications defined by the file "publication.xml"
                 CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir),
-                    new File(toDir.toString()), twoTuple, filter, this);
+                    new File(this.toDir.toString()), twoTuple, filter, this);
             }
         }
 
         numberOfDirectoriesCreated = twoTuple.x;
         numberOfFilesCopied = twoTuple.y;
-        log("Copying " + numberOfDirectoriesCreated + " directories to " + toDir);
-        log("Copying " + numberOfFilesCopied + " files to " + toDir);
+        log("Copying " + numberOfDirectoriesCreated + " directories to " + this.toDir);
+        log("Copying " + numberOfFilesCopied + " files to " + this.toDir);
     }
 
     /**
      * Where the publications are located
      * 
-     * @param pubsRootDirs
+     * @param _pubsRootDirs
      */
-    public void setPubsRootDirs(Path pubsRootDirs) {
-        this.pubsRootDirs = pubsRootDirs;
+    public void setPubsRootDirs(Path _pubsRootDirs) {
+        this.pubsRootDirs = _pubsRootDirs;
     }
 
     /**
      * Where the publications shall be copied to
      * 
-     * @param toDir
+     * @param _toDir
      */
-    public void setToDir(Path toDir) {
-        this.toDir = toDir;
+    public void setToDir(Path _toDir) {
+        this.toDir = _toDir;
     }
 
     /**
      * Which filenames shall be excluded
      *
-     * @param excludes
+     * @param _excludes
      */
-    public void setExcludes(String excludes) {
-        this.excludes = excludes;
+    public void setExcludes(String _excludes) {
+        this.excludes = _excludes;
     }
 }

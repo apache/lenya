@@ -21,22 +21,22 @@ package org.apache.lenya.cms.authoring;
 
 import java.io.File;
 
+/**
+ * Default creator for Documents of type branch (ie, they can have child documents)
+ */
 public class DefaultBranchCreator extends DefaultCreator {
     /**
      * Return the child type.
-     *
      * @param childType a <code>short</code> value
-     *
      * @return a <code>short</code> value
-     *
      * @exception Exception if an error occurs
      */
     public short getChildType(short childType) throws Exception {
         return BRANCH_NODE;
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
+    /**
+     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String, java.lang.String)
      */
     protected String getChildFileName(
         File parentDir,
@@ -51,8 +51,8 @@ public class DefaultBranchCreator extends DefaultCreator {
             + ".xml";
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String)
+    /**
+     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String, java.lang.String)
      */
     protected String getChildMetaFileName(
         File parentDir,

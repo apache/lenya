@@ -44,8 +44,10 @@ import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
@@ -55,10 +57,10 @@ public class PolicyHelper {
 
     /**
      * Ctor.
-     * @param logger The logger.
+     * @param _logger The logger.
      */
-    public PolicyHelper(Logger logger) {
-        this.logger = logger;
+    public PolicyHelper(Logger _logger) {
+        this.logger = _logger;
     }
 
     private DefaultAccessController accessController;
@@ -80,14 +82,14 @@ public class PolicyHelper {
     /**
      * Initializes this helper.
      * @param objectModel The Cocoon object model.
-     * @param manager The component manager.
+     * @param _manager The component manager.
      * @param area The selected area.
      * @throws ProcessingException when something went wrong.
      */
-    public void setup(Map objectModel, ComponentManager manager, String area)
+    public void setup(Map objectModel, ComponentManager _manager, String area)
             throws ProcessingException {
 
-        this.manager = manager;
+        this.manager = _manager;
 
         this.accessController = null;
         this.selector = null;
@@ -97,7 +99,7 @@ public class PolicyHelper {
         this.url = computeUrl(objectModel, area);
 
         try {
-            this.selector = (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE
+            this.selector = (ComponentSelector) _manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
             this.resolver = (AccessControllerResolver) this.selector
                     .select(AccessControllerResolver.DEFAULT_RESOLVER);
@@ -115,14 +117,14 @@ public class PolicyHelper {
      * Releases all obtained components.
      */
     public void tearDown() {
-        if (selector != null) {
-            if (resolver != null) {
-                if (accessController != null) {
-                    resolver.release(accessController);
+        if (this.selector != null) {
+            if (this.resolver != null) {
+                if (this.accessController != null) {
+                    this.resolver.release(this.accessController);
                 }
-                selector.release(resolver);
+                this.selector.release(this.resolver);
             }
-            manager.release(selector);
+            this.manager.release(this.selector);
         }
     }
 
@@ -190,12 +192,15 @@ public class PolicyHelper {
             Publication publication = factory.getPublication(objectModel);
             DocumentIdentityMap map = new DocumentIdentityMap(publication);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
-        } catch (Exception e) {
+        } catch (PublicationException e) {
+            throw new ProcessingException(e);
+        } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
-        String url = "/" + envelope.getPublication().getId() + "/" + area
+
+        String _url = "/" + envelope.getPublication().getId() + "/" + area
                 + envelope.getDocument().getId();
-        return url;
+        return _url;
     }
 
     /**
@@ -212,12 +217,12 @@ public class PolicyHelper {
         try {
             if (onlyUrl) {
                 policies = new DefaultPolicy[1];
-                AccreditableManager manager = accessController.getAccreditableManager();
-                policies[0] = policyManager.buildSubtreePolicy(manager, url);
+                AccreditableManager _manager = this.accessController.getAccreditableManager();
+                policies[0] = this.policyManager.buildSubtreePolicy(_manager, this.url);
             } else {
                 String ancestorUrl = "";
 
-                String currentUrl = url;
+                String currentUrl = this.url;
                 if (currentUrl.endsWith("/")) {
                     currentUrl = currentUrl.substring(0, currentUrl.length() - 1);
                 }
@@ -226,7 +231,7 @@ public class PolicyHelper {
                 if (lastSlashIndex != -1) {
                     ancestorUrl = currentUrl.substring(0, lastSlashIndex);
                 }
-                policies = policyManager.getPolicies(accessController.getAccreditableManager(),
+                policies = this.policyManager.getPolicies(this.accessController.getAccreditableManager(),
                         ancestorUrl);
             }
         } catch (AccessControlException e) {
@@ -257,8 +262,8 @@ public class PolicyHelper {
             throws ProcessingException {
 
         try {
-            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController
-                    .getAccreditableManager(), url);
+            DefaultPolicy policy = this.policyManager.buildSubtreePolicy(this.accessController
+                    .getAccreditableManager(), this.url);
             Accreditable accreditable = (Accreditable) item;
 
             if (operation.equals(ADD)) {
@@ -267,7 +272,7 @@ public class PolicyHelper {
                 policy.removeRole(accreditable, role);
             }
 
-            policyManager.saveSubtreePolicy(url, policy);
+            this.policyManager.saveSubtreePolicy(this.url, policy);
 
         } catch (Exception e) {
             throw new ProcessingException("Manipulating credential failed: ", e);
@@ -283,11 +288,11 @@ public class PolicyHelper {
         boolean ssl;
         try {
             String ancestorUrl = "";
-            int lastSlashIndex = url.lastIndexOf("/");
+            int lastSlashIndex = this.url.lastIndexOf("/");
             if (lastSlashIndex != -1) {
-                ancestorUrl = url.substring(0, lastSlashIndex);
+                ancestorUrl = this.url.substring(0, lastSlashIndex);
             }
-            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
+            Policy policy = this.policyManager.getPolicy(this.accessController.getAccreditableManager(),
                     ancestorUrl);
             ssl = policy.isSSLProtected();
         } catch (AccessControlException e) {
@@ -304,8 +309,8 @@ public class PolicyHelper {
     public boolean isUrlSSLProtected() throws ProcessingException {
         boolean ssl;
         try {
-            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController
-                    .getAccreditableManager(), url);
+            DefaultPolicy policy = this.policyManager.buildSubtreePolicy(this.accessController
+                    .getAccreditableManager(), this.url);
             ssl = policy.isSSLProtected();
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
@@ -320,10 +325,10 @@ public class PolicyHelper {
      */
     public void setUrlSSLProtected(boolean ssl) throws ProcessingException {
         try {
-            DefaultPolicy policy = policyManager.buildSubtreePolicy(accessController
-                    .getAccreditableManager(), url);
+            DefaultPolicy policy = this.policyManager.buildSubtreePolicy(this.accessController
+                    .getAccreditableManager(), this.url);
             policy.setSSL(ssl);
-            policyManager.saveSubtreePolicy(url, policy);
+            this.policyManager.saveSubtreePolicy(this.url, policy);
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
         }
@@ -338,9 +343,9 @@ public class PolicyHelper {
     public User[] getUsersWithRole(String roleId) throws ProcessingException {
         List users = new ArrayList();
         try {
-            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(),
+            Policy policy = this.policyManager.getPolicy(this.accessController.getAccreditableManager(),
                     getUrl());
-            UserManager userManager = accessController.getAccreditableManager().getUserManager();
+            UserManager userManager = this.accessController.getAccreditableManager().getUserManager();
             User[] userArray = userManager.getUsers();
             for (int i = 0; i < userArray.length; i++) {
                 Identity identity = new Identity();
@@ -365,7 +370,7 @@ public class PolicyHelper {
      * @return A string.
      */
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
 }

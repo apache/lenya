@@ -20,21 +20,25 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.avalon.excalibur.component.ExcaliburComponentManager;
 import org.apache.avalon.excalibur.logger.LogKitLoggerManager;
-import org.apache.avalon.framework.component.ComponentManager;
+import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.DefaultContext;
 import org.apache.avalon.framework.logger.LogKitLogger;
 import org.apache.avalon.framework.logger.Logger;
@@ -55,13 +59,13 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.log.Hierarchy;
 import org.apache.log.Priority;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -139,10 +143,11 @@ public class XSPPrecompileWrapper {
 
 	protected static final String CONFIG_FILE_LONG = "configFile";
 
-	//
-	// INITIALISATION METHOD
-	//
-	public void initialize() throws Exception {
+	/**
+	 * INITIALISATION METHOD
+	 * @throws IOException
+	 */
+	public void initialize() throws IOException {
 		// @todo@ these should log then throw exceptions back to the caller, not
 		// use system.exit()
 
@@ -150,79 +155,104 @@ public class XSPPrecompileWrapper {
 		// within a CocoonServlet call, in order not to mix logs
 		final Hierarchy hierarchy = new Hierarchy();
 
-		final Priority priority = Priority.getPriorityForName(logLevel);
+		final Priority priority = Priority.getPriorityForName(this.logLevel);
 		hierarchy.setDefaultPriority(priority);
 
 		// Install a temporary logger so that getDir() can log if needed
 		this.log = new LogKitLogger(hierarchy.getLoggerFor(""));
 
 		try {
-			// First of all, initialize the logging system
+            // First of all, initialize the logging system
 
-			// Setup the application context with context-dir and work-dir that
-			// can be used in logkit.xconf
-			this.context = getDir(this.contextDir, "context");
-			this.work = getDir(workDir, "working");
-			DefaultContext appContext = new DefaultContext();
-			appContext.put(Constants.CONTEXT_WORK_DIR, work);
+            // Setup the application context with context-dir and work-dir that
+            // can be used in logkit.xconf
+            this.context = getDir(this.contextDir, "context");
+            this.work = getDir(this.workDir, "working");
+            DefaultContext appContext = new DefaultContext();
+            appContext.put(Constants.CONTEXT_WORK_DIR, this.work);
 
-			this.logManager = new LogKitLoggerManager(hierarchy);
-			this.logManager.enableLogging(log);
+            this.logManager = new LogKitLoggerManager(hierarchy);
+            this.logManager.enableLogging(this.log);
 
-			if (this.logKit != null) {
-				final FileInputStream fis = new FileInputStream(logKit);
-				final DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
-				final Configuration logKitConf = builder.build(fis);
-				final DefaultContext subcontext = new DefaultContext(appContext);
-				subcontext.put("context-root", this.contextDir);
-				subcontext.put("context-work", this.workDir);
-				this.logManager.contextualize(subcontext);
-				this.logManager.configure(logKitConf);
-				if (logger != null) {
-					log = this.logManager.getLoggerForCategory(logger);
-				} else {
-					log = this.logManager.getLoggerForCategory("cocoon");
-				}
-			}
+            if (this.logKit != null) {
+            	final FileInputStream fis = new FileInputStream(this.logKit);
+            	final DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+            	final Configuration logKitConf = builder.build(fis);
+            	final DefaultContext subcontext = new DefaultContext(appContext);
+            	subcontext.put("context-root", this.contextDir);
+            	subcontext.put("context-work", this.workDir);
+            	this.logManager.contextualize(subcontext);
+            	this.logManager.configure(logKitConf);
+            	if (this.logger != null) {
+            		this.log = this.logManager.getLoggerForCategory(this.logger);
+            	} else {
+            		this.log = this.logManager.getLoggerForCategory("cocoon");
+            	}
+            }
 
-			this.conf = getConfigurationFile(this.context, this.configFile);
+            this.conf = getConfigurationFile(this.context, this.configFile);
 
-			cliContext = new CommandLineContext(contextDir);
-			cliContext.enableLogging(log);
+            this.cliContext = new CommandLineContext(this.contextDir);
+            this.cliContext.enableLogging(this.log);
 
-			appContext.put(Constants.CONTEXT_ENVIRONMENT_CONTEXT, cliContext);
-			appContext.put(Constants.CONTEXT_CLASS_LOADER, org.apache.cocoon.bean.CocoonWrapper.class
-					.getClassLoader());
-			appContext.put(Constants.CONTEXT_CLASSPATH,
-					getClassPath(contextDir));
-			appContext.put(Constants.CONTEXT_UPLOAD_DIR, contextDir
-					+ "upload-dir");
-			File cacheDir = getDir(workDir + File.separator + "cache-dir",
-					"cache");
-			appContext.put(Constants.CONTEXT_CACHE_DIR, cacheDir);
-			appContext.put(Constants.CONTEXT_CONFIG_URL, conf.toURL());
-			appContext.put(Constants.CONTEXT_DEFAULT_ENCODING, "ISO-8859-1");
+            appContext.put(Constants.CONTEXT_ENVIRONMENT_CONTEXT, this.cliContext);
+            appContext.put(Constants.CONTEXT_CLASS_LOADER, org.apache.cocoon.bean.CocoonWrapper.class
+            		.getClassLoader());
+            appContext.put(Constants.CONTEXT_CLASSPATH,
+            		getClassPath(this.contextDir));
+            appContext.put(Constants.CONTEXT_UPLOAD_DIR, this.contextDir
+            		+ "upload-dir");
+            File cacheDir = getDir(this.workDir + File.separator + "cache-dir",
+            		"cache");
+            appContext.put(Constants.CONTEXT_CACHE_DIR, cacheDir);
+            appContext.put(Constants.CONTEXT_CONFIG_URL, this.conf.toURL());
+            appContext.put(Constants.CONTEXT_DEFAULT_ENCODING, "ISO-8859-1");
 
-			loadClasses(classList);
+            loadClasses(this.classList);
 
-			cocoon = new Cocoon();
-			ContainerUtil.enableLogging(cocoon, log);
-			ContainerUtil.contextualize(cocoon, appContext);
-			cocoon.setLoggerManager(logManager);
-			ContainerUtil.initialize(cocoon);
+            this.cocoon = new Cocoon();
+            ContainerUtil.enableLogging(this.cocoon, this.log);
+            ContainerUtil.contextualize(this.cocoon, appContext);
+            this.cocoon.setLoggerManager(this.logManager);
+            ContainerUtil.initialize(this.cocoon);
 
-			sourceResolver = (SourceResolver) getComponentManager().lookup(
-					SourceResolver.ROLE);
+            this.sourceResolver = (SourceResolver) getComponentManager().lookup(
+            		SourceResolver.ROLE);
+        } catch (final IllegalStateException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final FileNotFoundException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final ConfigurationException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final ContextException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final MalformedURLException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final ComponentException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final IOException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final SAXException e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        } catch (final Exception e) {
+			this.log.fatalError("Exception caught", e);
+			throw new IOException(e.toString());
+        }
 
-		} catch (Exception e) {
-			log.fatalError("Exception caught", e);
-			throw e;
-		}
-		initialized = true;
+
+		this.initialized = true;
 	}
 
 	protected ExcaliburComponentManager getComponentManager() {
-		return cocoon.getComponentManager();
+		return this.cocoon.getComponentManager();
 	}
 
 	/**
@@ -230,60 +260,61 @@ public class XSPPrecompileWrapper {
 	 * 
 	 * @param dir
 	 *            a <code>File</code> where to look for configuration files
+	 * @param _configFile The config file
 	 * @return a <code>File</code> representing the configuration
 	 * @exception IOException
 	 *                if an error occurs
 	 */
-	private File getConfigurationFile(File dir, String configFile)
+	private File getConfigurationFile(File dir, String _configFile)
 			throws IOException {
-		File conf;
-		if (configFile == null) {
-			conf = tryConfigurationFile(dir + File.separator
+		File _conf;
+		if (_configFile == null) {
+			_conf = tryConfigurationFile(dir + File.separator
 					+ Constants.DEFAULT_CONF_FILE);
-			if (conf == null) {
-				conf = tryConfigurationFile(dir + File.separator + "WEB-INF"
+			if (_conf == null) {
+				_conf = tryConfigurationFile(dir + File.separator + "WEB-INF"
 						+ File.separator + Constants.DEFAULT_CONF_FILE);
 			}
-			if (conf == null) {
-				conf = tryConfigurationFile(SystemUtils.USER_DIR
+			if (_conf == null) {
+				_conf = tryConfigurationFile(SystemUtils.USER_DIR
 						+ File.separator + Constants.DEFAULT_CONF_FILE);
 			}
-			if (conf == null) {
-				conf = tryConfigurationFile("/usr/local/etc/"
+			if (_conf == null) {
+				_conf = tryConfigurationFile("/usr/local/etc/"
 						+ Constants.DEFAULT_CONF_FILE);
 			}
 		} else {
-			conf = new File(configFile);
-			if (!conf.exists()) {
-				conf = new File(dir, configFile);
+			_conf = new File(_configFile);
+			if (!_conf.exists()) {
+				_conf = new File(dir, _configFile);
 			}
 		}
-		if (conf == null) {
-			log.error("Could not find the configuration file.");
+		if (_conf == null) {
+			this.log.error("Could not find the configuration file.");
 			throw new FileNotFoundException(
 					"The configuration file could not be found.");
 		}
-		return conf;
+		return _conf;
 	}
 
 	/**
 	 * Try loading the configuration file from a single location
+	 * @param filename The configuration filename
+	 * @return The configuration file
 	 */
 	private File tryConfigurationFile(String filename) {
-		if (log.isDebugEnabled()) {
-			log.debug("Trying configuration file at: " + filename);
+		if (this.log.isDebugEnabled()) {
+			this.log.debug("Trying configuration file at: " + filename);
 		}
-		File conf = new File(filename);
-		if (conf.canRead()) {
-			return conf;
-		} else {
-			return null;
+		File _conf = new File(filename);
+		if (_conf.canRead()) {
+			return _conf;
 		}
+		return null;
 	}
 
 	/**
 	 * Get a <code>File</code> representing a directory.
-	 * 
 	 * @param dir
 	 *            a <code>String</code> with a directory name
 	 * @param type
@@ -293,8 +324,8 @@ public class XSPPrecompileWrapper {
 	 *                if an error occurs
 	 */
 	private File getDir(String dir, String type) throws IOException {
-		if (log.isDebugEnabled()) {
-			log.debug("Getting handle to " + type + " directory '" + dir + "'");
+		if (this.log.isDebugEnabled()) {
+			this.log.debug("Getting handle to " + type + " directory '" + dir + "'");
 		}
 		File d = new File(dir);
 
@@ -325,22 +356,34 @@ public class XSPPrecompileWrapper {
 		super.finalize();
 	}
 
-	protected void loadClasses(List classList) {
-		if (classList != null) {
-			for (Iterator i = classList.iterator(); i.hasNext();) {
+	protected void loadClasses(List _classList) {
+		if (_classList != null) {
+			for (Iterator i = _classList.iterator(); i.hasNext();) {
 				String className = (String) i.next();
 				try {
-					if (log.isDebugEnabled()) {
-						log.debug("Trying to load class: " + className);
-					}
-					ClassUtils.loadClass(className).newInstance();
-				} catch (Exception e) {
-					if (log.isWarnEnabled()) {
-						log.warn("Could not force-load class: " + className, e);
+                    if (this.log.isDebugEnabled()) {
+                    	this.log.debug("Trying to load class: " + className);
+                    }
+                    ClassUtils.loadClass(className).newInstance();
+                } catch (final InstantiationException e) {
+					if (this.log.isWarnEnabled()) {
+						this.log.warn("Could not force-load class: " + className, e);
 					}
 					// Do not throw an exception, because it is not a fatal
 					// error.
-				}
+                } catch (final IllegalAccessException e) {
+					if (this.log.isWarnEnabled()) {
+						this.log.warn("Could not force-load class: " + className, e);
+					}
+					// Do not throw an exception, because it is not a fatal
+					// error.
+                } catch (final ClassNotFoundException e) {
+					if (this.log.isWarnEnabled()) {
+						this.log.warn("Could not force-load class: " + className, e);
+					}
+					// Do not throw an exception, because it is not a fatal
+					// error.
+                }
 			}
 		}
 	}
@@ -351,76 +394,98 @@ public class XSPPrecompileWrapper {
 
 	/**
 	 * Set LogKit configuration file name
-	 * 
-	 * @param logKit
+	 * @param _logKit
 	 *            LogKit configuration file
 	 */
-	public void setLogKit(String logKit) {
-		this.logKit = logKit;
+	public void setLogKit(String _logKit) {
+		this.logKit = _logKit;
 	}
 
 	/**
 	 * Set log level. Default is DEBUG.
-	 * 
-	 * @param logLevel
+	 * @param _logLevel
 	 *            log level
 	 */
-	public void setLogLevel(String logLevel) {
-		this.logLevel = logLevel;
+	public void setLogLevel(String _logLevel) {
+		this.logLevel = _logLevel;
 	}
 
 	/**
 	 * Set logger category as default logger for the Cocoon engine
 	 * 
-	 * @param logger
+	 * @param _logger
 	 *            logger category
 	 */
-	public void setLogger(String logger) {
-		this.logger = logger;
+	public void setLogger(String _logger) {
+		this.logger = _logger;
 	}
 
+	/**
+	 * Return the name of the logger
+	 * @return The name of the logger
+	 */
 	public String getLoggerName() {
-		return logger;
+		return this.logger;
 	}
 
 	/**
 	 * Set context directory
 	 * 
-	 * @param contextDir
+	 * @param _contextDir
 	 *            context directory
 	 */
-	public void setContextDir(String contextDir) {
-		this.contextDir = contextDir;
+	public void setContextDir(String _contextDir) {
+		this.contextDir = _contextDir;
 	}
 
 	/**
 	 * Set working directory
 	 * 
-	 * @param workDir
+	 * @param wDir
 	 *            working directory
 	 */
-	public void setWorkDir(String workDir) {
-		this.workDir = workDir;
+	public void setWorkDir(String wDir) {
+		this.workDir = wDir;
 	}
 
-	public void setConfigFile(String configFile) {
-		this.configFile = configFile;
+	/**
+	 * Set the configuration file
+	 * @param cFile The configuration file
+	 */
+	public void setConfigFile(String cFile) {
+		this.configFile = cFile;
 	}
 
-	public void setAgentOptions(String userAgent) {
-		this.userAgent = userAgent;
+	/**
+	 * Set user agent options
+	 * @param _userAgent The user agent
+	 */
+	public void setAgentOptions(String _userAgent) {
+		this.userAgent = _userAgent;
 	}
 
-	public void setAcceptOptions(String accept) {
-		this.accept = accept;
+	/**
+	 * Set the accept header
+	 * @param _accept The accept header
+	 */
+	public void setAcceptOptions(String _accept) {
+		this.accept = _accept;
 	}
 
-	public void addLoadedClass(String className) {
-		this.classList.add(className);
+	/**
+	 * Set the class name
+	 * @param _className The class name
+	 */
+	public void addLoadedClass(String _className) {
+		this.classList.add(_className);
 	}
 
-	public void addLoadedClasses(List classList) {
-		this.classList.addAll(classList);
+	/**
+	 * Add the loaded classes
+	 * @param cList The list of classes to load
+	 */
+	public void addLoadedClasses(List cList) {
+		this.classList.addAll(cList);
 	}
 
 	/**
@@ -430,21 +495,22 @@ public class XSPPrecompileWrapper {
 	 *            to process
 	 * @param outputStream
 	 *            to write generated contents into
+	 * @throws Exception
 	 */
 	public void processURI(String uri, OutputStream outputStream)
 			throws Exception {
 
-		if (!initialized) {
+		if (!this.initialized) {
 			initialize();
 		}
-		log.info("Processing URI: " + uri);
+		this.log.info("Processing URI: " + uri);
 
 		// Get parameters, deparameterized URI and path from URI
 		final TreeMap parameters = new TreeMap();
 		final String deparameterizedURI = NetUtils.deparameterize(uri,
 				parameters);
-		parameters.put("user-agent", userAgent);
-		parameters.put("accept", accept);
+		parameters.put("user-agent", this.userAgent);
+		parameters.put("accept", this.accept);
 
 		int status = getPage(deparameterizedURI, 0L, parameters, null, null,
 				outputStream);
@@ -454,14 +520,17 @@ public class XSPPrecompileWrapper {
 		}
 	}
 
+	/**
+	 * Disposal method
+	 */
 	public void dispose() {
 		if (this.initialized) {
 			this.initialized = false;
 			ContainerUtil.dispose(this.cocoon);
 			this.cocoon = null;
 			this.logManager.dispose();
-			if (log.isDebugEnabled()) {
-				log.debug("Disposed");
+			if (this.log.isDebugEnabled()) {
+				this.log.debug("Disposed");
 			}
 		}
 	}
@@ -480,12 +549,12 @@ public class XSPPrecompileWrapper {
 	protected Collection getLinks(String deparameterizedURI, Map parameters)
 			throws Exception {
 
-		parameters.put("user-agent", userAgent);
-		parameters.put("accept", accept);
+		parameters.put("user-agent", this.userAgent);
+		parameters.put("accept", this.accept);
 
 		LinkSamplingEnvironment env = new LinkSamplingEnvironment(
-				deparameterizedURI, context, attributes, parameters,
-				cliContext, log);
+				deparameterizedURI, this.context, this.attributes, parameters,
+				this.cliContext, this.log);
 		processLenient(env);
 		return env.getLinks();
 	}
@@ -495,10 +564,12 @@ public class XSPPrecompileWrapper {
 	 * 
 	 * @param deparameterizedURI
 	 *            a <code>String</code> value of an URI to start sampling from
+	 * @param lastModified The last modified date
 	 * @param parameters
 	 *            a <code>Map</code> value containing request parameters
 	 * @param links
 	 *            a <code>Map</code> value
+	 * @param gatheredLinks
 	 * @param stream
 	 *            an <code>OutputStream</code> to write the content to
 	 * @return a <code>String</code> value for the content
@@ -509,16 +580,16 @@ public class XSPPrecompileWrapper {
 			Map parameters, Map links, List gatheredLinks, OutputStream stream)
 			throws Exception {
 
-		parameters.put("user-agent", userAgent);
-		parameters.put("accept", accept);
+		parameters.put("user-agent", this.userAgent);
+		parameters.put("accept", this.accept);
 
 		FileSavingEnvironment env = new FileSavingEnvironment(
-				deparameterizedURI, lastModified, context, attributes,
-				parameters, links, gatheredLinks, cliContext, stream, log);
+				deparameterizedURI, lastModified, this.context, this.attributes,
+				parameters, links, gatheredLinks, this.cliContext, stream, this.log);
 
 		// Here Cocoon can throw an exception if there are errors in processing
 		// the page
-		cocoon.process(env);
+		this.cocoon.process(env);
 
 		// if we get here, the page was created :-)
 		int status = env.getStatus();
@@ -530,19 +601,30 @@ public class XSPPrecompileWrapper {
 
 	/** Class <code>NullOutputStream</code> here. */
 	static class NullOutputStream extends OutputStream {
+		/** 
+		 * @see java.io.OutputStream#write(int)
+		 */
 		public void write(int b) throws IOException {
+		    // do nothing
 		}
 
+		/**
+		 * @see java.io.OutputStream#write(byte[])
+		 */
 		public void write(byte b[]) throws IOException {
+		    // do nothing
 		}
 
+		/**
+		 * @see java.io.OutputStream#write(byte[], int, int)
+		 */
 		public void write(byte b[], int off, int len) throws IOException {
+		    // do nothing
 		}
 	}
 
 	/**
 	 * Analyze the type of content for an URI.
-	 * 
 	 * @param deparameterizedURI
 	 *            a <code>String</code> value to analyze
 	 * @param parameters
@@ -554,19 +636,18 @@ public class XSPPrecompileWrapper {
 	protected String getType(String deparameterizedURI, Map parameters)
 			throws Exception {
 
-		parameters.put("user-agent", userAgent);
-		parameters.put("accept", accept);
+		parameters.put("user-agent", this.userAgent);
+		parameters.put("accept", this.accept);
 
 		FileSavingEnvironment env = new FileSavingEnvironment(
-				deparameterizedURI, context, attributes, parameters, empty,
-				null, cliContext, new NullOutputStream(), log);
+				deparameterizedURI, this.context, this.attributes, parameters, this.empty,
+				null, this.cliContext, new NullOutputStream(), this.log);
 		processLenient(env);
 		return env.getContentType();
 	}
 
 	/**
 	 * Try to process something but don't throw a ProcessingException.
-	 * 
 	 * @param env
 	 *            the <code>Environment</code> to process
 	 * @return boolean true if no error were cast, false otherwise
@@ -586,22 +667,20 @@ public class XSPPrecompileWrapper {
 	 * This builds the important ClassPath used by this class. It does so in a
 	 * neutral way. It iterates in alphabetical order through every file in the
 	 * lib directory and adds it to the classpath.
-	 * 
 	 * Also, we add the files to the ClassLoader for the Cocoon system. In order
 	 * to protect ourselves from skitzofrantic classloaders, we need to work
 	 * with a known one.
-	 * 
-	 * @param context
+	 * @param _context
 	 *            The context path
 	 * @return a <code>String</code> value
 	 */
-	protected String getClassPath(final String context) {
+	protected String getClassPath(final String _context) {
 		StringBuffer buildClassPath = new StringBuffer();
 
-		String classDir = context + "/WEB-INF/classes";
+		String classDir = _context + "/WEB-INF/classes";
 		buildClassPath.append(classDir);
 
-		File root = new File(context + "/WEB-INF/lib");
+		File root = new File(_context + "/WEB-INF/lib");
 		if (root.isDirectory()) {
 			File[] libraries = root.listFiles();
 			Arrays.sort(libraries);
@@ -621,8 +700,8 @@ public class XSPPrecompileWrapper {
 		// buildClassPath.append(File.pathSeparatorChar)
 		// .append(getExtraClassPath(context));
 
-		if (log.isDebugEnabled()) {
-			log.debug("Context classpath: " + buildClassPath);
+		if (this.log.isDebugEnabled()) {
+			this.log.debug("Context classpath: " + buildClassPath);
 		}
 		return buildClassPath.toString();
 	}
@@ -631,35 +710,34 @@ public class XSPPrecompileWrapper {
 	 * Allow subclasses to recursively precompile XSPs.
 	 */
 	protected void precompile() {
-		recursivelyPrecompile(context, context);
+		recursivelyPrecompile(this.context, this.context);
 	}
 
 	/**
 	 * Recurse the directory hierarchy and process the XSP's.
-	 * 
-	 * @param contextDir
+	 * @param _contextDir
 	 *            a <code>File</code> value for the context directory
 	 * @param file
 	 *            a <code>File</code> value for a single XSP file or a
 	 *            directory to scan recursively
 	 */
-	private void recursivelyPrecompile(File contextDir, File file) {
+	private void recursivelyPrecompile(File _contextDir, File file) {
 		if (file.isDirectory()) {
 			String entries[] = file.list();
 			for (int i = 0; i < entries.length; i++) {
-				recursivelyPrecompile(contextDir, new File(file, entries[i]));
+				recursivelyPrecompile(_contextDir, new File(file, entries[i]));
 			}
-		} else if (file.getName().toLowerCase().endsWith(".xmap")) {
+		} else if (file.getName().toLowerCase(Locale.ENGLISH).endsWith(".xmap")) {
 			try {
 				// necessary?
-				this.processXMAP(IOUtils.getContextFilePath(contextDir
+				this.processXMAP(IOUtils.getContextFilePath(_contextDir
 						.getCanonicalPath(), file.getCanonicalPath()));
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}
-		} else if (file.getName().toLowerCase().endsWith(".xsp")) {
+		} else if (file.getName().toLowerCase(Locale.ENGLISH).endsWith(".xsp")) {
 			try {
-				this.processXSP(IOUtils.getContextFilePath(contextDir
+				this.processXSP(IOUtils.getContextFilePath(_contextDir
 						.getCanonicalPath(), file.getCanonicalPath()));
 			} catch (Exception e) {
 				System.err.println(e.toString());
@@ -669,7 +747,6 @@ public class XSPPrecompileWrapper {
 
 	/**
 	 * Process a single XSP file
-	 * 
 	 * @param uri
 	 *            a <code>String</code> pointing to an xsp URI
 	 * @exception Exception
@@ -679,15 +756,14 @@ public class XSPPrecompileWrapper {
 
 		String markupLanguage = "xsp";
 		String programmingLanguage = "java";
-		Environment env = new LinkSamplingEnvironment("/", context, attributes,
-				null, cliContext, log);
+		Environment env = new LinkSamplingEnvironment("/", this.context, this.attributes,
+				null, this.cliContext, this.log);
 		precompile(uri, env, markupLanguage, programmingLanguage);
 	
 	}
 
 	/**
 	 * Process a single XMAP file
-	 * 
 	 * @param uri
 	 *            a <code>String</code> pointing to an xmap URI
 	 * @exception Exception
@@ -697,19 +773,20 @@ public class XSPPrecompileWrapper {
 
 		String markupLanguage = "sitemap";
 		String programmingLanguage = "java";
-		Environment env = new LinkSamplingEnvironment("/", context, attributes,
-				null, cliContext, log);
+		Environment env = new LinkSamplingEnvironment("/", this.context, this.attributes,
+				null, this.cliContext, this.log);
 		precompile(uri, env, markupLanguage, programmingLanguage);
 	}
 
 	/**
 	 * Process the given <code>Environment</code> to generate Java code for
 	 * specified XSP files.
-	 * 
 	 * @param fileName
 	 *            a <code>String</code> value
 	 * @param environment
 	 *            an <code>Environment</code> value
+	 * @param markupLanguage The markup language
+	 * @param programmingLanguage The programming language
 	 * @exception Exception
 	 *                if an error occurs
 	 */
@@ -720,25 +797,25 @@ public class XSPPrecompileWrapper {
 		Source source = null;
 		Object key = CocoonComponentManager.startProcessing(environment);
 		CocoonComponentManager.enterEnvironment(environment,
-				(ComponentManager) getComponentManager(), cocoon);
+				getComponentManager(), this.cocoon);
 		try {
-			if (log.isDebugEnabled()) {
-				log.debug("XSP generation begin:" + fileName);
+			if (this.log.isDebugEnabled()) {
+				this.log.debug("XSP generation begin:" + fileName);
 			}
 
 			programGenerator = (ProgramGenerator) getComponentManager().lookup(
 					ProgramGenerator.ROLE);
-			source = sourceResolver.resolveURI(fileName);
+			source = this.sourceResolver.resolveURI(fileName);
 			CompiledComponent xsp = programGenerator.load(
 					getComponentManager(), source, markupLanguage,
 					programmingLanguage, environment);
 			System.out.println("[XSP generated] " + xsp);
-			if (log.isDebugEnabled()) {
-				log.debug("XSP generation complete:" + xsp);
+			if (this.log.isDebugEnabled()) {
+				this.log.debug("XSP generation complete:" + xsp);
 
 			}
 		} finally {
-			sourceResolver.release(source);
+			this.sourceResolver.release(source);
 			getComponentManager().release(programGenerator);
 
 			CocoonComponentManager.leaveEnvironment();
@@ -746,6 +823,11 @@ public class XSPPrecompileWrapper {
 		}
 	}
 
+	/**
+	 * To invoke the wrapper from the command line
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 
 		XSPPrecompileWrapper.setOptions();
@@ -816,7 +898,6 @@ public class XSPPrecompileWrapper {
 				"java org.apache.cocoon.bean.XSPPrecompileWrapper [options] ",
 
 				options);
-		System.exit(0);
 	}
 
 }

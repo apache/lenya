@@ -43,11 +43,11 @@ public class PolicyBuilder implements InputStreamBuilder {
 
     /**
      * Ctor.
-     * @param accreditableManager An accreditable manager.
+     * @param _accreditableManager An accreditable manager.
      */
-    public PolicyBuilder(AccreditableManager accreditableManager) {
-        assert accreditableManager != null;
-        this.accreditableManager = accreditableManager;
+    public PolicyBuilder(AccreditableManager _accreditableManager) {
+        assert _accreditableManager != null;
+        this.accreditableManager = _accreditableManager;
     }
     
     /**
@@ -55,7 +55,7 @@ public class PolicyBuilder implements InputStreamBuilder {
      * @return An accreditable manager.
      */
     public AccreditableManager getAccreditableManager() {
-        return accreditableManager;
+        return this.accreditableManager;
     }
 
     private AccreditableManager accreditableManager;

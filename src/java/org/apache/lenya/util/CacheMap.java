@@ -24,22 +24,22 @@ import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * A map with a maximum capacity. When the map is full, the oldest entry is removed.
  */
 public class CacheMap extends HashMap {
     
-    private static final Category log = Category.getInstance(CacheMap.class);
+    private static final Logger log = Logger.getLogger(CacheMap.class);
     
     /**
      * Ctor.
-     * @param capacity The maximum number of entries.
+     * @param _capacity The maximum number of entries.
      */
-    public CacheMap(int capacity) {
-        assert capacity > -1;
-        this.capacity = capacity;
+    public CacheMap(int _capacity) {
+        assert _capacity > -1;
+        this.capacity = _capacity;
     }
     
     private int capacity;
@@ -50,18 +50,16 @@ public class CacheMap extends HashMap {
      */
     public Object put(Object key, Object value) {
         
-        if (size() == capacity) {
-            Object oldestKey = timeToKey.get(timeToKey.firstKey());
+        if (size() == this.capacity) {
+            Object oldestKey = this.timeToKey.get(this.timeToKey.firstKey());
             remove(oldestKey);
             if (log.isDebugEnabled()) {
                 log.debug("Clearing cache");
             }
         }
-        timeToKey.put(new Date(), key);
+        this.timeToKey.put(new Date(), key);
         return super.put(key, value);
     }
-    
-    
     
     /**
      * @see java.util.Map#get(java.lang.Object)

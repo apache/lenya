@@ -21,6 +21,9 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+/**
+ * Document Id to Path mapper interface
+ */
 public interface DocumentIdToPathMapper {
     
     /**

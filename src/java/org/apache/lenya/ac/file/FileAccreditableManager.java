@@ -56,20 +56,20 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * calling {@link #parameterize(Parameters)}.
      */
     public FileAccreditableManager() {
+	    // do nothing
     }
 
     /**
      * Creates a new FileAccessController based on a configuration directory.
-     * 
-     * @param configurationDirectory The configuration directory.
-     * @param userTypes The supported user types.
+     * @param _configurationDirectory The configuration directory.
+     * @param _userTypes The supported user types.
      */
-    public FileAccreditableManager(File configurationDirectory, UserType[] userTypes) {
-        assert configurationDirectory != null;
-        assert configurationDirectory.exists();
-        assert configurationDirectory.isDirectory();
-        this.configurationDirectory = configurationDirectory;
-        this.userTypes = new HashSet(Arrays.asList(userTypes));
+    public FileAccreditableManager(File _configurationDirectory, UserType[] _userTypes) {
+        assert _configurationDirectory != null;
+        assert _configurationDirectory.exists();
+        assert _configurationDirectory.isDirectory();
+        this.configurationDirectory = _configurationDirectory;
+        this.userTypes = new HashSet(Arrays.asList(_userTypes));
     }
 
     private File configurationDirectory;
@@ -81,22 +81,21 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @throws AccessControlException if an error occurs.
      */
     public UserType[] getUserTypes() throws AccessControlException {
-        if (userTypes == null)
+        if (this.userTypes == null)
             throw new AccessControlException("User types not initialized");
-        return (UserType[]) userTypes.toArray(new UserType[userTypes.size()]);
+        return (UserType[]) this.userTypes.toArray(new UserType[this.userTypes.size()]);
     }
 
     /**
      * Returns the configuration directory.
-     * 
      * @return The configuration directory.
      * @throws AccessControlException when something went wrong.
      */
     public File getConfigurationDirectory() throws AccessControlException {
 
-        if (configurationDirectory == null) {
+        if (this.configurationDirectory == null) {
 
-            if (configurationDirectoryPath == null) {
+            if (this.configurationDirectoryPath == null) {
                 throw new AccessControlException("Configuration directory not set!");
             }
 
@@ -106,10 +105,10 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
             try {
 
                 getLogger().debug(
-                        "Configuration directory Path: [" + configurationDirectoryPath + "]");
+                        "Configuration directory Path: [" + this.configurationDirectoryPath + "]");
 
                 resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
-                source = resolver.resolveURI(configurationDirectoryPath);
+                source = resolver.resolveURI(this.configurationDirectoryPath);
 
                 getLogger().debug("Configuration directory URI: " + source.getURI());
                 directory = new File(new URI(source.getURI()));
@@ -126,7 +125,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
             setConfigurationDirectory(directory);
         }
 
-        return configurationDirectory;
+        return this.configurationDirectory;
     }
 
     protected static final String DIRECTORY = "directory";
@@ -136,8 +135,8 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      */
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(DIRECTORY)) {
-            configurationDirectoryPath = parameters.getParameter(DIRECTORY);
-            getLogger().debug("Configuration directory: [" + configurationDirectoryPath + "]");
+            this.configurationDirectoryPath = parameters.getParameter(DIRECTORY);
+            getLogger().debug("Configuration directory: [" + this.configurationDirectoryPath + "]");
         }
     }
 
@@ -164,12 +163,12 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
         // have this configuration. So for backward compatibility, we need
         // to distinguish the 2 cases
         if (A_M_TAG.equals(configuration.getName())) {
-            userTypes = new HashSet();
+            this.userTypes = new HashSet();
             Configuration umConf = configuration.getChild(U_M_CHILD_TAG, false);
             if (umConf != null) {
                 Configuration[] typeConfs = umConf.getChildren();
                 for (int i = 0; i < typeConfs.length; i++) {
-                    userTypes.add(new UserType(typeConfs[i].getValue(), typeConfs[i]
+                    this.userTypes.add(new UserType(typeConfs[i].getValue(), typeConfs[i]
                             .getAttribute(U_T_CLASS_ATTRIBUTE), typeConfs[i]
                             .getAttribute(U_T_CREATE_ATTRIBUTE)));
                 }
@@ -178,7 +177,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
                         "FileAccreditableManager: using default configuration for user types");
                 // no "user-manager" block in access control: provide
                 // a default for backward compatibility
-                userTypes.add(getDefaultUserType());
+                this.userTypes.add(getDefaultUserType());
             }
             // maybe todo (or is it overkill?) : validate the parametrized user
             // types, for example, check if the classes are in the classpath ?
@@ -198,9 +197,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
 
     /**
      * Sets the configuration directory.
-     * 
      * @param file The configuration directory.
-     * 
      * @throws AccessControlException if an error occurs
      */
     public void setConfigurationDirectory(File file) throws AccessControlException {
@@ -208,61 +205,59 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
             throw new AccessControlException("Configuration directory [" + file
                     + "] does not exist!");
         }
-        configurationDirectory = file;
+        this.configurationDirectory = file;
     }
 
     private ServiceManager manager;
 
     /**
      * Set the global component manager.
-     * 
-     * @param manager The global component manager
+     * @param _manager The global component manager
      * @throws ServiceException when something went wrong.
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     /**
      * Returns the service manager.
-     * 
      * @return A service manager.
      */
     protected ServiceManager getManager() {
-        return manager;
+        return this.manager;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
      */
     protected GroupManager initializeGroupManager() throws AccessControlException {
-        FileGroupManager manager = FileGroupManager.instance(getConfigurationDirectory(), getLogger());
-        return manager;
+        FileGroupManager _manager = FileGroupManager.instance(getConfigurationDirectory(), getLogger());
+        return _manager;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
      */
     protected IPRangeManager initializeIPRangeManager() throws AccessControlException {
-        FileIPRangeManager manager = FileIPRangeManager.instance(getConfigurationDirectory(), getLogger());
-        return manager;
+        FileIPRangeManager _manager = FileIPRangeManager.instance(getConfigurationDirectory(), getLogger());
+        return _manager;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
      */
     protected RoleManager initializeRoleManager() throws AccessControlException {
-        FileRoleManager manager = FileRoleManager.instance(getConfigurationDirectory(), getLogger());
-        return manager;
+        FileRoleManager _manager = FileRoleManager.instance(getConfigurationDirectory(), getLogger());
+        return _manager;
     }
 
     /**
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
      */
     protected UserManager initializeUserManager() throws AccessControlException {
-        FileUserManager manager = FileUserManager.instance(getConfigurationDirectory(),
+        FileUserManager _manager = FileUserManager.instance(getConfigurationDirectory(),
                 getUserTypes(), getLogger());
-        return manager;
+        return _manager;
     }
 
 }

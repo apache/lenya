@@ -70,9 +70,9 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      */
     public AbstractIPRange() {
         try {
-            networkAddress = InetAddress.getLocalHost();
+            this.networkAddress = InetAddress.getLocalHost();
             byte[] mask = null;
-            int masklen = networkAddress.getAddress().length;
+            int masklen = this.networkAddress.getAddress().length;
             if (masklen == 4) {
                 /* IPv4: */
                 /*
@@ -84,7 +84,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
                 mask = new byte[masklen];
                 Arrays.fill(mask, (byte) -1);
             }
-            subnetMask = InetAddress.getByAddress(mask);
+            this.subnetMask = InetAddress.getByAddress(mask);
         } catch (UnknownHostException ignore) {
             /*
              * FIXME? by zisch@dals.ch: Is it safe to ignore the exception and just leave the
@@ -108,26 +108,24 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * @return A file object.
      */
     public File getConfigurationDirectory() {
-        return configurationDirectory;
+        return this.configurationDirectory;
     }
 
     /**
      * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
-    public void setConfigurationDirectory(File configurationDirectory) {
-        this.configurationDirectory = configurationDirectory;
+    public void setConfigurationDirectory(File _configurationDirectory) {
+        this.configurationDirectory = _configurationDirectory;
     }
 
     /**
      * Save the IP range
-     * 
      * @throws AccessControlException if the save failed
      */
     public abstract void save() throws AccessControlException;
 
     /**
      * Delete an IP range
-     * 
      * @throws AccessControlException if the delete failed
      */
     public void delete() throws AccessControlException {
@@ -141,18 +139,15 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * <code>"129.168.0.32"</code>, numeric IPv6 addresses like
      * <code>"1080::8:800:200C:417A"</code> as well as hostnames (if DNS resolution is available)
      * like <code>"localhost"</code> or <code>"www.apache.com"</code>.
-     * 
      * @param address a <code>String</code> like <code>"192.168.0.32"</code>,
      *            <code>"::1"</code>, ...
-     * 
      * @throws AccessControlException when the conversion of the <code>String</code> to an
      *             <code>InetAddress</code> failed
-     * 
      * @see #setNetworkAddress(byte[])
      */
     public void setNetworkAddress(String address) throws AccessControlException {
         try {
-            networkAddress = InetAddress.getByName(address);
+            this.networkAddress = InetAddress.getByName(address);
         } catch (UnknownHostException e) {
             throw new AccessControlException("Failed to convert address [" + address + "]: ", e);
         }
@@ -161,17 +156,14 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
     /**
      * Sets the network address. The method accepts numeric IPv4 addresses (specified by byte arrays
      * of length 4) or IPv6 addresses (specified by byte arrays of length 16).
-     * 
      * @param address a byte array of the length 4 or 16
-     * 
      * @throws AccessControlException when the conversion of the byte array to an InetAddress
      *             failed.
-     * 
      * @see #setNetworkAddress(String)
      */
     public void setNetworkAddress(byte[] address) throws AccessControlException {
         try {
-            networkAddress = InetAddress.getByAddress(address);
+            this.networkAddress = InetAddress.getByAddress(address);
         } catch (UnknownHostException e) {
             throw new AccessControlException("Failed to convert address [" + addr2string(address)
                     + "]: ", e);
@@ -180,11 +172,10 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
 
     /**
      * Returns the network address.
-     * 
      * @return an <code>InetAddress</code> representing the network address
      */
     public InetAddress getNetworkAddress() {
-        return networkAddress;
+        return this.networkAddress;
     }
 
     private InetAddress subnetMask;
@@ -197,19 +188,16 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * Only valid subnet masks are accepted, for which the binary representation is a sequence of
      * 1-bits followed by a sequence of 0-bits. For example <code>"255.128.0.0"</code> is valid
      * while <code>"255.128.0.1"</code> is not.
-     * 
      * @param mask a <code>String</code> like <code>"255.255.255.0"</code>
-     * 
      * @throws AccessControlException when the conversion of the String to an
      *             <code>InetAddress</code> failed.
-     * 
      * @see #setSubnetMask(byte[])
      */
     public void setSubnetMask(String mask) throws AccessControlException {
         try {
             /* use setSubnetMask(...) to check the mask-format: */
             setSubnetMask(InetAddress.getByName(mask).getAddress());
-        } catch (UnknownHostException e) {
+        } catch (final UnknownHostException e) {
             throw new AccessControlException("Failed to convert mask [" + mask + "]: ", e);
         }
 
@@ -221,12 +209,9 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * Only valid subnet masks are accepted, for which the binary representation is a sequence of
      * 1-bits followed by a sequence of 0-bits. For example <code>{ 255, 128, 0, 0 }</code> is
      * valid while <code>{ 255, 128, 0, 1 }</code> is not.
-     * 
      * @param mask A byte array of the length 4.
-     * 
      * @throws AccessControlException when the conversion of the byte array to an InetAddress
      *             failed.
-     * 
      * @see #setSubnetMask(String)
      */
     public void setSubnetMask(byte[] mask) throws AccessControlException {
@@ -279,8 +264,8 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
 
         /* convert the checked mask to InetAddress: */
         try {
-            subnetMask = InetAddress.getByAddress(mask);
-        } catch (UnknownHostException e) {
+            this.subnetMask = InetAddress.getByAddress(mask);
+        } catch (final UnknownHostException e) {
             throw new AccessControlException(
                     "Failed to convert mask [" + addr2string(mask) + "]: ", e);
         }
@@ -291,7 +276,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * @return An InetAddress value.
      */
     public InetAddress getSubnetMask() {
-        return subnetMask;
+        return this.subnetMask;
     }
 
     /**
@@ -299,7 +284,6 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * @param networkAddress The network address.
      * @param subnetMask The subnet mask.
      * @return A boolean value.
-     * 
      * @deprecated This method is currently not implemented, probably not necessary.and could be
      *             removed in the future. Therefore it should not be used.
      */
@@ -327,10 +311,8 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * <code>127.0.0.0/8</code>) will <b>not </b> contain the localhost in IPv6 (
      * <code>::1</code>), and the localhost in IPv4 (<code>127.0.0.1</code>) will <b>not </b>
      * be contained in the local subnet in IPv6 (<code>::1/128</code>).
-     * 
      * @param machine the machine to check for
      * @return a boolean value
-     * 
      * @see InetAddressUtil#contains
      */
     public boolean contains(Machine machine) {
@@ -340,7 +322,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
          * about this. ;-)
          */
         getLogger().debug("Checking IP range: [" + getId() + "]");
-        return InetAddressUtil.contains(networkAddress, subnetMask, machine.getAddress());
+        return InetAddressUtil.contains(this.networkAddress, this.subnetMask, machine.getAddress());
     }
 
     /**

@@ -99,7 +99,6 @@ public class Machine implements Identifiable {
      * @param string The IP address, represented by a string.
      * @return An InetAddress object.
      * @throws AccessControlException when something went wrong.
-     * 
      * @deprecated This method is unnecessary and does not work for IPv6.
      *      Use <code>InetAddress.getByName(string)</code> instead!
      */
@@ -119,10 +118,14 @@ public class Machine implements Identifiable {
             }
 
             address = InetAddress.getByAddress(numbers);
-        } catch (Exception e) {
+        } catch (final NumberFormatException e1) {
             throw new AccessControlException(
-                "Failed to convert address [" + string + "]: ",
-                e);
+                    "Failed to convert address [" + string + "]: ",
+                    e1);
+        } catch (final UnknownHostException e1) {
+            throw new AccessControlException(
+                    "Failed to convert address [" + string + "]: ",
+                    e1);
         }
         return address;
     }
@@ -139,15 +142,15 @@ public class Machine implements Identifiable {
      * @return An IP address.
      */
     public InetAddress getAddress() {
-        return address;
+        return this.address;
     }
 
     /**
      * Sets the IP address.
-     * @param address An IP address.
+     * @param _address An IP address.
      */
-    public void setAddress(InetAddress address) {
-        this.address = address;
+    public void setAddress(InetAddress _address) {
+        this.address = _address;
     }
 
     private List ipRanges = new ArrayList();
@@ -158,8 +161,8 @@ public class Machine implements Identifiable {
      */
     public void addIPRange(IPRange range) {
         assert range != null;
-        assert !ipRanges.contains(range);
-        ipRanges.add(range);
+        assert !this.ipRanges.contains(range);
+        this.ipRanges.add(range);
     }
     
     /**
@@ -167,7 +170,7 @@ public class Machine implements Identifiable {
      * @return An array of IP ranges.
      */
     public IPRange[] getIPRanges() {
-        return (IPRange[]) ipRanges.toArray(new IPRange[ipRanges.size()]);
+        return (IPRange[]) this.ipRanges.toArray(new IPRange[this.ipRanges.size()]);
     }
     
 }

@@ -26,12 +26,13 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 /**
- *
+ * HTML content handler
  */
 public class HtmlContentHandler extends DefaultHandler {
 
     /**
-     *
+     * Command line interface
+     * @param args Command line args
      */
     public static void main(String[] args) {
         ContentHandler ch = new HtmlContentHandler();
@@ -45,27 +46,37 @@ public class HtmlContentHandler extends DefaultHandler {
     }
 
     /**
-     *
+     * End the document
+     * @throws SAXException
      */
     public void endDocument() throws SAXException {
+        // do nothing
     }
 
     /**
-     *
+     * Start the prefix mapping
+     * @param prefix The prefix
+     * @param uri The URI
+     * @throws SAXException if a parser error occurs
      */
     public void startPrefixMapping(String prefix, String uri)
         throws SAXException {
+        // do nothing
     }
 
     /**
-     *
+     * Set the document locator
+     * @param locator The locator
      */
     public void setDocumentLocator(Locator locator) {
+        // do nothing
     }
 
     /**
-     *
+     * Start document
+     * @throws SAXException if a parser error occurs
      */
     public void startDocument() throws SAXException {
+        // do nothing
     }
 }

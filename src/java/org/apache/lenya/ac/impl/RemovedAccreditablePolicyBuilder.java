@@ -58,20 +58,20 @@ public class RemovedAccreditablePolicyBuilder extends PolicyBuilder {
 
         Accreditable accreditable;
 
-        if (removedAccreditable instanceof User
+        if (this.removedAccreditable instanceof User
             && elementName.equals(USER_ELEMENT)
-            && ((User) removedAccreditable).getId().equals(id)) {
-            accreditable = removedAccreditable;
+            && ((User) this.removedAccreditable).getId().equals(id)) {
+            accreditable = this.removedAccreditable;
         } else if (
-            removedAccreditable instanceof Group
+            this.removedAccreditable instanceof Group
                 && elementName.equals(GROUP_ELEMENT)
-                && ((Group) removedAccreditable).getId().equals(id)) {
-            accreditable = removedAccreditable;
+                && ((Group) this.removedAccreditable).getId().equals(id)) {
+            accreditable = this.removedAccreditable;
         } else if (
-            removedAccreditable instanceof IPRange
+            this.removedAccreditable instanceof IPRange
                 && elementName.equals(IP_RANGE_ELEMENT)
-                && ((IPRange) removedAccreditable).getId().equals(id)) {
-            accreditable = removedAccreditable;
+                && ((IPRange) this.removedAccreditable).getId().equals(id)) {
+            accreditable = this.removedAccreditable;
         } else {
 
             accreditable = super.getAccreditable(elementName, id);

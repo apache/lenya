@@ -19,7 +19,6 @@ package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 
 /**
  * Default document builder implementation.
@@ -31,6 +30,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * Non-public constructor.
      */
     public DefaultDocumentBuilder() {
+	    // do nothing
     }
 
     /**
@@ -90,7 +90,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     /**
      * Removes all "."-separated extensions from a URL (e.g., <code>/foo.print.html</code> is
      * transformed to <code>/foo</code>).
-     * 
      * @param url The URL to trim.
      * @return A URL string.
      */
@@ -104,7 +103,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
     /**
      * Returns the language of a URL.
-     * 
      * @param urlWithoutSuffix The URL without the suffix.
      * @return A string.
      */
@@ -125,7 +123,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
     /**
      * Returns the extension of a URL.
-     * 
      * @param url The URL.
      * @return The extension.
      */
@@ -166,7 +163,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
     /**
      * Builds the canonical document URL.
-     * 
      * @param publication The publication.
      * @param documentid The document ID.
      * @param language The language of the document.

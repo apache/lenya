@@ -30,12 +30,10 @@ import java.io.IOException;
 public abstract class AbstractFilePublisher extends AbstractPublisher {
     /**
      * Utility function to copy a source file to destination
-     *
      * @param source a <code>File</code> value
      * @param destination a <code>File</code> value
-     *
      * @exception IOException if an error occurs
-     * @throws FileNotFoundException DOCUMENT ME!
+     * @throws FileNotFoundException if the file was not found
      */
     protected void copyFile(File source, File destination)
         throws IOException, FileNotFoundException {

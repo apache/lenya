@@ -35,17 +35,16 @@ public class HTMLDocument {
     static char dirSep = System.getProperty("file.separator").charAt(0);
 
     private HTMLDocument() {
+        // do nothing
     }
 
     /**
      * Append path and date into a string in such a way that lexicographic sorting gives the same
      * results as a walk of the file hierarchy.  Thus null (\u0000) is used both to separate
      * directory components and to separate the path from the date.
-     *
-     * @param f DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param f The file
+     * @param htdocsDumpDir The dump directory
+     * @return The uid
      */
     public static String uid(File f, File htdocsDumpDir) {
         String requestURI = f.getPath().substring(htdocsDumpDir.getPath().length());
@@ -56,11 +55,9 @@ public class HTMLDocument {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param uid DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Convert a uid into a URL
+     * @param uid The uid
+     * @return The converted URL
      */
     public static String uid2url(String uid) {
         String url = uid.replace('\u0000', '/'); // replace nulls with slashes
@@ -69,17 +66,14 @@ public class HTMLDocument {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param f DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
-     * @return org.apache.lucene.document.Document
-     *
-     * @throws IOException DOCUMENT ME!
-     * @throws InterruptedException DOCUMENT ME!
+     * Returns a document
+     * @param f The file
+     * @param htdocsDumpDir The dump directory
+     * @return org.apache.lucene.document.Document The document
+     * @throws IOException if an IO error occurs
+     * @throws InterruptedException if an error occurs
      */
-    public static Document Document(File f, File htdocsDumpDir)
+    public static Document document(File f, File htdocsDumpDir)
         throws IOException, InterruptedException {
         System.out.println("HTMLDocument.Document(File,File): " + f);
 

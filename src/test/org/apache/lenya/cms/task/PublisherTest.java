@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublisherTest.java,v 1.7 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -32,11 +32,13 @@ import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
 
 
+/**
+ * Publisher test
+ */
 public class PublisherTest extends AntTaskTest {
 
     /**
      * Create a test.
-     * 
      * @param test the test
      */
     public PublisherTest(String test) {
@@ -45,7 +47,6 @@ public class PublisherTest extends AntTaskTest {
 
     /**
      * Creates a test suite.
-     * 
      * @return a test
      */
     public static Test getSuite() {
@@ -54,7 +55,6 @@ public class PublisherTest extends AntTaskTest {
 
     /**
      * The main program for the PublisherTest class
-     *
      * @param args The command line arguments
      */
     public static void main(String[] args) {
@@ -62,11 +62,16 @@ public class PublisherTest extends AntTaskTest {
         TestRunner.run(getSuite());
     }
 
+    /**
+     * <code>DOCUMENT_ID</code> The document id
+     */
     public static final String DOCUMENT_ID = "/tutorial";
+    /**
+     * <code>DOCUMENT_LANGUAGE</code> The document language
+     */
     public static final String DOCUMENT_LANGUAGE = "en";
 
 	/**
-	 *  (non-Javadoc)
 	 * @see org.apache.lenya.cms.task.AntTaskTest#evaluateTest()
 	 */
     protected void evaluateTest() throws IOException {
@@ -79,7 +84,6 @@ public class PublisherTest extends AntTaskTest {
     }
 
 	/**
-	 *  (non-Javadoc)
 	 * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
 	 */
     protected Parameters getTaskParameters() {
@@ -94,7 +98,6 @@ public class PublisherTest extends AntTaskTest {
     }
 
 	/**
-	 *  (non-Javadoc)
 	 * @see org.apache.lenya.cms.task.AntTaskTest#getTarget()
 	 */
     protected String getTarget() {

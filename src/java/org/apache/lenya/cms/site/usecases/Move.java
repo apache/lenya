@@ -16,8 +16,6 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -47,6 +45,7 @@ public class Move extends SiteUsecase {
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
+	    // do nothing
     }
 
     /**

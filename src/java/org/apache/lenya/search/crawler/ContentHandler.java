@@ -24,90 +24,78 @@ import java.util.List;
 
 
 /**
- * DOCUMENT ME!
+ * Content handler interface
  */
 public interface ContentHandler {
     /**
      * Return author
-     *
-     * @return DOCUMENT ME!
+     * @return The author
      */
     String getAuthor();
 
     /**
      * Return categories (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * @return The categories
      */
     String getCategories();
 
     /**
      * Return contents
-     *
-     * @return DOCUMENT ME!
+     * @return The contents
      */
     String getContents();
 
     /**
      * Return description (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * @return The description
      */
     String getDescription();
 
     /**
      * Return META HREF
-     *
-     * @return DOCUMENT ME!
+     * @return The META HREF
      */
     String getHREF();
 
     /**
      * Return keywords (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * @return The keywords
      */
     String getKeywords();
 
     /**
      * Return links
-     *
-     * @return DOCUMENT ME!
+     * @return The links
      */
     List getLinks();
 
     /**
      * Return published date (from META tag)
-     *
-     * @return DOCUMENT ME!
+     * @return The published date
      */
     long getPublished();
 
     /**
-     * Return description (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * Return Robot follow (from META tags)
+     * @return The robot follow
      */
     boolean getRobotFollow();
 
     /**
-     * Return description (from META tags)
-     *
-     * @return DOCUMENT ME!
+     * Return Robot index (from META tags)
+     * @return The robot index
      */
     boolean getRobotIndex();
 
     /**
      * Return page title
-     *
-     * @return DOCUMENT ME!
+     * @return The title
      */
     String getTitle();
 
     /**
      * Parse Content.
-     * 
-     * @param in DOCUMENT ME!
+     * @param in The Stream
      */
     void parse(InputStream in);
 }

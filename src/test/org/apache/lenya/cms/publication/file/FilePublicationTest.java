@@ -68,14 +68,28 @@ public class FilePublicationTest extends TestCase {
         return new TestSuite(FilePublicationTest.class);
     }
 
+    /**
+     * <code>sourceDocumentId</code> The source document id
+     */
     public static final String sourceDocumentId = "/tutorial";
+    /**
+     * <code>destinationDocumentId</code> The destination document id
+     */
     public static final String destinationDocumentId = "/doctypes/simple-document";
+    /**
+     * <code>sourceLanguage</code> The source language
+     */
     public static final String sourceLanguage = "en";
+    /**
+     * <code>destinationLanguage</code> The destination language
+     */
     public static final String destinationLanguage = "en";
 
     /**
      * Tests copying a document.
      * @throws PublicationException when something went wrong.
+     * @throws DocumentException
+     * @throws SiteException
      */
     public void testCopyDocument() throws PublicationException, DocumentException, SiteException {
         testCopyDocument(Publication.AUTHORING_AREA, sourceDocumentId, sourceLanguage,
@@ -87,31 +101,33 @@ public class FilePublicationTest extends TestCase {
     /**
      * Tests copying a document.
      * @param sourceArea The source area.
-     * @param sourceDocumentId The source document ID.
-     * @param sourceLanguage The source language.
+     * @param _sourceDocumentId The source document ID.
+     * @param _sourceLanguage The source language.
      * @param destinationArea The destination area.
-     * @param destinationDocumentId The destination document ID.
-     * @param destinationLanguage The destination language.
+     * @param _destinationDocumentId The destination document ID.
+     * @param _destinationLanguage The destination language.
      * @throws PublicationException when something went wrong.
+     * @throws DocumentException
+     * @throws SiteException
      */
-    public void testCopyDocument(String sourceArea, String sourceDocumentId, String sourceLanguage,
-            String destinationArea, String destinationDocumentId, String destinationLanguage)
+    public void testCopyDocument(String sourceArea, String _sourceDocumentId, String _sourceLanguage,
+            String destinationArea, String _destinationDocumentId, String _destinationLanguage)
             throws PublicationException, DocumentException, SiteException {
 
         System.out.println("Copy document");
         System.out.println("    Source area:             [" + sourceArea + "]");
-        System.out.println("    Source document ID:      [" + sourceDocumentId + "]");
-        System.out.println("    Source language:         [" + sourceLanguage + "]");
+        System.out.println("    Source document ID:      [" + _sourceDocumentId + "]");
+        System.out.println("    Source language:         [" + _sourceLanguage + "]");
         System.out.println("    Destination area:        [" + destinationArea + "]");
-        System.out.println("    Destination document ID: [" + destinationDocumentId + "]");
-        System.out.println("    Destination language:    [" + destinationLanguage + "]");
+        System.out.println("    Destination document ID: [" + _destinationDocumentId + "]");
+        System.out.println("    Destination language:    [" + _destinationLanguage + "]");
 
         Publication publication = PublicationHelper.getPublication();
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
 
-        Document sourceDocument = map.getFactory().get(sourceArea, sourceDocumentId, sourceLanguage);
-        Document destinationDocument = map.getFactory().get(destinationArea, destinationDocumentId,
-                destinationLanguage);
+        Document sourceDocument = map.getFactory().get(sourceArea, _sourceDocumentId, _sourceLanguage);
+        Document destinationDocument = map.getFactory().get(destinationArea, _destinationDocumentId,
+                _destinationLanguage);
 
         publication.copyDocument(sourceDocument, destinationDocument);
 
@@ -119,13 +135,13 @@ public class FilePublicationTest extends TestCase {
 
         TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(map);
         SiteTree destinationTree = manager.getTree(destinationArea);
-        SiteTreeNode destinationNode = destinationTree.getNode(destinationDocumentId);
+        SiteTreeNode destinationNode = destinationTree.getNode(_destinationDocumentId);
         assertNotNull(destinationNode);
-        Label destinationLabel = destinationNode.getLabel(destinationLanguage);
+        Label destinationLabel = destinationNode.getLabel(_destinationLanguage);
         assertNotNull(destinationLabel);
 
-        SiteTreeNode sourceNode = destinationTree.getNode(sourceDocumentId);
-        Label sourceLabel = sourceNode.getLabel(sourceLanguage);
+        SiteTreeNode sourceNode = destinationTree.getNode(_sourceDocumentId);
+        Label sourceLabel = sourceNode.getLabel(_sourceLanguage);
 
         assertTrue(destinationLabel.getLabel().equals(sourceLabel.getLabel()));
 

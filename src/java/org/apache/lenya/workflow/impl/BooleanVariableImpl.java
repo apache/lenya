@@ -30,12 +30,11 @@ public class BooleanVariableImpl implements BooleanVariable {
     /**
      * Creates a new instance of BooleanVariableImpl.
      * @param variableName The variable name.
-     * @param initialValue The initial value of the corresponding variable instances.
+     * @param _initialValue The initial value of the corresponding variable instances.
      */
-    protected BooleanVariableImpl(String variableName, boolean initialValue) {
-        name = variableName;
-
-        this.initialValue = initialValue;
+    protected BooleanVariableImpl(String variableName, boolean _initialValue) {
+        this.name = variableName;
+        this.initialValue = _initialValue;
     }
 
     private String name;
@@ -44,7 +43,7 @@ public class BooleanVariableImpl implements BooleanVariable {
      * @see org.apache.lenya.workflow.BooleanVariable#getName()
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     private boolean initialValue;
@@ -53,6 +52,6 @@ public class BooleanVariableImpl implements BooleanVariable {
      * @see org.apache.lenya.workflow.BooleanVariable#getInitialValue()
      */
     public boolean getInitialValue() {
-        return initialValue;
+        return this.initialValue;
     }
 }

@@ -20,6 +20,7 @@
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.lucene.document.Document;
 
@@ -31,7 +32,11 @@ import org.apache.lucene.document.Document;
 public interface DocumentCreator {
     /**
      * Create a document from a file.
+     * @param file The file
+     * @param htdocsDumpDir The directory to hold the dumps from spidering
+     * @return The document
+     * @throws IOException
      */
     public Document getDocument(File file, File htdocsDumpDir)
-        throws Exception;
+        throws IOException;
 }

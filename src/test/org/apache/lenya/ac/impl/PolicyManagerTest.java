@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PolicyManagerTest.java,v 1.2 2004/03/04 15:40:19 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -26,11 +26,13 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * Test for the Policy Manager
+ */
 public class PolicyManagerTest extends AccessControlTest {
 
     /**
      * Create an instance of PolicyManagerTest
-     * 
      * @param test a test
      */
     public PolicyManagerTest(String test) {

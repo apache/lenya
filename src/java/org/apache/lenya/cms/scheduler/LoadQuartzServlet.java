@@ -38,6 +38,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -49,7 +51,7 @@ import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.SchedulerException;
 import org.w3c.dom.Document;
 
@@ -57,16 +59,36 @@ import org.w3c.dom.Document;
  * A simple servlet that starts an instance of a Quartz scheduler.
  */
 public class LoadQuartzServlet extends HttpServlet {
-    private static Category log = Category.getInstance(LoadQuartzServlet.class);
+    private static Logger log = Logger.getLogger(LoadQuartzServlet.class);
     private static SchedulerWrapper scheduler = null;
     private ServletContext servletContext;
     private String schedulerConfigurations;
 
+    /**
+     * <code>PREFIX</code> Scheduler namespace prefix
+     */
     public static final String PREFIX = "scheduler";
+    /**
+     * <code>PARAMETER_ACTION</code> The action parameter
+     */
     public static final String PARAMETER_ACTION = "action";
+    /**
+     * <code>PARAMETER_PUBLICATION_ID</code> The publication id parameter
+     */
     public static final String PARAMETER_PUBLICATION_ID = "publication-id";
+    /**
+     * <code>PARAMETER_DOCUMENT_URL</code> The document URL parameter
+     */
     public static final String PARAMETER_DOCUMENT_URL = "document-url";
+    /**
+     * <code>CONFIGURATION_ELEMENT</code> The configuration element
+     */
     public static final String CONFIGURATION_ELEMENT = "scheduler-configurations";
+    /**
+     * <code>SERVLET_URL</code> The scheduler servlet URL
+     */
+    public static final String SERVLET_URL = "/servlet/QuartzSchedulerServlet";
+
 
     /**
      * Returns the scheduler wrapper.
@@ -118,18 +140,18 @@ public class LoadQuartzServlet extends HttpServlet {
 
     /**
      * Process.
-     * 
      * @throws ServletException when an error occurs.
      * @throws SchedulerException when an error occurs.
      */
     public void process() throws ServletException, SchedulerException {
         scheduler = new SchedulerWrapper(getServletContextDirectory().getAbsolutePath(),
-                schedulerConfigurations);
+                this.schedulerConfigurations);
 
         try {
-            ShutdownHook();
+            shutdownHook();
         } catch (Exception e) {
             log.error(e.toString(), e);
+            throw new ServletException(e);
         }
 
         restoreJobs();
@@ -156,7 +178,7 @@ public class LoadQuartzServlet extends HttpServlet {
      * 
      * @throws Exception when something went wrong.
      */
-    public static void ShutdownHook() throws Exception {
+    public static void shutdownHook() throws Exception {
         log.debug("-------------------- ShutdownHook --------------------");
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
@@ -180,10 +202,8 @@ public class LoadQuartzServlet extends HttpServlet {
 
     /**
      * Handles a POST request.
-     * 
      * @param req The requust.
      * @param resp The response.
-     * 
      * @throws ServletException when an error occured.
      * @throws IOException when an error occured.
      */
@@ -228,6 +248,7 @@ public class LoadQuartzServlet extends HttpServlet {
             String action = (String) schedulerParameters.get(PARAMETER_ACTION);
             log.debug("    scheduler.action:         [" + action + "]");
             if (action == null) {
+                // do nothing
             } else if (action.equals(ADD)) {
                 Date startTime = TriggerHelper.getDate(schedulerParameters);
                 getScheduler().addJob(publicationId, startTime, request);
@@ -259,7 +280,22 @@ public class LoadQuartzServlet extends HttpServlet {
             Document snapshot = getScheduler().getSnapshot();
 
             DocumentHelper.writeDocument(snapshot, writer);
-        } catch (Exception e) {
+        } catch (DocumentBuildException e) {
+            log.error("Can't create job snapshot: ", e);
+            throw new IOException(e.getMessage() + " (view log for details)");
+        } catch (TransformerConfigurationException e) {
+            log.error("Can't create job snapshot: ", e);
+            throw new IOException(e.getMessage() + " (view log for details)");
+        } catch (IOException e) {
+            log.error("Can't create job snapshot: ", e);
+            throw new IOException(e.getMessage() + " (view log for details)");
+        } catch (SchedulerException e) {
+            log.error("Can't create job snapshot: ", e);
+            throw new IOException(e.getMessage() + " (view log for details)");
+        } catch (PublicationException e) {
+            log.error("Can't create job snapshot: ", e);
+            throw new IOException(e.getMessage() + " (view log for details)");
+        } catch (TransformerException e) {
             log.error("Can't create job snapshot: ", e);
             throw new IOException(e.getMessage() + " (view log for details)");
         }
@@ -373,8 +409,6 @@ public class LoadQuartzServlet extends HttpServlet {
         }
     }
 
-    public static final String SERVLET_URL = "/servlet/QuartzSchedulerServlet";
-
     /**
      * Returns the servlet for a certain canonical servlet context path.
      * @param contextPath The canonical servlet context path.
@@ -387,6 +421,8 @@ public class LoadQuartzServlet extends HttpServlet {
     /**
      * Generates the request URI needed to delete the jobs for a certain
      * document.
+     * @param port The port of the servlet
+     * @param servletContextPath The context path of the servlet
      * @param document The document.
      * @return A string.
      */
@@ -398,18 +434,19 @@ public class LoadQuartzServlet extends HttpServlet {
         requestParameters.put(PARAMETER_PUBLICATION_ID, document.getPublication().getId());
         requestParameters.put(PARAMETER_DOCUMENT_URL, document.getCanonicalWebappURL());
 
-        String requestUri = "http://127.0.0.1:" + port + servletContextPath + "?";
+        StringBuffer buf = new StringBuffer();
+        buf.append("http://127.0.0.1:" + port + servletContextPath + "?");
         Map map = requestParameters.getMap();
 
         String[] keys = (String[]) map.keySet().toArray(new String[map.keySet().size()]);
         for (int i = 0; i < keys.length; i++) {
             if (i > 0) {
-                requestUri += "&";
+                buf.append("&");
             }
             String value = (String) map.get(keys[i]);
-            requestUri += keys[i] + "=" + value;
+            buf.append(keys[i] + "=" + value);
         }
 
-        return requestUri;
+        return buf.toString();
     }
 }

@@ -47,13 +47,13 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 	 * @return string The policies directory.
 	 */
 	public String getPoliciesDir() {
-		return policiesDir;
+		return this.policiesDir;
 	}
 	/**
 	 * @param string The policies directory
 	 */
 	public void setPoliciesDir(String string) {
-		policiesDir = string;
+		this.policiesDir = string;
 	}
 
 	/** 
@@ -104,8 +104,8 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
         }
 	}
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.ant.DocumentOperationTask#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	/** 
+	 * @see org.apache.lenya.cms.ant.DocumentOperationTask#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
 		String srcArea = this.getFirstarea();
@@ -122,7 +122,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 				if (destArea.equals(Publication.AUTHORING_AREA)) {
 					File srcDir =
 						new File(
-							policiesDir,
+							this.policiesDir,
 							this.getFirstarea()
 								+ File.separator
 								+ srcDocumentid);
@@ -130,7 +130,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
                     deletePolicies(srcDir);
 					File srcLiveDir =
 						new File(
-							policiesDir,
+							this.policiesDir,
 							Publication.LIVE_AREA
 								+ File.separator
 								+ srcDocumentid);
@@ -142,7 +142,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 						| destArea.equals(Publication.TRASH_AREA)) {
 					File srcDir =
 						new File(
-							policiesDir,
+							this.policiesDir,
 							this.getFirstarea()
 								+ File.separator
 								+ srcDocumentid);
@@ -151,7 +151,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 
 					File srcLiveDir =
 						new File(
-							policiesDir,
+							this.policiesDir,
 							Publication.LIVE_AREA
 								+ File.separator
 								+ srcDocumentid);
@@ -164,7 +164,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 				if (destArea.equals(Publication.AUTHORING_AREA)) {
 					File srcDir =
 						new File(
-							policiesDir,
+							this.policiesDir,
 							this.getFirstarea()
 								+ File.separator
 								+ this.getSecarea()
@@ -175,7 +175,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 
 					File srcLiveDir =
 						new File(
-							policiesDir,
+							this.policiesDir,
 							this.getFirstarea()
 								+ File.separator
 								+ Publication.LIVE_AREA
@@ -200,7 +200,6 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 			log("document-id for the destination :" + this.getSecdocumentid());
 			log("area for the destination :" + this.getSecarea());
 
-			Publication publication = getPublication();
 			SiteTree tree = getSiteTree(this.getSecarea());
 			SiteTreeNode node = tree.getNode(this.getSecdocumentid());
 			node.acceptReverseSubtree(this);

@@ -69,7 +69,7 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Initializes the parameters. Call this method from your subclass
-     * {@link main(String[])} method.
+     * {@link #main(String[])} method.
      * @param args The command-line arguments.
      */
     public static void initialize(String[] args) {
@@ -111,7 +111,7 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Tests an AntTask.
-     * @param target the target of the task to test.
+     * @param _target the target of the task to test.
      * 
      * @throws ExecutionException if an error occurs
      * @throws IOException if an error occurs
@@ -119,8 +119,8 @@ public class AntTaskTest extends TestCase {
      * @throws SAXException if an error occurs
      * @throws ConfigurationException if an error occurs
      */
-    protected void doTest(String target) throws ExecutionException, ParameterException, ConfigurationException, SAXException, IOException {
-        System.out.println("Testing target [" + target + "]:");
+    protected void doTest(String _target) throws ExecutionException, ParameterException, ConfigurationException, SAXException, IOException {
+        System.out.println("Testing target [" + _target + "]:");
 
         Publication publication = PublicationHelper.getPublication();
 
@@ -128,9 +128,9 @@ public class AntTaskTest extends TestCase {
         AntTask task = (AntTask) manager.getTask(TaskManager.ANT_TASK);
 
         Parameters parameters = getTaskParameters();
-        parameters.setParameter(AntTask.PARAMETER_PUBLICATION_ID, publication.getId());
-        parameters.setParameter(AntTask.PARAMETER_CONTEXT_PREFIX, "/");
-        parameters.setParameter(AntTask.PARAMETER_SERVLET_CONTEXT,
+        parameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
+        parameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, "/");
+        parameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT,
             publication.getServletContext().getCanonicalPath());
         parameters.setParameter(AntTask.TARGET, getTarget());
         task.parameterize(parameters);

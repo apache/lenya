@@ -21,7 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import java.util.StringTokenizer;
 
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -49,17 +48,17 @@ public class InsertCopyNode extends TwoNodesTask {
     public void manipulateTree(String firstdocumentid, String secdocumentid, String firstarea,
             String secarea) throws SiteException {
 
-        Publication publication = getPublication();
         SiteTree firsttree = getSiteTree(firstarea);
         SiteTree sectree = getSiteTree(secarea);
 
-        String parentid = "";
+		StringBuffer buf = new StringBuffer();
         StringTokenizer st = new StringTokenizer(secdocumentid, "/");
         int length = st.countTokens();
 
         for (int i = 0; i < (length - 1); i++) {
-            parentid = parentid + "/" + st.nextToken();
+            buf.append("/" + st.nextToken());
         }
+        String parentid = buf.toString();
         String newid = st.nextToken();
 
         SiteTreeNode node = firsttree.getNode(firstdocumentid);

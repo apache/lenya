@@ -29,6 +29,7 @@ public final class World implements Identifiable {
      * Creates a new World object.
      */
     private World() {
+	    // do nothing
     }
 
     private static World instance;

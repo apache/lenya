@@ -24,7 +24,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lenya.lucene.IndexConfiguration;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -36,11 +36,11 @@ import org.w3c.dom.Element;
 
 /**
  * Abstract base class for indexers.
- * The factory method {@link #getDocumentCreator(String[])} is used to create a
+ * The factory method {@link #getDocumentCreator} is used to create a
  * DocumentCreator from the command-line arguments.
  */
 public abstract class AbstractIndexer implements Indexer {
-    private static Category log = Category.getInstance(AbstractIndexer.class); 
+    static Logger log = Logger.getLogger(AbstractIndexer.class); 
     
     private DocumentCreator documentCreator;
     private Element indexer;
@@ -50,34 +50,37 @@ public abstract class AbstractIndexer implements Indexer {
      * Creates a new instance of AbstractIndexer
      */
     public AbstractIndexer() {
+        // do nothing
     }
 
     /**
      * Returns the DocumentCreator of this indexer.
+     * @return The document creator
      */
     protected DocumentCreator getDocumentCreator() {
-        return documentCreator;
+        return this.documentCreator;
     }
 
     /**
      * Initializes this indexer with command-line parameters.
+     * @param _indexer The indexer
+     * @param _configFileName The config file name
+     * @throws IOException
      */
-    public void configure(Element indexer, String configFileName) throws Exception {
-        documentCreator = createDocumentCreator(indexer, configFileName);
-        this.indexer = indexer;
-        this.configFileName = configFileName;
+    public void configure(Element _indexer, String _configFileName) throws IOException {
+        this.documentCreator = createDocumentCreator(_indexer, _configFileName);
+        this.indexer = _indexer;
+        this.configFileName = _configFileName;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param element DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Creates the document creator
+     * @param _indexer The indexer
+     * @param _configFileName The config file name
+     * @return The document creator
+     * @throws IOException if an error occurs
      */
-    public abstract DocumentCreator createDocumentCreator(Element indexer, String configFileName) throws Exception;
+    public abstract DocumentCreator createDocumentCreator(Element _indexer, String _configFileName) throws IOException;
 
     /**
      * Updates the index incrementally.
@@ -88,23 +91,27 @@ public abstract class AbstractIndexer implements Indexer {
      *   <li>unchanged documents, to be left alone, or</li>
      *   <li>new documents, to be indexed.</li>
      * </ol>
+     * @param dumpDirectory
+     * @param index
+     * @throws IOException
      */
-    public void updateIndex(File dumpDirectory, File index) throws Exception {
+    public void updateIndex(File dumpDirectory, File index) throws IOException {
         deleteStaleDocuments(dumpDirectory, index);
         doIndex(dumpDirectory, index, false);
     }
 
     /**
-     * Updates the index re one document
-     *
+     * Updates the index for the document specified
      * <ol>
      *   <li>old documents to be deleted</li>
      *   <li>unchanged documents, to be left alone, or</li>
      *   <li>new documents, to be indexed.</li>
      * </ol>
+     * @param file The document
+     * @throws IOException if an error occurs
      */
-    public void indexDocument(File file) throws Exception {
-        IndexConfiguration config = new IndexConfiguration(configFileName);
+    public void indexDocument(File file) throws IOException {
+        IndexConfiguration config = new IndexConfiguration(this.configFileName);
         log.debug("File: " + file);
 
         File dumpDir = new File(config.resolvePath(config.getHTDocsDumpDir()));
@@ -149,29 +156,31 @@ public abstract class AbstractIndexer implements Indexer {
 
     /**
      * Creates a new index.
+     * @param dumpDirectory The dump directory to use
+     * @param index The index
+     * @throws IOException if an error occurs
      */
     public void createIndex(File dumpDirectory, File index)
-        throws Exception {
+        throws IOException {
         doIndex(dumpDirectory, index, true);
     }
 
     /**
      * Index files
-     *
      * @param dumpDirectory Directory where the files to be indexed are located
      * @param index Directory where the index shall be located
      * @param create <strong>true</strong> means the index will be created from scratch, <strong>false</strong> means it will be indexed incrementally
+     * @throws IOException if an error occurs
      */
-    public void doIndex(File dumpDirectory, File index, boolean create) {
+    public void doIndex(File dumpDirectory, File index, boolean create) throws IOException {
         if (!index.isDirectory()) {
             index.mkdirs();
             log.warn("Directory has been created: " + index.getAbsolutePath());
         }
-        try {
             IndexWriter writer = new IndexWriter(index.getAbsolutePath(), new StandardAnalyzer(), create);
             writer.maxFieldLength = 1000000;
 
-            IndexInformation info = new IndexInformation(index.getAbsolutePath(), dumpDirectory, getFilter(indexer, configFileName), create);
+            IndexInformation info = new IndexInformation(index.getAbsolutePath(), dumpDirectory, getFilter(this.indexer, this.configFileName), create);
 
             IndexHandler handler;
 
@@ -181,34 +190,35 @@ public abstract class AbstractIndexer implements Indexer {
                 handler = new UpdateIndexHandler(dumpDirectory, info, writer);
             }
 
-            IndexIterator iterator = new IndexIterator(index.getAbsolutePath(), getFilter(indexer, configFileName));
+            IndexIterator iterator = new IndexIterator(index.getAbsolutePath(), getFilter(this.indexer, this.configFileName));
             iterator.addHandler(handler);
             iterator.iterate(dumpDirectory);
 
             writer.optimize();
             writer.close();
-        } catch (IOException e) {
-            log.error(e);
-        }
     }
 
     /**
-     * Delete the stale documents.
+     * Delete stale documents.
+     * @param _dumpDirectory The dump directory to use
+     * @param _index The index
      */
-    protected void deleteStaleDocuments(File dumpDirectory, File index)
-        throws Exception {
+    protected void deleteStaleDocuments(File _dumpDirectory, File _index) {
         log.debug("Deleting stale documents");
 
-        IndexIterator iterator = new IndexIterator(index.getAbsolutePath(), getFilter(indexer, configFileName));
+        IndexIterator iterator = new IndexIterator(_index.getAbsolutePath(), getFilter(this.indexer, this.configFileName));
         iterator.addHandler(new DeleteHandler());
-        iterator.iterate(dumpDirectory);
+        iterator.iterate(_dumpDirectory);
         log.debug("Deleting stale documents finished");
     }
 
     /**
-     * Returns the filter used to receive the indexable files. Might be overwritten by inherited class.
+     * Returns the filter used to receive the indexable files. May be overwritten by inherited class.
+     * @param _indexer The indexer
+     * @param _configFileName The name of the configuration file
+     * @return The filter
      */
-    public FileFilter getFilter(Element indexer, String configFileName) {
+    public FileFilter getFilter(Element _indexer, String _configFileName) {
         String[] indexableExtensions = { "html", "htm", "txt" };
         return new AbstractIndexer.DefaultIndexFilter(indexableExtensions);
     }
@@ -224,20 +234,22 @@ public abstract class AbstractIndexer implements Indexer {
          */
         public DefaultIndexFilter() {
             String[] iE = { "html", "htm", "txt" };
-            indexableExtensions = iE;
+            this.indexableExtensions = iE;
         }
 
         /**
+         * Constructor
+         * @param _indexableExtensions Array of extensions
          *
          */
-        public DefaultIndexFilter(String[] indexableExtensions) {
-            this.indexableExtensions = indexableExtensions;
+        public DefaultIndexFilter(String[] _indexableExtensions) {
+            this.indexableExtensions = _indexableExtensions;
         }
 
-        /** Tests whether or not the specified abstract pathname should be
+        /** Tests whether or not the specified file should be
          * included in a pathname list.
+         * @param file The file to be tested
          *
-         * @param  pathname  The abstract pathname to be tested
          * @return  <code>true</code> if and only if <code>pathname</code> should be included
          *
          */
@@ -249,7 +261,7 @@ public abstract class AbstractIndexer implements Indexer {
             } else {
                 String fileName = file.getName();
                 String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
-                accept = Arrays.asList(indexableExtensions).contains(extension);
+                accept = Arrays.asList(this.indexableExtensions).contains(extension);
             }
 
             return accept;
@@ -266,14 +278,16 @@ public abstract class AbstractIndexer implements Indexer {
      */
     public class DeleteHandler extends AbstractIndexIteratorHandler {
         /** Handles a stale document.
+         * @param _reader The reader
+         * @param _term The term
          *
          */
-        public void handleStaleDocument(IndexReader reader, Term term) {
+        public void handleStaleDocument(IndexReader _reader, Term _term) {
             log.debug("deleting " +
-                IndexIterator.uid2url(term.text()));
+                IndexIterator.uid2url(_term.text()));
 
             try {
-                int deletedDocuments = reader.delete(term);
+                int deletedDocuments = _reader.delete(_term);
                 log.debug("deleted " + deletedDocuments +
                     " documents.");
             } catch (IOException e) {
@@ -283,68 +297,69 @@ public abstract class AbstractIndexer implements Indexer {
     }
 
     /**
-     * DOCUMENT ME!
+     * The index handler
      */
     public class IndexHandler extends AbstractIndexIteratorHandler {
         /**
          * Creates a new IndexHandler object.
          *
-         * @param dumpDirectory DOCUMENT ME!
-         * @param info DOCUMENT ME!
-         * @param writer DOCUMENT ME!
+         * @param _dumpDirectory The dump directory
+         * @param _info The index information
+         * @param _writer The index writer
          */
-        public IndexHandler(File dumpDirectory, IndexInformation info, IndexWriter writer) {
-            this.info = info;
-            this.dumpDirectory = dumpDirectory;
-            this.writer = writer;
+        public IndexHandler(File _dumpDirectory, IndexInformation _info, IndexWriter _writer) {
+            this.info = _info;
+            this.dumpDirectory = _dumpDirectory;
+            this.writer = _writer;
         }
 
         private IndexInformation info;
 
         protected IndexInformation getInformation() {
-            return info;
+            return this.info;
         }
 
         private File dumpDirectory;
 
         protected File getDumpDirectory() {
-            return dumpDirectory;
+            return this.dumpDirectory;
         }
 
         private IndexWriter writer;
 
         protected IndexWriter getWriter() {
-            return writer;
+            return this.writer;
         }
 
         /**
-	 * Add document to index
-	 */
+         * Add document to index
+         * @param file The file to add
+         */
         protected void addFile(File file) {
             log.debug("adding document: " + file.getAbsolutePath());
 
             try {
-                Document doc = getDocumentCreator().getDocument(file, dumpDirectory);
-                writer.addDocument(doc);
+                Document doc = getDocumentCreator().getDocument(file, this.dumpDirectory);
+                this.writer.addDocument(doc);
             } catch (Exception e) {
                 log.error(e);
             }
 
-            info.increase();
-            log.info(info.printProgress());
+            this.info.increase();
+            log.info(this.info.printProgress());
         }
     }
 
     /**
-     * DOCUMENT ME!
+     * The factory for the index handler
      */
     public class CreateIndexHandler extends IndexHandler {
         /**
          * Creates a new CreateIndexHandler object.
          *
-         * @param dumpDirectory DOCUMENT ME!
-         * @param info DOCUMENT ME!
-         * @param writer DOCUMENT ME!
+         * @param dumpDirectory The dump directory to use
+         * @param info The index information
+         * @param writer The index writer
          */
         public CreateIndexHandler(File dumpDirectory, IndexInformation info, IndexWriter writer) {
             super(dumpDirectory, info, writer);
@@ -352,6 +367,8 @@ public abstract class AbstractIndexer implements Indexer {
 
         /**
          * Handles a file. Used when creating a new index.
+         * @param reader The reader
+         * @param file The file
          */
         public void handleFile(IndexReader reader, File file) {
             addFile(file);
@@ -359,15 +376,15 @@ public abstract class AbstractIndexer implements Indexer {
     }
 
     /**
-     * DOCUMENT ME!
+     * Class to update the index
      */
     public class UpdateIndexHandler extends IndexHandler {
         /**
          * Creates a new UpdateIndexHandler object.
          *
-         * @param dumpDirectory DOCUMENT ME!
-         * @param info DOCUMENT ME!
-         * @param writer DOCUMENT ME!
+         * @param dumpDirectory The dump directory to use
+         * @param info The index information
+         * @param writer The index writer
          */
         public UpdateIndexHandler(File dumpDirectory, IndexInformation info, IndexWriter writer) {
             super(dumpDirectory, info, writer);
@@ -375,6 +392,9 @@ public abstract class AbstractIndexer implements Indexer {
 
         /**
          * Handles a new document. Used when updating the index.
+         * @param reader The index reader
+         * @param term The term
+         * @param file The file
          */
         public void handleNewDocument(IndexReader reader, Term term, File file) {
             addFile(file);

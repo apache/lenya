@@ -36,12 +36,12 @@ public class FileRole extends AbstractRole implements Item {
 
     /**
      * Creates a new file role.
-     * @param configurationDirectory The configuration directory.
+     * @param _configurationDirectory The configuration directory.
      * @param id The role ID.
      */
-    public FileRole(File configurationDirectory, String id) {
+    public FileRole(File _configurationDirectory, String id) {
         setId(id);
-        setConfigurationDirectory(configurationDirectory);
+        setConfigurationDirectory(_configurationDirectory);
     }
 
     protected static final String ROLE = "role";
@@ -50,11 +50,11 @@ public class FileRole extends AbstractRole implements Item {
      * Creates a new FileRole object.
      */
     public FileRole() {
+	    // do nothing
     }
 
     /**
      * Configure this instance of <code>FileRole</code>
-     * 
      * @param config containing the role details
      * @throws ConfigurationException if the <code>FileRole</code> could not be configured
      */
@@ -64,7 +64,6 @@ public class FileRole extends AbstractRole implements Item {
 
     /**
      * Save the role
-     * 
      * @throws AccessControlException if the save fails
      */
     public void save() throws AccessControlException {
@@ -82,7 +81,6 @@ public class FileRole extends AbstractRole implements Item {
 
     /**
      * Create a configuration containing the role details
-     * 
      * @return a <code>Configuration</code>
      */
     private Configuration createConfiguration() {
@@ -98,13 +96,13 @@ public class FileRole extends AbstractRole implements Item {
      * @return A file object.
      */
     public File getConfigurationDirectory() {
-        return configurationDirectory;
+        return this.configurationDirectory;
     }
 
     /**
      * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
     public void setConfigurationDirectory(File file) {
-        configurationDirectory = file;
+        this.configurationDirectory = file;
     }
 }

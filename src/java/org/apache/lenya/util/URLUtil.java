@@ -23,28 +23,15 @@ import java.util.Locale;
 
 
 /**
- * DOCUMENT ME!
+ * URL utility class
  */
 public class URLUtil {
-    /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-        System.out.println(URLUtil.complete("http://www.apache.org/download/index.html",
-                "../images/lenya.jpeg"));
-        System.out.println(URLUtil.complete("http://www.apache.org/download/index.html",
-                "/images/lenya.jpeg"));
-    }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param parent DOCUMENT ME!
-     * @param child DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns a complete URL from the partial URLs passed in
+     * @param parent The parent part
+     * @param child The child part
+     * @return The complete URL
      */
     public static String complete(String parent, String child) {
         String url = child;

@@ -34,6 +34,7 @@ public class ItemConfiguration {
      * Ctor.
      */
     public ItemConfiguration() {
+	    // do nothing
     }
     
     /**

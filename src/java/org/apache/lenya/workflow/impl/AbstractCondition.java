@@ -33,8 +33,8 @@ public abstract class AbstractCondition extends AbstractLogEnabled implements Co
     /**
      * @see org.apache.lenya.workflow.impl.AbstractCondition#setExpression(java.lang.String)
      */
-    public void setExpression(String expression) throws WorkflowException {
-        this.expression = expression.trim();
+    public void setExpression(String ex) throws WorkflowException {
+        this.expression = ex.trim();
     }
 
     /**
@@ -42,7 +42,7 @@ public abstract class AbstractCondition extends AbstractLogEnabled implements Co
      * @return A string.
      */
     public String getExpression() {
-        return expression;
+        return this.expression;
     }
 
     /**

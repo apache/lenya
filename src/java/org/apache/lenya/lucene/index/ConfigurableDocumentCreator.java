@@ -26,13 +26,19 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -42,57 +48,61 @@ import org.apache.lenya.lucene.parser.HTMLParserFactory;
 import org.apache.lenya.lucene.parser.StringCleaner;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * Uses XSLT to transform a XML into a Lucene document
  */
 public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
-    Category log = Category.getInstance(ConfigurableDocumentCreator.class);
+    private static final Logger log = Logger.getLogger(ConfigurableDocumentCreator.class);
   
+    /**
+     * <code>LUCENE_NAMESPACE</code> The Lucene namespace
+     */
     public static final String LUCENE_NAMESPACE = "http://apache.org/cocoon/lenya/lucene/1.0";
+    /**
+     * <code>XHTML_NAMESPACE</code> The XHTML namespace
+     */
     public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
 
     /**
      * Creates a new ConfigurableDocumentCreator object.
      *
-     * @param stylesheet DOCUMENT ME!
+     * @param _stylesheet The stylesheet to use to transform the Document into a Lucene document
      */
-    public ConfigurableDocumentCreator(String stylesheet) {
-        this.stylesheet = stylesheet;
+    public ConfigurableDocumentCreator(String _stylesheet) {
+        this.stylesheet = _stylesheet;
     }
 
     private String stylesheet;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get the stylesheet
+     * @return The stylesheet
      */
     public String getStylesheet() {
-        return stylesheet;
+        return this.stylesheet;
     }
 
     /**
      * Transform source document into lucene document and generate a Lucene Document instance
      *
-     * @param file DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * @param file The file
+     * @param htdocsDumpDir The dump directory
+     * @return The Lucene document
+     * @throws IOException if an error occurs
      */
-    public Document getDocument(File file, File htdocsDumpDir) throws Exception {
+    public Document getDocument(File file, File htdocsDumpDir) throws IOException {
         log.debug(".getDocument() : indexing " + file.getAbsolutePath());
-        try {
 
+        try {
             org.w3c.dom.Document sourceDocument = null;
             DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
             parserFactory.setValidating(false);
@@ -104,18 +114,15 @@ public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
 
 // FIXME: What is this good for: <?xml version="1.0"?><body>...</body>
 /*
-            NamespaceHelper documentHelper = new NamespaceHelper(XHTML_NAMESPACE, "xhtml", "html");
-            org.w3c.dom.Document sourceDocument = documentHelper.getDocument();
+                NamespaceHelper documentHelper = new NamespaceHelper(XHTML_NAMESPACE, "xhtml", "html");
+                org.w3c.dom.Document sourceDocument = documentHelper.getDocument();
 
-            Element rootNode = sourceDocument.getDocumentElement();
+                Element rootNode = sourceDocument.getDocumentElement();
 
-            String bodyText = getBodyText(file);
-            Element bodyElement = documentHelper.createElement("body", bodyText);
-            rootNode.appendChild(bodyElement);
+                String bodyText = getBodyText(file);
+                Element bodyElement = documentHelper.createElement("body", bodyText);
+                rootNode.appendChild(bodyElement);
 */
-
-
-
 
             DOMSource documentSource = new DOMSource(sourceDocument);
             Writer documentWriter = new StringWriter();
@@ -163,31 +170,62 @@ public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
             }
 
             return document;
-        } catch (Exception e) {
-            throw e;
+        } catch (final TransformerConfigurationException e) {
+            throw new IOException(e.toString());
+        } catch (final IllegalArgumentException e) {
+            throw new IOException(e.toString());
+        } catch (final SecurityException e) {
+            throw new IOException(e.toString());
+        } catch (final FactoryConfigurationError e) {
+            throw new IOException(e.toString());
+        } catch (final ParserConfigurationException e) {
+            throw new IOException(e.toString());
+        } catch (final SAXException e) {
+            throw new IOException(e.toString());
+        } catch (final IOException e) {
+            throw new IOException(e.toString());
+        } catch (final TransformerFactoryConfigurationError e) {
+            throw new IOException(e.toString());
+        } catch (final TransformerException e) {
+            throw new IOException(e.toString());
+        } catch (final NoSuchMethodException e) {
+            throw new IOException(e.toString());
+        } catch (final IllegalAccessException e) {
+            throw new IOException(e.toString());
+        } catch (final InvocationTargetException e) {
+            throw new IOException(e.toString());
         }
     }
 
     /**
      * Writes the lucene XML document to a file.
+     * @param file The file
+     * @param writer The writer
+     * @throws IOException if an IO error occurs
      */
     protected void dumpLuceneDocument(File file, Writer writer) throws IOException {
-        log.debug(".dumpLuceneDocument(): Dump document: " + file.getAbsolutePath());
+        FileWriter fileWriter = null;
+        
+        try {
+            log.debug(".dumpLuceneDocument(): Dump document: " + file.getAbsolutePath());
 
-        File luceneDocumentFile = new File(file.getAbsolutePath() + ".xluc");
-        luceneDocumentFile.createNewFile();
+            File luceneDocumentFile = new File(file.getAbsolutePath() + ".xluc");
+            if (luceneDocumentFile.createNewFile()) log.debug("new lucene file created.");
 
-        FileWriter fileWriter = new FileWriter(luceneDocumentFile);
-        fileWriter.write(writer.toString());
-        fileWriter.close();
+            fileWriter = new FileWriter(luceneDocumentFile);
+            fileWriter.write(writer.toString());
+        } catch (IOException e) {
+            log.error("IO Error " +e.toString());
+        } finally {
+            if (fileWriter != null)
+                fileWriter.close();
+        }
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param node DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get the text of a node
+     * @param node The node
+     * @return The text of the node
      */
     public static String getText(Node node) {
         StringBuffer result = new StringBuffer();
@@ -211,18 +249,14 @@ public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
                 result.append(getText(subnode));
             }
         }
-
         return result.toString();
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param file DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Get the body text of a file (if that file happens to be HTML)
+     * @param file The file
+     * @return The body text
+     * @throws Exception if an error occurs
      */
     public static String getBodyText(File file) throws Exception {
         HTMLParser parser = HTMLParserFactory.newInstance(file);

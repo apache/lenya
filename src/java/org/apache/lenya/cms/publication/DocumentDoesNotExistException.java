@@ -19,6 +19,9 @@
 
 package org.apache.lenya.cms.publication;
 
+/**
+ * Document does not exist exception
+ */
 public class DocumentDoesNotExistException extends DocumentException {
 
     /**
@@ -31,7 +34,6 @@ public class DocumentDoesNotExistException extends DocumentException {
 
     /**
      * Creates a new DocumentDoesNotExistException
-     * 
      * @param message the exception message
      */
     public DocumentDoesNotExistException(String message) {
@@ -40,7 +42,6 @@ public class DocumentDoesNotExistException extends DocumentException {
 
     /**
      * Creates a new DocumentDoesNotExistException
-     * 
      * @param message the exception message
      * @param cause the cause of the exception
      */
@@ -50,7 +51,6 @@ public class DocumentDoesNotExistException extends DocumentException {
 
     /**
      * Creates a new DocumentDoesNotExistException
-     * 
      * @param cause the cause of the exception
      */
     public DocumentDoesNotExistException(Throwable cause) {

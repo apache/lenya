@@ -34,15 +34,16 @@ public class DocumentSet {
 	 * Ctor.
 	 */
     public DocumentSet() {
+	    // do nothing
     }
     
     /**
      * Ctor.
-     * @param documents The initial documents.
+     * @param _documents The initial documents.
      */
-    public DocumentSet(Document[] documents) {
-        for (int i = 0; i < documents.length; i++) {
-            add(documents[i]);
+    public DocumentSet(Document[] _documents) {
+        for (int i = 0; i < _documents.length; i++) {
+            add(_documents[i]);
         }
     }
 
@@ -62,23 +63,21 @@ public class DocumentSet {
 	 * @return An array of documents.
 	 */
     public Document[] getDocuments() {
-        return (Document[]) documents.toArray(new Document[documents.size()]);
+        return (Document[]) this.documents.toArray(new Document[this.documents.size()]);
     }
 
     /**
 	 * Adds a document to this set.
-	 * 
 	 * @param document The document to add.
 	 */
     public void add(Document document) {
         assert document != null;
-        assert !documents.contains(document);
-        documents.add(document);
+        assert !this.documents.contains(document);
+        this.documents.add(document);
     }
 
     /**
 	 * Checks if this set is empty.
-	 * 
 	 * @return A boolean value.
 	 */
     public boolean isEmpty() {

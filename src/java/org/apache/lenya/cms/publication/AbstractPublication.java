@@ -20,18 +20,21 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
+import org.xml.sax.SAXException;
 
 /**
  * A publication.
@@ -57,21 +60,19 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
 
     /**
      * Creates a new instance of Publication
-     * 
-     * @param id the publication id
+     * @param _id the publication id
      * @param servletContextPath the servlet context of this publication
-     * 
      * @throws PublicationException if there was a problem reading the config file
      */
-    protected AbstractPublication(String id, String servletContextPath) throws PublicationException {
-        assert id != null;
-        this.id = id;
+    protected AbstractPublication(String _id, String servletContextPath) throws PublicationException {
+        assert _id != null;
+        this.id = _id;
 
         assert servletContextPath != null;
 
-        File servletContext = new File(servletContextPath);
-        assert servletContext.exists();
-        this.servletContext = servletContext;
+        File _servletContext = new File(servletContextPath);
+        assert _servletContext.exists();
+        this.servletContext = _servletContext;
 
         File configFile = new File(getDirectory(), CONFIGURATION_FILE);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
@@ -88,7 +89,7 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
                 pathMapperClassName = config.getChild(ELEMENT_PATH_MAPPER).getValue();
                 Class pathMapperClass = Class.forName(pathMapperClassName);
                 this.mapper = (DocumentIdToPathMapper) pathMapperClass.newInstance();
-            } catch (ClassNotFoundException e) {
+            } catch (final ClassNotFoundException e) {
                 throw new PublicationException("Cannot instantiate documentToPathMapper: ["
                         + pathMapperClassName + "]", e);
             }
@@ -101,28 +102,28 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
                     Class documentBuilderClass = Class.forName(documentBuilderClassName);
                     this.documentBuilder = (DocumentBuilder) documentBuilderClass.newInstance();
                 }
-            } catch (ClassNotFoundException e) {
+            } catch (final ClassNotFoundException e) {
                 throw new PublicationException("Cannot instantiate document builder: ["
                         + pathMapperClassName + "]", e);
             }
 
-            Configuration[] languages = config.getChild(LANGUAGES).getChildren();
-            for (int i = 0; i < languages.length; i++) {
-                Configuration languageConfig = languages[i];
+            Configuration[] _languages = config.getChild(LANGUAGES).getChildren();
+            for (int i = 0; i < _languages.length; i++) {
+                Configuration languageConfig = _languages[i];
                 String language = languageConfig.getValue();
                 this.languages.add(language);
                 if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null) != null) {
-                    defaultLanguage = language;
+                    this.defaultLanguage = language;
                 }
             }
 
-            String siteManagerClass = TreeSiteManager.class.getName();
+            String _siteManagerClass = TreeSiteManager.class.getName();
             Configuration siteStructureConfiguration = config.getChild(ELEMENT_SITE_STRUCTURE,
                     false);
             if (siteStructureConfiguration != null) {
-                siteManagerClass = siteStructureConfiguration.getAttribute(ATTRIBUTE_TYPE);
+                _siteManagerClass = siteStructureConfiguration.getAttribute(ATTRIBUTE_TYPE);
             }
-            Class klass = Class.forName(siteManagerClass);
+            Class klass = Class.forName(_siteManagerClass);
             this.siteManagerClass = klass;
 
             Configuration[] proxyConfigs = config.getChildren(ELEMENT_PROXY);
@@ -141,15 +142,31 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
                             + "]");
                 }
             }
-
-        } catch (PublicationException e) {
-            throw e;
-        } catch (Exception e) {
+        } catch (final ConfigurationException e) {
+            throw new PublicationException("Problem with config file: "
+                    + configFile.getAbsolutePath(), e);
+        } catch (final SAXException e) {
+            throw new PublicationException("Problem with config file: "
+                    + configFile.getAbsolutePath(), e);
+        } catch (final IOException e) {
+            throw new PublicationException("Problem with config file: "
+                    + configFile.getAbsolutePath(), e);
+        } catch (final InstantiationException e) {
+            throw new PublicationException("Problem with config file: "
+                    + configFile.getAbsolutePath(), e);
+        } catch (final IllegalAccessException e) {
+            throw new PublicationException("Problem with config file: "
+                    + configFile.getAbsolutePath(), e);
+        } catch (final PublicationException e) {
+            throw new PublicationException("Problem with config file: "
+                    + configFile.getAbsolutePath(), e);
+        } catch (final ClassNotFoundException e) {
             throw new PublicationException("Problem with config file: "
                     + configFile.getAbsolutePath(), e);
         }
 
-        breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
+
+        this.breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
 
     }
 
@@ -158,7 +175,7 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
      * @return A string value.
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -167,7 +184,7 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
      * @return A <code>File</code> object.
      */
     public File getServletContext() {
-        return servletContext;
+        return this.servletContext;
     }
 
     /**
@@ -180,9 +197,7 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
 
     /**
      * Return the directory of a specific area.
-     * 
      * @param area a <code>File</code> representing the root of the area content directory.
-     * 
      * @return the directory of the given content area.
      */
     public File getContentDirectory(String area) {
@@ -190,22 +205,20 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
     }
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @param mapper DOCUMENT ME!
+     * Set the path mapper
+     * @param _mapper The path mapper
      */
-    public void setPathMapper(DefaultDocumentIdToPathMapper mapper) {
-        assert mapper != null;
-        this.mapper = mapper;
+    public void setPathMapper(DefaultDocumentIdToPathMapper _mapper) {
+        assert _mapper != null;
+        this.mapper = _mapper;
     }
 
     /**
      * Returns the path mapper.
-     * 
      * @return a <code>DocumentIdToPathMapper</code>
      */
     public DocumentIdToPathMapper getPathMapper() {
-        return mapper;
+        return this.mapper;
     }
 
     /**
@@ -219,39 +232,35 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
 
     /**
      * Get the default language
-     * 
      * @return the default language
      */
     public String getDefaultLanguage() {
-        return defaultLanguage;
+        return this.defaultLanguage;
     }
 
     /**
      * Set the default language
-     * 
      * @param language the default language
      */
     public void setDefaultLanguage(String language) {
-        defaultLanguage = language;
+        this.defaultLanguage = language;
     }
 
     /**
      * Get all available languages for this publication
-     * 
      * @return an <code>Array</code> of languages
      */
     public String[] getLanguages() {
-        return (String[]) languages.toArray(new String[languages.size()]);
+        return (String[]) this.languages.toArray(new String[this.languages.size()]);
     }
 
     /**
      * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger
      * site
-     * 
      * @return the breadcrumb prefix
      */
     public String getBreadcrumbPrefix() {
-        return breadcrumbprefix;
+        return this.breadcrumbprefix;
     }
 
     private DocumentBuilder documentBuilder;

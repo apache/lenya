@@ -32,6 +32,7 @@ public abstract class AbstractRole extends AbstractItem implements Role {
      * Creates a new instance of Role.
      */
     public AbstractRole() {
+	    // do nothing
     }
 
     /**

@@ -31,13 +31,12 @@ public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment 
     
     /**
      * Ctor.
-     * @param variable The variable.
-     * @param value The value.
+     * @param _variable The variable.
+     * @param _value The value.
      */
-    protected BooleanVariableAssignmentImpl(BooleanVariableImpl variable, boolean value) {
-        this.variable = variable;
-
-        this.value = value;
+    protected BooleanVariableAssignmentImpl(BooleanVariableImpl _variable, boolean _value) {
+        this.variable = _variable;
+        this.value = _value;
     }
 
     private BooleanVariableImpl variable;
@@ -56,7 +55,7 @@ public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment 
      * @return A boolean value.
      */
     public boolean getValue() {
-        return value;
+        return this.value;
     }
 
     /**
@@ -64,6 +63,6 @@ public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment 
      * @return A variable.
      */
     public BooleanVariableImpl getVariable() {
-        return variable;
+        return this.variable;
     }
 }

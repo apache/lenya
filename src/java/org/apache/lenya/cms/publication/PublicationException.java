@@ -19,11 +19,13 @@
 
 package org.apache.lenya.cms.publication;
 
+/**
+ * Publication Exception
+ */
 public class PublicationException extends Exception {
 
     /**
      * Creates a new PublicationException.
-     * 
      */
     public PublicationException() {
         super();
@@ -31,7 +33,6 @@ public class PublicationException extends Exception {
 
     /**
      * Creates a new PublicationException.
-     * 
      * @param message the exception message
      */
     public PublicationException(String message) {
@@ -40,7 +41,6 @@ public class PublicationException extends Exception {
 
     /**
      * Creates a new PublicationException.
-     * 
      * @param message the exception message
      * @param cause the cause of the exception
      */
@@ -50,7 +50,6 @@ public class PublicationException extends Exception {
 
     /**
      * Creates a new PublicationException.
-     * 
      * @param cause the cause of the exception
      */
     public PublicationException(Throwable cause) {

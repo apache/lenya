@@ -31,15 +31,13 @@ public class HelloWorldTask extends AbstractTask {
      * Creates a new instance of HelloWorldTask
      */
     public HelloWorldTask() {
+	    // do nothing
     }
 
     /**
-     * Execute the task. All parameters must have been set with init().
-     *
-     * @param path DOCUMENT ME!
-     * 
-     * @throws ExecutionException if the exection fails
+     * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
     public void execute(String path) throws ExecutionException {
+        // do nothing
     }
 }

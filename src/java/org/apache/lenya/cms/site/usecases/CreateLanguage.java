@@ -97,7 +97,7 @@ public class CreateLanguage extends Create {
         DocumentFactory factory = source.getIdentityMap().getFactory();
         Document document = factory.get(area, source.getId(), language);
 
-        DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
+        DocumentType _documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);
 
         String parentId = factory.getParent(document).getId().substring(1);
@@ -106,7 +106,7 @@ public class CreateLanguage extends Create {
         File doctypesDirectory = new File(publication.getDirectory(),
                 DocumentTypeBuilder.DOCTYPE_DIRECTORY);
 
-        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
+        _documentType.getCreator().create(new File(doctypesDirectory, "samples"),
                 new File(publication.getContentDirectory(area), parentId),
                 childId,
                 ParentChildCreatorInterface.BRANCH_NODE,

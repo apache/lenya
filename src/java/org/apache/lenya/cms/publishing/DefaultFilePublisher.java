@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.task.ExecutionException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -47,23 +47,25 @@ import org.apache.log4j.Category;
  *  * @deprecated use the publish ant task instead.
  */
 public class DefaultFilePublisher extends AbstractFilePublisher {
-    private static Category log = Category.getInstance(DefaultFilePublisher.class);
+    private static Logger log = Logger.getLogger(DefaultFilePublisher.class);
+    /**
+     * <code>PARAMETER_SOURCES</code> The sources parameter
+     */
     public static final String PARAMETER_SOURCES = "sources";
 
     /**
      * Default implementation of <code>publish</code> which simply
      * copies the files from the absoluteAuthoringPath to the
      * absoluteLivePath.
-     *
-     * @param publicationPath DOCUMENT ME!
-     * @param authoringPath DOCUMENT ME!
-     * @param treeAuthoringPath DOCUMENT ME!
+     * @param publicationPath The path to the publication
+     * @param authoringPath The path to the authoring area
+     * @param treeAuthoringPath The path to the authoring tree
      * @param resourcesAuthoringPath path to authoring resources base directory
-     * @param livePath DOCUMENT ME!
-     * @param treeLivePath DOCUMENT ME!
+     * @param livePath The path to the live area
+     * @param treeLivePath The path to the live tree
      * @param resourcesLivePath path to live resources base directory
-     * @param replicationPath DOCUMENT ME!
-     * @param sources DOCUMENT ME!
+     * @param replicationPath The path to the replication directory
+     * @param sources The sources to publish
      * @exception PublishingException if an error occurs
      */
     public void publish(String publicationPath, String authoringPath, String treeAuthoringPath,
@@ -176,15 +178,14 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
      * implementation doesn't deal with resources. It simply ignores
      * them and assumes that they end up in the live directory be some
      * other means.
-     *
      * @param publicationPath path to the publication
      * @param resourcesAuthoringPath authoring path for the resources
      * @param resourcesLivePath live path for the resources
      * @param sources array of docIds
-     * 
      * @throws PublishingException if the publishing of resources fails
      */
     protected void publishResources(String publicationPath, String resourcesAuthoringPath,
         String resourcesLivePath, String[] sources) throws PublishingException {
+	    // do nothing
     }
 }

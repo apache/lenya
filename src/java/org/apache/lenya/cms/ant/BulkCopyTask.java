@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BulkCopyTask.java 106114 2004-11-21 20:54:40Z roku $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -34,7 +34,7 @@ import org.apache.tools.ant.types.Path;
  * Usage:
  * &lt;bulkCopy 
  *     sourcedirs="dirOne:dirTwo" 
- *     todir="WEB-INF/lib" 
+ *     todir="WEB-INF/" 
  *     flatten="true">
  *     &lt;fileset includes="java/lib/*"/&gt;
  * &lt;/bulkCopy&gt;
@@ -45,14 +45,13 @@ import org.apache.tools.ant.types.Path;
 public class BulkCopyTask extends Copy {
     
     private Path sourceDirs;
-    private String libDir;
     
     /** 
      * @see org.apache.tools.ant.taskdefs.Copy#execute()
      */
     public void execute() throws BuildException {
                 
-        final StringTokenizer sourceDirTokens = new StringTokenizer(sourceDirs.toString(), File.pathSeparator);
+        final StringTokenizer sourceDirTokens = new StringTokenizer(this.sourceDirs.toString(), File.pathSeparator);
             
         while (sourceDirTokens.hasMoreTokens()) {
             final String sourceDir = sourceDirTokens.nextToken();
@@ -65,10 +64,10 @@ public class BulkCopyTask extends Copy {
     }
 
     /**
-     * @param sourceDirs Colon seperated list of source directories
+     * @param _sourceDirs Colon seperated list of source directories
      */
-    public void setSourceDirs(Path sourceDirs) {
-        this.sourceDirs = sourceDirs;
+    public void setSourceDirs(Path _sourceDirs) {
+        this.sourceDirs = _sourceDirs;
     }
     
     /**

@@ -2,20 +2,26 @@
 
 package org.apache.lenya.cms.task;
 
-import org.apache.log4j.Category;
+import org.apache.avalon.framework.parameters.ParameterException;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 
 import org.apache.lenya.lucene.index.Index;
 import org.apache.lenya.lucene.index.Indexer;
 
+/**
+ * Lucene Task
+ */
 public class LuceneTask extends AbstractTask {
-    Category log = Category.getInstance(LuceneTask.class);
+    private static final Logger log = Logger.getLogger(LuceneTask.class);
 
     /**
      * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
     public void execute(String servletContextPath) throws ExecutionException {
+        Indexer indexer;
+        String files;
         try {
             //outputParameters();
 
@@ -24,7 +30,7 @@ public class LuceneTask extends AbstractTask {
             String publicationId = getParameters().getParameter("publication-id");
             log.debug("Publication ID: " + publicationId);
 
-            String files = getParameters().getParameter("properties.files2index");
+            files = getParameters().getParameter("properties.files2index");
             log.debug("Files 2 index: " + files);
 
             String luceneConfig = getParameters().getParameter("config");
@@ -33,15 +39,21 @@ public class LuceneTask extends AbstractTask {
             String luceneConfigAbsolutePath = servletContextPath + File.separator + "lenya" + File.separator + "pubs" + File.separator + publicationId  + File.separator + luceneConfig;
             log.debug("Lucene configuration: " + luceneConfigAbsolutePath);
 
-            Indexer indexer = Index.getIndexer(luceneConfigAbsolutePath);
-	    indexer.indexDocument(new File(files));
+            indexer = Index.getIndexer(luceneConfigAbsolutePath);
+    	    indexer.indexDocument(new File(files));
+        } catch (final ParameterException e) {
+            log.error("" +e.toString());
+            throw new ExecutionException(e);
         } catch (Exception e) {
-            log.error("" + e);
+            log.error("" +e.toString());
+            throw new ExecutionException(e);
         }
     }
 
     /**
      * Output parameters for debugging
+     * @throws Exception if an error occurs
+     * FIXME don't throw Exception here
      */
     public void outputParameters() throws Exception {
         String[] names = getParameters().getNames();

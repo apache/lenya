@@ -57,23 +57,24 @@ public abstract class FileItemManager extends AbstractLogEnabled {
      * Create a new ItemManager.
      */
     protected FileItemManager() {
+	    // do nothing
     }
 
     /**
      * Configures the item manager.
-     * @param configurationDirectory where the items are fetched from
+     * @param _configurationDirectory where the items are fetched from
      * @throws AccessControlException if the item manager cannot be instantiated
      */
-    public void configure(File configurationDirectory) throws AccessControlException {
-        assert configurationDirectory != null;
+    public void configure(File _configurationDirectory) throws AccessControlException {
+        assert _configurationDirectory != null;
 
-        if (!configurationDirectory.exists() || !configurationDirectory.isDirectory()) {
+        if (!_configurationDirectory.exists() || !_configurationDirectory.isDirectory()) {
             throw new AccessControlException("The directory ["
-                    + configurationDirectory.getAbsolutePath() + "] does not exist!");
+                    + _configurationDirectory.getAbsolutePath() + "] does not exist!");
         }
 
-        this.configurationDirectory = configurationDirectory;
-        this.notifier = new DirectoryChangeNotifier(configurationDirectory, getFileFilter());
+        this.configurationDirectory = _configurationDirectory;
+        this.notifier = new DirectoryChangeNotifier(_configurationDirectory, getFileFilter());
         this.notifier.enableLogging(getLogger());
         loadItems();
     }
@@ -86,7 +87,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
 
         boolean changed;
         try {
-            changed = notifier.hasChanged();
+            changed = this.notifier.hasChanged();
         } catch (IOException e) {
             throw new AccessControlException(e);
         }
@@ -97,19 +98,19 @@ public abstract class FileItemManager extends AbstractLogEnabled {
                 getLogger().debug("Item configuration has changed - reloading.");
             }
 
-            File[] addedFiles = notifier.getAddedFiles();
+            File[] addedFiles = this.notifier.getAddedFiles();
 
             for (int i = 0; i < addedFiles.length; i++) {
                 Item item = loadItem(addedFiles[i]);
                 add(item);
             }
 
-            File[] removedFiles = notifier.getRemovedFiles();
+            File[] removedFiles = this.notifier.getRemovedFiles();
             for (int i = 0; i < removedFiles.length; i++) {
                 String fileName = removedFiles[i].getName();
                 String id = fileName.substring(0, fileName.length() - getSuffix().length());
 
-                Item item = (Item) items.get(id);
+                Item item = (Item) this.items.get(id);
 
                 if (item != null) {
 
@@ -124,7 +125,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
                 }
             }
 
-            File[] changedFiles = notifier.getChangedFiles();
+            File[] changedFiles = this.notifier.getChangedFiles();
             for (int i = 0; i < changedFiles.length; i++) {
                 Item item = loadItem(changedFiles[i]);
                 update(item);
@@ -145,7 +146,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
 
         String fileName = file.getName();
         String id = fileName.substring(0, fileName.length() - getSuffix().length());
-        Item item = (Item) items.get(id);
+        Item item = (Item) this.items.get(id);
 
         String klass = ItemConfiguration.getItemClass(config);
         if (item == null) {
@@ -161,7 +162,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
                 getLogger().error(errorMsg);
                 throw new AccessControlException(errorMsg, e);
             }
-            item.setConfigurationDirectory(configurationDirectory);
+            item.setConfigurationDirectory(this.configurationDirectory);
         }
 
         try {
@@ -199,6 +200,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
     }
 
     protected void removeItem(File file) {
+	    // do nothing
     }
 
     /**
@@ -212,12 +214,11 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         } catch (AccessControlException e) {
             throw new IllegalStateException(e.getMessage());
         }
-        return (Item) items.get(id);
+        return (Item) this.items.get(id);
     }
 
     /**
      * get all items
-     * 
      * @return an array of items
      */
     public Item[] getItems() {
@@ -226,18 +227,17 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         } catch (AccessControlException e) {
             throw new IllegalStateException(e.getMessage());
         }
-        return (Item[]) items.values().toArray(new Item[items.values().size()]);
+        return (Item[]) this.items.values().toArray(new Item[this.items.values().size()]);
     }
 
     /**
      * Add an Item to this manager
-     * 
      * @param item to be added
      * @throws AccessControlException when the notification threw this exception.
      */
     public void add(Item item) throws AccessControlException {
         assert item != null;
-        items.put(item.getId(), item);
+        this.items.put(item.getId(), item);
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item [" + item + "] added.");
         }
@@ -250,7 +250,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
      * @throws AccessControlException when the notification threw this exception.
      */
     public void remove(Item item) throws AccessControlException {
-        items.remove(item.getId());
+        this.items.remove(item.getId());
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item [" + item + "] removed.");
         }
@@ -263,8 +263,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
      * @throws AccessControlException when the notification threw this exception.
      */
     public void update(Item newItem) throws AccessControlException {
-        items.remove(newItem.getId());
-        items.put(newItem.getId(), newItem);
+        this.items.remove(newItem.getId());
+        this.items.put(newItem.getId(), newItem);
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item [" + newItem + "] updated.");
         }
@@ -281,16 +281,15 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         } catch (AccessControlException e) {
             throw new IllegalStateException(e.getMessage());
         }
-        return items.containsValue(item);
+        return this.items.containsValue(item);
     }
 
     /**
      * Get the directory where the items are located.
-     * 
      * @return a <code>File</code>
      */
     public File getConfigurationDirectory() {
-        return configurationDirectory;
+        return this.configurationDirectory;
     }
 
     /**
@@ -323,8 +322,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Adding listener: [" + listener + "]");
         }
-        if (!itemManagerListeners.contains(listener)) {
-            itemManagerListeners.add(listener);
+        if (!this.itemManagerListeners.contains(listener)) {
+            this.itemManagerListeners.add(listener);
         }
     }
 
@@ -336,7 +335,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Removing listener: [" + listener + "]");
         }
-        itemManagerListeners.remove(listener);
+        this.itemManagerListeners.remove(listener);
     }
 
     /**
@@ -348,7 +347,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item was added: [" + item + "]");
         }
-        List clone = new ArrayList(itemManagerListeners);
+        List clone = new ArrayList(this.itemManagerListeners);
         for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
             listener.itemAdded(item);
@@ -364,7 +363,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item was removed: [" + item + "]");
         }
-        List clone = new ArrayList(itemManagerListeners);
+        List clone = new ArrayList(this.itemManagerListeners);
         for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
             if (getLogger().isDebugEnabled()) {
@@ -381,12 +380,12 @@ public abstract class FileItemManager extends AbstractLogEnabled {
 
         /**
          * Ctor.
-         * @param directory The directory to observe.
-         * @param filter A filter to specify the file type to observe.
+         * @param _directory The directory to observe.
+         * @param _filter A filter to specify the file type to observe.
          */
-        public DirectoryChangeNotifier(File directory, FileFilter filter) {
-            this.directory = directory;
-            this.filter = filter;
+        public DirectoryChangeNotifier(File _directory, FileFilter _filter) {
+            this.directory = _directory;
+            this.filter = _filter;
         }
 
         private File directory;
@@ -405,11 +404,11 @@ public abstract class FileItemManager extends AbstractLogEnabled {
          */
         public boolean hasChanged() throws IOException {
 
-            addedFiles.clear();
-            removedFiles.clear();
-            changedFiles.clear();
+            this.addedFiles.clear();
+            this.removedFiles.clear();
+            this.changedFiles.clear();
 
-            File[] files = directory.listFiles(filter);
+            File[] files = this.directory.listFiles(this.filter);
 
             Set newPathSet = new HashSet();
 
@@ -417,40 +416,40 @@ public abstract class FileItemManager extends AbstractLogEnabled {
                 String canonicalPath = files[i].getCanonicalPath();
                 newPathSet.add(canonicalPath);
 
-                if (!canonicalPath2LastModified.containsKey(canonicalPath)) {
-                    addedFiles.add(new File(canonicalPath));
+                if (!this.canonicalPath2LastModified.containsKey(canonicalPath)) {
+                    this.addedFiles.add(new File(canonicalPath));
 
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("New file: [" + canonicalPath + "]");
                     }
 
                 } else {
-                    Long lastModifiedObject = (Long) canonicalPath2LastModified.get(canonicalPath);
+                    Long lastModifiedObject = (Long) this.canonicalPath2LastModified.get(canonicalPath);
                     long lastModified = lastModifiedObject.longValue();
                     if (lastModified < files[i].lastModified()) {
-                        changedFiles.add(files[i]);
+                        this.changedFiles.add(files[i]);
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("File has changed: [" + canonicalPath + "]");
                         }
                     }
                 }
                 Long lastModified = new Long(files[i].lastModified());
-                canonicalPath2LastModified.put(canonicalPath, lastModified);
+                this.canonicalPath2LastModified.put(canonicalPath, lastModified);
             }
 
-            Set oldPathSet = canonicalPath2LastModified.keySet();
+            Set oldPathSet = this.canonicalPath2LastModified.keySet();
             String[] oldPaths = (String[]) oldPathSet.toArray(new String[oldPathSet.size()]);
             for (int i = 0; i < oldPaths.length; i++) {
                 if (!newPathSet.contains(oldPaths[i])) {
-                    removedFiles.add(new File(oldPaths[i]));
-                    canonicalPath2LastModified.remove(oldPaths[i]);
+                    this.removedFiles.add(new File(oldPaths[i]));
+                    this.canonicalPath2LastModified.remove(oldPaths[i]);
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("File removed: [" + oldPaths[i] + "]");
                     }
                 }
             }
 
-            return !addedFiles.isEmpty() || !removedFiles.isEmpty() || !changedFiles.isEmpty();
+            return !this.addedFiles.isEmpty() || !this.removedFiles.isEmpty() || !this.changedFiles.isEmpty();
         }
 
         /**
@@ -458,7 +457,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
          * @return An array of files.
          */
         public File[] getAddedFiles() {
-            return (File[]) addedFiles.toArray(new File[addedFiles.size()]);
+            return (File[]) this.addedFiles.toArray(new File[this.addedFiles.size()]);
         }
 
         /**
@@ -466,7 +465,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
          * @return An array of files.
          */
         public File[] getRemovedFiles() {
-            return (File[]) removedFiles.toArray(new File[removedFiles.size()]);
+            return (File[]) this.removedFiles.toArray(new File[this.removedFiles.size()]);
         }
 
         /**
@@ -474,7 +473,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
          * @return An array of files.
          */
         public File[] getChangedFiles() {
-            return (File[]) changedFiles.toArray(new File[changedFiles.size()]);
+            return (File[]) this.changedFiles.toArray(new File[this.changedFiles.size()]);
         }
 
     }

@@ -47,6 +47,9 @@ import com.sun.jndi.ldap.LdapCtxFactory;
 public class LDAPUser extends FileUser {
     private static Properties defaultProperties = null;
 
+    /**
+     * <code>LDAP_ID</code> The LDAP id
+     */
     public static final String LDAP_ID = "ldapid";
     private static String LDAP_PROPERTIES_FILE = "ldap.properties"; 
     private static String PROVIDER_URL_PROP = "provider-url";
@@ -76,6 +79,7 @@ public class LDAPUser extends FileUser {
      * Creates a new LDAPUser object.
      */
     public LDAPUser() {
+	    // do nothing
     }
 
     /**
@@ -88,57 +92,54 @@ public class LDAPUser extends FileUser {
 
     /**
      * Create an LDAPUser
-     * 
      * @param configurationDirectory where the user will be attached to
      * @param id user id of LDAPUser
      * @param email of LDAPUser
-     * @param ldapId of LDAPUser
+     * @param _ldapId of LDAPUser
      * @throws ConfigurationException if the properties could not be read
      */
-    public LDAPUser(File configurationDirectory, String id, String email, String ldapId)
+    public LDAPUser(File configurationDirectory, String id, String email, String _ldapId)
             throws ConfigurationException {
         super(configurationDirectory, id, null, email, null);
-        this.ldapId = ldapId;
+        this.ldapId = _ldapId;
 
         initialize();
     }
 
     /**
      * Create a new LDAPUser from a configuration
-     * 
      * @param config the <code>Configuration</code> specifying the user details
      * @throws ConfigurationException if the user could not be instantiated
      */
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
-        ldapId = config.getChild(LDAP_ID).getValue();
+        this.ldapId = config.getChild(LDAP_ID).getValue();
 
         initialize();
     }
 
     /**
      * Checks if a user exists.
-     * 
-     * @param ldapId The LDAP id.
+     * @param _ldapId The LDAP id.
      * @return A boolean value indicating whether the user is found in the directory
      * @throws AccessControlException when an error occurs. 
      */
-    public boolean existsUser(String ldapId) throws AccessControlException {
+    public boolean existsUser(String _ldapId) throws AccessControlException {
 
 	if (getLogger().isDebugEnabled())
-	    getLogger().debug("existsUser() checking id " + ldapId);
+	    getLogger().debug("existsUser() checking id " + _ldapId);
 
         boolean exists = false;
 
         try {
             readProperties();
-	    SearchResult entry = getDirectoryEntry(ldapId);
+            SearchResult entry = getDirectoryEntry(_ldapId);
 
-	    exists = (entry != null);
+            exists = (entry != null);
 
         } catch (Exception e) {
 	    if (getLogger().isDebugEnabled())
-            getLogger().debug("existsUser() for id " + ldapId + " got exception: " + e);
+            getLogger().debug("existsUser() for id " + _ldapId + " got exception: " + e);
             throw new AccessControlException("Exception during search: ", e);
         } 
 
@@ -147,57 +148,57 @@ public class LDAPUser extends FileUser {
 
     /**
      * Initializes this user.
-     *
      * The current (already authenticated) ldapId is queried in the directory, 
      * in order to retrieve additional information, such as the user name.
      * In current implementation, only the user name is actually retrieved, but
      * other attributes may be used in the future (such as groups ?)
-     *
      * TODO: should the code be changed to not throw an exception when something
      * goes wrong ? After all, it's only used to get additional info for display?
      * This is a design decision, I'm not sure what's best.
-     * 
      * @throws ConfigurationException when something went wrong.
+     * FIXME DirContext is unused at this time
      */
     protected void initialize() throws ConfigurationException {
         DirContext context = null;
-        try {
-	    if (getLogger().isDebugEnabled())
-            getLogger().debug("initialize() getting entry ...");
 
-	    SearchResult entry = getDirectoryEntry(ldapId);
-	    StringBuffer name = new StringBuffer();
+	    try {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("initialize() getting entry ...");
 
-	    if (entry != null) {
-		/* users full name */
-		String usrNameAttr = 
-		    defaultProperties.getProperty(USR_NAME_ATTR_PROP, USR_NAME_ATTR_DEFAULT);
+            SearchResult entry = getDirectoryEntry(this.ldapId);
+            StringBuffer name = new StringBuffer();
 
-		if (getLogger().isDebugEnabled())
-		    getLogger().debug("initialize() got entry, going to look for attribute " + usrNameAttr + " in entry, which is: " + entry);
-		
-		Attributes attributes = entry.getAttributes();
-		if (attributes != null) {
-		    Attribute userNames = attributes.get(usrNameAttr);
-		    if (userNames != null) {
-			for (NamingEnumeration enum = userNames.getAll(); enum.hasMore(); enum.next()) {
-			    name.append((String)userNames.get());
-			}
-		    }
-		}
-	    }
-	    ldapName = name.toString();
-	    if (getLogger().isDebugEnabled())
-            getLogger().debug("initialize() set name to " + ldapName);
+            if (entry != null) {
+            /* users full name */
+            String usrNameAttr = 
+                defaultProperties.getProperty(USR_NAME_ATTR_PROP, USR_NAME_ATTR_DEFAULT);
 
-        } catch (Exception e) {
-            throw new ConfigurationException("Could not read properties", e);
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("initialize() got entry, going to look for attribute " + usrNameAttr + " in entry, which is: " + entry);
+            
+            Attributes attributes = entry.getAttributes();
+            if (attributes != null) {
+                Attribute userNames = attributes.get(usrNameAttr);
+                if (userNames != null) {
+            	for (NamingEnumeration enumeration = userNames.getAll(); enumeration.hasMore(); enumeration.next()) {
+            	    name.append((String)userNames.get());
+            	}
+                }
+            }
+            }
+            this.ldapName = name.toString();
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("initialize() set name to " + this.ldapName);
+        } catch (final NamingException e1) {
+            throw new ConfigurationException("Could not read properties", e1);
+        } catch (final IOException e1) {
+            throw new ConfigurationException("Could not read properties", e1);
         } finally {
             try {
                 if (context != null) {
                     close(context);
                 }
-            } catch (NamingException e) {
+            } catch (final NamingException e) {
                 throw new ConfigurationException("Closing context failed: ", e);
             }
         }
@@ -211,7 +212,7 @@ public class LDAPUser extends FileUser {
 
         // add ldap_id node
         DefaultConfiguration child = new DefaultConfiguration(LDAP_ID);
-        child.setValue(ldapId);
+        child.setValue(this.ldapId);
         config.addChild(child);
 
         return config;
@@ -219,30 +220,26 @@ public class LDAPUser extends FileUser {
 
     /**
      * Get the ldap id
-     * 
      * @return the ldap id
      */
     public String getLdapId() {
-        return ldapId;
+        return this.ldapId;
     }
 
     /**
      * Set the ldap id
-     * 
      * @param string the new ldap id
      */
     public void setLdapId(String string) {
-        ldapId = string;
+        this.ldapId = string;
     }
 
     /**
      * Authenticate a user against the directory.
-     *
      * The principal to be authenticated is either constructed by use of the
      * configured properties, or by lookup of this ID in the directory. 
      * This principal then attempts to authenticate against the directory with
      * the provided password.
-     * 
      * @see org.apache.lenya.ac.User#authenticate(java.lang.String)
      */
     public boolean authenticate(String password) {
@@ -271,8 +268,6 @@ public class LDAPUser extends FileUser {
             getLogger().info("authenticate failed for principal " + principal + ", exception " + e);
         } catch (NamingException e) {
             // log this failure
-            // StringWriter writer = new StringWriter();
-            // e.printStackTrace(new PrintWriter(writer));
             if (getLogger().isInfoEnabled()) {
                 getLogger().info("Bind for user " + principal + " to Ldap server failed: ", e);
             }
@@ -286,14 +281,13 @@ public class LDAPUser extends FileUser {
      * @see org.apache.lenya.ac.Item#getName()
      */
     public String getName() {
-        return ldapName;
+        return this.ldapName;
     }
 
     /**
      * LDAP Users fetch their name information from the LDAP server, so we don't store it locally.
      * Since we only have read access we basically can't set the name, i.e. any request to change
      * the name is ignored.
-     * 
      * @param string is ignored
      */
     public void setName(String string) {
@@ -303,7 +297,6 @@ public class LDAPUser extends FileUser {
 
     /**
      * The LDAPUser doesn't store any passwords as they are handled by LDAP
-     * 
      * @param plainTextPassword is ignored
      */
     public void setPassword(String plainTextPassword) {
@@ -312,7 +305,6 @@ public class LDAPUser extends FileUser {
 
     /**
      * The LDAPUser doesn't store any passwords as they are handled by LDAP
-     * 
      * @param encryptedPassword is ignored
      */
     protected void setEncryptedPassword(String encryptedPassword) {
@@ -321,7 +313,6 @@ public class LDAPUser extends FileUser {
 
     /**
      * Connect to the LDAP server
-     * 
      * @param principal the principal string for the LDAP connection
      * @param credentials the credentials for the LDAP connection
      * @param authMethod the authentication method
@@ -358,7 +349,6 @@ public class LDAPUser extends FileUser {
 
     /**
      * Close the connection to the LDAP server
-     * 
      * @param ctx the context that was returned from the bind
      * @throws NamingException if there is a problem communicating to the LDAP server
      */
@@ -368,7 +358,6 @@ public class LDAPUser extends FileUser {
 
     /**
      * Read the properties
-     * 
      * @throws IOException if the properties cannot be found.
      */
     private void readProperties() throws IOException {
@@ -397,6 +386,7 @@ public class LDAPUser extends FileUser {
      * (starting Lenya 1.2.2); if it has a value, then a specific branch is wanted:
      * no recursive search. If the property is present, but has no value,
      * search recursively.
+     * @return Recursive search
      */
     private boolean isSubtreeSearch() {
 	boolean recurse = false;
@@ -431,7 +421,6 @@ public class LDAPUser extends FileUser {
 		defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT);
 	    searchFilter = "(" + userAttribute + "=" + userId + ")";
 	    SearchControls scope = new SearchControls();
-	    NamingEnumeration results;
 
 	    recursiveSearch = isSubtreeSearch();
 	    if (recursiveSearch) {
@@ -447,7 +436,7 @@ public class LDAPUser extends FileUser {
 	    if (getLogger().isDebugEnabled())
 		getLogger().debug("searching object " + objectName + " filtering with " + searchFilter + ", recursive search ? " + recursiveSearch);
 
-	    results = context.search(objectName, searchFilter, scope);
+	    NamingEnumeration results = context.search(objectName, searchFilter, scope);
 
 	    // sanity check: if more than one entry is returned
 	    // for a user-id, then the directory is probably flawed,
@@ -494,6 +483,9 @@ public class LDAPUser extends FileUser {
      * The third case is where a specific branch of the directory is to be used;
      * this is the case where usr-branch is set to a value. In this case, this branch
      * is used to construct the principal.
+     * @return The principal
+     * @throws IOException
+     * @throws NamingException
      */
     private String getPrincipal() throws IOException, NamingException {
 
@@ -527,7 +519,8 @@ public class LDAPUser extends FileUser {
     /**
      * Construct the principal for a user, by using the given userId along
      * with the configured properties.
-     *
+     * @param userId The user id
+     * @return The principal
      */
     private String constructPrincipal(String userId) {
 	StringBuffer principal = new StringBuffer();
@@ -561,6 +554,5 @@ public class LDAPUser extends FileUser {
 
 	return principal.toString();
     }
-
 
 }

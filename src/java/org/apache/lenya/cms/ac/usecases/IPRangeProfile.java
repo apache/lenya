@@ -127,35 +127,43 @@ public class IPRangeProfile extends AccessControlUsecase {
         
         /**
          * Ctor.
-         * @param position The position.
-         * @param value The value.
+         * @param _position The position.
+         * @param _value The value.
          */
-        public Part(byte position, byte value) {
-            this.value = Byte.toString(value);
-            this.position = position;
+        public Part(byte _position, byte _value) {
+            this.value = Byte.toString(_value);
+            this.position = _position;
         }
         
         /**
          * Ctor.
-         * @param position The position.
+         * @param _position The position.
          */
-        public Part(byte position) {
-            this(position, (byte) 0);
+        public Part(byte _position) {
+            this(_position, (byte) 0);
         }
         
+        /**
+         * Returns the position
+         * @return The position
+         */
         public byte getPosition() {
             return this.position;
         }
         
+        /**
+         * Returns the value
+         * @return The value
+         */
         public String getValue() {
             return this.value;
         }
         
         /**
-         * @param value The value.
+         * @param _value The value.
          */
-        public void setValue(String value) {
-            this.value = value;
+        public void setValue(String _value) {
+            this.value = _value;
         }
         
         /**

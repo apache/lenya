@@ -27,6 +27,9 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.impl.AbstractCondition;
 
+/**
+ * Role condition
+ */
 public class RoleCondition extends AbstractCondition {
     
     private Set roleIds = new HashSet();
@@ -41,7 +44,7 @@ public class RoleCondition extends AbstractCondition {
         
         String[] roles = expression.split(SEPARATOR);
         for (int i = 0; i < roles.length; i++) {
-            roleIds.add(roles[i].trim());
+            this.roleIds.add(roles[i].trim());
         }
     }
 
@@ -51,14 +54,14 @@ public class RoleCondition extends AbstractCondition {
      * role that is required by the RoleCondition.
      * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Situation, WorkflowInstance)
      */
-    public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
+    public boolean isComplied(Situation situation, WorkflowInstance instance) {
         CMSSituation situationImpl = (CMSSituation) situation;
         String[] roles = situationImpl.getRoleIds();
 
         boolean complied = false;
 
         for (int i = 0; i < roles.length; i++) {
-            if (roleIds.contains(roles[i])) {
+            if (this.roleIds.contains(roles[i])) {
                 complied = true;
             }
         }

@@ -21,13 +21,16 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.tools.ant.BuildException;
 
+/**
+ * An abstract base class for tasks operating on two documents
+ */
 public abstract class TwoDocumentsOperationTask extends DocumentOperationTask {
 
 	private String secarea;
 	private String secdocumentid;
 
 	/**
-	 * 
+	 * Constructor
 	 */
 	public TwoDocumentsOperationTask() {
 		super();
@@ -37,28 +40,28 @@ public abstract class TwoDocumentsOperationTask extends DocumentOperationTask {
 	 * @return String The area of the destination.
 	 */
 	public String getSecarea() {
-		return secarea;
+		return this.secarea;
 	}
 
 	/**
 	 * @return String The document-id corresponding to the destination.
 	 */
 	public String getSecdocumentid() {
-		return secdocumentid;
+		return this.secdocumentid;
 	}
 
 	/**
 	 * @param string The area of the destination.
 	 */
 	public void setSecarea(String string) {
-		secarea = string;
+		this.secarea = string;
 	}
 
 	/**
 	 * @param string The document-id corresponding to the destination.
 	 */
 	public void setSecdocumentid(String string) {
-		secdocumentid = string;
+		this.secdocumentid = string;
 	}
 
 	/** 

@@ -28,20 +28,26 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URLConnection;
 
+/**
+ * PDF Parser Wrapper
+ */
 public class PDFParserWrapper extends AbstractHTMLParser {
     /** Creates a new instance of PDFParserWrapper */
     public PDFParserWrapper() {
+        // do nothing
     }
 
     /** Returns a reader that reads the contents of the HTML document.
-     *
+     * @return The reader
+     * @throws IOException if an IO error occurs
      */
     public Reader getReader() throws IOException {
         return getParser().getReader();
     }
 
     /** Returns the title of the HTML document.
-     *
+     * @return The title
+     * @throws IOException if an IO error occurs
      */
     public String getTitle() throws IOException {
         try {
@@ -52,7 +58,8 @@ public class PDFParserWrapper extends AbstractHTMLParser {
     }
 
     /** Returns the keywords of the HTML document.
-     *
+     * @return The keywords
+     * @throws IOException if an IO error occurs
      */
     public String getKeywords() throws IOException {
         try {
@@ -65,36 +72,32 @@ public class PDFParserWrapper extends AbstractHTMLParser {
     org.apache.lenya.lucene.html.HTMLParser parser;
 
     protected org.apache.lenya.lucene.html.HTMLParser getParser() {
-        return parser;
+        return this.parser;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param file DOCUMENT ME!
-     *
-     * @throws ParseException DOCUMENT ME!
+     * Parse a file
+     * @param file The File
+     * @throws ParseException if a parser error occurs
      */
     public void parse(File file) throws ParseException {
         try {
-            parser = new org.apache.lenya.lucene.html.HTMLParser(file);
+            this.parser = new org.apache.lenya.lucene.html.HTMLParser(file);
         } catch (FileNotFoundException e) {
             throw new ParseException(e);
         }
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param uri DOCUMENT ME!
-     *
-     * @throws ParseException DOCUMENT ME!
+     * Parse a URL
+     * @param uri The URL
+     * @throws ParseException if a parser error occurs
      */
     public void parse(URI uri) throws ParseException {
         try {
             URLConnection connection = uri.toURL().openConnection();
             Reader reader = new InputStreamReader(connection.getInputStream());
-            parser = new org.apache.lenya.lucene.html.HTMLParser(reader);
+            this.parser = new org.apache.lenya.lucene.html.HTMLParser(reader);
         } catch (MalformedURLException e) {
             throw new ParseException(e);
         } catch (IOException e) {

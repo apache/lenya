@@ -125,9 +125,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
     /**
      * Returns the servlet context.
      * @return A file.
-     * @throws AccessControlException when something went wrong.
      */
-    protected File getContext() throws AccessControlException {
+    protected File getContext() {
         return this.context;
     }
 

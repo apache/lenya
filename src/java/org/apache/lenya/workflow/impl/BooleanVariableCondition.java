@@ -36,7 +36,7 @@ public class BooleanVariableCondition extends AbstractCondition {
      * @return A boolean value.
      */
     protected boolean getValue() {
-        return value;
+        return this.value;
     }
 
     /**
@@ -44,7 +44,7 @@ public class BooleanVariableCondition extends AbstractCondition {
      * @return A string.
      */
     protected String getVariableName() {
-        return variableName;
+        return this.variableName;
     }
 
     /**
@@ -58,12 +58,12 @@ public class BooleanVariableCondition extends AbstractCondition {
                 "The expression '" + expression + "' must be of the form 'name = [true|false]'");
         }
         
-        variableName = sides[0].trim();
-        value = Boolean.valueOf(sides[1].trim()).booleanValue();
+        this.variableName = sides[0].trim();
+        this.value = Boolean.valueOf(sides[1].trim()).booleanValue();
         
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Expression:    [" + sides[1].trim() + "]");
-            getLogger().debug("Setting value: [" + value + "]");
+            getLogger().debug("Setting value: [" + this.value + "]");
         }
     }
 

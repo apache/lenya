@@ -33,11 +33,11 @@ public class JobWrapper {
     /**
      * Ctor.
      * @param detail The job detail.
-     * @param trigger The trigger.
+     * @param _trigger The trigger.
      */
-    public JobWrapper(JobDetail detail, Trigger trigger) {
+    public JobWrapper(JobDetail detail, Trigger _trigger) {
         this.jobDetail = detail;
-        this.trigger = trigger;
+        this.trigger = _trigger;
     }
     
     /**
@@ -45,7 +45,7 @@ public class JobWrapper {
      * @return A job detail object.
      */
     public JobDetail getJobDetail() {
-        return jobDetail;
+        return this.jobDetail;
     }
     
     /**
@@ -53,7 +53,7 @@ public class JobWrapper {
      * @return A servlet job.
      */
     public ServletJob getJob() {
-        ServletJob job = ServletJobFactory.createJob(jobDetail.getJobClass());
+        ServletJob job = ServletJobFactory.createJob(this.jobDetail.getJobClass());
         return job;
     }
     
@@ -62,7 +62,7 @@ public class JobWrapper {
      * @return A trigger.
      */
     public Trigger getTrigger() {
-        return trigger;
+        return this.trigger;
     }
 
 }

@@ -19,9 +19,7 @@ package org.apache.lenya.cms.site.usecases;
 import java.util.Map;
 import org.apache.cocoon.servlet.multipart.Part;
 
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -46,7 +44,7 @@ public class Assets extends SiteUsecase {
      */
     protected void doInitialize() {
         super.doInitialize();
-        resourcesManager = getSourceDocument().getResourcesManager();
+        this.resourcesManager = getSourceDocument().getResourcesManager();
     }
             
      /**
@@ -55,8 +53,6 @@ public class Assets extends SiteUsecase {
      */
     void validate() throws UsecaseException {
         String title = getParameterAsString("title");
-        String creator = getParameterAsString("creator");
-        String rights = getParameterAsString("rights");
 
         if (title.length() == 0) {
             addErrorMessage("Please enter a title.");
@@ -83,10 +79,10 @@ public class Assets extends SiteUsecase {
 
         Map metadata = null;
         metadata.put("title",title);
-        metadata.put("cretor",creator);
+        metadata.put("creator",creator);
         metadata.put("rights",rights);
         try {
-        	resourcesManager.addResource(file, metadata);
+        	this.resourcesManager.addResource(file, metadata);
         } catch (Exception e) {
             addErrorMessage("The resource could not be added.");
         }

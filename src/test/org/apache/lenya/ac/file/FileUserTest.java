@@ -48,9 +48,9 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * The main method
      * 
-     * @param args DOCUMENT ME!
+     * @param args command line args
      */
     public static void main(String[] args) {
         PublicationHelper.extractPublicationArguments(args);
@@ -66,21 +66,21 @@ public class FileUserTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get all Groups
      * 
-     * @return DOCUMENT ME!
+     * @return A map of the groups
      */
     final public Map getGroups() {
-        return groups;
+        return this.groups;
     }
 
     /**
      * Create and save a user
      * 
-     * @param userName DOCUMENT ME!
-     * @param fullName DOCUMENT ME!
-     * @param email DOCUMENT ME!
-     * @param password DOCUMENT ME!
+     * @param userName The user name
+     * @param fullName The full name
+     * @param email The email
+     * @param password The password
      * 
      * @return a <code>FileUser</code>
      * 
@@ -107,8 +107,8 @@ public class FileUserTest extends AccessControlTest {
         adminGroup.save();
         user.save();
 
-        FileUserManager manager = getUserManager();
-        manager.add(user);
+        FileUserManager _manager = getUserManager();
+        _manager.add(user);
 
         return user;
     }
@@ -120,9 +120,9 @@ public class FileUserTest extends AccessControlTest {
      */
     protected FileUserManager getUserManager() throws AccessControlException {
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
+        FileUserManager _manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
                 getLogEnabledLogger());
-        return manager;
+        return _manager;
     }
 
     /**
@@ -135,8 +135,8 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public FileUser loadUser(String userName) throws AccessControlException {
-        FileUserManager manager = getUserManager();
-        return (FileUser) manager.getUser(userName);
+        FileUserManager _manager = getUserManager();
+        return (FileUser) _manager.getUser(userName);
     }
 
     /**
@@ -215,13 +215,13 @@ public class FileUserTest extends AccessControlTest {
     final public void testDelete() throws AccessControlException {
         String id = "albert";
         FileUser user = createAndSaveUser(id, "Albert Einstein", "albert@physics.org", "secret");
-        FileUserManager manager = getUserManager();
-        assertNotNull(manager);
+        FileUserManager _manager = getUserManager();
+        assertNotNull(_manager);
 
-        assertNotNull(manager.getUser(id));
+        assertNotNull(_manager.getUser(id));
         user.delete();
-        manager.remove(user);
-        assertNull(manager.getUser(id));
+        _manager.remove(user);
+        assertNull(_manager.getUser(id));
     }
 
     /**
@@ -234,10 +234,10 @@ public class FileUserTest extends AccessControlTest {
         FileUser user = createAndSaveUser("mickey", "Mickey Mouse", "mickey@mouse.com", password);
         assertTrue(user.authenticate(password));
 
-        FileUserManager manager = getUserManager();
-        assertNotNull(manager);
+        FileUserManager _manager = getUserManager();
+        assertNotNull(_manager);
 
-        User lenya = manager.getUser("lenya");
+        User lenya = _manager.getUser("lenya");
         assertNotNull(lenya);
         assertTrue(lenya.authenticate("levi"));
     }

@@ -47,9 +47,8 @@ public class UserManagerTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @param args DOCUMENT ME!
+     * Command line interface
+     * @param args Command line args
      */
     public static void main(String[] args) {
         PublicationHelper.extractPublicationArguments(args);
@@ -57,7 +56,6 @@ public class UserManagerTest extends AccessControlTest {
     }
 
     /**
-     * (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
@@ -65,22 +63,20 @@ public class UserManagerTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @throws AccessControlException DOCUMENT ME!
+     * Run the test
+     * @throws AccessControlException if an error occurs
      */
     final public void testInstance() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes,
+        FileUserManager _manager = FileUserManager.instance(configDir, userTypes,
                 getLogEnabledLogger());
-        assertNotNull(manager);
+        assertNotNull(_manager);
     }
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @throws AccessControlException DOCUMENT ME!
+     * Load the configuration for the test
+     * @throws AccessControlException if an error occurs
      */
     final public void testLoadConfig() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
@@ -131,9 +127,8 @@ public class UserManagerTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @throws AccessControlException DOCUMENT ME!
+     * Test getUser()
+     * @throws AccessControlException if an error occurs
      */
     final public void testGetUser() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
@@ -141,12 +136,12 @@ public class UserManagerTest extends AccessControlTest {
         FileUser user = new FileUser(configDir, userName, "Alice in Wonderland",
                 "alice@wonderland.com", "secret");
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager manager = FileUserManager.instance(configDir, userTypes,
+        FileUserManager _manager = FileUserManager.instance(configDir, userTypes,
                 getLogEnabledLogger());
-        assertNotNull(manager);
-        manager.add(user);
+        assertNotNull(_manager);
+        _manager.add(user);
 
-        User otherUser = manager.getUser(userName);
+        User otherUser = _manager.getUser(userName);
         assertEquals(user, otherUser);
         assertEquals(user.getDescription(), otherUser.getDescription());
         assertEquals(user.getEmail(), otherUser.getEmail());

@@ -20,30 +20,42 @@
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.w3c.dom.Element;
 
+/**
+ * The indexer interface
+ */
 public interface Indexer {
     /**
      * Configures this indexer.
+     * @param _indexer The indexer
+     * @param _configFileName The name of the configuration file
+     * @throws IOException if an error occurs
      */
-    void configure(Element indexer, String configFileName) throws Exception;
+    void configure(Element _indexer, String _configFileName) throws IOException;
 
     /**
      * Indexes the contents of a directory.
+     * @param _dumpDirectory The dump directory to use
+     * @param _index The index to use
+     * @throws IOException if an error occurs
      */
-    void createIndex(File dumpDirectory, File index)
-        throws Exception;
+    void createIndex(File _dumpDirectory, File _index) throws IOException;
 
     /**
      * Indexes the contents of a directory.
+     * @param _dumpDirectory The dump directory to use
+     * @param _index The index to use
+     * @throws IOException if an error occurs
      */
-    void updateIndex(File dumpDirectory, File index)
-        throws Exception;
+    void updateIndex(File _dumpDirectory, File _index) throws IOException;
 
     /**
      * Indexes the content of one file
+     * @param file The file to index
+     * @throws IOException if an error occurs
      */
-    void indexDocument(File file)
-        throws Exception;
+    void indexDocument(File file) throws IOException;
 }

@@ -38,22 +38,19 @@ public class HTML {
     HTMLHandler htmlHandler;
 
     /**
-     * Creates a new HTML object.
-     *
-     * @param uri DOCUMENT ME!
-     *
-     * @throws IOException DOCUMENT ME!
+     * Creates a new HTML object from a URI
+     * @param uri The URI
+     * @throws IOException if a IO error occurs
      */
     public HTML(String uri) throws IOException {
         ParserDelegator pd = new ParserDelegator();
-        htmlHandler = new HTMLHandler();
-        pd.parse(getReader(uri), htmlHandler, true);
+        this.htmlHandler = new HTMLHandler();
+        pd.parse(getReader(uri), this.htmlHandler, true);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
+     * Command line interface
+     * @param args Command line args
      */
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -97,48 +94,39 @@ public class HTML {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param duplicate DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get Anchor Hrefs
+     * @param duplicate Whether you want duplicate HREFS
+     * @return A list of Hrefs
      */
     public List getAnchorHRefs(boolean duplicate) {
         if (duplicate) {
-            return htmlHandler.getAllAHRefs();
-        } else {
-            return htmlHandler.getAHRefs();
+            return this.htmlHandler.getAllAHRefs();
         }
+        return this.htmlHandler.getAHRefs();
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param duplicate DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get Link hrefs
+     * @param duplicate Whether you want duplicate Hrefs
+     * @return A list of Hrefs
      */
     public List getLinkHRefs(boolean duplicate) {
         if (duplicate) {
-            return htmlHandler.getAllLinkHRefs();
-        } else {
-            return htmlHandler.getLinkHRefs();
+            return this.htmlHandler.getAllLinkHRefs();
         }
+        return this.htmlHandler.getLinkHRefs();
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param duplicate DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get Image src attributes
+     * @param duplicate Whether you want duplicates
+     * @return A list of src Attributes
      */
     public List getImageSrcs(boolean duplicate) {
         if (duplicate) {
-            return htmlHandler.getAllImageSrcs();
-        } else {
-            return htmlHandler.getImageSrcs();
+            return this.htmlHandler.getAllImageSrcs();
         }
+        return this.htmlHandler.getImageSrcs();
     }
 
     private Reader getReader(String uri) throws IOException {
@@ -147,9 +135,8 @@ public class HTML {
             URLConnection connection = new URL(uri).openConnection();
 
             return new InputStreamReader(connection.getInputStream());
-        } else {
-            // uri is file
-            return new FileReader(uri);
         }
+        // uri is file
+        return new FileReader(uri);
     }
 }

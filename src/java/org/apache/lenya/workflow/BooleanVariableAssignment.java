@@ -24,4 +24,5 @@ package org.apache.lenya.workflow;
  * Boolean variable assignment.
  */
 public interface BooleanVariableAssignment extends Action {
+    // do nothing
 }

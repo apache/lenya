@@ -26,6 +26,7 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -57,6 +58,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * Ctor.
      */
     public DocumentPolicyManagerWrapper() {
+	    // do nothing
     }
 
     private InheritingPolicyManager policyManager;
@@ -64,7 +66,6 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
 
     /**
      * Returns the URI which is used to obtain the policy for a webapp URL.
-     * 
      * @param webappUrl The webapp URL.
      * @return A string.
      * @throws AccessControlException when something went wrong.
@@ -108,7 +109,6 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
 
     /**
      * Returns the publication for a certain URL.
-     * 
      * @param url The webapp url.
      * @return A publication.
      * @throws AccessControlException when the publication could not be created.
@@ -121,7 +121,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         SourceResolver resolver = null;
 
         try {
-            resolver = (SourceResolver) serviceManager.lookup(SourceResolver.ROLE);
+            resolver = (SourceResolver) this.serviceManager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI("context:///");
             File servletContext = SourceUtil.getFile(source);
             getLogger().debug("    Webapp URL:      [" + url + "]");
@@ -135,7 +135,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
                 if (source != null) {
                     resolver.release(source);
                 }
-                serviceManager.release(resolver);
+                this.serviceManager.release(resolver);
             }
         }
         return publication;
@@ -145,11 +145,10 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
 
     /**
      * Returns the service manager.
-     * 
      * @return A service manager.
      */
     protected ServiceManager getServiceManager() {
-        return serviceManager;
+        return this.serviceManager;
     }
 
     /**
@@ -163,14 +162,14 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * @return Returns the policyManager.
      */
     public InheritingPolicyManager getPolicyManager() {
-        return policyManager;
+        return this.policyManager;
     }
 
     /**
-     * @param policyManager The policyManager to set.
+     * @param _policyManager The policyManager to set.
      */
-    public void setPolicyManager(InheritingPolicyManager policyManager) {
-        this.policyManager = policyManager;
+    public void setPolicyManager(InheritingPolicyManager _policyManager) {
+        this.policyManager = _policyManager;
     }
 
     /**
@@ -243,28 +242,46 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        Configuration policyManagerConfiguration = configuration.getChild(ELEMENT_POLICY_MANAGER,
-                false);
+        Configuration policyManagerConfiguration = configuration.getChild(
+                this.ELEMENT_POLICY_MANAGER, false);
         if (policyManagerConfiguration != null) {
-            String type = policyManagerConfiguration.getAttribute(ATTRIBUTE_TYPE);
+            String type = null;
             try {
-                policyManagerSelector = (ServiceSelector) getServiceManager().lookup(
-                        PolicyManager.ROLE + "Selector");
+                type = policyManagerConfiguration
+                        .getAttribute(this.ATTRIBUTE_TYPE);
 
-                PolicyManager policyManager = (PolicyManager) policyManagerSelector.select(type);
+                this.policyManagerSelector = (ServiceSelector) getServiceManager()
+                        .lookup(PolicyManager.ROLE + "Selector");
 
-                if (!(policyManager instanceof InheritingPolicyManager)) {
-                    throw new AccessControlException("The " + getClass().getName()
+                PolicyManager _policyManager = (PolicyManager) this.policyManagerSelector
+                        .select(type);
+
+                if (!(_policyManager instanceof InheritingPolicyManager)) {
+                    throw new AccessControlException("The "
+                            + getClass().getName()
                             + " can only be used with an "
                             + InheritingPolicyManager.class.getName() + ".");
                 }
 
-                DefaultAccessController.configureOrParameterize(policyManager,
+                DefaultAccessController.configureOrParameterize(_policyManager,
                         policyManagerConfiguration);
-                setPolicyManager((InheritingPolicyManager) policyManager);
-            } catch (Exception e) {
-                throw new ConfigurationException("Obtaining policy manager for type [" + type
-                        + "] failed: ", e);
+                setPolicyManager((InheritingPolicyManager) _policyManager);
+            } catch (final ConfigurationException e1) {
+                throw new ConfigurationException(
+                        "Obtaining policy manager for type [" + type
+                                + "] failed: ", e1);
+            } catch (final ServiceException e1) {
+                throw new ConfigurationException(
+                        "Obtaining policy manager for type [" + type
+                                + "] failed: ", e1);
+            } catch (final ParameterException e1) {
+                throw new ConfigurationException(
+                        "Obtaining policy manager for type [" + type
+                                + "] failed: ", e1);
+            } catch (final AccessControlException e1) {
+                throw new ConfigurationException(
+                        "Obtaining policy manager for type [" + type
+                                + "] failed: ", e1);
             }
         }
     }
@@ -273,11 +290,11 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
-        if (policyManagerSelector != null) {
+        if (this.policyManagerSelector != null) {
             if (getPolicyManager() != null) {
-                policyManagerSelector.release(getPolicyManager());
+                this.policyManagerSelector.release(getPolicyManager());
             }
-            getServiceManager().release(policyManagerSelector);
+            getServiceManager().release(this.policyManagerSelector);
         }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Disposing [" + this + "]");

@@ -34,10 +34,10 @@ public class ExistingUsecaseResolver implements PublicationVisitor {
 
     /**
      * Ctor.
-     * @param usecase The name of the usecase to resolve.
+     * @param _usecase The name of the usecase to resolve.
      */
-    public ExistingUsecaseResolver(String usecase) {
-        this.usecase = usecase;
+    public ExistingUsecaseResolver(String _usecase) {
+        this.usecase = _usecase;
     }
 
     protected static final String ELEMENT_USECASES = "usecases";
@@ -47,10 +47,10 @@ public class ExistingUsecaseResolver implements PublicationVisitor {
     /**
      * @see org.apache.lenya.cms.publication.templating.PublicationVisitor#visit(org.apache.lenya.cms.publication.Publication)
      */
-    public void visit(Publication publication) {
+    public void visit(Publication _publication) {
 
         if (this.publication == null) {
-            File configFile = new File(publication.getDirectory(), Publication.CONFIGURATION_FILE);
+            File configFile = new File(_publication.getDirectory(), Publication.CONFIGURATION_FILE);
             DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
             try {
@@ -61,7 +61,7 @@ public class ExistingUsecaseResolver implements PublicationVisitor {
                     for (int i = 0; i < usecaseConfigs.length; i++) {
                         String usecaseName = usecaseConfigs[i].getAttribute(ATTRIBUTE_NAME);
                         if (usecaseName.equals(this.usecase)) {
-                            this.publication = publication;
+                            this.publication = _publication;
                         }
                     }
                 }

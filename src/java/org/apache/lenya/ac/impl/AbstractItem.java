@@ -35,6 +35,7 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
      * Ctor.
      */
     public AbstractItem() {
+	    // do nothing
     }
 
     /**
@@ -43,7 +44,7 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
      */
     protected void setId(String string) {
         assert isValidId(string);
-        id = string;
+        this.id = string;
     }
 
     /**
@@ -51,7 +52,7 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
      * @return The ID.
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -59,16 +60,16 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
      * @return A string.
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     /**
      * Sets the description of this object.
-     * @param description A string.
+     * @param _description A string.
      */
-    public void setDescription(String description) {
-        assert description != null;
-        this.description = description;
+    public void setDescription(String _description) {
+        assert _description != null;
+        this.description = _description;
     }
 
     /**
@@ -81,21 +82,19 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
 
     /**
      * Returns the name of this object.
-     * 
      * @return A <code>String</code>.
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
      * Set the full name
-     * 
-     * @param name the new full name
+     * @param _name the new full name
      */
-    public void setName(String name) {
-        assert name != null;
-        this.name = name;
+    public void setName(String _name) {
+        assert _name != null;
+        this.name = _name;
     }
 
     /**
@@ -117,7 +116,6 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item {
             AbstractItem otherManageable = (AbstractItem) otherObject;
             equals = getId().equals(otherManageable.getId());
         }
-
         return equals;
     }
 

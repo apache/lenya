@@ -22,7 +22,15 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * Tests the identity
+ */
 public class IdentityTest extends AccessControlTest {
+
+    /**
+     * <code>USER_ID</code> The user id to test
+     */
+    public static final String USER_ID = "lenya";
 
     /**
      * Ctor.
@@ -41,8 +49,6 @@ public class IdentityTest extends AccessControlTest {
         TestRunner.run(IdentityTest.class);
     }
     
-    public static final String USER_ID = "lenya";
-
     /**
      * Tests the identity.
      * 

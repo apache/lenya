@@ -47,8 +47,8 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     private Context context;
@@ -56,8 +56,8 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
+    public void contextualize(Context _context) throws ContextException {
+        this.context = _context;
     }
 
     /**
@@ -105,10 +105,10 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
     private String filterURI(final String uri) {
         final int index = uri.indexOf(";jsessionid");
 
-        if (index >= 0)
+        if (index >= 0) {
             return uri.substring(0, index);
-        else
-            return uri;
+        }
+        return uri;
     }
 
 }

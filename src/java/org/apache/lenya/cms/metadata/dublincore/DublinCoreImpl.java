@@ -36,6 +36,7 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -88,30 +89,26 @@ public class DublinCoreImpl {
 
     /**
      * Creates a new instance of Dublin Core
-     * 
      * @param aDocument the document for which the Dublin Core instance is created.
-     * 
      * @throws DocumentException if an error occurs
      */
     protected DublinCoreImpl(Document aDocument) throws DocumentException {
         this.cmsdocument = aDocument;
-        infofile = cmsdocument.getPublication().getPathMapper().getFile(
-                cmsdocument.getPublication(), cmsdocument.getArea(), cmsdocument.getId(),
-                cmsdocument.getLanguage());
+        this.infofile = this.cmsdocument.getPublication().getPathMapper().getFile(
+                this.cmsdocument.getPublication(), this.cmsdocument.getArea(), this.cmsdocument.getId(),
+                this.cmsdocument.getLanguage());
         loadValues();
     }
 
     /**
      * Creates a new instance of Dublin Core 
-     * 
      * @param file the File for which the Dublin Core instance is created.
      * TODO This is a hack until resources are treated as documents, and .meta files
      * can be accessed through the Document interface.
-     * 
      * @throws DocumentException if an error occurs
      */
     public DublinCoreImpl(File file) throws DocumentException {
-        infofile = file;
+        this.infofile = file;
         loadValues();
     }
 
@@ -121,12 +118,12 @@ public class DublinCoreImpl {
      */
     protected void loadValues() throws DocumentException {
 
-        if (infofile.exists()) {
+        if (this.infofile.exists()) {
             org.w3c.dom.Document doc = null;
             try {
-                doc = DocumentHelper.readDocument(infofile);
+                doc = DocumentHelper.readDocument(this.infofile);
             } catch (Exception e) {
-                throw new DocumentException("Parsing file [" + infofile + "] failed: ", e);
+                throw new DocumentException("Parsing file [" + this.infofile + "] failed: ", e);
             }
 
             // FIXME: what if "lenya:meta" element doesn't exist yet?
@@ -136,7 +133,7 @@ public class DublinCoreImpl {
             String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
             String[] prefixes = { DC_PREFIX, DCTERMS_PREFIX };
             String[][] arrays = { ELEMENTS, TERMS };
-            Map[] maps = { elements, terms };
+            Map[] maps = { this.elements, this.terms };
 
             for (int type = 0; type < 2; type++) {
                 NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
@@ -157,18 +154,17 @@ public class DublinCoreImpl {
 
     /**
      * Save the meta data.
-     * 
      * @throws DocumentException if the meta data could not be made persistent.
      */
     public void save() throws DocumentException {
         org.w3c.dom.Document doc = null;
         try {
-            doc = DocumentHelper.readDocument(infofile);
-        } catch (ParserConfigurationException e) {
+            doc = DocumentHelper.readDocument(this.infofile);
+        } catch (final ParserConfigurationException e) {
             throw new DocumentException(e);
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
             throw new DocumentException(e);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new DocumentException(e);
         }
 
@@ -177,7 +173,7 @@ public class DublinCoreImpl {
         String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
         String[] prefixes = { DC_PREFIX, DCTERMS_PREFIX };
         String[][] arrays = { ELEMENTS, TERMS };
-        Map[] maps = { elements, terms };
+        Map[] maps = { this.elements, this.terms };
 
         for (int type = 0; type < 2; type++) {
             NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
@@ -197,7 +193,7 @@ public class DublinCoreImpl {
         }
 
         try {
-            DocumentHelper.writeDocument(doc, infofile);
+            DocumentHelper.writeDocument(doc, this.infofile);
         } catch (TransformerConfigurationException e) {
             throw new DocumentException(e);
         } catch (TransformerException e) {
@@ -215,22 +211,27 @@ public class DublinCoreImpl {
      * @throws DocumentException if an error occurs.
      */
     protected Element getMetaElement(org.w3c.dom.Document doc) throws DocumentException {
-        NamespaceHelper namespaceHelper = new NamespaceHelper(PageEnvelope.NAMESPACE,
-                PageEnvelope.DEFAULT_PREFIX, doc);
-        Element documentElement = doc.getDocumentElement();
-        Element metaElement = namespaceHelper.getFirstChild(documentElement, META);
+        Element metaElement;
+        try {
+            NamespaceHelper namespaceHelper = new NamespaceHelper(PageEnvelope.NAMESPACE,
+                    PageEnvelope.DEFAULT_PREFIX, doc);
+            Element documentElement = doc.getDocumentElement();
+            metaElement = namespaceHelper.getFirstChild(documentElement, META);
 
-        if (metaElement == null) {
-            metaElement = namespaceHelper.createElement(META);
-            Element[] children = DocumentHelper.getChildren(documentElement);
-            if (children.length == 0) {
-                documentElement.appendChild(metaElement);
-            } else {
-                documentElement.insertBefore(metaElement, children[0]);
+            if (metaElement == null) {
+                metaElement = namespaceHelper.createElement(META);
+                Element[] children = DocumentHelper.getChildren(documentElement);
+                if (children.length == 0) {
+                    documentElement.appendChild(metaElement);
+                } else {
+                    documentElement.insertBefore(metaElement, children[0]);
+                }
             }
+        } catch (final DOMException e) {
+            throw new DocumentException(e);
         }
-
         return metaElement;
+
     }
 
     /**
@@ -260,9 +261,9 @@ public class DublinCoreImpl {
         List elementList = Arrays.asList(ELEMENTS);
         List termList = Arrays.asList(TERMS);
         if (elementList.contains(key)) {
-            values = (String[]) elements.get(key);
+            values = (String[]) this.elements.get(key);
         } else if (termList.contains(key)) {
-            values = (String[]) terms.get(key);
+            values = (String[]) this.terms.get(key);
         } else {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
@@ -300,9 +301,9 @@ public class DublinCoreImpl {
         List elementList = Arrays.asList(ELEMENTS);
         List termList = Arrays.asList(TERMS);
         if (elementList.contains(key)) {
-            elements.put(key, newValues);
+            this.elements.put(key, newValues);
         } else if (termList.contains(key)) {
-            terms.put(key, newValues);
+            this.terms.put(key, newValues);
         } else {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
@@ -322,9 +323,9 @@ public class DublinCoreImpl {
         List elementList = Arrays.asList(ELEMENTS);
         List termList = Arrays.asList(TERMS);
         if (elementList.contains(key)) {
-            elements.put(key, newValues);
+            this.elements.put(key, newValues);
         } else if (termList.contains(key)) {
-            terms.put(key, newValues);
+            this.terms.put(key, newValues);
         } else {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
@@ -366,9 +367,9 @@ public class DublinCoreImpl {
         List elementList = Arrays.asList(ELEMENTS);
         List termList = Arrays.asList(TERMS);
         if (elementList.contains(key)) {
-            elements.put(key, newValues);
+            this.elements.put(key, newValues);
         } else if (termList.contains(key)) {
-            terms.put(key, newValues);
+            this.terms.put(key, newValues);
         } else {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
@@ -384,9 +385,9 @@ public class DublinCoreImpl {
         List elementList = Arrays.asList(ELEMENTS);
         List termList = Arrays.asList(TERMS);
         if (elementList.contains(key)) {
-            elements.put(key, new String[0]);
+            this.elements.put(key, new String[0]);
         } else if (termList.contains(key)) {
-            terms.put(key, new String[0]);
+            this.terms.put(key, new String[0]);
         } else {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");

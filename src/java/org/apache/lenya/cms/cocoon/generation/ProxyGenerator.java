@@ -51,27 +51,28 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
         Parameterizable {
 
     // The URI of the namespace of this generator
-    private String URI = "http://apache.org/cocoon/lenya/proxygenerator/1.0";
+    private final static String URI = "http://apache.org/cocoon/lenya/proxygenerator/1.0";
 
     /**
      * No parameters implemented.
      * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
      */
-    public void parameterize(Parameters parameters) throws ParameterException {
+    public void parameterize(Parameters _parameters) throws ParameterException {
+	    // do nothing
     }
 
     /**
      * @see org.apache.cocoon.generation.Generator#generate()
      */
     public void generate() throws SAXException {
-        Request request = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
+        Request _request = (Request) this.objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
 
         getLogger().debug("\n----------------------------------------------------------------"
-                + "\n- Request: (" + request.getClass().getName() + ") at port "
-                + request.getServerPort()
+                + "\n- Request: (" + _request.getClass().getName() + ") at port "
+                + _request.getServerPort()
                 + "\n----------------------------------------------------------------");
 
-        String submitMethod = request.getMethod();
+        String submitMethod = _request.getMethod();
 
         SAXParser parser = null;
 
@@ -79,12 +80,12 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             // DEBUG
             if (submitMethod.equals("POST")) {
                 // FIXME: Andreas
-                if (request instanceof HttpRequest) {
-                    intercept(((HttpRequest) request).getInputStream());
+                if (_request instanceof HttpRequest) {
+                    intercept(((HttpRequest) _request).getInputStream());
                 }
             }
 
-            URL url = createURL(request);
+            URL url = createURL(_request);
 
             // Forward "InputStream", Parameters, QueryString to Servlet
             org.apache.commons.httpclient.HttpMethod httpMethod = null;
@@ -92,11 +93,11 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             if (submitMethod.equals("POST")) {
                 httpMethod = new PostMethod();
 
-                Enumeration params = request.getParameterNames();
+                Enumeration params = _request.getParameterNames();
 
                 while (params.hasMoreElements()) {
                     String paramName = (String) params.nextElement();
-                    String[] paramValues = request.getParameterValues(paramName);
+                    String[] paramValues = _request.getParameterValues(paramName);
 
                     for (int i = 0; i < paramValues.length; i++) {
                         ((PostMethod) httpMethod).setParameter(paramName, paramValues[i]);
@@ -104,11 +105,11 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
                 }
             } else if (submitMethod.equals("GET")) {
                 httpMethod = new org.apache.commons.httpclient.methods.GetMethod();
-                httpMethod.setQueryString(request.getQueryString());
+                httpMethod.setQueryString(_request.getQueryString());
             }
 
             // Copy/clone Cookies
-            Cookie[] cookies = request.getCookies();
+            Cookie[] cookies = _request.getCookies();
             org.apache.commons.httpclient.Cookie[] transferedCookies = null;
 
             if (cookies != null) {
@@ -138,9 +139,9 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             httpMethod.setPath(url.getPath());
 
             // FIXME
-            for (Enumeration e = request.getHeaderNames(); e.hasMoreElements();) {
+            for (Enumeration e = _request.getHeaderNames(); e.hasMoreElements();) {
                 String name = (String) e.nextElement();
-                httpMethod.addRequestHeader(name, request.getHeader(name));
+                httpMethod.addRequestHeader(name, _request.getHeader(name));
             }
             HostConfiguration hostConfiguration = new HostConfiguration();
             hostConfiguration.setHost(url.getHost(), url.getPort());
@@ -176,12 +177,10 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
     /**
      * Log input stream for debugging
-     * 
      * @param in an <code>InputStream</code> value
-     * 
      * @return an <code>InputStream</code> value
-     * 
      * @exception Exception if an error occurs
+     * FIXME don't throw Exception here
      */
     private InputStream intercept(InputStream in) throws Exception {
         byte[] buffer = new byte[1024];
@@ -197,15 +196,18 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
     /**
      * Add server name and server port if necessary
+     * @param _request The request
+     * @return The URL
+     * @throws MalformedURLException if the URL was invalid
      */
-    private URL createURL(Request request) throws MalformedURLException {
+    private URL createURL(Request _request) throws MalformedURLException {
         URL url = null;
 
         try {
             url = new URL(this.source);
             getLogger().debug("Is URL: " + url);
         } catch (MalformedURLException e) {
-            url = new URL("http://" + request.getServerName() + ":" + request.getServerPort() + this.source);
+            url = new URL("http://" + _request.getServerName() + ":" + _request.getServerPort() + this.source);
             getLogger().debug("Add localhost and port: " + url);
         }
 

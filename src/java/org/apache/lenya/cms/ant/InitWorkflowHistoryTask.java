@@ -20,13 +20,18 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.tools.ant.BuildException;
 
+/**
+ * A task to initialize the workflow history
+ */
 public class InitWorkflowHistoryTask extends PublicationTask {
     private String documentId;
     private String documentType;
@@ -37,15 +42,15 @@ public class InitWorkflowHistoryTask extends PublicationTask {
      * @return A string.
      */
     public String getMachineIp() {
-        return machineIp;
+        return this.machineIp;
     }
 
     /**
      * Sets the machine IP address from which the history was initialized.
-     * @param machineIp A string.
+     * @param _machineIp A string.
      */
-    public void setMachineIp(String machineIp) {
-        this.machineIp = machineIp;
+    public void setMachineIp(String _machineIp) {
+        this.machineIp = _machineIp;
     }
 
     /**
@@ -53,31 +58,31 @@ public class InitWorkflowHistoryTask extends PublicationTask {
      * @return A string.
      */
     public String getUserId() {
-        return userId;
+        return this.userId;
     }
 
     /**
      * Sets the ID of the user who initialized the history.
-     * @param userId A string.
+     * @param _userId A string.
      */
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String _userId) {
+        this.userId = _userId;
     }
 
     /**
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
-        String language = getLanguage();
+        String _language = getLanguage();
 
-        if (language == null) {
-            language = getPublication().getDefaultLanguage();
+        if (_language == null) {
+            _language = getPublication().getDefaultLanguage();
         }
         Document document;
         try {
-            document = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, getDocumentId(), language);
+            document = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, getDocumentId(), _language);
             log(".execute(): " + document.getLanguage());
-        } catch (DocumentBuildException e) {
+        } catch (final DocumentBuildException e) {
             throw new BuildException(e);
         }
 
@@ -90,69 +95,65 @@ public class InitWorkflowHistoryTask extends PublicationTask {
             WorkflowFactory factory = WorkflowFactory.newInstance();
             WorkflowInstance instance = factory.buildNewInstance(document, type.getWorkflowFileName());
             instance.getHistory().initialize(situation);
-        } catch (Exception e) {
+        } catch (final BuildException e) {
+            throw new BuildException(e);
+        } catch (final DocumentTypeBuildException e) {
+            throw new BuildException(e);
+        } catch (final WorkflowException e) {
             throw new BuildException(e);
         }
     }
 
     /**
      * Get the document-id.
-     * 
      * @return the document-id
      */
     public String getDocumentId() {
-        assertString(documentId);
-
-        return documentId;
+        assertString(this.documentId);
+        return this.documentId;
     }
 
     /**
      * Set the document-id.
-     * 
      * @param aDocumentId the document-id
      */
     public void setDocumentId(String aDocumentId) {
         assertString(aDocumentId);
-        documentId = aDocumentId;
+        this.documentId = aDocumentId;
     }
 
     /**
      * Get the document type.
-     * 
      * @return the document type
      */
     public String getDocumentType() {
-        assertString(documentType);
-
-        return documentType;
+        assertString(this.documentType);
+        return this.documentType;
     }
 
     /**
      * Set the document type.
-     * 
      * @param aDocumentType the document type
      */
     public void setDocumentType(String aDocumentType) {
         assertString(aDocumentType);
-        documentType = aDocumentType;
+        this.documentType = aDocumentType;
     }
 
     /**
      * Get the language.
-     * 
      * @return the language
      */
     public String getLanguage() {
-        return language;
+        return this.language;
     }
 
     /**
      * Set the language.
-     * 
      * @param string the language
      */
     public void setLanguage(String string) {
-        language = string;
+        this.language = string;
     }
 
     private String userId = "";

@@ -45,6 +45,7 @@ public class Search extends DocumentUsecase {
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
+	    // do nothing
     }
 
     /**

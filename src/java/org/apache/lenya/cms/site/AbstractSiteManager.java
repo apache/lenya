@@ -33,13 +33,14 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * Ctor.
      */
     public AbstractSiteManager() {
+	    // do nothing
     }
     
     /**
      * @see org.apache.lenya.cms.site.SiteManager#setIdentityMap(org.apache.lenya.cms.publication.DocumentIdentityMap)
      */
-    public void setIdentityMap(DocumentIdentityMap map) {
-        this.map = map;
+    public void setIdentityMap(DocumentIdentityMap _map) {
+        this.map = _map;
     }
 
     /**
@@ -47,7 +48,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @return A resource identity map.
      */
     public DocumentIdentityMap getIdentityMap() {
-        return map;
+        return this.map;
     }
 
 }

@@ -45,68 +45,66 @@ public class DocumentIdToPath extends PublicationTask {
      * @return Sting The area.
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * @return string The document id 
      */
     protected String getDocumentid() {
-        return documentid;
+        return this.documentid;
     }
 
     /**
      * @return propertyname. The name of the property for the directory path.
      */
     public String getPropertyname() {
-        return propertyname;
+        return this.propertyname;
     }
 
     /**
      * @param string The area.
      */
     public void setArea(String string) {
-        area = string;
+        this.area = string;
     }
 
     /**
      * @param string The name of the property.
      */
     public void setPropertyname(String string) {
-        propertyname = string;
+        this.propertyname = string;
     }
 
     /**
      * Set the value of the document id.
-     *   
      * @param string The document id. 
      */
     public void setDocumentid(String string) {
-        documentid = string;
+        this.documentid = string;
     }
 
     /**
      * Gets the directory path from the document id and sets this value in the 
      * property of the project with the name propertyname.   
-    
-     * @param area The area (ex authoring)
-     * @param documentid  The document id.
-     * @param propertyname The name of the property
+     * @param _area The area (ex authoring)
+     * @param _documentid  The document id.
+     * @param _propertyname The name of the property
      */
-    public void compute(String area, String documentid, String propertyname) {
+    public void compute(String _area, String _documentid, String _propertyname) {
 
         Publication publication = getPublication();
         DocumentIdToPathMapper pathMapper = publication.getPathMapper();
-        String path = pathMapper.getPath(documentid, "");
+        String path = pathMapper.getPath(_documentid, "");
         log("path " + path);
 
         int index = path.lastIndexOf("/");
         String dir = path.substring(0, index);
         log("dir " + dir);
 
-        Target target = getOwningTarget();
-        Project project = target.getProject();
-        project.setProperty(propertyname, dir);
+        Target _target = getOwningTarget();
+        Project _project = _target.getProject();
+        _project.setProperty(_propertyname, dir);
     }
 
     /** 

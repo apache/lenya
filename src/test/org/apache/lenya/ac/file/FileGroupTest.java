@@ -32,7 +32,15 @@ import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
 import org.xml.sax.SAXException;
 
+/**
+ * Test for file-based groups
+ */
 public class FileGroupTest extends AccessControlTest {
+
+    /**
+     * <code>GROUP_ID</code> The group id
+     */
+    public static final String GROUP_ID = "testGroup";
 
     /**
      * Constructor for FileGroupTest.
@@ -43,9 +51,9 @@ public class FileGroupTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * The command line interface
      *
-     * @param args DOCUMENT ME!
+     * @param args The command line args
      */
     public static void main(String[] args) {
         PublicationHelper.extractPublicationArguments(args);
@@ -53,12 +61,12 @@ public class FileGroupTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
+     * Runs the test
      *
-     * @throws AccessControlException DOCUMENT ME!
-     * @throws ConfigurationException DOCUMENT ME!
-     * @throws SAXException DOCUMENT ME!
-     * @throws IOException DOCUMENT ME!
+     * @throws AccessControlException if an AC error occurs
+     * @throws ConfigurationException if an error with the configuration occurs
+     * @throws SAXException if a parsing error occurs
+     * @throws IOException if an IO error occurs
      */
     final public void testFileGroup()
         throws AccessControlException, ConfigurationException, SAXException, IOException {
@@ -83,8 +91,6 @@ public class FileGroupTest extends AccessControlTest {
         assertTrue(newGroup.getId().equals(GROUP_ID));
 
     }
-
-    public static final String GROUP_ID = "testGroup";
 
     /**
      * Test getGroup

@@ -34,40 +34,38 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
      * Creates a new User.
      */
     public AbstractUser() {
+	    // do nothing
     }
 
     /**
      * Create a User instance
-     * 
      * @param id the user id
      * @param fullName the full name of the user
-     * @param email the users email address
+     * @param _email the users email address
      * @param password the users password
      */
-    public AbstractUser(String id, String fullName, String email, String password) {
+    public AbstractUser(String id, String fullName, String _email, String password) {
         setId(id);
         setName(fullName);
-        this.email = email;
+        this.email = _email;
         setPassword(password);
     }
 
     /**
      * Get the email address
-     * 
      * @return a <code>String</code>
      */
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
 
     /**
      * Set the email address
-     * 
-     * @param email the new email address
+     * @param _email the new email address
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String _email) {
+        this.email = _email;
     }
 
     /**
@@ -75,38 +73,34 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
      * @param plainTextPassword The plain text passwrod.
      */
     public void setPassword(String plainTextPassword) {
-        encryptedPassword = Password.encrypt(plainTextPassword);
+        this.encryptedPassword = Password.encrypt(plainTextPassword);
     }
 
     /**
      * This method can be used for subclasses to set the password without it being encrypted again.
      * Some subclass might have knowledge of the encrypted password and needs to be able to set it.
-     * 
-     * @param encryptedPassword the encrypted password
+     * @param _encryptedPassword the encrypted password
      */
-    protected void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    protected void setEncryptedPassword(String _encryptedPassword) {
+        this.encryptedPassword = _encryptedPassword;
     }
 
     /**
      * Get the encrypted password
-     * 
      * @return the encrypted password
      */
     protected String getEncryptedPassword() {
-        return encryptedPassword;
+        return this.encryptedPassword;
     }
 
     /**
      * Save the user
-     * 
      * @throws AccessControlException if the save failed
      */
     public abstract void save() throws AccessControlException;
 
     /**
      * Delete a user
-     * 
      * @throws AccessControlException if the delete failed
      */
     public void delete() throws AccessControlException {
@@ -116,7 +110,6 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     /**
      * Authenticate a user. This is done by encrypting the given password and comparing this to the
      * encryptedPassword.
-     * 
      * @param password to authenticate with
      * @return true if the given password matches the password for this user
      */

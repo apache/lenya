@@ -16,22 +16,20 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
- * Usecase to display the overview tab in the site area for a document.
+ * Usecase to display the Scheduler tab in the site area for a document.
  * 
- * @version $Id: Overview.java 123984 2005-01-03 15:02:18Z andreas $
+ * @version $Id: Scheduler.java 123658 2004-12-29 17:35:03Z gregor $
  */
-public class Overview extends SiteUsecase {
-	private DublinCore dc;
+public class Scheduler extends SiteUsecase {
 
 	/**
      * Ctor.
      */
-    public Overview() {
+    public Scheduler() {
         super();
     }
 
@@ -40,17 +38,11 @@ public class Overview extends SiteUsecase {
      */
     protected void doInitialize() {
         super.doInitialize();
-        this.dc = getSourceDocument().getDublinCore();
         try {
-	        setParameter("languages", getSourceDocument().getLanguages());
-	        setParameter("title", this.dc.getFirstValue(DublinCore.ELEMENT_TITLE));
-	        setParameter("description", this.dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
-	        setParameter("lastmodified", "");
-	        setParameter("resourcetype", "");
 	        setParameter("live", "");
         } catch (Exception e) {
         	addErrorMessage("Could not read a value.");
-        	getLogger().error("Could not read value for Overview usecase. " + e.toString());
+        	getLogger().error("Could not read value for Scheduler usecase. " + e.toString());
         }
     }
             
@@ -74,6 +66,11 @@ public class Overview extends SiteUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
+        try {
+		    // do nothing
+        } catch (Exception e) {
+            addErrorMessage("Scheduler reported error");
+        }
     }
 
     /**

@@ -55,46 +55,37 @@ public class DocumentLanguagesHelper {
 
     /**
      * Compute the URL for a given language and the parameters given in the contructor.
-     * 
      * @param language the language
-     * 
      * @return the url for the given language
-     * 
      * @throws ProcessingException if the document for the given language could not be created.
      */
     public String getUrl(String language) throws ProcessingException {
         Document doc = getDocument(language);
-        return pageEnvelope.getContext() + doc.getCanonicalWebappURL();
+        return this.pageEnvelope.getContext() + doc.getCanonicalWebappURL();
     }
 
     /**
      * Compute the info area URL for a given language and the parameters given in the contructor.
-     * 
      * @param language the language
-     * 
      * @return the url for the given language
-     * 
      * @throws ProcessingException if the document for the given language could not be created.
      */
     public String getInfoUrl(String language) throws ProcessingException {
         Document doc = getDocument(language);
-        return pageEnvelope.getContext() + doc.getCompleteInfoURL();
+        return this.pageEnvelope.getContext() + doc.getCompleteInfoURL();
     }
 
     /**
      * Create a document for a given language and the parameters given in the contructor.
-     * 
      * @param language the language
-     * 
      * @return the document with the given language
-     * 
      * @throws ProcessingException if the document for the given language could not be created.
      */
     protected Document getDocument(String language) throws ProcessingException {
         Document document;
         try {
             document = this.identityMap.getFactory().getLanguageVersion(
-                    pageEnvelope.getDocument(), language);
+                    this.pageEnvelope.getDocument(), language);
         } catch (DocumentBuildException e) {
             throw new ProcessingException(e);
         }

@@ -42,12 +42,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * Ctor.
      */
     public AbstractUsecase() {
+        // do nothing
     }
 
     /**
      * Override to initialize parameters.
      */
     protected void initParameters() {
+        // do nothing
     }
 
     private String sourceUrl = null;
@@ -137,6 +139,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @throws Exception if an error occurs.
      */
     protected void doCheckExecutionConditions() throws Exception {
+        // do nothing
     }
 
     /**
@@ -162,6 +165,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @throws Exception if an error occurs.
      */
     protected void doCheckPreconditions() throws Exception {
+        // do nothing
     }
 
     /**
@@ -200,12 +204,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * Dumps the error messages to the log and the command line.
      */
     protected void dumpErrorMessages() {
-        List errorMessages = getErrorMessages();
-        for (int i = 0; i < errorMessages.size(); i++) {
+        List _errorMessages = getErrorMessages();
+        for (int i = 0; i < _errorMessages.size(); i++) {
             if (getLogger().isDebugEnabled()) {
-                System.out.println("+++ ERROR +++ " + errorMessages.get(i));
+                System.out.println("+++ ERROR +++ " + _errorMessages.get(i));
             }
-            getLogger().error((String) errorMessages.get(i));
+            getLogger().error((String) _errorMessages.get(i));
         }
     }
 
@@ -232,6 +236,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @throws Exception if an error occured.
      */
     protected void doCheckPostconditions() throws Exception {
+        // do nothing
     }
 
     /**
@@ -239,6 +244,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @throws Exception when something went wrong.
      */
     protected void doExecute() throws Exception {
+        // do nothing
     }
 
     private Map parameters = new HashMap();
@@ -311,6 +317,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      *      org.apache.cocoon.servlet.multipart.Part)
      */
     public void setPart(String name, Part value) {
+        // do nothing
     }
 
     private Context context;
@@ -318,8 +325,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
+    public void contextualize(Context _context) throws ContextException {
+        this.context = _context;
     }
 
     /**
@@ -350,6 +357,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @see org.apache.lenya.cms.usecase.Usecase#advance()
      */
     public void advance() {
+        // do nothing
     }
     
     /**

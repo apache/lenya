@@ -19,9 +19,12 @@
 
 package org.apache.lenya.cms.authoring;
 
+/**
+ * The creator exception
+ */
 public class CreatorException extends Exception {
     /**
-     *
+     * The Constructor
      */
     public CreatorException() {
         super();
@@ -29,7 +32,6 @@ public class CreatorException extends Exception {
 
     /**
      * Create an instance of <code>CreatorException</code>
-     * 
      * @param message the exception message
      */
     public CreatorException(String message) {
@@ -38,7 +40,6 @@ public class CreatorException extends Exception {
 
     /**
      * Create an instance of <code>CreatorException</code>
-     * 
      * @param cause the cause of the exception
      */
     public CreatorException(Throwable cause) {
@@ -47,7 +48,6 @@ public class CreatorException extends Exception {
 
     /**
      * Create an instance of <code>CreatorException</code>
-     * 
      * @param message the exception message
      * @param cause the cause of the exception
      */

@@ -20,6 +20,7 @@
 package org.apache.lenya.cms.scheduler;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,11 +28,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
@@ -43,25 +47,40 @@ import org.w3c.dom.Element;
  */
 public class SchedulerStore {
 
+    /**
+     * <code>ELEMENT_JOB_GROUP</code> The job group element
+     */
     public static final String ELEMENT_JOB_GROUP = "job-group";
+    /**
+     * <code>ELEMENT_JOB</code> The job element
+     */
     public static final String ELEMENT_JOB = "job";
+    /**
+     * <code>TITLE_ELEMENT</code> The title element
+     */
     public static final String TITLE_ELEMENT = "title";
-
-    private static final Category log = Category.getInstance(SchedulerStore.class);
-
+    /**
+     * <code>SNAPSHOT_FILE</code> The path to the stored jobs
+     */
     public static final String SNAPSHOT_FILE =
         "config/scheduler/jobs.xml".replace('/', File.separatorChar);
 
+    /** The namespace for the <code>jobs.xml</code> file. */
+    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/scheduler/1.0";
+
+    private static final Logger log = Logger.getLogger(SchedulerStore.class);
+
+
     /**
      * Ctor.
-     * @param publication The publication.
      */
     public SchedulerStore() {
+	    // do nothing
     }
 
     /**
      * Returns the job snapshot file for a publication..
-     * @param Publication The publication.
+     * @param publication The publication.
      * @return A file.
      * @throws SchedulerException when the publication could not be built.
      */
@@ -75,6 +94,7 @@ public class SchedulerStore {
     /**
      * Writes a job snapshot.
      * @param publication The publication.
+     * @param jobs The jobs to persist
      * @throws SchedulerException when something went wrong.
      */
     protected void writeSnapshot(Publication publication, JobWrapper[] jobs)
@@ -91,17 +111,29 @@ public class SchedulerStore {
                 log.debug("Creating job snapshot directory: " + directory.getPath());
             }
 
-            jobsFile.createNewFile();
+            if (jobsFile.createNewFile()) log.debug("new jobs file created.");
             DocumentHelper.writeDocument(getSnapshot(publication, jobs), jobsFile);
-        } catch (Exception e) {
+        } catch (final TransformerConfigurationException e) {
             log.error("Writing job snapshot failed: ", e);
+            throw new SchedulerException(e);
+        } catch (final IOException e) {
+            log.error("Writing job snapshot failed: ", e);
+            throw new SchedulerException(e);
+        } catch (final TransformerException e) {
+            log.error("Writing job snapshot failed: ", e);
+            throw new SchedulerException(e);
+        } catch (final SchedulerException e) {
+            log.error("Writing job snapshot failed: ", e);
+            throw new SchedulerException(e);
         }
+
     }
 
     /**
      * Return an xml description of all scheduled jobs for the given publication.
      *
      * @param publication The publication.
+     * @param jobs The jobs to return
      * @return An XML document.
      * @exception SchedulerException if an error occurs
      */
@@ -116,9 +148,6 @@ public class SchedulerStore {
 
         return document;
     }
-
-    /** The namespace for the <code>jobs.xml</code> file. */
-    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/scheduler/1.0";
 
     /**
      * Returns a scheduler namespace helper for a document.
@@ -145,10 +174,11 @@ public class SchedulerStore {
     }
 
     /**
-     * Creates an XML element containting a snapshot of a job group.
+     * Creates an XML element containing a snapshot of a job group.
      * @param helper The namespace helper to use.
-     * @param jobGroup The job group.
-     * @return An XMl element.
+     * @param publication The publication to create the snapshot for
+     * @param jobs The jobs
+     * @return An XML element.
      * @throws SchedulerException when something went wrong.
      */
     protected Element createSnapshot(
@@ -178,7 +208,8 @@ public class SchedulerStore {
 
     /**
      * Restores the jobs of a certain job group from the snapshot file.
-     * @param jobGroup The job group.
+     * @param publication The publication
+     * @return A job wrapper
      * @throws SchedulerException when something went wrong.
      */
     public JobWrapper[] restoreJobs(Publication publication) throws SchedulerException {
@@ -211,8 +242,11 @@ public class SchedulerStore {
 
     /**
      * Restores the jobs from a certain XML element.
+     * @param helper The namespace helper
      * @param jobElement The XML element.
-     * @param jobGroup The job group the job belongs to.
+     * @param publication The publication to restore jobs for
+     * @return A job wrapper
+     * @throws SchedulerException if an error occurs
      */
     protected JobWrapper restoreJob(
         NamespaceHelper helper,
@@ -288,10 +322,9 @@ public class SchedulerStore {
                         "The jobs.xml file contains a wrong job group: ["
                             + jobGroupAttribute
                             + "]");
-                } else {
-                    jobElements = helper.getChildren(jobGroupElement, SchedulerStore.ELEMENT_JOB);
-
                 }
+                jobElements = helper.getChildren(jobGroupElement, SchedulerStore.ELEMENT_JOB);
+
             } else {
                 throw new SchedulerException(
                     "The jobs file [" + jobsFile.getAbsolutePath() + "] does not exist!");

@@ -31,7 +31,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -41,9 +41,15 @@ import org.w3c.dom.NodeList;
  * Handle with the RCML file
  */
 public class RCML {
-    private static Category log = Category.getInstance(RCML.class);
+    private static Logger log = Logger.getLogger(RCML.class);
 
+    /**
+     * <code>co</code> Checkout
+     */
     public static final short co = 0;
+    /**
+     * <code>ci</code> Checkin
+     */
     public static final short ci = 1;
 
     private File rcmlFile;
@@ -65,26 +71,24 @@ public class RCML {
      * Creates a new RCML object.
      */
     public RCML() {
-        maximalNumberOfEntries = 10;
-        maximalNumberOfEntries = (2 * maximalNumberOfEntries) + 1;
+        this.maximalNumberOfEntries = 10;
+        this.maximalNumberOfEntries = (2 * this.maximalNumberOfEntries) + 1;
     }
 
     /**
      * create a RCML-File if no one exists already
-     *
      * @param rcmlDirectory The rcml directory.
      * @param filename The path of the file from the publication (e.g. for file with 
      * absolute path home/...//lenya/pubs/{publication id}/content/authoring/foo/bar.xml
      * the filename is content/authoring/foo/bar.xml)
      * @param rootDirectory The publication directory
-     *
      * @throws Exception if an error occurs
      */
     public RCML(String rcmlDirectory, String filename, String rootDirectory) throws Exception {
         this();
-        rcmlFile = new File(rcmlDirectory, filename + ".rcml");
+        this.rcmlFile = new File(rcmlDirectory, filename + ".rcml");
 
-        if (!rcmlFile.isFile()) {
+        if (!this.rcmlFile.isFile()) {
             // The rcml file does not yet exist, so we create it now...
             //
             File dataFile = new File(rootDirectory, filename);
@@ -102,20 +106,21 @@ public class RCML {
             //
             checkOutIn(RCML.ci, RevisionController.systemUsername, lastModified, false);
 
-            File parent = new File(rcmlFile.getParent());
+            File parent = new File(this.rcmlFile.getParent());
             parent.mkdirs();
 
             write();
         } else {
-            document = DocumentHelper.readDocument(rcmlFile);
+            this.document = DocumentHelper.readDocument(this.rcmlFile);
         }
     }
 
     /**
      * initialise the RCML-document. Delete all entries
+     * @throws ParserConfigurationException
      */
     public void initDocument() throws ParserConfigurationException {
-        document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
+        this.document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
     }
 
     /**
@@ -132,23 +137,21 @@ public class RCML {
     }
     /**
      * Write the xml RCML-document in the RCML-file. 
-     *
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
     public void write() throws IOException, Exception {
-        DocumentHelper.writeDocument(document, rcmlFile);
+        DocumentHelper.writeDocument(this.document, this.rcmlFile);
         clearDirty();
     }
 
     /**
      * Write a new entry for a check out or a check in the RCML-File made by the user with identity
      * at time
-     *
      * @param type co for a check out, ci for a check in
      * @param identity The identity of the user
      * @param time Time at which the check in/out is made
-     *
+     * @param backup Create backup element
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
@@ -160,7 +163,7 @@ public class RCML {
                 "ERROR: " + this.getClass().getName() + ".checkOutIn(): No such type");
         }
 
-        NamespaceHelper helper = new NamespaceHelper(null, "", document);
+        NamespaceHelper helper = new NamespaceHelper(null, "", this.document);
 
         Element identityElement = helper.createElement("Identity", identity);
         Element timeElement = helper.createElement("Time", "" + time);
@@ -176,7 +179,7 @@ public class RCML {
             checkOutElement.appendChild(backupElement);
         }
 
-        Element root = document.getDocumentElement();
+        Element root = this.document.getDocumentElement();
         root.insertBefore(checkOutElement, root.getFirstChild());
 
         setDirty();
@@ -203,19 +206,17 @@ public class RCML {
 
     /**
      * get the latest check out
-     *
      * @return CheckOutEntry The entry of the check out
-     *
      * @throws Exception if an error occurs
      */
     public CheckOutEntry getLatestCheckOutEntry() throws Exception {
-        Element parent = document.getDocumentElement();
+        Element parent = this.document.getDocumentElement();
         Node identity = null;
         Node time = null;
         String rcIdentity = null;
 
-       identity = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckOut[1]/Identity/text()");
-       time = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckOut[1]/Time/text()");
+       identity = XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckOut[1]/Identity/text()");
+       time = XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckOut[1]/Time/text()");
 
         if (identity == null && time == null) {
             // No checkout at all
@@ -229,19 +230,17 @@ public class RCML {
 
     /**
      * get the latest check in
-     *
      * @return CheckInEntry The entry of the check in
-     *
      * @throws Exception if an error occurs
      */
     public CheckInEntry getLatestCheckInEntry() throws Exception {
-        Element parent = document.getDocumentElement();
+        Element parent = this.document.getDocumentElement();
         Node identity = null;
         Node time = null;
         String rcIdentity = null;
 
-       identity = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckIn[1]/Identity/text()");
-       time = (Node) XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckIn[1]/Time/text()");
+       identity = XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckIn[1]/Identity/text()");
+       time = XPathAPI.selectSingleNode(parent,"/XPSRevisionControl/CheckIn[1]/Time/text()");
 
         if (identity == null && time == null) {
             // No checkout at all
@@ -255,9 +254,7 @@ public class RCML {
 
     /**
      * get the latest entry (a check out or check in)
-     *
      * @return RCMLEntry The entry of the check out/in
-     *
      * @throws Exception if an error occurs
      */
     public RCMLEntry getLatestEntry() throws Exception {
@@ -267,27 +264,23 @@ public class RCML {
         if ((cie != null) && (coe != null)) {
             if (cie.getTime() > coe.getTime()) {
                 return cie;
-            } else {
-                return coe;
             }
+            return coe;
         }
 
         if (cie != null) {
             return cie;
-        } else {
-            return coe;
         }
+        return coe;
     }
 
     /**
      * get all check in and check out
-     *
      * @return Vector of all check out and check in entries in this RCML-file
-     *
      * @throws Exception if an error occurs
      */
     public Vector getEntries() throws Exception {
-    	Element parent = document.getDocumentElement();
+    	Element parent = this.document.getDocumentElement();
     	NodeList entries =
     		XPathAPI.selectNodeList(parent, "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
         Vector RCMLEntries = new Vector();
@@ -311,17 +304,15 @@ public class RCML {
     /**
      * Prune the list of entries and delete the corresponding backups. Limit the number of entries to the value
      * maximalNumberOfEntries (2maxNumberOfRollbacks(configured)+1)
-     *
      * @param backupDir The backup directory
-     *
      * @throws Exception if an error occurs
      */
     public void pruneEntries(String backupDir) throws Exception {
-    	Element parent = document.getDocumentElement();
+    	Element parent = this.document.getDocumentElement();
     	NodeList entries =
     		XPathAPI.selectNodeList(parent, "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
 
-        for (int i = maximalNumberOfEntries; i < entries.getLength(); i++) {
+        for (int i = this.maximalNumberOfEntries; i < entries.getLength(); i++) {
             Element current = (Element) entries.item(i);
 
             // remove the backup file associated with this entry
@@ -336,49 +327,45 @@ public class RCML {
 
     /**
      * Get a clone document 
-     *
      * @return org.w3c.dom.Document The clone document
-     *
      * @throws Exception if an error occurs
      */
     public org.w3c.dom.Document getDOMDocumentClone() throws Exception {
         Document documentClone = DocumentHelper.createDocument(null, "dummy", null);
         documentClone.removeChild(documentClone.getDocumentElement());
-        documentClone.appendChild(documentClone.importNode(document.getDocumentElement(), true));
+        documentClone.appendChild(documentClone.importNode(this.document.getDocumentElement(), true));
 
         return documentClone;
     }
 
     /**
      * Check if the document is dirty
-     *
      * @return boolean dirty 
      */
     public boolean isDirty() {
-        return dirty;
+        return this.dirty;
     }
 
     /**
      * Set the value dirty to true
      */
     protected void setDirty() {
-        dirty = true;
+        this.dirty = true;
     }
 
     /**
      * Set the value dirty to false
      */
     protected void clearDirty() {
-        dirty = false;
+        this.dirty = false;
     }
 
     /**
      * Delete the latest check in
-     *
      * @throws Exception if an error occurs
      */
     public void deleteFirstCheckIn() throws Exception {
-        Node root = document.getDocumentElement();
+        Node root = this.document.getDocumentElement();
         Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckIn[1]");
         root.removeChild(firstCheckIn);
         root.removeChild(root.getFirstChild()); // remove EOL (end of line)
@@ -387,13 +374,11 @@ public class RCML {
 
     /**
      * get the time's value of the backups
-     *
      * @return String[] the times
-     *
      * @throws Exception if an error occurs
      */
     public String[] getBackupsTime() throws Exception {
-        Node root = document.getDocumentElement();
+        Node root = this.document.getDocumentElement();
         NodeList entries = XPathAPI.selectNodeList(root, "/XPSRevisionControl/CheckIn");
 
         ArrayList times = new ArrayList();
@@ -412,13 +397,11 @@ public class RCML {
 
     /**
      * delete the rcml file and the directory if this one is empty
-     *
      * @return boolean true, if the file was deleted
      */
     public boolean delete() {
-        File rcmlFile = this.rcmlFile;
-        File directory = rcmlFile.getParentFile();
-        boolean deleted = rcmlFile.delete();
+        File directory = this.rcmlFile.getParentFile();
+        boolean deleted = this.rcmlFile.delete();
         if (directory.exists()
             && directory.isDirectory()
             && directory.listFiles().length == 0) {

@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * The Java HTML parser cannot handle self-closing text.
@@ -31,7 +31,7 @@ import org.apache.log4j.Category;
  */
 public class PreParser {
     
-    private static Category log = Category.getInstance(PreParser.class);
+    private static Logger log = Logger.getLogger(PreParser.class);
     
     /** Creates a new instance of PreParser */
     public PreParser() {
@@ -40,10 +40,12 @@ public class PreParser {
 
     /**
      * Parses HTML from a reader.
+     * @param reader The reader
+     * @return The Reader
+     * @throws IOException if an IO error occurs
      */
     public Reader parse(Reader reader) throws IOException {
         StringBuffer buffer = new StringBuffer();
-        boolean pending = false;
 
         char[] chars = new char[1];
 

@@ -23,6 +23,9 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.impl.Version;
 
+/**
+ * A CMS version
+ */
 public class CMSVersion extends Version {
 
     /**
@@ -30,15 +33,15 @@ public class CMSVersion extends Version {
      * @return A string.
      */
     public String getUserId() {
-        return userId;
+        return this.userId;
     }
 
     /**
      * Sets the user ID.
-     * @param userId A user ID.
+     * @param _userId A user ID.
      */
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String _userId) {
+        this.userId = _userId;
     }
 
     /**

@@ -45,7 +45,7 @@ public class SourceCacheImpl
      * @return A service manager.
      */
     public ServiceManager getManager() {
-        return manager;
+        return this.manager;
     }
 
     /**
@@ -53,14 +53,14 @@ public class SourceCacheImpl
      * @return A source resolver.
      */
     public SourceResolver getResolver() {
-        return resolver;
+        return this.resolver;
     }
 
     /**
      * Ctor.
      */
     public SourceCacheImpl() {
-        cache = new CacheMap(CAPACITY);
+        this.cache = new CacheMap(CAPACITY);
     }
 
     protected static final int CAPACITY = 1000;
@@ -71,7 +71,7 @@ public class SourceCacheImpl
      * @return A cache object.
      */
     protected CacheMap getCache() {
-        return cache;
+        return this.cache;
     }
 
     /**
@@ -87,7 +87,6 @@ public class SourceCacheImpl
         SourceValidity sourceValidity = null;
 
         try {
-
             if (cachedObject != null) {
                 if (getLogger().isDebugEnabled()){
                     getLogger().debug("Found cached object [" + cachedObject + "]"); 
@@ -167,9 +166,14 @@ public class SourceCacheImpl
                     getCache().put(key, new CachedObject(sourceValidity, value));
                 }
             }
-
-        } catch (Exception e) {
-            throw new CachingException(e);
+        } catch (final SourceNotFoundException e1) {
+            throw new CachingException(e1);
+        } catch (final MalformedURLException e1) {
+            throw new CachingException(e1);
+        } catch (final IOException e1) {
+            throw new CachingException(e1);
+        } catch (final BuildException e1) {
+            throw new CachingException(e1);
         }
 
         return value;
@@ -231,9 +235,9 @@ public class SourceCacheImpl
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-        this.resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
+        this.resolver = (SourceResolver) _manager.lookup(SourceResolver.ROLE);
     }
 
     /**

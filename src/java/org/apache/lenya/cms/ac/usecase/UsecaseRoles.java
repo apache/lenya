@@ -33,6 +33,7 @@ public class UsecaseRoles {
      * Ctor.
      */
     public UsecaseRoles() {
+	    // do nothing
     }
     
     /**
@@ -41,7 +42,7 @@ public class UsecaseRoles {
      * @param roleIds The role IDs.
      */
     public void setRoles(String usecaseId, String[] roleIds) {
-        usecaseToRoles.put(usecaseId, roleIds);
+        this.usecaseToRoles.put(usecaseId, roleIds);
     }
     
     /**
@@ -52,8 +53,8 @@ public class UsecaseRoles {
      */
     public String[] getRoles(String usecaseId) {
         String[] usecaseRoles;
-        if (usecaseToRoles.containsKey(usecaseId)) {
-            usecaseRoles = (String[]) usecaseToRoles.get(usecaseId);
+        if (this.usecaseToRoles.containsKey(usecaseId)) {
+            usecaseRoles = (String[]) this.usecaseToRoles.get(usecaseId);
         } else {
             usecaseRoles = new String[0];
         }
@@ -66,7 +67,7 @@ public class UsecaseRoles {
      * @return A boolean value.
      */
     public boolean hasRoles(String usecaseId) {
-        return usecaseToRoles.containsKey(usecaseId);
+        return this.usecaseToRoles.containsKey(usecaseId);
     }
 
 }

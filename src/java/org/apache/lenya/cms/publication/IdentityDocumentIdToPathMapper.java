@@ -21,6 +21,9 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+/**
+ * Identity Document Id to path mapper
+ */
 public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
 
     /**
@@ -34,7 +37,6 @@ public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
      */
     public File getDirectory(Publication publication, String area, String documentId) {

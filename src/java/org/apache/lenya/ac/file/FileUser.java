@@ -46,26 +46,25 @@ public class FileUser extends AbstractUser implements Item {
      * Creates a new FileUser object.
      */
     public FileUser() {
+	    // do nothing
     }
 
     /**
      * Create a FileUser
-     * 
-     * @param configurationDirectory where the user will be attached to
+     * @param _configurationDirectory where the user will be attached to
      * @param id the user id
      * @param fullName the full name of the user
      * @param email the users email address
      * @param password the users password
      */
-    public FileUser(File configurationDirectory, String id, String fullName, String email,
+    public FileUser(File _configurationDirectory, String id, String fullName, String email,
             String password) {
         super(id, fullName, email, password);
-        setConfigurationDirectory(configurationDirectory);
+        setConfigurationDirectory(_configurationDirectory);
     }
 
     /**
      * Configure this FileUser.
-     * 
      * @param config where the user details are specified
      * @throws ConfigurationException if the necessary details aren't specified in the config
      */
@@ -83,11 +82,11 @@ public class FileUser extends AbstractUser implements Item {
             FileGroupManager manager = null;
 
             try {
-                manager = FileGroupManager.instance(configurationDirectory, getLogger());
+                manager = FileGroupManager.instance(this.configurationDirectory, getLogger());
             } catch (AccessControlException e) {
                 throw new ConfigurationException(
                         "Exception when trying to fetch GroupManager for directory: ["
-                                + configurationDirectory + "]", e);
+                                + this.configurationDirectory + "]", e);
             }
 
             for (int i = 0; i < groups.length; i++) {
@@ -112,7 +111,6 @@ public class FileUser extends AbstractUser implements Item {
 
     /**
      * Create a configuration from the current user details. Can be used for saving.
-     * 
      * @return a <code>Configuration</code>
      */
     protected Configuration createConfiguration() {
@@ -186,15 +184,15 @@ public class FileUser extends AbstractUser implements Item {
      * @return A file object.
      */
     protected File getConfigurationDirectory() {
-        return configurationDirectory;
+        return this.configurationDirectory;
     }
 
     /**
      * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
-    public void setConfigurationDirectory(File configurationDirectory) {
-        assert (configurationDirectory != null) && configurationDirectory.isDirectory();
-        this.configurationDirectory = configurationDirectory;
+    public void setConfigurationDirectory(File _configurationDirectory) {
+        assert (_configurationDirectory != null) && _configurationDirectory.isDirectory();
+        this.configurationDirectory = _configurationDirectory;
     }
 
 }

@@ -19,14 +19,17 @@
 
 package org.apache.lenya.cms.scheduler;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerListener;
 import org.quartz.Trigger;
 
+/**
+ * The Abstract Scheduler Listener
+ */
 public class AbstractSchedulerListener implements SchedulerListener {
 
-	private static final Category log = Category.getInstance(AbstractSchedulerListener.class);
+	private static final Logger log = Logger.getLogger(AbstractSchedulerListener.class);
 
 	/**
 	 * @see org.quartz.SchedulerListener#jobScheduled(org.quartz.Trigger)

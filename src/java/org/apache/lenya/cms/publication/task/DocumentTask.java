@@ -28,8 +28,17 @@ import org.apache.lenya.cms.task.ExecutionException;
  */
 public abstract class DocumentTask extends PublicationTask {
 
+    /**
+     * <code>PARAMETER_DOCUMENT_ID</code> The document id parameter
+     */
     public static final String PARAMETER_DOCUMENT_ID = "document-id";
+    /**
+     * <code>PARAMETER_DOCUMENT_AREA</code> The document area parameter
+     */
     public static final String PARAMETER_DOCUMENT_AREA = "document-area";
+    /**
+     * <code>PARAMETER_DOCUMENT_LANGUAGE</code> The document language parameter
+     */
     public static final String PARAMETER_DOCUMENT_LANGUAGE = "document-language";
 
     /**

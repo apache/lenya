@@ -25,11 +25,14 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
+/**
+ * Parameter wrapper class
+ */
 public abstract class ParameterWrapper {
     
-    private static Category log = Category.getInstance(ParameterWrapper.class);
+    private static Logger log = Logger.getLogger(ParameterWrapper.class);
     private NamespaceMap parameters;
     
     /**
@@ -37,7 +40,7 @@ public abstract class ParameterWrapper {
      * @return A map.
      */
     public Map getMap() {
-        return parameters.getMap();
+        return this.parameters.getMap();
     }
 
     /**
@@ -45,7 +48,7 @@ public abstract class ParameterWrapper {
      * @param prefixedParameters The prefixed parameters to wrap.
      */
     public ParameterWrapper(Map prefixedParameters) {
-        parameters = new NamespaceMap(prefixedParameters, getPrefix());
+        this.parameters = new NamespaceMap(prefixedParameters, getPrefix());
     }
     
     /**
@@ -62,7 +65,7 @@ public abstract class ParameterWrapper {
     public void put(String key, String value) {
         if (value != null) {
             log.debug("Setting parameter: [" + key + "] = [" + value + "]");
-            parameters.put(key, value);
+            this.parameters.put(key, value);
         }
         else {
             log.debug("Not setting parameter: [" + key + "] = [" + value + "]");
@@ -75,7 +78,7 @@ public abstract class ParameterWrapper {
      * @return The value.
      */
     public String get(String key) {
-        return (String) parameters.get(key);
+        return (String) this.parameters.get(key);
     }
     
     /**
@@ -120,12 +123,12 @@ public abstract class ParameterWrapper {
     
     /**
      * Parameterizes this wrapper with un-prefixed parameters.
-     * @param parameters A parameters object.
+     * @param _parameters A parameters object.
      */
-    public void parameterize(Parameters parameters) {
-        String[] keys = parameters.getNames();
+    public void parameterize(Parameters _parameters) {
+        String[] keys = _parameters.getNames();
         for (int i = 0; i < keys.length; i++) {
-            put(keys[i], parameters.getParameter(keys[i], null));
+            put(keys[i], _parameters.getParameter(keys[i], null));
         }
     }
     

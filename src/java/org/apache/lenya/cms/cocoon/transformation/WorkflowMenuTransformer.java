@@ -23,14 +23,17 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
@@ -46,8 +49,17 @@ import org.xml.sax.helpers.AttributesImpl;
  * respect to the current workflow state.
  */
 public class WorkflowMenuTransformer extends AbstractSAXTransformer {
+    /**
+     * <code>MENU_ELEMENT</code> The menu element
+     */
     public static final String MENU_ELEMENT = "menu";
+    /**
+     * <code>ITEM_ELEMENT</code> The item element
+     */
     public static final String ITEM_ELEMENT = "item";
+    /**
+     * <code>EVENT_ATTRIBUTE</code> The event attribute
+     */
     public static final String EVENT_ATTRIBUTE = "event";
 
     /**
@@ -103,19 +115,19 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
      *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
+    public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters _parameters)
             throws ProcessingException, SAXException, IOException {
 
-        super.setup(resolver, objectModel, src, parameters);
+        super.setup(_resolver, _objectModel, src, _parameters);
         
         PageEnvelope envelope = null;
         WorkflowResolver workflowResolver = null;
 
         try {
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(objectModel);
+            Publication pub = factory.getPublication(_objectModel);
             DocumentIdentityMap map = new DocumentIdentityMap(pub);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, _objectModel);
 
             Document document = envelope.getDocument();
             workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
@@ -137,17 +149,22 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Executable events: ");
-                        for (int i = 0; i < events.length; i++) {
-                            getLogger().debug("    [" + events[i] + "]");
+                        for (int i = 0; i < this.events.length; i++) {
+                            getLogger().debug("    [" + this.events[i] + "]");
                         }
                     }
 
-                } catch (WorkflowException e) {
+                } catch (final WorkflowException e) {
                     throw new ProcessingException(e);
                 }
             }
-        
-        } catch (Exception e) {
+        } catch (final ServiceException e) {
+            throw new ProcessingException(e);
+        } catch (final ProcessingException e) {
+            throw new ProcessingException(e);
+        } catch (final PublicationException e) {
+            throw new ProcessingException(e);
+        } catch (final PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
         finally {
@@ -163,11 +180,10 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
     /**
      * Get the workflow instance.
-     * 
      * @return a <code>WorkflowInstance</code>
      */
     protected SynchronizedWorkflowInstances getInstance() {
-        return instance;
+        return this.instance;
     }
 
     private String[] events;
@@ -180,8 +196,8 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     protected boolean containsEvent(String eventName) {
         boolean result = false;
 
-        for (int i = 0; i < events.length; i++) {
-            if (events[i].equals(eventName)) {
+        for (int i = 0; i < this.events.length; i++) {
+            if (this.events[i].equals(eventName)) {
                 result = true;
             }
         }
@@ -194,22 +210,22 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
      * @return A boolean value.
      */
     protected boolean hasWorkflow() {
-        return hasWorkflow;
+        return this.hasWorkflow;
     }
 
     /**
      * Sets if the current document has a workflow.
-     * @param hasWorkflow A boolean value.
+     * @param _hasWorkflow A boolean value.
      */
-    public void setHasWorkflow(boolean hasWorkflow) {
-        this.hasWorkflow = hasWorkflow;
+    public void setHasWorkflow(boolean _hasWorkflow) {
+        this.hasWorkflow = _hasWorkflow;
     }
 
     /**
      * Sets the workflow instance for the current request.
-     * @param instance A workflow instance.
+     * @param _instance A workflow instance.
      */
-    public void setInstance(SynchronizedWorkflowInstances instance) {
-        this.instance = instance;
+    public void setInstance(SynchronizedWorkflowInstances _instance) {
+        this.instance = _instance;
     }
 }

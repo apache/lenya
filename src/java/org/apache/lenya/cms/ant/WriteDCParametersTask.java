@@ -53,7 +53,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the creator
      */
     public String getCreator() {
-        return creator;
+        return this.creator;
     }
 
     /**
@@ -62,7 +62,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     /**
@@ -71,7 +71,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the publisher
      */
     public String getPublisher() {
-        return publisher;
+        return this.publisher;
     }
 
     /**
@@ -80,7 +80,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the rights
      */
     public String getRights() {
-        return rights;
+        return this.rights;
     }
 
     /**
@@ -89,7 +89,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the subject
      */
     public String getSubject() {
-        return subject;
+        return this.subject;
     }
 
     /**
@@ -98,7 +98,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the title
      */
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     /**
@@ -107,7 +107,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the creator
      */
     public void setCreator(String string) {
-        creator = string;
+        this.creator = string;
     }
 
     /**
@@ -116,7 +116,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the description
      */
     public void setDescription(String string) {
-        description = string;
+        this.description = string;
     }
 
     /**
@@ -125,7 +125,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the publisher
      */
     public void setPublisher(String string) {
-        publisher = string;
+        this.publisher = string;
     }
 
     /**
@@ -134,7 +134,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the rights
      */
     public void setRights(String string) {
-        rights = string;
+        this.rights = string;
     }
 
     /**
@@ -143,7 +143,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the subject
      */
     public void setSubject(String string) {
-        subject = string;
+        this.subject = string;
     }
 
     /**
@@ -152,7 +152,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the title
      */
     public void setTitle(String string) {
-        title = string;
+        this.title = string;
     }
 
     /**
@@ -161,7 +161,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the area
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
@@ -170,7 +170,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the area
      */
     public void setArea(String string) {
-        area = string;
+        this.area = string;
     }
 
     /**
@@ -179,7 +179,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the document-id
      */
     public String getDocumentId() {
-        return documentId;
+        return this.documentId;
     }
 
     /**
@@ -188,7 +188,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the document-id
      */
     public void setDocumentId(String string) {
-        documentId = string;
+        this.documentId = string;
     }
 
     /**
@@ -197,7 +197,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the language
      */
     public String getLanguage() {
-        return language;
+        return this.language;
     }
 
     /**
@@ -206,50 +206,50 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the language
      */
     public void setLanguage(String string) {
-        language = string;
+        this.language = string;
     }
 
     /**
      * Write the dublin core params.
      * 
-     * @param documentId the document-id
-     * @param area the area
+     * @param _documentId the document-id
+     * @param _area the area
      * @param lang the language
-     * @param creator the creator.
-     * @param title the title
-     * @param description the description
-     * @param subject the subject
-     * @param publisher the publisher
-     * @param rights the rights
+     * @param _creator the creator.
+     * @param _title the title
+     * @param _description the description
+     * @param _subject the subject
+     * @param _publisher the publisher
+     * @param _rights the rights
      * 
      * @throws BuildException if an error occurs
      * @throws DocumentBuildException if an error occurs
      * @throws DocumentException if an error occurs
      */
     public void writeDublinCoreParameters(
-        String documentId,
-        String area,
+        String _documentId,
+        String _area,
         String lang,
-        String creator,
-        String title,
-        String description,
-        String subject,
-        String publisher,
-        String rights)
+        String _creator,
+        String _title,
+        String _description,
+        String _subject,
+        String _publisher,
+        String _rights)
         throws BuildException, DocumentBuildException, DocumentException {
 
-        Document doc = getIdentityMap().getFactory().get(area, documentId, lang);
+        Document doc = getIdentityMap().getFactory().get(_area, _documentId, lang);
         DublinCore dc = doc.getDublinCore();
-        dc.setValue(DublinCore.ELEMENT_CREATOR, creator);
-        dc.setValue(DublinCore.ELEMENT_TITLE, title);
-        dc.setValue(DublinCore.ELEMENT_DESCRIPTION, description);
-        dc.setValue(DublinCore.ELEMENT_SUBJECT, subject);
-        dc.setValue(DublinCore.ELEMENT_PUBLISHER, publisher);
-        dc.setValue(DublinCore.ELEMENT_RIGHTS, rights);
+        dc.setValue(DublinCore.ELEMENT_CREATOR, _creator);
+        dc.setValue(DublinCore.ELEMENT_TITLE, _title);
+        dc.setValue(DublinCore.ELEMENT_DESCRIPTION, _description);
+        dc.setValue(DublinCore.ELEMENT_SUBJECT, _subject);
+        dc.setValue(DublinCore.ELEMENT_PUBLISHER, _publisher);
+        dc.setValue(DublinCore.ELEMENT_RIGHTS, _rights);
         dc.save();
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
@@ -264,8 +264,11 @@ public class WriteDCParametersTask extends PublicationTask {
                 getSubject(),
                 getPublisher(),
                 getRights());
-            } catch (
-                Exception e) {
+        } catch (final BuildException e) {
+            throw new BuildException(e);
+        } catch (final DocumentBuildException e) {
+            throw new BuildException(e);
+        } catch (final DocumentException e) {
             throw new BuildException(e);
         }
     }

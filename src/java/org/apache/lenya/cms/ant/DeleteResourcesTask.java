@@ -21,8 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -78,7 +76,6 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
             log("document-id for the destination :" + this.getSecdocumentid());
             log("area for the destination :" + this.getSecarea());
 
-            Publication publication = getPublication();
             SiteTree tree = getSiteTree(this.getSecarea());
             SiteTreeNode node = tree.getNode(this.getSecdocumentid());
             node.acceptReverseSubtree(this);

@@ -57,6 +57,7 @@ public class LanguageExistsAction extends AbstractAction {
      * 
      * @return an empty <code>Map</code> if there is a version of this document for the current
      *         language, null otherwiese
+     * @throws Exception if an error occurs
      * 
      * @exception DocumentDoesNotExistException if there is no document with the specified
      *                document-id.

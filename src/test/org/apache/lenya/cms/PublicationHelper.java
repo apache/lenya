@@ -26,23 +26,24 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
+/**
+ * A publication helper
+ */
 public class PublicationHelper {
 
     /**
      * Constructor for PublicationHelper.
-     *  
      */
     protected PublicationHelper() {
+        // do nothing
     }
 
     /**
      * Initializes the object with the first parameters from the command line
      * arguments <code>args</code>. The remainder of the array is returned.
-     * 
      * @param args The command line arguments of the test.
      * @return The remainder of the arguments after the publication parameters
      *         are extracted.
-     *  
      */
     public static String[] extractPublicationArguments(String[] args) {
         String servletContextPath = args[0];

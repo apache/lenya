@@ -143,18 +143,18 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        super.service(manager);
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        super.service(_manager);
+        this.manager = _manager;
     }
 
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize(org.apache.avalon.framework.context.Context context)
+    public void contextualize(org.apache.avalon.framework.context.Context _context)
             throws ContextException {
-        this.envContext = (Context) context.get(Constants.CONTEXT_ENVIRONMENT_CONTEXT);
-        this.context = context;
+        this.envContext = (Context) _context.get(Constants.CONTEXT_ENVIRONMENT_CONTEXT);
+        this.context = _context;
     }
 
     /**
@@ -172,7 +172,8 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 resolver.release(source);
-            } catch (ServiceException ingore) {
+            } catch (ServiceException ignore) {
+    		    // ignore the exception
             } finally {
                 this.manager.release(resolver);
             }

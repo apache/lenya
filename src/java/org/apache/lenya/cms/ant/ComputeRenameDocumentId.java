@@ -45,12 +45,13 @@ public class ComputeRenameDocumentId extends ComputeNewDocumentId {
 	 * @return String The document id of the destination.
 	 */
 	protected String compute(String firstdocumentid, String secdocumentid) {
-		String documentid= "";
+		StringBuffer buf = new StringBuffer();
 		StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
 		int l = st.countTokens();
 		for (int i = 0; i < l-1; i++) {
-			documentid = documentid + "/" + st.nextToken();
+		    buf.append("/" + st.nextToken());
 		}
+		String documentid = buf.toString();
 		secdocumentid = documentid + "/" + secdocumentid;
 		return secdocumentid;
 	}

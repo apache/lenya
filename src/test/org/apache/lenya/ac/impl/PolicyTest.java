@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PolicyTest.java,v 1.3 2004/03/04 15:40:19 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -31,9 +31,9 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.PublicationHelper;
 
 /**
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
+ * Policy Test
+ *  
+ * */
 public class PolicyTest extends AccessControlTest {
     /**
      * Executes this test.

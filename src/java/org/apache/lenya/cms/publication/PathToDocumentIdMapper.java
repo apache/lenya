@@ -22,20 +22,16 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 
 /**
- * 
  * This interface is basically the reverse of DocumentIdToPathMapper.
  */
 public interface PathToDocumentIdMapper {
 
     /**
      * Compute the document-id for a given file.
-     *
      * @param publication the publication where the file is.
      * @param area the area where the file is.
      * @param file the file that is associated with the document
-     * 
      * @return the document-id of the document associated with the given file.
-     * 
      * @throws DocumentDoesNotExistException if there is no document associated with this file.
      */
     String getDocumentId(Publication publication, String area, File file)
@@ -43,9 +39,7 @@ public interface PathToDocumentIdMapper {
         
     /**
      * Returns the language for a given file
-     * 
      * @param file the document file
-     * 
      * @return the language for the given document file or null if the file
      * has no language.
      */

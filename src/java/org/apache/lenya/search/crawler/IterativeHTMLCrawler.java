@@ -20,26 +20,32 @@
 package org.apache.lenya.search.crawler;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
+import java.util.List;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 
 import websphinx.RobotExclusion;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
  * Crawl iteratively
  */
 public class IterativeHTMLCrawler implements Configurable {
-    static Category log = Category.getInstance(IterativeHTMLCrawler.class);
+    private static final Logger log = Logger.getLogger(IterativeHTMLCrawler.class);
 
     java.util.Vector urlsToCrawl;
     java.util.TreeSet urlsToCrawlLowerCase;
@@ -56,7 +62,6 @@ public class IterativeHTMLCrawler implements Configurable {
 
     /**
      * Command line interface
-     *
      * @param args Configuration file crawler.xconf
      */
     public void main(String[] args) {
@@ -68,15 +73,15 @@ public class IterativeHTMLCrawler implements Configurable {
 
         try {
             if (args.length == 1) {
-                configurationFilePath = args[0];
+                this.configurationFilePath = args[0];
                 try {
                     DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
-                    Configuration configuration = builder.buildFromFile(configurationFilePath);
+                    Configuration configuration = builder.buildFromFile(this.configurationFilePath);
                     configure(configuration);
                 } catch (Exception e) {
                 	System.err.println("Cannot load crawler configuration!");
                 }
-                new IterativeHTMLCrawler(new File(args[0])).crawl(new URL(baseURL), scopeURL[0]);
+                new IterativeHTMLCrawler(new File(args[0])).crawl(new URL(this.baseURL), this.scopeURL[0]);
 	    } else {
                 System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
             }
@@ -86,14 +91,12 @@ public class IterativeHTMLCrawler implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @throws org.apache.avalon.framework.configuration.ConfigurationException DOCUMENT ME!
+     * Configuration of the IterativeHTMLCrawler
+     * @param configuration The configuration
+     * @throws ConfigurationException if an error occurs
      */
-    public void configure(org.apache.avalon.framework.configuration.Configuration configuration)
-        throws org.apache.avalon.framework.configuration.ConfigurationException {
+    public void configure(Configuration configuration)
+        throws ConfigurationException {
 
     	this.baseURL = configuration.getChild("base-url").getAttribute("href");
     	this.scopeURL[0] = configuration.getChild("scope-url").getAttribute("href");
@@ -106,21 +109,18 @@ public class IterativeHTMLCrawler implements Configurable {
 
     /**
      * Creates a new IterativeHTMLCrawler object.
-     *
-     * @param uriList File where all dumped files will be listed
-     * @param htdocsDumpDir Directory where htdocs should be dumped
-     * @param userAgent User-agent for robots.txt
+     * @param _uriList File where all dumped files will be listed
+     * @param _htdocsDumpDir Directory where htdocs should be dumped
+     * @param _userAgent User-agent for robots.txt
      */
-    public IterativeHTMLCrawler(String uriList, String htdocsDumpDir, String userAgent) {
-        this.uriList = uriList;
-        this.htdocsDumpDir = htdocsDumpDir;
-
-        robot = new RobotExclusion(userAgent);
+    public IterativeHTMLCrawler(String _uriList, String _htdocsDumpDir, String _userAgent) {
+        this.uriList = _uriList;
+        this.htdocsDumpDir = _htdocsDumpDir;
+        this.robot = new RobotExclusion(_userAgent);
     }
 
     /**
      * Creates a new IterativeHTMLCrawler object.
-     *
      * @param config Configuration File
      */
     public IterativeHTMLCrawler(File config) {
@@ -132,29 +132,28 @@ public class IterativeHTMLCrawler implements Configurable {
         	System.err.println("Cannot load crawler configuration! ");
         }
 
-        robot = new RobotExclusion(this.userAgent);
+        this.robot = new RobotExclusion(this.userAgent);
 
         if (this.robotsFile != null && this.robotsDomain != null) {
             log.debug(this.robotsFile + " " + this.robotsDomain);
-            robot.addLocalEntries(robotsDomain, new File(robotsFile));
+            this.robot.addLocalEntries(this.robotsDomain, new File(this.robotsFile));
         }
     }
 
     /**
      * Crawl
-     *
      * @param start Start crawling at this URL
      * @param scope Limit crawling to this scope
      */
     public void crawl(URL start, String scope) {
-        scopeURL = new String[1];
-        scopeURL[0] = scope;
+        this.scopeURL = new String[1];
+        this.scopeURL[0] = scope;
 
         String seedURL = start.toString();
         this.rootURL = seedURL.substring(0, seedURL.indexOf("/", 8));
 
-        urlsToCrawl = new java.util.Vector();
-        urlsToCrawlLowerCase = new java.util.TreeSet();
+        this.urlsToCrawl = new java.util.Vector();
+        this.urlsToCrawlLowerCase = new java.util.TreeSet();
 
         String currentURLPath = start.toString().substring(0, start.toString().lastIndexOf("/"));
 
@@ -172,11 +171,11 @@ public class IterativeHTMLCrawler implements Configurable {
 
         int currentPosition = 0;
 
-        while (currentPosition < urlsToCrawl.size()) {
-            URL currentURL = (URL) urlsToCrawl.elementAt(currentPosition);
+        while (currentPosition < this.urlsToCrawl.size()) {
+            URL currentURL = (URL) this.urlsToCrawl.elementAt(currentPosition);
             currentURLPath = currentURL.toString().substring(0, currentURL.toString().lastIndexOf("/"));
 
-            log.info("INFO: Current Array Size: " + urlsToCrawl.size() + ", Current Position: " + currentPosition + ", Current URL: " + currentURL.toString());
+            log.info("INFO: Current Array Size: " + this.urlsToCrawl.size() + ", Current Position: " + currentPosition + ", Current URL: " + currentURL.toString());
 
 
             java.util.List urlsWithinPage = parsePage(currentURL.toString());
@@ -193,7 +192,7 @@ public class IterativeHTMLCrawler implements Configurable {
                         if ((urlToCrawl = addURL(urlCandidate, currentURLPath)) != null) {
                             dumpHTDoc(urlToCrawl);
                         }
-                    } catch (MalformedURLException e) {
+                    } catch (final MalformedURLException e) {
                         log.warn("" + e + " " + urlCandidate);
                     }
                 }
@@ -202,83 +201,73 @@ public class IterativeHTMLCrawler implements Configurable {
             currentPosition = currentPosition + 1;
         }
 
-        log.info("Stop crawling at: " + urlsToCrawl.elementAt(urlsToCrawl.size()-1));
-
-
+        log.info("Stop crawling at: " + this.urlsToCrawl.elementAt(this.urlsToCrawl.size()-1));
 
         // Write all crawled URLs into file
         try {
-            File parent = new File(new File(uriList).getParent());
+            File parent = new File(new File(this.uriList).getParent());
             if (!parent.isDirectory()) {
                 parent.mkdirs();
                 log.warn("Directory has been created: " + parent);
             }
-            java.io.PrintWriter out = new java.io.PrintWriter(new FileOutputStream(uriList));
+            PrintWriter out = new PrintWriter(new FileOutputStream(this.uriList));
 
-            for (int i = 0; i < urlsToCrawl.size(); i++) {
-                out.println("" + urlsToCrawl.elementAt(i));
+            for (int i = 0; i < this.urlsToCrawl.size(); i++) {
+                out.println("" + this.urlsToCrawl.elementAt(i));
             }
 
             out.close();
-        } catch (java.io.FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             log.error("" + e);
         }
     }
 
     /**
      * Add URLs to crawl
-     *
-     * @param urlCandidate DOCUMENT ME!
-     * @param currentURLPath DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws MalformedURLException DOCUMENT ME!
+     * @param urlCandidate URL to add
+     * @param currentURLPath The current URL path
+     * @return Added URL
+     * @throws MalformedURLException if the URL is invalid
      */
     public URL addURL(String urlCandidate, String currentURLPath)
         throws MalformedURLException {
         URL url = new URL(parseHREF(urlCandidate, urlCandidate.toLowerCase(Locale.ENGLISH), currentURLPath));
         //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
 
-        if (filterURL(urlCandidate, currentURLPath, urlsToCrawlLowerCase)) {
-            if (!robot.disallowed(url)) {
+        if (filterURL(urlCandidate, currentURLPath, this.urlsToCrawlLowerCase)) {
+            if (!this.robot.disallowed(url)) {
                 if (url.getQuery() == null) {
-                    urlsToCrawl.add(url);
-                    urlsToCrawlLowerCase.add(url.toString().toLowerCase());
+                    this.urlsToCrawl.add(url);
+                    this.urlsToCrawlLowerCase.add(url.toString().toLowerCase(Locale.ENGLISH));
                     log.debug("URL added: " + url);
                 } else {
                     log.info("Don't crawl URLs with query string: " + url);
                 }
 
                 return url;
-            } else {
-                log.info("Disallowed by robots.txt: " + urlCandidate);
             }
+            log.info("Disallowed by robots.txt: " + urlCandidate);
         }
 
         return null;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param urlString DOCUMENT ME!
-     *
-     * @return ok, 404
+     * Parse a URL
+     * @param urlString URL to parse
+     * @return ok if the parse succeeded, or an error message if it did not
+     * FIXME why does this return null?
      */
-    public java.util.List parsePage(String urlString) {
+    public List parsePage(String urlString) {
         String status = "ok";
 
         try {
             URL currentURL = new java.net.URL(urlString);
-            String currentURLPath = urlString.substring(0, urlString.lastIndexOf("/"));
             HttpURLConnection httpCon = (HttpURLConnection) currentURL.openConnection();
 
             httpCon.setRequestProperty("User-Agent", "Lenya Lucene Crawler");
 
             httpCon.connect();
-
-            long lastModified = httpCon.getLastModified();
 
             if (httpCon.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 String contentType = httpCon.getContentType();
@@ -310,22 +299,17 @@ public class IterativeHTMLCrawler implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param httpCon DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws java.io.IOException DOCUMENT ME!
+     * Returns a list of links for a HTTP connection
+     * @param httpCon The HTTP connection
+     * @return The list of links
+     * @throws IOException if an IO error occurs
      */
-    public static java.util.List handleHTML(HttpURLConnection httpCon)
-        throws java.io.IOException {
+    public static List handleHTML(HttpURLConnection httpCon) throws IOException {
         ContentHandler handler = new HTMLHandler();
         handler.parse(httpCon.getInputStream());
 
         if (handler.getRobotFollow()) {
-            java.util.List links = handler.getLinks();
-
+            List links = handler.getLinks();
             return links;
         }
 
@@ -334,30 +318,27 @@ public class IterativeHTMLCrawler implements Configurable {
 
     /**
      * Parse PDF for links
-     *
-     * @param httpCon DOCUMENT ME!
+     * @param httpCon The HTTP connection
      */
     public void handlePDF(HttpURLConnection httpCon) {
         log.debug(".handlePDF(): Not handled yet!");
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param url DOCUMENT ME!
-     * @param currentURLPath DOCUMENT ME!
-     * @param links DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Checks if a URL is in the crawling scope
+     * @param url The URL
+     * @param currentURLPath The current URL path
+     * @param links The list of known links
+     * @return whether the URL is in the crawling scope
      */
-    public boolean filterURL(String url, String currentURLPath, java.util.TreeSet links) {
+    public boolean filterURL(String url, String currentURLPath, TreeSet links) {
         String urlLowCase = url.toLowerCase(Locale.ENGLISH);
 
         if (!(urlLowCase.startsWith("http://") || urlLowCase.startsWith("https://"))) {
             url = parseHREF(url, urlLowCase, currentURLPath);
 
             if (url != null) {
-                urlLowCase = url.toLowerCase();
+                urlLowCase = url.toLowerCase(Locale.ENGLISH);
             }
         }
 
@@ -374,11 +355,9 @@ public class IterativeHTMLCrawler implements Configurable {
 
     /**
      * Parse URL and complete if necessary
-     *
      * @param url URL from href
      * @param urlLowCase url is lower case
      * @param currentURLPath URL of current page
-     *
      * @return Completed URL
      */
     public String parseHREF(String url, String urlLowCase, String currentURLPath) {
@@ -388,7 +367,7 @@ public class IterativeHTMLCrawler implements Configurable {
 
         // Looks for incomplete URL and completes them
         if (urlLowCase.startsWith("/")) {
-            url = rootURL + url;
+            url = this.rootURL + url;
         } else if (urlLowCase.startsWith("./")) {
             url = currentURLPath + url.substring(1, url.length());
         } else if (urlLowCase.startsWith("../")) {
@@ -446,15 +425,13 @@ public class IterativeHTMLCrawler implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param url DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Checks if a URL is in the crawling scope
+     * @param url The URL
+     * @return whether the URL is in the crawling scope
      */
     public boolean inScope(String url) {
-        for (int i = 0; i < scopeURL.length; i++) {
-            if (url.startsWith(scopeURL[i])) {
+        for (int i = 0; i < this.scopeURL.length; i++) {
+            if (url.startsWith(this.scopeURL[i])) {
                 return true;
             }
         }
@@ -463,28 +440,25 @@ public class IterativeHTMLCrawler implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param parent DOCUMENT ME!
-     * @param child DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws MalformedURLException DOCUMENT ME!
+     * Returns the complete URL for a child
+     * @param parent The parent URL
+     * @param child The child
+     * @return The complete URL
+     * @throws MalformedURLException if the URL was not valid
+     * FIXME this looks wrong
      */
     public URL completeURL(URL parent, String child) throws MalformedURLException {
         return parent;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param url DOCUMENT ME!
+     * Dumps the content of a URL to the dump directory
+     * @param url The URL
      */
     public void dumpHTDoc(URL url) {
         String ext = getExtension(url);
 
-        String filename = htdocsDumpDir + url.getFile();
+        String filename = this.htdocsDumpDir + url.getFile();
         File file = new File(filename);
 
         if (filename.charAt(filename.length() - 1) == '/') {
@@ -493,6 +467,7 @@ public class IterativeHTMLCrawler implements Configurable {
         }
 
         if (ext.equals("html") || ext.equals("htm") || ext.equals("txt") || ext.equals("pdf")) {
+
             try {
                 File parent = new File(file.getParent());
 
@@ -503,7 +478,7 @@ public class IterativeHTMLCrawler implements Configurable {
                 HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
                 java.io.InputStream in = httpConnection.getInputStream();
 
-		FileOutputStream out = new FileOutputStream(file);
+                FileOutputStream out = new FileOutputStream(file);
                 byte[] buffer = new byte[1024];
                 int bytesRead = -1;
                 while ((bytesRead = in.read(buffer)) >= 0) {
@@ -512,28 +487,32 @@ public class IterativeHTMLCrawler implements Configurable {
                 out.close();
 
 /*
-                BufferedInputStream bin = new BufferedInputStream(in);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(bin));
+                    BufferedInputStream bin = new BufferedInputStream(in);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(bin));
 
-                java.io.FileWriter fw = new java.io.FileWriter(file);
-                int i;
+                    java.io.FileWriter fw = new java.io.FileWriter(file);
+                    int i;
 
-                while ((i = reader.read()) != -1) {
-                    fw.write(i);
-                }
+                    while ((i = reader.read()) != -1) {
+                        fw.write(i);
+                    }
 
-                fw.close();
+                    fw.close();
 
-                bin.close();
+                    bin.close();
 */
                 in.close();
                 httpConnection.disconnect();
 
                 log.info("URL dumped: " + url + " (" + file + ")");
-            } catch (Exception e) {
+            } catch (final FileNotFoundException e) {
+                log.error("" + e);
+                log.error("URL not dumped: " + url);
+            } catch (final IOException e) {
                 log.error("" + e);
                 log.error("URL not dumped: " + url);
             }
+
         } else {
             log.info("URL not dumped: " + url);
         }
@@ -565,22 +544,18 @@ public class IterativeHTMLCrawler implements Configurable {
 */
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param url DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the extension of a URL
+     * @param url The URL
+     * @return The extension
      */
     public String getExtension(URL url) {
         return getExtension(new File(url.getPath()));
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param file DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the extension of a file
+     * @param file The file
+     * @return The extension
      */
     public String getExtension(File file) {
         StringTokenizer st = new StringTokenizer(file.getPath(), ".");

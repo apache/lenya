@@ -19,16 +19,19 @@
 
 package org.apache.lenya.cms.publishing;
 
+/**
+ * Export exception
+ */
 public class ExportException extends Exception {
     /**
      * Creates a new ExportException.
      */
     public ExportException() {
+	    // do nothing
     }
 
     /**
      * Creates a new ExportException.
-     * 
      * @param message the exception message
      */
     public ExportException(String message) {
@@ -37,7 +40,6 @@ public class ExportException extends Exception {
 
     /**
      * Creates a new ExportException.
-     * 
      * @param message the exception message
      * @param cause the cause of the exception
      */
@@ -47,7 +49,6 @@ public class ExportException extends Exception {
 
     /**
      * Creates a new ExportException.
-     * 
      * @param cause  the cause of the exception
      */
     public ExportException(Throwable cause) {

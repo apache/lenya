@@ -33,6 +33,7 @@ public final class URLKeyUtil {
      * Ctor.
      */
     private URLKeyUtil() {
+	    // do nothing
     }
 
     /**

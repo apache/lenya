@@ -52,10 +52,10 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
 
         /**
          * Ctor.
-         * @param logger The logger to use.
+         * @param _logger The logger to use.
          */
-        public URIParametrizerConsumer(Logger logger) {
-            this.logger = logger;
+        public URIParametrizerConsumer(Logger _logger) {
+            this.logger = _logger;
         }
 
         /**
@@ -64,10 +64,10 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
          */
         public void startElement(String uri, String loc, String raw, Attributes a) {
             if (loc.equals("parameter")) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("start Element " + uri + ":" + loc + ":" + raw);
+                if (this.logger.isDebugEnabled()) {
+                    this.logger.debug("start Element " + uri + ":" + loc + ":" + raw);
                 }
-                inParamElement = true;
+                this.inParamElement = true;
             }
         }
 
@@ -75,16 +75,16 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
          * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
          *      java.lang.String, java.lang.String)
          */
-        public void endElement(String uri, String loc, String raw, Attributes a) {
+        public void endElement(String uri, String loc, String raw) {
             if (loc.equals("parameter")) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("stop Element " + uri + ":" + loc + ":" + raw);
+                if (this.logger.isDebugEnabled()) {
+                    this.logger.debug("stop Element " + uri + ":" + loc + ":" + raw);
                 }
-                inParamElement = false;
+                this.inParamElement = false;
             }
 
-            if (logger.isDebugEnabled()) {
-                logger.debug("processing Element " + uri + ":" + loc + ":" + raw);
+            if (this.logger.isDebugEnabled()) {
+                this.logger.debug("processing Element " + uri + ":" + loc + ":" + raw);
             }
         }
 
@@ -92,10 +92,10 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
          * @see org.xml.sax.ContentHandler#characters(char[], int, int)
          */
         public void characters(char[] ch, int start, int len) {
-            if (inParamElement) {
-                parameterValue = new String(ch, start, len);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("grab Element " + parameterValue);
+            if (this.inParamElement) {
+                this.parameterValue = new String(ch, start, len);
+                if (this.logger.isDebugEnabled()) {
+                    this.logger.debug("grab Element " + this.parameterValue);
                 }
             }
         }
@@ -105,7 +105,7 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
          * @return A string.
          */
         public String getParameter() {
-            return parameterValue;
+            return this.parameterValue;
         }
 
     }
@@ -114,6 +114,7 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
      * Ctor.
      */
     public URIParameterizerImpl() {
+	    // do nothing
     }
 
     /**
@@ -132,7 +133,7 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
         Source inputSource = null;
 
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             URIParametrizerConsumer xmlConsumer = new URIParametrizerConsumer(getLogger());
 
             String[] parameterNames = parameters.getNames();
@@ -166,7 +167,7 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
                 if (inputSource != null) {
                     resolver.release(inputSource);
                 }
-                manager.release(resolver);
+                this.manager.release(resolver);
             }
         }
         return uriParameters;
@@ -181,8 +182,8 @@ public class URIParameterizerImpl extends AbstractLogEnabled implements URIParam
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
 }

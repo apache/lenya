@@ -21,7 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.tools.ant.BuildException;
 
@@ -43,104 +42,95 @@ public class InsertLabelTask extends PublicationTask {
 
     /**
      * Get the area of the site tree.
-     * 
      * @return the area of the tree.
      */
     protected String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * Set the area of the site tree
-     * 
-     * @param area the area of the tree.
+     * @param _area the area of the tree.
      */
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String _area) {
+        this.area = _area;
     }
 
     /**
      * Return the document-id corresponding to the node to delete.
-     * 
      * @return string The document-id.
      */
     protected String getDocumentid() {
-        return documentid;
+        return this.documentid;
     }
 
     /**
      * Set the value of the document-id corresponding to the node to delete.
-     * 
      * @param string The document-id.
      */
     public void setDocumentid(String string) {
-        documentid = string;
+        this.documentid = string;
     }
 
     /**
      * Get the name of the label.
-     * 
      * @return the labelName
      */
     public String getLabelName() {
-        return labelName;
+        return this.labelName;
     }
 
     /**
      * Set the labelName.
-     * 
-     * @param labelName the name of the label
+     * @param _labelName the name of the label
      */
-    public void setLabelName(String labelName) {
-        this.labelName = labelName;
+    public void setLabelName(String _labelName) {
+        this.labelName = _labelName;
     }
 
     /**
      * Get the language.
-     * 
      * @return the language
      */
     public String getLanguage() {
-        return language;
+        return this.language;
     }
 
     /**
      * Set the language.
-     * 
-     * @param language the language
+     * @param _language the language
      */
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setLanguage(String _language) {
+        this.language = _language;
     }
 
     /**
      * Insert a label in an existing node in the tree.
      * 
-     * @param documentid the document-id of the document.
-     * @param labelName the name of the label that is to be inserted.
-     * @param language the language of the label that is to be inserted.
-     * @param area determines in which sitetree the label is to be inserted
+     * @param _documentid the document-id of the document.
+     * @param _labelName the name of the label that is to be inserted.
+     * @param _language the language of the label that is to be inserted.
+     * @param _area determines in which sitetree the label is to be inserted
      * 
      * @throws SiteException if an error occurs
      */
-    public void insertLabel(String documentid, String labelName, String language, String area)
+    public void insertLabel(String _documentid, String _labelName, String _language, String _area)
             throws SiteException {
 
         SiteTree tree = null;
         Label label = null;
         try {
-            tree = getSiteTree(area);
-            label = new Label(labelName, language);
-            tree.addLabel(documentid, label);
+            tree = getSiteTree(_area);
+            label = new Label(_labelName, _language);
+            tree.addLabel(_documentid, label);
             tree.save();
         } catch (Exception e) {
-            throw new SiteException("Cannot insert label " + label + " into tree " + area, e);
+            throw new SiteException("Cannot insert label " + label + " into tree " + _area, e);
         }
 
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {

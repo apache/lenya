@@ -43,10 +43,10 @@ public class ResourcePublisher extends PublicationTask {
     public void execute() throws BuildException {
 
         try {
-            Document authoringDocument = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, documentId);
+            Document authoringDocument = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, this.documentId);
             ResourcesManager authoringManager = authoringDocument.getResourcesManager();
 
-            Document liveDocument = getIdentityMap().getFactory().get(Publication.LIVE_AREA, documentId);
+            Document liveDocument = getIdentityMap().getFactory().get(Publication.LIVE_AREA, this.documentId);
             ResourcesManager liveManager = liveDocument.getResourcesManager();
             
             // find all resource files and their associated meta files
@@ -76,15 +76,15 @@ public class ResourcePublisher extends PublicationTask {
      * @return A document ID.
      */
     public String getDocumentId() {
-        return documentId;
+        return this.documentId;
     }
 
     /**
      * Sets the document ID.
-     * @param documentId A document ID.
+     * @param _documentId A document ID.
      */
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
+    public void setDocumentId(String _documentId) {
+        this.documentId = _documentId;
     }
 
 }

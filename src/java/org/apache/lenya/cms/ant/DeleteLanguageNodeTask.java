@@ -21,7 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -46,20 +45,20 @@ public class DeleteLanguageNodeTask extends DeleteNodeTask {
      * with document id <documentid> and area <area>. When no more language
      * is available, then the node will be deleted fom the tree. 
      * 
-     * @param language The language of the document.
+     * @param _language The language of the document.
      * @param documentid The id of the document.
      * @param area The area of the document.
      * 
      * @throws SiteException if an error occurs
      */
-    public void deleteLanguageNode(String language, String documentid, String area)
+    public void deleteLanguageNode(String _language, String documentid, String area)
         throws SiteException {
         SiteTree tree = null;
 
         try {
             tree = getSiteTree(area);
             SiteTreeNode node = tree.getNode(documentid);
-            node.removeLabel(node.getLabel(language));
+            node.removeLabel(node.getLabel(_language));
             Label[] labels = node.getLabels();
             if (labels.length < 1 ){
                 deleteNode(documentid,area);   
@@ -90,7 +89,7 @@ public class DeleteLanguageNodeTask extends DeleteNodeTask {
 	 * @return The language
 	 */
 	public String getLanguage() {
-		return language;
+		return this.language;
 	}
 
     /**
@@ -99,7 +98,7 @@ public class DeleteLanguageNodeTask extends DeleteNodeTask {
      * @param string The language.
      */
 	public void setLanguage(String string) {
-		language = string;
+		this.language = string;
 	}
 
 }

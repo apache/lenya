@@ -27,6 +27,9 @@ import org.apache.lenya.cms.task.ExecutionException;
  */
 public class CopyDocumentToArea extends DocumentTask {
     
+    /**
+     * <code>PARAMETER_DESTINATION_AREA</code> Destination area parameter
+     */
     public static final String PARAMETER_DESTINATION_AREA = "destination-area";
 
     /**

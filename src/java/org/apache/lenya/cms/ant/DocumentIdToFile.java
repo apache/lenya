@@ -45,101 +45,93 @@ public class DocumentIdToFile extends PublicationTask {
 
     /**
      * Get the area.
-     * 
      * @return The directory for the area in the publication.
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * Get the document-id.
-     * 
      * @return The document id 
      */
     protected String getDocumentid() {
-        return documentId;
+        return this.documentId;
     }
 
     /**
      * Get the property name.
-     * 
      * @return The name of the property for the path.
      */
     public String getPropertyname() {
-        return propertyname;
+        return this.propertyname;
     }
 
     /**
      * Set the area.
-     * 
-     * @param area The area.
+     * @param _area The area.
      */
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String _area) {
+        this.area = _area;
     }
 
     /**
      * Set the property name
-     * 
      * @param string The name of the property.
      */
     public void setPropertyname(String string) {
-        propertyname = string;
+        this.propertyname = string;
     }
 
     /**
      * Set the value of the document id
-     *   
-     * @param documentId The document id. 
+     * @param _documentId The document id. 
      */
-    public void setDocumentid(String documentId) {
-        this.documentId = documentId;
+    public void setDocumentid(String _documentId) {
+        this.documentId = _documentId;
     }
 
     /**
      * Get the language
-     * 
      * @return the language
      */
     public String getLanguage() {
-        return language;
+        return this.language;
     }
 
     /**
      * Set the language
-     * 
-     * @param language the language
+     * @param _language the language
      */
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setLanguage(String _language) {
+        this.language = _language;
     }
 
     /**
      * Gets the path from the document id and sets this value in the 
      * property of the project with the name propertyname.   
     
-     * @param area The area (e.g. "authoring")
+     * @param _area The area (e.g. "authoring")
      * @param documentid  The document id.
-     * @param language the language of the document
-     * @param propertyname The name of the property
+     * @param _language the language of the document
+     * @param _propertyname The name of the property
      */
     public void compute(
-        String area,
+        String _area,
         String documentid,
-        String language,
-        String propertyname) {
+        String _language,
+        String _propertyname) {
 
         Publication publication = getPublication();
         DocumentIdToPathMapper pathMapper = publication.getPathMapper();
         String fileName =
             pathMapper
-                .getFile(publication, area, documentid, language)
+                .getFile(publication, _area, documentid, _language)
                 .getAbsolutePath();
 
-        Target target = getOwningTarget();
-        Project project = target.getProject();
-        project.setProperty(propertyname, fileName);
+        Target _target = getOwningTarget();
+        Project _project = _target.getProject();
+        _project.setProperty(_propertyname, fileName);
     }
 
     /** 

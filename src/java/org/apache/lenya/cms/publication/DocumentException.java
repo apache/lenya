@@ -19,6 +19,9 @@
 
 package org.apache.lenya.cms.publication;
 
+/**
+ * Document exception
+ */
 public class DocumentException extends PublicationException {
 
     /**

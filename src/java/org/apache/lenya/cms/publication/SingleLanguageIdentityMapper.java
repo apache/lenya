@@ -19,6 +19,9 @@
 
 package org.apache.lenya.cms.publication;
 
+/**
+ * Single Language Identity mapper
+ */
 public class SingleLanguageIdentityMapper extends IdentityDocumentIdToPathMapper {
 
     /**

@@ -42,24 +42,20 @@ public interface Transition {
 	
     /**
      * Returns the event of this transition.
-     * 
      * @return the event
      */
     Event getEvent();
 
     /**
      * Returns the actions of this transition.
-     * 
      * @return the actions
      */
     Action[] getActions();
 
     /**
      * Returns if the transition can fire in a certain situation.
-     * 
      * @param situation the situation for which the query is requested.
      * @param instance The workflow instance to invoke the transition on.
-     * 
      * @return true if the transition can fire in the given situation.
      * @throws WorkflowException when an error occurs.
      */

@@ -66,25 +66,20 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * Create a DefaultSiteTree
-     * 
      * @param pubDir the publication directory
-     * @param area the area
-     * 
+     * @param _area the area
      * @throws SiteException if an error occurs
      */
-    protected DefaultSiteTree(File pubDir, String area) throws SiteException {
-        this(new File(pubDir, Publication.CONTENT_PATH + File.separator + area + File.separator
+    protected DefaultSiteTree(File pubDir, String _area) throws SiteException {
+        this(new File(pubDir, Publication.CONTENT_PATH + File.separator + _area + File.separator
                 + SITE_TREE_FILENAME));
-        this.area = area;
+        this.area = _area;
     }
 
     /**
      * Create a DefaultSiteTree from a filename.
-     * 
      * @param treefilename file name of the tree
-     * 
      * @throws SiteException if an error occurs
-     * 
      * @deprecated use the DefaultSiteTree(File pubDir, String area) constructor
      *             instead.
      */
@@ -94,24 +89,21 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * Create a DefaultSiteTree from a file.
-     * 
-     * @param treefile the file containing the tree
-     * 
+     * @param _treefile the file containing the tree
      * @throws SiteException if an error occurs
-     * 
      * @deprecated this constructor will be private in the future
      */
-    protected DefaultSiteTree(File treefile) throws SiteException {
-        this.treefile = treefile;
+    protected DefaultSiteTree(File _treefile) throws SiteException {
+        this.treefile = _treefile;
 
         try {
-            if (!treefile.isFile()) {
+            if (!_treefile.isFile()) {
                 //the treefile doesn't exist, so create it
 
-                document = createDocument();
+                this.document = createDocument();
             } else {
                 // Read tree
-                document = DocumentHelper.readDocument(treefile);
+                this.document = DocumentHelper.readDocument(_treefile);
             }
         } catch (ParserConfigurationException e) {
             throw new SiteException(e);
@@ -130,48 +122,44 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * tree.
      */
     protected void checkModified() {
-        if (area.equals(Publication.LIVE_AREA) && treefile.isFile()
-                && treefile.lastModified() > lastModified) {
+        if (this.area.equals(Publication.LIVE_AREA) && this.treefile.isFile()
+                && this.treefile.lastModified() > this.lastModified) {
 
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Sitetree [" + treefile + "] has changed: reloading.");
+                getLogger().debug("Sitetree [" + this.treefile + "] has changed: reloading.");
             }
 
             try {
-                document = DocumentHelper.readDocument(treefile);
+                this.document = DocumentHelper.readDocument(this.treefile);
             } catch (Exception e) {
                 throw new IllegalStateException(e.getMessage());
             }
-            lastModified = treefile.lastModified();
+            this.lastModified = this.treefile.lastModified();
         }
     }
 
     /**
      * Create a new DefaultSiteTree xml document.
-     * 
      * @return the new site document
-     * 
      * @throws ParserConfigurationException if an error occurs
      */
     public Document createDocument() throws ParserConfigurationException {
-        document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
+        this.document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
 
-        Element root = document.getDocumentElement();
+        Element root = this.document.getDocumentElement();
         root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         root
                 .setAttribute("xsi:schemaLocation",
                         "http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd");
 
-        return document;
+        return this.document;
     }
 
     /**
      * Find a node in a subtree. The search is started at the given node. The
      * list of ids contains the document-id split by "/".
-     * 
      * @param node where to start the search
      * @param ids list of node ids
-     * 
      * @return the node that matches the path given in the list of ids
      */
     protected Node findNode(Node node, List ids) {
@@ -180,19 +168,18 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
         if (ids.size() < 1) {
             return node;
-        } else {
-            NodeList nodes = node.getChildNodes();
+        }
+        NodeList nodes = node.getChildNodes();
 
-            for (int i = 0; i < nodes.getLength(); i++) {
-                NamedNodeMap attributes = nodes.item(i).getAttributes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            NamedNodeMap attributes = nodes.item(i).getAttributes();
 
-                if (attributes != null) {
-                    Node idAttribute = attributes.getNamedItem("id");
+            if (attributes != null) {
+                Node idAttribute = attributes.getNamedItem("id");
 
-                    if (idAttribute != null && !"".equals(idAttribute.getNodeValue())
-                            && idAttribute.getNodeValue().equals(ids.get(0))) {
-                        return findNode(nodes.item(i), ids.subList(1, ids.size()));
-                    }
+                if (idAttribute != null && !"".equals(idAttribute.getNodeValue())
+                        && idAttribute.getNodeValue().equals(ids.get(0))) {
+                    return findNode(nodes.item(i), ids.subList(1, ids.size()));
                 }
             }
         }
@@ -232,14 +219,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     public void addNode(String documentid, Label[] labels, String href, String suffix,
             boolean link, String refDocumentId) throws SiteException {
-        String parentid = "";
+		StringBuffer buf = new StringBuffer();
         StringTokenizer st = new StringTokenizer(documentid, "/");
         int length = st.countTokens();
 
         for (int i = 0; i < (length - 1); i++) {
-            parentid = parentid + "/" + st.nextToken();
+            buf.append("/" + st.nextToken());
         }
-
+        String parentid = buf.toString();
         String id = st.nextToken();
         this.addNode(parentid, id, labels, href, suffix, link, refDocumentId);
     }
@@ -275,7 +262,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         Node parentNode = getNodeInternal(parentid);
 
         if (parentNode == null) {
-            throw new SiteException("Parentid: " + parentid + " in " + area + " tree not found");
+            throw new SiteException("Parentid: " + parentid + " in " + this.area + " tree not found");
         }
 
         getLogger().debug("PARENT ELEMENT: " + parentNode);
@@ -290,7 +277,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
 
         // Create node
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
+        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
         Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
         child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
 
@@ -329,7 +316,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         } else {
             parentNode.appendChild(child);
         }
-        getLogger().debug("Tree has been modified: " + document.getDocumentElement());
+        getLogger().debug("Tree has been modified: " + this.document.getDocumentElement());
 
     }
 
@@ -356,7 +343,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.site.tree.SiteTree#removeNode(java.lang.String)
      */
     public SiteTreeNode removeNode(String documentId) {
@@ -375,9 +361,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * removes the node corresponding to the given document-id and returns it
-     * 
      * @param documentId the document-id of the Node to be removed
-     * 
      * @return the <code>Node</code> that was removed
      */
     private Node removeNodeInternal(String documentId) {
@@ -404,7 +388,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             ids.add(st.nextToken());
         }
 
-        Node node = findNode(document.getDocumentElement(), ids);
+        Node node = findNode(this.document.getDocumentElement(), ids);
         return node;
     }
 
@@ -514,25 +498,23 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (children == null) {
             getLogger().info("The node " + subtreeRoot.toString() + " has no children");
             return;
-        } else {
-            for (int i = 0; i < children.length; i++) {
-                importSubtree(newParent, children[i], children[i].getId(), null);
-            }
+        }
+        for (int i = 0; i < children.length; i++) {
+            importSubtree(newParent, children[i], children[i].getId(), null);
         }
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.site.tree.SiteTree#save()
      */
     public void save() throws SiteException {
         try {
-            DocumentHelper.writeDocument(document, treefile);
+            DocumentHelper.writeDocument(this.document, this.treefile);
         } catch (TransformerException e) {
-            throw new SiteException("The document [" + document.getLocalName()
+            throw new SiteException("The document [" + this.document.getLocalName()
                     + "] could not be transformed");
         } catch (IOException e) {
-            throw new SiteException("The saving of document [" + document.getLocalName()
+            throw new SiteException("The saving of document [" + this.document.getLocalName()
                     + "] failed");
         }
     }

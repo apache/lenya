@@ -65,14 +65,10 @@ public class DocumentCopyTaskTest extends AntTaskTest {
         TestRunner.run(getSuite());
     }
 
-    public static final String FIRST_DOCUMENT_ID = "/tutorial";
-    public static final String SEC_DOCUMENT_ID = "/features";
-    public static final String AUTHORING_PATH = "content/authoring"
+    private static final String FIRST_DOCUMENT_ID = "/tutorial";
+    private static final String SEC_DOCUMENT_ID = "/features";
+    private static final String AUTHORING_PATH = "content/authoring"
             .replace('/', File.separatorChar);
-    public static final String TREE_FILE = "sitetree.xml";
-    public static final String AUTHORING_RESOURCE = "resources/authoring";
-    public static final String RCML_DIR = "content/rcml";
-    public static final String RCBAK_DIR = "content/rcbak";
 
     /**
      * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
@@ -98,9 +94,6 @@ public class DocumentCopyTaskTest extends AntTaskTest {
      * @throws Exception if an error occurs
      */
     protected void prepareTest() throws Exception {
-        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath() + File.separator;
-        File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
 
         // TODO generate the resources
     }

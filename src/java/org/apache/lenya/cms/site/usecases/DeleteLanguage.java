@@ -46,8 +46,8 @@ public class DeleteLanguage extends DocumentUsecase {
         super.doExecute();
 
         Document document = getSourceDocument();
-        SiteManager manager = document.getPublication().getSiteManager(document.getIdentityMap());
-        manager.delete(document);
+        SiteManager _manager = document.getPublication().getSiteManager(document.getIdentityMap());
+        _manager.delete(document);
         
         document.getFile().delete();
         

@@ -26,28 +26,28 @@ class ParserThread extends Thread {
     HTMLParser parser;
 
     ParserThread(HTMLParser p) {
-        parser = p;
+        this.parser = p;
     }
 
     /**
-     * DOCUMENT ME!
+     * Run method
      */
     public void run() { // convert pipeOut to pipeIn
 
         try {
             try { // parse document to pipeOut
-                parser.HTMLDocument();
+                this.parser.HTMLDocument();
             } catch (ParseException e) {
                 System.out.println("Parse Aborted: " + e.getMessage());
             } catch (TokenMgrError e) {
                 System.out.println("Parse Aborted: " + e.getMessage());
             } finally {
-                parser.pipeOut.close();
+                this.parser.pipeOut.close();
 
-                synchronized (parser) {
-                    parser.summary.setLength(HTMLParser.SUMMARY_LENGTH);
-                    parser.titleComplete = true;
-                    parser.notifyAll();
+                synchronized (this.parser) {
+                    this.parser.summary.setLength(HTMLParser.SUMMARY_LENGTH);
+                    this.parser.titleComplete = true;
+                    this.parser.notifyAll();
                 }
             }
         } catch (IOException e) {

@@ -25,14 +25,29 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
+/**
+ * The default creator
+ */
 public class DefaultCreator implements ParentChildCreatorInterface {
-    private static Category log = Category.getInstance(DefaultCreator.class);
+    private static Logger log = Logger.getLogger(DefaultCreator.class);
+    /**
+     * <code>RESOURCE_NAME</code> The resource name parameter
+     */
     public static final String RESOURCE_NAME = "resource-name";
+    /**
+     * <code>RESOURCE_META_NAME</code> The resource meta name parameter
+     */
     public static final String RESOURCE_META_NAME = "resource-meta-name";
+    /**
+     * <code>SAMPLE_NAME</code> The sample name parameter
+     */
     public static final String SAMPLE_NAME = "sample-name";
+    /**
+     * <code>SAMPLE_META_NAME</code> The sample meta name parameter
+     */
     public static final String SAMPLE_META_NAME = "sample-meta-name";
 
     private String resourceName = null;
@@ -42,8 +57,6 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
     /**
      * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration)
-     *
-     * @param conf DOCUMENT ME!
      */
     public void init(Configuration conf) {
         if (conf == null) {
@@ -51,33 +64,30 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         }
 
         if (conf.getChild(RESOURCE_NAME, false) != null) {
-            resourceName = conf.getChild(RESOURCE_NAME).getValue("index.xml");
+            this.resourceName = conf.getChild(RESOURCE_NAME).getValue("index.xml");
         }
 
         if (conf.getChild(RESOURCE_META_NAME, false) != null) {
-            resourceMetaName =
+            this.resourceMetaName =
                 conf.getChild(RESOURCE_META_NAME).getValue("index-meta.xml");
         }
 
         if (conf.getChild(SAMPLE_NAME, false) != null) {
-            sampleResourceName =
+            this.sampleResourceName =
                 conf.getChild(SAMPLE_NAME).getValue("sampleindex.xml");
         }
 
         if (conf.getChild(SAMPLE_META_NAME, false) != null) {
-            sampleMetaName =
+            this.sampleMetaName =
                 conf.getChild(SAMPLE_META_NAME).getValue("samplemeta.xml");
         }
     }
 
     /**
      * Generate a tree id by returning the child ID.
-     *
      * @param childId a <code>String</code> value
      * @param childType a <code>short</code> value
-     *
      * @return a <code>String</code> value
-     *
      * @exception Exception if an error occurs
      */
     public String generateTreeId(String childId, short childType)
@@ -87,11 +97,8 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
     /**
      * Return the child type by simply returning the child type.
-     *
      * @param childType a <code>short</code> value
-     *
      * @return a <code>short</code> value
-     *
      * @exception Exception if an error occurs
      */
     public short getChildType(short childType) throws Exception {
@@ -100,34 +107,20 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
     /**
      * Create Child Name for tree entry
-     *
      * @param childname a <code>String</code> value
-     *
      * @return a <code>String</code> for Child Name for tree entry
-     *
      * @exception Exception if an error occurs
      */
     public String getChildName(String childname) throws Exception {
         if (childname.length() != 0) {
             return childname;
-        } else {
-            return "abstract_default";
         }
+        return "abstract_default";
     }
 
     /**
-      * DOCUMENT ME!
-      *
-      * @param samplesDir DOCUMENT ME!
-      * @param parentDir DOCUMENT ME!
-      * @param childId DOCUMENT ME!
-      * @param childType DOCUMENT ME!
-      * @param childName the name of the child
-      * @param language for which the document is created
-      * @param parameters additional parameters that can be considered when 
-      *  creating the child
-      *
-      * @throws Exception DOCUMENT ME!
+     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#create(File, File,
+     * String, short, String, String, Map)
       */
     public void create(
         File samplesDir,
@@ -143,8 +136,8 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         String filename = getChildFileName(parentDir, id, language);
         String filenameMeta = getChildMetaFileName(parentDir, id, language);
 
-        String doctypeSample = samplesDir + File.separator + sampleResourceName;
-        String doctypeMeta = samplesDir + File.separator + sampleMetaName;
+        String doctypeSample = samplesDir + File.separator + this.sampleResourceName;
+        String doctypeMeta = samplesDir + File.separator + this.sampleMetaName;
 
         File sampleFile = new File(doctypeSample);
         if (!sampleFile.exists()) {
@@ -177,7 +170,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
         // now do the same thing for the meta document if the
         // sampleMetaName is specified
-        if (sampleMetaName != null) {
+        if (this.sampleMetaName != null) {
             doc = DocumentHelper.readDocument(new File(doctypeMeta));
 
             transformMetaXML(doc, id, childType, childName, parameters);
@@ -194,13 +187,11 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
     /**
      * Apply some transformation on the newly created child.
-     * 
      * @param doc the xml document
      * @param childId the id of the child
      * @param childType the type of child
      * @param childName the name of the child
      * @param parameters additional parameters that can be used in the transformation
-     * 
      * @throws Exception if the transformation fails
      */
     protected void transformXML(
@@ -209,17 +200,17 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         short childType,
         String childName,
         Map parameters)
-        throws Exception {}
+        throws Exception {
+	    // do nothing
+    }
 
     /**
      * Apply some transformation on the meta file of newly created child.
-     * 
      * @param doc the xml document
      * @param childId the id of the child
      * @param childType the type of child
      * @param childName the name of the child
      * @param parameters additional parameters that can be used in the transformation
-     * 
      * @throws Exception if the transformation fails
      */
     protected void transformMetaXML(
@@ -228,15 +219,15 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         short childType,
         String childName,
         Map parameters)
-        throws Exception {}
+        throws Exception {
+	    // do nothing
+        }
 
     /**
      * Get the file name of the child
-     * 
      * @param parentDir the parent directory
      * @param childId the id of the child
      * @param language for which the document is created
-     * 
      * @return the file name of the child
      */
     protected String getChildFileName(
@@ -248,11 +239,9 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
     /**
      * Get the file name of the meta file
-     * 
      * @param parentDir the parent directory
      * @param childId the id of the child
      * @param language for which the document is created
-     * 
      * @return the name of the meta file
      */
     protected String getChildMetaFileName(
@@ -264,9 +253,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
     /**
      * Create the language suffix for a file name given a language string
-     * 
      * @param language the language
-     * 
      * @return the suffix for the language dependant file name
      */
     protected String getLanguageSuffix(String language) {

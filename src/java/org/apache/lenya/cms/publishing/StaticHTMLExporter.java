@@ -20,12 +20,14 @@
 package org.apache.lenya.cms.publishing;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.StringTokenizer;
 
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.task.ExecutionException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -40,20 +42,22 @@ import org.apache.log4j.Category;
  * the path<br/>
  */
 public class StaticHTMLExporter extends AbstractExporter {
-    private static Category log = Category.getInstance(StaticHTMLExporter.class);
+    private static Logger log = Logger.getLogger(StaticHTMLExporter.class);
+    /**
+     * <code>PARAMETER_URIS</code> The URIs parameter
+     */
     public static final String PARAMETER_URIS = "uris";
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param serverURI DOCUMENT ME!
-     * @param serverPort DOCUMENT ME!
-     * @param publicationPath DOCUMENT ME!
-     * @param exportPath DOCUMENT ME!
-     * @param uris DOCUMENT ME!
-     * @param substituteExpression DOCUMENT ME!
-     *
-     * @throws ExportException DOCUMENT ME!
+     * Export the specified URIs
+     * @param serverURI The server to use
+     * @param serverPort The server port to use
+     * @param publicationPath The path to the publication to use
+     * @param exportPath The export path to use
+     * @param uris Array of URIs
+     * @param substituteExpression The substitute expression
+     * @param substituteReplacement The replacement value
+     * @throws ExportException if an error occurs
      */
     public void export(URL serverURI, int serverPort, String publicationPath, String exportPath,
         String[] uris, String substituteExpression, String substituteReplacement)
@@ -85,9 +89,9 @@ public class StaticHTMLExporter extends AbstractExporter {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param contextPath DOCUMENT ME!
+     * Run the export
+     * @param contextPath The context path
+     * @throws ExecutionException if an error occurs
      */
     public void execute(String contextPath) throws ExecutionException {
         try {
@@ -129,7 +133,13 @@ public class StaticHTMLExporter extends AbstractExporter {
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_EXPORT_PATH), uris,
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REGEXP),
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_SUBSTITUTE_REPLACEMENT));
-        } catch (Exception e) {
+        } catch (final ParameterException e) {
+            throw new ExecutionException(e);
+        } catch (final IllegalStateException e) {
+            throw new ExecutionException(e);
+        } catch (final MalformedURLException e) {
+            throw new ExecutionException(e);
+        } catch (final ExportException e) {
             throw new ExecutionException(e);
         }
     }

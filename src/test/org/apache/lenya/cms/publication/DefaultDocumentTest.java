@@ -42,7 +42,6 @@ public class DefaultDocumentTest extends TestCase {
 
     /**
      * The main program. The parameters are set from the command line arguments.
-     * 
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
@@ -67,7 +66,7 @@ public class DefaultDocumentTest extends TestCase {
     /**
      * Tests a document test set.
      * @param testSet The test set.
-     * @throws DocumentBuildException when something went wrong.
+     * @throws DocumentBuildException if an error occurs
      */
     protected void doDocumentTest(DocumentTestSet testSet) throws DocumentBuildException {
         Document document = getDocument(testSet);
@@ -93,7 +92,7 @@ public class DefaultDocumentTest extends TestCase {
 
     /**
      * Tests the default document.
-     * @throws DocumentBuildException when something went wrong.
+     * @throws DocumentBuildException if an error occurs
      */
     public void testDefaultDocument() throws DocumentBuildException {
         for (int i = 0; i < testSets.length; i++) {
@@ -115,7 +114,7 @@ public class DefaultDocumentTest extends TestCase {
      * Returns the test document for a given test set.
      * @param testSet A document test set.
      * @return A document.
-     * @throws DocumentBuildException when something went wrong.
+     * @throws DocumentBuildException if an error occurs
      */
     protected Document getDocument(DocumentTestSet testSet) throws DocumentBuildException {
 
@@ -140,53 +139,53 @@ public class DefaultDocumentTest extends TestCase {
 
         /**
          * Ctor.
-         * @param url The url.
-         * @param id The ID.
-         * @param area The area.
-         * @param language The language.
-         * @param extension The extension.
+         * @param _url The url.
+         * @param _id The ID.
+         * @param _area The area.
+         * @param _language The language.
+         * @param _extension The extension.
          */
-        public DocumentTestSet(String url, String id, String area, String language, String extension) {
-            this.url = url;
-            this.id = id;
-            this.area = area;
-            this.language = language;
-            this.extension = extension;
+        public DocumentTestSet(String _url, String _id, String _area, String _language, String _extension) {
+            this.url = _url;
+            this.id = _id;
+            this.area = _area;
+            this.language = _language;
+            this.extension = _extension;
         }
 
         /**
          * @return The area.
          */
         public String getArea() {
-            return area;
+            return this.area;
         }
 
         /**
          * @return The extension.
          */
         public String getExtension() {
-            return extension;
+            return this.extension;
         }
 
         /**
          * @return The ID.
          */
         public String getId() {
-            return id;
+            return this.id;
         }
 
         /**
          * @return The language.
          */
         public String getLanguage() {
-            return language;
+            return this.language;
         }
 
         /**
          * @return The URL.
          */
         public String getUrl() {
-            return url;
+            return this.url;
         }
     }
 

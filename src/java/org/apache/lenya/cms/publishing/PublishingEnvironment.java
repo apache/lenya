@@ -24,23 +24,59 @@ import java.io.File;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
+/**
+ * A class that holds various publishing parameters
+ */
 public class PublishingEnvironment implements Configurable {
-    private static Category log = Category.getInstance(PublishingEnvironment.class);
+    private static Logger log = Logger.getLogger(PublishingEnvironment.class);
+    /**
+     * <code>CONFIGURATION_FILE</code> The path to the publisher configuration file
+     */
     public static final String CONFIGURATION_FILE = "config" + File.separator + "publishing" +
         File.separator + "publisher.xconf";
+    /**
+     * <code>PUBLICATION_PREFIX</code> The path to the publications from the webapp root
+     */
     public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs" +
         File.separator;
+    /**
+     * <code>PUBLICATION_PATH</code> The publication path
+     */
     public static final String PUBLICATION_PATH = "publication-path";
+    /**
+     * <code>PARAMETER_AUTHORING_PATH</code> The authoring path
+     */
     public static final String PARAMETER_AUTHORING_PATH = "authoring-path";
+    /**
+     * <code>PARAMETER_TREE_AUTHORING_PATH</code> The path to the authoring tree
+     */
     public static final String PARAMETER_TREE_AUTHORING_PATH = "tree-authoring-path";
+    /**
+     * <code>PARAMETER_LIVE_PATH</code> The live path
+     */
     public static final String PARAMETER_LIVE_PATH = "live-path";
+    /**
+     * <code>PARAMETER_TREE_LIVE_PATH</code> The path to the live tree
+     */
     public static final String PARAMETER_TREE_LIVE_PATH = "tree-live-path";
+    /**
+     * <code>PARAMETER_REPLICATION_PATH</code> The replication path
+     */
     public static final String PARAMETER_REPLICATION_PATH = "replication-path";
+    /**
+     * <code>PARAMETER_EXPORT_PATH</code> The export path
+     */
     public static final String PARAMETER_EXPORT_PATH = "export-path";
+    /**
+     * <code>PARAMETER_SUBSTITUTE_REGEXP</code> The regular expression to use during export
+     */
     public static final String PARAMETER_SUBSTITUTE_REGEXP = "substitute-regexp";
+    /**
+     * <code>PARAMETER_SUBSTITUTE_REPLACEMENT</code> The replacement value for the regular expression
+     */
     public static final String PARAMETER_SUBSTITUTE_REPLACEMENT = "substitute-replacement";
     private String publicationPath;
     private String replicationDirectory;
@@ -55,8 +91,8 @@ public class PublishingEnvironment implements Configurable {
     /**
      * Creates a new PublishingEnvironment object.
      *
-     * @param contextPath DOCUMENT ME!
-     * @param publicationId DOCUMENT ME!
+     * @param contextPath The context path
+     * @param publicationId The publication id
      */
     public PublishingEnvironment(String contextPath, String publicationId) {
         this(PublishingEnvironment.getPublicationPath(contextPath, publicationId));
@@ -66,12 +102,12 @@ public class PublishingEnvironment implements Configurable {
     /**
      * Creates a new PublishingEnvironment object.
      *
-     * @param publicationPath DOCUMENT ME!
+     * @param _publicationPath The publication path
      */
-    public PublishingEnvironment(String publicationPath) {
-        setPublicationPath(publicationPath);
+    public PublishingEnvironment(String _publicationPath) {
+        setPublicationPath(_publicationPath);
 
-        String configurationFilePath = publicationPath + CONFIGURATION_FILE;
+        String configurationFilePath = _publicationPath + CONFIGURATION_FILE;
 
         File configurationFile = new File(configurationFilePath);
 
@@ -88,11 +124,11 @@ public class PublishingEnvironment implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
+     * Initializes the class from a configuration file
      *
-     * @param configuration DOCUMENT ME!
+     * @param configuration The configuration file
      *
-     * @throws org.apache.avalon.framework.configuration.ConfigurationException DOCUMENT ME!
+     * @throws org.apache.avalon.framework.configuration.ConfigurationException if an error occurs
      */
     public void configure(org.apache.avalon.framework.configuration.Configuration configuration)
         throws org.apache.avalon.framework.configuration.ConfigurationException {
@@ -127,121 +163,123 @@ public class PublishingEnvironment implements Configurable {
     }
 
     /**
-     * Returns the publication directory.
+     * Returns the publication path.
      *
-     * @return DOCUMENT ME!
+     * @return The publication path
      */
     public String getPublicationPath() {
-        return publicationPath;
+        return this.publicationPath;
     }
 
     /**
      * Returns the publication directory.
+     * @return The publication directory
      */
     public File getPublicationDirectory() {
         return new File(getPublicationPath());
     }
 
     protected void setPublicationPath(String path) {
-        publicationPath = path;
+        this.publicationPath = path;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the authoring path
      *
-     * @return DOCUMENT ME!
+     * @return The authoring path
      */
     public String getAuthoringPath() {
-        return authoringPath;
+        return this.authoringPath;
     }
 
     protected void setAuthoringPath(String path) {
-        authoringPath = path;
+        this.authoringPath = path;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the live path
      *
-     * @return DOCUMENT ME!
+     * @return The live path
      */
     public String getLivePath() {
-        return livePath;
+        return this.livePath;
     }
 
     protected void setLivePath(String path) {
-        livePath = path;
+        this.livePath = path;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the path to the authoring tree
      *
-     * @return DOCUMENT ME!
+     * @return The path to the authoring tree
      */
     public String getTreeAuthoringPath() {
-        return treeAuthoringPath;
+        return this.treeAuthoringPath;
     }
 
     protected void setTreeAuthoringPath(String path) {
-        treeAuthoringPath = path;
+        this.treeAuthoringPath = path;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the path to the live tree
      *
-     * @return DOCUMENT ME!
+     * @return The path to the live tree
      */
     public String getTreeLivePath() {
-        return treeLivePath;
+        return this.treeLivePath;
     }
 
     protected void setTreeLivePath(String path) {
-        treeLivePath = path;
+        this.treeLivePath = path;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the path to the replication directory
      *
-     * @return DOCUMENT ME!
+     * @return The path to the replication directory
      */
     public String getReplicationDirectory() {
-        return replicationDirectory;
+        return this.replicationDirectory;
     }
 
     protected void setReplicationDirectory(String directory) {
-        replicationDirectory = directory;
+        this.replicationDirectory = directory;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the path to the export directory
      *
-     * @return DOCUMENT ME!
+     * @return The path to the export directory
      */
     public String getExportDirectory() {
-        return exportDirectory;
+        return this.exportDirectory;
     }
 
     protected void setExportDirectory(String directory) {
-        exportDirectory = directory;
+        this.exportDirectory = directory;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the substitution regular expression used in the export
      *
-     * @return DOCUMENT ME!
+     * @return The substitution regular expression
      */
     public String getSubstituteExpression() {
-        return substituteExpression;
+        return this.substituteExpression;
     }
 
     protected void setSubstituteExpression(String substitute) {
-        substituteExpression = substitute;
+        this.substituteExpression = substitute;
     }
 
     /**
      * Set replacement string, which was read from publisher.xconf
+     * @param replacement The replacement string
      */
     protected void setSubstituteReplacementExpression(String replacement) {
-        substituteReplacement = replacement;
+        this.substituteReplacement = replacement;
     }
 
     /**
@@ -250,16 +288,16 @@ public class PublishingEnvironment implements Configurable {
      * @return The replacement string
      */
     public String getSubstituteReplacement() {
-        return substituteReplacement;
+        return this.substituteReplacement;
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the path to the publication given the servlet context path and the publication id
      *
-     * @param servletContextPath DOCUMENT ME!
-     * @param publicationId DOCUMENT ME!
+     * @param servletContextPath The servlet context path
+     * @param publicationId The publication id
      *
-     * @return DOCUMENT ME!
+     * @return The path to the publication
      */
     public static String getPublicationPath(String servletContextPath, String publicationId) {
         if (!servletContextPath.endsWith(File.separator)) {

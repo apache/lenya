@@ -37,7 +37,7 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -48,10 +48,19 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Scheduler wrapper
+ */
 public class SchedulerWrapper {
 
-    private static Category log = Category.getInstance(SchedulerWrapper.class);
+    private static Logger log = Logger.getLogger(SchedulerWrapper.class);
+    /**
+     * <code>JOB_PREFIX</code> Job Namespace prefix
+     */
     public static final String JOB_PREFIX = "job";
+    /**
+     * <code>JOB_ID</code> Job ID
+     */
     public static final String JOB_ID = "id";
     private static int jobId = 0;
     private Scheduler scheduler = null;
@@ -62,21 +71,21 @@ public class SchedulerWrapper {
     /**
      * Creates a new instance of SchedulerWrapper
      *
-     * @param servletContextPath The servlet context path.
-     * @param schedulerConfigurationPath The scheduler configuration path.
+     * @param _servletContextPath The servlet context path.
+     * @param _schedulerConfigurationPath The scheduler configuration path.
      */
-    public SchedulerWrapper(String servletContextPath, String schedulerConfigurationPath) {
-        this.servletContextPath = servletContextPath;
-        this.schedulerConfigurationPath = schedulerConfigurationPath;
+    public SchedulerWrapper(String _servletContextPath, String _schedulerConfigurationPath) {
+        this.servletContextPath = _servletContextPath;
+        this.schedulerConfigurationPath = _schedulerConfigurationPath;
 
         SchedulerFactory factory = new StdSchedulerFactory();
         log.info("------- Starting up -----------------------");
 
         try {
-            scheduler = factory.getScheduler();
+            this.scheduler = factory.getScheduler();
 
-            scheduler.addSchedulerListener(new AbstractSchedulerListener());
-            scheduler.start();
+            this.scheduler.addSchedulerListener(new AbstractSchedulerListener());
+            this.scheduler.start();
         } catch (SchedulerException e) {
             log.error("Can't initialize SchedulerWrapper: ", e);
             log.error("------- Startup failed -------------------");
@@ -90,7 +99,7 @@ public class SchedulerWrapper {
      * @return A scheduler store.
      */
     protected SchedulerStore getStore() {
-        return store;
+        return this.store;
     }
 
     /**
@@ -98,7 +107,7 @@ public class SchedulerWrapper {
      * @return A scheduler.
      */
     private Scheduler getScheduler() {
-        return scheduler;
+        return this.scheduler;
     }
 
     /**
@@ -122,7 +131,7 @@ public class SchedulerWrapper {
      * @return The servlet context path.
      */
     protected String getServletContextPath() {
-        return servletContextPath;
+        return this.servletContextPath;
     }
 
     /**
@@ -130,7 +139,7 @@ public class SchedulerWrapper {
      * @return A string.
      */
     protected String getSchedulerConfigurationPath() {
-        return schedulerConfigurationPath;
+        return this.schedulerConfigurationPath;
     }
 
     /**
@@ -177,7 +186,7 @@ public class SchedulerWrapper {
         
         log.debug("----------------------------------------------");
         
-        store.writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
+        this.store.writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
     }
 
     /**
@@ -205,7 +214,10 @@ public class SchedulerWrapper {
             JobDataMap map = job.createJobData(request);
 
             addJob(jobGroup, startTime, jobClass, map);
-        } catch (Exception e) {
+        } catch (final SchedulerException e) {
+            log.error("Adding job failed: ", e);
+            throw new SchedulerException(e);
+        } catch (final PublicationException e) {
             log.error("Adding job failed: ", e);
             throw new SchedulerException(e);
         }
@@ -263,9 +275,12 @@ public class SchedulerWrapper {
             log.debug("-----------------------------------");
             getScheduler().deleteJob(jobName, jobGroup);
             getStore().writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
-        } catch (Exception e) {
+        } catch (SchedulerException e) {
+            log.error("Deleting job failed: ", e);
+        } catch (PublicationException e) {
             log.error("Deleting job failed: ", e);
         }
+
     }
 
     /**
@@ -289,9 +304,21 @@ public class SchedulerWrapper {
         }
     }
 
+    /**
+     * <code>ELEMENT_TRIGGERS</code> Triggers element
+     */
     public static final String ELEMENT_TRIGGERS = "triggers";
+    /**
+     * <code>ELEMENT_TRIGGER</code> Trigger element
+     */
     public static final String ELEMENT_TRIGGER = "trigger";
+    /**
+     * <code>TYPE_ATTRIBUTE</code> Type attribute
+     */
     public static final String TYPE_ATTRIBUTE = "type";
+    /**
+     * <code>CLASS_ATTRIBUTE</code> Class attribute
+     */
     public static final String CLASS_ATTRIBUTE = "class";
 
     /**
@@ -423,7 +450,7 @@ public class SchedulerWrapper {
 
     /**
      * Return an xml description of all scheduled jobs.
-     * @return DOCUMENT ME!
+     * @return The description
      * @exception SchedulerException if an error occurs
      */
     public Document getSnapshot() throws SchedulerException {
@@ -457,24 +484,28 @@ public class SchedulerWrapper {
                     addJob(jobs[i].getJobDetail());
                 }
             }
-        } catch (Exception e) {
-            log.error("Restoring jobs failed: ", e);
+        } catch (final SchedulerException e) {
+            log.error("" +e.toString());
+            throw new SchedulerException(e);
+        } catch (final PublicationException e) {
+            log.error("" +e.toString());
+            throw new SchedulerException(e);
         }
 
     }
 
     /**
      * Modifies the execution time of a job.
-     * @param jobId The job ID.
+     * @param _jobId The job ID.
      * @param jobGroup The job group.
      * @param startTime The new start time.
      * @throws SchedulerException when the job was not found.
      */
-    public void modifyJob(String jobId, String jobGroup, Date startTime)
+    public void modifyJob(String _jobId, String jobGroup, Date startTime)
         throws SchedulerException {
-        log.debug("Modifying job [" + jobId + "][" + jobGroup + "]");
+        log.debug("Modifying job [" + _jobId + "][" + jobGroup + "]");
 
-        JobDetail jobDetail = getScheduler().getJobDetail(jobId, jobGroup);
+        JobDetail jobDetail = getScheduler().getJobDetail(_jobId, jobGroup);
         if (jobDetail == null) {
             throw new SchedulerException("Job not found!");
         }
@@ -488,11 +519,11 @@ public class SchedulerWrapper {
             if (startTime.after(new GregorianCalendar().getTime())) {
                 log.debug("    Start time is in future - re-scheduling job.");
                 getScheduler().unscheduleJob(trigger.getName(), trigger.getGroup());
-                trigger = TriggerHelper.createSimpleTrigger(jobId, jobGroup, startTime);
+                trigger = TriggerHelper.createSimpleTrigger(_jobId, jobGroup, startTime);
                 getScheduler().scheduleJob(trigger);
             } else {
                 log.debug("    Start time has already expired - deleting job.");
-                getScheduler().deleteJob(jobId, jobGroup);
+                getScheduler().deleteJob(_jobId, jobGroup);
             }
             try {
                 getStore().writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));

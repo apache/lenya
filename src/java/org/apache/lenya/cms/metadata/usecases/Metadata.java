@@ -42,20 +42,20 @@ public class Metadata extends SiteUsecase {
         super.doInitialize();
 
         try {
-        	dc = getSourceDocument().getDublinCore();
-            setParameter(dc.ELEMENT_CREATOR, dc.getFirstValue(dc.ELEMENT_CREATOR));
-            setParameter(dc.ELEMENT_TITLE, dc.getFirstValue(dc.ELEMENT_TITLE));
-            setParameter(dc.ELEMENT_DESCRIPTION, dc.getFirstValue(dc.ELEMENT_CREATOR));
-            setParameter(dc.ELEMENT_SUBJECT, dc.getFirstValue(dc.ELEMENT_SUBJECT));
-            setParameter(dc.ELEMENT_PUBLISHER, dc.getFirstValue(dc.ELEMENT_PUBLISHER));
-            setParameter(dc.ELEMENT_RIGHTS, dc.getFirstValue(dc.ELEMENT_RIGHTS));
-            setParameter(dc.ELEMENT_TYPE, dc.getFirstValue(dc.ELEMENT_TYPE));
-            setParameter(dc.ELEMENT_DATE, dc.getFirstValue(dc.ELEMENT_DATE));
-            setParameter(dc.ELEMENT_FORMAT, dc.getFirstValue(dc.ELEMENT_FORMAT));
-            setParameter(dc.ELEMENT_SOURCE, dc.getFirstValue(dc.ELEMENT_SOURCE));
-            setParameter(dc.ELEMENT_LANGUAGE, dc.getFirstValue(dc.ELEMENT_LANGUAGE));
-            setParameter(dc.ELEMENT_RELATION, dc.getFirstValue(dc.ELEMENT_RELATION));
-            setParameter(dc.ELEMENT_COVERAGE, dc.getFirstValue(dc.ELEMENT_COVERAGE));
+        	this.dc = getSourceDocument().getDublinCore();
+            setParameter(DublinCore.ELEMENT_CREATOR, this.dc.getFirstValue(DublinCore.ELEMENT_CREATOR));
+            setParameter(DublinCore.ELEMENT_TITLE, this.dc.getFirstValue(DublinCore.ELEMENT_TITLE));
+            setParameter(DublinCore.ELEMENT_DESCRIPTION, this.dc.getFirstValue(DublinCore.ELEMENT_CREATOR));
+            setParameter(DublinCore.ELEMENT_SUBJECT, this.dc.getFirstValue(DublinCore.ELEMENT_SUBJECT));
+            setParameter(DublinCore.ELEMENT_PUBLISHER, this.dc.getFirstValue(DublinCore.ELEMENT_PUBLISHER));
+            setParameter(DublinCore.ELEMENT_RIGHTS, this.dc.getFirstValue(DublinCore.ELEMENT_RIGHTS));
+            setParameter(DublinCore.ELEMENT_TYPE, this.dc.getFirstValue(DublinCore.ELEMENT_TYPE));
+            setParameter(DublinCore.ELEMENT_DATE, this.dc.getFirstValue(DublinCore.ELEMENT_DATE));
+            setParameter(DublinCore.ELEMENT_FORMAT, this.dc.getFirstValue(DublinCore.ELEMENT_FORMAT));
+            setParameter(DublinCore.ELEMENT_SOURCE, this.dc.getFirstValue(DublinCore.ELEMENT_SOURCE));
+            setParameter(DublinCore.ELEMENT_LANGUAGE, this.dc.getFirstValue(DublinCore.ELEMENT_LANGUAGE));
+            setParameter(DublinCore.ELEMENT_RELATION, this.dc.getFirstValue(DublinCore.ELEMENT_RELATION));
+            setParameter(DublinCore.ELEMENT_COVERAGE, this.dc.getFirstValue(DublinCore.ELEMENT_COVERAGE));
         }
         catch (Exception e) {
         	getLogger().error("Unable to load Dublin Core metadata.", e);
@@ -68,6 +68,7 @@ public class Metadata extends SiteUsecase {
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
+	    // do nothing
     }
 
     /**
@@ -83,20 +84,20 @@ public class Metadata extends SiteUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        String creator = getParameterAsString(dc.ELEMENT_CREATOR);
-        String title  = getParameterAsString(dc.ELEMENT_TITLE);
-        String description = getParameterAsString(dc.ELEMENT_DESCRIPTION);
-        String subject = getParameterAsString(dc.ELEMENT_SUBJECT);
-        String publisher = getParameterAsString(dc.ELEMENT_PUBLISHER);
-        String rights = getParameterAsString(dc.ELEMENT_RIGHTS);
+        String creator = getParameterAsString(DublinCore.ELEMENT_CREATOR);
+        String title  = getParameterAsString(DublinCore.ELEMENT_TITLE);
+        String description = getParameterAsString(DublinCore.ELEMENT_DESCRIPTION);
+        String subject = getParameterAsString(DublinCore.ELEMENT_SUBJECT);
+        String publisher = getParameterAsString(DublinCore.ELEMENT_PUBLISHER);
+        String rights = getParameterAsString(DublinCore.ELEMENT_RIGHTS);
 
-        dc.setValue(dc.ELEMENT_CREATOR, creator);
-        dc.setValue(dc.ELEMENT_TITLE, title);
-        dc.setValue(dc.ELEMENT_DESCRIPTION, description);
-        dc.setValue(dc.ELEMENT_SUBJECT, subject);
-        dc.setValue(dc.ELEMENT_PUBLISHER, publisher);
-        dc.setValue(dc.ELEMENT_RIGHTS, rights);
-        dc.save();
+        this.dc.setValue(DublinCore.ELEMENT_CREATOR, creator);
+        this.dc.setValue(DublinCore.ELEMENT_TITLE, title);
+        this.dc.setValue(DublinCore.ELEMENT_DESCRIPTION, description);
+        this.dc.setValue(DublinCore.ELEMENT_SUBJECT, subject);
+        this.dc.setValue(DublinCore.ELEMENT_PUBLISHER, publisher);
+        this.dc.setValue(DublinCore.ELEMENT_RIGHTS, rights);
+        this.dc.save();
         //TODO set workflow situation to edit here.
     }
 

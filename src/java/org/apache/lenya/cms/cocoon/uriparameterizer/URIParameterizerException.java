@@ -19,6 +19,9 @@
 
 package org.apache.lenya.cms.cocoon.uriparameterizer;
 
+/**
+ * URI Parametrizer Exception
+ */
 public class URIParameterizerException extends Exception {
 
     /**

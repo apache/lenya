@@ -20,67 +20,96 @@
 package org.apache.lenya.xml;
 
 import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Helper class for XLinks
+ */
 public class XLink {
 
+    /**
+     * <code>type</code> The Xlink type
+     */
     public String type = null;
+    /**
+     * <code>href</code> The XLink href
+     */
     public String href = null;
+    /**
+     * <code>show</code> The value of the show attribute
+     */
     public String show = null;
+    /**
+     * <code>name</code> The Xlink name
+     */
     public String name = null;
+    /**
+     * <code>element</code> The Xlink element
+     */
     public Element element = null;
-
+    /**
+     * <code>XLINK_NAMESPACE</code> The XLink namespace
+     */
     public static final String XLINK_NAMESPACE = "http://www.w3.org/1999/xlink";
+    /**
+     * <code>ATTRIBUTE_HREF</code> The href attribte
+     */
     public static final String ATTRIBUTE_HREF = "href";
+    /**
+     * <code>ATTRIBUTE_SHOW</code> The show attribute
+     */
     public static final String ATTRIBUTE_SHOW = "show";
+    /**
+     * <code>ATTRIBUTE_TYPE</code> The type attribute
+     */
     public static final String ATTRIBUTE_TYPE = "type";
 
     /**
-     *
+     * Constructor
      */
     public XLink() {
-        type = "simple";
-        show = "undefined";
+        this.type = "simple";
+        this.show = "undefined";
     }
 
     /**
-     *
+     * Constructor
+     * @param _element The element
      */
-    public XLink(Element element) {
+    public XLink(Element _element) {
         this();
-        this.element = element;
+        this.element = _element;
 
-        name = element.getNodeName();
+        this.name = _element.getNodeName();
 
-        Attr hrefAttribute = element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_HREF);
+        Attr hrefAttribute = _element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_HREF);
         if (hrefAttribute != null) {
-            href = hrefAttribute.getNodeValue();
+            this.href = hrefAttribute.getNodeValue();
         }
-        Attr typeAttribute = element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_TYPE);
+        Attr typeAttribute = _element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_TYPE);
         if (typeAttribute != null) {
-            type = typeAttribute.getNodeValue();
+            this.type = typeAttribute.getNodeValue();
         }
-        Attr showAttribute = element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_SHOW);
+        Attr showAttribute = _element.getAttributeNodeNS(XLINK_NAMESPACE, ATTRIBUTE_SHOW);
         if (showAttribute != null) {
-            show = showAttribute.getNodeValue();
+            this.show = showAttribute.getNodeValue();
         }
 
     }
 
-
     /**
-     *
+     * Returns a printout of the XLink values
+     * @return The printout
      */
     public String toString() {
         return "XLink: type=\""
-            + type
+            + this.type
             + "\", href=\""
-            + href
+            + this.href
             + "\", show=\""
-            + show
+            + this.show
             + "\", name=\""
-            + name
+            + this.name
             + "\"";
     }
 }

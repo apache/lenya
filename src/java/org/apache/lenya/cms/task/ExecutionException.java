@@ -26,10 +26,10 @@ package org.apache.lenya.cms.task;
 public class ExecutionException extends Exception {
     /** Creates a new instance of ExecutionException */
     public ExecutionException() {
+	    // do nothing
     }
 
     /** Creates a new instance of ExecutionException 
-     * 
      * @param message the exception message 
      */
     public ExecutionException(String message) {
@@ -37,7 +37,6 @@ public class ExecutionException extends Exception {
     }
 
     /** Creates a new instance of ExecutionException 
-     * 
      * @param message the exception message
      * @param cause the exception cause
      */
@@ -46,7 +45,6 @@ public class ExecutionException extends Exception {
     }
 
     /** Creates a new instance of ExecutionException
-     * 
      * @param cause the exception cause
      */
     public ExecutionException(Throwable cause) {

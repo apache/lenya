@@ -97,28 +97,28 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
         getLogger().debug("Beginning authorization.");
 
         if (hasAuthorizers()) {
-            Authorizer[] authorizers = getAuthorizers();
+            Authorizer[] _authorizers = getAuthorizers();
             int i = 0;
             authorized = true;
 
-            while ((i < authorizers.length) && authorized) {
+            while ((i < _authorizers.length) && authorized) {
 
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("---------------------------------------------------------");
-                    getLogger().debug("Invoking authorizer [" + authorizers[i] + "]");
+                    getLogger().debug("Invoking authorizer [" + _authorizers[i] + "]");
                 }
 
-                if (authorizers[i] instanceof PolicyAuthorizer) {
-                    PolicyAuthorizer authorizer = (PolicyAuthorizer) authorizers[i];
-                    authorizer.setAccreditableManager(accreditableManager);
-                    authorizer.setPolicyManager(policyManager);
+                if (_authorizers[i] instanceof PolicyAuthorizer) {
+                    PolicyAuthorizer authorizer = (PolicyAuthorizer) _authorizers[i];
+                    authorizer.setAccreditableManager(this.accreditableManager);
+                    authorizer.setPolicyManager(this.policyManager);
                 }
 
-                authorized = authorized && authorizers[i].authorize(request);
+                authorized = authorized && _authorizers[i].authorize(request);
 
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
-                            "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
+                            "Authorizer [" + _authorizers[i] + "] returned [" + authorized + "]");
                 }
 
                 i++;
@@ -190,12 +190,12 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
                 getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
             }
 
-            accreditableManagerSelector = (ServiceSelector) manager.lookup(AccreditableManager.ROLE
+            this.accreditableManagerSelector = (ServiceSelector) this.manager.lookup(AccreditableManager.ROLE
                     + "Selector");
-            accreditableManager = (AccreditableManager) accreditableManagerSelector
+            this.accreditableManager = (AccreditableManager) this.accreditableManagerSelector
                     .select(accreditableManagerType);
-            accreditableManager.addItemManagerListener(this);
-            configureOrParameterize(accreditableManager, accreditableManagerConfiguration);
+            this.accreditableManager.addItemManagerListener(this);
+            configureOrParameterize(this.accreditableManager, accreditableManagerConfiguration);
         }
     }
 
@@ -211,7 +211,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             ConfigurationException, ParameterException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
         if (authorizerConfigurations.length > 0) {
-            authorizerSelector = (ServiceSelector) manager.lookup(Authorizer.ROLE + "Selector");
+            this.authorizerSelector = (ServiceSelector) this.manager.lookup(Authorizer.ROLE + "Selector");
 
             for (int i = 0; i < authorizerConfigurations.length; i++) {
                 String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
@@ -219,9 +219,9 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
                     getLogger().debug("Adding authorizer [" + type + "]");
                 }
 
-                Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
-                authorizerKeys.add(type);
-                authorizers.put(type, authorizer);
+                Authorizer authorizer = (Authorizer) this.authorizerSelector.select(type);
+                this.authorizerKeys.add(type);
+                this.authorizers.put(type, authorizer);
                 configureOrParameterize(authorizer, authorizerConfigurations[i]);
             }
         }
@@ -244,20 +244,19 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Adding policy manager type: [" + policyManagerType + "]");
             }
-            policyManagerSelector = (ServiceSelector) manager.lookup(PolicyManager.ROLE
+            this.policyManagerSelector = (ServiceSelector) this.manager.lookup(PolicyManager.ROLE
                     + "Selector");
-            policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
-            configureOrParameterize(policyManager, policyManagerConfiguration);
+            this.policyManager = (PolicyManager) this.policyManagerSelector.select(policyManagerType);
+            configureOrParameterize(this.policyManager, policyManagerConfiguration);
         }
     }
 
     /**
      * Sets up the authenticator.
-     * 
      * @throws ServiceException when something went wrong.
      */
     protected void setupAuthenticator() throws ServiceException {
-        authenticator = (Authenticator) manager.lookup(Authenticator.ROLE);
+        this.authenticator = (Authenticator) this.manager.lookup(Authenticator.ROLE);
     }
 
     private ServiceManager manager;
@@ -265,45 +264,41 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
     /**
      * Set the global component manager.
      * 
-     * @param manager The global component manager
+     * @param _manager The global component manager
      * @throws ServiceException when something went wrong.
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     /**
      * Returns the service manager.
-     * 
      * @return A service manager.
      */
     protected ServiceManager getManager() {
-        return manager;
+        return this.manager;
     }
 
     /**
      * Returns the authorizers of this action.
-     * 
      * @return An array of authorizers.
      */
     public Authorizer[] getAuthorizers() {
 
-        Authorizer[] authorizerArray = new Authorizer[authorizers.size()];
-        for (int i = 0; i < authorizers.size(); i++) {
-            String key = (String) authorizerKeys.get(i);
-            authorizerArray[i] = (Authorizer) authorizers.get(key);
+        Authorizer[] authorizerArray = new Authorizer[this.authorizers.size()];
+        for (int i = 0; i < this.authorizers.size(); i++) {
+            String key = (String) this.authorizerKeys.get(i);
+            authorizerArray[i] = (Authorizer) this.authorizers.get(key);
         }
-
         return authorizerArray;
     }
 
     /**
      * Returns if this action has authorizers.
-     * 
      * @return A boolean value.
      */
     protected boolean hasAuthorizers() {
-        return !authorizers.isEmpty();
+        return !this.authorizers.isEmpty();
     }
 
     /**
@@ -311,31 +306,31 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      */
     public void dispose() {
 
-        if (accreditableManagerSelector != null) {
-            if (accreditableManager != null) {
-                accreditableManager.removeItemManagerListener(this);
-                accreditableManagerSelector.release(accreditableManager);
+        if (this.accreditableManagerSelector != null) {
+            if (this.accreditableManager != null) {
+                this.accreditableManager.removeItemManagerListener(this);
+                this.accreditableManagerSelector.release(this.accreditableManager);
             }
-            getManager().release(accreditableManagerSelector);
+            getManager().release(this.accreditableManagerSelector);
         }
 
-        if (policyManagerSelector != null) {
-            if (policyManager != null) {
-                policyManagerSelector.release(policyManager);
+        if (this.policyManagerSelector != null) {
+            if (this.policyManager != null) {
+                this.policyManagerSelector.release(this.policyManager);
             }
-            getManager().release(policyManagerSelector);
+            getManager().release(this.policyManagerSelector);
         }
 
-        if (authorizerSelector != null) {
-            Authorizer[] authorizers = getAuthorizers();
-            for (int i = 0; i < authorizers.length; i++) {
-                authorizerSelector.release(authorizers[i]);
+        if (this.authorizerSelector != null) {
+            Authorizer[] _authorizers = getAuthorizers();
+            for (int i = 0; i < _authorizers.length; i++) {
+                this.authorizerSelector.release(_authorizers[i]);
             }
-            getManager().release(authorizerSelector);
+            getManager().release(this.authorizerSelector);
         }
 
-        if (authenticator != null) {
-            getManager().release(authenticator);
+        if (this.authenticator != null) {
+            getManager().release(this.authenticator);
         }
 
         if (getLogger().isDebugEnabled()) {
@@ -345,29 +340,26 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
 
     /**
      * Returns the accreditable manager.
-     * 
      * @return An accreditable manager.
      */
     public AccreditableManager getAccreditableManager() {
-        return accreditableManager;
+        return this.accreditableManager;
     }
 
     /**
      * Returns the policy manager.
-     * 
      * @return A policy manager.
      */
     public PolicyManager getPolicyManager() {
-        return policyManager;
+        return this.policyManager;
     }
 
     /**
      * Returns the authenticator.
-     * 
      * @return The authenticator.
      */
     public Authenticator getAuthenticator() {
-        return authenticator;
+        return this.authenticator;
     }
 
     /**
@@ -405,7 +397,7 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getLogger().info("Remote Address to use: [" + remoteAddress + "]");
 
             Machine machine = new Machine(remoteAddress);
-            IPRange[] ranges = accreditableManager.getIPRangeManager().getIPRanges();
+            IPRange[] ranges = this.accreditableManager.getIPRangeManager().getIPRanges();
             for (int i = 0; i < ranges.length; i++) {
                 if (ranges[i].contains(machine)) {
                     machine.addIPRange(ranges[i]);

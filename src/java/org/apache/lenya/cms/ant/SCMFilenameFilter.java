@@ -34,14 +34,13 @@ public class SCMFilenameFilter implements FilenameFilter {
 
     /**
      * Ctor.
-     * @param excludes A comma-separated list of file names, e.g. CVS,.svn
+     * @param _excludes A comma-separated list of file names, e.g. CVS,.svn
      */
-    public SCMFilenameFilter(String excludes) {
-        this.excludes = Arrays.asList(excludes.split(","));
+    public SCMFilenameFilter(String _excludes) {
+        this.excludes = Arrays.asList(_excludes.split(","));
     }
 
     /**
-     *  (non-Javadoc)
      * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
      */
     public boolean accept(File dir, String name) {

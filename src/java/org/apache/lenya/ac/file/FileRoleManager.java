@@ -40,6 +40,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
      * <code>RoleManager</code> is a singleton.
      */
     protected FileRoleManager() {
+	    // do nothing
     }
 
     /**
@@ -63,7 +64,6 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Get the role for the given ID.
-     * 
      * @param roleId The name of the role requested.
      * @return a <code>Role</code> or null if no role with the given name found
      */
@@ -80,7 +80,6 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Get all roles
-     * 
      * @return an array of roles.
      */
     public Role[] getRoles() {
@@ -94,7 +93,6 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Add a role
-     * 
      * @param role The role to add.
      * @throws AccessControlException if an error occurs.
      */
@@ -104,7 +102,6 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
 
     /**
      * Remove a role
-     * 
      * @param role The role to remove.
      * @throws AccessControlException if an error occurs.
      */

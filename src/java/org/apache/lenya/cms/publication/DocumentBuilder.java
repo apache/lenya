@@ -27,7 +27,6 @@ public interface DocumentBuilder {
 
     /**
      * Builds a document.
-     * 
      * @param map The identity map the document belongs to.
      * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
      * @return A document.
@@ -38,7 +37,6 @@ public interface DocumentBuilder {
     
     /**
      * Checks if an URL corresponds to a CMS document.
-     * 
      * @param publication The publication the document belongs to.
      * @param url The URL of the form /{publication-id}/...
      * @return A boolean value.
@@ -50,7 +48,6 @@ public interface DocumentBuilder {
     /**
      * Builds an URL corresponding to a cms document from the publication, 
      * the area, the document id and the language
-     * 
      * @param publication The publication the document belongs to.
      * @param area The area the document belongs to.
      * @param documentid The document id of the document.

@@ -30,21 +30,27 @@ import java.net.URLConnection;
 
 import javax.swing.text.html.parser.ParserDelegator;
 
+/**
+ * The Swing HTML parser
+ */
 public class SwingHTMLParser extends AbstractHTMLParser {
     /** Creates a new instance of SwingHTMLParser */
     public SwingHTMLParser() {
+        // do nothing
     }
 
     /**
      * Parses a URI.
+     * @param uri The URI to parse
+     * @throws ParseException if an error occurs
      */
     public void parse(URI uri) throws ParseException {
         try {
-            ParserDelegator delagator = new ParserDelegator();
-            handler = new SwingHTMLHandler();
+            ParserDelegator delegator = new ParserDelegator();
+            this.handler = new SwingHTMLHandler();
 
-            Reader reader = new PreParser().parse(getReader(uri));
-            delagator.parse(reader, handler, true);
+            Reader _reader = new PreParser().parse(getReader(uri));
+            delegator.parse(_reader, this.handler, true);
         } catch (IOException e) {
             throw new ParseException(e);
         }
@@ -53,13 +59,12 @@ public class SwingHTMLParser extends AbstractHTMLParser {
     private SwingHTMLHandler handler;
 
     protected SwingHTMLHandler getHandler() {
-        return handler;
+        return this.handler;
     }
 
     /**
      * Get title
-     *
-     * @return DOCUMENT ME!
+     * @return The title
      */
     public String getTitle() {
         return getHandler().getTitle();
@@ -67,19 +72,15 @@ public class SwingHTMLParser extends AbstractHTMLParser {
 
     /**
      * Get keywords
-     *
-     * @return DOCUMENT ME!
+     * @return The keywords
      */
     public String getKeywords() {
         return getHandler().getKeywords();
     }
 
-    private Reader reader;
-
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the reader
+     * @return The reader
      */
     public Reader getReader() {
         return getHandler().getReader();
@@ -91,9 +92,8 @@ public class SwingHTMLParser extends AbstractHTMLParser {
             URLConnection connection = uri.toURL().openConnection();
 
             return new InputStreamReader(connection.getInputStream());
-        } else {
-            // uri is file
-            return new FileReader(new File(uri));
         }
+        // uri is file
+        return new FileReader(new File(uri));
     }
 }

@@ -35,26 +35,26 @@ public class FileReservedCheckInException extends Exception {
     /**
      * Creates a new FileReservedCheckInException object.
      *
-     * @param source DOCUMENT ME!
-     * @param rcml DOCUMENT ME!
+     * @param _source The source document
+     * @param rcml The RCML
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
-    public FileReservedCheckInException(String source, RCML rcml)
+    public FileReservedCheckInException(String _source, RCML rcml)
         throws Exception {
-        this.source = source;
+        this.source = _source;
 
         try {
             RCMLEntry rcmlEntry = rcml.getLatestEntry();
 
-            username = rcmlEntry.getIdentity();
-            date = new Date(rcmlEntry.getTime());
-            type = rcmlEntry.getType();
+            this.username = rcmlEntry.getIdentity();
+            this.date = new Date(rcmlEntry.getTime());
+            this.type = rcmlEntry.getType();
 
-            if (type == RCML.co) {
-                typeString = "Checkout";
+            if (this.type == RCML.co) {
+                this.typeString = "Checkout";
             } else {
-                typeString = "Checkin";
+                this.typeString = "Checkin";
             }
         } catch (Exception exception) {
             throw new Exception("Unable to create FileReservedCheckInException object!");
@@ -62,9 +62,8 @@ public class FileReservedCheckInException extends Exception {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the exception message
+     * @return The exception message
      */
     public String getMessage() {
         return "Unable to check in the file " + this.source + " because of a " + this.typeString +
@@ -72,37 +71,33 @@ public class FileReservedCheckInException extends Exception {
     }
     /**
      * Get the date
-     * 
      * @return the date
      */
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     /**
      * Get the typeString
-     * 
      * @return the type string
      */
     public String getTypeString() {
-        return typeString;
+        return this.typeString;
     }
 
     /**
      * Get the user name.
-     * 
      * @return the user name
      */
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     /**
-     * Get source
-     * 
-     * @return source
+     * Get the source
+     * @return The source
      */
     public String getSource() {
-        return source;
+        return this.source;
     }
 }

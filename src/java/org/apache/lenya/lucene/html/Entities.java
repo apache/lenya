@@ -21,6 +21,9 @@ package org.apache.lenya.lucene.html;
 
 import java.util.Hashtable;
 
+/**
+ * Entities helper class
+ */
 public class Entities {
     static final Hashtable decoder = new Hashtable(300);
     static final String[] encoder = new String[0x100];
@@ -297,23 +300,20 @@ public class Entities {
             Character c = new Character((char) Integer.parseInt(entity.substring(start), radix));
 
             return c.toString();
-        } else {
-            String s = (String) decoder.get(entity);
-
-            if (s != null) {
-                return s;
-            } else {
-                return "";
-            }
         }
+        String s = (String) decoder.get(entity);
+
+        if (s != null) {
+            return s;
+        }
+        return "";
+
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param s DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Encodes a string
+     * @param s The string
+     * @return The encoded string
      */
     static final public String encode(String s) {
         int length = s.length();

@@ -122,29 +122,48 @@ public class OneFormEditorSaveAction extends AbstractConfigurableAction implemen
     }
 
     /**
-     * @param encoding
-     * @param content
-     * @param xmlSource
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
-     * @throws IOException
+     * Save the XML file
+     * @param encoding The encoding
+     * @param content The content
+     * @param xmlSource The source
+     * @throws FileNotFoundException if the file was not found
+     * @throws UnsupportedEncodingException if the encoding is not supported
+     * @throws IOException if an IO error occurs
      */
     private void saveXMLFile(String encoding, String content, Source xmlSource)
             throws FileNotFoundException, UnsupportedEncodingException, IOException {
-        File xmlFile = org.apache.excalibur.source.SourceUtil.getFile(xmlSource);
-        File parentFile = new File(xmlFile.getParent());
-        if (!parentFile.exists()) {
-            parentFile.mkdirs();
-        }
+        FileOutputStream fileoutstream = null;
+        Writer writer = null;
+        
+        try {
+            File xmlFile = org.apache.excalibur.source.SourceUtil.getFile(xmlSource);
+            File parentFile = new File(xmlFile.getParent());
+            if (!parentFile.exists()) {
+                parentFile.mkdirs();
+            }
 
-        FileOutputStream fileoutstream = new FileOutputStream(xmlFile);
-        Writer writer = new OutputStreamWriter(fileoutstream, encoding);
-        writer.write(content, 0, content.length());
-        writer.close();
+            fileoutstream = new FileOutputStream(xmlFile);
+            writer = new OutputStreamWriter(fileoutstream, encoding);
+            writer.write(content, 0, content.length());
+        } catch (FileNotFoundException e) {
+            getLogger().error("File not found " +e.toString());
+        } catch (UnsupportedEncodingException e) {
+            getLogger().error("Encoding not supported " +e.toString());
+        } catch (IOException e) {
+            getLogger().error("IO error " +e.toString());
+        } finally {
+            // close all streams
+            if (writer != null)
+                writer.close();
+            if (fileoutstream != null)
+                fileoutstream.close();
+        }
     }
 
     /**
      * Remove redundant namespaces
+     * @param namespaces The namespaces to remove
+     * @return The namespace string without the removed namespaces
      */
     private String removeRedundantNamespaces(String namespaces) {
         String[] namespace = namespaces.split(" ");
@@ -164,6 +183,9 @@ public class OneFormEditorSaveAction extends AbstractConfigurableAction implemen
 
     /**
      * Add namespaces
+     * @param namespaces The namespaces to add
+     * @param content The content to add them to
+     * @return The content with the added namespaces
      */
     private String addNamespaces(String namespaces, String content) {
         int i = content.indexOf(">");

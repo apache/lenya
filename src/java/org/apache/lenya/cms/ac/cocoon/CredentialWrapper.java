@@ -35,7 +35,7 @@ public class CredentialWrapper {
      * @return A string.
      */
     public String getAccreditableId() {
-        return accreditableId;
+        return this.accreditableId;
     }
 
     /**
@@ -43,7 +43,7 @@ public class CredentialWrapper {
      * @return A string.
      */
     public String getAccreditableName() {
-        return accreditableName;
+        return this.accreditableName;
     }
 
     /**
@@ -51,7 +51,7 @@ public class CredentialWrapper {
      * @return A string.
      */
     public String getRoleId() {
-        return roleId;
+        return this.roleId;
     }
 
     /**
@@ -59,7 +59,7 @@ public class CredentialWrapper {
      * @return A string.
      */
     public String getRoleName() {
-        return roleName;
+        return this.roleName;
     }
 
     /**
@@ -67,7 +67,7 @@ public class CredentialWrapper {
      * @return A string.
      */
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -78,26 +78,26 @@ public class CredentialWrapper {
     public CredentialWrapper(Accreditable accreditable, Role role) {
         if (accreditable instanceof Item) {
             Item item = (Item) accreditable;
-            accreditableId = item.getId();
-            accreditableName = item.getName();
+            this.accreditableId = item.getId();
+            this.accreditableName = item.getName();
         
             if (item instanceof User) {
-                type = USER;
+                this.type = USER;
             }
             else if (item instanceof Group) {
-                type = GROUP;
+                this.type = GROUP;
             }
             else if (item instanceof IPRange) {
-                type = IPRANGE;
+                this.type = IPRANGE;
             }
         }
         else {
-            accreditableId = "world";
-            accreditableName = "the world";
-            type = "world";
+            this.accreditableId = "world";
+            this.accreditableName = "the world";
+            this.type = "world";
         }
-        roleId = role.getId();
-        roleName = role.getName();
+        this.roleId = role.getId();
+        this.roleName = role.getName();
         
     }
     

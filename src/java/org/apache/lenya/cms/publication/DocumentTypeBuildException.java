@@ -19,9 +19,12 @@
 
 package org.apache.lenya.cms.publication;
 
+/**
+ * Document type build exception
+ */
 public class DocumentTypeBuildException extends Exception {
     /**
-     *
+     * Constructor
      */
     public DocumentTypeBuildException() {
         super();
@@ -29,7 +32,6 @@ public class DocumentTypeBuildException extends Exception {
 
     /**
      * Creates a new DocumentTypeBuildException.
-     * 
      * @param message the exception message
      */
     public DocumentTypeBuildException(String message) {
@@ -38,7 +40,6 @@ public class DocumentTypeBuildException extends Exception {
 
     /**
      * Creates a new DocumentTypeBuildException.
-     * 
      * @param message the exception message
      * @param cause the cause of the exception
      */
@@ -48,7 +49,6 @@ public class DocumentTypeBuildException extends Exception {
 
     /**
      * Creates a new DocumentTypeBuildException.
-     * 
      * @param cause the cause of the exception
      */
     public DocumentTypeBuildException(Throwable cause) {

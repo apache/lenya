@@ -24,17 +24,17 @@ import java.net.URL;
 
 
 /**
- * DOCUMENT ME!
+ * The main crawler class
+ * FIXME this class does not seem to do anything
  */
 public class Main {
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
+     * Command line interface
+     * @param args Command line args
      */
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: " + new Main().getClass().getName() + " uri");
+            System.err.println("Usage: Main uri");
 
             return;
         }
@@ -47,9 +47,8 @@ public class Main {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param start_url DOCUMENT ME!
+     * Start the crawling
+     * @param start_url The starting URL
      */
     public void crawl(URL start_url) {
         System.out.println(".crawl(): INFO: " + start_url);

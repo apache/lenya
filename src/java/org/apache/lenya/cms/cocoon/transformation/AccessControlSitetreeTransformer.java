@@ -23,7 +23,9 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -58,8 +60,17 @@ public class AccessControlSitetreeTransformer
     extends AbstractSAXTransformer
     implements Disposable {
 
+    /**
+     * <code>ATTRIBUTE_PROTECTED</code> The attribute for protected
+     */
     public static final String ATTRIBUTE_PROTECTED = "protected";
+    /**
+     * <code>PARAMETER_PUBLICATION_ID</code> The publication id parameter
+     */
     public static final String PARAMETER_PUBLICATION_ID = "publication-id";
+    /**
+     * <code>PARAMETER_AREA</code> The area parameter
+     */
     public static final String PARAMETER_AREA = "area";
 
     private String documentId;
@@ -73,15 +84,15 @@ public class AccessControlSitetreeTransformer
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
+    public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters par)
         throws ProcessingException, SAXException, IOException {
-        super.setup(resolver, objectModel, src, par);
+        super.setup(_resolver, _objectModel, src, par);
 
-        serviceSelector = null;
-        acResolver = null;
-        policyManager = null;
+        this.serviceSelector = null;
+        this.acResolver = null;
+        this.policyManager = null;
 
-        identity = Identity.getIdentity(request.getSession(false));
+        this.identity = Identity.getIdentity(this.request.getSession(false));
 
         try {
             String publicationId = par.getParameter(PARAMETER_PUBLICATION_ID);
@@ -89,48 +100,52 @@ public class AccessControlSitetreeTransformer
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Setting up transformer");
-                getLogger().debug("    Identity:       [" + identity + "]");
+                getLogger().debug("    Identity:       [" + this.identity + "]");
                 getLogger().debug("    Publication ID: [" + publicationId + "]");
                 getLogger().debug("    Area:           [" + area + "]");
             }
 
-            urlPrefix = "/" + publicationId + "/" + area;
+            this.urlPrefix = "/" + publicationId + "/" + area;
 
-            Request request = ObjectModelHelper.getRequest(objectModel);
+            Request _request = ObjectModelHelper.getRequest(_objectModel);
 
-            serviceSelector =
-                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            this.serviceSelector =
+                (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE + "Selector");
 
-            acResolver =
-                (AccessControllerResolver) serviceSelector.select(
+            this.acResolver =
+                (AccessControllerResolver) this.serviceSelector.select(
                     AccessControllerResolver.DEFAULT_RESOLVER);
 
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Resolved AC resolver [" + acResolver + "]");
+                getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
             }
 
-            String webappUrl = ServletHelper.getWebappURI(request);
-            AccessController accessController = acResolver.resolveAccessController(webappUrl);
+            String webappUrl = ServletHelper.getWebappURI(_request);
+            AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
 
             if (accessController instanceof DefaultAccessController) {
                 DefaultAccessController defaultAccessController =
                     (DefaultAccessController) accessController;
 
-                accreditableManager = defaultAccessController.getAccreditableManager();
+                this.accreditableManager = defaultAccessController.getAccreditableManager();
 
                 Authorizer[] authorizers = defaultAccessController.getAuthorizers();
                 for (int i = 0; i < authorizers.length; i++) {
                     if (authorizers[i] instanceof PolicyAuthorizer) {
                         PolicyAuthorizer policyAuthorizer = (PolicyAuthorizer) authorizers[i];
-                        policyManager = policyAuthorizer.getPolicyManager();
+                        this.policyManager = policyAuthorizer.getPolicyManager();
                     }
                 }
             }
 
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Using policy manager [" + policyManager + "]");
+                getLogger().debug("    Using policy manager [" + this.policyManager + "]");
             }
-        } catch (Exception e) {
+        } catch (final ParameterException e) {
+            throw new ProcessingException(e);
+        } catch (final ServiceException e) {
+            throw new ProcessingException(e);
+        } catch (final AccessControlException e) {
             throw new ProcessingException(e);
         }
 
@@ -143,11 +158,11 @@ public class AccessControlSitetreeTransformer
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Disposing transformer");
         }
-        if (serviceSelector != null) {
-            if (acResolver != null) {
-                serviceSelector.release(acResolver);
+        if (this.serviceSelector != null) {
+            if (this.acResolver != null) {
+                this.serviceSelector.release(this.acResolver);
             }
-            manager.release(serviceSelector);
+            this.manager.release(this.serviceSelector);
         }
     }
 
@@ -156,7 +171,7 @@ public class AccessControlSitetreeTransformer
      */
     public void startDocument() throws SAXException {
         super.startDocument();
-        documentId = "";
+        this.documentId = "";
     }
 
     /** (non-Javadoc)
@@ -170,19 +185,19 @@ public class AccessControlSitetreeTransformer
         if (isNode(uri, localName)) {
             String id = attr.getValue(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME);
             if (id != null) {
-                documentId += "/" + id;
+                this.documentId += "/" + id;
             }
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Checking node");
-                getLogger().debug("    Document ID: [" + documentId + "]");
-                getLogger().debug("    URL:         [" + urlPrefix + documentId + "]");
+                getLogger().debug("    Document ID: [" + this.documentId + "]");
+                getLogger().debug("    URL:         [" + this.urlPrefix + this.documentId + "]");
             }
 
             try {
-                String url = urlPrefix + documentId;
-                Policy policy = policyManager.getPolicy(accreditableManager, url);
-                Role[] roles = policy.getRoles(identity);
+                String url = this.urlPrefix + this.documentId;
+                Policy policy = this.policyManager.getPolicy(this.accreditableManager, url);
+                Role[] roles = policy.getRoles(this.identity);
 
                 getLogger().debug("    Roles:       [" + roles.length + "]");
 
@@ -211,8 +226,8 @@ public class AccessControlSitetreeTransformer
      */
     public void endElement(String uri, String localName, String raw) throws SAXException {
         super.endElement(uri, localName, raw);
-        if (isNode(uri, localName) && documentId.length() > 0) {
-            documentId = documentId.substring(0, documentId.lastIndexOf("/"));
+        if (isNode(uri, localName) && this.documentId.length() > 0) {
+            this.documentId = this.documentId.substring(0, this.documentId.lastIndexOf("/"));
         }
     }
 

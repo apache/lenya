@@ -48,10 +48,10 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
 
     /**
      * Creates a new instance of WorkflowInstanceImpl.
-     * @param workflow The workflow implementation to use.
+     * @param _workflow The workflow implementation to use.
      */
-    protected WorkflowInstanceImpl(WorkflowImpl workflow) {
-        this.workflow = workflow;
+    protected WorkflowInstanceImpl(WorkflowImpl _workflow) {
+        this.workflow = _workflow;
         initVariableInstances();
     }
     
@@ -94,7 +94,7 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * @return A workflow object.
      */
     protected WorkflowImpl getWorkflowImpl() {
-        return workflow;
+        return this.workflow;
     }
 
     /**
@@ -238,14 +238,14 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * Initializes the variable instances in the initial state.
      */
     protected void initVariableInstances() {
-        variableInstances.clear();
+        this.variableInstances.clear();
 
         BooleanVariable[] variables = getWorkflowImpl().getVariables();
 
         for (int i = 0; i < variables.length; i++) {
             BooleanVariableInstance instance = new BooleanVariableInstanceImpl();
             instance.setValue(variables[i].getInitialValue());
-            variableInstances.put(variables[i], instance);
+            this.variableInstances.put(variables[i], instance);
         }
     }
 
@@ -301,8 +301,8 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * @see org.apache.lenya.workflow.WorkflowInstance#addWorkflowListener(org.apache.lenya.workflow.WorkflowListener)
      */
     public void addWorkflowListener(WorkflowListener listener) {
-        if (!listeners.contains(listener)) {
-            listeners.add(listener);
+        if (!this.listeners.contains(listener)) {
+            this.listeners.add(listener);
         }
     }
 
@@ -310,7 +310,7 @@ public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements
      * @see org.apache.lenya.workflow.WorkflowInstance#removeWorkflowListener(org.apache.lenya.workflow.WorkflowListener)
      */
     public void removeWorkflowListener(WorkflowListener listener) {
-        listeners.remove(listener);
+        this.listeners.remove(listener);
     }
 
     /**

@@ -34,7 +34,6 @@ public class ReservedCheckinAction extends RevisionControllerAction {
     /**
      * Checkin document
      * @return HashMap with checkin parameters
-     * 
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
      *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
      *      org.apache.avalon.framework.parameters.Parameters)

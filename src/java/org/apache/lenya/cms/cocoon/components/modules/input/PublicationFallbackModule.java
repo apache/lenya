@@ -24,6 +24,7 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
+ * Publication Fallback Module
  */
 public class PublicationFallbackModule extends FallbackModule {
 

@@ -32,63 +32,64 @@ import java.nio.charset.CharsetDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
- * Similar to the UNIX sed
+ * Performs pattern substitution similar to the UNIX sed
  */
 public class SED {
-    static Category log = Category.getInstance(SED.class);
-
-    /**
-     * Command Line Interface
-     *
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Usage: org.apache.lenya.util.SED");
-            return;
-        }
-    }
+    private static final Logger log = Logger.getLogger(SED.class);
 
     /**
      * Substitute prefix, e.g. ".*world.*" by "universe"
-     *
      * @param file File which sed shall be applied
-     * @param prefixSubstitute Prefix which shall be replaced
+     * @param substitute Prefix which shall be replaced
      * @param substituteReplacement Prefix which is going to replace the original
-     *
-     * @throws IOException DOCUMENT ME!
+     * @throws IOException if an IO error occurs
      */
     public static void replaceAll(File file, String substitute, String substituteReplacement) throws IOException {
-        log.debug("Replace " + substitute + " by " + substituteReplacement);
-
+    	PrintStream ps = null;
+    	FileOutputStream fos = null;
+    	FileInputStream fis = null;
+    	FileChannel fc = null;
+    	
+    	log.debug("Replace " + substitute + " by " + substituteReplacement);        
+        
         Pattern pattern = Pattern.compile(substitute);
+        
+        try {
 
-        // Open the file and then get a channel from the stream
-        FileInputStream fis = new FileInputStream(file);
-        FileChannel fc = fis.getChannel();
-
-        // Get the file's size and then map it into memory
-        int sz = (int)fc.size();
-        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, sz);
-
-	// Decode the file into a char buffer
-        // Charset and decoder for ISO-8859-15
-        Charset charset = Charset.forName("ISO-8859-15");
-        CharsetDecoder decoder = charset.newDecoder();
-	CharBuffer cb = decoder.decode(bb);
-
-        Matcher matcher = pattern.matcher(cb);
-        String outString = matcher.replaceAll(substituteReplacement);
-        log.debug(outString);
-
-
-        FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-        PrintStream ps =new PrintStream(fos);
-        ps.print(outString);
-        ps.close();
-        fos.close();
+	        // Open the file and then get a channel from the stream
+	        fis = new FileInputStream(file);
+	        fc = fis.getChannel();
+	
+	        // Get the file's size and then map it into memory
+	        int sz = (int)fc.size();
+	        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, sz);
+	
+	        // Decode the file into a char buffer
+	        Charset charset = Charset.forName("UTF-8");
+	        CharsetDecoder decoder = charset.newDecoder();
+	        CharBuffer cb = decoder.decode(bb);
+	
+	        Matcher matcher = pattern.matcher(cb);
+	        String outString = matcher.replaceAll(substituteReplacement);
+	        log.debug(outString);
+	
+	        fos = new FileOutputStream(file.getAbsolutePath());
+	        ps =new PrintStream(fos);
+	        ps.print(outString);
+        } catch(final IOException e) {
+        	log.error("SED caught exception: " + e.toString());
+        } finally {
+        	if (ps != null)
+        		ps.close();
+	        if (fc != null)
+	        	fc.close();
+	        if (fis != null)
+	        	fis.close();
+	        if (fos != null)
+	        	fos.close();
+        }
     }
 }

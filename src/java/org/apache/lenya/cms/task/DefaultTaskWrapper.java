@@ -35,12 +35,15 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 
+/**
+ * The default task wrapper
+ */
 public class DefaultTaskWrapper implements TaskWrapper {
 
-    private static Category log = Category.getInstance(DefaultTaskWrapper.class);
+    private static Logger log = Logger.getLogger(DefaultTaskWrapper.class);
 
     private Map parameters = new HashMap();
     private TaskWrapperParameters wrapperParameters =
@@ -51,18 +54,19 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * Default ctor for subclasses.
      */
     protected DefaultTaskWrapper() {
+	    // do nothing
     }
 
     /**
      * Ctor to be called when all task wrapper parameters are known.
      * All keys and values must be strings or string arrays.
-     * @param parameters The prefixed parameters.
+     * @param _parameters The prefixed parameters.
      */
-    public DefaultTaskWrapper(Map parameters) {
+    public DefaultTaskWrapper(Map _parameters) {
         log.debug("Creating");
 
         List keys = new ArrayList();
-        for (Iterator i = parameters.keySet().iterator(); i.hasNext();) {
+        for (Iterator i = _parameters.keySet().iterator(); i.hasNext();) {
             String key = (String) i.next();
             keys.add(key);
         }
@@ -71,23 +75,24 @@ public class DefaultTaskWrapper implements TaskWrapper {
 
         for (Iterator i = keys.iterator(); i.hasNext();) {
             String key = (String) i.next();
+            StringBuffer buf = new StringBuffer();
             String value = null;
-            Object valueObject = parameters.get(key);
+            Object valueObject = _parameters.get(key);
             if (valueObject instanceof String) {
-                value = ((String) valueObject).trim();
+                buf.append(((String) valueObject).trim());
             } else if (valueObject instanceof String[]) {
                 String[] values = (String[]) valueObject;
-                value = "";
                 for (int j = 0; j < values.length; j++) {
-                    if (j > 0 && !"".equals(value)) {
-                        value += ",";
+                    if (j > 0 && !"".equals(buf.toString())) {
+                        buf.append(",");
                     }
-                    value += values[j].trim();
+                    buf.append(values[j].trim());
                 }
             } else {
                 log.debug("Not a string value: [" + key + "] = [" + valueObject + "]");
             }
 
+            value = buf.toString();
             if (value != null) {
                 log.debug("Setting parameter: [" + key + "] = [" + value + "]");
                 this.parameters.put(key, value);
@@ -112,63 +117,65 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param taskId The task ID.
      * @param publication The publication.
      * @param webappUrl The webapp URL.
-     * @param parameters The task parameters.
+     * @param _parameters The task parameters.
      * @throws ExecutionException when the task ID is null.
      */
     protected void initialize(
         String taskId,
         Publication publication,
         String webappUrl,
-        Parameters parameters)
+        Parameters _parameters)
         throws ExecutionException {
         log.debug("Initializing");
+
+        if (taskId.equals("")) throw new ExecutionException();
 
         getTaskParameters().setPublication(publication);
         getWrapperParameters().setWebappUrl(webappUrl);
 
         getWrapperParameters().setTaskId(taskId);
-        getTaskParameters().parameterize(parameters);
+        getTaskParameters().parameterize(_parameters);
     }
 
     /**
      * Extracts the task parameters from the given objects.
-     * @param parameters A parameters object.
+     * @param _parameters A parameters object.
      * @param publication A publication.
      * @param request A request.
      * @return A parameters object.
      */
     protected Parameters extractTaskParameters(
-        Parameters parameters,
+        Parameters _parameters,
         Publication publication,
         Request request) {
-        Parameters taskParameters = new Parameters();
-        taskParameters.setParameter(
+        Parameters _taskParameters = new Parameters();
+        _taskParameters.setParameter(
             Task.PARAMETER_SERVLET_CONTEXT,
             publication.getServletContext().getAbsolutePath());
-        taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath());
-        taskParameters.setParameter(
+        _taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath());
+        _taskParameters.setParameter(
             Task.PARAMETER_SERVER_PORT,
             Integer.toString(request.getServerPort()));
-        taskParameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
-        taskParameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
+        _taskParameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
+        _taskParameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
 
         for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
             String key = (String) e.nextElement();
             String value = request.getParameter(key);
             if (value != null) {
-                taskParameters.setParameter(key, value);
+                _taskParameters.setParameter(key, value);
             }
         }
 
-        String[] names = parameters.getNames();
+        String[] names = _parameters.getNames();
         for (int i = 0; i < names.length; i++) {
             String name = names[i];
-            String value = parameters.getParameter(name, "");
+            String value = _parameters.getParameter(name, "");
             if (value != null) {
-                taskParameters.setParameter(name, value);
+                _taskParameters.setParameter(name, value);
             }
         }
-        return taskParameters;
+        return _taskParameters;
     }
 
     /**
@@ -199,7 +206,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
         log.info(" Executing task [" + taskId + "]");
         log.info("-----------------------------------");
 
-        if (!wrapperParameters.isComplete()) {
+        if (!this.wrapperParameters.isComplete()) {
 
             String[] missingKeys = getWrapperParameters().getMissingKeys();
             String keyString = "";
@@ -226,9 +233,9 @@ public class DefaultTaskWrapper implements TaskWrapper {
 
             Properties properties = new Properties();
             properties.putAll(getTaskParameters().getMap());
-            Parameters parameters = Parameters.fromProperties(properties);
+            Parameters _parameters = Parameters.fromProperties(properties);
 
-            task.parameterize(parameters);
+            task.parameterize(_parameters);
         } catch (Exception e) {
             throw new ExecutionException(e);
         }
@@ -263,7 +270,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @return A task wrapper parameters object.
      */
     public TaskWrapperParameters getWrapperParameters() {
-        return wrapperParameters;
+        return this.wrapperParameters;
     }
 
     /**
@@ -271,7 +278,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @return A task parameters object.
      */
     public TaskParameters getTaskParameters() {
-        return taskParameters;
+        return this.taskParameters;
     }
 
     protected static final String ELEMENT_TASK = "task";
@@ -327,7 +334,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @return A map.
      */
     public Map getParameters() {
-        return Collections.unmodifiableMap(parameters);
+        return Collections.unmodifiableMap(this.parameters);
     }
 
     /**
@@ -335,7 +342,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @return A map.
      */
     protected Map getParameterObject() {
-        return parameters;
+        return this.parameters;
     }
 
     /**

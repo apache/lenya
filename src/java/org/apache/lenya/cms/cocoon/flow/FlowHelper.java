@@ -16,25 +16,17 @@
  */
 package org.apache.lenya.cms.cocoon.flow;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Map;
 
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
-import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.workflow.WorkflowDocument;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 
@@ -113,6 +105,7 @@ public interface FlowHelper {
     /**
      * Get a RevisionController instance.
      * @param cocoon The Cocoon Flow Object Model
+     * @return A RevisionController
      * @throws PageEnvelopeException Page envelope can not operate properly.
      * @throws IOException If an IOException occurs.
      * @see PageEnvelope

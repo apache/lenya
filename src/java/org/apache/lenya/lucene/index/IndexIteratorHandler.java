@@ -24,24 +24,37 @@ import java.io.File;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 
+/**
+ * Index Iterator interface
+ */
 public interface IndexIteratorHandler {
     /**
      * Handles a file. This is called for every file and mainly used for creating a new index.
+     * @param reader The reader
+     * @param file The file
      */
     void handleFile(IndexReader reader, File file);
 
     /**
      * Handles a stale document.
+     * @param reader The reader
+     * @param term The term
      */
     void handleStaleDocument(IndexReader reader, Term term);
 
     /**
      * Handles an unmodified document and the file that represents it.
+     * @param reader The reader
+     * @param term The term
+     * @param file The file
      */
     void handleUnmodifiedDocument(IndexReader reader, Term term, File file);
 
     /**
      * Handles a new document and the file that represents it.
+     * @param reader The reader
+     * @param term The term
+     * @param file The file
      */
     void handleNewDocument(IndexReader reader, Term term, File file);
 }

@@ -37,10 +37,10 @@ public class DocumentIdentityMap {
 
     /**
      * Ctor.
-     * @param publication The publication to use.
+     * @param _publication The publication to use.
      */
-    public DocumentIdentityMap(Publication publication) {
-        this.publication = publication;
+    public DocumentIdentityMap(Publication _publication) {
+        this.publication = _publication;
     }
     
     /**
@@ -59,7 +59,7 @@ public class DocumentIdentityMap {
      * @return A publication.
      */
     public Publication getPublication() {
-        return publication;
+        return this.publication;
     }
     
     /**
@@ -73,12 +73,12 @@ public class DocumentIdentityMap {
     protected Document get(String area, String documentId, String language)
             throws DocumentBuildException {
         String key = getKey(area, documentId, language);
-        Document document = (Document) key2document.get(key);
+        Document document = (Document) this.key2document.get(key);
         if (document == null) {
             DocumentBuilder builder = getPublication().getDocumentBuilder();
             String url = builder.buildCanonicalUrl(getPublication(), area, documentId, language);
             document = builder.buildDocument(this, url);
-            key2document.put(key, document);
+            this.key2document.put(key, document);
         }
         return document;
     }
@@ -100,11 +100,11 @@ public class DocumentIdentityMap {
         String key = getKey(document.getArea(), document.getId(), document.getLanguage());
 
         Document resultDocument;
-        if (key2document.containsKey(key)) {
-            resultDocument = (Document) key2document.get(key);
+        if (this.key2document.containsKey(key)) {
+            resultDocument = (Document) this.key2document.get(key);
         } else {
             resultDocument = document;
-            key2document.put(key, resultDocument);
+            this.key2document.put(key, resultDocument);
         }
         return resultDocument;
     }

@@ -20,12 +20,14 @@
 package org.apache.lenya.cms.rc;
 
 
+/**
+ * A checkin entry
+ */
 public class CheckInEntry extends RCMLEntry {
     /**
      * Creates a new CheckInEntry object.
-     *
-     * @param identity DOCUMENT ME!
-     * @param time DOCUMENT ME!
+     * @param identity The identity to use
+     * @param time The time
      */
     public CheckInEntry(String identity, long time) {
         super(identity, time);

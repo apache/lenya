@@ -34,7 +34,7 @@ public class ActionImpl implements Action {
      * @param actionId The action ID.
      */
     protected ActionImpl(String actionId) {
-        id = actionId;
+        this.id = actionId;
     }
 
     private String id;
@@ -44,7 +44,7 @@ public class ActionImpl implements Action {
      * @return A string.
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -58,5 +58,6 @@ public class ActionImpl implements Action {
      * @see org.apache.lenya.workflow.Action#execute(org.apache.lenya.workflow.WorkflowInstance)
      */
     public void execute(WorkflowInstance instance) throws WorkflowException {
+        // do nothing
     }
 }

@@ -23,8 +23,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
-import org.apache.avalon.framework.logger.Log4JLogger;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -33,7 +31,6 @@ import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.task.AntTask;
-import org.apache.log4j.Category;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
@@ -44,11 +41,11 @@ import org.apache.tools.ant.Task;
 public abstract class PublicationTask extends Task {
     /** Creates a new instance of PublicationTask */
     public PublicationTask() {
+	    // do nothing
     }
 
     /**
      * Returns the publication directory.
-     * 
      * @return a the path to the publication directory as a <code>File</code>
      */
     protected File getPublicationDirectory() {
@@ -57,7 +54,6 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Return the context prefix.
-     * 
      * @return the context-prefix
      */
     protected String getContextPrefix() {
@@ -66,7 +62,6 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Returns the publication ID.
-     * 
      * @return the publication-id
      */
     protected String getPublicationId() {
@@ -75,7 +70,6 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Returns the servlet context (e.g., <code>tomcat/webapp/lenya</code>)
-     * 
      * @return the servlet-context
      */
     protected File getServletContext() {
@@ -106,9 +100,7 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Get the publication
-     * 
      * @return the publication
-     * 
      * @throws BuildException if the publication could not be found
      */
     protected Publication getPublication() throws BuildException {
@@ -117,7 +109,6 @@ public abstract class PublicationTask extends Task {
 
     /**
      * Utility method for assertion that a string is != null and != ""
-     * 
      * @param string the string to check
      */
     protected void assertString(String string) {

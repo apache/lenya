@@ -24,4 +24,5 @@ package org.apache.lenya.workflow;
  * workflow transitions can fire at a certain moment.
  */
 public interface Situation {
+    // do nothing
 }

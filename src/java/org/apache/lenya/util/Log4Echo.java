@@ -21,23 +21,22 @@ package org.apache.lenya.util;
 
 import java.util.Locale;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
- * Can be used within shell scripts resp. batch files
+ * Can be used within shell scripts or batch files
  */
 public class Log4Echo {
-    private static Category log = Category.getInstance(Log4Echo.class);
+    private static Logger log = Logger.getLogger(Log4Echo.class);
     
     /**
      * main
-     *
-     * @param args DOCUMENT ME!
+     * @param args command line args
      */
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.err.println("Usage: java " + new Log4Echo().getClass().getName() + "log-level log-message");
+            System.err.println("Usage: java Log4Echo log-level log-message");
             return;
         }
 

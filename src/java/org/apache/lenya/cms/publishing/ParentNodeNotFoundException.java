@@ -28,11 +28,11 @@ public class ParentNodeNotFoundException extends PublishingException{
      * Creates a new ParentNodeNotFoundException.
      */
     public ParentNodeNotFoundException() {
+	    // do nothing
     }
 
     /**
      * Creates a new ParentNodeNotFoundException.
-     * 
      * @param message the exception message
      */
     public ParentNodeNotFoundException(String message) {
@@ -41,7 +41,6 @@ public class ParentNodeNotFoundException extends PublishingException{
 
     /**
      * Creates a new ParentNodeNotFoundException.
-     * 
      * @param message the exception message
      * @param cause the cause of the exception
      */
@@ -51,7 +50,6 @@ public class ParentNodeNotFoundException extends PublishingException{
 
     /**
      * Creates a new ParentNodeNotFoundException.
-     * 
      * @param cause  the cause of the exception
      */
     public ParentNodeNotFoundException(Throwable cause) {

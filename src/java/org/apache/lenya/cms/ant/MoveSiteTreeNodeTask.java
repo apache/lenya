@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.tools.ant.BuildException;
 
@@ -29,7 +28,13 @@ import org.apache.tools.ant.BuildException;
  */
 public class MoveSiteTreeNodeTask extends PublicationTask {
 
+    /**
+     * <code>UP</code> Constant for up movement
+     */
     public static final String UP = "up";
+    /**
+     * <code>DOWN</code> Constant for down movement
+     */
     public static final String DOWN = "down";
 
     /**
@@ -37,15 +42,15 @@ public class MoveSiteTreeNodeTask extends PublicationTask {
      * @return A string.
      */
     protected String getDocumentId() {
-        return documentId;
+        return this.documentId;
     }
 
     /**
      * Sets the document ID.
-     * @param documentId A string.
+     * @param _documentId A string.
      */
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
+    public void setDocumentId(String _documentId) {
+        this.documentId = _documentId;
     }
 
     /**
@@ -53,15 +58,15 @@ public class MoveSiteTreeNodeTask extends PublicationTask {
      * @return A string.
      */
     protected String getDirection() {
-        return direction;
+        return this.direction;
     }
 
     /**
      * Sets the direction.
-     * @param direction A string.
+     * @param _direction A string.
      */
-    public void setDirection(String direction) {
-        this.direction = direction;
+    public void setDirection(String _direction) {
+        this.direction = _direction;
     }
 
     /**

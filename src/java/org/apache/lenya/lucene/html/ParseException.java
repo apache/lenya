@@ -62,18 +62,17 @@ public class ParseException extends Exception {
      * create this object. This constructor calls its super class with the empty string to force
      * the "toString" method of parent class "Throwable" to print the error message in the form:
      * ParseException: &lt;result of getMessage&gt;
-     *
-     * @param currentTokenVal DOCUMENT ME!
-     * @param expectedTokenSequencesVal DOCUMENT ME!
-     * @param tokenImageVal DOCUMENT ME!
+     * @param currentTokenVal Value of the current token
+     * @param expectedTokenSequencesVal Value of the expected token sequences
+     * @param tokenImageVal Value of the image token
      */
     public ParseException(Token currentTokenVal, int[][] expectedTokenSequencesVal,
         String[] tokenImageVal) {
         super("");
-        specialConstructor = true;
-        currentToken = currentTokenVal;
-        expectedTokenSequences = expectedTokenSequencesVal;
-        tokenImage = tokenImageVal;
+        this.specialConstructor = true;
+        this.currentToken = currentTokenVal;
+        this.expectedTokenSequences = expectedTokenSequencesVal;
+        this.tokenImage = tokenImageVal;
     }
 
     /**
@@ -85,17 +84,16 @@ public class ParseException extends Exception {
      */
     public ParseException() {
         super();
-        specialConstructor = false;
+        this.specialConstructor = false;
     }
 
     /**
      * Creates a new ParseException object.
-     *
-     * @param message DOCUMENT ME!
+     * @param message The message
      */
     public ParseException(String message) {
         super(message);
-        specialConstructor = false;
+        this.specialConstructor = false;
     }
 
     /**
@@ -105,61 +103,67 @@ public class ParseException extends Exception {
      * and you do not catch it (it gets thrown from the parser), then this method is called during
      * the printing of the final stack trace, and hence the correct error message gets displayed.
      *
-     * @return DOCUMENT ME!
+     * @return The exception message
      */
     public String getMessage() {
-        if (!specialConstructor) {
+        if (!this.specialConstructor) {
             return super.getMessage();
         }
 
         String expected = "";
+        StringBuffer buf = new StringBuffer();
         int maxSize = 0;
 
-        for (int i = 0; i < expectedTokenSequences.length; i++) {
-            if (maxSize < expectedTokenSequences[i].length) {
-                maxSize = expectedTokenSequences[i].length;
+        for (int i = 0; i < this.expectedTokenSequences.length; i++) {
+            if (maxSize < this.expectedTokenSequences[i].length) {
+                maxSize = this.expectedTokenSequences[i].length;
             }
 
-            for (int j = 0; j < expectedTokenSequences[i].length; j++) {
-                expected += (tokenImage[expectedTokenSequences[i][j]] + " ");
+            for (int j = 0; j < this.expectedTokenSequences[i].length; j++) {
+                buf.append((this.tokenImage[this.expectedTokenSequences[i][j]] + " "));
             }
 
-            if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {
-                expected += "...";
+            if (this.expectedTokenSequences[i][this.expectedTokenSequences[i].length - 1] != 0) {
+               buf.append("...");
             }
 
-            expected += (eol + "    ");
+            buf.append((this.eol + "    "));
         }
 
-        String retval = "Encountered \"";
-        Token tok = currentToken.next;
+        expected = buf.toString();
+
+        String retval = null;
+        StringBuffer buf2 = new StringBuffer();
+        buf2.append("Encountered \"");
+        Token tok = this.currentToken.next;
 
         for (int i = 0; i < maxSize; i++) {
             if (i != 0) {
-                retval += " ";
+                buf2.append(" ");
             }
 
             if (tok.kind == 0) {
-                retval += tokenImage[0];
+                buf2.append(this.tokenImage[0]);
 
                 break;
             }
 
-            retval += add_escapes(tok.image);
+            buf2.append(add_escapes(tok.image));
             tok = tok.next;
         }
 
-        retval += ("\" at line " + currentToken.next.beginLine + ", column " +
-        currentToken.next.beginColumn);
-        retval += ("." + eol);
+        buf2.append("\" at line " + this.currentToken.next.beginLine + ", column " +
+        this.currentToken.next.beginColumn);
+        buf2.append("." + this.eol);
 
-        if (expectedTokenSequences.length == 1) {
-            retval += ("Was expecting:" + eol + "    ");
+        if (this.expectedTokenSequences.length == 1) {
+            buf2.append("Was expecting:" + this.eol + "    ");
         } else {
-            retval += ("Was expecting one of:" + eol + "    ");
+            buf2.append("Was expecting one of:" + this.eol + "    ");
         }
 
-        retval += expected;
+        buf2.append(expected);
+        retval = buf2.toString();
 
         return retval;
     }
@@ -167,10 +171,8 @@ public class ParseException extends Exception {
     /**
      * Used to convert raw characters to their escaped version when these raw version cannot be
      * used as part of an ASCII string literal.
-     *
-     * @param str DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param str The string to be escaped
+     * @return The escaped string
      */
     protected String add_escapes(String str) {
         StringBuffer retval = new StringBuffer();
@@ -179,47 +181,38 @@ public class ParseException extends Exception {
         for (int i = 0; i < str.length(); i++) {
             switch (str.charAt(i)) {
             case 0:
-
                 continue;
 
             case '\b':
                 retval.append("\\b");
-
                 continue;
 
             case '\t':
                 retval.append("\\t");
-
                 continue;
 
             case '\n':
                 retval.append("\\n");
-
                 continue;
 
             case '\f':
                 retval.append("\\f");
-
                 continue;
 
             case '\r':
                 retval.append("\\r");
-
                 continue;
 
             case '\"':
                 retval.append("\\\"");
-
                 continue;
 
             case '\'':
                 retval.append("\\\'");
-
                 continue;
 
             case '\\':
                 retval.append("\\\\");
-
                 continue;
 
             default:

@@ -26,7 +26,7 @@ import org.apache.lenya.cms.PublicationHelper;
 /**
  * Role manager test.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class RoleManagerTest extends AccessControlTest {
     /**
@@ -38,9 +38,8 @@ public class RoleManagerTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @param args DOCUMENT ME!
+     * Command line interface
+     * @param args Command line args
      */
     public static void main(String[] args) {
         PublicationHelper.extractPublicationArguments(args);
@@ -48,69 +47,67 @@ public class RoleManagerTest extends AccessControlTest {
     }
 
     /**
-     * DOCUMENT ME!
-     * 
-     * @throws AccessControlException DOCUMENT ME!
+     * Run the test
+     * @throws AccessControlException if an error occurs
      */
     final public void testInstance() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
-        FileRoleManager manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
-        assertNotNull(manager);
+        FileRoleManager _manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
+        assertNotNull(_manager);
 
         FileRoleManager anotherManager = FileRoleManager.instance(configDir, getLogEnabledLogger());
         assertNotNull(anotherManager);
-        assertEquals(manager, anotherManager);
+        assertEquals(_manager, anotherManager);
     }
 
     /**
-     * DOCUMENT ME!
+     * Test getRoles()
      */
     final public void testGetRoles() {
+        // do nothing
     }
 
     /**
      * Test add(Role)
-     * 
      * @throws AccessControlException if an error occurs
      */
     final public void testAddRole() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
         String name = "test";
-        FileRoleManager manager = null;
-        manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
-        assertNotNull(manager);
-        Role role = new FileRole(manager.getConfigurationDirectory(), name);
-        manager.add(role);
+        FileRoleManager _manager = null;
+        _manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
+        assertNotNull(_manager);
+        Role role = new FileRole(_manager.getConfigurationDirectory(), name);
+        _manager.add(role);
 
-        assertTrue(manager.getRoles().length > 0);
+        assertTrue(_manager.getRoles().length > 0);
     }
 
     /**
      * Test for void remove(Role)
      * @throws AccessControlException if an error occurs.
-     *  
      */
     final public void testRemoveRole() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
         String name = "test2";
         Role role = new FileRole(configDir, name);
-        FileRoleManager manager = null;
+        FileRoleManager _manager = null;
 
         try {
-            manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
+            _manager = FileRoleManager.instance(configDir, getLogEnabledLogger());
         } catch (AccessControlException e) {
             e.printStackTrace();
         }
 
-        assertNotNull(manager);
+        assertNotNull(_manager);
 
-        Role[] roles = manager.getRoles();
+        Role[] roles = _manager.getRoles();
         int roleCountBefore = roles.length;
 
-        manager.add(role);
-        manager.remove(role);
+        _manager.add(role);
+        _manager.remove(role);
 
-        roles = manager.getRoles();
+        roles = _manager.getRoles();
         int roleCountAfter = roles.length;
 
         assertEquals(roleCountBefore, roleCountAfter);

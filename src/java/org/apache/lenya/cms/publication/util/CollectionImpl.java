@@ -34,6 +34,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -77,7 +78,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected List documents() throws DocumentException {
         load();
-        return documentsList;
+        return this.documentsList;
     }
 
     /**
@@ -123,7 +124,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @throws DocumentException when something went wrong.
      */
     protected void load() throws DocumentException {
-        if (!isLoaded) {
+        if (!this.isLoaded) {
             getLogger().debug("Loading: ", new DocumentException());
             NamespaceHelper helper;
             try {
@@ -136,14 +137,14 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 for (int i = 0; i < documentElements.length; i++) {
                     Element documentElement = documentElements[i];
                     Document document = loadDocument(documentElement);
-                    documentsList.add(document);
+                    this.documentsList.add(document);
                 }
             } catch (DocumentException e) {
                 throw e;
             } catch (Exception e) {
                 throw new DocumentException(e);
             }
-            isLoaded = true;
+            this.isLoaded = true;
         }
     }
 
@@ -209,9 +210,13 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected Element createDocumentElement(Document document, NamespaceHelper helper)
             throws DocumentException {
-        Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
-        documentElement.setAttributeNS(null, ATTRIBUTE_ID, document.getId());
-        return documentElement;
+        try {
+            Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
+            documentElement.setAttributeNS(null, ATTRIBUTE_ID, document.getId());
+            return documentElement;
+        } catch (final DOMException e) {
+           throw new DocumentException(e);
+        }
     }
 
     /**

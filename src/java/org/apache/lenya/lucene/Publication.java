@@ -25,20 +25,39 @@ import java.util.StringTokenizer;
  * Parameters to do a search by Lucene and display results
  */
 public class Publication {
+    /**
+     * <code>id</code> The publication id
+     */
     public String id = null;
+    /**
+     * <code>name</code> The publication name
+     */
     public String name = null;
+    /**
+     * <code>indexDir</code> The index directory
+     */
     public String indexDir = null;
+    /**
+     * <code>searchFields</code> The search fields
+     */
     public String searchFields = null;
+    /**
+     * <code>excerptDir</code> The excerpt directory
+     */
     public String excerptDir = null;
+    /**
+     * <code>prefix</code> The prefix
+     */
     public String prefix = null;
 
     /**
-     *
+     * Returns the search fields
+     * @return The search fields
      */
     public String[] getFields() {
         String[] fields = null;
-        if (searchFields != null) {
-            StringTokenizer st = new StringTokenizer(searchFields, ",");
+        if (this.searchFields != null) {
+            StringTokenizer st = new StringTokenizer(this.searchFields, ",");
             int length = st.countTokens();
             fields = new String[length];
             for (int i = 0; i < length; i++) {

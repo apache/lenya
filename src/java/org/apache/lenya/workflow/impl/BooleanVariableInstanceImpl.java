@@ -30,19 +30,20 @@ public class BooleanVariableInstanceImpl implements BooleanVariableInstance {
 
     /** Creates a new instance of BooleanVariableInstanceImpl */
     protected BooleanVariableInstanceImpl() {
+        // do nothing
     }
 
     /**
      * @see org.apache.lenya.workflow.BooleanVariableInstance#getValue()
      */
     public boolean getValue() {
-        return value;
+        return this.value;
     }
 
     /**
      * @see org.apache.lenya.workflow.BooleanVariableInstance#setValue(boolean)
      */
     public void setValue(boolean variableValue) {
-        value = variableValue;
+        this.value = variableValue;
     }
 }

@@ -34,7 +34,6 @@ import org.apache.lenya.cms.publication.util.DocumentHelper;
  * Example:
  * <code>{document-url:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}}</code>
  * </p>
- * 
  * @version: $Id$
  */
 public class DocumentURLModule extends AbstractPageEnvelopeModule {

@@ -22,6 +22,9 @@ package org.apache.lenya.cms.rc;
 import java.util.Date;
 
 
+/**
+ * Exception for already checked out files
+ */
 public class FileReservedCheckOutException extends Exception {
     private String source = null;
     private Date checkOutDate = null;
@@ -29,42 +32,38 @@ public class FileReservedCheckOutException extends Exception {
 
     /**
      * Creates a new FileReservedCheckOutException object.
-     *
-     * @param source DOCUMENT ME!
-     * @param rcml DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * @param _source The source
+     * @param rcml The RCML
+     * @throws Exception if an error occurs
      */
-    public FileReservedCheckOutException(String source, RCML rcml)
+    public FileReservedCheckOutException(String _source, RCML rcml)
         throws Exception {
-        this.source = source;
+        this.source = _source;
 
         try {
             CheckOutEntry coe = rcml.getLatestCheckOutEntry();
 
-            checkOutUsername = coe.getIdentity();
-            checkOutDate = new Date(coe.getTime());
-        } catch (Exception exception) {
+            this.checkOutUsername = coe.getIdentity();
+            this.checkOutDate = new Date(coe.getTime());
+        } catch (Exception e) {
             throw new Exception("Unable to create FileReservedCheckOutException object!");
         }
     }
     
     /**
      * Get the date of the checkout.
-     * 
      * @return the date of the checkout
      */
     public Date getCheckOutDate() {
-        return checkOutDate;
+        return this.checkOutDate;
     }
 
     /**
      * Get the user name who did this checkout.
-     * 
      * @return the user name of this checkout
      */
     public String getCheckOutUsername() {
-        return checkOutUsername;
+        return this.checkOutUsername;
     }
 
 }

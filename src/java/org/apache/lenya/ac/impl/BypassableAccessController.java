@@ -41,6 +41,7 @@ public class BypassableAccessController extends DefaultAccessController {
      * Ctor.
      */
     public BypassableAccessController() {
+	    // do nothing
     }
 
     private List publicMatchers = new ArrayList();
@@ -59,7 +60,7 @@ public class BypassableAccessController extends DefaultAccessController {
             String publicHref = publics[i].getValue(null);
 
             try {
-                publicMatchers.add(preparePattern(publicHref));
+                this.publicMatchers.add(preparePattern(publicHref));
             } catch (PatternException pe) {
                 throw new ConfigurationException("invalid pattern for public hrefs", pe);
             }
@@ -139,9 +140,9 @@ public class BypassableAccessController extends DefaultAccessController {
         
         // Check public uris from configuration above. Should only be used during development before the implementation of a concrete authorizer.
         int i = 0;
-        while (!authorized && i < publicMatchers.size()) {
-            getLogger().debug("Trying pattern: [" + publicMatchers.get(i) + "] with URL [" + uri + "]");
-            if (preparedMatch((REProgram) publicMatchers.get(i), uri)) {
+        while (!authorized && i < this.publicMatchers.size()) {
+            getLogger().debug("Trying pattern: [" + this.publicMatchers.get(i) + "] with URL [" + uri + "]");
+            if (preparedMatch((REProgram) this.publicMatchers.get(i), uri)) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Permission granted for free: [" + uri + "]");
                 }

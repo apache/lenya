@@ -38,7 +38,6 @@ public class Proxy {
 
     /**
      * Returns the absolute URL of a particular document.
-     * 
      * @param document The document.
      * @return A string.
      */
@@ -56,14 +55,13 @@ public class Proxy {
 
     /**
      * Sets the proxy URL.
-     * @param url The url to set.
+     * @param _url The url to set.
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrl(String _url) {
+        this.url = _url;
     }
 
     /**
-     * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString() {

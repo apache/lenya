@@ -44,6 +44,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * Ctor.
      */
     public UsecaseResolverImpl() {
+        // do nothing
     }
 
     private ServiceSelector selector;
@@ -69,9 +70,9 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-        this.selector = (ServiceSelector) manager.lookup(Usecase.ROLE + "Selector");
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
+        this.selector = (ServiceSelector) _manager.lookup(Usecase.ROLE + "Selector");
     }
 
     /**
@@ -116,8 +117,8 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
+    public void contextualize(Context _context) throws ContextException {
+        this.context = _context;
     }
 
     /**

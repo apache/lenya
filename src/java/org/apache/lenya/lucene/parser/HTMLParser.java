@@ -24,23 +24,42 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.URI;
 
+/**
+ * HTMLParser interface
+ */
 public interface HTMLParser {
+    /**
+     * Parse a file
+     * @param file The file
+     * @throws ParseException if a parser error occured
+     */
     void parse(File file) throws ParseException;
 
+    /**
+     * Parse a URI
+     * @param uri The URI
+     * @throws ParseException if a parser error occured
+     */
     void parse(URI uri) throws ParseException;
 
     /**
      * Returns the title of the HTML document.
+     * @return The title
+     * @throws IOException if an IO error occurs
      */
     String getTitle() throws IOException;
 
     /**
      * Returns keywords
+     * @return The keywords
+     * @throws IOException if an IO error occurs
      */
     String getKeywords() throws IOException;
 
     /**
      * Returns a reader that reads the contents of the HTML document.
+     * @return The reader
+     * @throws IOException if an IO error occurs
      */
     Reader getReader() throws IOException;
 }

@@ -21,6 +21,7 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,10 +30,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 
@@ -52,121 +49,131 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Create a new instance of Resources.
-     * 
-     * @param document the document for which the resources are managed
+     * @param _document the document for which the resources are managed
      */
-    public DefaultResourcesManager(Document document) {
-        this.document = document;
+    public DefaultResourcesManager(Document _document) {
+        this.document = _document;
     }
 
     /**
      * Add the file in the Part either as a resource or content
      * @param part The Part
      * @param metadata Holds the metadata for the resource
-     * 
-     * @exception Exception if an error occurs
+     * @exception IOException if an error occurs
      */
-    public void addResource(Part part, Map metadata) throws Exception {
+    public void addResource(Part part, Map metadata) throws IOException {
 
         File resourceFile;
 
-        String fileName = part.getFileName();
-        if (!fileName.matches(FILE_NAME_REGEXP)) {
-            // the file name contains characters which mean trouble
-            // and are therefore not allowed.
-            getLogger().warn("The filename [" + fileName + "]� is not valid for an asset.");
+        try {
+            String fileName = part.getFileName();
+            if (!fileName.matches(FILE_NAME_REGEXP)) {
+                // the file name contains characters which mean trouble
+                // and are therefore not allowed.
+                getLogger().warn("The filename [" + fileName + "]� is not valid for an asset.");
+            }
+            // convert spaces in the file name to underscores
+            fileName = fileName.replace(' ', '_');
+            String mimeType = part.getMimeType();
+            int fileSize = part.getSize();
+
+            metadata.put("format", mimeType);
+            metadata.put("extent", Integer.toString(fileSize));
+
+            /* if (type.equals("resource")) { */
+            resourceFile = new File(this.getPath(), fileName);
+
+            if (!this.getPath().exists()) {
+                this.getPath().mkdirs();
+            }
+
+            // create an extra file containing the meta description for
+            // the resource.
+            File metaDataFile = new File(this.getPath(), fileName + RESOURCES_META_SUFFIX);
+            createMetaData(metaDataFile, metadata);
+
+            /*
+             * } // must be a content upload then else { resourceFile = new
+             * File(document.getFile().getParent(), fileName);
+             * getLogger().debug("resourceFile: " + resourceFile); }
+             */
+            saveResource(resourceFile, part);
+        } catch (final DocumentException e) {
+            getLogger().error("Document exception " +e.toString());
+            throw new IOException(e.toString());
+        } catch (final IOException e) {
+            getLogger().error("IO Error " +e.toString());
         }
-        // convert spaces in the file name to underscores
-        fileName = fileName.replace(' ', '_');
-        String mimeType = part.getMimeType();
-        int fileSize = part.getSize();
-
-        metadata.put("format", mimeType);
-        metadata.put("extent", Integer.toString(fileSize));
-
-        /* if (type.equals("resource")) { */
-        resourceFile = new File(this.getPath(), fileName);
-
-        if (!this.getPath().exists()) {
-            this.getPath().mkdirs();
-        }
-
-        // create an extra file containing the meta description for
-        // the resource.
-        File metaDataFile = new File(this.getPath(), fileName + RESOURCES_META_SUFFIX);
-        createMetaData(metaDataFile, metadata);
-
-        /*
-         * } // must be a content upload then else { resourceFile = new
-         * File(document.getFile().getParent(), fileName);
-         * getLogger().debug("resourceFile: " + resourceFile); }
-         */
-        saveResource(resourceFile, part);
     }
 
     /**
      * Saves the resource to a file.
-     * 
      * @param resourceFile The resource file.
      * @param part The part of the multipart request.
-     * @throws Exception if an error occurs.
+     * @throws IOException if an error occurs.
      */
-    protected void saveResource(File resourceFile, Part part) throws Exception {
+    protected void saveResource(File resourceFile, Part part) throws IOException {
         if (!resourceFile.exists()) {
             boolean created = resourceFile.createNewFile();
             if (!created) {
-                throw new RuntimeException("The file [" + resourceFile + "]�could not be created.");
+                throw new IOException("The file [" + resourceFile + "]�could not be created.");
             }
         }
 
-        byte[] buf = new byte[4096];
-        FileOutputStream out = new FileOutputStream(resourceFile);
-        try {
-            InputStream in = part.getInputStream();
-            int read = in.read(buf);
+	    try {
+            byte[] buf = new byte[4096];
+            FileOutputStream out = new FileOutputStream(resourceFile);
+                InputStream in = part.getInputStream();
+                int read = in.read(buf);
 
-            while (read > 0) {
-                out.write(buf, 0, read);
-                read = in.read(buf);
-            }
-        } finally {
-            out.close();
+                while (read > 0) {
+                    out.write(buf, 0, read);
+                    read = in.read(buf);
+                }
+        } catch (final FileNotFoundException e) {
+            getLogger().error("file not found" +e.toString());
+            throw new IOException(e.toString());
+        } catch (IOException e) {
+            getLogger().error("IO error " +e.toString());
+            throw new IOException(e.toString());
+        } catch (Exception e) {
+            getLogger().error("Exception" +e.toString());
+            throw new IOException(e.toString());
         }
     }
 
     /**
      * Create the meta data file given the dublin core parameters.
-     * 
      * @param metaDataFile the file where the meta data file is to be created
      * @param metadata a <code>Map</code> containing the dublin core values
-     * @throws TransformerConfigurationException if an error occurs.
-     * @throws TransformerException if an error occurs.
-     * @throws IOException if an error occurs
-     * @throws ParserConfigurationException if an error occurs.
+     * @throws DocumentException if an error occurs
      */
     protected void createMetaData(File metaDataFile, Map metadata)
-            throws TransformerConfigurationException, TransformerException, IOException,
-            ParserConfigurationException {
+            throws DocumentException {
 
         assert (metaDataFile.getParentFile().exists());
-        try {
-            dc = new DublinCoreImpl(metaDataFile);
-            Iterator iter = metadata.keySet().iterator();
+		try {
+            String		key;
+            String		value;
+            Map.Entry	entry;
+            this.dc = new DublinCoreImpl(metaDataFile);
+            Iterator iter = metadata.entrySet().iterator();
 
             while (iter.hasNext()) {
-                String key = (String) iter.next();
-                String value = (String) metadata.get(key);
-                dc.setValue(key, value);
+            	entry 	= (Map.Entry)iter.next();
+            	key 	= (String)entry.getKey();
+            	value 	= (String)entry.getValue();
+                this.dc.setValue(key, value);
             }
-            dc.save();
-        } catch (Exception e) {
+            this.dc.save();
+        } catch (final DocumentException e) {
             getLogger().error("Saving of [" + metaDataFile + "]�failed.");
+            throw new DocumentException(e);
         }
     }
 
     /**
      * Get the path to the resources.
-     * 
      * @return the path to the resources
      */
     private String getPathFromPublication() {
@@ -175,7 +182,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Get the path to the resources.
-     * 
      * @return the path to the resources
      */
     public File getPath() {
@@ -187,6 +193,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Returns the path of a resource relative to the context prefix.
+     * @param resource The resource
      * @return The path of a resource relative to the context prefix.
      */
     public String getResourceUrl(File resource) {
@@ -196,7 +203,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Get all resources for the associated document.
-     * 
      * @return all resources of the associated document
      */
     public File[] getResources() {
@@ -243,7 +249,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Get the meta data for all resources for the associated document.
-     * 
      * @return all meta data files for the resources for the associated
      *         document.
      */
@@ -296,8 +301,11 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.ResourcesManager#getDocument()
+     */
     public Document getDocument() {
-        return document;
+        return this.document;
     }
 
     /**
@@ -309,12 +317,12 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             getLogger().debug("Copying resources of document [" + getDocument() + "]");
         }
 
-        ResourcesManager destinationManager = destinationDocument.getResourcesManager();
+        ResourcesManager _destinationManager = destinationDocument.getResourcesManager();
 
         List resourcesList = new ArrayList(Arrays.asList(getResources()));
         resourcesList.addAll(Arrays.asList(getMetaFiles()));
         File[] resources = (File[]) resourcesList.toArray(new File[resourcesList.size()]);
-        File destinationDirectory = destinationManager.getPath();
+        File destinationDirectory = _destinationManager.getPath();
 
         for (int i = 0; i < resources.length; i++) {
             File destinationResource = new File(destinationDirectory, resources[i].getName());

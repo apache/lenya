@@ -24,8 +24,14 @@ import java.util.Map;
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.parameters.Parameters;
 
+/**
+ * URI Parametrizer Interface
+ */
 public interface URIParameterizer extends Component {
     
+    /**
+     * <code>ROLE</code> The Role
+     */
     String ROLE = URIParameterizer.class.getName();
     
     /**

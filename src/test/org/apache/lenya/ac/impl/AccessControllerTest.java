@@ -15,15 +15,17 @@
  *
  */
 
-/* $Id: AccessControllerTest.java,v 1.2 2004/03/04 15:40:19 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
 import junit.textui.TestRunner;
 
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.PublicationHelper;
 
+/**
+ * Access controller test
+ */
 public class AccessControllerTest extends AccessControlTest {
 
     /**
@@ -44,9 +46,8 @@ public class AccessControllerTest extends AccessControlTest {
 
     /**
      * The test.
-     * @throws AccessControlException when something went wrong.
      */
-    public void testAccessController() throws AccessControlException {
+    public void testAccessController() {
         assertNotNull(getAccessController());
     }
 

@@ -50,23 +50,21 @@ public abstract class AbstractAccreditableManager
 
     /**
 	 * Attaches an item manager listener to this accreditable manager.
-	 * 
 	 * @param listener An item manager listener.
 	 */
     public void addItemManagerListener(ItemManagerListener listener) {
-        if (!itemManagerListeners.contains(listener)) {
+        if (!this.itemManagerListeners.contains(listener)) {
             
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Adding listener: [" + listener + "]");
             }
             
-            itemManagerListeners.add(listener);
+            this.itemManagerListeners.add(listener);
         }
     }
 
     /**
 	 * Removes an item manager listener from this accreditable manager.
-	 * 
 	 * @param listener An item manager listener.
 	 */
     public void removeItemManagerListener(ItemManagerListener listener) {
@@ -74,17 +72,16 @@ public abstract class AbstractAccreditableManager
             getLogger().debug("Removing listener: [" + listener + "]");
         }
             
-        itemManagerListeners.remove(listener);
+        this.itemManagerListeners.remove(listener);
     }
 
     /**
 	 * Notifies the listeners that an item was added.
-	 * 
 	 * @param item The item that was added.
 	 * @throws AccessControlException when a notified listener threw this exception.
 	 */
     protected void notifyAdded(Item item) throws AccessControlException {
-        List clone = new ArrayList(itemManagerListeners);
+        List clone = new ArrayList(this.itemManagerListeners);
         for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
             listener.itemAdded(item);
@@ -93,13 +90,11 @@ public abstract class AbstractAccreditableManager
 
     /**
 	 * Notifies the listeners that an item was removed.
-	 * 
 	 * @param item The item that was removed.
 	 * @throws AccessControlException when a notified listener threw this exception.
 	 */
     protected void notifyRemoved(Item item) throws AccessControlException {
-        
-        List clone = new ArrayList(itemManagerListeners);
+        List clone = new ArrayList(this.itemManagerListeners);
         for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
             listener.itemRemoved(item);
@@ -130,16 +125,16 @@ public abstract class AbstractAccreditableManager
 	 * @see org.apache.avalon.framework.activity.Disposable#dispose()
 	 */
     public void dispose() {
-        if (userManager != null) {
-            userManager.removeItemManagerListener(this);
+        if (this.userManager != null) {
+            this.userManager.removeItemManagerListener(this);
         }
-        if (groupManager != null) {
-            groupManager.removeItemManagerListener(this);
+        if (this.groupManager != null) {
+            this.groupManager.removeItemManagerListener(this);
         }
-        if (ipRangeManager != null) {
+        if (this.ipRangeManager != null) {
             this.ipRangeManager.removeItemManagerListener(this);
         }
-        if (roleManager != null) {
+        if (this.roleManager != null) {
             this.roleManager.removeItemManagerListener(this);
         }
         
@@ -152,44 +147,44 @@ public abstract class AbstractAccreditableManager
 	 * @see org.apache.lenya.ac.AccreditableManager#getUserManager()
 	 */
     public UserManager getUserManager() throws AccessControlException {
-        if (userManager == null) {
-            userManager = initializeUserManager();
-            userManager.addItemManagerListener(this);
+        if (this.userManager == null) {
+            this.userManager = initializeUserManager();
+            this.userManager.addItemManagerListener(this);
         }
-        return userManager;
+        return this.userManager;
     }
 
     /**
 	 * @see org.apache.lenya.ac.AccreditableManager#getGroupManager()
 	 */
     public GroupManager getGroupManager() throws AccessControlException {
-        if (groupManager == null) {
-            groupManager = initializeGroupManager();
-            groupManager.addItemManagerListener(this);
+        if (this.groupManager == null) {
+            this.groupManager = initializeGroupManager();
+            this.groupManager.addItemManagerListener(this);
         }
-        return groupManager;
+        return this.groupManager;
     }
 
     /**
 	 * @see org.apache.lenya.ac.AccreditableManager#getRoleManager()
 	 */
     public RoleManager getRoleManager() throws AccessControlException {
-        if (roleManager == null) {
-            roleManager = initializeRoleManager();
-            roleManager.addItemManagerListener(this);
+        if (this.roleManager == null) {
+            this.roleManager = initializeRoleManager();
+            this.roleManager.addItemManagerListener(this);
         }
-        return roleManager;
+        return this.roleManager;
     }
 
     /**
 	 * @see org.apache.lenya.ac.AccreditableManager#getIPRangeManager()
 	 */
     public IPRangeManager getIPRangeManager() throws AccessControlException {
-        if (ipRangeManager == null) {
-            ipRangeManager = initializeIPRangeManager();
-            ipRangeManager.addItemManagerListener(this);
+        if (this.ipRangeManager == null) {
+            this.ipRangeManager = initializeIPRangeManager();
+            this.ipRangeManager.addItemManagerListener(this);
         }
-        return ipRangeManager;
+        return this.ipRangeManager;
     }
 
     /**

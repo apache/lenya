@@ -52,6 +52,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
      * Ctor.
      */
     public PublicationTemplateManagerImpl() {
+	    // do nothing
     }
 
     private Publication[] templatePublications;
@@ -59,10 +60,10 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     /**
      * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#setup(org.apache.lenya.cms.publication.Publication)
      */
-    public void setup(Publication publication) throws ConfigurationException {
-        this.publication = publication;
+    public void setup(Publication _publication) throws ConfigurationException {
+        this.publication = _publication;
 
-        File configFile = new File(publication.getDirectory(), Publication.CONFIGURATION_FILE);
+        File configFile = new File(_publication.getDirectory(), Publication.CONFIGURATION_FILE);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
         try {
@@ -74,7 +75,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
                 for (int i = 0; i < templateConfigs.length; i++) {
                     String templateId = templateConfigs[i].getAttribute(ATTRIBUTE_ID);
                     PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                    Publication template = factory.getPublication(templateId, publication
+                    Publication template = factory.getPublication(templateId, _publication
                             .getServletContext().getAbsolutePath());
                     templates.add(template);
                 }
@@ -101,7 +102,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
         SourceResolver resolver = null;
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             String[] baseUris = getBaseURIs();
             for (int i = 0; i < baseUris.length; i++) {
@@ -129,7 +130,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
             throw new TemplatingException("Visiting path [" + path + "] failed: ", e);
         } finally {
             if (resolver != null) {
-                manager.release(resolver);
+                this.manager.release(resolver);
             }
         }
 
@@ -140,8 +141,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     /**
@@ -188,7 +189,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     public void visit(PublicationVisitor visitor) {
         SourceResolver resolver = null;
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             Publication[] publications = getPublications();
             for (int i = 0; i < publications.length; i++) {
@@ -202,7 +203,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
             throw new TemplatingException("Visiting publications failed: ", e);
         } finally {
             if (resolver != null) {
-                manager.release(resolver);
+                this.manager.release(resolver);
             }
         }
 

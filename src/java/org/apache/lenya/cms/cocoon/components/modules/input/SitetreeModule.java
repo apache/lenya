@@ -36,9 +36,21 @@ import org.apache.lenya.cms.site.tree.TreeSiteManager;
  */
 public class SitetreeModule extends AbstractPageEnvelopeModule {
 
+    /**
+     * <code>AUTHORING_NODE</code> The authoring node
+     */
     public static final String AUTHORING_NODE = "authoring-node";
+    /**
+     * <code>LIVE_NODE</code> The live node
+     */
     public static final String LIVE_NODE = "live-node";
+    /**
+     * <code>TRASH_NODE</code> The trash node
+     */
     public static final String TRASH_NODE = "trash-node";
+    /**
+     * <code>ARCHIVE_NODE</code> The archive node
+     */
     public static final String ARCHIVE_NODE = "archive-node";
     
     protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, TRASH_NODE, ARCHIVE_NODE };
@@ -56,25 +68,25 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
             PageEnvelope envelope = getEnvelope(objectModel);
             Publication publication = envelope.getPublication();
             DocumentIdentityMap map = envelope.getIdentityMap();
-            TreeSiteManager manager = (TreeSiteManager) publication.getSiteManager(map);
+            TreeSiteManager _manager = (TreeSiteManager) publication.getSiteManager(map);
 
             if (name.equals(AUTHORING_NODE)) {
-                SiteTree authoringTree = manager.getTree(Publication.AUTHORING_AREA);
+                SiteTree authoringTree = _manager.getTree(Publication.AUTHORING_AREA);
                 value = authoringTree.getNode(envelope.getDocument().getId());
             }
 
             if (name.equals(LIVE_NODE)) {
-                SiteTree liveTree = manager.getTree(Publication.LIVE_AREA);
+                SiteTree liveTree = _manager.getTree(Publication.LIVE_AREA);
                 value = liveTree.getNode(envelope.getDocument().getId());
             }
             
             if (name.equals(TRASH_NODE)) {
-                SiteTree trashTree = manager.getTree(Publication.TRASH_AREA);
+                SiteTree trashTree = _manager.getTree(Publication.TRASH_AREA);
                 value = trashTree.getNode(envelope.getDocument().getId());
             }
             
             if (name.equals(ARCHIVE_NODE)) {
-                SiteTree archiveTree = manager.getTree(Publication.ARCHIVE_AREA);
+                SiteTree archiveTree = _manager.getTree(Publication.ARCHIVE_AREA);
                 value = archiveTree.getNode(envelope.getDocument().getId());
             }
         } catch (Exception e) {

@@ -63,12 +63,12 @@ public abstract class AbstractAccessControllerResolver
             }
         }
 
-        synchronized (cache) {
-            controller = (AccessController) cache.get(key);
+        synchronized (this.cache) {
+            controller = (AccessController) this.cache.get(key);
             if (controller == null) {
                 getLogger().debug("No access controller in cache.");
                 controller = doResolveAccessController(webappUrl);
-                cache.put(key, controller);
+                this.cache.put(key, controller);
             } else {
                 getLogger().debug("Getting access controller from cache.");
             }
@@ -120,9 +120,9 @@ public abstract class AbstractAccessControllerResolver
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
+    public void service(ServiceManager _manager) throws ServiceException {
         getLogger().debug("Servicing [" + getClass().getName() + "]");
-        this.manager = manager;
+        this.manager = _manager;
     }
 
     /**
@@ -130,7 +130,7 @@ public abstract class AbstractAccessControllerResolver
      * @return A service manager.
      */
     public ServiceManager getManager() {
-        return manager;
+        return this.manager;
     }
 
 }

@@ -56,83 +56,74 @@ public class LinkRewriteTask extends PublicationTask {
 
     /**
      * Get the area
-     * 
      * @return the area
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * Set the area
-     * 
-     * @param area the area
+     * @param _area the area
      */
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String _area) {
+        this.area = _area;
     }
 
     /**
      * Get the new document-id.
-     * 
      * @return the new document-id
      */
     public String getNewDocumentId() {
-        return newDocumentId;
+        return this.newDocumentId;
     }
 
     /**
      * Set the new document-id.
-     * 
-     * @param newDocumentId the new document-id
+     * @param _newDocumentId the new document-id
      */
-    public void setNewDocumentId(String newDocumentId) {
-        this.newDocumentId = newDocumentId;
+    public void setNewDocumentId(String _newDocumentId) {
+        this.newDocumentId = _newDocumentId;
     }
 
     /**
      * Get the old document-id.
-     * 
      * @return the old document-id
      */
     public String getOldDocumentId() {
-        return oldDocumentId;
+        return this.oldDocumentId;
     }
 
     /**
      * Set the old document-id.
-     * 
-     * @param oldDocumentId the old document-id
+     * @param _oldDocumentId the old document-id
      */
-    public void setOldDocumentId(String oldDocumentId) {
-        this.oldDocumentId = oldDocumentId;
+    public void setOldDocumentId(String _oldDocumentId) {
+        this.oldDocumentId = _oldDocumentId;
     }
 
     /**
      * Get the stylesheet.
-     * 
      * @return the stylesheet
      */
     public String getStylesheet() {
-        return stylesheet;
+        return this.stylesheet;
     }
 
     /**
      * Set the stylesheet.
-     * 
-     * @param stylesheet the stylesheet that transforms the links
+     * @param _stylesheet the stylesheet that transforms the links
      */
-    public void setStylesheet(String stylesheet) {
-        this.stylesheet = stylesheet;
+    public void setStylesheet(String _stylesheet) {
+        this.stylesheet = _stylesheet;
     }
 
     /**
      * Set the base dir where in which the link rewrite will take place.
-     * 
-     * @param baseDir the base dir
+     * @param _baseDir the base dir
      */
-    public void setBaseDir(String baseDir) {
-        this.baseDir = baseDir;
+    public void setBaseDir(String _baseDir) {
+        this.baseDir = _baseDir;
     }
 
     /**
@@ -164,8 +155,9 @@ public class LinkRewriteTask extends PublicationTask {
     }
 
     /**
-     * @param file
-     * @param transformer
+     * Rewrites links
+     * @param file The starting point for the link rewrite
+     * @param transformer The transformer to use for the link rewrite
      * @throws TransformerException
      * @throws ParserConfigurationException
      * @throws SAXException
@@ -177,16 +169,16 @@ public class LinkRewriteTask extends PublicationTask {
         FilenameFilter directoryFilter = new FilenameFilter() {
 
             public boolean accept(File dir, String name) {
-                File file = new File(dir, name);
-                return file.isDirectory();
+                File _file = new File(dir, name);
+                return _file.isDirectory();
             }
         };
 
         FilenameFilter xmlFileFilter = new FilenameFilter() {
 
             public boolean accept(File dir, String name) {
-                File file = new File(dir, name);
-                return file.isFile() && FileUtil.getExtension(name).equals("xml");
+                File _file = new File(dir, name);
+                return _file.isFile() && FileUtil.getExtension(name).equals("xml");
             }
         };
 
@@ -221,27 +213,31 @@ public class LinkRewriteTask extends PublicationTask {
     }
 
     /**
+     * Rewrites links by traversing a directory tree and applying a rewrite transformation
+     * to XML files in the directory.
+     * @param rootDirName The root directory for the rewrite
+     * @param _stylesheet The stylesheet to use for rewriting
+     * @param _area The area to use for rewriting
+     * @param _oldDocumentId The old document id
+     * @param _newDocumentId The new document id
      * 
-     * @param rootDirName
-     * @param stylesheet
-     * @param oldDocumentId
-     * @param newDocumentId
-     * 
-     * @throws FileNotFoundException
      * @throws TransformerException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
      */
     private void replace(
         String rootDirName,
-        String stylesheet,
-        String area,
-        String oldDocumentId,
-        String newDocumentId)
+        String _stylesheet,
+        String _area,
+        String _oldDocumentId,
+        String _newDocumentId)
         throws TransformerException, ParserConfigurationException, SAXException, IOException {
 
         File rootDir = new File(rootDirName);
         TransformerFactory tFactory = TransformerFactory.newInstance();
 
-        Transformer transformer = tFactory.newTransformer(new StreamSource(stylesheet));
+        Transformer transformer = tFactory.newTransformer(new StreamSource(_stylesheet));
 
         Publication publication = getPublication();
 
@@ -250,8 +246,8 @@ public class LinkRewriteTask extends PublicationTask {
         for (int i = 0; i < languages.length; i++) {
             String language = languages[i];
 
-            String oldURL = getUrl(area, oldDocumentId, language);
-            String newURL = getUrl(area, newDocumentId, language);
+            String oldURL = getUrl(_area, _oldDocumentId, language);
+            String newURL = getUrl(_area, _newDocumentId, language);
 
             log("Replace '" + oldURL + "' by '" + newURL + "'");
             transformer.setParameter("idbefore", oldURL);
@@ -264,15 +260,15 @@ public class LinkRewriteTask extends PublicationTask {
     /**
      * Returns the complete URL for a certain area, document ID, and language.
      * 
-     * @param area The area.
+     * @param _area The area.
      * @param documentId The document ID.
      * @param language The language.
      * @return A string.
      */
-    protected String getUrl(String area, String documentId, String language) {
+    protected String getUrl(String _area, String documentId, String language) {
         org.apache.lenya.cms.publication.Document newDocument;
         try {
-            newDocument = getIdentityMap().getFactory().get(area, documentId, language);
+            newDocument = getIdentityMap().getFactory().get(_area, documentId, language);
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }

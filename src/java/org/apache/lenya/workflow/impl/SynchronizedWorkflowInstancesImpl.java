@@ -41,42 +41,54 @@ public class SynchronizedWorkflowInstancesImpl extends AbstractLogEnabled implem
      * Ctor.
      */
     public SynchronizedWorkflowInstancesImpl() {
+        // do nothing
     }
 
     /**
      * Ctor.
-     * @param instances The set of workflow instances to synchronize.
-     * @param mainInstance The main workflow instance to invoke for
+     * @param _instances The set of workflow instances to synchronize.
+     * @param _mainInstance The main workflow instance to invoke for
      *            non-synchronized transitions.
      */
-    public SynchronizedWorkflowInstancesImpl(WorkflowInstance[] instances,
-            WorkflowInstance mainInstance) {
-        setInstances(instances);
-        setMainInstance(mainInstance);
+    public SynchronizedWorkflowInstancesImpl(WorkflowInstance[] _instances,
+            WorkflowInstance _mainInstance) {
+        setInstances(_instances);
+        setMainInstance(_mainInstance);
     }
 
     /**
      * Sets the main workflow instance.
-     * @param mainInstance The main workflow instance to invoke for
+     * @param _mainInstance The main workflow instance to invoke for
      *            non-synchronized transitions.
      */
-    public void setMainInstance(WorkflowInstance mainInstance) {
-        this.mainInstance = mainInstance;
+    public void setMainInstance(WorkflowInstance _mainInstance) {
+        this.mainInstance = _mainInstance;
     }
 
     private WorkflowInstance[] instances;
     private WorkflowInstance mainInstance;
 
-    public void setInstances(WorkflowInstance[] instances) {
-        this.instances = instances;
+    /**
+     * Set the workflow instances
+     * @param _instances The instances
+     */
+    public void setInstances(WorkflowInstance[] _instances) {
+        this.instances = _instances;
     }
 
+    /**
+     * Return the workflow instances
+     * @return The instances
+     */
     public WorkflowInstance[] getInstances() {
-        return instances;
+        return this.instances;
     }
 
     /**
      * Returns all executable events.
+     * @param situation
+     * @return
+     * @throws WorkflowException
      * @see org.apache.lenya.workflow.WorkflowInstance#getExecutableEvents(org.apache.lenya.workflow.Situation)
      */
     public String[] getExecutableEvents(Situation situation) throws WorkflowException {
@@ -84,17 +96,17 @@ public class SynchronizedWorkflowInstancesImpl extends AbstractLogEnabled implem
             getLogger().debug("Resolving executable events");
         }
 
-        WorkflowInstance[] instances = getInstances();
-        if (instances.length == 0) {
+        WorkflowInstance[] _instances = getInstances();
+        if (_instances.length == 0) {
             throw new WorkflowException("The set must contain at least one workflow instance!");
         }
 
-        String[] events = mainInstance.getExecutableEvents(situation);
+        String[] events = this.mainInstance.getExecutableEvents(situation);
         Set executableEvents = new HashSet(Arrays.asList(events));
 
         for (int i = 0; i < events.length; i++) {
             String event = events[i];
-            if (mainInstance.isSynchronized(event)) {
+            if (this.mainInstance.isSynchronized(event)) {
 
                 boolean canFire = true;
                 if (getLogger().isDebugEnabled()) {
@@ -102,10 +114,10 @@ public class SynchronizedWorkflowInstancesImpl extends AbstractLogEnabled implem
                 }
 
                 boolean sameState = true;
-                State currentState = mainInstance.getCurrentState();
+                State currentState = this.mainInstance.getCurrentState();
                 int j = 0;
-                while (j < instances.length && sameState) {
-                    sameState = instances[j].getCurrentState().equals(currentState);
+                while (j < _instances.length && sameState) {
+                    sameState = _instances[j].getCurrentState().equals(currentState);
                     j++;
                 }
                 if (getLogger().isDebugEnabled()) {
@@ -113,9 +125,9 @@ public class SynchronizedWorkflowInstancesImpl extends AbstractLogEnabled implem
                 }
 
                 if (sameState) {
-                    for (int k = 0; k < instances.length; k++) {
-                        WorkflowInstanceImpl instance = (WorkflowInstanceImpl) instances[k];
-                        if (instance != mainInstance
+                    for (int k = 0; k < _instances.length; k++) {
+                        WorkflowInstanceImpl instance = (WorkflowInstanceImpl) _instances[k];
+                        if (instance != this.mainInstance
                                 && !instance.getNextTransition(event).canFire(situation, instance)) {
                             canFire = false;
                             if (getLogger().isDebugEnabled()) {
@@ -146,6 +158,9 @@ public class SynchronizedWorkflowInstancesImpl extends AbstractLogEnabled implem
 
     /**
      * Invokes an event on all documents.
+     * @param situation The situation
+     * @param event The event
+     * @throws WorkflowException if an error occurs
      * @see org.apache.lenya.workflow.WorkflowInstance#invoke(org.apache.lenya.workflow.Situation,
      *      java.lang.String)
      */

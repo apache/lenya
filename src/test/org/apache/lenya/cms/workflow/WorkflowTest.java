@@ -175,14 +175,14 @@ public class WorkflowTest extends AccessControlTest {
 
         /**
          * Creates a new test situation.
-         * @param user The user.
-         * @param event The event.
-         * @param value The variable value.
+         * @param _user The user.
+         * @param _event The event.
+         * @param _value The variable value.
          */
-        public TestSituation(String user, String event, boolean value) {
-            this.user = user;
-            this.event = event;
-            this.value = value;
+        public TestSituation(String _user, String _event, boolean _value) {
+            this.user = _user;
+            this.event = _event;
+            this.value = _value;
         }
 
         /**
@@ -190,7 +190,7 @@ public class WorkflowTest extends AccessControlTest {
          * @return An event.
          */
         public String getEvent() {
-            return event;
+            return this.event;
         }
 
         /**
@@ -198,7 +198,7 @@ public class WorkflowTest extends AccessControlTest {
          * @return A string.
          */
         public String getUser() {
-            return user;
+            return this.user;
         }
 
         /**
@@ -206,7 +206,7 @@ public class WorkflowTest extends AccessControlTest {
          * @return A value.
          */
         public boolean getValue() {
-            return value;
+            return this.value;
         }
     }
 

@@ -23,11 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 /**
@@ -35,8 +36,33 @@ import org.w3c.dom.Element;
  */
 public abstract class ServletJob implements Job {
 
-    private static Category log = Category.getInstance(ServletJob.class);
+    private static Logger log = Logger.getLogger(ServletJob.class);
     
+    /**
+     * <code>ELEMENT_JOB</code> The job element
+     */
+    public static final String ELEMENT_JOB = "job";
+    /**
+     * <code>ATTRIBUTE_ID</code> The id attribute
+     */
+    public static final String ATTRIBUTE_ID = "id";
+    /**
+     * <code>ATTRIBUTE_CLASS</code> The class attribute
+     */
+    public static final String ATTRIBUTE_CLASS = "class";
+    /**
+     * <code>ATTRIBUTE_DOCUMENT_URL</code> The document url attribute
+     */
+    public static final String ATTRIBUTE_DOCUMENT_URL = "url";
+    /**
+     * <code>ATTRIBUTE_SERVLET_CONTEXT</code> The servlet context attribute
+     */
+    public static final String ATTRIBUTE_SERVLET_CONTEXT = "servletcontext";
+    /**
+     * <code>PARAMETER_DOCUMENT_URL</code> The document URL parameter
+     */
+    public static final String PARAMETER_DOCUMENT_URL = "document-url";
+
     /**
      * Creates the job data from an HTTP request.
      * @param request The request.
@@ -71,13 +97,6 @@ public abstract class ServletJob implements Job {
 
     }
 
-    public static final String ELEMENT_JOB = "job";
-    public static final String ATTRIBUTE_ID = "id";
-    public static final String ATTRIBUTE_CLASS = "class";
-    public static final String ATTRIBUTE_DOCUMENT_URL = "url";
-    public static final String ATTRIBUTE_SERVLET_CONTEXT = "servletcontext";
-    public static final String PARAMETER_DOCUMENT_URL = "document-url";
-
     /**
      * Saves the job data to an XML element.
      * @param helper The namespace helper of the document the element shall belong to.
@@ -88,14 +107,19 @@ public abstract class ServletJob implements Job {
     public Element save(NamespaceHelper helper, JobDetail jobDetail) throws SchedulerException {
         log.debug("Saving job");
 
-        Element jobElement = helper.createElement(ELEMENT_JOB);
-        jobElement.setAttribute(ATTRIBUTE_ID, jobDetail.getName());
-        jobElement.setAttribute(ATTRIBUTE_CLASS, getClass().getName());
+        try {
+            Element jobElement = helper.createElement(ELEMENT_JOB);
+            jobElement.setAttribute(ATTRIBUTE_ID, jobDetail.getName());
+            jobElement.setAttribute(ATTRIBUTE_CLASS, getClass().getName());
 
-        String documentUrl = getDocumentUrl(jobDetail);
-        jobElement.setAttribute(ATTRIBUTE_DOCUMENT_URL, documentUrl);
-        
-        return jobElement;
+            String documentUrl = getDocumentUrl(jobDetail);
+            jobElement.setAttribute(ATTRIBUTE_DOCUMENT_URL, documentUrl);
+            
+            return jobElement;
+        } catch (final DOMException e) {
+            log.error("" +e.toString());
+            throw new SchedulerException(e);
+        }
     }
 
     /**

@@ -31,7 +31,7 @@ import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task, which implements the SiteTreeNodeVisitor for the operation move a document. (Visitor
+ * Ant task which implements the SiteTreeNodeVisitor for the operation move a document. (Visitor
  * pattern)
  */
 public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVisitor {
@@ -42,7 +42,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
     private String secdocumentid;
 
     /**
-     *  
+     *  Constructor
      */
     public MoveDocumentTask() {
         super();
@@ -52,28 +52,28 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
      * @return String The area of the source.
      */
     public String getFirstarea() {
-        return firstarea;
+        return this.firstarea;
     }
 
     /**
      * @return String The document-id corresponding to the source.
      */
     public String getFirstdocumentid() {
-        return firstdocumentid;
+        return this.firstdocumentid;
     }
 
     /**
      * @return String The area of the destination.
      */
     public String getSecarea() {
-        return secarea;
+        return this.secarea;
     }
 
     /**
      * @return String The document-id corresponding to the destination.
      */
     public String getSecdocumentid() {
-        return secdocumentid;
+        return this.secdocumentid;
     }
 
     /**
@@ -81,7 +81,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
      *            The area of the source.
      */
     public void setFirstarea(String string) {
-        firstarea = string;
+        this.firstarea = string;
     }
 
     /**
@@ -89,7 +89,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
      *            The document-id corresponding to the source.
      */
     public void setFirstdocumentid(String string) {
-        firstdocumentid = string;
+        this.firstdocumentid = string;
     }
 
     /**
@@ -97,7 +97,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
      *            The area of the destination.
      */
     public void setSecarea(String string) {
-        secarea = string;
+        this.secarea = string;
     }
 
     /**
@@ -105,7 +105,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
      *            The document-id corresponding to the destination.
      */
     public void setSecdocumentid(String string) {
-        secdocumentid = string;
+        this.secdocumentid = string;
     }
 
     /**
@@ -119,7 +119,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
             String language = labels[i].getLanguage();
 
             String srcDocumentid = node.getAbsoluteId();
-            String destDocumentid = srcDocumentid.replaceFirst(firstdocumentid, secdocumentid);
+            String destDocumentid = srcDocumentid.replaceFirst(this.firstdocumentid, this.secdocumentid);
 
             // TODO: content(fix the build file)
             // TODO: resources (fix the build file)
@@ -134,8 +134,8 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 
             log("move workflow history");
             try {
-                document = getIdentityMap().getFactory().get(firstarea, srcDocumentid, language);
-                newDocument = getIdentityMap().getFactory().get(secarea, destDocumentid, language);
+                document = getIdentityMap().getFactory().get(this.firstarea, srcDocumentid, language);
+                newDocument = getIdentityMap().getFactory().get(this.secarea, destDocumentid, language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

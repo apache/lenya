@@ -36,10 +36,10 @@ public final class PublicationHelper {
 
     /**
      * Ctor.
-     * @param publication The publication.
+     * @param _publication The publication.
      */
-    public PublicationHelper(Publication publication) {
-        this.publication = publication;
+    public PublicationHelper(Publication _publication) {
+        this.publication = _publication;
     }
 
     /**
@@ -78,6 +78,6 @@ public final class PublicationHelper {
      * @return Returns the publication.
      */
     public Publication getPublication() {
-        return publication;
+        return this.publication;
     }
 }

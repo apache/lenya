@@ -35,13 +35,13 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
     /**
      * Ctor.
      * @param workflow The workflow.
-     * @param document the document
+     * @param _document the document
      * @throws WorkflowException if an error occurs.
      */
-    protected WorkflowDocument(WorkflowImpl workflow, Document document) throws WorkflowException {
+    protected WorkflowDocument(WorkflowImpl workflow, Document _document) throws WorkflowException {
         super(workflow);
-        assert document != null;
-        this.document = document;
+        assert _document != null;
+        this.document = _document;
     }
 
     private Document document;
@@ -51,7 +51,7 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
      * @return A document object.
      */
     public Document getDocument() {
-        return document;
+        return this.document;
     }
 
     /**

@@ -82,7 +82,7 @@ public class WorkflowUsecase extends AbstractUsecase {
         WorkflowInstance instance = null;
         WorkflowResolver resolver = null;
         try {
-            resolver = (WorkflowResolver) manager.lookup(WorkflowResolver.ROLE);
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             instance = resolver.getWorkflowInstance(document);
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -106,7 +106,7 @@ public class WorkflowUsecase extends AbstractUsecase {
         boolean hasWorkflow = false;
         WorkflowResolver resolver = null;
         try {
-            resolver = (WorkflowResolver) manager.lookup(WorkflowResolver.ROLE);
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             hasWorkflow = resolver.hasWorkflow(document);
         } catch (ServiceException e) {
             throw new WorkflowException(e);

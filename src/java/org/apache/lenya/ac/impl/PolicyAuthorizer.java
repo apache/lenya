@@ -43,7 +43,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      * @return An accreditable manager.
      */
     public AccreditableManager getAccreditableManager() {
-        return accreditableManager;
+        return this.accreditableManager;
     }
 
     /**
@@ -51,13 +51,14 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      * @return A policy manager.
      */
     public PolicyManager getPolicyManager() {
-        return policyManager;
+        return this.policyManager;
     }
 
     /**
      * Creates a new policy authorizer.
      */
     public PolicyAuthorizer() {
+	    // do nothing
     }
     
     private PolicyManager policyManager;
@@ -68,7 +69,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      */
     public void setPolicyManager(PolicyManager manager) {
         assert manager != null;
-        policyManager = manager;
+        this.policyManager = manager;
     }
     
     private AccreditableManager accreditableManager;
@@ -79,7 +80,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      */
     public void setAccreditableManager(AccreditableManager manager) {
         assert manager != null;
-        accreditableManager = manager;
+        this.accreditableManager = manager;
     }
 
     /**
@@ -165,13 +166,14 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         List roleList = (List) request.getAttribute(AbstractRole.class.getName());
 
         if (roleList == null) {
-            String message = "    URI: [" + request.getRequestURI() + "]\n";
+            StringBuffer buf = new StringBuffer();
+            buf.append("    URI: [" + request.getRequestURI() + "]\n");
             for (Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
                 String key = (String) e.nextElement();
-                message += "    Parameter: [" + key + "] = [" + request.getParameter(key) + "]\n";
+                buf.append("    Parameter: [" + key + "] = [" + request.getParameter(key) + "]\n");
             }
             
-            throw new AccessControlException("Request [" + request + "] does not contain roles: \n" + message);
+            throw new AccessControlException("Request [" + request + "] does not contain roles: \n" + buf.toString());
         }
         
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);

@@ -31,5 +31,6 @@ public abstract class AbstractPublisher extends AbstractTask implements Publishe
      * 
      */
     protected AbstractPublisher() {
+	    // do nothing
     }
 }

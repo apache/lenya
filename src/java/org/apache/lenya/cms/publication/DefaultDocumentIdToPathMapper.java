@@ -93,7 +93,6 @@ public class DefaultDocumentIdToPathMapper
 
     /**
      * Returns the document ID for a certain file.
-     * 
      * @param publication The publication.
      * @param area The area.
      * @param file The file representing the document.
@@ -121,10 +120,10 @@ public class DefaultDocumentIdToPathMapper
                     relativeFileName.lastIndexOf(File.separator));
             // and replace the os specific separator by '/'
             return relativeFileName.replace(File.separatorChar, '/');
-        } else {
-            throw new DocumentDoesNotExistException(
-                "No document associated with file" + fileName);
         }
+        // Document does not seem to exist
+        throw new DocumentDoesNotExistException(
+            "No document associated with file" + fileName);
     }
     
     /**

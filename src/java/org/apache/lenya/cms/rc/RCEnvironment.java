@@ -25,14 +25,27 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
+/**
+ * Helper class that holds the revision controller configuration
+ */
 public class RCEnvironment implements Configurable {
-    private static Category log = Category.getInstance(RCEnvironment.class);
+    private static Logger log = Logger.getLogger(RCEnvironment.class);
+    /**
+     * <code>CONFIGURATION_FILE</code> The configuration file
+     */
     public static final String CONFIGURATION_FILE = "lenya" + File.separator + "config" +
         File.separator + "rc" + File.separator + "revision-controller.xconf";
+    /**
+     * <code>RCML_DIRECTORY</code> The RCML directory
+     */
     public static final String RCML_DIRECTORY = "rcml-directory";
+    /**
+     * <code>BACKUP_DIRECTORY</code> The backup directory
+     */
     public static final String BACKUP_DIRECTORY = "backup-directory";
     private String rcmlDirectory;
     private String backupDirectory;
@@ -54,9 +67,8 @@ public class RCEnvironment implements Configurable {
     }
 
     /**
-     * Creates a new RCEnvironment object.
-     *
-     * @param contextPath DOCUMENT ME!
+     * Creates a new RCEnvironment object from the context path
+     * @param contextPath The context path
      */
     public RCEnvironment(String contextPath) {
         log.debug("context path:" + contextPath);
@@ -76,14 +88,10 @@ public class RCEnvironment implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @throws org.apache.avalon.framework.configuration.ConfigurationException DOCUMENT ME!
+     @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)     
      */
     public void configure(org.apache.avalon.framework.configuration.Configuration configuration)
-        throws org.apache.avalon.framework.configuration.ConfigurationException {
+        throws ConfigurationException {
         // revision controller
         setRCMLDirectory(configuration.getChild("rcmlDirectory").getAttribute("href"));
         setBackupDirectory(configuration.getChild("backupDirectory").getAttribute("href"));
@@ -93,38 +101,34 @@ public class RCEnvironment implements Configurable {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get the RCML directory
+     * @return The RCML directory
      */
     public String getRCMLDirectory() {
-        return rcmlDirectory;
+        return this.rcmlDirectory;
     }
 
 	/**
 	 * Set the rcml directory
-	 * 
 	 * @param rcmlDir the path to the rcml directory
 	 */
     protected void setRCMLDirectory(String rcmlDir) {
-        rcmlDirectory = rcmlDir;
+        this.rcmlDirectory = rcmlDir;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Get the backup directory
+     * @return The backup directory
      */
     public String getBackupDirectory() {
-        return backupDirectory;
+        return this.backupDirectory;
     }
 
 	/**
 	 * Set the backup directory
-	 * 
 	 * @param backupDir path to the backup directory
 	 */
     protected void setBackupDirectory(String backupDir) {
-        backupDirectory = backupDir;
+        this.backupDirectory = backupDir;
     }
 }

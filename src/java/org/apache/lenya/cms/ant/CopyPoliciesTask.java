@@ -45,13 +45,13 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 	 * @return string The policies directory.
 	 */
 	public String getPoliciesDir() {
-		return policiesDir;
+		return this.policiesDir;
 	}
 	/**
 	 * @param string The policies directory
 	 */
 	public void setPoliciesDir(String string) {
-		policiesDir = string;
+		this.policiesDir = string;
 	}
 
 	/** 
@@ -96,8 +96,8 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 		}
 	}
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.ant.DocumentOperationTask#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	/** 
+	 * @see org.apache.lenya.cms.ant.DocumentOperationTask#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
 		String srcArea = this.getFirstarea();
@@ -113,21 +113,21 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 			if (destArea.equals(Publication.AUTHORING_AREA)) {
 				File srcDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getFirstarea() + File.separator + srcDocumentid);
 				File destDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getSecarea() + File.separator + destDocumentid);
 				copyPolicies(srcDir, destDir);
 
 				File srcLiveDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						Publication.LIVE_AREA + File.separator + srcDocumentid);
 				File destLiveDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						Publication.LIVE_AREA
 							+ File.separator
 							+ destDocumentid);
@@ -139,11 +139,11 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 					| destArea.equals(Publication.TRASH_AREA)) {
 				File srcDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getFirstarea() + File.separator + srcDocumentid);
 				File destDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getSecarea()
 							+ File.separator
 							+ this.getFirstarea()
@@ -153,11 +153,11 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 
 				File srcLiveDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						Publication.LIVE_AREA + File.separator + srcDocumentid);
 				File destLiveDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getSecarea()
 							+ File.separator
 							+ Publication.LIVE_AREA
@@ -173,7 +173,7 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 			if (destArea.equals(Publication.AUTHORING_AREA)) {
 				File srcDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getFirstarea()
 							+ File.separator
 							+ this.getSecarea()
@@ -181,13 +181,13 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 							+ srcDocumentid);
 				File destDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getSecarea() + File.separator + destDocumentid);
 				copyPolicies(srcDir, destDir);
 
 				File srcLiveDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						this.getFirstarea()
 							+ File.separator
 							+ Publication.LIVE_AREA
@@ -195,7 +195,7 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 							+ srcDocumentid);
 				File destLiveDir =
 					new File(
-						policiesDir,
+						this.policiesDir,
 						Publication.LIVE_AREA
 							+ File.separator
 							+ destDocumentid);

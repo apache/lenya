@@ -21,41 +21,40 @@ package org.apache.lenya.cms.task;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
  * A TaskSequence contains of multiple tasks that are executed successively.
  */
 public class TaskSequence extends AbstractTask {
-    private static Category log = Category.getInstance(TaskSequence.class);
+    private static Logger log = Logger.getLogger(TaskSequence.class);
 
     // keeps the task order
     private Task[] tasks;
     private TaskManager taskManager;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param configuration DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
+     * Initialize the task
+     * @param configuration The configuration
+     * @throws ConfigurationException if an error occurs
      */
     public void init(Configuration configuration) throws ConfigurationException {
-        taskManager = new TaskManager();
-        taskManager.configure(configuration);
+        this.taskManager = new TaskManager();
+        this.taskManager.configure(configuration);
 
         // create task list
         Configuration[] taskConfigurations = configuration.getChildren(TaskManager.TASK_ELEMENT);
-        tasks = new Task[taskConfigurations.length];
+        this.tasks = new Task[taskConfigurations.length];
 
         // set task IDs
-        for (int i = 0; i < tasks.length; i++) {
+        for (int i = 0; i < this.tasks.length; i++) {
             String taskId = taskConfigurations[i].getAttribute(TaskManager.TASK_ID_ATTRIBUTE);
 
             try {
-                tasks[i] = taskManager.getTask(taskId);
+                this.tasks[i] = this.taskManager.getTask(taskId);
             } catch (ExecutionException e) {
                 throw new ConfigurationException("Sequence initialization failed: ", e);
             }
@@ -66,29 +65,24 @@ public class TaskSequence extends AbstractTask {
 
     /**
      * Returns the tasks in this sequence.
-     *
-     * @return DOCUMENT ME!
+     * @return The tasks
      */
     public Task[] getTasks() {
-        return (Task[]) tasks.clone();
+        return (Task[]) this.tasks.clone();
     }
 
     /**
      * Returns the TaskManager that is used to manage the tasks of this TaskSequence.
-     *
-     * @return DOCUMENT ME!
+     * @return The task manager
      */
     protected TaskManager getTaskManager() {
-        return taskManager;
+        return this.taskManager;
     }
 
     /**
      * Returns the ID of a specific Task.
-     *
      * @param task the specific task for which the task id is requested.
-     *
      * @return the task id of the given task
-     *
      * @throws ExecutionException if the task could not be found.
      */
     public String getTaskId(Task task) throws ExecutionException {
@@ -105,17 +99,16 @@ public class TaskSequence extends AbstractTask {
 
     /**
      * Executes the tasks.
-     *
-     * @param path DOCUMENT ME!
-     * 
+     * @param path The path to the tasks
      * @throws ExecutionException if the execution fails
      */
     public void execute(String path) throws ExecutionException {
-        try {
-            Task[] tasks = getTasks();
 
-            for (int i = 0; i < tasks.length; i++) {
-                Task task = tasks[i];
+        try {
+            Task[] _tasks = getTasks();
+
+            for (int i = 0; i < _tasks.length; i++) {
+                Task task = _tasks[i];
                 String taskId = getTaskId(task);
                 log.debug("Executing task '" + taskId + "'");
 
@@ -136,8 +129,15 @@ public class TaskSequence extends AbstractTask {
                 task.parameterize(taskParameters);
                 task.execute(path);
             }
-        } catch (Exception e) {
+        } catch (final IllegalStateException e) {
             log.error("Cannot execute TaskSequence: ", e);
+            throw new ExecutionException(e);
+        } catch (final ParameterException e) {
+            log.error("Cannot execute TaskSequence: ", e);
+            throw new ExecutionException(e);
+        } catch (final ExecutionException e) {
+            log.error("Cannot execute TaskSequence: ", e);
+            throw new ExecutionException(e);
         }
     }
 }

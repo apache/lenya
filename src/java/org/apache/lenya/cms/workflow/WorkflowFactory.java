@@ -51,6 +51,7 @@ public class WorkflowFactory {
 
     /** Creates a new instance of WorkflowFactory */
     protected WorkflowFactory() {
+        // do nothing
     }
 
     /**

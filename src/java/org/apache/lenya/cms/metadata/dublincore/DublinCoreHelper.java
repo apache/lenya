@@ -24,8 +24,7 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Facade to get the DublinCore through the cms Document
@@ -33,12 +32,13 @@ import org.apache.log4j.Category;
 public final class DublinCoreHelper {
 
     /**
-     *  
+     *  Constructor
      */
     private DublinCoreHelper() {
+	    // do nothing
     }
 
-    private static Category log = Category.getInstance(DublinCoreHelper.class);
+    private static Logger log = Logger.getLogger(DublinCoreHelper.class);
 
     /**
      * Get the value of the DCIdentifier corresponding to a document id.
@@ -47,34 +47,41 @@ public final class DublinCoreHelper {
      * @param area The area the document(s) belongs to.
      * @param documentId The document id.
      * @return a String. The value of the DCIdentifier.
-     * @throws SiteException when something with the sitetree went wrong.
-     * @throws DocumentBuildException when the building of a document failed.
      * @throws DocumentException when something with the document went wrong.
      */
     public static String getDCIdentifier(Publication publication, String area, String documentId)
-            throws SiteException, DocumentBuildException, DocumentException {
+            throws DocumentException {
         
         String identifier = null;
-        
-        DocumentIdentityMap map = new DocumentIdentityMap(publication);
-        Document baseDocument = map.getFactory().get(area, documentId);
-        String[] languages = baseDocument.getLanguages();
-        
-        int i = 0;
-        if (languages.length > 0) {
-            while (identifier == null && i < languages.length) {
-                Document document = map.getFactory().get(area, documentId, languages[i]);
-                log.debug("document file : " + document.getFile().getAbsolutePath());
-                DublinCore dublincore = document.getDublinCore();
-                log.debug("dublincore title : "
-                        + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
-                identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
-                i = i + 1;
+        try {
+            identifier = null;
+            
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            Document baseDocument = map.getFactory().get(area, documentId);
+            String[] languages = baseDocument.getLanguages();
+            
+            int i = 0;
+            if (languages.length > 0) {
+                while (identifier == null && i < languages.length) {
+                    Document document = map.getFactory().get(area, documentId, languages[i]);
+                    log.debug("document file : " + document.getFile().getAbsolutePath());
+                    DublinCore dublincore = document.getDublinCore();
+                    log.debug("dublincore title : "
+                            + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
+                    identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
+                    i = i + 1;
+                }
             }
-        }
-        if (languages.length < 1 || identifier == null) {
-            DublinCore dublincore = baseDocument.getDublinCore();
-            identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
+            if (languages.length < 1 || identifier == null) {
+                DublinCore dublincore = baseDocument.getDublinCore();
+                identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
+            }
+        } catch (final DocumentBuildException e) {
+            log.error("" +e.toString());
+            throw new DocumentException(e);
+        } catch (final DocumentException e) {
+            log.error("" +e.toString());
+            throw new DocumentException(e);
         }
 
         return identifier;

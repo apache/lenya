@@ -112,11 +112,15 @@ public class AntTask extends AbstractTask {
             project.setUserProperty(SERVLET_CONTEXT_PATH, servletContextPath);
 			project.setUserProperty(CONTEXT_PREFIX, contextPrefix);
 
-            for (Iterator keys = properties.keySet().iterator();
-                keys.hasNext();
-                ) {
-                String key = (String)keys.next();
-                project.setUserProperty(key, (String)properties.get(key));
+			String		key;
+			String		value;
+			Map.Entry	entry;
+
+			for (Iterator iter = properties.entrySet().iterator(); iter.hasNext();) {
+				entry 	= (Map.Entry)iter.next();
+				key 	= (String)entry.getKey();
+				value 	= (String)entry.getValue();
+                project.setUserProperty(key, value);
             }
 
             if (target == null) {
@@ -134,10 +138,8 @@ public class AntTask extends AbstractTask {
 
     /**
      * Returns the filename of the logfile to write.
-     * 
      * @param publicationDirectory for which publication the 
      * filename of the logfile is requested
-     * 
      * @return the file path for the log file
      */
     protected File getDefaultLogFile(File publicationDirectory) {
@@ -148,26 +150,60 @@ public class AntTask extends AbstractTask {
             LOG_PATH + dateFormat.format(now.getTime()) + ".xml");
     }
 
+    /**
+     * <code>dateFormat</code> The date format
+     */
     public static final DateFormat dateFormat =
         new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
+    /**
+     * <code>PUBLICATION_DIRECTORY</code> The publication directory
+     */
     public static final String PUBLICATION_DIRECTORY = "pub.dir";
+    /**
+     * <code>PUBLICATION_ID</code> The publication id
+     */
     public static final String PUBLICATION_ID = "pub.id";
+    /**
+     * <code>SERVLET_CONTEXT_PATH</code> The servlet context path
+     */
     public static final String SERVLET_CONTEXT_PATH = "servlet.context";
+    /**
+     * <code>CONTEXT_PREFIX</code> The context prefix
+     */
     public static final String CONTEXT_PREFIX = "context.prefix";
+    /**
+     * <code>BUILDFILE</code> The build file
+     */
     public static final String BUILDFILE = "buildfile";
+    /**
+     * <code>TARGET</code> The target
+     */
     public static final String TARGET = "target";
+    /**
+     * <code>ANT_PREFIX</code> The ant prefix
+     */
     public static final String ANT_PREFIX = "ant";
+    /**
+     * <code>PROPERTIES_PREFIX</code> The properties prefix
+     */
     public static final String PROPERTIES_PREFIX = "properties";
+    /**
+     * <code>DEFAULT_BUILDFILE</code> The default build file
+     */
     public static final String DEFAULT_BUILDFILE = "config/tasks/targets.xml";
+    /**
+     * <code>LOG_PATH</code> The log path
+     */
     public static final String LOG_PATH =
         "logs/tasks/".replace('/', File.separatorChar);
+    /**
+     * <code>PARAMETER_LOGFILE</code> The log file parameter
+     */
     public static final String PARAMETER_LOGFILE = "logfile";
 
     /**
      * Execute the task. All parameters must have been set with parameterize().
-     *
      * @param servletContextPath The servlet context path.
-     *
      * @throws ExecutionException when the execution of the task failed.
      */
     public void execute(String servletContextPath) throws ExecutionException {

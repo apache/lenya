@@ -41,20 +41,18 @@ public class DefaultPolicy implements Policy {
 
     /**
 	 * Adds a credential to this policy.
-	 * 
 	 * @param credential A credential.
 	 */
     public void addCredential(Credential credential) {
         assert credential != null;
-        assert !accreditableToCredential.containsKey(credential.getAccreditable());
-        accreditableToCredential.put(credential.getAccreditable(), credential);
+        assert !this.accreditableToCredential.containsKey(credential.getAccreditable());
+        this.accreditableToCredential.put(credential.getAccreditable(), credential);
     }
 
     /**
 	 * Adds a role to this policy for a certain accreditable and a certain role. If a credenital
 	 * exists for the accreditable, the role is added to this credential. Otherwise, a new
 	 * credential is created.
-	 * 
 	 * @param accreditable An accreditable.
 	 * @param role A role.
 	 */
@@ -74,7 +72,6 @@ public class DefaultPolicy implements Policy {
 
     /**
 	 * Removes a role from this policy for a certain accreditable and a certain role.
-	 * 
 	 * @param accreditable An accreditable.
 	 * @param role A role.
 	 * @throws AccessControlException if the accreditable-role pair is not contained.
@@ -88,7 +85,7 @@ public class DefaultPolicy implements Policy {
                 "No credential for accreditable ["
                     + accreditable
                     + "] ["
-                    + accreditableToCredential.keySet().size()
+                    + this.accreditableToCredential.keySet().size()
                     + "]");
         }
         if (!credential.contains(role)) {
@@ -108,11 +105,10 @@ public class DefaultPolicy implements Policy {
 
     /**
 	 * Returns the credentials of this policy.
-	 * 
 	 * @return An array of credentials.
 	 */
     public Credential[] getCredentials() {
-        Collection values = accreditableToCredential.values();
+        Collection values = this.accreditableToCredential.values();
         return (Credential[]) values.toArray(new Credential[values.size()]);
     }
 
@@ -146,7 +142,7 @@ public class DefaultPolicy implements Policy {
 	 * @return A credential.
 	 */
     public Credential getCredential(Accreditable accreditable) {
-        return (Credential) accreditableToCredential.get(accreditable);
+        return (Credential) this.accreditableToCredential.get(accreditable);
     }
 
     private boolean isSSL;
@@ -155,12 +151,11 @@ public class DefaultPolicy implements Policy {
 	 * @see org.apache.lenya.ac.Policy#isSSLProtected()
 	 */
     public boolean isSSLProtected() throws AccessControlException {
-        return isSSL;
+        return this.isSSL;
     }
 
     /**
 	 * Sets if this policy requires SSL protection.
-	 * 
 	 * @param ssl A boolean value.
 	 */
     public void setSSL(boolean ssl) {
@@ -176,25 +171,23 @@ public class DefaultPolicy implements Policy {
 
     /**
 	 * Removes a credential.
-	 * 
 	 * @param credential The credential to remove.
 	 * @throws AccessControlException If the credential does not exist.
 	 */
     protected void removeCredential(Credential credential) throws AccessControlException {
-        if (!accreditableToCredential.containsValue(credential)) {
+        if (!this.accreditableToCredential.containsValue(credential)) {
             throw new AccessControlException("Credential [" + credential + "] does not exist!");
         }
-        accreditableToCredential.remove(credential.getAccreditable());
+        this.accreditableToCredential.remove(credential.getAccreditable());
     }
 
     /**
 	 * Removes all roles for a certain accreditable.
-	 * 
 	 * @param accreditable The accreditable to remove all roles for.
 	 * @throws AccessControlException If no credential exists for this accreditable.
 	 */
     public void removeRoles(Accreditable accreditable) throws AccessControlException {
-        if (accreditableToCredential.containsKey(accreditable)) {
+        if (this.accreditableToCredential.containsKey(accreditable)) {
             Credential credential = getCredential(accreditable);
             removeCredential(credential);
         }

@@ -25,7 +25,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.Label;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -50,48 +49,38 @@ public class DeactivateResourcesTask extends PublicationTask {
     /**
      * Remove the resources belonging to the document with document id <documentid>, area <area>and
      * language <language>, when no more version of this document is available.
-     * 
-     * @param language The language
-     * @param documentid The document id
-     * @param area The area
-     * 
-     * @throws SiteException if an error occurs
+     * @param _language The language
+     * @param _documentid The document id
+     * @param _area The area
      */
-    public void deactivateResources(String language, String documentid, String area)
-            throws SiteException {
+    public void deactivateResources(String _language, String _documentid, String _area) {
         SiteTree tree = null;
 
-        try {
-            tree = getSiteTree(area);
-            SiteTreeNode node = tree.getNode(documentid);
-            Label[] labels = null;
-            if (node != null) {
-                labels = node.getLabels();
-            }
-            if (node == null || (labels != null && labels.length < 1)) {
+        tree = getSiteTree(_area);
+        SiteTreeNode node = tree.getNode(_documentid);
+        Label[] labels = null;
+        if (node != null) {
+            labels = node.getLabels();
+        }
+        if (node == null || (labels != null && labels.length < 1)) {
 
-                Document doc;
-                try {
-                    doc =getIdentityMap().getFactory().get(area, documentid, language);
-                } catch (DocumentBuildException e) {
-                    throw new BuildException(e);
-                }
-                ResourcesManager resourcesMgr = doc.getResourcesManager();
-                File[] resources = resourcesMgr.getResources();
-                for (int i = 0; i < resources.length; i++) {
-                    resources[i].delete();
-                }
-                File directory = resourcesMgr.getPath();
-                directory.delete();
+            Document doc;
+            try {
+                doc =getIdentityMap().getFactory().get(_area, _documentid, _language);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
             }
-        } catch (Exception e) {
-            throw new SiteException(e);
+            ResourcesManager resourcesMgr = doc.getResourcesManager();
+            File[] resources = resourcesMgr.getResources();
+            for (int i = 0; i < resources.length; i++) {
+                resources[i].delete();
+            }
+            File directory = resourcesMgr.getPath();
+            directory.delete();
         }
     }
 
     /**
-     * (non-Javadoc)
-     * 
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
@@ -107,56 +96,50 @@ public class DeactivateResourcesTask extends PublicationTask {
 
     /**
      * Get the value of the area.
-     * 
      * @return The area.
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * Get the value of the document id.
-     * 
      * @return The document id.
      */
     public String getDocumentid() {
-        return documentid;
+        return this.documentid;
     }
 
     /**
      * Get the value of the language.
-     * 
      * @return The language.
      */
     public String getLanguage() {
-        return language;
+        return this.language;
     }
 
     /**
      * Set the value of the area.
-     * 
      * @param string The area.
      */
     public void setArea(String string) {
-        area = string;
+        this.area = string;
     }
 
     /**
      * Set the value of the document id.
-     * 
      * @param string The document id.
      */
     public void setDocumentid(String string) {
-        documentid = string;
+        this.documentid = string;
     }
 
     /**
      * Set the value of the language.
-     * 
      * @param string The language.
      */
     public void setLanguage(String string) {
-        language = string;
+        this.language = string;
     }
 
 }

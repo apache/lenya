@@ -50,15 +50,41 @@ import org.apache.lenya.ac.impl.PolicyAuthorizer;
  */
 public class AccessControlModule extends AbstractInputModule implements Serviceable {
 
+    /**
+     * <code>USER_ID</code> The user id
+     */
     public static final String USER_ID = "user-id";
+    /**
+     * <code>USER_NAME</code> The user name
+     */
     public static final String USER_NAME = "user-name";
+    /**
+     * <code>USER_EMAIL</code> The user email
+     */
     public static final String USER_EMAIL = "user-email";
+    /**
+     * <code>IP_ADDRESS</code> The IP address
+     */
     public static final String IP_ADDRESS = "ip-address";
+    /**
+     * <code>ROLE_IDS</code> The role ids
+     */
     public static final String ROLE_IDS = "role-ids";
-
+    /**
+     * <code>USER_MANAGER</code> The user manager
+     */
     public static final String USER_MANAGER = "user-manager";
+    /**
+     * <code>GROUP_MANAGER</code> The group manager
+     */
     public static final String GROUP_MANAGER = "group-manager";
+    /**
+     * <code>ROLE_MANAGER</code> The role manager
+     */
     public static final String ROLE_MANAGER = "role-manager";
+    /**
+     * <code>IP_RANGE_MANAGER</code> The IP range manager
+     */
     public static final String IP_RANGE_MANAGER = "iprange-manager";
 
     /**
@@ -117,14 +143,14 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                 } else if (name.equals(ROLE_IDS)) {
                     try {
                         Role[] roles = PolicyAuthorizer.getRoles(request);
-                        String roleIds = "";
+                        StringBuffer buf = new StringBuffer();
                         for (int i = 0; i < roles.length; i++) {
                             if (i > 0) {
-                                roleIds += ",";
+                                buf.append(",");
                             }
-                            roleIds += roles[i].getId();
+                            buf.append(roles[i].getId());
                         }
-                        value = roleIds;
+                        value = buf.toString();
                     } catch (AccessControlException e) {
                         throw new ConfigurationException(
                             "Obtaining value for attribute [" + name + "] failed: ",
@@ -178,7 +204,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         ItemManager itemManager = null;
 
         try {
-            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE + "Selector");
             resolver =
                 (AccessControllerResolver) selector.select(
                     AccessControllerResolver.DEFAULT_RESOLVER);
@@ -214,7 +240,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                     }
                     selector.release(resolver);
                 }
-                manager.release(selector);
+                this.manager.release(selector);
             }
         }
 
@@ -226,8 +252,8 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
 }

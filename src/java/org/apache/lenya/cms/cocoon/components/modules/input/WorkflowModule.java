@@ -36,8 +36,17 @@ import org.apache.lenya.workflow.WorkflowInstance;
  */
 public class WorkflowModule extends AbstractPageEnvelopeModule {
 
+    /**
+     * <code>STATE</code> The state
+     */
     public static final String STATE = "state";
+    /**
+     * <code>VARIABLE_PREFIX</code> The variable prefix
+     */
     public static final String VARIABLE_PREFIX = "variable.";
+    /**
+     * <code>HISTORY_PATH</code> The history path
+     */
     public static final String HISTORY_PATH = "history-path";
 
     static final String[] PARAMETER_NAMES = { STATE, HISTORY_PATH };

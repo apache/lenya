@@ -29,7 +29,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.lang.StringUtils;
-import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -103,9 +103,13 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             } else {
                 throw new ConfigurationException("The attribute [" + name + "] is not supported!");
             }
-        } catch (ConfigurationException e) {
-            throw e;
-        } catch (Exception e) {
+        } catch (final DocumentException e) {
+            throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
+                    e);
+        } catch (final ServiceException e) {
+            throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
+                    e);
+        } catch (final ConfigurationException e) {
             throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
                     e);
         }
@@ -117,6 +121,9 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
         return value;
     }
 
+    /**
+     * <code>DATE_FORMAT</code> The date format
+     */
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
@@ -124,10 +131,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
      * @param envelope The page envelope.
      * @return A string.
      * @throws ServiceException when something went wrong.
-     * @throws URIParameterizerException when something went wrong.
      */
-    protected String getDocumentType(PageEnvelope envelope) throws ServiceException,
-            URIParameterizerException {
+    protected String getDocumentType(PageEnvelope envelope) throws ServiceException {
         String documentType;
         DocumentTypeResolver resolver = null;
         try {

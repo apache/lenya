@@ -61,7 +61,6 @@ public class XlinkCollection extends CollectionImpl {
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.util.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.xml.NamespaceHelper)
      */

@@ -20,39 +20,49 @@
 package org.apache.lenya.lucene.index;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.lenya.lucene.parser.HTMLParser;
 import org.apache.lenya.lucene.parser.HTMLParserFactory;
+import org.apache.lenya.lucene.parser.ParseException;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 
+/**
+ * The default document creator
+ */
 public class DefaultDocumentCreator extends AbstractDocumentCreator {
 
     /** 
      * Creates a new instance of DefaultDocumentCreator
      */
     public DefaultDocumentCreator() {
+        // do nothing
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param file DOCUMENT ME!
-     * @param htdocsDumpDir DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Returns a document
+     * @param file The file
+     * @param htdocsDumpDir The dump directory
+     * @return The document
+     * @throws IOException if an error occurs
      */
-    public Document getDocument(File file, File htdocsDumpDir) throws Exception {
-        Document document = super.getDocument(file, htdocsDumpDir);
+    public Document getDocument(File file, File htdocsDumpDir) throws IOException {
+        Document document;
+        try {
+            document = super.getDocument(file, htdocsDumpDir);
 
-        HTMLParser parser = HTMLParserFactory.newInstance(file);
-        parser.parse(file);
+            HTMLParser parser = HTMLParserFactory.newInstance(file);
+            parser.parse(file);
 
-        document.add(Field.Text("title", parser.getTitle()));
-        document.add(Field.Text("keywords", parser.getKeywords()));
-        document.add(Field.Text("contents", parser.getReader()));
+            document.add(Field.Text("title", parser.getTitle()));
+            document.add(Field.Text("keywords", parser.getKeywords()));
+            document.add(Field.Text("contents", parser.getReader()));
+        } catch (ParseException e) {
+            throw new IOException(e.toString());
+        } catch (IOException e) {
+            throw new IOException(e.toString());
+        }
 
         return document;
     }

@@ -22,24 +22,24 @@ package org.apache.lenya.net;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * A utility class for InetAddress. Also see http://jodies.de/ipcalc
  */
 public class InetAddressUtil {
 
-    private static final Category log = Category.getInstance(InetAddressUtil.class);
+    private static final Logger log = Logger.getLogger(InetAddressUtil.class);
 
     /**
      * Ctor.
      */
     private InetAddressUtil() {
+        // do nothing
     }
 
     /**
      * Checks if a subnet contains a specific IP address.
-     * 
      * @param network The network address.
      * @param netmask The subnet mask.
      * @param ip The IP address to check.
@@ -107,7 +107,6 @@ public class InetAddressUtil {
      * @param ip The address.
      * @param partNumber The number of the part.
      * @return An integer value.
-     * 
      * @deprecated This was an internal implementation detail of the
      *      method {@link #contains} and should never have been
      *      made public. (And it's inefficient and unnecessary
@@ -125,7 +124,6 @@ public class InetAddressUtil {
      * Check netmask, e.g. 255.255.255.240 is fine, 255.255.240.16 is illegal (needs to be 255.255.240.0)
      * @param netmask The netmask address.
      * @return An integer value. -1 if illegal netmask, otherwise 0, 1, 2, 3
-     * 
      * @deprecated This was an internal implementation detail of the
      *      method {@link #contains} and should never have been
      *      made public. Furthermore it's broken for IPv6.
@@ -151,14 +149,12 @@ public class InetAddressUtil {
                         }
                     }
                     return i;
-                } else {
-                    continue;
                 }
-            } else {
-                // FIXME: This check not really be necessary because java.net.UnknownHostException should be thrown long time before
-                log.error(".checkNetmask(): Illegal Netmask: " + netmask);
-                return -1;
+                continue;
             }
+            // FIXME: This check not really be necessary because java.net.UnknownHostException should be thrown long time before
+            log.error(".checkNetmask(): Illegal Netmask: " + netmask);
+            return -1;
         }
         if (log.isDebugEnabled()) {
             log.debug("All parts equal 255: " + netmask);
@@ -170,8 +166,7 @@ public class InetAddressUtil {
      * Converts a string to an IP addres.
      * @param string The IP address, represented by a string.
      * @return An InetAddress object.
-     * @throws AccessControlException when something went wrong.
-     * 
+     * @throws UnknownHostException
      * @deprecated This was an internal implementation detail of the
      *      method {@link #contains} and should never have been
      *      made public. (And it's unnecessary

@@ -21,23 +21,27 @@ package org.apache.lenya.lucene.index;
 
 import org.w3c.dom.Element;
 
+import java.io.IOException;
+
+/**
+ * The default indexer
+ */
 public class DefaultIndexer extends AbstractIndexer {
 
     /**
      * Creates a new instance of DefaultIndexer 
      */
     public DefaultIndexer() {
+        // do nothing
     }
 
     /**
      * @param indexer Indexer
      * @param configFileName Lucene Configuration File
-     *
      * @return DefaultDocumentCreator
-     *
-     * @throws Exception DOCUMENT ME!
+     * @throws IOException if an error occurs
      */
-    public DocumentCreator createDocumentCreator(Element indexer, String configFileName) throws Exception {
+    public DocumentCreator createDocumentCreator(Element indexer, String configFileName) throws IOException {
         return new DefaultDocumentCreator();
     }
 }

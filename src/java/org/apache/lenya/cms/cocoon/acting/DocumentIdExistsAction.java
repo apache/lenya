@@ -27,8 +27,11 @@ import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -38,6 +41,11 @@ import org.apache.lenya.cms.publication.PublicationFactory;
  * prevent creation of documents with non-unique document-ids
  */
 public class DocumentIdExistsAction extends AbstractAction {
+
+    /**
+     * <code>DOCUMENT_ID_PARAMETER_NAME</code> the name of the parameter to pass in
+     */
+    public static final String DOCUMENT_ID_PARAMETER_NAME = "document-id";
 
     /**
      * Check if there is a doument in the site tree with the given document-id.
@@ -58,11 +66,6 @@ public class DocumentIdExistsAction extends AbstractAction {
      * @exception PageEnvelopeException if the PageEnvelope could not be created.
      * @exception DocumentException if the language information could not be fetched from the
      *                document.
-     */
-
-    public static final String DOCUMENT_ID_PARAMETER_NAME = "document-id";
-
-    /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
      *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
      *      org.apache.avalon.framework.parameters.Parameters)

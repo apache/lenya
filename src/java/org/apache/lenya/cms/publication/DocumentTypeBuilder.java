@@ -20,10 +20,13 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -32,6 +35,7 @@ import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 public final class DocumentTypeBuilder {
     /** Creates a new instance of DocumentTypeBuilder */
     private DocumentTypeBuilder() {
+	    // do nothing
     }
 
     /**
@@ -39,20 +43,37 @@ public final class DocumentTypeBuilder {
      */
     public static final String DOCTYPE_DIRECTORY = "config/doctypes".replace('/', File.separatorChar);
 
-    /*
-     * The default document types configuration file, relative to the publication directory.
+    /**
+     * <code>CONFIG_FILE</code> The default document types configuration file, relative to the publication directory.
      */
     public static final String CONFIG_FILE = "doctypes.xconf".replace('/', File.separatorChar);
+    /**
+     * <code>DOCTYPES_ELEMENT</code> The doctypes element
+     */
     public static final String DOCTYPES_ELEMENT = "doctypes";
+    /**
+     * <code>DOCTYPE_ELEMENT</code> The doctype element
+     */
     public static final String DOCTYPE_ELEMENT = "doc";
+    /**
+     * <code>TYPE_ATTRIBUTE</code> The type attribute
+     */
     public static final String TYPE_ATTRIBUTE = "type";
+    /**
+     * <code>CREATOR_ELEMENT</code> The creator element
+     */
     public static final String CREATOR_ELEMENT = "creator";
+    /**
+     * <code>SRC_ATTRIBUTE</code> The src attribute
+     */
     public static final String SRC_ATTRIBUTE = "src";
+    /**
+     * <code>WORKFLOW_ELEMENT</code> The workflow element
+     */
     public static final String WORKFLOW_ELEMENT = "workflow";
 
     /**
      * Builds a document type for a given name.
-     *
      * @param name A string value.
      * @param publication The publication the document type belongs to.
      * @return A document type object.
@@ -102,7 +123,19 @@ public final class DocumentTypeBuilder {
                 String workflowFileName = workflowConf.getAttribute(SRC_ATTRIBUTE);
                 type.setWorkflowFileName(workflowFileName);
             }
-        } catch (Exception e) {
+        } catch (final ConfigurationException e) {
+            throw new DocumentTypeBuildException(e);
+        } catch (final SAXException e) {
+            throw new DocumentTypeBuildException(e);
+        } catch (final IOException e) {
+            throw new DocumentTypeBuildException(e);
+        } catch (final DocumentTypeBuildException e) {
+            throw new DocumentTypeBuildException(e);
+        } catch (final ClassNotFoundException e) {
+            throw new DocumentTypeBuildException(e);
+        } catch (final InstantiationException e) {
+            throw new DocumentTypeBuildException(e);
+        } catch (final IllegalAccessException e) {
             throw new DocumentTypeBuildException(e);
         }
 

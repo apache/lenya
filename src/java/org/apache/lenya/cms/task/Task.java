@@ -22,16 +22,28 @@ package org.apache.lenya.cms.task;
 import org.apache.avalon.framework.parameters.Parameterizable;
 
 /**
- * A Task is a command that can be executed. <br/
- * > When a Task is executed from a TaskAction or initialized from a TaskJob, the default
+ * A Task is a command that can be executed. <br/>
+ * When a Task is executed from a TaskAction or initialized from a TaskJob, the default
  * parameters are provided. <strong>This is not a contract!</strong>
  */
 public interface Task extends Parameterizable {
     
-    String NAMESPACE = "http://apache.org/cocoon/lenya/task/1.0";
-    String DEFAULT_PREFIX = "task";
-    int SUCCESS = 0;
-    int FAILURE = 1;
+    /**
+     * <code>NAMESPACE</code> The task namespace
+     */
+    public final static String NAMESPACE = "http://apache.org/cocoon/lenya/task/1.0";
+    /**
+     * <code>DEFAULT_PREFIX</code> The task namespace prefix
+     */
+    public final static String DEFAULT_PREFIX = "task";
+    /**
+     * <code>SUCCESS</code> Success
+     */
+    public final static int SUCCESS = 0;
+    /**
+     * <code>FAILURE</code> Failure
+     */
+    public final static int FAILURE = 1;
 
     /**
      * The path of the servlet
@@ -65,23 +77,20 @@ public interface Task extends Parameterizable {
 
     /**
      * Execute the task. All parameters must have been set with parameterize().
-     * 
      * @param servletContextPath the servlet-context
-     * 
      * @throws ExecutionException if the execution fails
      */
     void execute(String servletContextPath) throws ExecutionException;
 
     /**
      * Set the label that is used to identify the task.
-     * 
      * @param label the label
      */
     void setLabel(String label);
     
     /**
-     * Returns the result of the task ({@link #SUCCESS}, {@link FAILURE}).
-     * @return
+     * Returns the result of the task ({@link #SUCCESS}, {@link #FAILURE}).
+     * @return #SUCCESS for success, #FAILURE for failure
      */
     int getResult();
 }

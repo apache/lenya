@@ -28,11 +28,11 @@ public class PageEnvelopeException extends Exception {
      * Creates a new PageEnvelopeException.
      */
     public PageEnvelopeException() {
+	    // do nothing
     }
 
     /**
      * Creates a new PageEnvelopeException.
-     * 
      * @param message the exception message
      */
     public PageEnvelopeException(String message) {
@@ -41,7 +41,6 @@ public class PageEnvelopeException extends Exception {
 
     /**
      * Creates a new PageEnvelopeException.
-     * 
      * @param message the exception message
      * @param cause the cause of the exception
      */
@@ -51,7 +50,6 @@ public class PageEnvelopeException extends Exception {
 
     /**
      * Creates a new PageEnvelopeException.
-     * 
      * @param cause  the cause of the exception
      */
     public PageEnvelopeException(Throwable cause) {

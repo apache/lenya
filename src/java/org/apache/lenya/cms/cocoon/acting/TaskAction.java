@@ -38,17 +38,7 @@ import org.apache.lenya.cms.task.TaskWrapper;
 public class TaskAction extends AbstractAction {
     
     /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param sourceResolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param str DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws java.lang.Exception DOCUMENT ME!
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public java.util.Map act(
         Redirector redirector,

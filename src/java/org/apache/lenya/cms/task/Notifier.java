@@ -25,27 +25,42 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
+/**
+ * Task Notification
+ */
 public class Notifier extends ParameterWrapper {
 
-    private static Category log = Category.getInstance(Notifier.class);
+    private static Logger log = Logger.getLogger(Notifier.class);
 
+    /**
+     * <code>PREFIX</code> Notification namespace prefix
+     */
     public static final String PREFIX = "notification";
+    /**
+     * <code>TARGET</code> Notification target
+     */
     public static final String TARGET = "notification";
+    /**
+     * <code>PARAMETER_TO</code> To Parameter
+     */
     public static final String PARAMETER_TO = "tolist";
+    /**
+     * <code>PARAMETER_FROM</code> From Parameter
+     */
     public static final String PARAMETER_FROM = "from";
 
     private TaskManager taskManager;
 
     /**
      * Ctor.
-     * @param taskManager The task manager.
+     * @param _taskManager The task manager.
      * @param parameters The task wrapper parameters.
      */
-    public Notifier(TaskManager taskManager, Map parameters) {
+    public Notifier(TaskManager _taskManager, Map parameters) {
         super(parameters);
-        this.taskManager = taskManager;
+        this.taskManager = _taskManager;
     }
 
     /**
@@ -63,7 +78,7 @@ public class Notifier extends ParameterWrapper {
         else {
             log.info("Sending notification");
             
-            Task task = taskManager.getTask(TaskManager.ANT_TASK);
+            Task task = this.taskManager.getTask(TaskManager.ANT_TASK);
 
             Parameters params = new Parameters();
 
@@ -87,9 +102,14 @@ public class Notifier extends ParameterWrapper {
             propertiesMap.putAll(mailMap.getPrefixedMap());
 
             Map prefixMap = propertiesMap.getPrefixedMap();
-            for (Iterator i = prefixMap.keySet().iterator(); i.hasNext();) {
-                String key = (String) i.next();
-                String value = (String) prefixMap.get(key);
+			String		key;
+			String		value;
+			Map.Entry	entry;
+
+			for (Iterator iter = prefixMap.entrySet().iterator(); iter.hasNext();) {
+				entry 	= (Map.Entry)iter.next();
+				key 	= (String)entry.getKey();
+				value 	= (String)entry.getValue();
                 String trimmedValue = value.replace((char) 160, ' ');
                 trimmedValue = trimmedValue.trim();
                 if (log.isDebugEnabled()) {
@@ -120,7 +140,7 @@ public class Notifier extends ParameterWrapper {
      * @return A task manager.
      */
     protected TaskManager getTaskManager() {
-        return taskManager;
+        return this.taskManager;
     }
 
     /**
