@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.8 2003/04/03 00:58:35 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.9 2003/04/26 23:16:05 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>OSCOM</lenya:name>
@@ -28,6 +28,16 @@ This publication implements the CMS matrix used at <a href="http://www.oscom.org
   <li>File: src/webapp/lenya/xslt/search/search-and-results.xsl
     <ol>
       <li><code>variable uriName</code></li>
+    </ol>
+  </li>
+  <li>File: src/java/org/apache/lenya/net/WGet.java
+    <ol>
+      <li><code>/bin/sed</code></li>
+    </ol>
+  </li>
+  <li>File: src/webapp/lenya/pubs/oscom/config/publishing/publisher.xconf
+    <ol>
+      <li><code>/var/www/apache/html</code></li>
     </ol>
   </li>
 <!--
