@@ -303,7 +303,11 @@
             <map:act type="task">
               <map:parameter name="task-id" value="create-language"/>
               <map:parameter name="properties.create.doctype" value="{page-envelope:document-type}"/>
-              <map:redirect-to uri="{request:requestURI}"/>
+              <map:generate type="serverpages" src="{fallback:content/util/redirect-language.xsp}">
+                <map:parameter name="language" value="{request-param:properties.create.new.language}"/>
+              </map:generate>
+              <map:transform src="{fallback:xslt/util/redirect-language.xsl}"/>
+              <map:serialize/>
             </map:act>
           </map:match>
 

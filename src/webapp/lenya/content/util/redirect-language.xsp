@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+This is a task preview screen that is used to create session attributes etc.
+for a TaskAction execution.
+-->
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:session="http://apache.org/cocoon/session/1.0"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+       >
+
+<xsp:structure>
+  <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.DocumentBuilder</xsp:include>
+</xsp:structure>
+
+<redirect>
+  <xsp:logic>
+    try {
+      Document document = (Document)
+          <input:get-attribute module="page-envelope" type="object" name="document"/>;
+      DocumentBuilder builder = document.getPublication().getDocumentBuilder();
+        
+      String language = parameters.getParameter("language");
+      Document languageDocument = builder.buildLanguageVersion(document, language);
+      String url = languageDocument.getDocumentURL();
+      String filename = url.substring(url.lastIndexOf("/") + 1);
+        
+      <xsp:attribute name="url"><xsp:expr>filename</xsp:expr></xsp:attribute>
+    }
+    catch (Exception e) {
+        throw new ProcessingException(e);
+    }
+  </xsp:logic>
+
+</redirect>
+
+</xsp:page>
