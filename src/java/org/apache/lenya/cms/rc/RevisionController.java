@@ -1,5 +1,5 @@
 /*
-$Id: RevisionController.java,v 1.21 2003/08/26 15:51:12 edith Exp $
+$Id: RevisionController.java,v 1.22 2003/10/22 14:57:43 edith Exp $
 <License>
 
  ============================================================================
@@ -67,10 +67,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Date;
+import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
+ * Controller for the reserved check-in, check-out, the backup versions and the rollback 
  *
  * @author Michael Wechner (http://cocoon.apache.org/lenya)
  * @version 1.5.1
@@ -93,6 +94,7 @@ public class RevisionController {
 
     /**
      * Creates a new RevisionController object.
+     * 
      */
     public RevisionController() {
         Configuration conf = new Configuration();
@@ -104,9 +106,9 @@ public class RevisionController {
     /**
      * Creates a new RevisionController object.
      *
-     * @param rcmlDirectory DOCUMENT ME!
-     * @param backupDirectory DOCUMENT ME!
-     * @param rootDirectory DOCUMENT ME!
+     * @param rcmlDirectory The directory for the RCML files
+     * @param backupDirectory The directory for the backup versions
+     * @param rootDirectory The publication directory
      */
     public RevisionController(String rcmlDirectory, String backupDirectory, String rootDirectory) {
         this.rcmlDir = rcmlDirectory;
@@ -117,7 +119,7 @@ public class RevisionController {
     /**
      * Creates a new RevisionController object.
      *
-     * @param rootDir DOCUMENT ME!
+     * @param rootDir The publication directory
      */
     public RevisionController(String rootDir) {
         this();
@@ -127,7 +129,7 @@ public class RevisionController {
     /**
      * Shows Configuration
      *
-     * @return DOCUMENT ME!
+     * @return String The rcml directory, the backup directory, the publication directory
      */
     public String toString() {
         return "rcmlDir=" + rcmlDir + " , rcbakDir=" + backupDir + " , rootDir=" + rootDir;
@@ -136,13 +138,13 @@ public class RevisionController {
     /**
      * Get the RCML File for the file source
      *
-     * @param source The filename of a document.
+     * @param source The path of the file from the publication.
      *
      * @return RCML The corresponding RCML file.
      *
-     * @throws FileNotFoundException DOCUMENT ME!
-     * @throws IOException DOCUMENT ME!
-     * @throws Exception DOCUMENT ME!
+     * @throws FileNotFoundException if an error occurs
+     * @throws IOException if an error occurs
+     * @throws Exception if an error occurs
      */
     public RCML getRCML(String source) throws FileNotFoundException, IOException, Exception {
 /*        File file = new File(rootDir + source);
@@ -159,15 +161,13 @@ public class RevisionController {
      *
      * @param source The filename of the file to check out
      * @param identity The identity of the user
-     *
      * @return File File to check out
-     *
-     * @exception FileNotFoundException if the file couldn't be found
-     * @exception FileReservedCheckOutException if the document is already checked out by another
+	 * @throws FileReservedCheckOutException if the document is already checked out by another
      *            user
-     * @throws IOException DOCUMENT ME!
-     * @exception Exception if another problem occurs
-     */
+     * @throws FileNotFoundException if an error occurs
+	 * @throws IOException if an error occurs
+	 * @throws Exception if an error occurs
+	 */
     public File reservedCheckOut(String source, String identity)
         throws FileNotFoundException, FileReservedCheckOutException, IOException, Exception {
         File file = new File(rootDir + source);
@@ -204,7 +204,7 @@ public class RevisionController {
      * @param identity The identity of the user
      * @param backup if true, a backup will be created, else no backup will be made.
      *
-     * @return DOCUMENT ME!
+     * @return long The time.
      *
      * @exception FileReservedCheckInException if the document couldn't be checked in (for instance
      *            because it is already checked out by someone other ...)
@@ -290,6 +290,7 @@ public class RevisionController {
         }
 
         rcml.checkOutIn(RCML.ci, identity, time);
+        rcml.pruneEntries(backupDir);
         rcml.write();
 
         // FIXME: If we reuse the observer pattern as implemented in
@@ -301,12 +302,12 @@ public class RevisionController {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get the absolute path of a backup version  
      *
-     * @param time DOCUMENT ME!
-     * @param filename DOCUMENT ME!
+     * @param time The time of the backup 
+     * @param filename The path of the file from the {publication}
      *
-     * @return DOCUMENT ME!
+     * @return String The absolute path of the backup version
      */
     public String getBackupFilename(long time, String filename) {
         File backup = new File(backupDir , filename + ".bak." + time);
@@ -315,14 +316,14 @@ public class RevisionController {
     }
 
     /**
-     * Rolls back to the given point in time
+     * Rolls back to the given point in time.  
      *
      * @param destination File which will be rolled back
      * @param identity The identity of the user
      * @param backupFlag If true, a backup of the current version will be made before the rollback
      * @param time The time point of the desired version
      *
-     * @return DOCUMENT ME!
+     * @return long The time of the version to roll back to.
      *
      * @exception FileReservedCheckInException if the current version couldn't be checked in again
      * @exception FileReservedCheckOutException if the current version couldn't be checked out
@@ -411,4 +412,5 @@ public class RevisionController {
         rcml.deleteFirstCheckIn();
         out.close();
     }
+
 }
