@@ -15,19 +15,34 @@
   <menus>
     <menu name="File">
       <block>
-        <item>Edit</item>
+        <item>Edit&#160;Headlines</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/headlines.html&amp;docids=/frontpage/headlines.xml</xsp:attribute>Publish&#160;Headlines</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/webperls.html&amp;docids=/frontpage/webperls.xml</xsp:attribute>Publish&#160;Webperls</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/dossier.html&amp;docids=/frontpage/dossier.xml</xsp:attribute>Publish&#160;Dossiers</item>
         <item>Schedule&#160;Headlines</item>
+      </block>
+      <block>
+        <item>--------------------</item>
+      </block>
+      <block>
+        <item>Edit&#160;Webperls</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/webperls.html&amp;docids=/frontpage/webperls.xml</xsp:attribute>Publish&#160;Webperls</item>
         <item>Schedule&#160;Webperls</item>
-<!--
-        <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
--->
+      </block>
+      <block>
+        <item>--------------------</item>
+      </block>
+      <block>
+        <item>Edit&#160;Dossiers</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=/frontpage/dossier.html&amp;docids=/frontpage/dossier.xml</xsp:attribute>Publish&#160;Dossiers</item>
+        <item>Schedule&#160;Dossiers</item>
+      </block>
+      <block>
+        <item>--------------------</item>
+      </block>
+      <block>
         <item href="index.xml">View&#160;XML</item>
       </block>
       <block>
-        <item>-----------</item>
+        <item>--------------------</item>
       </block>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
