@@ -118,6 +118,10 @@
         <map:generate type="serverpages" src="docs/publication/menus/overview.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
+      <map:match pattern="authoring/menus/editor-overview.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/editor-overview.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
       <map:match pattern="authoring/menus/board.xml">
         <map:generate type="serverpages" src="docs/publication/menus/board.xsp"/>
         <map:serialize type="xml"/>
@@ -263,7 +267,7 @@
    <map:pipeline>
       <map:match pattern="authoring/editor-overview.xml">
         <map:aggregate element="wyona">
-          <map:part src="cocoon:/authoring/menus/overview.xml"/>
+          <map:part src="cocoon:/authoring/menus/editor-overview.xml"/>
           <map:part src="cocoon:/authoring/editor-matrix/index.xml" element="cmsbody"/>
         </map:aggregate>
         <map:serialize type="xml"/>
@@ -330,10 +334,19 @@
         <map:serialize type="html"/>
       </map:match>
 
-      <!-- Edit Matrix with Xopus2 -->
+      <!-- Edit Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/matrix/*.html">
         <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
         <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_xopus2.xsl">
+          <map:parameter name="projectid" value="{1}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Edit Editor Matrix Project with Xopus2 -->
+      <map:match pattern="authoring/xopus2/editor-matrix/*.html">
+        <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
+        <map:transform src="stylesheets/publication/Page/Matrix/Authoring/main_editor_xopus2.xsl">
           <map:parameter name="projectid" value="{1}"/>
         </map:transform>
         <map:serialize type="html"/>

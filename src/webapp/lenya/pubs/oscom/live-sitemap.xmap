@@ -170,13 +170,20 @@
         </map:read>
       </map:match>
 
-      <!-- Overview -->
+      <!-- CMS/F Overview -->
       <map:match pattern="live/overview.xml">
         <map:generate type="directory" src="docs/publication/live/matrix/"/>
         <map:transform src="stylesheets/publication/Page/Matrix/Live/xinclude.xsl"/>
-<!--
-        <map:transform type="xinclude" label="xml"/>
--->
+        <map:transform type="xlink" label="xml">
+          <map:parameter name="href" value="docs/publication/live/overview_dummy.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- Editor Overview -->
+      <map:match pattern="live/editor-overview.xml">
+        <map:generate type="directory" src="docs/publication/live/editor-matrix/"/>
+        <map:transform src="stylesheets/publication/Page/Matrix/Live/xinclude_editor.xsl"/>
         <map:transform type="xlink" label="xml">
           <map:parameter name="href" value="docs/publication/live/overview_dummy.xml"/>
         </map:transform>
@@ -263,6 +270,19 @@
    </map:pipeline>
    <!-- /CMS/F Overview -->
 
+   <!-- Editor Overview -->
+   <map:pipeline>
+      <map:match pattern="editor-matrix/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+      <map:match pattern="editor-matrix/index.html">
+        <map:generate src="cocoon:/live/editor-overview.xml" label="xml"/>
+        <map:transform src="stylesheets/publication/Page/Overview/Live/main_editor.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+   </map:pipeline>
+   <!-- /Editor Overview -->
+
    <!-- CMS/F Projects -->
    <map:pipeline>
       <map:match pattern="matrix/*.html">
@@ -271,6 +291,24 @@
         </map:generate>
         <map:transform type="xinclude"/>
         <map:transform src="stylesheets/publication/Page/Matrix/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:transform src="../../stylesheets/cms/Page/Exception/not_published_yet.xsl"/>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+   </map:pipeline>
+   <!-- /CMS/F Projects -->
+
+   <!-- Editor Projects -->
+   <map:pipeline>
+      <map:match pattern="editor-matrix/*.html">
+        <map:generate type="serverpages" src="docs/publication/live/editor-matrix-envelope.xsp">
+          <map:parameter name="projectid" value="{1}"/>
+        </map:generate>
+        <map:transform type="xinclude"/>
+        <map:transform src="stylesheets/publication/Page/Matrix/Live/main_editor.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
