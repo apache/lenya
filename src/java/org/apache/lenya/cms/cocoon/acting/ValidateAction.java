@@ -129,7 +129,6 @@ public class ValidateAction extends AbstractConfigurableAction {
  * what is this whole file creation business here?
  */
             File valFile = new File(file.getAbsolutePath() + ".validate");
-            getLogger().error("valFile: " + file.getAbsolutePath() + ".validate");
             if (!valFile.getParentFile().isDirectory()){
                 valFile.getParentFile().mkdir();
             }
