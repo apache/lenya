@@ -18,15 +18,4 @@
 <xmap remove="/sitemap/resources" xpath="/sitemap" insert-after="/sitemap/views">
 <!-- =========================== Resources ================================= -->
 
-  <map:resources>
-
-    <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="cocoon://lenya-screen.xsl"/>
-      <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:serialize/>
-    </map:resource>
-  
- </map:resources></xmap>
+</xmap>
