@@ -65,9 +65,6 @@
   
   <table class="lenya-table">
     <xsl:apply-templates mode="nodes"/>
-<!--
-    <xsl:apply-templates select="node"/>
--->
   </table>
 
   </div>
