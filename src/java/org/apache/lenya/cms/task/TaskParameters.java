@@ -1,5 +1,5 @@
 /*
-$Id: TaskParameters.java,v 1.2 2003/08/27 14:36:07 egli Exp $
+$Id: TaskParameters.java,v 1.3 2003/08/29 11:37:36 andreas Exp $
 <License>
 
  ============================================================================
@@ -124,9 +124,15 @@ public class TaskParameters extends ParameterWrapper {
      */
     public void setPublication(Publication publication) {
         put(Task.PARAMETER_PUBLICATION_ID, publication.getId());
-        put(
-            Task.PARAMETER_SERVLET_CONTEXT,
-            publication.getServletContext().getAbsolutePath());
+        put(Task.PARAMETER_SERVLET_CONTEXT, publication.getServletContext().getAbsolutePath());
+    }
+
+    /**
+     * Sets the servlet context path.
+     * @param servletContextPath A string.
+     */
+    public void setServletContextPath(String servletContextPath) {
+        put(Task.PARAMETER_SERVLET_CONTEXT, servletContextPath);
     }
 
 }
