@@ -15,11 +15,12 @@
  *
  */
 
-/* $Id: FlowHelper.java,v 1.8 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id: FlowHelper.java,v 1.9 2004/08/22 21:51:14 roku Exp $  */
 
 package org.apache.lenya.cms.cocoon.flow;
 
 import java.util.Enumeration;
+import java.util.Map;
 
 import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -31,6 +32,7 @@ import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -118,6 +120,25 @@ public class FlowHelper {
         return cocoon.getRequest();
     }
 
+    /**
+     * Returns the Cocoon Object Model
+     * @param cocoon The Flow Object Model of Cocoon
+     * @return The object model
+     */
+    public Map getObjectModel(FOM_Cocoon cocoon) {
+        return cocoon.getObjectModel();
+    }
+    
+    /**
+     * Returns a DocumentHelper instance.  
+     * @param cocoon The Flow Object Model of Cocoon 
+     * @return The document helper
+     * @see DocumentHelper
+     */
+    public DocumentHelper getDocumentHelper(FOM_Cocoon cocoon) {
+        return new DocumentHelper(cocoon.getObjectModel());
+    }
+    
     public static final String SEPARATOR = ":";
 
     /**
