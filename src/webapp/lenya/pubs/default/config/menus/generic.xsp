@@ -71,19 +71,23 @@
     <menus>
       <menu i18n:attr="name" name="File" label="File">
 	<block>
+          <menu name="New">
+            <block>
 	  
 	  <xsp:logic>
 	    {
         if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
-          <item><i18n:text>New XHTML Document</i18n:text></item>
-          <item><i18n:text>New Links Document</i18n:text></item>
+          <item><i18n:text>XHTML Document</i18n:text></item>
+          <item><i18n:text>Links Document</i18n:text></item>
         }
         else {
-          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml"><i18n:text>New XHTML Document</i18n:text></item>
-          <item uc:usecase="create" uc:step="showscreen" href="?doctype=links"><i18n:text>New Links Document</i18n:text></item>
+          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml"><i18n:text>XHTML Document</i18n:text></item>
+          <item uc:usecase="create" uc:step="showscreen" href="?doctype=links"><i18n:text>Links Document</i18n:text></item>
         }
 	    }
 	  </xsp:logic>
+            </block>
+          </menu>
 	</block>
 	<block>
 	  <xsp:logic>
@@ -125,10 +129,20 @@
       <menu i18n:attr="name" name="Edit" label="Search">
         
         <block info="false">
+          <menu name="Edit Body">
+            <block>
+              <item wf:event="edit" uc:usecase="kupu" uc:step="open" href="?"><i18n:text>With Kupu</i18n:text></item>
+              <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?"><i18n:text>With BXE</i18n:text></item>
+              <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
+              <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>With one Form</i18n:text></item>
+            </block>
+          </menu>
+          <!--
           <item wf:event="edit" uc:usecase="kupu" uc:step="open" href="?"><i18n:text>Edit with Kupu</i18n:text></item>
           <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?"><i18n:text>Edit with BXE</i18n:text></item>
           <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>Edit with Forms</i18n:text></item>
           <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>Edit with one Form</i18n:text></item>
+          -->
           <!--<item wf:event="edit" uc:usecase="uploaddocument" uc:step="showscreen" href="?"><i18n:text>Upload Document</i18n:text></item>-->
         </block>
         <block info="false">
