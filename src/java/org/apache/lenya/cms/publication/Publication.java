@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.21 2003/08/07 15:50:27 egli Exp $
+$Id: Publication.java,v 1.22 2003/08/08 08:17:57 edith Exp $
 <License>
 
  ============================================================================
@@ -293,7 +293,10 @@ public class Publication {
     public DefaultSiteTree getSiteTree(String area) throws SiteTreeException {
 
         DefaultSiteTree sitetree = null;
-
+		
+		if (siteTrees == null) {
+			siteTrees = new HashMap();	 
+		}
         if (siteTrees.containsKey(area)) {
             sitetree = (DefaultSiteTree)siteTrees.get(area);
         } else {
