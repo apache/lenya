@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: publication-tests.xml,v 1.1 2003/10/31 16:44:09 michi Exp $ -->
+
+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
+<lenya:tests>
+  <lenya:test>Check <a href="authoring/index.html">Frontpage</a></lenya:test>
+  <lenya:test>Check CMS Matrix</lenya:test>
+  <lenya:test>Create new CMS Project</lenya:test>
+  <lenya:test>Check new CMS Project</lenya:test>
+  <lenya:test>Publish new CMS Project</lenya:test>
+  <lenya:test>Check published new CMS Project</lenya:test>
+  <lenya:test>Create new CMF Project</lenya:test>
+  <lenya:test>Check new CMF Project</lenya:test>
+  <lenya:test>Publish new CMF Project</lenya:test>
+  <lenya:test>Check published new CMF Project</lenya:test>
+  <lenya:test>Check <a href="osearch-live/lucene">Search</a></lenya:test>
+  <lenya:test>Check Mailing Lists Page</lenya:test>
+</lenya:tests>
+</lenya:publication>
