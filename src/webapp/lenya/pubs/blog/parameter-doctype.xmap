@@ -15,13 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: parameter-doctype.xmap,v 1.2 2004/03/13 12:31:32 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
     <map:actions>
-      <map:action logger="sitemap.action.sourcetype" name="sourcetype" src="org.apache.forrest.components.sourcetype.SourceTypeAction">
+      <map:action logger="sitemap.action.sourcetype" name="sourcetype" src="org.apache.cocoon.acting.sourcetype.SourceTypeAction">
         <sourcetype name="entry">
           <document-element local-name="entry"/>
         </sourcetype>
