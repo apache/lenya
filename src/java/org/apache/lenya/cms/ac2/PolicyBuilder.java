@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.8 2003/08/28 10:07:02 andreas Exp $
+$Id: PolicyBuilder.java,v 1.9 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -107,7 +107,7 @@ public class PolicyBuilder implements InputStreamBuilder {
     
     /**
      * Builds a policy from an input stream.
-     * @param stream The input stream to read the policy from..
+     * @param stream The input stream to read the policy from.
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */

@@ -1,5 +1,5 @@
 /*
-$Id: AccreditableManager.java,v 1.3 2003/07/23 13:21:22 gregor Exp $
+$Id: AccreditableManager.java,v 1.4 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,11 +56,11 @@ $Id: AccreditableManager.java,v 1.3 2003/07/23 13:21:22 gregor Exp $
 package org.apache.lenya.cms.ac2;
 
 import org.apache.avalon.framework.component.Component;
-import org.apache.avalon.framework.parameters.Parameterizable;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.GroupManager;
 import org.apache.lenya.cms.ac.IPRangeManager;
+import org.apache.lenya.cms.ac.ItemManagerListener;
 import org.apache.lenya.cms.ac.RoleManager;
 import org.apache.lenya.cms.ac.UserManager;
 
@@ -71,7 +71,7 @@ import org.apache.lenya.cms.ac.UserManager;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface AccreditableManager extends Component, Parameterizable {
+public interface AccreditableManager extends Component {
     
     String ROLE = AccreditableManager.class.getName();
     
@@ -103,4 +103,16 @@ public interface AccreditableManager extends Component, Parameterizable {
      */
     IPRangeManager getIPRangeManager() throws AccessControlException;
 
+    /**
+     * Attaches an item manager listener to this accreditable manager.
+     * @param listener An item manager listener.
+     */
+    void addItemManagerListener(ItemManagerListener listener);
+    
+    /**
+     * Removes an item manager listener from this accreditable manager.
+     * @param listener An item manager listener.
+     */
+    void removeItemManagerListener(ItemManagerListener listener);
+    
 }

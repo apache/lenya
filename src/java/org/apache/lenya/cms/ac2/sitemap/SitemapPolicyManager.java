@@ -1,5 +1,5 @@
 /*
-$Id: SitemapPolicyManager.java,v 1.7 2003/08/13 13:11:45 andreas Exp $
+$Id: SitemapPolicyManager.java,v 1.8 2003/10/31 15:16:46 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac2.Accreditable;
 import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyBuilder;
@@ -135,6 +136,14 @@ public class SitemapPolicyManager
      */
     public ServiceManager getManager() {
         return manager;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.PolicyManager#accreditableRemoved(org.apache.lenya.cms.ac2.AccreditableManager, org.apache.lenya.cms.ac2.Accreditable)
+     */
+    public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
+        // TODO Auto-generated method stub
+        
     }
 
 }

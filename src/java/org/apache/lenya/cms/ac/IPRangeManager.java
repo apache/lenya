@@ -74,7 +74,7 @@ public class IPRangeManager extends ItemManager {
      *
     * @param range IP range that is to be added
     */
-    public void add(IPRange range) {
+    public void add(IPRange range) throws AccessControlException {
         super.add(range);
     }
 
@@ -83,7 +83,7 @@ public class IPRangeManager extends ItemManager {
      *
     * @param range IP range that is to be removed
     */
-    public void remove(IPRange range) {
+    public void remove(IPRange range) throws AccessControlException {
         super.remove(range);
     }
 

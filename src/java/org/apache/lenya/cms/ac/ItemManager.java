@@ -1,5 +1,5 @@
 /*
-$Id: ItemManager.java,v 1.11 2003/07/23 13:21:16 gregor Exp $
+$Id: ItemManager.java,v 1.12 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,8 +64,10 @@ import org.apache.log4j.Category;
 import java.io.File;
 import java.io.FileFilter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 
@@ -179,9 +181,10 @@ public abstract class ItemManager {
      *
      * @param item to be added
      */
-    public void add(Item item) {
+    public void add(Item item) throws AccessControlException {
         assert item != null;
         items.put(item.getId(), item);
+        notifyAdded(item);
     }
 
     /**
@@ -190,8 +193,9 @@ public abstract class ItemManager {
      *
      * @param item to be removed
      */
-    public void remove(Item item) {
+    public void remove(Item item) throws AccessControlException {
         items.remove(item.getId());
+        notifyRemoved(item);
     }
     
     /**
@@ -231,5 +235,54 @@ public abstract class ItemManager {
      * @return A string.
      */
     protected abstract String getSuffix();
+    
+    private List itemManagerListeners = new ArrayList();
+    
+    /**
+     * Attaches an item manager listener to this item manager.
+     * @param listener An item manager listener.
+     */
+    public void addItemManagerListener(ItemManagerListener listener) {
+        log.debug("Adding listener: [" + listener + "]");
+        if (!itemManagerListeners.contains(listener)) {
+            itemManagerListeners.add(listener);
+        }
+    }
+    
+    /**
+     * Removes an item manager listener from this item manager.
+     * @param listener An item manager listener.
+     */
+    public void removeItemManagerListener(ItemManagerListener listener) {
+        log.debug("Removing listener: [" + listener + "]");
+       itemManagerListeners.remove(listener);
+    }
+    
+    /**
+     * Notifies the listeners that an item was added.
+     * @param item The item that was added.
+     */
+    protected void notifyAdded(Item item) throws AccessControlException {
+        log.debug("Item was added: [" + item + "]");
+        List clone = new ArrayList(itemManagerListeners);
+        for (Iterator i = clone.iterator(); i.hasNext(); ) {
+            ItemManagerListener listener = (ItemManagerListener) i.next();
+            listener.itemAdded(item);
+        }
+    }
+
+    /**
+     * Notifies the listeners that an item was removed.
+     * @param item The item that was removed.
+     */
+    protected void notifyRemoved(Item item) throws AccessControlException {
+        log.debug("Item was removed: [" + item + "]");
+        List clone = new ArrayList(itemManagerListeners);
+        for (Iterator i = clone.iterator(); i.hasNext(); ) {
+            ItemManagerListener listener = (ItemManagerListener) i.next();
+            log.debug("Notifying listener: [" + listener + "]");
+            listener.itemRemoved(item);
+        }
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
-$Id: UserManager.java,v 1.14 2003/08/28 14:06:32 egli Exp $
+$Id: UserManager.java,v 1.15 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -119,7 +119,7 @@ public class UserManager extends ItemManager {
      *
     * @param user User that is to be added
     */
-    public void add(User user) {
+    public void add(User user) throws AccessControlException {
         super.add(user);
     }
 
@@ -128,7 +128,7 @@ public class UserManager extends ItemManager {
      *
     * @param user User that is to be removed
     */
-    public void remove(User user) {
+    public void remove(User user) throws AccessControlException {
         super.remove(user);
     }
 

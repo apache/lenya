@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultPolicy.java,v 1.7 2003/10/26 18:23:41 andreas Exp $ <License>
+ * $Id: DefaultPolicy.java,v 1.8 2003/10/31 15:16:45 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -8,21 +8,19 @@
  * Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modifica- tion, are permitted
- * provided that the following conditions are met:
- *  1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- *  2. Redistributions in binary form must reproduce the above copyright notice, this list of
+ * provided that the following conditions are met: 1. Redistributions of source code must retain
+ * the above copyright notice, this list of conditions and the following disclaimer. 2.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of
  * conditions and the following disclaimer in the documentation and/or other materials provided
- * with the distribution.
- *  3. The end-user documentation included with the redistribution, if any, must include the
- * following acknowledgment: "This product includes software developed by the Apache Software
- * Foundation (http://www.apache.org/)." Alternately, this acknowledgment may appear in the
- * software itself, if and wherever such third-party acknowledgments normally appear.
- *  4. The names "Apache Lenya" and "Apache Software Foundation" must not be used to endorse or
- * promote products derived from this software without prior written permission. For written
- * permission, please contact apache@apache.org.
- *  5. Products derived from this software may not be called "Apache", nor may "Apache" appear in
- * their name, without prior written permission of the Apache Software Foundation.
+ * with the distribution. 3. The end-user documentation included with the redistribution, if any,
+ * must include the following acknowledgment: "This product includes software developed by the
+ * Apache Software Foundation (http://www.apache.org/)." Alternately, this acknowledgment may
+ * appear in the software itself, if and wherever such third-party acknowledgments normally appear. 4.
+ * The names "Apache Lenya" and "Apache Software Foundation" must not be used to endorse or promote
+ * products derived from this software without prior written permission. For written permission,
+ * please contact apache@apache.org. 5. Products derived from this software may not be called
+ * "Apache", nor may "Apache" appear in their name, without prior written permission of the Apache
+ * Software Foundation.
  * 
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -59,164 +57,167 @@ import java.util.Set;
  */
 public class DefaultPolicy implements Policy {
 
-	private Map accreditableToCredential = new HashMap();
+    private Map accreditableToCredential = new HashMap();
 
-	/**
+    /**
 	 * Adds a credential to this policy.
 	 * 
-	 * @param credential
-	 *            A credential.
+	 * @param credential A credential.
 	 */
-	public void addCredential(Credential credential) {
-		assert credential != null;
-		assert !accreditableToCredential.containsKey(credential.getAccreditable());
-		accreditableToCredential.put(credential.getAccreditable(), credential);
-	}
+    public void addCredential(Credential credential) {
+        assert credential != null;
+        assert !accreditableToCredential.containsKey(credential.getAccreditable());
+        accreditableToCredential.put(credential.getAccreditable(), credential);
+    }
 
-	/**
+    /**
 	 * Adds a role to this policy for a certain accreditable and a certain role. If a credenital
 	 * exists for the accreditable, the role is added to this credential. Otherwise, a new
 	 * credential is created.
 	 * 
-	 * @param accreditable
-	 *            An accreditable.
-	 * @param role
-	 *            A role.
+	 * @param accreditable An accreditable.
+	 * @param role A role.
 	 */
-	public void addRole(Accreditable accreditable, Role role) {
-		assert accreditable != null;
-		assert role != null;
+    public void addRole(Accreditable accreditable, Role role) {
+        assert accreditable != null;
+        assert role != null;
 
-		Credential credential = getCredential(accreditable);
-		if (credential == null) {
-			credential = new Credential(accreditable);
-			addCredential(credential);
-		}
-		if (!credential.contains(role)) {
-			credential.addRole(role);
-		}
-	}
+        Credential credential = getCredential(accreditable);
+        if (credential == null) {
+            credential = new Credential(accreditable);
+            addCredential(credential);
+        }
+        if (!credential.contains(role)) {
+            credential.addRole(role);
+        }
+    }
 
-	/**
+    /**
 	 * Removes a role from this policy for a certain accreditable and a certain role.
 	 * 
-	 * @param accreditable
-	 *            An accreditable.
-	 * @param role
-	 *            A role.
-	 * @throws AccessControlException
-	 *             if the accreditable-role pair is not contained.
+	 * @param accreditable An accreditable.
+	 * @param role A role.
+	 * @throws AccessControlException if the accreditable-role pair is not contained.
 	 */
-	public void removeRole(Accreditable accreditable, Role role) throws AccessControlException {
-		assert accreditable != null;
-		assert role != null;
-		Credential credential = getCredential(accreditable);
-		if (credential == null) {
-			throw new AccessControlException(
-				"No credential for accreditable ["
-					+ accreditable
-					+ "] ["
-					+ accreditableToCredential.keySet().size()
-					+ "]");
-		}
-		if (!credential.contains(role)) {
-			throw new AccessControlException(
-				"Credential for accreditable ["
-					+ accreditable
-					+ "] does not contain role ["
-					+ role
-					+ "]");
-		}
-		credential.removeRole(role);
+    public void removeRole(Accreditable accreditable, Role role) throws AccessControlException {
+        assert accreditable != null;
+        assert role != null;
+        Credential credential = getCredential(accreditable);
+        if (credential == null) {
+            throw new AccessControlException(
+                "No credential for accreditable ["
+                    + accreditable
+                    + "] ["
+                    + accreditableToCredential.keySet().size()
+                    + "]");
+        }
+        if (!credential.contains(role)) {
+            throw new AccessControlException(
+                "Credential for accreditable ["
+                    + accreditable
+                    + "] does not contain role ["
+                    + role
+                    + "]");
+        }
+        credential.removeRole(role);
 
-		if (credential.isEmpty()) {
-			removeCredential(credential);
-		}
-	}
+        if (credential.isEmpty()) {
+            removeCredential(credential);
+        }
+    }
 
-	/**
+    /**
 	 * Returns the credentials of this policy.
 	 * 
 	 * @return An array of credentials.
 	 */
-	public Credential[] getCredentials() {
-		Collection values = accreditableToCredential.values();
-		return (Credential[]) values.toArray(new Credential[values.size()]);
-	}
+    public Credential[] getCredentials() {
+        Collection values = accreditableToCredential.values();
+        return (Credential[]) values.toArray(new Credential[values.size()]);
+    }
 
-	/**
+    /**
 	 * @see org.apache.lenya.cms.ac2.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
 	 */
-	public Role[] getRoles(Identity identity) {
-		Accreditable[] accreditables = identity.getAccreditables();
-		Credential[] credentials = getCredentials();
+    public Role[] getRoles(Identity identity) {
+        Accreditable[] accreditables = identity.getAccreditables();
+        Credential[] credentials = getCredentials();
 
-		Set roles = new HashSet();
+        Set roles = new HashSet();
 
-		for (int credIndex = 0; credIndex < credentials.length; credIndex++) {
-			for (int accrIndex = 0; accrIndex < accreditables.length; accrIndex++) {
-				Credential credential = credentials[credIndex];
-				Accreditable accreditable = accreditables[accrIndex];
+        for (int credIndex = 0; credIndex < credentials.length; credIndex++) {
+            for (int accrIndex = 0; accrIndex < accreditables.length; accrIndex++) {
+                Credential credential = credentials[credIndex];
+                Accreditable accreditable = accreditables[accrIndex];
 
-				if (credential.getAccreditable().equals(accreditable)) {
-					roles.addAll(Arrays.asList(credential.getRoles()));
-				}
-			}
-		}
+                if (credential.getAccreditable().equals(accreditable)) {
+                    roles.addAll(Arrays.asList(credential.getRoles()));
+                }
+            }
+        }
 
-		return (Role[]) roles.toArray(new Role[roles.size()]);
-	}
+        return (Role[]) roles.toArray(new Role[roles.size()]);
+    }
 
-	/**
+    /**
 	 * Returns the credential for a certain accreditable.
 	 * 
-	 * @param accreditable
-	 *            An accreditable.
+	 * @param accreditable An accreditable.
 	 * @return A credential.
 	 */
-	protected Credential getCredential(Accreditable accreditable) {
-		return (Credential) accreditableToCredential.get(accreditable);
-	}
+    protected Credential getCredential(Accreditable accreditable) {
+        return (Credential) accreditableToCredential.get(accreditable);
+    }
 
-	private boolean isSSL;
+    private boolean isSSL;
 
-	/**
+    /**
 	 * @see org.apache.lenya.cms.ac2.Policy#isSSLProtected()
 	 */
-	public boolean isSSLProtected() throws AccessControlException {
-		return isSSL;
-	}
+    public boolean isSSLProtected() throws AccessControlException {
+        return isSSL;
+    }
 
-	/**
+    /**
 	 * Sets if this policy requires SSL protection.
 	 * 
-	 * @param ssl
-	 *            A boolean value.
+	 * @param ssl A boolean value.
 	 */
-	public void setSSL(boolean ssl) {
-		this.isSSL = ssl;
-	}
+    public void setSSL(boolean ssl) {
+        this.isSSL = ssl;
+    }
 
-	/**
+    /**
 	 * @see org.apache.lenya.cms.ac2.Policy#isEmpty()
 	 */
-	public boolean isEmpty() throws AccessControlException {
-		return getCredentials().length == 0;
-	}
+    public boolean isEmpty() throws AccessControlException {
+        return getCredentials().length == 0;
+    }
 
-	/**
+    /**
 	 * Removes a credential.
 	 * 
-	 * @param credential
-	 *            The credential to remove.
-	 * @throws AccessControlException
-	 *             If the credential does not exist.
+	 * @param credential The credential to remove.
+	 * @throws AccessControlException If the credential does not exist.
 	 */
-	protected void removeCredential(Credential credential) throws AccessControlException {
-		if (!accreditableToCredential.containsValue(credential)) {
-			throw new AccessControlException("Credential [" + credential + "] does not exist!");
-		}
-		accreditableToCredential.remove(credential.getAccreditable());
-	}
+    protected void removeCredential(Credential credential) throws AccessControlException {
+        if (!accreditableToCredential.containsValue(credential)) {
+            throw new AccessControlException("Credential [" + credential + "] does not exist!");
+        }
+        accreditableToCredential.remove(credential.getAccreditable());
+    }
+
+    /**
+	 * Removes all roles for a certain accreditable.
+	 * 
+	 * @param accreditable The accreditable to remove all roles for.
+	 * @throws AccessControlException If no credential exists for this accreditable.
+	 */
+    public void removeRoles(Accreditable accreditable) throws AccessControlException {
+        if (accreditableToCredential.containsKey(accreditable)) {
+            Credential credential = getCredential(accreditable);
+            removeCredential(credential);
+        }
+    }
 
 }

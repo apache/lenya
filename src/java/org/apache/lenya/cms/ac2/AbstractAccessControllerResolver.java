@@ -1,5 +1,5 @@
 /*
-$Id: AbstractAccessControllerResolver.java,v 1.3 2003/08/12 15:16:25 andreas Exp $
+$Id: AbstractAccessControllerResolver.java,v 1.4 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -144,9 +144,11 @@ public abstract class AbstractAccessControllerResolver
      * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
      */
     public void release(AccessController controller) {
+        /*
         if (controller != null) {
             getManager().release(controller);
         }
+        */
     }
 
     private ServiceManager manager;

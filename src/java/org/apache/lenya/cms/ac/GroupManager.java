@@ -1,5 +1,5 @@
 /*
-$Id: GroupManager.java,v 1.10 2003/08/28 14:06:32 egli Exp $
+$Id: GroupManager.java,v 1.11 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -113,7 +113,7 @@ public final class GroupManager extends ItemManager {
      *
      * @param group the group to be added
      */
-    public void add(Group group) {
+    public void add(Group group) throws AccessControlException {
         super.add(group);
     }
 
@@ -122,7 +122,7 @@ public final class GroupManager extends ItemManager {
      *
      * @param group the group to be removed
      */
-    public void remove(Group group) {
+    public void remove(Group group) throws AccessControlException {
         super.remove(group);
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Id: PolicyManager.java,v 1.9 2003/10/31 15:16:45 andreas Exp $ <License>
+ * $Id: ItemManagerListener.java,v 1.1 2003/10/31 15:16:45 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -40,38 +40,29 @@
  * Lenya includes software developed by the Apache Software Foundation, W3C, DOM4J Project,
  * BitfluxEditor, Xopus, and WebSHPINX. </License>
  */
-package org.apache.lenya.cms.ac2;
-
-import org.apache.avalon.framework.component.Component;
-import org.apache.lenya.cms.ac.AccessControlException;
+package org.apache.lenya.cms.ac;
 
 /**
- * @author andreas
+ * This class allows listening to objects that manages items.
  * 
- * To change the template for this generated type comment go to Window>Preferences>Java>Code
- * Generation>Code and Comments
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public interface PolicyManager extends Component {
-
-    String ROLE = PolicyManager.class.getName();
+public interface ItemManagerListener {
 
     /**
-	 * Returns the policy for a given page.
+	 * Called when an accreditable was added.
 	 * 
-	 * @param controller The access controller.
-	 * @param url The url inside the web application.
-	 * @return The policy.
-	 * @throws AccessControlException when something went wrong.
+	 * @param item The item that was added.
+	 * @throws AccessControlException when an error occurs.
 	 */
-    Policy getPolicy(AccreditableManager controller, String url) throws AccessControlException;
+    void itemAdded(Item item) throws AccessControlException;
 
     /**
-	 * Called when an accreditable was removed. Used to clean up the policies.
+	 * Called when an accreditable was removed.
 	 * 
-     * @param manager The accreditable manager the accreditable belonged to.
-	 * @param accreditable The accreditable that was removed.
-     * @throws AccessControlException when something went wrong.
+	 * @param item The item that was removed.
+	 * @throws AccessControlException when an error occurs.
 	 */
-    void accreditableRemoved(AccreditableManager manager, Accreditable accreditable) throws AccessControlException;
+    void itemRemoved(Item item) throws AccessControlException;
 
 }

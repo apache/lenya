@@ -1,5 +1,5 @@
 /*
-$Id: SourceCacheImpl.java,v 1.1 2003/08/13 13:10:11 andreas Exp $
+$Id: SourceCacheImpl.java,v 1.2 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -187,10 +187,7 @@ public class SourceCacheImpl
                     }
                 }
 
-                stream = getInputStream(sourceUri);
-                if (stream != null) {
-                    value = builder.build(stream);
-                }
+                value = buildObject(sourceUri, builder);
 
                 // store the response
                 if (key != null) {
@@ -216,26 +213,27 @@ public class SourceCacheImpl
     /**
      * Returns the input stream to read a source from.
      * @param sourceUri The URI of the source.
-     * @return An input stream.
+     * @return An object.
      * @throws MalformedURLException when an error occurs.
      * @throws IOException when an error occurs.
      * @throws SourceNotFoundException when an error occurs.
      */
-    protected InputStream getInputStream(String sourceUri)
-        throws MalformedURLException, IOException, SourceNotFoundException {
-        InputStream stream = null;
+    protected Object buildObject(String sourceUri, InputStreamBuilder builder)
+        throws MalformedURLException, IOException, SourceNotFoundException, BuildException {
+        Object value = null;
         Source source = null;
         try {
             source = getResolver().resolveURI(sourceUri);
             if (source.exists()) {
-                stream = source.getInputStream();
+                InputStream stream = source.getInputStream();
+                value = builder.build(stream);
             }
         } finally {
             if (source != null) {
                 getResolver().release(source);
             }
         }
-        return stream;
+        return value;
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
-$Id: RoleManager.java,v 1.9 2003/10/31 15:16:45 andreas Exp $
+$Id: RemovedAccreditablePolicyBuilder.java,v 1.1 2003/10/31 15:16:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,92 +53,66 @@ $Id: RoleManager.java,v 1.9 2003/10/31 15:16:45 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.ac;
+package org.apache.lenya.cms.ac2;
 
-import java.io.File;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
+import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.Group;
+import org.apache.lenya.cms.ac.IPRange;
+import org.apache.lenya.cms.ac.User;
 
 /**
- * @author egli
- *
- *
+ * A PolicyBuilder which can be used after an accreditable was removed.
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public final class RoleManager extends ItemManager {
-    protected static final String SUFFIX = ".rml";
-    private static Map instances = new HashMap();
+public class RemovedAccreditablePolicyBuilder extends PolicyBuilder {
 
     /**
-     * Return the <code>RoleManager</code> for this configuration directory.
-     * The <code>RoleManager</code> is a singleton.
-     *
-     * @param configurationDirectory the directory for which the RoleManager is requested.
-     * @throws AccessControlException if the <code>RoleManager<code> could not be instantiated
+     * Ctor.
+     * @param accreditableManager The accreditable manager.
      */
-    protected RoleManager(File configurationDirectory)
-        throws AccessControlException {
-        super(configurationDirectory);
+    public RemovedAccreditablePolicyBuilder(AccreditableManager accreditableManager) {
+        super(accreditableManager);
+    }
+
+    private Accreditable removedAccreditable;
+
+    /**
+     * Sets the removed accreditable.
+     * 
+     * @param accreditable An accreditable.
+     */
+    public void setRemovedAccreditable(Accreditable accreditable) {
+        this.removedAccreditable = accreditable;
     }
 
     /**
-     * Returns the role manager for this configuration directory.
-     * @param configurationDirectory The configuration directory.
-     * @return A role manager.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.lenya.cms.ac2.PolicyBuilder#getAccreditable(java.lang.String, java.lang.String)
      */
-    public static RoleManager instance(File configurationDirectory)
+    protected Accreditable getAccreditable(String elementName, String id)
         throws AccessControlException {
-        if (!instances.containsKey(configurationDirectory)) {
-            instances.put(configurationDirectory, new RoleManager(configurationDirectory));
+
+        Accreditable accreditable;
+
+        if (removedAccreditable instanceof User
+            && elementName.equals(USER_ELEMENT)
+            && ((User) removedAccreditable).getId().equals(id)) {
+            accreditable = removedAccreditable;
+        } else if (
+            removedAccreditable instanceof Group
+                && elementName.equals(GROUP_ELEMENT)
+                && ((Group) removedAccreditable).getId().equals(id)) {
+            accreditable = removedAccreditable;
+        } else if (
+            removedAccreditable instanceof IPRange
+                && elementName.equals(IP_RANGE_ELEMENT)
+                && ((IPRange) removedAccreditable).getId().equals(id)) {
+            accreditable = removedAccreditable;
+        } else {
+
+            accreditable = super.getAccreditable(elementName, id);
         }
-
-        return (RoleManager) instances.get(configurationDirectory);
+        return accreditable;
     }
 
-    /**
-     * Get the role for the given ID.
-     *
-     * @param roleId The name of the role requested.
-     * @return a <code>Role</code> or null if no role with the given name found
-     */
-    public Role getRole(String roleId) {
-        return (Role) getItem(roleId);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
-     */
-    protected String getSuffix() {
-        return SUFFIX;
-    }
-
-    /**
-     * Get all roles
-     *
-     * @return an <code>Iterator</code>
-     */
-    public Iterator getRoles() {
-        return super.getItems();
-    }
-
-    /**
-     * Add a role
-     *
-     * @param role Role to add
-     */
-    public void add(Role role) throws AccessControlException {
-        super.add(role);
-    }
-
-    /**
-     * Remove a role
-     *
-     * @param role Role to remove
-     */
-    public void remove(Role role) throws AccessControlException {
-        super.remove(role);
-    }
 }
