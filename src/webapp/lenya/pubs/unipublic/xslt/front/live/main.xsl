@@ -3,6 +3,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:include href="../../head.xsl"/>
+<xsl:include href="../../HTMLhead.xsl"/>
 
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
@@ -12,8 +13,8 @@
 
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html;charset=iso-8859-1"/>
 <title>unipublic - Das Online-Magazin der Universit&#228;t Z&#252;rich</title>
+
 <script type="text/javascript" language="JavaScript1.2">
 <xsl:comment>
 function aboWindow() {
@@ -22,21 +23,10 @@ function aboWindow() {
 </xsl:comment>        
 </script>
 
-<link rel="stylesheet" type="text/css" href="{$unipublic}/unipublic.mac.css"/>
-<script type="text/javascript" language="JavaScript">
-<xsl:comment>
+<xsl:call-template name="styles"/>
 
-<!--antiframe-->
-if (top.frames.length &#62; 0) {top.location.href = self.location;}
- <!--CSS Triage-->
-if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
-   seite = '{$unipublic}/unipublic.win.css';
-   document.write('&#60;link rel="stylesheet" type="text/css" href="'+seite+'">');
-}
-</xsl:comment>
-</script>
+<xsl:call-template name="jscript"/>
 
-<meta http-equiv="content-type" content="text/html;charset=iso-8859-1"/>
 <style type="text/css">
 <xsl:comment>
 
@@ -48,48 +38,12 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 </xsl:comment>
 </style>
 
-<meta http-equiv="content-type" content="text/html;charset=iso-8859-1"/>
 </head>	
 <body text="#333333" link="#333399" alink="#993300" vlink="#666666" bgcolor="#F5F5F5" background="{$img-unipub}/bg.gif">
 
 <center>
 
 <!--START kopf.html-->
-<!--
-<center>
-<form action="http://www.unizh.ch/cgi-bin/unisearch" method="post">
-<input type="hidden" value="www.unipublic.unizh.ch" name="url"/>
- <a name="topofpage">&#160;</a>
-
-<table width="585" border="0" cellspacing="0" cellpadding="0" bgcolor="#666699">
-<tr>
-<td bgcolor="#999966" valign="middle" align="left">
-<img height="20" width="3" src="{$img-unipub}/1.gif" alt= " "/>
-<a href="http://www.unizh.ch/index.html">
-<img src="{$img-uni}/oliv_home.gif" alt="Home" border="0" height="17" width="31"/></a></td>
-<td bgcolor="#999966" width="1">&#160;</td>
-<td bgcolor="#999966" valign="middle" align="right">
-<a href="http://www.unipublic.unizh.ch/ssi_unipublic/impressum.html">
-<img src="{$img-uni}/oliv_kontakt.gif" alt="Kontakt" border="0" height="17" width="41" align="middle"/></a>
-<img src="{$img-uni}/oliv_strich.gif" alt="|" height="17" width="7" align="middle"/>
-<img src="{$img-uni}/oliv_suchen.gif" alt="Suchen" height="17" width="37" align="middle"/>
- <input type="text" name="keywords" size="18"/> <input src="{$img-uni}/oliv_go.gif" type="image" border="0" name="search" align="middle"/>
-
-</td>
-<td bgcolor="#F5F5F5" width="57">&#160;</td>
-</tr>
-<tr height="39">
-<td align="right" height="39">&#160;</td>
-<td align="right" height="39" valign="top" colspan="2">
-<a href="http://www.unizh.ch/index.html">
-<img height="29" width="235" src="{$img-uni}/unilogoklein.gif" alt="Universit&#228;t Z&#252;rich" border="0"/></a></td>
-<td width="57" height="39">&#160;</td>
-</tr>
-</table>
-
-</form>
-</center>
--->
 <xsl:call-template name="Searchbox"/>
 <!--ENDE kopf.html-->
 
@@ -285,70 +239,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 </tr>
 </table>
 </xsl:for-each>
-<!--
-<table border="0" cellpadding="0" cellspacing="0" width="316">
-<tr>
-<td colspan="3"><img src="{$img-unipub}/t_umwelt.gif" width="316" height="13" border="0" alt="Umwelt &#38; Technik"/></td>
-</tr>
 
-<tr>
-<td bgcolor="white" colspan="3">&#160;</td>
-</tr>
-
-<tr>
-<td width="4" bgcolor="white">&#160;</td>
-<td bgcolor="white" class="tsr-text">
-<p><a href="../magazin/umwelt/2002/0385/"><img src="{$unipublic}/magazin/umwelt/2002/0385/bild-headline.jpg" width="80" height="60" border="0" alt="Kuppel" align="right"/></a><span class="tsr-title">Spaziergang in die Vergangenheit</span><br />
- Der Botanische Garten ist sicher einer der sch&#246;nsten Orte in
-Z&#252;rich. Aber auch mit seiner Geschichte hat dieser in seiner
-Anlage ganz besondere Park einiges zu bieten. Am vergangenen
-Samstag trafen ndash; 25 Jahre nach der Er&#246;ffnung des Gartens
-im Z&#252;rcher Quartier Riesbach ndash; die Architekten von
-damals zusammen zu einer Veranstaltung &#252;ber Konzept und Anlage
-des Parks. (26.3.2002)</p>
-</td>
-<td width="4" bgcolor="white">&#160;</td>
-</tr>
-
-<tr>
-<td bgcolor="white" colspan="3">&#160;</td>
-</tr>
-</table>
-
-<table border="0" cellpadding="0" cellspacing="0" width="316">
-<tr>
-<td colspan="3">
-<table border="0" cellpadding="0" cellspacing="0" width="316">
-<tr>
-<td colspan="3"><img src="{$img-unipub}/t_uninews.gif" width="316" height="13" border="0" alt="uni-news"/></td>
-</tr>
-
-<tr>
-<td bgcolor="white" colspan="3">&#160;</td>
-</tr>
-
-<tr>
-<td width="4" bgcolor="white">&#160;</td>
-<td bgcolor="white" class="tsr-text">
-<p><a href="../campus/uni-news/2002/0511/"><img src="{$unipublic}/campus/uni-news/2002/0511/bild-headline.jpg" width="80" height="60" border="0" alt="Charly Schneiter" align="right"/></a><span class="tsr-title">Tod st&#228;rker als Vitalit&#228;t</span><br />
- Charly Schneiter, Gr&#252;nder und langj&#228;hriger Direktor des
-ASVZ starb vergangenen Samstag im Alter von 91 Jahren. Der Initiant
-und Promotor zahlreicher Sportanl&#228;sse und -anlagen, wie z.B.
-des Uni - Poly Rudermatches oder der Sportanlage Fluntern und der
-Dreifachsporthalle auf der Politerrasse blieb dem Sport bis zuletzt
-verbunden. Ein Nachruf. (26.3.2002)</p>
-</td>
-<td width="4" bgcolor="white">&#160;</td>
-</tr>
-
-<tr>
-<td bgcolor="white" colspan="3">&#160;</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
--->
 </td>
 <td width="135" valign="top">
 <table border="0" cellpadding="0" cellspacing="0" width="126">
