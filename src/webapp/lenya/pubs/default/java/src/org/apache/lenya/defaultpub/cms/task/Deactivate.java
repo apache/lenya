@@ -159,7 +159,7 @@ public class Deactivate extends PublicationTask {
         throws ParameterException, DocumentBuildException, ExecutionException {
         String id = getParameters().getParameter(PARAMETER_DOCUMENT_ID);
         String language = getParameters().getParameter(PARAMETER_DOCUMENT_LANGUAGE);
-        Document document = getIdentityMap().get(Publication.LIVE_AREA, id, language);
+        Document document = getIdentityMap().getFactory().get(Publication.LIVE_AREA, id, language);
         return document;
     }
 

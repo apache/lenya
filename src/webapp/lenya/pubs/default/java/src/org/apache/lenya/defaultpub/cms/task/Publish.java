@@ -26,7 +26,6 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.task.PublicationTask;
@@ -100,7 +99,7 @@ public class Publish extends PublicationTask {
         }
 
         Document liveDocument = getPublication().getAreaVersion(document, Publication.LIVE_AREA);
-        Document liveParent = DocumentHelper.getParentDocument(liveDocument);
+        Document liveParent = document.getIdentityMap().getFactory().getParent(liveDocument);
         if (liveParent != null) {
             SiteTree liveTree = getSiteTree(Publication.LIVE_AREA);
             SiteTreeNode liveParentNode = liveTree.getNode(liveParent.getId());
@@ -146,7 +145,7 @@ public class Publish extends PublicationTask {
         throws ParameterException, DocumentBuildException, ExecutionException {
         String id = getParameters().getParameter(PARAMETER_DOCUMENT_ID);
         String language = getParameters().getParameter(PARAMETER_DOCUMENT_LANGUAGE);
-        Document document = getIdentityMap().get(Publication.AUTHORING_AREA, id, language);
+        Document document = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, id, language);
         return document;
     }
 
