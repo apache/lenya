@@ -19,6 +19,9 @@
 
   <map:resources>
     <map:resource name="style-cms-page">
+      <map:transform src="xslt/admin/page.xsl">
+        <map:parameter name="root" value="{request:contextPath}/{page-envelope:publication-id}"/>
+      </map:transform>
       <map:transform src="xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
@@ -110,12 +113,17 @@
     </map:pipeline>
 
    <map:pipeline>
-   <map:match pattern="status.html">
-    <map:generate src="status" type="status"/>
-    <map:transform src="xslt/admin/status2html.xslt">
-      <map:parameter name="contextPath" value="{request:contextPath}"/>
-    </map:transform>
-    <map:serialize type="html"/>
+     <map:match pattern="index.html">
+       <map:generate src="content/admin/index.xml"/>
+       <map:call resource="style-cms-page"/>
+     </map:match>
+
+     <map:match pattern="status.html">
+       <map:generate src="status" type="status"/>
+       <map:transform src="xslt/admin/status2html.xslt">
+         <map:parameter name="contextPath" value="{request:contextPath}"/>
+       </map:transform>
+     <map:serialize type="html"/>
 <!--
     <map:serialize type="xml"/>
 -->
