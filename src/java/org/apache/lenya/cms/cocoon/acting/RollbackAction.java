@@ -110,7 +110,7 @@ public class RollbackAction extends RevisionControllerAction {
         long newtime = 0;
 
         try {
-            newtime = rc.rollback(filename, username, true, new Long(rollbackTime).longValue());
+            newtime = getRc().rollback(getFilename(), getUsername(), true, new Long(rollbackTime).longValue());
         } catch (FileNotFoundException e) {
             getLogger().error("Unable to roll back!" + e);
 

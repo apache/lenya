@@ -1,5 +1,5 @@
 /*
-$Id: ReservedCheckoutAction.java,v 1.12 2003/07/14 14:24:20 egli Exp $
+$Id: ReservedCheckoutAction.java,v 1.13 2003/07/17 09:13:21 egli Exp $
 <License>
 
  ============================================================================
@@ -94,31 +94,31 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
 
         //check out
         try {
-            getLogger().debug(".act(): Filename: " + filename);
-            getLogger().debug(".act(): Username: " + username);
+            getLogger().debug(".act(): Filename: " + getFilename());
+            getLogger().debug(".act(): Username: " + getUsername());
 
-            if (filename == null) {
+            if (getFilename() == null) {
                 throw new Exception("Filename is null");
             }
 
-            if (username == null) {
+            if (getUsername() == null) {
                 throw new Exception("Username is null");
             }
 
-            rc.reservedCheckOut(filename, username);
+            getRc().reservedCheckOut(getFilename(), getUsername());
         } catch (FileReservedCheckOutException e) {
             actionMap.put("exception", "fileReservedCheckOutException");
-            actionMap.put("filename", filename);
+            actionMap.put("filename", getFilename());
             actionMap.put("user", e.getCheckOutUsername());
             actionMap.put("date", e.getCheckOutDate());
-            getLogger().warn("Document " + filename + " already checked-out by " + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
+            getLogger().warn("Document " + getFilename() + " already checked-out by " + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
 
             return actionMap;
         } catch (Exception e) {
             actionMap.put("exception", "genericException");
-            actionMap.put("filename", filename);
+            actionMap.put("filename", getFilename());
             actionMap.put("message", "" + e);
-            getLogger().error(".act(): The document " + filename + " couldn't be checked out: ", e);
+            getLogger().error(".act(): The document " + getFilename() + " couldn't be checked out: ", e);
 
             return actionMap;
         }

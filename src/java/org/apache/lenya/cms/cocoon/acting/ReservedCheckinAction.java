@@ -1,5 +1,5 @@
 /*
-$Id: ReservedCheckinAction.java,v 1.11 2003/07/14 14:24:20 egli Exp $
+$Id: ReservedCheckinAction.java,v 1.12 2003/07/17 09:13:21 egli Exp $
 <License>
 
  ============================================================================
@@ -94,10 +94,10 @@ public class ReservedCheckinAction extends RevisionControllerAction {
 
         //check in 
         try {
-            rc.reservedCheckIn(filename, username, true);
+            getRc().reservedCheckIn(getFilename(), getUsername(), true);
         } catch (FileReservedCheckInException e) {
             actionMap.put("exception", "fileReservedCheckInException");
-            actionMap.put("filename", filename);
+            actionMap.put("filename", getFilename());
             actionMap.put("checkType", e.getTypeString());
             actionMap.put("user", e.getUsername());
             actionMap.put("date", e.getDate());
@@ -106,8 +106,8 @@ public class ReservedCheckinAction extends RevisionControllerAction {
             return actionMap;
         } catch (Exception e) {
             actionMap.put("exception", "exception");
-            actionMap.put("filename", filename);
-            getLogger().warn("The document " + filename + " couldn't be checked in");
+            actionMap.put("filename", getFilename());
+            getLogger().warn("The document " + getFilename() + " couldn't be checked in");
 
             return actionMap;
         }

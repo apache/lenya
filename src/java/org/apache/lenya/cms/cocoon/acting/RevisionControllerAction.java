@@ -84,11 +84,11 @@ import java.util.Map;
  * @version 2003.1.5
  */
 public class RevisionControllerAction extends AbstractAction {
-    String rcmlDirectory = null;
-    String backupDirectory = null;
-    RevisionController rc = null;
-    String username = null;
-    String filename = null;
+    private String rcmlDirectory = null;
+    private String backupDirectory = null;
+    private RevisionController rc = null;
+    private String username = null;
+    private String filename = null;
 
     /**
      * DOCUMENT ME!
@@ -166,4 +166,32 @@ public class RevisionControllerAction extends AbstractAction {
 
         return null;
     }
+    
+    /**
+     * Get the filename.
+     * 
+     * @return the filename
+     */
+    protected String getFilename() {
+        return filename;
+    }
+
+    /**
+     * Get the revision controller.
+     * 
+     * @return the revision controller
+     */
+    protected RevisionController getRc() {
+        return rc;
+    }
+
+    /**
+     * Get the user name.
+     * 
+     * @return the user name
+     */
+    protected String getUsername() {
+        return username;
+    }
+
 }
