@@ -360,7 +360,7 @@ function user_delete_user() {
 		}
 			
 		if (cocoon.request.get("submit")) {
-			resolve2();
+			resolve();
 			try {
 				var userManager = getAccreditableManager().getUserManager();
 				userManager.remove(user);
