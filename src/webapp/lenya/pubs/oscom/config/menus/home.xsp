@@ -16,7 +16,7 @@
     <menu name="File">
       <block>
         <item>Edit</item>
-        <item>Publish</item>
+        <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
         <item href="index.xml">View&#160;XML</item>
       </block>
       <block>
