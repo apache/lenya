@@ -41,6 +41,10 @@
         <map:when test="">
           <map:serialize/>
         </map:when>
+        <!-- FIXME workaround for http://issues.apache.org/bugzilla/show_bug.cgi?id=32336 -->
+        <map:when test="404">
+          <map:serialize status-code="404"/>
+        </map:when>
         <map:otherwise>
           <map:serialize status-code="{statusCode}"/>
         </map:otherwise>
