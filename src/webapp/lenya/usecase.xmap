@@ -336,7 +336,7 @@
             </map:transform>
             <map:transform type="write-source"/>
             <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
-            <map:transform src="pubs/{1}/xslt/editor/{request-param:doctype}.xsl">
+            <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
               <map:parameter name="docid" value="{page-envelope:document-path}"/>
               <map:parameter name="doctype" value="{request-param:doctype}"/>
             </map:transform>
@@ -360,7 +360,7 @@
               <map:transform type="write-source"/>
               <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
 
-              <map:transform src="pubs/{../1}/xslt/editor/{request-param:doctype}.xsl">
+              <map:transform src="pubs/{../1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="doctype" value="{request-param:doctype}"/>
                 <map:parameter name="message" value="{message}"/>
