@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xhtml.xsl,v 1.25 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -200,16 +200,18 @@
   <xsl:template match="menu:menu" mode="menu">
     <div id="menu{@label}" class="menuOutline">
       <div class="menuBg" style="">
-      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]" mode="submenu"/>
       </div>
     </div>
   </xsl:template>
   
   
   <!-- match blocks with not area='false' -->
-  <xsl:template match="menu:block">
+  <xsl:template match="menu:block" mode="submenu">
     <xsl:apply-templates select="menu:title"/>
-    <xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+
+    <!-- * is menu:item and menu:menu -->
+    <xsl:apply-templates select="*[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]" mode="submenu"/>
 		
     <xsl:if test="position() != last()">
       <div class="lenya-menubar-separator">
@@ -218,13 +220,17 @@
     </xsl:if>
   </xsl:template>
   
+  <xsl:template match="menu:menu" mode="submenu">
+    <span class="mI"><strong><xsl:value-of select="@name"/></strong></span>
+    <xsl:apply-templates mode="submenu"/>
+  </xsl:template>
   
   <xsl:template match="menu:title">
     <span class="mI"><strong><xsl:apply-templates/></strong></span>
   </xsl:template>
   	
   <!-- match items with not area='false' -->
-  <xsl:template match="menu:item">
+  <xsl:template match="menu:item" mode="submenu">
 		<xsl:choose>
 			<xsl:when test="@href">
 				<a class="mI">
