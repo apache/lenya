@@ -9,8 +9,7 @@ JAVA=`grep java.run $DIRNAME/search.properties | grep -v "#" | sed -e 's/java.ru
 echo "INFO: JAVA = $JAVA"
 WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
-#symlink the xpdf directory to the version you have
-XPDF=$HOME/build/xpdf-2.03-linux/pdftotext
+XPDF=`grep xpdf.bin $DIRNAME/search.properties | grep -v "#" | sed -e 's/xpdf.bin=//'`
 
 CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.6.1.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar:$LIB_DIR/xml-commons-resolver-1.1.jar:$LIB_DIR/websphinx.jar
 
@@ -45,8 +44,10 @@ case "$1" in
         LUCENE_CONF=$2
 
         echo "INFO: lucene.xconf = $LUCENE_CONF"
+	echo "INFO: Show configuration:"
         $JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexConfiguration $LUCENE_CONF
         echo ""
+	echo "INFO: Create index:"
         $JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF
 
         ###$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
