@@ -1,5 +1,5 @@
 /*
-$Id: DeleteNodeTask.java,v 1.1 2003/07/22 13:56:19 edith Exp $
+$Id: DeleteNodeTask.java,v 1.2 2003/08/12 10:06:41 egli Exp $
 <License>
 
  ============================================================================
@@ -60,15 +60,14 @@ import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 
 /**
  * Ant task to delete a node of a tree.
  * @author edith
  */
-public class DeleteNodeTask extends Task {
-    private String absolutetreepath;
+public class DeleteNodeTask extends PublicationTask {
+    private String area;
     private String documentid;
 
     /**
@@ -79,19 +78,21 @@ public class DeleteNodeTask extends Task {
     }
 
     /**
-     * @return absolutetreepath The absolute path of the tree.
+     * Get the area.
+     * 
+     * @return the area.
      */
-    protected String getAbsolutetreepath() {
-        return absolutetreepath;
+    public String getArea() {
+        return area;
     }
 
     /**
-     * Set the value of the absolute path of the tree
+     * Set the area.
      * 
-     * @param string The absolute path of the tree.
+     * @param area the area
      */
-    public void setAbsolutetreepath(String string) {
-        absolutetreepath = string;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     /**
@@ -115,16 +116,16 @@ public class DeleteNodeTask extends Task {
      * Delete a node of a tree.
      * 
      * @param documentid The id of the document corresponding to the node to delete.
-     * @param absolutetreepath The absolute path of the tree
+     * @param area the areaof the tree
      * 
      * @throws SiteTreeException if an error occurs
      */
-    public void deleteNode(String documentid, String absolutetreepath)
+    public void deleteNode(String documentid, String area)
         throws SiteTreeException {
 		DefaultSiteTree tree = null;
 
 	  	try {
-			tree = new DefaultSiteTree(absolutetreepath);
+			tree = getPublication().getSiteTree(area);
 			SiteTreeNode node = tree.removeNode(documentid);
 			if (node == null) {
 				throw new SiteTreeException("Node " + node + " couldn't be removed");
@@ -140,8 +141,8 @@ public class DeleteNodeTask extends Task {
     public void execute() throws BuildException {
         try {
             log("document-id corresponding to the node: " + getDocumentid());
-            log("Absolute Tree Path: " + getAbsolutetreepath());
-			deleteNode(getDocumentid(), getAbsolutetreepath());
+            log("area: " + getArea());
+			deleteNode(getDocumentid(), getArea());
         } catch (Exception e) {
             throw new BuildException(e);
         }
