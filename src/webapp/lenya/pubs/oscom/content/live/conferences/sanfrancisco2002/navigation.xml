@@ -4,13 +4,13 @@
 <leaf name="Home" href="index.html"/>
 <branch name="Conferences">
   <leaf name="Zurich" href="http://www.oscom.org/conferences/zurich2002/"/>
-  <branch name="Berkeley" href="conferences/sanfrancisco2002/index.html">
-    <leaf name="Program" href="conferences/sanfrancisco2002/program.html"/>
-    <leaf name="Registration&#160;&#38;&#160;Fees" href="conferences/sanfrancisco2002/registration_fees.html"/>
+  <branch name="Berkeley" href="conferences/berkeley2002/index.html">
+    <leaf name="Program" href="conferences/berkeley2002/program.html"/>
+    <leaf name="Registration&#160;&#38;&#160;Fees" href="conferences/berkeley2002/registration_fees.html"/>
     <leaf name="Local&#160;Information"/>
-    <leaf name="CfP" href="conferences/sanfrancisco2002/cfp.html"/>
-    <leaf name="Press Release" href="conferences/sanfrancisco2002/press-release.html"/>
-    <leaf name="Contact/OC" href="conferences/sanfrancisco2002/contact.html"/>
+    <leaf name="CfP" href="conferences/berkeley2002/cfp.html"/>
+    <leaf name="Press Release" href="conferences/berkeley2002/press-release.html"/>
+    <leaf name="Contact/OC" href="conferences/berkeley2002/contact.html"/>
   </branch>
   <leaf name="Tokyo"/>
 </branch>

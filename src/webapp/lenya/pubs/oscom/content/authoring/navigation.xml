@@ -4,24 +4,16 @@
 <leaf name="Home" href="index.html"/>
 <branch name="Conferences">
   <leaf name="Zurich" href="http://www.oscom.org/conferences/zurich2002/"/>
-<!--
-  <branch name="San Francisco" href="conferences/sanfrancisco2002/">
--->
-  <branch name="Berkeley" href="conferences/sanfrancisco2002/index.html">
-<!--
-    <leaf name="Program"/>
-    <leaf name="Registration&#160;&#38;&#160;Fees"/>
-    <leaf name="Local&#160;Information"/>
-    <leaf name="CfP" href="conferences/sanfrancisco2002/cfp.html"/>
-    <leaf name="Contact/OC"/>
--->
-  </branch>
+  <branch name="Berkeley" href="conferences/sanfrancisco2002/index.html"/>
   <leaf name="Tokyo"/>
 </branch>
 <leaf name="CMF/S&#160;Overview" href="overview.html"/>
 <leaf name="Editor&#160;Overview"/>
 <leaf name="Glossary" href="glossary.html"/>
+<branch name="Interop">
+  <leaf name="Blog" href="http://alpha.oscom.org/postnuke/"/>
+  <leaf name="Wiki" href="http://alpha.oscom.org/postnuke/modules.php?op=modload&amp;name=phpWiki&amp;file=index"/>
+</branch>
 <leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
-<leaf name="Wiki" href="http://alpha.oscom.org/postnuke/modules.php?op=modload&amp;name=phpWiki&amp;file=index"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>
