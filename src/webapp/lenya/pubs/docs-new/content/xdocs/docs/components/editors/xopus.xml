@@ -71,7 +71,7 @@ whereas the text of the alerts might be replaced by something else.
   getExitURL: function(path)
   {
     exitURL = path.substring(0, path.indexOf('?'));
-    alert('Exit to: ' + exitURL)
+    alert('Exit to: ' + exitURL);
     return exitURL;
   },
 ]]>
