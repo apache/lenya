@@ -1,124 +1,146 @@
 /*
- * $Id: FileGroupTest.java,v 1.2 2003/06/25 14:55:10 andreas Exp $
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2003 Wyona. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment: "This product
- *    includes software developed by Wyona (http://www.wyona.com)"
- *
- * 4. The name "Lenya" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact contact@wyona.com
- *
- * 5. Products derived from this software may not be called "Lenya" nor
- *    may "Lenya" appear in their names without prior written permission
- *    of Wyona.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment: "This product includes software developed by Wyona
- *    (http://www.wyona.com)"
- *
- * THIS SOFTWARE IS PROVIDED BY Wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS
- * OR IMPLIED, INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- * Wyona WILL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY YOU AS A RESULT
- * OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE FOR ANY SPECIAL,
- * INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF Wyona HAS BEEN
- * ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. Wyona WILL NOT BE LIABLE
- * FOR ANY THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
- 
-package org.apache.lenya.cms.ac;
+$Id
+<License>
 
-import java.io.File;
-import java.io.IOException;
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
+package org.apache.lenya.cms.ac;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+
 import org.apache.lenya.cms.PublicationHelper;
+
 import org.xml.sax.SAXException;
+
+import java.io.File;
+import java.io.IOException;
+
 
 /**
  * @author egli
- * 
- * 
+ *
+ *
  */
 public class FileGroupTest extends AccessControlTest {
+    /**
+     * Constructor for FileGroupTest.
+     * @param arg0
+     */
+    public FileGroupTest(String arg0) {
+        super(arg0);
+    }
 
-	/**
-	 * Constructor for FileGroupTest.
-	 * @param arg0
-	 */
-	public FileGroupTest(String arg0) {
-		super(arg0);
-	}
-
-	public static void main(String[] args) {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param args DOCUMENT ME!
+     */
+    public static void main(String[] args) {
         PublicationHelper.extractPublicationArguments(args);
-		junit.textui.TestRunner.run(FileGroupTest.class);
-	}
+        junit.textui.TestRunner.run(FileGroupTest.class);
+    }
 
-	final public void testFileGroup() throws AccessControlException, ConfigurationException, SAXException, IOException {
-		String groupName = "testGroup";
-		String roleName = "testRole";
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws AccessControlException DOCUMENT ME!
+     * @throws ConfigurationException DOCUMENT ME!
+     * @throws SAXException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
+     */
+    final public void testFileGroup()
+        throws AccessControlException, ConfigurationException, SAXException, IOException {
+        String groupName = "testGroup";
+        String roleName = "testRole";
         File configurationDirectory = getConfigurationDirectory();
-        
-        System.out.println("Configuration directory: " + configurationDirectory);
-        
-		FileGroup group = new FileGroup(configurationDirectory, groupName);
-		FileRole role = new FileRole(configurationDirectory, roleName);
-//		group.addRole(role);
 
+        System.out.println("Configuration directory: " + configurationDirectory);
+
+        FileGroup group = new FileGroup(configurationDirectory, groupName);
+        FileRole role = new FileRole(configurationDirectory, roleName);
+
+        //		group.addRole(role);
         role.save();
         group.save();
-        
+
         File path = null;
         path = RoleManager.instance(configurationDirectory).getConfigurationDirectory();
-        
-		File groupFile = new File(path, groupName + GroupManager.SUFFIX);
-		assertNotNull(groupFile);
-		assertTrue(groupFile.exists());
-		Configuration config = null;
+
+        File groupFile = new File(path, groupName + GroupManager.SUFFIX);
+        assertNotNull(groupFile);
+        assertTrue(groupFile.exists());
+
+        Configuration config = null;
         config = new DefaultConfigurationBuilder().buildFromFile(groupFile);
-		assertNotNull(config);
-        
-		FileGroup newGroup = null;
-    	newGroup = new FileGroup();
+        assertNotNull(config);
+
+        FileGroup newGroup = null;
+        newGroup = new FileGroup();
         newGroup.setConfigurationDirectory(configurationDirectory);
         newGroup.configure(config);
-		assertNotNull(newGroup);
-        
-		assertTrue(newGroup.getName().equals(groupName));
-        
-        /*
-		int roleCount = 0;
-		for (Iterator roles = newGroup.getRoles(); roles.hasNext();) {
-			Role newRole = (Role) roles.next();
-			roleCount = roleCount + 1;
-			assertTrue(newRole.getName().equals(roleName));	
-		}
-		assertEquals(1, roleCount);
-        */
-	}
+        assertNotNull(newGroup);
 
+        assertTrue(newGroup.getName().equals(groupName));
+
+        /*
+                int roleCount = 0;
+                for (Iterator roles = newGroup.getRoles(); roles.hasNext();) {
+                        Role newRole = (Role) roles.next();
+                        roleCount = roleCount + 1;
+                        assertTrue(newRole.getName().equals(roleName));
+                }
+                assertEquals(1, roleCount);
+        */
+    }
 }

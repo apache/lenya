@@ -1,49 +1,65 @@
 /*
- * $Id
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2002 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this
- *    list of conditions and the following disclaimer in the documentation and/or
- *    other materials provided with the distribution.
- *
- * 3. All advertising materials mentioning features or use of this software must
- *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products derived from
- *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya" nor may "lenya"
- *    appear in their names without prior written permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
- * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
- * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
+$Id
+<License>
+
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
 package org.apache.lenya.cms.workflow;
 
-import java.io.File;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
@@ -68,10 +84,8 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import java.io.File;
+
 
 /**
  * @author andreas
@@ -80,7 +94,6 @@ import junit.textui.TestRunner;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class WorkflowTest extends TestCase {
-
     /**
      * Constructor.
      * @param test The test to execute.
@@ -120,13 +133,8 @@ public class WorkflowTest extends TestCase {
      * @throws DocumentBuildException when something went wrong.
      */
     public void testWorkflow()
-        throws
-            DocumentTypeBuildException,
-            WorkflowException,
-            AccessControlException,
-            PageEnvelopeException,
-            DocumentBuildException {
-
+        throws DocumentTypeBuildException, WorkflowException, AccessControlException, 
+            PageEnvelopeException, DocumentBuildException {
         Publication publication = PublicationHelper.getPublication();
         String url = "/" + publication.getId() + URL;
         Document document = DefaultDocumentBuilder.getInstance().buildDocument(publication, url);
@@ -143,47 +151,53 @@ public class WorkflowTest extends TestCase {
         WorkflowFactory.initHistory(document, workflowId);
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
-        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
 
+        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
             WorkflowInstance instance = null;
             instance = factory.buildInstance(document);
             assertNotNull(instance);
 
             System.out.println("Current state: " + instance.getCurrentState());
 
-            User user =
-                UserManager.instance(configDir).getUser(situations[situationIndex].getUser());
+            User user = UserManager.instance(configDir).getUser(situations[situationIndex].getUser());
 
             Identity identity = new Identity();
             identity.addIdentifiable(user);
-            Role roles[] = policy.getRoles(identity);
+
+            Role[] roles = policy.getRoles(identity);
             System.out.print("Roles:");
+
             for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
                 System.out.print(" " + roles[roleIndex]);
             }
+
             System.out.println();
 
             Group group = new Group("test-group");
+
             //group.addRole(role);
-
             //user.addGroup(group);
-
             Situation situation = null;
+
             try {
                 situation = factory.buildSituation(roles);
             } catch (WorkflowException e1) {
                 e1.printStackTrace(System.err);
             }
-            Event events[] = instance.getExecutableEvents(situation);
+
+            Event[] events = instance.getExecutableEvents(situation);
 
             Event event = null;
             System.out.print("Events:");
+
             for (int eventIndex = 0; eventIndex < events.length; eventIndex++) {
                 System.out.print(" " + events[eventIndex]);
+
                 if (events[eventIndex].getName().equals(situations[situationIndex].getEvent())) {
                     event = events[eventIndex];
                 }
             }
+
             assertNotNull(event);
             System.out.println();
 
@@ -192,29 +206,24 @@ public class WorkflowTest extends TestCase {
 
             assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
 
-            System.out.println(
-                "Variable: " + variableName + " = " + instance.getValue(variableName));
+            System.out.println("Variable: " + variableName + " = " +
+                instance.getValue(variableName));
             System.out.println("------------------------------------------------------");
-
         }
 
         System.out.println("Test completed.");
-
     }
 
-    private static final TestSituation situations[] =
-        {
-            new TestSituation("lenya", "submit", false),
-            new TestSituation("roger", "reject", false),
-            new TestSituation("lenya", "submit", false),
-            new TestSituation("roger", "publish", true),
-            new TestSituation("roger", "deactivate", false)};
+    private static final TestSituation[] situations = {
+        new TestSituation("lenya", "submit", false), new TestSituation("roger", "reject", false),
+        new TestSituation("lenya", "submit", false), new TestSituation("roger", "publish", true),
+        new TestSituation("roger", "deactivate", false)
+    };
 
     /**
-     * A test situation. 
+     * A test situation.
      */
     public static class TestSituation {
-
         private String user;
         private String event;
         private boolean value;
@@ -256,7 +265,6 @@ public class WorkflowTest extends TestCase {
         public boolean getValue() {
             return value;
         }
-
     }
 
     private static String documentTypeName;
@@ -266,10 +274,9 @@ public class WorkflowTest extends TestCase {
      */
     protected void setUp() throws Exception {
         if (documentTypeName == null) {
-            String args[] = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
+            String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
             PublicationHelper.extractPublicationArguments(args);
             documentTypeName = "simple";
         }
     }
-
 }

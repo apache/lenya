@@ -1,19 +1,59 @@
 /*
- * WorkflowInstanceImpl.java
- *
- * Created on 9. April 2003, 13:30
- */
+$Id
+<License>
 
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
 package org.apache.lenya.workflow.impl;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.BooleanVariable;
@@ -27,12 +67,21 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.WorkflowListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+
 /**
  *
  * @author  andreas
  */
 public abstract class WorkflowInstanceImpl implements WorkflowInstance {
-
     /**
      * Creates a new instance of WorkflowInstanceImpl.
      */
@@ -62,7 +111,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @return The events that can be invoked.
      */
     public Event[] getExecutableEvents(Situation situation) {
-        Transition transitions[] = getWorkflow().getLeavingTransitions(getCurrentState());
+        Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
         Set executableEvents = new HashSet();
 
         for (int i = 0; i < transitions.length; i++) {
@@ -70,6 +119,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
                 executableEvents.add(transitions[i].getEvent());
             }
         }
+
         return (Event[]) executableEvents.toArray(new Event[executableEvents.size()]);
     }
 
@@ -77,21 +127,21 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @param situation The situation when the event was invoked.
      * @param event The event that was invoked.
      */
-    public void invoke(Situation situation, Event event) throws WorkflowException {
+    public void invoke(Situation situation, Event event)
+        throws WorkflowException {
         if (!Arrays.asList(getExecutableEvents(situation)).contains(event)) {
-            throw new WorkflowException(
-                "The event '"
-                    + event
-                    + "' cannot be invoked in the situation '"
-                    + situation
-                    + "'.");
+            throw new WorkflowException("The event '" + event +
+                "' cannot be invoked in the situation '" + situation + "'.");
         }
-        Transition transitions[] = getWorkflow().getLeavingTransitions(getCurrentState());
+
+        Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
+
         for (int i = 0; i < transitions.length; i++) {
             if (transitions[i].getEvent().equals(event)) {
                 fire((TransitionImpl) transitions[i]);
             }
         }
+
         for (Iterator iter = listeners.iterator(); iter.hasNext();) {
             WorkflowListener listener = (WorkflowListener) iter.next();
             listener.transitionFired(this, situation, event);
@@ -104,10 +154,12 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @throws WorkflowException if something goes wrong.
      */
     protected void fire(TransitionImpl transition) throws WorkflowException {
-        Action actions[] = transition.getActions();
+        Action[] actions = transition.getActions();
+
         for (int i = 0; i < actions.length; i++) {
             actions[i].execute(this);
         }
+
         setCurrentState(transition.getDestination());
     }
 
@@ -118,7 +170,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @param state The state to set.
      */
     protected void setCurrentState(State state) {
-        assert state != null && ((WorkflowImpl) getWorkflow()).containsState(state);
+        assert (state != null) && ((WorkflowImpl) getWorkflow()).containsState(state);
         this.currentState = state;
     }
 
@@ -146,7 +198,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @throws WorkflowException if something goes wrong.
      */
     protected void setWorkflow(String workflowName) throws WorkflowException {
-        assert workflowName != null && !"".equals(workflowName);
+        assert (workflowName != null) && !"".equals(workflowName);
         setWorkflow(getWorkflow(workflowName));
     }
 
@@ -155,7 +207,8 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @param workflow The workflow identifier.
      * @return A workflow object.
      */
-    protected abstract WorkflowImpl getWorkflow(String workflowName) throws WorkflowException;
+    protected abstract WorkflowImpl getWorkflow(String workflowName)
+        throws WorkflowException;
 
     /**
      * Returns a workflow state for a given name.
@@ -173,7 +226,9 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      */
     protected void initVariableInstances() {
         variableInstances.clear();
-        BooleanVariable variables[] = getWorkflowImpl().getVariables();
+
+        BooleanVariable[] variables = getWorkflowImpl().getVariables();
+
         for (int i = 0; i < variables.length; i++) {
             BooleanVariableInstance instance = new BooleanVariableInstanceImpl();
             instance.setValue(variables[i].getInitialValue());
@@ -191,6 +246,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
         if (!variableInstances.containsKey(variable)) {
             throw new WorkflowException("No instance for variable '" + variable.getName() + "'!");
         }
+
         return (BooleanVariableInstance) variableInstances.get(variable);
     }
 
@@ -200,15 +256,17 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     public boolean getValue(String variableName) throws WorkflowException {
         BooleanVariable variable = getWorkflowImpl().getVariable(variableName);
         BooleanVariableInstance instance = getVariableInstance(variable);
+
         return instance.getValue();
     }
-    
+
     /**
      * Sets the value of a state variable.
      * @param variableName The variable name.
      * @param value The value to set.
      */
-    protected void setValue(String variableName, boolean value) throws WorkflowException {
+    protected void setValue(String variableName, boolean value)
+        throws WorkflowException {
         BooleanVariable variable = getWorkflowImpl().getVariable(variableName);
         BooleanVariableInstance instance = getVariableInstance(variable);
         instance.setValue(value);
@@ -220,8 +278,9 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @see org.apache.lenya.workflow.WorkflowInstance#addWorkflowListener(org.apache.lenya.workflow.WorkflowListener)
      */
     public void addWorkflowListener(WorkflowListener listener) {
-        if (!listeners.contains(listener))
+        if (!listeners.contains(listener)) {
             listeners.add(listener);
+        }
     }
 
     /* (non-Javadoc)
@@ -230,5 +289,4 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     public void removeWorkflowListener(WorkflowListener listener) {
         listeners.remove(listener);
     }
-
 }

@@ -1,59 +1,75 @@
 /*
- * $Id: ResourceFilePublisher.java,v 1.3 2003/05/30 20:59:11 andreas Exp $
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2002 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this
- *    list of conditions and the following disclaimer in the documentation and/or
- *    other materials provided with the distribution.
- *
- * 3. All advertising materials mentioning features or use of this software must
- *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products derived from
- *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya" nor may "lenya"
- *    appear in their names without prior written permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
- * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
- * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
+$Id
+<License>
+
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
 package org.apache.lenya.cms.publishing;
 
-import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.log4j.Category;
 import org.apache.lenya.cms.task.ExecutionException;
 
+import org.apache.log4j.Category;
+
 import java.io.File;
-import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import java.lang.IllegalArgumentException;
+
 import java.util.StringTokenizer;
+
 
 /**
  * The <code>ResourceFilePublisher</code> is a task that extends the
@@ -61,7 +77,7 @@ import java.util.StringTokenizer;
  * publisher it also copies resource files (e.g. images) from the
  * authoring directory to another location, usually the live
  * directory.
- * 
+ *
  * In addition to the parameters that have to be provided for
  * <code>DefaultFilePublisher</code> the following parameters have to
  * be specified:<br/>
@@ -75,54 +91,51 @@ import java.util.StringTokenizer;
 public class ResourceFilePublisher extends DefaultFilePublisher {
     private static Category log = Category.getInstance(ResourceFilePublisher.class);
 
-    protected void publishResources(String publicationPath,
-				    String resourcesAuthoringPath,
-				    String resourcesLivePath,
-				    String[] sources)
-	throws PublishingException {
-
+    protected void publishResources(String publicationPath, String resourcesAuthoringPath,
+        String resourcesLivePath, String[] sources) throws PublishingException {
         String absoluteResourceAuthoringPath = publicationPath + resourcesAuthoringPath;
         String absoluteResourceLivePath = publicationPath + resourcesLivePath;
 
-	log.debug("Publishing resources from " + absoluteResourceAuthoringPath
-		  + " to " + absoluteResourceLivePath);
+        log.debug("Publishing resources from " + absoluteResourceAuthoringPath + " to " +
+            absoluteResourceLivePath);
 
         for (int index = 0; index < sources.length; index++) {
             File sourceDir = new File(absoluteResourceAuthoringPath +
-				      FileUtil.getPath(sources[index]));
+                    FileUtil.getPath(sources[index]));
             File destinationDir = new File(absoluteResourceLivePath +
-					   FileUtil.getPath(sources[index]));
+                    FileUtil.getPath(sources[index]));
 
-	    if (sourceDir == null || !sourceDir.isDirectory()) {
-		// Hmm, the source dir doesn't exist. Ok, this
-		// document possibly doesn't have any related
-		// resources (e.g. images, etc.). Skip it.
-		continue;
-	    }
+            if ((sourceDir == null) || !sourceDir.isDirectory()) {
+                // Hmm, the source dir doesn't exist. Ok, this
+                // document possibly doesn't have any related
+                // resources (e.g. images, etc.). Skip it.
+                continue;
+            }
 
-	    log.debug("Copying resources from " + sourceDir + " to " + destinationDir);
+            log.debug("Copying resources from " + sourceDir + " to " + destinationDir);
 
-	    File[] resourceSources = sourceDir.listFiles();
-	    for (int j = 0; j < resourceSources.length; j++) {
-		if (resourceSources[j].isFile()) {
-		    try {
-			// only copy resources that are files
-			FileUtil.copyFileToDirectory(resourceSources[j], destinationDir);
-			log.debug("COPY\nresource: " + resourceSources[j]
-				  + "\nto " + destinationDir);
-		    } catch (FileNotFoundException fnfe) {
-			throw new PublishingException("Resource not published: Source file ("
-						      + resourceSources[j] + ") not found!", fnfe);
-		    } catch (IllegalArgumentException iae) {
-			throw new PublishingException("Resource not published: Live resources path ("
-						      + destinationDir + ")is not a directory ");
-		    } catch (IOException ioe) {
-			throw new PublishingException("Resource not published: "
-						      + resourceSources[j] + " "
-						      + destinationDir, ioe);
-		    }
-		}
-	    }
+            File[] resourceSources = sourceDir.listFiles();
+
+            for (int j = 0; j < resourceSources.length; j++) {
+                if (resourceSources[j].isFile()) {
+                    try {
+                        // only copy resources that are files
+                        FileUtil.copyFileToDirectory(resourceSources[j], destinationDir);
+                        log.debug("COPY\nresource: " + resourceSources[j] + "\nto " +
+                            destinationDir);
+                    } catch (FileNotFoundException fnfe) {
+                        throw new PublishingException("Resource not published: Source file (" +
+                            resourceSources[j] + ") not found!", fnfe);
+                    } catch (IllegalArgumentException iae) {
+                        throw new PublishingException(
+                            "Resource not published: Live resources path (" + destinationDir +
+                            ")is not a directory ");
+                    } catch (IOException ioe) {
+                        throw new PublishingException("Resource not published: " +
+                            resourceSources[j] + " " + destinationDir, ioe);
+                    }
+                }
+            }
         }
     }
 
@@ -133,15 +146,14 @@ public class ResourceFilePublisher extends DefaultFilePublisher {
      * @param contextPath a <code>String</code> value
      * @exception ExecutionException if an error occurs
      */
-    public void execute(String contextPath)
-	throws ExecutionException {
+    public void execute(String contextPath) throws ExecutionException {
         try {
             String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
             Parameters taskParameters = new Parameters();
 
-            ResourcePublishingEnvironment environment =
-		new ResourcePublishingEnvironment(contextPath, publicationId);
+            ResourcePublishingEnvironment environment = new ResourcePublishingEnvironment(contextPath,
+                    publicationId);
 
             // read default parameters from PublishingEnvironment
             taskParameters.setParameter(PublishingEnvironment.PARAMETER_AUTHORING_PATH,

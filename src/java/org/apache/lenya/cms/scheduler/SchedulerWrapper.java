@@ -1,46 +1,58 @@
 /*
- * $Id: SchedulerWrapper.java,v 1.14 2003/05/30 21:01:47 andreas Exp $
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2002 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this
- *    list of conditions and the following disclaimer in the documentation and/or
- *    other materials provided with the distribution.
- *
- * 3. All advertising materials mentioning features or use of this software must
- *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products derived from
- *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya" nor may "lenya"
- *    appear in their names without prior written permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
- * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
- * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
+$Id
+<License>
+
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
 /*
  * JobConfiguration.java
  *
@@ -50,6 +62,11 @@ package org.apache.lenya.cms.scheduler;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+
+import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 
 import org.apache.log4j.Category;
 
@@ -62,8 +79,8 @@ import org.quartz.Trigger;
 
 import org.quartz.impl.StdSchedulerFactory;
 
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import java.io.File;
 
@@ -71,10 +88,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpServletRequest;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
 
 
 /**
@@ -328,7 +341,7 @@ public class SchedulerWrapper {
     }
 
     protected Element getJobsElement(NamespaceHelper helper, String jobGroup)
-            throws SchedulerException {
+        throws SchedulerException {
         Element jobsElement = helper.createElement("jobs");
 
         String[] jobNames = getScheduler().getJobNames(jobGroup);
@@ -367,9 +380,9 @@ public class SchedulerWrapper {
      * @return DOCUMENT ME!
      * @exception SchedulerException if an error occurs
      */
-    public Document getSnapshot()
-            throws SchedulerException {
+    public Document getSnapshot() throws SchedulerException {
         log.debug("Creating job snapshot for all groups");
+
         NamespaceHelper helper = getNamespaceHelper();
         Document document = helper.getDocument();
         Element root = document.getDocumentElement();
@@ -378,9 +391,11 @@ public class SchedulerWrapper {
         root.appendChild(getTriggerTypes(helper));
 
         String[] jobGroupNames = getScheduler().getJobGroupNames();
+
         for (int groupIndex = 0; groupIndex < jobGroupNames.length; groupIndex++) {
             root.appendChild(createSnapshot(helper, jobGroupNames[groupIndex]));
         }
+
         return document;
     }
 
@@ -391,8 +406,7 @@ public class SchedulerWrapper {
      * @return DOCUMENT ME!
      * @exception SchedulerException if an error occurs
      */
-    public Document getSnapshot(String jobGroup)
-            throws SchedulerException {
+    public Document getSnapshot(String jobGroup) throws SchedulerException {
         log.debug("Creating job snapshot for group '" + jobGroup + "'");
 
         NamespaceHelper helper = getNamespaceHelper();
@@ -407,15 +421,16 @@ public class SchedulerWrapper {
     }
 
     protected Element createSnapshot(NamespaceHelper helper, String jobGroup)
-            throws SchedulerException {
+        throws SchedulerException {
         Element publicationElement = helper.createElement("publication");
         publicationElement.setAttribute("name", jobGroup);
+
         Element jobsElement = getJobsElement(helper, jobGroup);
         publicationElement.appendChild(jobsElement);
+
         return publicationElement;
     }
-    
-    
+
     /**
      * DOCUMENT ME!
      *
@@ -434,15 +449,14 @@ public class SchedulerWrapper {
                 NamespaceHelper helper = getNamespaceHelper(document);
 
                 Element publicationElement = helper.getFirstChild(schedulerElement, "publication");
-                
+
                 String elementPublicationId = publicationElement.getAttribute("name");
+
                 if (!elementPublicationId.equals(publicationId)) {
-                    log.error(
-                        "\nRestoring jobs failed:"
-                        + "\nThe jobs.xml file contains a wrong publication: "
-                        + elementPublicationId);
-                }
-                else {
+                    log.error("\nRestoring jobs failed:" +
+                        "\nThe jobs.xml file contains a wrong publication: " +
+                        elementPublicationId);
+                } else {
                     Element jobsElement = helper.getFirstChild(publicationElement, "jobs");
                     Element[] jobElements = helper.getChildren(jobsElement, "job");
 
@@ -460,12 +474,13 @@ public class SchedulerWrapper {
         log.debug("\n Restoring job ");
 
         String className = null;
-        
+
         NamespaceHelper helper = getNamespaceHelper();
-        Element parameterElements[] = helper.getChildren(jobElement, "parameter");
+        Element[] parameterElements = helper.getChildren(jobElement, "parameter");
 
         for (int i = 0; i < parameterElements.length; i++) {
             String key = parameterElements[i].getAttribute("name");
+
             if ((key).equals(JOB_CLASS)) {
                 className = parameterElements[i].getAttribute("value");
             }
@@ -484,26 +499,24 @@ public class SchedulerWrapper {
 
                 // FIXME: In the case of CronTrigger, getFinalFireTime does not make sense!
                 addJob(jobDetail, trigger);
-
             } else {
                 addJob(jobDetail);
             }
         } catch (Exception e) {
             log.error("Could not restore job: ", e);
         }
-
     }
-    
+
     /** The namespace for the <code>jobs.xml</code> file. */
     public static final String NAMESPACE = "http://www.lenya.org/2002/sch";
-    
+
     /**
      * Returns a scheduler namespace helper for a document.
      */
     public static NamespaceHelper getNamespaceHelper(Document document) {
         return new NamespaceHelper(NAMESPACE, "sch", document);
     }
-    
+
     /**
      * Returns a new scheduler namespace helper with an document containing
      * a &lt;sch:scheduler&gt; element.
@@ -511,11 +524,10 @@ public class SchedulerWrapper {
     public static NamespaceHelper getNamespaceHelper() {
         try {
             return new NamespaceHelper(NAMESPACE, "sch", "scheduler");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Could not create namespace helper: ", e);
+
             return null;
         }
     }
-    
 }

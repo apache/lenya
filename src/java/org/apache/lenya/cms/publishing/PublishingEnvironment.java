@@ -1,51 +1,64 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.19 2003/05/30 20:59:11 andreas Exp $
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2002 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this
- *    list of conditions and the following disclaimer in the documentation and/or
- *    other materials provided with the distribution.
- *
- * 3. All advertising materials mentioning features or use of this software must
- *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products derived from
- *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya" nor may "lenya"
- *    appear in their names without prior written permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
- * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
- * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
+$Id
+<License>
+
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
 package org.apache.lenya.cms.publishing;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+
 import org.apache.log4j.Category;
 
 import java.io.File;
@@ -59,8 +72,10 @@ import java.io.File;
  */
 public class PublishingEnvironment implements Configurable {
     private static Category log = Category.getInstance(PublishingEnvironment.class);
-    public static final String CONFIGURATION_FILE = "config" + File.separator + "publishing" + File.separator + "publisher.xconf";
-    public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs" + File.separator;
+    public static final String CONFIGURATION_FILE = "config" + File.separator + "publishing" +
+        File.separator + "publisher.xconf";
+    public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs" +
+        File.separator;
     public static final String PUBLICATION_PATH = "publication-path";
     public static final String PARAMETER_AUTHORING_PATH = "authoring-path";
     public static final String PARAMETER_TREE_AUTHORING_PATH = "tree-authoring-path";
@@ -108,9 +123,10 @@ public class PublishingEnvironment implements Configurable {
             Configuration configuration = builder.buildFromFile(configurationFile);
             configure(configuration);
         } catch (Exception e) {
-            log.warn("Did not load publishing configuration from publication.xconf (file is missing). " + 
-            "That means you can't access all PublishingEnvironment parameters and you should only" +
-            "use the AntTask.");
+            log.warn(
+                "Did not load publishing configuration from publication.xconf (file is missing). " +
+                "That means you can't access all PublishingEnvironment parameters and you should only" +
+                "use the AntTask.");
         }
     }
 
@@ -137,8 +153,10 @@ public class PublishingEnvironment implements Configurable {
 
         // export
         setExportDirectory(configuration.getChild("export").getChild("destination").getAttribute("href"));
-        setSubstituteExpression(configuration.getChild("export").getChild("substitution").getAttribute("regexp"));
-        setSubstituteReplacementExpression(configuration.getChild("export").getChild("substitution").getAttribute("replacement"));
+        setSubstituteExpression(configuration.getChild("export").getChild("substitution")
+                                             .getAttribute("regexp"));
+        setSubstituteReplacementExpression(configuration.getChild("export").getChild("substitution")
+                                                        .getAttribute("replacement"));
 
         log.debug("CONFIGURATION:\nauthoring path=" + getAuthoringPath() + "\nlive path=" +
             getLivePath());
@@ -159,7 +177,7 @@ public class PublishingEnvironment implements Configurable {
     public String getPublicationPath() {
         return publicationPath;
     }
-    
+
     /**
      * Returns the publication directory.
      */
@@ -268,6 +286,7 @@ public class PublishingEnvironment implements Configurable {
     protected void setSubstituteReplacementExpression(String replacement) {
         substituteReplacement = replacement;
     }
+
     /**
      * Get the replacement string, which was read from publisher.xconf
      *
@@ -286,8 +305,10 @@ public class PublishingEnvironment implements Configurable {
      * @return DOCUMENT ME!
      */
     public static String getPublicationPath(String servletContextPath, String publicationId) {
-        if (!servletContextPath.endsWith(File.separator))
+        if (!servletContextPath.endsWith(File.separator)) {
             servletContextPath += File.separator;
+        }
+
         return servletContextPath + PUBLICATION_PREFIX + publicationId + File.separator;
     }
 }

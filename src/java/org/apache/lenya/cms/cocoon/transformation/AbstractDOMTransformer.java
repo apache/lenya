@@ -1,4 +1,6 @@
 /*
+$Id
+<License>
 
  ============================================================================
                    The Apache Software License, Version 1.1
@@ -22,7 +24,7 @@
     Alternately, this  acknowledgment may  appear in the software itself,  if
     and wherever such third-party acknowledgments normally appear.
 
- 4. The names "Apache Cocoon" and  "Apache Software Foundation" must  not  be
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
     used to  endorse or promote  products derived from  this software without
     prior written permission. For written permission, please contact
     apache@apache.org.
@@ -44,34 +46,38 @@
 
  This software  consists of voluntary contributions made  by many individuals
  on  behalf of the Apache Software  Foundation and was  originally created by
- Stefano Mazzocchi  <stefano@apache.org>. For more  information on the Apache
- Software Foundation, please see <http://www.apache.org/>.
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
 
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
 */
 package org.apache.lenya.cms.cocoon.transformation;
 
+import org.apache.avalon.excalibur.pool.Recyclable;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.component.ComponentManager;
 import org.apache.avalon.framework.component.Composable;
 import org.apache.avalon.framework.parameters.Parameters;
 
-import org.apache.avalon.excalibur.pool.Recyclable;
-
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.transformation.AbstractTransformer;
+import org.apache.cocoon.transformation.Transformer;
 import org.apache.cocoon.xml.dom.DOMBuilder;
 import org.apache.cocoon.xml.dom.DOMStreamer;
 
-import org.apache.cocoon.transformation.AbstractTransformer;
-import org.apache.cocoon.transformation.Transformer;
-
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-import org.xml.sax.Locator;
+
 import org.xml.sax.Attributes;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
+
 import java.util.Map;
+
 
 /**
  * An Abstract DOM Transformer, for use when a transformer needs a DOM-based
@@ -83,11 +89,10 @@ import java.util.Map;
  * @author <a href="mailto:rossb@apache.org">Ross Burton</a>
  * @author <a href="mailto:brobertson@mta.ca">Bruce G. Robertson</a>
  * @author <a href="mailto:vgritsenko@apache.org">Vadim Gritsenko</a>
- * @version CVS $Id: AbstractDOMTransformer.java,v 1.2 2003/04/24 13:52:38 gregor Exp $
+ * @version CVS $Id: AbstractDOMTransformer.java,v 1.3 2003/06/30 11:52:22 andreas Exp $
  */
-public abstract class AbstractDOMTransformer extends AbstractTransformer
-        implements Transformer, DOMBuilder.Listener, Composable, Disposable, Recyclable {
-
+public abstract class AbstractDOMTransformer extends AbstractTransformer implements Transformer,
+    DOMBuilder.Listener, Composable, Disposable, Recyclable {
     /**
      *  The SAX entity resolver
      */
@@ -119,7 +124,9 @@ public abstract class AbstractDOMTransformer extends AbstractTransformer
      */
     protected DOMBuilder builder;
 
-
+    /**
+     * Creates a new AbstractDOMTransformer object.
+     */
     public AbstractDOMTransformer() {
         super();
         this.builder = new DOMBuilder(this);
@@ -140,8 +147,7 @@ public abstract class AbstractDOMTransformer extends AbstractTransformer
      * <code>super()</code> and then add your code.
      */
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
-            throws ProcessingException, SAXException, IOException {
-
+        throws ProcessingException, SAXException, IOException {
         this.resolver = resolver;
         this.objectModel = objectModel;
         this.source = src;
@@ -190,93 +196,210 @@ public abstract class AbstractDOMTransformer extends AbstractTransformer
      */
     protected abstract Document transform(Document doc);
 
-
     //
     // SAX Methods. Send incoming SAX events to the DOMBuilder.
     //
-
     public void setDocumentLocator(Locator locator) {
         builder.setDocumentLocator(locator);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
     public void startDocument() throws SAXException {
         builder.startDocument();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
     public void endDocument() throws SAXException {
         builder.endDocument();
     }
 
-    public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param prefix DOCUMENT ME!
+     * @param uri DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void startPrefixMapping(String prefix, String uri)
+        throws SAXException {
         builder.startPrefixMapping(prefix, uri);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param prefix DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
     public void endPrefixMapping(String prefix) throws SAXException {
         builder.endPrefixMapping(prefix);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param uri DOCUMENT ME!
+     * @param loc DOCUMENT ME!
+     * @param raw DOCUMENT ME!
+     * @param a DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
     public void startElement(String uri, String loc, String raw, Attributes a)
-            throws SAXException {
+        throws SAXException {
         builder.startElement(uri, loc, raw, a);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param uri DOCUMENT ME!
+     * @param loc DOCUMENT ME!
+     * @param raw DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
     public void endElement(String uri, String loc, String raw)
-            throws SAXException {
+        throws SAXException {
         builder.endElement(uri, loc, raw);
     }
 
-    public void characters(char c[], int start, int len)
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param c DOCUMENT ME!
+     * @param start DOCUMENT ME!
+     * @param len DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void characters(char[] c, int start, int len)
+        throws SAXException {
         builder.characters(c, start, len);
     }
 
-    public void ignorableWhitespace(char c[], int start, int len)
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param c DOCUMENT ME!
+     * @param start DOCUMENT ME!
+     * @param len DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void ignorableWhitespace(char[] c, int start, int len)
+        throws SAXException {
         builder.ignorableWhitespace(c, start, len);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param target DOCUMENT ME!
+     * @param data DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
     public void processingInstruction(String target, String data)
-            throws SAXException {
+        throws SAXException {
         builder.processingInstruction(target, data);
     }
 
-    public void skippedEntity(String name)
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void skippedEntity(String name) throws SAXException {
         builder.skippedEntity(name);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     * @param publicId DOCUMENT ME!
+     * @param systemId DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
     public void startDTD(String name, String publicId, String systemId)
-            throws SAXException {
+        throws SAXException {
         builder.startDTD(name, publicId, systemId);
     }
 
-    public void endDTD()
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void endDTD() throws SAXException {
         builder.endDTD();
     }
 
-    public void startEntity(String name)
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void startEntity(String name) throws SAXException {
         builder.startEntity(name);
     }
 
-    public void endEntity(String name)
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void endEntity(String name) throws SAXException {
         builder.endEntity(name);
     }
 
-    public void startCDATA()
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void startCDATA() throws SAXException {
         builder.startCDATA();
     }
 
-    public void endCDATA()
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void endCDATA() throws SAXException {
         builder.endCDATA();
     }
 
-    public void comment(char ch[], int start, int len)
-            throws SAXException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param ch DOCUMENT ME!
+     * @param start DOCUMENT ME!
+     * @param len DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     */
+    public void comment(char[] ch, int start, int len)
+        throws SAXException {
         builder.comment(ch, start, len);
     }
 }

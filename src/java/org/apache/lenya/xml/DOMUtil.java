@@ -1,50 +1,60 @@
 /*
+$Id
 <License>
- * =======================================================================
- * Copyright (c) 2000 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. All advertising materials mentioning features or use of this
- *    software must display the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products
- *    derived from this software without prior written permission.
- *    For written permission , please contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya"
- *    nor may "lenya" appear in their names without prior written
- *    permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following
- *    acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY
- * EXPRESS OR IMPLIED, INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND
- * THE IMPLIED WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY YOU AS
- * A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE FOR
- * ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN
- * IF lenya HAS BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE.
- * lenya WILL NOT BE LIABLE FOR ANY THIRD PARTY CLAIMS AGAINST YOU.
- * =======================================================================
+
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
- */
+*/
 package org.apache.lenya.xml;
 
-import java.io.StringReader;
 import org.apache.log4j.Category;
 
 import org.w3c.dom.Attr;
@@ -52,6 +62,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.io.StringReader;
 
 import java.util.Vector;
 
@@ -88,8 +100,7 @@ public class DOMUtil {
             du.setElementValue(document, "/Artikel/Datum/Monat", "7");
             du.setElementValue(document, "/Artikel/Datum/Monat", "9");
             du.setElementValue(document, "/Artikel/Datm/Mont", "13");
-            du.setAttributeValue(document, "/Artikel/Datum/Monat/@Name",
-                "Oktober");
+            du.setAttributeValue(document, "/Artikel/Datum/Monat/@Name", "Oktober");
             du.setAttributeValue(document, "/Artikel/Datu/Monat/@Nam", "August");
             du.setElementValue(document, "/Artikel/Datu/Monat", "8");
             du.addElement(document, "/Artikel/Datum/Tag", "26");
@@ -99,8 +110,7 @@ public class DOMUtil {
             System.out.print("\n");
             System.out.print("\n");
 
-            String[] elements = du.getAllElementValues(document,
-                    new XPath("/Artikel/Datum/Monat"));
+            String[] elements = du.getAllElementValues(document, new XPath("/Artikel/Datum/Monat"));
 
             for (int i = 0; i < elements.length; i++) {
                 System.out.println("Elements=" + elements[i]);
@@ -108,15 +118,12 @@ public class DOMUtil {
 
             System.out.print("\n");
             System.out.println("Datum/Monat=" +
-                du.getElementValue(document.getDocumentElement(),
-                    new XPath("Datum/Monat")));
+                du.getElementValue(document.getDocumentElement(), new XPath("Datum/Monat")));
             System.out.println("Datm=" +
-                du.getElementValue(document.getDocumentElement(),
-                    new XPath("Datm")));
+                du.getElementValue(document.getDocumentElement(), new XPath("Datm")));
 
             System.out.println("Datum/Monat/@Name=" +
-                du.getAttributeValue(document.getDocumentElement(),
-                    new XPath("Datum/Monat/@Name")));
+                du.getAttributeValue(document.getDocumentElement(), new XPath("Datum/Monat/@Name")));
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -181,8 +188,7 @@ public class DOMUtil {
             if (nodeType == Node.TEXT_NODE) {
                 value = value + nl.item(i).getNodeValue();
             } else {
-                log.warn("XPath " + xpath +
-                    " contains node types other than just TEXT_NODE");
+                log.warn("XPath " + xpath + " contains node types other than just TEXT_NODE");
             }
         }
 
@@ -200,11 +206,10 @@ public class DOMUtil {
             NodeList nl = element.getElementsByTagName(xpath.parts[0]);
 
             if (nl.getLength() == 0) {
-                throw new Exception("There are no elements with Name \"" +
-                    xpath.parts[0] + "\".");
+                throw new Exception("There are no elements with Name \"" + xpath.parts[0] + "\".");
             } else if (nl.getLength() == 1) {
-                log.debug("There is one element with Name \"" + xpath.parts[0] +
-                    "\" (" + xpath.parts.length + ").");
+                log.debug("There is one element with Name \"" + xpath.parts[0] + "\" (" +
+                    xpath.parts.length + ").");
 
                 if (xpath.parts.length == 1) {
                     return (Element) nl.item(0);
@@ -215,12 +220,10 @@ public class DOMUtil {
                         newXPathString = newXPathString + "/" + xpath.parts[i];
                     }
 
-                    return getElement((Element) nl.item(0),
-                        new XPath(newXPathString));
+                    return getElement((Element) nl.item(0), new XPath(newXPathString));
                 }
             } else {
-                throw new Exception(
-                    "There are more elements than one with Name \"" +
+                throw new Exception("There are more elements than one with Name \"" +
                     xpath.parts[0] + "\".");
             }
         }
@@ -298,7 +301,6 @@ public class DOMUtil {
         return value;
     }
 
-
     /**
      * Return the value of an attribte named e.g.
      * "this/myelement/(at)myattribute"
@@ -332,8 +334,7 @@ public class DOMUtil {
 
         if (elements.length >= 1) {
             if (elements.length > 1) {
-                log.warn("There are more elements than one with XPath \"" +
-                    xpath +
+                log.warn("There are more elements than one with XPath \"" + xpath +
                     "\". The value of the first element will be replaced");
             }
 
@@ -358,8 +359,7 @@ public class DOMUtil {
         parent.appendChild(element);
 
         if (value != null) {
-            element.appendChild(dpf.newTextNode(element.getOwnerDocument(),
-                    value));
+            element.appendChild(dpf.newTextNode(element.getOwnerDocument(), value));
         }
     }
 
@@ -414,12 +414,10 @@ public class DOMUtil {
             Node parentNode = createNode(document, xpath.getParent());
 
             if (xpath.getType() == Node.ATTRIBUTE_NODE) {
-                ((Element) parentNode).setAttribute(xpath.getNameWithoutPredicates(),
-                    "null");
+                ((Element) parentNode).setAttribute(xpath.getNameWithoutPredicates(), "null");
                 node = ((Element) parentNode).getAttributeNode(xpath.getNameWithoutPredicates());
             } else {
-                node = dpf.newElementNode(document,
-                        xpath.getNameWithoutPredicates());
+                node = dpf.newElementNode(document, xpath.getNameWithoutPredicates());
                 parentNode.appendChild(node);
             }
         }

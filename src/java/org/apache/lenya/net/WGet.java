@@ -1,46 +1,58 @@
 /*
- * $Id: WGet.java,v 1.24 2003/04/24 13:53:13 gregor Exp $
- * <License>
- * The Apache Software License
- *
- * Copyright (c) 2002 lenya. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice, this
- *    list of conditions and the following disclaimer in the documentation and/or
- *    other materials provided with the distribution.
- *
- * 3. All advertising materials mentioning features or use of this software must
- *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
- *
- * 4. The name "lenya" must not be used to endorse or promote products derived from
- *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
- *
- * 5. Products derived from this software may not be called "lenya" nor may "lenya"
- *    appear in their names without prior written permission of lenya.
- *
- * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
- *
- * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
- * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
- * THIRD PARTY CLAIMS AGAINST YOU.
- *
- * Lenya includes software developed by the Apache Software Foundation, W3C,
- * DOM4J Project, BitfluxEditor and Xopus.
- * </License>
- */
+$Id
+<License>
+
+ ============================================================================
+                   The Apache Software License, Version 1.1
+ ============================================================================
+
+ Copyright (C) 1999-2003 The Apache Software Foundation. All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modifica-
+ tion, are permitted provided that the following conditions are met:
+
+ 1. Redistributions of  source code must  retain the above copyright  notice,
+    this list of conditions and the following disclaimer.
+
+ 2. Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+
+ 3. The end-user documentation included with the redistribution, if any, must
+    include  the following  acknowledgment:  "This product includes  software
+    developed  by the  Apache Software Foundation  (http://www.apache.org/)."
+    Alternately, this  acknowledgment may  appear in the software itself,  if
+    and wherever such third-party acknowledgments normally appear.
+
+ 4. The names "Apache Lenya" and  "Apache Software Foundation"  must  not  be
+    used to  endorse or promote  products derived from  this software without
+    prior written permission. For written permission, please contact
+    apache@apache.org.
+
+ 5. Products  derived from this software may not  be called "Apache", nor may
+    "Apache" appear  in their name,  without prior written permission  of the
+    Apache Software Foundation.
+
+ THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS  FOR A PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN NO  EVENT SHALL  THE
+ APACHE SOFTWARE  FOUNDATION  OR ITS CONTRIBUTORS  BE LIABLE FOR  ANY DIRECT,
+ INDIRECT, INCIDENTAL, SPECIAL,  EXEMPLARY, OR CONSEQUENTIAL  DAMAGES (INCLU-
+ DING, BUT NOT LIMITED TO, PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS
+ OF USE, DATA, OR  PROFITS; OR BUSINESS  INTERRUPTION)  HOWEVER CAUSED AND ON
+ ANY  THEORY OF LIABILITY,  WHETHER  IN CONTRACT,  STRICT LIABILITY,  OR TORT
+ (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
+ ware Foundation, please see <http://www.apache.org/>.
+
+ Lenya includes software developed by the Apache Software Foundation, W3C,
+ DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
+</License>
+*/
 package org.apache.lenya.net;
 
 import org.apache.log4j.Category;
@@ -58,6 +70,7 @@ import java.net.URL;
 
 import java.util.Iterator;
 import java.util.List;
+
 
 /**
  * DOCUMENT ME!
@@ -98,7 +111,6 @@ public class WGet {
             }
 
             byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/oscom//g", "");
-
         } catch (MalformedURLException e) {
             System.err.println(e);
         } catch (Exception e) {
@@ -124,7 +136,8 @@ public class WGet {
      *
      * @throws IOException URL might not exist
      */
-    public byte[] download(URL url, String prefixSubstitute, String substituteReplacement) throws IOException {
+    public byte[] download(URL url, String prefixSubstitute, String substituteReplacement)
+        throws IOException {
         log.debug(".download(): " + url + " " + prefixSubstitute + " " + substituteReplacement);
 
         return downloadUsingHttpClient(url, prefixSubstitute, substituteReplacement);
@@ -138,7 +151,8 @@ public class WGet {
      *
      * @return DOCUMENT ME!
      */
-    public byte[] downloadUsingHttpClient(URL url, String prefixSubstitute, String substituteReplacement) {
+    public byte[] downloadUsingHttpClient(URL url, String prefixSubstitute,
+        String substituteReplacement) {
         log.debug(".downloadUsingHttpClient(): " + url);
 
         byte[] sresponse = null;
@@ -174,11 +188,12 @@ public class WGet {
                 String link = (String) iterator.next();
 
                 try {
-                    URL child_url = new URL(org.apache.lenya.util.URLUtil.complete(url.toString(), link));
+                    URL child_url = new URL(org.apache.lenya.util.URLUtil.complete(url.toString(),
+                                link));
 
                     byte[] child_sresponse = getResource(child_url);
-                    saveToFile(createFileName(child_url, prefixSubstitute, substituteReplacement), child_sresponse);
-
+                    saveToFile(createFileName(child_url, prefixSubstitute, substituteReplacement),
+                        child_sresponse);
                 } catch (Exception e) {
                     log.error(".downloadUsingHttpClient(): " + e);
                 }
@@ -210,33 +225,31 @@ public class WGet {
         return sresponse;
     }
 
-
     /*
     //FIXME: This is an unfinished attempt at getting the links via cocoon.
     public URL[] getLinksViaCocoon(URL url) throws IOException, HttpException {
         log.debug(".getLinksViaCocoon(): "+url);
-	
+
         java.io.BufferedReader br = null;
         try {
-	    String linkViewQuery = "cocoon-view=links";
-	    String sURL = url.getFile();
-	    URL links = new URL(url, sURL + ((sURL.indexOf("?") == -1) ? "?" : "&") + linkViewQuery);
-	    java.net.URLConnection links_url_connection = links.openConnection();
-	    java.io.InputStream is = links_url_connection.getInputStream();
-	    br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
-	    String line;
-	    while ((line = br.readLine()) != null) {
-		log.debug(".getLinksViaCocoon(): Link: "+line);
+            String linkViewQuery = "cocoon-view=links";
+            String sURL = url.getFile();
+            URL links = new URL(url, sURL + ((sURL.indexOf("?") == -1) ? "?" : "&") + linkViewQuery);
+            java.net.URLConnection links_url_connection = links.openConnection();
+            java.io.InputStream is = links_url_connection.getInputStream();
+            br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
+            String line;
+            while ((line = br.readLine()) != null) {
+                log.debug(".getLinksViaCocoon(): Link: "+line);
             }
-	}
+        }
         catch(Exception e){
-	    log.error(".getLinksViaCocoon(): "+e);
-	}
-	
+            log.error(".getLinksViaCocoon(): "+e);
+        }
+
         return null;
     }
     */
-
     public List getLinks(URL url) throws IOException {
         log.debug(".getLinks(): Get links from " + url);
 
@@ -251,7 +264,6 @@ public class WGet {
 
         if (links != null) {
             log.debug(".getLinks(): Number of links found: " + links.size());
-
         }
 
         return links;
@@ -268,11 +280,12 @@ public class WGet {
      *
      * @throws IOException DOCUMENT ME!
      */
-    public byte[] substitutePrefix(String filename, String prefixSubstitute, String substituteReplacement) throws IOException {
+    public byte[] substitutePrefix(String filename, String prefixSubstitute,
+        String substituteReplacement) throws IOException {
         try {
             File file = new File(filename);
-            String command = "/usr/bin/sed --expression=s/" + escapeSlashes(prefixSubstitute) + "/" + escapeSlashes(substituteReplacement) + "/g " + file.getAbsolutePath();
-
+            String command = "/usr/bin/sed --expression=s/" + escapeSlashes(prefixSubstitute) +
+                "/" + escapeSlashes(substituteReplacement) + "/g " + file.getAbsolutePath();
 
             byte[] wget_response_sed = runProcess(command);
 
@@ -298,13 +311,15 @@ public class WGet {
      */
     public String escapeSlashes(String string) {
         StringBuffer buffer = new StringBuffer("");
+
         for (int i = 0; i < string.length(); i++) {
             if (string.charAt(i) == '/') {
-               buffer.append("\\/");
+                buffer.append("\\/");
             } else {
                 buffer.append(string.charAt(i));
             }
         }
+
         return buffer.toString();
     }
 
@@ -320,7 +335,8 @@ public class WGet {
     /**
      *
      */
-    public void saveToFile(String filename, byte[] bytes) throws FileNotFoundException, IOException {
+    public void saveToFile(String filename, byte[] bytes)
+        throws FileNotFoundException, IOException {
         File file = new File(filename);
         File parent = new File(file.getParent());
 
@@ -340,6 +356,7 @@ public class WGet {
      */
     public String createFileName(URL url, String prefixSubstitute, String substituteReplacement) {
         File file = new File(directory_prefix + File.separator + url.getFile());
+
         return file.getAbsolutePath().replaceAll(prefixSubstitute, substituteReplacement);
     }
 
@@ -350,23 +367,22 @@ public class WGet {
     //doesn't work on some platforms)
     public String grep(String pattern, String string) {
         try {
-	    RE regexp = new RE(pattern);
-	    if (regexp.match(string)) {
-		log.debug("Pattern matched");
-		for (int i=0; i<regexp.getParenCount(); i++) {
-		    log.debug("Parenthesis: " + regexp.getParen(i));
-		}
+            RE regexp = new RE(pattern);
+            if (regexp.match(string)) {
+                log.debug("Pattern matched");
+                for (int i=0; i<regexp.getParenCount(); i++) {
+                    log.debug("Parenthesis: " + regexp.getParen(i));
+                }
             } else{
-		log.debug("Pattern did not match");
+                log.debug("Pattern did not match");
             }
-	    return "";
-	} catch (RESyntaxException e) {
-	    log.error(e);
-	    return null;
-	}
+            return "";
+        } catch (RESyntaxException e) {
+            log.error(e);
+            return null;
+        }
     }
     */
-
     public byte[] runProcess(String command) throws Exception {
         Process process = Runtime.getRuntime().exec(command);
 
@@ -392,7 +408,8 @@ public class WGet {
         }
 
         if (baout_e.toString().length() > 0) {
-            log.error(".runProcess(): ###ErrorStream:START" + baout_e.toString() + "END:ErrorStream###");
+            log.error(".runProcess(): ###ErrorStream:START" + baout_e.toString() +
+                "END:ErrorStream###");
         }
 
         return baout.toByteArray();
