@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.xml,v 1.12 2004/05/07 23:44:54 michi Exp $ -->
+<!-- $Id: lenya.xml,v 1.13 2004/07/27 16:33:13 michi Exp $ -->
     
 <system type="cms">
   <id>lenya</id>
@@ -26,7 +26,7 @@
   <system_name>Apache Lenya</system_name>
   <description>Lenya is a CMS based on the XML publishing/application framework <a href="http://cocoon.apache.org">Cocoon</a> from the Apache Software Foundation.
 Hence it is totally based on XML, XSLT and other related open standards.
-Lenya supports browser based inline WYSIWYG editors, such as Xopus, Bitflux and Epoz.
+Lenya supports browser based inline WYSIWYG editors, such as Xopus, Bitflux and Kupu.
   </description>
   <main_url>http://cocoon.apache.org/lenya/</main_url>
   <license>
@@ -47,7 +47,7 @@ Lenya supports browser based inline WYSIWYG editors, such as Xopus, Bitflux and 
   <features>
     <feature>
       <title>WYSIWYG Editing</title>
-      <description>Xopus, Bitflux Edior and Epoz have been integrated into Lenya.</description>
+      <description>Xopus, Bitflux Edior and Kupu1.0.3 have been integrated into Lenya.</description>
     </feature>
     <feature>
       <title>WYSIWYC areas</title>
