@@ -6,7 +6,7 @@
   <map:pipelines>
     <map:pipeline>
       
-      <!-- CMS -->
+      <!-- Lenya Core -->
 
           <!-- matches lenya/css/**.css -->
           <map:match pattern="lenya/css/**.css">
@@ -28,7 +28,7 @@
             <map:read src="lenya/resources/images/{3}.{4}" mime-type="image/{4}" />
           </map:match>
 
-      <!-- publications -->
+      <!-- Lenya Publications -->
       
           <!-- matches pub-id/area/css/**.css -->
           <map:match pattern="*/*/css/**.css">
@@ -45,7 +45,7 @@
             <map:read src="pubs/{1}/resources/images/{3}.jpg" mime-type="image/jpeg" />
           </map:match>
 
-          <!-- matches pub-id/images/**.ext -->
+          <!-- matches pub-id/area/images/**.ext -->
           <map:match pattern="*/*/images/**.*">
             <map:read src="pubs/{1}/resources/images/{3}.{4}" mime-type="image/{4}" />
           </map:match>
