@@ -150,7 +150,7 @@ The schema of the CMS/F matrix is currently based on <a href="http://cvs.oscom.o
 </div>
 
 <div class="nnbe" style="padding-left: 10px;">
-<a class="nnbr" target="_blank" href="http://www.boomtchak.net/rubrique.php3?id_rubrique=48">CMS Outils</a>
+<a class="nnbr" target="_blank" href="http://www.boomtchak.net/rubrique.php3?id_rubrique=48">Boomtchak CMS Outils</a>
 </div>
 
 </td>
