@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DocumentIdToPathMapper.java,v 1.4 2003/07/04 12:55:59 egli Exp $
 <License>
 
  ============================================================================
@@ -68,22 +68,14 @@ public interface DocumentIdToPathMapper {
      * Compute the document-path for a given publication, area
      * and document-id
      *
-     * @param publication
-     * @param area
-     * @param documentId
-     * @return
+     * @param publication the publication of the document
+     * @param area the area of the document
+     * @param documentId the document-id of the document
+     * @param language the language of the document
+     * 
+     * @return the path to the document
      */
-    public abstract File getFile(Publication publication, String area, String documentId,
+    File getFile(Publication publication, String area, String documentId,
         String language);
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param publication DOCUMENT ME!
-     * @param area DOCUMENT ME!
-     * @param documentId DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public abstract File[] getFiles(Publication publication, String area, String documentId);
 }

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DefaultDocumentIdToPathMapper.java,v 1.5 2003/07/04 12:55:59 egli Exp $
 <License>
 
  ============================================================================
@@ -64,18 +64,8 @@ import java.io.File;
  *
  */
 public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
-    /* (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#computeDocumentPath(java.lang.String)
-     */
-    public String computeDocumentPath(Publication publication, String area, String documentId) {
-        File path = new File(publication.getDirectory(),
-                "content" + File.separator + area + File.separator + documentId + File.separator +
-                "index.xml");
-
-        return path.getAbsolutePath();
-    }
-
-    /* (non-Javadoc)
+	
+    /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
      */
     public File getFile(Publication publication, String area, String documentId, String language) {
@@ -90,13 +80,5 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
                 "index" + languageSuffix + ".xml");
 
         return file;
-    }
-
-    /* (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFiles(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
-     */
-    public File[] getFiles(Publication publication, String area, String documentId) {
-        //SiteTree tree = new DefaultSiteTree()
-        return null;
     }
 }
