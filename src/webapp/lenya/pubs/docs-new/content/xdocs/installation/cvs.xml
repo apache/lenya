@@ -13,6 +13,7 @@
 </header> 
 <body> 
 
+<!--
 <section>
 <title>CVS at Wyona</title>
 
@@ -22,18 +23,29 @@ The CVS command line for the Wyona CVS server:
 <source>
 cvs -d :pserver:anonymous@cvs.wyona.org:/usr/local/repositories checkout lenya
 </source>
-
 </section>
+-->
 
 <section>
-<title>CVS at Apache</title>
+<title>CVS at Apache (public)</title>
 <p>
-The CVS command line for the Apache CVS server (<strong>Note:</strong> This module has not been populated yet):
+The CVS command line for the Apache CVS server:
 </p>
 <source>
 cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic login
 (password: anoncvs)
 cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic checkout cocoon-lenya
+</source>
+</section>
+
+<section>
+<title>CVS at Apache (commit)</title>
+<p>
+The CVS command line for the Apache CVS server:
+</p>
+<source>
+export CVS_RSH=ssh
+cvs -d :ext:userid@cvs.apache.org:/home/cvs checkout cocoon-lenya
 </source>
 </section>
 
