@@ -9,10 +9,10 @@
 -->
 
 <xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:param name="forrest-publication"/>
+<xsl:param name="hsqldb-server-port"/>
 
 <xsl:template match="markup-languages/xsp-language/target-language[@name = 'java']">
   <xsl:copy>
@@ -107,6 +107,10 @@
   </xsl:copy>
 </xsl:template>
 
+
+<xsl:template match="hsqldb-server/parameter[@name = 'port']">
+  <parameter name="port" value="{$hsqldb-server-port}"/>
+</xsl:template>
 
 
 <xsl:template match="@*|node()">

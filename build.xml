@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.52 2003/04/07 09:01:39 andreas Exp $
+   @version CVS $Id: build.xml,v 1.53 2003/04/07 12:08:15 andreas Exp $
 
 -->
 
@@ -124,6 +124,9 @@
   <property name="src.webapp.dir" value="src/webapp"/>
 
   <property name="tools.jar" value="${java.home}/../lib/tools.jar"/>
+  
+  <!-- HSQLDB server port -->
+  <property name="hsqldb-server.port" value="9002"/>
 
   <!--
   these are here only for those who use jikes compiler. For other
@@ -267,6 +270,7 @@
         style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
         >
       <param name="forrest-publication" expression="${install.dir}/lenya/pubs/docs-new"/>
+      <param name="hsqldb-server-port" expression="${hsqldb-server.port}"/>
       <outputproperty name="indent" value="yes"/>
     </xslt>
     
