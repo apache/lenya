@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowModule.java,v 1.5 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id: WorkflowModule.java,v 1.6 2004/08/16 12:16:45 andreas Exp $  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -39,7 +39,7 @@ public class WorkflowModule extends AbstractInputModule {
     public static final String VARIABLE_PREFIX = "variable.";
     public static final String HISTORY_PATH = "history-path";
 
-    protected static final String[] PARAMETER_NAMES = { STATE, HISTORY_PATH };
+    static final String[] PARAMETER_NAMES = { STATE, HISTORY_PATH };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
@@ -64,7 +64,7 @@ public class WorkflowModule extends AbstractInputModule {
                     String variableName = name.substring(VARIABLE_PREFIX.length());
                     String[] variableNames = instance.getWorkflow().getVariableNames();
                     if (Arrays.asList(variableNames).contains(variableName)) {
-                        value = new Boolean(instance.getValue(variableName));
+                        value = Boolean.valueOf(instance.getValue(variableName));
                     }
                 }
                 else if (name.equals(HISTORY_PATH)) {
