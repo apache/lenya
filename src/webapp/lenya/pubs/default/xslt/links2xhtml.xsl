@@ -6,6 +6,9 @@
   xmlns="http://www.w3.org/1999/xhtml"
 >
 
+  <!-- default parameter value -->
+  <xsl:param name="rendertype" select="''"/>
+
   <xsl:template match="default:links">
     <div id="body">
       <h1><xsl:value-of select="default:title"/></h1>
