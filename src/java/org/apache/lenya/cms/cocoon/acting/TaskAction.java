@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.15 2003/06/06 13:29:53 andreas Exp $
+ * $Id: TaskAction.java,v 1.16 2003/06/06 17:28:33 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -143,7 +143,7 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         taskId = parameters.getParameter("task-id", taskId);
 
         if (taskId == null) {
-            getLogger().error("No task id provided! ", new IllegalStateException());
+            throw new IllegalStateException("No task id provided!");
         }
 
         //------------------------------------------------------------
