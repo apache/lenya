@@ -58,7 +58,7 @@ package org.apache.lenya.cms.publication;
 /**
  * @author Christian Egli
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCore.java,v 1.22 2004/02/12 17:56:06 andreas Exp $
+ * @version $Id: DublinCore.java,v 1.23 2004/02/17 14:03:52 egli Exp $
  */
 public interface DublinCore {
 
@@ -322,6 +322,15 @@ public interface DublinCore {
      */
     void addValue(String key, String value) throws DocumentException;
 
+	/**
+	 * Add all values for a certain key.
+	 * 
+	 * @param key The key
+	 * @param values The value to add
+	 * @throws DocumentException if something went wrong
+	 */
+	void addValues(String key, String[] values) throws DocumentException;
+
     /**
      * Removes a specific value for a certain key.
      * @param key The key.
@@ -336,5 +345,12 @@ public interface DublinCore {
      * @throws DocumentException when something went wrong.
      */
     void removeAllValues(String key) throws DocumentException;
+    
+	/**
+	 * Replace the contents of the current dublin core by the 
+	 * contents of other.
+	 * @param other
+	 */
+    void replaceBy(DublinCore other) throws DocumentException;
 
 }

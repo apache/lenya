@@ -59,12 +59,13 @@ package org.apache.lenya.cms.publication;
  * only read from file when it is actually requested.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
- * @version $Id: DublinCoreProxy.java,v 1.6 2004/02/12 17:56:06 andreas Exp $
+ * @version $Id: DublinCoreProxy.java,v 1.7 2004/02/17 14:03:52 egli Exp $
  */
 public class DublinCoreProxy implements DublinCore {
 
     private DublinCore dcCore;
     private Document cmsDocument;
+
 
     /** 
      * Creates a new instance of Dublin Core
@@ -81,7 +82,7 @@ public class DublinCoreProxy implements DublinCore {
      * @return a real dublin core object
      * @throws DocumentException when an error occurs.
      */
-    public DublinCore instance() throws DocumentException {
+    protected DublinCore instance() throws DocumentException {
         if (dcCore == null) {
             dcCore = new DublinCoreImpl(this.cmsDocument);
         }
@@ -290,6 +291,22 @@ public class DublinCoreProxy implements DublinCore {
      */
     public void removeAllValues(String key) throws DocumentException {
         instance().removeAllValues(key);
+    }
+    
+	/**
+	 * @see org.apache.lenya.cms.publication.DublinCore#replaceBy(org.apache.lenya.cms.publication.DublinCore)
+	 */
+	public void replaceBy(DublinCore other) throws DocumentException {
+		instance().replaceBy(other);
+
+	}
+
+    /**
+     * @see org.apache.lenya.cms.publication.DublinCore#addValues(java.lang.String, java.lang.String[])
+     */
+    public void addValues(String key, String[] values) throws DocumentException {
+        instance().addValues(key, values);
+        
     }
 
 }

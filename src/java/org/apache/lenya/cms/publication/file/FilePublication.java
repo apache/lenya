@@ -1,5 +1,5 @@
 /*
-$Id: FilePublication.java,v 1.5 2004/02/12 17:56:07 andreas Exp $
+$Id: FilePublication.java,v 1.6 2004/02/17 14:03:52 egli Exp $
 <License>
 
  ============================================================================
@@ -62,8 +62,6 @@ import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.AbstractPublication;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentSet;
-import org.apache.lenya.cms.publication.DublinCoreImpl;
-import org.apache.lenya.cms.publication.DublinCoreProxy;
 import org.apache.lenya.cms.publication.PublicationException;
 
 /**
@@ -114,9 +112,7 @@ public class FilePublication extends AbstractPublication {
                 destinationDirectory.mkdirs();
             }
             FileUtil.copyFileToDirectory(file, destinationDirectory);
-            DublinCoreProxy proxy = (DublinCoreProxy) destinationDocument.getDublinCore();
-            DublinCoreImpl dublinCore = (DublinCoreImpl) proxy.instance();
-            dublinCore.refresh();
+            destinationDocument.getDublinCore().replaceBy(sourceDocument.getDublinCore());
         } catch (IOException e) {
             throw new PublicationException(e);
         }

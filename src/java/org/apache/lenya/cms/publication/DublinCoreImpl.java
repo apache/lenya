@@ -77,7 +77,7 @@ import org.xml.sax.SAXException;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCoreImpl.java,v 1.8 2004/02/12 17:56:06 andreas Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.9 2004/02/17 14:03:52 egli Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;
@@ -168,14 +168,6 @@ public class DublinCoreImpl implements DublinCore {
                 cmsdocument.getArea(),
                 cmsdocument.getId(),
                 cmsdocument.getLanguage());
-        loadValues();
-    }
-
-    /**
-     * Refreshes the dublin core values.
-     * Loads the dublin core values from the XML file.
-     */
-    public void refresh() throws DocumentException {
         loadValues();
     }
 
@@ -605,7 +597,16 @@ public class DublinCoreImpl implements DublinCore {
                 "The key [" + key + "] does not refer to a dublin core element or term!");
         }
     }
-
+	
+	/**
+	 * @see org.apache.lenya.cms.publication.DublinCore#addValues(java.lang.String, java.lang.String[])
+	 */
+	public void addValues(String key, String[] values) throws DocumentException {
+		for (int i = 0; i < values.length; i++) {
+            addValue(key,values[i]);
+        }
+	}
+	
     /**
      * @see org.apache.lenya.cms.publication.DublinCore#removeValue(java.lang.String, java.lang.String)
      */
@@ -648,5 +649,21 @@ public class DublinCoreImpl implements DublinCore {
                 "The key [" + key + "] does not refer to a dublin core element or term!");
         }
     }
+    
+	/**
+	 * @see org.apache.lenya.cms.publication.DublinCore#replaceBy(org.apache.lenya.cms.publication.DublinCore)
+	 */
+	public void replaceBy(DublinCore other) throws DocumentException {
+		for (int i = 0; i < ELEMENTS.length; i++) {
+            String key = ELEMENTS[i];
+            removeAllValues(key);
+            addValues(key, other.getValues(key));
+        }
+        for (int i = 0; i < TERMS.length; i++) {
+            String key = TERMS[i];
+            removeAllValues(key);
+            addValues(key, other.getValues(key));
+        }
+	}
 
 }
