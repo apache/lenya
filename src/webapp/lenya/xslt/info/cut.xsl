@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: cut.xsl,v 1.11 2003/09/05 14:42:59 andreas Exp $
+ $Id: cut.xsl,v 1.12 2004/02/25 11:32:09 roku Exp $
  -->
 
 <xsl:stylesheet version="1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   >
   
@@ -23,7 +24,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>Cut Document</page:title>
+      <page:title><i18n:text>Cut Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
 	    <xsl:apply-templates select="info"/>
@@ -33,7 +34,12 @@
   
   <xsl:template match="info">
     <div class="lenya-box">
-      <div class="lenya-box-title">Cut Document</div>
+      <div class="lenya-box-title">
+        <i18n:translate>
+          <i18n:text key="cut-doc"/>
+          <i18n:param><q><xsl:value-of select="document-id"/></q></i18n:param>			
+        </i18n:translate>
+      </div>
       <div class="lenya-box-body">
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
@@ -44,19 +50,18 @@
 					<input type="hidden" name="lenya.step" value="cut"/>
           <table class="lenya-table-noborder">
           	<tr>
-          		<td class="lenya-entry-caption">Document:</td>
-          		<td><xsl:value-of select="document-id"/></td>
+          	  <td>
+                <i18n:translate>          		
+          		    <i18n:text key="cut-doc-to-clip?"/>
+                    <i18n:param><strong><xsl:value-of select="document-id"/></strong></i18n:param>			
+                  </i18n:translate>          	
+               </td>
           	</tr>
           	<tr>
-          		<td/>
-          		<td><br/>The document will be placed on the clipboard, ready<br/> to be pasted at the location of your choosing.</td>
-          	</tr>
-          	<tr>
-          		<td/>
           		<td>
           			<br/>
-        <input type="submit" value="Cut"/>&#160;
-        <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                    <input i18n:attr="value" type="submit" value="Cut"/>&#160;
+                    <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
           		</td>
           	</tr>
           </table>

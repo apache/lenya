@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: copy.xsl,v 1.12 2004/02/24 21:43:39 roku Exp $
+ $Id: copy.xsl,v 1.13 2004/02/25 11:32:09 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -52,21 +52,19 @@
           
           <table class="lenya-table-noborder">          
           	<tr>
-          		<td/>
           		<td><br/>
                   <i18n:translate>          		
-          		    <i18n:text key="copy-doc-to-clip-info"/>
+          		    <i18n:text key="copy-doc-to-clip?"/>
                     <i18n:param><strong><xsl:value-of select="document-id"/></strong></i18n:param>			
                   </i18n:translate>
-          		</td>
+                </td>
           	</tr>
           	<tr>
-          		<td/>
           		<td>
           			<br/>
-        <input i18n:attr="value" type="submit" value="Copy"/>&#160;
-        <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
-          		</td>
+                    <input i18n:attr="value" type="submit" value="Copy"/>&#160;
+                    <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                  </td>
           	</tr>
           </table>
           
