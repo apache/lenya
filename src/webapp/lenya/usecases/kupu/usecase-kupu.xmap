@@ -80,11 +80,6 @@
     
     <!-- Usecase pipeline -->  
     <map:pipeline>
-      <!--
-      <map:match pattern="**">
-        <map:redirect-to uri="/default/authoring/tutorial.html?pattern={1}"/>
-      </map:match>
-      -->
       <map:match pattern="kupu" type="usecase">
         <map:match pattern="open" type="step">
           <map:match pattern="*/authoring/**.html">
