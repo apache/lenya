@@ -1,5 +1,5 @@
 /*
-$Id: ServletJob.java,v 1.14 2003/08/29 11:35:21 andreas Exp $
+$Id: ServletJob.java,v 1.15 2004/01/07 18:37:23 andreas Exp $
 <License>
 
  ============================================================================
@@ -131,11 +131,34 @@ public abstract class ServletJob implements Job {
         jobElement.setAttribute(ATTRIBUTE_ID, jobDetail.getName());
         jobElement.setAttribute(ATTRIBUTE_CLASS, getClass().getName());
 
+        String documentUrl = getDocumentUrl(jobDetail);
+        jobElement.setAttribute(ATTRIBUTE_DOCUMENT_URL, documentUrl);
+        
+        return jobElement;
+    }
+
+    /**
+     * Returns the document URL of a certain job.
+     * @param jobDetail The job detail.
+     * @return A string.
+     */
+    public String getDocumentUrl(JobDetail jobDetail) {
         JobDataMap map = jobDetail.getJobDataMap();
         NamespaceMap wrapper = new NamespaceMap(map, LoadQuartzServlet.PREFIX);
         String documentUrl = (String) wrapper.get(PARAMETER_DOCUMENT_URL);
-
-        jobElement.setAttribute(ATTRIBUTE_DOCUMENT_URL, documentUrl);
-        return jobElement;
+        return documentUrl;
     }
+    
+    /**
+     * Sets the document URL of a job.
+     * @param jobDetail The job detail.
+     * @param url The URL.
+     */
+    public void setDocumentUrl(JobDetail jobDetail, String url) {
+        JobDataMap map = jobDetail.getJobDataMap();
+        NamespaceMap wrapper = new NamespaceMap(map, LoadQuartzServlet.PREFIX);
+        wrapper.put(PARAMETER_DOCUMENT_URL, url);
+        jobDetail.setJobDataMap(map);
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.24 2003/10/26 17:29:31 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.25 2004/01/07 18:37:23 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
 import org.apache.log4j.Category;
@@ -88,8 +87,10 @@ import java.io.File;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -99,20 +100,15 @@ import javax.servlet.http.HttpServletRequest;
  * @author ah
  */
 public class SchedulerWrapper {
+
     private static Category log = Category.getInstance(SchedulerWrapper.class);
     public static final String JOB_PREFIX = "job";
     public static final String JOB_ID = "id";
     private static int jobId = 0;
-    public static final String ELEMENT_JOB_GROUP = "job-group";
-    public static final String ELEMENT_JOB = "job";
-    public static final String ELEMENT_TRIGGERS = "triggers";
-    public static final String ELEMENT_TRIGGER = "trigger";
-    public static final String TITLE_ELEMENT = "title";
-    public static final String TYPE_ATTRIBUTE = "type";
-    public static final String CLASS_ATTRIBUTE = "class";
     private Scheduler scheduler = null;
     private String servletContextPath;
     private String schedulerConfigurationPath;
+    private SchedulerStore store = new SchedulerStore();
 
     /**
      * Creates a new instance of SchedulerWrapper
@@ -129,8 +125,8 @@ public class SchedulerWrapper {
 
         try {
             scheduler = factory.getScheduler();
-            
-            scheduler.addSchedulerListener(new AbstractSchedulerListener());         
+
+            scheduler.addSchedulerListener(new AbstractSchedulerListener());
             scheduler.start();
         } catch (SchedulerException e) {
             log.error("Can't initialize SchedulerWrapper: ", e);
@@ -138,6 +134,14 @@ public class SchedulerWrapper {
         }
 
         log.info("------- Startup complete ------------------");
+    }
+
+    /**
+     * Returns the store.
+     * @return A scheduler store.
+     */
+    protected SchedulerStore getStore() {
+        return store;
     }
 
     /**
@@ -237,11 +241,21 @@ public class SchedulerWrapper {
 
             log.debug("----------------------------------------------");
 
-            writeSnapshot(jobGroup);
+            store.writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
         } catch (Exception e) {
             log.error("Adding job failed: ", e);
             throw new SchedulerException(e);
         }
+    }
+
+    /**
+     * Returns the publication for a job group.
+     * @param jobGroup A job group.
+     * @return A publication.
+     * @throws PublicationException when the publication does not exist.
+     */
+    protected Publication getPublication(String jobGroup) throws PublicationException {
+        return PublicationFactory.getPublication(jobGroup, getServletContextPath());
     }
 
     /**
@@ -284,65 +298,9 @@ public class SchedulerWrapper {
             log.debug("\n Deleting job [" + jobGroup + "/" + jobName + "]");
             log.debug("-----------------------------------");
             getScheduler().deleteJob(jobName, jobGroup);
-            writeSnapshot(jobGroup);
+            getStore().writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
         } catch (Exception e) {
             log.error("Deleting job failed: ", e);
-        }
-    }
-
-    public static final String SNAPSHOT_FILE =
-        "config/scheduler/jobs.xml".replace('/', File.separatorChar);
-
-    /**
-     * Returns the job snapshot file for a job group. If a publication exists
-     * with publication ID = job group, the file is obtained from the publication
-     * directory. Otherwise, the generic Lenya snapshot file is used.
-     * @param jobGroup The job group.
-     * @return A file.
-     * @throws SchedulerException when the publication could not be built.
-     */
-    public File getJobsFile(String jobGroup) throws SchedulerException {
-        String publicationId = jobGroup;
-        File jobsFile;
-        if (PublicationFactory.existsPublication(publicationId, getServletContextPath())) {
-            log.debug("Publication [" + publicationId + "] exists.");
-            Publication publication;
-            try {
-                publication =
-                    PublicationFactory.getPublication(publicationId, getServletContextPath());
-            } catch (PublicationException e) {
-                throw new SchedulerException(e);
-            }
-            jobsFile = new File(publication.getDirectory(), SNAPSHOT_FILE);
-        } else {
-            jobsFile = new File(getServletContextPath(), "lenya" + File.separator + SNAPSHOT_FILE);
-        }
-        log.debug("Resolved job snapshot file: [" + jobsFile.getAbsolutePath() + "]");
-        return jobsFile;
-    }
-
-    /**
-     * Writes a job snapshot.
-     * @param jobGroup The job group.
-     * @throws SchedulerException when something went wrong.
-     */
-    protected void writeSnapshot(String jobGroup) throws SchedulerException {
-
-        log.debug("Writing job snapshot for group [" + jobGroup + "]");
-        File jobsFile = getJobsFile(jobGroup);
-
-        try {
-            File directory = jobsFile.getParentFile();
-
-            if (!directory.exists()) {
-                directory.mkdirs();
-                log.debug("Creating job snapshot directory: " + directory.getPath());
-            }
-
-            jobsFile.createNewFile();
-            DocumentHelper.writeDocument(getSnapshot(jobGroup), jobsFile);
-        } catch (Exception e) {
-            log.error("Writing job snapshot failed: ", e);
         }
     }
 
@@ -366,6 +324,11 @@ public class SchedulerWrapper {
             return null;
         }
     }
+
+    public static final String ELEMENT_TRIGGERS = "triggers";
+    public static final String ELEMENT_TRIGGER = "trigger";
+    public static final String TYPE_ATTRIBUTE = "type";
+    public static final String CLASS_ATTRIBUTE = "class";
 
     /**
      * Returns an XML element containing the trigger types.
@@ -431,6 +394,70 @@ public class SchedulerWrapper {
     }
 
     /**
+     * Return an XML description certain job groups.
+     * @param jobGroupNames The job group names.
+     * @return An XML document.
+     * @exception SchedulerException if an error occurs
+     */
+    public Document getSnapshot(String[] jobGroupNames) throws SchedulerException {
+        log.debug("Creating job snapshot");
+
+        NamespaceHelper helper = SchedulerStore.getNamespaceHelper();
+        Document document = helper.getDocument();
+        Element root = document.getDocumentElement();
+
+        // print a list of all available trigger types
+        root.appendChild(getTriggerTypes(helper));
+
+        for (int groupIndex = 0; groupIndex < jobGroupNames.length; groupIndex++) {
+            log.debug("Creating job snapshot for group [" + jobGroupNames[groupIndex] + "]");
+            root.appendChild(getSnapshot(helper, jobGroupNames[groupIndex]));
+        }
+
+        return document;
+    }
+    
+    /**
+     * Returns the snapshot of a certain job group.
+     * @param helper The namespace helper.
+     * @param group The job group.
+     * @return An XML element.
+     * @throws SchedulerException when something went wrong.
+     */
+    protected Element getSnapshot(NamespaceHelper helper, String group) throws SchedulerException {
+        JobWrapper[] jobs = getJobWrappers(group);
+        Element element;
+        try {
+            element = getStore().createSnapshot(helper, getPublication(group), jobs);
+        } catch (SchedulerException e) {
+            throw e;
+        } catch (PublicationException e) {
+            throw new SchedulerException(e);
+        }
+        return element;
+    }
+    
+    /**
+     * Returns the job wrappers for a certain job group.
+     * @param jobGroupName The job group.
+     * @return An array of job wrappers.
+     * @throws SchedulerException when something went wrong.
+     */
+    protected JobWrapper[] getJobWrappers(String jobGroupName) throws SchedulerException {
+        
+        List wrappers = new ArrayList();
+        String[] jobNames = getScheduler().getJobNames(jobGroupName);
+
+        for (int nameIndex = 0; nameIndex < jobNames.length; nameIndex++) {
+            JobDetail jobDetail = getScheduler().getJobDetail(jobNames[nameIndex], jobGroupName);
+            Trigger trigger = getTrigger(jobNames[nameIndex], jobGroupName);
+            wrappers.add(new JobWrapper(jobDetail, trigger));
+        }
+        
+        return (JobWrapper[]) wrappers.toArray(new JobWrapper[wrappers.size()]);
+    }
+
+    /**
      * Return an xml description of all scheduled jobs.
      * @return DOCUMENT ME!
      * @exception SchedulerException if an error occurs
@@ -441,194 +468,35 @@ public class SchedulerWrapper {
     }
 
     /**
-     * Return an xml description of all scheduled jobs for the given job group.
-     *
-     * @param jobGroup a<code>PrintWriter</code> value
-     * @return DOCUMENT ME!
-     * @exception SchedulerException if an error occurs
-     */
-    public Document getSnapshot(String jobGroup) throws SchedulerException {
-        String[] jobGroupNames = { jobGroup };
-        return getSnapshot(jobGroupNames);
-    }
-
-    /**
-     * Return an XML description certain job groups.
-     * @param jobGroupNames The job group names.
-     * @return An XML document.
-     * @exception SchedulerException if an error occurs
-     */
-    public Document getSnapshot(String[] jobGroupNames) throws SchedulerException {
-        log.debug("Creating job snapshot");
-
-        NamespaceHelper helper = getNamespaceHelper();
-        Document document = helper.getDocument();
-        Element root = document.getDocumentElement();
-
-        // print a list of all available trigger types
-        root.appendChild(getTriggerTypes(helper));
-
-        for (int groupIndex = 0; groupIndex < jobGroupNames.length; groupIndex++) {
-            log.debug("Creating job snapshot for group [" + jobGroupNames[groupIndex] + "]");
-            root.appendChild(createSnapshot(helper, jobGroupNames[groupIndex]));
-        }
-
-        return document;
-    }
-
-    /**
-     * Creates an XML element containting a snapshot of a job group.
-     * @param helper The namespace helper to use.
-     * @param jobGroup The job group.
-     * @return An XMl element.
-     * @throws SchedulerException when something went wrong.
-     */
-    protected Element createSnapshot(NamespaceHelper helper, String jobGroup)
-        throws SchedulerException {
-        Element jobGroupElement = helper.createElement(ELEMENT_JOB_GROUP);
-        jobGroupElement.setAttribute("name", jobGroup);
-
-        String[] jobNames = getScheduler().getJobNames(jobGroup);
-
-        for (int nameIndex = 0; nameIndex < jobNames.length; nameIndex++) {
-            JobDetail jobDetail = getScheduler().getJobDetail(jobNames[nameIndex], jobGroup);
-
-            ServletJob job = ServletJobFactory.createJob(jobDetail.getJobClass());
-            Element jobElement = job.save(helper, jobDetail);
-            jobGroupElement.appendChild(jobElement);
-
-            Trigger trigger = getTrigger(jobNames[nameIndex], jobGroup);
-
-            if (trigger != null) {
-                Element triggerElement = TriggerHelper.createElement(helper, trigger);
-                jobElement.appendChild(triggerElement);
-            }
-        }
-
-        return jobGroupElement;
-    }
-
-    /**
      * Restores the jobs of a certain job group from the snapshot file.
      * @param jobGroup The job group.
      * @throws SchedulerException when something went wrong.
      */
     public void restoreJobs(String jobGroup) throws SchedulerException {
+        
         log.debug("--------------------------------------------------");
         log.debug("Restoring jobs for job group [" + jobGroup + "]");
         log.debug("--------------------------------------------------");
-
-        File jobsFile = getJobsFile(jobGroup);
-
-        if (jobsFile.exists()) {
-            try {
-                Document document = DocumentHelper.readDocument(jobsFile);
-                Element schedulerElement = document.getDocumentElement();
-                NamespaceHelper helper = getNamespaceHelper(document);
-
-                Element jobGroupElement = helper.getFirstChild(schedulerElement, ELEMENT_JOB_GROUP);
-                if (jobGroupElement == null) {
-                    throw new SchedulerException("No <job-group> element found!");
-                }
-
-                String jobGroupAttribute = jobGroupElement.getAttribute("name");
-
-                if (!jobGroupAttribute.equals(jobGroup)) {
-                    throw new SchedulerException(
-                        "The jobs.xml file contains a wrong job group: ["
-                            + jobGroupAttribute
-                            + "]");
-                } else {
-                    Element[] jobElements = helper.getChildren(jobGroupElement, ELEMENT_JOB);
-
-                    for (int i = 0; i < jobElements.length; i++) {
-                        restoreJob(jobElements[i], jobGroup);
+        
+        try {
+            JobWrapper[] jobs = getStore().restoreJobs(getPublication(jobGroup));
+            for (int i = 0; i < jobs.length; i++) {
+                if (jobs[i].getTrigger() != null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("    Trigger time in future - scheduling job.");
                     }
+                    addJob(jobs[i].getJobDetail(), jobs[i].getTrigger());
+                } else {
+                    if (log.isDebugEnabled()) {
+                        log.debug("    Trigger time has expired - adding job without scheduling.");
+                    }
+                    addJob(jobs[i].getJobDetail());
                 }
-            } catch (Exception e) {
-                log.error("Restoring jobs failed: ", e);
-            }
-        }
-    }
-
-    /**
-     * Restores the jobs from a certain XML element.
-     * @param jobElement The XML element.
-     * @param jobGroup The job group the job belongs to.
-     */
-    protected void restoreJob(Element jobElement, String jobGroup) {
-        log.debug("Restoring job ");
-
-        NamespaceHelper helper = getNamespaceHelper();
-
-        try {
-            String jobClassName = jobElement.getAttribute(ServletJob.ATTRIBUTE_CLASS);
-            ServletJob job = ServletJobFactory.createJob(jobClassName);
-            JobDetail jobDetail = job.load(jobElement, jobGroup, getServletContextPath());
-
-            Trigger trigger = null;
-
-            Element triggerElement = helper.getFirstChild(jobElement, "trigger");
-            if (triggerElement != null) {
-                trigger =
-                    TriggerHelper.createTrigger(
-                        triggerElement,
-                        jobDetail.getName(),
-                        jobDetail.getGroup());
-
-                Date now = new GregorianCalendar().getTime();
-                if (log.isDebugEnabled()) {
-                    DateFormat format = new SimpleDateFormat();
-                    log.debug("    Trigger time: [" + format.format(trigger.getFinalFireTime()) + "]");
-                    log.debug("    Current time: [" + format.format(now) + "]");
-                }
-                if (!trigger.getFinalFireTime().after(now)) {
-                    trigger = null;
-                }
-            }
-
-            // FIXME: In the case of CronTrigger, getFinalFireTime does not make sense!
-            if (trigger != null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("    Trigger time in future - scheduling job.");
-                }
-                addJob(jobDetail, trigger);
-            } else {
-                if (log.isDebugEnabled()) {
-                    log.debug("    Trigger time has expired - adding job without scheduling.");
-                }
-                addJob(jobDetail);
             }
         } catch (Exception e) {
-            log.error("Could not restore job: ", e);
+            log.error("Restoring jobs failed: ", e);
         }
-    }
 
-    /** The namespace for the <code>jobs.xml</code> file. */
-    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/scheduler/1.0";
-
-    /**
-     * Returns a scheduler namespace helper for a document.
-     * @param document The XML document.
-     * @return a namespace helper.
-     */
-    public static NamespaceHelper getNamespaceHelper(Document document) {
-        return new NamespaceHelper(NAMESPACE, "sch", document);
-    }
-
-    /**
-     * Returns a new scheduler namespace helper with an document containing
-     * a &lt;sch:scheduler&gt; element.
-     * @return a namespace helper.
-     */
-    public static NamespaceHelper getNamespaceHelper() {
-        try {
-            return new NamespaceHelper(NAMESPACE, "sch", "scheduler");
-        } catch (Exception e) {
-            log.error("Could not create namespace helper: ", e);
-
-            return null;
-        }
     }
 
     /**
@@ -662,7 +530,14 @@ public class SchedulerWrapper {
                 log.debug("    Start time has already expired - deleting job.");
                 getScheduler().deleteJob(jobId, jobGroup);
             }
-            writeSnapshot(jobGroup);
+            try {
+                getStore().writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
+            } catch (SchedulerException e) {
+                throw e;
+            } catch (PublicationException e) {
+                throw new SchedulerException(e);
+            }
         }
     }
+
 }

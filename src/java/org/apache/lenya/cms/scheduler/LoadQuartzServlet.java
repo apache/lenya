@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.33 2003/08/29 17:14:43 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.34 2004/01/07 18:37:23 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id: LoadQuartzServlet.java,v 1.33 2003/08/29 17:14:43 andreas Exp $
 */
 package org.apache.lenya.cms.scheduler;
 
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.util.NamespaceMap;
@@ -91,7 +92,7 @@ import javax.servlet.http.HttpServletResponse;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.33 2003/08/29 17:14:43 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.34 2004/01/07 18:37:23 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -332,6 +333,7 @@ public class LoadQuartzServlet extends HttpServlet {
      * @throws SchedulerException when something went wrong.
      */
     public void restoreJobs() throws SchedulerException {
+
         File publicationsDirectory =
             new File(getServletContextDirectory(), PublishingEnvironment.PUBLICATION_PREFIX);
 
@@ -341,10 +343,19 @@ public class LoadQuartzServlet extends HttpServlet {
             }
         });
 
+        log.debug("=========================================");
+        log.debug("  Restoring jobs.");
+        log.debug("    servlet context: [" + getServletContextDirectory() + "]");
+        log.debug("    publications directory: [" + publicationsDirectory + "]");
+        log.debug("=========================================");
+
         for (int i = 0; i < publicationDirectories.length; i++) {
             File directory = publicationDirectories[i];
             String publicationId = directory.getName();
-            getScheduler().restoreJobs(publicationId);
+            if (PublicationFactory
+                .existsPublication(publicationId, getServletContextDirectory().getAbsolutePath())) {
+                getScheduler().restoreJobs(publicationId);
+            }
         }
     }
 }

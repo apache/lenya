@@ -1,5 +1,5 @@
 /*
-$Id: TriggerHelper.java,v 1.16 2003/08/28 10:12:35 andreas Exp $
+$Id: TriggerHelper.java,v 1.17 2004/01/07 18:37:23 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,7 @@ $Id: TriggerHelper.java,v 1.16 2003/08/28 10:12:35 andreas Exp $
 */
 package org.apache.lenya.cms.scheduler.xml;
 
-import org.apache.lenya.cms.scheduler.SchedulerWrapper;
+import org.apache.lenya.cms.scheduler.SchedulerStore;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
 
@@ -118,7 +118,7 @@ public final class TriggerHelper {
 
         String triggerType = element.getAttribute(TRIGGER_TYPE);
 
-        NamespaceHelper helper = SchedulerWrapper.getNamespaceHelper();
+        NamespaceHelper helper = SchedulerStore.getNamespaceHelper();
 
         // SimpleTrigger
         if (triggerType.equals(ONCE)) {

@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.34 2003/10/26 17:29:31 andreas Exp $
+$Id: TaskJob.java,v 1.35 2004/01/07 18:37:23 andreas Exp $
 <License>
 
  ============================================================================
@@ -180,7 +180,7 @@ public class TaskJob extends ServletJob {
     public JobDetail load(Element jobElement, String jobGroup, String servletContextPath) throws SchedulerException {
         JobDetail jobDetail = super.load(jobElement, jobGroup, servletContextPath);
         
-        NamespaceHelper helper = SchedulerWrapper.getNamespaceHelper();
+        NamespaceHelper helper = SchedulerStore.getNamespaceHelper();
         DefaultTaskWrapper wrapper = new DefaultTaskWrapper(helper, jobElement);
         wrapper.getTaskParameters().setServletContextPath(servletContextPath);
         
