@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.ResourcesManager</xsp:include>
+  </xsp:structure>
+  
+  <usecase:asset>
+    
+    <xsp:logic>
+      Publication pub = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+      ResourcesManager resourceMgr = new ResourcesManager(doc);
+      File[] resources = resourceMgr.getResources();
+    </xsp:logic>
+  
+    <usecase:date><input:get-attribute module="date" name="currentDate"/></usecase:date>
+    <usecase:assets>
+      <xsp:logic>
+	if (resources != null) {
+	  for(int i = 0; i &lt; resources.length; i++) {
+	  <xsp:content>
+	    <usecase:asset><xsp:expr>resources[i].getName()</xsp:expr></usecase:asset>
+	  </xsp:content>
+	  } 
+	}
+      </xsp:logic>
+    </usecase:assets>
+
+    <!-- FIXME: this should be defined in the workflow schema -->
+    <usecase:task-id>asset-insert</usecase:task-id>
+    
+  </usecase:asset>
+  
+</xsp:page>
