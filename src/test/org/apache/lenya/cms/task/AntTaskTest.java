@@ -26,6 +26,13 @@ public class AntTaskTest
     extends TestCase {
     
     /**
+	 * 
+	 */
+	AntTaskTest(String test) {
+		super(test);
+	}
+
+	/**
      * The main program for the IdentityTestCase class
      *
      * @param args The command line arguments
