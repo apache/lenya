@@ -3,15 +3,12 @@
 <article>
    <meta>
      <id/>
-<!--
-     <id>@ID@</id>
--->
-   <editor>@EDITOR@</editor>
+   <editor/>
    <author>@AUTHOR@</author>
    <date>
      <year/>
-     <month name="@MONTH_NAME@">00</month>
-     <day name="@DAY_NAME@">00</day>
+     <month name="@MONTH_NAME@"/>
+     <day name="@DAY_NAME@"/>
      <hour/>
      <minute/>
    </date>
@@ -26,6 +23,9 @@
    <quotation>Sample Quotation ...</quotation>.
    Sample Text ...
    </p>
+<p>
+To edit this story open the menu "File" and click on "Edit with Xopus2".
+</p>
    </body>
    <comments/>
 </article>

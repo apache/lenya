@@ -5,15 +5,20 @@ import org.wyona.cms.authoring.AbstractParentChildCreator;
 import java.io.File;
 import java.io.FileWriter;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import org.apache.log4j.Category;
 
+import org.wyona.util.DateUtil;
+
 /**
  * @author Michael Wechner
- * @version 2002.6.4
+ * @version 2002.11.10
  */
 public class NewArticleCreator extends AbstractParentChildCreator{
   static Category log=Category.getInstance(NewArticleCreator.class);
@@ -56,24 +61,50 @@ public class NewArticleCreator extends AbstractParentChildCreator{
     eid.addText(id);
     log.error(eid.getPath()+" "+eid.getText());
 
+    // Replace editor
+    Element eeditor=(Element)doc.selectSingleNode("/article/meta/editor");
+    log.debug(eeditor.getPath()+" "+eeditor.getText());
+    eeditor.addText("levi");
+    log.debug(eeditor.getPath()+" "+eeditor.getText());
+
+
+    Calendar cal=new GregorianCalendar();
+
     // Replace year
     Element eyear=(Element)doc.selectSingleNode("/article/meta/date/year");
     log.debug(eyear.getPath()+" "+eyear.getText());
-    //eid.remove(org.dom4j.DocumentHelper.createText("@ID@"));
-    eyear.addText("2002");
+    eyear.addText(Integer.toString(cal.get(cal.YEAR)));
     log.debug(eyear.getPath()+" "+eyear.getText());
+
+    // Replace month 
+    Element emonth=(Element)doc.selectSingleNode("/article/meta/date/month");
+    log.debug(emonth.getPath()+" "+emonth.getText());
+    int imonth=cal.get(cal.MONTH)+1;
+    emonth.addText(Integer.toString(imonth));
+    emonth.addAttribute("name",DateUtil.getMonthName(imonth));
+    log.debug(emonth.getPath()+" "+emonth.getText());
+
+    // Replace day 
+    Element eday=(Element)doc.selectSingleNode("/article/meta/date/day");
+    log.debug(eday.getPath()+" "+eday.getText());
+    eday.addText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+    eday.addAttribute("name",DateUtil.getDayName(cal.get(Calendar.DAY_OF_WEEK)));
+    log.debug(eday.getPath()+" "+eday.getText());
 
     // Replace hour 
     Element ehour=(Element)doc.selectSingleNode("/article/meta/date/hour");
     log.debug(ehour.getPath()+" "+ehour.getText());
-    ehour.addText("01");
+    ehour.addText(DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.HOUR_OF_DAY))));
     log.debug(ehour.getPath()+" "+ehour.getText());
 
     // Replace minute 
     Element eminute=(Element)doc.selectSingleNode("/article/meta/date/minute");
     log.debug(eminute.getPath()+" "+eminute.getText());
-    eminute.addText("28");
+    eminute.addText(DateUtil.oneToTwoDigits(Integer.toString(cal.get(cal.MINUTE))));
     log.debug(eminute.getPath()+" "+eminute.getText());
+
+
+
 
     // Write file
     File parent=new File(new File(filename).getParent());
