@@ -85,7 +85,7 @@
         <map:transform src="../../xslt/bxeng/change-object-path-back.xsl">
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
         </map:transform>
-        <map:serialize type="xml-utf-8"/>
+        <map:serialize type="xml"/>
       </map:match>
       
       <map:match type="usecase" pattern="bxeng">

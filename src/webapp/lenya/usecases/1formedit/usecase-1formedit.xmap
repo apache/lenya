@@ -51,7 +51,7 @@
     <map:pipeline internal-only="true">     
       <map:match pattern="request2document">
         <map:generate src="{global:basedir}/pubs/{page-envelope:publication-id}/work/oneformeditor/authoring/{page-envelope:document-id}.xml"/>
-        <map:serialize type="xml-utf-8"/>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>   
     
