@@ -177,7 +177,8 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      */
     public void addLabel(Label label) {
         if (getLabel(label.getLanguage()) == null) {
-            // only add the label if there is no label with the same language yet.
+            // only add the label if there is no label with the same language
+            // yet.
 
             NamespaceHelper helper = getNamespaceHelper();
             Element labelElem = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, label.getLabel());
@@ -204,8 +205,8 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                         && child.getNodeName().equals(LABEL_NAME)
                         && child.getFirstChild().getNodeValue().equals(label.getLabel())) {
 
-                    Node languageAttribute = child.getAttributes().getNamedItem(
-                            LANGUAGE_ATTRIBUTE_NAME);
+                    Node languageAttribute = child.getAttributes()
+                            .getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
 
                     if (languageAttribute != null
                             && languageAttribute.getNodeValue().equals(label.getLanguage())) {
@@ -265,7 +266,8 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
             // FIXME: the if is a workaround
-            if (getLogger()!=null) ContainerUtil.enableLogging(newNode, getLogger());
+            if (getLogger() != null)
+                ContainerUtil.enableLogging(newNode, getLogger());
             childElements.add(newNode);
         }
 
@@ -295,7 +297,27 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         List siblingElements = new ArrayList();
 
         NamespaceHelper helper = getNamespaceHelper();
-        Element[] elements = helper.getNextSiblings((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
+        Element[] elements = helper
+                .getNextSiblings((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
+
+        for (int i = 0; i < elements.length; i++) {
+            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            ContainerUtil.enableLogging(newNode, getLogger());
+            siblingElements.add(newNode);
+        }
+
+        return (SiteTreeNode[]) siblingElements.toArray(new SiteTreeNode[siblingElements.size()]);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getPrecedingSiblings()
+     */
+    public SiteTreeNode[] getPrecedingSiblings() {
+        List siblingElements = new ArrayList();
+
+        NamespaceHelper helper = getNamespaceHelper();
+        Element[] elements = helper.getPrecedingSiblings((Element) this.node,
+                SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
@@ -444,4 +466,5 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         }
         return list;
     }
+
 }

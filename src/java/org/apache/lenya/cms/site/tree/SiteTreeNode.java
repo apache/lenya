@@ -133,6 +133,13 @@ public interface SiteTreeNode {
      */
     SiteTreeNode[] removeChildren();
 
+    /**
+     * Get the sitetreenodes, which are the siblings preceding this node
+     * 
+     * @return the children.
+     */
+    SiteTreeNode[] getPrecedingSiblings();
+
 	/**
 	 * Get the sitetreenodes, which are the siblings following this node
 	 * 
