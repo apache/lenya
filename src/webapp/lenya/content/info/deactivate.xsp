@@ -29,6 +29,7 @@
           Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
           SiteTreeNode liveNode = (SiteTreeNode) <input:get-attribute module="sitetree" as="object" name="live-node"/>;
           SiteTreeNode[] liveChildren = liveNode.getChildren();
+          <language><xsp:expr>document.getLanguage()</xsp:expr></language>
           Publication publication = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
           
           if (liveChildren.length &gt; 0) {

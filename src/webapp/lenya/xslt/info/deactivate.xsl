@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: deactivate.xsl,v 1.11 2003/09/30 09:10:58 egli Exp $
+ $Id: deactivate.xsl,v 1.12 2003/10/14 09:47:56 edith Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -18,6 +18,10 @@
     <xsl:value-of select="/page/info/document-id"/>
   </xsl:variable>
   
+  <xsl:variable name="language">
+    <xsl:value-of select="/page/info/language"/>
+  </xsl:variable>
+
   <xsl:variable name="task-id">
     <xsl:value-of select="/page/info/task-id"/>
   </xsl:variable>
@@ -54,6 +58,7 @@
           <input type="hidden" name="task-id" value="{$task-id}"/>
           
           <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
+          <input type="hidden" name="properties.node.language" value="{$language}"/>
           
           <table class="lenya-table-noborder">
             <tr>
