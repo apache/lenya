@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: create.xsl,v 1.3 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id: create.xsl,v 1.1 2004/03/24 20:46:20 gregor Exp $ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
