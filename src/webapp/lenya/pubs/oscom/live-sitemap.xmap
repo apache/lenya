@@ -17,11 +17,6 @@
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
-    <map:pipeline>
-      <map:match pattern="introduction.html">
-        <map:read src="resources/publication/html/documentation/index.html" mime-type="text/html"/>
-      </map:match>
-    </map:pipeline>    
 
     <map:pipeline>
       <map:match pattern="http/slashdot.rdf">

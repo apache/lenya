@@ -127,7 +127,8 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
 
         // If there are more than one authenticator enabled, then check corresponding type
         String authenticator_type=(String)session.getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
-        if(this.authenticator_type != authenticator_type){
+        if(!this.authenticator_type.equals(authenticator_type)){
+        //if(this.authenticator_type != authenticator_type){
             getLogger().error("Bad authenticator: "+authenticator_type+" (Authorizer's authenticator: "+this.authenticator_type+")");
             return false;
         }

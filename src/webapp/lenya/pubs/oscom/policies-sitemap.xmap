@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+ <map:components>
+   <map:generators default="file"/>
+   <map:serializers default="xml"/>
+   <map:matchers default="wildcard"/>
+ </map:components>
+
+ <map:pipelines>
+   <map:pipeline>
+
+<!--
+     <map:match pattern="policies/.acml">
+       <map:generate src="docs/wyona/cms/ac/policies/public.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+     <map:match pattern="policies/index.html.acml">
+       <map:generate src="docs/wyona/cms/ac/policies/public.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="policies/live/**">
+       <map:generate src="docs/wyona/cms/ac/policies/public.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="policies/images/**">
+       <map:generate src="docs/wyona/cms/ac/policies/public.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="policies/authoring/**">
+       <map:generate src="docs/wyona/cms/ac/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="policies/xopus/**">
+       <map:generate src="docs/wyona/cms/ac/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="policies/edit/**">
+       <map:generate src="docs/wyona/cms/ac/policies/edit.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="policies/passwd/*.iml.acml">
+       <map:generate src="docs/wyona/cms/ac/policies/iml.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="policies/**">
+       <map:generate src="docs/wyona/cms/ac/policies/root.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+-->
+     <map:match pattern="authoring/**">
+       <map:generate src="docs/publication/access-control/policies/root.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+
+     <map:match pattern="**">
+       <map:generate src="docs/publication/access-control/policies/public.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+ </map:pipelines>
+</map:sitemap>
