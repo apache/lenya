@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.11 2003/07/25 16:43:45 edith Exp $
+$Id: SiteTreeNodeImpl.java,v 1.12 2003/08/08 08:19:58 edith Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,7 @@ import java.util.List;
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
  * @author $Author: edith $
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -325,6 +325,10 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             return false;
         }
     }
+	/**
+	 * (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren()
+	 */
 	public SiteTreeNode[] getChildren() {
 		List childElements = new ArrayList();
         
@@ -338,5 +342,29 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
 		return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
 	}
+
+	/**
+	 * (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTreeNode#accept(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
+	 */
+	public void accept (SiteTreeNodeVisitor visitor) {
+		visitor.visitSiteTreeNode(this);
+	}
 	
+	/**
+	 * (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTreeNode#acceptSubtree(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
+	 */
+	public void acceptSubtree (SiteTreeNodeVisitor visitor) {
+		this.accept(visitor);
+        SiteTreeNode[] children = this.getChildren();
+		if (children == null) {
+			log.info("The node " + this.getId() + " has no children");
+			return;
+		} else {
+			for (int i=0; i<children.length; i++) {
+				children[i].acceptSubtree(visitor);
+			}	
+		}
+	}
 }

@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.6 2003/07/25 16:43:45 edith Exp $
+$Id: SiteTreeNode.java,v 1.7 2003/08/08 08:19:58 edith Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ package org.apache.lenya.cms.publication;
  * delegates everything to the Node.
  *
  * @author $Author: edith $
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public interface SiteTreeNode {
 	
@@ -137,6 +137,24 @@ public interface SiteTreeNode {
 	 */
     boolean hasLink();
 
+	/**
+	 * Get the sitetreenodes, which are children of this node
+	 * @return the children.
+	 */
 	SiteTreeNode[] getChildren();
 	
+	/**
+	 * Call the visit method of the visitor, that mean
+	 * the operation that shall be perfoemed on this node
+	 * (Visitor pattern)
+	 * @param visitor The visitor.
+	 */
+	void accept (SiteTreeNodeVisitor visitor);
+	
+	/**
+	 * Traverse the node ant its children and call the
+	 * accept method.
+	 * @param visitor The visitor.
+	 */
+	void acceptSubtree (SiteTreeNodeVisitor visitor);
 }
