@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.38 2004/03/24 12:08:07 roku Exp $ -->
+<!-- $Id: asset.xsl,v 1.39 2004/04/02 13:44:20 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -58,7 +58,7 @@
 	  </xsl:choose>
 	</xsl:when>
 	<xsl:otherwise>
-	  <page:title><i18n:text>Asset Upload</i18n:text></page:title>
+	  <page:title><i18n:text>New Asset</i18n:text></page:title>
 	</xsl:otherwise>
       </xsl:choose>
       <page:body>
@@ -118,7 +118,7 @@ function check(fileinput) {
      }
   }
    // file does not have one of the accepted extensions.
-   alert("You tried to upload a file with an invalid extension. Valid extensions are:\n\n<xsl:value-of select="$extensions"/>");
+   alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/></i18n:param></i18n:translate>");
    return false;
 }
 </script>  
@@ -154,21 +154,27 @@ function check(fileinput) {
 	    <xsl:if test="$error = 'true'">
 	      <tr>
 		<td colspan="2" class="lenya-form-caption">
-		  <span	class="lenya-form-message-error">The file name
-		  of the file you are trying to upload contains characters which are not
-		  allowed, such as spaces or umlauts. 
+		  <span class="lenya-form-message-error">
+		    <i18n:text key="filename-format-exception"/>
 		  </span>
 		</td>
 	      </tr>
 	    </xsl:if>
 	    <tr>
-	      <td class="lenya-form-caption" style="vertical-align: top;"><i18n:text>Select</i18n:text>&#160;
-	      <xsl:choose>
-	        <xsl:when test="$insertimage = 'true'"><i18n:text>Image</i18n:text></xsl:when>
-	        <xsl:otherwise><i18n:text>File</i18n:text></xsl:otherwise>
-	      </xsl:choose>:
+	      <td class="lenya-form-caption" style="vertical-align: top;">
+	        <i18n:translate>
+	          <i18n:text key="select-object"/>
+	          <i18n:param>
+	            <i18n:text>
+                  <xsl:choose>
+                    <xsl:when test="$insertimage = 'true'">Image</xsl:when>
+	                <xsl:otherwise>File</xsl:otherwise>
+                  </xsl:choose>
+	            </i18n:text>
+              </i18n:param>
+	        </i18n:translate>:
 	      </td>
-	      <td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
+	      <td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>

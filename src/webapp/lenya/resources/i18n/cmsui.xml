@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.52 2004/04/02 13:22:32 roku Exp $ -->
+<!-- $Id: cmsui.xml,v 1.53 2004/04/02 13:44:20 roku Exp $ -->
 
 <catalogue xml:lang="en">
 
@@ -72,13 +72,15 @@
   <message key="Subject">Subject</message>
   <message key="Rights">Rights</message>
   <message key="Select File">Select File</message>
+  <message key="select-object">Select {0}</message>
   <message key="Insert">Insert</message>
   <message key="Insert File">Insert File</message>
   <message key="upload-with-invalid-extension">You tried to upload a file with an invalid extension. Valid extensions are{0}</message>
   <message key="filename-format-exception">The file name of the file you are trying to upload either has no extension, or contains characters which are not allowed, such as spaces or umlauts.</message>
   <message key="Creation Date">Creation Date</message>
   <message key="File Size">File Size</message>
-
+  <message key="Image">Image</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
