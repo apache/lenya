@@ -23,18 +23,18 @@
            fork="true">
       <classpath refid="classpath"/>
       <classpath>
-        <pathelement path="${build.root}/lenya/classes" />
+        <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
       </classpath>
     </javac>
 
     <!-- Run tests -->
     <java fork="yes" classname="junit.textui.TestRunner">
       <arg value="org.apache.lenya.cms.ac.IdentityTestCase"/>
+      <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
-        <pathelement path="${build.root}/lenya/classes" />
+        <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
       </classpath>
-      <classpath refid="classpath"/>
     </java>
   </target>
 

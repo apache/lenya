@@ -22,9 +22,10 @@ function passwd() {
       var filename = sitemapPath + "pubs/" + authenticatorId + "/content/ac/passwd/" + identityFromSession.getUsername() + ".iml";
       var identity = new Packages.org.lenya.cms.ac.Identity(filename);
       if (identity.changePassword(oldpassword, newpassword, confirmednewpassword)) {
+          identity.writeDocument(filename);
           break;
       } else {
-          exceptionMessage = "Either authentication failed (username = " + identity.getUsername() + ") or new password and confirmed new password do not match (" + filename + ")";
+          exceptionMessage = "Either authentication failed (username = " + identity.getUsername() + ") or new password and confirmed new password do not match or new password length is not between 5 and 8 characters";
           continue;
       }
   }

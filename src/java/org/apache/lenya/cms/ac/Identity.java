@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.9 2003/04/21 23:22:55 michi Exp $
+ * $Id: Identity.java,v 1.10 2003/04/22 22:17:24 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,9 +57,11 @@ import org.w3c.dom.NodeList;
 
 import java.util.Vector;
 
+import org.lenya.xml.DOMUtil;
+
 
 /**
- * DOCUMENT ME!
+ * Identity class representing an IML (Identity Markup Language) document
  *
  * @author Michael Wechner
  * @version 2003.4.20
@@ -70,6 +72,7 @@ public class Identity {
     private static String ROOT = "identity";
     private String username = null;
     private String encryptedPassword = null;
+    private String comment = null;
     private Vector groupnames = null;
 
     /**
@@ -87,6 +90,10 @@ public class Identity {
         Node passwordNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/password");
         encryptedPassword = passwordNode.getFirstChild().getNodeValue();
         log.debug("Encrypted Password: " + encryptedPassword);
+
+        Node commentNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/comment");
+        comment = commentNode.getFirstChild().getNodeValue();
+        log.debug("Comment: " + comment);
 
         NodeList groupNodes = XPathAPI.selectNodeList(doc, "/" + ROOT + "/groups/group");
 
@@ -142,6 +149,13 @@ public class Identity {
     }
 
     /**
+     * Encrypt and set password
+     */
+    public void setPassword(String plainTextPassword) throws Exception {
+        this.encryptedPassword = Password.encrypt(plainTextPassword);
+    }
+
+    /**
      * DOCUMENT ME!
      *
      * @param groupname DOCUMENT ME!
@@ -181,10 +195,35 @@ public class Identity {
     }
 
     /**
+     * Create XML Document
+     */
+     public Document createDocument() throws Exception {
+         DOMUtil du = new DOMUtil();
+         Document iml = du.create("<?xml version=\"1.0\"?><identity id=\"" +  username + "\"></identity>");
+         du.setAttributeValue(iml, "/identity/password/@type", "md5");
+         du.setElementValue(iml, "/identity/password", encryptedPassword);
+         du.setElementValue(iml, "/identity/comment", comment);
+         for (int i = 0; i < groupnames.size(); i++) {
+             du.addElement(iml, "/identity/groups/group", (String) groupnames.elementAt(i));
+         }
+
+         //new org.lenya.xml.DOMWriter(System.out).printWithoutFormatting(iml);
+         return iml;
+     }
+
+    /**
+     * Write XML Document to the filesystem
+     */
+     public void writeDocument(String filename) throws Exception {
+         new org.lenya.xml.DOMWriter(new java.io.FileOutputStream(filename)).printWithoutFormatting(createDocument());
+     }
+
+    /**
      * Change Password
      */
      public boolean changePassword(String oldP, String newP, String confirmedP) throws Exception {
-         if (Password.encrypt(oldP).equals(getEncryptedPassword()) && newP.equals(confirmedP)) {
+         if (Password.encrypt(oldP).equals(getEncryptedPassword()) && newP.equals(confirmedP) && newP.length() > 4 && newP.length() < 9) {
+             setPassword(newP);
              return true;
          }
          return false;
