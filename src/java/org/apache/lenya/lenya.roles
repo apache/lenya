@@ -112,6 +112,6 @@
         
   <role name="org.apache.lenya.cms.publication.DocumentManager"
   	    shorthand="link-rewriter"
-  	    default-class="org.apache.lenya.cms.publication.file.FileDocumentManager"/>
+  	    default-class="org.apache.lenya.cms.publication.DocumentManagerImpl"/>
         
 </role-list>

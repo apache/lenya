@@ -26,6 +26,10 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
@@ -41,7 +45,7 @@ import org.apache.lenya.workflow.WorkflowInstance;
  * 
  * @version $Id:$
  */
-public abstract class AbstractDocumentManager extends AbstractLogEnabled implements
+public class DocumentManagerImpl extends AbstractLogEnabled implements
         DocumentManager, Serviceable, Contextualizable {
 
     /**
@@ -160,15 +164,6 @@ public abstract class AbstractDocumentManager extends AbstractLogEnabled impleme
     }
 
     /**
-     * Copies a document source.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws PublicationException when something went wrong.
-     */
-    protected abstract void copyDocumentSource(Document sourceDocument, Document destinationDocument)
-            throws PublicationException;
-
-    /**
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteDocument(org.apache.lenya.cms.publication.Document)
      */
     public void deleteDocument(Document document) throws PublicationException {
@@ -194,13 +189,6 @@ public abstract class AbstractDocumentManager extends AbstractLogEnabled impleme
             }
         }
     }
-
-    /**
-     * Deletes the source of a document.
-     * @param document The document to delete.
-     * @throws PublicationException when something went wrong.
-     */
-    protected abstract void deleteDocumentSource(Document document) throws PublicationException;
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#moveDocument(org.apache.lenya.cms.publication.Document,
@@ -391,6 +379,54 @@ public abstract class AbstractDocumentManager extends AbstractLogEnabled impleme
         }
     }
 
+    /**
+     * Copies a document source.
+     * @param sourceDocument The source document.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException when something went wrong.
+     */
+    public void copyDocumentSource(Document sourceDocument, Document destinationDocument)
+            throws PublicationException {
+        
+        SourceResolver sourceResolver = null;
+        try {
+            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            Source source = sourceResolver.resolveURI(sourceDocument.getSourceURI());
+            Source destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
+            SourceUtil.copy(source, (ModifiableSource) destination, true);
+            destinationDocument.getDublinCore().replaceBy(sourceDocument.getDublinCore());
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        }
+        finally {
+            if (sourceResolver != null) {
+                this.manager.release(sourceResolver);
+            }
+        }
+    }
+
+    /**
+     * Deletes the source of a document.
+     * @param document The document to delete.
+     * @throws PublicationException when something went wrong.
+     */
+    protected void deleteDocumentSource(Document document) throws PublicationException {
+        
+        SourceResolver sourceResolver = null;
+        try {
+            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            Source source = sourceResolver.resolveURI(document.getSourceURI());
+            ((ModifiableSource) source).delete();
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        }
+        finally {
+            if (sourceResolver != null) {
+                this.manager.release(sourceResolver);
+            }
+        }
+    }
+    
     /**
      * Abstract base class for document visitors which operate on a source and
      * target document.
