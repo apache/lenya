@@ -40,9 +40,7 @@
     <menu name="File" label="File">
       <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;doctype=entry">Edit&#160;with&#160;Forms</item>
-<!--
         <item href="index-bxeng.html">Edit&#160;with&#160;BXENG</item>
--->
 <!--
         <item>Edit&#160;with&#160;Midas</item>
 -->
