@@ -99,6 +99,7 @@ table.lenya-menubar-menu img {border:0px}
 	font:11px verdana, arial, sans-serif; 
 	color:#444444; 
 	background-color: transparent;
+        text-decoration: none;
 }
 
 .lenya-menubar-separator {
