@@ -53,7 +53,7 @@ import org.apache.lenya.util.ServletHelper;
  * document.
  * 
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
- * @version $Id: PageEnvelope.java,v 1.55 2004/02/02 02:50:39 stefano Exp $ <License>
+ * @version $Id: PageEnvelope.java,v 1.56 2004/02/20 16:34:53 andreas Exp $ <License>
  */
 public class PageEnvelope {
     public static final String PUBLICATION_ID = "publication-id";
@@ -75,14 +75,30 @@ public class PageEnvelope {
     public static final String DOCUMENT_LANGUAGE = "document-language";
     public static final String DOCUMENT_LANGUAGES = "document-languages";
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
+    
+    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
+    
+    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
+    
+    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
     public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
+    
+    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
     public static final String DOCUMENT_DC_PUBLISHER = "document-dc-publisher";
+    
+    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
     public static final String DOCUMENT_DC_DATE_CREATED = "document-dc-date-created";
+    
+    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
     public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
+    
+    /** @deprecated Use {@link org.apache.lenya.cms.publication.Document#getDublinCore()} instead */
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
+    
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
+
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
 
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
