@@ -17,6 +17,8 @@
       <block>
         <item>Edit</item>
         <item>Publish</item>
+        <item>Schedule&#160;Headlines</item>
+        <item>Schedule&#160;Webperls</item>
 <!--
         <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
 -->

@@ -31,6 +31,7 @@
 -->
         <item><xsp:attribute name="href"><xsp:expr>"http://wyona.bitflux.ch/wysiwyg/?url-xml="+domain_prefix+"/magazin/gesundheit/2002/0465/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.js&amp;url-css="+domain_prefix+"/css/article.css"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
         <item>Publish</item>
+        <item>Schedule</item>
 <!--
         <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
 -->
