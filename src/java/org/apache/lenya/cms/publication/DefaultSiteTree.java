@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.11 2003/05/28 09:34:54 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.12 2003/05/28 11:54:59 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -205,7 +205,7 @@ public class DefaultSiteTree
 	return new SiteTreeNodeImpl(node);
     }
 
-    public void serialize()
+    public void save()
 	throws IOException,
 	       TransformerConfigurationException,
 	       TransformerException  {
@@ -225,7 +225,7 @@ public class DefaultSiteTree
 	    Label[] labels2 = { label_de, label_en  };
 	    sitetree.addNode("/tutorial/features", "here", labels2);
 	    
-	    sitetree.serialize();
+	    sitetree.save();
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}

@@ -147,7 +147,7 @@ public class TreePublisher extends PublicationTask {
                     documentid);
             }
 
-            liveTree.serialize();
+            liveTree.save();
         } catch (Exception e) {
             throw new PublishingException("Couldn't publish the tree :" +
                 absolutetreelivepath, e);

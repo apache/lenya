@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreatorAction.java,v 1.4 2003/05/27 14:52:38 egli Exp $
+ * $Id: DefaultCreatorAction.java,v 1.5 2003/05/28 11:54:59 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -267,7 +267,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         }
 
 	// commit (sort of)
-	siteTree.serialize();
+	siteTree.save();
 
 	HashMap actionMap = new HashMap();
 	return actionMap;
