@@ -38,7 +38,8 @@
     <usecase:task-id>publish</usecase:task-id>
     
     <xsp:logic>
-	  DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
+      Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+	  DocumentReferencesHelper helper = new DocumentReferencesHelper(document.getIdentityMap(), objectModel);
 	  Document[] references = helper.getInternalReferences();
 	  if (references.length &gt; 0) {
         </xsp:logic><referenced-documents><xsp:logic>
