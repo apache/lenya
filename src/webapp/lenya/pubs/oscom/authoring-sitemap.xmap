@@ -108,6 +108,12 @@
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>
+      <map:match pattern="authoring/menus/editor-matrix/*.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/editor-matrix.xsp">
+          <map:parameter name="projectid" value="{1}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
       <map:match pattern="authoring/menus/overview.xml">
         <map:generate type="serverpages" src="docs/publication/menus/overview.xsp"/>
         <map:serialize type="xml"/>
@@ -207,9 +213,6 @@
     <map:match pattern="authoring/editor-matrix/index.xml">
       <map:generate type="directory" src="docs/publication/authoring/editor-matrix/" label="xml"/>
       <map:transform src="stylesheets/publication/Page/Matrix/xinclude_editor.xsl"/>
-<!--
-      <map:transform type="xinclude"/>
--->
       <map:transform type="xlink">
         <map:parameter name="href" value="docs/publication/authoring/overview_dummy.xml"/>
       </map:transform>
@@ -225,7 +228,7 @@
 
     <map:match pattern="authoring/editor-matrix/*.xml">
       <map:aggregate element="wyona">
-        <map:part src="cocoon:/authoring/menus/matrix/{1}.xml"/>
+        <map:part src="cocoon:/authoring/menus/editor-matrix/{1}.xml"/>
         <map:part src="cocoon:/authoring/editor-matrix/{1}-envelope.xsp" element="cmsbody"/>
       </map:aggregate>
       <map:transform type="xinclude"/>
