@@ -24,11 +24,18 @@ public class DocumentTypeBuilder {
     public DocumentTypeBuilder() {
     }
     
+    
     /**
+     * The default document types configuration directory, relative to the publication directory.
+     */
+    public static final String DOCTYPE_DIRECTORY
+        = "config/doctypes".replace('/', File.separatorChar);
+    /*
      * The default document types configuration file, relative to the publication directory.
      */
     public static final String CONFIG_FILE
-    	= "config/doctypes/doctypes.xconf".replace('/', File.separatorChar);
+    	= "doctypes.xconf".replace('/', File.separatorChar);
+        
     
     /**
      * Builds a document type for a given name.
@@ -40,7 +47,8 @@ public class DocumentTypeBuilder {
     public DocumentType buildDocumentType(String name, Publication publication)
         throws DocumentTypeBuildException {
     	
-    	File configFile = new File(publication.getDirectory(), CONFIG_FILE);
+        File configDirectory = new File(publication.getDirectory(), DOCTYPE_DIRECTORY);
+    	File configFile = new File(configDirectory, CONFIG_FILE);
     	
     	try {
 			Document document = DocumentHelper.readDocument(configFile);  
