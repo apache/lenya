@@ -2,21 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
-
 <xsl:template match="menu">
-<html>
-
-<head>
-<title>Lenya > <xsl:value-of select="url-info/publication-id"/> > <xsl:value-of select="url-info/area"/> > <xsl:value-of select="url-info/document-id"/></title>
-<script type="text/javascript" src="/lenya/lenya/menu/menu.js">
-</script>
-
-<link type="text/css" rel="stylesheet" href="/lenya/lenya/menu/menu.css" />
-</head>
-
-<body bgcolor="#ffffff" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4">
@@ -95,22 +81,11 @@ src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
 </table>
 
 <xsl:apply-templates select="menus/menu" mode="menu"/>
-
-<script type="text/javascript">
- initialize(); 
-</script>
-</body>
-</html>
 </xsl:template>
-
-
-
-
 
 <xsl:template match="workflow-state">
   Workflow State: <b><xsl:apply-templates/></b> |
 </xsl:template>
-
 
 
 <xsl:template match="menu" mode="nav">
@@ -125,11 +100,6 @@ src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
   <div style="float:left; width:46px">&#160;</div>
 <div style="float:left; width:1px"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="21" /></div>
 </xsl:template>
-
-
-
-
-
 
 
 <xsl:template match="menu" mode="menu">
@@ -158,9 +128,4 @@ src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
   </div>
 </xsl:template>
 
-
-
-
-
 </xsl:stylesheet>
-
