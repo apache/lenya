@@ -21,6 +21,7 @@ import java.io.File;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationImpl;
 
 /**
  * Publication visitor which returns the first publication implementing a certain usecase.
@@ -50,7 +51,7 @@ public class ExistingUsecaseResolver implements PublicationVisitor {
     public void visit(Publication _publication) {
 
         if (this.publication == null) {
-            File configFile = new File(_publication.getDirectory(), Publication.CONFIGURATION_FILE);
+            File configFile = new File(_publication.getDirectory(), PublicationImpl.CONFIGURATION_FILE);
             DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
             try {

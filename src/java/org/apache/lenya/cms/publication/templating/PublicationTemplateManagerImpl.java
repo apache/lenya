@@ -32,6 +32,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationImpl;
 
 /**
  * Manager for publication templates.
@@ -63,7 +64,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     public void setup(Publication _publication) throws ConfigurationException {
         this.publication = _publication;
 
-        File configFile = new File(_publication.getDirectory(), Publication.CONFIGURATION_FILE);
+        File configFile = new File(_publication.getDirectory(), PublicationImpl.CONFIGURATION_FILE);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
         try {

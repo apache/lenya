@@ -104,11 +104,9 @@ public final class PublicationFactory extends AbstractLogEnabled {
         if (keyToPublication.containsKey(key)) {
             publication = (Publication) keyToPublication.get(key);
         } else {
-            if (PublicationFactory.existsPublication(id, servletContextPath)) {
-                publication = new PublicationImpl(id, servletContextPath);
-                ContainerUtil.enableLogging(publication, getLogger());
-                keyToPublication.put(key, publication);
-            }
+            publication = new PublicationImpl(id, servletContextPath);
+            ContainerUtil.enableLogging(publication, getLogger());
+            keyToPublication.put(key, publication);
         }
 
         if (publication == null) {
@@ -170,28 +168,6 @@ public final class PublicationFactory extends AbstractLogEnabled {
         String publicationId = new URLInformation(webappUrl).getPublicationId();
         Publication publication = getPublication(publicationId, servletContext.getAbsolutePath());
         return publication;
-    }
-
-    /**
-     * Checks if a publication with a certain ID exists in a certain context.
-     * @param id The publication ID.
-     * @param servletContextPath The webapp context path.
-     * @return <code>true</code> if the publication exists, <code>false</code> otherwise.
-     */
-    public static boolean existsPublication(String id, String servletContextPath) {
-
-        if (servletContextPath.endsWith("/")) {
-            servletContextPath = servletContextPath.substring(0, servletContextPath.length() - 1);
-        }
-
-        File publicationDirectory = new File(servletContextPath + File.separator
-                + Publication.PUBLICATION_PREFIX + File.separator + id);
-
-        boolean exists = true;
-        exists = exists && publicationDirectory.isDirectory();
-        exists = exists && new File(publicationDirectory, Publication.CONFIGURATION_FILE).exists();
-
-        return exists;
     }
 
     /**
@@ -282,10 +258,8 @@ public final class PublicationFactory extends AbstractLogEnabled {
 
             for (int i = 0; i < publicationDirectories.length; i++) {
                 String publicationId = publicationDirectories[i].getName();
-                if (existsPublication(publicationId, servletContextPath)) {
-                    Publication publication = getPublication(publicationId, servletContextPath);
-                    publications.add(publication);
-                }
+                Publication publication = getPublication(publicationId, servletContextPath);
+                publications.add(publication);
             }
 
         } catch (Exception e) {

@@ -104,19 +104,17 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             String publicationId = info.getPublicationId();
 
             File contextDir = getContext();
-            if (PublicationFactory.existsPublication(publicationId, contextDir.getAbsolutePath())) {
-
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            try {
+                publication = factory.getPublication(webappUrl, contextDir);
+            } catch (PublicationException e) {
+                throw new AccessControlException(e);
+            }
+            if (publication.exists()) {
                 getLogger().debug("Publication [" + publicationId + "] exists.");
-                try {
-                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                    publication = factory.getPublication(publicationId, contextDir
-                            .getAbsolutePath());
-                } catch (PublicationException e) {
-                    throw new AccessControlException(e);
-                }
-
             } else {
                 getLogger().debug("Publication [" + publicationId + "] does not exist.");
+                publication = null;
             }
         }
         return publication;

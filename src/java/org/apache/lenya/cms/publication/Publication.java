@@ -54,50 +54,6 @@ public interface Publication {
      */
     String TRASH_AREA = "trash";
     /**
-     * <code>ELEMENT_PATH_MAPPER</code> The path mapper element
-     */
-    String ELEMENT_PATH_MAPPER = "path-mapper";
-    /**
-     * <code>ELEMENT_DOCUMENT_BUILDER</code> The document buider element
-     */
-    String ELEMENT_DOCUMENT_BUILDER = "document-builder";
-    /**
-     * <code>ELEMENT_SITE_STRUCTURE</code> The site structure element
-     */
-    String ELEMENT_SITE_STRUCTURE = "site-structure";
-    /**
-     * <code>ATTRIBUTE_TYPE</code> The type attribute
-     */
-    String ATTRIBUTE_TYPE = "type";
-    /**
-     * <code>ATTRIBUTE_SRC</code> The src attribute
-     */
-    String ATTRIBUTE_SRC = "type";
-    /**
-     * <code>LANGUAGES</code> The languages
-     */
-    String LANGUAGES = "languages";
-    /**
-     * <code>LANGUAGE</code> The language
-     */
-    String LANGUAGE = "language";
-    /**
-     * <code>DEFAULT_LANGUAGE_ATTR</code> The default language attribute
-     */
-    String DEFAULT_LANGUAGE_ATTR = "default";
-    /**
-     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix
-     */
-    String BREADCRUMB_PREFIX = "breadcrumb-prefix";
-    /**
-     * <code>SSL_PREFIX</code> The SSL prefix
-     */
-    String SSL_PREFIX = "ssl-prefix";
-    /**
-     * <code>LIVE_MOUNT_POINT</code> The live mount point
-     */
-    String LIVE_MOUNT_POINT = "live-mount-point";
-    /**
      * <code>PUBLICATION_PREFIX</code> The publication prefix
      */
     String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
@@ -129,10 +85,6 @@ public interface Publication {
      * <code>SEARCH_AREA_PREFIX</code> The search area prefix
      */
     String SEARCH_AREA_PREFIX = "search-";
-    /**
-     * <code>CONFIGURATION_FILE</code> The publication configuration file
-     */
-    String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
 
     /**
      * Returns the publication ID.
@@ -146,6 +98,11 @@ public interface Publication {
      * @return A <code>File</code> object.
      */
     File getServletContext();
+    
+    /**
+     * @return if this publication exists.
+     */
+    boolean exists();
 
     /**
      * Returns the publication directory.

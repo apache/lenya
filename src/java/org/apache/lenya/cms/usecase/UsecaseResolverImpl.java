@@ -27,9 +27,6 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -140,32 +137,20 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @return A publication.
      */
     protected Publication getPublication(String webappUrl) {
-
-        SourceResolver resolver = null;
-        Source source = null;
         Publication publication = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context://");
-            String contextPath = SourceUtil.getFile(source).getAbsolutePath();
-
             URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
 
-            if (publicationId != null
-                    && PublicationFactory.existsPublication(publicationId, contextPath)) {
+            if (publicationId != null) {
                 PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                publication = factory.getPublication(webappUrl, SourceUtil.getFile(source));
+                Publication pub = factory.getPublication(this.manager, webappUrl);
+                if (pub.exists()) {
+                    publication = pub;
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
         return publication;
     }

@@ -28,9 +28,7 @@ import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.Constants;
 import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
@@ -109,8 +107,8 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
             URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
             
-            if (publicationId != null && PublicationFactory.existsPublication(publicationId, contextPath)) {
-                Publication pub = factory.getPublication(publicationId, contextPath);
+            Publication pub = factory.getPublication(publicationId, contextPath);
+            if (pub.exists()) {
                 templateManager.setup(pub);
                 ExistingSourceResolver resolver = new ExistingSourceResolver();
                 templateManager.visit(path, resolver);
@@ -154,9 +152,6 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
 
     private org.apache.avalon.framework.context.Context context;
 
-    /** The environment context */
-    private Context envContext;
-
     /** The ServiceManager */
     private ServiceManager manager;
 
@@ -173,7 +168,6 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
      */
     public void contextualize(org.apache.avalon.framework.context.Context _context)
             throws ContextException {
-        this.envContext = (Context) _context.get(Constants.CONTEXT_ENVIRONMENT_CONTEXT);
         this.context = _context;
     }
 

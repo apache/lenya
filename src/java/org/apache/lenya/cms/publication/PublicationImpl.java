@@ -58,6 +58,57 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private boolean isConfigLoaded = false;
 
     /**
+     * <code>CONFIGURATION_FILE</code> The publication configuration file
+     */
+    public static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator
+            + "publication.xconf";
+
+    /**
+     * <code>ELEMENT_PATH_MAPPER</code> The path mapper element
+     */
+    String ELEMENT_PATH_MAPPER = "path-mapper";
+    /**
+     * <code>ELEMENT_DOCUMENT_BUILDER</code> The document buider element
+     */
+    String ELEMENT_DOCUMENT_BUILDER = "document-builder";
+    /**
+     * <code>ELEMENT_SITE_STRUCTURE</code> The site structure element
+     */
+    String ELEMENT_SITE_STRUCTURE = "site-structure";
+    /**
+     * <code>ATTRIBUTE_TYPE</code> The type attribute
+     */
+    String ATTRIBUTE_TYPE = "type";
+    /**
+     * <code>ATTRIBUTE_SRC</code> The src attribute
+     */
+    String ATTRIBUTE_SRC = "type";
+    /**
+     * <code>LANGUAGES</code> The languages
+     */
+    String LANGUAGES = "languages";
+    /**
+     * <code>LANGUAGE</code> The language
+     */
+    String LANGUAGE = "language";
+    /**
+     * <code>DEFAULT_LANGUAGE_ATTR</code> The default language attribute
+     */
+    String DEFAULT_LANGUAGE_ATTR = "default";
+    /**
+     * <code>BREADCRUMB_PREFIX</code> The breadcrumb prefix
+     */
+    String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+    /**
+     * <code>SSL_PREFIX</code> The SSL prefix
+     */
+    String SSL_PREFIX = "ssl-prefix";
+    /**
+     * <code>LIVE_MOUNT_POINT</code> The live mount point
+     */
+    String LIVE_MOUNT_POINT = "live-mount-point";
+
+    /**
      * Creates a new instance of Publication
      * @param _id the publication id
      * @param servletContextPath the servlet context of this publication
@@ -76,12 +127,18 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         if (isConfigLoaded) {
             return;
         }
-        
+
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Loading configuration for publication [" + getId() + "]");
         }
 
-        File configFile = new File(getDirectory(), CONFIGURATION_FILE);
+        File configFile = getConfigurationFile();
+
+        if (!configFile.exists()) {
+            throw new RuntimeException("The configuration file [" + configFile
+                    + "] does not exist!");
+        }
+
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
         Configuration config;
@@ -157,6 +214,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         this.breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
 
         isConfigLoaded = true;
+    }
+
+    /**
+     * @return The configuration file (publication.xconf).
+     */
+    protected File getConfigurationFile() {
+        File configFile = new File(getDirectory(), CONFIGURATION_FILE);
+        return configFile;
     }
 
     /**
@@ -360,5 +425,12 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
             throw new SiteException(e);
         }
         return manager;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#exists()
+     */
+    public boolean exists() {
+        return getConfigurationFile().exists();
     }
 }

@@ -89,24 +89,10 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
         if (publicationId.trim().equals("")) {
             addErrorMessage("Please enter a publication ID!");
         } else {
-
-            SourceResolver resolver = null;
-            Source source = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                Source context = resolver.resolveURI("context://");
-                String contextPath = SourceUtil.getFile(context).getAbsolutePath();
-
-                if (PublicationFactory.existsPublication(publicationId, contextPath)) {
-                    addErrorMessage("A publication with this ID already exists.");
-                }
-            } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    this.manager.release(resolver);
-                }
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication publication = factory.getPublication(this.manager, publicationId);
+            if (publication.exists()) {
+                addErrorMessage("A publication with this ID already exists.");
             }
         }
     }
@@ -141,25 +127,15 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
 
     }
 
-    protected static final String[] sourcesToCopy = {
-            "publication.xml",
-            "config/publication.xconf",
-            "config/ac/passwd/visit.rml",
-            "config/ac/passwd/reviewer.gml",
-            "config/ac/passwd/review.rml",
-            "config/ac/passwd/localhost.ipml",
-            "config/ac/passwd/lenya.iml",
-            "config/ac/passwd/ldap.properties.sample",
-            "config/ac/passwd/editor.gml",
-            "config/ac/passwd/edit.rml",
-            "config/ac/passwd/alice.iml",
-            "config/ac/passwd/admin.rml",
-            "config/ac/passwd/admin.gml",
-            "config/ac/ac.xconf",
-            "config/doctypes/doctypes.xconf",
-            "config/workflow/workflow.xml",
-            "content/authoring/sitetree.xml",
-            "content/authoring/index/index_en.xml" };
+    protected static final String[] sourcesToCopy = { "publication.xml",
+            "config/publication.xconf", "config/ac/passwd/visit.rml",
+            "config/ac/passwd/reviewer.gml", "config/ac/passwd/review.rml",
+            "config/ac/passwd/localhost.ipml", "config/ac/passwd/lenya.iml",
+            "config/ac/passwd/ldap.properties.sample", "config/ac/passwd/editor.gml",
+            "config/ac/passwd/edit.rml", "config/ac/passwd/alice.iml",
+            "config/ac/passwd/admin.rml", "config/ac/passwd/admin.gml", "config/ac/ac.xconf",
+            "config/doctypes/doctypes.xconf", "config/workflow/workflow.xml",
+            "content/authoring/sitetree.xml", "content/authoring/index/index_en.xml" };
 
     /**
      * Creates a publication from a template.
@@ -233,7 +209,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
         }
 
     }
-    
+
     protected void copySource(Publication template, String publicationId, SourceResolver resolver,
             String publicationsUri, String source) throws MalformedURLException, IOException {
         Source templateSource = null;

@@ -407,8 +407,14 @@ public class LoadQuartzServlet extends HttpServlet {
         for (int i = 0; i < publicationDirectories.length; i++) {
             File directory = publicationDirectories[i];
             String publicationId = directory.getName();
-            if (PublicationFactory.existsPublication(publicationId, getServletContextDirectory()
-                    .getAbsolutePath())) {
+            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+            Publication publication;
+            try {
+                publication = factory.getPublication(publicationId, getServletContextDirectory());
+            } catch (PublicationException e) {
+                throw new SchedulerException(e);
+            }
+            if (publication.exists()) {
                 getScheduler().restoreJobs(publicationId);
             }
         }
