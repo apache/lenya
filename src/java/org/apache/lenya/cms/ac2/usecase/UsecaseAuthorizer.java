@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseAuthorizer.java,v 1.5 2003/08/05 16:21:37 andreas Exp $
+$Id: UsecaseAuthorizer.java,v 1.6 2003/08/06 12:38:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -131,7 +131,7 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
                 Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
                 Set roleIds = new HashSet();
                 for (int j = 0; j < roleElements.length; j++) {
-                    String roleId = roleElements[i].getAttribute(ID_ATTRIBUTE);
+                    String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
                     roleIds.add(roleId);
                     getLogger().debug("Adding role [" + roleId + "]");
                 }
