@@ -7,8 +7,9 @@
 package org.apache.lenya.cms.publication;
 
 /**
+ * A CMS document.
  *
- * @author  andreas
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public interface Document {
     
