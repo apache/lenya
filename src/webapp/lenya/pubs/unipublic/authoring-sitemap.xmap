@@ -71,9 +71,10 @@
         <doctypes href="docs/publication/doctypes/"/>
       </map:action>                                                                                                                         
       <map:action logger="action.upload" name="file-upload"
-	src="ch.unizh.unipublic.wyona.cms.ArticleImageUploadCreatorAction">
-        <images-dir href="resources/publication/images/authoring" />
-        <meta-dir href="docs/publication/authoring" />
+	src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+        <resources-root href="resources/publication/images/live" />
+        <docs-root href="docs/publication/authoring" />
+        <meta-root href="docs/publication/authoring" />
 	<insert-image-before value="false" />
       </map:action>
     </map:actions>
@@ -112,7 +113,7 @@
     <map:pipeline>
       <map:match pattern="revision/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
           <map:parameter name="channel" value="{1}"/>
@@ -126,14 +127,14 @@
 
       <map:match pattern="rollback/*/*/*/*/index.xml">
         <map:act type="rollback">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
           <map:redirect-to uri="{location}" session="true"/>
         </map:act>
       </map:match>                                                                                                                          
        
       <map:match pattern="view/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
         </map:generate>
@@ -185,7 +186,7 @@
 
 
 
-    <!-- ParentChild Content Creator: New Article -->
+    <!-- ParentChild Content Creator: New Document -->
     <map:pipeline>
       <map:match pattern="wyona/ParentChildScreenNewArticle*">
         <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
@@ -199,7 +200,7 @@
         <map:redirect-to uri="ParentChildScreenNewArticle?status=failed" session="true"/>
       </map:match>
     </map:pipeline>
-    <!-- /ParentChild Content Creator: New Article -->
+    <!-- /ParentChild Content Creator: New Document -->
 
 
 
@@ -413,7 +414,7 @@
         </map:aggregate>
         <map:transform src="stylesheets/publication/Page/Dossier/Authoring/main.xsl">
           <map:parameter name="authoring" value="true"/>
-          <map:parameter name="documentid" value="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+          <map:parameter name="documentid" value="dossiers/{1}/{2}/index.xml"/>
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
@@ -439,7 +440,7 @@
       </map:match>
 
       <map:match pattern="*/*/*/articles.xml">
-        <map:generate type="directory" src="docs/publication/authoring/{1}/{2}/articles/{3}"/>
+        <map:generate type="directory" src="docs/publication/authoring/{1}/{2}/{3}"/>
         <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
@@ -497,7 +498,7 @@
   <!-- Checkout -->
       <map:match pattern="rco/*/*/*/*/index.xml">
         <map:act type="reserved-checkout">
-            <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+            <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 <!--
           <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
 -->
@@ -511,14 +512,14 @@
           </map:generate>
           <map:serialize type="xml"/>
         </map:act>
-        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
   <!-- Checkin -->
       <map:match pattern="rci/*/*/*/*/index.xml">
         <map:act type="reserved-checkin">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 <!--
           <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkin-exception.xsp">
 -->
@@ -530,17 +531,17 @@
           </map:generate>
           <map:serialize type="xml"/>
         </map:act>
-        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="*/*/*/*/index.xml">
-        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="*/*/*/*/index.xhtml">
-        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xhtml"/>
+        <map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xhtml"/>
         <map:transform src="stylesheets/publication/Page/Article/migrate-xhtml2xml.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
@@ -571,11 +572,11 @@
         </map:aggregate>
         <map:transform src="stylesheets/publication/Page/Article/xinclude.xsl" />
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="href" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
         </map:transform>
         <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
           <map:parameter name="section" value="{2}"/>
-          <map:parameter name="documentid" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="documentid" value="{1}/{2}/{3}/{4}/index.xml"/>
           <map:parameter name="authoring" value="true"/>
         </map:transform>
         <map:serialize type="html"/>
@@ -589,7 +590,7 @@
         </map:aggregate>
         <map:transform src="stylesheets/publication/Page/Article/xinclude.xsl" />
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <map:parameter name="href" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
