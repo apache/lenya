@@ -87,6 +87,22 @@ Limit your search to field:
     </xsl:for-each>
     License
   </input>
+  <input type="checkbox" name="matrix.fields.plang">
+    <xsl:for-each select="search/fields/field">
+    <xsl:if test=". = 'plang'">
+      <xsl:attribute name="checked">checked</xsl:attribute>
+    </xsl:if>
+    </xsl:for-each>
+    Programming Language
+  </input>
+  <input type="checkbox" name="matrix.fields.features">
+    <xsl:for-each select="search/fields/field">
+    <xsl:if test=". = 'features'">
+      <xsl:attribute name="checked">checked</xsl:attribute>
+    </xsl:if>
+    </xsl:for-each>
+    Features
+  </input>
 
     <!-- Selection -->
 <!--

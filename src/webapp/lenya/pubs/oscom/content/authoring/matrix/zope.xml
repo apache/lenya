@@ -8,4 +8,5 @@
     <license_name>Zope Public License (ZPL)</license_name>
     <license_url>http://www.zope.org/Resources/ZPL</license_url>
   </license>
+  <programming-language>Python</programming-language>
 </system>

@@ -11,4 +11,5 @@ Apache Cocoon is an XML publishing framework that raises the usage of XML and XS
     <license_name>Apache Software License</license_name>
     <license_url>http://xml.apache.org/cocoon/license.html</license_url>
   </license>
+  <programming-language>Java</programming-language>
 </system>

@@ -5,14 +5,8 @@
   <luc:variable name="" value=""/>
 -->
   <luc:field name="title" type="Text" xpath="/system/system_name"/>
-  <luc:field name="contents" type="Text" xpath="/system/description"/>
-  <luc:field name="license" type="Text" xpath="/system/license/license_name"/>
-<!--
-  <luc:field name="name" type="Text" xpath="/system/system_name"/>
-  <luc:field name="descr" type="UnStored" xpath="/system/description"/>
-  <luc:field name="fulltext" type="UnStored" xpath="/system"/>
--->
-<!--
-  <luc:field name="plang" type="Text" xpath="/system/programming-language"/>
--->
+  <luc:field name="contents" type="UnStored" xpath="/system/description"/>
+  <luc:field name="license" type="UnStored" xpath="/system/license/license_name"/>
+  <luc:field name="plang" type="UnStored" xpath="/system/programming-language"/>
+  <luc:field name="features" type="UnStored" xpath="/system/features"/>
 </luc:document>
