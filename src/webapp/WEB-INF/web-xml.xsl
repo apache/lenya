@@ -38,7 +38,7 @@
       <servlet-class>org.apache.lenya.cms.scheduler.LoadQuartzServlet</servlet-class>
       <init-param>
         <param-name>scheduler-configurations</param-name>
-        <param-value>/lenya/content/scheduler/scheduler.xconf</param-value>
+        <param-value>/lenya/config/scheduler/scheduler.xconf</param-value>
       </init-param>
     <load-on-startup>1</load-on-startup>
     </servlet>
