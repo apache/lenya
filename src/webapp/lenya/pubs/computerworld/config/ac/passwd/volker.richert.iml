@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<identity id="volker.richert">
-	<password type="md5">a3650ac4cea58f1c22e9b80ec84dc755</password>
-	<comment>Volker Richert</comment>
-	<!--<expire year="2002" month="12" day="31"/>-->
-	<groups>
-		<group>editor</group>
-	</groups>
-</identity>
