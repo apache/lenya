@@ -42,14 +42,21 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
+        if (getErrorMessages().isEmpty()) {
 
-        String event = getEvent();
+            if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+                addErrorMessage("This usecase can only be invoked from the authoring area.");
+                return;
+            }
 
-        if (!getWorkflowInstance(getSourceDocument()).canInvoke(getSituation(), event)) {
-            setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
-            addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
-        } else {
-            setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
+            String event = getEvent();
+
+            if (!getWorkflowInstance(getSourceDocument()).canInvoke(getSituation(), event)) {
+                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
+                addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
+            } else {
+                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
+            }
         }
     }
 

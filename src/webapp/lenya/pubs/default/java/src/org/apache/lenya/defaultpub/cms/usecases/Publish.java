@@ -49,39 +49,44 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
+        if (getErrorMessages().isEmpty()) {
 
-        String event = getEvent();
-        Document document = getSourceDocument();
+            String event = getEvent();
+            Document document = getSourceDocument();
 
-        if (!getWorkflowInstance(getSourceDocument()).canInvoke(getSituation(), event)) {
-            setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
-            addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
-        }
-        else {
-            setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
-        }
+            if (!document.getArea().equals(Publication.AUTHORING_AREA)) {
+                addErrorMessage("This usecase can only be invoked from the authoring area.");
+                return;
+            }
 
-        Publication publication = document.getPublication();
+            if (!getWorkflowInstance(getSourceDocument()).canInvoke(getSituation(), event)) {
+                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
+                addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
+            } else {
+                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
+            }
 
-        Document liveDocument = publication.getAreaVersion(document, Publication.LIVE_AREA);
+            Publication publication = document.getPublication();
 
-        List missingDocuments = new ArrayList();
+            Document liveDocument = publication.getAreaVersion(document, Publication.LIVE_AREA);
 
-        SiteManager manager = publication.getSiteManager(document.getIdentityMap());
-        Document[] requiredDocuments = manager.getRequiredResources(liveDocument);
-        for (int i = 0; i < requiredDocuments.length; i++) {
-            if (!manager.containsInAnyLanguage(requiredDocuments[i])) {
-                Document authoringVersion = publication.getAreaVersion(requiredDocuments[i],
-                        Publication.AUTHORING_AREA);
-                missingDocuments.add(authoringVersion);
+            List missingDocuments = new ArrayList();
+
+            SiteManager manager = publication.getSiteManager(document.getIdentityMap());
+            Document[] requiredDocuments = manager.getRequiredResources(liveDocument);
+            for (int i = 0; i < requiredDocuments.length; i++) {
+                if (!manager.containsInAnyLanguage(requiredDocuments[i])) {
+                    Document authoringVersion = publication.getAreaVersion(requiredDocuments[i],
+                            Publication.AUTHORING_AREA);
+                    missingDocuments.add(authoringVersion);
+                }
+            }
+
+            if (!missingDocuments.isEmpty()) {
+                addErrorMessage("Cannot publish document unless the following documents are published:");
+                setParameter(MISSING_DOCUMENTS, missingDocuments);
             }
         }
-
-        if (!missingDocuments.isEmpty()) {
-            addErrorMessage("Cannot publish document unless the following documents are published:");
-            setParameter(MISSING_DOCUMENTS, missingDocuments);
-        }
-
     }
 
     /**
