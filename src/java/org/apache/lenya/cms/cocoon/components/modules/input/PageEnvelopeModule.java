@@ -29,6 +29,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
@@ -51,12 +52,17 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
+
+        if (!Arrays.asList(PageEnvelope.PARAMETER_NAMES).contains(name)) {
+            throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+        }
+
         PageEnvelope envelope = getEnvelope(objectModel);
         Object value = null;
 
         try {
             if (name.equals(PageEnvelope.AREA)) {
-                value = envelope.getDocument().getArea();
+                value = envelope.getArea();
             } else if (name.equals(PageEnvelope.CONTEXT)) {
                 value = envelope.getContext();
             } else if (name.equals(PageEnvelope.PUBLICATION_ID)) {
@@ -65,51 +71,49 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 value = envelope.getPublication();
             } else if (name.equals(PageEnvelope.PUBLICATION_LANGUAGES_CSV)) {
                 value = StringUtils.join(envelope.getPublication().getLanguages(), ',');
-            } else if (name.equals(PageEnvelope.DOCUMENT)) {
-                value = envelope.getDocument();
-            } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
-                value = envelope.getDocument().getId();
-            } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
-                value = envelope.getDocument().getName();
-            } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) { // FIXME: Why
-                                                                   // is this
-                                                                   // here?
-                value = envelope.getDocument().getLabel();
-            } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
-                value = envelope.getDocument().getCanonicalDocumentURL();
-            } else if (name.equals(PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE)) {
-                value = envelope.getDocument().getCanonicalWebappURL();
-            } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
-                value = envelope.getDocumentPath();
-            } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
-                value = envelope.getDocument().getFile();
-            } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
-                value = envelope.getDocument().getExtension();
             } else if (name.equals(PageEnvelope.DEFAULT_LANGUAGE)) {
                 value = envelope.getPublication().getDefaultLanguage();
-            } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
-                value = envelope.getDocument().getLanguage();
-            } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
-                value = envelope.getDocument().getLanguages();
-            } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
-                value = StringUtils.join(envelope.getDocument().getLanguages(), ',');
-            } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
-                Date date = envelope.getDocument().getLastModified();
-                value = new SimpleDateFormat(DATE_FORMAT).format(date);
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
-            } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
-                value = getDocumentType(envelope);
-            } else {
-                throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+            }
+
+            Document document = envelope.getDocument();
+            if (document != null) {
+                if (name.equals(PageEnvelope.DOCUMENT)) {
+                    value = document;
+                } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
+                    value = document.getId();
+                } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
+                    value = document.getName();
+                } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) {
+                    value = document.getLabel();
+                } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
+                    value = document.getCanonicalDocumentURL();
+                } else if (name.equals(PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE)) {
+                    value = document.getCanonicalWebappURL();
+                } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
+                    value = envelope.getDocumentPath();
+                } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
+                    value = document.getFile();
+                } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
+                    value = document.getExtension();
+                } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
+                    value = document.getLanguage();
+                } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
+                    value = document.getLanguages();
+                } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
+                    value = StringUtils.join(document.getLanguages(), ',');
+                } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
+                    Date date = document.getLastModified();
+                    value = new SimpleDateFormat(DATE_FORMAT).format(date);
+                } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
+                    value = getDocumentType(envelope);
+                }
             }
         } catch (final DocumentException e) {
             throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
                     e);
         } catch (final ServiceException e) {
-            throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
-                    e);
-        } catch (final ConfigurationException e) {
             throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
                     e);
         }
