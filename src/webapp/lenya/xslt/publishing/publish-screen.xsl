@@ -135,8 +135,7 @@
                 <tr>
                   <td/>
                   <td>
-                    <input i18n:attr="value" type="submit" value="Publish"/>
-                    <xsl:text> </xsl:text>
+                    <input i18n:attr="value" type="submit" value="Publish"/>&#160;
                     <input i18n:attr="value" type="button" onClick="location.href='{$referer}';" value="Cancel"/>
                   </td>
                 </tr>
@@ -175,11 +174,7 @@
           </sch:job>
           
         </sch:scheduler-form>
-        -->
-        
-        <div style="text-align: right">
-        <form action="{$referer}"><input i18n:attr="value" type="submit" value="Back to Page"/></form>
-        </div>
+        -->                
         </td>
         </tr>
         </table>

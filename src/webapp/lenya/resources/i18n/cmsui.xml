@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-$Id: cmsui.xml,v 1.12 2004/02/14 14:39:39 roku Exp $
+$Id: cmsui.xml,v 1.13 2004/02/14 15:15:36 roku Exp $
 @author <a href="mailto:roku@apache.org">Rolf Kulemann</a>
 <License>
 
@@ -60,7 +60,6 @@ $Id: cmsui.xml,v 1.12 2004/02/14 14:39:39 roku Exp $
   <!-- common used words -->
   <message key="Submit">Submit</message>
   <message key="Cancel">Cancel</message>
-  <message key="Back to Page">Back to page</message>
   <message key="NOTE">NOTE</message>
   <message key="No referer">No referer</message>
   <message key="Referer">Referer</message>
