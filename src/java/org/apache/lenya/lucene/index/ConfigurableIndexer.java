@@ -57,7 +57,6 @@ package org.lenya.lucene.index;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.*;
 import org.apache.lucene.document.Document;
-//import org.apache.lucene.demo.html.HTMLParser;
 
 import java.io.File;
 import java.io.Reader;
@@ -78,24 +77,29 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
+
 import org.lenya.lucene.HTMLDocument;
-import org.lenya.lucene.IndexEnvironment;
 import org.lenya.lucene.index.ConfigurableDocumentCreator;
 import org.lenya.xml.DocumentHelper;
+
+import org.w3c.dom.Element;
+
 import org.xml.sax.SAXException;
 
 public class ConfigurableIndexer
     extends AbstractIndexer {
     
-    public DocumentCreator createDocumentCreator(Configuration configuration)
+    public DocumentCreator createDocumentCreator(Element element)
             throws Exception {
                 
+// FIXME: ANT has a problem with Avalon, that's why we replaced Configuration by Element
+/*
         String configurationFileName = configuration.getChild("configuration").getAttribute("src");
         File configurationFile = new File(configurationFileName);
         String stylesheet = getStylesheet(configurationFile);
         return new ConfigurableDocumentCreator(stylesheet);
+*/
+        return null;
     }
     
     public static final String CONFIGURATION_CREATOR_STYLESHEET = "org/lenya/lucene/index/configuration2xslt.xsl";

@@ -13,14 +13,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.xml.transform.Source;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
 import org.lenya.lucene.HTMLDocument;
+
+import org.w3c.dom.Element;
 
 /**
  * Abstract base class for indexers.
@@ -48,12 +49,12 @@ public abstract class AbstractIndexer
     /**
      * Initializes this indexer with command-line parameters.
      */
-    public void configure(Configuration configuration)
+    public void configure(Element element)
             throws Exception {
-        documentCreator = createDocumentCreator(configuration);
+        documentCreator = createDocumentCreator(element);
     }
     
-    public abstract DocumentCreator createDocumentCreator(Configuration configuration)
+    public abstract DocumentCreator createDocumentCreator(Element element)
             throws Exception;
     
     /**

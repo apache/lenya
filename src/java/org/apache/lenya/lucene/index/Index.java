@@ -8,11 +8,17 @@ package org.lenya.lucene.index;
 
 import java.io.File;
 import java.util.Date;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexWriter;
-import org.lenya.lucene.IndexEnvironment;
+
+import org.lenya.lucene.IndexConfiguration;
+import org.lenya.xml.DOMParserFactory;
+import org.lenya.xml.DOMUtil;
+import org.lenya.xml.XPath;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -34,7 +40,8 @@ public class Index {
                 return;
             }
             
-            IndexEnvironment ie = new IndexEnvironment(argv[0]);
+            //IndexEnvironment ie = new IndexEnvironment(argv[0]);
+            IndexConfiguration ie = new IndexConfiguration(argv[0]);
             index = ie.resolvePath(ie.getIndexDir());
             root = new File(ie.resolvePath(ie.getHTDocsDumpDir()));
             if (ie.getUpdateIndexType().equals("new")){
@@ -70,9 +77,9 @@ public class Index {
 
             Indexer indexer = (Indexer) ie.getIndexerClass().newInstance();
             
-            DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
-            Configuration configuration = builder.buildFromFile(argv[0]);
-            indexer.configure(configuration.getChild("indexer"));
+            DOMUtil du = new DOMUtil();
+            Document config = new DOMParserFactory().getDocument(argv[0]);
+            indexer.configure(du.getElement(config.getDocumentElement(), new XPath("indexer")));
             
             if (create)
                 indexer.createIndex(root, index, writer);

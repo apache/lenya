@@ -6,7 +6,7 @@
 
 package org.lenya.lucene.index;
 
-import org.apache.avalon.framework.configuration.Configuration;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -19,7 +19,7 @@ public class DefaultIndexer
     public DefaultIndexer() {
     }
     
-    public DocumentCreator createDocumentCreator(Configuration configuration) throws Exception {
+    public DocumentCreator createDocumentCreator(Element element) throws Exception {
         return new DefaultDocumentCreator();
     }
     

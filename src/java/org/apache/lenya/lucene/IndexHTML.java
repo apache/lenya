@@ -1,5 +1,5 @@
 /*
- * $Id: IndexHTML.java,v 1.13 2003/03/18 14:23:38 michi Exp $
+ * $Id: IndexHTML.java,v 1.14 2003/03/24 15:54:22 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -96,7 +96,6 @@ public class IndexHTML {
             }
 
             IndexConfiguration ie = new IndexConfiguration(argv[0]);
-            //IndexEnvironment ie = new IndexEnvironment(argv[0]);
             index = ie.resolvePath(ie.getIndexDir());
             root = new File(ie.resolvePath(ie.getHTDocsDumpDir()));
 

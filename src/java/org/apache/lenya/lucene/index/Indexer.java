@@ -7,9 +7,10 @@
 package org.lenya.lucene.index;
 
 import java.io.File;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
+
 import org.apache.lucene.index.IndexWriter;
+
+import org.w3c.dom.Element;
 
 /**
  *
@@ -20,7 +21,7 @@ public interface Indexer {
     /**
      * Configures this indexer.
      */
-    void configure(Configuration configuration)
+    void configure(Element element)
             throws Exception;
     
     /**

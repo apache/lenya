@@ -302,7 +302,11 @@ public class SwingHTMLHandler
         //System.out.println(indent + string.substring(0, Math.min(20, string.length())) + " ...");
         
         if (isDebug)
-            System.out.print(data);
+            System.out.println(".handleText(): data: " + new String(data));
+
+        if (data[0] == '>') {
+           throw new IllegalStateException();
+           }
         
         if (isIndexing() || isTitleParsing()) {
             appendToContents(data);

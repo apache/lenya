@@ -1,5 +1,5 @@
 /*
- * $Id: IndexConfiguration.java,v 1.2 2003/03/18 15:06:22 michi Exp $
+ * $Id: IndexConfiguration.java,v 1.3 2003/03/24 15:54:22 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -68,6 +68,7 @@ public class IndexConfiguration {
     private String update_index_type;
     private String index_dir;
     private String htdocs_dump_dir;
+    private Class indexerClass;
 
     /**
      * Creates a new IndexConfiguration object.
@@ -84,6 +85,7 @@ public class IndexConfiguration {
             configure(document.getDocumentElement());
         } catch (Exception e) {
             log.error("Cannot load publishing configuration! ", e);
+            System.err.println("Cannot load publishing configuration! " + e);
         }
     }
 
@@ -103,15 +105,17 @@ public class IndexConfiguration {
         String parameter;
 
         parameter = ic.getUpdateIndexType();
-        System.out.println(parameter);
+        System.out.println("Index type: " + parameter);
 
         parameter = ic.getIndexDir();
-        System.out.println(parameter);
-        System.out.println(ic.resolvePath(parameter));
+        System.out.println("Index dir: " + parameter);
+        System.out.println("Index dir (resolved): " + ic.resolvePath(parameter));
 
         parameter = ic.getHTDocsDumpDir();
-        System.out.println(parameter);
-        System.out.println(ic.resolvePath(parameter));
+        System.out.println("htdocs_dump: " + parameter);
+        System.out.println("htdocs_dump (resolved): " + ic.resolvePath(parameter));
+
+        System.out.println("Indexer class: " + ic.getIndexerClass());
     }
 
     /**
@@ -126,6 +130,9 @@ public class IndexConfiguration {
         update_index_type = du.getAttributeValue(root, new XPath("update-index/@type"));
         index_dir = du.getAttributeValue(root, new XPath("index-dir/@src"));
         htdocs_dump_dir = du.getAttributeValue(root, new XPath("htdocs-dump-dir/@src"));
+
+        String indexerClassName = du.getAttributeValue(root, new XPath("indexer/@class"));
+        indexerClass = Class.forName(indexerClassName);
     }
 
     /**
@@ -159,6 +166,17 @@ public class IndexConfiguration {
         log.debug(".getHTDocsDumpDir(): " + htdocs_dump_dir);
 
         return htdocs_dump_dir;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Class getIndexerClass() {
+        log.debug(".getIndexerClass(): " + indexerClass);
+
+        return indexerClass;
     }
 
     /**
