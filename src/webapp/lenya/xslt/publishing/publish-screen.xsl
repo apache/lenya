@@ -25,7 +25,62 @@
   <xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
   <xsl:variable name="referer"><xsl:value-of select="/usecase:publish/usecase:referer"/></xsl:variable>
 
-  <xsl:template match="/usecase:publish">
+
+  <xsl:template match="/usecase:publish[usecase:message]">
+    <page:page>
+      <page:title>Publish</page:title>
+      <page:body>
+          <div class="lenya-box">
+            <div class="lenya-box-title">Publish</div>
+            <div class="lenya-box-body">
+              <table class="lenya-table-noborder">
+                <tr>
+                  <td class="lenya-entry-caption">Source&#160;File(s):</td>
+                  <td>
+                    <xsl:call-template name="print-list-simple">
+                      <xsl:with-param name="list-string" select="$sources"/>
+                    </xsl:call-template>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lenya-entry-caption">URI(s):</td>
+                  <td>
+                    <xsl:call-template name="print-list-simple">
+                      <xsl:with-param name="list-string" select="$uris"/>
+                    </xsl:call-template>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top" class="lenya-entry-caption">Problem:</td>
+                  <td>
+                    <span class="lenya-form-error">This page cannot be published unless its parent is
+                      published:</span>
+                    <ul>
+                      <li><xsl:apply-templates select="usecase:parent"/></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td/>
+                  <td>
+                    <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+                  </td>
+                </tr>
+              </table>
+              
+            </div>
+          </div>
+      </page:body>
+    </page:page>
+  </xsl:template>
+  
+  
+  <xsl:template match="usecase:parent">
+    <a href="{@href}"><xsl:value-of select="@id"/> [<xsl:value-of select="@language"/>]</a>
+  </xsl:template>
+        
+        
+  <xsl:template match="/usecase:publish[not(usecase:message)]">
 
     <page:page>
       <page:title>Publish</page:title>
