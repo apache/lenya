@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.36 2003/05/21 10:06:38 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.37 2003/05/21 16:24:34 edith Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -34,18 +34,6 @@
       </map:match>
     </map:pipeline>
     
-    <!-- Rollback -->
-    <map:pipeline>
-      <map:match type="usecase" pattern="rollback">
-	<map:match type="step" pattern="view">
-	  <map:generate type="serverpages" src="../../content/rc/view.xsp">
-	  </map:generate>
-	  <map:serialize type="xml"/>
-	</map:match>
-      </map:match>
-    </map:pipeline>
-    <!-- /Rollback -->
-
     <!-- Edit Article with Xopus2 -->
     <map:pipeline>
       <map:match pattern="authoring/xopus2/**.html">
@@ -55,7 +43,8 @@
 	    <map:parameter name="filename" value="{filename}"/>
 	    <map:parameter name="date" value="{date}"/>
 	  </map:generate>
-	  <map:serialize type="xml"/>
+          <map:transform src="xslt/rc/rco-exception.xsl"/>
+	  <map:serialize type="html"/>
 	</map:act>
 	
 	<map:act type="uriparametrizer" src="authoring/{1}.html">

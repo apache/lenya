@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: doctypes.xmap,v 1.9 2003/05/21 10:05:30 egli Exp $ -->
+<!-- CVS: $Id: doctypes.xmap,v 1.10 2003/05/21 16:24:34 edith Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -18,6 +18,15 @@
   <map:pipelines>
 
     <map:pipeline>
+      <map:match pattern="*/*/**.html.xml">
+        <map:match type="step" pattern="view-revision">
+          <map:generate type="serverpages" src="../../content/rc/view.xsp">
+          </map:generate>
+          <map:transform src="xslt/toDoc.xsl"/>
+          <map:transform src="xslt/{../2}2xhtml.xsl"/>
+          <map:serialize type="xml"/>
+        </map:match>
+      </map:match>
 
       <!-- parametrized doctype matcher -->
       <!-- pattern="{area}/{doctype}/{document-id}.html" -->

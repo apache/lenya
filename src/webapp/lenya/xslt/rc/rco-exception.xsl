@@ -32,6 +32,19 @@
   </table>
 </xsl:template>
 
+<xsl:template match="rc:file-reserved-checkin-exception">
+  <h2>File Reserved Checkin Exception</h2>
+  <p>
+  Resource has already been checked out:
+  </p>
+  <table>
+  <tr><td>User:</td><td><xsl:value-of select="rc:user"/></td></tr>
+  <tr><td>Date:</td><td><xsl:value-of select="rc:date"/></td></tr>
+  <tr><td>Filename:</td><td><xsl:value-of select="rc:filename"/></td></tr>
+  </table>
+</xsl:template>
+
+
 <xsl:template match="rc:generic-exception">
   <h2>Generic Exception</h2>
   <p>
