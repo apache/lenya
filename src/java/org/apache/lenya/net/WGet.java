@@ -1,5 +1,5 @@
 /*
- * $Id: WGet.java,v 1.21 2003/03/06 20:45:52 gregor Exp $
+ * $Id: WGet.java,v 1.22 2003/04/07 17:33:43 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -306,13 +306,12 @@ public class WGet {
     /**
      *
      */
-    public void saveToFile(String filename, byte[] bytes)
-        throws FileNotFoundException, IOException {
+    public void saveToFile(String filename, byte[] bytes) throws FileNotFoundException, IOException {
         File file = new File(filename);
         File parent = new File(file.getParent());
 
         if (!parent.exists()) {
-            log.info(".saveToFile(): Directory will be created: " + parent.getAbsolutePath());
+            log.warn(".saveToFile(): Directory will be created: " + parent.getAbsolutePath());
             parent.mkdirs();
         }
 

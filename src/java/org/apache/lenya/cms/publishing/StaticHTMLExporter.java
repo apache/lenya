@@ -1,5 +1,5 @@
 /*
- * $Id: StaticHTMLExporter.java,v 1.11 2003/03/06 20:45:41 gregor Exp $
+ * $Id: StaticHTMLExporter.java,v 1.12 2003/04/07 17:33:43 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,6 +47,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.log4j.Category;
 import org.lenya.cms.task.ExecutionException;
 
+import java.io.File;
 import java.net.URL;
 import java.util.StringTokenizer;
 
@@ -84,9 +85,12 @@ public class StaticHTMLExporter extends AbstractExporter {
         String[] uris, String substituteExpression) throws ExportException {
         try {
             String exportDirectory = publicationPath + exportPath;
+            if (new File(exportPath).isAbsolute()) {
+                exportDirectory = exportPath;
+            }
+            log.info(".export(): Export directory: " + exportDirectory + " (" + publicationPath + " , " + exportPath + ")");
 
             org.lenya.net.WGet wget = new org.lenya.net.WGet();
-            log.info(".export(): Export directory: " + exportDirectory);
             wget.setDirectoryPrefix(exportDirectory);
 
             String fullServerURI = serverURI + ":" + serverPort;
