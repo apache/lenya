@@ -45,7 +45,7 @@
       </block>
 -->
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
       </block>
     </menu>
 
