@@ -5,8 +5,6 @@
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns="http://www.w3.org/1999/xhtml">
   
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
-  
   <xsl:param name="lenya.usecase" select="'asset'"/>
   <xsl:param name="lenya.step"/>
   <xsl:param name="insert"/>
