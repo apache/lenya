@@ -15,7 +15,7 @@
 <!-- FIXME: In the case of text input field, < and > need to be replaced by &lt; and &gt;
   <td><input type="text" name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:apply-templates select="echo:title/node()" mode="mixed"/></xsl:attribute></input></td>
 -->
-  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" cols="40" rows="1"><xsl:apply-templates select="echo:title/node()" mode="mixed"/></textarea></td>
+  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:title[@tagID='{echo:title/@tagID}']&quot;&gt;" cols="40" rows="1"><xsl:apply-templates select="echo:title/node()" mode="mixedcontent"/></textarea></td>
 </tr>
 
 <xsl:if test="not(echo:summary)">
@@ -44,7 +44,11 @@
 <tr>
   <td valign="top"><input type="image" src="/lenya/lenya/images/delete.gif" name="&lt;xupdate:remove select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;/&gt;" value="true"/></td>
   <td valign="top">Summary</td>
-  <td><textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5"><xsl:apply-templates select="node()" mode="mixed" /></textarea></td>
+  <td>
+    <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:summary[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
+      <xsl:apply-templates mode="mixedcontent" />
+    </textarea>
+  </td>
 </tr>
 </xsl:template>
 
@@ -72,7 +76,7 @@
   <td valign="top">Content (text/xhtml)</td>
   <td>
     <textarea name="&lt;xupdate:update select=&quot;/echo:entry/echo:content[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="5">
-      <xsl:apply-templates select="." mode="mixed"/>
+      <xsl:apply-templates mode="mixedcontent"/>
     </textarea>
   </td>
 </tr>
@@ -83,31 +87,6 @@
 <tr>
   <td>&#160;</td><td valign="top">Content (Either no @type attribute or no xsl:template with such a @type attribute!)</td><td><xsl:apply-templates/></td>
 </tr>
-</xsl:template>
-
-
-<!-- Copy mixed content -->
-
-
-<xsl:template match="echo:title//*" mode="mixed">
-<xsl:copy>
-<xsl:copy-of select="@*[local-name()!='tagID']"/>
-<xsl:apply-templates select="node()" mode="mixed"/>
-</xsl:copy>
-</xsl:template>
-
-<xsl:template match="echo:summary//*" mode="mixed">
-<xsl:copy>
-<xsl:copy-of select="@*[local-name()!='tagID']"/>
-<xsl:apply-templates select="node()" mode="mixed"/>
-</xsl:copy>
-</xsl:template>
-
-<xsl:template match="echo:content//*" mode="mixed">
-<xsl:copy>
-<xsl:copy-of select="@*[local-name()!='tagID']"/>
-<xsl:apply-templates select="node()" mode="mixed"/>
-</xsl:copy>
 </xsl:template>
  
 </xsl:stylesheet>  

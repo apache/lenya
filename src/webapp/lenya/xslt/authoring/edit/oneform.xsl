@@ -59,7 +59,7 @@ Edit Document <b><xsl:value-of select="$docid"/></b>
 &lt;/<xsl:value-of select="name()"/>&gt;
 </xsl:when>
 <xsl:otherwise>
-&lt;<xsl:value-of select="name()"/> /&gt;
+&lt;<xsl:value-of select="name()"/><xsl:if test="namespace-uri()"><xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="namespace-uri()"/>"</xsl:if><xsl:apply-templates select="@*" mode="mixed"/> /&gt;
 </xsl:otherwise>
 </xsl:choose>
 
