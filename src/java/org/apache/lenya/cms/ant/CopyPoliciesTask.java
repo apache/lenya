@@ -1,5 +1,5 @@
 /*
-$Id: CopyPoliciesTask.java,v 1.2 2003/11/10 16:42:19 andreas Exp $
+$Id: CopyPoliciesTask.java,v 1.3 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -141,8 +141,7 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 		String srcArea = this.getFirstarea();
 		String destArea = this.getSecarea();
 
-		String parentid = node.getAbsoluteParentId();
-		String srcDocumentid = parentid + "/" + node.getId();
+		String srcDocumentid = node.getAbsoluteId();
 		String destDocumentid =
 			srcDocumentid.replaceFirst(
 				getFirstdocumentid(),

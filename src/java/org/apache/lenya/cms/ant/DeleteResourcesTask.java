@@ -1,5 +1,5 @@
 /*
-$Id: DeleteResourcesTask.java,v 1.1 2004/01/21 16:11:44 edith Exp $
+$Id: DeleteResourcesTask.java,v 1.2 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -90,8 +90,7 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
 		Publication publication = getPublication();
 		DocumentBuilder builder = publication.getDocumentBuilder();
 
-		String parentid = node.getAbsoluteParentId();
-		String destDocumentid = parentid + "/" + node.getId();
+		String destDocumentid = node.getAbsoluteId();
 		String srcDocumentid =
 			destDocumentid.replaceFirst(
 				getSecdocumentid(),

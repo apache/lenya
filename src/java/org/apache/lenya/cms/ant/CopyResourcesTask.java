@@ -1,5 +1,5 @@
 /*
-$Id: CopyResourcesTask.java,v 1.5 2003/10/22 16:40:19 edith Exp $
+$Id: CopyResourcesTask.java,v 1.6 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -95,8 +95,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
 		Publication publication = getPublication();
 		DocumentBuilder builder = publication.getDocumentBuilder();
 
-		String parentid = node.getAbsoluteParentId();
-		String srcDocumentid = parentid + "/" + node.getId();
+		String srcDocumentid = node.getAbsoluteId();
 		String destDocumentid =
 			srcDocumentid.replaceFirst(
 				getFirstdocumentid(),

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.37 2004/02/02 02:50:39 stefano Exp $
+$Id: DefaultSiteTree.java,v 1.38 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -78,8 +78,8 @@ import org.xml.sax.SAXException;
 /**
  * DOCUMENT ME!
  *
- * @author $author$
- * @version $Revision: 1.37 $
+ * @author $Author: egli $
+ * @version $Revision: 1.38 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -552,9 +552,7 @@ public class DefaultSiteTree implements SiteTree {
         throws SiteTreeException {
         assert subtreeRoot != null;
         assert newParent != null;
-        String parentId =
-            parentId =
-                newParent.getAbsoluteParentId() + "/" + newParent.getId();
+        String parentId = newParent.getAbsoluteId();
         String id = newid;
 
         this.addNode(

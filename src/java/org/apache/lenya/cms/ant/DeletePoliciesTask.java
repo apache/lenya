@@ -1,5 +1,5 @@
 /*
-$Id: DeletePoliciesTask.java,v 1.2 2004/01/21 18:04:55 edith Exp $
+$Id: DeletePoliciesTask.java,v 1.3 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -148,8 +148,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 		String srcArea = this.getFirstarea();
 		String destArea = this.getSecarea();
 
-		String parentid = node.getAbsoluteParentId();
-		String destDocumentid = parentid + "/" + node.getId();
+		String destDocumentid = node.getAbsoluteId();
 		String srcDocumentid =
 			destDocumentid.replaceFirst(
 				getSecdocumentid(),

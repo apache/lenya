@@ -1,5 +1,5 @@
 /*
-$Id: MoveWorkflowTask.java,v 1.3 2003/10/21 09:51:55 andreas Exp $
+$Id: MoveWorkflowTask.java,v 1.4 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -92,8 +92,7 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 		for (int i=0 ; i<labels.length; i ++){
 			String language = labels[i].getLanguage();
 
-			String parentid = node.getAbsoluteParentId();
-			String srcDocumentid = parentid + "/" +node.getId();
+			String srcDocumentid = node.getAbsoluteId();
 			String destDocumentid = srcDocumentid.replaceFirst(this.getFirstdocumentid(),this.getSecdocumentid());
 
 			String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid, language);

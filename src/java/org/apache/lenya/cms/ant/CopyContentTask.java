@@ -1,5 +1,5 @@
 /*
-$Id: CopyContentTask.java,v 1.4 2003/10/29 13:41:28 edith Exp $
+$Id: CopyContentTask.java,v 1.5 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -89,8 +89,7 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
 		Publication publication = getPublication();
 		DocumentBuilder builder = publication.getDocumentBuilder();
 
-		String parentid = node.getAbsoluteParentId();
-		String srcDocumentid = parentid + "/" + node.getId();
+		String srcDocumentid = node.getAbsoluteId();
 		String destDocumentid =
 			srcDocumentid.replaceFirst(
 				getFirstdocumentid(),

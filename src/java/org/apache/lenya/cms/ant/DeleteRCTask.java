@@ -1,5 +1,5 @@
 /*
-$Id: DeleteRCTask.java,v 1.3 2004/02/02 02:50:40 stefano Exp $
+$Id: DeleteRCTask.java,v 1.4 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -85,7 +85,6 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
 		String publicationPath;
 		String rcmlDirectory;
 		String rcbakDirectory;
@@ -100,8 +99,7 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 			throw new BuildException(e);
 		}
 
-		String parentid = node.getAbsoluteParentId();
-		String destDocumentid = parentid + "/" + node.getId();
+		String destDocumentid = node.getAbsoluteId();
 		String srcDocumentid =
 			destDocumentid.replaceFirst(
 				getSecdocumentid(),

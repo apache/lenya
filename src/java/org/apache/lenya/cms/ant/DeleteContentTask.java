@@ -1,5 +1,5 @@
 /*
-$Id: DeleteContentTask.java,v 1.6 2004/02/02 02:50:40 stefano Exp $
+$Id: DeleteContentTask.java,v 1.7 2004/02/04 10:09:03 egli Exp $
 <License>
 
  ============================================================================
@@ -89,8 +89,7 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 		Publication publication = getPublication();
 		DocumentBuilder builder = publication.getDocumentBuilder();
 
-		String parentid = node.getAbsoluteParentId();
-		String destDocumentid = parentid + "/" + node.getId();
+		String destDocumentid = node.getAbsoluteId();
 		String srcDocumentid =
 			destDocumentid.replaceFirst(
 				getSecdocumentid(),

@@ -122,8 +122,7 @@ public class InitRCTask extends TwoDocumentsOperationTask {
 				this.getPublicationDirectory().getCanonicalPath();
 			DocumentBuilder builder = publication.getDocumentBuilder();
 
-			String parentid = node.getAbsoluteParentId();
-			String srcDocumentid = parentid + "/" + node.getId();
+			String srcDocumentid = node.getAbsoluteId();
 			String destDocumentid =
 				srcDocumentid.replaceFirst(
 					getFirstdocumentid(),

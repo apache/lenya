@@ -1,5 +1,5 @@
 /*
- * $Id: MoveDocumentTask.java,v 1.4 2004/01/08 09:35:34 egli Exp $ <License>
+ * $Id: MoveDocumentTask.java,v 1.5 2004/02/04 10:09:03 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -145,8 +145,7 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 		for (int i = 0; i < labels.length; i++) {
 			String language = labels[i].getLanguage();
 
-			String parentid = node.getAbsoluteParentId();
-			String srcDocumentid = parentid + "/" + node.getId();
+			String srcDocumentid = node.getAbsoluteId();
 			String destDocumentid = srcDocumentid.replaceFirst(firstdocumentid, secdocumentid);
 
 			// TODO: content(fix the build file)
