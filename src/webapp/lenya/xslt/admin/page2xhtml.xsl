@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- $Id: page2xhtml.xsl,v 1.2 2003/07/04 13:17:32 andreas Exp $ -->
+<!-- $Id: page2xhtml.xsl,v 1.3 2003/09/02 13:49:36 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
 	  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -16,7 +16,7 @@
   <xsl:copy>
     <html>
       <head>
-        <title><xsl:value-of select="page:title"/></title>
+        <title><xsl:value-of select="page:page/page:title"/></title>
         <link rel="stylesheet" type="text/css"
           href="{$contextprefix}/lenya/css/default.css" title="default css"/>
       </head>
