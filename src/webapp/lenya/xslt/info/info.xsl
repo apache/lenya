@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.42 2003/09/12 09:40:39 andreas Exp $
+ $Id: info.xsl,v 1.43 2003/09/19 09:07:43 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -324,7 +324,7 @@
 				<xsl:apply-templates select="//lenya-info:items[@type = 'role']"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<input type="hidden" name="role_id" value="visitor"/>
+				<input type="hidden" name="role_id" value="visit"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</td>
