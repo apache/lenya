@@ -1,5 +1,5 @@
 /*
-$Id: UserAuthenticatorAction.java,v 1.9 2003/07/23 13:21:31 gregor Exp $
+$Id: UserAuthenticatorAction.java,v 1.10 2003/09/02 18:22:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,17 +66,12 @@ import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Identity;
-import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.AccessControllerResolver;
 import org.apache.lenya.cms.ac2.DefaultAccessController;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 import org.w3c.dom.Document;
-
-import java.io.File;
 
 import java.util.Map;
 
@@ -103,9 +98,6 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
      */
     public boolean authenticate(String username, String password, Request request, Map map)
         throws Exception {
-        Publication publication = PublicationFactory.getPublication(objectModel);
-        File configurationDirectory = new File(publication.getDirectory(), ItemManager.PATH);
-        
         User user = getUser(username);
 
         if (getLogger().isDebugEnabled()) {
@@ -144,7 +136,6 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
     }
 
     protected static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
-    private String accessControllerId = null;
     
     private Map objectModel;
     
@@ -161,7 +152,6 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
         User user;
         AccessControllerResolver resolver = null;
         AccessController accessController = null;
-        boolean authorized;
         try {
             resolver = (AccessControllerResolver) manager.lookup(AccessControllerResolver.ROLE);
             Request request = ObjectModelHelper.getRequest(objectModel);

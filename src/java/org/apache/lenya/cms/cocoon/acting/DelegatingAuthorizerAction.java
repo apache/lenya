@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.15 2003/08/15 09:42:36 andreas Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.16 2003/09/02 18:22:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -75,8 +75,6 @@ import java.util.Map;
  */
 public class DelegatingAuthorizerAction extends AccessControlAction {
 
-    private Map objectModel;
-
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
@@ -87,7 +85,6 @@ public class DelegatingAuthorizerAction extends AccessControlAction {
         String src,
         Parameters parameters)
         throws Exception {
-        this.objectModel = objectModel;
 
         return super.act(redirector, resolver, objectModel, src, parameters);
     }

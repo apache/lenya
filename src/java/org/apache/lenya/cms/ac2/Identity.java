@@ -1,5 +1,5 @@
 /*
-$Id: Identity.java,v 1.11 2003/08/15 13:09:26 andreas Exp $
+$Id: Identity.java,v 1.12 2003/09/02 18:22:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -208,6 +208,15 @@ public class Identity implements Identifiable {
      public static Identity getIdentity(Session session) {
          Identity identity = (Identity) session.getAttribute(Identity.class.getName());
          return identity;
+     }
+     
+     /**
+      * Removes a certain identifiable from the idenity.
+      * @param identifiable An identifiable.
+      */
+     public void removeIdentifiable(Identifiable identifiable) {
+         assert identifiables.contains(identifiable);
+         identifiables.remove(identifiable);
      }
 
 }
