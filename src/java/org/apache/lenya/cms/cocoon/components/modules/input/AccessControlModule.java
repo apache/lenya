@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.3 2003/07/17 11:06:12 egli Exp $
+$Id: AccessControlModule.java,v 1.4 2003/07/21 13:39:04 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,9 +62,19 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
+import org.apache.lenya.cms.ac.ItemManager;
+import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccessControllerResolver;
+import org.apache.lenya.cms.ac2.AccreditableManager;
+import org.apache.lenya.cms.ac2.DefaultAccessController;
 import org.apache.lenya.cms.ac2.Identity;
 
 /**
@@ -72,11 +82,15 @@ import org.apache.lenya.cms.ac2.Identity;
  * @author egli
  * 
  */
-public class AccessControlModule extends AbstractInputModule {
+public class AccessControlModule extends AbstractInputModule implements Serviceable {
 
     public static final String USER_ID = "user-id";
     public static final String USER_NAME = "user-name";
 	public static final String USER_EMAIL = "user-email";
+    
+    public static final String USER_MANAGER = "user-manager";
+    public static final String GROUP_MANAGER = "group-manager";
+    public static final String ROLE_MANAGER = "role-manager";
 
     /**
       * The names of the AccessControlModule parameters.
@@ -93,8 +107,9 @@ public class AccessControlModule extends AbstractInputModule {
         Configuration modeConf,
         Map objectModel)
         throws ConfigurationException {
-        Session session =
-            ObjectModelHelper.getRequest(objectModel).getSession();
+            
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Session session = request.getSession();
         Object value = null;
 
         if (session != null) {
@@ -111,6 +126,11 @@ public class AccessControlModule extends AbstractInputModule {
                 }
             }
         }
+        
+        if (name.equals(USER_MANAGER) || name.equals(GROUP_MANAGER)) {
+            value = getItemManager(request, name);
+        }
+        
         return value;
     }
 
@@ -133,6 +153,63 @@ public class AccessControlModule extends AbstractInputModule {
         Object[] objects = { getAttribute(name, modeConf, objectModel)};
 
         return objects;
+    }
+    
+    protected static final String DEFAULT_RESOLVER = "composable";
+
+    protected ItemManager getItemManager(Request request, String name) throws ConfigurationException {
+        AccessController accessController = null;
+        ServiceSelector selector = null;
+        AccessControllerResolver resolver = null;
+        ItemManager itemManager = null;
+        
+        try {
+            selector =
+                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            resolver = (AccessControllerResolver) selector.select(DEFAULT_RESOLVER);
+
+            String requestURI = request.getRequestURI();
+            String context = request.getContextPath();
+            if (context == null) {
+                context = "";
+            }
+            String url = requestURI.substring(context.length());
+            accessController = resolver.resolveAccessController(url);
+            
+            AccreditableManager accreditableManager = ((DefaultAccessController) accessController).getAccreditableManager();
+            
+            if (name.equals(USER_MANAGER)) { 
+                itemManager = accreditableManager.getUserManager();
+            }
+            else if (name.equals(GROUP_MANAGER)) {
+                itemManager = accreditableManager.getGroupManager();
+            }
+            
+        } catch (Exception e) {
+            throw new ConfigurationException("Obtaining user manager failed: ", e);
+        }
+        finally {
+            if (selector != null) {
+                if (resolver != null) {
+                    if (accessController != null) {
+                        resolver.release(accessController);
+                    }
+                    selector.release(resolver);
+                }
+                manager.release(selector);
+            }
+        }
+        
+        return itemManager;
+    }
+    
+    private ServiceManager manager;
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
 }

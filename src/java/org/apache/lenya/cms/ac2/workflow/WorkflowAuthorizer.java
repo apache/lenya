@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.11 2003/07/18 18:02:02 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.12 2003/07/21 13:39:05 andreas Exp $
 <License>
 
  ============================================================================
@@ -72,13 +72,11 @@ import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.ac2.PolicyManager;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 import java.io.File;

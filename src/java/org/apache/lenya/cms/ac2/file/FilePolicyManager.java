@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.10 2003/07/17 16:24:20 andreas Exp $
+$Id: FilePolicyManager.java,v 1.11 2003/07/21 13:39:04 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,6 @@ import org.apache.lenya.cms.ac2.DefaultPolicy;
 import org.apache.lenya.cms.ac2.InheritingPolicyManager;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyBuilder;
-import org.apache.lenya.cms.ac2.PolicyManager;
 import org.apache.lenya.cms.ac2.URLPolicy;
 import org.apache.lenya.util.CacheMap;
 import org.apache.lenya.xml.DocumentHelper;
