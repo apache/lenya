@@ -1,5 +1,5 @@
 /*
- * $Id: Group.java,v 1.2 2003/05/30 15:25:53 andreas Exp $
+ * $Id: Group.java,v 1.3 2003/06/03 13:49:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,10 +60,14 @@ import java.util.Set;
  */
 public class Group {
 	
-	protected String name;
+	private String name;
 	protected Set roles = new HashSet();
 	protected Set users = new HashSet();
 
+	public Group(String name) {
+		this.name = name;
+	}
+	
 	/**
 	 * Get the name of this group
 	 * 
