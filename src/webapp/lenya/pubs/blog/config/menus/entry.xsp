@@ -41,10 +41,13 @@
       <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;doctype=entry">Edit&#160;with&#160;Forms</item>
 <!--
-        <item href="/bxeng/bxeng.html?xml=/lenya/blog/authoring/entries/2003/07/28/1/index-bxeng.xml&amp;xslt=examples/uni/test.xsl">Edit&#160;with&#160;BXENG</item>
+        <item href="index-bxeng.html">Edit&#160;with&#160;BXENG</item>
 -->
 <!--
         <item>Edit&#160;with&#160;Midas</item>
+-->
+<!--
+        <item>Edit&#160;with&#160;Epoz</item>
 -->
       </block>
       <block>
@@ -75,10 +78,16 @@
     <menu name="Debug" label="Debug">
       <block>
         <item href="index.xml">XML</item>
-<!--
-        <item href="index-bxeng.xml">XML&#160;for&#160;BXENG</item>
--->
       </block>
+<!--
+      <block>
+        <item href="index-bxeng.html">HTML&#160;for&#160;BXENG</item>
+        <item href="config-bxeng.html">Config&#160;for&#160;BXENG</item>
+        <item href="index-bxeng.xml">XML&#160;for&#160;BXENG</item>
+        <item href="entry-bxeng.xsl">XSLT&#160;for&#160;BXENG</item>
+        <item href="entry-relaxng-bxeng.xml">RelaxNG&#160;for&#160;BXENG</item>
+      </block>
+-->
     </menu>
   </menus>
 
