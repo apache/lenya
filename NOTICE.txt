@@ -1,0 +1,21 @@
+This product includes software developed by The Apache Software Foundation
+(http://www.apache.org/).
+   
+This product includes software developed by the DOM4J Project
+(http://www.dom4j.org/).
+
+This product includes software developed by the XML:DB Initiative 
+(http://www.xmldb.org/).
+
+This product includes software developed by the Bitflux Editor Project
+(http://www.bitfluxeditor.org/).
+
+This product includes software developed by the Epoz Project
+(http://epoz.sf.net/).
+
+Portions are Copyright (c) 1998-2000 World Wide Web Consortium 
+(Massachusetts Institute of Technology, Institut National de Recherche en
+Informatique et en Automatique, Keio University). All Rights Reserved.
+
+Portions are Copyright (c) 2001, 2002 Thai Open Source Software Center Ltd.
+All rights reserved.

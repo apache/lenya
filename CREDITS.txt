@@ -22,7 +22,7 @@ growth.
 
 In early 2000 Michael co-founded Wyona (www.wyona.com), which
 continued to develop Lenya on the basis of the interactive newspaper
-edition of Neue Z�rcher Zeitung (www.nzz.ch).  The name Lenya is a
+edition of Neue Zürcher Zeitung (www.nzz.ch).  The name Lenya is a
 combination of the names of his two sons Levi and Vanya.
 
 * Andreas Hartmann
@@ -67,32 +67,6 @@ The Lenya logo has been designed by Stephen.
 * Thomas Werschlein
 * Urs Stöckli
 * Martin Hitz
-
-
- Credits of included software
- ----------------------------
-
-This product includes software developed by the Apache Software Foundation 
-(http://www.apache.org/).
-
-This product includes software developed by the DOM4J Project
-(http://www.dom4j.org/).
-
-This product includes software developed by the XML:DB Initiative 
-(http://www.xmldb.org/).
-
-This product includes software developed by the Bitflux Editor Project
-(http://www.bitfluxeditor.org/).
-
-This product includes software developed by the Epoz Project
-(http://epoz.sf.net/).
-
-Portions are Copyright (c) 1998-2000 World Wide Web Consortium 
-(Massachusetts Institute of Technology, Institut National de Recherche en
-Informatique et en Automatique, Keio University). All Rights Reserved.
-
-Portions are Copyright (c) 2001, 2002 Thai Open Source Software Center Ltd.
-All rights reserved.
 
 
 
