@@ -70,6 +70,7 @@
 	  <input type="hidden" name="task-id" value="insert-asset"/>
 	  <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
 	  <input type="hidden" name="properties.insert.asset.insertWhere" value="{$insertWhere}"/>
+	  <input type="hidden" name="properties.insert.asset.area" value="{/usecase:asset/usecase:area}"/>
 	  <input type="hidden" name="insert" value="{$insert}"/>
 	  <input type="hidden" name="insertimage" value="{$insertimage}"/>
 	  <input type="hidden" name="assetXPath" value="{$assetXPath}"/>
