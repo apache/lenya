@@ -69,10 +69,8 @@ import java.io.File;
 
 /**
  * @author andreas
- * @version $Id: CMSHistory.java,v 1.18 2003/09/30 14:44:50 egli Exp $
+ * @version $Id: CMSHistory.java,v 1.19 2003/09/30 14:45:50 egli Exp $
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class CMSHistory extends History {
     public static final String HISTORY_PATH = "content/workflow/history";
