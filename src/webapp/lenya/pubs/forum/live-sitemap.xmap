@@ -2,7 +2,6 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <!-- =========================== Components ================================ -->
 
   <map:components>
     <map:generators default="file"/>
@@ -18,7 +17,19 @@
     <map:selectors/>
   </map:components>
 
-  <!-- =========================== Pipelines ================================ -->
+
+
+  <map:views>
+    <map:view name="source" from-position="first">
+      <map:serialize type="xml"/>
+    </map:view>
+
+    <map:view name="content" from-label="content">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
+
 
   <map:pipelines>
 
@@ -48,7 +59,7 @@
         <map:redirect-to uri="index.html"/>
       </map:match>
       <map:match pattern="index.html">
-        <map:generate src="cocoon:/index.xml"/>
+        <map:generate src="cocoon:/index.xml" label="content"/>
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
