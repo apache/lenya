@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.4 2003/04/11 15:39:51 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.5 2003/04/11 16:23:00 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -22,7 +22,10 @@
       <map:action name="page-envelope" logger="sitemap.action.page-envelope" src="org.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
       <map:action name="uriparametrizer"
 	src="org.lenya.cms.cocoon.acting.URIParametrizerAction"
-	logger="sitemap.action.uriparametrizer"/>
+	logger="sitemap.action.uriparametrizer">
+	<parameter name="doctype" src="cocoon:/"/>
+	<parameter name="path" src="cocoon:/"/>
+      </map:action>
     </map:actions>
   </map:components>
 
