@@ -387,7 +387,7 @@
                 </map:act>
 
                 <map:generate src="resources/epoz/apache-lenya/epozmacros.html"/>
-                <map:transform src="xslt/authoring/edit/epozmacros-xhtml.xsl">
+                <map:transform src="resources/epoz/apache-lenya/epozmacros-xhtml.xsl">
                   <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=content"/>
                   <map:parameter name="context" value="{request:contextPath}"/>
                   <map:parameter name="document-path" value="{page-envelope:document-path}"/>
