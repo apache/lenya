@@ -89,6 +89,9 @@
 -->
       </block>
       <block>
+        <item href="http://www.feedvalidator.org">Feed Validator</item>
+      </block>
+      <block>
         <item href="index-bxeng.html">HTML&#160;for&#160;BXE</item>
         <item href="config-bxeng.xml">Config&#160;for&#160;BXE</item>
         <item href="/lenya/blog/webdav/entries/2003/07/28/1/index.xml">XML&#160;for&#160;BXE</item>
