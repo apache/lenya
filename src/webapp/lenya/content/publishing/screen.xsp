@@ -5,6 +5,7 @@
        xmlns:xsp="http://apache.org/xsp"
        xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
        xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
        xmlns:xsp-scheduler="http://apache.org/cocoon/lenya/xsp/scheduler/1.0"
        xmlns:xsp-request="http://apache.org/xsp/request/2.0"
        >
@@ -25,6 +26,46 @@
     <!-- add scheduler data -->
     <xsp-scheduler:insert-data/>
     
+	<not:users>
+	<xsp:logic>
+		
+		try {
+		
+		  Document document = (Document)
+		  	<input:get-attribute module="page-envelope" as="object" name="document"/>;
+		  String userId = null;
+		  
+		  if (WorkflowFactory.newInstance().hasWorkflow(document)) {
+				History history = WorkflowFactory.getHistory(document);
+				Version[] versions = history.getVersions();
+				
+				int i = versions.length - 1;
+				while (userId == null &amp;&amp; i &gt;= 0) {
+						if (versions[i].getEvent().getName().equals("submit")) {
+								userId = ((CMSVersion) versions[i]).getUserId();
+						}
+				}
+		  }
+		
+		  if (userId != null) {
+				UserManager userManager = (UserManager)
+					<input:get-attribute module="access-control" as="object" name="user-manager"/>;
+				User user = userManager.getUser(userId);	
+				<not:user>
+					<xsp:attribute name="id"><xsp:expr>user.getId()</xsp:expr></xsp:attribute>
+					<xsp:attribute name="name"><xsp:expr>user.getName()</xsp:expr></xsp:attribute>
+					<xsp:attribute name="email"><xsp:expr>user.getEmail()</xsp:expr></xsp:attribute>
+				</not:user>
+		  }
+		}
+		catch (Exception e) {
+			throw new ProcessingException(e);
+		}
+		
+	</xsp:logic>
+	
+	</not:users>
+	
   </usecase:publish>
   
 </xsp:page>
