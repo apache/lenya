@@ -1,5 +1,5 @@
 /*
-$Id: PublicationTask.java,v 1.3 2003/12/01 16:05:29 andreas Exp $
+$Id: PublicationTask.java,v 1.4 2003/12/02 14:34:46 andreas Exp $
 <License>
 
  ============================================================================
@@ -163,6 +163,10 @@ public abstract class PublicationTask extends AbstractTask {
      */
     protected boolean canWorkflowFire(Document document) throws ExecutionException {
 
+        if (log.isDebugEnabled()) {
+            log.debug("Checking workflow of document [" + document + "].");
+        }
+
         boolean canFire = true;
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
@@ -257,6 +261,7 @@ public abstract class PublicationTask extends AbstractTask {
         Event[] events = instance.getExecutableEvents(situation);
 
         if (log.isDebugEnabled()) {
+            log.debug("Workflow event name: [" + workflowEvent + "]");
             log.debug("Resolved executable events.");
         }
 
@@ -265,6 +270,11 @@ public abstract class PublicationTask extends AbstractTask {
                 event = events[i];
             }
         }
+
+        if (log.isDebugEnabled()) {
+            log.debug("Executable event found: [" + event + "]");
+        }
+
         return event;
     }
 
