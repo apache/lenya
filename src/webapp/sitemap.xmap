@@ -621,7 +621,11 @@
           <map:parameter name="pub0-prefix" value=""/>
         </map:generate>
         <map:transform src="lenya/xslt/search/sort.xsl"/>
-        <map:transform src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl"/>
+        
+        <map:act type="resource-exists" src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl">
+          <map:transform src="lenya/pubs/{1}/lenya/xslt/search/search-and-results.xsl"/>
+        </map:act>
+        <map:transform src="lenya/xslt/search/search-and-results.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors>
@@ -655,7 +659,7 @@
       
       <!-- navigation -->
       <map:match pattern="navigation/**">
-        <map:mount uri-prefix="" src="lenya/navigation.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="navigation" src="lenya/navigation.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
 
