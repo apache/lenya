@@ -23,10 +23,12 @@ import org.apache.log4j.Category;
 
 import org.apache.avalon.framework.configuration.Configuration;
 
+import org.apache.xpath.XPathAPI;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.xml.DOMUtil;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -66,7 +68,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
      *
      */
     protected String getChildFileName(File parentDir, String childId, String language) {
-        String newFilename = parentDir + File.separator + "entries" + File.separator + year + File.separator + month + "/" + day + "/" + childId + "/index.xml";
+        String newFilename = parentDir + File.separator + "entries" + File.separator + year + File.separator + month + File.separator + day + File.separator + childId + File.separator + "index.xml";
         log.debug(".getChildFileName(): " + newFilename);
         return newFilename;
     }
@@ -75,26 +77,29 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
      *
      */
     protected void transformXML(Document doc, String childId, short childType, String childName, Map parameters) throws Exception {
-        log.debug(".transformXML(): " + childId);
-        DOMUtil du = new DOMUtil();
+       Element parent = doc.getDocumentElement();
+       log.debug(".transformXML(): " + childId);
 
-        // Replace id
-        du.setElementValue(doc, "/echo:entry/echo:id", "tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
+       // Replace id
+        Element element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'id']");
+        element.setNodeValue("tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
 
         // Replace title 
-        du.setElementValue(doc, "/echo:entry/echo:title", (String)parameters.get("title"));
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'title']");
+        element.setNodeValue((String)parameters.get("title"));
+        element.setAttribute("rel","alternate");
+        element.setAttribute("href","http://bob.blog");
+        element.setAttribute("type","text/xml");
 
         // Replace Summary
-        du.setElementValue(doc, "/echo:entry/echo:summary", "Summary");
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'summary']");
+        element.setNodeValue("Summary");
 
-	// Replace link:
-        du.setAttributeValue(doc, "/echo:entry/echo:link/@rel",  "alternate");
-        du.setAttributeValue(doc, "/echo:entry/echo:link/@href", "http://bob.blog/");
-        du.setAttributeValue(doc, "/echo:entry/echo:link/@type", "text/xml");
 
         // Replace author
         Identity identity = (Identity)parameters.get("org.apache.lenya.ac.Identity");
-        du.setElementValue(doc, "/echo:entry/echo:author/echo:name", identity.getUser().getId());
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'author']/*[local-name = 'name']");
+        element.setNodeValue(identity.getUser().getId());
 
         // Replace date created (and issued and modified, FIXME: issued should be set during first time publishing, modified should be set during re-publishing)
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -103,8 +108,11 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         String dateofs = ofsfmt.format(date);
         String datestr = datefmt.format(date) + dateofs.substring(0, 3) + ":" + dateofs.substring(3, 5);
 
-        du.setElementValue(doc, "/echo:entry/echo:created", datestr);
-        du.setElementValue(doc, "/echo:entry/echo:issued", datestr);
-        du.setElementValue(doc, "/echo:entry/echo:modified", datestr);
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'created']");
+        element.setNodeValue(datestr);
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'issued']");
+        element.setNodeValue(datestr);
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'modified']");
+        element.setNodeValue(datestr);
     }
 }
