@@ -24,7 +24,7 @@
 					<terms href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
 					<terms href="authenticators.html" label="Authenticators"/>
 					<terms href="authorizers.html" label="Authorizers"/>
-					<terms href="policymanagers.html" label="Policy&#160;Managers"/>
+					<terms href="policymanagers.html" label="Policies and Policy&#160;Managers"/>
 					<terms href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
 				</accesscontrol>
 				<authoring href="authoring/" labe="Authoring">

@@ -3,7 +3,7 @@
 
 <document>
 	<header>
-		<title>Policy Managers</title>
+		<title>Policies and Policy Managers</title>
 		<version/>
 		<type/>
 		<authors>
@@ -12,15 +12,50 @@
 	</header>
 
   <body>
+    
+<section><title>Policies</title>
+<p>
+  A <code>Policy</code> assigns <code>Role</code>s to <code>Accreditable</code>s.
+</p>
+<p>
+  There is a common policy definition XML schema which is handled by the
+  <code>PolicyBuilder</code>. It can be used together with the
+  <code>FilePolicyManager</code> and the <code>SitemapPolicyManager</code>.
+</p>
+<p>Here is an example of a policy definition:</p>
+<source><![CDATA[
+<policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+
+  <user id="lenya">
+    <role id="editor"/>
+    <role id="reviewer"/>
+  </group>
+
+  <group id="reviewer">
+    <role id="reviewer"/>
+  </group>
+  
+  <ip-range id="localhost">
+    <role id="editor"/>
+  </ip-range>
+  
+  <world>
+    <role id="visitor"/>
+  </world>
+
+</policy> 
+]]></source>
+</section>
 	
 <section>
-	<title>Introduction</title>
+	<title>Policy Managers</title>
 	<p>A PolicyManager is used to resolve the policy for a certain URL. Lenya ships with the following PolicyManagers:</p>
 </section>
 	
 	<section>
-		<title>InheritingPolicyManager</title>
-		<p>This PolicyManager merges the policies of all steps in the URL. For each
+		<title>Inheriting Policy Manager</title>
+		<p>This is an abstract base class. It merges the policies
+		  of all steps in the URL. For each
 			URL, a <em>url policy</em> and a <em>subtree policy</em> can be defined.
 			The InheritingPolicyManager adds the credentials of</p>
 		<ul>
@@ -34,14 +69,14 @@
 			<li>subtree policy of <code>/</code></li>
 			<li>subtree policy of <code>/lenya</code></li>
 			<li>subtree policy of <code>/lenya/news</code></li>
-			<li>subtree policy of <code>/lenya/news/index</code></li>
-			<li>url policy of <code>/lenya/news/index</code></li>
+			<li>subtree policy of <code>/lenya/news/index.html</code></li>
+			<li>url policy of <code>/lenya/news/index.html</code></li>
 		</ul>
 	</section>
 	
 	<section>
-		<title>FilePolicyManager</title>
-		<p>The FilePolicyManager is an InheritingPolicyManager. The policies are defined by policy files that are arranged as a directory tree that reflects the URI space, e.g.:
+		<title>File Policy Manager</title>
+		<p>The <code>FilePolicyManager</code> is an <code>InheritingPolicyManager</code>. The policies are defined by policy files that are arranged as a directory tree that reflects the URI space, e.g.:
 			</p>
 <source>/subtree-policy.acml
 /lenya/subtree-policy.acml
@@ -51,16 +86,40 @@
 	</section>
 	
 	<section>
-		<title>PublicationFilePolicyManager</title>
-		<p>This PolicyManager does the same as the FilePolicyManager, except that
-			the current publication is determined and the policy files are resolved
-			relatively to the <code>publication/config/ac/policies</code> directory.</p>
+		<title>Document Policy Manager Wrapper</title>
+		<p>This <code>InheritingPolicyManager</code> subclass is used together with another
+  		<code>InheritingPolicyManager.</code>
+		  It is able to apply a single policy to all versions of a document
+		  (languages, print version, ...). E.&#160;g., if you define
+		</p>
+		<ul><li><code>/foo/bar/subtree-policy.xml</code></li></ul>
+		<p>
+		  and you use the <code>DefaultDocumentBuilder</code>, this policy is applied to the URLs
+		</p>
+		<ul>
+		  <li><code>/foo/bar.html</code></li>
+		  <li><code>/foo/bar_de.html</code></li>
+		  <li><code>/foo/bar_en.print.html</code></li>
+		  <li>...</li>
+		</ul>
+		
 	</section>
 	
 	<section>
-		<title>SitemapPolicyManager</title>
+		<title>Sitemap Policy Manager</title>
 		<p>The SitemapPolicyManager uses the policy sitemap to resolve the policy
-			for a certain URL.</p>
+			for a certain URL. For this purpose it sends a request of the form
+    </p>
+	  <source>cocoon://{publication-id}/policies{url}.acml
+
+Example:
+cocoon://mypub/policies/authoring/foo/bar_de.html.acml
+</source>
+	  <p>
+			which is processed by <code>global-sitemap.xmap</code> and forwarded
+			to <code>lenya/pubs/{publication-id}/policies-sitemap.xmap</code>.
+			The request is supposed to return a valid policy XML document.
+	</p>
 	</section>
 		
   </body>
