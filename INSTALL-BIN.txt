@@ -1,15 +1,18 @@
-
+﻿
    +----------------------+
    |    INSTALL BINARY    |
    +----------------------+
+   
 
-Jetty
------
+Using the built-in Jetty
+------------------------
 
 
-1) Start up Lenya by executing lenya.bat on Windows or lenya.sh on Unix, e.g.
+1) Start up Apache Lenya by executing lenya.bat on Windows or
 
    sh lenya.sh servlet
+   
+   on Unix.
 
 
 2) Open http://localhost:8888/ with your browser
@@ -31,4 +34,4 @@ Tomcat
 Known issues
 ------------
 Please read the "Known issues" section in the README.txt file
-to find out more about known bugs/issues in Lenya.
+to find out more about known bugs/issues in Apache Lenya.
