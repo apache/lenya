@@ -17,6 +17,7 @@
       String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst(".html", replacementString);
       String sourcesParameter = "sources=" + xmlSource;
       String urisParameter = "uris=" + <input:get-attribute as="string" module="page-envelope" name="document-url"/>;
+      String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
     </xsp:logic>
         
     <menus>
@@ -41,12 +42,24 @@
       <menu label="Search" name="Edit">
         <block>
           <item href="?lenya.step=open&amp;doctype=simple" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
+        </block>
 <!--
+        <block>
           <item href="?lenya.step=open" uc:usecase="midas" wf:event="edit">Edit&#160;with&#160;Midas</item>
           <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/authoring/xopus2<xsp:expr>xmlSource</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
           <item wf:event="edit"><xsp:attribute name="href"><xsp-request:get-context-path/>/bitflux/index.html?url-xml=<xsp:expr>bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+<xsp-request:get-context-path/>+"/authoring"+<input:get-attribute as="string" module="page-envelope" name="document-url"/></xsp:expr></xsp:attribute>Edit with Bitflux</item>
--->
         </block>
+-->
+<!--
+        <block>
+          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>HTML&#160;for&#160;BXENG</item>
+          <item><xsp:attribute name="href"><xsp:expr>documentId + "-config-bxeng.xml"</xsp:expr></xsp:attribute>Config&#160;for&#160;BXENG</item>
+          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.xml"</xsp:expr></xsp:attribute>XML&#160;for&#160;BXENG</item>
+          <item href="content-bxeng.xsl">XSLT&#160;for&#160;BXENG</item>
+          <item href="content-bxeng.css">CSS&#160;for&#160;BXENG</item>
+          <item href="xhtml.rng">RelaxNG&#160;for&#160;BXENG</item>
+        </block>
+-->
       </menu>
       
       <menu label="Help" name="Tools">
