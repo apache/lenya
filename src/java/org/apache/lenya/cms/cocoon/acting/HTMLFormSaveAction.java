@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.7 2003/08/13 09:46:53 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.8 2003/08/13 14:41:56 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -128,6 +128,15 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             setNodeValue(document, request.getParameter(name), xpath);
                         } else if (name.equals("insert")) { // Insert Element
                             getLogger().error(".act(): Insert Element: " + request.getParameter("insert"));
+                            String value = request.getParameter("insert");
+                            String xpathSibling = value.substring(8, value.indexOf("["));
+                            String tagID = value.substring(value.indexOf("[") + 1, value.indexOf("]"));
+                            xpathSibling = xpathSibling + "[@tagID=\"" + tagID + "\"]";
+                            String xpathElement = value.substring(value.indexOf("element.") + 8);
+                            getLogger().error(".act() Sibling: XPath: " + xpathSibling);
+                            getLogger().error(".act() Insert Element: XPath: " + xpathElement);
+                            // FIXME: insert-after and insert-before remains to be implemented
+                            new org.apache.lenya.xml.DOMUtil().addElement(document, xpathElement, "My text");
                         } else if (name.equals("delete")) { // Delete Element
                             String value = request.getParameter("delete");
                             String xpath = value.substring(8, value.indexOf("["));
@@ -135,6 +144,9 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             xpath = xpath + "[@tagID=\"" + tagID + "\"]";
                             getLogger().error(".act() Delete Element: XPath: " + xpath);
                             //DOMUtil.deleteElement(document, xpath);
+                            Node node = DOMUtil.getSingleNode(document.getDocumentElement(), xpath);
+                            Node parent = node.getParentNode();
+                            parent.removeChild(node);
                         }
                     }
 
@@ -162,6 +174,10 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      */
     private void setNodeValue(Document document, String value, String xpath) throws Exception {
         Node node = DOMUtil.getSingleNode(document.getDocumentElement(), xpath);
+        if (node == null) {
+            getLogger().warn(".act(): Node does not exist (might have been deleted): " + xpath);
+            return;
+        }
         getLogger().error(".act(): value = " + DOMUtil.getValueOfNode(node));
         DOMUtil.setValueOfNode(node, value);
         getLogger().error(".act(): value = " + DOMUtil.getValueOfNode(node));

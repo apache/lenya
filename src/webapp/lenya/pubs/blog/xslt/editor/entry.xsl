@@ -15,13 +15,13 @@
 
 <xsl:if test="not(echo:subtitle)">
 <tr>
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./echo:entry/echo:title[]element./echo:entry/echo:subtitle"/></td><td colspan="2">Subtitle</td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./echo:entry/echo:title[{echo:title/@tagID}]element./echo:entry/echo:subtitle"/></td><td colspan="2">Subtitle</td>
 </tr>
 </xsl:if>
 
 <xsl:if test="not(echo:summary)">
 <tr>
-<td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./echo:entry/echo:title[]element./echo:entry/echo:summary"/></td><td colspan="2">Summary</td>
+<td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./echo:entry/echo:title[{echo:title/@tagID}]element./echo:entry/echo:summary"/></td><td colspan="2">Summary</td>
 </tr>
 </xsl:if>
 
