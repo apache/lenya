@@ -10,10 +10,8 @@ function user_change_profile(userId) {
 	var description = user.getDescription();
 	
 	var ldapId;
-	var ldap = false;
 	if (user.getClass().getName().endsWith("LDAPUser")) {
 		ldapId = user.getLdapId();
-		ldap = true;
 	}
 	
 	// at the moment the loop is executed only once (no form validation)
@@ -24,8 +22,7 @@ function user_change_profile(userId) {
 	    	"fullname" : fullName,
 	    	"email" : email,
 	    	"description" : description,
-	    	"page-title" : "Edit Profile",
-	    	"ldap" : ldap
+	    	"page-title" : "Edit Profile"
 	    });
 	    
 	    if (cocoon.request.get("cancel")) {
@@ -197,8 +194,6 @@ function add_user(ldap) {
 	var fullName = "";
 	var description = "";
 	var message = "";
-	var password = "";
-	var confirmPassword = "";
 	var userManager = getUserManager();
 	
 	while (true) {
@@ -210,10 +205,7 @@ function add_user(ldap) {
 	    	"description" : description,
 	    	"message" : message,
 	    	"ldap-id" : ldapId,
-	    	"password" : password,
-	    	"confirm-password" : confirmPassword,
-	    	"new-user" : true,
-	    	"ldap" : ldap
+	    	"new-user" : true
 		});
 		
 	    if (cocoon.request.get("cancel")) {
@@ -226,16 +218,11 @@ function add_user(ldap) {
 		fullName = cocoon.request.get("fullname");
 		description = cocoon.request.get("description");
 		ldapId = cocoon.request.get("ldapid");
-		password = cocoon.request.get("password");
-		confirmPassword = cocoon.request.get("confirm-password");
 		
 		var existingUser = userManager.getUser(userId);
 		
 		if (existingUser != null) {
 			message = "This user already exists.";
-		}
-		else if (!password.equals(confirmPassword)) {
-	    	message = "Password and confirmed password are not equal!";
 		}
 		else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(userId)) {
 			message = "This is not a valid user ID.";
@@ -252,7 +239,6 @@ function add_user(ldap) {
 			}
 			
 			user.setDescription(description);
-			user.setPassword(password);
 			user.save();
 			userManager.add(user);
 			break;
