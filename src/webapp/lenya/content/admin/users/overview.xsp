@@ -13,6 +13,7 @@
     <xsp:include>org.apache.avalon.framework.parameters.ParameterException</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.LDAPUser</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.Arrays</xsp:include>
@@ -36,6 +37,7 @@
       if (user != null) {
     </xsp:logic>
     <user>
+      <xsp:attribute name="ldap"><xsp:expr>user instanceof LDAPUser</xsp:expr></xsp:attribute>
       <id><xsp:expr>user.getId()</xsp:expr></id>
       <name><xsp:expr>user.getName()</xsp:expr></name>
       <email><xsp:expr>user.getEmail()</xsp:expr></email>

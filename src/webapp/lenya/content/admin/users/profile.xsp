@@ -11,6 +11,7 @@
     <continuation><jpath:continuation/></continuation>
     <user>
       <xsp:attribute name="new"><jpath:value-of select="new-user"/></xsp:attribute>
+      <xsp:attribute name="ldap"><jpath:value-of select="ldap"/></xsp:attribute>
       <message type="error"><jpath:value-of select="message"/></message>
       <id><jpath:value-of select="user-id"/></id>
       
@@ -20,6 +21,7 @@
           <ldapid><xsp:expr>ldapId</xsp:expr></ldapid>
       	}
       </xsp:logic>
+      
       <fullname><jpath:value-of select="fullname"/></fullname>
       <email><jpath:value-of select="email"/></email>
       <description><jpath:value-of select="description"/></description>
