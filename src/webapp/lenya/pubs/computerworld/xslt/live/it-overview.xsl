@@ -43,7 +43,7 @@
 					<xsl:variable name="url"><xsl:value-of select="@href"/></xsl:variable>
 					<tr>
 						<td valign="middle" height="25">
-							<a href="{$url}" class="txt-l-red">
+							<a href="{$url}" target="_blank" class="txt-l-red">
 								<img border="0" src="/img/layout/arrow-red-big.gif" width="16" height="16" alt="&#187;"/>
 								<b>
 									<xsl:value-of select="title"/>
