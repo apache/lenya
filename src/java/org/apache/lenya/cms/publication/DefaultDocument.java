@@ -43,6 +43,8 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
+
 /**
  * A typical CMS document.
  * 
@@ -74,6 +76,26 @@ public class DefaultDocument implements Document {
      */
     public Publication getPublication() {
         return publication;
+    }
+    
+    /**
+     * Returns the file for this document in a certain area and language.
+     * @param area The area.
+     * @param language The language.
+     * @return A file object.
+     */
+    public File getFile(String area, String language) {
+        return getPublication().getPathMapper().getFile(
+            getPublication(), area, getId(), language);
+    }
+    
+    /**
+     * Returns the files for this document in a certain area and all languages.
+     * @param area The area.
+     * @return A file object.
+     */
+    public File[] getFiles(String area) {
+        return getPublication().getPathMapper().getFiles(getPublication(), area, getId());
     }
 
 }
