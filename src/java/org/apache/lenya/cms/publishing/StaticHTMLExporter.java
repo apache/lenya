@@ -1,5 +1,4 @@
 /*
-$Id: StaticHTMLExporter.java,v 1.17 2003/07/23 13:21:09 gregor Exp $
 <License>
 
  ============================================================================
@@ -80,6 +79,7 @@ import java.util.StringTokenizer;
  * the path<br/>
  *
  * @author <a href="mailto:andreas.hartmann@lenya.com">Andreas Hartmann</a>
+ * @version $Id: StaticHTMLExporter.java,v 1.18 2004/01/21 21:54:15 michi Exp $
  */
 public class StaticHTMLExporter extends AbstractExporter {
     private static Category log = Category.getInstance(StaticHTMLExporter.class);
