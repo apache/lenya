@@ -72,7 +72,6 @@
     <map:generator label="content,data" logger="sitemap.generator.principallist" name="principallist" src="org.apache.cocoon.generation.PrincipalListGenerator"/>
 -->
 
-    <map:generator name="search" src="org.apache.cocoon.generation.SearchGenerator"/>
     <map:generator label="content,data" name="html" src="org.apache.cocoon.generation.HTMLGenerator"/>
     <map:generator label="content,data" logger="sitemap.generator.proxy" name="proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
     <map:generator name="notifying" src="org.apache.cocoon.sitemap.NotifyingGenerator"/>
@@ -338,10 +337,6 @@
       <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/> 
     </map:selector>
 
-<!-- FIXME: Cocoon M1 -->
-<!--
-    <map:selector name="auth-media" src="org.apache.cocoon.webapps.authentication.selection.MediaSelector"/>
--->
 <!-- FIXME: Latest Cocoon CVS -->
 <!--
     <map:selector name="auth-media" src="org.apache.cocoon.webapps.session.selection.MediaSelector"/>
