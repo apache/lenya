@@ -15,12 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: form-layout.xsl,v 1.19 2004/06/29 09:36:10 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
 >
+
+<xsl:param name="nodeid" select="''"/>
 
 <xsl:param name="contextPrefix" select="'/lenya'"/>
 <xsl:param name="edit" select="'No node selected yet'"/>
@@ -186,8 +188,15 @@
 </xsl:when>
 <xsl:otherwise>
   <p>
-    <xsl:value-of select="input/@value"/>
-    <xsl:copy-of select="textarea/node()"/>
+    <xsl:choose>
+      <xsl:when test="(../@name='Object')">
+        <img src="{$nodeid}/{input/@value}"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="input/@value"/>
+        <xsl:copy-of select="textarea/node()"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </p>
 </xsl:otherwise>
 </xsl:choose>
