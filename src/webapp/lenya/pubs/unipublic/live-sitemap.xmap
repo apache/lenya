@@ -96,29 +96,9 @@
       <map:match pattern="index.html">
         <map:generate src="cocoon:/index.xml"/> 
         <map:transform type="xinclude"/>
-<!--<map:transform src="stylesheets/publication/Page/Front/newsml.xsl"/> would be nice to have-->
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
-
-<!--
-      <map:match pattern="navigation">
-        <map:generate src="docs/publication/live/navigation.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="dossier">
-        <map:generate src="docs/publication/live/frontpage/dossier.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="navigation.xml">
-        <map:aggregate element="FirstColumn">
-          <map:part src="cocoon:/navigation"/>
-          <map:part src="cocoon:/dossier"/>
-        </map:aggregate>
-        <map:serialize type="xml"/>
-      </map:match>
--->
 
       <map:match pattern="headlines.xml">
         <map:generate src="docs/publication/live/frontpage/headlines.xml"/>
@@ -127,31 +107,9 @@
         <map:serialize type="xml"/>
       </map:match>
 
-<!--
-      <map:match pattern="service">
-        <map:generate src="docs/publication/live/frontpage/service.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="webperls">
-        <map:generate src="docs/publication/live/frontpage/webperls.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="services.xml">
-        <map:aggregate element="LastColumn">
-          <map:part src="cocoon:/service"/>
-          <map:part src="cocoon:/webperls"/>
-        </map:aggregate>
-        <map:serialize type="xml"/>
-      </map:match>
--->
-
       <map:match pattern="index.xml">
         <map:generate src="docs/publication/live/frontpage/index.xml"/>
         <map:transform type="xinclude"/>
-<!--
-        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
--->
         <map:serialize type="xml"/>
       </map:match>
 
@@ -165,7 +123,10 @@
         <map:serialize type="xml"/>
       </map:match>
 
-      <map:match pattern="*/*/*/index.xml">
+      <map:match pattern="*/*/*/articles.xml">
+<!--
+        <map:generate src="docs/publication/live/{1}/{2}/sections/articles{3}.xml"/>
+-->
         <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
         <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
           <map:parameter name="channel" value="{1}"/>
@@ -176,36 +137,39 @@
         <map:serialize type="xml"/>
       </map:match>
 
+      <map:match pattern="*/*/*/index.xml">
+<!--
+        <map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>
+-->
+        <map:generate type="serverpages" src="docs/publication/live/section.xsp">
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+        </map:generate>
+        <map:transform type="xinclude"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
       <map:match pattern="*/*/">
-        <map:redirect-to uri="2002/" session="true"/>
+        <map:redirect-to uri="2002/index.html" session="true"/>
+      </map:match>
+      <map:match pattern="*/*/index.html">
+        <map:redirect-to uri="2002/index.html" session="true"/>
       </map:match>
       <map:match pattern="*/*/*/">
-        <!--<map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>-->
-        <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
-        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
-          <map:parameter name="channel" value="{1}"/>
-          <map:parameter name="section" value="{2}"/>
-          <map:parameter name="year" value="{3}"/>
-        </map:transform>
-        <map:transform type="xinclude"/>
-        <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
-        <map:serialize type="html"/>
+        <map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="*/*/*/index.html">
-        <!--<map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>-->
-        <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
-        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
-          <map:parameter name="channel" value="{1}"/>
-          <map:parameter name="section" value="{2}"/>
-          <map:parameter name="year" value="{3}"/>
-        </map:transform>
-        <map:transform type="xinclude"/>
+        <map:generate src="cocoon:/{1}/{2}/{3}/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Article -->
       <map:match pattern="*/*/*/*/">
+        <map:redirect-to uri="index.html" session="true"/>
+      </map:match>
+      <map:match pattern="*/*/*/*/index.html">
         <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Article/Live/main.xsl"/>
         <map:serialize type="html"/>
@@ -215,6 +179,7 @@
         <map:serialize type="xml"/>
       </map:match>
 
+      <!-- XML -->
       <map:match pattern="**.xml">
         <map:generate src="docs/publication/live/{1}.xml"/>
         <map:serialize type="xml"/>

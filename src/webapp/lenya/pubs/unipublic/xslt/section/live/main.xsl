@@ -46,7 +46,10 @@
 
 <tr>
 <td width="135" align="right" valign="top" rowspan="3">
+<xsl:apply-templates select="FirstColumn/MainNavigation"/>
+<!--
 <xsl:apply-templates select="MainNavigation"/>
+-->
 </td>
 <td width="315" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" alt="{$sectiontext}"/></td>
 <td width="135" valign="bottom" align="right"></td>

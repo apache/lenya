@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+>
+
+<Page>
+ <xsp:logic>
+  String channel=parameters.getParameter("channel","null");
+  String section=parameters.getParameter("section","null");
+  String year=parameters.getParameter("year","null");
+ </xsp:logic>
+
+<Content xmlns:xi="http://www.w3.org/2001/XInclude">
+  <FirstColumn>
+    <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></xi:include>
+    <xi:include href="frontpage/dossier.xml" xml:base="cocoon:"/>
+  </FirstColumn>
+  <MainColumn>
+    <xi:include xml:base="cocoon:"><xsp:attribute name="href"><xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/articles.xml</xsp:attribute></xi:include>
+  </MainColumn>
+</Content>
+</Page>
+
+</xsp:page>
