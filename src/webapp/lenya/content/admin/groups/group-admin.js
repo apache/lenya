@@ -153,6 +153,9 @@ function group_add_group() {
 		if (existingGroup != null) {
 			message = "This group already exists.";
 		}
+		else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(groupId)) {
+          	message = "This is not a valid group ID.";
+		}
 		else {
 			var configDir = groupManager.getConfigurationDirectory();
 			var group = new Packages.org.apache.lenya.cms.ac.FileGroup(configDir, groupId);

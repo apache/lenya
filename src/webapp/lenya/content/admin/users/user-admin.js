@@ -224,6 +224,9 @@ function add_user(ldap) {
 		if (existingUser != null) {
 			message = "This user already exists.";
 		}
+		else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(userId)) {
+			message = "This is not a valid user ID.";
+		}
 		else {
 			var configDir = userManager.getConfigurationDirectory();
 			var user;

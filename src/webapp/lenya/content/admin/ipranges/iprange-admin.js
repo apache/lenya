@@ -149,11 +149,14 @@ function iprange_change_profile(iprangeId, newRange) {
 	                    message = "This IP range already exists.";
 	                    ok = false;
 	                }
+					else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(iprangeId)) {
+	                	message = "This is not a valid IP range ID. [" + iprangeId + "]";
+	                	ok = false;
+	                }
 	                else {
 	                    range = new Packages.org.apache.lenya.cms.ac.FileIPRange(
 	                        ipRangeManager.getConfigurationDirectory(), iprangeId);
 	                    ipRangeManager.add(range);
-	                    ok = true;
 	                }
 	            }
 	        }
