@@ -37,7 +37,9 @@ public class ChangeLabel extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+        if (!getErrorMessages().isEmpty()) {
+            return;
+        }
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }

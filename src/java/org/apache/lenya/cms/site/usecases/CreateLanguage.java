@@ -46,10 +46,16 @@ public class CreateLanguage extends Create {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
+        
+        if (getSourceDocument() == null) {
+            addErrorMessage("This operation must be invoked on a document.");
+            return;
+        }
 
         String area = getSourceDocument().getArea();
         if (!area.equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This operation is only supported in the authoring area.");
+            return;
         }
 
         if (getNonExistingLanguages().isEmpty()) {
