@@ -1,5 +1,5 @@
 /*
-$Id: Label.java,v 1.6 2003/09/12 17:34:01 egli Exp $
+$Id: Label.java,v 1.7 2003/10/29 15:31:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publication;
  * The Label class encapsulates a string label and a associated language.
  *
  * @author Christian Egli
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class Label {
     private String label = null;
@@ -97,7 +97,7 @@ public class Label {
     /**
      * Set the actual label of the label object.
      * 
-     * @param label
+     * @param label The label.
      */
     public void setLabel(String label) {
         this.label = label;

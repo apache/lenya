@@ -1,5 +1,5 @@
 /*
-$Id: DublinCoreProxy.java,v 1.2 2003/08/28 11:39:58 egli Exp $
+$Id: DublinCoreProxy.java,v 1.3 2003/10/29 15:31:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -79,6 +79,7 @@ public class DublinCoreProxy implements DublinCore {
      * Instanciate a dublin core implementation object
      * 
      * @return a real dublin core object
+     * @throws DocumentException when an error occurs.
      */
     protected DublinCore instance() throws DocumentException {
         if (dcCore == null) {

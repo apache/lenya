@@ -1,5 +1,5 @@
 /*
-$Id: LanguageVersions.java,v 1.3 2003/10/21 09:51:55 andreas Exp $
+$Id: LanguageVersions.java,v 1.4 2003/10/29 15:31:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,10 +56,17 @@ $Id: LanguageVersions.java,v 1.3 2003/10/21 09:51:55 andreas Exp $
 package org.apache.lenya.cms.publication;
 
 /**
+ * Document set containing all language versions of a document.
+ * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class LanguageVersions extends DocumentSet {
 
+    /**
+     * Ctor.
+     * @param document The document.
+     * @throws DocumentException when something went wrong.
+     */
     public LanguageVersions(Document document) throws DocumentException {
         String[] languages = document.getLanguages();
         DocumentBuilder builder = document.getPublication().getDocumentBuilder();
