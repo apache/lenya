@@ -5,6 +5,13 @@
 <!--
   <update-index type="incremental"/>
 -->
-  <index-dir src="../../resources/publication/search/lucene/index-blog"/>
-  <htdocs-dump-dir src="../../resources/publication/search/lucene/htdocs_dump/blog.oscom.org"/>
+  <index-dir src="../resources/search/lucene/index/index-blog"/>
+  <htdocs-dump-dir src="/home/michiii/eurex/htdocs_dump_BAK1"/>
+<!--
+  <htdocs-dump-dir src="/home/michiii/oscom/htdocs_dump/blog.oscom.org"/>
+-->
+<!--
+  <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump/blog.oscom.org"/>
+-->
+  <indexer class="org.lenya.lucene.index.DefaultIndexer"/>
 </lucene>
