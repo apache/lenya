@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -266,7 +266,29 @@ public class DefaultSiteTree implements SiteTree {
         log.debug("Tree has been modified: " + document.getDocumentElement());
     }
 
-    /** (non-Javadoc)
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#addLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
+	 */
+    public void addLabel(String documentId, Label label) {
+        SiteTreeNode node = getNode(documentId);
+        if (node != null) {
+            node.addLabel(label);
+        }
+    }
+	
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#removeLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
+	 */
+	public void removeLabel(String documentId, Label label) {
+		SiteTreeNode node = getNode(documentId);
+		if (node != null) {
+			node.removeLabel(label);
+		}
+	}
+	
+	/** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#removeNode(java.lang.String)
      */
     public SiteTreeNode removeNode(String documentId) {
