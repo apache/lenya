@@ -17,7 +17,7 @@
 
 <!-- $Id: properties-build.xml 43145 2004-07-27 03:07:25Z michi $ -->
 
-<project name="properties">
+<project name="lenya-properties">
 
   <description>
     Properties Targets
@@ -104,7 +104,10 @@
     <fileset dir="${lib.dir}">
       <include name="*.jar"/>
     </fileset>
-    <fileset dir="${build.webapp}/WEB-INF/lib">
+    <fileset dir="${src.webapp.dir}/WEB-INF/lib">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${cocoon.webapp.dir}/WEB-INF/lib">
       <include name="*.jar"/>
     </fileset>
     <fileset dir="tools/jetty/lib">

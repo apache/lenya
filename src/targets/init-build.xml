@@ -17,7 +17,7 @@
 
 <!-- $Id: init-build.xml 46135 2004-09-15 21:58:38Z antonio $ -->
 
-<project name="init">
+<project name="lenya-init">
 
   <description>
     Initialization Targets
@@ -54,8 +54,6 @@
     <property name="snapshot.src.name" value="${fullname}-${SNAPSHOT_STAMP}-src"/>
     <property name="snapshot.bin.dir" value="${dist.root}/${snapshot.bin.name}"/>
     <property name="snapshot.src.dir" value="${dist.root}/${snapshot.src.name}"/>
-
-    
   </target>
 
   <target name="build-custom-tasks" depends="init">
@@ -82,7 +80,8 @@
   <!-- ============================================================ -->
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
-  <target name="build-cocoon" depends="init, build-custom-tasks">
+  <target name="build-cocoon" depends="init">
+    <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
     <echo>Building Cocoon with our properties</echo>
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
@@ -92,7 +91,7 @@
             includes="src/confpatch/*.xmap"/> 
   </target>
 
-  <target name="prepare-cocoon" depends="init, build-cocoon">
+  <target name="prepare-cocoon" depends="build-cocoon">
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/web.xml</echo>

@@ -15,9 +15,9 @@
   limitations under the License.
 -->
 
-<!-- $Id: compile-build.xml,v 1.4 2004/05/04 13:46:26 michi Exp $ -->
+<!-- $Id$ -->
 
-<project name="compile">
+<project name="lenya-compile">
 
   <description>
     Compilation Targets

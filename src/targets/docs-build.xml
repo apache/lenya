@@ -15,9 +15,9 @@
   limitations under the License.
 -->
 
-<!-- $Id: docs-build.xml,v 1.3 2004/03/21 18:35:15 gregor Exp $ -->
+<!-- $Id$ -->
 
-<project name="documentation">
+<project name="lenya-documentation">
 
   <description>
     Documentation Targets

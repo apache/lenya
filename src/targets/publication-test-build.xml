@@ -16,7 +16,7 @@
 -->
 
 <!-- $Id$ -->
-<project name="pubtest">
+<project name="lenya-pubtest">
 
   <description>
     Publication Test Targets

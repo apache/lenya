@@ -17,23 +17,11 @@
 
 <!-- $Id: webapp-build.xml 46135 2004-09-15 21:58:38Z antonio $ -->
 
-<project name="webapp">
+<project name="lenya-webapp">
 
   <description>
     Webapp Targets
   </description>
-
-  <target name="check-cocoon" description="Check if Cocoon webapp exists">
-    <echo>INFO: Check if Cocoon webapp exists</echo>
-    <available file="${cocoon.webapp.dir}" property="cocoon.exists"/>
-
-    <antcall target="cocoon-does-not-exist"/>
-  </target>
-
-  <target name="cocoon-does-not-exist" description="Check if Cocoon webapp exists" unless="cocoon.exists">
-    <echo>ERROR: Cocoon webapp does not exist: ${cocoon.webapp.dir}</echo>
-    <fail message="Cocoon webapp does not exist: ${cocoon.webapp.dir}"/>
-  </target>
 
   <!-- ============================================================ -->
   <!-- Produce the webapp                                           -->
@@ -48,8 +36,8 @@
   in the server.xml configuration is set to true so changes in the classes
   are reflected immediately.
   -->
-  <target name="webapp" depends="check-cocoon, compile" description="Builds the webapp directory ready to be linked into a servlet engines context directory" if="cocoon.exists">
-  
+  <target name="webapp" depends="compile" 
+      description="Builds the webapp directory ready to be linked into a servlet engines context directory">  
     <!--
     Copy CMS files and overwrite some parts of the previously unpacked cocoon webapp package with our customized files
     -->
@@ -69,7 +57,7 @@
     </copyPubs>
 
     <!-- Patch cocoon.xconf -->
-    <echo>INFO: Patch cocoon.xconf</echo>
+    <echo>INFO: Patch cocoon.xconf with publication-specific changes</echo>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
             srcdir="${build.webapp}/lenya/pubs" 
             includes="*/config/*.xconf"

@@ -17,7 +17,7 @@
 
 <!-- $Id$ -->
 
-<project name="export">
+<project name="lenya-export">
 
   <description>
     Export Targets

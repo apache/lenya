@@ -15,9 +15,9 @@
   limitations under the License.
 -->
 
-<!-- $Id: test-build.xml,v 1.18 2004/03/21 18:35:15 gregor Exp $ -->
+<!-- $Id$ -->
 
-<project name="test">
+<project name="lenya-test">
 
   <description>
     Test Targets
