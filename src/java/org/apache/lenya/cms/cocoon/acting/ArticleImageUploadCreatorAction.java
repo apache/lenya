@@ -46,6 +46,12 @@ public class ArticleImageUploadCreatorAction
 	   "source", "language",
 	   "relation", "coverage", "rights"};
 
+    /**
+     * Describe <code>configure</code> method here.
+     *
+     * @param conf a <code>Configuration</code> value
+     * @exception ConfigurationException if an error occurs
+     */
     public void configure(Configuration conf) throws ConfigurationException {
 	super.configure(conf);
 	// The name of the uploaddir is specified as a parameter of
@@ -62,6 +68,17 @@ public class ArticleImageUploadCreatorAction
 	getLogger().debug("metaDirName:" + metaDirName);
     }
 
+    /**
+     * Describe <code>act</code> method here.
+     *
+     * @param redirector a <code>Redirector</code> value
+     * @param resolver a <code>SourceResolver</code> value
+     * @param objectModel a <code>Map</code> value
+     * @param source a <code>String</code> value
+     * @param parameters a <code>Parameters</code> value
+     * @return a <code>Map</code> value
+     * @exception Exception if an error occurs
+     */
     public Map act(Redirector redirector, SourceResolver resolver,
 		   Map objectModel, String source, Parameters parameters)
 	throws Exception {
@@ -181,6 +198,13 @@ public class ArticleImageUploadCreatorAction
 	return Collections.unmodifiableMap(results);
     }
 
+    /**
+     * Describe <code>createMetaData</code> method here.
+     *
+     * @param metaDataFilePathName a <code>String</code> value
+     * @param dublinCoreParams a <code>HashMap</code> value
+     * @exception IOException if an error occurs
+     */
     protected void createMetaData(String metaDataFilePathName,
 				  HashMap dublinCoreParams)
 	throws IOException {
