@@ -146,4 +146,20 @@ public interface DocumentManager {
      */
     public void copyAllLanguageVersions(Document source, Document target)
             throws PublicationException;
+    
+    /**
+     * Deletes a document, incl. all requiring documents. If
+     * a sitetree is used, this means that the whole subtree is deleted.
+     * @param document The document.
+     * @throws PublicationException if an error occurs.
+     */
+    public void deleteAll(Document document) throws PublicationException;
+    
+    /**
+     * Deletes all language versions of a document.
+     * @param document The document.
+     * @throws PublicationException if the documents could not be copied.
+     */
+    public void deleteAllLanguageVersions(Document document) throws PublicationException;
+
 }

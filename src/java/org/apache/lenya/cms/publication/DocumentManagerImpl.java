@@ -45,8 +45,8 @@ import org.apache.lenya.workflow.WorkflowInstance;
  * 
  * @version $Id:$
  */
-public class DocumentManagerImpl extends AbstractLogEnabled implements
-        DocumentManager, Serviceable, Contextualizable {
+public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentManager,
+        Serviceable, Contextualizable {
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#addDocument(org.apache.lenya.cms.publication.Document)
@@ -105,13 +105,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
         WorkflowResolver workflowResolver = null;
         try {
             resourcesManager.copyResourcesTo(destinationDocument);
-            
+
             workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             copyWorkflow(workflowResolver, sourceDocument, destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
-        }
-        finally {
+        } finally {
             if (workflowResolver != null) {
                 this.manager.release(workflowResolver);
             }
@@ -387,7 +386,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
      */
     public void copyDocumentSource(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
-        
+
         SourceResolver sourceResolver = null;
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -397,8 +396,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
             destinationDocument.getDublinCore().replaceBy(sourceDocument.getDublinCore());
         } catch (Exception e) {
             throw new PublicationException(e);
-        }
-        finally {
+        } finally {
             if (sourceResolver != null) {
                 this.manager.release(sourceResolver);
             }
@@ -411,7 +409,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
      * @throws PublicationException when something went wrong.
      */
     protected void deleteDocumentSource(Document document) throws PublicationException {
-        
+
         SourceResolver sourceResolver = null;
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -419,19 +417,18 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
             ((ModifiableSource) source).delete();
         } catch (Exception e) {
             throw new PublicationException(e);
-        }
-        finally {
+        } finally {
             if (sourceResolver != null) {
                 this.manager.release(sourceResolver);
             }
         }
     }
-    
+
     /**
      * Abstract base class for document visitors which operate on a source and
      * target document.
      */
-    public abstract class Visitor implements DocumentVisitor {
+    public abstract class SourceTargetVisitor implements DocumentVisitor {
 
         private Document rootSource;
         private Document rootTarget;
@@ -443,7 +440,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
          * @param source The root source.
          * @param target The root target.
          */
-        public Visitor(DocumentManager manager, Document source, Document target) {
+        public SourceTargetVisitor(DocumentManager manager, Document source, Document target) {
             this.manager = manager;
             this.rootSource = source;
             this.rootTarget = target;
@@ -481,7 +478,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
     /**
      * DocumentVisitor to move documents.
      */
-    public class MoveVisitor extends Visitor {
+    public class MoveVisitor extends SourceTargetVisitor {
 
         /**
          * Ctor.
@@ -506,7 +503,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
     /**
      * DocumentVisitor to copy documents.
      */
-    public class CopyVisitor extends Visitor {
+    public class CopyVisitor extends SourceTargetVisitor {
 
         /**
          * Ctor.
@@ -528,4 +525,65 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements
 
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#deleteAll(org.apache.lenya.cms.publication.Document)
+     */
+    public void deleteAll(Document document) throws PublicationException {
+        DocumentIdentityMap identityMap = document.getIdentityMap();
+        SiteManager manager = identityMap.getPublication().getSiteManager(identityMap);
+        Document[] descendantsArray = manager.getRequiringResources(document);
+        OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
+        descendants.add(document);
+
+        DocumentVisitor visitor = new DeleteVisitor(this, document);
+        descendants.visitDescending(visitor);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#deleteAllLanguageVersions(org.apache.lenya.cms.publication.Document)
+     */
+    public void deleteAllLanguageVersions(Document document) throws PublicationException {
+        DocumentIdentityMap identityMap = document.getIdentityMap();
+        String[] languages = document.getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+
+            Document version = identityMap.getFactory().getLanguageVersion(document, languages[i]);
+            deleteDocument(version);
+        }
+    }
+
+    /**
+     * Visitor to delete documents.
+     */
+    public class DeleteVisitor implements DocumentVisitor {
+
+        private Document rootSource;
+        private DocumentManager manager;
+
+        /**
+         * Ctor.
+         * @param manager The document manager.
+         * @param source The root source.
+         */
+        public DeleteVisitor(DocumentManager manager, Document source) {
+            this.manager = manager;
+            this.rootSource = source;
+        }
+
+        protected Document getRootSource() {
+            return rootSource;
+        }
+
+        protected DocumentManager getDocumentManager() {
+            return this.manager;
+        }
+
+        /**
+         * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
+         */
+        public void visitDocument(Document document) throws PublicationException {
+            getDocumentManager().deleteAllLanguageVersions(document);
+        }
+
+    }
 }
