@@ -57,7 +57,7 @@ function executeUsecase() {
 	var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
 	var usecase = usecaseResolver.resolve(usecaseName);
 	
-	var flowHelper = new Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper();
+	var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
 	var envelope = flowHelper.getPageEnvelope(cocoon);
 	var document = envelope.getDocument();
 	
@@ -67,6 +67,8 @@ function executeUsecase() {
 
 	var ready = false;
 	var success = false;
+	
+	usecase.checkPreconditions();
 
 	while (!ready) {
 	
