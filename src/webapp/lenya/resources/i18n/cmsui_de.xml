@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.23 2004/02/17 21:19:48 roku Exp $
+   $Id: cmsui_de.xml,v 1.24 2004/02/17 21:51:32 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -41,11 +41,13 @@
   <message key="Users">Benutzer</message>  
   <message key="group">Gruppe</message>
   <message key="Group">Gruppe</message>
+  <message key="Groups">Gruppen</message>
   <message key="Group ID">Gruppen ID</message>
   <message key="Yes">Ja</message>
   <message key="No">Nein</message>
   <message key="Description">Beschreibung</message>
   <message key="Name">Name</message>
+  <message key="Full Name">Vor-&#160;und&#160;Nachname</message>
   <message key="required fields">Pflichfelder</message> 
 
   <!-- submit screen -->
@@ -132,10 +134,12 @@
   
     <!-- User Administration -->
   <message key="User Data">Benutzerdetails</message>
+  <message key="User ID">Benutzer</message>
   <message key="CMS User ID">CMS&#160;Benutzer</message>
   <message key="LDAP ID">LDAP&#160;ID</message>
   <message key="Confirm password">Passwort&#160;best&#228;tigen</message>
   <message key="Add User">Benutzer hinzuf&#252;gen</message>
+  <message key="User Administration">Benutzerverwaltung</message>
 
 </catalogue>
 
