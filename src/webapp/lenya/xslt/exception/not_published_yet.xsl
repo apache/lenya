@@ -11,6 +11,8 @@
 </head>
 <body>
 Document not published yet!
+<br />
+<br />To publish click on the <b>File</b> menu within the Authoring area and then click on the <b>Publish</b> menu item.
 </body>
 </html>
 </xsl:template>
