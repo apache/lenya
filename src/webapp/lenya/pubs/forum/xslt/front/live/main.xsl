@@ -13,6 +13,6 @@
 <!--
 <xsl:include href="../body_q42.xsl"/>
 -->
-<xsl:include href="../body_wyona.xsl"/>
+<xsl:include href="../body_lenya.xsl"/>
  
 </xsl:stylesheet>  

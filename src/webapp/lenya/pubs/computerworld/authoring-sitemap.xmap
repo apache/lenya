@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: authoring-sitemap.xmap,v 1.27 2003/03/04 18:08:09 gregor Exp $ -->
+<!-- $Id: authoring-sitemap.xmap,v 1.28 2003/03/04 19:45:09 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
   <map:components>
@@ -120,7 +120,7 @@
 	  <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
 	  <map:parameter name="articleId" value="{4}"/>
 	</map:generate>
-	<map:transform src="../../stylesheets/cms/Page/rc/rollback.xsl"/>
+	<map:transform src="../../stylesheets/cms/rc/rollback.xsl"/>
 	<map:serialize type="html"/>
       </map:match>
       <map:match pattern="rollback/*">
@@ -135,8 +135,8 @@
 	  <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
 	  <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
 	</map:generate>
-	<map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
-	<map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+	<map:transform src="xslt/Article/Authoring/toArticle.xsl"/>
+	<map:transform src="xslt/Article/Authoring/main.xsl"/>
 	<map:serialize type="html"/>
       </map:match>
     </map:pipeline>
@@ -148,14 +148,14 @@
       The task ID of the publishing task is forwarded as request parameter
       from the menu. This simplifies publishing of different document types. -->
       <!-- ===================================================================== -->
-      <map:match pattern="wyona/publishScreen*">
+      <map:match pattern="lenya/publishScreen*">
 	<map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
-	<map:transform src="../../stylesheets/cms/Page/publishing/main.xsl">
+	<map:transform src="../../stylesheets/cms/publishing/main.xsl">
 	  <map:parameter name="use-request-parameters" value="true"/>
 	</map:transform>
 	<map:serialize type="html"/>
       </map:match>
-      <map:match pattern="wyona/publish*">
+      <map:match pattern="lenya/publish*">
 	<map:act type="request-parameters">
 	  <map:parameter name="parameters" value="true"/>
 	  <map:act type="task">
@@ -169,12 +169,12 @@
     <!-- /Publisher  -->
     <!-- ParentChild Content Creator: New Document -->
     <map:pipeline>
-      <map:match pattern="wyona/ParentChildScreenNewArticle*">
+      <map:match pattern="lenya/ParentChildScreenNewArticle*">
 	<map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
-	<map:transform src="../../stylesheets/cms/Page/authoring/new-document.xsl"/>
+	<map:transform src="../../stylesheets/cms/authoring/new-document.xsl"/>
 	<map:serialize type="html"/>
       </map:match>
-      <map:match pattern="wyona/create*">
+      <map:match pattern="lenya/create*">
 	<map:act type="parent-child">
 	  <map:redirect-to uri="{parent_uri}" session="true"/>
 	</map:act>
@@ -240,12 +240,12 @@
 	</map:match>
 	<map:match type="step" pattern="showscreen">
 	  <map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
-	  <map:transform src="stylesheets/cms/Page/authoring/upload-image.xsl"/>
+	  <map:transform src="stylesheets/cms/authoring/upload-image.xsl"/>
 	  <map:serialize type="html"/>
 	</map:match>
 	<map:match type="step" pattern="showteaserscreen">
 	  <map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
-	  <map:transform src="stylesheets/cms/Page/authoring/upload-teaserimage.xsl"/>
+	  <map:transform src="stylesheets/cms/authoring/upload-teaserimage.xsl"/>
 	  <map:serialize type="html"/>
 	</map:match>
 	<map:match type="step" pattern="upload">
@@ -255,7 +255,7 @@
 	  </map:act>
 	  <!-- otherwise the action could not validate some of the	  input and we present the upload form again -->
 	  <map:generate type="serverpages" src="../../docs/cms/authoring/upload-image.xsp"/>
-	  <map:transform src="../../stylesheets/cms/Page/authoring/upload-image.xsl"/>
+	  <map:transform src="../../stylesheets/cms/authoring/upload-image.xsl"/>
 	  <map:serialize type="html"/>
 	</map:match>
       </map:match>
@@ -266,7 +266,7 @@
 	<map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="index.html">
-	<map:aggregate element="wyona" label="gregor">
+	<map:aggregate element="lenya" label="gregor">
 	  <map:part src="cocoon:/menus/front.xml"/>
 	  <map:part element="cmsbody" src="docs/publication/authoring/index.html"/>
 	  <map:part src="docs/publication/authoring/preview.xml"/>
@@ -275,26 +275,26 @@
 	  <map:part src="cocoon:/selected-headlines"/>
 	  <map:part src="cocoon:/today"/>
 	</map:aggregate>
-	<map:transform src="stylesheets/publication/Page/Authoring/main.xsl" label="content">
+	<map:transform src="xslt/Authoring/main.xsl" label="content">
 	  <map:parameter name="id" value="/index.html"/>
 	  <map:parameter name="authoring" value="true"/>
 	</map:transform>
-	<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
+	<map:transform src="xslt/Authoring/images.xsl"/>
 	<map:serialize type="html"/>
       </map:match>
       <!-- ALL articles overview -->
       <map:match pattern="overview.html">
-	<map:aggregate element="wyona" label="gregor">
+	<map:aggregate element="lenya" label="gregor">
 	  <map:part src="cocoon:/menus/overview.xml"/>
 	  <map:part element="cmsbody" src="cocoon:/all-headlines"/>
 	</map:aggregate>
-	<map:transform src="stylesheets/publication/Page/Authoring/overview.xsl"/>
+	<map:transform src="xslt/Authoring/overview.xsl"/>
 	<map:serialize type="html"/>
       </map:match>
       <!-- Include ALL articles -->
       <map:match pattern="all-headlines">
 	<map:generate type="directory" src="docs/publication/authoring/news/"/>
-	<map:transform src="stylesheets/publication/Page/Authoring/xinclude.xsl"/>
+	<map:transform src="xslt/Authoring/xinclude.xsl"/>
 	<map:transform type="xlink">
 	  <map:parameter name="href" value="docs/publication/authoring/news/dummy.xml"/>
 	</map:transform>
@@ -303,7 +303,7 @@
       <!-- Include only articles specified in headlines.xml -->
       <map:match pattern="selected-headlines">
 	<map:generate src="docs/publication/authoring/headlines.xml"/>
-	<map:transform src="stylesheets/publication/Page/Authoring/selected-xinclude.xsl" label="gregor"/>
+	<map:transform src="xslt/Authoring/selected-xinclude.xsl" label="gregor"/>
 	<map:transform type="xlink">
 	  <map:parameter name="href" value="docs/publication/authoring/headlines.xml"/>
 	</map:transform>
@@ -311,7 +311,7 @@
       </map:match>
       <!-- ALL it-stellen overview -->
       <map:match pattern="it-stellen/index.html">
-	<map:aggregate element="wyona" label="gregor">
+	<map:aggregate element="lenya" label="gregor">
 	  <map:part src="cocoon:/menus/front.xml"/>
 	  <map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
 	  <map:part src="cocoon:/all-it-stellen"/>
@@ -319,19 +319,19 @@
 	  <map:part src="docs/publication/authoring/sitetree.xml"/>
 	  <map:part src="cocoon:/today"/>
 	</map:aggregate>
-	<map:transform src="stylesheets/publication/Page/Authoring/it-overview.xsl">
+	<map:transform src="xslt/Authoring/it-overview.xsl">
 	  <map:parameter name="files" value="Stellen/"/>
 	  <map:parameter name="id" value="/it-stellen/"/>
 	  <map:parameter name="documentid" value="news/{1}.xml"/>
 	  <map:parameter name="authoring" value="true"/>
 	</map:transform>
-	<map:transform src="stylesheets/publication/Page/today.xsl"/>
-	<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+	<map:transform src="xslt/today.xsl"/>
+	<map:transform src="xslt/Authoring/images.xsl" label="content"/>
 	<map:serialize type="html"/>
       </map:match>
       <!-- ALL it-kalender overview -->
       <map:match pattern="it-kalender/index.html">
-	<map:aggregate element="wyona" label="gregor">
+	<map:aggregate element="lenya" label="gregor">
 	  <map:part src="cocoon:/menus/front.xml"/>
 	  <map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
 	  <map:part src="cocoon:/all-it-kalender"/>
@@ -339,20 +339,20 @@
 	  <map:part src="docs/publication/authoring/sitetree.xml"/>
 	  <map:part src="cocoon:/today"/>
 	</map:aggregate>
-	<map:transform src="stylesheets/publication/Page/Authoring/it-overview.xsl">
+	<map:transform src="xslt/Authoring/it-overview.xsl">
 	  <map:parameter name="files" value="Kalender"/>
 	  <map:parameter name="id" value="/it-kalender/"/>
 	  <map:parameter name="documentid" value="news/{1}.xml"/>
 	  <map:parameter name="authoring" value="true"/>
 	</map:transform>
-	<map:transform src="stylesheets/publication/Page/today.xsl"/>
-	<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+	<map:transform src="xslt/today.xsl"/>
+	<map:transform src="xslt/Authoring/images.xsl" label="content"/>
 	<map:serialize type="html"/>
       </map:match>
       <!-- Include ALL it-stellen -->
       <map:match pattern="all-it-stellen">
 	<map:generate type="directory" src="docs/publication/authoring/it-stellen/"/>
-	<map:transform src="stylesheets/publication/Page/xinclude-it.xsl"/>
+	<map:transform src="xslt/xinclude-it.xsl"/>
 	<map:transform type="xlink">
 	  <map:parameter name="href" value="docs/publication/authoring/it-stellen/dummy.xml"/>
 	</map:transform>
@@ -361,7 +361,7 @@
       <!-- Include ALL it-kalender -->
       <map:match pattern="all-it-kalender">
 	<map:generate type="directory" src="docs/publication/authoring/it-kalender/"/>
-	<map:transform src="stylesheets/publication/Page/xinclude-it.xsl"/>
+	<map:transform src="xslt/xinclude-it.xsl"/>
 	<map:transform type="xlink">
 	  <map:parameter name="href" value="docs/publication/authoring/it-kalender/dummy.xml"/>
 	</map:transform>
@@ -372,7 +372,7 @@
     <map:pipeline>
       <map:match pattern="headlines.xml">
 	<map:generate src="docs/publication/authoring/headlines.xml"/>
-	<map:transform src="stylesheets/publication/Page/Authoring/xinclude.xsl"/>
+	<map:transform src="xslt/Authoring/xinclude.xsl"/>
 	<map:transform type="xlink">
 	  <map:parameter name="href" value="docs/publication/authoring/headlines.xml"/>
 	</map:transform>
@@ -431,7 +431,7 @@
     <map:pipeline>
       <!-- Detail Article view -->
       <map:match pattern="news/**.html">
-	<map:aggregate element="wyona" label="gregor">
+	<map:aggregate element="lenya" label="gregor">
 	  <map:part src="cocoon:/menus/news/{1}.xml"/>
 	  <map:part element="cmsbody" src="docs/publication/authoring/index.html"/>
 	  <map:part src="docs/publication/authoring/news/{1}.xml"/>
@@ -440,13 +440,13 @@
 	  <map:part src="cocoon:/selected-headlines"/>
 	  <map:part src="cocoon:/today"/>
 	</map:aggregate>
-	<map:transform src="stylesheets/publication/Page/Authoring/article.xsl">
+	<map:transform src="xslt/Authoring/article.xsl">
 	  <map:parameter name="id" value="/news/"/>
 	  <map:parameter name="documentid" value="news/{1}.xml"/>
 	  <map:parameter name="authoring" value="true"/>
 	</map:transform>
-	<map:transform src="stylesheets/publication/Page/today.xsl"/>
-	<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+	<map:transform src="xslt/today.xsl"/>
+	<map:transform src="xslt/Authoring/images.xsl" label="content"/>
 	<map:serialize type="html"/>
       </map:match>
     </map:pipeline>
@@ -465,7 +465,7 @@
       </map:match>
       <!-- Fallback matcher (for wraping files) -->
       <map:match pattern="**">
-	<map:aggregate element="wyona" label="gregor">
+	<map:aggregate element="lenya" label="gregor">
 	  <map:part src="cocoon:/menus/static/{1}"/>
 	  <map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
 	  <map:part src="docs/publication/authoring/{1}" element="wrapper"/>
@@ -473,11 +473,11 @@
 	  <map:part src="docs/publication/authoring/sitetree.xml"/>
 	  <map:part src="cocoon:/today"/>
 	</map:aggregate>
-	<map:transform src="stylesheets/publication/Page/Authoring/wrapper.xsl">
+	<map:transform src="xslt/Authoring/wrapper.xsl">
 	  <map:parameter name="id" value="/{1}"/>
 	  <map:parameter name="authoring" value="true"/>
 	</map:transform>
-	<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+	<map:transform src="xslt/Authoring/images.xsl" label="content"/>
 	<map:serialize type="html"/>
       </map:match>
       <!-- Error handling -->

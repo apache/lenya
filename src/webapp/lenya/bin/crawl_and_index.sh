@@ -3,7 +3,7 @@
 DIRNAME=`dirname $0`
 echo "dirname: $DIRNAME"
 
-PREFIX=/home/michiii/src/wyonacms
+PREFIX=/home/michiii/src/lenyacms
 JAVA=/usr/local/jdk1.3.1/bin/java
 PDFBOX=/home/michiii/src/PDFBox-0.5.5
 XPDF=/home/michiii/bin/xpdf-2.01-linux/pdftotext

@@ -7,8 +7,8 @@
     <version/>
     <type/>
     <authors>
-      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
-      <person name="Juergen Bigalke" email="juergen.bigalke@wyona.org"/>
+      <person name="Michael Wechner" email="michael.wechner@lenya.org"/>
+      <person name="Juergen Bigalke" email="juergen.bigalke@lenya.org"/>
     </authors>
   </header>
   <body>
@@ -72,10 +72,10 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 <map:resources>
   <map:resource name="login">
     <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
-    <map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
+    <map:transform src="../../stylesheets/cms/ac/login.xsl">
       <map:parameter name="publication_name" value="MY-PUB"/>
       <map:parameter name="publication_id" value="MY-PUB"/>
-      <map:parameter name="wyona_path" value="lenya/pubs/MY-PUB/docs/standard/t01/" />
+      <map:parameter name="lenya_path" value="lenya/pubs/MY-PUB/docs/standard/t01/" />
     </map:transform>
     <map:serialize type="html"/>
   </map:resource>
@@ -86,7 +86,7 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 
 <map:match pattern="logout">
   <map:generate type="serverpages" src="../../docs/cms/access-control/invalidate.xsp"/>
-  <map:transform src="../../stylesheets/cms/Page/ac/logout.xsl">
+  <map:transform src="../../stylesheets/cms/ac/logout.xsl">
     <map:parameter name="publication_name" value="MY-PUB"/>
   </map:transform>
   <map:serialize/>
@@ -103,18 +103,18 @@ Set Name of Publication: lenya/pubs/MY-PUB/stylesheets/lenya/conf/conf.xsl
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  <xsl:include href="../../../Configuration/read.xsl"/>
  <xsl:variable name="publication">MY Publication</xsl:variable>
- <xsl:variable name="copyright">copyright &#169; 2002 wyona.org</xsl:variable>
+ <xsl:variable name="copyright">copyright &#169; 2002 lenya.org</xsl:variable>
 </xsl:stylesheet>
 
 ]]></code>
 </li>
 <li>
 Moreover, replace ethz-mat by MY-PUB in following files:<br/>
-i)   webapp/lenya/docs/cms/menus/live.xsp<br/>
+i)   webapp/lenya/content/menus/live.xsp<br/>
 ii)  webapp/lenya/pubs/MY-PUB/docs/cms/menus/live.xsp<br/>
 iii) webapp/lenya/pubs/MY-PUB/stylesheets/standard/t01/Configuration/read.xsl<br/>
 iv)  webapp/lenya/pubs/MY-PUB/stylesheets/Configuration/read.xsl<br/>
-v)   webapp/lenya/pubs/MY-PUB/stylesheets/lenya/edit/Page/root.xsl
+v)   webapp/lenya/pubs/MY-PUB/stylesheets/lenya/edit/root.xsl
 </li>
 </ol>
 </section>
@@ -158,8 +158,8 @@ java -classpath WYONACMS/build/lenya/classes:WYONACMS/build/lenya/webapp/WEB-INF
 <p>
 </p>
 <p>
-Modify 'wyonaPath'in the java-class org.lenya.cms.cocoon.acting.EditorMainAction<br/>
-     for instance: String wyonaPath="lenya/pubs/MY-PUB/docs/standard/t01/";<br/>
+Modify 'lenyaPath'in the java-class org.lenya.cms.cocoon.acting.EditorMainAction<br/>
+     for instance: String lenyaPath="lenya/pubs/MY-PUB/docs/standard/t01/";<br/>
      and recompile.
 </p>
 

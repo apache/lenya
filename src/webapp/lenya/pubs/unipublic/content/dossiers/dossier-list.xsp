@@ -3,7 +3,7 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
   xmlns:request="http://apache.org/xsp/request/2.0"
 >
 
@@ -14,7 +14,7 @@
 
 <dossier-list>
     
-  <xsp-wyona:util/>
+  <xsp-lenya:util/>
 
   <xsp:logic>
     Source inputSource = resolver.resolve("");

@@ -12,13 +12,13 @@
   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://purl.org/rss/1.0/">
     <channel>
       <title>Wyona</title>
-      <link>http://www.wyona.org</link>
+      <link>http://www.lenya.org</link>
     </channel>
 
     <xsl:for-each select="article">
       <item>
         <title><xsl:apply-templates select="article/head/title"/></title>
-        <link>http://www.wyona.org</link>
+        <link>http://www.lenya.org</link>
         <xsl:apply-templates select="article/meta/date"/>
       </item>
     </xsl:for-each>

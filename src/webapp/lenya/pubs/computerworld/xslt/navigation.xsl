@@ -7,7 +7,7 @@
 <xsl:variable name="prefix">/lenya/computerworld<xsl:if test="$authoring">/authoring</xsl:if></xsl:variable>
 
 <xsl:template match="span[@id = 'navigation']">
-        <xsl:apply-templates select="/wyona/sitetree"/>
+        <xsl:apply-templates select="/lenya/sitetree"/>
 </xsl:template>
 
 <xsl:template match="sitetree">
@@ -89,7 +89,7 @@
 		<td colspan="2">
 
 	<!-- call small preview xslt here. -->
-        <xsl:apply-templates select="/wyona/small-preview"/>
+        <xsl:apply-templates select="/lenya/small-preview"/>
 
 		</td>
 	</tr>

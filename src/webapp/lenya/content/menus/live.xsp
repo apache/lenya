@@ -3,13 +3,13 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
 >
 
 <menu>
 
 <!--
-  <xsp-wyona:util/>
+  <xsp-lenya:util/>
 -->
   <context>/lenya</context>
   <context_prefix>/lenya/ethz-mat</context_prefix>

@@ -11,7 +11,7 @@
  </map:components>
 
  <map:views>
-   <map:view name="xhtml4wyona" from-position="last">
+   <map:view name="xhtml4lenya" from-position="last">
      <map:serialize type="xml"/>
    </map:view>
  </map:views>
@@ -47,8 +47,8 @@
          <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
          <map:part src="cocoon:/tree.xml"/>
        </map:aggregate>
-       <map:transform src="stylesheets/publication/Page/toc-main.xsl"/>
-       <map:transform src="stylesheets/publication/Page/url_rewrite.xsl"/>
+       <map:transform src="xslt/toc-main.xsl"/>
+       <map:transform src="xslt/url_rewrite.xsl"/>
        <map:serialize/>
      </map:match>
      <map:match pattern="index.html">
@@ -56,22 +56,22 @@
          <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
          <map:part src="cocoon:/tree.xml"/>
        </map:aggregate>
-       <map:transform src="stylesheets/publication/Page/toc-main.xsl"/>
-       <map:transform src="stylesheets/publication/Page/url_rewrite.xsl"/>
+       <map:transform src="xslt/toc-main.xsl"/>
+       <map:transform src="xslt/url_rewrite.xsl"/>
        <map:serialize/>
      </map:match>
 
      <map:match pattern="inhalt.txt">
        <map:generate src="cocoon:/tree.xml"/>
-       <map:transform src="stylesheets/publication/Page/tree2js.xsl"/>
-       <map:transform src="stylesheets/publication/Page/tree2js_2.xsl"/>
+       <map:transform src="xslt/tree2js.xsl"/>
+       <map:transform src="xslt/tree2js_2.xsl"/>
        <map:serialize/>
      </map:match>
 
      <map:match pattern="content_list.txt">
        <map:generate src="cocoon:/tree.xml"/>
-       <map:transform src="stylesheets/publication/Page/tree2js.xsl"/>
-       <map:transform src="stylesheets/publication/Page/tree2ls.xsl"/>
+       <map:transform src="xslt/tree2js.xsl"/>
+       <map:transform src="xslt/tree2ls.xsl"/>
        <map:serialize/>
      </map:match>
 
@@ -86,8 +86,8 @@
          <map:part src="docs/publication/live/navigation.xml" label="navigation"/>
          <map:part src="cocoon:/body-{1}.xml" label="content"/>
        </map:aggregate>
-       <map:transform src="stylesheets/publication/Page/xdoc-main.xsl"/>
-       <map:transform src="stylesheets/publication/Page/url_rewrite.xsl"/>
+       <map:transform src="xslt/xdoc-main.xsl"/>
+       <map:transform src="xslt/url_rewrite.xsl"/>
        <map:serialize type="html"/>
      </map:match>
 

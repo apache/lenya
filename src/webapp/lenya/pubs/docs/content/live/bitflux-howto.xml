@@ -7,7 +7,7 @@
 		<version/>
 		<type/>
 		<authors>
-			<person name="Felix Maeder" email="felix.maeder@wyona.org"/>
+			<person name="Felix Maeder" email="felix.maeder@lenya.org"/>
 		</authors>
 	</header>
 	<body>
@@ -32,7 +32,7 @@
         </map:match>
         <map:match pattern="stylesheets/webperls.xsl">
                 <map:generate src="cocoon://unipublic/authoring/index.xhtml"/>
-                <map:transform src="stylesheets/publication/Page/Front/Authoring/webperls-bitflux.xsl"/>
+                <map:transform src="xslt/Front/Authoring/webperls-bitflux.xsl"/>
                 <map:serialize type="xml"/>
         </map:match>
         <map:match pattern="schemas/webperls.xsd">
@@ -76,7 +76,7 @@
 				<source><![CDATA[
 <map:match pattern="stylesheets/webperls.xsl">
 	<map:generate src="cocoon://unipublic/authoring/index.xhtml"/>
-	<map:transform src="stylesheets/publication/Page/Front/Authoring/webperls-bitflux.xsl"/>
+	<map:transform src="xslt/Front/Authoring/webperls-bitflux.xsl"/>
 	<map:serialize type="xml"/>
 </map:match>
 ]]></source>
@@ -217,12 +217,12 @@ title, byline {
 <item>
         <xsp:attribute name="href">
                 <xsp:expr>
-                "/lenya/bitfluxeditor/in]]><![CDATA[dex.html?url-xml="+bitflux_prefix+"/webperls.xml
+                "/lenya/bitflux/in]]><![CDATA[dex.html?url-xml="+bitflux_prefix+"/webperls.xml
                 &amp;url-xslt="+bitflux_prefix+"/stylesheets/webperls.xsl
                 &amp;url-xsd="+bitflux_prefix+"/schemas/webperls.xsd
                 &amp;url-css="+bitflux_prefix+"/css/webperls.css
                 &amp;url-post="+bitflux_prefix+"/save/webperls.xml
-                &amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"
+                &amp;url-back="+xsp_lenya_context_prefix+"/authoring/index.html"
                 </xsp:expr>
         </xsp:attribute>
         Edit&#160;Webperls

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <NewsML>
-  <Catalog Href="http://nzz.wyona.com/newsml/catalog.xml"/>
+  <Catalog Href="http://nzz.lenya.com/newsml/catalog.xml"/>
   <NewsEnvelope>
     <TransmissionId>1004500635628</TransmissionId>
     <DateAndTime>20020325T0457+0100</DateAndTime>
@@ -42,7 +42,7 @@
         </ByLine>
         <DateLine year="2002" month="04" day="06"/>
         <CreditLine>
-          <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
+          <Origin Href="http://nzz.lenya.com/newml/creditline.xml"/>
         </CreditLine>
         <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
       </NewsLines>

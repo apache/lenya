@@ -1,9 +1,9 @@
 /*
- * $Id: ProxyGenerator.java,v 1.12 2003/03/04 17:58:25 gregor Exp $
+ * $Id: ProxyGenerator.java,v 1.13 2003/03/04 19:44:44 gregor Exp $
  * <License>
  * The Apache Software License
  *
- * Copyright (c) 2002 wyona. All rights reserved.
+ * Copyright (c) 2002 lenya. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -17,24 +17,24 @@
  *
  * 3. All advertising materials mentioning features or use of this software must
  *    display the following acknowledgment: "This product includes software developed
- *    by wyona (http://www.wyona.org)"
+ *    by lenya (http://www.lenya.org)"
  *
- * 4. The name "wyona" must not be used to endorse or promote products derived from
+ * 4. The name "lenya" must not be used to endorse or promote products derived from
  *    this software without prior written permission. For written permission, please
- *    contact contact@wyona.org
+ *    contact contact@lenya.org
  *
- * 5. Products derived from this software may not be called "wyona" nor may "wyona"
- *    appear in their names without prior written permission of wyona.
+ * 5. Products derived from this software may not be called "lenya" nor may "lenya"
+ *    appear in their names without prior written permission of lenya.
  *
  * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by wyona (http://www.wyona.org)"
+ *    "This product includes software developed by lenya (http://www.lenya.org)"
  *
- * THIS SOFTWARE IS PROVIDED BY wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
+ * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
  * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
- * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. wyona WILL NOT BE LIABLE FOR ANY DAMAGES
- * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL wyona BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF wyona HAS
- * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. wyona WILL NOT BE LIABLE FOR ANY
+ * BILITY AND FITNESS FOR A PARTICULAR PURPOSE. lenya WILL NOT BE LIABLE FOR ANY DAMAGES
+ * SUFFERED BY YOU AS A RESULT OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE
+ * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF lenya HAS
+ * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
  * THIRD PARTY CLAIMS AGAINST YOU.
  *
  * Wyona includes software developed by the Apache Software Foundation, W3C,
@@ -85,7 +85,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
     static Category log = Category.getInstance(ProxyGenerator.class);
 
     // The URI of the namespace of this generator
-    private String URI = "http://www.wyona.org/lenya/proxygenerator/1.0";
+    private String URI = "http://www.lenya.org/lenya/proxygenerator/1.0";
 
     /**
      * DOCUMENT ME!

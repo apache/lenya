@@ -3,12 +3,12 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
 >
 
 <menu>
 
-  <xsp-wyona:util/>
+  <xsp-lenya:util/>
 
   <live_uri>/editor-matrix/index.html</live_uri>
 
@@ -23,7 +23,7 @@
       <block>
         <item>Passwd</item>
         <item>Switch&#160;User</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
 
@@ -45,15 +45,15 @@
 
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
       </block>
       <separator>
         <item>-----------------</item>
       </separator>
       <block>
-        <item href="http://www.wyona.org">About&#160;Wyona</item>
+        <item href="http://www.lenya.org">About&#160;Wyona</item>
       </block>
     </menu>
 

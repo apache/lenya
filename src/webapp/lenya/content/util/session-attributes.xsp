@@ -8,7 +8,7 @@ for a TaskAction execution.
 <xsp:page
        language="java"
        xmlns:xsp="http://apache.org/xsp"
-       xmlns:session="http://www.wyona.org/2002/session"
+       xmlns:session="http://www.lenya.org/2002/session"
        >
 
 <xsp:structure>

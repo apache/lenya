@@ -9,29 +9,29 @@
 <target name="init">
   <echo message="INFO: Init"/>
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/docs/publication/crawler.xconf"/>
-  <property name="wyona.src.dir" value="/home/michiii/src/wyonacms"/>
+  <property name="lenya.src.dir" value="/home/michiii/src/lenyacms"/>
 
   <path id="class.path">
-    <pathelement path="${wyona.src.dir}/build/lenya/classes"/>
-    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar"/>
-    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/avalon-excalibur-20020402.jar"/>
+    <pathelement path="${lenya.src.dir}/build/lenya/classes"/>
+    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/avalon-framework-4.1.2.jar"/>
+    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/avalon-excalibur-20020402.jar"/>
 
-    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/xml-apis.jar"/>
+    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/xml-apis.jar"/>
 <!--
     <pathelement path="/home/michiii/build/jakarta-ant-1.4.1/lib/crimson.jar"/>
 -->
 <!--
-    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/xercesImpl-2.0.0.jar"/>
+    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/xercesImpl-2.0.0.jar"/>
 -->
 <!--
     <pathelement path="/home/michiii/build/jakarta-ant-1.5.1/lib/xml-apis.jar"/>
     <pathelement path="/home/michiii/build/jakarta-ant-1.5.1/lib/xercesImpl.jar"/>
 -->
 
-    <pathelement path="${wyona.src.dir}/src/cocoon/WEB-INF/lib/jtidy-04aug2000r7-dev.jar"/>
-    <pathelement path="${wyona.src.dir}/lib/log4j-1.2.3.jar"/>
-    <pathelement path="${wyona.src.dir}/src/java"/>
-    <pathelement path="${wyona.src.dir}/lib/websphinx.jar"/>
+    <pathelement path="${lenya.src.dir}/src/cocoon/WEB-INF/lib/jtidy-04aug2000r7-dev.jar"/>
+    <pathelement path="${lenya.src.dir}/lib/log4j-1.2.3.jar"/>
+    <pathelement path="${lenya.src.dir}/src/java"/>
+    <pathelement path="${lenya.src.dir}/lib/websphinx.jar"/>
   </path>
 </target>
 

@@ -11,6 +11,6 @@
 <!--
 <xsl:include href="page_q42.xsl"/>
 -->
-<xsl:include href="page_wyona.xsl"/>
+<xsl:include href="page_lenya.xsl"/>
  
 </xsl:stylesheet>  

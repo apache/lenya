@@ -3,9 +3,9 @@
 
 <xsl:param name="files"/>
 
-	<xsl:include href="../../../../../../stylesheets/cms/Page/menu/root.xsl"/>
+	<xsl:include href="../../../../../../stylesheets/cms/menu/root.xsl"/>
 	
-	<xsl:template match="wyona/cmsbody">
+	<xsl:template match="lenya/cmsbody">
 		<xsl:apply-templates/>
 	</xsl:template>
 	
@@ -15,7 +15,7 @@
 	
 	<xsl:template match="span[@id = 'content']">
 		<!-- Process the headlines here... -->
-		<xsl:apply-templates select="/wyona/files"/>
+		<xsl:apply-templates select="/lenya/files"/>
 	</xsl:template>
 	
 	<!-- Replace Page title -->

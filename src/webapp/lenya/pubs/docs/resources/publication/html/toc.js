@@ -194,7 +194,7 @@
   
   tocTab[39]=
 	new Array("4.2",
-	"Creating a new Page/Document",
+	"Creating a new Document",
 	"/lenya/docs/xdocs/document");
       
   tocTab[40]=

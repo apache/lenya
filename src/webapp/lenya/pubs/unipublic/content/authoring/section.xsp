@@ -3,7 +3,7 @@
 <xsp:page
   language="java"
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
   xmlns:up="http://www.unipublic.unizh.ch/2002/up"
 >
 

@@ -3,7 +3,7 @@
 
 <xsl:template match="span[@id = 'preview']" >
     <!-- Insert magazine preview here... -->
-    <xsl:apply-templates select="/wyona/preview"  />
+    <xsl:apply-templates select="/lenya/preview"  />
 </xsl:template>
 
 <xsl:template match="preview" >

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.4 2003/03/04 18:09:06 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.5 2003/03/04 19:48:52 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Unipublic</lenya:name>
@@ -19,12 +19,12 @@ We hope deeply that they will receive the appropriate ROI.
 <ol>
   <li>Users (We are currently implementing a wizard to set initial users and corresponding passwords)
     <ol>
-      <li>wyona (levi)</li>
+      <li>lenya (levi)</li>
     </ol>
   </li>
   <li><a target="blank" href="http://www.unipublic.unizh.ch">Live</a></li>
   <li><a href="mirror/index.html">Mirror of Live</a> (Shall NOT be taken as design templates)</li>
-  <li><a target="blank" href="http://www.unipublic.unizh.ch/wyona/">Design templates</a></li>
+  <li><a target="blank" href="http://www.unipublic.unizh.ch/lenya/">Design templates</a></li>
   <li><a href="index.html">Reader`s View</a> (Live)</li>
   <li><a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
   <li>Information Architecture
@@ -111,8 +111,8 @@ Changes
 patched two BXE files to revert unipublic-specific configuration settings. revert locally.
 the files are:
 
-src/webapp/lenya/resources/cms/misc/bitfluxeditor/inc/config.xml
-src/webapp/lenya/bitfluxeditor.xmap
+src/webapp/lenya/resources/misc/bitflux/inc/config.xml
+src/webapp/lenya/bitflux.xmap
 
 ]]>
 </lenya:readme>

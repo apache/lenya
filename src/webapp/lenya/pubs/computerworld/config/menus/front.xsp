@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0">
 	<menu>
-		<xsp-wyona:util/>
+		<xsp-lenya:util/>
 		<live_uri>/index.html</live_uri>
 		<xsp:logic>
-   		 	String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
+   		 	String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
     			String articleId=parameters.getParameter("articleId","null");
   		</xsp:logic>
 		<menus>
@@ -12,47 +12,47 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/headlines.xml&amp;task-id=publish</xsp:attribute>Publish Headlines</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?sources=/headlines.xml&amp;task-id=publish</xsp:attribute>Publish Headlines</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/preview.xml&amp;task-id=publish</xsp:attribute>Publish Print Issue</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?sources=/preview.xml&amp;task-id=publish</xsp:attribute>Publish Print Issue</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/small-preview.xml&amp;task-id=publish</xsp:attribute>Publish Magazines</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?sources=/small-preview.xml&amp;task-id=publish</xsp:attribute>Publish Magazines</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/sitetree.xml&amp;task-id=publish</xsp:attribute>Publish Navigation</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/lenya/publishScreen?sources=/sitetree.xml&amp;task-id=publish</xsp:attribute>Publish Navigation</item>
 				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule Headlines</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/index.html&amp;task.sources=/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule Headlines</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/preview.xml&amp;documentType=Preview</xsp:attribute>Schedule Print Issue</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/index.html&amp;task.sources=/preview.xml&amp;documentType=Preview</xsp:attribute>Schedule Print Issue</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/small-preview.xml&amp;documentType=Small-Preview</xsp:attribute>Schedule Magazines</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/index.html&amp;task.sources=/small-preview.xml&amp;documentType=Small-Preview</xsp:attribute>Schedule Magazines</item>
 				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
 				</block>
 			</menu>
 			<menu name="Edit" label="Search">
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/headlines.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/headlines.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/headlines.xsd&amp;url-css="+bitflux_prefix+"/css/headlines.css&amp;url-post="+bitflux_prefix+"/save/headlines.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+"/headlines.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/headlines.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/headlines.xsd&amp;url-css="+bitflux_prefix+"/css/headlines.css&amp;url-post="+bitflux_prefix+"/save/headlines.xml&amp;url-back="+xsp_lenya_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Edit Headlines</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/preview.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/preview.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/preview.xsd&amp;url-css="+bitflux_prefix+"/css/preview.css&amp;url-post="+bitflux_prefix+"/save/preview.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+"/preview.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/preview.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/preview.xsd&amp;url-css="+bitflux_prefix+"/css/preview.css&amp;url-post="+bitflux_prefix+"/save/preview.xml&amp;url-back="+xsp_lenya_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Edit Print Issue</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/lenya/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/small-preview.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/small-preview.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/small-preview.xsd&amp;url-css="+bitflux_prefix+"/css/small-preview.css&amp;url-post="+bitflux_prefix+"/save/small-preview.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+"/small-preview.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/small-preview.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/small-preview.xsd&amp;url-css="+bitflux_prefix+"/css/small-preview.css&amp;url-post="+bitflux_prefix+"/save/small-preview.xml&amp;url-back="+xsp_lenya_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Edit Magazines</item>
 				</block>
 			</menu>
@@ -60,32 +60,32 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>xsp_lenya_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>Authoring Home</item>
 				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>Article Overview</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>Article Overview</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication</xsp:attribute>Scheduler Admin</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/scheduler/admin-publication</xsp:attribute>Scheduler Admin</item>
 				</block>
 			</menu>
 			<menu name="Help" label="Debug">
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User Guide</item>
+							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User Guide</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Admin Guide</item>
+							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Admin Guide</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Dev Guide</item>
+							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Dev Guide</item>
 				</block>
 				<block>
-					<item href="http://www.wyona.org">About Wyona</item>
+					<item href="http://www.lenya.org">About Wyona</item>
 				</block>
 			</menu>
 		</menus>

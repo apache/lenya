@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0">
 	<menu>
-		<xsp-wyona:util/>
+		<xsp-lenya:util/>
 		<xsp:logic>
     String year=parameters.getParameter("year","null");
   </xsp:logic>
@@ -11,7 +11,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix+"/authoring/wyona/ParentChildScreenNewArticle?parentid=/dossiers/"+year+"&amp;doctype=Dossier"</xsp:expr>
+							<xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/dossiers/"+year+"&amp;doctype=Dossier"</xsp:expr>
 						</xsp:attribute>New&#160;Dossier</item>
 				</block>
 				<separator>
@@ -19,14 +19,14 @@
 				</separator>
 				<block>
 					<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_lenya_id == null ? "nobody" : xsp_lenya_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
 -->
 					<item>Passwd</item>
 					<item>Switch&#160;User</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
 				</block>
 			</menu>
 			<menu name="Edit" label="Search">
@@ -35,7 +35,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/newsletter/index.html
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/newsletter/index.html
 						</xsp:attribute>
 						Newsletter
 					</item>
@@ -43,7 +43,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication?publication-id=unipublic
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/scheduler/admin-publication?publication-id=unipublic
 						</xsp:attribute>
 						Scheduler&#160;Admin
 					</item>
@@ -53,7 +53,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html
+							<xsp:expr>xsp_lenya_context_prefix</xsp:expr>/introduction.html
 						</xsp:attribute>
 						About&#160;this&#160;Publication
 					</item>
@@ -61,16 +61,16 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
 				</block>
 				<block>
-					<item href="http://www.wyona.org">About&#160;Wyona</item>
+					<item href="http://www.lenya.org">About&#160;Wyona</item>
 				</block>
 			</menu>
 		</menus>

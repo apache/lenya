@@ -32,7 +32,7 @@
       <map:serialize type="xml"/>
     </map:view>
 
-    <map:view name="xhtml4wyona" from-position="last">
+    <map:view name="xhtml4lenya" from-position="last">
       <map:serialize type="xml"/>
     </map:view>
 
@@ -70,7 +70,7 @@
     <map:pipeline>
       <map:match pattern="http/slashdot.rdf">
         <map:generate src="http://www.slashdot.org/slashdot.rdf"/>
-        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -82,7 +82,7 @@
     <map:pipeline>
       <map:match pattern="http/fm.rdf">
         <map:generate src="http://www.freshmeat.net/backend/fm.rdf"/>
-        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -95,7 +95,7 @@
       <map:match pattern="http/oscom.rdf">
         <map:generate src="http://blog.oscom.org/index.rdf"/>
 <!--
-        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
 -->
         <map:serialize type="xml"/>
       </map:match>
@@ -109,7 +109,7 @@
     <map:pipeline>
       <map:match pattern="http/cmsinfo.rdf">
         <map:generate src="http://www.cmsinfo.org/backend.php3"/>
-        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -212,7 +212,7 @@
       <!-- CMS/F Overview -->
       <map:match pattern="live/overview.xml">
         <map:generate type="directory" src="docs/publication/live/matrix/"/>
-        <map:transform src="stylesheets/publication/Page/Matrix/Live/xinclude.xsl"/>
+        <map:transform src="xslt/Matrix/Live/xinclude.xsl"/>
         <map:transform type="xlink" label="xml">
           <map:parameter name="href" value="docs/publication/live/overview_dummy.xml"/>
         </map:transform>
@@ -222,7 +222,7 @@
       <!-- Editor Overview -->
       <map:match pattern="live/editor-overview.xml">
         <map:generate type="directory" src="docs/publication/live/editor-matrix/"/>
-        <map:transform src="stylesheets/publication/Page/Matrix/Live/xinclude_editor.xsl"/>
+        <map:transform src="xslt/Matrix/Live/xinclude_editor.xsl"/>
         <map:transform type="xlink" label="xml">
           <map:parameter name="href" value="docs/publication/live/overview_dummy.xml"/>
         </map:transform>
@@ -255,7 +255,7 @@
       </map:match>
       <map:match pattern="index.html">
         <map:generate src="cocoon:/live/index.xml" label="content"/>
-        <map:transform src="stylesheets/publication/Page/Home/Live/main.xsl"/>
+        <map:transform src="xslt/Home/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <!-- /Homepage -->
@@ -263,7 +263,7 @@
       <!-- Board -->
       <map:match pattern="board.html">
         <map:generate src="cocoon:/live/board.xml" label="content"/>
-        <map:transform src="stylesheets/publication/Page/Board/Live/main.xsl"/>
+        <map:transform src="xslt/Board/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <!-- /Board -->
@@ -271,14 +271,14 @@
       <!-- Weekly Column -->
       <map:match pattern="weekly-column.html">
         <map:generate src="cocoon:/live/weekly-column-page.xml"/>
-        <map:transform src="stylesheets/publication/Page/WeeklyColumn/Live/main.xsl"/>
+        <map:transform src="xslt/WeeklyColumn/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Mailing Lists -->
       <map:match pattern="mailing-lists.html">
         <map:generate src="cocoon:/live/mailing-lists.xml" label="content"/>
-        <map:transform src="stylesheets/publication/Page/Mailing-Lists/Live/main.xsl"/>
+        <map:transform src="xslt/Mailing-Lists/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <!-- Mailing Lists -->
@@ -286,12 +286,12 @@
       <!-- Glossary -->
       <map:match pattern="live/glossary.html">
         <map:generate src="cocoon:/live/glossary.xml"/>
-        <map:transform src="stylesheets/publication/Page/Glossary/Live/main.xsl"/>
+        <map:transform src="xslt/Glossary/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="glossary.html">
         <map:generate src="cocoon:/live/glossary.xml"/>
-        <map:transform src="stylesheets/publication/Page/Glossary/Live/main.xsl"/>
+        <map:transform src="xslt/Glossary/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
    </map:pipeline>
@@ -303,7 +303,7 @@
       </map:match>
       <map:match pattern="matrix/index.html">
         <map:generate src="cocoon:/live/overview.xml" label="xml"/>
-        <map:transform src="stylesheets/publication/Page/Overview/Live/main.xsl"/>
+        <map:transform src="xslt/Overview/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
    </map:pipeline>
@@ -316,7 +316,7 @@
       </map:match>
       <map:match pattern="editor-matrix/index.html">
         <map:generate src="cocoon:/live/editor-overview.xml" label="xml"/>
-        <map:transform src="stylesheets/publication/Page/Overview/Live/main_editor.xsl"/>
+        <map:transform src="xslt/Overview/Live/main_editor.xsl"/>
         <map:serialize type="html"/>
       </map:match>
    </map:pipeline>
@@ -329,12 +329,12 @@
           <map:parameter name="projectid" value="{1}"/>
         </map:generate>
         <map:transform type="xinclude"/>
-        <map:transform src="stylesheets/publication/Page/Matrix/Live/main.xsl"/>
+        <map:transform src="xslt/Matrix/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../stylesheets/cms/Page/exception/not_published_yet.xsl"/>
+        <map:transform src="../../stylesheets/cms/exception/not_published_yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
    </map:pipeline>
@@ -347,12 +347,12 @@
           <map:parameter name="projectid" value="{1}"/>
         </map:generate>
         <map:transform type="xinclude"/>
-        <map:transform src="stylesheets/publication/Page/Matrix/Live/main_editor.xsl"/>
+        <map:transform src="xslt/Matrix/Live/main_editor.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <map:handle-errors>
-        <map:transform src="../../stylesheets/cms/Page/Exception/not_published_yet.xsl"/>
+        <map:transform src="../../stylesheets/cms/Exception/not_published_yet.xsl"/>
         <map:serialize type="html"/>
       </map:handle-errors>
    </map:pipeline>
@@ -361,18 +361,18 @@
       <!-- Generic (XHTML) -->
       <map:match pattern="conferences/berkeley2002/**.html">
         <map:generate src="cocoon:/live/conferences/sanfrancisco2002/{1}.xml"/>
-        <map:transform src="stylesheets/publication/Page/Generic/Live/main_berkeley.xsl"/>
+        <map:transform src="xslt/Generic/Live/main_berkeley.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <map:match pattern="live/**.html">
         <map:generate src="cocoon:/live/{1}.xml"/>
-        <map:transform src="stylesheets/publication/Page/Generic/Live/main.xsl"/>
+        <map:transform src="xslt/Generic/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="**.html">
         <map:generate src="cocoon:/live/{1}.xml"/>
-        <map:transform src="stylesheets/publication/Page/Generic/Live/main.xsl"/>
+        <map:transform src="xslt/Generic/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="live/**.xhtml">

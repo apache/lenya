@@ -7,7 +7,7 @@
 	</task>
 	<task id="publish-article">
 		<label>Publish Article</label>
-		<task id="prepare" class="ch.computerworld.wyona.cms.ArticleTask"/>
+		<task id="prepare" class="ch.computerworld.lenya.cms.ArticleTask"/>
 		<task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
 		<!--<task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>-->
 	</task> 

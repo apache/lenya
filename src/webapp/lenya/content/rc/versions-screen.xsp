@@ -6,7 +6,7 @@
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
   </xsp:structure>                                                                                                                          
-<rc:revisions xmlns:rc="http://www.wyona.org/2002/rc">
+<rc:revisions xmlns:rc="http://www.lenya.org/2002/rc">
   <xsp:logic>
     org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
     String sitemapPath=input_source.getSystemId();

@@ -5,7 +5,7 @@
     <xsp:include>org.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>org.lenya.xml.DOMParserFactory</xsp:include>
   </xsp:structure>                                                                                                                          
-<rc:backup xmlns:rc="http://www.wyona.org/2002/rc">
+<rc:backup xmlns:rc="http://www.lenya.org/2002/rc">
   <xsp:logic>
     org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
     String sitemapPath=input_source.getSystemId();

@@ -13,9 +13,9 @@
 <news xmlns:xi="http://www.w3.org/2001/XInclude">
 <!-- FIXME: something wrong with regard to the view "links", which is needed for Lucene -->
 <!--
-  <wyonasite name="OSCOM">
+  <lenyasite name="OSCOM">
     <xi:include href="/news.rss" xml:base="cocoon:"/>
-  </wyonasite>
+  </lenyasite>
 -->
   <cmsinfosite name="OSCOM Blog">
     <xi:include href="rss-rdf/oscom.rdf"/>

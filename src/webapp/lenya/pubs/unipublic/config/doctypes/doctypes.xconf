@@ -14,7 +14,7 @@
 <!--
   <creator src="org.lenya.cms.authoring.DefaultCreator"/>
 -->
-  <creator src="ch.unizh.unipublic.wyona.cms.authoring.NewArticleCreator"/>
+  <creator src="ch.unizh.unipublic.lenya.cms.authoring.NewArticleCreator"/>
   <tasks>
     <task id="publish-article"/>
   </tasks>

@@ -7,7 +7,7 @@
 		<version/>
 		<type/>
 		<authors>
-			<person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+			<person name="Michael Wechner" email="michael.wechner@lenya.org"/>
 		</authors>
 	</header>
 	<body>
@@ -37,7 +37,7 @@ by editing the javascript bxe/js/bitfluxeditor.js (navigator.productSub &lt;= 20
 		<section><title>Open/Edit and Save</title>
 			<section><title>Getting Data from Server</title>
 				<source><![CDATA[
-http://hostname:port/lenya/bitfluxeditor/index.html
+http://hostname:port/lenya/bitflux/index.html
 ?url-xml=/lenya/unipublic/bitflux/magazin/gesundheit/2002/0508
 &url-xslt=/lenya/unipublic/bitflux/stylesheets/article.xsl
 &url-xsd=/lenya/unipublic/bitflux/doctypes/schemas/article.xsd
@@ -56,7 +56,7 @@ The parameters can be configured within the file inc/config.xml
 
 <css><file isParam="true">url-css</file></css>
 
-<output><file name="BX_posturl" method="wyona" isParam="true">url-post</file></output>
+<output><file name="BX_posturl" method="lenya" isParam="true">url-post</file></output>
 	  ]]></source>
 				<p>
 Beware that the MIME-TYPE for the schema file (xsd) is set properly by the server to text/xml.
@@ -68,7 +68,7 @@ Wyona does that for you already, but in case you serve it via Apache you have to
 To save the document the BitfluxAction is used. It is nearly the same as the
 XopusAction. The only difference is that the filename for saving is passed to
 the action as parameter. Although you could actually set the filename within
-the javascript bxe/js/wyona.js (BX_DocumentID) and then use the XopusAction.
+the javascript bxe/js/lenya.js (BX_DocumentID) and then use the XopusAction.
 </p>
 			</section>
 		</section>

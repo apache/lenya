@@ -69,8 +69,8 @@
 				<leaf relURI="" doctype="Empty" menuName="The definition of a Page"/>
 				<leaf relURI="" doctype="Empty" menuName="The definition of a Document"/>
 				<leaf relURI="" doctype="Empty" menuName="The various parts of a Page"/>
-				<leaf relURI="parent-child-creator.html" doctype="XDoc" menuName="Creating a new Page/Document"/>
-				<leaf relURI="int-filesystem-publisher.html" doctype="XDoc" menuName="Making a Page/Document publishable"/>
+				<leaf relURI="parent-child-creator.html" doctype="XDoc" menuName="Creating a new Document"/>
+				<leaf relURI="int-filesystem-publisher.html" doctype="XDoc" menuName="Making a Document publishable"/>
 				<branch relURI="edit" doctype="Empty" menuName="Making a Document editable">
 					<leaf relURI="int-html-form-editor.html" doctype="XDoc" menuName="With the HTML Form Editor"/>
 					<leaf relURI="xopus.html#hookers" doctype="XDoc" menuName="With Q42's Xopus"/>

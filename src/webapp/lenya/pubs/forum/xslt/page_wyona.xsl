@@ -13,7 +13,7 @@
 <table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="%100">
  <tr>
   <td colspan="3">
-  <a><xsl:attribute name="href"><xsl:value-of select="$context_prefix"/><xsl:if test="/wyona/menu/authoring">/authoring</xsl:if>/index.html</xsl:attribute><img src="{$image_path}/wyona-org-forum.jpg" border="0"/></a>
+  <a><xsl:attribute name="href"><xsl:value-of select="$context_prefix"/><xsl:if test="/lenya/menu/authoring">/authoring</xsl:if>/index.html</xsl:attribute><img src="{$image_path}/lenya-org-forum.jpg" border="0"/></a>
   </td>
  </tr>
  <tr>
@@ -52,7 +52,7 @@
  </tr>
  <tr>
   <td colspan="3">
-  copyright &#169; 2002 wyona.org
+  copyright &#169; 2002 lenya.org
   </td>
  </tr>
 </table>

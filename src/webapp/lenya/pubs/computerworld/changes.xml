@@ -4,15 +4,15 @@
 
 <!--
   History of publication changes
-  $Id: changes.xml,v 1.1 2003/02/21 14:35:42 gregor Exp $
+  $Id: changes.xml,v 1.2 2003/03/04 19:45:09 gregor Exp $
 -->
 
 <changes title="History of Changes">
 
 <devs>
   <!-- in strict alphabetical order -->
-  <person name="Felix Maeder" email="felix@wyona.org" id="FM"/>
-  <person name="Gregor J. Rothfuss" email="gregor@wyona.org" id="GJR"/>
+  <person name="Felix Maeder" email="felix@lenya.org" id="FM"/>
+  <person name="Gregor J. Rothfuss" email="gregor@lenya.org" id="GJR"/>
 </devs>
 
  <release version="@version@" date="@date@">

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doctypes>
 	<doc type="Article">
-		<creator src="ch.computerworld.wyona.cms.ArticleCreator"/>
+		<creator src="ch.computerworld.lenya.cms.ArticleCreator"/>
 		<tasks>
 			<task id="publish-article"/>
 		</tasks>

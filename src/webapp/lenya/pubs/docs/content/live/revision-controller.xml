@@ -7,8 +7,8 @@
 	 <version>0.1</version> 
 	 <type>Overview document</type> 
 	 <authors>
-           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
-           <person name="Edith Chevrier" email="edith.chevrier@wyona.org"/>
+           <person name="Michael Wechner" email="michael.wechner@lenya.org"/> 
+           <person name="Edith Chevrier" email="edith.chevrier@lenya.org"/>
 	 </authors> 
   </header> 
   <body> 
@@ -35,16 +35,16 @@ The different check-in/check-out of a file are memorised in an xml file (RCML-fi
 <?xml version="1.0" encoding="utf-8"?>
 
 <XPSRevisionControl>
-<CheckIn><Identity>wyona</Identity><Time>1023102128815</Time></CheckIn>
-<CheckOut><Identity>wyona</Identity><Time>1023102128780</Time></CheckOut>
-<CheckOut><Identity>wyona</Identity><Time>1023102125300</Time></CheckOut>
-<CheckOut><Identity>wyona</Identity><Time>1023102121346</Time></CheckOut>
-<CheckIn><Identity>wyona</Identity><Time>1023102110381</Time></CheckIn>
-<CheckOut><Identity>wyona</Identity><Time>1023102110349</Time></CheckOut>
+<CheckIn><Identity>lenya</Identity><Time>1023102128815</Time></CheckIn>
+<CheckOut><Identity>lenya</Identity><Time>1023102128780</Time></CheckOut>
+<CheckOut><Identity>lenya</Identity><Time>1023102125300</Time></CheckOut>
+<CheckOut><Identity>lenya</Identity><Time>1023102121346</Time></CheckOut>
+<CheckIn><Identity>lenya</Identity><Time>1023102110381</Time></CheckIn>
+<CheckOut><Identity>lenya</Identity><Time>1023102110349</Time></CheckOut>
 <CheckIn><Identity>System</Identity><Time>1023102073728</Time></CheckIn>
-<CheckOut><Identity>wyona</Identity><Time>1023102073695</Time></CheckOut>
-<CheckOut><Identity>wyona</Identity><Time>1023102012990</Time></CheckOut>
-<CheckOut><Identity>wyona</Identity><Time>1023102010354</Time></CheckOut>
+<CheckOut><Identity>lenya</Identity><Time>1023102073695</Time></CheckOut>
+<CheckOut><Identity>lenya</Identity><Time>1023102012990</Time></CheckOut>
+<CheckOut><Identity>lenya</Identity><Time>1023102010354</Time></CheckOut>
 <CheckIn><Identity>System</Identity><Time>1022569908000</Time></CheckIn>
 </XPSRevisionControl>
                                                                                                                                          
@@ -268,7 +268,7 @@ send the following XML:
           <map:parameter name="year" value="{3}"/>
           <map:parameter name="articleId" value="{4}"/>
         </map:generate>
-        <map:transform src="../../stylesheets/cms/Page/rc/rollback.xsl"/>
+        <map:transform src="../../stylesheets/cms/rc/rollback.xsl"/>
         <map:serialize type="html"/>
       </map:match>                                                                                                                            
 
@@ -284,8 +284,8 @@ send the following XML:
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
         </map:generate>
-          <map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
-          <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+          <map:transform src="xslt/Article/Authoring/toArticle.xsl"/>
+          <map:transform src="xslt/Article/Authoring/main.xsl">
              <map:paramete]]><![CDATA[r name="section" value="{2}"/>
           </map:transform>
           <map:serialize type="html"/>

@@ -1,7 +1,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up"
-                xmlns:rc="http://www.wyona.org/2002/rc" >
+                xmlns:rc="http://www.lenya.org/2002/rc" >
 
 <xsl:template match="rc:backup">
   <cmsbody>

@@ -7,8 +7,8 @@
     <version>2002.01.20</version>
     <type/>
     <authors>
-      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
-      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
+      <person name="Michael Wechner" email="michael.wechner@lenya.org"/>
+      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@lenya.org"/>
     </authors>
 </header>
 <body>
@@ -42,7 +42,7 @@
       <date year="2002" month="1" day="21" hour="23" minute="50" second="12" millisecond="654"/>
     </checkout>
     <checkin>
-      <user>wyona</user>
+      <user>lenya</user>
       <time>1003757300954</time>
       <date year="2002" month="1" day="21" hour="22" minute="45" second="14" millisecond="954"/>
       <backup id="1"/>
@@ -66,7 +66,7 @@
       <date year="2002" month="1" day="21" hour="22" minute="45" second="24" millisecond="657"/>
     </state>
     <state id="authoring">
-      <user>wyona</user>
+      <user>lenya</user>
       <time>1003757300954</time>
       <date year="2002" month="1" day="21" hour="22" minute="45" second="14" millisecond="954"/>
     </state>
@@ -82,9 +82,9 @@
 		</section>
 		<section><title>Explanation</title>
 		<ol>
-		  <li>At 22:45:14 the user "wyona" is checking in a new article, which was
+		  <li>At 22:45:14 the user "lenya" is checking in a new article, which was
 		      probably written with some third-party editor.</li>
-		  <li>At 22:45:24 the user "wyona" is assigning the article to the user "levi"
+		  <li>At 22:45:24 the user "lenya" is assigning the article to the user "levi"
 		      for proof-reading.</li>
 		  <li>At 23:50:12 the user "levi" is checking out the article for doing some modifications.</li>
 		  <li>The user "levi" is getting tired and forgets to check in the article</li>

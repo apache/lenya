@@ -3,7 +3,7 @@
 
 <xsl:template match="span[@id = 'today']" >
     <!-- Process todays date here... -->
-    <xsl:apply-templates select="/wyona/today" />
+    <xsl:apply-templates select="/lenya/today" />
 </xsl:template>
 
 <xsl:template match="today">

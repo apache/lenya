@@ -11,6 +11,6 @@
 </xsl:template>
 
 <xsl:include href="../../root.xsl"/>
-<xsl:include href="../body_wyona.xsl"/>
+<xsl:include href="../body_lenya.xsl"/>
  
 </xsl:stylesheet>  

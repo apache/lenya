@@ -13,11 +13,11 @@
   </date>
 </meta>
 <head>
-  <title>Documentation at wyona.org is now based on xdoc</title>
+  <title>Documentation at lenya.org is now based on xdoc</title>
 </head>
 <body>
 <p>
-We have finally published the xdoc based documentation on wyona.org website.
+We have finally published the xdoc based documentation on lenya.org website.
 The format xdoc is used by the Apache Cocoon and Forrest.
 </p>
 </body>

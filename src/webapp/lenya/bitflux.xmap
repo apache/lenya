@@ -38,11 +38,11 @@
             <map:parameter name="filename" value="{filename}"/>
             <map:parameter name="date" value="{date}"/>
           </map:generate>
-          <map:transform src="stylesheets/cms/Page/rc/rco-exception.xsl"/>
+          <map:transform src="stylesheets/cms/rc/rco-exception.xsl"/>
           <map:serialize type="html"/>
         </map:act>
 -->
-        <map:read src="resources/cms/misc/bitfluxeditor/index.html" mime-type="text/html"/>
+        <map:read src="resources/misc/bitflux/index.html" mime-type="text/html"/>
         </map:match>
       </map:match>
       <map:handle-errors>
@@ -53,7 +53,7 @@
 
     <map:pipeline>
       <map:match pattern="**.html">
-        <map:read src="resources/cms/misc/bitfluxeditor/{1}.html" mime-type="text/xml"/>
+        <map:read src="resources/misc/bitflux/{1}.html" mime-type="text/xml"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
@@ -63,7 +63,7 @@
     
     <map:pipeline>
       <map:match pattern="**.js">
-        <map:read src="resources/cms/misc/bitfluxeditor/{1}.js" mime-type="text/javascript"/>
+        <map:read src="resources/misc/bitflux/{1}.js" mime-type="text/javascript"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
@@ -72,7 +72,7 @@
 
     <map:pipeline>
       <map:match pattern="**.xml">
-        <map:generate src="resources/cms/misc/bitfluxeditor/{1}.xml"/>
+        <map:generate src="resources/misc/bitflux/{1}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:handle-errors>
@@ -82,7 +82,7 @@
 
     <map:pipeline>
       <map:match pattern="**.xsl">
-        <map:generate src="resources/cms/misc/bitfluxeditor/{1}.xsl"/>
+        <map:generate src="resources/misc/bitflux/{1}.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:handle-errors>
@@ -92,7 +92,7 @@
 
     <map:pipeline>
       <map:match pattern="**.gif">
-        <map:read src="resources/cms/misc/bitfluxeditor/{1}.gif" mime-type="images/gif"/>
+        <map:read src="resources/misc/bitflux/{1}.gif" mime-type="images/gif"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
@@ -101,7 +101,7 @@
 
     <map:pipeline>
       <map:match pattern="**.png">
-        <map:read src="resources/cms/misc/bitfluxeditor/{1}.png" mime-type="images/png"/>
+        <map:read src="resources/misc/bitflux/{1}.png" mime-type="images/png"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>
@@ -110,7 +110,7 @@
 
     <map:pipeline>
       <map:match pattern="**.css">
-        <map:read src="resources/cms/misc/bitfluxeditor/{1}.css" mime-type="text/css"/>
+        <map:read src="resources/misc/bitflux/{1}.css" mime-type="text/css"/>
       </map:match>
       <map:handle-errors>
         <map:serialize type="xml"/>

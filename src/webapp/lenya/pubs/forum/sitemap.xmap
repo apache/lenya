@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.7 2003/03/04 18:08:19 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.8 2003/03/04 19:47:48 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -35,7 +35,7 @@
   <map:resources>
     <map:resource name="login">
       <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
-      <map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
+      <map:transform src="../../stylesheets/cms/ac/login.xsl">
         <map:parameter name="publication_name" value="Wyona News and Comments"/>
         <map:parameter name="publication_id" value="forum"/>
       </map:transform>
@@ -118,7 +118,7 @@
           
           <map:match pattern="logout">
             <map:generate type="serverpages" src="../../docs/cms/ac/logout.xsp"/>
-            <map:transform src="../../stylesheets/cms/Page/ac/logout.xsl">
+            <map:transform src="../../stylesheets/cms/ac/logout.xsl">
               <map:parameter name="publication_name" value="Wyona News and Comments"/>
             </map:transform>
             <map:serialize/>

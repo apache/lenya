@@ -3,12 +3,12 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
 >
 
 <menu>
 
-  <xsp-wyona:util/>
+  <xsp-lenya:util/>
 
   <live_uri>/matrix/index.html</live_uri>
 
@@ -27,12 +27,12 @@
 -->
         <item>Edit&#160;with&#160;Bitflux</item>
 <!--
-        <item href="/lenya/bitfluxeditor/weekly-column.html?url-xml=/lenya/oscom/bitflux/home.xml&amp;url-xslt=/lenya/oscom/bitflux/home.xsl&amp;url-xsd=/lenya/oscom/bitflux/home.xsd&amp;url-css=/lenya/oscom/bitflux/home.css&amp;url-post=/lenya/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
+        <item href="/lenya/bitflux/weekly-column.html?url-xml=/lenya/oscom/bitflux/home.xml&amp;url-xslt=/lenya/oscom/bitflux/home.xsl&amp;url-xsd=/lenya/oscom/bitflux/home.xsd&amp;url-css=/lenya/oscom/bitflux/home.css&amp;url-post=/lenya/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
 -->
 <!--
         <item>Publish</item>
 -->
-        <item href="../wyona/publishAllCMSProjectsScreen">Publish</item>
+        <item href="../lenya/publishAllCMSProjectsScreen">Publish</item>
       </block>
       <separator>
         <item>-----------------</item>
@@ -41,10 +41,10 @@
         <item>Passwd</item>
         <item>Switch&#160;User</item>
 <!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_lenya_id == null ? "nobody" : xsp_lenya_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
 -->
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
 
@@ -57,15 +57,15 @@
 
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
       </block>
       <separator>
         <item>-----------------</item>
       </separator>
       <block>
-        <item href="http://www.wyona.org">About&#160;Wyona</item>
+        <item href="http://www.lenya.org">About&#160;Wyona</item>
       </block>
     </menu>
 

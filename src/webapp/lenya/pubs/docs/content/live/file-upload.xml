@@ -7,7 +7,7 @@
     <version>1.0</version>
     <type>Overview document</type>
     <authors>
-      <person name="Christian Egli" email="christian.egli@wyona.org"/>
+      <person name="Christian Egli" email="christian.egli@lenya.org"/>
     </authors>
     <notice/>
     <abstract/>
@@ -15,7 +15,7 @@
   <body>
     <section><title>File Upload</title>
       <section><title>What is it?</title>
-	<p>The file upload in wyona allows the user to upload arbitrary
+	<p>The file upload in lenya allows the user to upload arbitrary
 	  files to the web server. It is implemented as a cocoon
 	  action.</p>
       </section>
@@ -86,7 +86,7 @@
   <!-- otherwise the action could not validate some of the
   input and we present the upload form again -->
   <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-  <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+  <map:transform src="../../stylesheets/cms/upload-image.xsl"/>
   <map:serialize type="html"/>
 </map:match>
 
@@ -226,7 +226,7 @@ Insert the media tag before the xpath if true
 	<dd>(*cough*) There is practically no validation of the
 	request parameters. This is a potential security problem.</dd>
 
-	<dt>wyona integration</dt>
+	<dt>lenya integration</dt>
 	<dd>Uploading an image and inserting it in a document is
 	editing this document. It should therefore be integrated with
 	the revision controler.</dd>

@@ -4,7 +4,7 @@
 	<xsl:param name="front"/>
 	
 	<xsl:template match="/">
-		<xsl:apply-templates select="wyona/cmsbody/html"/>
+		<xsl:apply-templates select="lenya/cmsbody/html"/>
 	</xsl:template>
 	
 	<!-- load frontpage banners or inside banners, depending on location -->

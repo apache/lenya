@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:include href="../../../../../../stylesheets/cms/Page/menu/root.xsl"/>
+	<xsl:include href="../../../../../../stylesheets/cms/menu/root.xsl"/>
 	<xsl:template match="@*|*">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:copy>
 	</xsl:template>
-	<xsl:template match="wyona/cmsbody/articles">
+	<xsl:template match="lenya/cmsbody/articles">
 		<html>
 			<head>
 				<title/>

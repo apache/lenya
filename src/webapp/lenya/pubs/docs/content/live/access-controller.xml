@@ -7,7 +7,7 @@
 	 <version>0.3</version> 
 	 <type>Overview document</type> 
 	 <authors>
-           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+           <person name="Michael Wechner" email="michael.wechner@lenya.org"/> 
            <person name="Marc von Wattenwyl" email="begomarc@freesurf.ch"/>
 	 </authors> 
   </header> 
@@ -51,8 +51,8 @@ NOTE: "authoring" and "live" are required parameters, "tree-authoring" and "tree
 
    <section><title>Required Files</title> 
 <ol>
-  <li>lenya/docs/cms/publish-screen.xsp</li>
-  <li>lenya/stylesheets/cms/Page/Publish/main.xsl</li>
+  <li>lenya/content/publish-screen.xsp</li>
+  <li>lenya/xslt/Publish/main.xsl</li>
 </ol>
    </section>
 

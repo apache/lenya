@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <crawler>
-  <user-agent>wyona</user-agent>
+  <user-agent>lenya</user-agent>
 
   <base-url href="http://lists.oscom.org/pipermail/participants/2003-February/index.html"/>
   <scope-url href="http://lists.oscom.org/pipermail/participants/2003-February/"/>

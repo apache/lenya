@@ -3,7 +3,7 @@
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-hello="http://www.wyona.org/xsp/hello/1.0"
+  xmlns:xsp-hello="http://www.lenya.org/xsp/hello/1.0"
   version="1.0"
 >
 

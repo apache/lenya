@@ -2,14 +2,14 @@
 
 <doctypes>
 <doc type="EditorProject">
- <creator src="org.oscom.wyona.cms.EditorProjectCreator"/>
+ <creator src="org.oscom.lenya.cms.EditorProjectCreator"/>
 </doc>
 
 <doc type="CMSProject">
- <creator src="org.oscom.wyona.cms.CMSProjectCreator"/>
+ <creator src="org.oscom.lenya.cms.CMSProjectCreator"/>
 </doc>
 
 <doc type="CMFProject">
- <creator src="org.oscom.wyona.cms.CMFProjectCreator"/>
+ <creator src="org.oscom.lenya.cms.CMFProjectCreator"/>
 </doc>
 </doctypes>

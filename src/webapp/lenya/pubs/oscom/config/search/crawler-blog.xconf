@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <crawler>
-  <user-agent>wyona</user-agent>
+  <user-agent>lenya</user-agent>
 
   <base-url href="http://blog.oscom.org/"/>
   <scope-url href="http://blog.oscom.org/"/>

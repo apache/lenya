@@ -929,11 +929,11 @@
    </map:match>
 
    <map:match pattern="slides/style">
-    <map:read mime-type="text/css" src="resources/styles/slides-apachecon.css"/>
+    <map:read mime-type="text/css" src="resources/css/slides-apachecon.css"/>
    </map:match>
 
    <map:match pattern="style">
-    <map:read mime-type="text/css" src="resources/styles/slides-apachecon.css"/>
+    <map:read mime-type="text/css" src="resources/css/slides-apachecon.css"/>
    </map:match>
 
    <map:match pattern="slides/**.gif">
@@ -1183,7 +1183,7 @@
    </map:match>
 
    <map:match pattern="sites/styles/**.css">
-    <map:read mime-type="text/css" src="resources/styles/{1}.css"/>
+    <map:read mime-type="text/css" src="resources/css/{1}.css"/>
    </map:match>
 
    <map:match pattern="**favicon.ico">

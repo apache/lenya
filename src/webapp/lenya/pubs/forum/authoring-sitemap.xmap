@@ -66,12 +66,12 @@
    <!-- Wyona CMS -->
     <map:pipeline>
      <!-- Publisher -->
-      <map:match pattern="wyona/publishScreen*">
+      <map:match pattern="lenya/publishScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
-        <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
+        <map:transform src="../../stylesheets/cms/publishing/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
-      <map:match pattern="wyona/publish*">
+      <map:match pattern="lenya/publish*">
         <map:act type="publisher">
           <map:redirect-to uri="{parent_uri}" session="true"/>
         </map:act>
@@ -80,15 +80,15 @@
      <!-- /Publisher -->
 
      <!-- ParentChild Content Creator: New Article -->
-      <map:match pattern="wyona/ParentChildScreenNewArticle*">
+      <map:match pattern="lenya/ParentChildScreenNewArticle*">
         <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
-        <map:transform src="stylesheets/cms/Page/parent-child-new-article.xsl"/>
+        <map:transform src="stylesheets/cms/parent-child-new-article.xsl"/>
 <!--
-        <map:transform src="../../stylesheets/cms/Page/authoring/parent-child.xsl"/>
+        <map:transform src="../../stylesheets/cms/authoring/parent-child.xsl"/>
 -->
         <map:serialize type="html"/>
       </map:match>
-      <map:match pattern="wyona/create*">
+      <map:match pattern="lenya/create*">
         <map:act type="parent-child">
           <map:redirect-to uri="{parent_uri}" session="true"/>
         </map:act>
@@ -111,7 +111,7 @@
       </map:match>
 
       <map:match pattern="front.xml">
-        <map:aggregate element="wyona">
+        <map:aggregate element="lenya">
           <map:part src="cocoon:/menus/front.xml"/>
           <map:part src="cocoon:/index.xml" element="cmsbody"/>
         </map:aggregate>
@@ -122,11 +122,11 @@
         <map:generate type="directory" src="docs/publication/authoring/articles/">
           <map:parameter name="depth" value="1"/>
         </map:generate>
-        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl">
+        <map:transform src="xslt/Front/xinclude.xsl">
           <map:parameter name="view" value="authoring"/>
         </map:transform>
         <map:transform type="xlink"/>
-        <map:transform src="stylesheets/publication/Page/Front/sort.xsl"/>
+        <map:transform src="xslt/Front/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -135,7 +135,7 @@
       </map:match>
       <map:match pattern="index.html">
         <map:generate src="cocoon:/front.xml"/>
-        <map:transform src="stylesheets/publication/Page/Front/Authoring/main.xsl"/>
+        <map:transform src="xslt/Front/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -145,12 +145,12 @@
         <map:redirect-to uri="../index.rss"/>
 -->
         <map:generate src="cocoon:/index.xml"/>
-        <map:transform src="stylesheets/publication/Page/Front/rdf.xsl"/>
+        <map:transform src="xslt/Front/rdf.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="articles/*/article.xml">
-        <map:aggregate element="wyona">
+        <map:aggregate element="lenya">
           <map:part src="cocoon:/menus/article{1}.xml"/>
           <map:part src="cocoon:/articles/{1}/index.xml" element="cmsbody"/>
         </map:aggregate>
@@ -164,10 +164,10 @@
         <map:generate src="cocoon:/articles/{1}/article.xml"/>
         <map:select>
           <map:when test="explorer">
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+            <map:transform src="xslt/Article/Authoring/main.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+            <map:transform src="xslt/Article/Authoring/main.xsl"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
@@ -177,10 +177,10 @@
         <map:generate src="cocoon:/articles/{1}/article.xml"/>
         <map:select>
           <map:when test="explorer">
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
+            <map:transform src="xslt/Article/Authoring/main_xopus.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
+            <map:transform src="xslt/Article/Authoring/main_xopus.xsl"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>

@@ -69,7 +69,7 @@
   <xsl:apply-templates select="rdf:RDF" mode="cmsinfo"/>
 </xsl:template>
 
-<xsl:template match="wyonasite">
+<xsl:template match="lenyasite">
   <xsl:apply-templates select="rdf:RDF" mode="cmsinfo"/>
 </xsl:template>
 
@@ -199,7 +199,7 @@
 -->
 </xsl:template>
 
-<xsl:template match="rdf:RDF" mode="wyona" xmlns:purl="http://purl.org/rss/1.0/">
+<xsl:template match="rdf:RDF" mode="lenya" xmlns:purl="http://purl.org/rss/1.0/">
  <table cellpadding="0" cellspacing="0" border="0" width="150">
   <tr>
     <td bgcolor="{$tablecolor}">&#160;</td>

@@ -8,7 +8,7 @@
     <version>0.1</version> 
     <type>Overview document</type> 
     <authors>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+      <person name="Andreas Hartmann" email="andreas.hartmann@lenya.org"/> 
     </authors> 
 </header> 
 <body> 
@@ -94,7 +94,7 @@ the request and session objects:</p>
 <ul>
   <li>
     <code>Task.PARAMETER_SERVLET_CONTEXT</code> - the path of the servlet context<br/>
-    <code>/home/user_id/build/jakarta-tomcat/webapps/wyonacms</code>
+    <code>/home/user_id/build/jakarta-tomcat/webapps/lenyacms</code>
   </li>
   <li>
     <code>Task.PARAMETER_SERVER_URI</code> - the server URI<br/>
@@ -192,7 +192,7 @@ to the task.
 </p>
 <source><![CDATA[
 
-<map:match pattern="wyona/publish*">
+<map:match pattern="lenya/publish*">
   <map:act type="publisher">
     <map:redirect-to uri="{parent_uri}" session="true"/>
   </map:act>
@@ -214,7 +214,7 @@ You can also pass the task ID as a <code>task-id</code> parameter directly in th
 
 ...
 
-<map:match pattern="wyona/publish*">
+<map:match pattern="lenya/publish*">
   <map:act type="task">
     <map:parameter name="task-id" value="publish-article"/>
     <map:redirect-to uri="{parent_uri}" session="true"/>
@@ -253,7 +253,7 @@ file manually, you won't have to provide a hard-coded <code>servlet-context</cod
 <p>
 <strong>This feature may be subject to changes. If you have any suggestions to improve
 the task implementation, just contact me (Andreas Hartmann) at</strong>
-<link href="mailto:ah@wyona.org">ah@wyona.org</link>.
+<link href="mailto:ah@lenya.org">ah@lenya.org</link>.
 </p>
 </section>
 

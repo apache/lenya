@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<wyona.org:navigation xmlns:wyona.org="http://www.wyona.org/2002/wyona.org">
+<lenya.org:navigation xmlns:lenya.org="http://www.lenya.org/2002/lenya.org">
 <leaf name="Home" href="index.html"/>
 <branch name="Download" href="download/index.html">
 </branch>
@@ -16,4 +16,4 @@
 <leaf name="License" href="license.html"/>
 <branch name="Related Projects" href="related-projects/index.html">
 </branch>
-</wyona.org:navigation>
+</lenya.org:navigation>

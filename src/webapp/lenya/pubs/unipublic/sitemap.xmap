@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.9 2003/03/04 18:09:06 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.10 2003/03/04 19:48:52 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -36,7 +36,7 @@
     <map:resource name="login">
       <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
 
-      <map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
+      <map:transform src="../../stylesheets/cms/ac/login.xsl">
         <map:parameter name="publication_name" value="Unipublic"/>
         <map:parameter name="publication_id" value="unipublic"/>
       </map:transform>
@@ -85,7 +85,7 @@
     <!-- misc -->
     <map:pipeline>
     
-      <map:match pattern="wyona/css/**.css">
+      <map:match pattern="lenya/css/**.css">
         <map:read mime-type="text/css" src="../../resources/cms/css/{1}.css"/>
       </map:match>
       
@@ -144,7 +144,7 @@
           
           <map:match pattern="logout">
             <map:generate type="serverpages" src="../../docs/cms/ac/logout.xsp"/>
-            <map:transform src="../../stylesheets/cms/Page/ac/logout.xsl">
+            <map:transform src="../../stylesheets/cms/ac/logout.xsl">
               <map:parameter name="publication_name" value="Unipublic"/>
             </map:transform>
             <map:serialize/>

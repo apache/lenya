@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<sch:scheduler xmlns:sch="http://www.wyona.org/2002/sch">
+<sch:scheduler xmlns:sch="http://www.lenya.org/2002/sch">
   <sch:triggers>
     <sch:trigger name="cron" src="org.quartz.CronTrigger"/>
     <sch:trigger name="date" src="org.quartz.SimpleTrigger"/>
@@ -76,7 +76,7 @@
       <sch:job>
         <sch:task>
           <sch:parameter name="id" value="downloadRSS"/>
-          <sch:parameter name="server-uri" value="http://www.wyona.org"/>
+          <sch:parameter name="server-uri" value="http://www.lenya.org"/>
           <sch:parameter name="publication-id" value="oscom"/>
           <sch:parameter name="server-port" value="1313"/>
         </sch:task>

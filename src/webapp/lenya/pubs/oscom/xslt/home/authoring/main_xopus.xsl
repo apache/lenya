@@ -4,7 +4,7 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:include href="../../../../../../../stylesheets/cms/Page/xopus/root.xsl"/>
+<xsl:include href="../../../../../../../stylesheets/cms/xopus/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates select="oscom"/>
@@ -18,10 +18,10 @@
  	<xml>
 		<pipeline xml="home.xml" xsd="home.xsd">
 			<view id="defaultView" default="true">
-				<transform xsl="Page/Home/Authoring/xopus.xsl"></transform>
+				<transform xsl="Home/Authoring/xopus.xsl"></transform>
 			</view>
 			<view id="treeView">
-				<transform xsl="Page/Home/Authoring/tree.xsl"></transform>
+				<transform xsl="Home/Authoring/tree.xsl"></transform>
 			</view>
 		</pipeline>
     </xml>

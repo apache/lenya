@@ -4,7 +4,7 @@
 <xsl:param name="files"/>
 
 <xsl:template match="/">
-    <xsl:apply-templates select="wyona/cmsbody/html"/>
+    <xsl:apply-templates select="lenya/cmsbody/html"/>
  </xsl:template>
 		
 	<xsl:include href="../today.xsl"/>
@@ -14,7 +14,7 @@
 	
 	<xsl:template match="span[@id = 'content']">
 		<!-- Process the headlines here... -->
-		<xsl:apply-templates select="/wyona/files"/>
+		<xsl:apply-templates select="/lenya/files"/>
 	</xsl:template>
 
 <!-- Replace Page title -->

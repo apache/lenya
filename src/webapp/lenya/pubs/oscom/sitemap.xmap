@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.12 2003/03/04 18:08:21 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.13 2003/03/04 19:48:15 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -41,7 +41,7 @@
   <map:resources>
     <map:resource name="login">
       <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
-      <map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
+      <map:transform src="../../stylesheets/cms/ac/login.xsl">
         <map:parameter name="publication_name" value="OSCOM"/>
         <map:parameter name="publication_id" value="oscom"/>
       </map:transform>
@@ -96,13 +96,13 @@
         <map:aggregate element="oscom">
           <map:part src="cocoon:/search-oscom/lucene.xml{1}"/>
         </map:aggregate>
-        <map:transform src="../../stylesheets/cms/Page/search/sort.xsl"/>
-        <map:transform src="stylesheets/publication/Page/Search/Live/main.xsl"/>
+        <map:transform src="../../stylesheets/cms/search/sort.xsl"/>
+        <map:transform src="xslt/Search/Live/main.xsl"/>
 <!--
         <map:transform src="stylesheets/cms/search-and-results.xsl"/>
 -->
 <!--
-        <map:transform src="../../stylesheets/cms/Page/search/search-and-results.xsl"/>
+        <map:transform src="../../stylesheets/cms/search/search-and-results.xsl"/>
 -->
         <map:serialize type="html"/>
       </map:match>
@@ -159,7 +159,7 @@
           
           <map:match pattern="logout">
             <map:generate type="serverpages" src="../../docs/cms/ac/logout.xsp"/>
-            <map:transform src="../../stylesheets/cms/Page/ac/logout.xsl">
+            <map:transform src="../../stylesheets/cms/ac/logout.xsl">
               <map:parameter name="publication_name" value="OSCOM"/>
             </map:transform>
             <map:serialize/>

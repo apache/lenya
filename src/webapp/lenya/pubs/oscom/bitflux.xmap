@@ -26,7 +26,7 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="home.xsl">
-        <map:generate src="stylesheets/publication/Page/Home/Authoring/bitflux.xsl"/>
+        <map:generate src="xslt/Home/Authoring/bitflux.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="home.xsd">

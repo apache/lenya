@@ -3,7 +3,7 @@
 ======================================================================
 OSCOM CMS List
 
-$Id: overview-body.xml,v 1.5 2002/10/21 22:47:46 michicms Exp $
+$Id: overview-body.xml,v 1.6 2003/03/04 19:48:06 gregor Exp $
 ======================================================================
 -->
 <oscom topic="system overviews">
@@ -316,10 +316,10 @@ license.</license_description>
 <system type="cms">
   <id>15</id>
   <system_name>Wyona</system_name>
-  <main_url>http://www.wyona.org</main_url>
+  <main_url>http://www.lenya.org</main_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_url>http://www.wyona.org/license.html</license_url>
+    <license_url>http://www.lenya.org/license.html</license_url>
   </license>
 </system>
 

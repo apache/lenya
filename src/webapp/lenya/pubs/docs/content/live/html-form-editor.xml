@@ -7,8 +7,8 @@
     <version/>
     <type/>
     <authors>
-      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
-      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@wyona.org"/>
+      <person name="Michael Wechner" email="michael.wechner@lenya.org"/>
+      <person name="Marc von Wattenwyl" email="marc.vonwattenwyl@lenya.org"/>
     </authors>
   </header>
 <body>
@@ -49,7 +49,7 @@
       <town>Graceland</town>
     </address>
     <emails>
-      <email>elvis@wyona.com</email>
+      <email>elvis@lenya.com</email>
       <email>king@graceland.com</email>
       <email>god@rnr.com</email>
     </emails>
@@ -166,9 +166,9 @@
       <li>stylesheets/lenya/edit/htmlform/performRequest.xsl (EditorAction and Sitemap)</li>
       <li>stylesheets/lenya/edit/htmlform/translateRequest.xsl (EditorAction and Sitemap)</li>
       <li>stylesheets/lenya/edit/editdescriptor/"RootElementName"-descriptor.xml (EditorAction and XSLT)</li>
-      <li>stylesheets/lenya/Page/Edit/root.xsl (xsl:include)</li>
-      <li>stylesheets/lenya/Page/Edit/body.xsl (xsl:include)</li>
-      <li>stylesheets/publication/Page/"DoctypeName"/Edit/main.xsl (Sitemap)</li>
+      <li>stylesheets/lenya/Edit/root.xsl (xsl:include)</li>
+      <li>stylesheets/lenya/Edit/body.xsl (xsl:include)</li>
+      <li>xslt/"DoctypeName"/Edit/main.xsl (Sitemap)</li>
     </ol>
   </li>
   <li>Edit Document

@@ -39,11 +39,11 @@
 		<!-- Used for Bitflux specific pre- and post-processing of the xml (for all doctypes)  -->
 		<map:pipeline>
 			<map:match pattern="stylesheets/bitflux-include.xsl">
-				<map:generate src="stylesheets/publication/Bitflux/bitflux-include.xsl"/>
+				<map:generate src="xslt/Bitflux/bitflux-include.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/bitflux-back-include.xsl">
-				<map:generate src="stylesheets/publication/Bitflux/bitflux-back-include.xsl"/>
+				<map:generate src="xslt/Bitflux/bitflux-back-include.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 		</map:pipeline>
@@ -55,7 +55,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/article.xsl">
-				<map:generate src="stylesheets/publication/Page/Authoring/article-bitflux.xsl"/>
+				<map:generate src="xslt/Authoring/article-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/article.xsd">
@@ -73,7 +73,7 @@
 			</map:match>
 			<map:match pattern="stylesheets/small-preview.xsl">
 				<map:generate src="docs/publication/authoring/index.html"/>
-				<map:transform src="stylesheets/publication/Page/Authoring/small-preview-bitflux.xsl"/>
+				<map:transform src="xslt/Authoring/small-preview-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/small-preview.xsd">
@@ -94,7 +94,7 @@
 				<map:generate src="http://127.0.0.1:7080/lenya/computerworld/index.html?cocoon-view=content"/>
 				-->
 				<map:generate src="docs/publication/live/index.html"/>
-				<map:transform src="stylesheets/publication/Page/Authoring/preview-bitflux.xsl"/>
+				<map:transform src="xslt/Authoring/preview-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/preview.xsd">
@@ -115,7 +115,7 @@
 				<map:generate src="http://127.0.0.1:7080/lenya/computerworld/index.html?cocoon-view=content"/>
 				-->
 				<map:generate src="docs/publication/live/index.html"/>
-				<map:transform src="stylesheets/publication/Page/Authoring/headlines-bitflux.xsl"/>
+				<map:transform src="xslt/Authoring/headlines-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/headlines.xsd">

@@ -7,8 +7,8 @@
 	 <version>0.1</version> 
 	 <type>Overview document</type> 
 	 <authors>
-           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
-           <person name="Edith Chevrier" email="edith.chevrier@wyona.org"/>
+           <person name="Michael Wechner" email="michael.wechner@lenya.org"/> 
+           <person name="Edith Chevrier" email="edith.chevrier@lenya.org"/>
 	 </authors> 
   </header> 
   <body> 
@@ -43,9 +43,9 @@ Normally the "Menus" can be found at <em>docs/publication/menus</em>.
            <code><![CDATA[
 
 <map:pipeline>
-  <map:match pattern="wyona/ParentChildScreenNewArticle*">
+  <map:match pattern="lenya/ParentChildScreenNewArticle*">
     <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
-    <map:transform src="../../stylesheets/cms/Page/authoring/parent-child.xsl"/>
+    <map:transform src="../../stylesheets/cms/authoring/parent-child.xsl"/>
     <map:serialize type="html"/>
   </map:match>
 </map:pipeline>
@@ -56,7 +56,7 @@ Normally the "Menus" can be found at <em>docs/publication/menus</em>.
            <code><![CDATA[
 
 <map:pipeline>
-  <map:match pattern="wyona/create*">
+  <map:match pattern="lenya/create*">
     <map:act type="parent-child">
       <map:redirect-to uri="{parent_uri}" session="true"/>
     </map:act>
@@ -71,7 +71,7 @@ Normally the "Menus" can be found at <em>docs/publication/menus</em>.
 
    <section><title>Customizing the Create Screen</title> 
      <p>
-Copy the generic XSLT "../../stylesheets/cms/Page/parent-child.xsl" into the publication's stylesheet directory "stylesheets/cms/Page/parent-child-new-article.xsl". Don't forget to change the sitemap appropriately. The following parameters have to exist: parentid (generated via XSP), childid (not-empty String, no whitespace), childname (non-empty String), childtype (leaf or branch), doctype (e.g. Article). Exp:
+Copy the generic XSLT "../../stylesheets/cms/parent-child.xsl" into the publication's stylesheet directory "stylesheets/cms/parent-child-new-article.xsl". Don't forget to change the sitemap appropriately. The following parameters have to exist: parentid (generated via XSP), childid (not-empty String, no whitespace), childname (non-empty String), childtype (leaf or branch), doctype (e.g. Article). Exp:
      </p>  
 <source><![CDATA[
 <form>
@@ -158,7 +158,7 @@ Finally the Java class AbstractParentChildCreator has to be extended.
      </p>  
            <source><![CDATA[
 
-package ch.unizh.unipublic.wyona.cms.authoring;
+package ch.unizh.unipublic.lenya.cms.authoring;
     
 import java.io.File;
 

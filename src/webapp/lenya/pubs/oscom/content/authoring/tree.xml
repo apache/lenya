@@ -6,7 +6,7 @@
       <leaf relURI="xopus" doctype="EditorProject" menuName="Xopus"/>
     </branch>
     <branch relURI="matrix" doctype="CMSFOverview" menuName="CMS/F Overview">
-      <leaf relURI="wyona" doctype="CMSProject" menuName="Wyona"/>
+      <leaf relURI="lenya" doctype="CMSProject" menuName="Wyona"/>
       <leaf relURI="cocoon" doctype="CMFProject" menuName="Cocoon"/>
     </branch>
   </branch>

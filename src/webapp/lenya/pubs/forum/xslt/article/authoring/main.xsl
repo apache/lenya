@@ -4,13 +4,13 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:include href="../../../../../../../stylesheets/cms/Page/menu/root.xsl"/>
+<xsl:include href="../../../../../../../stylesheets/cms/menu/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:call-template name="page"/>
 </xsl:template>
 
-<xsl:include href="../../page_wyona.xsl"/>
+<xsl:include href="../../page_lenya.xsl"/>
 
 <xsl:template name="cmsbody">
  <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -18,6 +18,6 @@
  </table>
 </xsl:template>
 
-<xsl:include href="../body_wyona.xsl"/>
+<xsl:include href="../body_lenya.xsl"/>
  
 </xsl:stylesheet>  

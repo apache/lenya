@@ -3,13 +3,13 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
 >
 
 <menu>
 
-  <xsp-wyona:util/>
-  <xsp-wyona:helloworld/>
+  <xsp-lenya:util/>
+  <xsp-lenya:helloworld/>
 
   <xsp:logic>
     //String projectid="levi";
@@ -21,14 +21,14 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/xopus2/"+projectid</xsp:expr>.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/"+projectid</xsp:expr>.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
         <item>Edit&#160;with&#160;Bitflux</item>
 <!--
-        <item href="/lenya/bitfluxeditor/weekly-column.html?url-xml=/lenya/oscom/bitflux/home.xml&amp;url-xslt=/lenya/oscom/bitflux/home.xsl&amp;url-xsd=/lenya/oscom/bitflux/home.xsd&amp;url-css=/lenya/oscom/bitflux/home.css&amp;url-post=/lenya/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
+        <item href="/lenya/bitflux/weekly-column.html?url-xml=/lenya/oscom/bitflux/home.xml&amp;url-xslt=/lenya/oscom/bitflux/home.xsl&amp;url-xsd=/lenya/oscom/bitflux/home.xsd&amp;url-css=/lenya/oscom/bitflux/home.css&amp;url-post=/lenya/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
 -->
         <item>Publish</item>
 <!--
-        <item><xsp:attribute name="href"><xsp:expr>"wyona/publishScreen?docid=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;docids=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>"lenya/publishScreen?docid=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;docids=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
 -->
       </block>
       <separator>
@@ -38,10 +38,10 @@
         <item>Passwd</item>
         <item>Switch&#160;User</item>
 <!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/lenya/admin/users/passwd/<xsp:expr>(xsp_lenya_id == null ? "nobody" : xsp_lenya_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
 -->
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
 
@@ -54,31 +54,31 @@
 
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
       </block>
       <separator>
         <item>-----------------</item>
       </separator>
       <block>
-        <item href="http://www.wyona.org">About&#160;Wyona</item>
+        <item href="http://www.lenya.org">About&#160;Wyona</item>
       </block>
     </menu>
 
     <menu name="Debug" label="Debug">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/"+projectid</xsp:expr>.html?cocoon-view=wyonapage</xsp:attribute>View&#160;Page&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/"+projectid</xsp:expr>.html?cocoon-view=lenyapage</xsp:attribute>View&#160;Page&#160;XML</item>
 <!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Page&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Page&#160;XML</item>
 -->
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Body&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Body&#160;XML</item>
       </block>
       <separator>
         <item>-----------------</item>
       </separator>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/xopus/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Xopus&#160;XSLT</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/xopus/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Xopus&#160;XSLT</item>
         <item>View&#160;Xopus&#160;XSLT</item>
         <item>View&#160;Xopus&#160;XSD</item>
 <!--
@@ -104,7 +104,7 @@
       </separator>
       <block>
         <item>Hello World</item>
-        <item><xsp:expr>xsp_wyona_context_prefix</xsp:expr></item>
+        <item><xsp:expr>xsp_lenya_context_prefix</xsp:expr></item>
 <!--
         <item><xsp:expr>xsp_hello_server_time</xsp:expr></item>
 -->

@@ -7,7 +7,7 @@
 <!--
 <xsl:include href="../../root.xsl"/>
 -->
-<xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
+<xsl:include href="../../../../../../../stylesheets/cms/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates select="oscom"/>

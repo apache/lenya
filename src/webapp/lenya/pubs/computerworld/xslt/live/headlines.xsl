@@ -3,7 +3,7 @@
 <xsl:param name="id"/>
 	<xsl:template match="span[@id = 'headlines']">
 		<!-- Process the headlines here... -->
-		<xsl:apply-templates select="/wyona/articles"/>
+		<xsl:apply-templates select="/lenya/articles"/>
 	</xsl:template>
 	<xsl:template match="articles">
 		<xsl:for-each select="article">

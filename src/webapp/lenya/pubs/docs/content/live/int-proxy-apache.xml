@@ -7,7 +7,7 @@
     <version/>
     <type/>
     <authors>
-      <person name="Michael Wechner" email="michael.wechner@wyona.org"/>
+      <person name="Michael Wechner" email="michael.wechner@lenya.org"/>
     </authors>
   </header>
   <body>
@@ -15,10 +15,10 @@
       <section><title>DNS Configuration</title>
         <source><![CDATA[
           
-chlorine.wyona.org.  IN A 194.191.122.217
-calcium.wyona.org.   IN A 194.191.122.220
-ethz-mat.wyona.com.  IN CNAME chlorine.wyona.com
-unipublic.wyona.com. IN CNAME calcium.wyona.com
+chlorine.lenya.org.  IN A 194.191.122.217
+calcium.lenya.org.   IN A 194.191.122.220
+ethz-mat.lenya.com.  IN CNAME chlorine.lenya.com
+unipublic.lenya.com. IN CNAME calcium.lenya.com
           
         ]]></source>
       </section>
@@ -38,13 +38,13 @@ unipublic.wyona.com. IN CNAME calcium.wyona.com
 NameVirtualHost 195.226.6.70
 
 <VirtualHost 195.226.6.70>
-    ServerAdmin michael.wechner@wyona.org
+    ServerAdmin michael.wechner@lenya.org
 #    DocumentRoot /usr/local/apache/htdocs/oscom
-    ServerName oscom.wyona.org
+    ServerName oscom.lenya.org
     ProxyPass          / http://195.226.6.70:8080/lenya/oscom/
     ProxyPassReverse   / http://195.226.6.70:8080/lenya/oscom/
-    ErrorLog logs/oscom.wyona.org-error_log
-    CustomLog logs/oscom.wyona.org-access_log common
+    ErrorLog logs/oscom.lenya.org-error_log
+    CustomLog logs/oscom.lenya.org-access_log common
 </VirtualHost>
           
         ]]></source>

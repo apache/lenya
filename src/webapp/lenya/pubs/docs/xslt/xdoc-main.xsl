@@ -8,7 +8,7 @@
 <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:include href="wyona.org.xsl"/>
+<xsl:include href="lenya.org.xsl"/>
 
 <xsl:template name="body">
  <xsl:apply-templates select="/site/document/title"/><br />

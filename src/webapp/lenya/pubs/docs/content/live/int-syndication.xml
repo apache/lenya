@@ -7,7 +7,7 @@
     <version/>
     <type/>
     <authors>
-      <person name="Gregor J. Rothfuss" email="gregor.rothfuss@wyona.org"/>
+      <person name="Gregor J. Rothfuss" email="gregor.rothfuss@lenya.org"/>
     </authors>
   </header>
   <body>
@@ -89,7 +89,7 @@ for engineer to anticipate too much and XML Namespace is a frequent host of over
 <section><title>RSS within Wyona</title>
 <p>
 The publication "Wyona News and Comments" (pubs/forum) is providing/producing RSS, which is
-consumed by the publication OSCOM (pubs/oscom) and the publication wyona.org (pubs/wyona.org).
+consumed by the publication OSCOM (pubs/oscom) and the publication lenya.org (pubs/lenya.org).
 </p>
 </section>
 </section>

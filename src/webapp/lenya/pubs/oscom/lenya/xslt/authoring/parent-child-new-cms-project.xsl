@@ -7,7 +7,7 @@
 <xsl:template match="/">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="/lenya/wyona/default.css" />
+<link rel="stylesheet" type="text/css" href="/lenya/lenya/default.css" />
 </head>
 <body>
   <xsl:apply-templates/>
@@ -32,7 +32,7 @@
   </tr>
 -->
   <tr>
-    <td>project id:</td><td><input type="text" name="childid"/> (e.g. wyona)</td>
+    <td>project id:</td><td><input type="text" name="childid"/> (e.g. lenya)</td>
   </tr>
   <tr>
     <td>project name:</td><td><input type="text" name="childname"/> (e.g. Wyona)</td>

@@ -7,7 +7,7 @@
 <xsl:template match="span[@id = 'preview']">
 	<span id="preview" bxe-editable="article">
     <!-- Insert article content here... -->
-    <xsl:apply-templates select="/wyona/article"/>
+    <xsl:apply-templates select="/lenya/article"/>
     </span>
 </xsl:template>
 

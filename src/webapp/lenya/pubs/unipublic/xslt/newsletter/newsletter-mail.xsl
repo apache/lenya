@@ -10,7 +10,7 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:mail="http://www.wyona.org/2002/mail">
+    xmlns:mail="http://www.lenya.org/2002/mail">
 
 <xsl:output method="text"/>
     

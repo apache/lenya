@@ -20,7 +20,7 @@ In the section overview, all articles of this section are listed: first appear t
    </code>
   </p>
 </li>
-<li>transformation with stylesheets/publication/Page/Section/xinclude.xsl. Introduction of xlink and tags for the different articles: 
+<li>transformation with xslt/Section/xinclude.xsl. Introduction of xlink and tags for the different articles: 
   <p>
    <code>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/>
@@ -102,7 +102,7 @@ Zoologischen Institut der Universitaet Zuerich untersuchte die Folgen dieses Def
  <p>
   <code>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&nbsp;&lt;Page xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0" xmlns:up="http://www.unipublic.unizh.ch/2002/up"&gt;<br/>
+&nbsp;&lt;Page xmlns:xsp="http://apache.org/xsp" xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0" xmlns:up="http://www.unipublic.unizh.ch/2002/up"&gt;<br/>
  
 &nbsp;&nbsp;&lt;Content xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2002/XLink"&gt;<br/>
 &nbsp;&nbsp;&nbsp;  &lt;FirstColumn&gt;<br/>
@@ -213,9 +213,9 @@ Die&nbsp;ungehemmte&nbsp;Zellteilung,&nbsp;kurz&nbsp;Krebs,&nbsp;wird&nbsp;norma
   </code>
  </p>
 </li>
-<li>the articles are sorted: transformation with the stylesheet "stylesheets/publication/Page/Section/Authoring/sort.xsl"</li>
+<li>the articles are sorted: transformation with the stylesheet "xslt/Section/Authoring/sort.xsl"</li>
 <li>aggregation of the menus with the index.xml</li>
-<li>transformation with the stylesheet stylesheets/publication/Page/Section/Authoring/main.xsl to generate the html</li>
+<li>transformation with the stylesheet xslt/Section/Authoring/main.xsl to generate the html</li>
 </ul>
 <h3>New Year</h3>
 <p>When the new Year beginn, we should
@@ -283,7 +283,7 @@ Die&nbsp;ungehemmte&nbsp;Zellteilung,&nbsp;kurz&nbsp;Krebs,&nbsp;wird&nbsp;norma
 </code>
 </p>
 </li>
-<li>put the old year in the hardcoded year's navigation in the section stylesheet: <b>.../pubs/unipublic/stylesheets/publication/Page/Section/page.xsl</b>:
+<li>put the old year in the hardcoded year's navigation in the section stylesheet: <b>.../pubs/unipublic/xslt/Section/page.xsl</b>:
 <p>
 <code>
 

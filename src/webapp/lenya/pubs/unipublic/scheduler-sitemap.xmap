@@ -47,7 +47,7 @@
       <!-- create the current job snapshot -->
       <map:match pattern="scheduler-servlet">
         <map:generate type="servletproxy" src="/lenya/servlet/QuartzSchedulerServlet"/>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/sort.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       
@@ -56,28 +56,28 @@
     <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
     <map:pipeline>
       <map:match pattern="admin-document">
-        <map:aggregate element="scheduler" prefix="sch" ns="http://www.wyona.org/2002/sch">
+        <map:aggregate element="scheduler" prefix="sch" ns="http://www.lenya.org/2002/sch">
           <map:part src="cocoon:/document-types"/>
           <map:part src="cocoon:/tasks"/>
           <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
           <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
         </map:aggregate>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/filter.xsl"/>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/filterTasks.xsl"/>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/admin-document.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/filter.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/filterTasks.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/admin-document.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       
       <map:match pattern="admin-publication">
-        <map:aggregate element="scheduler" prefix="sch" ns="http://www.wyona.org/2002/sch">
+        <map:aggregate element="scheduler" prefix="sch" ns="http://www.lenya.org/2002/sch">
           <map:part src="cocoon:/document-types"/>
           <map:part src="cocoon:/tasks"/>
           <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
           <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
         </map:aggregate>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/filter.xsl"/>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/filterTasks.xsl"/>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/admin-publication.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/filter.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/filterTasks.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/admin-publication.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       
@@ -89,8 +89,8 @@
       <map:match pattern="admin/pubid/**">
         <map:generate type="servletproxy"
 	  src="/lenya/servlet/QuartzSchedulerServlet"/>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/sort.xsl"/>
-        <map:transform src="../../stylesheets/cms/Page/scheduler/adminPublication.xsl">
+        <map:transform src="../../stylesheets/cms/scheduler/sort.xsl"/>
+        <map:transform src="../../stylesheets/cms/scheduler/adminPublication.xsl">
 	  <map:parameter name="documentID" value="{1}"/>
 	</map:transform>
         <map:serialize type="html"/>

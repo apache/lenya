@@ -8,7 +8,7 @@
     <version>0.1</version> 
     <type>Overview document</type> 
     <authors>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+      <person name="Andreas Hartmann" email="andreas.hartmann@lenya.org"/> 
     </authors> 
 </header> 
 <body> 
@@ -43,7 +43,7 @@ A complete XML document could look like this:
 </p>
 <source><![CDATA[
 
-<mail:mail xmlns:mail="http://www.wyona.org/2002/mail">
+<mail:mail xmlns:mail="http://www.lenya.org/2002/mail">
   <mail:server>mail.yourhost.com</mail:server>
   <mail:from>you@yourhost.com</mail:from>
   <mail:to>friend@mail.com</mail:to>
@@ -74,9 +74,9 @@ In <code>tasks.xconf</code>, a typical mail task looks like follows:
 
   <task id="send-newsletter" class="org.lenya.cms.mail.MailTask">
     <label>Send Newsletter</label>
-    <parameter name="server" value="mail.wyona.net"/>
-    <parameter name="from" value="info@wyona.org"/>
-    <parameter name="to" value="newsletter-subscribers@wyona.org"/>
+    <parameter name="server" value="mail.lenya.net"/>
+    <parameter name="from" value="info@lenya.org"/>
+    <parameter name="to" value="newsletter-subscribers@lenya.org"/>
     <parameter name="uri" value="/authoring/newsletter/mail.xml"/>
   </task>
 

@@ -7,7 +7,7 @@
 	 <version>0.3</version> 
 	 <type>Overview document</type> 
 	 <authors>
-           <person name="Michael Wechner" email="michael.wechner@wyona.org"/> 
+           <person name="Michael Wechner" email="michael.wechner@lenya.org"/> 
            <person name="Marc von Wattenwyl" email="begomarc@freesurf.ch"/>
 	 </authors> 
   </header> 
@@ -50,9 +50,9 @@
        		<li>"Publish-Screen": generation of a publish-screen with a servepage, docs/lenya/publish/publish-screen.xsp and the stylesheet stylesheets/lenya/publish/main.xsl :
            	<code><![CDATA[
 		
-     <map:match pattern="authoring/wyona/publishScreen*">
+     <map:match pattern="authoring/lenya/publishScreen*">
        <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
-       <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
+       <map:transform src="../../stylesheets/cms/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>
 		
@@ -62,7 +62,7 @@
            	<code><![CDATA[
 		
      </map:match>
-     <map:match pattern="authoring/wyona/publish*">
+     <map:match pattern="authoring/lenya/publish*">
        <map:act type="publisher">
          <map:redirect-to uri="{parent_uri}" session="true"/>
        </map:act>
@@ -76,8 +76,8 @@
    
    		<section><title>Customizing the Publish Screen</title>
      		<p>
-		Copy the generic XSLT: ../../stylesheets/cms/Page/Publish/main.xsl " 
-		into the publication's stylesheet directory "stylesheets/cms/Page/Publish/....xsl ". 
+		Copy the generic XSLT: ../../stylesheets/cms/Publish/main.xsl " 
+		into the publication's stylesheet directory "stylesheets/cms/Publish/....xsl ". 
 		Don't forget to change the sitemap appropriately. 
      		</p>
    		</section>

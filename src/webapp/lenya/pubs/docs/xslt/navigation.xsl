@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:wyona.org="http://www.wyona.org/2002/wyona.org">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:lenya.org="http://www.lenya.org/2002/lenya.org">
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:template match="wyona.org:navigation">
+<xsl:template match="lenya.org:navigation">
     <font face="verdana" size="-1">
       <xsl:apply-templates>
         <xsl:with-param name="offset">&#160;&#160;</xsl:with-param>

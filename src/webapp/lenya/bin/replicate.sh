@@ -50,10 +50,10 @@ EXPORT_DIR_3=$PUBLICATION_DIR/forum/resources/publication/export
 PENDING_DIR_3=$EXPORT_DIR_3/pending/lenya/forum
 REPLICATION_DIR_3=$EXPORT_DIR_3/replication
 RU_3_1=michi
-RH_3_1=cvs.wyona.org
+RH_3_1=cvs.lenya.org
 RDOCS_3_1=/usr/local/apache/htdocs_oscom/news
 RU_3_2=michi
-RH_3_2=cvs.wyona.org
+RH_3_2=cvs.lenya.org
 RDOCS_3_2=/usr/local/apache/htdocs_oscom/news
 
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:include href="../../../../../../stylesheets/cms/Page/menu/root.xsl"/>
+<xsl:include href="../../../../../../stylesheets/cms/menu/root.xsl"/>
 
 <!-- Build the base page -->
 <xsl:include href="skeleton.xsl"/>
 
 <xsl:template match="span[@id = 'preview']">
     <!-- Insert article content here... -->
-    <xsl:apply-templates select="/wyona/article"/>
+    <xsl:apply-templates select="/lenya/article"/>
 </xsl:template>
 
 <xsl:param name="documentid"/>

@@ -2,7 +2,7 @@
 
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp">
 
-<rc:exception xmlns:rc="http://www.wyona.org/2002/rc">
+<rc:exception xmlns:rc="http://www.lenya.org/2002/rc">
   <xsp:logic>
     String filename=parameters.getParameter("filename","null");
   </xsp:logic>

@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- Only needed for authoring
-<xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
+<xsl:include href="../../../../../../../stylesheets/cms/root.xsl"/>
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates/>

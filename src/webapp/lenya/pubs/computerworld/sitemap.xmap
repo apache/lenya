@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: sitemap.xmap,v 1.4 2003/03/04 18:08:09 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.5 2003/03/04 19:45:09 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -27,7 +27,7 @@
 	<map:resources>
 		<map:resource name="login">
 			<map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
-			<map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
+			<map:transform src="../../stylesheets/cms/ac/login.xsl">
 				<map:parameter name="publication_name" value="Computerworld"/>
 				<map:parameter name="publication_id" value="computerworld"/>
 			</map:transform>
@@ -70,7 +70,7 @@
 		</map:pipeline>
 		<!-- misc -->
 		<map:pipeline>
-			<map:match pattern="wyona/css/**.css">
+			<map:match pattern="lenya/css/**.css">
 				<map:read mime-type="text/css" src="../../resources/cms/css/{1}.css"/>
 			</map:match>
 		</map:pipeline>
@@ -103,7 +103,7 @@
 					</map:match>
 					<map:match pattern="logout">
 						<map:generate type="serverpages" src="../../docs/cms/access-control/invalidate.xsp"/>
-						<map:transform src="../../stylesheets/cms/Page/ac/logout.xsl">
+						<map:transform src="../../stylesheets/cms/ac/logout.xsl">
 							<map:parameter name="publication_name" value="Computerworld"/>
 						</map:transform>
 						<map:serialize/>

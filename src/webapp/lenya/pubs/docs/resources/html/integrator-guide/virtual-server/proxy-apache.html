@@ -5,10 +5,10 @@
 
 <h2>DNS Configuration</h2>
 <p>
-<code>chlorine.wyona.org.         IN A 194.191.122.217</code><br>
-<code>calcium.wyona.org.         IN A 194.191.122.220</code><br>
-<code>ethz-mat.wyona.com.             IN CNAME        chlorine.wyona.com</code><br>
-<code>unipublic.wyona.com.             IN CNAME        calcium.wyona.com</code><br>
+<code>chlorine.lenya.org.         IN A 194.191.122.217</code><br>
+<code>calcium.lenya.org.         IN A 194.191.122.220</code><br>
+<code>ethz-mat.lenya.com.             IN CNAME        chlorine.lenya.com</code><br>
+<code>unipublic.lenya.com.             IN CNAME        calcium.lenya.com</code><br>
 </p>
 
 <h2>Build Apache with mod_proxy (or plus mod_rewrite)</h2>
@@ -51,16 +51,16 @@ NameVirtualHost 194.191.122.220
 # The first VirtualHost section is used for requests without a known
 # server name.
 &lt;VirtualHost 194.191.122.220&gt;
-  ServerName calcium.wyona.org
+  ServerName calcium.lenya.org
   DocumentRoot /usr/local/apache/htdocs
 &lt;/VirtualHost&gt;
 &lt;VirtualHost 194.191.122.217&gt;
-  ServerName ethz-mat.wyona.org
+  ServerName ethz-mat.lenya.org
   ProxyPass / http://194.191.122.220:8080/lenya/ethz-mat/
   ProxyPassReverse / http://194.191.122.220:8080/lenya/ethz-mat/
 &lt;/VirtualHost&gt;
 &lt;VirtualHost 194.191.122.220&gt;
-  ServerName unipublic.wyona.org
+  ServerName unipublic.lenya.org
   ProxyPass / http://194.191.122.220:8080/lenya/oscom/live/index.html
   ProxyPassReverse / http://194.191.122.220:8080/lenya/oscom/live/index.html
 &lt;/VirtualHost&gt;
