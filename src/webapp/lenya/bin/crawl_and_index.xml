@@ -34,6 +34,7 @@
     <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/log4j-1.2.3.jar"/>
     <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/excalibur-io-1.1.jar"/>
     <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/lucene-1.3-dev1.jar"/>
+    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/websphinx.jar"/>
 <!--
     <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/avalon-framework-4.1.3.jar"/>
 -->
@@ -43,25 +44,16 @@
 <target name="crawl" description="Crawl and dump hypertext documents" depends="init">
   <echo>INFO: Crawl and dump hypertext documents(${crawler.xconf})</echo>
 
-  <java classname="org.lenya.lucene.Main">
-    <arg value="http://www.wyona.org/index.html"/>
-    <classpath refid="class.path"/>
-  </java>
-
-<!--
-  <java classname="org.lenya.search.crawler.CrawlerEnvironment">
+  <java classname="org.lenya.search.crawler.CrawlerConfiguration">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
--->
 
 
-<!--
   <java classname="org.lenya.search.crawler.IterativeHTMLCrawler">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
--->
 </target>
 
 

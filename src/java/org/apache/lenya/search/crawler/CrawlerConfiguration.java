@@ -1,9 +1,9 @@
 /*
- * $Id: IndexConfiguration.java,v 1.2 2003/03/18 15:06:22 michi Exp $
+ * $Id: CrawlerConfiguration.java,v 1.1 2003/03/18 15:06:22 michi Exp $
  * <License>
  * The Apache Software License
  *
- * Copyright (c) 2003 lenya. All rights reserved.
+ * Copyright (c) 2002 lenya. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.lenya.lucene;
+package org.lenya.search.crawler;
 
 import org.lenya.xml.DOMParserFactory;
 import org.lenya.xml.DOMUtil;
@@ -62,19 +62,22 @@ import java.io.File;
  *
  * @author Michael Wechner
  */
-public class IndexConfiguration {
-    static Category log = Category.getInstance(IndexConfiguration.class);
+public class CrawlerConfiguration {
+    static Category log = Category.getInstance(CrawlerConfiguration.class);
+
     private String configurationFilePath;
-    private String update_index_type;
-    private String index_dir;
+    private String base_url;
+    private String user_agent;
+    private String scope_url;
+    private String uri_list;
     private String htdocs_dump_dir;
 
     /**
-     * Creates a new IndexConfiguration object.
+     * Creates a new CrawlerConfiguration object.
      *
      * @param configurationFilePath DOCUMENT ME!
      */
-    public IndexConfiguration(String configurationFilePath) {
+    public CrawlerConfiguration(String configurationFilePath) {
         this.configurationFilePath = configurationFilePath;
 
         File configurationFile = new File(configurationFilePath);
@@ -93,25 +96,51 @@ public class IndexConfiguration {
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: org.lenya.lucene.IndexConfiguration lucene.xconf");
+        if (args.length == 0) {
+            System.err.println(
+                "Usage: org.lenya.search.crawler.CrawlerConfiguration crawler.xconf [-name <name>]");
 
             return;
         }
 
-        IndexConfiguration ic = new IndexConfiguration(args[0]);
+        CrawlerConfiguration ce = new CrawlerConfiguration(args[0]);
         String parameter;
 
-        parameter = ic.getUpdateIndexType();
-        System.out.println(parameter);
+        String name = null;
 
-        parameter = ic.getIndexDir();
-        System.out.println(parameter);
-        System.out.println(ic.resolvePath(parameter));
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("-name")) {
+                if ((i + 1) < args.length) {
+                    name = args[i + 1];
+                }
+            }
+        }
 
-        parameter = ic.getHTDocsDumpDir();
-        System.out.println(parameter);
-        System.out.println(ic.resolvePath(parameter));
+        if (name != null) {
+            if (name.equals("htdocs-dump-dir")) {
+                parameter = ce.getHTDocsDumpDir();
+                System.out.println(ce.resolvePath(parameter));
+            } else {
+                System.out.println("No such element: " + name);
+            }
+        } else {
+            parameter = ce.getBaseURL();
+            System.out.println(parameter);
+
+            parameter = ce.getScopeURL();
+            System.out.println(parameter);
+
+            parameter = ce.getUserAgent();
+            System.out.println(parameter);
+
+            parameter = ce.getURIList();
+            System.out.println(parameter);
+            System.out.println(ce.resolvePath(parameter));
+
+            parameter = ce.getHTDocsDumpDir();
+            System.out.println(parameter);
+            System.out.println(ce.resolvePath(parameter));
+        }
     }
 
     /**
@@ -123,9 +152,18 @@ public class IndexConfiguration {
      */
     public void configure(Element root) throws Exception {
         DOMUtil du = new DOMUtil();
-        update_index_type = du.getAttributeValue(root, new XPath("update-index/@type"));
-        index_dir = du.getAttributeValue(root, new XPath("index-dir/@src"));
+
+        base_url = du.getAttributeValue(root, new XPath("base-url/@href"));
+        scope_url = du.getAttributeValue(root, new XPath("scope-url/@href"));
+        user_agent = du.getElementValue(root, new XPath("user-agent"));
+        uri_list = du.getAttributeValue(root, new XPath("uri-list/@src"));
         htdocs_dump_dir = du.getAttributeValue(root, new XPath("htdocs-dump-dir/@src"));
+/*
+        scope_url = configuration.getChild("scope-url").getAttribute("href");
+        user_agent = configuration.getChild("user-agent").getValue(null);
+        uri_list = configuration.getChild("uri-list").getAttribute("src");
+        htdocs_dump_dir = configuration.getChild("htdocs-dump-dir").getAttribute("src");
+*/
     }
 
     /**
@@ -133,10 +171,10 @@ public class IndexConfiguration {
      *
      * @return DOCUMENT ME!
      */
-    public String getUpdateIndexType() {
-        log.debug(".getUpdateIndexType(): " + update_index_type);
+    public String getBaseURL() {
+        log.debug(".getBaseURL(): " + base_url);
 
-        return update_index_type;
+        return base_url;
     }
 
     /**
@@ -144,10 +182,32 @@ public class IndexConfiguration {
      *
      * @return DOCUMENT ME!
      */
-    public String getIndexDir() {
-        log.debug(".getIndexDir(): " + index_dir);
+    public String getScopeURL() {
+        log.debug(".getScopeURL(): " + scope_url);
 
-        return index_dir;
+        return scope_url;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getUserAgent() {
+        log.debug(".getUserAgent(): " + user_agent);
+
+        return user_agent;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getURIList() {
+        log.debug(".getURIList(): " + uri_list);
+
+        return uri_list;
     }
 
     /**
