@@ -23,6 +23,7 @@
   <!-- Dummy arguments -->
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/content/crawler.xconf"/>
   <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
+  <property name="debug" value="false"/>
   <!-- /Dummy arguments -->
 
   <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
@@ -67,17 +68,18 @@
     <classpath refid="class.path"/>
   </java>
 
-<!--
   <java classname="org.lenya.lucene.index.Index">
     <arg value="${lucene.xconf}"/>
+    <arg value="${debug}"/>
     <classpath refid="class.path"/>
   </java>
--->
 
+<!--
   <java classname="org.lenya.lucene.IndexHTML">
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
+-->
 </target>
 
 
