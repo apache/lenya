@@ -34,17 +34,11 @@ public class SiteUsecase extends DocumentUsecase {
     protected WorkflowInstance instance = null;
     protected static final String AREA = "area";
     protected static final String DOCUMENTID = "documentid";
+    protected static final String DOCUMENTNAME = "documentname";
     protected static final String LANGUAGEEXISTS = "languageexists";
     protected static final String STATE = "state";
     protected static final String ISLIVE = "is_live";
 
-    /**
-     * Ctor.
-     */
-    public SiteUsecase() {
-        super();
-    }
-    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
     /*TODO make common parameters available to site usecases: area, documentid, languageexists etc
@@ -70,6 +64,7 @@ public class SiteUsecase extends DocumentUsecase {
 
         setParameter(AREA, this.doc.getArea());
         setParameter(DOCUMENTID, this.doc.getId());
+        setParameter(DOCUMENTNAME, this.doc.getName());
         setParameter(LANGUAGEEXISTS, "true");
     }
 

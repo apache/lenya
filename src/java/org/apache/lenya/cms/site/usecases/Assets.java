@@ -16,28 +16,28 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.servlet.multipart.Part;
 
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.xml.DocumentHelper;
 
 /**
- * Usecase to Assets a resource.
+ * Usecase to add Assets to a resource.
  * 
  * @version $Id: Assets.java 123984 2005-01-03 15:02:18Z andreas $
  */
 public class Assets extends SiteUsecase {
 	
 	private ResourcesManager resourcesManager = null;
-
-	/**
-     * Ctor.
-     */
-    public Assets() {
-        super();
-    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
@@ -68,6 +68,39 @@ public class Assets extends SiteUsecase {
     }
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+        File[] resources = this.resourcesManager.getResources();
+        
+        if (resources != null) {
+            Map[] assets = new Map[resources.length];
+
+            for(int i = 0; i < resources.length; i++) {    
+                Map asset = new HashMap();
+                String title = "";
+                String format = "";
+                org.w3c.dom.Document metaDoc;
+                try {
+                    metaDoc = DocumentHelper.readDocument(this.resourcesManager.getMetaFile(resources[i]));
+                    title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
+                    format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format").item(0).getChildNodes().item(0).getNodeValue();
+                } catch(final Exception e) { 
+                    throw new RuntimeException(e);
+                }
+                asset.put("source", resources[i].getName());
+                asset.put("title", title);
+                asset.put("date", DateFormat.getDateInstance().format(new Date(resources[i].lastModified())));
+                asset.put("format", format);
+                asset.put("extent", new Long(resources[i].length()/1024));
+                assets[i] = asset;
+            } 
+            setParameter("assets", assets);
+        }
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
@@ -83,15 +116,9 @@ public class Assets extends SiteUsecase {
         metadata.put("rights",rights);
         try {
         	this.resourcesManager.addResource(file, metadata);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             addErrorMessage("The resource could not be added.");
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
-     */
-    public void setParameter(String name, Object value) {
-        super.setParameter(name, value);
-    }
 }
