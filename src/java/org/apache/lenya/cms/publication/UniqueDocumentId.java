@@ -1,5 +1,5 @@
 /*
-$Id: UniqueDocumentId.java,v 1.8 2003/09/23 13:47:42 edith Exp $
+$Id: UniqueDocumentId.java,v 1.9 2003/09/29 10:26:17 egli Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: UniqueDocumentId.java,v 1.8 2003/09/23 13:47:42 edith Exp $
 */
 package org.apache.lenya.cms.publication;
 
-import org.apache.log4j.Category;
-
 /**
  * class to compute an unique document id for a document, if there is
  * already a node in the sitetree for a document with this id. It will
@@ -65,56 +63,55 @@ import org.apache.log4j.Category;
  *
  */
 public class UniqueDocumentId {
-	private static Category log = Category.getInstance(UniqueDocumentId.class);
 
-	/** compute an unique document id
-	 * @param publication The publication the document belongs to.
-	 * @param area The area the document belongs to.
-	 * @param documentid The documentid .
-	 * @return the unique documentid
-	 */
-	public String computeUniqueDocumentId(
-		Publication publication,
-		String area,
-		String documentid) {
-		SiteTree tree;
-		try {
-			tree = publication.getSiteTree(area);
-			SiteTreeNode node = tree.getNode(documentid);
-			String suffix = null;
-			int version = 0;
-			String idwithoutsuffix = null;
+    /** compute an unique document id
+     * @param publication The publication the document belongs to.
+     * @param area The area the document belongs to.
+     * @param documentid The documentid .
+     * @return the unique documentid
+     */
+    public String computeUniqueDocumentId(
+        Publication publication,
+        String area,
+        String documentid) {
+        SiteTree tree;
+        try {
+            tree = publication.getSiteTree(area);
+            SiteTreeNode node = tree.getNode(documentid);
+            String suffix = null;
+            int version = 0;
+            String idwithoutsuffix = null;
 
-			if (node != null) {
-				int n = documentid.lastIndexOf("/");
-				String lastToken = "";
-				String substring = documentid;
-				if ((n < documentid.length()) && (n > 0)) {
-					lastToken = documentid.substring(n);
-					substring = documentid.substring(0, n);
-				}
+            if (node != null) {
+                int n = documentid.lastIndexOf("/");
+                String lastToken = "";
+                String substring = documentid;
+                if ((n < documentid.length()) && (n > 0)) {
+                    lastToken = documentid.substring(n);
+                    substring = documentid.substring(0, n);
+                }
 
-				int l = lastToken.length();
-				int index = lastToken.lastIndexOf("-");
-				if ((index < l) & (index > 0)) {
-					suffix = lastToken.substring(index + 1);
-					idwithoutsuffix = substring + lastToken.substring(0, index);
-					version = Integer.parseInt(suffix);
-				} else {
-					idwithoutsuffix = substring + lastToken;
-				}
+                int l = lastToken.length();
+                int index = lastToken.lastIndexOf("-");
+                if ((index < l) & (index > 0)) {
+                    suffix = lastToken.substring(index + 1);
+                    idwithoutsuffix = substring + lastToken.substring(0, index);
+                    version = Integer.parseInt(suffix);
+                } else {
+                    idwithoutsuffix = substring + lastToken;
+                }
 
-				while (node != null) {
-					version = version + 1;
-					suffix = (new Integer(version)).toString();
-					documentid = idwithoutsuffix + "-" + suffix;
-					node = tree.getNode(documentid);
-				}
-			}
-		} catch (SiteTreeException e) {
-			e.printStackTrace();
-		}
+                while (node != null) {
+                    version = version + 1;
+                    suffix = (new Integer(version)).toString();
+                    documentid = idwithoutsuffix + "-" + suffix;
+                    node = tree.getNode(documentid);
+                }
+            }
+        } catch (SiteTreeException e) {
+            e.printStackTrace();
+        }
 
-		return documentid;
-	}
+        return documentid;
+    }
 }
