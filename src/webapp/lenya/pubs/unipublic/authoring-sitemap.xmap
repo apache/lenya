@@ -353,7 +353,7 @@
 
       <map:match pattern="dossiers/*/*/index.xml">
         <map:aggregate element="wyona">
-          <map:part src="cocoon:/menus/{1}/{2}/dossier.xml"/>
+          <map:part src="cocoon:/menus/{1}/{2}/dossiers.xml"/>
           <map:part src="cocoon:/dossiers/{1}/{2}/content.xml" element="cmsbody"/>
         </map:aggregate>
         <map:serialize type="xml"/>
@@ -390,7 +390,9 @@
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
         </map:generate>
-        <map:transform type="xlink"/>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/authoring/section.xsp"/>
+        </map:transform>
         <map:transform src="stylesheets/publication/Page/Section/Authoring/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
