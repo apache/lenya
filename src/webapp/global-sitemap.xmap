@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.62 2004/04/25 14:47:20 gregor Exp $ -->
+<!-- $Id: global-sitemap.xmap,v 1.63 2004/04/28 07:44:06 andreas Exp $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -769,14 +769,6 @@
         </map:act>
       </map:match>
       
-      <!-- lenya/{file} -->
-      <map:match pattern="lenya/**">
-        <map:act type="resource-exists">
-          <map:parameter name="url" value="lenya/resources/{1}"/>
-          <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
-        </map:act>
-      </map:match>
-
       <!-- Admin Area -->
         <map:match pattern="*/admin/**">
           <map:mount uri-prefix="{1}/admin" src="lenya/admin.xmap" check-reload="true" reload-method="synchron"/>

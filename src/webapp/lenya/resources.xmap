@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: resources.xmap,v 1.11 2004/04/14 10:50:23 egli Exp $ -->
+<!-- $Id: resources.xmap,v 1.12 2004/04/28 07:43:27 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:components/>
@@ -23,28 +23,6 @@
   <map:pipelines>
     <map:pipeline>
       
-      <!-- Lenya Core -->
-
-          <!-- matches lenya/css/**.css -->
-          <map:match pattern="lenya/css/**.css">
-            <map:read src="lenya/resources/css/{3}.css" mime-type="text/css" />
-          </map:match>
-
-          <!-- matches lenya/javascript/**.js -->
-          <map:match pattern="lenya/javascript/**.js">
-            <map:read src="lenya/resources/javascript/{3}.js" mime-type="application/javascript" />
-          </map:match>
-
-          <!-- matches lenya/images/**.jpg -->
-          <map:match pattern="lenya/images/**.jpg">
-            <map:read src="lenya/resources/images/{3}.jpg" mime-type="image/jpeg" />
-          </map:match>
-
-          <!-- matches lenya/**.ext -->
-          <map:match pattern="lenya/images/**.*">
-            <map:read src="lenya/resources/images/{3}.{4}" mime-type="image/{4}" />
-          </map:match>
-
       <!-- Lenya Publications -->      
           <!-- matches pub-id/area/css/*.css -->
           <map:match pattern="*/*/css/*.css">
