@@ -1,5 +1,5 @@
 /*
- * $Id: CopyJavaSourcesTask.java,v 1.9 2003/05/27 14:48:10 egli Exp $
+ * $Id: CopyJavaSourcesTask.java,v 1.10 2003/05/30 20:36:31 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,7 +69,7 @@ public class CopyJavaSourcesTask extends Task {
         int numberOfFilesCopied = 0;
         TwoTuple twoTuple = new TwoTuple(numberOfDirectoriesCreated, numberOfFilesCopied);
 
-        File absoluteBuildDir = new File(project.getBaseDir(), Project.translatePath(buildDir));
+        File absoluteBuildDir = new File(getProject().getBaseDir(), Project.translatePath(buildDir));
         //System.out.println("CopyJavaSourcesTask.execute(): " + absoluteBuildDir);
 
         //System.out.println("CopyJavaSourcesTask.execute(): " + pubsRootDirs);
