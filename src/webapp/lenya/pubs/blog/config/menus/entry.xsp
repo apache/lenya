@@ -24,6 +24,7 @@
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
 >
 
@@ -51,12 +52,12 @@
   <menus>
     <menu i18n:attr="name" name="File">
       <block>
-        <item uc:usecase="edit" uc:step="open" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
-        <item href="index-bxe.html">Edit&#160;with&#160;BXE</item>
-        <item uc:usecase="1formedit" uc:step="open">Edit&#160;with&#160;one&#160;Form</item>
+        <item wf:event="edit" uc:usecase="edit" uc:step="open" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
+        <item wf:event="edit" href="index-bxe.html">Edit&#160;with&#160;BXE</item>
+        <item wf:event="edit" uc:usecase="1formedit" uc:step="open">Edit&#160;with&#160;one&#160;Form</item>
       </block>
       <block>
-        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute><i18n:text>Publish</i18n:text></item>
+        <item wf:event="publish" uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute><i18n:text>Publish</i18n:text></item>
       </block>
       <!--
       <block>
@@ -64,7 +65,7 @@
       </block>
       -->
       <block>
-        <item uc:usecase="ac.logout"><i18n:text>Logout</i18n:text></item>
+        <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
 

@@ -15,12 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: doctypes.xconf,v 1.2 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id$ -->
 
 <doctypes>
   <doc type="entry">
     <creator src="org.apache.lenya.cms.authoring.NewBlogEntryCreator">
       <sample-name>entry.xml</sample-name>
     </creator>
+    <workflow src="workflow.xml"/>
   </doc>
 </doctypes>

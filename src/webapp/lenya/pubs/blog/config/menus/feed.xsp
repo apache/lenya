@@ -25,6 +25,7 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
 >
  
 <menu>
@@ -47,11 +48,11 @@
         <item uc:usecase="site.create">Add&#160;new&#160;Entry</item>
       </block>
       <block>
-        <item uc:usecase="edit" uc:step="open" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
-        <item uc:usecase="publish" uc:step="showscreen" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html"><i18n:text>Publish Sidebar</i18n:text></item>
+        <item wf:event="edit" uc:usecase="edit" uc:step="open" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
+        <item wf:event="publish" uc:usecase="publish" uc:step="showscreen" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html"><i18n:text>Publish Sidebar</i18n:text></item>
       </block>
       <block>
-        <item uc:usecase="ac.logout"><i18n:text>Logout</i18n:text></item>
+          <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
  

@@ -19,7 +19,7 @@
 
 package org.apache.lenya.cms.authoring;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import org.apache.avalon.framework.configuration.Configuration;
 
@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Date;
 
 public class NewBlogEntryCreator extends DefaultBranchCreator {
-    private static Category log = Category.getInstance(NewBlogEntryCreator.class);
+    private static Logger log = Logger.getLogger(NewBlogEntryCreator.class);
 
     private String year;
     private String month;
