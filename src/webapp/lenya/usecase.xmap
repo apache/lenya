@@ -164,14 +164,15 @@
           
           <!-- show scheduler screen -->
           <map:match pattern="showscreen" type="step">
-            <map:generate src="cocoon://scheduler/publication/{../../1}"/>
-            <map:serialize type="xml"/>
-            <map:transform src="xslt/scheduler/scheduler-page.xsl">
-              <map:parameter name="context-prefix" value="{request:contextPath}"/>
+            <map:call resource="cms-screen-xml">
               <map:parameter name="publication-id" value="{../../1}"/>
-              <map:parameter name="area" value="{../../2}"/>
-              <map:parameter name="document-url" value="/{../../3}"/>
-            </map:transform>
+              <map:parameter name="serverpage" value="scheduler/screen.xsp"/>
+              <map:parameter name="stylesheet" value="scheduler/screen.xsl"/>
+            </map:call>
+            <!--
+            <map:transform src="cocoon:/notification/{../../1}/publish.xsl"/>
+            -->
+            <map:transform src="cocoon://scheduler/{../../1}/{page-envelope:area}/{../../3}.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
