@@ -30,7 +30,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="snapshot" depends="prepare-dist" description="Build a snapshot binary distribution tar ball">
+  <target name="snapshot" depends="prepare-dist" description="Build a snapshot binary distribution tar ball (the same as 'dist' except for the filename)">
 
     <copy todir="${snapshot.bin.dir}">
       <fileset dir="${dist.root}/${fullname}"/>
@@ -84,7 +84,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="snapshot-src" depends="prepare-dist-src" description="Builds a snapshot tar ball containing the sources for developers">
+  <target name="snapshot-src" depends="prepare-dist-src" description="Builds a snapshot tar ball containing the sources for developers (the same as 'dist-src' except for the filename)">
 
     <copy todir="${snapshot.src.dir}">
       <fileset dir="${dist.src.dir}"/>
