@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml2xhtml.xsl,v 1.12 2004/08/27 07:24:17 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -90,10 +90,10 @@
               <xsl:value-of select="$nodeid"/>/<xsl:value-of select="@data"/>
             </xsl:attribute>
             <xsl:attribute name="alt">
-              <!-- the overwritten title (stored in @name) has precedence over dc:title -->
+              <!-- the overwritten title (stored in @title) has precedence over dc:title -->
               <xsl:choose>
-                <xsl:when test="@name != ''">
-                  <xsl:value-of select="@name"/>
+                <xsl:when test="@title != ''">
+                  <xsl:value-of select="@title"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="dc:metadata/dc:title"/>                    
