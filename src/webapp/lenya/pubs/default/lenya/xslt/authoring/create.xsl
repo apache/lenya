@@ -146,7 +146,6 @@ function validateForm(theForm)
 	<li><i18n:text key="exception.cause.createdoc.whitespace-in-id"/></li>
 	<li><i18n:text key="exception.cause.createdoc.id-in-use"/></li>
       </ol>
-      <i18n:text>Exception handling will be improved in the near future</i18n:text>
     </p>
   </xsl:template>
   
