@@ -14,7 +14,7 @@
 <!--
 <xsl:variable name="searchURL">/search/go</xsl:variable>
 -->
-<xsl:variable name="searchURL">/lenya/oscom/osearch-live/lucene</xsl:variable>
+<xsl:variable name="searchURL">/lenya/oscom/search-live/lucene</xsl:variable>
 
 <xsl:template match="oscom">
 <html>

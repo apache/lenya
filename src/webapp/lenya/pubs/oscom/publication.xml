@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.14 2003/11/06 09:51:04 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.15 2003/11/10 17:19:06 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:name>OSCOM</lenya:name>
@@ -78,8 +78,8 @@ This publication implements the CMS matrix used at <a href="http://www.oscom.org
     DocumentRoot /usr/local/apache/htdocs_oscom
     ProxyPass          /matrix/ http://oscom.wyona.org:18080/lenya/oscom/matrix/
     ProxyPassReverse   /matrix/ http://oscom.wyona.org:18080/lenya/oscom/matrix/
-    ProxyPass          /search/go http://oscom.wyona.org:18080/lenya/oscom/osearch-live/lucene
-    ProxyPassReverse   /search/go http://oscom.wyona.org:18080/lenya/oscom/osearch-live/lucene
+    ProxyPass          /search/go http://oscom.wyona.org:18080/lenya/oscom/search-live/lucene
+    ProxyPassReverse   /search/go http://oscom.wyona.org:18080/lenya/oscom/search-live/lucene
     ErrorLog logs/oscom.wyona.org-error_log
     CustomLog logs/oscom.wyona.org-access_log common
 &lt;/VirtualHost&gt;
