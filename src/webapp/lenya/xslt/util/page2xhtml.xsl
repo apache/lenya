@@ -15,13 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xhtml.xsl,v 1.20 2004/04/17 17:14:05 gregor Exp $ -->
+<!-- $Id: page2xhtml.xsl,v 1.21 2004/04/29 09:14:41 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
     exclude-result-prefixes="page xhtml i18n"
     >
 

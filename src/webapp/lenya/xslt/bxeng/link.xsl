@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.8 2004/04/19 14:49:20 gregor Exp $
+ $Id: link.xsl,v 1.9 2004/04/29 09:10:55 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -24,6 +24,8 @@
     xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+    xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"     
     >
 
 <xsl:param name="contextprefix"/>
