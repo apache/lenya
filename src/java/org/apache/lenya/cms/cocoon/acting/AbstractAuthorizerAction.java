@@ -29,7 +29,7 @@ import org.wyona.util.Stack;
 /**
  * @author Michael Wechner
  * @created 2001.11.18
- * @version $Id: AbstractAuthorizerAction.java,v 1.2 2002/01/22 16:59:18 giacomo Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.3 2002/06/21 23:40:01 michicms Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction implements Configurable {
     REProgram [] public_matchers;
@@ -111,7 +111,13 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
             }
         }
 
-        session.setAttribute("protected_destination",request_uri);
+        String query_string=req.getQueryString();
+        if(query_string != null){
+          session.setAttribute("protected_destination",request_uri+"?"+req.getQueryString());
+          }
+        else{
+          session.setAttribute("protected_destination",request_uri);
+          }
 
         HashMap actionMap=new HashMap();
         if(authorize(req,actionMap)){
