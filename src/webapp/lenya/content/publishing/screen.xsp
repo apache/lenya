@@ -5,7 +5,7 @@
        xmlns:xsp="http://apache.org/xsp"
        xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
        xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
-       xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
+       xmlns:xsp-scheduler="http://apache.org/cocoon/lenya/xsp/scheduler/1.0"
        xmlns:xsp-request="http://apache.org/xsp/request/2.0"
        >
 
@@ -23,18 +23,7 @@
     <usecase:task-id>publish</usecase:task-id>
     
     <!-- add date for scheduler -->
-    <xsp:logic>
-      java.util.GregorianCalendar calendar = new java.util.GregorianCalendar();
-    </xsp:logic>
-    
-    <sch:current-date>
-      <sch:year><xsp:expr>calendar.get(java.util.Calendar.YEAR)</xsp:expr></sch:year>
-      <sch:month><xsp:expr>calendar.get(java.util.Calendar.MONTH) + 1</xsp:expr></sch:month>
-      <sch:day><xsp:expr>calendar.get(java.util.Calendar.DAY_OF_MONTH)</xsp:expr></sch:day>
-      <sch:hour><xsp:expr>calendar.get(java.util.Calendar.HOUR_OF_DAY)</xsp:expr></sch:hour>
-      <sch:minute><xsp:expr>calendar.get(java.util.Calendar.MINUTE)</xsp:expr></sch:minute>
-      <sch:second><xsp:expr>calendar.get(java.util.Calendar.SECOND)</xsp:expr></sch:second>
-    </sch:current-date>
+    <xsp-scheduler:current-date/>
     
   </usecase:publish>
   
