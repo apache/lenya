@@ -43,7 +43,7 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
       return null;
       }
     if(authenticate(req,new HashMap())){
-      getLogger().error("Authentication succeeded");
+      getLogger().info(".act(): Authentication succeeded");
       HashMap actionMap=new HashMap();
       actionMap.put("protected_destination",session.getAttribute("protected_destination"));
       return actionMap;

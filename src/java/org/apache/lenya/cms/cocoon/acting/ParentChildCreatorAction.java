@@ -61,8 +61,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
     org.apache.cocoon.environment.Source input_source=resolver.resolve("");
     String sitemapParentPath=input_source.getSystemId();
-    sitemapParentPath=sitemapParentPath.substring(5); // Remove "file:" protocoll
-    getLogger().debug("PARENT PATH OF SITEMAP: "+sitemapParentPath);
+    sitemapParentPath=sitemapParentPath.substring(5); // Remove "file:" protocol
+
+    getLogger().debug(".act(): PARENT PATH OF SITEMAP: "+sitemapParentPath);
 
     // Get request object
     Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
@@ -106,17 +107,22 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     Document doctypesDoc=new SAXReader().read("file:"+absoluteDoctypesPath+"doctypes.xconf");
     Attribute creator_src=(Attribute)doctypesDoc.selectSingleNode("/doctypes/doc[@type='"+doctype+"']/creator/@src");
     if(creator_src != null){
-      //getLogger().debug("CREATOR 1: "+creator_src.getName()+" "+creator_src.getPath()+" "+creator_src.getValue());
+      getLogger().info(".act(): Creator found for \""+doctype+"\": "+creator_src.getName()+" "+creator_src.getPath()+" "+creator_src.getValue());
       creator=(AbstractParentChildCreator)Class.forName(creator_src.getValue()).newInstance();
       }
     else{
-      //getLogger().debug("CREATOR 2: DefaultCreator");
+      getLogger().warn(".act(): No creator found for \""+doctype+"\". DefaultParentChildreator will be taken.");
       creator=(AbstractParentChildCreator)Class.forName("org.wyona.cms.authoring.DefaultParentChildCreator").newInstance();
       }
-    getLogger().debug("CREATOR : "+creator.getClass().getName());   
-    // evaluate doctype.xconf 
+    getLogger().debug(".act(): Creator : "+creator.getClass().getName());   
+
+
+    // Init creator
     org.dom4j.Node creatorNode=doctypesDoc.selectSingleNode("/doctypes/doc[@type='"+doctype+"']/creator");
     creator.init(creatorNode);
+
+
+
     // Transaction should actually be started here!
     // Read tree
     String treefilename=sitemapParentPath+treeAuthoringPath;
@@ -179,7 +185,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     // Redirect to referer
     if(7 > 1){
       String parent_uri=(String)session.getAttribute("org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
-      getLogger().error("Child added");
+      getLogger().info(".act(): Child added");
       HashMap actionMap=new HashMap();
       actionMap.put("parent_uri",parent_uri);
       session.removeAttribute("org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");

@@ -129,7 +129,7 @@ public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticato
             imlURLString=imlURLString+context;
         }
         imlURLString=imlURLString+"/"+passwd+username+".iml";
-        getLogger().error(imlURLString);
+        getLogger().debug(".getIdentity(): "+imlURLString);
         return db.parse(new URL(imlURLString).openStream());
     }
 }
