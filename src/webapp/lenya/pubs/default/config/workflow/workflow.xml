@@ -13,35 +13,32 @@
     xsi:schemaLocation="http://apache.org/cocoon/lenya/workflow/1.0
         ../../../resources/entities/workflow/workflow.xsd">
 
-  <state id="modified" initial="yes"/>
-  <state id="pending"/>
-  <state id="published"/>
+  <state id="redaktion" initial="true"/>
+  <state id="review"/>
+  <state id="live"/>
   
-  <transition source="modified" destination="pending">
+  <variable name="is-live" value="false"/>
+  
+  <transition source="redaktion" destination="review">
     <event id="publish"/>
-    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">editor</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
   </transition>
         
-  <transition source="pending" destination="published">
+  <transition source="review" destination="live">
     <event id="approve"/>
-    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">manager</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">manager</condition>
+    <assign variable="is-live" value="true"/>
     <action id="publish"/>
   </transition>
         
-  <transition source="pending" destination="modified">
+  <transition source="review" destination="redaktion">
     <event id="disapprove"/>
-    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">manager</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">manager</condition>
   </transition>
         
-  <transition source="published" destination="modified">
+  <transition source="live" destination="redaktion">
     <event id="edit"/>
-    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">editor</condition>
-    <action id="save"/>
-  </transition>
-        
-  <transition source="pending" destination="modified">
-    <event id="edit"/>
-    <condition class="org.apache.lenya.cms.workflow.impl.RoleCondition">editor</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">editor</condition>
     <action id="save"/>
   </transition>
         
