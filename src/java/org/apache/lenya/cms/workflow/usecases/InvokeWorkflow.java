@@ -24,7 +24,16 @@ import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
  * Invoke a workflow event on the current document. The event is obtained from
- * the <code>lenya.event</code> request parameter.
+ * the configuration in <code>cocoon.xconf</code>:
+ * <code>
+ * <pre>
+ *   &lt;component-instance name="default/workflow.submit"
+ *                       logger="lenya.usecases.workflow"
+ *                       class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"&gt;
+ *     &lt;event id="submit"/&gt;
+ *   &lt;/component-instance&gt;
+ * </pre>
+ * </code>
  * 
  * @version $Id:$
  */
