@@ -22,5 +22,6 @@ public interface Publisher {
         String treeAuthoringPath,
         String livePath,
         String treeLivePath,
+        String replicationPath,
         String[] sources) throws Exception;
 }

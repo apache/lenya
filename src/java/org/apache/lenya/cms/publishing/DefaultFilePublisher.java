@@ -18,9 +18,11 @@ import org.wyona.cms.task.Task;
  * <code><strong>tree-authoring-path</strong></code>: the location of the <code>tree.xml</code> file<br/>
  * <code><strong>live-path</strong></code>: the live path<br/>
  * <code><strong>tree-live-path</strong></code>: the location of the <code>tree.xml</code> file<br/>
+ * <code><strong>replication-path</strong></code>: the replication path, where sources are waiting for replication<br/>
  * <code><strong>sources</strong></code>: a comma-separated list of files to publish<br/>
  *
- * @author <a href="mailto:andreas.hartmann@wyona.com">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
+ * @author <a href="mailto:michael.wechner@wyona.org">Michael Wechner</a>
  */
 public class DefaultFilePublisher
     extends AbstractFilePublisher {
@@ -28,17 +30,18 @@ public class DefaultFilePublisher
     static Category log = Category.getInstance(DefaultFilePublisher.class);
     public static final String PARAMETER_SOURCES = "sources";
 
-    /**
-     * Default implementation of <code>publish</code> which simply
-     * copies the files from the absoluteAuthoringPath to the
-     * absoluteLivePath.
-     */
+/**
+ * Default implementation of <code>publish</code> which simply
+ * copies the files from the absoluteAuthoringPath to the
+ * absoluteLivePath.
+ */
     public void publish(
         String publicationPath,
         String authoringPath,
         String treeAuthoringPath,
         String livePath,
         String treeLivePath,
+        String replicationPath,
         String[] sources) {
 
 	log.debug("PUBLICATION: " + publicationPath);
@@ -49,15 +52,19 @@ public class DefaultFilePublisher
 	String absoluteTreeAuthoringPath = publicationPath + treeAuthoringPath;
 	String absoluteLivePath = publicationPath + livePath;
 	String absoluteTreeLivePath = publicationPath + treeLivePath;
+	String absoluteReplicationPath = publicationPath + replicationPath;
 
         log.debug("DefaultFilePublisher.publish() has been called.");
 
         for (int index=0; index < sources.length; index++) {
 	    File sourceFile = new File(absoluteAuthoringPath + sources[index]);
 	    File destinationFile = new File(absoluteLivePath + sources[index]);
+	    File destinationReplicationFile = new File(absoluteReplicationPath + sources[index]);
 	    try {
 		copyFile(sourceFile, destinationFile);
 		log.debug("Document published: " + sourceFile + " " + destinationFile);
+		copyFile(sourceFile, destinationReplicationFile);
+		log.debug("Document ready for replication: " + sourceFile + " " + destinationReplicationFile);
 	    } catch (FileNotFoundException fnfe) {
 		log.error("Document not published: Source file (" + sourceFile + ") not found");
 	    } catch (IOException ioe) {
@@ -78,7 +85,9 @@ public class DefaultFilePublisher
                       absoluteTreeLivePath);
 	}
     }
-    
+/**
+ *
+ */
     public void execute(String contextPath) {
 
         try {
@@ -94,6 +103,8 @@ public class DefaultFilePublisher
             taskParameters.setParameter(PublishingEnvironment.PARAMETER_TREE_AUTHORING_PATH, environment.getTreeAuthoringPath());
             taskParameters.setParameter(PublishingEnvironment.PARAMETER_LIVE_PATH, environment.getLivePath());
             taskParameters.setParameter(PublishingEnvironment.PARAMETER_TREE_LIVE_PATH, environment.getTreeLivePath());
+
+            taskParameters.setParameter(PublishingEnvironment.PARAMETER_REPLICATION_PATH, environment.getReplicationDirectory());
 
             taskParameters.merge(getParameters());
             parameterize(taskParameters);
@@ -112,10 +123,10 @@ public class DefaultFilePublisher
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_TREE_AUTHORING_PATH),
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_LIVE_PATH),
                 getParameters().getParameter(PublishingEnvironment.PARAMETER_TREE_LIVE_PATH),
+                getParameters().getParameter(PublishingEnvironment.PARAMETER_REPLICATION_PATH),
                 sources);
 	} catch (Exception e) {
 	    log.error("Publishing failed: ", e);
 	}
     }
-    
 }

@@ -17,6 +17,9 @@
     <documents href="docs/publication/live"/>
     <tree href="docs/publication/live/tree.xml"/>
   </live>
+  <replication>
+    <pending-documents href="docs/publication/replication/pending"/>
+  </replication>
 <!-- FIXME? -->
   <export>
     <destination href="resources/publication/export/pending"/>

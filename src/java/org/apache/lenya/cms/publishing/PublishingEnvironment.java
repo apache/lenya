@@ -13,8 +13,8 @@ import org.apache.log4j.Category;
 import org.xml.sax.SAXException;
 
 /**
- *
  * @author  ah
+ * @author  Michael Wechner
  */
 public class PublishingEnvironment implements Configurable {
 
@@ -30,13 +30,24 @@ public class PublishingEnvironment implements Configurable {
     public static final String PARAMETER_TREE_AUTHORING_PATH = "tree-authoring-path";
     public static final String PARAMETER_LIVE_PATH = "live-path";
     public static final String PARAMETER_TREE_LIVE_PATH = "tree-live-path";
+    public static final String PARAMETER_REPLICATION_PATH = "replication-path";
     public static final String PARAMETER_EXPORT_PATH = "export-path";
     public static final String PARAMETER_SUBSTITUTE_REGEXP = "substitute-regexp";
     
+    
+    private String publicationPath;
+    private String replicationDirectory;
+    private String authoringPath, livePath, treeAuthoringPath, treeLivePath;
+    private String exportDirectory, substituteExpression;
+/**
+ *
+ */
     public PublishingEnvironment(String contextPath, String publicationId) {
         this(PublishingEnvironment.getPublicationPath(contextPath, publicationId));
     }
-    
+/**
+ *
+ */
     public PublishingEnvironment(String publicationPath) {
         setPublicationPath(publicationPath);
         String configurationFilePath = publicationPath + CONFIGURATION_FILE;
@@ -50,7 +61,9 @@ public class PublishingEnvironment implements Configurable {
             log.error("Cannot load publishing configuration! ", e);
         }
     }
-    
+/**
+ *
+ */
     public void configure(
             org.apache.avalon.framework.configuration.Configuration configuration)
             throws org.apache.avalon.framework.configuration.ConfigurationException {
@@ -60,6 +73,10 @@ public class PublishingEnvironment implements Configurable {
                 configuration.getChild("authoring").getChild("documents").getAttribute("href"));
         setTreeAuthoringPath(
                 configuration.getChild("authoring").getChild("tree").getAttribute("href"));
+
+        // replication
+        setReplicationDirectory(
+                configuration.getChild("replication").getChild("pending-documents").getAttribute("href"));
 
         // live
         setLivePath(
@@ -80,16 +97,18 @@ public class PublishingEnvironment implements Configurable {
 
         log.debug("CONFIGURATION:\nDirectory Prefix: href=" + getExportDirectory());
         log.debug("CONFIGURATION:\nPrefix Substitute: href=" + getSubstituteExpression());
-    }
-    
-    private String publicationPath;
-    private String authoringPath, livePath, treeAuthoringPath, treeLivePath;
-    private String exportDirectory, substituteExpression;
 
+        log.debug("CONFIGURATION:\nReplication Directory: href=" + getReplicationDirectory());
+    }
+/**
+ *
+ */
     public String getPublicationPath() {
         return publicationPath;
     }
-    
+/**
+ *
+ */
     protected void setPublicationPath(String path) {
         publicationPath = path;
     }
@@ -125,15 +144,33 @@ public class PublishingEnvironment implements Configurable {
     protected void setTreeLivePath(String path) {
         treeLivePath = path;
     }
-        
+/**
+ *
+ */        
+    public String getReplicationDirectory() {
+        return replicationDirectory;
+    }
+/**
+ *
+ */
+    protected void setReplicationDirectory(String directory) {
+        replicationDirectory = directory;
+    }
+/**
+ *
+ */        
     public String getExportDirectory() {
         return exportDirectory;
     }
-    
+/**
+ *
+ */
     protected void setExportDirectory(String directory) {
         exportDirectory = directory;
     }
-    
+/**
+ *
+ */
     public String getSubstituteExpression() {
         return substituteExpression;
     }
