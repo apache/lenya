@@ -59,6 +59,7 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
 import org.apache.log4j.Category;
+import org.apache.xpath.XPathAPI;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -83,7 +84,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -358,6 +359,69 @@ public class DefaultSiteTree implements SiteTree {
         return new SiteTreeNodeImpl(node);
     }
 
+	/**
+	 * Move up the node amongst its siblings. 
+	 * @param documentid. The document id for the node.
+	 * @throws SiteTreeException if the moving failed.
+	 */
+	public void moveUp(String documentid)
+		throws SiteTreeException {
+			Node node = this.getNodeInternal(documentid);
+			if (node == null) {
+			  throw new SiteTreeException("Node to move: " + documentid + " not found");
+			}
+			Node parentNode = node.getParentNode();
+			if (parentNode == null) {
+			  throw new SiteTreeException("Parentid of node with documentid: " + documentid + " not found");
+			}
+			
+			Node previousNode;
+			try {
+				previousNode = XPathAPI.selectSingleNode(node, "(preceding-sibling::*[local-name() = 'node'])[last()]");
+			} catch (TransformerException e) {
+				throw new SiteTreeException(e);
+			}
+			
+			if (previousNode == null){
+			  log.warn("Couldn't found a preceding sibling");
+              return;
+			}
+			Node insertNode=parentNode.removeChild(node);
+			parentNode.insertBefore(insertNode,previousNode);
+	}
+
+	/**
+	 * Move down the node amongst its siblings. 
+	 * @param documentid. The document id for the node.
+	 * @throws SiteTreeException if the moving failed.
+	 */
+	public void moveDown(String documentid)
+		throws SiteTreeException {
+			Node node = this.getNodeInternal(documentid);
+			if (node == null) {
+			  throw new SiteTreeException("Node to move: " + documentid + " not found");
+			}
+			Node parentNode = node.getParentNode();
+			if (parentNode == null) {
+			  throw new SiteTreeException("Parentid of node with documentid: " + documentid + " not found");
+			}
+			Node nextNode;
+			try {
+				nextNode = XPathAPI.selectSingleNode(node, "following-sibling::*[local-name() = 'node'][position()=2]");
+			} catch (TransformerException e) {
+				throw new SiteTreeException(e);
+			}
+			
+			Node insertNode=parentNode.removeChild(node);
+	
+			if (nextNode == null){
+				log.warn("Couldn't found the second following sibling");
+                parentNode.appendChild(insertNode);
+			} else {
+ 				parentNode.insertBefore(insertNode,nextNode);
+			}
+	}
+
     /**
      * Save the DefaultSiteTree.
      *
@@ -365,6 +429,6 @@ public class DefaultSiteTree implements SiteTree {
      * @throws TransformerException if the document could not be transformed
      */
     public void save() throws IOException, TransformerException {
-        DocumentHelper.writeDocument(document, treefile);
+       DocumentHelper.writeDocument(document, treefile);
     }
 }
