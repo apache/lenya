@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.131 2004/07/12 12:12:05 michi Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.132 2004/07/20 10:18:17 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -422,9 +422,7 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="lenya/xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
-      </map:transform>
+      <map:transform src="cocoon://lenya-screen.xsl"/>
       <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
       <map:serialize/>
     </map:resource>
@@ -446,7 +444,7 @@
         
       <!-- Lenya GUI screen -->
       <map:match pattern="lenya-screen.xsl">
-        <map:generate src="lenya/xslt/util/page2xhtml.xsl"/>
+        <map:generate src="lenya/{fallback:xslt/util/page2xhtml.xsl}"/>
         <map:transform src="lenya/xslt/util/page2xslt.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
@@ -456,11 +454,11 @@
       <map:match type="usecase" pattern="login">
         
         <map:match type="step" pattern="showscreen">
-          <map:generate type="serverpages" src="lenya/content/ac/login.xsp"/>
-          <map:transform src="lenya/xslt/ac/login.xsl">
+          <map:generate type="serverpages" src="lenya/{fallback:content/ac/login.xsp}"/>
+          <map:transform src="lenya/{fallback:xslt/ac/login.xsl}">
             <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
           </map:transform>
-         <map:call resource="style-cms-page"/>
+          <map:call resource="style-cms-page"/>
         </map:match>
         
         <map:match type="step" pattern="login">
@@ -473,8 +471,8 @@
       </map:match>
       
       <map:match type="usecase" pattern="logout">
-        <map:generate type="serverpages" src="lenya/content/ac/logout.xsp"/>
-        <map:transform src="lenya/xslt/ac/logout.xsl">
+        <map:generate type="serverpages" src="lenya/{fallback:content/ac/logout.xsp}"/>
+        <map:transform src="lenya/{fallback:xslt/ac/logout.xsl}">
           <map:parameter name="publication_name" value="{page-envelope:publication-id}"/>
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
