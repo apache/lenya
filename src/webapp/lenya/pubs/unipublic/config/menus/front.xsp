@@ -22,7 +22,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?documentUri=/index.html&amp;task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/frontpage/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule&#160;Headlines</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?documentUri=/index.html&amp;task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html,<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/unizh-headline.txt&amp;task.sources=/frontpage/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule&#160;Headlines</item>
 				</block>
 				<block>
 					<!--
