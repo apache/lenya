@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsp,v 1.5 2004/03/13 12:31:31 gregor Exp $ -->
+<!-- $Id: asset.xsp,v 1.6 2004/04/17 16:22:37 gregor Exp $ -->
 
 <xsp:page
        language="java"
@@ -37,13 +37,17 @@
       Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
       ResourcesManager resourceMgr = new ResourcesManager(doc);
       File[] resources = resourceMgr.getResources();
+      String docid = (String) <input:get-attribute module="request-param" name="document-id"/>;
+      if (docid == "") {
+        docid = (String) <input:get-attribute module="page-envelope" name="document-id"/>;
+      }
     </xsp:logic>
   
     <usecase:request-uri><input:get-attribute module="request" name="requestURI"/></usecase:request-uri>
     <usecase:date><input:get-attribute module="date" name="currentDate"/></usecase:date>
     <usecase:creator><input:get-attribute module="access-control" name="user-name"/></usecase:creator>
     <usecase:area><input:get-attribute module="page-envelope" name="area"/></usecase:area>
-    <usecase:document-id><input:get-attribute module="page-envelope" name="document-id"/></usecase:document-id>
+    <usecase:document-id><xsp:expr>docid</xsp:expr></usecase:document-id>
     <usecase:language><input:get-attribute module="page-envelope" name="document-language"/></usecase:language>
     <usecase:assets>
       <xsp:logic>
