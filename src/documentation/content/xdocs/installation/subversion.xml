@@ -69,7 +69,8 @@ svn sw --relocate http://svn.apache.org/repos/asf/incubator/lenya https://svn.ap
 Installing the SVN client with SSL enabled on Debian Woody:
 </p>
 <source>
-apt-get install libssl-dev
+apt-get install openssl
+apt-get install libssl-dev (Important Header Files)
 
 ./configure --with-ssl
 make
