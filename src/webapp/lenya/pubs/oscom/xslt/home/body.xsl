@@ -41,13 +41,20 @@
 </xsl:template>
 
 <xsl:template match="news">
+  <xsl:apply-templates/>
+<!--
   <xsl:apply-templates select="site"/>
+-->
 </xsl:template>
 
 <xsl:template match="site">
   <xsl:apply-templates select="rdf:RDF"/>
   <xsl:apply-templates select="rss"/>
   <!--<xsl:apply-templates select="error:notify"/>-->
+</xsl:template>
+
+<xsl:template match="cmsinfosite">
+  <xsl:apply-templates select="rdf:RDF" mode="cmsinfo"/>
 </xsl:template>
 
 <xsl:template match="rdf:RDF">
@@ -57,8 +64,10 @@
     <td bgcolor="{$tablecolor}">&#160;</td>
     <td bgcolor="{$tablecolor}">
       <p>
-        <font face="verdana" color="white"><xsl:value-of select="../@name"/>
-        &#160;<a href="{n-rdf:channel/n-rdf:link}" target="_blank">&#187;</a></font>
+        <font face="verdana" color="white">
+        <xsl:value-of select="../@name"/>&#160;<a href="{n-rdf:channel/n-rdf:link}" target="_blank">&#187;</a>
+        <!--<xsl:value-of select="../@name"/>&#160;<a href="{channel/link}" target="_blank">&#187;</a>-->
+        </font>
       </p>
     </td>
   </tr>
@@ -117,6 +126,45 @@
   <xsl:for-each select="channel/item[position() &lt;= $n]">
     <p>
     <a href="{link}" target="_blank"><xsl:value-of select="title"/></a>
+    </p>
+  </xsl:for-each>
+  </font>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">&#160;</td>
+  </tr>
+ </table>
+
+<!--
+  <p>
+  <i><xsl:apply-templates/></i>
+  <RDF><xsl:copy-of select="*"/></RDF>
+  </p>
+-->
+</xsl:template>
+
+<xsl:template match="rdf:RDF" mode="cmsinfo" xmlns:purl="http://purl.org/rss/1.0/">
+ <table cellpadding="0" cellspacing="0" border="0" width="150">
+  <tr>
+    <td bgcolor="{$tablecolor}">&#160;</td>
+    <td bgcolor="{$tablecolor}">
+      <p>
+        <font face="verdana" color="white">
+        <xsl:value-of select="../@name"/>&#160;<a href="{purl:channel/purl:link}" target="_blank">&#187;</a>
+        </font>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>&#160;</td>
+    <td>
+  <font face="verdana" size="-2">
+  <xsl:variable name="n">5</xsl:variable>
+  <!--  rdf:RDF -->
+  <xsl:for-each select="purl:item[position() &lt;= $n]">
+    <p>
+    <a href="{purl:link}" target="_blank"><xsl:value-of select="purl:title"/></a>
     </p>
   </xsl:for-each>
   </font>

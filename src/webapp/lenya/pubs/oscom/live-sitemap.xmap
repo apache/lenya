@@ -42,6 +42,20 @@
       </map:handle-errors>
     </map:pipeline>
 
+    <!-- CMS Info -->
+    <map:pipeline>
+      <map:match pattern="http/cmsinfo.rdf">
+        <map:generate src="http://www.cmsinfo.org/backend.php3"/>
+        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+    <!-- /CMS Info -->
+
     <map:pipeline>
       <map:match pattern="http/cmswatch.xml">
         <map:generate src="http://www.cmswatch.com/RSS/cmswatch.xml"/>
