@@ -60,7 +60,15 @@ src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
                   <p>
                     <xsl:apply-templates select="body.head" mode="media-column"/>
                     <span class="tsr-title"><a href="{@href}/"><xsl:apply-templates select="body.head/hedline/hl1"/></a> </span><br />
-                    <xsl:apply-templates select="body.head/abstract"/>
+          	    <xsl:choose>
+	                <xsl:when test="body.head/teasertext!=''">
+	                  <xsl:apply-templates select="body.head/teasertext"/>
+	                </xsl:when>
+	                <xsl:otherwise>
+	                  <xsl:apply-templates select="body.head/abstract"/>
+	                </xsl:otherwise>
+	            </xsl:choose>
+		     (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
                   </p>
                   </td>
                 <td width="4" bgcolor="white">&#160;</td>
@@ -95,7 +103,15 @@ src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
       <table cellspacing="0" cellpadding="3" border="0" bordercolor="green">
        <tr>
        <td class="tsr-text"><a href="{Article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[1]/body.head/hedline/hl1"/></span></a><br />
-      <xsl:apply-templates select="Article[1]/body.head/abstract"/>(<xsl:apply-templates select="Article[1]/body.head/dateline/story.date/@norm"/>)</td>
+          <xsl:choose>
+            <xsl:when test="Article[1]/body.head/teasertext!=''">
+              <xsl:apply-templates select="Article[1]/body.head/teasertext"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="Article[1]/body.head/abstract"/>
+            </xsl:otherwise>
+          </xsl:choose>
+       (<xsl:apply-templates select="Article[1]/body.head/dateline/story.date/@norm"/>)</td>
        </tr>
       </table>
     </td>
@@ -104,7 +120,15 @@ src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
       <table cellspacing="0" cellpadding="3" border="0" bordercolor="green">
        <tr>
        <td class="tsr-text"><a href="{Article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[2]/body.head/hedline/hl1"/> </span></a><br />
-      <xsl:apply-templates select="Article[2]/body.head/abstract"/>(<xsl:apply-templates select="Article[2]/body.head/dateline/story.date/@norm"/>)</td>
+          <xsl:choose>
+            <xsl:when test="Article[2]/body.head/teasertext!=''">
+              <xsl:apply-templates select="Article[2]/body.head/teasertext"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="Article[2]/body.head/abstract"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        (<xsl:apply-templates select="Article[2]/body.head/dateline/story.date/@norm"/>)</td>
        </tr>
      </table>
     </td>

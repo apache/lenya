@@ -11,13 +11,7 @@
       <ContentItem>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
            <nitf>
-            <head>
-              <hedline>
-                <hl1>Teaser Titel</hl1>
-                <dossier>Dossier</dossier>
-                <abstract>Teaser Lead</abstract> 
-              </hedline>
-            </head>
+            <head />
             <body>
               <body.head>
                 <dateline>
@@ -28,6 +22,8 @@
                 </hedline>
                 <byline>Autor</byline>
                 <abstract>Lead</abstract>
+		<teasertext>Teaser-Text</teasertext>
+		<spitzmarke>Spitzmarke</spitzmarke>
               </body.head>
 
               <body.content>
@@ -35,8 +31,7 @@
                     <p>Paragraph</p>
                 </block>
                 <block>
-                  <hl2>Zwischen-/Blocktitel</hl2> 
-                    <p>Paragraph</p>
+                  <hl2>Zwischentitel</hl2> 
                     <p>Paragraph</p>
                 </block>
                </body.content>

@@ -123,11 +123,6 @@
             <p> </p>
           </td>
             <td xsd_xopus="article.xsd" xsl_xopus="Page/Article/Authoring/xopus.xsl" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" id_xopus="body" class="art-text" width="388" bgcolor="white" valign="top">
-              <dossier class="art-pretitle" contentEditable="true">
-                <xsl:for-each select="/newsml/newsitem/newscomponent/contentitem/datacontent/nitf/head/hedline/dossier">
-                  <xsl:apply-templates/>
-                </xsl:for-each>
-              </dossier>
               <xsl:apply-templates select="/newsml/newsitem/newscomponent/contentitem/datacontent/nitf/body"/>
 
             </td>
@@ -162,6 +157,34 @@
     </RelatedContent>
   </xsl:template>
   <xsl:template match="body">
+
+    <table cellpadding="1" border="0" width="100%" bgcolor="#cccccc"><tr><td>
+    <table cellpadding="3" border="0" width="100%" bgcolor="white">
+      <tr>
+        <td class="tsr-text"><b>Teaser-Image</b></td>
+        <td class="tsr-text">
+              <img src="{body/body.head/media[1]/media-reference/@source}" border="0" alt="Teaser Image" align="middle" />
+        </td>
+      </tr>
+      <tr>
+        <td class="tsr-text"><b>Teaser-Text</b></td>
+        <td class="tsr-text">
+          <teasertext xmlns="http://www.w3.org/1999/xhtml" contentEditable="true">
+            <xsl:for-each select="body.head/teasertext">
+              <xsl:apply-templates/>
+            </xsl:for-each>
+          </teasertext>
+        </td>
+      </tr>
+    </table>
+    </td></tr></table>
+
+    <spitzmarke class="art-pretitle" contentEditable="true">
+      <xsl:for-each select="body.head/spitzmarke">
+        <xsl:apply-templates/>
+      </xsl:for-each>
+    </spitzmarke>
+
     <hl1 xmlns="http://www.w3.org/1999/xhtml" contentEditable="true">
       <xsl:for-each select="body.head/hedline/hl1">
         <xsl:apply-templates/>

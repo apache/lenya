@@ -8,7 +8,15 @@
       <xsl:for-each select="article">
         <p>
           <a href="{@href}/"><span class="tsr-title"><xsl:apply-templates select="body.head/hedline/hl1"/></span></a><br />
-          <xsl:apply-templates select="body.head/abstract"/> (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
+          <xsl:choose>
+            <xsl:when test="body.head/teasertext!=''">
+              <xsl:apply-templates select="body.head/teasertext"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="body.head/abstract"/>
+            </xsl:otherwise>
+          </xsl:choose>
+           (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
         </p>
       </xsl:for-each>
 

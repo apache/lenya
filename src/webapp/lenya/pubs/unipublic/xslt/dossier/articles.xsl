@@ -11,7 +11,14 @@
 	    <a href="{$unipublic}{$view}/{@href}/index.html"><xsl:apply-templates select="body.head/hedline/hl1"/></a>
 	  </span>
 	  <br/>
-	  <xsl:apply-templates select="body.head/abstract"/>	
+          <xsl:choose>
+            <xsl:when test="body.head/teasertext!=''">
+              <xsl:apply-templates select="body.head/teasertext"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="body.head/abstract"/>
+            </xsl:otherwise>
+          </xsl:choose>
           <xsl:if test="body.head/dateline/story.date/@norm!=''">
             (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
           </xsl:if>

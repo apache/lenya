@@ -14,20 +14,30 @@
 
   <td valign="top" bgcolor="white" width="393" class="art-text" id_xopus="body" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
   <xsl:if test="$authoring">
-    <div class="art-pretitle">
-    <p>&#160;</p>
-    <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
-      <xsl:choose>
-        <xsl:when test="body/body.head/media">
-          <xsl:apply-templates select="body/body.head/media[1]/media-reference" mode="image"/>
-        </xsl:when>
-        <xsl:otherwise>
-         <img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Upload Teaser Image" border="0"/> Upload Teaser Image
-        </xsl:otherwise>
-      </xsl:choose>
-    </a>
-    <p>&#160;</p>
-    </div>
+    <table cellpadding="1" border="0" width="100%" bgcolor="#cccccc"><tr><td>
+    <table cellpadding="3" border="0" width="100%" bgcolor="white">
+      <tr>
+        <td class="tsr-text"><b>Teaser-Image</b></td>
+	<td class="tsr-text">
+         <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
+          <xsl:choose>
+            <xsl:when test="body/body.head/media">
+              <img src="{body/body.head/media[1]/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
+            </xsl:when>
+            <xsl:otherwise>
+              <img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Upload Image" border="0"/> Upload Image
+            </xsl:otherwise>
+          </xsl:choose>
+         </a>
+        </td>
+      </tr>
+      <tr>
+	<td class="tsr-text"><b>Teaser-Text</b></td>
+	<td class="tsr-text"><xsl:value-of select="body/body.head/teasertext" /></td>
+      </tr>
+    </table>
+    </td></tr></table>
+    <br/>
   </xsl:if>
     <div class="art-date"><xsl:apply-templates select="../../../../NewsManagement/PublishDate" mode="article"/></div>
     <div class="art-pretitle"><xsl:apply-templates select="body/body.head/spitzmarke"/></div>

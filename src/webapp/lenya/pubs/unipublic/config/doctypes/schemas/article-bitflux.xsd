@@ -5,11 +5,22 @@
 xmlns:bxe="http://bitfluxeditor.org/schema/1.0"
 >
 
-<xs:element name='dossier' type='xs:string'>
+<xs:element name='teasertext' type='xs:string'>
   <xs:annotation>
-    <xs:documentation xml:lang='en'>Dossier</xs:documentation>
+    <xs:documentation xml:lang='en'>Teasertext</xs:documentation>
     <xs:appinfo>
- 	  <bxe:name>Dossier</bxe:name>
+ 	  <bxe:name>Teasertext</bxe:name>
+ 	  <bxe:returnelement>none</bxe:returnelement>
+ 	  <bxe:noaddparas>1</bxe:noaddparas>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='spitzmarke' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Spitzmarke</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Spitzmarke</bxe:name>
  	  <bxe:returnelement>none</bxe:returnelement>
  	  <bxe:noaddparas>1</bxe:noaddparas>
     </xs:appinfo>
