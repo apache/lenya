@@ -123,7 +123,7 @@ public class DefaultSiteTree implements SiteTree {
      * Checks if the tree file has been modified externally and reloads the site tree.
      * @throws SiteTreeException when something went wrong.
      */
-    protected void checkModified() {
+    protected synchronized void checkModified() {
         if (area.equals(Publication.LIVE_AREA)
             && treefile.isFile()
             && treefile.lastModified() > lastModified) {
@@ -148,7 +148,7 @@ public class DefaultSiteTree implements SiteTree {
      * 
      * @throws ParserConfigurationException if an error occurs
      */
-    public Document createDocument() throws ParserConfigurationException {
+    public synchronized Document createDocument() throws ParserConfigurationException {
         document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
 
         Element root = document.getDocumentElement();
@@ -170,7 +170,7 @@ public class DefaultSiteTree implements SiteTree {
      * 
      * @return the node that matches the path given in the list of ids
      */
-    protected Node findNode(Node node, List ids) {
+    protected synchronized Node findNode(Node node, List ids) {
 
         checkModified();
 
@@ -427,7 +427,7 @@ public class DefaultSiteTree implements SiteTree {
      * 
      * @return the Node if there is a Node for the given document-id, null otherwise
      */
-    private Node getNodeInternal(String documentId) {
+    private synchronized Node getNodeInternal(String documentId) {
         StringTokenizer st = new StringTokenizer(documentId, "/");
         ArrayList ids = new ArrayList();
 
@@ -442,7 +442,7 @@ public class DefaultSiteTree implements SiteTree {
     /**
      * @see org.apache.lenya.cms.publication.SiteTree#getNode(java.lang.String)
      */
-    public SiteTreeNode getNode(String documentId) {
+    public synchronized SiteTreeNode getNode(String documentId) {
         assert documentId != null;
 
         SiteTreeNode treeNode = null;
