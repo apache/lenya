@@ -57,7 +57,7 @@
       if (existsLanguage) {
       		<lenya-info:languages>
      			<xsp:logic>
-     				DocumentLanguagesHelper helper = new DocumentLanguagesHelper(objectModel);
+     				DocumentLanguagesHelper helper = new DocumentLanguagesHelper(doc.getIdentityMap(), objectModel);
 					try {
 						String[] documentLanguages = (String[]) doc.getLanguages();
 						for (int i = 0; i &lt; documentLanguages.length; i++) {

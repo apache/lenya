@@ -25,7 +25,6 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentHelper;
 import org.apache.lenya.cms.publication.Publication;
@@ -103,7 +102,7 @@ public class Publish extends PublicationTask {
         Document liveDocument = getPublication().getAreaVersion(document, Publication.LIVE_AREA);
         Document liveParent = DocumentHelper.getParentDocument(liveDocument);
         if (liveParent != null) {
-            SiteTree liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
+            SiteTree liveTree = getSiteTree(Publication.LIVE_AREA);
             SiteTreeNode liveParentNode = liveTree.getNode(liveParent.getId());
             if (liveParentNode == null) {
                 log.error("Cannot execute task: live parent node does not exist.");
@@ -147,10 +146,7 @@ public class Publish extends PublicationTask {
         throws ParameterException, DocumentBuildException, ExecutionException {
         String id = getParameters().getParameter(PARAMETER_DOCUMENT_ID);
         String language = getParameters().getParameter(PARAMETER_DOCUMENT_LANGUAGE);
-        DocumentBuilder builder = getPublication().getDocumentBuilder();
-        String url =
-            builder.buildCanonicalUrl(getPublication(), Publication.AUTHORING_AREA, id, language);
-        Document document = builder.buildDocument(getPublication(), url);
+        Document document = getIdentityMap().get(Publication.AUTHORING_AREA, id, language);
         return document;
     }
 

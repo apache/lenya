@@ -24,14 +24,13 @@ import java.io.IOException;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.task.PublicationTask;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.task.ExecutionException;
@@ -98,7 +97,7 @@ public class Deactivate extends PublicationTask {
         Document authoringDocument = getPublication().getAreaVersion(liveDocument, Publication.AUTHORING_AREA);
         OK = OK && canWorkflowFire(authoringDocument);
 
-        SiteTree tree = getPublication().getSiteTree(liveDocument.getArea());
+        SiteTree tree = getSiteTree(liveDocument.getArea());
         SiteTreeNode node = tree.getNode(liveDocument.getId());
 
         if (node == null) {
@@ -160,10 +159,7 @@ public class Deactivate extends PublicationTask {
         throws ParameterException, DocumentBuildException, ExecutionException {
         String id = getParameters().getParameter(PARAMETER_DOCUMENT_ID);
         String language = getParameters().getParameter(PARAMETER_DOCUMENT_LANGUAGE);
-        DocumentBuilder builder = getPublication().getDocumentBuilder();
-        String url =
-            builder.buildCanonicalUrl(getPublication(), Publication.LIVE_AREA, id, language);
-        Document document = builder.buildDocument(getPublication(), url);
+        Document document = getIdentityMap().get(Publication.LIVE_AREA, id, language);
         return document;
     }
 
