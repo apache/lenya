@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentHelper.java,v 1.25 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id: DocumentHelper.java,v 1.26 2004/04/26 08:35:59 andreas Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -273,6 +273,24 @@ public class DocumentHelper {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Returns all child elements of an element, regardless of the namespace.
+     * @param element The parent element.
+     * @return The child elements.
+     */
+    public static Element[] getChildren(Element element) {
+        List childElements = new ArrayList();
+        NodeList children = element.getElementsByTagName("*");
+
+        for (int i = 0; i < children.getLength(); i++) {
+            if (children.item(i).getParentNode() == element) {
+                childElements.add(children.item(i));
+            }
+        }
+
+        return (Element[]) childElements.toArray(new Element[childElements.size()]);
     }
 
     /**
