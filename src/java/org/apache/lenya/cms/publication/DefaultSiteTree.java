@@ -15,7 +15,7 @@
  *
  */
 
-/* @version $Id: DefaultSiteTree.java,v 1.45 2004/08/16 12:22:42 andreas Exp $ */
+/* @version $Id: DefaultSiteTree.java,v 1.46 2004/08/16 12:23:52 andreas Exp $ */
 
 package org.apache.lenya.cms.publication;
 
@@ -186,7 +186,7 @@ public class DefaultSiteTree implements SiteTree {
                     Node idAttribute = attributes.getNamedItem("id");
 
                     if (idAttribute != null
-                        && !"".equals(idAttribute)
+                        && !"".equals(idAttribute.getNodeValue())
                         && idAttribute.getNodeValue().equals(ids.get(0))) {
                         return findNode(nodes.item(i), ids.subList(1, ids.size()));
                     }
