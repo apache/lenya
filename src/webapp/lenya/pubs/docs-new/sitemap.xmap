@@ -317,7 +317,14 @@
 
 
     <!-- lenya pipelines -->
-    <!--    
+
+    <!-- Xopus Interface -->
+    <map:pipeline>
+      <map:match pattern="xopus/**">
+        <map:mount uri-prefix="xopus" src="xopus.xmap"/>
+      </map:match>
+    </map:pipeline>
+
     <map:pipeline>
       <map:match pattern="introduction.html">
         <map:read src="resources/html/introduction.html" mime-type="text/html"/>
@@ -328,6 +335,8 @@
       <map:match pattern="authoring/**">
         <map:mount uri-prefix="authoring" src="authoring-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
+    </map:pipeline>
+<!--
 
       <map:match pattern="**">
         <map:mount uri-prefix="" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
