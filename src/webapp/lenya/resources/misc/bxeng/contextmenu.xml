@@ -36,4 +36,14 @@
          <attribute name="id"/>      
          <attribute name="style"/>      
          <attribute name="xml:lang"/>      
+         <attribute name="accesskey"/>      
+         <attribute name="rel"/>      
+         <attribute name="rev"/>      
+         <attribute name="tabindex"/>      
+         <attribute name="name"/>      
+         <attribute name="axis"/>      
+         <attribute name="abbr"/>      
+         <attribute name="headers"/>      
+         <attribute name="scope"/>      
+         <attribute name="hreflang"/>      
     </context>
