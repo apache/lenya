@@ -6,8 +6,6 @@
 
 package org.apache.lenya.cms.workflow.impl;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.lenya.cms.workflow.Condition;
 
 /**

@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceMap.java,v 1.2 2003/04/24 13:53:14 gregor Exp $
+ * $Id: NamespaceMap.java,v 1.3 2003/05/27 15:26:30 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,7 +47,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import org.apache.avalon.framework.parameters.Parameters;
 
 /**
  * An object of this class provides an easy way to access

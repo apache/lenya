@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.18 2003/05/16 18:34:29 andreas Exp $
+ * $Id: TaskJob.java,v 1.19 2003/05/27 15:28:41 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,8 +60,6 @@ import org.quartz.JobExecutionException;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.Task;
 import org.apache.lenya.cms.task.TaskManager;
-
-import java.io.File;
 
 import java.util.Enumeration;
 

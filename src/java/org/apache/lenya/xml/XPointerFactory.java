@@ -1,5 +1,5 @@
 /*
- * $Id: XPointerFactory.java,v 1.9 2003/04/24 13:53:14 gregor Exp $
+ * $Id: XPointerFactory.java,v 1.10 2003/05/27 15:25:20 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,7 +47,6 @@ import org.apache.log4j.Category;
 
 import org.w3c.dom.*;
 
-import org.apache.lenya.xml.*;
 import org.apache.lenya.xml.xpointer.*;
 
 import java.io.*;

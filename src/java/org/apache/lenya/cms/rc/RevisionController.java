@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionController.java,v 1.14 2003/04/24 13:52:59 gregor Exp $
+ * $Id: RevisionController.java,v 1.15 2003/05/27 15:31:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,8 +46,6 @@ package org.apache.lenya.cms.rc;
 import org.apache.log4j.Category;
 
 import org.apache.lenya.util.XPSFileOutputStream;
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

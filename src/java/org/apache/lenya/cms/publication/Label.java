@@ -1,5 +1,5 @@
 /*
- * $Id: Label.java,v 1.1 2003/05/07 07:45:16 egli Exp $
+ * $Id: Label.java,v 1.2 2003/05/27 15:31:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -42,8 +42,6 @@
  * </License>
  */
 package org.apache.lenya.cms.publication;
-
-import java.util.Map;
 
 public class Label {
     

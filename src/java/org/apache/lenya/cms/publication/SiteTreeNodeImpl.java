@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTreeNodeImpl.java,v 1.4 2003/05/14 16:31:56 egli Exp $
+ * $Id: SiteTreeNodeImpl.java,v 1.5 2003/05/27 15:31:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,7 +47,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Category;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

@@ -1,5 +1,5 @@
 /*
- * $Id: MailTask.java,v 1.28 2003/04/24 13:52:38 gregor Exp $
+ * $Id: MailTask.java,v 1.29 2003/05/27 15:32:35 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,8 +58,6 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.Properties;
 import java.net.URL;
 import org.apache.lenya.net.SMTP;
 

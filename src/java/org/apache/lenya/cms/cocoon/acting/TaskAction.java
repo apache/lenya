@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.13 2003/05/16 15:27:11 andreas Exp $
+ * $Id: TaskAction.java,v 1.14 2003/05/27 15:34:03 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,11 +49,6 @@
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -68,12 +63,8 @@ import org.apache.lenya.cms.task.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.avalon.framework.parameters.ParameterException;
-import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.excalibur.source.Source;
-import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 

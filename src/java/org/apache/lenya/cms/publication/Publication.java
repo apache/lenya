@@ -9,8 +9,6 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 
-import org.apache.log4j.Category;
-
 /**
  *
  * @author  andreas

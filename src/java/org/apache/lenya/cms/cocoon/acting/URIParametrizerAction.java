@@ -1,14 +1,8 @@
 package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.acting.ConfigurableComposerAction;
 
@@ -21,8 +15,6 @@ import org.xml.sax.Attributes;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Iterator;
-
 import org.apache.log4j.Category;
 
 public class URIParametrizerAction extends ConfigurableComposerAction  {

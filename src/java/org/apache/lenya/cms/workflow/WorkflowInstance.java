@@ -6,7 +6,6 @@
 
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.publication.Document;
 

@@ -1,7 +1,6 @@
 package org.apache.lenya.util;
 
 import java.io.*;
-import java.util.*;
 /*
 import org.wyona.xpipe.*;
 import org.wyona.xpipe.util.*;

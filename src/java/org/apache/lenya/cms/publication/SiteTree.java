@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTree.java,v 1.4 2003/05/13 15:56:04 egli Exp $
+ * $Id: SiteTree.java,v 1.5 2003/05/27 15:31:29 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -42,8 +42,6 @@
  * </License>
  */
 package org.apache.lenya.cms.publication;
-
-import java.util.Map;
 
 public interface SiteTree {
 

@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.9 2003/05/16 18:34:29 andreas Exp $
+ * $Id: DefaultSiteTree.java,v 1.10 2003/05/27 15:35:00 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,14 +46,10 @@ package org.apache.lenya.cms.publication;
 import org.apache.log4j.Category;
 
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import org.w3c.dom.Document;
@@ -66,10 +62,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.IOException;
-
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
@@ -227,7 +220,7 @@ public class DefaultSiteTree
 	    
 	    sitetree.addNode("/tutorial", "foo", labels);
 	    
-	    Label label_de = new Label("Qualität", "de");
+	    Label label_de = new Label("Qualit?t", "de");
 	    Label label_en = new Label("Quality", "en");
 	    Label[] labels2 = { label_de, label_en  };
 	    sitetree.addNode("/tutorial/features", "here", labels2);
