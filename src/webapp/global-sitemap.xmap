@@ -19,8 +19,6 @@
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components/>
-
 <!-- =========================== Views =================================== -->
 
   <!--+
@@ -92,16 +90,6 @@
     </map:resource>
  </map:resources>
 
-<!-- ========================== Action sets ================================ -->
-
- <!--+
-     | Action sets group actions together. If some actions are often used
-     | together in pipeline fragments, it's easier to group them and refer
-     | to the group. For more info, please see the docs.
-     +-->
-  <map:action-sets>
-  </map:action-sets>
-
 <!-- =========================== Pipelines ================================= -->
 
  <!--+
@@ -141,10 +129,6 @@
            +-->
     </global-variables>
   </map:component-configurations>
-
-
-
-<!-- =========================== Lenya CMS ================================= -->
 
 <!-- =========================== Pipelines ================================= -->
 

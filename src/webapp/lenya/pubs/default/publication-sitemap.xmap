@@ -18,9 +18,7 @@
 <!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-  
-  <map:components/>
-  
+
   <map:views>
     <map:view from-label="aggregation" name="aggregation">
       <map:serialize type="xml"/>

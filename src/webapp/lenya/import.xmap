@@ -28,10 +28,7 @@
 <!--         <map:mount uri-prefix="import" src="lenya/import.xmap" check-reload="true" reload-method="synchron"/> -->
 <!--       </map:match> -->
       
-
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-
-  <map:components/>
 
   <map:pipelines>
     

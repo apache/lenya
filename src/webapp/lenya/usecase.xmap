@@ -46,7 +46,6 @@
   </map:resources>
   
   <!-- =========================== Pipelines ================================ -->
-  <!-- FIXME: Reorder the pipelines in here neatly. Maybe alphabetically? -->
   <map:pipelines>
   
     <!-- =================================================================== -->
@@ -109,6 +108,15 @@
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
       <map:match pattern="site.workflow" type="usecase">
+        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+      </map:match>
+      <map:match pattern="workflow.publish" type="usecase">
+        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+      </map:match>
+      <map:match pattern="workflow.reject" type="usecase">
+        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+      </map:match>
+      <map:match pattern="workflow.submit" type="usecase">
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
