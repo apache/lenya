@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- CVS: $Id: doctypes.xmap,v 1.14 2004/02/04 20:32:42 gregor Exp $ -->
+<!-- CVS: $Id: doctypes.xmap,v 1.15 2004/02/09 16:42:39 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -33,6 +33,7 @@
         <map:generate src="content/{2}/{4}.xml"/>
         <map:transform src="xslt/{3}2xhtml.xsl">
           <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
