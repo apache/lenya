@@ -5,6 +5,6 @@
     <language default="true">en</language>
     <language>de</language>
   </languages>
-  <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
+  <path-mapper>org.apache.lenya.cms.publication.BlogDocumentIdToPathMapper</path-mapper>
   <breadcrumb-prefix/>
 </publication>
