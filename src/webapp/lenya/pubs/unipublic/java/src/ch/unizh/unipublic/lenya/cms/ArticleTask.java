@@ -192,7 +192,10 @@ public class ArticleTask
           newArticleElement.setText(title);
           Element articlesElement = (Element) document.selectSingleNode(parentXPath); 
           List children = articlesElement.elements();
-          children.add(0, newArticleElement);
+          if (children.size() > 0)
+            children.add(0, newArticleElement);
+          else
+            children.add(newArticleElement);
         }
 
     }
