@@ -2,7 +2,6 @@
 
 <feed xmlns="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
   <title>Lenya's Weblog</title>
-  <subtitle>XML and beyond</subtitle>
   <link>http://bob.blog/</link>
 
   <modified>2003-02-05T12:29:29Z</modified>

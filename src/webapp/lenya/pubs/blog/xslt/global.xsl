@@ -26,12 +26,6 @@
   </a>
 </td>
 </tr>
-<tr>
-<td colspan="2" id="subtitle">
-  <!-- FIXME: namespace -->
-  <xsl:value-of select="feed/subtitle"/><xsl:value-of select="feed/echo:subtitle"/>
-</td>
-</tr>
 
 <tr>
 <td valign="top" id="content" width="70%">

@@ -8,7 +8,7 @@
   <xsl:apply-templates select="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0"/>
 </xsl:template>                                                                                                                             
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
-<feed xmlns:xlink="http://www.w3.org/2002/XLink">
+<feed xmlns:xlink="http://www.w3.org/2002/XLink" xmlns="http://purl.org/atom/ns#" version="0.2" xml:lang="en">
   <description xlink:href="feeds/{$feedid}/index.xml#xpointer(/feed/title)xpointer(/feed/subtitle)xpointer(/feed/link)xpointer(/feed/modified)" xlink:show="embed"/>
   <xsl:for-each select="dir:directory">
     <xsl:variable name="year"><xsl:value-of select="@name"/></xsl:variable>

@@ -2,7 +2,6 @@
 
 <echo:entry xmlns:echo="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
     <echo:title>My Second Entry</echo:title>
-    <echo:subtitle>In which a newbie learns to blog...</echo:subtitle>
     <echo:summary>A very boring entry; just learning how to blog here...</echo:summary>
 
     <echo:author>
