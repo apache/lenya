@@ -1,0 +1,586 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>WebDAV Servers</title>
+<link type="text/css" href="../../../skin/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!--================= start Banner ==================-->
+<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--================= start Group Logo ==================-->
+<td valign="bottom" bgcolor="#FFFFFF">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png"></a>
+</div>
+<span class="textheader">Apache Cocoon</span>
+<!--================= start Tabs ==================-->
+<div class="tab">
+<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="10" valign="bottom">
+<div class="tab-separator">
+<img alt="" width="10" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../installation/index.html"><font face="Arial, Helvetica, Sans-serif">Installation</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a href="../../index.html"><font color="#000000">Documentation</font></a>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<!--================= end Tabs ==================-->
+</td>
+<!--================= end Group Logo ==================-->
+<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<div style="padding: 10px" class="headerlogo">
+<a href="http://cocoon.apache.org/lenya"><img border="0" class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png"></a>
+</div>
+<div class="tab-separator"></div>
+</td>
+<!--================= end Project Logo ==================-->
+</tr>
+</table>
+<!--================= end Banner ==================-->
+<div class="tab-bar">
+<img alt="" height="5" src="../../../skin/images/spacer.gif"></div>
+<!--================= start Menu, NavBar, Content ==================-->
+<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
+<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<!--================= start left top NavBar ==================-->
+<!--================= end left top NavBar ==================-->
+<td valign="top">
+<div class="tab-subbar">
+<img width="10" height="5" alt="" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="top">
+<!--================= start Menu items ==================-->
+<div class="menu">
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<div class="menutitle">Integrator/Dev Guide</div>
+<div class="menuitemgroup">
+<div class="menutitle">Components</div>
+<div class="menuitemgroup">
+<div class="menutitle">Repository</div>
+<div class="menuitemgroup">
+<div class="menupage">
+<div class="menupagetitle">WebDAV Servers</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Apache+1">Apache 1</a>
+</div>
+<div class="menupageitem">
+<a href="#Apache+2">Apache 2</a>
+</div>
+<div class="menupageitem">
+<a href="#Tomcat">Tomcat</a>
+</div>
+<div class="menupageitem">
+<a href="#Apache+Jakarta+Slide">Apache Jakarta Slide</a>
+</div>
+<div class="menupageitem">
+<a href="#Monitoring+the+WebDAV+exchange">Monitoring the WebDAV exchange</a>
+</div>
+<div class="menupageitem">
+<a href="#PROPFIND">PROPFIND</a>
+</div>
+<div class="menupageitem">
+<a href="#PUT">PUT</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--================= end Menu items ==================-->
+</td><td valign="top">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr>
+<td></td><td height="5"><img alt="" width="150" height="1" src="../../../skin/images/spacer.gif"></td><td></td>
+</tr>
+</table>
+</td><td valign="top" width="100%">
+<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" colspan="3">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<!--================= start Content==================-->
+<tr>
+<td align="left" width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td><td align="left" width="100%">
+<div class="content">
+<table cellspacing="0" cellpadding="0" class="title">
+<tr>
+<td valign="middle">
+<h1>WebDAV Servers</h1>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="webdav.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+</tr>
+</table> 
+
+
+<a name="N101CB"></a><a name="Apache+1"></a>
+<h3>Apache 1</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+Download the Apache Web Server and WebDAV module source code from the Apache website, e.g. <span class="codefrag">apache_1.3.24.tar.gz</span> and <span class="codefrag">mod_dav-1.0.3-1.3.6.tar.gz</span>.
+Configure and compile mod_dav:
+</p>
+<pre class="code">
+
+wget http://www.webdav.org/mod_dav/mod_dav-1.0.3-1.3.6.tar.gz
+cd /home/michiii/src/mod_dav-1.0.3-1.3.6
+./configure --with-apache=/home/michiii/src/apache_1.3.24
+make
+make install
+cd /home/michiii/src/apache_1.3.24
+find . -name "*dav*" -print
+./configure --prefix=/usr/local/apache --activate-module=src/modules/dav/libdav.a
+(./configure --prefix=/usr/local/apache --enable-module=proxy --activate-module=src/modules/dav/libdav.a)
+make
+su
+make install
+/usr/local/apache/bin/httpd -l
+
+</pre>
+<p>
+You need to reconfigure <span class="codefrag">httpd.conf</span>, e.g.:
+</p>
+<pre class="code">
+
+DAVLockDB /home/michiii/build/apache/logs/DavLock
+&lt;Directory "/home/michiii/build/apache/htdocs"&gt;
+Dav On
+
+</pre>
+<p>
+To see the files open "Konqueror" and type <span class="codefrag">webdav://127.0.0.1:8080</span>.
+</p>
+<p>
+More info on <span class="codefrag">mod_dav</span> can be found at
+</p>
+<ul>
+
+<li>
+<a href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</a>
+</li>
+
+<li>
+<a href="http://www.ibiblio.org/pub/Linux/docs/HOWTO/other-formats/html_single/Apache-WebDAV-LDAP-HOWTO.html">Apache and DAV with LDAP and SSL</a>
+</li>
+
+</ul>
+</div>
+
+
+<a name="N10204"></a><a name="Apache+2"></a>
+<h3>Apache 2</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+Download the Apache Web Server source code from the Apache website, e.g. <span class="codefrag">httpd-2.0.46.tar.gz</span>.
+The mod_dav module is inlcuded with the Apache 2 distribution.
+Configure and compile Apache:
+</p>
+<pre class="code">
+
+./configure --prefix=/home/michiii/build/apache2 --with-dav --enable-dav
+make 
+make install
+/home/michiii/build/apache2/bin/httpd -l | grep dav
+
+</pre>
+<p>
+You need to reconfigure Apache:
+</p>
+<pre class="code">
+
+DAVLockDB /home/michiii/build/apache2/logs/DavLock
+&lt;Directory "/home/michiii/build/apache2/htdocs"&gt;
+Dav On
+&lt;/Directory&gt;
+
+</pre>
+<p>
+More info on <span class="codefrag">mod_dav</span> can be found at
+</p>
+<ul>
+
+<li>
+<a href="http://apacheworld.org/ty24/site.chapter13.html">http://apacheworld.org/ty24/site.chapter13.html</a>
+</li>
+
+<li>
+<a href="http://httpd.apache.org/docs-2.0/mod/mod_dav.html">http://httpd.apache.org/docs-2.0/mod/mod_dav.html</a>
+</li>
+
+<li>
+<a href="http://www.informit.com/isapi/product_id~%7BA27264B1-CE7A-47A4-8CC5-DA14003AD454%7D/element_id~%7B35D4A98B-60C6-45BE-853C-239742BA0FD9%7D/st~%7BEA04B5C6-6D59-4670-AC88-4982C49B746D%7D/content/articlex.asp">Apache and DAV</a>
+</li>
+
+</ul>
+</div>
+
+
+<a name="N10236"></a><a name="Tomcat"></a>
+<h3>Tomcat</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+Point your WebDAV client to <span class="codefrag">http://127.0.0.1:8080/webdav/</span>.
+The webdav context is DAV enabled, but has been set up in read-only mode for safety reasons.
+It can be put in read-write mode by editing the web application descriptor file <span class="codefrag">/webapps/webdav/WEB-INF/web.xml</span>.
+</p>
+<pre class="code">
+
+&lt;!-- Uncomment this to enable read and write access --&gt;
+&lt;init-param&gt;
+  &lt;param-name&gt;readonly&lt;/param-name&gt;
+  &lt;param-value&gt;false&lt;/param-value&gt;
+&lt;/init-param&gt;
+
+</pre>
+</div>
+
+
+<a name="N1024B"></a><a name="Apache+Jakarta+Slide"></a>
+<h3>Apache Jakarta Slide</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+Point your WebDAV client to <span class="codefrag">http://127.0.0.1:8080/slide/</span>.
+One needs to configure <span class="codefrag">Domain.xml</span>
+
+</p>
+<pre class="code">
+
+&lt;contentstore classname="slidestore.reference.FileContentStore"&gt;
+  &lt;parameter name="rootpath"&gt;/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/notimes/content/authoring/articles&lt;/parameter&gt;
+  ...
+
+</pre>
+</div>
+
+<!--
+<section>
+<title>Zope</title>
+<p>
+<source>
+<![CDATA[
+...
+]]>
+</source>
+</p>
+</section>
+-->
+
+
+<a name="N10262"></a><a name="Monitoring+the+WebDAV+exchange"></a>
+<h3>Monitoring the WebDAV exchange</h3>
+<div style="margin-left: 0 ; border: 2px">
+<pre class="code">
+
+cd /home/michiii/build/axis-1_1RC2
+java -cp lib/axis.jar org.apache.axis.utils.tcpmon
+
+Enter "Listen Port# 3333" for instance
+
+Select "Act as a... Listener"
+
+Enter "Target Hostname 195.226.6.70" for instance
+Enter "Target Port# 8080" for instance
+
+Click "Add" and a new tab saying "3333" should show up
+
+Click on this new tab to view the requests and responses
+
+Enter within your browser "http://127.0.0.1:3333/lenya/index.html"
+
+</pre>
+</div>
+
+
+<a name="N1026E"></a><a name="PROPFIND"></a>
+<h3>PROPFIND</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The WebDAV client will first send a PROPFIND with Depth = 0. Depending on the response (collection or resource)
+the WebDAV client will send another PROPFIND with Depth = 1 (collection) or a GET (resource).
+</p>
+<p>
+Collection:
+</p>
+<pre class="code">
+
+Request
+=======
+
+PROPFIND /lenya/blog/authoring/entries/2003/08/24/peanuts/ HTTP/1.1
+Pragma: no-cache
+Cache-control: no-cache
+Accept: text/*, image/jpeg, image/png, image/*, */*
+Accept-Encoding: x-gzip, gzip, identity
+Accept-Charset: iso-8859-1, utf-8;q=0.5, *;q=0.5
+Accept-Language: en
+Host: 127.0.0.1
+Depth: 0
+
+
+
+Response
+========
+
+HTTP/1.1 207 Multi-Status
+X-Cocoon-Version: 2.1
+Set-Cookie: JSESSIONID=320E3B1395B867B5BC42B5FC93457C36; Path=/lenya
+Content-Type: text/xml
+Transfer-Encoding: chunked
+Date: Mon, 25 Aug 2003 14:27:12 GMT
+Server: Apache Coyote/1.0
+
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;D:multistatus xmlns:D="DAV:"&gt;
+
+&lt;D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/"&gt;
+&lt;D:href&gt;/lenya/blog/authoring/entries/2003/08/24/peanuts/&lt;/D:href&gt;
+&lt;D:propstat&gt;
+&lt;D:prop&gt;
+&lt;lp1:resourcetype&gt;&lt;D:collection/&gt;&lt;/lp1:resourcetype&gt;
+&lt;D:getcontenttype&gt;httpd/unix-directory&lt;/D:getcontenttype&gt;
+&lt;/D:prop&gt;
+&lt;D:status&gt;HTTP/1.1 200 OK&lt;/D:status&gt;
+&lt;/D:propstat&gt;
+&lt;/D:response&gt;
+
+&lt;/D:multistatus&gt;
+
+
+
+Request
+=======
+
+PROPFIND /lenya/blog/authoring/entries/2003/08/24/peanuts/ HTTP/1.1
+Pragma: no-cache
+Cache-control: no-cache
+Accept: text/*, image/jpeg, image/png, image/*, */*
+Accept-Encoding: x-gzip, gzip, identity
+Accept-Charset: iso-8859-1, utf-8;q=0.5, *;q=0.5
+Accept-Language: en
+Host: 127.0.0.1
+Depth: 1
+
+
+
+Response
+========
+
+HTTP/1.1 207 Multi-Status
+X-Cocoon-Version: 2.1
+Set-Cookie: JSESSIONID=5A87A774B7B29D04DEDBDECC54477E5B; Path=/lenya
+Content-Type: text/xml
+Transfer-Encoding: chunked
+Date: Mon, 25 Aug 2003 14:27:12 GMT
+Server: Apache Coyote/1.0
+
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;D:multistatus xmlns:D="DAV:"&gt;
+
+&lt;D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/"&gt;
+&lt;D:href&gt;/lenya/blog/webdav/entries/2003/08/24/peanuts/index.html&lt;/D:href&gt;
+&lt;D:propstat&gt;
+&lt;D:prop&gt;
+&lt;lp1:resourcetype/&gt;
+&lt;D:getcontenttype&gt;text/html&lt;/D:getcontenttype&gt;
+&lt;/D:prop&gt;
+&lt;D:status&gt;HTTP/1.1 200 OK&lt;/D:status&gt;
+&lt;/D:propstat&gt;
+&lt;/D:response&gt;
+
+&lt;D:response xmlns:lp1="DAV:" xmlns:lp2="http://apache.org/dav/props/"&gt;
+&lt;D:href&gt;/lenya/blog/webdav/entries/2003/08/24/peanuts/charlie.xml&lt;/D:href&gt;
+&lt;D:propstat&gt;
+&lt;D:prop&gt;
+&lt;lp1:resourcetype/&gt;
+&lt;lp1:creationdate&gt;2003-07-21T13:04:23Z&lt;/lp1:creationdate&gt;
+&lt;lp1:getcontentlength&gt;3845&lt;/lp1:getcontentlength&gt;
+&lt;D:getcontenttype&gt;text/xml&lt;/D:getcontenttype&gt;
+&lt;/D:prop&gt;
+&lt;D:status&gt;HTTP/1.1 200 OK&lt;/D:status&gt;
+&lt;/D:propstat&gt;
+&lt;/D:response&gt;
+
+&lt;/D:multistatus&gt;
+
+</pre>
+</div>
+
+
+<a name="N10280"></a><a name="PUT"></a>
+<h3>PUT</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The WebDAV client will send a PUT in order to copy a document onto the server.
+</p>
+<pre class="code">
+
+Request
+=======
+
+PUT /lenya/blog/webdav/entries/2003/08/29/levi/index.xml HTTP/1.1
+Host: 127.0.0.1
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.4b) Gecko/20030507
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,video/x-mng,image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+Content-Type: text/xml
+Content-Length: 1641
+Cookie: JSESSIONID=1CF7F4C27B737E3603FFC2D4D4C137CE
+
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;echo:entry xmlns:echo="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0"&gt;
+    &lt;echo:title&gt;Lenya&lt;/echo:title&gt;
+
+    &lt;echo:created&gt;2003-08-29T01:46:45&lt;/echo:created&gt;
+    &lt;echo:issued&gt;2003-08-29T01:46:45&lt;/echo:issued&gt;
+    &lt;echo:modified&gt;2003-08-29T01:46:45&lt;/echo:modified&gt;
+
+    &lt;echo:content mode="escaped" type="text/plain" lang="en-us"&gt;
+      Plain Text
+    &lt;/echo:content&gt;
+
+    &lt;ent:topic id="introductory"&gt;Hello&lt;/ent:topic&gt;
+&lt;/echo:entry&gt;
+
+
+
+Response
+========
+
+HTTP/1.1 204 No Content
+Date: Mon, 18 Aug 2003 14:22:47 GMT
+Server: Apache/2.0.46 (Unix) DAV/2
+Content-Length: 0
+Keep-Alive: timeout=15, max=100
+Connection: Keep-Alive
+Content-Type: text/xml
+
+</pre>
+</div>
+
+
+
+</div>
+</td><td width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td>
+</tr>
+<!--================= end Content==================-->
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<!--================= end Menu, NavBar, Content ==================-->
+<!--================= start Footer ==================-->
+<div class="footer">
+<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+<td colspan="2" height="1"><img height="1" width="1" alt="" src="../../../skin/images/spacer.gif"><a href="../../../skin/images/label.gif"></a><a href="../../../skin/images/page.gif"></a><a href="../../../skin/images/chapter.gif"></a><a href="../../../skin/images/chapter_open.gif"></a><a href="../../../skin/images/current.gif"></a></td>
+</tr>
+<tr>
+<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
+                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
+                <br>
+<script type="text/javascript" language="JavaScript"><!--
+                  document.write(" - "+"Last Published: " + document.lastModified);
+                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../../../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../../../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+</tr>
+</table>
+</div>
+<!--================= end Footer ==================-->
+</body>
+</html>

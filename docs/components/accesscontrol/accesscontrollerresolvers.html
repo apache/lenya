@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Access Controller Resolvers</title>
+<link type="text/css" href="../../../skin/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!--================= start Banner ==================-->
+<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--================= start Group Logo ==================-->
+<td valign="bottom" bgcolor="#FFFFFF">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png"></a>
+</div>
+<span class="textheader">Apache Cocoon</span>
+<!--================= start Tabs ==================-->
+<div class="tab">
+<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="10" valign="bottom">
+<div class="tab-separator">
+<img alt="" width="10" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../installation/index.html"><font face="Arial, Helvetica, Sans-serif">Installation</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a href="../../index.html"><font color="#000000">Documentation</font></a>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<!--================= end Tabs ==================-->
+</td>
+<!--================= end Group Logo ==================-->
+<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<div style="padding: 10px" class="headerlogo">
+<a href="http://cocoon.apache.org/lenya"><img border="0" class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png"></a>
+</div>
+<div class="tab-separator"></div>
+</td>
+<!--================= end Project Logo ==================-->
+</tr>
+</table>
+<!--================= end Banner ==================-->
+<div class="tab-bar">
+<img alt="" height="5" src="../../../skin/images/spacer.gif"></div>
+<!--================= start Menu, NavBar, Content ==================-->
+<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
+<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<!--================= start left top NavBar ==================-->
+<!--================= end left top NavBar ==================-->
+<td valign="top">
+<div class="tab-subbar">
+<img width="10" height="5" alt="" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="top">
+<!--================= start Menu items ==================-->
+<div class="menu">
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<div class="menutitle">Integrator/Dev Guide</div>
+<div class="menuitemgroup">
+<div class="menutitle">Components</div>
+<div class="menuitemgroup">
+<div class="menutitle">Access&nbsp;Control</div>
+<div class="menuitemgroup">
+<div class="menuitem">
+<a href="terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a href="accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Access Controller Resolvers</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a href="#Defining+the+Roles+in+lenya.roles">Defining the Roles in lenya.roles</a>
+</div>
+<div class="menupageitem">
+<a href="#Declaring+the+Access+Controller+Resolvers+in+cocoon.xconf">Declaring the Access Controller Resolvers in cocoon.xconf</a>
+</div>
+<div class="menupageitem">
+<a href="#Publication+Access+Controller+Resolver">Publication Access Controller Resolver</a>
+</div>
+<div class="menupageitem">
+<a href="#Configurable+Access+Controller+Resolver">Configurable Access Controller Resolver</a>
+</div>
+<div class="menupageitem">
+<a href="#Composable+Access+Controller+Resolver">Composable Access Controller Resolver</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a href="authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a href="policymanagers.html">Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--================= end Menu items ==================-->
+</td><td valign="top">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr>
+<td></td><td height="5"><img alt="" width="150" height="1" src="../../../skin/images/spacer.gif"></td><td></td>
+</tr>
+</table>
+</td><td valign="top" width="100%">
+<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" colspan="3">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<!--================= start Content==================-->
+<tr>
+<td align="left" width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td><td align="left" width="100%">
+<div class="content">
+<table cellspacing="0" cellpadding="0" class="title">
+<tr>
+<td valign="middle">
+<h1>Access Controller Resolvers</h1>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="accesscontrollerresolvers.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+</tr>
+</table>
+	
+
+<a name="N101C9"></a><a name="Introduction"></a>
+<h3>Introduction</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>An AccessControllerResolver resolves the appropriate AccessController for a URL.</p>
+</div>
+
+
+<a name="N101D3"></a><a name="Defining+the+Roles+in+lenya.roles"></a>
+<h3>Defining the Roles in lenya.roles</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>To obtain an AccessControllerResolver, the AccessControllerResolverSelector is
+		used. A component which wants to obtain an AccessController asks the
+		selector for the <span class="codefrag">composable</span> AccessControllerResolver.
+		The <span class="codefrag">composable</span> AccessControllerResolver itself uses the
+		selector to obtain its child AccessControllerResolvers.
+		</p>
+<pre class="code">&lt;role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
+    shorthand="access-controller-resolvers"
+    default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector"&gt;
+  &lt;hint shorthand="configurable"
+      class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"/&gt;
+  &lt;hint shorthand="publication"
+      class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/&gt;
+  &lt;hint shorthand="composable"
+      class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/&gt;
+&lt;/role&gt;</pre>
+</div>
+
+
+<a name="N101E8"></a><a name="Declaring+the+Access+Controller+Resolvers+in+cocoon.xconf"></a>
+<h3>Declaring the Access Controller Resolvers in cocoon.xconf</h3>
+<div style="margin-left: 0 ; border: 2px">
+<pre class="code">&lt;access-controller-resolvers&gt;
+  &lt;component-instance logger="lenya.ac.accesscontrollerresolver.publication"
+    class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+    name="publication"&gt;
+  &lt;/component-instance&gt;
+  &lt;component-instance logger="lenya.ac.accesscontrollerresolver.global"
+    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    name="global"&gt;
+    &lt;access-controller type="global"/&gt;
+  &lt;/component-instance&gt;
+  &lt;component-instance logger="lenya.ac.accesscontrollerresolver.composable"
+    class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+    name="composable"&gt;
+    &lt;resolver type="publication"/&gt;
+    &lt;resolver type="global"/&gt;
+  &lt;/component-instance&gt;
+&lt;/access-controller-resolvers&gt;</pre>
+</div>
+
+
+<a name="N101F4"></a><a name="Publication+Access+Controller+Resolver"></a>
+<h3>Publication Access Controller Resolver</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>The PublicationAccessControllerResolver looks for a <span class="codefrag">config/ac.xconf</span>
+		file inside the publication. If you want to use multiple AccessControllers
+		within your Lenya installation, just declare them in the <span class="codefrag">
+		cocoon-xconf.xsl</span> file and choose the type in the <span class="codefrag">
+		config/ac.xconf</span> file:</p>
+<pre class="code">&lt;?xml version="1.0"?&gt;
+&lt;access-controller type="publication-file"&gt;
+  &lt;authorizer type="usecase"&gt;
+    &lt;config-file
+        src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/&gt;
+  &lt;/authorizer&gt;
+  &lt;accreditable-manager&gt;
+    &lt;parameter name="directory"
+        value="context:///lenya/pubs/default/config/ac/passwd"/&gt;
+  &lt;/accreditable-manager&gt;
+&lt;/access-controller&gt;</pre>
+<p>As you see here, you can put additional configuration code inside the 
+		<span class="codefrag">&lt;access-controller&gt;</span> element. This allows you to use
+		the same AccessController type for multiple publications with different
+		configurations.</p>
+</div>
+
+
+<a name="N10212"></a><a name="Configurable+Access+Controller+Resolver"></a>
+<h3>Configurable Access Controller Resolver</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>The ConfigurableAccessControllerResolver can be configured with an
+		AccessController directly inside <span class="codefrag">cocoon.xconf</span>:</p>
+<pre class="code">&lt;component-instance logger="lenya.ac.accesscontrollerresolver"
+    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    name="global"&gt;
+  &lt;access-controller type="global"/&gt;
+&lt;/component-instance&gt; </pre>
+</div>
+
+
+<a name="N10224"></a><a name="Composable+Access+Controller+Resolver"></a>
+<h3>Composable Access Controller Resolver</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>The ComposableAccessControllerResolver is configured with a list of
+		AccessControllerResolvers. Each one of these resolvers is invoked until one
+		is successful. If no resolver finds an AccessController, the
+		ComposableAccessControllerResolver returns <span class="codefrag">null</span>.</p>
+<pre class="code">&lt;component-instance logger="lenya.ac.accesscontrollerresolver"
+    class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+    name="composable"&gt;
+  &lt;resolver type="publication"/&gt;
+  &lt;resolver type="global"/&gt;
+&lt;/component-instance&gt;</pre>
+</div>
+
+  
+</div>
+</td><td width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td>
+</tr>
+<!--================= end Content==================-->
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<!--================= end Menu, NavBar, Content ==================-->
+<!--================= start Footer ==================-->
+<div class="footer">
+<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+<td colspan="2" height="1"><img height="1" width="1" alt="" src="../../../skin/images/spacer.gif"><a href="../../../skin/images/label.gif"></a><a href="../../../skin/images/page.gif"></a><a href="../../../skin/images/chapter.gif"></a><a href="../../../skin/images/chapter_open.gif"></a><a href="../../../skin/images/current.gif"></a></td>
+</tr>
+<tr>
+<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
+                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
+                <br>
+<script type="text/javascript" language="JavaScript"><!--
+                  document.write(" - "+"Last Published: " + document.lastModified);
+                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../../../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../../../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+</tr>
+</table>
+</div>
+<!--================= end Footer ==================-->
+</body>
+</html>
