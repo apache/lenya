@@ -24,14 +24,18 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * Class for testing AntTasks.
  * Extend this class to test your own AntTask.
- * By default, the task ID is "ant-test". Use {@link #getTaskId()} to change the task ID.
+ * The task ID can be passed as a command-line argument.
+ * If the argument is omitted, the task ID is "ant-test".
+ * Override {@link #getTaskId()} to provide a hard-coded task ID.
  * Override {@link #evaluateTest()} to add your evaluation code.
  * @author  andreas
  */
 public class AntTaskTest extends TestCase {
+    
+    private static String taskId = "ant-test";
 
     /**
-     * 
+     * Creates a new AntTaskTest object.
      */
     public AntTaskTest(String test) {
         super(test);
@@ -44,11 +48,14 @@ public class AntTaskTest extends TestCase {
      */
     public static void main(String[] args) {
         args = PublicationHelper.extractPublicationArguments(args);
+        if (args.length > 0) {
+            taskId = args[0];
+        }
         TestRunner.run(getSuite());
     }
 
     /**
-     *
+     * Creates a test suite.
      */
     public static Test getSuite() {
         return new TestSuite(AntTaskTest.class);
@@ -63,13 +70,17 @@ public class AntTaskTest extends TestCase {
         evaluateTest();
     }
     
+    /**
+     * Returns the task ID of the task to test.
+     * @return The task ID.
+     */
     protected String getTaskId() {
-        return "ant-test";
+        return taskId;
     }
     
     /**
      * Tests an AntTask.
-     * @param taskId
+     * @param taskId The ID of the task to test.
      * @throws ExecutionException
      * @throws IOException
      * @throws ParameterException
