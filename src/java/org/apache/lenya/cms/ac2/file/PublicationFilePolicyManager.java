@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.4 2003/08/12 15:52:49 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.5 2003/08/12 16:08:38 andreas Exp $
 <License>
 
  ============================================================================
@@ -113,12 +113,12 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
         List policies = new ArrayList();
 
         String[] directories = path.split("/");
-        path = "/" + publication.getId();
         
         getLogger().debug("Building URL policy for URL [" + path + "]");
-        Policy policy = buildURLPolicy(controller, path);
+        Policy policy = buildURLPolicy(controller, "/" + publication.getId() + path);
         policies.add(policy);
 
+        path = "/" + publication.getId();
         for (int i = 0; i < directories.length; i++) {
             path += directories[i] + "/";
             getLogger().debug("Building subtree policy for URL [" + path + "]");
