@@ -22,10 +22,7 @@
   <!-- =========================== FlowScript =============================== -->
 
   <map:flow language="javascript">
-    <map:script src="content/ac/passwd.js"/>
     <map:script src="content/admin/common/access-control.js"/>
-    <map:script src="content/admin/users/user-admin.js"/>
-    <map:script src="content/admin/groups/group-admin.js"/>
     <map:script src="content/admin/ipranges/iprange-admin.js"/>
   </map:flow>
   
@@ -78,16 +75,7 @@
   <map:pipelines>
     
     <map:pipeline>
-      <map:match pattern="admin.addUser" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="admin.userProfile" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="admin.changePassword" type="usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="admin.userGroups" type="usecase">
+      <map:match type="registered-usecase">
         <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
