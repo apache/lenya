@@ -38,24 +38,6 @@
     <property name="snapshot.src.dir" value="${dist.root}/${snapshot.src.name}"/>
   </target>
 
-  <!-- Build ant tasks used during the Lenya build -->
-  <target name="build-custom-tasks" depends="init">
-    <javac srcdir="${tools.tasks.dest}"
-           destdir="${tools.tasks.dest}"
-           debug="${debug}"
-           optimize="{optimize}"
-           deprecation="${deprecation}"
-           target="${target.vm}"
-           nowarn="${nowarn}"
-           classpathref="classpath"
-           source="1.4"/>
-
-    <taskdef name="copyJavaSources" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
-    <taskdef name="bulkCopy" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
-    <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
-    <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
-  </target>
-
   <!-- Prepare the build webapp directory -->
   <target name="check-cocoon" depends="init" unless="gump.skipcocoonbuild">
     <echo>Check if Cocoon has been built: ${cocoon.src.dir}/build/webapp</echo>
@@ -73,7 +55,6 @@
 
   <!-- Copy the bulk of the cocoon webapp to our destination -->
   <target name="prepare-cocoon" depends="check-cocoon" unless="gump.skipcocoonbuild">
-    <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
         <exclude name="*.xml"/>
@@ -120,8 +101,8 @@
   </target>
 
   <!-- Prepare the source code -->
-  <target name="prepare-src" depends="prepare, build-custom-tasks">
-    <!-- Copy java source files from ${java.dir} to ${build.src} -->
+  <target name="prepare-src" depends="prepare">
+  	<!-- Copy java source files from ${java.dir} to ${build.src} -->
     <copy todir="${build.src}" filtering="on">
       <fileset dir="${java.dir}">
         <exclude name="log4j-properties.xsl"/>

@@ -57,7 +57,7 @@
   </target>
   
   <!-- prepares the tests. -->
-  <target name="tests.prepare" depends="build-custom-tasks">
+  <target name="tests.prepare">
     <mkdir dir="${build.test}"/>
 
     <!-- Copy test files to build test dir -->
