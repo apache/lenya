@@ -22,6 +22,7 @@
   xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
 >
@@ -41,26 +42,26 @@
   </tabs>
  
   <menus>
-    <menu name="File" label="File">
+    <menu i18n:attr="name" name="File" label="File">
       <block>
         <item uc:usecase="create" uc:step="showscreen" href="?doctype=entry">Add&#160;new&#160;Entry</item>
       </block>
       <block>
-        <item uc:usecase="edit" href="../../sidebar.html?lenya.step=open&amp;form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
-        <item uc:usecase="publish" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html&amp;lenya.step=showscreen">Publish Sidebar</item>
+        <item uc:usecase="edit" uc:step="open" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
+        <item uc:usecase="publish" uc:step="showscreen" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html"><i18n:text>Publish Sidebar</i18n:text></item>
       </block>
       <block>
-        <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
+        <item uc:usecase="logout"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
  
-    <menu name="Search" label="Search">
+    <menu i18n:attr="name" name="Search" label="Search">
     </menu>
  
-    <menu name="Help" label="Help">
+    <menu i18n:attr="name" name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute>Documentation</item>
-        <item href="http://wiki.apache.org/lenya">Wiki&#160;Documentation</item>
+        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+        <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
@@ -68,10 +69,10 @@
       </block>
     </menu>
  
-    <menu name="Debug" label="Debug">
+    <menu i18n:attr="name" name="Debug" label="Debug">
       <block>
-        <item href="index.xml">Feed</item>
-        <item href="lenya-page-body.xml">Body</item>
+        <item href="index.xml"><i18n:text>Feed</i18n:text></item>
+        <item href="lenya-page-body.xml"><i18n:text>Body</i18n:text></item>
       </block>
       <block>
         <item href="/lenya/blog/atomapi/">introspection</item>

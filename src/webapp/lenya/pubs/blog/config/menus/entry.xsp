@@ -24,6 +24,7 @@
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
 >
 
 <menu>
@@ -48,51 +49,53 @@
   </tabs>
 
   <menus>
-    <menu name="File" label="File">
+    <menu i18n:attr="name" name="File" label="File">
       <block>
-        <item uc:usecase="edit" href="?lenya.step=open&amp;form=entry">Edit&#160;with&#160;Forms</item>
-        <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
-        <item uc:usecase="1formedit" href="?lenya.step=open">Edit&#160;with&#160;one&#160;Form</item>
+        <item uc:usecase="edit" uc:step="open" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
+        <item href="index-bxe.html">Edit&#160;with&#160;BXE</item>
+        <item uc:usecase="1formedit" uc:step="open">Edit&#160;with&#160;one&#160;Form</item>
       </block>
       <block>
-        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute>Publish</item>
+        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute><i18n:text>Publish</i18n:text></item>
       </block>
+      <!--
       <block>
         <item uc:usecase="rollback" uc:step="showscreen" href="?">Revisions</item>
       </block>
+      -->
       <block>
-        <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
+        <item uc:usecase="logout"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
 
-    <menu name="Search" label="Search">
+    <menu i18n:attr="name" name="Search" label="Search">
     </menu>
 
-    <menu name="Help" label="Help">
+    <menu i18n:attr="name" name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute>Documentation</item>
-        <item href="http://wiki.apache.org/lenya">Wiki&#160;Documentation</item>
+        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+        <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
+        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
+        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
       </block>
     </menu>
 
-    <menu name="Debug" label="Debug">
+    <menu i18n:attr="name" name="Debug" label="Debug">
       <block>
-        <item href="index.xml">Feed</item>
-        <item href="lenya-page-body.xml">Body</item>
+        <item href="index.xml"><i18n:text>Feed</i18n:text></item>
+        <item href="lenya-page-body.xml"><i18n:text>Body</i18n:text></item>
       </block>
       <block>
         <item href="http://www.feedvalidator.org">Feed Validator</item>
       </block>
       <block>
-        <item href="index-bxeng.html">HTML&#160;for&#160;BXE</item>
-        <item href="config-bxeng.xml">Config&#160;for&#160;BXE</item>
-        <item href="entry-bxeng.xsl">XSLT&#160;for&#160;BXE</item>
-        <item href="entry-bxeng.css">CSS&#160;for&#160;BXE</item>
-        <item href="entry-relaxng-bxeng.xml">RelaxNG&#160;for&#160;BXE</item>
+        <item href="index-bxe.html">HTML&#160;for&#160;BXE</item>
+        <item href="config-bxe.xml">Config&#160;for&#160;BXE</item>
+        <item href="entry-bxe.xsl">XSLT&#160;for&#160;BXE</item>
+        <item href="entry-bxe.css">CSS&#160;for&#160;BXE</item>
+        <item href="entry-relaxng-bxe.xml">RelaxNG&#160;for&#160;BXE</item>
       </block>
     </menu>
   </menus>
