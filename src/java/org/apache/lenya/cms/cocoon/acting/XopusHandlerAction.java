@@ -11,12 +11,16 @@ import java.io.StringReader;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.excalibur.io.IOUtil;
 import org.apache.avalon.framework.component.ComponentException;
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.ComposerAction;
+//import org.apache.cocoon.acting.ComposerAction;
+import org.apache.cocoon.acting.ConfigurableComposerAction;
 import org.apache.cocoon.components.parser.Parser;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -42,7 +46,21 @@ import org.xml.sax.SAXException;
  * @created 2002.02.21
  * @version 0.1
  */
-public class XopusHandlerAction extends ComposerAction {
+public class XopusHandlerAction extends ConfigurableComposerAction {
+  private String xmlRoot=null;
+  private String xsdRoot=null;
+  private String xslRoot=null;
+/**
+ *
+ */
+  public void configure(Configuration conf) throws ConfigurationException{
+    super.configure(conf);
+
+    xmlRoot=conf.getChild("xml").getAttribute("href");
+    xslRoot=conf.getChild("xsd").getAttribute("href");
+    xsdRoot=conf.getChild("xsl").getAttribute("href");
+    getLogger().debug("CONFIGURATION:\n"+xmlRoot+"\n"+xslRoot+"\n"+xsdRoot);
+    }
 
   public java.util.Map act (Redirector redirector, 
                             SourceResolver resolver, 
@@ -53,6 +71,16 @@ public class XopusHandlerAction extends ComposerAction {
                                    ComponentException, 
                                    SAXException, 
                                    ProcessingException {
+
+    // Get absolute path of parent of sitemap
+    org.apache.cocoon.environment.Source input_source=resolver.resolve("");
+    String sitemapParentPath=input_source.getSystemId();
+    sitemapParentPath=sitemapParentPath.substring(5); // Remove "file:" protocoll
+    getLogger().debug("PARENT PATH OF SITEMAP: "+sitemapParentPath);
+    getLogger().debug("XML: "+sitemapParentPath+"/"+xmlRoot);
+    getLogger().debug("XSL: "+sitemapParentPath+"/"+xslRoot);
+    getLogger().debug("XSD: "+sitemapParentPath+"/"+xsdRoot);
+
 
     // Get request object
     HttpRequest httpReq = (HttpRequest)objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
