@@ -8,8 +8,10 @@
   <xsl:param name="lenya.usecase" select="'asset'"/>
   <xsl:param name="lenya.step"/>
   <xsl:param name="insert"/>
-  <xsl:param name="insertimage"/>
-  
+  <xsl:param name="insertimage"/> 
+  <xsl:param name="insertTemplate"/>
+  <xsl:param name="insertReplace"/>
+ 
   <xsl:param name="assetXPath"/>
   <xsl:param name="insertWhere"/>
 
@@ -78,14 +80,8 @@
 	  <input type="hidden" name="insertWhere" value="{$insertWhere}"/>
 	  <input type="hidden" name="properties.insert.asset.document-id" value="{/usecase:asset/usecase:document-id}"/>
 	  <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
-	  <xsl:choose>
-	    <xsl:when test="$insertimage = 'true'">
-	      <input type="hidden" name="properties.insert.asset.insertTemplate" value="insertImg.xml"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <input type="hidden" name="properties.insert.asset.insertTemplate" value="insertAsset.xml"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
+          <input type="hidden" name="properties.insert.asset.insertTemplate" value="{$insertTemplate}"/>
+          <input type="hidden" name="properties.insert.asset.insertReplace" value="{$insertReplace}"/>
 	  <table class="lenya-table-noborder">
 	    <xsl:if test="$error = 'true'">
 	      <tr>
@@ -161,14 +157,8 @@
 	      <input type="hidden" name="task-id" value="insert-asset"/>
 	      <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
 	      <input type="hidden" name="properties.insert.asset.insertWhere" value="{$insertWhere}"/>
-	      <xsl:choose>
-		<xsl:when test="$insertimage = 'true'">
-		  <input type="hidden" name="properties.insert.asset.insertTemplate" value="insertImg.xml"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <input type="hidden" name="properties.insert.asset.insertTemplate" value="insertAsset.xml"/>
-		</xsl:otherwise>
-	      </xsl:choose>
+	      <input type="hidden" name="properties.insert.asset.insertTemplate" value="{$insertTemplate}"/>
+	      <input type="hidden" name="properties.insert.asset.insertReplace" value="{$insertReplace}"/>
 	      <input type="hidden" name="properties.insert.asset.area" value="{/usecase:asset/usecase:area}"/>
 	      <input type="hidden" name="properties.insert.asset.document-id" value="{/usecase:asset/usecase:document-id}"/>
 	      <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
