@@ -1,5 +1,5 @@
 /*
- * $Id: XPointerFactory.java,v 1.3 2003/02/07 12:14:25 ah Exp $
+ * $Id: XPointerFactory.java,v 1.4 2003/02/17 13:21:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -188,11 +188,8 @@ public class XPointerFactory {
         for (int i = 0; i < xpaths.size(); i++) {
             Vector n = xpointer.select(node, (String) xpaths.elementAt(i));
 
-            //Vector n=xpointer.select(copyToXercesTree(node),(String)xpaths.elementAt(i)); // WORK AROUND
             for (int j = 0; j < n.size(); j++) {
                 nodes.addElement(n.elementAt(j));
-
-                //nodes.addElement(copyToDefaultTree((Node)n.elementAt(j))); // WORK AROUND
             }
         }
 
@@ -211,7 +208,6 @@ public class XPointerFactory {
         throws MalformedXPointerException {
         if ((xpointer.indexOf("xpointer(") == 0) &&
                 (xpointer.charAt(xpointer.length() - 1) == ')')) {
-            //System.err.println("XPointer: "+xpointer);
             String substring = xpointer.substring(9, xpointer.length());
             int i = substring.indexOf(")xpointer(");
 
@@ -316,42 +312,6 @@ public class XPointerFactory {
         }
     }
 
-    /*
-         public void getText(Node node,Vector text)
-              {
-              short type=node.getNodeType();
-              switch(type)
-                    {
-                    case Node.TEXT_NODE:
-                       {
-                       String txt=StringUtil.moveEOLtoWhiteSpace(node.getNodeValue());
-                       txt=StringUtil.removeWhiteSpaceFromBeginningAndEnd(txt);
-                       if(txt.length() > 1)
-                         {
-                         text.addElement(txt);
-                         }
-                       else if(txt.length() == 1)
-                         {
-                         if(txt.charAt(0) != ' ')
-                           {
-                           text.addElement(txt);
-                           }
-                         }
-                       break;
-                       }
-                    default:
-                       break;
-                    }
-              if(node.hasChildNodes())
-                {
-                NodeList nl=node.getChildNodes();
-                for(int i=0;i<nl.getLength();i++)
-                   {
-                   getText(nl.item(i),text);
-                   }
-                }
-              }
-    */
     public Document employees() {
         DOMParserFactory dpf = new DOMParserFactory();
         Document doc = dpf.getDocument();

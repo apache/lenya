@@ -102,20 +102,9 @@ public class XLink
 /**
  *
  */
-     public Element getXLink(Document document,DOMParserFactory dpf)
-          {
-          return (Element)dpf.cloneNode(document,element,true);
-/*
-          Element element=dpf.newElementNode(document,name);
-          element.setAttribute("xlink:href",href);
-          element.setAttribute("xlink:show",show);
-          if(type != null)
-            {
-            element.setAttribute("xlink:type",type);
-            }
-          return element;
-*/
-          }
+     public Element getXLink(Document document,DOMParserFactory dpf) {
+	 return (Element)dpf.cloneNode(document,element,true);
+     }
 /**
  *
  */

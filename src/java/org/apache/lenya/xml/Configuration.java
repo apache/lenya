@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.4 2003/02/07 12:14:25 ah Exp $
+ * $Id: Configuration.java,v 1.5 2003/02/17 13:21:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -142,7 +142,6 @@ public class Configuration {
         System.out.println(conf.DocumentTypeXPath);
         System.out.println("Default Workflow Status: " + conf.DefaultStatus);
 
-        //System.out.println("WFDocTypeDefaultXSLT (Etwas faul!): "+conf.WFDocTypeDefaultXSLT);
         System.out.println(conf.html2xmlTranslation);
         System.out.println(conf.xpsgwsconf);
         System.out.println(conf.xpsgwssimpleconf);
@@ -168,11 +167,10 @@ public class Configuration {
         }
 
         ClassLoader cl = ClassLoader.getSystemClassLoader();
+	// FIXME:
         URL url = org.apache.log4j.helpers.Loader.getResource("hallo");
 
-        //URL url=cl.getResource(resourcePathRelativeToClasspath);
         if (url == null) {
-            //log.fatal("Could not find resource on classpath: "+resourcePathRelativeToClasspath);
             //return null;
         }
 
@@ -183,7 +181,6 @@ public class Configuration {
         try {
             properties.load(Configuration.class.getResourceAsStream("xpsconf.properties"));
 
-            //properties.load(url.openStream());
         } catch (Exception e) {
             log.error(e);
         }
@@ -226,8 +223,6 @@ public class Configuration {
             DocumentTypeXPath = getProperty(properties, "DocumentTypeXPath");
             DefaultStatus = getProperty(properties, "DefaultStatus");
 
-            //WFDocTypeDefaultXSLT=getProperty(properties,"WFDocTypeDefaultXSLT");
-            //WFDocTypeDefaultXSLT=getProperty(properties,"WFDocTypeDefault");
             html2xmlTranslation = getProperty(properties, "html2xmlTranslation");
             xpsgwsconf = getProperty(properties, "xpsgwsconf");
             xpsgwssimpleconf = getProperty(properties, "xpsgwssimpleconf");

@@ -1,5 +1,5 @@
 /*
- * $Id: ReTokenizeFile.java,v 1.6 2003/02/16 23:41:10 michi Exp $
+ * $Id: ReTokenizeFile.java,v 1.7 2003/02/17 13:23:09 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,7 +58,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class ReTokenizeFile {
     /**
@@ -82,9 +82,6 @@ public class ReTokenizeFile {
 
             String s = null;
 
-            /*
-                  s=new ReTokenizeFile().reTokenize(new File(args[0]));
-            */
             s = new ReTokenizeFile().getExcerpt(new File(args[0]), words);
             System.err.println(".main(): Excerpt: " + s);
         } catch (Exception e) {
@@ -102,7 +99,6 @@ public class ReTokenizeFile {
      * @throws Exception DOCUMENT ME!
      */
     public String reTokenize(File file) throws Exception {
-        //System.out.println("ReTokenizeFile.reTokenize(File): Re-tokenize "+file);
         TokenStream ts = new StandardAnalyzer().tokenStream(new HTMLParser(file).getReader());
 
         Token token = null;
@@ -124,7 +120,6 @@ public class ReTokenizeFile {
             file = new File(file.getAbsolutePath() + ".txt");
         }
 
-        //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Get excerpt from "+file);
         java.io.Reader reader = new HTMLParser(file).getReader();
         char[] chars = new char[1024];
         int chars_read;
@@ -136,26 +131,12 @@ public class ReTokenizeFile {
 
         String html = writer.toString();
 
-        /*
-            InputStream in=new FileInputStream(file.getAbsolutePath());
-            byte[] buffer=new byte[1024];
-            int bytes_read;
-            ByteArrayOutputStream bufferOut=new ByteArrayOutputStream();
-            while((bytes_read=in.read(buffer)) != -1){
-              bufferOut.write(buffer,0,bytes_read);
-              }
-            in.close();
-            String html=bufferOut.toString();
-        */
-
-        //if(true) return html;
         int index = -1;
 
         for (int i = 0; i < words.length; i++) {
             index = html.toLowerCase().indexOf(words[i].toLowerCase());
 
             if (index >= 0) {
-                //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Word matched: "+words[i]);
                 int offset = 100;
                 int start = index - offset;
 
@@ -173,7 +154,6 @@ public class ReTokenizeFile {
             }
         }
 
-        //System.out.println("ReTokenizeFile.getExcerpt(File,String[]): No word matches: "+index);
         return null;
     }
 
@@ -215,7 +195,5 @@ public class ReTokenizeFile {
         }
 
         return "<excerpt>" + emphasizedString + "</excerpt>";
-
-        //return "<excerpt>... hallo <word>Levi</word>. Wie sp&auml;t ist es? Gute ...</excerpt>";
     }
 }

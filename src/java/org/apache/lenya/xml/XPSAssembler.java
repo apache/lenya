@@ -1,5 +1,5 @@
 /*
- * $Id: XPSAssembler.java,v 1.4 2003/02/07 16:55:06 michicms Exp $
+ * $Id: XPSAssembler.java,v 1.5 2003/02/17 13:21:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -88,12 +88,9 @@ public class XPSAssembler implements XPSInclude {
         }
     }
 
-    //public XPSAssembler(String includeoption,String cacheFolder)
     public XPSAssembler(String includeoption) {
         this();
         conf.INCLUDE = includeoption;
-
-        //conf.cacheFolder=cacheFolder;
     }
 
     /**
@@ -114,28 +111,13 @@ public class XPSAssembler implements XPSInclude {
             return;
         }
 
-        /*
-                  Document notAssembledDocument=null;
-                  try
-                    {
-                    notAssembledDocument=new DOMParserFactory().getDocument(args[0]);
-                    }
-                  catch(FileNotFoundException e)
-                    {
-                    }
-                  Document document=xpsa.assemble(notAssembledDocument,args[0]);
-        */
         String cocoon = null; // e.g. http://127.0.0.1:8080/wyona-cms/nwt
         Document document = xpsa.assemble(args[0], cocoon);
 
         try {
-            //PrintWriter out=new PrintWriter(new FileWriter("temp.xml"));
-            //PrintWriter out=new PrintWriter(System.out);
             OutputStream out = System.out;
             new DOMWriter(out, "utf-8").printWithoutFormatting(document);
 
-            //new DOMWriter(out,"iso-8859-1").printWithoutFormatting(document);
-            //new DOMWriter(out,"ascii").printWithoutFormatting(document);
             System.out.print("\n");
             out.flush();
         } catch (Exception e) {
@@ -152,7 +134,6 @@ public class XPSAssembler implements XPSInclude {
      * @return DOCUMENT ME!
      */
     public Document assemble(String reference, String cocoon) {
-        //String cocoon="http://127.0.0.1:8080/wyona-cms/unipublic";
         File workingDirectory = new File(System.getProperty("user.dir"));
         XPSSourceInformation sourceInfo = new XPSSourceInformation("file:" + workingDirectory +
                 "/dummy.xml", cocoon);
@@ -162,18 +143,6 @@ public class XPSAssembler implements XPSInclude {
         XPSSourceInformation currentInfo = new XPSSourceInformation(args[0], sourceInfo, cocoon);
         deleteFromCache(currentInfo.url);
 
-        /*
-                  if(conf.cacheFolder != null) // Remove from cache
-                    {
-                    XPSSourceInformation currentInfo=new XPSSourceInformation(args[0],sourceInfo);
-                    File cacheFile=getCacheFile(currentInfo.url);
-                    if(cacheFile.isFile())
-                      {
-                      log.debug("Remove file from cache: "+cacheFile.getAbsolutePath());
-                      cacheFile.delete();
-                      }
-                    }
-        */
         Vector nodes = include(args, sourceInfo);
         log.debug(sourceInfo);
 
@@ -211,7 +180,6 @@ public class XPSAssembler implements XPSInclude {
      * @return DOCUMENT ME!
      */
     public Document assemble(Document document, String reference, String cocoon) {
-        //String cocoon="http://127.0.0.1:8080/wyona-cms/unipublic";
         Element root = document.getDocumentElement();
         Document assembledDocument = dpf.getDocument();
         Element assembledRoot = (Element) dpf.cloneNode(assembledDocument, root, false);
@@ -253,7 +221,6 @@ public class XPSAssembler implements XPSInclude {
          {
             cacheFile = getCacheFile(currentInfo.url);
 
-            //String protocol=currentInfo.url.getProtocol();
             if (protocol.equals("file")) {
                 File originalFile = new File(currentInfo.url.getFile());
                 originalFileLastModified = originalFile.lastModified();
@@ -264,17 +231,13 @@ public class XPSAssembler implements XPSInclude {
                 log.error("No such protocol: " + protocol);
             }
 
-            if (cacheFile.isFile() && (cacheFile.lastModified() >= originalFileLastModified))
-            // File already exists in cache and is newer than original File
-             {
-                //System.err.println("WARNING: Retrieving file from cache: "+cacheFile.getName());
+            if (cacheFile.isFile() && (cacheFile.lastModified() >= originalFileLastModified)) {
+		// File already exists in cache and is newer than original File
                 url = new URL("file:" + cacheFile.getAbsolutePath());
-            } else // File does not exist in cache
-             {
+            } else { // File does not exist in cache
                 url = new URL(currentInfo.url.toString());
             }
-        } else // No cache folder specified
-         {
+        } else { // No cache folder specified
             url = new URL(currentInfo.url.toString());
         }
 
@@ -303,12 +266,9 @@ public class XPSAssembler implements XPSInclude {
         if (cacheFile != null) {
             String protocol = currentInfo.url.getProtocol();
 
-            if (!cacheFile.exists()) // Write "Xlink" to cache
-             {
-                //System.err.println("WARNING: Write into cache: "+cacheFile.getName());
+            if (!cacheFile.exists()) { // Write "Xlink" to cache
                 return writeToCache(protocol, cacheFile, newDocument);
-            } else // cacheFile exists
-             {
+            } else { // cacheFile exists
                 long originalFileLastModified = 0;
                 String p = currentInfo.url.getProtocol();
 
@@ -325,10 +285,8 @@ public class XPSAssembler implements XPSInclude {
                     log.error("No such protocol: " + p);
                 }
 
-                if (cacheFile.lastModified() < originalFileLastModified)
-                // File in cache is older than original File
-                 {
-                    //System.err.println("WARNING: Overwrite cache: "+cacheFile.getName());
+                if (cacheFile.lastModified() < originalFileLastModified) {
+		    // File in cache is older than original File
                     return writeToCache(protocol, cacheFile, newDocument);
                 }
             }
@@ -386,12 +344,6 @@ public class XPSAssembler implements XPSInclude {
 
         boolean writtenToCache = tryWritingToCache(currentInfo, newDocument);
 
-        /*
-                  if(writtenToCache)
-                    {
-                    System.err.println("Written into cache: "+currentInfo.url);
-                    }
-        */
         if (currentInfo.url.getRef() == null) // No XPointer specified
          {
             nodes.addElement(newRoot);
@@ -603,10 +555,6 @@ public class XPSAssembler implements XPSInclude {
         exceptionElement.appendChild(dpf.newElementNode(dummyDocument, "NoNodesReturnedFromXLink"));
         dummyRoot.appendChild(exceptionElement);
 
-        /*
-                  Comment comment=dpf.newCommentNode(dummyDocument,"No nodes returned from XLink");
-                  dummyRoot.appendChild(comment);
-        */
         return dummyRoot.getChildNodes();
     }
 
@@ -679,12 +627,8 @@ public class XPSAssembler implements XPSInclude {
         }
 
         try {
-            //System.err.println("Write to cache: "+cacheFile.getAbsolutePath());
-            //PrintWriter out=new PrintWriter(new FileWriter(cacheFile.getAbsolutePath()));
-            //new DOMWriter(out).print(newDocument);
             OutputStream out = new FileOutputStream(cacheFile.getAbsolutePath());
 
-            //new DOMWriter(out,"utf-8").printWithoutFormatting(newDocument);
             new DOMWriter(out, "iso-8859-1").printWithoutFormatting(newDocument);
             out.close();
 

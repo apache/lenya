@@ -1,5 +1,5 @@
 /*
- * $Id: XalanXPointer.java,v 1.2 2003/02/07 12:14:26 ah Exp $
+ * $Id: XalanXPointer.java,v 1.3 2003/02/17 13:22:28 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -121,30 +121,12 @@ public class XalanXPointer implements XPointer {
      * @exception Exception ...
      */
     public Vector select(Node node, String xpath) throws Exception {
-        //System.err.println("XalanXPointer: "+xpath);
-        //System.err.println("XalanXPointer: "+node.getNodeName());
         NodeList children = node.getChildNodes();
 
-        /*
-                  for(int i=0;i<children.getLength();i++)
-                     {
-                     System.err.println(((Node)children.item(i)).getNodeName());
-                     }
-        */
         log.debug(node.getNodeName() + "  " + xpath);
 
-        //NodeList nl=null; //new XPathAPI().selectNodeList(node,xpath);
         NodeList nl = new org.apache.xpath.XPathAPI().selectNodeList(node, xpath);
 
-        //System.err.println("XalanXPointer: "+nl.getLength());
-
-        /*
-                  NodeList kinder=node.getChildNodes();
-                  for(int i=0;i<kinder.getLength();i++)
-                     {
-                     System.err.println(((Node)kinder.item(i)).getNodeName());
-                     }
-        */
         Vector nodes = new Vector();
 
         for (int i = 0; i < nl.getLength(); i++) {

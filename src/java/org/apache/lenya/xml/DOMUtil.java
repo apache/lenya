@@ -115,8 +115,6 @@ public class DOMUtil {
                 du.getElementValue(document.getDocumentElement(),
                     new XPath("Datm")));
 
-            //   System.out.println("Datum/Tag="+du.getElementValue(document.getDocumentElement(),new XPath("Datum/Tag")));
-            //System.out.println("/Artikel/Datum/Tag="+du.getElementValue(document,new XPath("/Artikel/Datum/Tag")));
             System.out.println("Datum/Monat/@Name=" +
                 du.getAttributeValue(document.getDocumentElement(),
                     new XPath("Datum/Monat/@Name")));
@@ -301,39 +299,6 @@ public class DOMUtil {
         return value;
     }
 
-    //   public Element[] getAllElements(Element element, XPath xpath) throws Exception {
-    //     log.debug(xpath);
-    //     if (xpath.parts.length > 0){
-    //       NodeList nl = element.getElementsByTagName(xpath.parts[0]);
-    //       log.debug("nodelist: "+nl.getLength());
-    //       if (nl.getLength() == 0){
-    //         throw new Exception("There are no elements with Name \""+xpath.parts[0]+"\".");
-    //       } else {
-    //         log.debug("xpath: "+xpath.parts.length);
-    //         Vector el = null;
-    //         if (xpath.parts.length == 1){
-    //           log.debug("path is 1 long");
-    //           for (int i=0; i<nl.getLength(); i++) {
-    //             el.addElement( nl.item(i) );
-    //           } 
-    //         } else {
-    //           String newXPathString=xpath.parts[1];
-    //           for(int i=2;i<xpath.parts.length;i++){
-    //             newXPathString=newXPathString+"/"+xpath.parts[i];
-    //           }
-    //           XPath newxpath = new XPath(newXPathString);
-    //           log.debug("newxpath: "+newxpath.toString());
-    //           for (int i=0; i<nl.getLength(); i++) {
-    //             log.debug("node: "+i+" "+ nl.item(i));
-    //             el.addElement( getElement((Element)nl.item(i), newxpath) );
-    //           } 
-    //         }
-    //         log.debug("--------returning: "+el.size());
-    //         return (Element[])el.toArray();
-    //       }
-    //     }
-    //     return null;
-    //   }
 
     /**
      * Return the value of an attribte named e.g.

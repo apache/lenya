@@ -1,5 +1,5 @@
 /*
- * $Id: MailTask.java,v 1.21 2003/02/14 17:00:09 andreas Exp $
+ * $Id: MailTask.java,v 1.22 2003/02/17 13:23:43 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -129,8 +129,7 @@ public class MailTask extends AbstractTask {
                 // generate absolute URI from relative URI
                 if (!uri.startsWith("http://") && !uri.startsWith("ftp://") &&
                         !uri.startsWith("file://")) {
-                    //                    String absoluteUri =
-                    //                        getParameters().getParameter(PARAMETER_SERVER_URI);
+
                     String absoluteUri = "http://127.0.0.1";
                     String serverPort = getParameters().getParameter(PARAMETER_SERVER_PORT, "");
 

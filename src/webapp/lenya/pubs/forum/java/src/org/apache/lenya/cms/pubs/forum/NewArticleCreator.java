@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.6 2003/02/07 12:14:12 ah Exp $
+ * $Id: NewArticleCreator.java,v 1.7 2003/02/17 13:24:28 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -111,8 +111,6 @@ public class NewArticleCreator extends AbstractParentChildCreator {
         long id = System.currentTimeMillis();
 
         return "" + id;
-
-        //return "articles/"+id+"/index.xml";
     }
 
     /**
@@ -140,7 +138,6 @@ public class NewArticleCreator extends AbstractParentChildCreator {
         Element eid = (Element) doc.selectSingleNode("/article/meta/id");
         log.error(eid.getPath() + " " + eid.getText());
 
-        //eid.remove(org.dom4j.DocumentHelper.createText("@ID@"));
         eid.addText(id);
         log.error(eid.getPath() + " " + eid.getText());
 
@@ -196,7 +193,5 @@ public class NewArticleCreator extends AbstractParentChildCreator {
         FileWriter fileWriter = new FileWriter(filename);
         doc.write(fileWriter);
         fileWriter.close();
-
-        //copyFile(new File(doctypeSample),new File(filename));
     }
 }

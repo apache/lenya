@@ -1,5 +1,5 @@
 /*
- * $Id: XPSSourceInformation.java,v 1.6 2003/02/07 18:36:01 ah Exp $
+ * $Id: XPSSourceInformation.java,v 1.7 2003/02/17 13:21:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -133,8 +133,6 @@ public class XPSSourceInformation {
 
             // transform URI to system-independent path and create absolute path
             try {
-                //File file = org.wyona.util.FileUtil.file(parent.getParent(), urlString);
-                //File file = new File(org.apache.avalon.excalibur.io.FileUtil.catPath(parent.getAbsolutePath(), urlString));
                 int index = urlString.indexOf("#");
                 String xpointer = "";
                 String relativePath = urlString;
@@ -150,7 +148,6 @@ public class XPSSourceInformation {
 
                 url = new URL("file", null, -1, file.getCanonicalPath() + xpointer);
 
-                //url = file.toURL();
                 log.info("Concatenated URL: " + url);
             } catch (MalformedURLException exception) {
                 log.error(exception);

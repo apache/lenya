@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.5 2003/02/11 19:51:09 andreas Exp $
+ * $Id: DocumentHelper.java,v 1.6 2003/02/17 13:21:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,11 +63,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-/*
-import org.apache.commons.jxpath.Container;
-import org.apache.commons.jxpath.JXPathContext;
-import org.apache.commons.jxpath.xml.DocumentContainer;
- */
+
 import org.apache.log.Hierarchy;
 import org.apache.log.Logger;
 import org.w3c.dom.DOMException;
@@ -269,38 +265,4 @@ public class DocumentHelper {
         }
         return (Element[]) childElements.toArray(new Element[childElements.size()]);
     }
-
-    /*
-    public static Element[] getXPathElements(File file, String xPath) {
-        
-        URL url = file.toURL();
-        JXPathContext context = JXPathContext.newContext(new XMLFile(url));
-        Object object = context.getValue(xPath);
-        
-        Logger logger = Hierarchy.getDefaultHierarchy().getLoggerFor("DocumentHelper");
-        if (object != null)
-            logger.debug("Object is null");
-        else
-            logger.debug("Object is instance of " + object.getClass().getName());
-    }
-    
-    public static class XMLFile {
-        
-        public XMLFile(URL url) {
-            this.url = url;
-        }
-        
-        private Container locations = null;
-        private URL url;
-
-        public Container getLocations(){
-            if (locations == null) {
-                URL url = getClass().getResource("Vendor.xml");
-                locations = new DocumentContainer(url, DocumentContainer.MODEL_DOM);
-            }
-            return locations;
-        }
-    }
-     */
-    
 }

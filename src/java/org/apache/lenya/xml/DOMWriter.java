@@ -1,5 +1,5 @@
 /*
- * $Id: DOMWriter.java,v 1.3 2003/02/07 12:14:25 ah Exp $
+ * $Id: DOMWriter.java,v 1.4 2003/02/17 13:21:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -96,8 +96,6 @@ public class DOMWriter {
      */
     public DOMWriter(OutputStream os) throws Exception {
         this(os, "utf-8");
-
-        //this.encoding="utf-8";
     }
 
     /**
@@ -144,7 +142,6 @@ public class DOMWriter {
         }
 
         try {
-            //new DOMWriter(System.out,"utf-8").printWithoutFormatting(document);
             new DOMWriter(System.out, "iso-8859-1").printWithoutFormatting(document);
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -179,17 +176,6 @@ public class DOMWriter {
                 root.appendChild(dpf.newTextNode(doc, values[i]));
             }
 
-            //
-            /*
-                        Vector text=new Vector();
-                        xpf.getText((Node)nodes.elementAt(0),text);
-                        String string="";
-                        for(int i=0;i<text.size();i++)
-                           {
-                           string=string+(String)text.elementAt(i);
-                           }
-                        root.appendChild(dpf.newTextNode(doc,string));
-            */
             doc.appendChild(root);
             new DOMWriter(new PrintWriter(System.out)).print(doc);
             System.out.print("\n");
@@ -370,21 +356,18 @@ public class DOMWriter {
 
             switch (ch) {
             case '<': {
-                //str.append("&lt;");
                 str.append("&#60;");
 
                 break;
             }
 
             case '>': {
-                //str.append("&gt;");
                 str.append("&#62;");
 
                 break;
             }
 
             case '&': {
-                //str.append("&amp;");
                 str.append("&#38;");
 
                 break;

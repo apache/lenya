@@ -1,5 +1,5 @@
 /*
- * $Id: DOMParserFactory.java,v 1.5 2003/02/13 19:10:17 andreas Exp $
+ * $Id: DOMParserFactory.java,v 1.6 2003/02/17 13:21:36 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -125,23 +125,6 @@ public class DOMParserFactory {
 
             return;
         }
-
-        /*
-                  new DOMWriter(new PrintWriter(System.out)).print(doc);
-                  System.out.println("");
-
-                  if(doc != null)
-                    {
-                    System.out.println("DOM Implementation: "+(DOMImplementation)doc.getImplementation());
-                    }
-
-                  Document newDocument=dpf.getDocument();
-                  Element newRoot=(Element)dpf.cloneNode(newDocument,doc.getDocumentElement(),true);
-                  newDocument.appendChild(newRoot);
-
-                  new DOMWriter(new PrintWriter(System.out)).print(newDocument);
-                  System.out.println("");
-        */
     }
 
     public Document getDocument(String filename) throws FileNotFoundException, Exception {
