@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+This sitemap creates default navigation components.
+-->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <!-- =========================== Components ================================ -->
+
+  <map:components>
+    <map:generators default="file"/>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions/>
+    <map:selectors/>
+  </map:components>
+  <!-- =========================== Pipelines ================================ -->
+  
+  <map:pipelines>
+  
+    <!-- pattern: <pub-id>/<nav-element>/<nav-id>.xml -->
+    <map:match pattern="*/*/**.xml">
+    
+      <!-- load sitetree -->
+      <map:generate src="cocoon://{1}/sitetree.xml"/>
+      
+      <!-- use publication-specific presentation if available -->
+      <map:act type="resource-exists">
+        <map:parameter name="url" value="pubs/{1}/xslt/lenya/navigation/{2}.xsl"/>
+        <map:transform src="pubs/{1}/xslt/lenya/navigation/{2}.xsl">
+          <map:parameter name="navigation-id" value="{3}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:act>
+      
+      <!-- use default presentation -->
+      <map:transform src="xslt/navigation/{2}.xsl">
+        <map:parameter name="navigation-id" value="{3}"/>
+      </map:transform>
+      <map:serialize type="xml"/>
+    </map:match>
+  
+  </map:pipelines>
+
+</map:sitemap>
