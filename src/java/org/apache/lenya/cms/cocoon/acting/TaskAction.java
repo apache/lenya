@@ -40,12 +40,13 @@ public class TaskAction
     public void configure(Configuration configuration) throws ConfigurationException{
         super.configure(configuration);
         
-        if (configuration.getChild("task") != null) {
+        try {
             taskId = configuration.getChild("task").getAttribute(TaskManager.TASK_ID_ATTRIBUTE);
             log.debug("CONFIGURATION:\ntask id = " + taskId);
         }
-        else
+        catch(ConfigurationException e) {
             log.debug("CONFIGURATION:\nNo task id provided");
+        }
     } 
     
     public java.util.Map act(
