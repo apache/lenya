@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.28 2003/09/12 10:07:32 egli Exp $
+$Id: PageEnvelopeModule.java,v 1.29 2003/09/12 16:47:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,12 +57,19 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
+import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -75,7 +82,9 @@ import java.util.Map;
  * 
  * @author  andreas
  */
-public class PageEnvelopeModule extends AbstractInputModule {
+public class PageEnvelopeModule extends AbstractInputModule implements Serviceable {
+
+    private ServiceManager manager;
 
     /**
      * Get the the page envelope for the given objectModel.
@@ -88,7 +97,7 @@ public class PageEnvelopeModule extends AbstractInputModule {
      */
     protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {
         PageEnvelope envelope = null;
-        
+
         if (getLogger().isDebugEnabled()) {
             Request request = ObjectModelHelper.getRequest(objectModel);
             getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
@@ -102,6 +111,8 @@ public class PageEnvelopeModule extends AbstractInputModule {
 
         return envelope;
     }
+
+    protected static final String URI_PARAMETER_DOCTYPE = "doctype";
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
@@ -172,18 +183,57 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocument().getLastModified();
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
+            } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
+                value = getDocumentType(objectModel, envelope);
             }
         } catch (Exception e) {
             throw new ConfigurationException(
                 "Getting attribute for name [" + name + "] failed: ",
                 e);
         }
-        
+
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Returning [" + name + "] = [" + value + "]");
         }
-        
+
         return value;
+    }
+
+    /**
+     * Returns the document type.
+     * @param objectModel The object model.
+     * @param envelope The page envelope.
+     * @return A string.
+     * @throws ServiceException when something went wrong.
+     * @throws URIParameterizerException when something went wrong.
+     */
+    protected String getDocumentType(Map objectModel, PageEnvelope envelope) throws ServiceException, URIParameterizerException {
+        String documentType;
+        URIParameterizer parameterizer = null;
+        Map map = null;
+        try {
+            parameterizer = (URIParameterizer) manager.lookup(URIParameterizer.ROLE);
+        
+            Parameters parameters = new Parameters();
+            parameters.setParameter(
+                URI_PARAMETER_DOCTYPE,
+                "cocoon://uri-parameter/"
+                    + envelope.getPublication().getId()
+                    + "/"
+                    + URI_PARAMETER_DOCTYPE);
+                    
+            String source = envelope.getDocument().getArea() + envelope.getDocument().getDocumentURL();
+                    
+            Request request = ObjectModelHelper.getRequest(objectModel);
+        
+            map = parameterizer.parameterize(request.getRequestURI(), source, parameters);
+            documentType = (String) map.get(URI_PARAMETER_DOCTYPE);
+        } finally {
+            if (parameterizer != null) {
+                manager.release(parameterizer);
+            }
+        }
+        return documentType;
     }
 
     /**
@@ -202,5 +252,12 @@ public class PageEnvelopeModule extends AbstractInputModule {
         Object[] objects = { getAttribute(name, modeConf, objectModel)};
 
         return objects;
+    }
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 }

@@ -1,5 +1,5 @@
 /*
-$Id: URIParametrizerAction.java,v 1.17 2003/09/12 16:47:53 andreas Exp $
+$Id: URIParameterizerException.java,v 1.1 2003/09/12 16:47:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,63 +53,43 @@ $Id: URIParametrizerAction.java,v 1.17 2003/09/12 16:47:53 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.cocoon.acting;
-
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.cocoon.acting.ConfigurableComposerAction;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
-
-import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
-import java.util.Map;
+package org.apache.lenya.cms.cocoon.uriparameterizer;
 
 /**
- * DOCUMENT ME!
- *
- * @author $Author: andreas $
- * @version $Revision: 1.17 $
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class URIParametrizerAction extends ConfigurableComposerAction {
+public class URIParameterizerException extends Exception {
+
     /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Ctor.
      */
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String src,
-        Parameters parameters)
-        throws Exception {
+    public URIParameterizerException() {
+        super();
+    }
 
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        String uri = request.getRequestURI();
+    /**
+     * Ctor.
+     * @param message The message.
+     */
+    public URIParameterizerException(String message) {
+        super(message);
+    }
 
-        URIParameterizer parameterizer = null;
-        Map map = null;
-        try {
-            parameterizer = (URIParameterizer) manager.lookup(URIParameterizer.ROLE);
-            map = parameterizer.parameterize(uri, src, parameters);
-        } finally {
-            if (parameterizer != null) {
-                manager.release(parameterizer);
-            }
-        }
+    /**
+     * Ctor.
+     * @param message The message.
+     * @param cause The cause.
+     */
+    public URIParameterizerException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-        return map;
-
+    /**
+     * Ctor.
+     * @param cause The cause.
+     */
+    public URIParameterizerException(Throwable cause) {
+        super(cause);
     }
 
 }

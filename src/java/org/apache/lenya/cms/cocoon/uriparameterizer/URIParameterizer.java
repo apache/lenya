@@ -1,5 +1,5 @@
 /*
-$Id: URIParametrizerAction.java,v 1.17 2003/09/12 16:47:53 andreas Exp $
+$Id: URIParameterizer.java,v 1.1 2003/09/12 16:47:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,63 +53,28 @@ $Id: URIParametrizerAction.java,v 1.17 2003/09/12 16:47:53 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.cocoon.acting;
+package org.apache.lenya.cms.cocoon.uriparameterizer;
 
-import org.apache.avalon.framework.parameters.Parameters;
-
-import org.apache.cocoon.acting.ConfigurableComposerAction;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Redirector;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.SourceResolver;
-
-import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 import java.util.Map;
 
+import org.apache.avalon.framework.component.Component;
+import org.apache.avalon.framework.parameters.Parameters;
+
 /**
- * DOCUMENT ME!
- *
- * @author $Author: andreas $
- * @version $Revision: 1.17 $
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class URIParametrizerAction extends ConfigurableComposerAction {
+public interface URIParameterizer extends Component {
+    
+    String ROLE = URIParameterizer.class.getName();
+    
     /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * Receives the URI parameters for a source.
+     * @param uri The URI.
+     * @param src The source.
+     * @param parameters The parameters.
+     * @return The URI parameters.
+     * @throws URIParameterizerException when something went wrong.
      */
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String src,
-        Parameters parameters)
-        throws Exception {
-
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        String uri = request.getRequestURI();
-
-        URIParameterizer parameterizer = null;
-        Map map = null;
-        try {
-            parameterizer = (URIParameterizer) manager.lookup(URIParameterizer.ROLE);
-            map = parameterizer.parameterize(uri, src, parameters);
-        } finally {
-            if (parameterizer != null) {
-                manager.release(parameterizer);
-            }
-        }
-
-        return map;
-
-    }
-
+    Map parameterize(String uri, String src, Parameters parameters)
+        throws URIParameterizerException;
 }
