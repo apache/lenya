@@ -613,7 +613,7 @@
     <taskdef name="linkRewrite" classname="org.apache.lenya.cms.ant.LinkRewriteTask"/>
     
     <linkRewrite baseDir="${pub.dir}/${authoring.dir}"
-      stylesheet="${pub.dir}/../../xslt/linkRewrite.xsl"
+      stylesheet="${pub.dir}/../../xslt/util/linkRewrite.xsl"
       area="${authoring.area}"
       oldDocumentId="${node.firstdocumentid}"
       newDocumentId="${node.newdocumentid}"/>

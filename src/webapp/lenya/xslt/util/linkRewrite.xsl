@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- $Id: linkRewrite.xsl,v 1.1 2003/11/24 17:25:49 egli Exp $ -->
+<!-- $Id: linkRewrite.xsl,v 1.1 2003/12/04 17:01:21 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
