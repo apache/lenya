@@ -182,15 +182,28 @@
 
   <xs:element name="body.head">
     <xs:complexType mixed="true">
-      <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="dossier" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="spitzmarke" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element ref="media" minOccurs="0" maxOccurs="unbounded"></xs:element>
           <xs:element ref="dateline" minOccurs="0" maxOccurs="unbounded"></xs:element>
           <xs:element name="byline" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="abstract" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="teasertext" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element ref="hedline" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:choice></xs:sequence>
+        </xs:choice>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
+  <xs:element name="dossier">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="dateline">
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -218,6 +231,8 @@
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
   <xs:element name="hedline">
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -227,6 +242,8 @@
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
+
+
   <xs:element name="TopicSet">
     <xs:complexType mixed="true">
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">

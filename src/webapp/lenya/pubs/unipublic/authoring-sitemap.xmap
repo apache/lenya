@@ -699,8 +699,20 @@
       </map:match>
 
 
+
       <!-- Edit with Xopus2 -->
       <map:match pattern="xopus2/*/*/*/*/index.html">
+        <map:act type="reserved-checkout">
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="date" value="{date}"/> 
+          </map:generate>
+          <map:transform src="../../stylesheets/cms/Page/rco-exception.xsl"/>
+          <map:serialize type="html"/>
+        </map:act>
+
         <map:aggregate element="wyona">
           <map:part src="cocoon:/menus/{1}/{2}/{3}/{4}/article.xml"/>
           <map:part src="cocoon:/{1}/{2}/{3}/{4}/index.xml" element="cmsbody"/>
@@ -713,6 +725,9 @@
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
+
+
+
 
       <!-- select dossier screen -->
       <map:match pattern="selectDossierScreen">
