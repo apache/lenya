@@ -21,7 +21,7 @@
 	
 	Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.3 2002/01/15 10:36:19 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.4 2002/01/15 10:44:42 giacomo Exp $
 
 -->
 
@@ -305,7 +305,8 @@
   in the server.xml configuration is set to true so changes in the classes
   are reflected immediately.
   -->
-  <target name="webapp" depends="compile">
+  <target name="webapp" depends="compile" 
+          description="Builds the webapp directory ready to be linked into a servlet engines context directory">
 
     <!--
     overwrite some parts of the previously unpacked 
@@ -344,7 +345,7 @@
   The war target just packs up what was created in the webapp target
   (and triggers the javadoc target with the dependency)
   -->
-  <target name="war" depends="webapp, javadocs">
+  <target name="war" depends="webapp, javadocs" description="Builds the deployable war file">
 
     <mkdir dir="${dist.bin.dir}"/>
 
@@ -363,7 +364,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="dist" depends="clean, war">
+  <target name="dist" depends="clean, war" description="Build a distribution tar ball">
 
     <copy todir="${dist.bin.dir}">
       <fileset dir="${src.dist.dir}">
@@ -415,11 +416,11 @@
   <!-- ============================================================ -->
   <!-- Clean targets                                                -->
   <!-- ============================================================ -->
-  <target name="clean" depends="init" description="* Cleans the build directories">
+  <target name="clean" depends="init" description="Cleans the build directories">
     <delete dir="${build.dir}"/>
   </target>
 
-  <target name="distclean" depends="clean" description="* Cleans everything to the original state">
+  <target name="distclean" depends="clean" description="Cleans everything to the original state">
     <delete dir="${build.root}"/>
     <delete file="${dist.root}"/>
   </target>
