@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xopus.xmap,v 1.17 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id: xopus.xmap,v 1.18 2004/03/19 10:21:35 gregor Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -92,8 +92,9 @@
       
       <!-- Error handling -->
       <map:handle-errors>
-        <map:transform src="context://stylesheets/system/error2html.xsl"/>
-        <map:serialize status-code="500"/>
+        <map:generate type="notifying"/>
+        <map:transform src="context://stylesheets/system/error2html.xslt"/>
+        <map:serialize/>
       </map:handle-errors>
 
     </map:pipeline>

@@ -15,13 +15,20 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.52 2004/03/13 12:31:32 gregor Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.53 2004/03/19 10:21:35 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components/>
 
-  <map:resources/>
+  <map:resources>
+          <map:resource name="style-cms-page">
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize/>
+    </map:resource>
+ </map:resources>
 
   <map:pipelines>
     <!-- WebDAV -->
@@ -111,10 +118,22 @@
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml"/>
         <map:serialize type="html"/>
       </map:match>
-      <map:handle-errors type="500">
-        <!-- FIXME: can also contain other errors than "not published yet" -->
-        <map:transform src="../../xslt/exception/not-published-yet.xsl"/>
-        <map:transform src="../../xslt/util/page2xhtml.xsl"/>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
         <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
@@ -164,7 +183,24 @@
         <map:generate src="config/doctypes/schemas/entry.rng"/>
         <map:serialize type="xml"/>
       </map:match>
-      <map:handle-errors type="500"/>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>
     </map:pipeline>
     <!-- /BX Editor: Entries -->
 
@@ -212,10 +248,22 @@
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
         <map:serialize type="html"/>
       </map:match>
-      <map:handle-errors type="500">
-        <!-- FIXME: can also contain other errors than "not published yet" -->
-        <map:transform src="../../xslt/exception/not-published-yet.xsl"/>
-        <map:transform src="../../xslt/util/page2xhtml.xsl"/>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
         <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
@@ -251,7 +299,24 @@
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/archive.xml"/>
         <map:serialize type="html"/>
       </map:match>
-      <map:handle-errors type="500"/>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>
     </map:pipeline>
 
   </map:pipelines>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.196 2004/03/14 18:06:39 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.197 2004/03/19 10:21:35 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -531,7 +531,7 @@
           <map:generate type="stream">
             <map:parameter name="form-name" value="content"/>
           </map:generate>
-          <map:act type="validate">
+            <map:act type="validate">
             <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
             <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
             <map:transform src="xslt/authoring/edit/oneform.xsl">
@@ -1209,14 +1209,21 @@
         
       </map:match>
       
-      <map:handle-errors type="500">
+      <map:handle-errors>
         <map:select type="exception">
           <map:when test="parent-node-not-found">
+            <map:generate src="content/util/empty.xml"/>
             <map:transform src="xslt/exception/parent-node-not-found.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:when>
+      <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+      </map:otherwise>
         </map:select>
-        <map:serialize type="html"/>
+            <map:serialize type="html"/>
       </map:handle-errors>
       
     </map:pipeline>

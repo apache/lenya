@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.123 2004/03/13 14:34:20 gregor Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.124 2004/03/19 10:21:36 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -30,7 +30,8 @@
     <map:generator label="content" logger="sitemap.generator.wsproxy" name="wsproxy" src="org.apache.cocoon.generation.WebServiceProxyGenerator"/>
     <!-- FIXME: What is the difference to wsproxy? -->
     <map:generator label="content" logger="sitemap.generator.proxy" name="proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
-<!-- =========================== Lenya CMS ================================= -->
+   <map:generator name="notifying" src="org.apache.cocoon.sitemap.NotifyingGenerator"/>
+    <!-- =========================== Lenya CMS ================================= -->
     <map:generator name="servletproxy" src="org.apache.lenya.cms.cocoon.generation.ProxyGenerator"/>
   </map:generators>
 
@@ -125,6 +126,12 @@
    </map:selector>
    
    <map:selector logger="sitemap.selector.resource-exists" name="resource-exists" src="org.apache.cocoon.selection.ResourceExistsSelector"/>
+    <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
+      <exception  name="sax" class="org.xml.sax.SAXException" unroll="true"/>
+      <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>
+      <exception  class="org.apache.cocoon.ProcessingException" unroll="true"/>
+      <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/> 
+    </map:selector>
 </map:selectors>
 
   <map:actions>
@@ -250,6 +257,15 @@
         <map:transform type="xinclude"/>
         <map:serialize/>
       </map:match>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+
     </map:pipeline>
 
 
@@ -283,12 +299,49 @@
           <map:call resource="style-cms-page"/>
       </map:match>
 
+    <!-- images -->
+    <map:match pattern="images/*.gif">
+      <map:read mime-type="images/gif" src="resources/images/{1}.gif"/>
+    </map:match>
+
+    <!-- CSS stylesheets -->
+    <map:match pattern="styles/*.css">
+      <map:read mime-type="text/css" src="resources/styles/{1}.css"/>
+    </map:match>
+
+    <!-- JavaScript scripts -->
+    <map:match pattern="scripts/*.js">
+      <map:read mime-type="text/javascript" src="resources/scripts/{1}.js"/>
+    </map:match>
+    
+    <!-- favicon -->
+    <map:match pattern="**favicon.ico">
+      <map:read mime-type="image/x-icon" src="resources/icons/cocoon.ico"/>
+    </map:match>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+
     </map:pipeline>
 
     <map:pipeline internal-only="true">
       <map:match pattern="**">
         <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+
     </map:pipeline>
       
     <map:pipeline>
@@ -298,6 +351,15 @@
         </map:act>
         <map:redirect-to uri="{request:requestURI}?lenya.usecase=login&amp;lenya.step=showscreen" session="true"/>
       </map:match>
+
+      <map:handle-errors>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+
     </map:pipeline>
 
   </map:pipelines>

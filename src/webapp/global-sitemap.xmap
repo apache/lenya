@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.55 2004/03/18 16:06:18 michi Exp $ -->
+<!-- $Id: global-sitemap.xmap,v 1.56 2004/03/19 10:21:36 gregor Exp $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -582,7 +582,26 @@
         <map:generate src="lenya/content/about.xml"/>
         <map:call resource="style-cms-page"/>
       </map:match>
-    </map:pipeline>
+      
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+      </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>    
+      </map:pipeline>
 
     <!-- Search with Lucene -->
     <map:pipeline>
@@ -590,12 +609,23 @@
         <map:mount uri-prefix="" src="lenya/{fallback:lucene.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
       <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
         <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
+        <map:transform src="stylesheets/system/error2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
+      </map:otherwise>
+        </map:select>
         <map:serialize type="html"/>
-      </map:handle-errors>
+      </map:handle-errors>    
     </map:pipeline>
     <!-- /Search with Lucene -->
 
@@ -698,25 +728,19 @@
       </map:match>
 
       <!-- Access Control Policies -->
-      <map:pipeline>
         <map:match pattern="*/policies/**">
           <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
-      </map:pipeline>
       
       <!-- Scheduler -->
-      <map:pipeline>
       	<map:match pattern="scheduler/**">
           <map:mount uri-prefix="scheduler/" src="lenya/scheduler.xmap" check-reload="true" reload-method="synchron"/>
       	</map:match>
-      </map:pipeline>
 
       <!-- Info usecases -->
-      <map:pipeline>
         <map:match type="usecase" pattern="info-*">
           <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
-      </map:pipeline>
 
       <!-- Internal usecases -->
       <map:pipeline internal-only="true">
@@ -728,22 +752,17 @@
       </map:pipeline>
 
       <!-- Usecases -->
-      <map:pipeline>
         <map:match type="usecase" pattern="*">
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
-      </map:pipeline>
 
       <!-- Info area -->
-      <map:pipeline>
       	<map:match pattern="*/*/info-sitetree/**">
           <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
       	</map:match>
         <map:match pattern="*/info-*/**">
           <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
-      </map:pipeline>
-
 
       <!-- Publications -->
       <map:match pattern="*/">
@@ -796,16 +815,34 @@
       </map:match>
 
       <!-- Admin Area -->
-      <map:pipeline>
         <map:match pattern="*/admin/**">
           <map:mount uri-prefix="{1}/admin" src="lenya/admin.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
-      </map:pipeline>
-
+      
       <!-- Enter the actual publication -->
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
+
+      <map:handle-errors>
+       <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+      </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>    
+
     </map:pipeline>
 
  </map:pipelines>
