@@ -77,15 +77,15 @@
 	</tr>
 	<tr>
 	  <td>computerworld</td>
-	  <td><code>publicationid</code></td>
+	  <td><code>publication-id</code></td>
 	</tr>
 	<tr>
 	  <td>authoring</td>
-	  <td><code>environment</code></td>
+	  <td><code>area</code></td>
 	</tr>
 	<tr>
 	  <td>news/foo</td>
-	  <td><code>documentid</code></td>
+	  <td><code>document-id</code></td>
 	</tr>
       </table>
     </section>
