@@ -108,18 +108,11 @@ src="/wyona-cms/wyona/menu/images/wyona_unten.gif" width="101" /></td>
 
 
 <xsl:template match="menu" mode="nav">
-  <div style="float:left; width:1px"><img src="/wyona-cms/ethz-mat/scratchpad/menus/images/grau.gif" width="1" height="21" /></div>
+  <div style="float:left; width:1px"><img src="/wyona-cms/wyona/menu/images/grau.gif" width="1" height="21" /></div>
 
 <div style="float:left; width:10px">&#160;</div>
 
 <div id="nav{@label}" class="click" style="float:left; width:46px">
-<!--
-<div id="nav{@label}" class="click" style="float:left" width="20">
--->
-<!--
-<img src="/wyona-cms/ethz-mat/scratchpad/menus/images/pixel.gif" height="4" /><br />
-<img src="/wyona-cms/ethz-mat/scratchpad/menus/images/file.gif" />
--->
 <font size="-1" face="verdana"><b>&#160;<xsl:value-of select="@name"/></b></font>
 </div>
 
@@ -139,7 +132,7 @@ src="/wyona-cms/wyona/menu/images/wyona_unten.gif" width="101" /></td>
           <xsl:for-each select="item">
             <xsl:choose>
               <xsl:when test="@href">
-                <a class="mI"><xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute><xsl:value-of select="."/></a>
+                <a class="mI"><xsl:attribute name="href"><xsl:value-of select="normalize-space(@href)"/></xsl:attribute><xsl:value-of select="."/></a>
               </xsl:when>
               <xsl:otherwise>
                 <span class="mI"><xsl:value-of select="."/></span>
@@ -148,8 +141,8 @@ src="/wyona-cms/wyona/menu/images/wyona_unten.gif" width="101" /></td>
           </xsl:for-each>
 
     <xsl:if test="position() != last()">
-      <div style="height: 2px; background-color: #EEEEEE; background-repeat: repeat; background-attachment: scroll; background-image: url('/wyona-cms/ethz-mat/scratchpad/menus/images/dotted.gif'); background-position: 0% 50%">
-      <div style="background:#EEEEEE"><img src="/wyona-cms/ethz-mat/scratchpad/menus/images/pixel.gif" height="1" alt="" />
+      <div style="height: 2px; background-color: #EEEEEE; background-repeat: repeat; background-attachment: scroll; background-image: url('/wyona-cms/wyona/menu/images/dotted.gif'); background-position: 0% 50%">
+      <div style="background:#EEEEEE"><img src="/wyona-cms/wyona/menu/images/pixel.gif" height="1" alt="" />
       </div>
       </div>
     </xsl:if>
