@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.7 2003/09/12 00:36:05 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.8 2003/09/12 16:34:28 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:name>Lenya's Weblog</lenya:name>
 <lenya:description>
-This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo"</a> specification for syndicating, archiving and
+This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo/Atom"</a> specification for syndicating, archiving and
 editing episodic web sites (e.g. weblogs).
 
 <h3>Customizing the layout</h3>
