@@ -60,7 +60,6 @@ import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.lenya.util.XPSFileOutputStream;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XPointerFactory;
@@ -76,7 +75,7 @@ import org.w3c.dom.Node;
  * @author Michael Wechner
  * @author Marc Liyanage
  * @author Edith Chevrier
- * @version $Id: RCML.java,v 1.22 2004/02/10 11:37:17 andreas Exp $
+ * @version $Id: RCML.java,v 1.23 2004/02/10 11:37:36 andreas Exp $
  */
 public class RCML {
     private static Category log = Category.getInstance(RCML.class);
