@@ -82,11 +82,10 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
     Request request
         = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
 
-    if (request instanceof RequestWrapper) {
-        log.debug("\nWrapper: " +request.getServerPort());
-//        log.debug("\nOriginal: "+ ((RequestWrapper) request).getRequest().getServerPort();
-
-}
+    log.debug(
+        "\n----------------------------------------------------------------" +
+        "\n- Request: (" + request.getClass().getName() + ") at port " + request.getServerPort() +
+        "\n----------------------------------------------------------------");
     
     String submitMethod = request.getMethod();
 
