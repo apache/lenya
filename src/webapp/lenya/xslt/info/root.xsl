@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.20 2003/08/22 12:45:41 gregor Exp $
+ $Id: root.xsl,v 1.21 2003/09/02 18:20:19 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -15,6 +15,7 @@
 <xsl:param name="area"/>
 <xsl:param name="tab"/>
 <xsl:param name="documentid"/>
+<xsl:param name="documenturl"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
     
@@ -23,13 +24,14 @@
 <head>
 
 <!-- These three scripts define the tree, do not remove-->
-<script src="ua.js"/>
-<script src="tree.js"/>
-<script src="lenyasitetree/{$chosenlanguage}"/>
-<script>// Load a page as if a node on the tree was clicked (synchronize frames)
+<script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js"/>
+<script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js"/>
+<script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/sitetree.js?language={$chosenlanguage}"/>
+<script language="JavaScript">// Load a page as if a node on the tree was clicked (synchronize frames)
 // (Highlights selection if highlight is available.)
 function loadSynchPage(srclink) 
 {
+
 	var docObj;
 	var linkID;
 	linkID = findIDbyLink(srclink);
@@ -47,7 +49,8 @@ function findIDbyLink(srclink)
 {
 <![CDATA[
   var i=0;
-  for(i=0;i<nEntries&&indexOfEntries[i].link!=srclink;i++);
+  
+  for (i = 0; i < nEntries && indexOfEntries[i].link.split('?')[0] != srclink; i++);
   //FIXME: extend to allow for mapping of index.html to index_defaultlanguage.html
   if (i >= nEntries) {
      return 1; //example: node removed in DB
@@ -142,16 +145,23 @@ function findIDbyLink(srclink)
 <!-- Build the tree. -->
 
    <div id="lenya-info-tree">
-      <div style="display:none;"><table border="0"><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a></td></tr></table></div>
+      <div style="display:none;">
+      	<table border="0">
+      		<tr>
+      			<td>
+      				<a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a>
+      			</td>
+      		</tr>
+      	</table>
+      </div>
     </div>
-  <script>initializeDocument();
- loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/><xsl:call-template name="selecttab"/>');
+  <script>
+ 	initializeDocument();
+  loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/><xsl:value-of select="$documenturl"/>');
    </script>
 </div>
-<div id="lenya-info-content"><iframe src="" id="basefrm" name="basefrm" frameborder="0" width="100%" height="100%"></iframe>
-  <script>
-   	frames['basefrm'].location.href = '<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/><xsl:call-template name="selecttab"/>';
-   </script>
+<div id="lenya-info-content">
+	<xsl:copy-of select="*"/>
 </div>
 </body>
 </html>
