@@ -98,6 +98,14 @@
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
+<!-- FIXME: 2.1.2 does not include jing-20030619.jar -->
+<!--
+    <copy todir="${build.webapp}/WEB-INF/lib">
+      <fileset dir="/home/username/src/cocoon-2.1.x/tools/lib">
+        <include name="jing-20030619.jar"/>
+      </fileset>
+    </copy>
+-->
 
     <!-- copy forrest and default libraries -->
     <!-- FIXME: shouldn't be publication specific -->
