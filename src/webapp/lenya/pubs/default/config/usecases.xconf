@@ -3,5 +3,8 @@
     <component-instance name="default/workflow.submit"
                         logger="lenya.usecases.workflow.submit"
                         class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"/>
+    <component-instance name="default/workflow.reject"
+                        logger="lenya.usecases.workflow.reject"
+                        class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"/>
 
   </xconf>

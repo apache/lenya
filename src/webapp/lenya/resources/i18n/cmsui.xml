@@ -108,6 +108,7 @@
 
   <!-- reject screen -->
   <message key="Reject">Reject</message>
+  <message key="reject-doc">Reject document {0}</message>
   <message key="reject-doc?">Do you want to reject the document {0}?</message>
   
   <!-- cms menu -->
