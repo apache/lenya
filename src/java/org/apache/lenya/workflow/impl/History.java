@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.14 2003/09/02 18:11:34 andreas Exp $
+$Id: History.java,v 1.15 2004/01/21 18:06:24 edith Exp $
 <License>
 
  ============================================================================
@@ -419,11 +419,23 @@ public abstract class History implements WorkflowListener {
         try {
             newFile.getParentFile().mkdirs();
             newFile.createNewFile();
-            FileChannel sourceChannel = new FileInputStream(getHistoryFile()).getChannel();
+            File historyFile = getHistoryFile();
+            FileChannel sourceChannel = new FileInputStream(historyFile).getChannel();
             FileChannel destinationChannel = new FileOutputStream(newFile).getChannel();
             destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
             sourceChannel.close();
             destinationChannel.close();
+            File directory = historyFile.getParentFile();
+            boolean deleted = historyFile.delete();
+            if (!deleted) {
+                throw new WorkflowException("The old history file could not be deleted!");
+            }
+            if (directory.exists()
+                && directory.isDirectory()
+                && directory.listFiles().length == 0) {
+                directory.delete();    
+                }
+            
         } catch (IOException e) {
             throw new WorkflowException(e);
         }
