@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>The AntTask</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Andreas Hartmann" email="andreas.hartmann@lenya.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>The AntTask</title> 
+<p>
+The <code>org.apache.lenya.cms.task.AntTask</code> class can be used to invoke targets
+of an Ant project.
+</p>
+</section>
+
+<section>
+<title>Task Parameters</title>
+<p>
+The task parameters are:
+</p>
+<ul>
+  <li><strong><code>publication-id</code></strong>: The publication ID</li>
+  <li><strong><code>buildfile (optional)</code></strong>: The location of the build file
+      relative to the publication directory. If this parameter is
+      not provided, the file is loaded from the default location (see section <a href="#File+Locations">File Locations</a>).</li>
+  <li><strong><code>target (optional)</code></strong>: The build target. If this parameter
+      is not provided, the default target is executed.</li>
+  <li><strong><code>properties.*</code></strong>: The project properties.</li>
+  <li><strong><code>ant.*</code></strong>: The command-line parameters for Ant <strong>(not implemented yet!)</strong></li>
+</ul>
+</section>
+
+<section>
+<title>Logging</title>
+
+<p>
+Every time an <code>AntTask</code> is invoked, a log file is created unsing
+the <code>XmlLogger</code>
+(<a href="http://ant.apache.org/manual/listeners.html">manual entry</a>,
+<a href="http://nagoya.apache.org/gump/javadoc/ant/build/javadocs/org/apache/tools/ant/XmlLogger.html">JavaDoc</a>).
+For the location of the log files, see section <a href="#File+Locations">File Locations</a>.
+The log history can be viewed at the URI
+</p>
+<source>
+http://.../&lt;publication&gt;/logs/tasks/index.html
+</source>
+</section>
+
+<section>
+<title>Writing AntTask Buildfiles</title>
+<p>
+Any Ant project file can be used as a buildfile for the <code>AntTask</code>.
+There is one implicit property that is always set when an
+<code>AntTask</code> is executed:
+</p>
+<ul>
+  <li><strong><code>pub.dir</code></strong>: The absolute path of publication directory.</li>
+</ul>
+<p>
+The runtime properties of the target can be set using task parameters
+with the prefix <code>properties</code>, e.&#160;g. <code>properties.filename</code>
+for a buildfile property named <code>filename</code>.
+</p>
+</section>
+
+<section>
+<title>Using custom Ant Tasks</title>
+<p>
+The implementation of custom Ant tasks is described in the
+<a href="http://ant.apache.org/manual/index.html">Ant User Manual</a>.
+If you want to write a general Lenya task, put it into the package
+<code>org.lenya.cms.ant</code>. If you want to write a task
+that is only suited for your publication, put it in the
+<code>&lt;publication&gt;/java/src/</code> directory.
+</p>
+</section>
+
+<section>
+<title>File Locations</title>
+
+<p>Default buildfile location:</p>
+<source>&lt;publication&gt;/config/tasks.xml</source>
+
+<p>Log files:</p>
+<source>&lt;publication&gt;/logs/tasks/*.xml</source>
+
+<p>Log file presentation stylesheets:</p>
+<source>&lt;webapp&gt;/lenya/xslt/logs/*.xsl</source>
+</section>
+
+<section>
+<title>Example</title>
+
+<p>
+The following buildfile contains the target <code>publish</code>
+that can be invoked using the <code>AntTask</code>:
+<source>
+<![CDATA[<project name="Example Project" default="publish" basedir=".">
+
+  <!-- implicit properties (set by the AntTask) -->
+  <property name="pub.dir" value=""/>
+
+  <!-- publishing properties -->
+  <property name="authoring.dir" value="content/authoring"/>
+  <property name="live.dir" value="content/live"/>
+  <property name="publish.sources" value=""/>
+
+  <target name="publish">
+    <echo>Publish: Copying files from ${authoring.dir} to ${live.dir}</echo>
+    <copy todir="${pub.dir}/${live.dir}">
+      <fileset dir="${pub.dir}/${authoring.dir}">
+        <include name="${publish.sources}"/>
+      </fileset>
+    </copy>
+  </target>
+
+</project>]]>
+</source>
+</p>
+
+<p>
+You define the task in your <code>tasks.xconf</code> file:
+</p>
+<source>
+<![CDATA[<task id="ant" class="org.lenya.cms.task.AntTask"/>]]>
+</source>
+
+<p>
+To invoke the task from your sitemap, you have to define an appropriate
+<code>TaskAction</code> instance:
+</p>
+<source>
+<![CDATA[<map:action name="publish"
+    src="org.lenya.cms.cocoon.acting.TaskAction">
+  <task id="ant"/>
+</map:action>]]>
+</source>
+
+<p>
+You call the action in a pipeline:
+</p>
+<source>
+<![CDATA[<map:match pattern="publish.html">
+  <map:act type="publish">
+    ...
+  </map:act>
+</map:match>]]>
+</source>
+
+<p>And finally, go to your browser and call the URI with the appropriate
+parameter(s):</p>
+<source>http://.../publish.html?properties.publish.sources=test.xml</source>
+
+</section>
+
+</body>
+</document>
