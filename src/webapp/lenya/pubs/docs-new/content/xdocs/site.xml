@@ -50,6 +50,14 @@
 					<pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
 					<sitetree href="siteTree.html" label="Site tree"/>
 				</publication>
+				<revisioncontrol href="revisioncontrol/" label="Revision Control">
+					<namespaces href="revisioncontroller.html" label="Revision Controller"/>
+					<namespaces href="rcml.html" label="RCML"/>
+					<namespaces href="checkin.html" label="Check In"/>
+					<namespaces href="checkout.html" label="Check Out"/>
+					<namespaces href="version.html" label="Revisions"/>
+					<namespaces href="rollback.html" label="Rollback"/>
+				</revisioncontrol>
 				<repository href="repository/" label="Repository">
 					<namespaces href="webdav.html" label="WebDAV Servers"/>
 				</repository>
