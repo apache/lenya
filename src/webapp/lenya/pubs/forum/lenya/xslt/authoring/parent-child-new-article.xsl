@@ -22,6 +22,7 @@
 <form action="create">
 <input type="hidden" name="parentid" value="{/parent-child/parentid}"/>
 <input type="hidden" name="childid" value="will-be-created-by-java-class"/>
+<input type="hidden" name="childname" value="might-be-created-by-java-class"/>
 <input type="hidden" name="childtype" value="branch"/>
 <input type="hidden" name="doctype" value="Article"/>
 <table>
@@ -35,7 +36,10 @@
 -->
   </tr>
   <tr>
+    <td>childname:</td><td>hidden value="might-be-created-by-java-class"</td>
+<!--
     <td>name:</td><td><input type="text" name="childname"/></td>
+-->
   </tr>
   <tr>
     <td>childtype:</td><td>hidden value="branch"</td>
