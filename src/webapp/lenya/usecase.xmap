@@ -320,6 +320,7 @@
                 <map:parameter name="task-id" value="create"/>
                 <map:generate type="serverpages" src="{fallback:content/util/redirect-document.xsp}">
                   <map:parameter name="document-id" value="{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}"/>
+                  <map:parameter name="language" value="{request-param:properties.create.language}"/>
                 </map:generate>
                 <map:transform src="{fallback:xslt/util/redirect-document.xsl}"/>
                 <map:serialize/>
