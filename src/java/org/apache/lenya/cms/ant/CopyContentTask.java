@@ -1,5 +1,5 @@
 /*
-$Id: CopyContentTask.java,v 1.1 2003/09/01 12:47:59 edith Exp $
+$Id: CopyContentTask.java,v 1.2 2003/09/09 12:10:06 edith Exp $
 <License>
 
  ============================================================================
@@ -72,7 +72,7 @@ import org.apache.tools.ant.BuildException;
  * Ant task to copy the contents (xml files) of a document
  * @author edith
  */
-public class CopyContentTask extends DocumentOperationTask {
+public class CopyContentTask extends TwoDocumentsOperationTask {
 
 	/**
 	 * 
