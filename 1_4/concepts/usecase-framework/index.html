@@ -128,6 +128,9 @@
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.3', '../../../skin/')" id="menu_selected_1.1.3Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Concepts</div>
 <div id="menu_selected_1.1.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a title="" href="../../../1_4/concepts/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
+</div>
 <div class="menupage">
 <div class="menupagetitle">Usecase Framework</div>
 </div>
@@ -221,18 +224,16 @@
 <p>A usecase in Lenya means a user triggered action. In most cases, a usecase is triggered by a CMS menu option on
       a specific document of the publication. This document is the object of the usecases' action (such as edit, delete, publish, ...).</p>
 <p>There are usecases which are independent of a specific document, such as the <span class="codefrag">ac.logout</span> usecase. In that case it does 
-      not matter on what document the usecase is triggered. The part of the request which specifies the document is simple ignored
+      not matter on what document the usecase is triggered. The part of the request which specifies the document is simply ignored
       by usecases that are document independent.</p>
-<p>The CMS menus trigger usecases by setting the lenya.usecase request parameter on the current document. If for example
-      the user selects the Publish option from the Workflow menu, a request will be triggered such as:
+<p>The CMS menus trigger usecases by setting the <span class="codefrag">lenya.usecase</span> request parameter on the current document. If for example
+      the user selects the <em>Publish</em> option from the <em>Workflow</em> menu, a request will be triggered such as:
       
 <span class="codefrag">
-      GET http://www.server.com/lenya/default/authoring/tutorial.html?&amp;lenya.event=publish&amp;lenya.usecase=publish
+      GET http://www.server.com/lenya/default/authoring/tutorial.html?&amp;lenya.usecase=publish
 </span>
 </p>
-<p>The <span class="codefrag">lenya.event</span> parameter belongs to the Lenya workflow framework and can be ignored here. I can even be left
-      out and the usecase will still work fine, but workflow actions will not be triggered.</p>
-<p>The Lenya <span class="codefrag">global-sitemap.xmap</span> will redirect requests with a lenya.usecase request parameter to the 
+<p>The Lenya <span class="codefrag">global-sitemap.xmap</span> will redirect requests with a <span class="codefrag">lenya.usecase</span> request parameter to the 
       <span class="codefrag">$LENYA_WEBAPP/lenya/usecase.xmap</span>
       sub-sitemap. From version 1.4 on, the following pipeline in this sitemap is used to recognonize usecases which are implemented 
       in Java using the new 1.4 usecase framework:</p>
@@ -250,7 +251,7 @@
 	traditional way using the <span class="codefrag">usecase</span> and <span class="codefrag">step</span> matchers 
 	(<span class="codefrag">org.apache.cocoon.matching.WildcardRequestParameterMatcher</span>). In order for this to work
 	correctly, there should be a <span class="codefrag">lenya.step</span> parameter in the request.</p>
-<p>If the usecase could be resolved successfully into an avalon component, processing will continue in the 
+<p>If the usecase could be resolved successfully into an Avalon component, processing will continue in the 
 	<span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecase.xmap</span> (as opposed to <span class="codefrag">$LENYA_WEBAPP/lenya/usecase.xmap</span>) with
 	the new JX and Java based 1.4 usecase framework.</p>
 <p>
@@ -266,10 +267,10 @@
 </div>
     
     
-<a name="N1005C"></a><a name="Directory+Structure"></a>
+<a name="N10062"></a><a name="Directory+Structure"></a>
 <h2 class="underlined_10">Directory Structure</h2>
 <div class="section">
-<a name="N10062"></a><a name="The+Lenya+Core"></a>
+<a name="N10068"></a><a name="The+Lenya+Core"></a>
 <h3 class="underlined_5">The Lenya Core</h3>
 <pre class="code">
 $LENYA_WEBAPP
@@ -280,7 +281,7 @@ $LENYA_WEBAPP
                        /addUser.jx    JX templates for usecase views
                  ...                  more Lenya core usecases
 </pre>
-<a name="N1006D"></a><a name="Your+Publication"></a>
+<a name="N10073"></a><a name="Your+Publication"></a>
 <h3 class="underlined_5">Your Publication</h3>
 <pre class="code">
 $PUB_HOME
@@ -292,11 +293,11 @@ $PUB_HOME
     
     
     
-<a name="N10079"></a><a name="Architecture"></a>
+<a name="N1007F"></a><a name="Architecture"></a>
 <h2 class="underlined_10">Architecture</h2>
 <div class="section">
 <p>
-        A usecase request - denoted by the request parameter <em>lenya.usecase</em> - is dispatched by <span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecase.xmap</span>.
+        A usecase request - denoted by the request parameter <span class="codefrag">lenya.usecase</span> - is dispatched by <span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecase.xmap</span>.
         All usecases are handled by a single flowscript <span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecases.js</span>. This keeps javascript maintenance costs at a minimum.
       </p>
 <p>
@@ -308,7 +309,7 @@ $PUB_HOME
 </div>
     
     
-<a name="N10099"></a><a name="The+Contract+Between+Flowscript+And+Usecase+Handler"></a>
+<a name="N1009F"></a><a name="The+Contract+Between+Flowscript+And+Usecase+Handler"></a>
 <h2 class="underlined_10">The Contract Between Flowscript And Usecase Handler</h2>
 <div class="section">
 <p>
@@ -330,19 +331,19 @@ $PUB_HOME
 </div>
     
     
-<a name="N100B8"></a><a name="Implementing+a+Custom+Usecase"></a>
+<a name="N100BE"></a><a name="Implementing+a+Custom+Usecase"></a>
 <h2 class="underlined_10">Implementing a Custom Usecase</h2>
 <div class="section">
-<a name="N100BE"></a><a name="Prerequisites"></a>
+<a name="N100C4"></a><a name="Prerequisites"></a>
 <h3 class="underlined_5">Prerequisites</h3>
 <ol>
           
 <li>Choose a name to identify the usecase, e.g. editHeadline. It is possible to group usecases
-              using "." as delimiter, for instance <em>article.editHeadline</em>.
+              using "." as delimiter, for instance <span class="codefrag">article.editHeadline</span>.
           </li>
         
 </ol>
-<a name="N100CE"></a><a name="Add+a+Menu+Item"></a>
+<a name="N100D4"></a><a name="Add+a+Menu+Item"></a>
 <h3 class="underlined_5">Add a Menu Item</h3>
 <div class="frame note">
 <div class="label">Note</div>
@@ -358,7 +359,7 @@ $PUB_HOME
 </li>
         
 </ol>
-<a name="N100E2"></a><a name="Implement+the+Usecase+Handler+Class"></a>
+<a name="N100E8"></a><a name="Implement+the+Usecase+Handler+Class"></a>
 <h3 class="underlined_5">Implement the Usecase Handler Class</h3>
 <ol>
           
@@ -398,7 +399,7 @@ $PUB_HOME
 </li>
         
 </ol>
-<a name="N10115"></a><a name="Implement+the+View"></a>
+<a name="N1011B"></a><a name="Implement+the+View"></a>
 <h3 class="underlined_5">Implement the View</h3>
 <ol>
           
@@ -429,7 +430,7 @@ $PUB_HOME
           
 </li>
           
-<li>Take care of adding the hidden <em>lenya.usecase</em> and <em>lenya.continuation</em> fields as shown above.</li>
+<li>Take care of adding the hidden <span class="codefrag">lenya.usecase</span> and <span class="codefrag">lenya.continuation</span> fields as shown above.</li>
           
 <li>The template has to be located at <span class="codefrag">$PUB_HOME/lenya/usecases/&lt;usecase&gt;.jx</span>
             (replace . with /), for instance
@@ -439,10 +440,10 @@ $PUB_HOME
 </div>
     
     
-<a name="N10139"></a><a name="Overriding+Core+Usecases+in+Publications"></a>
+<a name="N1013F"></a><a name="Overriding+Core+Usecases+in+Publications"></a>
 <h2 class="underlined_10">Overriding Core Usecases in Publications</h2>
 <div class="section">
-<a name="N1013F"></a><a name="Overriding+Usecase+Handler+Classes"></a>
+<a name="N10145"></a><a name="Overriding+Usecase+Handler+Classes"></a>
 <h3 class="underlined_5">Overriding Usecase Handler Classes</h3>
 <p>
           The usecase resolver, which is responsible for obtaining the handler class for a usecase,
@@ -471,7 +472,7 @@ $PUB_HOME
           Now, when the usecase is invoked from inside the publication mypub, the custom
           handler class will be used.
         </p>
-<a name="N10168"></a><a name="Overriding+JX+Templates"></a>
+<a name="N1016E"></a><a name="Overriding+JX+Templates"></a>
 <h3 class="underlined_5">Overriding JX Templates</h3>
 <p>
           Overriding the JX template of a usecase follows the
