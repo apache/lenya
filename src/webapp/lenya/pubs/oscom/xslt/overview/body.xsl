@@ -30,9 +30,16 @@ Please contact them directly in case the data might be outdated.
 
 <p>
 If you want your CMS/F project being added to the list below, please send an email to
-<a href="mailto:michael.wechner@oscom.org">Michael Wechner</a>.
+<a href="mailto:michael.wechner@oscom.org?subject=OSCOM CMS Matrix">Michael Wechner</a>
+or subscribe to the <a href="http://lists.oscom.org/mailman/listinfo.cgi/softwareml">SoftwareML</a> mailing list.
 For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing lists</a>.
 </p>
+
+<!--
+<p>
+The schema of the CMS/F matrix is currently based on <a href="http://cvs.oscom.org/cgi-bin/viewcvs.cgi/softwareml/cms.xml">cms.xml</a>.
+</p>
+-->
 </font>
 
  <h4>Content Management Frameworks</h4>
@@ -136,6 +143,14 @@ For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing l
 
 <div class="nnbe" style="padding-left: 10px;">
 <a class="nnbr" target="_blank" href="http://www.opensourcecms.com">OpensourceCMS</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.sydney.wilderness.org.au/docs/node.php?id=1">Wilderness Society</a>
+</div>
+
+<div class="nnbe" style="padding-left: 10px;">
+<a class="nnbr" target="_blank" href="http://www.boomtchak.net/rubrique.php3?id_rubrique=48">CMS Outils</a>
 </div>
 
 </td>
