@@ -37,7 +37,7 @@
   
   <role name="org.apache.lenya.cms.ac2.AccessController"
         shorthand="access-controller"
-        default-class="org.apache.lenya.cms.ac2.DefaultAccessController"/>
+        default-class="org.apache.lenya.cms.ac2.BypassableAccessController"/>
         
   <role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
         shorthand="access-controller-resolvers"
