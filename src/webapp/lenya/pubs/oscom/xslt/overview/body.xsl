@@ -74,7 +74,36 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
 </xsl:template>
 
 <xsl:template match="related-content">
-Overview: Related Content
+ <table cellpadding="0" cellspacing="0" border="0" width="150">
+  <tr>
+    <td bgcolor="{$tablecolor}">&#160;</td>
+    <td bgcolor="{$tablecolor}">
+      <p>
+        <font face="verdana" color="white">
+        Related Links
+        </font>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>&#160;</td>
+<td>
+<font face="verdana" size="-2">
+<a target="_blank" href="http://www.cms-list.org">cms-list</a>
+<br/><br/>
+<a target="_blank" href="http://www.cmsinfo.org">cmsinfo.org</a>
+<br/><br/>
+<a target="_blank" href="http://www.cmswatch.com/ContentManagement/Products/">CMS Watch</a>
+<br/><br/>
+<a target="_blank" href="http://www.contentmanager.eu.com/links/a4.htm">contentmanagement.eu.com</a>
+<br/><br/>
+<a target="_blank" href="http://www.contentmanager.de/itguide/produktvergleich_cms_opensource.html">contentmanager.de</a>
+<br/><br/>
+<a target="_blank" href="http://www.content-wire.com">Content-Wire</a>
+</font>
+</td>
+  </tr>
+ </table>
 </xsl:template>
  
 </xsl:stylesheet>  

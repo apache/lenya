@@ -29,7 +29,7 @@
 
     <tr>
     <td valign="top" width="120">
-      <xsl:apply-templates select="oscom:navigation"/>
+      <xsl:apply-templates select="oscom_navigation"/>
     </td>
 
     <td width="8"><img src="{$images}/pixel.gif" alt="." width="1" height="1"/></td>

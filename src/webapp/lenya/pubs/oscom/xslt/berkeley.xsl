@@ -51,7 +51,7 @@ href="contact.html"><img src="http://oscom.smokinggun.com/images/contact.gif" al
 
 <div id="contents">
 <!--
-      <xsl:apply-templates select="oscom:navigation"/>
+      <xsl:apply-templates select="oscom_navigation"/>
 -->
       <xsl:call-template name="body"/>
 </div>

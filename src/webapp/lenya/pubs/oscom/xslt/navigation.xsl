@@ -4,7 +4,7 @@
  
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:template match="oscom:navigation">
+<xsl:template match="oscom_navigation">
     <font face="verdana" size="-2">
       <xsl:apply-templates>
         <xsl:with-param name="offset">&#160;&#160;</xsl:with-param>
