@@ -39,24 +39,34 @@ function validRequired(formField,fieldLabel)
 		result = false;
 	}
 	
+	return result;
+}
+
+function validContent(formField,fieldLabel)
+{
+	var result = true;
+	
 	if (formField.value.match("[^a-zA-Z0-9_\\-]+"))
 	{
 		alert('Please enter a valid value for the "' + fieldLabel +'" field. A-Z, a-z, 0-9, _ or -');
 		formField.focus();
 		result = false;
 	}
-
+	
 	return result;
 }
 
 function validateForm(theForm)
 {
+	if (!validContent(theForm["properties.create.child-id"],"Document ID"))
+		return false;
+
 	if (!validRequired(theForm["properties.create.child-id"],"Document ID"))
 		return false;
 
 	if (!validRequired(theForm["properties.create.child-name"],"Navigation Title"))
 		return false;
-	
+
 	if (!validRequired(theForm["properties.create.language"],"Language"))
 		return false;
 
