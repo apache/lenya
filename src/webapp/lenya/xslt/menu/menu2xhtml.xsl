@@ -45,13 +45,6 @@
             <xsl:with-param name="tab-documenturl">/index.html</xsl:with-param>
           </xsl:call-template>
           
-          <xsl:variable name="tab-documenturl">
-            <xsl:choose>
-              <xsl:when test="$completearea = 'admin'">/index.html</xsl:when>
-              <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          
           <xsl:variable name="info-area">
           	<xsl:text>info-</xsl:text>
           	<xsl:choose>
@@ -63,7 +56,6 @@
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area" select="$info-area"/>
             <xsl:with-param name="tab-area-prefix">info</xsl:with-param>
-            <xsl:with-param name="tab-documenturl" select="$tab-documenturl"/>
           </xsl:call-template>
           
           <xsl:call-template name="area-tab">
@@ -120,9 +112,15 @@
   <xsl:template name="area-tab">
     <xsl:param name="tab-area"/>
     <xsl:param name="tab-area-prefix" select="$tab-area"/>
-    <xsl:param name="tab-documenturl" select="$documenturl"/>
     
-    <a id="{$tab-area-prefix}-tab" href="{$contextprefix}/{$publicationid}/{$tab-area}{$documenturl}">
+    <xsl:variable name="tab-documenturl">
+      <xsl:choose>
+        <xsl:when test="$documentarea = 'admin'">/index.html</xsl:when>
+        <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <a id="{$tab-area-prefix}-tab" href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}">
       <xsl:choose>
         <xsl:when test="starts-with($completearea, $tab-area-prefix)">
           <img border="0" src="{$image-prefix}/{$tab-area-prefix}_active.gif" />
