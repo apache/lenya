@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.15 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id: body.xsl,v 1.16 2004/05/08 09:25:38 michi Exp $ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
@@ -80,7 +80,7 @@ No such type: <xsl:value-of select="@type"/>
 <xsl:template match="editor">
 <p>
 <font size="-1">
-Data maintained by <i><a href="mailto:{email}?subject=OSCOM CMS Matrix: {../system_name}"><xsl:value-of select="name"/></a></i>
+Data maintained by <i><xsl:choose><xsl:when test="@homepage"><a href="{@homepage}"><xsl:value-of select="name"/></a></xsl:when><xsl:when test="email"><a href="mailto:{email}?subject=OSCOM CMS Matrix: {../system_name}"><xsl:value-of select="name"/></a></xsl:when><xsl:otherwise><xsl:value-of select="name"/></xsl:otherwise></xsl:choose></i>
 </font>
 </p>
 </xsl:template>
