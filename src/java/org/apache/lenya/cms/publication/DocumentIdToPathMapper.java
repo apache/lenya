@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentIdToPathMapper.java,v 1.1 2003/06/11 16:39:47 egli Exp $
+ * $Id: DocumentIdToPathMapper.java,v 1.2 2003/06/17 09:55:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,24 +49,32 @@
 
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
+
 /**
  * @author egli
  * 
  * 
  */
 public interface DocumentIdToPathMapper {
-	
-	/**
-	 * Compute the document-path for a given publication, area 
-	 * and document-id
-	 * 
-	 * @param publication
-	 * @param area
-	 * @param documentId
-	 * @return
-	 */
-	public abstract String computeDocumentPath(
-		Publication publication,
-		String area,
-		String documentId);
+
+    /**
+     * Compute the document-path for a given publication, area 
+     * and document-id
+     * 
+     * @param publication
+     * @param area
+     * @param documentId
+     * @return
+     */
+    public abstract File getFile(
+        Publication publication,
+        String area,
+        String documentId,
+        String language);
+
+    public abstract File[] getFiles(
+        Publication publication,
+        String area,
+        String documentId);
 }

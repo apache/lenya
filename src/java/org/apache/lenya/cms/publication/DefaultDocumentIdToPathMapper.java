@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultDocumentIdToPathMapper.java,v 1.1 2003/06/11 16:39:47 egli Exp $
+ * $Id: DefaultDocumentIdToPathMapper.java,v 1.2 2003/06/17 09:55:11 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -77,5 +77,28 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
 					+ "index.xml");
 		return path.getAbsolutePath();
 	}
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
+     */
+    public File getFile(
+        Publication publication,
+        String area,
+        String documentId,
+        String language) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFiles(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+     */
+    public File[] getFiles(
+        Publication publication,
+        String area,
+        String documentId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

@@ -44,7 +44,7 @@ public class PageEnvelope {
     private String area;
     private String documentId;
     private String documentUrl;
-    private String documentPath;
+    private File documentPath;
 
     /**
      * Creates a new instance of PageEnvelope from a sitemap inside a publication.
@@ -78,7 +78,7 @@ public class PageEnvelope {
             documentId = computeDocumentId(documentUrl);
             
 			DocumentIdToPathMapper mapper = new DefaultDocumentIdToPathMapper();
-			documentPath = mapper.computeDocumentPath(publication, area, documentId);
+			documentPath = mapper.getFile(publication, area, documentId, "de");
             
             rcEnvironment = new RCEnvironment(publication.getServletContext().getCanonicalPath());
         }
@@ -243,7 +243,7 @@ public class PageEnvelope {
 	 * Returns the document-path.
 	 * @return a <code>String<code> value
 	 */
-	public String getDocumentPath() {
+	public File getDocumentPath() {
 		return documentPath;
 	}
 	
