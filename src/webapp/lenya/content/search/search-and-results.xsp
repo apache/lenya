@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsp,v 1.12 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id: search-and-results.xsp,v 1.13 2004/05/08 21:25:59 michi Exp $ -->
 
 <xsp:page language="java"
           xmlns:xsp="http://apache.org/xsp"
@@ -264,7 +264,7 @@
 <!-- Search Results -->
       <search>
         <xsp:logic>
-          Enumeration para_names=request.getParameterNames();
+          Enumeration para_names = request.getParameterNames();
           if(para_names.hasMoreElements()){
             <request-parameters>
               <xsp:logic>
@@ -362,6 +362,7 @@
                   continue;
                   }
                 Document ldoc=hits.doc(i);
+                Enumeration lfields = ldoc.fields();
                 String lpath=ldoc.get("path");
 
                 String lurl=ldoc.get("url");
@@ -376,6 +377,13 @@
                 }
                 else if(lurl != null){
                   <hit><xsp:attribute name="pos"><xsp:expr>i+1</xsp:expr></xsp:attribute>
+                    <fields>
+		    <xsp:logic>
+                    while (lfields.hasMoreElements()) {
+                        <field><xsp:expr>lfields.nextElement()</xsp:expr></field>
+                    }
+		    </xsp:logic>
+                    </fields>
                     <score><xsp:attribute name="percent"><xsp:expr>getPercent(hits.score(i))</xsp:expr></xsp:attribute><xsp:expr>hits.score(i)</xsp:expr></score> 
                     <xsp:logic>
                       String parent = "";
