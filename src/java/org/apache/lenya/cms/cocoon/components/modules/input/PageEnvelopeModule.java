@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.24 2003/08/21 14:03:19 egli Exp $
+$Id: PageEnvelopeModule.java,v 1.25 2003/09/02 13:15:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -84,29 +84,22 @@ public class PageEnvelopeModule extends AbstractInputModule {
      * 
      * @throws ConfigurationException if the page envelope could not be instantiated.
      */
-    protected PageEnvelope getEnvelope(Map objectModel)
-        throws ConfigurationException {
+    protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {
         PageEnvelope envelope = null;
 
         try {
-            envelope =
-                PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         } catch (Exception e) {
-            throw new ConfigurationException(
-                "Resolving page envelope failed: ",
-                e);
+            throw new ConfigurationException("Resolving page envelope failed: ", e);
         }
 
         return envelope;
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
-    public Object getAttribute(
-        String name,
-        Configuration modeConf,
-        Map objectModel)
+    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
         throws ConfigurationException {
         PageEnvelope envelope = getEnvelope(objectModel);
         Object value = null;
@@ -134,12 +127,12 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocument().getFile();
             } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
                 value = envelope.getDocument().getExtension();
-			} else if (name.equals(PageEnvelope.DEFAULT_LANGUAGE)) {
-				value = envelope.getPublication().getDefaultLanguage();
+            } else if (name.equals(PageEnvelope.DEFAULT_LANGUAGE)) {
+                value = envelope.getPublication().getDefaultLanguage();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
                 value = envelope.getDocument().getLanguage();
-			} else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
-				value = envelope.getDocument().getLanguages();
+            } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
+                value = envelope.getDocument().getLanguages();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
                 String[] languages = envelope.getDocument().getLanguages();
                 String csv = "";
@@ -166,8 +159,8 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocument().getDublinCore().getDateCreated();
             } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
                 value = envelope.getDocument().getLastModified();
-			} else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
-				value = envelope.getPublication().getBreadcrumbPrefix();
+            } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
+                value = envelope.getPublication().getBreadcrumbPrefix();
             }
         } catch (Exception e) {
             throw new ConfigurationException(
@@ -178,7 +171,6 @@ public class PageEnvelopeModule extends AbstractInputModule {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
@@ -187,13 +179,9 @@ public class PageEnvelopeModule extends AbstractInputModule {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
-    public Object[] getAttributeValues(
-        String name,
-        Configuration modeConf,
-        Map objectModel)
+    public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
         throws ConfigurationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel)};
 
