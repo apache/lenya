@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.31 2003/07/17 14:52:38 gregor Exp $
+$Id: PageEnvelope.java,v 1.32 2003/07/23 12:13:33 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,8 @@ import org.apache.lenya.cms.rc.RCEnvironment;
 
 import org.apache.log4j.Category;
 
+import sun.security.action.GetLongAction;
+
 import java.io.File;
 
 import java.util.Map;
@@ -80,20 +82,23 @@ public class PageEnvelope {
     public static final String AREA = "area";
     public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_URL = "document-url";
+    public static final String DOCUMENT_FILE = "document-file";
     public static final String DOCUMENT_PATH = "document-path";
     public static final String DOCUMENT_LANGUAGE = "document-language";
-	public static final String DOCUMENT_DC_TITLE = "document-dc-title";
-	public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
-	public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
-	public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
-	public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
-	public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
+    public static final String DOCUMENT_DC_TITLE = "document-dc-title";
+    public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
+    public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
+    public static final String DOCUMENT_DC_DESCRIPTION =
+        "document-dc-description";
+    public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
+    public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
     private String context;
 
     /**
      * Constructor.
      */
-    protected PageEnvelope() {}
+    protected PageEnvelope() {
+    }
 
     /**
      * Creates a new instance of PageEnvelope from a sitemap inside a publication.
@@ -135,25 +140,25 @@ public class PageEnvelope {
         this(objectModel);
     }
 
-	/**
-	 * Setup an instance of Publication.
-	 * 
-	 * Shared by multiple constructors.
-	 * 
-	 * @param publication The publication the page belongs to.
-	 * @param request The request that calls the page.
-	 * 
-	 * @throws PageEnvelopeException if an error occurs.
-	 */
+    /**
+     * Setup an instance of Publication.
+     * 
+     * Shared by multiple constructors.
+     * 
+     * @param publication The publication the page belongs to.
+     * @param request The request that calls the page.
+     * 
+     * @throws PageEnvelopeException if an error occurs.
+     */
     protected void init(Publication publication, Request request)
-    	// FIXME: this method is mainly needed because the deprecated 
-    	// constructor PageEnvelope(Map objectModel) needs to handle an exception in
-    	// one of the arguments to another constructor. That's why the constructor
-    	// functionality is factored out into this method.
-    	// If the deprecated constructor PageEnvelope(Map objectModel) is removed
-    	// this method might not be needed anymore and the functionality could
-    	// be moved back to the constructor PageEnvelope(Publication publication, Request request).
-        throws PageEnvelopeException {
+    // FIXME: this method is mainly needed because the deprecated 
+    // constructor PageEnvelope(Map objectModel) needs to handle an exception in
+    // one of the arguments to another constructor. That's why the constructor
+    // functionality is factored out into this method.
+    // If the deprecated constructor PageEnvelope(Map objectModel) is removed
+    // this method might not be needed anymore and the functionality could
+    // be moved back to the constructor PageEnvelope(Publication publication, Request request).
+    throws PageEnvelopeException {
         assert publication != null;
         assert request != null;
 
@@ -260,60 +265,71 @@ public class PageEnvelope {
     }
 
     /**
-     * Returns the document-path.
-     * @return a <code>String<code> value
+     * Returns the file representing the document.
+     * @return a <code>File<code> value
      */
-    public File getDocumentPath() {
+    public File getDocumentFile() {
         return getDocument().getFile();
     }
 
-	/**
-	 * Returns the DC title for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCTitle() {
-		return getDocument().getDublinCore().getTitle();
-	}
+    /**
+     * Returns the document-path.
+     * @return a <code>File<code> value
+     */
+    public String getDocumentPath() {
 
-	/**
-	 * Returns the DC subject for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCSubject() {
-		return getDocument().getDublinCore().getSubject();
-	}
+        return getPublication().getPathMapper().getPath(
+            getDocumentId(),
+            getDocument().getLanguage());
+    }
 
-	/**
-	 * Returns the DC creator for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCCreator() {
-		return getDocument().getDublinCore().getCreator();
-	}
+    /**
+     * Returns the DC title for a document
+     * @return a <code>String<code> value
+     */
+    public String getDocumentDCTitle() {
+        return getDocument().getDublinCore().getTitle();
+    }
 
-	/**
-	 * Returns the DC description for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCDescription() {
-		return getDocument().getDublinCore().getDescription();
-	}
+    /**
+     * Returns the DC subject for a document
+     * @return a <code>String<code> value
+     */
+    public String getDocumentDCSubject() {
+        return getDocument().getDublinCore().getSubject();
+    }
 
-	/**
-	 * Returns the DC rights for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentDCRights() {
-		return getDocument().getDublinCore().getRights();
-	}
+    /**
+     * Returns the DC creator for a document
+     * @return a <code>String<code> value
+     */
+    public String getDocumentDCCreator() {
+        return getDocument().getDublinCore().getCreator();
+    }
 
-	/**
-	 * Returns the last modified date for a document
-	 * @return a <code>String<code> value
-	 */
-	public String getDocumentLastModified() {
-		return getDocument().getLastModified();
-	}
+    /**
+     * Returns the DC description for a document
+     * @return a <code>String<code> value
+     */
+    public String getDocumentDCDescription() {
+        return getDocument().getDublinCore().getDescription();
+    }
+
+    /**
+     * Returns the DC rights for a document
+     * @return a <code>String<code> value
+     */
+    public String getDocumentDCRights() {
+        return getDocument().getDublinCore().getRights();
+    }
+
+    /**
+     * Returns the last modified date for a document
+     * @return a <code>String<code> value
+     */
+    public String getDocumentLastModified() {
+        return getDocument().getLastModified();
+    }
 
     /**
      * The names of the page envelope parameters.
@@ -327,14 +343,13 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_ID,
             PageEnvelope.DOCUMENT_URL,
             PageEnvelope.DOCUMENT_PATH,
-            PageEnvelope.DOCUMENT_LANGUAGE, 
-			PageEnvelope.DOCUMENT_DC_TITLE,
-			PageEnvelope.DOCUMENT_DC_CREATOR,
-			PageEnvelope.DOCUMENT_DC_SUBJECT,
-			PageEnvelope.DOCUMENT_DC_DESCRIPTION,
-			PageEnvelope.DOCUMENT_DC_RIGHTS,           
-			PageEnvelope.DOCUMENT_LASTMODIFIED
-        };
+            PageEnvelope.DOCUMENT_LANGUAGE,
+            PageEnvelope.DOCUMENT_DC_TITLE,
+            PageEnvelope.DOCUMENT_DC_CREATOR,
+            PageEnvelope.DOCUMENT_DC_SUBJECT,
+            PageEnvelope.DOCUMENT_DC_DESCRIPTION,
+            PageEnvelope.DOCUMENT_DC_RIGHTS,
+            PageEnvelope.DOCUMENT_LASTMODIFIED };
 
     /**
      * @param string The context.

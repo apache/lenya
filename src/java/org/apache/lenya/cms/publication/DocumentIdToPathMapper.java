@@ -64,6 +64,18 @@ import java.io.File;
  *
  */
 public interface DocumentIdToPathMapper {
+    
+    /**
+     * Compute the document-path for a given publication, area
+     * and document-id. The file separator is the slash (/).
+     *
+     * @param documentId the document-id of the document
+     * @param language the language of the document
+     * 
+     * @return the path to the document, without publication ID and area
+     */
+    String getPath(String documentId, String language);
+
     /**
      * Compute the document-path for a given publication, area
      * and document-id

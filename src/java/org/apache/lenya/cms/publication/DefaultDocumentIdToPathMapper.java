@@ -65,32 +65,45 @@ import java.io.File;
  */
 public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
 	
-    /** (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
      */
     public File getFile(Publication publication, String area, String documentId, String language) {
-        String languageSuffix = "";
-
-        if ((language != null) && !"".equals(language)) {
-            languageSuffix = "_" + language;
-        }
-
+        assert documentId.startsWith("/");
         File file = new File(publication.getDirectory(),
-                "content" + File.separator + area + File.separator + documentId + File.separator +
-                "index" + languageSuffix + ".xml");
+                "content" + File.separator + area + File.separator + getPath(documentId, language));
 
         return file;
     }
-
-	/** (non-Javadoc)
+    
+	/**
 	 * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFiles(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
 	 */
 	public File getDirectory(Publication publication, String area, String documentId) {
-
+        assert documentId.startsWith("/");
+        // remove leading slash
+        documentId = documentId.substring(1);
+        documentId = documentId.replace('/', File.separatorChar);
+        
 		File file = new File(publication.getDirectory(),
-			"content" + File.separator + area + File.separator + documentId + 
-			File.separator);
+			"content" + File.separator + area + File.separator + documentId);
 
 		return file;
 	}
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String, java.lang.String)
+     */
+    public String getPath(String documentId, String language) {
+        assert documentId.startsWith("/");
+        String languageSuffix = "";
+        if (language != null && !"".equals(language)) {
+            languageSuffix = "_" + language;
+        }
+        
+        // remove leading slash
+        documentId = documentId.substring(1);
+
+        return documentId + "/" + "index" + languageSuffix + ".xml";
+    }
 }
