@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.22 2003/08/19 12:27:56 egli Exp $
+$Id: PageEnvelopeModule.java,v 1.23 2003/08/21 12:18:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -138,6 +138,16 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocument().getLanguage();
 			} else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
 				value = envelope.getDocument().getLanguages();
+            } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
+                String[] languages = envelope.getDocument().getLanguages();
+                String csv = "";
+                for (int i = 0; i < languages.length; i++) {
+                    if (i > 0) {
+                        csv += ",";
+                    }
+                    csv += languages[i];
+                }
+                value = csv;
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
                 value = envelope.getDocument().getDublinCore().getTitle();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {
