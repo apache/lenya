@@ -123,6 +123,7 @@
         >
       <param name="forrest-publication" expression="/lenya/pubs/docs-new"/>
       <param name="hsqldb-server-port" expression="${hsqldb-server.port}"/>
+      <param name="xopus-context" expression="${xopus.context}"/>
       <outputproperty name="indent" value="yes"/>
     </xslt>
     
