@@ -1,5 +1,4 @@
 /*
-$Id: ReservedCheckinAction.java,v 1.12 2003/07/17 09:13:21 egli Exp $
 <License>
 
  ============================================================================
@@ -67,14 +66,14 @@ import java.util.Map;
 
 
 /**
- * DOCUMENT ME!
+ * Checkin document
  *
  * @author Edith Chevrier
- * @version 2002.6.25
+ * @version $Id: ReservedCheckinAction.java,v 1.13 2003/12/20 23:44:12 michi Exp $
  */
 public class ReservedCheckinAction extends RevisionControllerAction {
     /**
-     * DOCUMENT ME!
+     * Checkin document
      *
      * @param redirector DOCUMENT ME!
      * @param resolver DOCUMENT ME!
@@ -82,19 +81,21 @@ public class ReservedCheckinAction extends RevisionControllerAction {
      * @param src DOCUMENT ME!
      * @param parameters DOCUMENT ME!
      *
-     * @return DOCUMENT ME!
+     * @return HashMap with checkin parameters
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src, Parameters parameters) throws Exception {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
 
-        //check in 
+        boolean backup = true;
+	if (parameters.getParameter("backup", "true").equals("false")) backup = false;
+        log.debug("Backup: " + backup);
+
         try {
-            getRc().reservedCheckIn(getFilename(), getUsername(), true);
+            getRc().reservedCheckIn(getFilename(), getUsername(), backup);
         } catch (FileReservedCheckInException e) {
             actionMap.put("exception", "fileReservedCheckInException");
             actionMap.put("filename", getFilename());

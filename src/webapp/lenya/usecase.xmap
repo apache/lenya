@@ -540,17 +540,7 @@
               </map:act>
 
               <!-- Stop Editing: Save and Cancel -->
-              <map:act type="reserved-checkin">
-                <map:generate src="content/rc/{exception}.xsp" type="serverpages">
-                  <map:parameter name="user" value="{user}"/>
-                  <map:parameter name="filename" value="{filename}"/>
-                  <map:parameter name="checkType" value="{checkType}"/>
-                  <map:parameter name="date" value="{date}"/>
-                </map:generate>
-                <map:transform src="xslt/rc/rco-exception.xsl"/>
-                <map:serialize/>
-              </map:act>
-
+              <!-- If temporary file exists, then SAVE else CANCEL -->
               <map:act type="resource-exists" src="pubs/{1}/work/editor/authoring/{page-envelope:document-path}">
                 <map:generate src="pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
                 <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
@@ -559,9 +549,6 @@
                   <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
                 </map:transform>
                 <map:transform type="write-source"/>
-                <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-                  <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html"/>
-                </map:transform>
               
                 <map:act type="workflow">
                   <map:parameter name="area" value="{page-envelope:area}"/>
@@ -569,7 +556,35 @@
                   <map:parameter name="language" value="{page-envelope:document-language}"/>
                   <map:parameter name="event" value="edit"/>
                 </map:act>
+
+                <map:act type="reserved-checkin">
+                  <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                    <map:parameter name="user" value="{user}"/>
+                    <map:parameter name="filename" value="{filename}"/>
+                    <map:parameter name="checkType" value="{checkType}"/>
+                    <map:parameter name="date" value="{date}"/>
+                  </map:generate>
+                  <map:transform src="xslt/rc/rco-exception.xsl"/>
+                  <map:serialize/>
+                </map:act>
+
+                <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+                  <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html"/>
+                </map:transform>
                 <map:serialize type="html" />
+              </map:act>
+
+              <!-- If CANCEL then the document also needs to be checked in -->
+              <map:act type="reserved-checkin">
+                <map:parameter name="backup" value="false"/>
+                <map:generate src="content/rc/{exception}.xsp" type="serverpages">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="checkType" value="{checkType}"/>
+                  <map:parameter name="date" value="{date}"/>
+                </map:generate>
+                <map:transform src="xslt/rc/rco-exception.xsl"/>
+                <map:serialize/>
               </map:act>
               
               <map:generate src="pubs/{1}/publication.xml"/> <!-- used as dummy file -->
