@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCoreHelper.java,v 1.5 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: DublinCoreHelper.java,v 1.6 2004/08/16 12:27:23 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -77,7 +77,7 @@ public final class DublinCoreHelper {
 				i = i + 1;
 			}
 		}
-		if ((labels.length < 1) | (identifier == null)) {
+		if (labels.length < 1 || identifier == null) {
 			url = builder.buildCanonicalUrl(publication, area, documentId);
 			document = builder.buildDocument(publication, url);
 			DublinCore dublincore = document.getDublinCore();
