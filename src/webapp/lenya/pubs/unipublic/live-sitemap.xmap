@@ -256,13 +256,22 @@
         </map:transform>                                                                                                                    
         <map:serialize type="html"/>
       </map:match>
+    </map:pipeline>
 
       <!-- Article -->
+    <map:pipeline>
       <map:match pattern="*/*/*/*/index.xml">
         <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
+      <map:handle-errors>
+        <map:transform src="../../stylesheets/cms/Page/Exception/not_published_yet.xsl"/>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <map:pipeline>
       <map:match pattern="*/*/*/*/article.xml">
 <!--
         <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>

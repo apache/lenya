@@ -612,15 +612,26 @@
         </map:transform>
         <map:serialize type="html"/>
       </map:match>
+    </map:pipeline>
 
 
+    <!-- Samples for resource/document creation -->
+    <map:pipeline>
+      <map:match pattern="doctypes/samples/*.xml">
+        <map:generate src="docs/publication/doctypes/samples/{1}.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
 
 
-      <!-- XML -->
+    <!-- XML -->
+    <map:pipeline>
       <map:match pattern="**.xml">
         <map:generate src="docs/publication/authoring/{1}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
+
+
   </map:pipelines>
 </map:sitemap>

@@ -110,7 +110,10 @@
 
     <menu name="Debug" label="Debug">
       <block>
+        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XML</item>
+<!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/bitflux/magazin/gesundheit/2002/0508/index.xml</xsp:attribute>View&#160;Bitflux&#160;XML</item>
+-->
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/bitflux/stylesheets/article.xsl</xsp:attribute>View&#160;Bitflux&#160;XSLT</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/bitflux/schemas/article.xsd</xsp:attribute>View&#160;Bitflux&#160;XSD</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/bitflux/css/article.css</xsp:attribute>View&#160;Bitflux&#160;CSS</item>
@@ -121,6 +124,7 @@
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/servlet/QuartzSchedulerServlet</xsp:attribute>Scheduler XML</item>            
         <item href="index.xml">View&#160;Article&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/doctypes/samples/Article.xml"</xsp:expr></xsp:attribute>View&#160;Sample&#160;Article&#160;XML</item>
       </block>
     </menu>
   </menus>
