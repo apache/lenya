@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE changes PUBLIC "-//APACHE//DTD Changes V1.0//EN" "src/documentation/xdocs/dtd/changes-v10.dtd">
+
+<!--
+  History of publication changes
+  $Id: changes.xml,v 1.1 2003/02/21 15:07:12 gregor Exp $
+-->
+
+<changes title="History of Changes">
+
+<devs>
+  <!-- in strict alphabetical order -->
+  <person name="Christian Egli" email="egli@wyona.org" id="CE"/>
+  <person name="Andreas Hartmann" email="ah@wyona.org" id="AH"/>
+  <person name="Felix Maeder" email="felix@wyona.org" id="FM"/>
+  <person name="Gregor J. Rothfuss" email="gregor@wyona.org" id="GJR"/>
+  <person name="Michael Wechner" email="michi@wyona.org" id="MW"/>
+</devs>
+
+ <release version="@version@" date="@date@">
+  <action dev="GJR" type="add">
+    Added changes.xml.
+  </action>
+ </release>
+</changes>
+ 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: publication.xml,v 1.1 2003/02/21 15:05:50 gregor Exp $ -->
+
+<lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
+<lenya:name>Forum</lenya:name>
+<lenya:version>1.0</lenya:version>
+<lenya:description>This publication implements a news site similar to slashdot.</lenya:description>
+<lenya:credits>Original ugly layout courtesy by slashdot.</lenya:credits>
+<lenya:help></lenya:help>
+<lenya:changelog>changes.xml</lenya:changelog>
+<lenya:license></lenya:license>
+<lenya:readme>
+</lenya:readme>
+</lenya:publication>

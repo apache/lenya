@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: publication.xml,v 1.1 2003/02/21 15:06:15 gregor Exp $ -->
+
+<lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
+<lenya:name>OSCOM</lenya:name>
+<lenya:version>1.0</lenya:version>
+<lenya:description>This publication implements the CMS matrix used at oscom.org</lenya:description>
+<lenya:credits>Special thanks to Eric Wiseman.</lenya:credits>
+<lenya:help></lenya:help>
+<lenya:changelog>changes.xml</lenya:changelog>
+<lenya:license></lenya:license>
+<lenya:readme>
+</lenya:readme>
+</lenya:publication>

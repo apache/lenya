@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: publication.xml,v 1.1 2003/02/21 15:07:12 gregor Exp $ -->
+
+<lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
+<lenya:name>Unipublic</lenya:name>
+<lenya:version>1.0</lenya:version>
+<lenya:description>This publication implements a news-driven site for the University of Zurich</lenya:description>
+<lenya:credits>Special thanks to</lenya:credits>
+<lenya:help></lenya:help>
+<lenya:changelog>changes.xml</lenya:changelog>
+<lenya:license></lenya:license>
+<lenya:readme>
+<![CDATA[
+Deployment
+**********
+
+- Change/add users
+- Modify smtp server for newsletter (in src/webapp/wyona/cms/pubs/unipublic/docs/publication/tasks.xconf): mail.unizh.ch
+- Modify sender address for newsletter  (in src/webapp/wyona/cms/pubs/unipublic/docs/publication/tasks.xconf): unipublic@unicom.unizh.ch
+- Adapt logging (src/cocoon/WEB-INF/logkit.xconf, src/java/log4j.properties)
+- Remove OSCOM scheduler jobs (src/webapp/wyona/cms/pubs/oscom/docs/publication/scheduler/jobs.xml)
+- Add ssh keys
+- Adapt replication (in src/webapp/wyona/cms/bin/replicate.sh)
+- Add cronjob for replication (0-59/1 * * * * sh /home/wcms/build/jakarta-tomcat-4.0.4/webapps/wyona-cms/wyona/cms/bin/replicate.sh > /home/wcms/logs/replicate.log 2>&1)
+
+18.12.02/fm
+
+Changes
+*******
+
+patched two BXE files to revert unipublic-specific configuration settings. revert locally.
+the files are:
+
+src/webapp/wyona/cms/resources/cms/misc/bitfluxeditor/inc/config.xml
+src/webapp/wyona/cms/bitfluxeditor.xmap
+
+]]>
+</lenya:readme>
+</lenya:publication>
