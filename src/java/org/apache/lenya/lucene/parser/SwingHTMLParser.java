@@ -1,5 +1,4 @@
 /*
-$Id: SwingHTMLParser.java,v 1.6 2003/07/23 13:21:21 gregor Exp $
 <License>
 
  ============================================================================
@@ -69,8 +68,9 @@ import javax.swing.text.html.parser.ParserDelegator;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: SwingHTMLParser.java,v 1.7 2003/12/02 22:24:57 michi Exp $
  */
 public class SwingHTMLParser extends AbstractHTMLParser {
     /** Creates a new instance of SwingHTMLParser */
@@ -99,12 +99,21 @@ public class SwingHTMLParser extends AbstractHTMLParser {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get title
      *
      * @return DOCUMENT ME!
      */
     public String getTitle() {
         return getHandler().getTitle();
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getKeywords() {
+        return getHandler().getKeywords();
     }
 
     private Reader reader;

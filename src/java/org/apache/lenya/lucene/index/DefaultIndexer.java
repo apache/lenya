@@ -1,5 +1,4 @@
 /*
-$Id: DefaultIndexer.java,v 1.6 2003/11/13 22:55:17 michi Exp $
 <License>
 
  ============================================================================
@@ -59,20 +58,22 @@ import org.w3c.dom.Element;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @version $Id: DefaultIndexer.java,v 1.7 2003/12/02 22:24:57 michi Exp $
  */
 public class DefaultIndexer extends AbstractIndexer {
-    /** Creates a new instance of DefaultIndexer */
+
+    /**
+     * Creates a new instance of DefaultIndexer 
+     */
     public DefaultIndexer() {
     }
 
     /**
-     * DOCUMENT ME!
+     * @param indexer Indexer
+     * @param configFileName Licene Configuration File
      *
-     * @param element DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @return DefaultDocumentCreator
      *
      * @throws Exception DOCUMENT ME!
      */

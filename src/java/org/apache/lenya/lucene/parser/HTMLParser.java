@@ -1,5 +1,4 @@
 /*
-$Id: HTMLParser.java,v 1.4 2003/07/23 13:21:21 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,8 +62,9 @@ import java.net.URI;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: HTMLParser.java,v 1.5 2003/12/02 22:24:57 michi Exp $
  */
 public interface HTMLParser {
     void parse(File file) throws ParseException;
@@ -75,6 +75,11 @@ public interface HTMLParser {
      * Returns the title of the HTML document.
      */
     String getTitle() throws IOException;
+
+    /**
+     * Returns keywords
+     */
+    String getKeywords() throws IOException;
 
     /**
      * Returns a reader that reads the contents of the HTML document.

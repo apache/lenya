@@ -1,5 +1,4 @@
 /*
-$Id: HTMLParserFactory.java,v 1.6 2003/11/13 22:57:28 michi Exp $
 <License>
 
  ============================================================================
@@ -63,7 +62,8 @@ import java.io.File;
 /**
  * Factory to create HTML parsers that are used for indexing HTML.
  *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @version $Id: HTMLParserFactory.java,v 1.7 2003/12/02 22:24:57 michi Exp $
  */
 public class HTMLParserFactory {
     /**

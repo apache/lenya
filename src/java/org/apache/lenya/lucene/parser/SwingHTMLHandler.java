@@ -1,5 +1,4 @@
 /*
-$Id: SwingHTMLHandler.java,v 1.7 2003/07/23 13:21:21 gregor Exp $
 <License>
 
  ============================================================================
@@ -67,13 +66,19 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 
+import org.apache.log4j.Category;
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @author Michael Wechner
+ * @version $Id: SwingHTMLHandler.java,v 1.8 2003/12/02 22:24:57 michi Exp $
  */
 public class SwingHTMLHandler extends ParserCallback {
-    /** Creates a new instance of SwingHTMLHandler */
+    Category log = Category.getInstance(SwingHTMLHandler.class);
+
+    /** 
+     * Creates a new instance of SwingHTMLHandler
+     */
     public SwingHTMLHandler() {
         debug("\n\n\n\n\nCreating " + getClass().getName());
 
@@ -88,13 +93,17 @@ public class SwingHTMLHandler extends ParserCallback {
     }
 
     private StringBuffer titleBuffer = new StringBuffer();
+    private StringBuffer keywordsBuffer = new StringBuffer();
 
+    /**
+     *
+     */
     protected void appendToTitle(char[] data) {
         titleBuffer.append(data);
     }
 
     /**
-     * DOCUMENT ME!
+     * Get title
      *
      * @return DOCUMENT ME!
      */
@@ -102,6 +111,17 @@ public class SwingHTMLHandler extends ParserCallback {
         debug("\n\nTitle: " + titleBuffer.toString());
 
         return titleBuffer.toString();
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getKeywords() {
+        log.error("Keywords: " + keywordsBuffer.toString());
+
+        return keywordsBuffer.toString();
     }
 
     private StringBuffer contentsBuffer = new StringBuffer();
@@ -263,19 +283,30 @@ public class SwingHTMLHandler extends ParserCallback {
      */
     protected void handleMetaTag(MutableAttributeSet attributes) {
         Object nameObject = attributes.getAttribute(HTML.Attribute.NAME);
-        Object contentObject = attributes.getAttribute(HTML.Attribute.VALUE);
+        Object valueObject = attributes.getAttribute(HTML.Attribute.VALUE);
 
-        if ((nameObject != null) && (contentObject != null)) {
+        if ((nameObject != null) && (valueObject != null)) {
             String name = (String) nameObject;
+            log.error("Meta tag found: name = " + name);
 
             if (name.equals(LUCENE_TAG_NAME)) {
-                String tagName = (String) contentObject;
+                String tagName = (String) valueObject;
                 HTML.Tag tag = HTML.getTag(tagName.toLowerCase());
                 setLuceneTag(tag);
             }
 
             if (name.equals(LUCENE_CLASS_VALUE)) {
-                setLuceneClassValue((String) contentObject);
+                setLuceneClassValue((String) valueObject);
+            }
+        }
+
+        Object contentObject = attributes.getAttribute(HTML.Attribute.CONTENT);
+        if ((nameObject != null) && (contentObject != null)) {
+            String name = (String) nameObject;
+            log.error("Meta tag found: name = " + name);
+            if (name.equals("keywords")) {
+                log.error("Keywords found ...");
+                keywordsBuffer = new StringBuffer((String) contentObject);
             }
         }
 
@@ -399,7 +430,7 @@ public class SwingHTMLHandler extends ParserCallback {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.7 $
+     * @version $Revision: 1.8 $
      */
     public class TagStack {
         private List tags = new ArrayList();
@@ -472,7 +503,7 @@ public class SwingHTMLHandler extends ParserCallback {
          * DOCUMENT ME!
          *
          * @author $author$
-         * @version $Revision: 1.7 $
+         * @version $Revision: 1.8 $
          */
         public class UnderflowException extends Exception {
             /**

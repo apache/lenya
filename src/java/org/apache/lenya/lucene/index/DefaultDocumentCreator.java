@@ -1,5 +1,4 @@
 /*
-$Id: DefaultDocumentCreator.java,v 1.6 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -65,11 +64,14 @@ import java.io.File;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @version $Id: DefaultDocumentCreator.java,v 1.7 2003/12/02 22:24:57 michi Exp $
  */
 public class DefaultDocumentCreator extends AbstractDocumentCreator {
-    /** Creates a new instance of DefaultDocumentCreator */
+
+    /** 
+     * Creates a new instance of DefaultDocumentCreator
+     */
     public DefaultDocumentCreator() {
     }
 
@@ -83,14 +85,14 @@ public class DefaultDocumentCreator extends AbstractDocumentCreator {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Document getDocument(File file, File htdocsDumpDir)
-        throws Exception {
+    public Document getDocument(File file, File htdocsDumpDir) throws Exception {
         Document document = super.getDocument(file, htdocsDumpDir);
 
         HTMLParser parser = HTMLParserFactory.newInstance(file);
         parser.parse(file);
 
         document.add(Field.Text("title", parser.getTitle()));
+        document.add(Field.Text("keywords", parser.getKeywords()));
         document.add(Field.Text("contents", parser.getReader()));
 
         return document;
