@@ -2,6 +2,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"  
   xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
@@ -94,7 +95,7 @@
         	  <xsl:if test="$workflowstate != ''">
         	    <xsl:call-template name="workflow"/>
         	  </xsl:if>
-            &#160;User Id: <b><xsl:value-of select="$userid"/></b>&#160;&#160;|&#160;&#160;Server Time: <b><xsl:value-of select="$servertime"/></b>
+            &#160;<i18n:text>User</i18n:text>: <b><xsl:value-of select="$userid"/></b>&#160;&#160;|&#160;&#160;<i18n:text>Server Time</i18n:text>: <b><xsl:value-of select="$servertime"/></b>
           </div>
           
         <div style="margin-top: 5px;"><img border="0" src="{$image-prefix}/lenya_oben_2.gif" /></div>
@@ -159,7 +160,7 @@
   
   
   <xsl:template name="workflow">
-    Workflow State: <b><xsl:value-of select="$workflowstate"/></b>
+    <i18n:text>Workflow State</i18n:text>: <b><xsl:value-of select="$workflowstate"/></b>
     <xsl:text>&#160;&#160;|&#160;&#160;</xsl:text>
     <xsl:if test="$islive = 'false'">not&#160;</xsl:if>
     <xsl:text>live&#160;&#160;|</xsl:text>

@@ -712,6 +712,10 @@
           <map:parameter name="islive" value="{workflow:variable.is_live}"/>
         </map:transform>
         
+        <map:transform type="i18n">      
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>        
+        
         <map:transform src="lenya/xslt/menu/menu2xslt.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.13 2004/02/14 11:06:43 roku Exp $
+$Id: cmsui_de.xml,v 1.14 2004/02/14 11:27:04 roku Exp $
 @author <a href="mailto:roku@apache.org">Rolf Kulemann</a>
 <License>
 
@@ -56,6 +56,7 @@ $Id: cmsui_de.xml,v 1.13 2004/02/14 11:06:43 roku Exp $
 
 <catalogue xml:lang="de">
 
+  <!-- common used words -->
   <message key="Submit">Senden</message>
   <message key="Cancel">Abbrechen</message>
   <message key="Back to Page">Zur&#252;ck zur Seite</message>
@@ -63,7 +64,8 @@ $Id: cmsui_de.xml,v 1.13 2004/02/14 11:06:43 roku Exp $
   <message key="No referer">Keine R&#252;ckverweiseite</message>  
   <message key="Referer">R&#252;ckverweis</message>
   <message key="EXCEPTION">AUSNAHME</message>  
-    
+  <message key="User">Benutzer</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -121,6 +123,10 @@ $Id: cmsui_de.xml,v 1.13 2004/02/14 11:06:43 roku Exp $
   <message key="Edit with Forms">Bearbeiten mit Formularen</message>
   <message key="Edit Metadata">Metadata bearbeiten</message>
   <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
+
+  <!-- cms tabs -->
+  <message key="Server Time">Serverzeit</message>  
+  <message key="Workflow State">Bearbeitungsstatus</message>
 
 </catalogue>
 
