@@ -31,8 +31,6 @@
     String projectid = parameters.getParameter("projectid","null");
   </xsp:logic>
 
-  <live_uri>/live</live_uri>
-
   <menus>
     <menu name="File" label="File">
       <block>

@@ -19,15 +19,6 @@
 
 <body bgcolor="#ffffff" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
 
-
-<noscript>
-<div style="color:#FF9900; padding:4px; font:14px arial; background:#000000">
-<b>This site requires Javascript to be turned on.</b>
-</div>
-</noscript>
-
-
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4">
@@ -47,14 +38,28 @@ src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
   <img src="/lenya/lenya/menu/images/blau_anfang_oben.gif" />
 </td>
 <td background="/lenya/lenya/menu/images/grau-bg2.gif">
-  <a href="{$context_prefix}/admin/">
+  <a href="{url-info/context-prefix}/{url-info/publication-id}/admin{url-info/document-id}">
+   <xsl:choose><xsl:when test="url-info/area = 'admin'">
     <img border="0" src="/lenya/lenya/menu/images/admin_active.gif" />
+    </xsl:when><xsl:otherwise>
+     <img border="0" src="/lenya/lenya/menu/images/admin_inactive.gif" />
+    </xsl:otherwise></xsl:choose>
   </a>
-  <a href="{$context_prefix}/info/">
+  <a href="{url-info/context-prefix}/{url-info/publication-id}/info{url-info/document-id}">
+   <xsl:choose><xsl:when test="url-info/area = 'info'">
     <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
+    </xsl:when><xsl:otherwise>
+     <img border="0" src="/lenya/lenya/menu/images/info_inactive.gif" />
+    </xsl:otherwise></xsl:choose>
   </a>
-  <img src="/lenya/lenya/menu/images/authoring_active.gif" />
-  <a target="_blank" href="{$context_prefix}{live_uri}">
+  <a href="{url-info/context-prefix}/{url-info/publication-id}/authoring{url-info/document-id}">
+   <xsl:choose><xsl:when test="url-info/area = 'authoring'">
+    <img border="0" src="/lenya/lenya/menu/images/authoring_active.gif" />
+    </xsl:when><xsl:otherwise>
+     <img border="0" src="/lenya/lenya/menu/images/authoring_inactive.gif" />
+    </xsl:otherwise></xsl:choose>
+  </a>
+  <a target="_blank" href="{url-info/context-prefix}/{url-info/publication-id}/live{url-info/document-id}">
     <img border="0" src="/lenya/lenya/menu/images/live_inactive.gif" />
   </a>
 </td>
