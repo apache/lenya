@@ -9,7 +9,7 @@
     <copy todir="${dist.root}/${fullname}">
       <fileset dir="${basedir}">
         <include name="INSTALL*"/>
-        <include name="README"/>
+        <include name="README.txt"/>
       </fileset>
     </copy>
 
@@ -57,7 +57,7 @@
 
     <copy todir="${dist.src.dir}">
       <fileset dir=".">
-        <include name="README"/>
+        <include name="README.txt"/>
         <include name="INSTALL*"/>
         <include name="build.properties.sample"/>
         <include name="src/**"/>
