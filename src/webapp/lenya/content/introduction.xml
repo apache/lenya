@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 
 <div xmlns="http://www.w3.org/1999/xhtml" class="lenya-frontpage">
-<h2>Preamble</h2>
+<h2>Welcome to Apache Lenya</h2>
 <p>
-Apache Lenya is the refactored version of XPS (Extensible Publishing System).
-XPS is being used by Switzerland's most famous newspaper Neue Z&#252;rcher Zeitung
-for their interactive edition <a href="http://www.nzz.ch">NZZ Online</a>. The system
-is being used 7 days a week and 24 hours a day by editors and automatic processes (i.e. nightly
-generation of the online version from the print edition). It is up and running since October 2, 2000.
-XPS was Open Source from the beginning (Apache license).</p>
+You have successfully installed Apache Lenya 1.2. To start, click on any of the publications on the left.</p>
 
-<h2>Introduction</h2>
+<h3>About Apache Lenya</h3>
 <p>
-Apache Lenya is a Java-based <a href="http://www.opensource.org">Open-Source</a>
+<a href="http://cocoon.apache.org/lenya">Apache Lenya</a> is a Java-based <a href="http://www.opensource.org">Open-Source</a>
 Content Management System. It
 is based on open standards such as <a href="http://www.w3c.org/XML/">XML</a> and <a href="http://www.w3c.org/TR/xslt">XSLT</a>. One of its core
 components is <a href="http://cocoon.apache.org">Cocoon</a> from the
@@ -27,7 +22,4 @@ An adminstration interface allows advanced users to
 monitor the CMS, and perform configuration tasks.
 </p>
 		
-<p>
-You are very welcome to participate in the <a href="http://cocoon.apache.org/lenya">Lenya project</a>.
-Thank you very much for your suggestions and contributions.
-</p></div>
+</div>
