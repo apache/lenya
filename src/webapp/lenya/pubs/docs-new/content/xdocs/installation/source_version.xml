@@ -136,15 +136,7 @@ $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
 </source>
     <p>See also <link href="http://cocoon.apache.org/2.0/installing/index.html">Installing Apache Cocoon</link></p>
   </li>
-  <li>
-    <p>
-    <strong>Copy the endorsed libraries</strong>
-    </p>
-    <p>
-    Copy all files from
-    <code>$COCOON_HOME\lib\endorsed/</code> to <code>$TOMCAT_HOME/common/endorsed/</code>.
-    </p>
-  </li>
+  
   <li>
     <p>
     If you have downloaded the source version: <strong>Extract Lenya</strong>
@@ -154,6 +146,7 @@ $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
     </p>
     <p/>
   </li>
+  
   <li>
     <strong>Configure Lenya</strong>
     <p>

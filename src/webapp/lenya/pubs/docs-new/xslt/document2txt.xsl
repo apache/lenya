@@ -13,7 +13,7 @@ and tabs (tab2menu.xsl) to generate the final HTML.
 Section handling
 - <a name/> anchors are added if the id attribute is specified
 
-$Id: document2txt.xsl,v 1.1 2004/02/05 10:18:44 andreas Exp $
+$Id: document2txt.xsl,v 1.2 2004/02/05 10:35:40 andreas Exp $
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
@@ -62,6 +62,17 @@ $Id: document2txt.xsl,v 1.1 2004/02/05 10:18:44 andreas Exp $
 <!-- document -->
 <!-- ====================================================================== -->
 <xsl:template match="document">
+<xsl:text>
++----------------------------------------------------------------+
+| This text document is generated from the XML source            |
+| using the follwoing stylesheet:                                |
+| lenya/pubs/docs-new/xslt/document2txt.xsl                      |
+|                                                                |
+| Feel free to improve the layout by changing the stylesheet.    |
++----------------------------------------------------------------+
+
+
+</xsl:text>
 
 <xsl:if test="normalize-space(header/title) != ''">
 <xsl:value-of select="translate(header/title, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/><xsl:text>
