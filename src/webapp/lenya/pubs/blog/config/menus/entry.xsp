@@ -79,6 +79,7 @@
       <block>
         <item href="index.xml">Feed</item>
         <item href="lenya-page-body.xml">Body</item>
+        <item href="?cocoon-view=pagexml">Page</item>
       </block>
       <block>
         <item href="index-bxeng.html">HTML&#160;for&#160;BXENG</item>
