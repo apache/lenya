@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication-sitemap.xmap,v 1.72 2004/08/11 12:58:39 michi Exp $ -->
+<!-- $Id: publication-sitemap.xmap,v 1.73 2004/08/11 13:02:56 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -153,8 +153,8 @@
       
       <map:match pattern="**.html">
         <map:act type="language-exists">
-	  <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
-	  <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml"/>
+        <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml"/>
       <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
   	  <map:serialize type="html"/>
         </map:act>
