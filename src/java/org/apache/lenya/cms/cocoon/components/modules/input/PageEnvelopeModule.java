@@ -27,13 +27,11 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
-import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
+import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.PageEnvelope;
 
 /**
@@ -47,10 +45,12 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
     protected static final String URI_PARAMETER_DOCTYPE = "doctype";
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         PageEnvelope envelope = getEnvelope(objectModel);
         Object value = null;
 
@@ -64,17 +64,16 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             } else if (name.equals(PageEnvelope.PUBLICATION)) {
                 value = envelope.getPublication();
             } else if (name.equals(PageEnvelope.PUBLICATION_LANGUAGES_CSV)) {
-                value =
-                    StringUtils.join(
-                        envelope.getPublication().getLanguages(),
-                        ',');
+                value = StringUtils.join(envelope.getPublication().getLanguages(), ',');
             } else if (name.equals(PageEnvelope.DOCUMENT)) {
                 value = envelope.getDocument();
             } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
                 value = envelope.getDocument().getId();
             } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
                 value = envelope.getDocument().getName();
-            } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) { // FIXME: Why is this here?
+            } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) { // FIXME: Why
+                                                                   // is this
+                                                                   // here?
                 value = envelope.getDocument().getLabel();
             } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
                 value = envelope.getDocument().getCanonicalDocumentURL();
@@ -93,26 +92,22 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
                 value = envelope.getDocument().getLanguages();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
-                value =
-                    StringUtils.join(
-                        envelope.getDocument().getLanguages(),
-                        ',');
+                value = StringUtils.join(envelope.getDocument().getLanguages(), ',');
             } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
                 Date date = envelope.getDocument().getLastModified();
                 value = new SimpleDateFormat(DATE_FORMAT).format(date);
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
             } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
-                value = getDocumentType(objectModel, envelope);
+                value = getDocumentType(envelope);
             } else {
                 throw new ConfigurationException("The attribute [" + name + "] is not supported!");
             }
         } catch (ConfigurationException e) {
             throw e;
         } catch (Exception e) {
-            throw new ConfigurationException(
-                "Getting attribute for name [" + name + "] failed: ",
-                e);
+            throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
+                    e);
         }
 
         if (getLogger().isDebugEnabled()) {
@@ -126,75 +121,46 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 
     /**
      * Returns the document type.
-     * @param objectModel The object model.
      * @param envelope The page envelope.
      * @return A string.
      * @throws ServiceException when something went wrong.
      * @throws URIParameterizerException when something went wrong.
      */
-    protected String getDocumentType(Map objectModel, PageEnvelope envelope)
-        throws ServiceException, URIParameterizerException {
+    protected String getDocumentType(PageEnvelope envelope) throws ServiceException,
+            URIParameterizerException {
         String documentType;
-        URIParameterizer parameterizer = null;
-        Map map = null;
+        DocumentTypeResolver resolver = null;
         try {
-            parameterizer = (URIParameterizer) manager.lookup(URIParameterizer.ROLE);
-
-            Parameters parameters = new Parameters();
-            parameters.setParameter(
-                URI_PARAMETER_DOCTYPE,
-                "cocoon://uri-parameter/"
-                    + envelope.getPublication().getId()
-                    + "/"
-                    + URI_PARAMETER_DOCTYPE);
-
-            String source =
-                envelope.getDocument().getArea() + envelope.getDocument().getCanonicalDocumentURL();
-
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            map = parameterizer.parameterize(filterURI(request.getRequestURI()), filterURI(source), parameters);                
-            documentType = (String) map.get(URI_PARAMETER_DOCTYPE);
-            
+            resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
+            DocumentType type = resolver.resolve(envelope.getDocument());
+            documentType = type.getName();
         } finally {
-            if (parameterizer != null) {
-                manager.release(parameterizer);
+            if (resolver != null) {
+                this.manager.release(resolver);
             }
         }
         return documentType;
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         return Arrays.asList(PageEnvelope.PARAMETER_NAMES).iterator();
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel)};
+            throws ConfigurationException {
+        Object[] objects = { getAttribute(name, modeConf, objectModel) };
 
         return objects;
     }
 
-    /**
-     * uri will be filtered by certain rules 
-     * i.e. session information encoded within the uri will be removed.
-     * @param uri The uri to be filtered
-     * @return uri filtered by certain rules i.e
-     */
-    // FIXME Maybe make this more configureable
-    private String filterURI(final String uri) 
-    {
-        final int index = uri.indexOf(";jsessionid");
-        
-        if(index >= 0)
-            return uri.substring(0, index);                        
-        else
-            return uri;        
-    }
 }
