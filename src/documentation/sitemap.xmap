@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- ===============================================
+Default Forrest sitemap, defining the whole site.
+Delegates to the other *.xmap files.  See
+http://forrest.apache.org/docs/sitemap-ref.html
+
+$Revision: 1.12 $
+==================================================== -->
+
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+<!-- Pipelines -->
+ <map:pipelines>
+  <map:pipeline>
+<!--Aggregation out of a couple of sites-->
+    <map:match pattern="docu.xml">
+      <map:generate src="cocoon://abs-linkmap"/>
+      <map:transform type="xpath">
+        <map:parameter name="include" value="//*[@wholesite='true']"/>
+      </map:transform>
+      <map:transform src="{forrest:stylesheets}/site2book.xsl" />
+      <map:transform src="{forrest:stylesheets}/aggregates/book2cinclude.xsl">
+ 	  <map:parameter name="title" value="{conf:project-name}: Whole documentation"/>
+      </map:transform>
+      <map:transform type="cinclude"/>
+      <map:transform src="{forrest:stylesheets}/aggregates/doc2doc-uniqueids.xsl"/>
+      <map:transform src="{forrest:stylesheets}/aggregates/docs2document.xsl"/>
+      <map:serialize type="xml"/>
+   </map:match>
+  </map:pipeline>
+ </map:pipelines>
+</map:sitemap>

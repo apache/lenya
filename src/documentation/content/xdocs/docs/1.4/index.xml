@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya Documentation</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+    </authors>
+  </header>
+  <body>
+        <note> This is just a working draft not the actual finished documentation</note>
+        <p>
+           The 1.4. branch reflects our efforts to integrate Jackrabbit and building an even more flexible frameworks. 
+           With the 1.4. branch we are trying to capsulate the functionalities of lenya into plugins. 
+           This plugins then can be used in all following version independent from the lenya core.
+        </p>
+  </body>
+</document>

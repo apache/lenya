@@ -1,0 +1,530 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-skin-name" content="pelt">
+<title>The TaskAction: Triggering a Task from the Sitemap</title>
+<link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../skin/profile.css" rel="stylesheet">
+<script src="../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a><script src="../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogoA1">
+<a href="http://lenya.apache.org"><img class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png" title="
+  	Apache Lenya is a Java-based Open-Source Content Management System.
+  	It is based on open standards such as XML and XSLT.
+  	One of its core components is Cocoon from the Apache Software Foundation.
+  "></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="cocoon.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../installation/index.html">Installation</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript" language="JavaScript"><!--
+              document.write("Published: " + document.lastModified);
+              //  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Documentation</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a title="" href="../../../docs/index.html">Documentation</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docu.pdf">pdf docu (whole)</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docu.html">html docu (whole)</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Integrator/Dev Guide</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_selected_1.1.4.1', '../../../skin/')" id="menu_selected_1.1.4.1Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Components</div>
+<div id="menu_selected_1.1.4.1" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.1.4.1.1', '../../../skin/')" id="menu_1.1.4.1.1Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_1.1.4.1.1" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.2', '../../../skin/')" id="menu_1.1.4.1.2Title" class="menutitle">Deployment</div>
+<div id="menu_1.1.4.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/deployment/mod_proxy.html">mod_proxy</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.3', '../../../skin/')" id="menu_1.1.4.1.3Title" class="menutitle">Editors</div>
+<div id="menu_1.1.4.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/editors/bxeng.html">Bitflux Editor</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.4', '../../../skin/')" id="menu_1.1.4.1.4Title" class="menutitle">Layout</div>
+<div id="menu_1.1.4.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.5', '../../../skin/')" id="menu_1.1.4.1.5Title" class="menutitle">Publication</div>
+<div id="menu_1.1.4.1.5" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.6', '../../../skin/')" id="menu_1.1.4.1.6Title" class="menutitle">Revision Control</div>
+<div id="menu_1.1.4.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.7', '../../../skin/')" id="menu_1.1.4.1.7Title" class="menutitle">Repository</div>
+<div id="menu_1.1.4.1.7" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/repository/webdav.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.8', '../../../skin/')" id="menu_1.1.4.1.8Title" class="menutitle">Search</div>
+<div id="menu_1.1.4.1.8" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.9', '../../../skin/')" id="menu_1.1.4.1.9Title" class="menutitle">URI Handling</div>
+<div id="menu_1.1.4.1.9" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.10', '../../../skin/')" id="menu_1.1.4.1.10Title" class="menutitle">Asset Management</div>
+<div id="menu_1.1.4.1.10" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.11', '../../../skin/')" id="menu_1.1.4.1.11Title" class="menutitle">Link Management</div>
+<div id="menu_1.1.4.1.11" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.12', '../../../skin/')" id="menu_1.1.4.1.12Title" class="menutitle">Meta Data</div>
+<div id="menu_1.1.4.1.12" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.13', '../../../skin/')" id="menu_1.1.4.1.13Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.1.4.1.13" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.4.1.14', '../../../skin/')" id="menu_selected_1.1.4.1.14Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Tasks</div>
+<div id="menu_selected_1.1.4.1.14" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">The TaskAction</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.14.5', '../../../skin/')" id="menu_1.1.4.1.14.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.1.4.1.14.5" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.15', '../../../skin/')" id="menu_1.1.4.1.15Title" class="menutitle">Workflow</div>
+<div id="menu_1.1.4.1.15" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.1.16', '../../../skin/')" id="menu_1.1.4.1.16Title" class="menutitle">Site Management</div>
+<div id="menu_1.1.4.1.16" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/components/sitemanagement/restore.html">Restore</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.2', '../../../skin/')" id="menu_1.1.4.2Title" class="menutitle">Specifications</div>
+<div id="menu_1.1.4.2" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/specs/namespaces.html">Namespaces</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.3', '../../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.1.4.3" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../../docs/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../docs/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../apidocs/index.html">API (Javadoc)</a>
+</div>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div id="skinconf-txtlink"></div>
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="taskaction.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>The TaskAction: Triggering a Task from the Sitemap</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Declaring+the+Action">Declaring the Action</a>
+</li>
+<li>
+<a href="#Scheduling+a+Task">Scheduling a Task</a>
+</li>
+<li>
+<a href="#Developing+Your+Own+Tasks">Developing Your Own Tasks</a>
+</li>
+</ul>
+</div> 
+
+
+<a name="N1001B"></a><a name="Declaring+the+Action"></a>
+<h2 class="underlined_10">Declaring the Action</h2>
+<div class="section">
+<p>
+To invoke a task from a sitemap pipeline, you use a <span class="codefrag">TaskAction</span>. The
+task ID is handled to the action by a <span class="codefrag">task</span> parameter:
+</p>
+<pre class="code">
+
+&lt;map:components&gt;
+  ...
+  &lt;map:actions&gt;
+    &lt;map:action name="publisher"
+                src="org.lenya.cms.cocoon.acting.TaskAction"&gt;
+      &lt;task id="publish"/&gt;
+    &lt;/map:action&gt;
+  &lt;/map:actions&gt;
+  ...
+&lt;/map:components&gt;
+
+</pre>
+<p>
+The <span class="codefrag">TaskAction</span> collects the request parameters and forwards them
+to the task.
+</p>
+<pre class="code">
+
+&lt;map:match pattern="lenya/publish*"&gt;
+  &lt;map:act type="publisher"&gt;
+    &lt;map:redirect-to uri="{parent_uri}" session="true"/&gt;
+  &lt;/map:act&gt;
+  &lt;map:redirect-to uri="publishScreen?status=failed" session="true"/&gt;
+&lt;/map:match&gt;
+
+</pre>
+<p>
+You can also pass the task ID as a <span class="codefrag">task-id</span> parameter directly in the pipeline:
+</p>
+<pre class="code">
+
+
+&lt;map:actions&gt;
+  &lt;map:action name="task" src="org.lenya.cms.cocoon.acting.TaskAction"/&gt;
+&lt;/map:actions&gt;
+
+...
+
+&lt;map:match pattern="lenya/publish*"&gt;
+  &lt;map:act type="task"&gt;
+    &lt;map:parameter name="task-id" value="publish-article"/&gt;
+    &lt;map:redirect-to uri="{parent_uri}" session="true"/&gt;
+  &lt;/map:act&gt;
+  &lt;map:redirect-to uri="publishScreen?status=failed" session="true"/&gt;
+&lt;/map:match&gt;
+
+</pre>
+</div>
+
+
+<a name="N10043"></a><a name="Scheduling+a+Task"></a>
+<h2 class="underlined_10">Scheduling a Task</h2>
+<div class="section">
+<p>
+See section <strong>Scheduler</strong>.
+</p>
+</div>
+
+
+<a name="N1004F"></a><a name="Developing+Your+Own+Tasks"></a>
+<h2 class="underlined_10">Developing Your Own Tasks</h2>
+<div class="section">
+<p>
+Every task must implement the <span class="codefrag">org.lenya.cms.task.Task</span> interface.
+</p>
+<p>
+The easiest way to develop your own task is to extend the <span class="codefrag">AbstractTask</span> class.
+Its <span class="codefrag">parameterize()</span> method simply replaces old parameter values with new
+ones. All you have to do is implementing the <span class="codefrag">execute(String contextPath)</span>
+method.
+</p>
+<p>
+You may wonder why we pass the <span class="codefrag">contextPath</span> as a method parameter
+since we already pass it as a task parameter. This ensures that the task is always
+able to access the Lenya CMS directory, even if it is not created by a <span class="codefrag">TaskAction</span>
+or a <span class="codefrag">TaskJob</span>. Furthermore, if you enter a task in the <span class="codefrag">jobs.xml</span>
+file manually, you won't have to provide a hard-coded <span class="codefrag">servlet-context</span> parameter.
+</p>
+<p>
+
+<strong>This feature may be subject to changes. If you have any suggestions to improve
+the task implementation, just contact me (Andreas Hartmann) at</strong>
+<a href="mailto:ah.at.wyona.org">ah@wyona.org</a>.
+</p>
+</div>
+
+
+<p align="right">
+<font size="-2">by&nbsp;Lenya community</font>
+</p>
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+ Copyright &copy; 2002-2004 The Apache Software Foundation.</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:lenya-dev@cocoon.apache.org?subject=Feedback%C2%A0for%C2%A0docs/components/tasks/taskaction.html">lenya-dev@cocoon.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

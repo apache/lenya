@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: checkin.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document>
+	<header>
+		<title>Reserved Checkin</title>
+		<version/>
+		<type/>
+		<authors>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+		</authors>
+	</header>
+
+  <body>
+	
+    <section>
+	  <title>Revision Controller</title>
+	  <p>To check in a file call:</p>
+
+<source>org.apache.lenya.cms.rc.RevisionController.reservedCheckIn(
+    String destination, String identity, boolean backup)</source>
+	      
+	  <p>where the destination is the path of the file from the publication,
+	     the identity is the identity of the user 
+	     and backup is a boolean.</p>
+	  <p>This method is called from the ReservedCheckinAction.</p>
+      <p>Rem: if no backup (and no rollback is needed) set in the ReservedCheckinAction the backup boolean to false.</p>
+    </section>
+
+    <section>
+	  <title>The ReservedCheckinAction</title>
+	  <p>To invoke a reserved check-in from a sitemap pipeline, you use The ReservedCheckinAction.</p>
+      <source><![CDATA[
+      <map:components>
+        ...
+        <map:actions>
+      	  <map:action name="reserved-checkin"
+      	      src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction"
+      	      logger="sitemap.action.reserved-checkin"/>
+        </map:actions>
+        ...
+      </map:components>
+      ]]></source>
+      
+      <source><![CDATA[
+            <map:act type="reserved-checkin">
+              <map:generate src="../../content/rc/{exception}.xsp"
+                  type="serverpages">
+                <map:parameter name="user" value="{user}"/>
+                <map:parameter name="filename" value="{filename}"/>
+                <map:parameter name="checkType" value="{checkType}"/>
+                <map:parameter name="date" value="{date}"/>
+              </map:generate>
+              <map:transform src="xslt/rc/rco-exception.xsl"/>
+              <map:serialize/>
+            </map:act>
+      ]]></source>
+    </section>
+
+    <section>
+	  <title>URL</title>
+       <p>The call</p>
+       <source><![CDATA[{document-URL}?lenya.usecase=checkin&lenya.step=checkin]]></source>
+       <p>invokes a check-in of the document</p>
+    </section>
+
+    <section>
+	  <title>fileReservedCheckInException</title>
+	  <p>When the file cannot be checked in because another user has already checked it out,
+	  a fileReservedCheckInException is thrown:</p>
+	  <source>
+	  File Reserved Checkin Exception
+      File not checked in yet
+
+      The resource has already been checked out:
+      User:	roger
+      Date:	Wed Oct 22 14:31:05 CEST 2003
+      Filename:	/content/authoring/index/index_de.xml
+	  </source>
+	  <p>The serverpage</p>
+      <source>cocoon-lenya/src/webapp/lenya/content/rc/fileReservedCheckInException.xsp</source>
+      <p>generates the xml which will be transformed with </p>
+      <source>cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
+    </section>
+
+    <section>
+	  <title>Exception</title>
+	  
+	  <p>The errors are catched as generic Exception</p>
+	  <source>
+      Generic Exception
+
+      Check the log files :-)
+      Filename:	/content/authoring/malaVida/index_de.xml	  </source>
+	  <p>The serverpage</p>
+      <source> cocoon-lenya/src/webapp/lenya/content/rc/exception.xsp</source>
+      <p>generates the xml which will be transformed with </p>
+      <source> cocoon-lenya/src/webapp/lenya/xslt/rc/rco-exception.xsl</source>
+    </section>
+
+  </body>
+</document>

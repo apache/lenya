@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: source_version.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document> 
+
+<header> 
+    <title>Installation of the Source Version</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+    </authors> 
+</header> 
+<body> 
+
+<section><title>Standalone Installation (using the built-in Jetty)</title>
+<ol>
+  <li>
+    <strong>Get the Java SDK</strong> (see <link href="prerequisites.html">Prerequisites</link>)
+    <p/>
+  </li>
+  <li>
+    <p>
+    <strong>Get Apache Cocoon</strong> (see <link href="prerequisites.html">Prerequisites</link>)
+    </p>
+  </li>
+  <li>
+    <p>
+    <strong>Get Apache Lenya</strong> (see <link href="download.html">Download Lenya</link>)
+    </p>
+  </li>
+    <li>
+    <p>
+    Extract the downloaded Lenya archive to the <code>lenya</code> directory as described below. If you use
+    Subversion, create your Lenya checkout inside the <code>src</code> directory as described below.
+    It is recommended to use the following directory structure for an easier build experience.</p>
+
+<source>
+your_home (or c:\ on Windows, NOT My Documents)
+    /src
+        /lenya                  $LENYA_HOME
+        /cocoon-2.1             $COCOON_HOME
+            /build
+                /webapp         $COCOON_WEBAPP
+</source>
+    <p/>
+  </li>
+  <li>
+    <p>
+      <strong>Copy the Cocoon build properties supplied by Lenya</strong>
+    </p>
+    <p>
+      Copy the files
+    </p>
+    <ul>
+    <li><code>local.build.properties</code></li>
+    <li><code>local.blocks.properties</code></li>
+    </ul>
+    <p>
+      from <code>$LENYA_HOME/src/cocoon</code> to <code>$COCOON_HOME</code>.
+    </p>
+  </li>
+  <li>
+    <p>
+    <strong>Compile Cocoon</strong>
+    </p>
+    <p><strong>MS Windows</strong></p>
+<source>
+$COCOON_HOME > build.bat
+</source>
+
+    <p><strong>Unix</strong></p>
+
+<source>
+$COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
+</source>
+  </li>
+  <li><p>
+    <strong>Configure Lenya</strong></p>
+    <p>If your Cocoon source tree is set up as described above, you can skip this step.
+        If your Cocoon source tree is not at <code>../cocoon-2.1</code> relative to Lenya, 
+        you need to edit your build properties. To do this, copy <code>$LENYA_HOME/build.properties</code> to
+    <code>$LENYA_HOME/local.build.properties</code>.
+    </p>
+    <p>
+    Edit <code>local.build.properties</code>. For the described configuration the following
+    settings will work (<strong>MS Windows:</strong> Don't use backslashes "<code>\</code>"
+    for directory separation.)
+    </p>
+    <ul>
+      <li><code>cocoon.src.dir=$COCOON_HOME</code></li>
+      <li><code>tomcat.home.dir=$TOMCAT_HOME</code></li>
+    </ul>
+    <p/>
+  </li>
+  <li><p>
+    <strong>Build Lenya</strong></p>
+        <p>
+ Execute <code>build.bat</code> or <code>build.sh</code> in your Lenya source directory, depending
+ on your platform.</p>
+  </li>
+ <li>
+    <p>
+    <strong>Start Lenya</strong></p>
+        <p>
+ Execute <code>lenya.bat</code> or <code>lenya.sh servlet</code> in your Lenya source directory, depending
+ on your platform.</p>
+ </li>
+  <li>
+    <p>
+    <strong>Test the installation</strong>
+    </p>
+    <p>
+    <link href="http://localhost:8888">http://localhost:8888</link>
+    </p>
+  </li>
+</ol>
+</section>
+<section><title>Installation with Apache Tomcat</title>
+    <p>Installing Lenya with Tomcat is mostly the same procedure. Follow Steps 1-6, then do the steps below.</p>
+    <ol>
+      <li><p>
+    <strong>get Apache Tomcat</strong> (see <link href="prerequisites.html">Prerequisites</link>)
+    </p>
+  </li>
+  <li>
+    <p>
+    <strong>Install Apache Tomcat</strong>
+    </p>
+    <p>
+    See <link href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/setup.html">Tomcat 5.0 Setup</link>
+    </p>
+    <p>
+    <strong>MS Windows:</strong><br/>
+    Basically this is setting the <code>JAVA_HOME</code> environment variable and
+    running the Tomcat installer. Decide to run Tomcat as a Windows NT/2000/XP-Service.</p>
+   <warning>Make sure you do not install at a location with spaces in the path</warning>
+  </li>
+  <li><p>
+    <strong>Configure Lenya</strong></p>
+    <p>To install Lenya with Tomcat, you need to edit your build properties. To do this, 
+        copy <code>$LENYA_HOME/build.properties</code> to
+    <code>$LENYA_HOME/local.build.properties</code>.
+    </p>
+    <p>
+    Edit <code>local.build.properties</code>. For the described configuration the following
+    settings will work (<strong>MS Windows:</strong> Don't use backslashes "<code>\</code>"
+    for directory separation.) It is important that <code>tomcat.home.dir</code> is an
+    absolute path. Replace <code>$TOMCAT_HOME</code> by your Tomcat installation directory. 
+    If your Cocoon source directory is not at <code>../cocoon-2.1</code> relative to Lenya,
+    then change the <code>cocoon.webapp.dir</code> and <code>cocoon.src.dir</code> properties.
+    </p>
+    <ul>
+      <li><code>cocoon.src.dir=$COCOON_HOME</code></li>
+      <li><code>tomcat.home.dir=$TOMCAT_HOME</code></li>
+    </ul>
+    <p/>
+  </li>
+  <li><p>
+    <strong>Build Lenya</strong></p>
+        <p>
+ Execute <code>ant install</code> in your Lenya source directory.
+ </p>
+  </li>
+  <li><p>
+    <strong>Restart Tomcat</strong></p>
+        <p>
+ Restart Tomcat to load the Lenya webapp.
+ </p>
+  </li>
+  <li>
+    <p>
+    <strong>Test the installation</strong>
+    </p>
+    <p>
+    <link href="http://localhost:8080/lenya">http://localhost:8080/lenya</link>
+    </p>
+  </li>
+    </ol>
+</section>
+</body>
+</document>
