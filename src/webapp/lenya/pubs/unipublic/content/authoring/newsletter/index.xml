@@ -3,6 +3,7 @@
   <email>
     <to>foo@foobar.org</to>
     <cc/>
+    <bcc/>
     <subject>Newsletter 1/2003</subject>
   </email>
   <title>Newsletter Title</title>

@@ -55,6 +55,10 @@
   <mail:cc><xsl:apply-templates/></mail:cc>
 </xsl:template>
 
+<xsl:template match="email/bcc">
+  <mail:bcc><xsl:apply-templates/></mail:bcc>
+</xsl:template>
+
 <xsl:template match="email/subject">
   <mail:subject><xsl:apply-templates/></mail:subject>
 </xsl:template>

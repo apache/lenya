@@ -55,6 +55,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * <code><strong>from</strong></code>:<br/>
  * <code><strong>to</strong></code>:<br/>
  * <code><strong>cc</strong></code>:<br/>
+ * <code><strong>bcc</strong></code>:<br/>
  * <code><strong>subject</strong></code>:<br/>
  * <code><strong>body</strong></code>:<br/>
  * <br/>
@@ -78,6 +79,7 @@ public class MailTask
     
     public static final String ELEMENT_TO = "to";
     public static final String ELEMENT_CC = "cc";
+    public static final String ELEMENT_BCC = "bcc";
     public static final String ELEMENT_SUBJECT = "subject";
     public static final String ELEMENT_BODY = "body";
     public static final String ELEMENT_FROM = "from";
@@ -137,6 +139,7 @@ public class MailTask
                     ELEMENT_FROM,
                     ELEMENT_TO,
                     ELEMENT_CC,
+                    ELEMENT_BCC,
                     ELEMENT_SUBJECT,
                     ELEMENT_BODY
                 };
@@ -169,6 +172,7 @@ public class MailTask
                 taskParameters.getParameter(ELEMENT_FROM),
                 taskParameters.getParameter(ELEMENT_TO),
                 taskParameters.getParameter(ELEMENT_CC, ""),
+                taskParameters.getParameter(ELEMENT_BCC, ""),
                 taskParameters.getParameter(ELEMENT_SUBJECT, ""),
                 taskParameters.getParameter(ELEMENT_BODY, ""));
         }
@@ -177,7 +181,7 @@ public class MailTask
         }
     }        
     
-    public void sendMail(String host, String from, String to, String cc, String subject, String body) {
+    public void sendMail(String host, String from, String to, String cc, String bcc, String subject, String body) {
         log.debug(
             "\nTrying to send mail:" +
             "\n-------------------------------------------------------------" +
@@ -188,6 +192,8 @@ public class MailTask
             "\nto:      " + to +
             "\n-------------------------------------------------------------" +
             "\ncc:      " + cc +
+            "\n-------------------------------------------------------------" +
+            "\nbcc:     " + bcc +
             "\n-------------------------------------------------------------" +
             "\nsubject: " + subject +
             "\n-------------------------------------------------------------" +
@@ -207,6 +213,9 @@ public class MailTask
             // set cc
             if (!cc.equals(""))
                 pm.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc));
+            // set bcc
+            if (!bcc.equals(""))
+                pm.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(bcc));
              // set subject
             if (!subject.equals(""))
               pm.setSubject(subject);

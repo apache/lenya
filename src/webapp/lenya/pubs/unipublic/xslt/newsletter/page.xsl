@@ -93,11 +93,24 @@
   </tr>
 </xsl:template>
 
+<xsl:template match="email/bcc">
+  <tr>
+    <td><strong>Bcc:</strong></td>
+    <td>
+      <code>
+        <xsl:apply-templates/>
+      </code>
+    </td>
+  </tr>
+</xsl:template>
+
 <xsl:template match="email/subject">
   <tr>
     <td><strong>Subject:&#160;&#160;</strong></td>
     <td>
+      <code>
         <xsl:apply-templates/>
+      </code>
     </td>
   </tr>
 </xsl:template>

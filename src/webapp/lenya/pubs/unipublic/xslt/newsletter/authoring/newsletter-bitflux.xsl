@@ -29,7 +29,7 @@
         </td>
       </tr> 
       <tr>
-        <td class="tsr-text">CC:</td>
+        <td class="tsr-text">Cc:</td>
         <td class="tsr-text">
           <cc contentEditable="true">
             <xslout:for-each select="newsletter/email/cc">
@@ -38,6 +38,16 @@
           </cc>
         </td>
       </tr> 
+      <tr>
+        <td class="tsr-text">Bcc:</td>
+        <td class="tsr-text">
+          <bcc contentEditable="true">
+            <xslout:for-each select="newsletter/email/bcc">
+              <xslout:apply-templates/>
+            </xslout:for-each>
+          </bcc>
+        </td>
+      </tr>
       <tr>
         <td class="tsr-text">Subject:</td>
         <td class="tsr-text">
