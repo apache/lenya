@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: overview.xsp,v 1.11 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -75,8 +75,8 @@
 			
       if (exists) {
       
-						<dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
-						<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></lenya-info:abstract>
+						<dc:title><input:get-attribute module="dublincore" as="object" name="title"/></dc:title>
+						<lenya-info:abstract><input:get-attribute module="dublincore" as="object" name="description"/></lenya-info:abstract>
 			
 						<lenya-info:status></lenya-info:status>
 						<dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
