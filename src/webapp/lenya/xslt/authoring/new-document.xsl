@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns="http://www.w3.org/1999/xhtml"
+	>
  
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="/">
-<html>
-<body>
-<head>
-<link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
-</head>
+<page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
+<page:title>Create Document</page:title>
+<page:body>
   <xsl:apply-templates/>
-</body>
-</html>
+</page:body>
+</page:page>
 </xsl:template>
 
 <xsl:template match="parent-child">
