@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: rename.xsl,v 1.20 2004/04/29 14:54:21 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -24,6 +24,8 @@
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
   
+  <xsl:param name="contextprefix"/>
+
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="source-document-id"><xsl:value-of select="/page/info/source-document-id"/></xsl:variable>
   <xsl:variable name="ref-document-id"><xsl:value-of select="/page/info/ref-document-id"/></xsl:variable>
@@ -54,25 +56,11 @@
         </i18n:translate>            
       </div>
       <div class="lenya-box-body">
+        <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
         <script Language="JavaScript">
-function validRequired(formField,fieldLabel)
-{
-	var result = true;
-	
-	if (formField.value.match("[^a-zA-Z0-9\\-]+"))
-	{
-		alert('Please enter a valid value for the "' + fieldLabel +'" field.');
-		formField.focus();
-		result = false;
-	}
-
-	return result;
-	
-}
-
 function validateForm(theForm)
 {
-	if (!validRequired(theForm["properties.node.secdocumentid"],"New Document ID"))
+	if (!validContent(theForm["properties.node.secdocumentid"],"New Document ID"))
 		return false;
 
 	return true;
