@@ -76,6 +76,7 @@
       <namespaces href="webdav.html" label="WebDAV Servers"/>
       <namespaces href="image-upload.html" label="Image Upload"/>
       <namespaces href="mod_proxy.html" label="mod_proxy"/>
+      <namespaces href="lucene.html" label="Searching with Lucene"/>
     </misc>
     <misc href="editors/" label="Editors">
       <namespaces href="htmlform.html" label="HTML Form Editor"/>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Lucene</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Generic Search</title>
+<p>URL:</p>
+<source>
+<![CDATA[
+/lenya/$PUB_ID/search/lucene
+]]>
+</source>
+
+<p>Indices and Excerpts:</p>
+<source>
+<![CDATA[
+src/webapp/lenya/pubs/$PUB_ID/work/search/index/index
+src/webapp/lenya/pubs/$PUB_ID/work/search/htdocs_dump
+]]>
+</source>
+
+<p>Configuration:</p>
+<source>
+<![CDATA[
+src/webapp/global-sitemap.xmap
+]]>
+</source>
+</section>
+
+<section>
+<title>Customizing/Overwriting Generic Search Interface</title>
+<p>XSLT:</p>
+<source>
+<![CDATA[
+src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
+]]>
+</source>
+</section>
+
+
+</body>
+</document>
