@@ -244,7 +244,7 @@
 				<map:match type="step" pattern="upload">
 					<map:act type="file-upload">
 						<!-- if the action suceeds it returns the referer and we	    simply redirect to it. -->
-						<map:redirect-to uri="{$referer}"/>
+						<map:redirect-to uri="{referer}"/>
 					</map:act>
 					<!-- otherwise the action could not validate some of the	  input and we present the upload form again -->
 					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
@@ -299,6 +299,62 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/selected-xinclude.xsl" label="gregor"/>
 				<map:transform type="xlink">
 					<map:parameter name="href" value="docs/publication/authoring/headlines.xml"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+			</map:match>
+			<!-- ALL it-stellen overview -->
+			<map:match pattern="it-stellen/index.html">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
+					<map:part src="cocoon:/all-it-stellen"/>
+					<map:part src="docs/publication/authoring/small-preview.xml"/>
+					<map:part src="docs/publication/authoring/sitetree.xml"/>
+					<map:part src="cocoon:/today"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/it-overview.xsl">
+					<map:parameter name="id" value="/it-stellen/"/>
+					<map:parameter name="documentid" value="news/{1}.xml"/>
+					<map:parameter name="authoring" value="true"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/today.xsl"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<!-- ALL it-kalender overview -->
+			<map:match pattern="it-kalender/index.html">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
+					<map:part src="cocoon:/all-it-kalender"/>
+					<map:part src="docs/publication/authoring/small-preview.xml"/>
+					<map:part src="docs/publication/authoring/sitetree.xml"/>
+					<map:part src="cocoon:/today"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/it-overview.xsl">
+					<map:parameter name="id" value="/it-kalender/"/>
+					<map:parameter name="documentid" value="news/{1}.xml"/>
+					<map:parameter name="authoring" value="true"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/today.xsl"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<!-- Include ALL it-stellen -->
+			<map:match pattern="all-it-stellen">
+				<map:generate type="directory" src="docs/publication/authoring/it-stellen/"/>
+				<map:transform src="stylesheets/publication/Page/xinclude-it.xsl"/>
+				<map:transform type="xlink">
+					<map:parameter name="href" value="docs/publication/authoring/it-stellen/dummy.xml"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+			</map:match>
+			<!-- Include ALL it-kalender -->
+			<map:match pattern="all-it-kalender">
+				<map:generate type="directory" src="docs/publication/authoring/it-kalender/"/>
+				<map:transform src="stylesheets/publication/Page/xinclude-it.xsl"/>
+				<map:transform type="xlink">
+					<map:parameter name="href" value="docs/publication/authoring/it-kalender/dummy.xml"/>
 				</map:transform>
 				<map:serialize type="xml"/>
 			</map:match>
@@ -385,9 +441,9 @@
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- Catch-all matcher -->
-			<map:match pattern="news/">
+<!--			<map:match pattern="news/">
 				<map:redirect-to uri="/wyona-cms/computerworld/authoring/index.html" session="true"/>
-			</map:match>
+			</map:match> -->
 		</map:pipeline>
 		<!-- Samples for resource/document creation -->
 		<map:pipeline>
