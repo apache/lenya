@@ -77,7 +77,7 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class URIParametrizerAction extends ConfigurableComposerAction {
     static Category log = Category.getInstance(URIParametrizerAction.class);
@@ -86,7 +86,7 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.10 $
+     * @version $Revision: 1.11 $
      */
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
         boolean inParamElement = false;
@@ -168,35 +168,6 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
 
         Map map = new HashMap();
 
-        /*
-        if (this.getLogger().isDebugEnabled()) {
-            this.getLogger().debug("processing file " + src);
-        }
-
-        Request request = ObjectModelHelper.getRequest(objectModel);
-
-        String requestUri = request.getRequestURI();
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("request URI (not processed): " + requestUri);
-        }
-
-        String servletPath = request.getServletPath();
-        if (requestUri.startsWith(servletPath)) {
-            requestUri = requestUri.substring(0, servletPath.length());
-        }
-
-        if (requestUri.startsWith("/")) {
-            requestUri = requestUri.substring(0, 1);
-        }
-
-        String publicationId = requestUri.substring(0, requestUri.indexOf("/"));
-        requestUri = requestUri.substring(0, publicationId.length());
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("request URI (processed): " + requestUri);
-        }
-        */
         String[] parameterNames = parameters.getNames();
 
         for (int i = 0; i < parameterNames.length; i++) {
