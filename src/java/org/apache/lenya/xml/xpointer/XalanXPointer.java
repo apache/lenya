@@ -1,5 +1,5 @@
 /*
- * $Id: XalanXPointer.java,v 1.8 2003/04/24 13:53:15 gregor Exp $
+ * $Id: XalanXPointer.java,v 1.9 2003/05/30 09:31:59 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,6 +48,7 @@ import org.apache.log4j.Category;
 import org.w3c.dom.*;
 
 import org.apache.lenya.xml.*;
+import org.apache.xpath.XPathAPI;
 
 import java.util.*;
 
@@ -123,7 +124,7 @@ public class XalanXPointer implements XPointer {
 
         log.debug(node.getNodeName() + "  " + xpath);
 
-        NodeList nl = new org.apache.xpath.XPathAPI().selectNodeList(node, xpath);
+        NodeList nl = XPathAPI.selectNodeList(node, xpath);
 
         Vector nodes = new Vector();
 
