@@ -29,24 +29,26 @@
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
+    
+    <map:pipeline>
+      <map:match pattern="**.xhtml">
+        <map:act type="request">
+          <map:parameter name="parameters" value="true"/>
+          <map:generate src="http://127.0.0.1:{serverPort}{context}/docs-new/{../1}.html?cocoon-view=xhtml4lenya"/>
+          <map:serialize type="xml"/>
+        </map:act>
+      </map:match>
+    </map:pipeline>
 
     <map:pipeline>
       <map:match pattern="**.html">
-        <map:act type="request">
-          <map:parameter name="parameters" value="true"/>
 
           <map:aggregate element="lenya" label="lenyapage">
-            <map:part src="cocoon:/menus/sdfdsafs.xml" element="menu"/>
-            <map:part src="http://127.0.0.1:{serverPort}{context}/docs-new/{../1}.html?cocoon-view=xhtml4lenya" element="cmsbody"/>
-<!--
-            <map:part src="cocoon://{../1}.html?cocoon-view=xhtml4lenya" element="cmsbody"/>
--->
+            <map:part src="cocoon:/menus/sdfdsafs.xml"/>
+            <map:part src="cocoon:/{1}.xhtml" element="cmsbody"/>
           </map:aggregate>
-<!--
-          <map:transform src="xslt/document/authoring/main.xsl"/>
--->
+          <!--<map:transform src="xslt/document/authoring/main.xsl"/>-->
           <map:serialize type="xml"/>
-        </map:act>
       </map:match>
     </map:pipeline>
 
