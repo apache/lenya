@@ -55,7 +55,7 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="xslt/util/page2xhtml.xsl">
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="xslt/util/strip_namespaces.xsl"/>
@@ -317,12 +317,12 @@
                     <map:parameter name="date" value="{date}"/>
                     <map:parameter name="message" value="{message}"/>
                   </map:generate>
-                  <map:transform src="xslt/rc/rco-exception.xsl"/>
+                  <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
                 </map:act>
                 
                 <map:generate src="content/util/empty.xml"/>
-                <map:transform src="xslt/authoring/edit/xopus-xhtml.xsl">
+                <map:transform src="fallback://lenya/xslt/authoring/edit/xopus-xhtml.xsl">
                   <map:parameter name="contextPrefix" value="{request:contextPath}"/>
                   <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
                   <map:parameter name="completeArea" value="authoring"/>
@@ -353,14 +353,13 @@
         	            <map:parameter name="date" value="{date}"/>
                         <map:parameter name="message" value="{message}"/>
             	      </map:generate>
-                	  <map:transform src="../../xslt/rc/rco-exception.xsl"/>
+                	  <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
         	          <map:call resource="style-cms-page"/>
                 	</map:act>
         
                   <map:generate type="stream"/>
                   <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                     <map:parameter name="source" value="pubs/{1}/content/{2}/{page-envelope:document-path}"/>
-                    <!--<map:parameter name="source" value="pubs/{1}/test-xopus.xml"/>-->
                   </map:transform>
                   <map:transform type="write-source">
                     <map:parameter name="serializer" value="xml"/>
@@ -384,7 +383,7 @@
           </map:match>
           <map:match pattern="xslt" type="step">
             <map:match pattern="*/authoring/**.html">
-              <map:generate src="pubs/{1}/lenya/xslt/xopus/{request-param:doctype}.xsl"/>
+              <map:generate src="fallback://lenya/xslt/xopus/{request-param:doctype}.xsl"/>
               <map:serialize type="xml"/>
             </map:match>
           </map:match>
@@ -407,7 +406,7 @@
                     <map:parameter name="date" value="{date}"/>
                     <map:parameter name="message" value="{message}"/>
                   </map:generate>
-                  <map:transform src="xslt/rc/rco-exception.xsl"/>
+                  <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
                 </map:act>
               </map:when>
@@ -462,7 +461,7 @@
                 <map:parameter name="checkType" value="{checkType}"/>
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
-              <map:transform src="xslt/rc/rco-exception.xsl"/>
+              <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
               <map:call resource="style-cms-page"/>
             </map:act>
             <map:generate src="fallback://lenya/content/authoring/asset.xsp" type="serverpages"/>
@@ -486,7 +485,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/rc/versions-screen.xsp" type="serverpages"/>
-            <map:transform src="xslt/rc/rollback.xsl"/>
+            <map:transform src="fallback://lenya/xslt/rc/rollback.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
@@ -520,7 +519,7 @@
                 <map:parameter name="filename" value="{filename}"/>
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
-              <map:transform src="xslt/rc/rco-exception.xsl"/>
+              <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
               <map:call resource="style-cms-page"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
@@ -541,7 +540,7 @@
                 <map:parameter name="checkType" value="{checkType}"/>
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
-              <map:transform src="xslt/rc/rco-exception.xsl"/>
+              <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
               <map:call resource="style-cms-page"/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
@@ -554,7 +553,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/authoring/removelabel.xsp" type="serverpages"/>
-            <map:transform src="xslt/authoring/removelabel.xsl"/>
+            <map:transform src="fallback://lenya/xslt/authoring/removelabel.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
 
@@ -574,7 +573,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/archive.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/archive.xsl">
+            <map:transform src="fallback://lenya/xslt/info/archive.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
@@ -593,7 +592,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/restore.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/restore.xsl">
+            <map:transform src="fallback://lenya/xslt/info/restore.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
@@ -612,7 +611,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/copy.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/copy.xsl"/>
+            <map:transform src="fallback://lenya/xslt/info/copy.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
@@ -633,7 +632,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/cut.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/cut.xsl"/>
+            <map:transform src="fallback://lenya/xslt/info/cut.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
@@ -675,7 +674,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/delete.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/delete.xsl">
+            <map:transform src="fallback://lenya/xslt/info/delete.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
@@ -704,7 +703,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/paste.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/paste.xsl"/>
+            <map:transform src="fallback://lenya/xslt/info/paste.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
@@ -736,7 +735,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/rename.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/rename.xsl"/>
+            <map:transform src="fallback://lenya/xslt/info/rename.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
           
@@ -753,7 +752,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/util/empty.xml"/>
-            <map:transform src="xslt/info/rename-label.xsl">
+            <map:transform src="fallback://lenya/xslt/info/rename-label.xsl">
               <map:parameter name="use-request-parameters" value="true"/>
               <map:parameter name="requesturi" value="{request:requestURI}"/>
               <map:parameter name="area" value="{page-envelope:area}"/>
@@ -801,7 +800,7 @@
         <map:select type="exception">
           <map:when test="parent-node-not-found">
             <map:generate src="content/util/empty.xml"/>
-            <map:transform src="xslt/exception/parent-node-not-found.xsl"/>
+            <map:transform src="fallback://lenya/xslt/exception/parent-node-not-found.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:when>
           <map:otherwise>

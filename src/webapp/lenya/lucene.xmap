@@ -32,11 +32,11 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="xslt/util/page2xhtml.xsl">
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="html-iso-8859-1"/>
+      <map:serialize type="html"/>
     </map:resource>
 </map:resources>  
 
@@ -58,49 +58,25 @@
         </map:generate>
         <map:transform src="xslt/search/sort.xsl"/>
         
-        <map:act type="resource-exists" src="pubs/{1}/lenya/xslt/search/search-and-results-body.xsl">
-          <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results-body.xsl">
-            <map:parameter name="contextprefix" value="{request:contextPath}"/>
-            <map:parameter name="publicationid" value="{1}"/>
-            <map:parameter name="area" value="{2}"/>
-          </map:transform>
-        </map:act>
-
+<!--        <map:transform src="fallback://lenya/xslt/search/search-and-results-body.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+        </map:transform>
+-->
         <map:serialize type="xml"/>
       </map:match>
 
-
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform src="../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
-    </map:pipeline>
-
-
-
-
-    <map:pipeline>
       <map:match pattern="*/search-*/lucene*">
         <map:generate src="cocoon:/{1}/search-{2}/lucene.xml{3}"/>
-        
-       <map:act type="resource-exists" src="pubs/{1}/lenya/xslt/search/search-and-results.xsl">
-          <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results.xsl">
-            <map:parameter name="contextprefix" value="{request:contextPath}"/>
-            <map:parameter name="publicationid" value="{1}"/>
-            <map:parameter name="area" value="{2}"/>
-          </map:transform>
-          <map:call resource="style-cms-page"/>
-         </map:act>
-        <map:transform src="xslt/search/search-and-results.xsl">
-          <map:parameter name="area" value="{2}"/>
+        <map:transform src="fallback://lenya/xslt/search/search-and-results.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
         </map:transform>
-        <map:call resource="style-cms-page"/>
+      <map:call resource="style-cms-page"/>
       </map:match>
+
       <map:handle-errors>
         <map:generate type="notifying"/>
         <map:transform src="../stylesheets/system/error2html.xslt">
@@ -109,8 +85,6 @@
         <map:serialize type="html"/>
       </map:handle-errors>
     </map:pipeline>
-
-
    </map:pipelines>
 
 </map:sitemap>

@@ -26,7 +26,7 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="../../xslt/util/page2xhtml.xsl">
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
@@ -124,7 +124,7 @@
           <map:parameter name="relative2root" value="../../../../.."/>
         </map:transform>
         <map:select type="browser">
-          <map:when test="mozilla5DISABLED">
+          <map:when test="mozilla5">
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml?uiml=xul"/>
             <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
           </map:when>
@@ -141,7 +141,7 @@
         <map:select type="exception">
            <map:when test="resourcenotfound">
              <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
               <map:parameter name="statusCode" value="404"/>
             </map:call>
@@ -206,7 +206,7 @@
         <map:select type="exception">
            <map:when test="resourcenotfound">
              <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
               <map:parameter name="statusCode" value="404"/>
             </map:call>
@@ -281,7 +281,7 @@
         <map:select type="exception">
            <map:when test="resourcenotfound">
              <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
               <map:parameter name="statusCode" value="404"/>
             </map:call>
@@ -333,7 +333,7 @@
         <map:select type="exception">
            <map:when test="resourcenotfound">
              <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
               <map:parameter name="statusCode" value="404"/>
             </map:call>

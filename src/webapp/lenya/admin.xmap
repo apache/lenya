@@ -107,7 +107,7 @@
           <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml.xml"/>
           <map:part src="cocoon:/internal/{1}.xml"/>
         </map:aggregate>
-        <map:transform src="xslt/admin/page2xhtml.xsl">
+        <map:transform src="fallback://lenya/xslt/admin/page2xhtml.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/admin/{1}.xml" label="content"/>
@@ -135,7 +135,7 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/admin/content/deleteTrash.xsp" type="serverpages"/>
-            <map:transform src="xslt/admin/content/deleteTrash.xsl"/>
+            <map:transform src="fallback://lenya/xslt/admin/content/deleteTrash.xsl"/>
             <map:transform src="cocoon://lenya-screen.xsl"/>
             <map:serialize/>
           </map:match>
@@ -176,7 +176,7 @@
       
       <map:match pattern="internal/status.html">
         <map:generate src="status" type="status"/>
-        <map:transform src="xslt/admin/status2html.xslt">
+        <map:transform src="fallback://lenya/xslt/admin/status2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
         <map:serialize type="html"/>
@@ -191,7 +191,7 @@
           <map:parameter name="xpath" value="/crawler|/lucene"/>
           <map:parameter name="xmlFiles" value="\.x.*$"/>
         </map:generate>
-        <map:transform src="xslt/search/admin.xsl"/>
+        <map:transform src="fallback://lenya/xslt/search/admin.xsl"/>
         <map:serialize type="xhtml"/>
         <!--<map:call resource="style-cms-page"/>-->
 
@@ -261,7 +261,7 @@
           <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml"/>
           <map:part src="cocoon:/internal/{1}"/>
         </map:aggregate>
-        <map:transform src="xslt/admin/page2xhtml.xsl">
+        <map:transform src="fallback://lenya/xslt/admin/page2xhtml.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/admin/{1}" label="content" />

@@ -32,7 +32,7 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="../../xslt/util/page2xhtml.xsl">
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
@@ -92,7 +92,7 @@
         <map:select type="exception">
            <map:when test="resourcenotfound">
              <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="../../xslt/exception/document-does-not-exist.xsl">
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
             </map:transform>
@@ -200,7 +200,7 @@
         <!-- There is no version of the requested document-id for the
              requested language. -->
         <map:generate type="serverpages" src="../../content/exception/missing-language.xsp"/>
-        <map:transform src="../../xslt/exception/missing-language.xsl"/>
+        <map:transform src="fallback://lenya/xslt/exception/missing-language.xsl"/>
         <map:call resource="style-cms-page"/>
 
       </map:match>
@@ -209,7 +209,7 @@
         <map:select type="exception">
           <map:when test="document-does-not-exist">
             <map:generate src="../../content/util/empty.xml"/>
-            <map:transform src="../../xslt/exception/document-does-not-exist.xsl">
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
             </map:transform>
@@ -219,7 +219,7 @@
           </map:when>
            <map:when test="resourcenotfound">
              <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="../../xslt/exception/document-does-not-exist.xsl">
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
             </map:transform>
