@@ -1,5 +1,5 @@
 /*
-$Id: CopyContentTask.java,v 1.3 2003/10/21 09:51:54 andreas Exp $
+$Id: CopyContentTask.java,v 1.4 2003/10/29 13:41:28 edith Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,8 @@ import org.apache.lenya.util.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to copy the contents (xml files) of a document
+ * Ant task to copy the contents (xml files) belonging to a subtree defined by a given document id and a given area.
+ * Visitor of the defined subtree (visitor pattern)
  * @author edith
  */
 public class CopyContentTask extends TwoDocumentsOperationTask {
@@ -89,13 +90,21 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
 		DocumentBuilder builder = publication.getDocumentBuilder();
 
 		String parentid = node.getAbsoluteParentId();
-		String srcDocumentid = parentid + "/" +node.getId();
-		String destDocumentid = srcDocumentid.replaceFirst(getFirstdocumentid(),getSecdocumentid());
+		String srcDocumentid = parentid + "/" + node.getId();
+		String destDocumentid =
+			srcDocumentid.replaceFirst(
+				getFirstdocumentid(),
+				getSecdocumentid());
 
-		Label[] labels = node.getLabels(); 
-		for (int i=0 ; i<labels.length; i ++){
+		Label[] labels = node.getLabels();
+		for (int i = 0; i < labels.length; i++) {
 			String language = labels[i].getLanguage();
-			String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid, language);
+			String srcUrl =
+				builder.buildCanonicalUrl(
+					publication,
+					getFirstarea(),
+					srcDocumentid,
+					language);
 			Document srcDoc;
 			try {
 				srcDoc = builder.buildDocument(publication, srcUrl);
@@ -104,10 +113,15 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
 			}
 			File srcFile = srcDoc.getFile();
 			if (!srcFile.exists()) {
-				log("There are no file "+srcFile.getAbsolutePath());
+				log("There are no file " + srcFile.getAbsolutePath());
 				return;
-			} 
-			String destUrl = builder.buildCanonicalUrl(publication, getSecarea(), destDocumentid, language);
+			}
+			String destUrl =
+				builder.buildCanonicalUrl(
+					publication,
+					getSecarea(),
+					destDocumentid,
+					language);
 			Document destDoc;
 			try {
 				destDoc = builder.buildDocument(publication, destUrl);
@@ -116,14 +130,20 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
 			}
 			File destFile = destDoc.getFile();
 
-			log("copy file "+srcFile.getAbsolutePath() + "to file " + destFile.getAbsolutePath());
+			log(
+				"copy file "
+					+ srcFile.getAbsolutePath()
+					+ "to file "
+					+ destFile.getAbsolutePath());
 			try {
-				FileUtil.copy(srcFile.getAbsolutePath(), destFile.getAbsolutePath());
+				FileUtil.copy(
+					srcFile.getAbsolutePath(),
+					destFile.getAbsolutePath());
 			} catch (FileNotFoundException e) {
 				throw new BuildException(e);
 			} catch (IOException e) {
 				throw new BuildException(e);
-			} 
+			}
 		}
 
 	}
