@@ -61,12 +61,12 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.workflow.Situation;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.cms.workflow.Workflowable;
-import org.apache.lenya.cms.workflow.impl.WorkflowFactoryImpl;
-import org.apache.lenya.cms.workflow.ui.CommandFilter;
-import org.apache.lenya.cms.workflow.ui.CommandFilterImpl;
+import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.cms.workflow.CommandFilter;
+import org.apache.lenya.cms.workflow.CommandFilterImpl;
+import org.apache.lenya.cms.workflow.WorkflowFactoryImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -134,11 +134,11 @@ public class WorkflowMenuTransformer
         Document document = new DefaultDocument(publication, envelope.getDocumentId());
         
         WorkflowFactory factory = WorkflowFactoryImpl.newInstance(document, user);
-        Workflowable workflowable = null;
+        WorkflowInstance instance = null;
         Situation situation = null;
       
         try {
-            workflowable = factory.buildWorkflowable();
+            instance = factory.buildInstance();
             situation = factory.buildSituation();
         }
         catch (Exception e) {
@@ -146,7 +146,7 @@ public class WorkflowMenuTransformer
         }
       
         CommandFilter filter = new CommandFilterImpl();
-        this.commands = filter.getExecutableCommands(workflowable.getInstance(), situation);
+        this.commands = filter.getExecutableCommands(instance, situation);
       
     }
     

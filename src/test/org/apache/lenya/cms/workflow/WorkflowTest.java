@@ -53,9 +53,11 @@ import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.workflow.impl.WorkflowFactoryImpl;
-import org.apache.lenya.cms.workflow.ui.CommandFilter;
-import org.apache.lenya.cms.workflow.ui.CommandFilterImpl;
+import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Transition;
+import org.apache.lenya.workflow.WorkflowBuildException;
+import org.apache.lenya.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -71,6 +73,13 @@ import junit.textui.TestRunner;
 public class WorkflowTest extends TestCase {
 
     /**
+	 * @param arg0
+	 */
+	public WorkflowTest(String test) {
+		super(test);
+	}
+
+	/**
      * The main program for the WorkflowTest class
      *
      * @param args The command line arguments
@@ -104,7 +113,7 @@ public class WorkflowTest extends TestCase {
         assertNull(exception);
         
         Situation situation = null;
-        Workflowable workflowable = null;
+        WorkflowInstance instance = null;
         Document document = new DefaultDocument(publication,  "index");
         
         User user = new FileUser("test-user");
@@ -118,7 +127,7 @@ public class WorkflowTest extends TestCase {
         WorkflowFactory factory = WorkflowFactoryImpl.newInstance(document, user);
 
         try {
-            workflowable = factory.buildWorkflowable();
+            instance = factory.buildInstance();
             situation = factory.buildSituation();
         } catch (WorkflowBuildException e) {
             e.printStackTrace(System.err);
@@ -127,7 +136,7 @@ public class WorkflowTest extends TestCase {
         assertNull(exception);
         
         setSituation(situation);
-        setWorkflowable(workflowable);
+        setInstance(instance);
 
     }
 
@@ -138,15 +147,15 @@ public class WorkflowTest extends TestCase {
         return new TestSuite(WorkflowTest.class);
     }
 
-    private static Workflowable workflowable;
+    private static WorkflowInstance instance;
     private static Situation situation;
 
     public void testWorkflow() {
 
         assertNotNull(getSituation());
-        assertNotNull(getWorkflowable());
+        assertNotNull(getInstance());
 
-        Transition transitions[] = getWorkflowable().getInstance().getExecutableTransitions(situation);
+        Transition transitions[] = getInstance().getExecutableTransitions(situation);
 
         System.out.println("Transitions:");
         for (int i = 0; i < transitions.length; i++) {
@@ -155,7 +164,7 @@ public class WorkflowTest extends TestCase {
         System.out.println();
 
         CommandFilter filter = new CommandFilterImpl();
-        String commands[] = filter.getExecutableCommands(getWorkflowable().getInstance(), getSituation());
+        String commands[] = filter.getExecutableCommands(getInstance(), getSituation());
 
         System.out.println("Commands:");
         for (int i = 0; i < commands.length; i++) {
@@ -184,22 +193,22 @@ public class WorkflowTest extends TestCase {
     /**
      * @return
      */
-    public static Workflowable getWorkflowable() {
-        return workflowable;
+    public static WorkflowInstance getInstance() {
+        return instance;
     }
 
     /**
      * @param instance
      */
-    public static void setWorkflowable(Workflowable wfable) {
-        workflowable = wfable;
+    public static void setInstance(WorkflowInstance ins) {
+        instance = ins;
     }
 
     /* (non-Javadoc)
      * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
-        if (getWorkflowable() == null) {
+        if (getInstance() == null) {
             init("D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "default", "simple");
         }
     }
