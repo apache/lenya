@@ -25,8 +25,7 @@
     <version/>
     <type/>
     <authors>
-      <person name="Christian Egli" email="egli@apache.org"/>
-      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors>
   </header>
 

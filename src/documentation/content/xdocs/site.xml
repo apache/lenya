@@ -22,16 +22,14 @@
         <index_pm href="index.html" label="About"/>
 		<history href="history.html" label="History"/>
         <node-d href="roadmap.html" label="Roadmap"/>
-        <release1.2 href="release.html" label="Release 1.2"/>
-        <node-i href="license.html" label="License"/>
+<!--        <release1.2 href="release.html" label="Release 1.2"/>
+-->        <node-i href="license.html" label="License"/>
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
     <installation href="installation/" label="Installation" tab="installation">
-        <!--install-overview href="index.html" label="Overview"/-->
         <prerequisites href="prerequisites.html" label="Prerequisites"/>
         <download href="index.html" label="Download"/>
         <cvs href="subversion.html" label="Subversion Access"/>
-        <!--<cvs href="cvs.html" label="CVS Access"/>-->
         <install href="source_version.html" label="Installation Instructions"/>
     </installation>
         <documentation href="docs/" label="Documentation" tab="docs">
@@ -43,7 +41,6 @@
             <integrator-dev-guide label="Integrator/Dev Guide" >
                 <components href="components/" label="Components" 
                     wholesite="true">
-                    <index_comp href="index.html" label="Components"/>
                     <!--resource-types href="resource-types/" 
                         label="Resource&#160;Types"/-->
                     <accesscontrol href="accesscontrol/" 
@@ -79,7 +76,7 @@
                             label="HTML Form Editor"/>
                         <namespaces href="1form.html" 
                             label="HTML One Form Editor"/>
-                        <namespaces href="bxe.html" label="Bitflux Editor"/>
+                        <namespaces href="bxeng.html" label="Bitflux Editor"/>
                         <namespaces href="kupu.html" label="Kupu"/>
                         <namespaces href="xopus.html" label="Xopus"/>
                     </misc>
@@ -198,8 +195,8 @@
     <community href="community/" label="Community" tab="community">
         <index_com href="index.html" label="Contributing"/>
 		<node-h href="acknowledgements.html" label="Credits"/>
-        <node-f href="http://cvs.apache.org/viewcvs.cgi/cocoon-lenya/" 
-            label="CVS Web"/>
+        <node-f href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/#dirlist" 
+            label="SVN Web"/>
         <node-g 
             href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27" 
             label="Bug Tracker"/>
@@ -244,9 +241,9 @@
 			<w3c.xml href="XML/"/>
 			<w3c.xslt href="TR/xslt/"/>
 		</w3c>
-		<wiki href="http://wiki.cocoondev.org/">
-			<wiki.CocoonWebsiteUpdate href="Wiki.jsp?page=CocoonWebsiteUpdate"/>
+		<wiki href="http://wiki.apache.org/cocoon-lenya">
+			<wiki.CocoonWebsiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
 		</wiki>
-		<wyona href="http://www.wyona.com" />
+		<wyona href="http://wyona.com" />
 	</external-refs>
 </site>

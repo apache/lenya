@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: siteTree.xml,v 1.1 2004/07/01 23:59:21 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document> 
@@ -23,8 +23,7 @@
     <title>Site Tree</title>
     <version major="0" minor="1">Initial version</version>
     <authors>
-      <person name="Christian Egli" email="christian.egli@wyona.org"/>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
     <notice></notice> 
     <abstract>Proposal for a a general framework for management of

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: prerequisites.xml,v 1.1 2004/07/01 23:59:25 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
 
@@ -26,48 +26,33 @@
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
     </authors> 
 </header> 
 <body> 
 
 <p>
 The following list describes the setup that is tested and recommended.
-Several items, e.g. the servlet container, may be replaced by other products.
+Please note that you can use other servlet containers as well, but Jetty and Tomcat are the tested
+ones.
 </p>
 <ul>
   <li>
     <p>
-    <strong>Java 2 Platform, Standard Edition</strong> (required: J2SE 1.4.1 or newer)<br/>
+    <strong>Java 2 Platform, Standard Edition</strong> (required: J2SE 1.4.2 or newer)<br/>
     <link href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</link>
     </p>
   </li>
-  
   <li>
     <p>
-    <strong>Apache Tomcat</strong> for JDK 1.4 (recommended: 4.1.29)<br/>
-    <link href="http://www.apache.org/dist/jakarta/tomcat-4/v4.1.29/bin/">Tomcat release builds</link><br/>
-    Pick one of the <code>jakarta-tomcat-4.1.24-LE-jdk14</code> files!
-    </p>
-  </li>
-  
-  <li>
-    <p>
-    <strong>Apache Ant</strong> (required: 1.6.1 or newer)<br/>
-    <link href="http://www.apache.org/dist/ant/">Ant main distribution directory</link>
-    </p>
-  </li>
-  
-  <li>
-    <p>
-    <strong>Apache Cocoon</strong> (required: Cocoon 2.1.4)<br/>
+    <strong>Apache Cocoon</strong> (required: Cocoon 2.1.5)<br/>
     <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
     </p>
   </li>
-  
   <li>
     <p>
-    <strong>Endorsed Libraries</strong> (recommended: Xalan 2.5.0 Xerces 2.5.0)<br/>
+    <strong>(optional) Apache Tomcat</strong> for JDK 1.4 (recommended: 5.0.28 or newer)<br/>
+    <link href="http://jakarta.apache.org/site/binindex.cgi">Tomcat release builds</link><br/>
     </p>
   </li>
 </ul>
