@@ -14,15 +14,19 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.excalibur.source.Source;
 import org.xml.sax.SAXException;
 
+import org.apache.log4j.Category;
+
 /**
  *
  * @author  nobby
  */
 public class PageEnvelope {
-    
+    static Category log = Category.getInstance(PageEnvelope.class);
+
     public static final String PUBLICATION_ID = "publication-id";
     public static final String CONTEXT = "context-prefix";
     public static final String STAGE = "stage";
+    public static final int STAGE_POS = 3;
     
     private Publication publication;
     private String context;
@@ -36,11 +40,18 @@ public class PageEnvelope {
         String directories[] = publicationUri.split("/");
         String publicationId = directories[directories.length - 1];
         String path = publicationUri.substring(0, publicationUri.indexOf("/lenya/pubs/" + publicationId));
-        path = path.replaceAll("file:/", "");
+	// apparently on windows the path will be something like
+	// "file://foo/bar/baz" where as on *nix it will be
+	// "file:/foo/bar/baz". The following hack will transparently
+	// take care of this.
+        path = path.replaceAll("file://", "/");
+        path = path.replaceAll("file:", "");
         path = path.replace('/', File.separatorChar);
 
-	// FIXME: figure out the stage properly
-        stage = "authoring";
+	String requestURI = request.getRequestURI();
+	log.debug("requestURI: " + requestURI);
+	directories = requestURI.split("/");
+        stage = directories[STAGE_POS];;
 
         publication = new Publication(publicationId, path);
         context = request.getContextPath();
