@@ -22,6 +22,8 @@
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
   <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
   <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene"/>
+  <property name="index.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene/index/live/index"/>
+  <property name="search.term" value="Lenya"/>
   <!-- /Dummy arguments -->
 
   <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
@@ -95,6 +97,20 @@
 
 <target name="search" description="Search within Index" depends="init">
   <echo>INFO: Search within Index</echo>
+
+  <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
+    <arg value="search"/>
+    <arg value="${index.dir}"/>
+    <arg value="${search.term}"/>
+  </exec>
+
+<!--
+  <java classname="org.apache.lenya.lucene.SearchFiles">
+    <arg value="${index.dir}"/>
+    <arg value="${search.term}"/>
+    <classpath refid="class.path"/>
+  </java>
+-->
 </target>
 
 <target name="publish-index" description="Publish Index" depends="init">

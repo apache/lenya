@@ -51,8 +51,22 @@ case "$1" in
             echo "WARNING: Xpdf not installed: $XPDF"
         fi
 	;;
+    search)
+        echo ""
+        echo "=========================================================="
+        echo "Target: $1"
+        echo "=========================================================="
+        echo ""
+        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.3.jar
+
+        INDEX_DIR=$2
+	WORD=$3
+
+        echo "INFO: Index Directory = $INDEX_DIR"
+        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.SearchFiles $INDEX_DIR $WORD
+	;;
     *)
-        echo "Usage: $0 {index|xpdf}"
+        echo "Usage: $0 {index|xpdf|search}"
         exit 1
         ;;
 esac
