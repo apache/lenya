@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.10 2003/08/20 13:43:37 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.11 2003/08/20 14:21:51 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -180,11 +180,14 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     private void setNodeValue(Document document, String value, String xpath) throws Exception {
         Node node = DOMUtil.getSingleNode(document.getDocumentElement(), xpath);
         if (node == null) {
-            getLogger().warn(".act(): Node does not exist (might have been deleted): " + xpath);
+            // FIXME: warn
+            getLogger().error(".setNodeValue(): Node does not exist (might have been deleted during update): " + xpath);
             return;
         }
-        getLogger().error(".act(): value = " + DOMUtil.getValueOfNode(node));
+        // FIXME: debug
+        getLogger().error(".setNodeValue(): value = " + DOMUtil.getValueOfNode(node));
         DOMUtil.setValueOfNode(node, value);
-        getLogger().error(".act(): value = " + DOMUtil.getValueOfNode(node));
+        // FIXME: debug
+        getLogger().error(".setNodeValue(): value = " + DOMUtil.getValueOfNode(node));
     }
 }
