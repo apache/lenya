@@ -675,7 +675,7 @@
         </map:match>
         
         <!-- Scheduler -->
-        <map:match type="usecase" pattern="schedule-page">
+        <map:match type="usecase" pattern="schedule">
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
         

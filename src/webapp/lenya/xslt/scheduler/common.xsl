@@ -21,8 +21,8 @@
   
     <xsl:variable name="date" select="//sch:current-date"/>
   
-    <input type="hidden" name="lenya.usecase" value="schedule-page"/>
-    <input type="hidden" name="lenya.step" value="add"/>
+    <input type="hidden" name="lenya.usecase" value="schedule"/>
+    <input type="hidden" name="lenya.step" value="showscreen"/>
     
     <table class="scheduler-job" border="0" cellpadding="0" cellspacing="0">
 
