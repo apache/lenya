@@ -43,11 +43,12 @@
   Installation Instructions and Documentation
   -------------------------------------------
 
-  Read the INSTALL.txt file in this directory for the installation 
-  instructions.
+  Read the files INSTALL-BIN.txt (for the binary distribution) or
+  INSTALL-SRC.txt (for the soruce disctribution) in this directory for
+  the installation instructions.
 
   The documentation available as of the date of this release is included 
-  in this directory. Read the INSTALL.txt for more information.
+  in this directory. 
 
   If you are updating from a previous release of Lenya, make sure
   that you read the installation instructions on updating first.
