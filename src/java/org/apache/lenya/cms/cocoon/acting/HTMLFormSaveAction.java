@@ -72,11 +72,12 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.24 2003/11/28 18:46:57 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.25 2003/11/28 19:23:17 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -220,10 +221,13 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     log.error(".act(): XUpdate Result: \n"+writer.toString());
 */
 
+
                     DocumentHelper.writeDocument(document, file);
 
+
 		    if (schema.isFile()) {
-                        String message = validateDocument(schema, file);
+                        // FIXME: remove tagID first
+                        String message = null; //RelaxNG.validate(schema, file);
                         if (message != null) {
                             log.error("Validation failed: " + message);
                             HashMap hmap = new HashMap();
@@ -361,12 +365,5 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     private String remove(String pname) {
         log.debug(".remove() REMOVE Node: " + pname);
         return "<?xml version=\"1.0\"?><xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname + "</xupdate:modifications>";
-    }
-
-    /**
-     * Validate Document
-     */
-    private String validateDocument(File schema, File file) {
-        return null;
     }
 }
