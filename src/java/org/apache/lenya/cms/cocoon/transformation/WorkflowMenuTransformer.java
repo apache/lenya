@@ -130,9 +130,13 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, _objectModel);
 
             Document document = envelope.getDocument();
-            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-
-            setHasWorkflow(workflowResolver.hasWorkflow(document));
+            if (document == null) {
+                setHasWorkflow(false);
+            }
+            else {
+                workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+                setHasWorkflow(workflowResolver.hasWorkflow(document));
+            }
 
             if (hasWorkflow()) {
                 Situation situation = null;
