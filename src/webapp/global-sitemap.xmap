@@ -59,40 +59,29 @@
 
    <map:generator label="data" logger="sitemap.generator.extractor" name="extractor" src="org.apache.cocoon.generation.FragmentExtractorGenerator"/>
 
-
+<!--
     <map:generator label="content,data" name="auth-conf" src="org.apache.cocoon.webapps.authentication.generation.ConfigurationGenerator"/>
-
-
     <map:generator label="content,data" name="portal" src="org.apache.cocoon.webapps.portal.generation.PortalGenerator"/>
     <map:generator label="content,data" name="portal-conf" src="org.apache.cocoon.webapps.portal.generation.ConfigurationGenerator"/>
-
     <map:generator label="content,data" name="jsp" src="org.apache.cocoon.generation.JspGenerator"/>
-
     <map:generator label="content,data" name="php" src="org.apache.cocoon.generation.PhpGenerator"/>
+    <map:generator label="content,data" name="script" src="org.apache.cocoon.generation.ScriptGenerator"/>
+    <map:generator label="content,data" logger="sitemap.generator.profiler" name="profiler" src="org.apache.cocoon.generation.ProfilerGenerator"/>
+    <map:generator label="content,data" logger="sitemap.generator.velocity" name="velocity" src="org.apache.cocoon.generation.VelocityGenerator"/>
+    <map:generator label="content,data" logger="sitemap.generator.sourcedescription" name="sourcedescription" src="org.apache.cocoon.generation.SourceDescriptionGenerator"/>
+    <map:generator label="content,data" logger="sitemap.generator.principallist" name="principallist" src="org.apache.cocoon.generation.PrincipalListGenerator"/>
+-->
 
     <map:generator name="search" src="org.apache.cocoon.generation.SearchGenerator"/>
-
     <map:generator label="content,data" name="html" src="org.apache.cocoon.generation.HTMLGenerator"/>
-
-    <map:generator label="content,data" name="script" src="org.apache.cocoon.generation.ScriptGenerator"/>
-
-    <map:generator label="content,data" logger="sitemap.generator.profiler" name="profiler" src="org.apache.cocoon.generation.ProfilerGenerator"/>
-
-    <map:generator label="content,data" logger="sitemap.generator.velocity" name="velocity" src="org.apache.cocoon.generation.VelocityGenerator"/>
-
-
-    <map:generator label="content,data" logger="sitemap.generator.sourcedescription" name="sourcedescription" src="org.apache.cocoon.generation.SourceDescriptionGenerator"/>
-
-    <map:generator label="content,data" logger="sitemap.generator.principallist" name="principallist" src="org.apache.cocoon.generation.PrincipalListGenerator"/>
-
     <map:generator label="content,data" logger="sitemap.generator.proxy" name="proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
-
     <map:generator name="notifying" src="org.apache.cocoon.sitemap.NotifyingGenerator"/>
 
     <!-- =================== XML:DB Generators ========================= -->
     <!-- BEWARE: these are unmaintained XML:DB generators, going to be   -->
     <!-- removed soon.                                                   -->
     <!-- You might want  to use the XML:DB pseudo protocol instead.      -->
+    <!--
     <map:generator label="content,data" name="xmldb" src="org.apache.cocoon.generation.XMLDBGenerator">
       <driver>org.apache.xindice.client.xmldb.DatabaseImpl</driver>
       <base>xmldb:xindice:///db/</base>
@@ -101,6 +90,7 @@
       <driver>org.apache.xindice.client.xmldb.DatabaseImpl</driver>
       <base>xmldb:xindice:///db/</base>
     </map:generator>
+    -->
     
 <!-- =========================== Lenya CMS ================================= -->
     
@@ -204,8 +194,10 @@
       <encoding>UTF-8</encoding>
     </map:serializer>
     <map:serializer logger="sitemap.serializer.text" mime-type="text/plain" name="text" src="org.apache.cocoon.serialization.TextSerializer"/>
+    
+    <!--
     <map:serializer logger="sitemap.serializer.vrml" mime-type="model/vrml" name="vrml" src="org.apache.cocoon.serialization.TextSerializer"/>
-  
+    -->
 
     <map:serializer logger="sitemap.serializer.fo2pdf" mime-type="application/pdf" name="fo2pdf" src="org.apache.cocoon.serialization.FOPSerializer">
       <!-- This element specifies URL to FOP user configuration file.
@@ -237,13 +229,13 @@
 
     <map:serializer logger="sitemap.serializer.svg2png" mime-type="image/png" name="svg2png" src="org.apache.cocoon.serialization.SVGSerializer"/>
 
-    <map:serializer mime-type="application/x-shockwave-flash" name="swf" src="org.apache.cocoon.serialization.SWFSerializer"/>
-
-    <map:serializer mime-type="application/msword" name="fo2rtf" src="org.apache.cocoon.serialization.RTFSerializer"/>
-
+		<!--
     <map:serializer mime-type="application/pdf" name="itext2pdf" src="org.apache.cocoon.serialization.iTextSerializer"/>
+    <map:serializer mime-type="application/x-shockwave-flash" name="swf" src="org.apache.cocoon.serialization.SWFSerializer"/>
+    <map:serializer mime-type="application/msword" name="fo2rtf" src="org.apache.cocoon.serialization.RTFSerializer"/>
+    <map:serializer mime-type="application/vnd.ms-excel" name="xls" src="org.apache.cocoon.serialization.HSSFSerializer"/>
+    -->
 
- <map:serializer mime-type="application/vnd.ms-excel" name="xls" src="org.apache.cocoon.serialization.HSSFSerializer"/>
 </map:serializers>
 
   <!--+
@@ -254,8 +246,9 @@
       +-->
   <map:readers default="resource">
     <map:reader logger="sitemap.reader.resource" name="resource" pool-max="32" src="org.apache.cocoon.reading.ResourceReader"/>
-  
+    <!--
     <map:reader name="jsp" src="org.apache.cocoon.reading.JSPReader"/>
+    -->
 </map:readers>
 
   <!--+
@@ -369,19 +362,16 @@
 
     <map:action name="session-form" src="org.apache.cocoon.webapps.session.acting.SessionFormAction"/>
 
-
+		<!--
     <map:action name="auth-protect" src="org.apache.cocoon.webapps.authentication.acting.AuthAction"/>
     <map:action name="auth-login" src="org.apache.cocoon.webapps.authentication.acting.LoginAction"/>
     <map:action name="auth-logout" src="org.apache.cocoon.webapps.authentication.acting.LogoutAction"/>
     <map:action name="auth-loggedIn" src="org.apache.cocoon.webapps.authentication.acting.LoggedInAction"/>
-
-
     <map:action name="portal-auth" src="org.apache.cocoon.webapps.portal.acting.AuthAction"/>
-
-
    <map:action logger="sitemap.action.source" name="source" src="org.apache.cocoon.acting.SourceMultiAction"/>
-
    <map:action logger="sitemap.action.principal" name="principal" src="org.apache.cocoon.acting.PrincipalMultiAction"/>
+		-->
+
 
 
 <!-- =========================== Lenya CMS ================================= -->
