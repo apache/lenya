@@ -1,5 +1,5 @@
 /*
-$Id: PublicationAccessControllerResolver.java,v 1.8 2003/08/28 10:07:21 andreas Exp $
+$Id: PublicationAccessControllerResolver.java,v 1.9 2003/11/04 17:19:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -223,6 +223,11 @@ public class PublicationAccessControllerResolver
             resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
             contextSource = resolver.resolveURI("context:///");
             contextDir = SourceUtil.getFile(contextSource);
+            
+            if (contextDir == null || !contextDir.isDirectory()) {
+                throw new AccessControlException("The servlet context is not a directory!");
+            }
+            
         } finally {
             if (resolver != null) {
                 if (contextSource != null) {
