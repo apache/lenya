@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Groupable.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id: Groupable.java,v 1.3 2004/04/28 12:47:23 andreas Exp $  */
 
 package org.apache.lenya.ac;
 
@@ -38,4 +38,9 @@ public interface Groupable {
      * @return A {@link Group} array.
      */
     Group[] getGroups();
+    
+    /**
+     * Removes this Groupable from all groups.
+     */
+    void removeFromAllGroups();
 }
