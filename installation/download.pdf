@@ -5,10 +5,10 @@
 /Producer (FOP 0.20.4) >>
 endobj
 5 0 obj
-<< /Length 711 /Filter [ /ASCII85Decode /FlateDecode ]
+<< /Length 720 /Filter [ /ASCII85Decode /FlateDecode ]
  >>
 stream
-Gat=h9okbt&;KZOME*#=(k7/%D6qu6<E3&2M0`l^n,iEI^eTG3inr@8"LHcL>?+3;*gl,=m29NHpA@DbPTpV&XbYY8ls\Ol"L,QF6u=L5(pQ?C3eq(K#?0s4W+6AG)G9mKp,1B[R_s&GJ$Cs7K_DoW$m>p$P4oBDLeE4OnL77VV5f0q,DJL+N?W0g)k9#L%W\J2,#tHIHr`\$/+%j1OPh%>;A=td-X'SgCkc,Rkl*cBRH:=-]DKJcd=Cn[%AdN)ppg%sGl<!YoEdX3AbS)M>VaBO0SUG-@jJAjU^3ZKQ1r1#[KR;=ikR!d0T)KJ*!L@ZhcJ@uK7?Po68&Ru0abG'm9l.s;^Z%'?.VUf<P2+i.<^/\-n@M?YqatYCh)8)E@KVqL_(g'I2ae]@RKrm$N6iaGo.ZQ/eWS:m/*D*\+k.!mAm=.JX'9VEc7u+Kf69f5V]/\:>H#K'=V'bZmqNhr4O02,",iNraQIY&YM[LD%?r1JhS#ds49VC8Ge*qdiS)?Qh$Gt$dBZiZuqM?9oNgsk!Ta1NR=cl+Pi[eiq[];P4G?.G@#Jk"P]+Q(==`gU&p2d[cbnua_!1e+<i4C_\DsMG,ZDtA?69Kq"$b81ur*I+e2]a@(2!ukP+,k'Wkr%g/'MlD\Q]mYWp?cf)(<n?2*m!ou_*O=r!7BUH.S7)inZqQ=Xs])44+4+t_:',u'I_]t^0O;&f~>
+Gat=(9okbt&A@Zck*R,tr!B70c#1!j<E8E5lD<a]$\UnlFp_als1[V?R*?u3W^6c!m!81bD`l4Nk<C_p*+;rf4ktKq%n#Ik_"Jo_[D%0$_u^82"8nTNQs/ZB-$*28:tjIQf2O\D%_lHN`PN30["j!^+XB?Anf@lXikcd2Hoe(7;UsXf&V`Sn%7SoG2DBDo*6=[GMH#kdnQ?UW6"pQ@!XZ"Q;MlY1on\o6l^OR`7s)LABl7q>o%inGNbH4SS.2<(#l(q'rcnB*GkqOa_6Vh?&=3e85SukIo?ib+##^+N_ohl8/R*eEQuTnj1)Q4InMgm:OF:21`t/0Or"o/=5beko/@`r49JqQ"P506+,BZuU/k)YYr1q_hS=;8c:n6qOp]c`$U^(9O633A?dr:uo)C@@3qg$qQrY<Q4Znr9q`6WJO\$Fok>WLj!520(_iuBR47&XV+1KE[?2RAZ/'liM$8ghndm^4O5c2>7miZ^d!&H6/uE=nj7L96b-/(*SU^LlIlg8c,eS&p^u8lR`=X%m3](M*&`g>C?Q2%e#*@]S'sAtus#^^5cY.50C8o=?[hCs+*jk17>($7Jg)SrZJj8%k!K+t-p<0`%rXeBJFX8jb3.GqM]-E\RS<S6:/Gc\)O`pZC*BD-7k.L5O*?UDVI6I50ngmj<n[\i]!>Q.]3G.OL`WF4*W=-.*thc^iGqQjgeT[J0/:9ouF4?\%?>;Z~>
 endstream
 endobj
 6 0 obj
@@ -35,7 +35,7 @@ endobj
 /Rect [ 108.0 578.879 133.344 566.879 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
-/A << /URI (http://www.apache.org/dist/cocoon/lenya/)
+/A << /URI (http://www.apache.org/dyn/closer.cgi/cocoon/lenya/)
 /S /URI >>
 /H /I
 >>
@@ -43,10 +43,10 @@ endobj
 9 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 133.344 578.879 300.648 566.879 ]
+/Rect [ 133.344 578.879 297.636 566.879 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
-/A << /URI (http://www.apache.org/dist/cocoon/lenya/)
+/A << /URI (http://www.apache.org/dyn/closer.cgi/cocoon/lenya/)
 /S /URI >>
 /H /I
 >>
@@ -54,10 +54,10 @@ endobj
 10 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 300.648 578.879 309.312 566.879 ]
+/Rect [ 297.636 578.879 359.628 566.879 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
-/A << /URI (http://www.apache.org/dist/cocoon/lenya/)
+/A << /URI (http://www.apache.org/dyn/closer.cgi/cocoon/lenya/)
 /S /URI >>
 /H /I
 >>
@@ -65,7 +65,7 @@ endobj
 11 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 108.0 532.383 152.676 520.383 ]
+/Rect [ 108.0 532.383 263.34 520.383 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
 /A << /URI (http://cvs.wyona.org/nightly-builds/)
@@ -76,7 +76,7 @@ endobj
 12 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 152.676 532.383 280.68 520.383 ]
+/Rect [ 263.34 532.383 280.68 520.383 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
 /A << /URI (http://cvs.wyona.org/nightly-builds/)
@@ -185,30 +185,30 @@ endobj
 xref
 0 25
 0000000000 65535 f 
-0000003218 00000 n 
-0000003276 00000 n 
-0000003368 00000 n 
+0000003255 00000 n 
+0000003313 00000 n 
+0000003405 00000 n 
 0000000015 00000 n 
 0000000071 00000 n 
-0000000873 00000 n 
-0000000993 00000 n 
-0000001045 00000 n 
-0000001236 00000 n 
-0000001429 00000 n 
-0000001623 00000 n 
-0000001811 00000 n 
-0000003491 00000 n 
-0000003542 00000 n 
-0000002000 00000 n 
-0000003605 00000 n 
-0000002191 00000 n 
-0000003670 00000 n 
-0000002331 00000 n 
-0000002662 00000 n 
-0000002775 00000 n 
-0000002891 00000 n 
-0000002999 00000 n 
-0000003108 00000 n 
+0000000882 00000 n 
+0000001002 00000 n 
+0000001054 00000 n 
+0000001255 00000 n 
+0000001458 00000 n 
+0000001662 00000 n 
+0000001849 00000 n 
+0000003528 00000 n 
+0000003579 00000 n 
+0000002037 00000 n 
+0000003642 00000 n 
+0000002228 00000 n 
+0000003707 00000 n 
+0000002368 00000 n 
+0000002699 00000 n 
+0000002812 00000 n 
+0000002928 00000 n 
+0000003036 00000 n 
+0000003145 00000 n 
 trailer
 <<
 /Size 25
@@ -216,5 +216,5 @@ trailer
 /Info 4 0 R
 >>
 startxref
-3735
+3772
 %%EOF

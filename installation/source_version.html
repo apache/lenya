@@ -345,12 +345,6 @@ your_home (or c:\ on Windows, NOT My Dcouments)
     
 <strong>Get Apache Cocoon</strong> (see <a href="prerequisites.html">Prerequisites</a>)
     </p>
-    
-<div class="frame warning">
-<div class="label">Warning</div>
-<div class="content">The current CVS version of Lenya works only with Cocoon  2.1
-    and newer versions.</div>
-</div>
   
 </li>
   
@@ -362,30 +356,32 @@ your_home (or c:\ on Windows, NOT My Dcouments)
     
 </p>
     
+<p>You need to build Cocoon with the local.blocks.properties and
+    local.build.properties which are optimized for lenya</p>
+    
+<p>Copy $LENYA_HOME/src/cocoon/* to $COCOON_HOME/.</p>
+
+    
 <p>
-    See <a href="http://cocoon.apache.org/2.0/installing/index.html">Installing Apache Cocoon</a>
-    
-</p>
-    
-<p>
-    
 <strong>MS Windows</strong>
-    
 </p>
 
 <pre class="code">
 $COCOON_HOME &gt; build.bat
 </pre>
+
     
 <p>
-    
 <strong>Unix</strong>
-    
 </p>
+
 
 <pre class="code">
 $COCOON_HOME &gt; ./build.sh -Dinclude.webapp.libs=yes webapp
 </pre>
+    
+<p>See also <a href="http://cocoon.apache.org/2.0/installing/index.html">Installing Apache Cocoon</a>
+</p>
   
 </li>
   
@@ -431,7 +427,7 @@ $COCOON_HOME &gt; ./build.sh -Dinclude.webapp.libs=yes webapp
 <p>
     Edit <span class="codefrag">build.properties</span>. For the described configuration the following
     settings will work (<strong>MS Windows:</strong> Don't use backslashes "<span class="codefrag">\</span>"
-    for directory separation.). It is important that <span class="codefrag">install.dir</span> is an
+    for directory separation.). It is important that <span class="codefrag">tomcat.home.dir</span> is an
     absolute path. The asterisk (*) has to be replaced by the appropriate version number.
     Replace <span class="codefrag">$TOMCAT_HOME</span> by your tomcat installation directory.
     </p>
@@ -439,7 +435,7 @@ $COCOON_HOME &gt; ./build.sh -Dinclude.webapp.libs=yes webapp
 <ul>
       
 <li>
-<span class="codefrag">src.cocoon.dir=$COCOON_HOME/build/webapp</span>
+<span class="codefrag">cocoon.webapp.dir=$COCOON_HOME/build/webapp</span>
 </li>
       
 <li>
@@ -447,11 +443,7 @@ $COCOON_HOME &gt; ./build.sh -Dinclude.webapp.libs=yes webapp
 </li>
       
 <li>
-<span class="codefrag">install.dir=$TOMCAT_HOME/webapps/lenya</span>
-</li>
-      
-<li>
-<span class="codefrag">cache.dir=$TOMCAT_HOME/work/Standalone/localhost/lenya</span>
+<span class="codefrag">tomcat.home.dir=$TOMCAT_HOME</span>
 </li>
     
 </ul>
