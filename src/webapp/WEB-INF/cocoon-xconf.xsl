@@ -127,20 +127,9 @@
   
   <component logger="lenya.ac.accesscontroller"
       class="org.apache.lenya.cms.ac2.DefaultAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/unicms">
+      role="org.apache.lenya.cms.ac2.AccessController/default">
     <accreditable-manager type="file">
-      <parameter name="directory" value="context:///lenya/pubs/unizh/config/ac"/>
-    </accreditable-manager>
-    <policy-manager type="file"/>
-    <authorizer type="policy"/>
-    <authorizer type="workflow"/>
-  </component>
-
-  <component logger="lenya.ac.accesscontroller"
-      class="org.apache.lenya.cms.ac2.DefaultAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/weilpublishing">
-    <accreditable-manager type="file">
-      <parameter name="directory" value="context:///lenya/pubs/weilpublishing/config/ac"/>
+      <parameter name="directory" value="context:///lenya/pubs/default/config/ac"/>
     </accreditable-manager>
     <policy-manager type="file"/>
     <authorizer type="policy"/>
