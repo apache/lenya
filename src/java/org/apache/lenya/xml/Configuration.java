@@ -65,7 +65,7 @@ import java.util.Properties;
  * Reads xpsconf.properties
  *
  * @author Michael Wechner
- * @version $Id: Configuration.java,v 1.15 2003/12/15 16:22:34 michi Exp $
+ * @version $Id: Configuration.java,v 1.16 2004/01/16 09:19:42 gregor Exp $
  * @deprecated replaced by config/ directory
  */
 public class Configuration {
@@ -180,7 +180,7 @@ public class Configuration {
 
             return value;
         } else {
-            log.warn(".getProperty(): No such property: " + key);
+            log.debug(".getProperty(): No such property: " + key);
         }
 
         return null;
