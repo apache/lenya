@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.246 2004/08/21 11:05:37 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.247 2004/08/22 13:13:12 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -353,8 +353,12 @@
                   <map:parameter name="use-css" value="1"/>
                   <map:parameter name="imagedrawer-xsl-uri" 
                     value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=imagedrawerxsl"/>
-                  <map:parameter name="imagedrawer-libraries-uri" 
-                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=imagedrawerlibraries"/>
+                  <map:parameter name="linkdrawer-xsl-uri" 
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=linkdrawerxsl"/>
+                  <map:parameter name="image-libraries-uri" 
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=imagelibraries"/>
+                  <map:parameter name="link-libraries-uri" 
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=linklibraries"/>
                 </map:transform>
                 <map:serialize type="html"/>
               </map:act>
@@ -377,18 +381,26 @@
           </map:match>
           
           <!-- Kupu Image Drawer -->
-          <map:match pattern="imagedrawerxsl" type="step">
-            <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/imagedrawer.xsl}" 
+          <map:match pattern="*drawerxsl" type="step">
+            <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl}" 
               type="jx">
-              <map:parameter name="root" value="{page-envelope:context-prefix}/kupu/common/kupudrawers/"/>
+              <map:parameter name="import-stylesheet-url" value="{page-envelope:context-prefix}/kupu/common/kupudrawers/{1}drawer.xsl"/>
             </map:generate>  
             <map:serialize type="xml"/>
           </map:match>
           
-          <map:match pattern="imagedrawerlibraries" type="step">
-            <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/libraries.xml.jx}" type="jx">
+          <map:match pattern="imagelibraries" type="step">
+            <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/imagelibraries.xml.jx}" type="jx">
               <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=global-library"/>
               <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=page-library"/>
+              <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
+            </map:generate>
+            <map:serialize type="xml"/>
+          </map:match>
+          <map:match pattern="linklibraries" type="step">
+            <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/linklibraries.xml.jx}" type="jx">
+              <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=sitetree-library"/>
+              <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=other-library"/>
               <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
             </map:generate>
             <map:serialize type="xml"/>
@@ -396,7 +408,10 @@
                     
           <map:match pattern="page-library" type="step">
             <map:generate src="{fallback:content/info/assets.xsp}" type="serverpages"/>
-            <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/pageassets2kupulibrary.xsl}"/>
+            <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/pageassets2kupulibrary.xsl}">
+              <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images/right_arrow.png"/>
+              <map:parameter name="resource-path-url" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-id}/"/>
+            </map:transform>
             <map:serialize type="xml"/>
           </map:match>
           
