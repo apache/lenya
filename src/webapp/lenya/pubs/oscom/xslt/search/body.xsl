@@ -61,25 +61,34 @@ the Matrix or within <a href="lucene">General</a>
 Limit your search to field:
 <xsl:choose>
 <xsl:when test="configuration/@checked-pid = 'matrix'">
-  <input type="checkbox" name="matrix.fields" value="contents">
-    <xsl:if test="search/fields/field[1]='contents'">
+
+   <!-- Checkboxes -->
+  <input type="checkbox" name="matrix.fields.contents">
+    <xsl:for-each select="search/fields/field">
+    <xsl:if test=". = 'contents'">
       <xsl:attribute name="checked">checked</xsl:attribute>
     </xsl:if>
+    </xsl:for-each>
     Contents
   </input>
-  <input type="checkbox" name="matrix.fields" value="title">
-    <xsl:if test="search/fields/field[1]='title'">
+  <input type="checkbox" name="matrix.fields.title">
+    <xsl:for-each select="search/fields/field">
+    <xsl:if test=". = 'title'">
       <xsl:attribute name="checked">checked</xsl:attribute>
     </xsl:if>
+    </xsl:for-each>
     Title
   </input>
-  <input type="checkbox" name="matrix.fields" value="license">
-    <xsl:if test="search/fields/field[1]='license'">
+  <input type="checkbox" name="matrix.fields.license">
+    <xsl:for-each select="search/fields/field">
+    <xsl:if test=". = 'license'">
       <xsl:attribute name="checked">checked</xsl:attribute>
     </xsl:if>
+    </xsl:for-each>
     License
   </input>
 
+    <!-- Selection -->
 <!--
     <select name="matrix.fields">
       <option value="contents">
@@ -101,7 +110,8 @@ Limit your search to field:
         License
       </option>
     </select>
-    -->
+-->
+
 </xsl:when>
 <xsl:otherwise>
     <select name="dummy-index-id.fields">
