@@ -115,7 +115,7 @@
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="html-iso-8859-1"/>
+        <map:serialize type="html"/>
       </map:match>
            
     </map:pipeline>
@@ -269,7 +269,7 @@
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="html-iso-8859-1"/>
+        <map:serialize type="html"/>
       </map:match>
       
     </map:pipeline>
