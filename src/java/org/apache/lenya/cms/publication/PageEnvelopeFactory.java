@@ -71,6 +71,9 @@ public class PageEnvelopeFactory {
      * @return The factory.
      */
     public static PageEnvelopeFactory getInstance() {
+        if (instance == null) {
+            return new PageEnvelopeFactory();
+        }
         return instance;
     }
 
