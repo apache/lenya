@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: init-build.xml,v 1.33 2004/06/28 17:41:08 michi Exp $ -->
+<!-- $Id$ -->
 
 <project name="init">
 
@@ -96,8 +96,6 @@
         <exclude name="WEB-INF/logkit.xconf"/>
         <exclude name="WEB-INF/web.xml"/>
         <exclude name="WEB-INF/lib/lucene**.jar"/>
-        <!-- Lenya ships a xalan.jar due to xslt issues with parameter passing in special xalan versions -->
-        <exclude name="WEB-INF/lib/xalan**.jar"/>
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
