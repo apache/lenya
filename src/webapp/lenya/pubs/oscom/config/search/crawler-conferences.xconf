@@ -3,8 +3,8 @@
 <crawler>
   <user-agent>wyona</user-agent>
 
-  <base-url href="http://www.oscom.org/index.html"/>
-  <scope-url href="http://www.oscom.org/"/>
+  <base-url href="http://www.oscom.org/Conferences/"/>
+  <scope-url href="http://www.oscom.org/Conferences/"/>
 
   <uri-list src="../../resources/publication/search/lucene/uris.txt"/>
   <htdocs-dump-dir src="../../resources/publication/search/lucene/htdocs_dump/www.oscom.org"/>

@@ -78,7 +78,7 @@
 </xsl:template>
 
 <xsl:template match="results">
-  <h3>Results (Publication <xsl:value-of select="../search/publication-id"/>)</h3>
+  <h3>Results (Publication <xsl:value-of select="../search/publication-name"/>)</h3>
   <xsl:choose>
     <xsl:when test="hits">
 <p>
@@ -118,11 +118,11 @@
       <td>URL: <xsl:value-of select="uri"/></td>
 -->
       <td>
-        Title: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
+        Title: <a><xsl:attribute name="href"><xsl:value-of select="/search-and-results/search/publication-prefix"/><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
         <br />
         <font size="-1">Excerpt: <xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
         <br />
-        <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="uri"/></a></font>
+        <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="/search-and-results/search/publication-prefix"/><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:value-of select="/search-and-results/search/publication-prefix"/><xsl:apply-templates select="uri"/></a></font>
         <br />
         <font size="-1">Mime-Type: <xsl:apply-templates select="mime-type"/><xsl:apply-templates select="no-mime-type"/></font>
       </td>

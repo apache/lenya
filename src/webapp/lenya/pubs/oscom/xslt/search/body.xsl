@@ -10,10 +10,10 @@
 
 <xsl:template match="search-and-results">
   <form>
-<table bgcolor="#99ccff" width="100%">
 <!--
-<table bgcolor="#dddddd" width="100%">
+<table bgcolor="#99ccff" width="100%">
 -->
+<table bgcolor="#dddddd" width="100%">
 <tr><td>
 Search within: 
 <select name="publication-id">
@@ -96,11 +96,7 @@ Limit your search to field:
 </xsl:template>
 
 <xsl:template match="results">
-  <xsl:variable name="pubid"><xsl:value-of select="../search/publication-id"/></xsl:variable>
-<!--
-  <xsl:variable name="pubname"><xsl:value-of select="/search-and-results/configuration/publication[@pid='all']/name"/></xsl:variable>
--->
-  <h3>Search Results (within <xsl:value-of select="$pubid"/><!--<xsl:value-of select="$pubname"/>-->)</h3>
+  <h3>Search Results (within <xsl:value-of select="../search/publication-name"/>)</h3>
   <xsl:choose>
     <xsl:when test="hits">
 <p>
@@ -136,11 +132,11 @@ Limit your search to field:
     </xsl:when>
     <xsl:when test="uri">
       <td>
-        <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
+        <a><xsl:attribute name="href"><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
         <br />
         <font size="-1"><xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
         <br />
-        <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="uri"/></a></font>
+        <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:apply-templates select="uri"/></a></font>
         <br /><br />
 <!--
         <font size="-1">Mime-Type: <xsl:apply-templates select="mime-type"/><xsl:apply-templates select="no-mime-type"/></font>
