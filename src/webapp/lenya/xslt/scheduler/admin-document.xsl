@@ -98,7 +98,7 @@
 	      <xsl:for-each select="sch:jobs">
 		<xsl:for-each select="sch:job">
 		  <tr>
-		    <form method="POST">
+		    <form method="GET">
                     
 		      <td>
                         <!-- hidden input fields for parameters -->

@@ -109,7 +109,7 @@
   <!-- ============================================================= -->
   <xsl:template name="schedulerForm">
     <tr>
-      <form method="POST">
+      <form method="GET">
         
         <!-- hidden input fields for parameters -->
         <xsl:call-template name="parameters-as-inputs"/>

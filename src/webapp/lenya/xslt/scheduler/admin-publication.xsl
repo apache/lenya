@@ -89,7 +89,7 @@
 	      <xsl:for-each select="sch:jobs">
 		<xsl:for-each select="sch:job">
 		  <tr>
-		    <form method="POST">
+		    <form method="GET">
 		      <xsl:attribute name="action">
 			<xsl:value-of select="$uri-prefix"/>
                         <xsl:text>/scheduler/admin-publication?publication-id=</xsl:text>
