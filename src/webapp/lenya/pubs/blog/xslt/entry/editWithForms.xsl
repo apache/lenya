@@ -15,13 +15,13 @@ Edit Document <xsl:value-of select="$entryid"/>
 <form method="post" action="?lenya.usecase=edit&amp;lenya.step=close">
 <table>
 <tr>
-  <td>Title</td><td><input type="text" name="title" size="40"><xsl:attribute name="value"><xsl:value-of select="/echo:entry/echo:title" /></xsl:attribute></input></td>
+  <td>Title</td><td><input type="text" name="element./echo:entry/echo:title[{/echo:entry/echo:title/@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="/echo:entry/echo:title" /></xsl:attribute></input></td>
 </tr>
 <tr>
-  <td>Subtitle</td><td><input type="text" name="subtitle" size="40"><xsl:attribute name="value"><xsl:value-of select="/echo:entry/echo:subtitle" /></xsl:attribute></input></td>
+  <td>Subtitle</td><td><input type="text" name="element./echo:entry/echo:subtitle[{/echo:entry/echo:subtitle/@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="/echo:entry/echo:subtitle" /></xsl:attribute></input></td>
 </tr>
 <tr>
-  <td valign="top">Summary</td><td><textarea name="summary" cols="40" rows="5"><xsl:value-of select="/echo:entry/echo:summary" /></textarea></td>
+  <td valign="top">Summary</td><td><textarea name="element./echo:entry/echo:summary[{/echo:entry/echo:summary/@tagID}]" cols="40" rows="5"><xsl:value-of select="/echo:entry/echo:summary" /></textarea></td>
 </tr>
 <xsl:apply-templates select="/echo:entry/echo:content"/>
 <tr>
@@ -35,7 +35,7 @@ Edit Document <xsl:value-of select="$entryid"/>
 
 <xsl:template match="echo:content[@type='text/plain']">
 <tr>
-  <td valign="top">Content (text/plain)</td><td><textarea name="content[3]" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
+  <td valign="top">Content (text/plain)</td><td><textarea name="element./echo:entry/echo:content[{@tagID}]" cols="40" rows="5"><xsl:value-of select="."/></textarea></td>
 </tr>
 </xsl:template>
 
