@@ -18,4 +18,6 @@
 <xmap remove="/sitemap/resources" xpath="/sitemap" insert-after="/sitemap/views">
 <!-- =========================== Resources ================================= -->
 
+  <map:resources/>
+
 </xmap>
