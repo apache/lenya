@@ -90,9 +90,6 @@ function validateForm(theForm)
                 <td class="lenya-form-caption">Navigation Title*:</td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">Document Title*:</td><td><input class="lenya-form-element" type="text" name="properties.create.title"/></td>
-              </tr>
-              <tr>
                 <td class="lenya-form-caption">Language:</td><td><select class="lenya-form-element"  name="properties.create.new.language"><xsl:apply-templates select="dc:languages"/></select></td>
               </tr>
               <tr>
