@@ -121,40 +121,32 @@ The URI steps are:
 <source><![CDATA[
     <map:pipeline>
       <map:match pattern="navigation/**.html">
-(1)     <map:act type="page-envelope">
-
-(2)       <map:aggregate element="page" prefix="page"
+(1)       <map:aggregate element="page" prefix="page"
               ns="http://apache.org/cocoon/lenya/cms-page/1.0">
               
-(3)         <map:part src="cocoon://navigation/
+(2)         <map:part src="cocoon://navigation/
                 {publication-id}/breadcrumb/{../1}.html.xml"/>
                 
-(4)         <map:part src="cocoon://navigation/
+(3)         <map:part src="cocoon://navigation/
                 {publication-id}/tabs/{../1}.html.xml"/>
                 
-(5)         <map:part src="cocoon://navigation/
+(4)         <map:part src="cocoon://navigation/
                {publication-id}/menu/{../1}.html.xml"/>
                
           </map:aggregate>
           
-(7)       <map:transform src="xslt/page2xhtml.xsl">
-(8)          <map:parameter name="root"
+(5)       <map:transform src="xslt/page2xhtml.xsl">
+(6)          <map:parameter name="root"
                  value="{context}/{publication-id}/"/>
           </map:transform>
-          
-        </map:act>
         
-(9)     <map:serialize type="xhtml"/>
+(7)     <map:serialize type="xhtml"/>
 
       </map:match>
     </map:pipeline>
 ]]></source>
   
 <ol>
-  <li>
-    The <code>PageEnvelopeAction</code> provides the page envelope
-    values as sitemap parameters.
-  </li>
   <li>
     The navigation elements are aggregated together with other document parts.
   </li>
@@ -166,9 +158,6 @@ The URI steps are:
   </li>
   <li>
     Load the menu XHTML fragment.
-  </li>
-  <li>
-    Load the remaining parts of the document.
   </li>
   <li>
     Create the XHTML page.

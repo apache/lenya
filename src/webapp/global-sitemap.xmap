@@ -394,7 +394,6 @@
         <rcmlDirectory href="content/rcml"/>
         <backupDirectory href="content/rcbak"/>
       </map:action>
-      <map:action name="page-envelope" src="org.apache.lenya.cms.cocoon.acting.PageEnvelopeAction" logger="sitemap.action.page-envelope"/> 
 	  <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>
 	  <map:action name="reserved-checkout-test" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutTestAction" logger="sitemap.action.reserved-checkout-test"/>
 	  <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
