@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.5 2003/06/03 13:45:48 egli Exp $
+ * $Id: FileUser.java,v 1.6 2003/06/03 16:30:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,6 +57,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.log4j.Category;
 
 /**
  * @author egli
@@ -64,7 +65,8 @@ import org.apache.lenya.cms.publication.Publication;
  * 
  */
 public class FileUser extends User {
-
+	private Category log = Category.getInstance(FileUser.class);
+	
 	public static final String ID = "identity";
 	public static final String FULL_NAME = "fullname";
 	public static final String EMAIL = "email";
@@ -80,29 +82,46 @@ public class FileUser extends User {
 	/**
 	 * @param id
 	 */
-	public FileUser(String id) {
+	public FileUser(Publication publication, String id) {
 		super(id);
+		this.publication = publication;
 	}
 	
 	public FileUser(Publication publication, Configuration config)
 		throws ConfigurationException {
-		id = config.getAttribute(ID);
+		id = config.getAttribute(ID_ATTRIBUTE);
 		setEmail(config.getValue(EMAIL));
 		setFullName(config.getValue(FULL_NAME));
 		setPassword(config.getValue(PASSWORD));
 		Configuration[] groups = config.getChildren(GROUPS);
-		GroupManager manager = null;
-		try {
-			manager = GroupManager.instance(publication);
-		} catch (AccessControlException e) {
-			throw new ConfigurationException(
-				"Exception when trying to fetch GroupManager for publication: "
-					+ publication,
-				e);
-		}
-		for (int i = 0; i < groups.length; i++) {
-			String groupName = groups[i].getValue();
-			addGroup(manager.getGroup(groupName));
+		if (groups.length == 1) {
+			groups = groups[0].getChildren(GROUP);
+
+			GroupManager manager = null;
+			try {
+				manager = GroupManager.instance(publication);
+			} catch (AccessControlException e) {
+				throw new ConfigurationException(
+					"Exception when trying to fetch GroupManager for publication: "
+						+ publication,
+					e);
+			}
+			for (int i = 0; i < groups.length; i++) {
+				String groupName = groups[i].getValue();
+				Group group = manager.getGroup(groupName);
+				if (group != null) {
+					addGroup(group);
+				} else {
+					log.error(
+						"Couldn't find Group for group name: " + groupName);
+				}
+			}
+		} else {
+			// strange, it should have groups
+			log.error(
+				"User "
+					+ config.getAttribute(ID_ATTRIBUTE)
+					+ " doesn't seem to have any groups");
 		}
 	}
 

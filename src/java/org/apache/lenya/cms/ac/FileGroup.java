@@ -1,5 +1,5 @@
 /*
- * $Id: FileGroup.java,v 1.3 2003/06/03 13:45:48 egli Exp $
+ * $Id: FileGroup.java,v 1.4 2003/06/03 16:30:16 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,6 +57,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.log4j.Category;
 
 /**
  * @author egli
@@ -64,6 +65,7 @@ import org.apache.lenya.cms.publication.Publication;
  * 
  */
 public class FileGroup extends Group {
+	private static Category log = Category.getInstance(FileGroup.class);
 	
 	public static final String GROUP = "group";
 	public static final String ROLES = "roles";
@@ -86,19 +88,29 @@ public class FileGroup extends Group {
 		super(config.getAttribute(NAME_ATTRIBUTE));
 		this.publication = publication;
 
-		Configuration[] roles = config.getChildren(ROLES)[0].getChildren(ROLE);
-		for (int i = 0; i < roles.length; i++) {
-			String roleName = roles[i].getValue();
-			RoleManager manager = null;
-			try {
-				manager = RoleManager.instance(publication);
-			} catch (AccessControlException e) {
-				throw new ConfigurationException(
-					"Exception when trying to fetch RoleManager for publication: "
-						+ publication,
-					e);
+		Configuration[] rolesConfig = config.getChildren(ROLES);
+		if (rolesConfig.length == 1) {
+			Configuration[] roles = rolesConfig[0].getChildren(ROLE);
+			for (int i = 0; i < roles.length; i++) {
+				String roleName = roles[i].getValue();
+				RoleManager manager = null;
+				try {
+					manager = RoleManager.instance(publication);
+				} catch (AccessControlException e) {
+					throw new ConfigurationException(
+						"Exception when trying to fetch RoleManager for publication: "
+							+ publication,
+						e);
+				}
+				addRole(manager.getRole(roleName));
 			}
-			addRole(manager.getRole(roleName));
+
+		} else {
+			// the Group should have a Roles node
+			log.error(
+				"The groups "
+					+ config.getAttribute(NAME_ATTRIBUTE)
+					+ "doesn't appear to have the mandatory roles node");
 		}
 	}
 	
