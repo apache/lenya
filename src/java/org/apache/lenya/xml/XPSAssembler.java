@@ -1,5 +1,5 @@
 /*
-$Id: XPSAssembler.java,v 1.13 2003/07/23 13:21:29 gregor Exp $
+$Id: XPSAssembler.java,v 1.14 2003/08/11 16:03:05 michi Exp $
 <License>
 
  ============================================================================
@@ -444,23 +444,26 @@ public class XPSAssembler implements XPSInclude {
         }
 
         case Node.COMMENT_NODE: {
-            newChildren.addElement(dpf.newCommentNode(newParent.getOwnerDocument(),
-                    orgChild.getNodeValue()));
+            newChildren.addElement(dpf.newCommentNode(newParent.getOwnerDocument(), orgChild.getNodeValue()));
 
             break;
         }
 
         case Node.TEXT_NODE: {
-            newChildren.addElement(dpf.newTextNode(newParent.getOwnerDocument(),
-                    orgChild.getNodeValue()));
+            newChildren.addElement(dpf.newTextNode(newParent.getOwnerDocument(), orgChild.getNodeValue()));
+
+            break;
+        }
+
+        case Node.CDATA_SECTION_NODE: {
+            //newChildren.addElement(dpf.newCommentNode(newParent.getOwnerDocument(), "CDATA not implemented yet."));
+            newChildren.addElement(dpf.newTextNode(newParent.getOwnerDocument(), "CDATA not implemented yet."));
 
             break;
         }
 
         default: {
-            log.fatal(".traverse(): Node type not implemented: " + nodeType + " (" +
-                currentInfo.url + ")");
-
+            log.error(".traverse(): Node type not implemented: " + nodeType + " (" + currentInfo.url + ")");
             break;
         }
         }
