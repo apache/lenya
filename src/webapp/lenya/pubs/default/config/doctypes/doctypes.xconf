@@ -19,6 +19,19 @@
 
 <doctypes>
 
+  <doc type="homepage">
+    <children>
+      <doc type="xhtml"/>
+      <doc type="links"/>
+    </children>
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>homepage.xml</sample-name>
+    </creator>
+    <tasks>
+      <task id="publish"/>
+    </tasks>
+    <workflow src="workflow.xml"/>
+  </doc>
   <doc type="links">
     <children>
       <doc type="xhtml"/>
