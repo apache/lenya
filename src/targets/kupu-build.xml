@@ -22,12 +22,30 @@
 
   <target name="kupu" depends="webapp" description="Build Kupu">
 
-    <echo message="Build Kupu"/>
+    <echo>
+      ********************************************
+      *               Build Kupu.                *
+      ********************************************
+    </echo>
+    
+    <exec 
+      dir="${build.webapp}/lenya/resources/kupu" 
+      executable="xsltproc" 
+      failonerror="false" 
+      failifexecutionfails="false" 
+      outputproperty="xsltproc.output"/>
+    
+    <fail unless="xsltproc.output">:            
+      ********************************************
+      * Please install "xsltproc" to build Kupu. *
+      ********************************************
+      
+    </fail>
+    
+    <exec dir="${build.webapp}/lenya/resources/kupu" 
+      executable="make" 
+      failonerror="true" 
+      failifexecutionfails="false"/>
 
-    <exec dir="${build.webapp}/lenya/resources/kupu" executable="make" failonerror="true" failifexecutionfails="false"/>
-    <exec dir="${build.webapp}/lenya/resources/kupu" executable="make.bat" failonerror="true" failifexecutionfails="false"/>
-    
-    <echo message="NOTE: Do not bother if you got an 'execution failed' error above."/>
-    
   </target>
 </project>
