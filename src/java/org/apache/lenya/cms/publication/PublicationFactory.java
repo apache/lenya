@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationFactory.java,v 1.25 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: PublicationFactory.java,v 1.26 2004/05/03 13:52:46 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -86,16 +86,18 @@ public final class PublicationFactory {
         assert servletContextPath != null;
 
         String key = generateKey(id, servletContextPath);
-        Publication publication;
+        Publication publication = null;
 
         if (keyToPublication.containsKey(key)) {
             publication = (Publication) keyToPublication.get(key);
         } else {
-            publication = new FilePublication(id, servletContextPath);
-            keyToPublication.put(key, publication);
+            if (PublicationFactory.existsPublication(id, servletContextPath)) {
+                publication = new FilePublication(id, servletContextPath);
+                keyToPublication.put(key, publication);
+            }
         }
 
-        assert publication != null;
+//        assert publication != null;
         return publication;
     }
 
