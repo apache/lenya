@@ -1,5 +1,5 @@
 /*
- * $Id: FileUserTest.java,v 1.2 2003/06/05 11:59:21 egli Exp $
+ * $Id: FileUserTest.java,v 1.3 2003/06/06 17:24:47 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -177,13 +177,6 @@ public class FileUserTest extends TestCase {
 				publication.getDirectory(),
 				ItemManager.PATH + File.separator + userName + ".iml");
 		assertTrue(xmlFile.exists());
-	}
-
-	/*
-	 * Test for void FileUser(Publication, Configuration)
-	 */
-	final public void testFileUserPublicationConfiguration() {
-		//TODO Implement FileUser().
 	}
 
 	final public void testGetEmail() {

@@ -1,5 +1,5 @@
 /*
- * $Id: UserManagerTest.java,v 1.3 2003/06/03 16:41:04 egli Exp $
+ * $Id: UserManagerTest.java,v 1.4 2003/06/06 17:24:47 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -160,14 +160,6 @@ public class UserManagerTest extends TestCase {
 
 		fetchedGroup = groupManager.getGroup(adminGroupName);
 		assertTrue(adminGroup.equals(fetchedGroup));			
-	}
-
-	final public void testAdd() {
-		//TODO Implement add().
-	}
-
-	final public void testRemove() {
-		//TODO Implement remove().
 	}
 
 	final public void testGetUser() {
