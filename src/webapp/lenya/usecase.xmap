@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.226 2004/08/11 08:05:30 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.227 2004/08/11 08:06:18 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -280,11 +280,11 @@
           </map:match>
           
           <map:match pattern="show-referenced-documents" type="step">
-	    <map:generate src="content/publishing/referenced-documents.xsp" type="serverpages"/>
-	    <map:transform type="xalan" src="xslt/publishing/referenced-documents.xsl">
-	      <map:parameter name="use-request-parameters" value="true"/>
-	    </map:transform>
-	    <map:serialize type="text"/>
+            <map:generate src="content/publishing/referenced-documents.xsp" type="serverpages"/>
+            <map:transform type="xalan" src="xslt/publishing/referenced-documents.xsl">
+              <map:parameter name="use-request-parameters" value="true"/>
+            </map:transform>
+            <map:serialize type="text"/>
           </map:match>
           
           <map:match pattern="publish" type="step">
