@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.17 2003/04/29 17:06:30 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.18 2003/05/02 16:38:55 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -58,7 +58,7 @@
           </map:transform>
 	</map:act>
       </map:act>
-      <map:serialize type="xhtml"/>
+      <map:serialize type="html"/>
     </map:match>
 
     </map:pipeline>
