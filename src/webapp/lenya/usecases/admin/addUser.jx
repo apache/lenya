@@ -31,41 +31,41 @@
         </tr>
         <tr>
           <td class="lenya-entry-caption"><i18n:text>User ID</i18n:text> *</td>
-          <td><input type="text" name="userId" class="lenya-form-entry" value="${request.getParameter('userId')}"/></td>
+          <td><input type="text" name="userId" class="lenya-form-element" value="${request.getParameter('userId')}"/></td>
         </tr>
         
         <jx:if test="${request.getParameter('className') == 'org.apache.lenya.ac.ldap.LDAPUser'}">
           <tr>
             <td class="lenya-entry-caption"><i18n:text>LDAP ID</i18n:text> *</td>
-            <td><input type="text" name="ldapId" class="lenya-form-entry" value="${request.getParameter('ldapId')}"/></td>
+            <td><input type="text" name="ldapId" class="lenya-form-element" value="${request.getParameter('ldapId')}"/></td>
           </tr>
         </jx:if>
         
         <tr>
           <td class="lenya-entry-caption"><i18n:text>Name</i18n:text> *</td>
-          <td><input type="text" name="fullName" class="lenya-form-entry" value="${request.getParameter('fullName')}"/></td>
+          <td><input type="text" name="fullName" class="lenya-form-element" value="${request.getParameter('fullName')}"/></td>
         </tr>
         <tr>
           <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text></td>
           <td>
             <!-- N.B.: do not put spaces or carriage returns inside the
                  textare element - these would be rendered -->
-            <textarea name="description" class="lenya-form-entry"><jx:out value="${request.getParameter('description')}"/></textarea>
+            <textarea name="description" class="lenya-form-element"><jx:out value="${request.getParameter('description')}"/></textarea>
           </td>
         </tr>
         <tr>
           <td class="lenya-entry-caption"><i18n:text>E-Mail</i18n:text> *</td>
-          <td><input type="text" name="email" class="lenya-form-entry" value="${request.getParameter('email')}"/></td>
+          <td><input type="text" name="email" class="lenya-form-element" value="${request.getParameter('email')}"/></td>
         </tr>
         
         <jx:if test="${request.getParameter('className') != 'org.apache.lenya.ac.ldap.LDAPUser'}">
         <tr>
           <td class="lenya-entry-caption"><i18n:text>Password</i18n:text> *</td>
-          <td><input type="password" name="password" class="lenya-form-entry" value="${request.getParameter('password')}"/></td>
+          <td><input type="password" name="password" class="lenya-form-element" value="${request.getParameter('password')}"/></td>
         </tr>
         <tr>
           <td class="lenya-entry-caption"><i18n:text>Confirm password</i18n:text> *</td>
-          <td><input type="password" name="confirmPassword" class="lenya-form-entry" value="${request.getParameter('confirmPassword')}"/></td>
+          <td><input type="password" name="confirmPassword" class="lenya-form-element" value="${request.getParameter('confirmPassword')}"/></td>
         </tr>
         </jx:if>
         

@@ -82,19 +82,19 @@
           </tr>
           <tr>
             <td class="lenya-entry-caption"><i18n:text>File</i18n:text> *</td>
-            <td><input type="file" name="file" class="lenya-form-entry"/></td>
+            <td><input type="file" name="file" class="lenya-form-element"/></td>
           </tr>
           <tr>
             <td class="lenya-entry-caption"><i18n:text>Title</i18n:text> *</td>
-            <td><input type="text" name="title" class="lenya-form-entry" value="${usecase.getParameter('title')}"/></td>
+            <td><input type="text" name="title" class="lenya-form-element" value="${usecase.getParameter('title')}"/></td>
           </tr>
           <tr>
             <td class="lenya-entry-caption"><i18n:text>Creator</i18n:text> *</td>
-            <td><input type="text" name="creator" class="lenya-form-entry" value="${usecase.getParameter('creator')}"/></td>
+            <td><input type="text" name="creator" class="lenya-form-element" value="${usecase.getParameter('creator')}"/></td>
           </tr>
           <tr>
             <td class="lenya-entry-caption"><i18n:text>Rights</i18n:text> *</td>
-            <td><input type="text" name="rights" class="lenya-form-entry" value="${usecase.getParameter('rights')}"/></td>
+            <td><input type="text" name="rights" class="lenya-form-element" value="${usecase.getParameter('rights')}"/></td>
           </tr>
           <tr>
             <td/>
