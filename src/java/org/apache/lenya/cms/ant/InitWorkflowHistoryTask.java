@@ -54,9 +54,9 @@
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
@@ -67,7 +67,7 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * @author andreas
- * @version $Id: InitWorkflowHistoryTask.java,v 1.8 2003/09/17 15:17:22 michi Exp $
+ * @version $Id: InitWorkflowHistoryTask.java,v 1.9 2003/10/21 09:51:54 andreas Exp $
  *
  */
 public class InitWorkflowHistoryTask extends PublicationTask {
@@ -116,10 +116,11 @@ public class InitWorkflowHistoryTask extends PublicationTask {
         if (language == null) {
             language = getPublication().getDefaultLanguage();
         }
-        String url = DefaultDocumentBuilder.getInstance().buildCanonicalUrl(getPublication(), Publication.AUTHORING_AREA, getDocumentId(), language);
+        DocumentBuilder builder = getPublication().getDocumentBuilder();
+        String url = builder.buildCanonicalUrl(getPublication(), Publication.AUTHORING_AREA, getDocumentId(), language);
         Document document;
         try {
-            document = DefaultDocumentBuilder.getInstance().buildDocument(getPublication(), url);
+            document = builder.buildDocument(getPublication(), url);
             log(".execute(): " + document.getLanguage());
         } catch (DocumentBuildException e) {
             throw new BuildException(e);

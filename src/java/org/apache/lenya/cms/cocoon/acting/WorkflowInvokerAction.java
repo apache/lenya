@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvokerAction.java,v 1.4 2003/10/10 16:42:14 andreas Exp $
+$Id: WorkflowInvokerAction.java,v 1.5 2003/10/21 09:51:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,8 +62,8 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -116,7 +116,7 @@ public class WorkflowInvokerAction extends AbstractAction {
 
         PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         Publication publication = envelope.getPublication();
-        DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+        DocumentBuilder builder = publication.getDocumentBuilder();
         String url = builder.buildCanonicalUrl(publication, area, documentId, language);
         Document document = builder.buildDocument(publication, url);
         

@@ -1,5 +1,5 @@
 /*
-$Id: DocumentLanguagesHelper.java,v 1.2 2003/09/05 14:40:22 andreas Exp $
+$Id: DocumentLanguagesHelper.java,v 1.3 2003/10/21 09:51:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,6 @@ package org.apache.lenya.cms.publication.xsp;
 import java.util.Map;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
@@ -131,7 +130,7 @@ public class DocumentLanguagesHelper {
      * @throws ProcessingException if the document for the given language could not be created.
      */
     protected Document getDocument(String language) throws ProcessingException {
-        DocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+        DocumentBuilder builder = pageEnvelope.getPublication().getDocumentBuilder();
         String canonicalURL =
             builder.buildCanonicalUrl(
                 pageEnvelope.getPublication(),

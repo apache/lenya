@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerAction.java,v 1.26 2003/09/10 12:54:05 edith Exp $
+$Id: RevisionControllerAction.java,v 1.27 2003/10/21 09:51:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,8 +65,8 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac.Identity;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -134,8 +134,6 @@ public class RevisionControllerAction extends AbstractAction {
 
 		//get Parameters for RC
 		String publicationPath = publication.getDirectory().getCanonicalPath();
-		String servletContextPath =
-			publication.getServletContext().getCanonicalPath();
 		RCEnvironment rcEnvironment =
 			RCEnvironment.getInstance(
 				publication.getServletContext().getAbsolutePath());
@@ -199,8 +197,7 @@ public class RevisionControllerAction extends AbstractAction {
 				}
 			}
 
-			DefaultDocumentBuilder builder =
-				DefaultDocumentBuilder.getInstance();
+			DocumentBuilder builder = publication.getDocumentBuilder();
 
 			String srcUrl =
 				builder.buildCanonicalUrl(

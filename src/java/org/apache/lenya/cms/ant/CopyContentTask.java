@@ -1,5 +1,5 @@
 /*
-$Id: CopyContentTask.java,v 1.2 2003/09/09 12:10:06 edith Exp $
+$Id: CopyContentTask.java,v 1.3 2003/10/21 09:51:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,9 +59,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -86,7 +86,7 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
 		Publication publication = getPublication();
-		DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+		DocumentBuilder builder = publication.getDocumentBuilder();
 
 		String parentid = node.getAbsoluteParentId();
 		String srcDocumentid = parentid + "/" +node.getId();

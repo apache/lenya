@@ -1,5 +1,5 @@
 /*
-$Id: DeleteContentTask.java,v 1.2 2003/10/14 09:46:46 edith Exp $
+$Id: DeleteContentTask.java,v 1.3 2003/10/21 09:51:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,9 +57,9 @@ package org.apache.lenya.cms.ant;
 
 import java.io.File;
 
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.tools.ant.BuildException;
 
@@ -146,7 +146,7 @@ public class DeleteContentTask extends PublicationTask {
 		String documentid,
 		String area) {
 		Publication publication = getPublication();
-		DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+		DocumentBuilder builder = publication.getDocumentBuilder();
 		String url =
 			builder.buildCanonicalUrl(publication, area, documentid, language);
 		Document document;

@@ -62,9 +62,9 @@ import java.util.Map;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -120,7 +120,7 @@ public class DocumentIndexTransformer
 
 	private String area;
 
-	private DefaultDocumentBuilder builder;
+	private DocumentBuilder builder;
 
 	private SiteTree siteTree;
 
@@ -143,7 +143,7 @@ public class DocumentIndexTransformer
 			setDocument(envelope.getDocument());
 			setPublication(document.getPublication());
 			setArea(document.getArea());
-			setBuilder(DefaultDocumentBuilder.getInstance());
+			setBuilder(document.getPublication().getDocumentBuilder());
 			setSiteTree(publication.getSiteTree(area));
 
 		} catch (Exception e) {
@@ -324,7 +324,7 @@ public class DocumentIndexTransformer
 	/**
 	 * @param builder The document builder.
 	 */
-	public void setBuilder(DefaultDocumentBuilder builder) {
+	public void setBuilder(DocumentBuilder builder) {
 		this.builder = builder;
 	}
 

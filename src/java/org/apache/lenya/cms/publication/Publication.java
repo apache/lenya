@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.29 2003/09/29 10:19:18 egli Exp $
+$Id: Publication.java,v 1.30 2003/10/21 09:51:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -319,5 +319,13 @@ public class Publication {
             siteTrees.put(area, sitetree);
         }
         return sitetree;
+    }
+    
+    /**
+     * Returns the document builder of this instance.
+     * @return A document builder.
+     */
+    public DocumentBuilder getDocumentBuilder() {
+    	return DefaultDocumentBuilder.getInstance();
     }
 }

@@ -1,5 +1,5 @@
 /*
-$Id: LanguageVersions.java,v 1.2 2003/10/07 08:40:24 andreas Exp $
+$Id: LanguageVersions.java,v 1.3 2003/10/21 09:51:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,7 @@ public class LanguageVersions extends DocumentSet {
 
     public LanguageVersions(Document document) throws DocumentException {
         String[] languages = document.getLanguages();
-        DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+        DocumentBuilder builder = document.getPublication().getDocumentBuilder();
         add(document);
         
         for (int i = 0; i < languages.length; i++) {

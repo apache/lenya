@@ -58,7 +58,7 @@ import java.util.HashMap;
 
 /**
  * @author andreas
- * @version $Id: DefaultDocumentBuilder.java,v 1.19 2003/10/02 15:29:00 andreas Exp $
+ * @version $Id: DefaultDocumentBuilder.java,v 1.20 2003/10/21 09:51:55 andreas Exp $
  *
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
@@ -74,7 +74,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      * Returns the singleton instance.
      * @return A document builder.
      */
-    public static DefaultDocumentBuilder getInstance() {
+    protected static DefaultDocumentBuilder getInstance() {
         if (instance == null) {
             instance = new DefaultDocumentBuilder();
         }

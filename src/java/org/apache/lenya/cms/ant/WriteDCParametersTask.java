@@ -1,5 +1,5 @@
 /*
-$Id: WriteDCParametersTask.java,v 1.3 2003/08/21 14:24:58 egli Exp $
+$Id: WriteDCParametersTask.java,v 1.4 2003/10/21 09:51:54 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,9 @@ $Id: WriteDCParametersTask.java,v 1.3 2003/08/21 14:24:58 egli Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DublinCore;
 import org.apache.tools.ant.BuildException;
@@ -276,7 +276,7 @@ public class WriteDCParametersTask extends PublicationTask {
         String rights)
         throws BuildException, DocumentBuildException, DocumentException {
 
-        DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+        DocumentBuilder builder = getPublication().getDocumentBuilder();
         String url = builder.buildCanonicalUrl(getPublication(), area, documentId, lang);
         Document doc = builder.buildDocument(getPublication(), url);
         DublinCore dc = doc.getDublinCore();

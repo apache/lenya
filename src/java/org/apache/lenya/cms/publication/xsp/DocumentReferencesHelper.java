@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.5 2003/10/17 09:56:58 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.6 2003/10/21 09:51:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,7 +65,6 @@ import java.util.regex.Pattern;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
@@ -82,7 +81,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DocumentReferencesHelper {
 
@@ -224,8 +223,8 @@ public class DocumentReferencesHelper {
      * current publication and context.
      */
     public String getURL(String area, String documentId) {
-        DocumentBuilder builder = DefaultDocumentBuilder.getInstance();
         Publication pub = pageEnvelope.getPublication();
+		DocumentBuilder builder = pub.getDocumentBuilder();
         String prefix = pageEnvelope.getContext();
 
         return prefix + builder.buildCanonicalUrl(pub, area, documentId);

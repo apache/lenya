@@ -1,5 +1,5 @@
 /*
-$Id: MoveWorkflowTask.java,v 1.2 2003/09/09 10:26:44 edith Exp $
+$Id: MoveWorkflowTask.java,v 1.3 2003/10/21 09:51:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,9 @@ $Id: MoveWorkflowTask.java,v 1.2 2003/09/09 10:26:44 edith Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -85,8 +85,8 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication= getPublication();
-		DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
+		Publication publication = getPublication();
+		DocumentBuilder builder = publication.getDocumentBuilder();
 
 		Label[] labels = node.getLabels(); 
 		for (int i=0 ; i<labels.length; i ++){
@@ -108,8 +108,8 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 			
 			log("init workflow history");
 			try {
-				srcDoc = DefaultDocumentBuilder.getInstance().buildDocument(publication, srcUrl);
-				destDoc = DefaultDocumentBuilder.getInstance().buildDocument(publication, destUrl);
+				srcDoc = builder.buildDocument(publication, srcUrl);
+				destDoc = builder.buildDocument(publication, destUrl);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}
