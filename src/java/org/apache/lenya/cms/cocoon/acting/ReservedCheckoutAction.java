@@ -63,12 +63,11 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
 import org.apache.log4j.Category;
 
-
 /**
  * Action doing reserved checkout
  *
  * @author Edth Chevrier
- * @version $Id: ReservedCheckoutAction.java,v 1.15 2004/02/02 02:50:37 stefano Exp $
+ * @version $Id: ReservedCheckoutAction.java,v 1.16 2004/02/10 15:32:52 andreas Exp $
  */
 public class ReservedCheckoutAction extends RevisionControllerAction {
     Category log = Category.getInstance(ReservedCheckoutAction.class);
@@ -86,8 +85,13 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
+    public Map act(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String src,
+        Parameters parameters)
+        throws Exception {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
@@ -111,7 +115,13 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             actionMap.put("filename", getFilename());
             actionMap.put("user", e.getCheckOutUsername());
             actionMap.put("date", e.getCheckOutDate());
-            getLogger().warn("Document " + getFilename() + " already checked-out by " + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
+            getLogger().warn(
+                "Document "
+                    + getFilename()
+                    + " already checked-out by "
+                    + e.getCheckOutUsername()
+                    + " since "
+                    + e.getCheckOutDate());
 
             return actionMap;
         } catch (Exception e) {

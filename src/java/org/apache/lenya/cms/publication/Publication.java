@@ -14,7 +14,7 @@ import org.apache.lenya.cms.publishing.PublishingEnvironment;
  * A Lenya publication.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: Publication.java,v 1.41 2004/02/09 16:56:43 andreas Exp $
+ * @version $Id: Publication.java,v 1.42 2004/02/10 15:33:52 andreas Exp $
  */
 public interface Publication {
 
@@ -207,5 +207,5 @@ public interface Publication {
      */
     boolean dependsOn(Document dependingDocument, Document requiredDocument)
         throws PublicationException;
-
+        
 }
