@@ -24,6 +24,7 @@
 <leaf name="Glossary" href="glossary.html"/>
 -->
 <leaf name="Glossary"/>
+<leaf name="Interop" href="interop.html"/>
 <leaf name="Mailing Lists" href="mailing-lists.html"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>
