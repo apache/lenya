@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: LinkRewriteTask.java,v 1.5 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -34,6 +34,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.tools.ant.BuildException;
@@ -48,6 +49,26 @@ import org.xml.sax.SAXException;
  */
 public class LinkRewriteTask extends PublicationTask {
 
+    private static final class XMLFilenameFilter implements FilenameFilter {
+        /**
+         * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
+         */
+        public boolean accept(File dir, String name) {
+            File _file = new File(dir, name);
+            return _file.isFile() && FileUtil.getExtension(name).equals("xml");
+        }
+    }
+
+    private static final class DirectoryFilter implements FilenameFilter {
+        /**
+         * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
+         */
+        public boolean accept(File dir, String name) {
+            File _file = new File(dir, name);
+            return _file.isDirectory();
+        }
+    }
+
     private String baseDir;
     private String stylesheet;
     private String area;
@@ -56,88 +77,78 @@ public class LinkRewriteTask extends PublicationTask {
 
     /**
      * Get the area
-     * 
      * @return the area
      */
     public String getArea() {
-        return area;
+        return this.area;
     }
 
     /**
      * Set the area
-     * 
-     * @param area the area
+     * @param _area the area
      */
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String _area) {
+        this.area = _area;
     }
 
     /**
      * Get the new document-id.
-     * 
      * @return the new document-id
      */
     public String getNewDocumentId() {
-        return newDocumentId;
+        return this.newDocumentId;
     }
 
     /**
      * Set the new document-id.
-     * 
-     * @param newDocumentId the new document-id
+     * @param _newDocumentId the new document-id
      */
-    public void setNewDocumentId(String newDocumentId) {
-        this.newDocumentId = newDocumentId;
+    public void setNewDocumentId(String _newDocumentId) {
+        this.newDocumentId = _newDocumentId;
     }
 
     /**
      * Get the old document-id.
-     * 
      * @return the old document-id
      */
     public String getOldDocumentId() {
-        return oldDocumentId;
+        return this.oldDocumentId;
     }
 
     /**
      * Set the old document-id.
-     * 
-     * @param oldDocumentId the old document-id
+     * @param _oldDocumentId the old document-id
      */
-    public void setOldDocumentId(String oldDocumentId) {
-        this.oldDocumentId = oldDocumentId;
+    public void setOldDocumentId(String _oldDocumentId) {
+        this.oldDocumentId = _oldDocumentId;
     }
 
     /**
      * Get the stylesheet.
-     * 
      * @return the stylesheet
      */
     public String getStylesheet() {
-        return stylesheet;
+        return this.stylesheet;
     }
 
     /**
      * Set the stylesheet.
-     * 
-     * @param stylesheet the stylesheet that transforms the links
+     * @param _stylesheet the stylesheet that transforms the links
      */
-    public void setStylesheet(String stylesheet) {
-        this.stylesheet = stylesheet;
+    public void setStylesheet(String _stylesheet) {
+        this.stylesheet = _stylesheet;
     }
 
     /**
      * Set the base dir where in which the link rewrite will take place.
-     * 
-     * @param baseDir the base dir
+     * @param _baseDir the base dir
      */
-    public void setBaseDir(String baseDir) {
-        this.baseDir = baseDir;
+    public void setBaseDir(String _baseDir) {
+        this.baseDir = _baseDir;
     }
 
     /**
      * Get the base dir.
-     * 
      * @return the base dir
      */
     private String getBaseDir() {
@@ -164,32 +175,20 @@ public class LinkRewriteTask extends PublicationTask {
     }
 
     /**
-     * 
-     * @param file
-     * @param transformer
-     * @param oldDocumentId
-     * @param newDocumentId
-     * @throws FileNotFoundException
+     * Rewrites links
+     * @param file The starting point for the link rewrite
+     * @param transformer The transformer to use for the link rewrite
      * @throws TransformerException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
      */
     private void replace_internal(File file, Transformer transformer)
         throws TransformerException, ParserConfigurationException, SAXException, IOException {
 
-        FilenameFilter directoryFilter = new FilenameFilter() {
+        FilenameFilter directoryFilter = new DirectoryFilter();
 
-            public boolean accept(File dir, String name) {
-                File file = new File(dir, name);
-                return file.isDirectory();
-            }
-        };
-
-        FilenameFilter xmlFileFilter = new FilenameFilter() {
-
-            public boolean accept(File dir, String name) {
-                File file = new File(dir, name);
-                return file.isFile() && FileUtil.getExtension(name).equals("xml");
-            }
-        };
+        FilenameFilter xmlFileFilter = new XMLFilenameFilter();
 
         log("root file: " + file.getCanonicalPath());
         assert(file.isDirectory());
@@ -222,40 +221,44 @@ public class LinkRewriteTask extends PublicationTask {
     }
 
     /**
+     * Rewrites links by traversing a directory tree and applying a rewrite transformation
+     * to XML files in the directory.
+     * @param rootDirName The root directory for the rewrite
+     * @param _stylesheet The stylesheet to use for rewriting
+     * @param _area The area to use for rewriting
+     * @param _oldDocumentId The old document id
+     * @param _newDocumentId The new document id
      * 
-     * @param rootDirName
-     * @param stylesheet
-     * @param oldDcoumentId
-     * @param newDocumentId
-     * 
-     * @throws FileNotFoundException
      * @throws TransformerException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
      */
     private void replace(
         String rootDirName,
-        String stylesheet,
-        String area,
-        String oldDcoumentId,
-        String newDocumentId)
+        String _stylesheet,
+        String _area,
+        String _oldDocumentId,
+        String _newDocumentId)
         throws TransformerException, ParserConfigurationException, SAXException, IOException {
 
         File rootDir = new File(rootDirName);
         TransformerFactory tFactory = TransformerFactory.newInstance();
 
-        Transformer transformer = tFactory.newTransformer(new StreamSource(stylesheet));
+        Transformer transformer = tFactory.newTransformer(new StreamSource(_stylesheet));
 
         Publication publication = getPublication();
         DocumentBuilder builder = publication.getDocumentBuilder();
 
         // replace all internal links
         String oldURL =
-            getContextPrefix() + builder.buildCanonicalUrl(publication, area, oldDcoumentId);
+            getContextPrefix() + builder.buildCanonicalUrl(publication, _area, _oldDocumentId);
         String newURL =
-            getContextPrefix() + builder.buildCanonicalUrl(publication, area, newDocumentId);
+            getContextPrefix() + builder.buildCanonicalUrl(publication, _area, _newDocumentId);
 
         log("Replace '" + oldURL + "' by '" + newURL + "'");
-        transformer.setParameter("idbefore", oldURL);
-        transformer.setParameter("idafter", newURL);
+        transformer.setParameter("urlbefore", oldURL);
+        transformer.setParameter("urlafter", newURL);
 
         replace_internal(rootDir, transformer);
 
@@ -266,14 +269,15 @@ public class LinkRewriteTask extends PublicationTask {
 
             oldURL =
                 getContextPrefix()
-                    + builder.buildCanonicalUrl(publication, area, oldDcoumentId, language);
+                    + builder.buildCanonicalUrl(publication, _area, _oldDocumentId, language);
             newURL =
                 getContextPrefix()
-                    + builder.buildCanonicalUrl(publication, area, newDocumentId, language);
+                    + builder.buildCanonicalUrl(publication, _area, _newDocumentId, language);
 
             log("Replace '" + oldURL + "' by '" + newURL + "'");
-            transformer.setParameter("idbefore", oldURL);
-            transformer.setParameter("idafter", newURL);
+            transformer.setParameter("urlbefore", oldURL);
+            transformer.setParameter("urlafter", newURL);
+            transformer.setParameter("language", language);
 
             replace_internal(rootDir, transformer);
         }

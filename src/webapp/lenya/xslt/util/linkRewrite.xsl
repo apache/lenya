@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: linkRewrite.xsl,v 1.2 2004/03/13 12:42:09 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -24,15 +24,44 @@
   exclude-result-prefixes="xhtml"
   >
 
-  <xsl:param name="idbefore"/>
-  <xsl:param name="idafter"/>
-  
+  <xsl:param name="urlbefore"/>
+  <xsl:param name="urlafter"/>
+  <xsl:param name="language"/>
+
+  <!-- base url for rewriting links to children of moved node -->
+
+  <xsl:variable name="baseurlbefore">
+    <xsl:choose>
+      <xsl:when test="$language != ''">
+        <xsl:value-of select="concat(substring-before($urlbefore, concat('_', $language, '.html')), '/')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat(substring-before($urlbefore, '.html'), '/')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+   <xsl:variable name="baseurlafter">
+    <xsl:choose>
+      <xsl:when test="$language != ''">
+        <xsl:value-of select="concat(substring-before($urlafter, concat('_', $language, '.html')), '/')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat(substring-before($urlafter, '.html'), '/')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+
   <xsl:template match="xhtml:a">
     <xsl:variable name="href">
       <xsl:choose>
-	<xsl:when test="@href=$idbefore">
-	  <xsl:value-of select="$idafter"/>
+	<xsl:when test="@href=$urlbefore">
+	  <xsl:value-of select="$urlafter"/>
 	</xsl:when>
+        <xsl:when test="contains(@href, $baseurlbefore)">
+          <xsl:value-of select="$baseurlafter"/><xsl:value-of select="substring-after(@href, $baseurlbefore)"/>
+        </xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="@href"/>
 	</xsl:otherwise>
