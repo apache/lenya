@@ -62,6 +62,7 @@
         <td align="right" colspan="2" background="/lenya/lenya/menu/images/grau-bg2.gif">
           <font color="#ffffff" size="-2" face="verdana">
             <xsl:apply-templates select="workflow-state"/>
+            <xsl:apply-templates select="is-live"/>
             User Id: <b><xsl:value-of select="current_username"/></b> | Server Time: <b><xsl:value-of select="server_time"/></b> &#160;&#160;&#160;
           </font>
         </td>
@@ -96,6 +97,11 @@
   
   <xsl:template match="workflow-state">
     Workflow State: <b><xsl:apply-templates/></b> |
+  </xsl:template>
+  
+  <xsl:template match="is-live">
+  	<xsl:if test="normalize-space(.) = 'false'">not&#160;</xsl:if>
+    <xsl:text>live |</xsl:text>
   </xsl:template>
   
   
