@@ -32,6 +32,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.URLInformation;
 
 /**
  * Usecase resolver implementation.
@@ -107,8 +108,13 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @param name The plain usecase name.
      * @return A string.
      */
-    protected String getPublicationUsecaseName(String webappUrl, String name) {
-        return getPublication(webappUrl).getId() + "/" + name;
+    protected String getPublicationUsecaseName(String webappUrl, final String name) {
+        String newName = null;
+        Publication publication = getPublication(webappUrl);
+        if (publication != null) {
+            newName = publication.getId() + "/" + name;
+        }
+        return newName;
     }
 
     private Context context;
@@ -137,13 +143,20 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
 
         SourceResolver resolver = null;
         Source source = null;
-        Publication publication;
+        Publication publication = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI("context://");
+            String contextPath = SourceUtil.getFile(source).getAbsolutePath();
 
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            publication = factory.getPublication(webappUrl, SourceUtil.getFile(source));
+            URLInformation info = new URLInformation(webappUrl);
+            String publicationId = info.getPublicationId();
+
+            if (publicationId != null
+                    && PublicationFactory.existsPublication(publicationId, contextPath)) {
+                PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+                publication = factory.getPublication(webappUrl, SourceUtil.getFile(source));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -158,13 +171,12 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String,
-     *      java.lang.String)
+     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String, java.lang.String)
      */
     public Usecase resolve(String webappUrl, String name) throws ServiceException {
         Usecase usecase = null;
         String publicationUsecaseName = getPublicationUsecaseName(webappUrl, name);
-        if (this.selector.isSelectable(publicationUsecaseName)) {
+        if (publicationUsecaseName != null && this.selector.isSelectable(publicationUsecaseName)) {
             usecase = (Usecase) this.selector.select(publicationUsecaseName);
         } else {
             usecase = (Usecase) this.selector.select(name);
@@ -178,7 +190,8 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      *      java.lang.String)
      */
     public boolean isRegistered(String webappUrl, String name) throws ServiceException {
-        return this.selector.isSelectable(getPublicationUsecaseName(webappUrl, name))
+        String pubName = getPublicationUsecaseName(webappUrl, name);
+        return (pubName != null && this.selector.isSelectable(pubName))
                 || this.selector.isSelectable(name);
     }
 
