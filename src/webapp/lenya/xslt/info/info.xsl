@@ -31,6 +31,8 @@
 
 <xsl:param name="tab"/>
 <xsl:param name="area"/>
+<xsl:param name="contextprefix"/>
+<xsl:param name="publicationid"/>
 <xsl:param name="documentid"/>
 <xsl:param name="languageexists"/>
 
@@ -198,7 +200,7 @@
           <td><xsl:value-of select="dc:source"/></td>
           <td>        
             <xsl:if test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png'">
-                <img src="../authoring/{../lenya-info:documentnodeid}/{dc:source}" style="height: 32px; vertical-align: middle;"/>&#160;
+                <img src="{$contextprefix}/{$publicationid}/authoring/{$documentid}/{dc:source}" style="height: 32px; vertical-align: middle;"/>&#160;
             </xsl:if>
            </td>
           <td><xsl:value-of select="dc:title"/></td>

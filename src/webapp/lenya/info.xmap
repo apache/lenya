@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xmap,v 1.59 2004/06/29 16:11:49 andreas Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -134,6 +134,8 @@
         <map:transform src="xslt/info/info.xsl">
           <map:parameter name="tab" value="{2}"/>
           <map:parameter name="area" value="{1}"/>
+      	  <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
         </map:transform>
@@ -146,6 +148,8 @@
         <map:transform src="xslt/info/info.xsl">
           <map:parameter name="tab" value="{2}"/>
           <map:parameter name="area" value="{1}"/>
+      	  <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
           <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
         </map:transform>
@@ -160,6 +164,8 @@
           <map:transform src="xslt/info/info.xsl">
             <map:parameter name="tab" value="{../2}"/>
             <map:parameter name="area" value="{../1}"/>
+        	  <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
             <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             <map:parameter name="languageexists" value="true"/>
           </map:transform>
