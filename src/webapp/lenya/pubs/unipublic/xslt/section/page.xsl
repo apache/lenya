@@ -33,8 +33,7 @@
 <tr>
 <td width="135" height="21" align="right" valign="top"><img src="{$img-unipub}/t_magazin.gif" border="0" alt="Magazin"/></td>
 <!-- Section title -->
-<td colspan="2" width="450" height="21" valign="bottom"><img src="{$img-unipub}/r_{MainColumn/section/@type}.gif" border="0" 
-alt="{$sectiontext}"/>
+<td colspan="2" width="450" height="21" valign="bottom"><img src="{$img-unipub}/r_{$section}.gif" border="0" alt="{$sectiontext}"/> 
 
 <!-- Drawing dynamic sub-navigation for the years 2002 and after (according to tree.xml) -->
 <xsl:for-each select="MainColumn/tree/branch/branch/branch[@relURI=$section]/branch">
