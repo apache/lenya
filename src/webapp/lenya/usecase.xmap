@@ -630,7 +630,7 @@
           
           <map:match pattern="archive" type="step">
             <map:act type="task">
-              <map:redirect-to session="true" uri=".."/>
+              <map:redirect-to session="true" uri="{request-param:parenturl}"/>
             </map:act>
           </map:match>
           
