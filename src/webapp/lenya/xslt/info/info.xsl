@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.38 2003/09/04 15:37:05 andreas Exp $
+ $Id: info.xsl,v 1.39 2003/09/05 08:10:36 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -42,8 +42,8 @@
 					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a></td>
 					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a></td>
 				</xsl:if>
-				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC Auth</a></td>
-				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC Live</a></td>
+				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC&#160;Auth</a></td>
+				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC&#160;Live</a></td>
 			</xsl:if>
 		</tr>
 	</table>
