@@ -76,7 +76,7 @@ public class PublisherTest extends AntTaskTest {
     }
 
     /**
-     * The main program for the IdentityTestCase class
+     * The main program for the PublisherTest class
      *
      * @param args The command line arguments
      */

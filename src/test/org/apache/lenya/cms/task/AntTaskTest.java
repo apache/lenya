@@ -80,7 +80,7 @@ public class AntTaskTest extends TestCase {
     }
 
     /**
-     * The main program for the IdentityTestCase class
+     * The main program for the AntTaskTest class
      *
      * @param args The command line arguments
      */
@@ -89,6 +89,11 @@ public class AntTaskTest extends TestCase {
         TestRunner.run(getSuite());
     }
     
+    /**
+     * Initializes the parameters. Call this method from your subclass
+     * {@link main(String[])} method.
+     * @param args The command-line arguments.
+     */
     public static void initialize(String args[]) {
         args = PublicationHelper.extractPublicationArguments(args);
         if (args.length > 0) {
