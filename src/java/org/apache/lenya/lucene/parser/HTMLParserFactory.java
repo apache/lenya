@@ -1,5 +1,5 @@
 /*
-$Id: HTMLParserFactory.java,v 1.5 2003/07/23 13:21:21 gregor Exp $
+$Id: HTMLParserFactory.java,v 1.6 2003/11/13 22:57:28 michi Exp $
 <License>
 
  ============================================================================
@@ -79,10 +79,12 @@ public class HTMLParserFactory {
         // PDF files
         else if (file.getName().endsWith(".txt")) {
             parser = new PDFParserWrapper();
+        } else {
+            parser = new SwingHTMLParser();
+            new CommandLineLogger(HTMLParserFactory.class).debug(".newInstance(): WARNING: Suffix did no match (" + file.getName()  + "). SwingHTMLParser as default parser selected!");
         }
 
-        new CommandLineLogger(HTMLParserFactory.class).debug("returning a " +
-            parser.getClass().getName() + " for " + file.getName());
+        new CommandLineLogger(HTMLParserFactory.class).debug("returning a " + parser.getClass().getName() + " for " + file.getName());
 
         return parser;
     }
