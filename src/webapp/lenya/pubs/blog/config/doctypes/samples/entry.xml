@@ -8,15 +8,7 @@
 
     <echo:author>
       <echo:name>Bob B. Bobbington</echo:name>
-      <echo:homepage>http://bob.name/</echo:homepage>
-      <echo:weblog>http://bob.blog/</echo:weblog>
     </echo:author>
-    <echo:contributor>
-      <echo:name>Yo-Yo Dyne</echo:name>
-      <echo:homepage>http://yoyo.dyne.name/</echo:homepage>
-      <echo:weblog>http://blog.yoyo.dyne.name/</echo:weblog>
-    </echo:contributor>
-    <!-- and another couple contributors could go here -->
 
     <echo:link>http://127.0.0.1:8080/lenya/blog/</echo:link>
     <echo:id>1969/02/16/michi</echo:id>
@@ -47,5 +39,7 @@
     <echo:content type="image/png" xml:lang="en-us" src="http://bob.blog/helloworld.png" />
 -->
 
+<!--
     <ent:topic id="introductory">Hello</ent:topic>
+-->
 </echo:entry>

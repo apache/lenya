@@ -13,7 +13,7 @@
   <xsl:apply-templates select="echo:content"/>
   <br />
   <p class="issued">
-  <b>Posted by <a href="{echo:author/echo:homepage}"><xsl:value-of select="echo:author/echo:name"/></a> at <xsl:value-of select="echo:issued"/>&#160;|&#160;<a href="index.html">Permalink</a></b>
+  <b>Posted <xsl:apply-templates select="echo:author"/> at <xsl:value-of select="echo:issued"/>&#160;|&#160;<a href="index.html">Permalink</a></b>
   </p>
 </xsl:template>
 
@@ -31,6 +31,18 @@
 <p>
   <xsl:apply-templates/>
 </p>
+</xsl:template>
+
+<xsl:template match="echo:author">
+by
+<xsl:choose>
+<xsl:when test="echo:homepage">
+<a href="{echo:homepage}"><xsl:value-of select="echo:name"/></a>
+</xsl:when>
+<xsl:otherwise>
+<xsl:value-of select="echo:name"/>
+</xsl:otherwise>
+</xsl:choose>
 </xsl:template>
  
 </xsl:stylesheet>  
