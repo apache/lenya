@@ -157,7 +157,7 @@ function check(fileinput) {
 	      <td/>
 	      <td>
 		<input type="submit" value="Submit"/>&#160;
-		<input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}';" value="Cancel"/>
+		<input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
 	      </td>
 	    </tr>
 	  </table>
@@ -214,7 +214,7 @@ function check(fileinput) {
 		  <td/>
 		  <td>
 		    <input type="submit" value="Submit"/>&#160;
-		    <input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}';" value="Cancel"/>
+		    <input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
 		  </td>
 		</tr>
 	      </table>
