@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 <xsl:stylesheet version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
@@ -26,8 +26,8 @@ xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
               <li>&amp;apos; instead of ' (single-quote)</li>
               <li>&amp;quot; instead of " (double-quote)</li>
             </ul>
-            <table class="lenya-table-noborder">
-              <xsl:if test="$message">
+            <xsl:if test="$message">
+              <table class="lenya-table-noborder">
                 <tr>
                   <td valign="top" class="lenya-entry-caption">
                     <span class="lenya-error">Message:</span>
@@ -41,8 +41,8 @@ xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
                   (Check log files for more details:
                   lenya/WEB-INF/logs/*)</td>
                 </tr>
-              </xsl:if>
-            </table>
+              </table>
+           </xsl:if>
           </div>
         </div>
         <div class="lenya-box">
@@ -79,53 +79,4 @@ xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
     </page:page>
   </xsl:template>
   <xsl:include href="copy-mixed-content.xsl" />
-<!-- Copy mixed content -->
-<!--
-<xsl:template match="//*" mode="mixedcontent">
-<xsl:variable name="prefix"><xsl:if test="contains(name(),':')">:<xsl:value-of select="substring-before(name(),':')"/></xsl:if></xsl:variable>
-
-<xsl:choose>
-<xsl:when test="node()">
-<xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
-
-<xsl:apply-templates select="@*" mode="mixedcontent"/>
-
-<xsl:for-each select="namespace::*">
-<xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
-<xsl:if test=". != 'http://www.w3.org/XML/1998/namespace'">
-<xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="."/><xsl:text>"</xsl:text>
-</xsl:if>
-</xsl:for-each>
-
-<xsl:text>&gt;</xsl:text>
-
-<xsl:apply-templates select="node()" mode="mixedcontent"/>
-
-<xsl:text>&lt;/</xsl:text><xsl:value-of select="name()"/><xsl:text>&gt;</xsl:text>
-
-</xsl:when>
-
-<xsl:otherwise>
-
-<xsl:text>&lt;</xsl:text><xsl:value-of select="name()"/>
-
-<xsl:apply-templates select="@*" mode="mixedcontent"/>
-
-<xsl:for-each select="namespace::*">
-<xsl:variable name="prefix"><xsl:if test="local-name() != ''">:<xsl:value-of select="local-name()"/></xsl:if></xsl:variable>
-<xsl:if test=". != 'http://www.w3.org/XML/1998/namespace'">
-<xsl:text> </xsl:text>xmlns<xsl:value-of select="$prefix"/>="<xsl:value-of select="."/><xsl:text>"</xsl:text>
-</xsl:if>
-</xsl:for-each>
-
-<xsl:text>/&gt;</xsl:text></xsl:otherwise>
-</xsl:choose>
-</xsl:template>
-
-
-
-
-<xsl:template match="@*" mode="mixedcontent"><xsl:text> </xsl:text><xsl:value-of select="name()"/>="<xsl:value-of select="."/>"</xsl:template>
--->
 </xsl:stylesheet>
-
