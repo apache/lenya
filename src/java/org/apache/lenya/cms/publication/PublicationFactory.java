@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.8 2003/07/04 14:07:39 egli Exp $
+$Id: PublicationFactory.java,v 1.9 2003/07/15 13:48:34 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,16 +61,16 @@ import org.apache.cocoon.environment.Request;
 
 import org.apache.log4j.Category;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  *
  * @author  andreas
  */
 public final class PublicationFactory {
-	
+
     /**
      * Create a new <code>PublicationFactory</code>.
      * 
@@ -85,7 +85,7 @@ public final class PublicationFactory {
      * Creates a new publication.
      * The publication ID is resolved from the request URI.
      * The servlet context path is resolved from the context object.
-
+    
      * @param objectModel The object model of the Cocoon component.
      * 
      * @return a <code>Publication</code>
@@ -123,7 +123,7 @@ public final class PublicationFactory {
 
         return publication;
     }
-    
+
     /**
      * Creates a new publication based on a request and a context.
      * 
@@ -146,5 +146,26 @@ public final class PublicationFactory {
         String servletContextPath = context.getRealPath("");
         return getPublication(publicationId, servletContextPath);
     }
-    
+
+    /**
+     * Checks if a publication with a certain ID exists in a certain context.
+     * @param id The publication ID.
+     * @param servletContextPath The webapp context path.
+     * @return <code>true</code> if the publication exists, <code>false</code> otherwise.
+     */
+    public static boolean existsPublication(String id, String servletContextPath) {
+
+        boolean exists = false;
+        File servletContext = new File(servletContextPath);
+        if (servletContext.isDirectory()) {
+            File publicationDirectory =
+                new File(servletContext, Publication.PUBLICATION_PREFIX + File.separator + id);
+            if (publicationDirectory.isDirectory()) {
+                exists = true;
+            }
+        }
+        return exists;
+
+    }
+
 }
