@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: Machine.java,v 1.4 2004/06/28 08:52:33 andreas Exp $  */
-
 package org.apache.lenya.ac;
 
 import java.net.InetAddress;
@@ -24,6 +22,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A machine (representing an IP address).
+ * @version $Id: Machine.java,v 1.5 2004/08/16 16:21:22 andreas Exp $
+ */
 public class Machine implements Identifiable {
 
     /**

@@ -15,16 +15,22 @@
  *
  */
 
-/* $Id: AccreditableManager.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
-
 package org.apache.lenya.ac;
 
 import org.apache.avalon.framework.component.Component;
 
+/**
+ * An AccreditableManager combines a UserManager, a GroupManager, an IPRangeManager and a
+ * RoleManager.
+ * @verison $Id: AccreditableManager.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ */
 public interface AccreditableManager extends Component {
-    
+
+    /**
+     * Avalon role.
+     */
     String ROLE = AccreditableManager.class.getName();
-    
+
     /**
      * Returns the user manager of this access controller.
      * @return A user manager.
@@ -58,11 +64,11 @@ public interface AccreditableManager extends Component {
      * @param listener An item manager listener.
      */
     void addItemManagerListener(ItemManagerListener listener);
-    
+
     /**
      * Removes an item manager listener from this accreditable manager.
      * @param listener An item manager listener.
      */
     void removeItemManagerListener(ItemManagerListener listener);
-    
+
 }

@@ -15,13 +15,16 @@
  *
  */
 
-/* $Id: World.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
-
 package org.apache.lenya.ac;
 
 import java.util.Collections;
 
+/**
+ * The world.
+ * @version $Id: World.java,v 1.4 2004/08/16 16:21:22 andreas Exp $
+ */
 public final class World implements Identifiable {
+    
     /**
      * Creates a new World object.
      */

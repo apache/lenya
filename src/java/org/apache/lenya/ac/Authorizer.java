@@ -15,15 +15,20 @@
  *
  */
 
-/* $Id: Authorizer.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
-
 package org.apache.lenya.ac;
 
 import org.apache.avalon.framework.component.Component;
 import org.apache.cocoon.environment.Request;
 
+/**
+ * An Authorizer checks if an Identity is authorized to invoke a certain request.
+ * @version $Id: Authorizer.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ */
 public interface Authorizer extends Component {
     
+    /**
+     * The Avalon role.
+     */
     String ROLE = Authorizer.class.getName();
 
     /**

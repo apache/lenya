@@ -15,14 +15,19 @@
  *
  */
 
-/* $Id: PolicyManager.java,v 1.3 2004/04/28 12:47:00 andreas Exp $  */
-
 package org.apache.lenya.ac;
 
 import org.apache.avalon.framework.component.Component;
 
+/**
+ * A policy manager.
+ * @version $Id: PolicyManager.java,v 1.4 2004/08/16 16:21:21 andreas Exp $
+ */
 public interface PolicyManager extends Component {
 
+    /**
+     * The Avalon role.
+     */
     String ROLE = PolicyManager.class.getName();
 
     /**

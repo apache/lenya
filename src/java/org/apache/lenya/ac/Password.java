@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Password.java,v 1.3 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id: Password.java,v 1.4 2004/08/16 16:21:22 andreas Exp $  */
 
 package org.apache.lenya.ac;
 
@@ -53,16 +53,16 @@ public class Password {
      * Encrypt plain text password
      *
      * @param plain plain text password
-     *
      * @return encrypted password
-     *
      */
     public static String encrypt(String plain) {
         return getMD5(plain);
     }
 
     /**
-     *
+     * Returns the MD5 representation of a string.
+     * @param plain The plain string.
+     * @return A string.
      */
     public static String getMD5(String plain) {
         MessageDigest md = null;
@@ -75,7 +75,9 @@ public class Password {
     }
 
     /**
-     *
+     * Converts a byte buffer to a string.
+     * @param buf The buffer.
+     * @return A string.
      */
     private static String stringify(byte[] buf) {
         StringBuffer sb = new StringBuffer(2 * buf.length);

@@ -15,10 +15,12 @@
  *
  */
 
-/* $Id: UserManager.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
-
 package org.apache.lenya.ac;
 
+/**
+ * User manager.
+ * @version $Id: UserManager.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ */
 public interface UserManager extends ItemManager {
     
     /**

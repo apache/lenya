@@ -15,10 +15,14 @@
  *
  */
 
-/* $Id: RoleManager.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id: RoleManager.java,v 1.3 2004/08/16 16:21:22 andreas Exp $  */
 
 package org.apache.lenya.ac;
 
+/**
+ * Role manager.
+ * @version $Id: RoleManager.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ */
 public interface RoleManager extends ItemManager {
     
     /**
