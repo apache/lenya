@@ -1,5 +1,5 @@
 /*
-$Id: ComputeArchivDocumentId.java,v 1.1 2003/07/25 16:40:33 edith Exp $
+$Id: ComputeArchiveDocumentId.java,v 1.1 2003/07/28 12:37:55 edith Exp $
 <License>
 
  ============================================================================
@@ -64,12 +64,12 @@ import java.util.StringTokenizer;
  * Used by ArchivDocument
  * @author edith
  */
-public class ComputeArchivDocumentId extends ComputeNewDocumentId {
+public class ComputeArchiveDocumentId extends ComputeNewDocumentId {
 
 	/**
-	 * Creates a new instance of ComputeRenameDocumentId
+	 * Creates a new instance of ComputeArchiveDocumentId
 	 */
-	public ComputeArchivDocumentId() {
+	public ComputeArchiveDocumentId() {
 		super();
 	}
 
