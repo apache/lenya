@@ -105,7 +105,9 @@
   
     
   <xsl:template match="menu" mode="nav">
-    <div style="float:left; width:1px"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="21" /></div>
+  	<xsl:if test="position() = 1">
+    <div style="float:left; width:1px; padding-top: 2px;"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="15" /></div>
+    </xsl:if>
     
     <div style="float:left; width:10px">&#160;</div>
     
@@ -114,7 +116,7 @@
     </div>
     
     <div style="float:left; width:46px">&#160;</div>
-    <div style="float:left; width:1px"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="21" /></div>
+    <div style="float:left; width:1px; padding-top: 2px;"><img src="/lenya/lenya/menu/images/grau.gif" width="1" height="15" /></div>
   </xsl:template>
   
   
