@@ -183,7 +183,7 @@
 		</tr>
 		<tr><td>&#160;</td></tr>
 		<tr>
-		  <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Deault Caption"/></td>
+		  <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
 		</tr>
 		<xsl:if test="$insertimage = 'true'">
 		  <tr>
