@@ -37,7 +37,7 @@
       </tr>
       
       <tr>
-        <td rowspan="2" valign="bottom" align="right" background="/lenya/lenya/menu/images/grau-bg.gif">
+        <td rowspan="2" valign="bottom" align="right" background="{$contextprefix}/lenya/menu/images/grau-bg.gif">
           <img src="{$image-prefix}/blau_anfang_oben.gif" />
         </td>
         <td background="{$image-prefix}/grau-bg2.gif" nowrap="nowrap">
@@ -106,7 +106,7 @@
       <tr valign="top">
         <td valign="top" colspan="3">
           <div id="navTop">
-            <div id="navTopBG">
+            <div id="navTopBG" style="background-image: url('{$contextprefix}/lenya/menu/images/menu-bg_2.gif');">
             	<div style="height: 100%; padding: 3px 0px;">
 						    <div style="float:left; width:12px; border-right: solid 1px #999999;">&#160;</div>
   	            <xsl:apply-templates select="menu:menus/menu:menu" mode="nav"/>&#160;
