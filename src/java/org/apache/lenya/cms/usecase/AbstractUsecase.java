@@ -352,6 +352,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
 
     private DocumentManager documentManager;
 
+    /**
+     * Retrieves a document manager, which allows the use cases to manipulate documents (move, copy, add documents to publications, ...)
+     *
+     * @return a DocumentManager, which is a service to manipulate documents
+     * @throws ServiceException if the document manager component can not be initialized by the component framework
+     */
     protected DocumentManager getDocumentManager() throws ServiceException {
         if (this.documentManager == null) {
            if (getLogger().isDebugEnabled())
