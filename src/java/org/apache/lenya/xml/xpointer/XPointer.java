@@ -67,9 +67,13 @@ import java.util.*;
  * @version 0.2.21
  */
 public interface XPointer {
+	
     /**
      * DOCUMENT ME!
-     *
+     * 
+     * @param node DOCUMENT ME!
+     * @param selectString DOCUMENT ME!
+     * 
      * @return DOCUMENT ME!
      *
      * @exception Exception ...
