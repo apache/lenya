@@ -16,6 +16,7 @@
   <tab label="Project Information" dir="project"/>
   <tab label="Installation" dir="installation"/>
   <tab label="Documentation" dir="docs"/>
+  <tab label="Community" dir="community"/>
   <!--
   <tab label="How-To's" dir="howtos"/>
   <tab label="Concepts" dir="concepts"/>

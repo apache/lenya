@@ -6,9 +6,7 @@
   <project-information href="project/" label="Project Information">
     <node-a href="http://demo.wyona.org" label="Demo" />
     <node-d href="roadmap.html" label="Roadmap" />
-    <node-e href="mailing-lists.html" label="Mailing Lists" />
-    <node-f href="http://cvs.wyona.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
-    <node-g href="http://cvs.wyona.org/bugs/" label="Bug Tracker" />
+    <node-e href="../community/mailing-lists.html" label="Mailing Lists" />
     <node-h href="acknowledgements.html" label="Credits" />
     <node-i href="license.html" label="License" />
     <node-i href="related-projects.html" label="Related Projects" />
@@ -24,14 +22,16 @@
       <node-5 href="source_version.html" label="Source Version"/>
     </install>
   </installation>
-  <node-c href="docs/" label="Documentation">
-    <node-24 href="concepts/" label="Concepts and Best Practises">
-      <node-33 href="siteTree.html" label="Site tree"/>
-      <node-36 href="pageEnvelope.html" label="Page envelope"/>
+  
+  <documentation href="docs/" label="Documentation">
+    <concepts href="concepts/" label="Concepts and Best Practises">
+      <sitetree href="siteTree.html" label="Site tree"/>
+<!--    
+      <page-envelope href="pageEnvelope.html" label="Page envelope"/>
       <navigation href="navigation.html" label="Navigation"/>
-      <standardURI href="standardURI.html" label="URI Scheme"/>
+      <standard-uri href="standardURI.html" label="URI Scheme"/>
       <xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
-      <node-381 href="static-resources.html" label="Serving static resources"/>
+      <static-resources href="static-resources.html" label="Serving static resources"/>
       <node-40 href="tasks/" label="Tasks">
         <node-41 href="concept.html" label="The Task Concept"/>
         <node-42 href="defining.html" label="Defining Tasks"/>
@@ -45,10 +45,21 @@
         </node-45>
         <node-50 href="development.html" label="Developing Tasks"/>
       </node-40>
-    </node-24>
+      -->
+    </concepts>
+    <!--
     <node-94 href="proposals/" label="Proposals / Requests for Comment (RFC)">
-      <siteTree href="siteTree.html" label="Site tree"/>
+      <sitetree-proposal href="siteTree.html" label="Site tree"/>
     </node-94>
-  </node-c>
+    -->
+  </documentation>
+  
+  <community href="community/" label="Community">
+    <node-f href="http://cvs.wyona.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
+    <node-g href="http://cvs.wyona.org/bugs/" label="Bug Tracker" />
+    <node-e href="mailing-lists.html" label="Mailing Lists" />
+    <irc href="irc.html" label="IRC"/>
+    <meetings href="meetings.html" label="Meetings and Sprints"/>
+  </community>
 
 </site>
