@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.41 2003/12/09 14:34:31 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.42 2003/12/20 23:45:58 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -52,6 +52,15 @@
     </map:pipeline>
 
     <!-- Entries -->
+    <map:pipeline>
+      <map:match type="step" pattern="view-revision">
+        <map:generate type="serverpages" src="../../content/rc/view.xsp"/>
+        <map:transform src="xslt/entry/main-live.xsl">
+          <map:parameter name="relative2root" value="../../../../.."/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/index.xml">
         <map:aggregate element="feed">
