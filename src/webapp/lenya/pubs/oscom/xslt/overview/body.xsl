@@ -25,8 +25,7 @@ Please contact them directly in case the data might be outdated.
 
 <p>
 If you want your CMS/F project being added to the list below, please send an email to
-<a href="mailto:michael.wechner@oscom.org?subject=OSCOM CMS Matrix">Michael Wechner</a>
-or subscribe to the <a href="http://lists.oscom.org/mailman/listinfo.cgi/softwareml">SoftwareML</a> mailing list.
+<a href="mailto:michael.wechner@oscom.org?subject=OSCOM CMS Matrix">Michael Wechner</a>.
 For all other inquiries please use OSCOM's <a href="/Mailing%20lists/">mailing lists</a>.
 </p>
 </font>
