@@ -1,5 +1,5 @@
 /*
-$Id: URIParametrizerAction.java,v 1.18 2004/02/02 02:50:37 stefano Exp $
+$Id: URIParametrizerAction.java,v 1.19 2004/02/17 10:13:57 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,7 @@ package org.apache.lenya.cms.cocoon.acting;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.ConfigurableComposerAction;
+import org.apache.cocoon.acting.ConfigurableServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -66,24 +66,18 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
 
 /**
- * DOCUMENT ME!
+ * Action to access the URI parameterizer.
+ * The map returned by this action is the map returned by the
+ * {@link org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer}.
+ * The <code>src</code> attribute is the URI to parameterize.
  *
- * @author $Author: stefano $
- * @version $Revision: 1.18 $
+ * @author $Author: andreas $
+ * @version $Revision: 1.19 $
  */
-public class URIParametrizerAction extends ConfigurableComposerAction {
+public class URIParametrizerAction extends ConfigurableServiceableAction {
+
     /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(
         Redirector redirector,
