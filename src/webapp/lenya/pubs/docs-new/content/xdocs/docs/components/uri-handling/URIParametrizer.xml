@@ -17,7 +17,7 @@
       <title>Motivation</title>
 
       <p>The problem of <link
-      href="site:siteTree">determining the doctype</link>
+      href="../publication/sitetree.html">determining the doctype</link>
       independent of request URI needs a flexible and yet simple
       solution. This is where the URI Parametrizer comes to the
       rescue.</p>
@@ -120,7 +120,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</source>
 	<p>A more serious example could possibly include matchers
 	using the SourceTypeAction from the Forrest Project or a
 	HashMapAction as outlined in the <link
-	href="site:siteTree">SiteTree proposal</link>.</p>
+	href="../publication/sitetree.html">SiteTree proposal</link>.</p>
 
 	<p>After a match has been found the pipeline in the parameter
 	sitemap returns an XML snippet in the following form:</p>
@@ -139,7 +139,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</source>
 
       <p>The fact that the actual determination is delegated back to
       the sitemap allows for a combination of the <link
-      href="site:siteTree">original proposals</link> where
+      href="../publication/sitetree.html">original proposals</link> where
       solutions such as Hashmap and SourceTypeAction were
       outlined.</p>
     </section>
