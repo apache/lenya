@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractPublication.java,v 1.20 2004/05/21 12:26:05 andreas Exp $  */
+/* $Id: AbstractPublication.java,v 1.21 2004/07/22 13:44:16 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
@@ -35,34 +36,42 @@ import org.apache.log4j.Category;
 public abstract class AbstractPublication implements Publication {
     private static Category log = Category.getInstance(AbstractPublication.class);
 
-    private static final String[] areas =
-        {
-            AUTHORING_AREA,
-            STAGING_AREA,
-            LIVE_AREA,
-            ADMIN_AREA,
-            ARCHIVE_AREA,
-            TRASH_AREA,
-            INFO_AREA_PREFIX + AUTHORING_AREA,
-            INFO_AREA_PREFIX + STAGING_AREA,
-            INFO_AREA_PREFIX + LIVE_AREA,
-            INFO_AREA_PREFIX + ARCHIVE_AREA,
-            INFO_AREA_PREFIX + TRASH_AREA
-        };
+    private static final String[] areas = { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
+            ARCHIVE_AREA, TRASH_AREA, INFO_AREA_PREFIX + AUTHORING_AREA,
+            INFO_AREA_PREFIX + STAGING_AREA, INFO_AREA_PREFIX + LIVE_AREA,
+            INFO_AREA_PREFIX + ARCHIVE_AREA, INFO_AREA_PREFIX + TRASH_AREA };
 
     private String id;
+
     private PublishingEnvironment environment;
+
     private File servletContext;
+
     private DocumentIdToPathMapper mapper = null;
+
     private ArrayList languages = new ArrayList();
+
     private String defaultLanguage = null;
+
     private String breadcrumbprefix = null;
+
     private String sslprefix = null;
+
     private String livemountpoint = null;
+
     private HashMap siteTrees = new HashMap();
+
     private boolean hasSitetree = true;
 
-    /** 
+    private static final String ELEMENT_PROXY = "proxy";
+
+    private static final String ATTRIBUTE_AREA = "area";
+
+    private static final String ATTRIBUTE_URL = "url";
+
+    private static final String ATTRIBUTE_SSL = "ssl";
+
+    /**
      * Creates a new instance of Publication
      * 
      * @param id the publication id
@@ -70,8 +79,7 @@ public abstract class AbstractPublication implements Publication {
      * 
      * @throws PublicationException if there was a problem reading the config file
      */
-    protected AbstractPublication(String id, String servletContextPath)
-        throws PublicationException {
+    protected AbstractPublication(String id, String servletContextPath) throws PublicationException {
         assert id != null;
         this.id = id;
 
@@ -100,23 +108,21 @@ public abstract class AbstractPublication implements Publication {
                 Class pathMapperClass = Class.forName(pathMapperClassName);
                 this.mapper = (DocumentIdToPathMapper) pathMapperClass.newInstance();
             } catch (ClassNotFoundException e) {
-                throw new PublicationException(
-                    "Cannot instantiate documentToPathMapper: [" + pathMapperClassName + "]",
-                    e);
+                throw new PublicationException("Cannot instantiate documentToPathMapper: ["
+                        + pathMapperClassName + "]", e);
             }
 
             try {
-                Configuration documentBuilderConfiguration =
-                    config.getChild(ELEMENT_DOCUMENT_BUILDER, false);
+                Configuration documentBuilderConfiguration = config.getChild(
+                        ELEMENT_DOCUMENT_BUILDER, false);
                 if (documentBuilderConfiguration != null) {
                     documentBuilderClassName = documentBuilderConfiguration.getValue();
                     Class documentBuilderClass = Class.forName(documentBuilderClassName);
                     this.documentBuilder = (DocumentBuilder) documentBuilderClass.newInstance();
                 }
             } catch (ClassNotFoundException e) {
-                throw new PublicationException(
-                    "Cannot instantiate document builder: [" + pathMapperClassName + "]",
-                    e);
+                throw new PublicationException("Cannot instantiate document builder: ["
+                        + pathMapperClassName + "]", e);
             }
 
             Configuration[] languages = config.getChild(LANGUAGES).getChildren();
@@ -129,8 +135,8 @@ public abstract class AbstractPublication implements Publication {
                 }
             }
 
-            Configuration siteStructureConfiguration =
-                config.getChild(ELEMENT_SITE_STRUCTURE, false);
+            Configuration siteStructureConfiguration = config.getChild(ELEMENT_SITE_STRUCTURE,
+                    false);
             if (siteStructureConfiguration != null) {
                 String siteStructureType = siteStructureConfiguration.getAttribute(ATTRIBUTE_TYPE);
                 if (!siteStructureType.equals("sitetree")) {
@@ -138,13 +144,29 @@ public abstract class AbstractPublication implements Publication {
                 }
             }
 
+            Configuration[] proxyConfigs = config.getChildren(ELEMENT_PROXY);
+            for (int i = 0; i < proxyConfigs.length; i++) {
+                String url = proxyConfigs[i].getAttribute(ATTRIBUTE_URL);
+                String ssl = proxyConfigs[i].getAttribute(ATTRIBUTE_SSL);
+                String area = proxyConfigs[i].getAttribute(ATTRIBUTE_AREA);
+
+                Proxy proxy = new Proxy();
+                proxy.setUrl(url);
+
+                Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
+                this.areaSsl2proxy.put(key, proxy);
+                if (log.isDebugEnabled()) {
+                    log.debug("Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
+                            + "]");
+                }
+            }
+
         } catch (PublicationException e) {
             throw e;
         } catch (Exception e) {
             log.error(e);
-            throw new PublicationException(
-                "Problem with config file: " + configFile.getAbsolutePath(),
-                e);
+            throw new PublicationException("Problem with config file: "
+                    + configFile.getAbsolutePath(), e);
         }
 
         breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
@@ -165,7 +187,7 @@ public abstract class AbstractPublication implements Publication {
 
     /**
      * Returns the publishing environment of this publication.
-     * @return A {@link PublishingEnvironment} object.
+     * @return A {@link PublishingEnvironment}object.
      * @deprecated It is planned to decouple the environments from the publication.
      */
     public PublishingEnvironment getEnvironment() {
@@ -173,8 +195,8 @@ public abstract class AbstractPublication implements Publication {
     }
 
     /**
-     * Returns the servlet context this publication belongs to
-     * (usually, the <code>webapps/lenya</code> directory).
+     * Returns the servlet context this publication belongs to (usually, the
+     * <code>webapps/lenya</code> directory).
      * @return A <code>File</code> object.
      */
     public File getServletContext() {
@@ -194,7 +216,7 @@ public abstract class AbstractPublication implements Publication {
      * 
      * @param area a <code>File</code> representing the root of the area content directory.
      * 
-     * @return the directory of the given content area. 
+     * @return the directory of the given content area.
      */
     public File getContentDirectory(String area) {
         return new File(getDirectory(), CONTENT_PATH + File.separator + area);
@@ -202,7 +224,7 @@ public abstract class AbstractPublication implements Publication {
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param mapper DOCUMENT ME!
      */
     public void setPathMapper(DefaultDocumentIdToPathMapper mapper) {
@@ -256,7 +278,8 @@ public abstract class AbstractPublication implements Publication {
     }
 
     /**
-     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger site
+     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger
+     * site
      * 
      * @return the breadcrumb prefix
      */
@@ -266,8 +289,8 @@ public abstract class AbstractPublication implements Publication {
 
     /**
      * Get the SSL prefix. If you want to serve SSL-protected pages through a special site, use this
-     * prefix. This can come in handy if you have multiple sites that need SSL protection and you want
-     * to share one SSL certificate. 
+     * prefix. This can come in handy if you have multiple sites that need SSL protection and you
+     * want to share one SSL certificate.
      * 
      * @return the SSL prefix
      */
@@ -276,11 +299,11 @@ public abstract class AbstractPublication implements Publication {
     }
 
     /**
-     * Get the Live mount point. The live mount point is used to rewrite links that are of the form 
+     * Get the Live mount point. The live mount point is used to rewrite links that are of the form
      * /contextprefix/publication/area/documentid to /livemountpoint/documentid
      * 
-     * This is useful if you serve your live area through mod_proxy. to enable this functionality, set
-     * the Live mount point to / or something else. An empty mount point disables the feature.
+     * This is useful if you serve your live area through mod_proxy. to enable this functionality,
+     * set the Live mount point to / or something else. An empty mount point disables the feature.
      * 
      * @return the Live mount point
      */
@@ -289,13 +312,13 @@ public abstract class AbstractPublication implements Publication {
     }
 
     /**
-     * Get the sitetree for a specific area of this publication. 
-     * Sitetrees are created on demand and are cached.
+     * Get the sitetree for a specific area of this publication. Sitetrees are created on demand and
+     * are cached.
      * 
      * @param area the area
      * @return the sitetree for the specified area
      * 
-     * @throws SiteTreeException if an error occurs 
+     * @throws SiteTreeException if an error occurs
      */
     public DefaultSiteTree getSiteTree(String area) throws SiteTreeException {
 
@@ -321,7 +344,8 @@ public abstract class AbstractPublication implements Publication {
     public DocumentBuilder getDocumentBuilder() {
 
         if (documentBuilder == null) {
-            throw new IllegalStateException("The document builder was not defined in publication.xconf!");
+            throw new IllegalStateException(
+                    "The document builder was not defined in publication.xconf!");
         }
 
         return documentBuilder;
@@ -336,8 +360,8 @@ public abstract class AbstractPublication implements Publication {
      */
     public Document getAreaVersion(Document document, String area) throws PublicationException {
         DocumentBuilder builder = getDocumentBuilder();
-        String url =
-            builder.buildCanonicalUrl(this, area, document.getId(), document.getLanguage());
+        String url = builder
+                .buildCanonicalUrl(this, area, document.getId(), document.getLanguage());
         Document destinationDocument = builder.buildDocument(this, url);
         return destinationDocument;
     }
@@ -350,8 +374,7 @@ public abstract class AbstractPublication implements Publication {
 
         if (getClass().isInstance(object)) {
             Publication publication = (Publication) object;
-            equals =
-                getId().equals(publication.getId())
+            equals = getId().equals(publication.getId())
                     && getServletContext().equals(publication.getServletContext());
         }
 
@@ -369,10 +392,11 @@ public abstract class AbstractPublication implements Publication {
     /**
      * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
      * to implement access to a custom repository.
-     * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.Publication#copyDocument(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.cms.publication.Document)
      */
     public void copyDocument(Document sourceDocument, Document destinationDocument)
-        throws PublicationException {
+            throws PublicationException {
 
         copyDocumentSource(sourceDocument, destinationDocument);
 
@@ -386,7 +410,7 @@ public abstract class AbstractPublication implements Publication {
      * @throws PublicationException when something went wrong.
      */
     protected void copySiteStructure(Document sourceDocument, Document destinationDocument)
-        throws PublicationException {
+            throws PublicationException {
         if (hasSitetree) {
             try {
                 SiteTree sourceTree = getSiteTree(sourceDocument.getArea());
@@ -394,10 +418,8 @@ public abstract class AbstractPublication implements Publication {
 
                 SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
                 if (sourceNode == null) {
-                    throw new PublicationException(
-                        "The node for source document ["
-                            + sourceDocument.getId()
-                            + "] doesn't exist!");
+                    throw new PublicationException("The node for source document ["
+                            + sourceDocument.getId() + "] doesn't exist!");
                 } else {
 
                     SiteTreeNode[] siblings = sourceNode.getNextSiblings();
@@ -421,32 +443,23 @@ public abstract class AbstractPublication implements Publication {
                     if (label == null) {
                         // the node that we're trying to publish
                         // doesn't have this language
-                        throw new PublicationException(
-                            "The node "
-                                + sourceDocument.getId()
+                        throw new PublicationException("The node " + sourceDocument.getId()
                                 + " doesn't contain a label for language "
                                 + sourceDocument.getLanguage());
                     } else {
-                        SiteTreeNode destinationNode =
-                            destinationTree.getNode(destinationDocument.getId());
+                        SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument
+                                .getId());
                         if (destinationNode == null) {
                             Label[] labels = { label };
 
                             if (siblingDocId == null) {
-                                destinationTree.addNode(
-                                    destinationDocument.getId(),
-                                    labels,
-                                    sourceNode.getHref(),
-                                    sourceNode.getSuffix(),
-                                    sourceNode.hasLink());
+                                destinationTree.addNode(destinationDocument.getId(), labels,
+                                        sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
+                                                .hasLink());
                             } else {
-                                destinationTree.addNode(
-                                    destinationDocument.getId(),
-                                    labels,
-                                    sourceNode.getHref(),
-                                    sourceNode.getSuffix(),
-                                    sourceNode.hasLink(),
-                                    siblingDocId);
+                                destinationTree.addNode(destinationDocument.getId(), labels,
+                                        sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
+                                                .hasLink(), siblingDocId);
                             }
 
                         } else {
@@ -471,10 +484,8 @@ public abstract class AbstractPublication implements Publication {
      * @param destinationDocument The destination document.
      * @throws PublicationException when something went wrong.
      */
-    protected abstract void copyDocumentSource(
-        Document sourceDocument,
-        Document destinationDocument)
-        throws PublicationException;
+    protected abstract void copyDocumentSource(Document sourceDocument, Document destinationDocument)
+            throws PublicationException;
 
     /**
      * @see org.apache.lenya.cms.publication.Publication#deleteDocument(org.apache.lenya.cms.publication.Document)
@@ -504,26 +515,20 @@ public abstract class AbstractPublication implements Publication {
             SiteTreeNode node = tree.getNode(document.getId());
 
             if (node == null) {
-                throw new PublicationException(
-                    "Sitetree node for document [" + document + "] does not exist!");
+                throw new PublicationException("Sitetree node for document [" + document
+                        + "] does not exist!");
             }
 
             Label label = node.getLabel(document.getLanguage());
 
             if (label == null) {
-                throw new PublicationException(
-                    "Sitetree label for document ["
-                        + document
-                        + "] in language ["
-                        + document.getLanguage()
-                        + "]does not exist!");
+                throw new PublicationException("Sitetree label for document [" + document
+                        + "] in language [" + document.getLanguage() + "]does not exist!");
             }
 
             if (node.getLabels().length == 1 && node.getChildren().length > 0) {
-                throw new PublicationException(
-                    "Cannot delete last language version of document ["
-                        + document
-                        + "] because this node has children.");
+                throw new PublicationException("Cannot delete last language version of document ["
+                        + document + "] because this node has children.");
             }
 
             node.removeLabel(label);
@@ -548,12 +553,42 @@ public abstract class AbstractPublication implements Publication {
     protected abstract void deleteDocumentSource(Document document) throws PublicationException;
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#moveDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.Publication#moveDocument(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.cms.publication.Document)
      */
     public void moveDocument(Document sourceDocument, Document destinationDocument)
-        throws PublicationException {
+            throws PublicationException {
         copyDocument(sourceDocument, destinationDocument);
         deleteDocument(sourceDocument);
+    }
+
+    private Map areaSsl2proxy = new HashMap();
+
+    /**
+     * Generates a hash key for a area-SSL combination.
+     * @param area The area.
+     * @param isSslProtected If the proxy is assigned for SSL-protected pages.
+     * @return An object.
+     */
+    protected Object getProxyKey(String area, boolean isSslProtected) {
+        return area + ":" + isSslProtected;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getProxy(org.apache.lenya.cms.publication.Document,
+     *      boolean)
+     */
+    public Proxy getProxy(Document document, boolean isSslProtected) {
+
+        Object key = getProxyKey(document.getArea(), isSslProtected);
+        Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
+
+        if (log.isDebugEnabled()) {
+            log.debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
+            log.debug("Resolved proxy: [" + proxy + "]");
+        }
+
+        return proxy;
     }
 
 }

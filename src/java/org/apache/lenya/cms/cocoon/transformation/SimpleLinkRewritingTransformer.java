@@ -71,6 +71,8 @@ import org.apache.log4j.Category;
  * 
  * Ideally this transformer could be replaced by the LinkRewrittingTransformer
  * that Forrest uses if we employ the same scheme for internal links.
+ * 
+ * @deprecated Use the {@link org.apache.lenya.cms.cocoon.transformation.LinkRewritingTransformer} instead.
  */
 public class SimpleLinkRewritingTransformer extends AbstractSAXTransformer
 implements Disposable {

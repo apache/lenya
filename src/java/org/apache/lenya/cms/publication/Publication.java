@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.50 2004/04/30 13:32:20 andreas Exp $  */
+/* $Id: Publication.java,v 1.51 2004/07/22 13:44:16 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -222,4 +222,13 @@ public interface Publication {
      */
     Document getAreaVersion(Document document, String area) throws PublicationException;
 
+    /**
+     * Returns the proxy which is used for a particular document. 
+     * @param document The document.
+     * @param isSslProtected A boolean value.
+     * @return A proxy or <code>null</code> if no proxy is defined
+     * for this version.
+     */
+    Proxy getProxy(Document document, boolean isSslProtected);
+    
 }
