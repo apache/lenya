@@ -69,8 +69,8 @@
       
       <!-- use publication-specific schema if available -->
       <map:select type="resource-exists">
-        <map:when test="lenya/pubs/{publication-id}/content/{serverpage}">
-          <map:generate src="pubs/{publication-id}/content/{serverpage}" type="serverpages"/>
+        <map:when test="lenya/pubs/{publication-id}/lenya/content/{serverpage}">
+          <map:generate src="pubs/{publication-id}/lenya/content/{serverpage}" type="serverpages"/>
         </map:when>
         <map:otherwise>
           <map:generate src="content/{serverpage}" type="serverpages"/>
