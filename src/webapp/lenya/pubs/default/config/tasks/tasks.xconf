@@ -18,4 +18,26 @@
     <parameter name="target" value="create"/>
   </task>
 
+  <task id="copyDocument" class="org.apache.lenya.cms.task.AntTask">
+    <label>CopyOfDocument</label>
+    <parameter name="target" value="copyDocument"/>
+  </task>
+
+  <task id="moveDocument" class="org.apache.lenya.cms.task.AntTask">
+    <label>MoveDocument</label>
+    <parameter name="target" value="moveDocument"/>
+  </task>
+
+  <task id="moveUpNode" class="org.apache.lenya.cms.task.MoveSiteTreeNodeTask">
+    <label>moveUpNode</label>
+    <parameter name="treePath" value="content/authoring/sitetree.xml"/>
+    <parameter name="org.apache.lenya.cms.info.direction" value="up"/>
+  </task>
+
+  <task id="moveDownNode" class="org.apache.lenya.cms.task.MoveSiteTreeNodeTask">
+    <label>moveDownNode</label>
+    <parameter name="treePath" value="content/authoring/sitetree.xml"/>
+    <parameter name="org.apache.lenya.cms.info.direction" value="down"/>
+  </task>
+
 </tasks>
