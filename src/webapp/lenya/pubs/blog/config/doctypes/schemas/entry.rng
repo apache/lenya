@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: entry.rng,v 1.9 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id: entry.rng,v 1.10 2004/04/26 14:59:02 michi Exp $ -->
 
 <grammar xmlns:echo="http://purl.org/atom/ns#" ns="http://www.w3.org/XML/1998/namespace" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
@@ -61,11 +61,11 @@
             <choice>
               <text/>
               <element>
-                <name ns="">b</name>
+                <name ns="">strong</name>
                 <text/>
               </element>
               <element>
-                <name ns="">i</name>
+                <name ns="">em</name>
                 <text/>
               </element>
               <element>
