@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: delete.xsl,v 1.7 2003/07/29 17:57:20 edith Exp $
+ $Id: delete.xsl,v 1.8 2003/08/19 13:22:25 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -58,7 +58,7 @@
   <xsl:param name="prefix" select="'task.'"/>
   <input type="hidden" name="{$prefix}properties.node.firstdocumentid" value="{$document-id}"/>
   <input type="hidden" name="{$prefix}properties.firstarea" value="{$area}"/>
-  <input type="hidden" name="{$prefix}properties.secarea" value="archive"/>
+  <input type="hidden" name="{$prefix}properties.secarea" value="trash"/>
 </xsl:template>
 
 </xsl:stylesheet>
