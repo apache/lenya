@@ -7,7 +7,7 @@
   <map:components>
     <map:generators default="file"/>
     <map:transformers default="xslt">
-      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer" logger="oscom.sitemap.transformer.xlink">
         <publication type="oscom"/>
       </map:transformer>
     </map:transformers>
@@ -17,6 +17,11 @@
     <map:actions>
       <map:action name="publisher" src="org.wyona.cms.cocoon.acting.TaskAction">
         <task id="publish"/>
+      </map:action>
+      <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction" logger="oscom.sitemap.action.creator">
+        <tree-authoring href="docs/publication/authoring/tree.xml"/>
+        <docs href="docs/publication/authoring"/>
+        <doctypes href="docs/publication/doctypes/"/>
       </map:action>
     </map:actions>
     <map:selectors default="browser">
@@ -247,6 +252,25 @@
     </map:match>
     <!-- /Project -->
   </map:pipeline>
+
+  <!-- Create New Editor Project -->
+  <map:pipeline>
+    <map:match pattern="authoring/editor-matrix/ParentChildScreenNewEditor*">
+      <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+<!--
+      <map:transform src="stylesheets/cms/Page/parent-child-new-article.xsl"/>
+-->
+      <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
+      <map:serialize type="html"/>
+    </map:match>
+    <map:match pattern="authoring/editor-matrix/create*">
+      <map:act type="parent-child">
+        <map:redirect-to uri="{parent_uri}" session="true"/>
+      </map:act>
+      <map:redirect-to uri="ParentChildScreenNewEditor?status=failed" session="true"/>
+    </map:match>
+  </map:pipeline>
+  <!-- /Create New Editor Project -->
 <!-- /Editor Matrix -->
 
 

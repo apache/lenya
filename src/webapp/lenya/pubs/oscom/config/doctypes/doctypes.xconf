@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
 <doctypes>
+<!--
 <doc type="Home">
   <children>
     <doc type="Generic"/>
@@ -9,11 +10,21 @@
     <task id="publish"/>
   </tasks>
 </doc>
+-->
 
+<!--
+<doc type="EditorProject">
+-->
+<doc type="generic">
+  <creator src="org.wyona.cms.authoring.DefaultCreator"/>
+</doc>
+
+<!--
 <doc type="Generic">
   <tasks>
     <task id="hello-world"/>
     <task id="publish"/>
   </tasks>
 </doc>
+-->
 </doctypes>

@@ -15,18 +15,7 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item>Edit&#160;with&#160;Xopus2</item>
-<!--
-        <item href="xopus2/weekly-column.html">Edit&#160;with&#160;Xopus2</item>
--->
-        <item>Edit&#160;with&#160;Bitflux</item>
-<!--
-        <item href="/wyona-cms/bitfluxeditor/weekly-column.html?url-xml=/wyona-cms/oscom/bitflux/home.xml&amp;url-xslt=/wyona-cms/oscom/bitflux/home.xsl&amp;url-xsd=/wyona-cms/oscom/bitflux/home.xsd&amp;url-css=/wyona-cms/oscom/bitflux/home.css&amp;url-post=/wyona-cms/oscom/bitflux/save/home">Edit&#160;with&#160;Bitflux</item>
--->
-        <item>Publish</item>
-<!--
-        <item href="wyona/publishScreen?docid=/wyona-cms/oscom/editor-matrix/index.html&amp;docids=/overview-body.xml">Publish</item>
--->
+        <item href="ParentChildScreenNewEditor?parentid=/editor-matrix">New&#160;Editor&#160;Project</item>
       </block>
       <separator>
         <item>-----------------</item>
@@ -34,10 +23,6 @@
       <block>
         <item>Passwd</item>
         <item>Switch&#160;User</item>
-<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
--->
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
       </block>
     </menu>
@@ -65,40 +50,7 @@
 
     <menu name="Debug" label="Debug">
       <block>
-        <item>View&#160;Page&#160;XML</item>
         <item href="index.xml">View&#160;Body&#160;XML</item>
-      </block>
-<!--
-      <block>
-        <item href="weekly-column-page.xml">View&#160;Page&#160;XML</item>
-        <item href="weekly-column-body.xml">View&#160;Body&#160;XML</item>
-      </block>
--->
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-        <item>View&#160;Xopus&#160;XSLT</item>
-        <item>View&#160;Xopus&#160;XSD</item>
-      </block>
-<!--
-      <block>
-        <item href="../xopus/weekly-column.xsl">View&#160;Xopus&#160;XSLT</item>
-        <item href="../xopus/weekly-column.xsd">View&#160;Xopus&#160;XSD</item>
-      </block>
--->
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-<!--
-        <item href="../bitflux/home.xsl">View&#160;Bitflux&#160;XSLT</item>
-        <item href="../bitflux/home.xsd">View&#160;Bitflux&#160;XSD</item>
-        <item href="../bitflux/home.css">View&#160;Bitflux&#160;CSS</item>
--->
-        <item>View&#160;Bitflux&#160;XSLT</item>
-        <item>View&#160;Bitflux&#160;XSD</item>
-        <item>View&#160;Bitflux&#160;CSS</item>
       </block>
     </menu>
   </menus>
