@@ -1,5 +1,5 @@
 /*
-$Id: AbstractAuthorizerAction.java,v 1.14 2003/07/23 13:21:30 gregor Exp $
+$Id: AbstractAuthorizerAction.java,v 1.15 2003/08/28 10:07:51 andreas Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.14 2003/07/23 13:21:30 gregor Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.15 2003/08/28 10:07:51 andreas Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
@@ -158,7 +158,7 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
         // Get request object
-        Request req = (Request) ObjectModelHelper.getRequest(objectModel);
+        Request req = ObjectModelHelper.getRequest(objectModel);
 
         if (req == null) {
             getLogger().error("No request object");
