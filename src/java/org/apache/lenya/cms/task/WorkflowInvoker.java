@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvoker.java,v 1.1 2003/08/25 15:40:55 andreas Exp $
+$Id: WorkflowInvoker.java,v 1.2 2003/09/19 19:21:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,6 +66,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowInstance;
@@ -91,18 +92,19 @@ public class WorkflowInvoker extends ParameterWrapper {
 
     /**
      * Ctor.
-     * @param parameters A map containing the prefixed parameters.
      * @param eventName The event name.
      * @param identity The identity.
      * @param roles The roles.
+     * @return A namespace map containing the parameters.
      */
-    public WorkflowInvoker(Map parameters, String eventName, Identity identity, Role[] roles) {
-        this(parameters);
-        log.debug("Creating workflow invoker.");
+    public static NamespaceMap extractParameters(String eventName, Identity identity, Role[] roles) {
+        NamespaceMap parameters = new NamespaceMap(PREFIX);
+        log.debug("Extractign workflow invoker parameters.");
         log.debug("    Event: [" + eventName + "]");
-        put(EVENT, eventName);
-        setRoles(roles);
-        setIdentity(identity);
+        parameters.put(EVENT, eventName);
+        setRoles(parameters, roles);
+        setIdentity(parameters, identity);
+        return parameters;
     }
 
     /**
@@ -125,9 +127,10 @@ public class WorkflowInvoker extends ParameterWrapper {
 
     /**
      * Sets the roles.
+     * @param parameters A workflow invoker namespace map.
      * @param roles A role array.
      */
-    public void setRoles(Role[] roles) {
+    public static void setRoles(NamespaceMap parameters, Role[] roles) {
 
         String roleString = "";
         for (int i = 0; i < roles.length; i++) {
@@ -136,28 +139,29 @@ public class WorkflowInvoker extends ParameterWrapper {
             }
             roleString += roles[i].getId();
         }
-        put(ROLES, roleString);
+        parameters.put(ROLES, roleString);
     }
 
     /**
      * Sets the identity.
+     * @param parameters A workflow invoker namespace map.
      * @param identity An identity.
      */
-    public void setIdentity(Identity identity) {
+    public static void setIdentity(NamespaceMap parameters, Identity identity) {
 
         String userId = "";
         User user = identity.getUser();
         if (user != null) {
             userId = user.getId();
         }
-        put(USER_ID, userId);
+        parameters.put(USER_ID, userId);
 
         String machineIp = "";
         Machine machine = identity.getMachine();
         if (machine != null) {
             machineIp = machine.getIp();
         }
-        put(MACHINE, machineIp);
+        parameters.put(MACHINE, machineIp);
     }
 
     /**
