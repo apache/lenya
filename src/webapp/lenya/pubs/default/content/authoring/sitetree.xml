@@ -19,33 +19,16 @@
     <label>Home</label>
   </node>
   
-  <node id="demo">
-    <label>Demo</label>
-    <node id="unipublic">
-      <label>Unipublic</label>
+  <node id="tutorial">
+    <label>Tutorial</label>
+    <node id="concepts">
+      <label>Concepts</label>
     </node>
-    <node id="news">
-      <label>Wyona News and Comments</label>
-    </node>
-    <node id="oscom">
-      <label>OSCOM</label>
+    <node id="features">
+      <label>Features</label>
     </node>
   </node>
   
-  <node id="download">
-    <label>Download</label>
-    <node id="source">
-      <label>Source Version</label>
-    </node>
-    <node id="binary">
-      <label>Binary Version</label>
-    </node>
-  </node>
-  
-  <node id="documentation">
-    <label>Documentation</label>
-  </node>
-
   <node id="simple-document">
     <label>Test</label>
   </node>
