@@ -27,6 +27,7 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * Ant task to insert a label into an existing node in a tree.
+ * @deprecated will be replaced during the 1.4 cycle by org.apache.lenya.cms.metadata.Metadata
  */
 public class WriteDCParametersTask extends PublicationTask {
     private String documentId = null;
