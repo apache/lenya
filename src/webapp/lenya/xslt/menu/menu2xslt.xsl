@@ -18,7 +18,6 @@
 <!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
-  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
@@ -27,7 +26,7 @@
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
 <xsl:param name="area"/>
-<xsl:param name="documentid"/>
+<xsl:param name="documenturl"/>
   
 <xsl:namespace-alias stylesheet-prefix="xso" result-prefix="xsl"/>
   
@@ -50,7 +49,8 @@
         <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
       </head>
       <body>
-        <xsl:apply-templates select="xhtml:div[@id = 'lenya-menubar']"/>
+        <xsl:apply-templates select="xhtml:div[@id = 'lenya-logo']"/>
+        <xsl:apply-templates select="xhtml:div[@id = 'lenya-menus']"/>
         <div id="lenya-cmsbody">
           <xso:apply-templates select="xhtml:html/xhtml:body/node()"/>
         </div>
@@ -59,19 +59,18 @@
     </html>
   </xso:template>
   
-  
   <xso:template name="title">
     <title>
-      Apache Lenya -
-      <xsl:value-of select="$publicationid"/> -
-      <xsl:value-of select="$area"/> -
-      <xsl:value-of select="$documentid"/> -
+      Apache Lenya |
+      <xsl:value-of select="$publicationid"/> |
+      <xsl:value-of select="$area"/> |
+      <xsl:value-of select="$documenturl"/> |
       <xso:value-of select="xhtml:html/xhtml:head/xhtml:title"/>
     </title>
   </xso:template>
   
   </xsl:if>
-
+    
     <xso:template match="xhtml:script">
         <xso:copy>
            <xso:apply-templates select="@*|node()"/>
@@ -79,6 +78,14 @@
         </xso:copy>
     </xso:template>
 
+  <xso:template match="xhtml:*">
+    <xso:element>
+      <xsl:attribute name="name">{local-name()}</xsl:attribute>
+      <xso:apply-templates select="@*|node()"/>
+    </xso:element>
+  </xso:template>
+  
+  
   <xso:template match="@*|node()">
     <xso:copy>
       <xso:apply-templates select="@*|node()"/>
