@@ -1,56 +1,91 @@
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+                xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="dossier">
   <html>
     <head>
-      <title>unipublic - Dossier</title>
-<!--
+      <title>unipublic - Dossier: <xsl:value-of select="title" /></title>
       <xsl:call-template name="styles"/>
       <xsl:call-template name="jscript"/>
--->
     </head>
 
     <body text="black" link="#333399" alink="#CC0000" vlink="#666666" bgcolor="#F5F5F5" background="{$img-unipub}/bg.gif">
-
+      <div align="center">
       <xsl:call-template name="Searchbox"/>
 
-RELATED CONTENT: <xsl:apply-templates select="related-content"/>
-MAIN: <xsl:apply-templates select="title"/>
-
-<!--
-        <center>
-          <table cellspacing="0" cellpadding="0" border="0" width="585">
-
-            <tr height="16">
-              <td height="16" width="187" align="center" valign="top">
-                <center><a href="../../../../"><img height="52" width="108" src="{$img-unipub}/t_unipublic_ALT.gif" alt="Unipublic" border="0"/></a></center>
-              </td>
-              <td height="16" align="right" width="10"></td>
-              <td width="388" height="16"></td>
-            </tr>
-
-            <xsl:call-template name="slider_image"/>
+          <table cellspacing="0" cellpadding="0" border="0" width="585" bordercolor="green">
 
             <tr>
-              <td valign="top" width="187">
+	      <!-- Start Left Column  -->
+              <td valign="top" align="right" width="187" rowspan="2">
+                <a href="../"><img height="28" alt="" src="{$img-unipub}/dossiers/doss_rub_title.gif" width="112" border="0"/></a>
 
-RELATED CONTENT: <xsl:apply-templates select="related-content"/>
-                <xsl:apply-templates select="NewsItem/NewsComponent/ContentItem/DataContent/related-content"/>
+                <xsl:apply-templates select="related-content"/>
 
               </td>
-MAIN: <xsl:apply-templates select="title"/>
-              <xsl:apply-templates select="NewsItem/NewsComponent/ContentItem/DataContent/nitf"/>
+	      <!-- End Left Column   -->
+
+ 	      <!-- Draws Dossier title and teaser image  -->
+              <xsl:call-template name="dossier_head"/>
+
            </tr>
 
-           <xsl:apply-templates select="NewsItem/NewsComponent/NewsLines" mode="Article_copyright"/>
+	   <!-- Lead -->
+           <tr>
+             <td valign="top" width="10" bgcolor="white">&#160;</td>
+             <td valign="top" width="388" bgcolor="white" class="tsr-text">
+               <p class="art-lead">
+               <br/>
+                <xsl:value-of select="lead" />
+               </p>
 
+	       <xsl:apply-templates select="articles" />
+
+             </td>
+          </tr>
+
+           <!-- Footer -->
+	   <tr>
+             <td width="187"></td>
+             <td width="5" bgcolor="white"></td>
+	     <td width="393" bgcolor="white">
+               <xsl:call-template name="footer">
+                 <xsl:with-param name="footer_date"></xsl:with-param>
+               </xsl:call-template>
+             </td>
+           </tr>
          </table>
-       </center>
--->
+       </div>
      </body>
   </html>
 </xsl:template>
 
+
+
+<!-- Draws Dossier title and teaser image  -->
+<xsl:template name="dossier_head">
+ <td valign="top" width="398" bgcolor="#9DC0D0" colspan="2">
+              <table cellspacing="0" cellpadding="0" width="398" bgcolor="#9DC0D0" border="0" bordercolor="blue">
+                <tbody>
+                  <tr height="28">
+                    <td align="left" width="402" colspan="2" height="28">&#160;&#160;&#160;&#160;&#160;
+	              <a href="../"><img height="5" alt="Alle Dossiers" src="{$img-unipub}/dossiers/doss_nav_list.gif" width="94" border="0"/></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="left" width="90">
+                      <img height="60" alt="" src="{teaser/image/@href}" width="80" border="0"/>
+                    </td>
+                    <td class="dos-title1" valign="top" width="308">Dossier:<br/>
+                    <xsl:value-of select="title" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+</xsl:template>          
+
 </xsl:stylesheet>
+
