@@ -287,17 +287,35 @@
         <td>Publish this document</td>
       </tr>
       <tr>
-        <td>Resource upload</td>
-        <td>upload</td>
+        <td>Asset upload</td>
+        <td>aset</td>
         <td>showscreen</td>
         <td>Show a form allowing to specify the parameters for
-          uploading of a resource</td>
+          uploading of an asset</td>
       </tr>
       <tr>
         <td></td>
         <td></td>
         <td>upload</td>
-        <td>Upload the resource</td>
+        <td>Upload the asset</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>insert</td>
+        <td>Insert an already uploaded asset</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>upload-and-insert</td>
+        <td>Upload and insert an asset</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>remove</td>
+        <td>Remove a previously uploaded asset</td>
       </tr>
        <tr>
         <td>Rename</td>

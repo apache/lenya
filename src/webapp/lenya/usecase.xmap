@@ -511,32 +511,7 @@
         <!-- ************************************************************** -->
 
 
-
-
-
-
-        <!-- This matcher is very specific for unipublic and should -->
-        <!-- probably go away -->
-        <map:match pattern="upload" type="usecase">
-
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/authoring/asset.xsp" type="serverpages"/>
-            <map:transform src="xslt/authoring/upload-content.xsl"/>
-            <map:call resource="style-cms-page"/>
-           </map:match>
-
-          <map:match type="step" pattern="upload">
-            <map:act type="upload">
-              <map:redirect-to uri="{request:requestURI}"/>
-            </map:act>
-            <map:generate type="serverpages" src="content/authoring/asset.xsp"/>
-            <map:transform src="xslt/authoring/upload-content.xsl"/>
-            <map:serialize/>
-          </map:match>
-        </map:match>
-
-        <!-- This is the generic asset upload matcher and should be -->
-        <!-- used for all publiations --> 
+        <!-- This is the generic asset upload matcher -->
         <map:match pattern="asset" type="usecase">
 
           <map:match pattern="showscreen" type="step">

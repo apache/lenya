@@ -52,7 +52,7 @@
     <xsl:apply-templates/>
   </xsl:element>
     <!-- FIXME: uncomment the following to get image upload red dots between paragraphs -->
-<!--   <a href="?lenya.usecase=upload&amp;lenya.step=showscreen&amp;xpath=/simple-document/body/p[{count(preceding-sibling::simple:p)+1}]"> -->
+<!--   <a href="?lenya.usecase=asset&amp;lenya.step=showscreen&amp;xpath=/simple-document/body/p[{count(preceding-sibling::simple:p)+1}]"> -->
 <!--     <img src="/lenya/lenya/images/util/reddot.gif" alt="Upload Image" border="0"/> -->
 <!--   </a> -->
 </xsl:template>
