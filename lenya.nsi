@@ -25,6 +25,7 @@
 ;Configuration
 
   ;General
+  Var product_name
   Name "Apache Lenya 1.2.1"
   OutFile "apache-lenya-1.2.1-bin.exe"
   
@@ -33,7 +34,7 @@
   SetDatablockOptimize on
 
   ;Folder selection page
-  InstallDir "C:\apache-lenya"
+  InstallDir "C:\apache-lenya-1.2.1"
   
 ;--------------------------------
 ;Interface Settings
@@ -59,10 +60,10 @@
 ;--------------------------------
 ;Installer Sections
 
-Section "Apache Lenya" SecDummy
+Section "Apache Lenya 1.2.1" SecDummy
 
   Call findJavaPath
-  
+  StrCpy $product_name "Apache Lenya 1.2.1"
   SetOutPath $INSTDIR
   
   SetOutPath $INSTDIR\build\lenya\webapp
@@ -87,20 +88,20 @@ Section "Apache Lenya" SecDummy
   File /r tools
   File /r legal
 
-  CreateDirectory "$SMPROGRAMS\$Name"
-  CreateShortCut "$SMPROGRAMS\$Name\Apache Lenya Home Page.lnk" \
+  CreateDirectory "$SMPROGRAMS\$product_name"
+  CreateShortCut "$SMPROGRAMS\$product_name\Lenya Home Page.lnk" \
                  "http://cocoon.apache.org/lenya/"
 
-  CreateShortCut "$SMPROGRAMS\$Name\Welcome.lnk" \
+  CreateShortCut "$SMPROGRAMS\$product_name\Welcome.lnk" \
                  "http://127.0.0.1:8888"
 
-  CreateShortCut "$SMPROGRAMS\$Name\Lenya Documentation.lnk" \
+  CreateShortCut "$SMPROGRAMS\$product_name\Apache Lenya Documentation.lnk" \
                  "http://127.0.0.1:8888/docs-new/docs/index.html"
 
-  CreateShortCut "$SMPROGRAMS\$Name\Uninstall $Name.lnk" \
+  CreateShortCut "$SMPROGRAMS\$product_name\Uninstall Apache Lenya.lnk" \
                  "$INSTDIR\Uninstall.exe"
 
-  CreateShortCut "$SMPROGRAMS\$Name\Start Lenya.lnk" \
+  CreateShortCut "$SMPROGRAMS\$product_name\Start Apache Lenya.lnk" \
                  "$INSTDIR\lenya.bat" \
                  'servlet' \
                  "$INSTDIR\lenya.bat" 1 SW_SHOWNORMAL
@@ -127,8 +128,7 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-
-  RMDir /r "$SMPROGRAMS\$Name"
+  RMDir /r "$SMPROGRAMS\Apache Lenya 1.2.1"
   RMDir /r "$INSTDIR"
 
 SectionEnd
