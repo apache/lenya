@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.4 2002/01/15 22:34:55 giacomo Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.5 2002/01/16 16:32:12 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -19,6 +19,8 @@
 
    <map:generator name="serverpages"    logger="sitemap.generator.serverpages"    label="content,data"
                   src="org.apache.cocoon.generation.ServerPagesGenerator"/>
+
+   <map:generator  name="request"     src="org.apache.cocoon.generation.RequestGenerator"/>
 
   </map:generators>
 
