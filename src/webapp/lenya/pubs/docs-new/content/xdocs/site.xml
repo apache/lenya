@@ -44,7 +44,7 @@
       <node-35 label="URI space"/>
       <node-36 href="pageEnvelope.html" label="Page envelope"/>
       <node-37 href="navigation.html" label="Navigation"/>
-      <node-38 label="XHTML templating"/>
+      <node-38 href="xhtml-templating.html" label="XHTML templating"/>
       <node-39 label="Metadata"/>
       <node-40 href="tasks/" label="Tasks">
         <node-41 href="concept.html" label="The Task Concept"/>
@@ -106,7 +106,9 @@
         <node-86 label="Default menus"/>
         <node-87 label="Customizing the menus"/>
       </node-85>
-      <node-88 label="Navigation"/>
+      <node-88 label="Navigation">
+	<uriParametrizer label="URI Parametrizer Action" href="URIParametrizer.html"/>
+      </node-88>
       <node-89 label="Search Engine (Lucene)"/>
     </node-51>
     <node-90 href="administration/" label="Deployment and Administration">
@@ -114,7 +116,9 @@
       <node-92 label="Performance"/>
       <node-93 label="Testing"/>
     </node-90>
-    <node-94 href="proposals/" label="Proposals / Requests for Comment (RFC)"/>
+    <node-94 href="proposals/" label="Proposals / Requests for Comment (RFC)">
+      <siteTree href="siteTree.html" label="Site tree"/>
+    </node-94>
     <node-95 href="related/" label="Related Topics">
       <node-96 label="Application Integration"/>
       <node-97 label="Interesting editors"/>
