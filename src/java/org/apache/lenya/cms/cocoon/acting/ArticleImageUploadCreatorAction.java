@@ -37,6 +37,7 @@ public class ArticleImageUploadCreatorAction
     final String UPLOADFILE_PARAM_NAME = "uploadFile";
     final String IMAGEXPATH_PARAM_NAME = "xpath";
     final String DOCUMENTID_PARAM_NAME = "documentid";
+    final String REFERER_PARAM_NAME    = "referer";
 
     // optional parameters for meta data according to dublin core
     final String[] DUBLIN_CORE_PARAMETERS
@@ -104,6 +105,12 @@ public class ArticleImageUploadCreatorAction
 	getLogger().debug("request: " + request);
 	getLogger().debug("context: " + context);
 	getLogger().debug("properties: " + properties);
+
+	// pass the referer back to the sitemap so that it can do a
+	// redirect back to it.
+	String referer = request.getParameter(REFERER_PARAM_NAME);
+	results.put(REFERER_PARAM_NAME, referer);
+	getLogger().debug(REFERER_PARAM_NAME + ": " + referer);
 
 	String imageXPath = request.getParameter(IMAGEXPATH_PARAM_NAME);
 	String requestingDocumentName = sitemapPath +
