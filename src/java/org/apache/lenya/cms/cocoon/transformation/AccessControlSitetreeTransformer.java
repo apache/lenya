@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlSitetreeTransformer.java,v 1.2 2003/11/13 16:09:53 andreas Exp $
+$Id: AccessControlSitetreeTransformer.java,v 1.3 2004/02/17 14:06:25 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,6 +61,7 @@ import java.util.Map;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -91,7 +92,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * with a <code>protected="true"</code> attribute.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.2 2003/11/13 16:09:53 andreas Exp $
+ * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.3 2004/02/17 14:06:25 andreas Exp $
  */
 public class AccessControlSitetreeTransformer
     extends AbstractSAXTransformer
@@ -102,7 +103,8 @@ public class AccessControlSitetreeTransformer
     public static final String PARAMETER_AREA = "area";
 
     private String documentId;
-    private ComponentSelector selector;
+    private ComponentSelector componentSelector;
+    private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
     private AccessControllerResolver acResolver;
     private AccreditableManager accreditableManager;
@@ -116,7 +118,8 @@ public class AccessControlSitetreeTransformer
         throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, par);
 
-        selector = null;
+        componentSelector = null;
+        serviceSelector = null;
         acResolver = null;
         policyManager = null;
 
@@ -137,11 +140,21 @@ public class AccessControlSitetreeTransformer
 
             Request request = ObjectModelHelper.getRequest(objectModel);
 
-            selector =
-                (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            acResolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            Object selector = manager.lookup(AccessControllerResolver.ROLE + "Selector");
+
+            if (selector instanceof ComponentSelector) {
+                componentSelector = (ComponentSelector) selector;
+                acResolver =
+                    (AccessControllerResolver) componentSelector.select(
+                        AccessControllerResolver.DEFAULT_RESOLVER);
+            }
+            if (selector instanceof ServiceSelector) {
+                serviceSelector = (ServiceSelector) selector;
+                acResolver =
+                    (AccessControllerResolver) serviceSelector.select(
+                        AccessControllerResolver.DEFAULT_RESOLVER);
+            }
+
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Resolved AC resolver [" + acResolver + "]");
             }
@@ -177,14 +190,20 @@ public class AccessControlSitetreeTransformer
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
-        //      if (getLogger().isDebugEnabled()) {
-        getLogger().debug("Disposing transformer");
-        //      }
-        if (selector != null) {
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Disposing transformer");
+        }
+        if (componentSelector != null) {
             if (acResolver != null) {
-                selector.release(acResolver);
+                componentSelector.release(acResolver);
             }
-            manager.release(selector);
+            manager.release(componentSelector);
+        }
+        if (serviceSelector != null) {
+            if (acResolver != null) {
+                serviceSelector.release(acResolver);
+            }
+            manager.release(serviceSelector);
         }
     }
 
