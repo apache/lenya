@@ -41,18 +41,18 @@ Because Apache Lenya is based on Cocoon, you can use <link href="ext:cocoon.2.1.
 such as robust Caching, multi-channel output, it's many connectivity options to quickly build 
 customized solutions to meet your specific needs that are not already covered by Apache Lenya today.</p>
 <p>
-Download Apache Lenya <link href="ext:lenya.dist">here</link>.
+<link href="ext:lenya.dist">Download Apache Lenya</link>.
 </p>
         </section>
 
         <section id="news">
       <title>News and events</title>
       <ul>
-       
+        <li><strong>Apache Lenya 1.2.1 released</strong> (December 29, 2004) </li>
         <li>The Lenya project has evolved to become a "top-level" Apache
          project.
         </li>
-        <li><strong>Apache Lenya 1.2 released</strong> (June 27, 2004) </li>
+        <li>Apache Lenya 1.2 released (June 27, 2004) </li>
       </ul>
     </section>
 		
