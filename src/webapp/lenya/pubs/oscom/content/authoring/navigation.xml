@@ -10,8 +10,12 @@
 </branch>
 -->
 <leaf name="CMF/S&#160;Overview" href="matrix/index.html"/>
+<!--
 <leaf name="Editor&#160;Overview" href="editor-matrix/index.html"/>
 <leaf name="Search&#160;Engine&#160;Overview" href="http://www.searchtools.com/tools/tools.html"/>
+-->
+
+
 <!--
 <leaf name="Glossary" href="glossary.html"/>
 <branch name="Interop" href="interop.html">

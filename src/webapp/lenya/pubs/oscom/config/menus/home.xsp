@@ -59,24 +59,15 @@
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
       </block>
-      <separator>
-        <item>-----------</item>
-      </separator>
       <block>
-        <item href="/lenya/lucene/create">Create&#160;Lucene&#160;Index</item>
-        <item href="/lenya/lucene/search">Search&#160;with&#160;Lucene</item>
+        <item href="../search-live/lucene">Search&#160;with&#160;Lucene</item>
       </block>
     </menu>
 
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
       </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
       <block>
         <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
       </block>
@@ -84,23 +75,7 @@
 
     <menu name="Debug" label="Debug">
       <block>
-        <item href="index.xml">View&#160;Page&#160;XML</item>
-        <item href="../bitflux/home.xml">View&#160;Body&#160;XML</item>
-      </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-        <item href="../xopus/home.xsl">View&#160;Xopus&#160;XSLT</item>
-        <item href="../xopus/home.xsd">View&#160;Xopus&#160;XSD</item>
-      </block>
-      <separator>
-        <item>-----------------</item>
-      </separator>
-      <block>
-        <item href="../bitflux/home.xsl">View&#160;Bitflux&#160;XSLT</item>
-        <item href="../bitflux/home.xsd">View&#160;Bitflux&#160;XSD</item>
-        <item href="../bitflux/home.css">View&#160;Bitflux&#160;CSS</item>
+        <item href="home.xml">XML</item>
       </block>
     </menu>
   </menus>
