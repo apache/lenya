@@ -44,7 +44,7 @@
 
 
   4) Get, build and copy Cocoon 
-     (OPTIONAL: Just in case you want the most recent Cocoon. If not, then go to 4)
+     (OPTIONAL: Just in case you want the most recent Cocoon. If not, then go to 5)
 
      [unix]  cd /home/wyona/src
              wget http://cvs.apache.org/snapshots/xml-cocoon2/xml-cocoon2_20020110171938.tar.gz
@@ -68,7 +68,8 @@
   6) Install Wyona for Development
 
      [unix]  cd /home/wyona/build/jakarta-tomcat-4.0/webapps
-             ln -s /home/wyona/src/wyona-cms-2.0-src/build/webapp wyona-cms
+             ln -s /home/wyona/src/wyona-cms-2.0-src/build/webapp cocoon
+             #ln -s /home/wyona/src/wyona-cms-2.0-src/build/webapp wyona-cms
              vi /home/wyona/build/jakarta-tomcat-4.0/conf/server.xml
              To allow class reloading, insert the following line:
              <Context path="/cocoon" docBase="cocoon" debug="0" reloadable="true" crossContext="true"/>
