@@ -87,18 +87,11 @@ public class XPSSourceInformation{
             {
             log.warn("1079: "+e+" -- Let's hope it's a relative path!");
             File parent=new File(parentInfo.url.getFile());
-            // <CHANGE author="Andreas">
-            // File file = org.wyona.util.FileUtil.file(parent.getParent(), urlString);
-            try {
-                // url=new URL("file",null,-1,file.getAbsolutePath());
-                
-                // transform URI to system-independent path and create absolute path
-                String relativePath = urlString.replace('/', File.separatorChar);
-                File file = new File(parent.getParentFile(), relativePath);
-                url = file.toURL();
-                
-            }
-            // </CHANGE>
+            File file=org.wyona.util.FileUtil.file(parent.getParent(),urlString);
+            try
+              {
+              url=new URL("file",null,-1,file.getAbsolutePath());
+              }
             catch(MalformedURLException exception)
               {
               log.error(exception);
