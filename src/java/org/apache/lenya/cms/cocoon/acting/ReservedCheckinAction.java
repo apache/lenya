@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReservedCheckinAction.java,v 1.16 2004/05/23 12:52:43 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -27,32 +27,28 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 
-
 /**
  * Checkin document
  */
 public class ReservedCheckinAction extends RevisionControllerAction {
     /**
      * Checkin document
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
      * @return HashMap with checkin parameters
-     *
-     * @throws Exception DOCUMENT ME!
+     * 
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src, Parameters parameters) throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
+            Parameters parameters) throws Exception {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
 
         boolean backup = true;
-	if (parameters.getParameter("backup", "true").equals("false")) backup = false;
-        log.debug("Backup: " + backup);
+        if (parameters.getParameter("backup", "true").equals("false"))
+            backup = false;
+        getLogger().debug("Backup: " + backup);
 
         try {
             getRc().reservedCheckIn(getFilename(), getUsername(), backup);

@@ -39,7 +39,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
-import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -47,24 +46,18 @@ import org.xml.sax.SAXException;
  * Action to validate an xml document with relax ng schema.
  */
 public class ValidateAction extends AbstractConfigurableAction {
-    Category log = Category.getInstance(ValidateAction.class);
 
-    /** (non-Javadoc)
-     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
-     **/
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String source,
-        Parameters parameters)
-        throws Exception {
+    /**
+     * (non-Javadoc)
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
+     */
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
+            Parameters parameters) throws Exception {
         File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
-        File schema =
-            new File(
-                sitemap.getAbsolutePath()
-                    + File.separator
-                    + parameters.getParameter("schema"));
+        File schema = new File(sitemap.getAbsolutePath() + File.separator
+                + parameters.getParameter("schema"));
         getLogger().debug("schema: " + schema.getAbsolutePath());
 
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -74,7 +67,7 @@ public class ValidateAction extends AbstractConfigurableAction {
             return null;
         }
         if (!schema.isFile()) {
-            log.warn("No such schema: " + schema.getAbsolutePath());
+            getLogger().warn("No such schema: " + schema.getAbsolutePath());
             return null;
         }
 
@@ -88,7 +81,7 @@ public class ValidateAction extends AbstractConfigurableAction {
                 return hmap;
             }
         } catch (Exception e) {
-            // FIXME: could it be that the tmpFile is not removed in the case of 
+            // FIXME: could it be that the tmpFile is not removed in the case of
             // an exception? Exceptions happen everytime the validation fails
             getLogger().error("RELAX NG Validation failed: " + e.getMessage());
             HashMap hmap = new HashMap();
@@ -110,15 +103,21 @@ public class ValidateAction extends AbstractConfigurableAction {
 
     }
 
-    private File createTmpFile(String content)
-        throws SAXException, ParserConfigurationException, TransformerException, IOException {
+    private File createTmpFile(String content) throws SAXException, ParserConfigurationException,
+            TransformerException, IOException {
         File tmpFile = File.createTempFile("OneformEditor", null);
         getLogger().debug("file: " + tmpFile.getAbsolutePath());
 
         //write POST content in temporary file
-        FileWriter fileWriter = new FileWriter(tmpFile);
-        fileWriter.write(content);
-        fileWriter.close();
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(tmpFile);
+            fileWriter.write(content);
+        } finally {
+            if (fileWriter != null) {
+                fileWriter.close();
+            }
+        }
 
         Document document = null;
         DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();

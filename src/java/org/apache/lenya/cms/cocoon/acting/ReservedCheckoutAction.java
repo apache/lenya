@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReservedCheckoutAction.java,v 1.18 2004/05/22 19:43:41 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -26,34 +26,27 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
-import org.apache.log4j.Category;
 
 /**
  * Action doing reserved checkout
  */
 public class ReservedCheckoutAction extends RevisionControllerAction {
-    Category log = Category.getInstance(ReservedCheckoutAction.class);
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param redirector DOCUMENT ME!
      * @param resolver DOCUMENT ME!
      * @param objectModel DOCUMENT ME!
      * @param src DOCUMENT ME!
      * @param parameters DOCUMENT ME!
-     *
+     * 
      * @return DOCUMENT ME!
-     *
+     * 
      * @throws Exception DOCUMENT ME!
      */
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String src,
-        Parameters parameters)
-        throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
+            Parameters parameters) throws Exception {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
@@ -78,19 +71,15 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             actionMap.put("user", e.getCheckOutUsername());
             actionMap.put("date", e.getCheckOutDate());
             getLogger().warn(
-                "Document "
-                    + getFilename()
-                    + " already checked-out by "
-                    + e.getCheckOutUsername()
-                    + " since "
-                    + e.getCheckOutDate());
+                    "Document " + getFilename() + " already checked-out by "
+                            + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
 
             return actionMap;
         } catch (Exception e) {
             actionMap.put("exception", "genericException");
             actionMap.put("filename", getFilename());
             actionMap.put("message", "" + e.getMessage());
-            log.error("The document " + getFilename() + " couldn't be checked out: ", e);
+            getLogger().error("The document " + getFilename() + " couldn't be checked out: ", e);
 
             return actionMap;
         }

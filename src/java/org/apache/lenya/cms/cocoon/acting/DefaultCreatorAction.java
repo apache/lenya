@@ -14,9 +14,6 @@
  *  limitations under the License.
  */
 
-/* $Id$  */
-
-
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
@@ -42,29 +39,24 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.Label;
-import org.apache.log4j.Category;
-
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
-
 /**
- * DOCUMENT ME!
+ * Default creator action.
+ * 
+ * @version $Id:$
  */
-public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction implements Configurable {
-    Category log = Category.getInstance(DefaultCreatorAction.class);
+public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction implements
+        Configurable {
 
     private String docsPath = null;
     private String doctypesPath = null;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param conf DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
@@ -75,19 +67,19 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param redirector DOCUMENT ME!
      * @param resolver DOCUMENT ME!
      * @param objectModel DOCUMENT ME!
      * @param src DOCUMENT ME!
      * @param parameters DOCUMENT ME!
-     *
+     * 
      * @return DOCUMENT ME!
-     *
+     * 
      * @throws Exception DOCUMENT ME!
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
+            Parameters parameters) throws Exception {
         Publication publication = PublicationFactory.getPublication(objectModel);
 
         // Get request object
@@ -102,21 +94,19 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         // Get parameters
         //String parentid = request.getParameter("parentid");
         String parentid = request.getParameter("properties.create.parent-id");
-        log.debug("properties.create.parent-id = " + parentid);
+        getLogger().debug("properties.create.parent-id = " + parentid);
 
         //String childid = request.getParameter("childid");
         String childid = request.getParameter("properties.create.child-id");
-        log.debug("properties.create.child-id = " + childid);
+        getLogger().debug("properties.create.child-id = " + childid);
 
         //String childname = request.getParameter("childname");
         String childname = request.getParameter("properties.create.child-name");
-        log.debug("properties.create.child-name = " + childname);
+        getLogger().debug("properties.create.child-name = " + childname);
 
         //String childtype = request.getParameter("childtype");
         String childtype = request.getParameter("properties.create.child-type");
-        log.debug("properties.create.childtype = " + childtype);
-
-
+        getLogger().debug("properties.create.childtype = " + childtype);
 
         short childType;
         if (childtype.equals("branch")) {
@@ -124,22 +114,17 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         } else if (childtype.equals("leaf")) {
             childType = ParentChildCreatorInterface.LEAF_NODE;
         } else {
-            log.error("No such child type: " + childtype);
+            getLogger().error("No such child type: " + childtype);
             return null;
         }
 
-
-
         //String doctype = request.getParameter("doctype");
         String doctype = request.getParameter("properties.create.doctype");
-        log.debug("poperties.create.doctype = " + doctype);
+        getLogger().debug("poperties.create.doctype = " + doctype);
 
         //String language = request.getParameter("language");
         String language = request.getParameter("properties.create.language");
-        log.debug("poperties.create.language = " + language);
-		
-
-
+        getLogger().debug("poperties.create.language = " + language);
 
         if (!validate(parentid, childid, childname, childtype, doctype)) {
             getLogger().error("Exception: Validation of parameters failed");
@@ -159,19 +144,24 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         // Get creator
         ParentChildCreatorInterface creator = null;
         String absoluteDoctypesPath = publication.getDirectory() + File.separator + doctypesPath;
-        Document doctypesDoc = new SAXReader().read("file:" + absoluteDoctypesPath +
-                "doctypes.xconf");
-        Attribute creator_src = (Attribute) doctypesDoc.selectSingleNode("/doctypes/doc[@type='" +
-                doctype + "']/creator/@src");
+        Document doctypesDoc = new SAXReader().read("file:" + absoluteDoctypesPath
+                + "doctypes.xconf");
+        Attribute creator_src = (Attribute) doctypesDoc.selectSingleNode("/doctypes/doc[@type='"
+                + doctype + "']/creator/@src");
 
         if (creator_src != null) {
-            log.info("Creator found for \"" + doctype + "\": " + creator_src.getName() + " " + creator_src.getPath() + " " + creator_src.getValue());
+            getLogger().info(
+                    "Creator found for \"" + doctype + "\": " + creator_src.getName() + " "
+                            + creator_src.getPath() + " " + creator_src.getValue());
 
             // now get the constructor that accepts the configuration
             Class creatorClass = Class.forName(creator_src.getValue());
             creator = (ParentChildCreatorInterface) creatorClass.newInstance();
         } else {
-            log.warn("No creator found for \"" + doctype + "\". DefaultBranchCreator will be taken.");
+            getLogger()
+                    .warn(
+                            "No creator found for \"" + doctype
+                                    + "\". DefaultBranchCreator will be taken.");
             creator = new org.apache.lenya.cms.authoring.DefaultBranchCreator();
         }
 
@@ -180,8 +170,8 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         // Init creator
         // "Read" the configuration from the DOM node
         DefaultConfigurationBuilder defaultConfigBuilder = new DefaultConfigurationBuilder();
-        Configuration[] docTypeConfigs = defaultConfigBuilder.buildFromFile(absoluteDoctypesPath +
-                "doctypes.xconf").getChildren();
+        Configuration[] docTypeConfigs = defaultConfigBuilder.buildFromFile(
+                absoluteDoctypesPath + "doctypes.xconf").getChildren();
 
         Configuration doctypeConf = null;
 
@@ -228,8 +218,8 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 
             if (allParameters.containsKey(requestParameterName)) {
                 // we do not allow name clashes
-                throw new ProcessingException("Name clash in request parameter " +
-                    "and sitemap parameter: " + requestParameterName);
+                throw new ProcessingException("Name clash in request parameter "
+                        + "and sitemap parameter: " + requestParameterName);
             }
 
             allParameters.put(requestParameterName, request.getParameter(requestParameterName));
@@ -242,19 +232,19 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 
             if (allParameters.containsKey(sessionAttributeName)) {
                 // we do not allow name clashes
-                throw new ProcessingException("Name clash in session attribute " +
-                    "and request parameter or sitemap parameter: " + sessionAttributeName);
+                throw new ProcessingException("Name clash in session attribute "
+                        + "and request parameter or sitemap parameter: " + sessionAttributeName);
             }
 
             allParameters.put(sessionAttributeName, session.getAttribute(sessionAttributeName));
         }
 
         try {
-            creator.create(new File(absoluteDoctypesPath + "samples"),
-                new File(publication.getDirectory(), docsPath + parentid), childid, childType,
-                childname, language, allParameters);
+            creator.create(new File(absoluteDoctypesPath + "samples"), new File(publication
+                    .getDirectory(), docsPath + parentid), childid, childType, childname, language,
+                    allParameters);
         } catch (Exception e) {
-            log.error("Creator threw exception: " + e);
+            getLogger().error("Creator threw exception: ", e);
             return null;
         }
 
@@ -268,19 +258,20 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 
     /**
      * DOCUMENT ME!
-     *
+     * 
      * @param parentid DOCUMENT ME!
      * @param childid DOCUMENT ME!
      * @param childname DOCUMENT ME!
      * @param childtype DOCUMENT ME!
      * @param doctype DOCUMENT ME!
-     *
+     * 
      * @return DOCUMENT ME!
      */
     public boolean validate(String parentid, String childid, String childname, String childtype,
-        String doctype) {
-        getLogger().debug(".validate(): parentid=" + parentid + " ; childid=" + childid +
-            " ; childname=" + childname + " ; childtype=" + childtype + " ; doctype=" + doctype);
+            String doctype) {
+        getLogger().debug(
+                ".validate(): parentid=" + parentid + " ; childid=" + childid + " ; childname="
+                        + childname + " ; childtype=" + childtype + " ; doctype=" + doctype);
 
         if ((childid.indexOf(" ") >= 0) || (childid.length() == 0)) {
             return false;

@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: RevisionControllerAction.java,v 1.35 2004/08/16 12:14:13 andreas Exp $  */
-
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
@@ -38,10 +36,13 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.log4j.Category;
 
+/**
+ * Revision controller action.
+ * 
+ * @version $Id:$
+ */
 public class RevisionControllerAction extends AbstractAction {
-    Category log = Category.getInstance(RevisionControllerAction.class);
 
     private String rcmlDirectory = null;
     private String backupDirectory = null;
@@ -50,25 +51,12 @@ public class RevisionControllerAction extends AbstractAction {
     private String filename = null;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param redirector DOCUMENT ME!
-     * @param resolver DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     * @param src DOCUMENT ME!
-     * @param parameters DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String src,
-        Parameters parameters)
-        throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
+            Parameters parameters) throws Exception {
         // Get request object
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -93,8 +81,8 @@ public class RevisionControllerAction extends AbstractAction {
 
         //get Parameters for RC
         String publicationPath = publication.getDirectory().getCanonicalPath();
-        RCEnvironment rcEnvironment =
-            RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
+        RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
+                .getCanonicalPath());
         rcmlDirectory = rcEnvironment.getRCMLDirectory();
         rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         backupDirectory = rcEnvironment.getBackupDirectory();
@@ -117,7 +105,8 @@ public class RevisionControllerAction extends AbstractAction {
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         getLogger().debug(".act(): Identity: " + identity);
 
-        //FIXME: hack because of the uri for the editor bitflux. The filename cannot be get from the page-envelope 
+        //FIXME: hack because of the uri for the editor bitflux. The filename cannot be get from
+        // the page-envelope
 
         String documentid = document.getId();
         int bx = documentid.lastIndexOf("-bxeng");
@@ -135,16 +124,15 @@ public class RevisionControllerAction extends AbstractAction {
 
                 if (lang > 0 && langLength + lang < l) {
                     language = documentid.substring(lang + 1, lang + langLength);
-                    documentid =
-                        documentid.substring(0, lang)
+                    documentid = documentid.substring(0, lang)
                             + documentid.substring(lang + langLength, l - bxLength);
                 }
             }
 
             DocumentBuilder builder = publication.getDocumentBuilder();
 
-            String srcUrl =
-                builder.buildCanonicalUrl(publication, document.getArea(), documentid, language);
+            String srcUrl = builder.buildCanonicalUrl(publication, document.getArea(), documentid,
+                    language);
             Document srcDoc = builder.buildDocument(publication, srcUrl);
             File newFile = srcDoc.getFile();
             filename = newFile.getCanonicalPath();
@@ -154,7 +142,7 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         filename = filename.substring(publicationPath.length());
-        log.debug("Filename: " + filename);
+        getLogger().debug("Filename: " + filename);
 
         username = null;
 
