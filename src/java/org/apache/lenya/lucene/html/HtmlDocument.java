@@ -1,5 +1,5 @@
 /*
- * $Id: HtmlDocument.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: HtmlDocument.java,v 1.3 2003/02/16 20:27:59 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,6 +50,8 @@ package org.wyona.lucene.html;
 import org.apache.lucene.document.Field;
 
 //import org.apache.lucene.document.Document;
+
+import org.w3c.dom.Attr;
 //import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -77,11 +79,15 @@ import java.io.StringWriter;
  * </p>
  *
  * @author Erik Hatcher
+ * @author Michael Wechner
+ * @author Andreas Hartmann
  *
- * @deprecated October 27, 2001
  */
 public class HtmlDocument {
     private Element rawDoc;
+
+    private String luceneTagName=null;
+    private String luceneClassValue=null;
 
     //-------------------------------------------------------------
     // Constructors
@@ -239,20 +245,43 @@ public class HtmlDocument {
             return null;
         }
 
-        NodeList metaNL = rawDoc.getElementsByTagName("meta");
 
-        if (metaNL.getLength() > 0) {
-            System.out.println("HtmlDocument.getBody(): META " + metaNL.getLength());
+
+
+        // NOTE: JTidy will insert a meta tag: <meta name="generator" content="HTML Tidy, see www.w3.org" />
+        //       This means that getLength is always greater than 0
+        NodeList metaNL = rawDoc.getElementsByTagName("meta");
+        //System.out.println("HtmlDocument.getBody(): Number of META tags: " + metaNL.getLength());
+        for (int i = 0; i < metaNL.getLength(); i++) {
+            Element metaElement = (Element)metaNL.item(i);
+            Attr nameAttr = metaElement.getAttributeNode("name");
+            Attr valueAttr = metaElement.getAttributeNode("value");
+            if ( (nameAttr != null) && (valueAttr != null)) {
+                //System.out.println("HtmlDocument.getBody(): <meta name=\"" + nameAttr.getValue()+"\" value=\""+valueAttr.getValue()+"\" />");
+                if ( nameAttr.getValue().equals("lucene-tag-name")) {
+                    luceneTagName=valueAttr.getValue();
+                }
+                if ( nameAttr.getValue().equals("lucene-class-value")) {
+                    luceneClassValue=valueAttr.getValue();
+                }
+            }
         }
+
+
+
+        boolean indexByLucene = true;
+        if ( (luceneTagName != null) && (luceneClassValue != null)) {
+            indexByLucene = false;
+        }
+        System.out.println("HtmlDocument.getBody(): Index By Lucene (Default): "+indexByLucene);
+
 
         String body = "";
         NodeList nl = rawDoc.getElementsByTagName("body");
 
         if (nl.getLength() > 0) {
-            boolean indexByLucene = false;
-            body = getBodyText(nl.item(0), indexByLucene);
-
             //System.out.println("HtmlDocument.getBody(): "+body);
+            body = getBodyText(nl.item(0), indexByLucene);
         }
 
         return body;
@@ -269,30 +298,34 @@ public class HtmlDocument {
     private String getBodyText(Node node, boolean indexByLucene) {
         NodeList nl = node.getChildNodes();
         StringBuffer buffer = new StringBuffer();
-        boolean index = indexByLucene;
 
         for (int i = 0; i < nl.getLength(); i++) {
+            boolean index = indexByLucene;
             Node child = nl.item(i);
 
             switch (child.getNodeType()) {
             case Node.ELEMENT_NODE:
 
-                if (child.getNodeName().equals("span")) {
-                    org.w3c.dom.Attr attribute = ((Element) child).getAttributeNode("class");
 
-                    if (attribute != null) {
-                        //System.out.println("HtmlDocument.getBodyText(): <span class=\""+attribute.getValue()+"!");
-                        if (attribute.getValue().equals("lucene-search")) {
-                            System.out.println(
-                                "HtmlDocument.getBodyText(): <span class=\"lucene-search\"> found!");
-                            index = true;
+
+                if ( (luceneTagName != null) && (luceneClassValue != null)) {
+                    if (child.getNodeName().equals(luceneTagName)) {
+                        Attr attribute = ((Element) child).getAttributeNode("class");
+
+                        if (attribute != null) {
+                            //System.out.println("HtmlDocument.getBodyText(): <"+luceneTagName+" class=\""+attribute.getValue()+"!");
+                            if (attribute.getValue().equals(luceneClassValue)) {
+                                System.out.println("HtmlDocument.getBodyText(): <"+luceneTagName+" class=\""+luceneClassValue+"\"> found!");
+                                index = true;
+                            }
+                            //System.out.println("HtmlDocument.getBodyText(): <"+luceneTageName+" class!");
                         }
-
-                        //System.out.println("HtmlDocument.getBodyText(): <span class!");
+                        //System.out.println("HtmlDocument.getBodyText(): <"+luceneTagName+"!");
                     }
-
-                    //System.out.println("HtmlDocument.getBodyText(): <span!");
                 }
+
+
+
 
                 buffer.append(getBodyText(child, index));
 
