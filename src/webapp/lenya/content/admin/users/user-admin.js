@@ -255,13 +255,14 @@ function user_delete_user() {
 	var userManager = getUserManager();
 	var userId = cocoon.request.get("user-id");
 	var user = userManager.getUser(userId);
-	var fullName = user.getFullName();
+	var name = user.getName();
 	var showPage = true;
 	
 	while (showPage) {
-		sendPageAndWait("users/confirm-delete.xml", {
-			"user-id" : userId,
-			"fullname" : fullName
+		sendPageAndWait("users/confirm-delete-common.xml", {
+			"id" : userId,
+			"name" : name,
+			"type" : user
 		});
 		
 		if (cocoon.request.get("submit")) {
