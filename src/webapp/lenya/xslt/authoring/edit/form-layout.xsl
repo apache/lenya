@@ -8,7 +8,7 @@
 <xsl:param name="contextPrefix" select="'/lenya'"/>
 <xsl:param name="edit" select="'No node selected yet'"/>
 
-<xsl:variable name="imagesPath"><xsl:value-of select="$contextPrefix"/>/lenya/images</xsl:variable>
+<xsl:variable name="imagesPath"><xsl:value-of select="$contextPrefix"/>/lenya/images/editor</xsl:variable>
 
 <xsl:include href="copy-mixed-content.xsl"/>
 
@@ -17,7 +17,7 @@
 <page:title>Edit Document</page:title>
 <page:body>
   
-<div style="float: left">
+<!--<div style="float: left">-->
   
 <div class="lenya-box">
   <div class="lenya-box-title">Information</div>
@@ -90,7 +90,7 @@
 </div>
 </div>
 
-</div>
+<!--</div>-->
 
 </page:body>
 </page:page>
@@ -158,15 +158,18 @@
 <!--
 <input type="submit" name="{@name}" value="INSERT"/>
 -->
-<input type="image" src="{$imagesPath}/insert.gif" name="{@name}" value="LENYA"/>
+<xsl:text> </xsl:text>
+<input type="image" src="{$imagesPath}/add.png" name="{@name}" value="LENYA"/>
 </xsl:template>
 
 <xsl:template match="delete">
-<input type="image" src="{$imagesPath}/delete.gif" name="{@name}" value="true"/>
+<xsl:text> </xsl:text>
+<input type="image" src="{$imagesPath}/delete.png" name="{@name}" value="true"/>
 </xsl:template>
 
 <xsl:template match="@select">
-<input type="image" src="{$imagesPath}/util/reddot.gif" name="edit" value="{.}"/>
+<xsl:text> </xsl:text>
+<input type="image" src="{$imagesPath}/edit.png" name="edit" value="{.}"/>
 </xsl:template>
 
 </xsl:stylesheet>  
