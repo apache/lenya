@@ -21,7 +21,7 @@
  <li>
  <xsl:choose>
   <xsl:when test="email">
-    <a href="mailto:{email}"><xsl:value-of select="name"/></a>
+    <a href="mailto:{email}?subject=SAMPLE SUBJECT&amp;body=SAMPLE BODY"><xsl:value-of select="name"/></a>
   </xsl:when>
   <xsl:otherwise>
     <xsl:value-of select="name"/>
