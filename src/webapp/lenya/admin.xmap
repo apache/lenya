@@ -43,10 +43,11 @@
     
     <map:pipeline>
       
-      <!-- The 'users' URI step is needed to highlight the menu item. -->
-      <map:match pattern="internal/users/lenya.usecase.change_*/*.xml">
-        <map:generate src="content/admin/users/{2}.xsp" type="serverpages"/>
-        <map:transform src="xslt/admin/users/{2}.xsl"/>
+      <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
+      <!-- pattern: internal/{type}/lenya.usecase.{usecase}/{page}.xml -->
+      <map:match pattern="internal/*/lenya.usecase.*/*.xml">
+        <map:generate src="content/admin/{1}/{3}.xsp" type="serverpages"/>
+        <map:transform src="xslt/admin/{1}/{3}.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       
@@ -61,26 +62,53 @@
     <map:pipeline>
       
 	    <!-- ============================================================ -->
-	    <!-- UserAdmin -->
+	    <!-- Admin Homepage -->
 	    <!-- ============================================================ -->
 	    
-	    <map:match pattern="internal/users.html">
-        <map:generate src="content/admin/users/users.xsp" type="serverpages"/>
-        <map:transform src="xslt/admin/users/users.xsl"/>
+      <map:match pattern="internal/index.html">
+        <map:generate src="content/admin/index.xml"/>
         <map:serialize type="xml"/>
-	    </map:match>
+      </map:match>
+
+	    <!-- ============================================================ -->
+	    <!-- Status Page -->
+	    <!-- ============================================================ -->
 	    
-	    <map:match pattern="internal/users/*/index.html">
-        <map:generate src="content/admin/users/overview.xsp" type="serverpages">
-          <map:parameter name="user-id" value="{1}"/>
-        </map:generate>
-        <map:transform src="xslt/admin/users/overview.xsl"/>
+      <map:match pattern="internal/status.html">
+        <map:generate src="status" type="status"/>
+        <map:transform src="xslt/admin/status2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+      
+	    <!-- ============================================================ -->
+	    <!-- Common Admin Pages -->
+	    <!-- ============================================================ -->
+	    
+	    <!-- list page (type = users|groups) -->
+	    <!-- pattern: internal/{type}.html -->
+	    <map:match pattern="internal/*.html">
+        <map:generate src="content/admin/{1}/{1}.xsp" type="serverpages"/>
+        <map:transform src="xslt/admin/{1}/{1}.xsl"/>
         <map:serialize type="xml"/>
 	    </map:match>
+
+      <!-- overview page (type = user|group) -->
+      <!-- pattern: internal/{type}s/{id}/index.html -->
+      <map:match pattern="internal/*s/*/index.html">
+        <map:generate src="content/admin/{1}s/overview.xsp" type="serverpages">
+          <map:parameter name="{1}-id" value="{2}"/>
+        </map:generate>
+        <map:transform src="xslt/admin/{1}s/overview.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
           
-	    <map:match pattern="users/*/lenya.usecase.*">
-	      <map:call function="user_{2}">
-	        <map:parameter name="userId" value="{1}"/>
+      <!-- usecase page (type = user|group) -->
+      <!-- pattern: {type}s/{id}/lenya.usecase.{usecase} -->
+	    <map:match pattern="*s/*/lenya.usecase.*">
+	      <map:call function="{1}_{3}">
+	        <map:parameter name="{1}Id" value="{2}"/>
 	      </map:call>
 	    </map:match>
           
@@ -99,23 +127,6 @@
         <map:transform src="content/ac/simple-page2html.xsl"/>
         <map:serialize type="html"/>
       </map:match>
-    </map:pipeline>
-
-    <map:pipeline>
-      
-      <map:match pattern="internal/index.html">
-        <map:generate src="content/admin/index.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="internal/status.html">
-        <map:generate src="status" type="status"/>
-        <map:transform src="xslt/admin/status2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:match>
-      
     </map:pipeline>
 
     
