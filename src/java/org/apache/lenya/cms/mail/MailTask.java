@@ -105,7 +105,9 @@ public class MailTask
                 factory.setNamespaceAware(true);
                 factory.setExpandEntityReferences(true);
                 DocumentBuilder builder = factory.newDocumentBuilder();
-                builder.setEntityResolver(new DefaultHandler());
+                
+                builder.setEntityResolver(new org.apache.cocoon.components.resolver.ResolverImpl());
+                
                 Document document = builder.parse(uri);
                 Element root = (Element) document.getChildNodes().item(0);
 /*
