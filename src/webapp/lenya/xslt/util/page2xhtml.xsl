@@ -41,19 +41,9 @@
       </div>
       <table class="lenya-body" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <xsl:variable name="main-div" select="page:body/xhtml:div[@class != 'lenya-sidebar']"/>
-          <xsl:choose>
-            <xsl:when test="$main-div">
-              <td class="{$main-div/@class}">
-                <xsl:copy-of select="$main-div/node()"/>
-              </td>
-            </xsl:when>
-            <xsl:otherwise>
-              <td class="lenya-content">
-                <xsl:copy-of select="page:body/node()[local-name() != 'div'][not(@class = 'lenya-sidebar')]"/>
-              </td>
-            </xsl:otherwise>
-          </xsl:choose>
+          <td class="lenya-content">
+            <xsl:copy-of select="page:body/node()[local-name() != 'div' or @class != 'lenya-sidebar']"/>
+          </td>
           <td class="lenya-sidebar">
             <xsl:copy-of select="//xhtml:div[@class = 'lenya-sidebar']/node()"/>
           </td>
