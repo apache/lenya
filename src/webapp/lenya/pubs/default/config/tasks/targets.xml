@@ -19,6 +19,7 @@
 <property name="authoring.area" value="authoring"/>
 <property name="sitetree" value="sitetree.xml"/>
 <property name="authoring.resource.dir" value="resources/images/authoring"/>
+<property name="live.area" value="live"/>
 <property name="live.dir" value="content/live"/>
 <property name="live.resource.dir" value="resources/images/live"/>
 <property name="replication.dir" value="content/replication/pending"/>
@@ -150,8 +151,9 @@
   <echo>the document id for the renamed file is now ${node.newdocumentid}</echo>
 </target>
 
-<target name = "documentpath">
-  <taskdef name="mapdocumentidtopath" classname="org.apache.lenya.cms.ant.DocumentIdToPath"/>
+<taskdef name="mapdocumentidtopath" classname="org.apache.lenya.cms.ant.DocumentIdToPath"/>
+
+<target name = "authdocumentpaths">
   <mapdocumentidtopath
     area="${authoring.area}" 
     documentid="${node.firstdocumentid}"
@@ -165,7 +167,7 @@
   />
 </target>
 
-<target name = "copyDocument" depends="newcopydocumentid, documentpath">
+<target name = "copyDocument" depends="newcopydocumentid, authdocumentpaths">
   <echo>Copy Content</echo>
   <copy todir="${file.secdocumentdir}" flatten="true">
     <fileset dir="${file.firstdocumentdir}"/>
@@ -271,10 +273,50 @@
   <!-- To Do -->
  
 </target>
-<target name = "moveDocument" depends="newcopydocumentid, documentpath, move">
+
+<target name = "moveDocument" depends="newcopydocumentid, authdocumentpaths, move">
   <echo>moveDocument</echo> 
 </target>
-<target name = "renameDocument" depends="newnamedocumentid, documentpath, move">
+
+<target name = "renameDocument" depends="newnamedocumentid, authdocumentpaths, move">
+</target>
+
+<taskdef name="mapdocumentidtopath" classname="org.apache.lenya.cms.ant.DocumentIdToPath"/>
+
+<target name = "livedocumentpath">
+  <mapdocumentidtopath
+    area="${live.area}" 
+    documentid="${node.firstdocumentid}"
+    propertyname="file.firstdocumentdir" 
+  />
+</target>
+
+<target name = "deactivateDocument" depends="livedocumentpath">
+  <echo>deactivateDocument</echo> 
+  <echo> Delete node of document ${node.firstdocumentid} from </echo>
+  <echo> the tree ${pub.dir}/${live.dir}/${sitetree}</echo>
+
+  <taskdef name="deletenode" classname="org.apache.lenya.cms.ant.DeleteNodeTask"/>
+
+  <deletenode
+    documentid="${node.firstdocumentid}"
+    absolutetreepath="${pub.dir}/${live.dir}/${sitetree}"
+  />
+
+  <echo> Delete document with id ${node.firstdocumentid} from live</echo> 
+
+  <echo>Delete Content from live</echo>
+  <delete dir="${file.firstdocumentdir}" includeemptydirs="true"/>
+
+  <echo>Delete Resources from live</echo>
+  <delete dir="${pub.dir}/${live.resource.dir}/${node.firstdocumentid}" includeemptydirs="true"/>
+
+  <echo>Delete Meta (To Do)</echo>
+  <!-- To Do -->
+
+  <echo>Delete Workflow (To Do)</echo>
+  <!-- To Do -->
+ 
 </target>
 
 </project>

@@ -28,6 +28,11 @@
     <parameter name="target" value="moveDocument"/>
   </task>
 
+  <task id="deactivateDocument" class="org.apache.lenya.cms.task.AntTask">
+    <label>DeactivateDocument</label>
+    <parameter name="target" value="deactivateDocument"/>
+  </task>
+
   <task id="moveUpNode" class="org.apache.lenya.cms.task.MoveSiteTreeNodeTask">
     <label>moveUpNode</label>
     <parameter name="treePath" value="content/authoring/sitetree.xml"/>
