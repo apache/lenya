@@ -661,7 +661,8 @@
         <map:mount uri-prefix="navigation" src="lenya/navigation.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
-      <map:match pattern="uri-parameter/*/*/**">
+      <!-- uri-parameter/{publication-id}/{parameter}/{area}/{uri} -->
+      <map:match pattern="uri-parameter/*/*/*/**">
         <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="lenya/pubs/{1}/parameter-{2}.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
