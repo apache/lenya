@@ -70,7 +70,7 @@ import java.io.*;
  * Xerces Parser Implementation
  *
  * @author Michael Wechner
- * @version $Id: XercesParser.java,v 1.13 2003/08/13 16:24:12 michi Exp $
+ * @version $Id: XercesParser.java,v 1.14 2003/12/04 14:16:57 andreas Exp $
  */
 public class XercesParser implements Parser {
     /**
@@ -184,6 +184,20 @@ public class XercesParser implements Parser {
     public Element newElementNode(Document document, String name) {
         //return new ElementNSImpl((CoreDocumentImpl) document, name);
         return new ElementImpl((DocumentImpl) document, name);
+    }
+
+    /**
+     * Creates an element with namespace support.
+     *
+     * @param document The owner document.
+     * @param namespaceUri The namespace URI of the element.
+     * @param qualifiedName The qualified name of the element.
+     *
+     * @return An element.
+     */
+    public Element newElementNSNode(Document document, String namespaceUri, String qualifiedName) {
+        //return new ElementNSImpl((CoreDocumentImpl) document, name);
+        return document.createElementNS(namespaceUri, qualifiedName);
     }
 
     /**

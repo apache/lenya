@@ -71,7 +71,7 @@ import java.util.Properties;
  * Utility class for creating DOM documents
  *
  * @author Michael Wechner
- * @version $Id: DOMParserFactory.java,v 1.16 2003/10/02 03:55:19 michi Exp $
+ * @version $Id: DOMParserFactory.java,v 1.17 2003/12/04 14:16:57 andreas Exp $
  * @deprecated replaced by DocumentHelper
  */
 public class DOMParserFactory {
@@ -206,6 +206,19 @@ public class DOMParserFactory {
     }
 
     /**
+     * Creates an element with namespace support.
+     *
+     * @param document The owner document.
+     * @param namespaceUri The namespace URI of the element.
+     * @param qualifiedName The qualified name of the element.
+     *
+     * @return An element.
+     */
+    public Element newElementNSNode(Document document, String namespaceUri, String qualifiedName) {
+        return parser.newElementNSNode(document, namespaceUri, qualifiedName);
+    }
+        
+    /**
      * DOCUMENT ME!
      *
      * @param document DOCUMENT ME!
@@ -256,7 +269,7 @@ public class DOMParserFactory {
 
         switch (nodeType) {
         case Node.ELEMENT_NODE: {
-            Element element = newElementNode(document, original.getNodeName());
+            Element element = newElementNSNode(document, original.getNamespaceURI(), original.getNodeName());
             log.debug(".cloneNode(): Clone element: " + original.getNodeName());
             NamedNodeMap attributes = original.getAttributes();
 

@@ -63,7 +63,7 @@ import java.io.*;
  * DOM Parser interface
  *
  * @author Michael Wechner
- * @version $Id: Parser.java,v 1.11 2003/08/13 16:24:12 michi Exp $
+ * @version $Id: Parser.java,v 1.12 2003/12/04 14:16:57 andreas Exp $
  */
 public interface Parser {
     /**
@@ -117,6 +117,17 @@ public interface Parser {
      */
     Element newElementNode(Document document, String name);
 
+    /**
+     * Creates an element with namespace support.
+     *
+     * @param document The owner document.
+     * @param namespaceUri The namespace URI of the element.
+     * @param qualifiedName The qualified name of the element.
+     *
+     * @return An element.
+     */
+    Element newElementNSNode(Document document, String namespaceUri, String qualifiedName);
+        
     /**
      * DOCUMENT ME!
      *
