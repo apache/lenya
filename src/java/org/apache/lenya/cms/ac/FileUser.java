@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.13 2003/06/11 14:58:04 egli Exp $
+ * $Id: FileUser.java,v 1.14 2003/06/12 15:47:08 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -104,6 +104,7 @@ public class FileUser extends User {
 			config.getChild(EMAIL).getValue(),
 			config.getChild(PASSWORD).getValue());
 		this.publication = publication;
+		setEncryptedPassword(config.getChild(PASSWORD).getValue());
 		Configuration[] groups = config.getChildren(GROUPS);
 		if (groups.length == 1) {
 			groups = groups[0].getChildren(GROUP);
