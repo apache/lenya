@@ -55,10 +55,10 @@
 		<!-- The server will tell the editor that the file was saved successfully. 
 			The editor has to do the redirection. 
 		       This xml is sent to bitflux after saving -->
-		<map:generate src="lenya/content/bitflux/response.xml"/>
+		<map:generate src="../../content/bitflux/response.xml"/>
 		<map:serialize type="xml"/>
 	</map:act>
-	<map:generate src="xopus_error.xml"/>
+	<map:generate src="../../content/xopus/error.xml"/>
 	<map:serialize type="xml"/>
 </map:match>
 <!-- Error handling -->

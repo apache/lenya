@@ -154,11 +154,11 @@
 				<map:act type="xopushandler">
 					<map:parameter name="save-filename" value="dossiers/{1}/{2}/index.xml"/>
 					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
-					<map:generate src="lenya/content/bitflux/response.xml"/>
+					<map:generate src="../..//content/bitflux/response.xml"/>
 					<!-- Is not needed since Bitflux uses the request parameter "url-back" to do the redirecton
                We only send a "status ok" back to Bitflux
           <map:generate src="{reqFilePath}"/>
-          <map:transform src="xopus_response.xsl">
+          <map:transform src="../../xslt/xopus/response.xsl">
             <map:parameter name="reqId" value="{reqId}"/>
             <map:parameter name="reqType" value="{reqType}"/>
             <map:parameter name="reqFile" value="{reqFile}"/>
@@ -167,7 +167,7 @@
           -->
 					<map:serialize type="xml"/>
 				</map:act>
-				<map:generate src="xopus_error.xml"/>
+				<map:generate src="../../content/xopus/error.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<!-- Save Article -->
@@ -175,11 +175,11 @@
 				<map:act type="xopushandler">
 					<map:parameter name="save-filename" value="{1}/{2}/{3}/{4}/index.xml"/>
 					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
-					<map:generate src="lenya/content/bitflux/response.xml"/>
+					<map:generate src="../../content/bitflux/response.xml"/>
 					<!-- Is not needed since Bitflux uses the request parameter "url-back" to do the redirecton
                We only send a "status ok" back to Bitflux
           <map:generate src="{reqFilePath}"/>
-          <map:transform src="xopus_response.xsl">
+          <map:transform src="../../xslt/xopus/response.xsl">
             <map:parameter name="reqId" value="{reqId}"/>
             <map:parameter name="reqType" value="{reqType}"/>
             <map:parameter name="reqFile" value="{reqFile}"/>
@@ -188,17 +188,17 @@
           -->
 					<map:serialize type="xml"/>
 				</map:act>
-				<map:generate src="xopus_error.xml"/>
+				<map:generate src="../../content/xopus/error.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
                         <!-- Save Newsletter -->
                         <map:match pattern="save/newsletter">
                                 <map:act type="xopushandler">
                                         <map:parameter name="save-filename" value="newsletter/index.xml"/>
-                                        <map:generate src="lenya/content/bitflux/response.xml"/>
+                                        <map:generate src="../../content/bitflux/response.xml"/>
                                         <map:serialize type="xml"/>
                                 </map:act>
-                                <map:generate src="xopus_error.xml"/>
+                                <map:generate src="../../content/xopus/error.xml"/>
                                 <map:serialize type="xml"/>
                         </map:match>
 			<!-- Save Generic -->
@@ -206,10 +206,10 @@
 				<map:act type="xopushandler">
 					<map:parameter name="save-filename" value="frontpage/{1}"/>
 					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
-					<map:generate src="lenya/content/bitflux/response.xml"/>
+					<map:generate src="../../content/bitflux/response.xml"/>
 					<map:serialize type="xml"/>
 				</map:act>
-				<map:generate src="xopus_error.xml"/>
+				<map:generate src="../../content/xopus/error.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<!-- Error handling -->

@@ -52,7 +52,7 @@
 <!--
           <map:generate src="{reqFilePath}"/>
 -->
-          <map:transform src="xopus_response.xsl">
+          <map:transform src="../../xslt/xopus/response.xsl">
             <map:parameter name="reqId" value="{reqId}"/>
             <map:parameter name="reqType" value="{reqType}"/>
             <map:parameter name="reqFile" value="{reqFile}"/>
@@ -61,7 +61,7 @@
           <map:serialize type="xml"/>
 
         </map:act>
-        <map:generate src="xopus_error.xml"/>
+        <map:generate src="../../content/xopus/error.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       
