@@ -42,25 +42,26 @@ public class Identity implements Identifiable, java.io.Serializable {
     }
 
     /**
-     * The the case of Tomcat the object will be serialized to TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * In the case of Tomcat the object will be serialized to TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
      */
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-        log.warn("Serializing identity which is attached to session: " + this.toString());
-
+        if (log.isDebugEnabled()) {
+        	log.debug("Serializing identity which is attached to session: " + this.toString());
+        }
         out.defaultWriteObject();
-
         out.writeObject(identifiables);
     }
 
     /**
-     * The the case of Tomcat the object will be restored from TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
+     * In case of Tomcat the object will be restored from TOMCAT/work/Standalone/localhost/lenya/SESSIONS.ser
      */
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
         in.defaultReadObject();
-
         identifiables = (Set) in.readObject();
 
-        log.warn("Identity loaded from serialized object: " + this.toString());
+        if (log.isDebugEnabled()) {
+        	log.debug("Identity loaded from serialized object: " + this.toString());
+        }
     }
 
     /**
