@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: History.java,v 1.22 2004/04/21 12:07:36 andreas Exp $  */
+/* $Id: History.java,v 1.23 2004/04/29 15:24:15 andreas Exp $  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -247,7 +247,8 @@ public abstract class History implements WorkflowListener {
     protected Element createVersionElement(NamespaceHelper helper, Situation situation) {
         Element versionElement = helper.createElement(VERSION_ELEMENT);
         Date now = new Date();
-        String dateString = SimpleDateFormat.getDateTimeInstance().format(now);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = format.format(now);
         versionElement.setAttribute(DATE_ATTRIBUTE, dateString);
         return versionElement;
     }
