@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.26 2003/10/10 16:42:13 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.27 2003/11/26 13:49:09 andreas Exp $
 <License>
 
  ============================================================================
@@ -95,7 +95,9 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
         if (hasWorkflow() && localName.equals(ITEM_ELEMENT)) {
             String event = attr.getValue(Workflow.NAMESPACE, EVENT_ATTRIBUTE);
-            getLogger().debug("Event: [" + event + "]");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Event: [" + event + "]");
+            }
 
             // filter item if command not allowed 
             if (event != null) {
@@ -106,11 +108,15 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
                 if (!containsEvent(event)) {
                     if (hrefIndex > -1) {
-                        getLogger().debug("Removing href attribute");
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("Removing href attribute");
+                        }
                         attributes.removeAttribute(hrefIndex);
                     }
                 } else {
-                    getLogger().debug("Adding event to href attribute");
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("Adding event to href attribute");
+                    }
                     String href = attributes.getValue("href");
                     attributes.setValue(hrefIndex, href + "&lenya.event=" + event);
                 }
