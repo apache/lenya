@@ -6,7 +6,7 @@
 
   <map:components>
     <map:generators default="file"/>
-    <map:transformers default="xslt"/>
+    <map:transformers default="xalan"/>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>

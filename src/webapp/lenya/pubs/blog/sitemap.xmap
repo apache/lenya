@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.44 2004/01/28 16:28:25 edith Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.45 2004/01/31 16:06:52 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -191,7 +191,7 @@
       </map:match>
       <map:match pattern="*/feeds/*/index.html">
         <map:generate src="cocoon:/{1}/feeds/{2}/lenya-page-body.xml"/>
-        <map:transform src="xslt/feed/main-{1}.xsl">
+        <map:transform type="xalan" src="xslt/feed/main-{1}.xsl">
           <map:parameter name="relative2root" value="../.."/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
@@ -229,7 +229,7 @@
       </map:match>
       <map:match pattern="*/*/*/">
         <map:generate src="cocoon:/{1}/{2}/{3}/lenya-page-body.xml"/>
-        <map:transform src="xslt/feed/main-{1}.xsl">
+        <map:transform type="xalan" src="xslt/feed/main-{1}.xsl">
           <map:parameter name="relative2root" value="../.."/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/archive.xml"/>
