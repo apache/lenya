@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.47 2003/10/13 13:12:54 egli Exp $
+ $Id: info.xsl,v 1.48 2003/11/25 10:01:25 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -155,11 +155,16 @@
   <xsl:template match="lenya-info:assets">
     <table class="lenya-table">
       <tr>
-        <th colspan="2">Assets</th>
+        <th>Assets</th>
+        <th>File Size</th>
+        <th>Creation Date</th>
+        <th></th>
       </tr>
       <xsl:for-each select="lenya-info:asset">
         <tr>
-          <td><xsl:value-of select="."/></td>
+          <td><xsl:value-of select="dc:title"/></td>
+          <td align="right"><xsl:value-of select="dc:extent"/> kB</td>
+          <td align="right"><xsl:value-of select="dc:date"/></td>
           <td>
             <form>
               <input type="hidden" name="lenya.usecase" value="asset"/>
@@ -172,7 +177,7 @@
               </input>
               <input type="hidden" name="properties.remove.asset.name">
                 <xsl:attribute name="value">
-                  <xsl:value-of select="."/>
+                  <xsl:value-of select="dc:title"/>
                 </xsl:attribute>
               </input>
               <input type="submit" value="Delete"/>

@@ -16,6 +16,8 @@
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.ResourcesManager</xsp:include>
+    <xsp:include>java.util.Date</xsp:include>
+    <xsp:include>java.text.SimpleDateFormat</xsp:include>
   </xsp:structure>
   
   <lenya-info:info>
@@ -29,7 +31,11 @@
 	if (resources != null) {
 	  for(int i = 0; i &lt; resources.length; i++) {
 	  <xsp:content>
-	    <lenya-info:asset><xsp:expr>resources[i].getName()</xsp:expr></lenya-info:asset>
+	    <lenya-info:asset>
+	      <dc:title><xsp:expr>resources[i].getName()</xsp:expr></dc:title>
+	      <dc:date><xsp:expr>SimpleDateFormat.getDateInstance().format(new Date(resources[i].lastModified()))</xsp:expr></dc:date>
+	      <dc:extent><xsp:expr>resources[i].length()/1024</xsp:expr></dc:extent>
+	    </lenya-info:asset>
 	  </xsp:content>
 	  } 
 	}
