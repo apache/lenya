@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.7-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>Bitflux Editor</title>
+<title>Bitflux Editor (BXE)</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
@@ -395,44 +395,285 @@
 <a class="dida" href="bxe.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Bitflux Editor</h1>
+<h1>Bitflux Editor (BXE)</h1>
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
-<a href="#Configuration">Configuration</a>
+<a href="#Overview">Overview</a>
 </li>
 <li>
-<a href="#Namespace+declaration">Namespace declaration</a>
+<a href="#The+open+step">The open step</a>
+</li>
+<li>
+<a href="#The+config+step">The config step</a>
+</li>
+<li>
+<a href="#The+xml+step">The xml step</a>
+</li>
+<li>
+<a href="#The+image-upload-show%2C+link-show+and+asset-upload-show+steps">The image-upload-show, link-show and asset-upload-show steps</a>
+</li>
+<li>
+<a href="#The+image-upload+and+asset-upload+steps">The image-upload and asset-upload steps</a>
+</li>
+<li>
+<a href="#Further+BXE+configuration">Further BXE configuration</a>
 </li>
 </ul>
 </div> 
 
 
-<a name="N1001B"></a><a name="Configuration"></a>
-<h2 class="underlined_10">Configuration</h2>
+<a name="N1001B"></a><a name="Overview"></a>
+<h2 class="underlined_10">Overview</h2>
 <div class="section">
-<p>Required and Optional parameters</p>
+<p>
+<a href="http://bxe.oscom.org">BXE</a> is a validating WYSIWYG XML editor for Mozilla-based browsers.
+    It uses <a href="http://www.relaxng.org/">RELAX NG</a> for validation and CSS for layout. 
+    Integration with Lenya is done with a series of use case steps that are defined
+    in a sitemap inside your publication: <span class="codefrag">usecase-bxeng.xmap</span>. If you understand the purpose
+    of the various use case steps, you will have a good grasp of how to integration is done, and will be
+    able to adjust it to your needs as necessary.</p>
+</div>
+
+<a name="N1002F"></a><a name="The+open+step"></a>
+<h2 class="underlined_10">The open step</h2>
+<div class="section">
+<p>The open step is called when you first open BXE from the Lenya menu. It first checks
+        if BXE is installed, and displays a warning page if it is not. It then attempts to check
+        out the page to be edited (to protect it from being edited by other users at the same time),
+        and displays an error page if this fails for some reason. It then loads the BXE start page
+        that contains references to the BXE configuration to be used for this page, such as the
+        location of the RELAX NG schema, CSS files, and more. The BXE start page is a dynamically
+        generated page that is being aggregated from a configuration pipeline (the config step), 
+        a file that contains all the namespaces that may occur in the document to be edited 
+        (<span class="codefrag">content-namespaces.xml</span>), and the skeleton BXE start page (<span class="codefrag">index.xhtml</span>).
+        The pipeline looks like this:
+     </p>
+<pre class="code">
+    
+          &lt;map:match type="step" pattern="open"&gt;
+           &lt;!-- Check for BXENG --&gt;
+           &lt;map:act type="resource-exists" src="../../resources/bxeng/bxeLoader.js"&gt;
+            &lt;map:act type="reserved-checkout"&gt;
+              &lt;map:generate type="serverpages" src="../../content/rc/{exception}.xsp"&gt;
+                &lt;map:parameter name="user" value="{user}"/&gt;
+                &lt;map:parameter name="filename" value="{filename}"/&gt;
+                &lt;map:parameter name="date" value="{date}"/&gt;
+                &lt;map:parameter name="message" value="{message}"/&gt;
+              &lt;/map:generate&gt;
+              &lt;map:transform src="../../xslt/rc/rco-exception.xsl"/&gt;
+              &lt;map:call resource="style-cms-page"/&gt;
+            &lt;/map:act&gt;
+            &lt;map:aggregate element="bxeng"&gt;
+              &lt;map:part src="../../resources/misc/bxeng/index.xhtml"/&gt;
+              &lt;map:part src="../../resources/misc/bxeng/content-namespaces.xml"/&gt;
+            &lt;/map:aggregate&gt;
+            &lt;map:transform src="../../xslt/bxeng/aggregate.xsl"/&gt;
+            &lt;map:transform src="../../xslt/bxeng/index-xhtml.xsl"&gt;
+              &lt;map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=config"/&gt;
+              &lt;map:parameter name="context" value="{request:contextPath}"/&gt;
+            &lt;/map:transform&gt;
+            &lt;map:serialize type="xhtml"/&gt;
+            &lt;/map:act&gt;
+            &lt;map:generate src="../../resources/misc/bxeng/download.xhtml"/&gt;
+            &lt;map:call resource="style-cms-page"/&gt;
+            &lt;map:serialize type="html"/&gt;
+          &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N10043"></a><a name="The+config+step"></a>
+<h2 class="underlined_10">The config step</h2>
+<div class="section">
+<p>The config step generates the BXE config file by transforming a template file (<span class="codefrag">config.xml</span>)
+        and passing in values for the following parameters:
+     </p>
 <ul>
-
-<li>BX_xmlfile: Actual Content (XML)</li>
-
-<li>BX_xslfile (or BX_xhtmlfile): Global Formatting (XSLT (or XHTML))</li>
-
-<li>css: Content Formatting (CSS)</li>
-
-<li>BX_exitdestination: Link (HTML)</li>
-
-<li>BX_validationfile: Schema (RNG)</li>
-
+        
+<li>BX_exitdestination: URL of the location BXE should redirect to upon exit</li>
+        
+<li>BX_validationfile: URL of the RELAX NG schema for the XML to be edited</li>
+        
+<li>BX_xhtmlfile: URL of the XHTML page to load the XML content into for editing</li>
+        
+<li>BX_xmlfile: URL of the XML for the page to be edited</li>
+        
+<li>BX_xslfile: URL of the XSL stylesheet to use for formatting the XML in BXE (BXE 1.1 only)</li>
+        
+<li>contextmenufile: URL of the file that defines the BXE context menu</li>
+        
+<li>css: URL of the CSS file used for styling the XML to be edited in BXE</li>
+        
+<li>defaultlanguage: default language of the publication, used for insert popups</li>
+        
 </ul>
-</div>
+<p>If you want to customize BXE, the config step is your starting point. Make sure to pass
+        in the right URL for these parameters. The default publication uses additional pipelines
+        for these URL to provide more flexibility (such as automatically loading the correct
+        RELAX NG schema based on the resource type of the current page). More information about
+        the format of <span class="codefrag">config.xml</span> is available at the <a href="http://wiki.bitfluxeditor.org/Config.xml">BXE wiki</a>. 
+        The config step pipeline looks as follows in the default publication:</p>
+<pre class="code">
+    
+        &lt;map:match type="step" pattern="config"&gt;
+          &lt;map:generate src="../../resources/misc/bxeng/inc/config.xml"/&gt;
+          &lt;map:transform src="../../xslt/bxeng/config-xml.xsl"&gt;
+            &lt;map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=xml"/&gt;
+            &lt;map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/&gt;
+            
+  &lt;!--      Instead of an xsl we use the xhtml file to provide the basic layout
+            &lt;map:parameter name="BX_xslfile" value="{2}.xsl"/&gt;
+  --&gt;
+            &lt;map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html"/&gt;
+            &lt;map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}.rng"/&gt;
+            &lt;map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxeng.css"/&gt;
+  &lt;!--       The document is checked in when we exit from bx (in case of save&amp;exit and in case of exit), so we use the usecase
+             for the checkin while we redirect to the document
+  --&gt;
+            &lt;map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;amp;lenya.step=checkin&amp;amp;backup=true"/&gt;
+            &lt;map:parameter name="contextmenufile" value="../../resources/misc/bxeng/contextmenu.xml"/&gt;
+          &lt;/map:transform&gt;
+          &lt;map:transform type="cinclude"/&gt;
+          &lt;map:serialize type="xml"/&gt;
+        &lt;/map:match&gt;
+    
+    </pre>
+</div>    
 
-
-<a name="N10037"></a><a name="Namespace+declaration"></a>
-<h2 class="underlined_10">Namespace declaration</h2>
+<a name="N10079"></a><a name="The+xml+step"></a>
+<h2 class="underlined_10">The xml step</h2>
 <div class="section">
-<p>resources/misc/bxe/*-namespaces.xml</p>
-</div>
+<p>The xml step is responsible for retrieving the XML of the page to be edited, and sending it back to the server
+        for saving (via HTTP PUT). It first checks if the request method is a GET or a PUT, and goes on to either deliver
+        the XML to BXE (for the GET case) or sending the XML to the server (for the PUT case). If the request method
+        is a PUT, it then checks if the page is properly checked out, and invokes a flow script function 
+        (<span class="codefrag">editDocument</span>) to save the page. The <span class="codefrag">editDocument</span> function takes care of checking
+        the page back in, triggering workflow transitions, and finally redirecting to the saved page. This is the
+        xml pipeline from the default publication:</p>
+<pre class="code">
+    
+      &lt;map:match type="step" pattern="xml"&gt;      
+        &lt;map:select type="request-method"&gt;
+          
+          &lt;map:when test="PUT"&gt;
+            &lt;!-- before we save, we must be sure that the document is well checked out
+            --&gt;           
+	        &lt;map:act type="reserved-checkout-test"&gt;
+    	      &lt;map:generate type="serverpages" src="../../content/rc/{exception}.xsp"&gt;
+        	    &lt;map:parameter name="user" value="{user}"/&gt;
+            	&lt;map:parameter name="filename" value="{filename}"/&gt;
+	            &lt;map:parameter name="date" value="{date}"/&gt;
+    	      &lt;/map:generate&gt;
+        	  &lt;map:transform src="../../xslt/rc/rco-exception.xsl"/&gt;
+	          &lt;map:call resource="style-cms-page"/&gt;
+        	&lt;/map:act&gt;
+          
+          &lt;map:call function="editDocument"&gt;
+            &lt;map:parameter name="sourceUri" value="cocoon:/request2document"/&gt;
+            &lt;map:parameter name="noCheckin" value="true"/&gt;
+          &lt;/map:call&gt;
+          &lt;/map:when&gt;
+
+          &lt;map:otherwise&gt; &lt;!-- GET --&gt;
+            &lt;map:generate src="content/authoring/{page-envelope:document-path}"/&gt;
+            &lt;map:transform src="../../xslt/bxeng/change-object-path.xsl"&gt;
+              &lt;map:parameter name="documentid" value="{page-envelope:document-id}"/&gt;
+            &lt;/map:transform&gt;
+            &lt;map:serialize type="xml"/&gt;
+          &lt;/map:otherwise&gt;
+          
+        &lt;/map:select&gt;
+      &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N1008D"></a><a name="The+image-upload-show%2C+link-show+and+asset-upload-show+steps"></a>
+<h2 class="underlined_10">The image-upload-show, link-show and asset-upload-show steps</h2>
+<div class="section">
+<p>BXE supports the notion of callbacks to allow Lenya to display a list of assets, images or links
+        to be inserted into a page. These three steps generate the content of these popup windows, respectively.
+        The <span class="codefrag">link-show</span> step is the most complex of these since it takes lots of parameters, such
+        as the currently selected language, the position in the sitetree and the list of available languages.
+        These parameters are necessary to recreate the sitetree visualization from the site area for the link
+        insert popup.</p>
+<pre class="code">
+    
+      &lt;map:match pattern="image-upload-show" type="step"&gt;
+        &lt;map:call resource="cms-screen"&gt;
+           &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+           &lt;map:parameter name="stylesheet" value="bxeng/image.xsl"/&gt;
+        &lt;/map:call&gt;
+      &lt;/map:match&gt;
+
+      &lt;map:match pattern="asset-upload-show" type="step"&gt;
+        &lt;map:call resource="cms-screen"&gt;
+           &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+           &lt;map:parameter name="stylesheet" value="bxeng/asset.xsl"/&gt;
+        &lt;/map:call&gt;
+      &lt;/map:match&gt; 
+
+      &lt;map:match pattern="link-show" type="step"&gt;
+            &lt;!-- just a dummy xsp since we call the info area directly --&gt;
+           &lt;map:generate type="serverpages" src="../../content/info/assets.xsp"/&gt;
+          &lt;map:transform src="../../xslt/bxeng/link.xsl" label="content"&gt;
+            &lt;map:parameter name="infoarea" value="true"/&gt;
+            &lt;map:parameter name="contextprefix" value="{request:contextPath}"/&gt;
+            &lt;map:parameter name="publicationid" value="{page-envelope:publication-id}"/&gt;
+            &lt;map:parameter name="area" value="authoring"/&gt;
+            &lt;map:parameter name="tab" value="en"/&gt;
+            &lt;map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/&gt;
+            &lt;map:parameter name="documentid" value="{page-envelope:document-id}"/&gt;
+            &lt;map:parameter name="documenturl" value="/{page-envelope:document-url}"/&gt;
+            &lt;map:parameter name="documentextension" value="{page-envelope:document-extension}"/&gt;
+            &lt;map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/&gt;
+            &lt;map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/&gt;
+          &lt;/map:transform&gt;
+        &lt;map:call resource="style-cms-page"/&gt;
+      &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N1009E"></a><a name="The+image-upload+and+asset-upload+steps"></a>
+<h2 class="underlined_10">The image-upload and asset-upload steps</h2>
+<div class="section">
+<p>To enable the upload of new assets to Lenya directly from the BXE <span class="codefrag">insert Image</span> 
+        and <span class="codefrag">insert Asset</span> popup windows, there are two use case steps that use the
+        upload action to process the uploaded file, and then redirect to the respective popup window.</p>
+<pre class="code">
+    
+          &lt;map:match type="step" pattern="asset-upload"&gt;
+            &lt;map:act type="upload"&gt;
+              &lt;map:redirect-to uri="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=asset-upload-show"/&gt;
+            &lt;/map:act&gt;
+            &lt;map:call resource="cms-screen"&gt;
+              &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+              &lt;map:parameter name="stylesheet" value="bxeng/asset.xsl"/&gt;
+            &lt;/map:call&gt;
+          &lt;/map:match&gt;
+
+          &lt;map:match type="step" pattern="image-upload"&gt;
+            &lt;map:act type="upload"&gt;
+              &lt;map:redirect-to uri="{request:requestURI}?lenya.usecase=bxeng&amp;amp;lenya.step=image-upload-show"/&gt;
+            &lt;/map:act&gt;
+	        &lt;map:call resource="cms-screen"&gt;
+	           &lt;map:parameter name="serverpage" value="info/assets.xsp"/&gt;
+	           &lt;map:parameter name="stylesheet" value="bxeng/image.xsl"/&gt;
+	        &lt;/map:call&gt;
+	       &lt;/map:match&gt;
+    
+    </pre>
+</div>    
+
+<a name="N100B2"></a><a name="Further+BXE+configuration"></a>
+<h2 class="underlined_10">Further BXE configuration</h2>
+<div class="section">
+<p>BXE offers a lot of customization options beyond those outlined above. If you plan to make the most
+        of BXE, you should familiarize yourself with the contents of the 
+            <a href="http://wiki.bitfluxeditor.org/Main_Page">BXE wiki</a>.</p>
+</div>    
 
 
 <p align="right">

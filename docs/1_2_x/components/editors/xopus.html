@@ -399,6 +399,9 @@
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
+<a href="#About+Xopus">About Xopus</a>
+</li>
+<li>
 <a href="#Demo">Demo</a>
 </li>
 <li>
@@ -417,32 +420,36 @@
 </div> 
 
 
-<a name="N1001B"></a><a name="Demo"></a>
+<a name="N1001B"></a><a name="About+Xopus"></a>
+<h2 class="underlined_10">About Xopus</h2>
+<div class="section">
+<p>Xopus is a browser based validating in-place wysiwyg XML editor. It uses Javascript, XML Schema and XSLT.
+    At this time, it only works on Internet Explorer. If you need a cross-platform solution, take a look at
+    BXE. Note that Xopus is not open source, but a commerical product by Q42.</p>
+</div>
+    
+
+<a name="N10025"></a><a name="Demo"></a>
 <h2 class="underlined_10">Demo</h2>
 <div class="section">
-<p>Try Xopus at:</p>
-<pre class="code">
-
-http://www.xopus.com/demo/index.html
-
-</pre>
+<p>There is an online <a href="http://www.xopus.com/demo/index.html">XOPUS demo</a> available. You need Internet
+    Explorer 5.5 or newer to view the demo.</p>
 </div>
 
 
-<a name="N10029"></a><a name="Configuration"></a>
+<a name="N10033"></a><a name="Configuration"></a>
 <h2 class="underlined_10">Configuration</h2>
 <div class="section">
-<p>Lenya needs to know the prefix of Xopus:</p>
-<pre class="code">
-
-src/webapp/lenya/usecase.xmap
-src/webapp/lenya/resources/misc/xopus/index.html
-
-</pre>
+<p>Lenya is expecting an <em>@XOPUS:CONTEXT@</em> (e.g. Xopus-2.1.66) directory 
+within your <em>@XOPUS:PATH@</em> (e.g. <em>webapps/ROOT</em>) directory. 
+<em>@XOPUS:CONTEXT@</em> and <em>@XOPUS:PATH@</em> are configured 
+within your <em>local.build.properties</em> (xopus.context resp. xopus.path). 
+The path is relative to <em>usecase.xmap</em>. 
+</p>
 </div>
 
 
-<a name="N10037"></a><a name="Saving+via+POST"></a>
+<a name="N10052"></a><a name="Saving+via+POST"></a>
 <h2 class="underlined_10">Saving via POST</h2>
 <div class="section">
 <p>To enable saving via POST, one needs to modify <span class="codefrag">$XOPUS/xopusPlugins/datadriver.js</span> as follows</p>
@@ -470,12 +477,12 @@ t.responseText);
 
 </pre>
 <p>
-whereas the text of the alerts might be replaced by something else.
+You may change the text of the alerts by something else.
 </p>
 </div>
 
 
-<a name="N1004B"></a><a name="Exit+Xopus"></a>
+<a name="N10066"></a><a name="Exit+Xopus"></a>
 <h2 class="underlined_10">Exit Xopus</h2>
 <div class="section">
 <p>To exit Xopus one needs to modify <span class="codefrag">$XOPUS/xopusPlugins/cmsdriver.js</span> as follows</p>
@@ -490,12 +497,12 @@ whereas the text of the alerts might be replaced by something else.
 
 </pre>
 <p>
-whereas the text of the alert might be replaced by something else.
+You may replace the text of the alert by something else.
 </p>
 </div>
 
 
-<a name="N1005F"></a><a name="Making+a+page+editable+with+Xopus%3A+Schemas%2C+Views+%28XSLT%29+and+Menus"></a>
+<a name="N1007A"></a><a name="Making+a+page+editable+with+Xopus%3A+Schemas%2C+Views+%28XSLT%29+and+Menus"></a>
 <h2 class="underlined_10">Making a page editable with Xopus: Schemas, Views (XSLT) and Menus</h2>
 <div class="section">
 <p>Xopus needs an XML Schema for validation and an XSLT to view the document. The Schemas and XSLTs need to be located at:</p>
@@ -506,16 +513,21 @@ $PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl
 
 </pre>
 <p>
-whereas one might want to use <a href="http://www.thaiopensource.com/relaxng/trang.html">Trang</a> to generate XML Schemas.
+You might want to use <a href="http://www.thaiopensource.com/relaxng/trang.html">Trang</a> to generate XML Schemas.
 </p>
 <p>
 Editing with Xopus is implemented as a usecase. One can add a menu item as follows:
 </p>
 <pre class="code">
 
-&lt;item uc:usecase="xopus" href="?lenya.step=open&amp;amp;doctype=$DOCTYPE"&gt;Edit&amp;#160;with&amp;#160;Xopus&lt;/item&gt;
+&lt;item uc:usecase="xopus" uc:step="open" href="?doctype=$DOCTYPE"&gt;Edit&amp;#160;with&amp;#160;Xopus&lt;/item&gt;
 
 </pre>
+<p>In addition, you may want to study the oscom publication which has an Xopus integration example, 
+    as well as the root xopus.xmap, the xopus.xmap in the oscom publication, and the section in 
+    usecase.xmap pertaining to xopus. This will help you understand how the integration was done
+    (which admittedly is a bit clunky as it predates many Lenya concepts).
+    </p>
 </div>
 
 <p align="right">

@@ -399,10 +399,7 @@
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
-<a href="#Generic+Search">Generic Search</a>
-</li>
-<li>
-<a href="#Customizing%2FOverwriting+Generic+Search+Interface">Customizing/Overwriting Generic Search Interface</a>
+<a href="#Overview">Overview</a>
 </li>
 <li>
 <a href="#Crawling+a+website">Crawling a website</a>
@@ -420,52 +417,23 @@
 </div> 
 
 
-<a name="N1001B"></a><a name="Generic+Search"></a>
-<h2 class="underlined_10">Generic Search</h2>
+<a name="N1001B"></a><a name="Overview"></a>
+<h2 class="underlined_10">Overview</h2>
 <div class="section">
-<p>URL:</p>
-<pre class="code">
-
-/lenya/$PUB_ID/search-$AREA/lucene
-
-</pre>
-<p>Indices and Excerpts:</p>
-<pre class="code">
-
-src/webapp/lenya/pubs/$PUB_ID/work/search/index/$AREA/index
-src/webapp/lenya/pubs/$PUB_ID/work/search/htdocs_dump/$AREA
-
-</pre>
-<p>Configuration:</p>
-<pre class="code">
-
-src/webapp/global-sitemap.xmap
-src/webapp/lenya/lucene.xmap
-
-</pre>
+<p>There are two URL for the search screen relative to your publication: 
+    <span class="codefrag">search-live/lucene</span> to search the live area, <span class="codefrag">search-authoring/lucene</span> to 
+    search the authoring area of your publication.</p>
+<p>If you want to customize the layout of  the search screen for your publication, 
+    place a stylesheet at <span class="codefrag">lenya/xslt/search/search-and-results.xsl</span>
+     relative to your publication root.</p>
+<p>Lucene indices are stored within the <span class="codefrag">work/search/index/$AREA/index</span> directory of your 
+    publication. The <span class="codefrag">work/search/htdocs_dump/$AREA</span> directory holds content from crawling (see below).</p>
+<p>The search pipelines are defined within <span class="codefrag">global-sitemap.xmap</span> and <span class="codefrag">lucene.xmap</span>
+</p>
 </div>
 
 
-<a name="N10037"></a><a name="Customizing%2FOverwriting+Generic+Search+Interface"></a>
-<h2 class="underlined_10">Customizing/Overwriting Generic Search Interface</h2>
-<div class="section">
-<p>XSLT:</p>
-<pre class="code">
-
-src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
-
-</pre>
-<p>URL:</p>
-<pre class="code">
-
-/lenya/$PUB_ID/search-$AREA/lucene
-
-</pre>
-</div>
-
-
-
-<a name="N1004C"></a><a name="Crawling+a+website"></a>
+<a name="N10042"></a><a name="Crawling+a+website"></a>
 <h2 class="underlined_10">Crawling a website</h2>
 <div class="section">
 <p>
@@ -473,11 +441,12 @@ Crawl a website by running
 </p>
 <pre class="code">
 
-ant -f src/webapp/lenya/bin/crawl_and_index.xml crawl -Dcrawler.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf
+ant -f build/lenya/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=build/lenya/webapp/lenya/pubs/default/config/search/crawler-live.xconf crawl
 
 </pre>
 <p>
-whereas the crawler.xconf has the following elements
+Note that there is a search.properties file in build/lenya/webapp/lenya/bin that you may have to change.
+crawler.xconf needs to have the following elements:
 </p>
 <pre class="code">
 
@@ -495,7 +464,7 @@ whereas the crawler.xconf has the following elements
 
 </pre>
 <p>
-where the element robots is optional.
+the robots element is optional.
 </p>
 <p>
 In case you don't have access to the server and want to disallow certain  URLs from being crawled, then
@@ -516,16 +485,17 @@ Disallow: /do/not/crawl/this/page.html
 </div>
 
 
-<a name="N1006B"></a><a name="Creating+an+index+from+the+command+line"></a>
+<a name="N10061"></a><a name="Creating+an+index+from+the+command+line"></a>
 <h2 class="underlined_10">Creating an index from the command line</h2>
 <div class="section">
 <pre class="code">
 
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
+ant -f build/lenya/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=build/lenya/webapp/lenya/pubs/default/config/search/lucene-live.xconf index
 
 </pre>
 <p>
-whereas the lucene.xconf has the following elements
+Note that there is a search.properties file in build/lenya/webapp/lenya/bin that you may have to change.
+lucene-live.xconf has the following elements
 </p>
 <pre class="code">
 
@@ -539,25 +509,13 @@ whereas the lucene.xconf has the following elements
     &lt;htdocs-dump-dir src="../../work/search/lucene/htdocs_dump"/&gt;
 
     &lt;indexer class="org.apache.lenya.lucene.index.DefaultIndexer"/&gt;
-&lt;!--
-    &lt;indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer"&gt;
-      &lt;configuration src="cmfs-luceneDoc.xconf"/&gt;
-      &lt;extensions src="xml"/&gt;
-    &lt;/indexer&gt;
---&gt;
-&lt;!--
-    &lt;indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer"&gt;
-      &lt;configuration src="cmfs-luceneDoc.xconf"/&gt;
-      &lt;filter class="foo.bar.FileFilter"/&gt;
-    &lt;/indexer&gt;
---&gt;
 &lt;/lucene&gt;
 
 </pre>
 </div>
 
 
-<a name="N1007D"></a><a name="Indexing+XML+documents"></a>
+<a name="N10073"></a><a name="Indexing+XML+documents"></a>
 <h2 class="underlined_10">Indexing XML documents</h2>
 <div class="section">
 <p>
@@ -604,12 +562,12 @@ Concatenating element values and setting default values in case element value do
 </div>
 
 
-<a name="N10098"></a><a name="Extract+text+from+a+PDF+document"></a>
+<a name="N1008E"></a><a name="Extract+text+from+a+PDF+document"></a>
 <h2 class="underlined_10">Extract text from a PDF document</h2>
 <div class="section">
 <pre class="code">
 
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/work/search/lucene/htdocs_dump xpdf
+ant -f build/lenya/webapp/lenya/bin/crawl_and_index.xml -Dhtdocs.dump.dir=build/lenya/webapp/lenya/pubs/default/work/search/lucene/htdocs_dump xpdf
 
 </pre>
 <p>
