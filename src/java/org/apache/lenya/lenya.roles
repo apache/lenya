@@ -122,4 +122,8 @@
   	    shorthand="document-manager"
   	    default-class="org.apache.lenya.cms.site.tree.TreeSiteManager"/>
         
+  <role name="org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler"
+  	    shorthand="usecase-scheduler"
+  	    default-class="org.apache.lenya.cms.usecase.scheduling.UsecaseSchedulerImpl"/>
+        
 </role-list>
