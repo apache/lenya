@@ -44,7 +44,6 @@
         
       <map:match type="step" pattern="open">
        <!-- Check for BXENG -->
-       <!-- <map:act type="resource-exists" src="../../../../ROOT/bxeng/bxeLoader.js"> -->
        <map:act type="resource-exists" src="../../resources/bxeng/bxeLoader.js">
         <map:act type="reserved-checkout">
           <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
