@@ -9,8 +9,8 @@
   <lenya:meta>
     <dc:title>The Simple Document Type</dc:title>
     <dc:creator>Andreas Hartmann</dc:creator>
-    <dc:subject></dc:subject>
-    <dc:description></dc:description>
+    <dc:subject>DC Subject</dc:subject>
+    <dc:description>DC Description</dc:description>
     <dc:publisher></dc:publisher>
     <dc:contributor></dc:contributor>
     <dc:date>First published date</dc:date>
@@ -18,10 +18,10 @@
     <dc:format></dc:format>
     <dc:identifier></dc:identifier>
     <dc:source></dc:source>
-    <dc:language></dc:language>
+    <dc:language>en</dc:language>
     <dc:relation></dc:relation>
     <dc:coverage></dc:coverage>
-    <dc:rights></dc:rights>
+    <dc:rights>dcrights</dc:rights>
   </lenya:meta>
   <lenya:header>
     <lenya:page-title>Page Title (can be used on overview
