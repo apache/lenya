@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-$Id: reject-screen.xsl,v 1.5 2004/02/14 08:07:40 roku Exp $
-$Author: roku $
+$Id: reject-screen.xsl,v 1.6 2004/02/14 08:09:14 roku Exp $
 <License>
 
  ============================================================================
