@@ -1,5 +1,5 @@
 /*
-$Id: DocumentLanguagesHelper.java,v 1.1 2003/09/03 14:12:20 egli Exp $
+$Id: DocumentLanguagesHelper.java,v 1.2 2003/09/05 14:40:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -103,7 +103,34 @@ public class DocumentLanguagesHelper {
      * @throws ProcessingException if the document for the given language could not be created.
      */
     public String getUrl(String language) throws ProcessingException {
-        String url = null;
+        Document doc = getDocument(language);
+        return pageEnvelope.getContext() + doc.getCompleteURL();
+    }
+
+    /**
+     * Compute the info area URL for a given language and the parameters given in the contructor.
+     * 
+     * @param language the language
+     * 
+     * @return the url for the given language
+     * 
+     * @throws ProcessingException if the document for the given language could not be created.
+     */
+    public String getInfoUrl(String language) throws ProcessingException {
+        Document doc = getDocument(language);
+        return pageEnvelope.getContext() + doc.getCompleteInfoURL();
+    }
+
+    /**
+     * Create a document for a given language and the parameters given in the contructor.
+     * 
+     * @param language the language
+     * 
+     * @return the document with the given language
+     * 
+     * @throws ProcessingException if the document for the given language could not be created.
+     */
+    protected Document getDocument(String language) throws ProcessingException {
         DocumentBuilder builder = DefaultDocumentBuilder.getInstance();
         String canonicalURL =
             builder.buildCanonicalUrl(
@@ -120,7 +147,6 @@ public class DocumentLanguagesHelper {
         } catch (DocumentBuildException e) {
             throw new ProcessingException(e);
         }
-        url = pageEnvelope.getContext() + doc.getCompleteURL();
-        return url;
+        return doc;
     }
 }
