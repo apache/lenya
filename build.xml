@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: build.xml,v 1.63 2004/03/21 18:35:14 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE project [
 <!-- ===========================================================================
@@ -24,7 +24,7 @@
                        |  Apache Lenya Build System |
                        * =========================== *
 
-       CVS $Id: build.xml,v 1.63 2004/03/21 18:35:14 gregor Exp $:
+       CVS $Id$:
 
     History
     =======
@@ -61,6 +61,8 @@
   <import file="src/targets/test-build.xml" />
   <!-- Distribution targets    -->
   <import file="src/targets/dist-build.xml" />
+  <!-- Kupu targets            -->
+  <import file="src/targets/kupu-build.xml" />
   <!-- Export targets          -->
   <import file="src/targets/export-build.xml" />
   <!-- Publication tests       -->
