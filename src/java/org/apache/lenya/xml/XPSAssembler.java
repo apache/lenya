@@ -1,5 +1,5 @@
 /*
- * $Id: XPSAssembler.java,v 1.9 2003/03/06 20:45:53 gregor Exp $
+ * $Id: XPSAssembler.java,v 1.10 2003/03/10 15:33:58 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -180,14 +180,15 @@ public class XPSAssembler implements XPSInclude {
      * @return DOCUMENT ME!
      */
     public Document assemble(Document document, String reference, String cocoon) {
+        //return document;
+
         Element root = document.getDocumentElement();
         Document assembledDocument = dpf.getDocument();
         Element assembledRoot = (Element) dpf.cloneNode(assembledDocument, root, false);
         assembledDocument.appendChild(assembledRoot);
 
         File workingDirectory = new File(System.getProperty("user.dir"));
-        XPSSourceInformation sourceInfo = new XPSSourceInformation("file:" + workingDirectory +
-                "/dummy.xml", cocoon);
+        XPSSourceInformation sourceInfo = new XPSSourceInformation("file:" + workingDirectory + "/dummy.xml", cocoon);
         XPSSourceInformation currentInfo = new XPSSourceInformation(reference, sourceInfo, cocoon);
         NodeList nl = root.getChildNodes();
 

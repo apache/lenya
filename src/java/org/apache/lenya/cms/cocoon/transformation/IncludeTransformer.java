@@ -1,5 +1,5 @@
 /*
- * $Id: IncludeTransformer.java,v 1.9 2003/03/06 20:45:41 gregor Exp $
+ * $Id: IncludeTransformer.java,v 1.10 2003/03/10 15:33:57 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,7 +49,8 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.transformation.AbstractDOMTransformer;
+//import org.apache.cocoon.transformation.AbstractDOMTransformer;
+import org.lenya.cms.cocoon.transformation.AbstractDOMTransformer;
 
 import org.w3c.dom.Document;
 
@@ -112,11 +113,9 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
             getLogger().debug("COCOON_BASE_REQUEST: " + cocoon_base_request);
 
             if (href != null) {
-                return new org.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + href,
-                    cocoon_base_request);
+                return new org.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + href, cocoon_base_request);
             } else {
-                return new org.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + sitemap_uri,
-                    cocoon_base_request);
+                return new org.lenya.xml.XPSAssembler().assemble(doc, sitemapPath + sitemap_uri, cocoon_base_request);
             }
         } catch (Exception e) {
             getLogger().error(".transform(): " + e);
