@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuilder.java,v 1.6 2003/08/21 10:29:14 egli Exp $
+$Id: DocumentBuilder.java,v 1.7 2003/09/30 09:06:46 egli Exp $
 <License>
 
  ============================================================================
@@ -86,27 +86,34 @@ public interface DocumentBuilder {
     boolean isDocument(Publication publication, String url)
         throws DocumentBuildException;
         
-	/**
-	 * Builds an URL corresponding to a cms document from the publication, 
+    /**
+     * Builds an URL corresponding to a cms document from the publication, 
      * the area, the document id and the language
      * 
-	 * @param publication The publication the document belongs to.
-	 * @param area The area the document belongs to.
-	 * @param documentid The document id of the document.
-	 * @param language The language of the document.
-	 * @return a String The builded url
-	 */
-	String buildCanonicalUrl(Publication publication, String area, String documentid, String language);
-        
-	/**
-	 * Builds an URL corresponding to a cms document from the publication, 
+     * @param publication The publication the document belongs to.
+     * @param area The area the document belongs to.
+     * @param documentid The document id of the document.
+     * @param language The language of the document.
+     * @return a String The builded url
+     */
+    String buildCanonicalUrl(
+        Publication publication,
+        String area,
+        String documentid,
+        String language);
+
+    /**
+     * Builds an URL corresponding to a cms document from the publication, 
      * the area and the document id
      * 
-	 * @param publication The publication the document belongs to.
-	 * @param area The area the document belongs to.
-	 * @param documentid The document id of the document.
-	 * @return a String The builded url
-	 */
-	String buildCanonicalUrl(Publication publication, String area, String documentid);
+     * @param publication The publication the document belongs to.
+     * @param area The area the document belongs to.
+     * @param documentid The document id of the document.
+     * @return a String The builded url
+     */
+    String buildCanonicalUrl(
+        Publication publication,
+        String area,
+        String documentid);
     
 }
