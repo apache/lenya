@@ -35,7 +35,7 @@
         <item>-----------------</item>
       </block>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/magazin/gesundheit/2002/0508/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.xsd&amp;url-css="+domain_prefix+"/css/article.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/XopusInterface"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
+        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.xsd&amp;url-css="+domain_prefix+"/css/article.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/XopusInterface"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
       </block>
       <block>
         <item>-----------------</item>
@@ -84,6 +84,12 @@
       </block>
     </menu>
     <menu name="Help">
+      <block>
+        <item href="../../../../../introduction.html">About&#160;this&#160;Publication</item>
+      </block>
+      <block>
+        <item>-----------------</item>
+      </block>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>

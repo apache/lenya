@@ -232,7 +232,7 @@
          <ContentItem>
            <DataContent>
              <related-content>
-<!-- -->
+<!--
                <block>
                  <title>Artikel</title>
                  <item>
@@ -254,7 +254,7 @@
                    <a href="">BrainFair 2002</a>
                  </item>
                </block>
-<!-- -->
+-->
              </related-content>
            </DataContent>
          </ContentItem>

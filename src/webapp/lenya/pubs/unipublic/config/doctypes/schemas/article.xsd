@@ -311,6 +311,23 @@
       <xs:sequence><xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element name="FirstCreated" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="ThisRevisionCreated" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="RevisionDate" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:attribute name="year" type="xs:string"/>
+              <xs:attribute name="month" type="xs:string"/>
+              <xs:attribute name="day" type="xs:string"/>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="PublishDate" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:attribute name="year" type="xs:string"/>
+              <xs:attribute name="month" type="xs:string"/>
+              <xs:attribute name="day" type="xs:string"/>
+              <xs:attribute name="hour" type="xs:string"/>
+              <xs:attribute name="minute" type="xs:string"/>
+              <xs:attribute name="millis" type="xs:string"/>
+            </xs:complexType>
+          </xs:element>
         </xs:choice></xs:sequence>
     </xs:complexType>
   </xs:element>
