@@ -37,11 +37,4 @@
   </copy>
 </target>
 
-<target name="updatelinks">
-  <echo>Update Links: Replacing ${old} with ${new}</echo>
-  <replace dir="$${pub.dir}/${authoring.dir}" value="{$new}" token="{$old}">
-     <include name="**/*.xml"/>
-  </replace>	
-</target>
-
 </project>
