@@ -674,6 +674,17 @@
           </map:match>
           
         </map:match>
+        
+        <map:match pattern="info-workflow" type="usecase">
+        	<map:act type="resource-exists" src="pubs/{page-envelope:publication-id}/content/workflow/history/{page-envelope:document-path}">
+						<map:generate src="pubs/{page-envelope:publication-id}/content/workflow/history/{page-envelope:document-path}"/>
+						<map:transform src="xslt/info/workflow2info.xsl"/>
+						<map:transform src="xslt/info/info.xsl">
+							<map:parameter name="tab" value="{../../1}"/>
+						</map:transform>
+						<map:serialize/>
+        	</map:act>
+        </map:match>
 
         <map:match pattern="info-*" type="usecase">
           

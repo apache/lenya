@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.16 2003/08/14 16:36:49 egli Exp $
+ $Id: info.xsl,v 1.17 2003/08/15 08:30:56 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -163,19 +163,17 @@
 	<td><xsl:apply-templates/></td>
 </xsl:template>
 
-<xsl:template match="wf:version">
-     <table class="lenya-table-noborder">
-	<tr><td><xsl:value-of select="@state"/></td><td><xsl:value-of select="@user"/></td><td><xsl:value-of select="@date"/></td></tr>
-    </table>
+<xsl:template match="lenya-info:workflow">
+	<xsl:copy-of select="node()"/>
 </xsl:template>
-
-
+	
+	
 <xsl:template match="lenya-info:permissions">
   <table class="lenya-table-noborder">
   <tr>
     <td>
     	<form method="get" name="form_ssl_{@area}">
-				<input type="hidden" name="lenya.usecase" value="info"/>
+				<input type="hidden" name="lenya.usecase" value="info-ac-{substring(@area, 1, 4)}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
 				<input type="hidden" name="area" value="{@area}"/>
 				<input type="hidden" name="change_ssl" value="true"/>
