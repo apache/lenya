@@ -69,6 +69,9 @@
 					<standard-uri href="standardURI.html" label="URI Scheme"/>
 					<usecases href="usecases.html" label="Usecases"/>
 				</uri-handling>
+        <asset-management href="asset-management/" label="Asset Management">
+          <management href="management.html" label="Asset Management"/>
+        </asset-management>
 				<node-40 href="tasks/" label="Tasks">
 					<node-41 href="concept.html" label="The Task Concept"/>
 					<node-42 href="defining.html" label="Defining Tasks"/>
