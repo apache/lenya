@@ -28,13 +28,13 @@
     <!-- <sampleMeta>Meta.xml</sampleMeta> -->
   </creator>
   <tasks>
-    <task id="publish-dossier"/>
+    <task id="publish"/>
   </tasks>
 </doc>
 
 <doc type="Headlines">
   <tasks>
-    <task id="publish-headlines"/>
+    <task id="publish"/>
   </tasks>
 </doc>
 

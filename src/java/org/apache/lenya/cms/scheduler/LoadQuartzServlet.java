@@ -34,7 +34,7 @@ import org.wyona.cms.publishing.PublishingEnvironment;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.8 2002/11/15 13:38:20 ah Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.9 2002/11/15 15:52:10 ah Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -181,7 +181,8 @@ public class LoadQuartzServlet extends HttpServlet {
 	log.debug("-------------------- End Session Attributes --------------------");
 	
 	// the publicationID is fetched from the session
-	String publicationId = (String) request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+	String publicationId = (String) request.getSession().getAttribute(
+                "org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
 	if (publicationId == null || publicationId.equals("")) {
 	    publicationId = "No_session_was_passed_in"; 
             log.error("No publication ID provided! ", new IllegalStateException());

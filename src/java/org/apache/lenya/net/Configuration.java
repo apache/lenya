@@ -54,7 +54,7 @@ public class Configuration{
   ClassLoader cl=ClassLoader.getSystemClassLoader();
   URL url=cl.getResource(resourcePathRelativeToClasspath);
   if(url == null){
-   log.fatal("Could not find resource on classpath: "+resourcePathRelativeToClasspath);
+   log.error("Could not find resource on classpath: "+resourcePathRelativeToClasspath);
    //return null;
    }
   log.debug(url);

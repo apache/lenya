@@ -11,7 +11,7 @@
   <xsl:param name="documentType"/>
 
   <!-- FIXME -->
-  <xsl:variable name="context_prefix">/wyona-cms/oscom</xsl:variable>
+  <xsl:variable name="context_prefix">/wyona-cms/<xsl:value-of select="/sch:scheduler/sch:current-date/sch:publication-id"/></xsl:variable>
   
   <xsl:template match="/">
     <xsl:apply-templates/>

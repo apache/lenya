@@ -212,6 +212,11 @@ public class SchedulerWrapper {
         OutputFormat format = OutputFormat.createPrettyPrint();
         
         try {
+            File directory = jobsFile.getParentFile();
+            if (!directory.exists()) {
+                directory.mkdirs();
+                log.info("\nCreating job snapshot directory: " + directory.getPath());
+            }
             jobsFile.createNewFile();
             XMLWriter writer = new XMLWriter(new FileWriter(jobsFile), format);
             writer.write(getSnapshot(publicationId));
