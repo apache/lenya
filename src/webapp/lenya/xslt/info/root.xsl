@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.11 2003/07/10 13:05:16 gregor Exp $
+ $Id: root.xsl,v 1.12 2003/07/11 15:42:37 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -13,7 +13,7 @@
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
 <xsl:param name="area"/>
-<xsl:param name="language"/>
+<xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
     
 <xsl:template match="lenya/cmsbody">
@@ -23,7 +23,7 @@
 <!-- These three scripts define the tree, do not remove-->
 <script src="ua.js"/>
 <script src="tree.js"/>
-<script src="lenyasitetree/{$language}"/>
+<script src="lenyasitetree/{$chosenlanguage}"/>
 </head>
 
 <body >
@@ -55,7 +55,7 @@
 <xsl:template name="activate">
 	<xsl:param name="tablanguage"/>
    <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.language=<xsl:value-of select="$tablanguage"/></xsl:attribute>
-   <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$language = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
+   <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 
 </xsl:stylesheet> 
