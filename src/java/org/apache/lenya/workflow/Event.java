@@ -12,6 +12,6 @@ package org.apache.lenya.workflow;
  */
 public interface Event {
 
-    String getCommand();
+    String getName();
 
 }

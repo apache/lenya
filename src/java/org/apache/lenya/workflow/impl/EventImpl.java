@@ -15,19 +15,15 @@ import org.apache.lenya.workflow.Event;
 public class EventImpl implements Event {
 
     /** Creates a new instance of EventImpl */
-    protected EventImpl(String eventId) {
-        assert eventId != null;
-        id = eventId;
+    protected EventImpl(String eventName) {
+        assert eventName != null;
+        name = eventName;
     }
 
-    private String id;
-
-    protected String getId() {
-        return id;
-    }
+    private String name;
 
     public String toString() {
-        return getId();
+        return getName();
     }
 
     public boolean equals(Object otherObject) {
@@ -35,7 +31,7 @@ public class EventImpl implements Event {
 
         if (otherObject instanceof EventImpl) {
             EventImpl otherEvent = (EventImpl) otherObject;
-            equals = getId().equals(otherEvent.getId());
+            equals = getName().equals(otherEvent.getName());
         } else {
             equals = super.equals(otherObject);
         }
@@ -44,14 +40,14 @@ public class EventImpl implements Event {
     }
 
     public int hashCode() {
-        return getId().hashCode();
+        return getName().hashCode();
     }
 
     /* (non-Javadoc)
-     * @see org.apache.lenya.cms.workflow.Event#getCommand()
+     * @see org.apache.lenya.cms.workflow.Event#getName()
      */
-    public String getCommand() {
-        return getId();
+    public String getName() {
+        return name;
     }
 
 }
