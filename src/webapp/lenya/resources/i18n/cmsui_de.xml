@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.38 2004/02/23 20:44:18 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.39 2004/02/24 21:43:39 roku Exp $ 
    
 -->
 
@@ -213,6 +213,13 @@
       <!--Rename document -->
   <message key="Rename Document">Dokument umbenennen</message>
   <message key="rename-doc">Dokument {0} umbenennen</message>
+      <!-- Copy document -->
+  <message key="Copy Document">Dokument kopieren</message>
+  <message key="copy-doc">Kopieren von Dokument {0}</message>
+  <message key="copy-doc-to-clip-info">Das Dokument {0} wird in die Zwischenablage kopiert, so dass Sie es an gew&#252;nschter Stelle wieder einf&#252;gen k&#246;nnen.</message>
+      <!-- Paste document -->
+  <message key="Paste Document">Dokument einf&#252;gen</message>
+  <message key="paste-doc">Dokument {0} einf&#252;gen</message>
 
 </catalogue>
 
