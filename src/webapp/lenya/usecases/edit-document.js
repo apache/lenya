@@ -15,7 +15,7 @@
  *
  */
 
-importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelperImpl);
+importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
 importClass(Packages.org.apache.excalibur.source.SourceResolver);
 importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
 
@@ -38,7 +38,7 @@ importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
  */
 function editDocument() {
     try {
-        var flowHelper = new FlowHelperImpl();
+        var flowHelper = cocoon.getComponent(org.apache.lenya.cms.cocoon.flow.FlowHelper.ROLE);
         var resolver = cocoon.getComponent(SourceResolver.ROLE);
         var dstUri = flowHelper.getPageEnvelope(cocoon).getDocument().getSourceURI();
         
@@ -70,7 +70,7 @@ function editDocument() {
 	/* FIXME: This is unclean because the flow will not return a value
 	   if there is an exception */
 
-        cocoon.log.error("Can not edit document.", exception.toString());
+        cocoon.log.error("Can not edit document.", exception);
     } finally {
         if(resolver != null)
             cocoon.releaseComponent(resolver);

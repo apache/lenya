@@ -34,6 +34,11 @@ import org.apache.lenya.workflow.WorkflowException;
  * Flowscript utility class.
  */
 public interface FlowHelper {
+	
+	/**
+	 * The Avalon Role.
+	 */
+	String ROLE = FlowHelper.class.getName();
 
     /**
      * Returns the current workflow situation.
