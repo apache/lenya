@@ -38,9 +38,14 @@
 
 </xsl:template>    
 
-
+<!--
+Apply nodes recursively
+-->
 <xsl:template match="tree:node">
+
+  <!-- basic url of parent node -->
   <xsl:param name="previous-url" select="''"/>
+  
   <nav:node>
   
     <xsl:copy-of select="@id"/>
@@ -87,7 +92,7 @@
     </xsl:attribute>
     
     <xsl:apply-templates>
-      <xsl:with-param name="previous-url" select="concat($previous-url, $basic-url, '/')"/>
+      <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
     </xsl:apply-templates>
     
   </nav:node>

@@ -52,11 +52,11 @@ root { }
 .menuitem-1 { font-weight: bold; padding-top: 2px; padding-bottom: 2px; font-size: 80%; }
 .menuitem-2 { padding-left: 20px; padding-top: 2px; padding-bottom: 2px; font-size: 70%; }
 .menuitem-2 a { color: #9090C0; }
-.menuitem-3 { padding-left: 1.5em; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; font-size: 60%; }
+.menuitem-3 { padding-left: 30px; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; font-size: 60%; }
 
 .menuitem-selected-1 { border-bottom: dotted 1px Navy; font-weight: bold; padding-top: 2px; padding-bottom: 2px; font-size: 80%; }
 .menuitem-selected-2 { padding-left: 20px; margin-top: 2px; margin-bottom: 2px; font-size: 70%; }
-.menuitem-selected-3 { padding-left: 1.5em; font-size: 60%; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; }
+.menuitem-selected-3 { padding-left: 30px; font-size: 60%; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; }
 
 /* breadcrumb */
 
