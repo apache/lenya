@@ -33,22 +33,25 @@
         </layout>	    
     </appender>
 
+<!-- 
+  To configure specific classes resp. packages, use their complete name
+  for the name attribute of the category entry. 
+  (This assumes the log4j Category in the class was initialized with the class name).
+  Example: for the PublicationTask, you might use this entry:
+-->
+<!--
+    <category name="org.apache.lenya.cms.publication.task.PublicationTask" additivity="false">
+      <priority value="DEBUG"/>
+      <appender-ref ref="COCOON_DEFAULT" />
+    </category>
+-->
+
+    <!-- root. Must be specified last -->
     <root>
       <!-- NOTE: Available log levels: debug, info, warn, error, fatal, log -->
       <priority value ="error" />
       <appender-ref ref="COCOON_DEFAULT" />
     </root>
 
-<!-- TODO: How can specific the following classes resp. packages be configured?
-
-# Lucene Indexing
-log4j.category.org.apache.lenya.lucene.index.AbstractIndexer=INFO
-log4j.category.org.apache.lenya.lucene.index.IndexInformation=INFO
-log4j.category.org.apache.lenya.lucene.index.IndexIterator=INFO
-
-# Apache JCS cache
-log4j.category.org.apache.jcs = ERROR, A1
-
--->
 
 </log4j:configuration>
