@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 
 <introspection xmlns="http://purl.org/atom/ns#">
-  <search-entries>http://127.0.0.1:8080/lenya/blog/atomapi/search</search-entries>
+  <search-entries>http://127.0.0.1:8080/lenya/blog/atomapi/search?atom-all</search-entries>
 </introspection>
