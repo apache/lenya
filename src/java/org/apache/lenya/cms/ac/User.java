@@ -1,5 +1,5 @@
 /*
- * $Id: User.java,v 1.15 2003/06/25 08:56:32 egli Exp $
+ * $Id: User.java,v 1.16 2003/06/25 14:38:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,24 +49,31 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.lenya.cms.ac2.*;
 import org.apache.log4j.Category;
 
 /**
  *
  * @author  nobby
  */
-public abstract class User {
-	private Category log = Category.getInstance(User.class);
+public abstract class User extends AbstractGroupable implements Identifiable {
+	private static Category log = Category.getInstance(User.class);
 	
 	private String id;
-	private String fullName;
-	private String email;
-	private String encryptedPassword;
-	private Set groups = new HashSet();
+    private String fullName;
+    private String email;
+    private String encryptedPassword;
+    private Set groups = new HashSet();
+
+    /**
+     * Creates a new User.
+     */
+    public User() {
+    }
 
    /**
 	* Create a User instance
@@ -102,15 +109,6 @@ public abstract class User {
 	}
 
 	/**
-	 * Get all groups
-	 * 
-	 * @return an <code>Iterator</code>
-	 */
-	public Iterator getGroups() {
-		return groups.iterator();
-	}
-
-	/**
 	 * Get the user id
 	 * 
 	 * @return the user id
@@ -138,41 +136,8 @@ public abstract class User {
 	}
 
 	/**
-	 * Remove all groups
-	 */
-	public void removeAllGroups() {
-		for (Iterator iter = groups.iterator(); iter.hasNext();) {
-			Group group = (Group) iter.next();
-			group.removeUser(this);
-		}
-		groups.clear();
-	}
-
-	/**
-	 * Add the specified group to this user
-	 * 
-	 * @param group which is to be added
-	 */
-	public void addGroup(Group group) {
-		assert group != null;
-		groups.add(group);
-		group.addUser(this);
-	}
-
-	/**
-	 * Remove the specified group from this user
-	 * 
-	 * @param group which is to be removed
-	 */
-	public void removeGroup(Group group) {
-		groups.remove(group);
-		group.removeUser(this);
-	}
-
-	/**
-	 * Set the password
-	 * 
-	 * @param plainTextPassword the password in plain text
+     * Sets the password.
+	 * @param plainTextPassword The plain text passwrod.
 	 */
 	public void setPassword(String plainTextPassword) {
 		encryptedPassword = Password.encrypt(plainTextPassword);
@@ -211,7 +176,7 @@ public abstract class User {
 	 * @throws AccessControlException if the delete failed
 	 */
 	public void delete() throws AccessControlException {
-		removeAllGroups();
+		removeFromAllGroups();
 	}
 
 	/** (non-Javadoc)
@@ -246,4 +211,36 @@ public abstract class User {
 		
 		return this.encryptedPassword.equals(Password.encrypt(password));
 	}
+    
+    
+    /**
+     * Sets the ID of this user.
+     * @param string The ID.
+     */
+    public void setId(String string) {
+        assert string != null && !"".equals(string);
+        id = string;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.Accreditable#getAccreditables()
+     */
+    public Accreditable[] getAccreditables() {
+        Set accreditables = new HashSet();
+        accreditables.add(this);
+        Group groups[] = getGroups();
+        for (int i = 0; i < groups.length; i++) {
+            Accreditable groupAccreditables[] = groups[i].getAccreditables();
+            accreditables.addAll(Arrays.asList(groupAccreditables));
+        }
+        return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return "[user " + getId() + "]";
+    }
+
 }

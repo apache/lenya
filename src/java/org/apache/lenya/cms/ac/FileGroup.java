@@ -1,5 +1,5 @@
 /*
- * $Id: FileGroup.java,v 1.5 2003/06/25 08:56:32 egli Exp $
+ * $Id: FileGroup.java,v 1.6 2003/06/25 14:38:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,13 +50,11 @@
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
@@ -64,7 +62,7 @@ import org.apache.log4j.Category;
  * 
  * 
  */
-public class FileGroup extends Group {
+public class FileGroup extends Group implements Item {
 	private static Category log = Category.getInstance(FileGroup.class);
 	
 	public static final String GROUP = "group";
@@ -72,31 +70,32 @@ public class FileGroup extends Group {
 	public static final String ROLE = "role";
 	public static final String NAME_ATTRIBUTE = "name";
 	public static final String CLASS_ATTRIBUTE = "class";
-	
-	private Publication publication;
+    
+    /**
+     * Creates a new FileGroup object.
+     */
+    public FileGroup() {
+    }
 
-	/**
-	 * Create a new instance of <code>FileGroup</code>
-	 * 
-	 * @param publication to which the group will be attached to
-	 * @param name the name of the group
+    /**	
+     * Create a new instance of <code>FileGroup</code>
+     * @param configurationDirectory to which the group will be attached to
+     * @param name the name of the group
 	 */
-	public FileGroup(Publication publication, String name) {
+	public FileGroup(File configurationDirectory, String name) {
 		super(name);
-		this.publication = publication;
+        setConfigurationDirectory(configurationDirectory);
 	}
 
-	/**
-	 * Create a new instance of <code>FileGroup</code>
-	 * 
-	 * @param publication to which the group will be attached to
-	 * @param config containing the group details
-	 * @throws ConfigurationException if the instantiation fails
-	 */
-	public FileGroup(Publication publication, Configuration config)
+    /**
+     * Configures this file group.
+     * @param config The configuration.
+     * @throws ConfigurationException when something went wrong.
+     */
+	public void configure(Configuration config)
 		throws ConfigurationException {
-		super(config.getAttribute(NAME_ATTRIBUTE));
-		this.publication = publication;
+            
+		setName(config.getAttribute(NAME_ATTRIBUTE));
 
 		Configuration[] rolesConfig = config.getChildren(ROLES);
 		if (rolesConfig.length == 1) {
@@ -105,14 +104,13 @@ public class FileGroup extends Group {
 				String roleName = roles[i].getValue();
 				RoleManager manager = null;
 				try {
-					manager = RoleManager.instance(publication);
+					manager = RoleManager.instance(getConfigurationDirectory());
 				} catch (AccessControlException e) {
 					throw new ConfigurationException(
 						"Exception when trying to fetch RoleManager for publication: "
-							+ publication,
+							+ getConfigurationDirectory(),
 						e);
 				}
-				addRole(manager.getRole(roleName));
 			}
 
 		} else {
@@ -133,7 +131,7 @@ public class FileGroup extends Group {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
-		File xmlPath = GroupManager.instance(publication).getPath();
+		File xmlPath = getConfigurationDirectory();
 		File xmlfile = new File(xmlPath, getName() + GroupManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
@@ -157,13 +155,26 @@ public class FileGroup extends Group {
 		child = new DefaultConfiguration(ROLES);
 		config.addChild(child);		
 
-		Iterator groupsIter = getRoles();
-		while (groupsIter.hasNext()) {
-			DefaultConfiguration groupNode = new DefaultConfiguration(ROLE);
-			groupNode.setValue(((Role) groupsIter.next()).getName());
-			child.addChild(groupNode);
-		}
 		return config;
 	}
+    
+    private File configurationDirectory;
+    
+    /**
+     * Returns the configuration directory.
+     * @return A file object.
+     */
+    protected File getConfigurationDirectory() {
+        return configurationDirectory;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
+     */
+    public void setConfigurationDirectory(File configurationDirectory) {
+        assert configurationDirectory != null
+            && configurationDirectory.isDirectory();
+        this.configurationDirectory = configurationDirectory;
+    }
 
 }

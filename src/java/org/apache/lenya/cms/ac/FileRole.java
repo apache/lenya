@@ -1,5 +1,5 @@
 /*
- * $Id: FileRole.java,v 1.4 2003/06/25 08:56:32 egli Exp $
+ * $Id: FileRole.java,v 1.5 2003/06/25 14:38:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -55,42 +55,42 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.lenya.cms.publication.Publication;
 
 /**
  * @author egli
  * 
  * 
  */
-public class FileRole extends Role {
+public class FileRole extends Role implements Item {
 
-	public static final String GROUP = "role";
+	/**
+     * Creates a new file role.
+     * @param configurationDirectory The configuration directory.
+     * @param roleName The role name.
+     */
+    public FileRole(File configurationDirectory, String roleName) {
+        setName(roleName);
+        setConfigurationDirectory(configurationDirectory);
+    }
+
+    public static final String GROUP = "role";
 	public static final String NAME_ATTRIBUTE = "name";
 	public static final String CLASS_ATTRIBUTE = "class";
 
-	private Publication publication;
-	
-	/**
-	 * Create a new instance of <code>FileRole</code>
-	 * 
-	 * @param publication to which the role is to be attached
-	 * @param name name of the role
-	 */
-	public FileRole(Publication publication, String name) {
-		super(name);
-		this.publication = publication;
-	}
+    /**
+     * Creates a new FileRole object.
+     */
+    public FileRole() {
+    }
 
 	/**
-	 * Create a new instance of <code>FileRole</code>
+	 * Configure this instance of <code>FileRole</code>
 	 * 
-	 * @param publication to which the role is to be attached
 	 * @param config containing the role details
-	 * @throws ConfigurationException if the <code>FileRole</code> could not be instantiated
+	 * @throws ConfigurationException if the <code>FileRole</code> could not be configured
 	 */
-	public FileRole(Publication publication, Configuration config) throws ConfigurationException {
-		super(config.getAttribute(NAME_ATTRIBUTE));
-		this.publication = publication;
+	public void configure(Configuration config) throws ConfigurationException {
+		setName(config.getAttribute(NAME_ATTRIBUTE));
 	}
 	
 	/**
@@ -102,7 +102,7 @@ public class FileRole extends Role {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
-		File xmlPath = RoleManager.instance(publication).getPath();
+		File xmlPath = getConfigurationDirectory();
 		File xmlfile = new File(xmlPath, getName() + RoleManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
@@ -123,5 +123,24 @@ public class FileRole extends Role {
 		config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
 		return config;
 	}
+    
+    private File configurationDirectory;
+    
+    
+
+    /**
+     * Returns the configuration directory.
+     * @return A file object.
+     */
+    public File getConfigurationDirectory() {
+        return configurationDirectory;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
+     */
+    public void setConfigurationDirectory(File file) {
+        configurationDirectory = file;
+    }
 
 }

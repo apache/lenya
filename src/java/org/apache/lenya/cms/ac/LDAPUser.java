@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.7 2003/06/25 09:16:53 egli Exp $
+ * $Id: LDAPUser.java,v 1.8 2003/06/25 14:38:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,7 +66,6 @@ import javax.naming.ldap.LdapContext;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
@@ -93,23 +92,28 @@ public class LDAPUser extends FileUser {
     private static String SECURITY_AUTHENTICATION = "security-authentication";
 
     private String ldapId;
+    
+    /**
+     * Creates a new LDAPUser object.
+     */
+    public LDAPUser() {
+    }
 
     /**
      * Create an LDAPUser
      * 
-     * @param publication where the user will be attached to
+     * @param configurationDirectory where the user will be attached to
      * @param id user id of LDAPUser
      * @param email of LDAPUser
      * @param ldapId of LDAPUser
      * @throws ConfigurationException if the properties could not be read
      */
     public LDAPUser(
-        Publication publication,
+        File configurationDirectory,
         String id,
         String email,
-        String ldapId)
-        throws ConfigurationException {
-        super(publication, id, null, email, null);
+        String ldapId) throws ConfigurationException {
+        super(configurationDirectory, id, null, email, null);
         this.ldapId = ldapId;
         try {
             readProperties();
@@ -121,13 +125,12 @@ public class LDAPUser extends FileUser {
     /**
      * Create a new LDAPUser from a configuration
      * 
-     * @param publication where the user will be attached to
      * @param config the <code>Configuration</code> specifying the user details
      * @throws ConfigurationException if the user could not be instantiated
      */
-    public LDAPUser(Publication publication, Configuration config)
+    public void configure(Configuration config)
         throws ConfigurationException {
-        super(publication, config);
+        super.configure(config);
         ldapId = config.getChild(LDAP_ID).getValue();
         try {
             readProperties();
@@ -272,8 +275,7 @@ public class LDAPUser extends FileUser {
 
         System.setProperty(
             "javax.net.ssl.trustStore",
-            getPublication().getDirectory().getAbsolutePath()
-                + CONFIG_PATH
+            getConfigurationDirectory().getAbsolutePath() + File.separator
                 + defaultProperties.getProperty(KEY_STORE));
 
         env.put(
@@ -314,8 +316,7 @@ public class LDAPUser extends FileUser {
         // create and load default properties
         File propertiesFile =
             new File(
-                getPublication().getDirectory(),
-                CONFIG_PATH + "ldap.properties");
+                getConfigurationDirectory(), "ldap.properties");
         if (defaultProperties == null) {
             defaultProperties = new Properties();
             FileInputStream in;

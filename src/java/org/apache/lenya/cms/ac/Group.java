@@ -1,5 +1,5 @@
 /*
- * $Id: Group.java,v 1.5 2003/06/24 17:44:26 egli Exp $
+ * $Id: Group.java,v 1.6 2003/06/25 14:38:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,123 +49,113 @@
  
 package org.apache.lenya.cms.ac;
 
+import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.lenya.cms.ac2.*;
+
 /**
+ * A group is a set of {@link Groupable}s.
  * @author egli
- * 
- * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class Group {
+public class Group implements Accreditable {
 	
 	private String name;
-	private Set roles = new HashSet();
-	private Set users = new HashSet();
+    
+    /**
+     * Creates a new group.
+     */
+    public Group() {
+    }
 
-	/**
-	 * Create a group
-	 * 
-	 * @param name the name for this group
-	 */
+    /**
+     * Creates a new group.
+     * @param name The group name.
+     */
 	public Group(String name) {
 		this.name = name;
 	}
 	
 	/**
 	 * Get the name of this group
-	 * 
-	 * @return the name
+	 * @return The name.
 	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Get all roles of this group
-	 * 
-	 * @return an <code>Iterator</code>
-	 */
-	public Iterator getRoles() {
-		return roles.iterator();
-	}
+    /**
+     * Set the name of this group
+     * @param string The name.
+     */
+    public void setName(String string) {
+        name = string;
+    }
+    
+    private Set members = new HashSet();
+
+    /**
+     * Returns the members of this group.
+     * @return An array of {@link Groupable}s.
+     */
+    public Groupable[] getMembers() {
+        return (Groupable[]) members.toArray(new Groupable[members.size()]);
+    }
 
 	/**
-	 * Get all users
-	 * 
-	 * @return an <code>Iterator</code>
+     * Adds a member to this group.
+	 * @param member The member to add.
 	 */
-	public Iterator getUsers() {
-		return users.iterator();
+	public void add(Groupable member) {
+        assert member != null && !members.contains(member);
+        members.add(member);
+        member.addedToGroup(this);
+	}
+	
+    /**
+     * Removes a member from this group.
+     * @param member The member to remove.
+     */
+	public void remove(Groupable member) {
+        assert member != null && members.contains(member);
+		members.remove(member);
+        member.removedFromGroup(this);
 	}
 	
 	/**
-	 * Set the name of this group
-	 * 
-	 * @param string whith which the name is replaced
-	 */
-	public void setName(String string) {
-		name = string;
-	}
-	
-	/**
-	 * Add a role to this group
-	 * 
-	 * @param role the role that is to be added
-	 */
-	public void addRole(Role role) {
-        assert role != null;
-		roles.add(role);
-		role.addGroup(this);
-	}
-	
-	/**
-	 * Remove a role from this group
-	 * 
-	 * @param role the role that is to be removed
-	 */
-	public void removeRole(Role role) {
-		roles.remove(role);
-		role.removeGroup(this);
-	}
-	
-	/**
-	 * Add a user to this group
-	 * 
-	 * @param user the user that is to be added
-	 */
-	public void addUser(User user) {
-		users.add(user);
-	}
-	
-	/**
-	 * Remove the given user from the group.
-	 * 
-	 * @param user the user that is to be removed
-	 */
-	public void removeUser(User user) {
-		users.remove(user);
-	}
-	
-	/**
-	 * Is this group equal to an object
-	 * 
-	 * @param obj the object that the Group is compared to
-	 * @return true if the object is also of type Group and has the same name.
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object obj) {
+        boolean equals = false;
 		if (obj instanceof Group) {
-			return getName().equals(((Group) obj).getName());
+			equals = getName().equals(((Group) obj).getName());
 		}
-		return false;
+		return equals;
 	}
 
-	/** (non-Javadoc)
+	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
 		return getName().hashCode();
 	}
+    
+    /**
+     * Returns if this group contains this member.
+     * @param member The member to check.
+     * @return A boolean value.
+     */
+    boolean contains(Groupable member) {
+        return members.contains(member);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.Accreditable#getAccreditables()
+     */
+    public Accreditable[] getAccreditables() {
+        return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
+    }
 
 }

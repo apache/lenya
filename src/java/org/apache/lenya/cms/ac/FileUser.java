@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.17 2003/06/25 08:56:32 egli Exp $
+ * $Id: FileUser.java,v 1.18 2003/06/25 14:38:29 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -50,13 +50,11 @@
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Category;
 
 /**
@@ -64,7 +62,7 @@ import org.apache.log4j.Category;
  * 
  * 
  */
-public class FileUser extends User {
+public class FileUser extends User implements Item {
 	private Category log = Category.getInstance(FileUser.class);
 
 	public static final String ID = "identity";
@@ -77,64 +75,68 @@ public class FileUser extends User {
 	public static final String ID_ATTRIBUTE = "id";
 	public static final String CLASS_ATTRIBUTE = "class";
 
-	private Publication publication;
+	private File configurationDirectory;
+    
+    /**
+     * Creates a new FileUser object.
+     */
+    public FileUser() {
+    }
 
 	/**
 	 * Create a FileUser
 	 * 
-	 * @param publication where the user will be attached to
+	 * @param configurationDirectory where the user will be attached to
 	 * @param id the user id
 	 * @param fullName the full name of the user
 	 * @param email the users email address
 	 * @param password the users password
 	 */
 	public FileUser(
-		Publication publication,
+        File configurationDirectory,
 		String id,
 		String fullName,
 		String email,
 		String password) {
 		super(id, fullName, email, password);
-		this.publication = publication;
+		setConfigurationDirectory(configurationDirectory);
 	}
 
-	/**
-	 * Create a FileUser.
-	 * 
-	 * @param publication where the user will be attached to
-	 * @param config where the user details are specified 
-	 * @throws ConfigurationException if the necessary details aren't specified in the config
-	 */
-	public FileUser(Publication publication, Configuration config)
+    /**
+     * Configure this FileUser.
+     * 
+     * @param config where the user details are specified 
+     * @throws ConfigurationException if the necessary details aren't specified in the config
+     */
+	public void configure(Configuration config)
 		throws ConfigurationException {
-		super(
-			config.getAttribute(ID_ATTRIBUTE),
-			config.getChild(FULL_NAME).getValue(null),
-			config.getChild(EMAIL).getValue(),
-			config.getChild(PASSWORD).getValue(null));
-		this.publication = publication;
+        setId(config.getAttribute(ID_ATTRIBUTE));
+        setFullName(config.getChild(FULL_NAME).getValue(null));
+        setEmail(config.getChild(EMAIL).getValue());
 		setEncryptedPassword(config.getChild(PASSWORD).getValue(null));
+        
 		Configuration[] groups = config.getChildren(GROUPS);
 		if (groups.length == 1) {
 			groups = groups[0].getChildren(GROUP);
 
 			GroupManager manager = null;
 			try {
-				manager = GroupManager.instance(publication);
+				manager = GroupManager.instance(configurationDirectory);
 			} catch (AccessControlException e) {
 				throw new ConfigurationException(
-					"Exception when trying to fetch GroupManager for publication: "
-						+ publication,
+					"Exception when trying to fetch GroupManager for directory: ["
+						+ configurationDirectory + "]",
 					e);
 			}
 			for (int i = 0; i < groups.length; i++) {
 				String groupName = groups[i].getValue();
 				Group group = manager.getGroup(groupName);
-				if (group != null) {
-					addGroup(group);
-				} else {
-					log.error(
-						"Couldn't find Group for group name: " + groupName);
+                if (!group.contains(this)) {
+                    group.add(this);
+                }
+				if (group == null) {
+                    log.error(
+						"Couldn't find Group for group name [" + groupName + "]");
 				}
 			}
 		} else {
@@ -176,10 +178,10 @@ public class FileUser extends User {
 		child = new DefaultConfiguration(GROUPS);
 		config.addChild(child);
 
-		Iterator groupsIter = getGroups();
-		while (groupsIter.hasNext()) {
+		Group groups[] = getGroups();
+		for (int i = 0; i < groups.length; i++) {
 			DefaultConfiguration groupNode = new DefaultConfiguration(GROUP);
-			groupNode.setValue(((Group) groupsIter.next()).getName());
+			groupNode.setValue(groups[i].getName());
 			child.addChild(groupNode);
 		}
 		return config;
@@ -192,10 +194,10 @@ public class FileUser extends User {
 		DefaultConfigurationSerializer serializer =
 			new DefaultConfigurationSerializer();
 		Configuration config = createConfiguration();
-		UserManager manager = UserManager.instance(publication);
+		UserManager manager = UserManager.instance(configurationDirectory);
 		manager.add(this);
 
-		File xmlPath = manager.getPath();
+		File xmlPath = manager.getConfigurationDirectory();
 		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
 		try {
 			serializer.serializeToFile(xmlfile, config);
@@ -209,20 +211,28 @@ public class FileUser extends User {
 	 */
 	public void delete() throws AccessControlException {
 		super.delete();
-		UserManager manager = UserManager.instance(publication);
+		UserManager manager = UserManager.instance(configurationDirectory);
 		manager.remove(this);
-		File xmlPath = manager.getPath();
+		File xmlPath = manager.getConfigurationDirectory();
 		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
 		xmlfile.delete();
 	}
 
     /**
-     * Get the publication where this FileUser is attached to.
-     * 
-     * @return the <code>Publication</code>
+     * Returns the configuration directory.
+     * @return A file object.
      */
-    protected Publication getPublication() {
-        return publication;
+    protected File getConfigurationDirectory() {
+        return configurationDirectory;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
+     */
+    public void setConfigurationDirectory(File configurationDirectory) {
+        assert configurationDirectory != null
+            && configurationDirectory.isDirectory();
+        this.configurationDirectory = configurationDirectory;
     }
 
 }
