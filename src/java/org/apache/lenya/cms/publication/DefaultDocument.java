@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultDocument.java,v 1.42 2004/05/21 12:26:34 andreas Exp $  */
+/* $Id: DefaultDocument.java,v 1.43 2004/08/16 12:21:37 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -39,11 +39,16 @@ public class DefaultDocument implements Document {
      * @deprecated Use {@link DefaultDocumentBuilder} instead.
      */
     public DefaultDocument(Publication publication, String id) {
-        assert id != null;
-        assert id.startsWith("/");
+        
+        if (id == null) {
+            throw new IllegalArgumentException("The document ID must not be null!");
+        }
+        if (!id.startsWith("/")) {
+            throw new IllegalArgumentException("The document ID must start with a slash!");
+        }
         this.id = id;
 
-        assert(publication != null) && !"".equals(publication);
+        assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
         this.dublincore = new DublinCoreProxy(this);
     }
@@ -57,11 +62,15 @@ public class DefaultDocument implements Document {
      * @param area The area.
      */
     protected DefaultDocument(Publication publication, String id, String area) {
-        assert id != null;
-        assert id.startsWith("/");
+        if (id == null) {
+            throw new IllegalArgumentException("The document ID must not be null!");
+        }
+        if (!id.startsWith("/")) {
+            throw new IllegalArgumentException("The document ID must start with a slash!");
+        }
         this.id = id;
 
-        assert(publication != null) && !"".equals(publication);
+        assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
 
         setArea(area);
@@ -80,11 +89,15 @@ public class DefaultDocument implements Document {
      * @param language the language
      */
     protected DefaultDocument(Publication publication, String id, String area, String language) {
-        assert id != null;
-        assert id.startsWith("/");
+        if (id == null) {
+            throw new IllegalArgumentException("The document ID must not be null!");
+        }
+        if (!id.startsWith("/")) {
+            throw new IllegalArgumentException("The document ID must start with a slash!");
+        }
         this.id = id;
 
-        assert(publication != null) && !"".equals(publication);
+        assert(publication != null) && !"".equals(publication.getId());
         this.publication = publication;
         this.language = language;
         setArea(area);
