@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.195 2004/03/13 14:28:33 gregor Exp $ -->
+<!-- $Id: usecase.xmap,v 1.196 2004/03/14 18:06:39 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -424,7 +424,7 @@
           <map:match pattern="content" type="step">
             <map:match pattern="*/authoring/**.html">
 	      <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-              <map:transform src="xslt/authoring/edit/epozcontent-xhtml.xsl">
+              <map:transform src="resources/epoz/apache-lenya/epozcontent-xhtml.xsl">
                 <map:parameter name="css" value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
               </map:transform>
 	      <map:serialize type="xhtml"/>
