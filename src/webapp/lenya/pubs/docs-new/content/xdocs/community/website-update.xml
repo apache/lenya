@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: website-update.xml,v 1.7 2004/03/13 12:42:15 gregor Exp $ -->
+<!-- $Id: website-update.xml,v 1.8 2004/05/03 16:57:17 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -41,10 +41,10 @@
   <li>Copy the pages from <code>$LENYA_HOME/build/lenya/export/docs-new/build/site</code> to <code>cocoon-site/site/lenya</code></li>
   <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>$TOMCAT_HOME/webapps/lenya/lenya/pubs/docs-new/resources/html/apidocs</code> to <code>cocoon-site/site/lenya</code>)</li>
   <li>Add, remove, commit to <code>cocoon-site</code></li>
-  <li>Login to <code>daedalus.apache.org</code></li>
-  <li><code>daedalus@apache.org &gt; umask 0002</code></li>
-  <li><code>daedalus@apache.org &gt; cd /www/cocoon.apache.org/lenya</code></li>
-  <li><code>daedalus@apache.org &gt; cvs update -dP</code></li>
+  <li>Login to <code>minotaur.apache.org</code></li>
+  <li><code>minotaur@apache.org &gt; umask 0002</code></li>
+  <li><code>minotaur@apache.org &gt; cd /www/cocoon.apache.org/lenya</code></li>
+  <li><code>minotaur@apache.org &gt; cvs update -dP</code></li>
 </ul>
 </section>
   </body>
