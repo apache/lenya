@@ -196,6 +196,7 @@ function check(fileinput) {
 	      action="">
 	      <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
 	      <input type="hidden" name="lenya.step" value="insert"/>
+  	      <input type="hidden" name="lenya.event" value="edit"/>
 	      <input type="hidden" name="task-id" value="insert-asset"/>
 	      <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
 	      <input type="hidden" name="properties.insert.asset.insertWhere" value="{$insertWhere}"/>
