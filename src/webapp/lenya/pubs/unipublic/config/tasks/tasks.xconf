@@ -11,14 +11,14 @@
   <task id="publish-article">
     <label>Publish Article</label>
     <task id="prepare" class="ch.unizh.unipublic.lenya.cms.ArticleTask"/>
-    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
+    <task id="publish" class="org.lenya.cms.publishing.ResourceFilePublisher"/>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
   
   <task id="publish-dossier">
     <label>Publish Dossier</label>
     <task id="insert" class="ch.unizh.unipublic.lenya.cms.InsertDossierTask"/>
-    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
+    <task id="publish" class="org.lenya.cms.publishing.ResourceFilePublisher"/>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
 
