@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
+<!-- This xsp has been deprecated. Use the publish-screen-usecase.xsp instead. -->
 <xsp:page
-       language="java"
-       xmlns:xsp="http://apache.org/xsp"  
-       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
-       >
-
-<xsp:structure>
-  <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-</xsp:structure>
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:xsp-session="http://apache.org/xsp/session/2.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  >
 
 <publish>
 
-  <!-- Import Lenya Page Envelope -->
-  <xsp-lenya:util/>
+    <uris><xsp-request:get-parameter name="uris"/></uris>
+    <sources><xsp-request:get-parameter name="sources"/></sources>
+    <task-id><xsp-request:get-parameter name="task-id"/></task-id>
+    <language><xsp-request:get-parameter name="language"/></language>
+    <publication-id><xsp-session:get-attribute name="org.apache.lenya.cms.cocoon.acting.Authenticator.id"/></publication-id>
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
 
-  <xsp:logic>
-    <xsp:content><uris><xsp:expr>request.getParameter("uris")</xsp:expr></uris></xsp:content>
-    <xsp:content><sources><xsp:expr>request.getParameter("sources")</xsp:expr></sources></xsp:content>
-    <xsp:content><task-id><xsp:expr>request.getParameter("task-id")</xsp:expr></task-id></xsp:content>
-    <xsp:content><publication-id><xsp:expr>request.getSession().getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id")</xsp:expr></publication-id></xsp:content>
-    <xsp:content><document-id><xsp-lenya:document-id/></document-id></xsp:content>
-  </xsp:logic>
 </publish>
 
 </xsp:page>
