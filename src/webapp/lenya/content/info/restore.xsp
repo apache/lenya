@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: restore.xsp,v 1.5 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -56,7 +56,7 @@
         parentId = "/";
     } 
     try {
-        SiteTree sectree = publication.getSiteTree(Publication.AUTHORING_AREA);
+        SiteTree sectree = publication.getTree(Publication.AUTHORING_AREA);
         parentNode = sectree.getNode(parentId);
     } catch (Exception e) {
         <exception><xsp:expr>e.toString()</xsp:expr></exception>

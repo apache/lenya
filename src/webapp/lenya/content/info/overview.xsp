@@ -48,7 +48,7 @@
       String visibility = "visible";
       
       try {
-          SiteTreeNode node = doc.getPublication().getSiteTree(doc.getArea()).getNode(doc.getId());
+          SiteTreeNode node = doc.getPublication().getTree(doc.getArea()).getNode(doc.getId());
           if (!node.visibleInNav()) visibility = "hidden";
       } catch(SiteTreeException e) {
           throw new ProcessingException(e);
