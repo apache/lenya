@@ -169,7 +169,8 @@ public class ArticleImageUploadCreatorAction
 	// if we can't find the uploadFile simply return, i.e. don't
 	// do anything.
 	if (uploadFile == null) {
-	    return Collections.unmodifiableMap(results);
+	    getLogger().debug("uploadFile is null");
+	    return null;
 	}
 
 	Object obj = request.get(UPLOADFILE_PARAM_NAME);
@@ -241,8 +242,9 @@ public class ArticleImageUploadCreatorAction
 	    insertMediaTag(sitemapPath + requestingDocumentPath, imageXPath,
 			   fileName, dublinCoreParams);
 	    
-	} else if (obj instanceof String) {
-	    getLogger().debug("Skipping parameter: " + (String)obj);
+	} else {
+	    getLogger().debug("parameter " + UPLOADFILE_PARAM_NAME + " is not of type FilePart");
+	    return null;
 	}			
 
 	return Collections.unmodifiableMap(results);
