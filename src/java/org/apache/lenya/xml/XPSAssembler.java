@@ -72,7 +72,7 @@ import java.util.*;
  * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  *
  * @author Michael Wechner
- * @version $Id: XPSAssembler.java,v 1.17 2003/12/08 18:03:44 michi Exp $
+ * @version $Id: XPSAssembler.java,v 1.18 2003/12/15 16:22:34 michi Exp $
  */
 public class XPSAssembler implements XPSInclude {
     static Category log = Category.getInstance(XPSAssembler.class);
@@ -360,10 +360,10 @@ public class XPSAssembler implements XPSInclude {
         boolean writtenToCache = tryWritingToCache(currentInfo, newDocument);
 
         if (currentInfo.url.getRef() == null) {
-            log.error("No XPointer. Return the root node in order to add the whole document.");
+            log.debug("No XPointer. Return the root node in order to add the whole document.");
             nodes.addElement(newRoot);
         } else {
-            log.error("XPointer: " + currentInfo.url.getRef());
+            log.debug("XPointer: " + currentInfo.url.getRef());
             try {
                 nodes = xpf.select(newRoot, currentInfo.url.getRef());
 

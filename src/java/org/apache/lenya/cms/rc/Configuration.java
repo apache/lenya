@@ -1,5 +1,4 @@
 /*
-$Id: Configuration.java,v 1.13 2003/07/23 13:21:35 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,10 +60,10 @@ import java.util.Properties;
 
 
 /**
- * DOCUMENT ME!
+ * Reads conf.properties
  *
- * @author Michael Wechner (http://cocoon.apache.org/lenya)
- * @version 0.10.5
+ * @author Michael Wechner
+ * @version $Id: Configuration.java,v 1.14 2003/12/15 16:22:33 michi Exp $
  */
 public class Configuration {
     private static Category log = Category.getInstance(Configuration.class);
@@ -106,5 +105,4 @@ public class Configuration {
     public String getRcmlDirectory() {
         return rcmlDirectory;
     }
-
 }

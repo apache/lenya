@@ -1,5 +1,4 @@
 /*
-$Id: RevisionController.java,v 1.23 2003/10/23 00:35:55 stefano Exp $
 <License>
 
  ============================================================================
@@ -70,8 +69,8 @@ import org.apache.log4j.Category;
 /**
  * Controller for the reserved check-in, check-out, the backup versions and the rollback 
  *
- * @author Michael Wechner (http://cocoon.apache.org/lenya)
- * @version 1.5.1
+ * @author Michael Wechner
+ * @version $Id: RevisionController.java,v 1.24 2003/12/15 16:22:34 michi Exp $
  */
 public class RevisionController {
     private static Category log = Category.getInstance(RevisionController.class);
@@ -96,7 +95,9 @@ public class RevisionController {
     public RevisionController() {
         Configuration conf = new Configuration();
         rcmlDir = conf.getRcmlDirectory();
+        if (!new File(rcmlDir).exists()) log.error("No such directory: " + rcmlDir);
         backupDir = conf.getBackupDirectory();
+        if (!new File(backupDir).exists()) log.error("No such directory: " + backupDir);
         rootDir = "conf.rootDirectory";
     }
 
@@ -144,8 +145,8 @@ public class RevisionController {
      * @throws Exception if an error occurs
      */
     public RCML getRCML(String source) throws FileNotFoundException, IOException, Exception {
-/*        File file = new File(rootDir + source);
-
+/*    
+        File file = new File(rootDir + source);
         if (!file.isFile()) {
             throw new FileNotFoundException(file.getAbsolutePath());
         }

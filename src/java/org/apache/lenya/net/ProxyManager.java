@@ -71,7 +71,7 @@ import java.util.Vector;
  *
  * @author Philipp Klaus
  * @author Michael Wechner
- * @version $Id: ProxyManager.java,v 1.11 2003/12/08 18:03:44 michi Exp $
+ * @version $Id: ProxyManager.java,v 1.12 2003/12/15 16:22:34 michi Exp $
  */
 public class ProxyManager {
     static Category log = Category.getInstance(ProxyManager.class);
@@ -156,25 +156,23 @@ public class ProxyManager {
     }
 
     /**
-     * DOCUMENT ME!
+     * Read proxy configuration
      *
-     * @param fname DOCUMENT ME!
+     * @param fname Filename of proxy configuration
      *
-     * @return DOCUMENT ME!
+     * @return proxies
      */
     public Vector readConfig(String fname) {
         DOMParserFactory dpf = new DOMParserFactory();
-        XPointerFactory xpf = new XPointerFactory();
-
-        Vector proxies = new Vector();
-
         Document document = null;
+        File configFile = null;
 
         try {
-            if (new File(fname).exists()) {
-                document = dpf.getDocument(fname);
+	    configFile = new File(new java.net.URI(ProxyManager.class.getClassLoader().getResource(fname).toString()));
+            if (configFile.exists()) {
+                document = dpf.getDocument(configFile.getAbsolutePath());
             } else {
-                log.warn("No such file or directory: " + fname);
+                log.warn("No such file or directory: " + configFile.getAbsolutePath());
                 return null;
             }
         } catch (Exception e) {
@@ -182,16 +180,19 @@ public class ProxyManager {
             return null;
         }
 
+
         Vector proxyElements = null;
+        XPointerFactory xpf = new XPointerFactory();
 
         try {
             proxyElements = xpf.select(document.getDocumentElement(), "xpointer(/conf/Proxy)");
         } catch (Exception e) {
-            log.warn(".readConfig(" + fname + "): No such element: /conf/Proxy");
+            log.warn("No such element: /conf/Proxy (" + configFile  + ")");
 
             return null;
         }
 
+        Vector proxies = new Vector();
         for (int i = 0; i < proxyElements.size(); i++) {
             ProxyConf proxy = new ProxyConf((Element) proxyElements.elementAt(i));
 

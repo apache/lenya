@@ -1,5 +1,4 @@
 /*
-$Id: RCML.java,v 1.18 2003/10/22 14:56:16 edith Exp $
 <License>
 
  ============================================================================
@@ -77,7 +76,8 @@ import java.util.Vector;
  *
  * @author Michael Wechner
  * @author Marc Liyanage
- * @version 0.7.19
+ * @author Edith Chevrier
+ * @version $Id: RCML.java,v 1.19 2003/12/15 16:22:34 michi Exp $
  */
 public class RCML {
     private static Category log = Category.getInstance(RCML.class);

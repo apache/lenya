@@ -1,5 +1,4 @@
 /*
-$Id: Configuration.java,v 1.14 2003/10/14 12:27:46 michi Exp $
 <License>
 
  ============================================================================
@@ -63,10 +62,10 @@ import java.util.Properties;
 
 
 /**
- * DOCUMENT ME!
+ * Reads xpsconf.properties
  *
  * @author Michael Wechner
- * @version 1.8.10
+ * @version $Id: Configuration.java,v 1.15 2003/12/15 16:22:34 michi Exp $
  * @deprecated replaced by config/ directory
  */
 public class Configuration {
@@ -80,34 +79,6 @@ public class Configuration {
     public String JAVA_ZONE = null;
     public String proxyHost = null;
     public String proxyPort = null;
-    public String servletZone = null;
-    public String xslt = null;
-    public String xslt_dir = null;
-    public String xslt_urlspace = null;
-    public String listeners = null;
-    public String password = null;
-    public String spaces = null;
-    public String html2xml = null;
-    public String xslt_structure = null;
-    public String spellcheckProviderClass = null;
-    public String spellcheckRootElement = null;
-    public String editor = null;
-    public String PublishConf = null;
-    public String MDMLRoot = null;
-    public String signalMasterStateFile = null;
-    public String signalMasterConfFile = null;
-    public String signalMasterMonitorXSLT = null;
-    public String webserverHostname = null;
-    public String WorkFlowConfiguration = null;
-    public String DocumentTypeXPath = null;
-    public String DefaultStatus = null;
-    public String WFDocTypeDefaultXSLT = null;
-    public String html2xmlTranslation = null;
-    public String xpsgwsconf = null;
-    public String xpsgwssimpleconf = null;
-    public String xpsguiconf = null;
-    public int maxNumberOfRollbacks;
-    public int maxNumberOfEntries;
 
     /**
      * Creates a new Configuration object.
@@ -136,31 +107,6 @@ public class Configuration {
         } else {
             System.out.println("No proxy set.");
         }
-
-        System.out.println("XSLT: " + conf.xslt);
-        System.out.println("XSLT (Directory): " + conf.xslt_dir);
-        System.out.println("XSLT (URLSpace): " + conf.xslt_urlspace);
-        System.out.println("Listeners: " + conf.listeners);
-        System.out.println("Space Password: " + conf.password);
-        System.out.println("Spaces: " + conf.spaces);
-        System.out.println("html2xml: " + conf.html2xml);
-        System.out.println("XSLT (View structure): " + conf.xslt_structure);
-        System.out.println("Editor: " + conf.editor);
-        System.out.println(conf.MDMLRoot);
-        System.out.println(conf.signalMasterStateFile);
-        System.out.println("signalMasterConfFile: " + conf.signalMasterConfFile);
-        System.out.println("signalMasterMonitorXSLT: " + conf.signalMasterMonitorXSLT);
-        System.out.println("Hostname and Port: " + conf.webserverHostname);
-        System.out.println("Workflow: " + conf.WorkFlowConfiguration);
-        System.out.println(conf.DocumentTypeXPath);
-        System.out.println("Default Workflow Status: " + conf.DefaultStatus);
-
-        System.out.println(conf.html2xmlTranslation);
-        System.out.println(conf.xpsgwsconf);
-        System.out.println(conf.xpsgwssimpleconf);
-        System.out.println(conf.xpsguiconf);
-        System.out.println(conf.maxNumberOfRollbacks);
-        System.out.println(conf.maxNumberOfEntries);
     }
 
     /**
@@ -215,34 +161,6 @@ public class Configuration {
             JAVA_ZONE = getProperty(properties, "JavaZone");
             proxyHost = null;
             proxyPort = null;
-            servletZone = getProperty(properties, "servletZone");
-            xslt = getProperty(properties, "xslt");
-            xslt_dir = getProperty(properties, "xslt_dir");
-            xslt_urlspace = getProperty(properties, "xslt_urlspace");
-            listeners = getProperty(properties, "listeners");
-            password = getProperty(properties, "password");
-            spaces = getProperty(properties, "spaces");
-            html2xml = getProperty(properties, "html2xml");
-            xslt_structure = getProperty(properties, "xslt_structure");
-            spellcheckProviderClass = getProperty(properties, "spellcheckProviderClass");
-            spellcheckRootElement = getProperty(properties, "spellcheckRootElement");
-            editor = getProperty(properties, "editor");
-            PublishConf = getProperty(properties, "PublishConf");
-            MDMLRoot = getProperty(properties, "MDMLRoot");
-            signalMasterStateFile = getProperty(properties, "signalMasterStateFile");
-            signalMasterConfFile = getProperty(properties, "signalMasterConfFile");
-            signalMasterMonitorXSLT = getProperty(properties, "signalMasterMonitorXSLT");
-            webserverHostname = getProperty(properties, "webserverHostname");
-            WorkFlowConfiguration = getProperty(properties, "WorkFlowConfiguration");
-            DocumentTypeXPath = getProperty(properties, "DocumentTypeXPath");
-            DefaultStatus = getProperty(properties, "DefaultStatus");
-
-            html2xmlTranslation = getProperty(properties, "html2xmlTranslation");
-            xpsgwsconf = getProperty(properties, "xpsgwsconf");
-            xpsgwssimpleconf = getProperty(properties, "xpsgwssimpleconf");
-            xpsguiconf = getProperty(properties, "xpsguiconf");
-            maxNumberOfRollbacks = new Integer(getProperty(properties, "maxNumberOfRollbacks")).intValue();
-            maxNumberOfEntries = new Integer(getProperty(properties, "maxNumberOfEntries")).intValue();
         }
     }
 

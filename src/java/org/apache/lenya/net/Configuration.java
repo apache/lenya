@@ -1,5 +1,4 @@
 /*
-$Id: Configuration.java,v 1.13 2003/10/14 12:47:15 michi Exp $
 <License>
 
  ============================================================================
@@ -63,10 +62,10 @@ import java.util.Properties;
 
 
 /**
- * DOCUMENT ME!
+ * Read configuration
  *
  * @author Michael Wechner
- * @version 1.8.10
+ * @version $Id: Configuration.java,v 1.14 2003/12/15 16:22:34 michi Exp $
  */
 public class Configuration {
     static Category log = Category.getInstance(Configuration.class);
@@ -110,23 +109,19 @@ public class Configuration {
         String resourcePathRelativeToClasspath = System.getProperty(OVERRIDE_DEFAULT_CONFIGURATION_KEY);
 
         if (resourcePathRelativeToClasspath == null) {
-            resourcePathRelativeToClasspath = System.getProperty(DEFAULT_CONFIGURATION_KEY,
-                    DEFAULT_CONFIGURATION_FILE);
+            resourcePathRelativeToClasspath = System.getProperty(DEFAULT_CONFIGURATION_KEY, DEFAULT_CONFIGURATION_FILE);
             log.debug(DEFAULT_CONFIGURATION_KEY + "=" + resourcePathRelativeToClasspath);
         } else {
             log.debug(OVERRIDE_DEFAULT_CONFIGURATION_KEY + "=" + resourcePathRelativeToClasspath);
         }
 
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-        URL url = cl.getResource(resourcePathRelativeToClasspath);
+        URL url = Configuration.class.getClassLoader().getResource(resourcePathRelativeToClasspath);
 
         if (url == null) {
             log.error(".load(): Could not find resource on classpath: " + resourcePathRelativeToClasspath);
 
             //return null;
         }
-
-        log.debug(url);
 
         Properties properties = new Properties();
 
@@ -146,8 +141,7 @@ public class Configuration {
      */
     public void getProperties(Properties properties) {
         if (properties != null) {
-            configurationPath = getProperty(properties,
-                    "org.apache.lenya.net.ProxyManager.configurationPath");
+            configurationPath = getProperty(properties, "org.apache.lenya.net.ProxyManager.configurationPath");
             smtpHost = getProperty(properties, "org.apache.lenya.net.SMTP.host");
             smtpPort = getProperty(properties, "org.apache.lenya.net.SMTP.port");
             smtpDomain = getProperty(properties, "org.apache.lenya.net.SMTP.domain");
