@@ -1,5 +1,5 @@
 /*
-$Id: ServletHelper.java,v 1.2 2003/08/25 15:41:31 andreas Exp $
+$Id: ServletHelper.java,v 1.3 2003/08/31 13:05:02 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,6 +60,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cocoon.environment.Request;
+import org.apache.log4j.Category;
 
 /**
  * Servlet utility class.
@@ -67,6 +68,8 @@ import org.apache.cocoon.environment.Request;
  * @author andreas
  */
 public final class ServletHelper {
+	
+	private static Category log = Category.getInstance(ServletHelper.class);
 
     /**
      * Ctor.
@@ -85,7 +88,15 @@ public final class ServletHelper {
         if (context == null) {
             context = "";
         }
-        String url = request.getRequestURI().substring(context.length());
+		String url = request.getRequestURI().substring(context.length());
+		
+		if (url.length() > 0 && !url.startsWith("/")) {
+			url = "/" + url;
+		}
+		
+		log.debug("    Context prefix:   [" + context + "]");
+		log.debug("    Webapp URL:       [" + url + "]");
+		
         return url;
     }
 
