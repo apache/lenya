@@ -10,11 +10,14 @@
 <leaf name="CMF/S&#160;Overview" href="overview.html"/>
 <leaf name="Editor&#160;Overview"/>
 <leaf name="Glossary" href="glossary.html"/>
-<branch name="Interop">
+<branch name="Interop" href="interop.html">
+<!--
   <leaf name="Blog" href="http://alpha.oscom.org/postnuke/"/>
   <leaf name="Wiki" href="http://alpha.oscom.org/postnuke/modules.php?op=modload&amp;name=phpWiki&amp;file=index"/>
   <leaf name="Another Wiki" href="http://alpha.oscom.org/phpwiki/"/>
+-->
 </branch>
 <leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
+<leaf name="CVS" href="cvs.html"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>
