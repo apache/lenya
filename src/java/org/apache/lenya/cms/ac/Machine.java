@@ -1,5 +1,5 @@
 /*
-$Id: Machine.java,v 1.6 2003/08/12 15:14:39 andreas Exp $
+$Id: Machine.java,v 1.7 2003/08/15 13:08:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -120,7 +120,7 @@ public class Machine implements Identifiable {
      * @return The IP address.
      */
     public String getIp() {
-        return toString();
+        return getAddress().getHostAddress();
     }
 
     /**
@@ -157,7 +157,7 @@ public class Machine implements Identifiable {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return getAddress().toString();
+        return getIp();
     }
 
     /**
