@@ -2,20 +2,13 @@
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
 	<menu>
 		<xsp-wyona:util/>
-		<live_uri>/index.html</live_uri>
+		<live_uri>http://212.98.53.238/index.html</live_uri>
 		<xsp:logic>
    		 	String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     			String articleId=parameters.getParameter("articleId","null");
   		</xsp:logic>
 		<menus>
 			<menu name="File" label="File">
-				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
-						</xsp:attribute>Authoring Home
-						</item>
-				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
@@ -46,10 +39,6 @@
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/preview.xml&amp;documentType=Preview</xsp:attribute>Schedule&#160;Print Issue</item>
 				</block>
 				<block>
-					<!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
--->
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
@@ -75,14 +64,15 @@
 						</xsp:attribute>Edit&#160;Magazine
 					</item>
 				</block>
-				<!--
-				<block>
-					<item href="/wyona-cms/lucene/create">Create&#160;Lucene&#160;Index</item>
-					<item href="/wyona-cms/lucene/search">Search&#160;with&#160;Lucene</item>
-				</block>
--->
 			</menu>
 			<menu name="Tools" label="Help">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+						</xsp:attribute>Authoring Home
+						</item>
+				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
@@ -95,14 +85,6 @@
 						Scheduler&#160;Admin
 					</item>
 				</block>
-				<!--
-				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr>
-						</xsp:attribute>Rollback</item>
-				</block>
--->
 			</menu>
 			<menu name="Help" label="Debug">
 				<block>

@@ -5,7 +5,9 @@
 		<xsp:logic>
     String articleId=parameters.getParameter("articleId","null");
   </xsp:logic>
-		<live_uri><xsp:expr>"/news/"+articleId+".html"</xsp:expr></live_uri>
+		<live_uri>
+			<xsp:expr>"/news/"+articleId+".html"</xsp:expr>
+		</live_uri>
 		<xsp:logic>
     String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
@@ -16,13 +18,6 @@
   </xsp:logic>
 		<menus>
 			<menu name="File" label="File">
-				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
-						</xsp:attribute>Authoring&#160;Home
-						</item>
-				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
@@ -48,7 +43,11 @@
 			</menu>
 			<menu name="Tools" label="Help">
 				<block>
-					<item>Cow&#160;Tools</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+						</xsp:attribute>Authoring&#160;Home
+						</item>
 				</block>
 			</menu>
 			<menu name="Help" label="Debug">
