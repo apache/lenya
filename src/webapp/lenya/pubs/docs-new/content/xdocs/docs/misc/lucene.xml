@@ -56,5 +56,15 @@ src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
 </section>
 
 
+<section>
+<title>Creating an index from the command line</title>
+<p>XSLT:</p>
+<source>
+<![CDATA[
+ant -f src/webapp/lenya/bin/crawl_and_index.xml index -Dlucene.xconf=/home/michi/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/lucene-live.xconf
+]]>
+</source>
+</section>
+
 </body>
 </document>
