@@ -36,7 +36,7 @@ public class UserPassword extends AccessControlUsecase {
         super.doCheckExecutionConditions();
         
         String checkOldPassword = getParameter(CHECK_PASSWORD);
-        if (checkOldPassword != null && checkOldPassword.equals(Boolean.toString(false))) {
+        if (checkOldPassword != null && checkOldPassword.equals(Boolean.toString(true))) {
             String oldPassword = getParameter(OLD_PASSWORD);
             boolean authenticated = this.user.authenticate(oldPassword);
             if (!authenticated) {
@@ -52,6 +52,8 @@ public class UserPassword extends AccessControlUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
+        
+        user.setPassword(getParameter(NEW_PASSWORD));
     }
 
     private User user;
@@ -65,7 +67,7 @@ public class UserPassword extends AccessControlUsecase {
         if (name.equals(UserProfile.USER_ID)) {
             String userId = value;
             this.user = getUserManager().getUser(userId);
-            if (user == null) {
+            if (this.user == null) {
                 throw new RuntimeException("User [" + userId + "] not found.");
             }
 
