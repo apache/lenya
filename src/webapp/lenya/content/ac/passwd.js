@@ -14,14 +14,17 @@ function passwd() {
       confirmednewpassword = cocoon.request.getParameter("confirmednewpassword");
 
 
+      var resolver = cocoon.environment.getObjectModel().get("source-resolver");
+      var sitemapPath = resolver.resolve("").getSystemId().substring(5);
+      var publicationId = "oscom";
       var session = cocoon.request.getSession(false);
       var identityFromSession = session.getAttribute("org.lenya.cms.ac.Identity");
-      var filename = "/home/michi/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/oscom/content/ac/passwd/" + identityFromSession.getUsername() + ".iml";
+      var filename = sitemapPath + "pubs/" + publicationId + "/content/ac/passwd/" + identityFromSession.getUsername() + ".iml";
       var identity = new Packages.org.lenya.cms.ac.Identity(filename);
       if (identity.changePassword(oldpassword, newpassword, confirmednewpassword)) {
           break;
       } else {
-          exceptionMessage = "Either authentication failed (" + identity.getUsername() + ") or new password and confirmed new password do not match (#" + newpassword + "##" + confirmednewpassword + "#)";
+          exceptionMessage = "Either authentication failed (username = " + identity.getUsername() + ") or new password and confirmed new password do not match (" + filename + ")";
           continue;
       }
   }
