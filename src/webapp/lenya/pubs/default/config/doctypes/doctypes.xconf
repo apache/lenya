@@ -27,6 +27,7 @@
     <tasks>
       <task id="publish"/>
     </tasks>
+    <workflow src="workflow.xml"/>
   </doc>
 
 </doctypes>
