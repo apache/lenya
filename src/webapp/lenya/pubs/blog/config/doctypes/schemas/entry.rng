@@ -33,6 +33,7 @@
       <element name="echo:modified">
         <text/>
       </element>
+      <oneOrMore>
       <element name="echo:content">
         <attribute name="type"/>
         <element>
@@ -57,6 +58,7 @@
           </oneOrMore>
         </element>
       </element>
+      </oneOrMore>
     </element>
   </start>
 </grammar>

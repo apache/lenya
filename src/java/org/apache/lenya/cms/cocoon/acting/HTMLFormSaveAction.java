@@ -81,7 +81,7 @@ import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.27 2003/12/01 23:43:23 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.28 2003/12/03 22:45:46 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -197,7 +197,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                     // no .x and .y from input type="image"
                                     xupdateModifications = append(pname.substring(0, pname.length()-2));
                                     //xupdateModifications = append(pname);
-                                } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) {
+                                } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">.x")) {
                                 //} else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">")) {
                                     // no .x and .y from input type="image"
                                     xupdateModifications = insertBefore(pname.substring(0, pname.length()-2));
