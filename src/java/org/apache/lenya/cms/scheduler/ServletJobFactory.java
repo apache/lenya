@@ -1,5 +1,5 @@
 /*
-$Id: ServletJobFactory.java,v 1.10 2003/08/18 12:23:32 andreas Exp $
+$Id: ServletJobFactory.java,v 1.11 2003/08/29 11:39:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -113,4 +113,5 @@ public final class ServletJobFactory {
             return null;
         }
     }
+    
 }
