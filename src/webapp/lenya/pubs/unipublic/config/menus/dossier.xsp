@@ -18,11 +18,17 @@
   <live_uri><xsp:expr>"/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr></live_uri>
 
   <xsp:logic>
-    String domain_prefix="http://194.191.122.220:8080"+xsp_wyona_context_prefix+"/authoring";
+    String domain_prefix=""+xsp_wyona_context_prefix+"/bitflux";
+    String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
   </xsp:logic>
+
 
   <menus>
     <menu name="File" label="File">
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/dossier.xsl&amp;url-xsd="+domain_prefix+"/schemas/dossier.xsd&amp;url-css="+domain_prefix+"/css/dossier.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/save/dossiers/"+year+"/"+dossierId</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
+      </block>
+
       <block>
         <item href="index.xml">Publish</item>
 <!--

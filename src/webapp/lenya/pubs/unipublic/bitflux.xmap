@@ -20,6 +20,7 @@
 
   <map:pipelines>
     <!-- GET -->
+    <!-- Article -->
     <map:pipeline>
       <map:match pattern="*/*/*/*/index.xml">
         <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
@@ -36,6 +37,25 @@
         <map:read src="resources/publication/styles/article-bitflux.css" mime-type="text/css"/>
       </map:match>
     </map:pipeline>
+
+    <!-- Dossier -->
+    <map:pipeline>
+      <map:match pattern="dossiers/*/*/index.xml">
+        <map:generate src="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="stylesheets/dossier.xsl">
+        <map:generate src="stylesheets/publication/Page/Dossier/Authoring/bitflux.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="schemas/dossier.xsd">
+        <map:read src="docs/publication/doctypes/schemas/dossier-bitflux.xsd" mime-type="text/xml"/>
+      </map:match>
+      <map:match pattern="css/dossier.css">
+        <map:read src="resources/publication/styles/dossier-bitflux.css" mime-type="text/css"/>
+      </map:match>
+    </map:pipeline>
+
     <!-- /GET -->
 
     <map:pipeline>
