@@ -60,7 +60,7 @@ public class ArticleTask
         String authoringPath,
         String[] sources) {
 
-	String absoluteAuthoringPath = publicationPath + authoringPath;
+	String absoluteAuthoringPath = publicationPath + authoringPath + "/";
 
         for (int i = 0; i < sources.length; i++) {
             File sourceFile = new File(absoluteAuthoringPath + sources[i]);
@@ -261,11 +261,24 @@ public class ArticleTask
     /** Execute the task.
     *
     */
-    public void execute(String path) {
+    public void execute(String contextPath) {
         try {
-            String publicationPath
-                = PublishingEnvironment.getPublicationPath(
-                path, getParameters().getParameter("publication-id"));
+            String publicationId = getParameters().getParameter("publication-id");
+            String publicationPath = PublishingEnvironment.getPublicationPath(contextPath, publicationId);
+
+            Parameters taskParameters = new Parameters();
+
+            PublishingEnvironment environment = new PublishingEnvironment(contextPath,
+                publicationId);
+
+            // read default parameters from PublishingEnvironment
+            taskParameters.setParameter("authoring-path", environment.getAuthoringPath());
+            taskParameters.setParameter("tree-authoring-path", environment.getTreeAuthoringPath());
+            taskParameters.setParameter("live-path", environment.getLivePath());
+            taskParameters.setParameter("tree-live-path", environment.getTreeLivePath());
+
+            taskParameters.merge(getParameters());
+            parameterize(taskParameters);
 
             String sourcesString = getParameters().getParameter("sources");
             StringTokenizer st = new StringTokenizer(sourcesString,",");
