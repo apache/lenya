@@ -5,6 +5,11 @@
 <!--
   <update-index type="incremental"/>
 -->
+<!--
   <index-dir src="../../resources/publication/search/lucene/index"/>
   <htdocs-dump-dir src="../../resources/publication/search/lucene/htdocs_dump"/>
+-->
+
+  <index-dir src="../resources/search/lucene/index"/>
+  <htdocs-dump-dir src="/home/michiii/oscom_htdocs_dump"/>
 </lucene>

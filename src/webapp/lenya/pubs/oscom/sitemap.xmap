@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.15 2003/03/14 10:31:38 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.16 2003/03/14 16:07:02 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -64,7 +64,10 @@
           <map:parameter name="pub0-id" value="all"/>
           <map:parameter name="pub0-name" value="All OSCOM"/>
           <map:parameter name="pub0-index-dir" value="resources/search/lucene/index"/>
+<!--
           <map:parameter name="pub0-excerpt-dir" value="resources/search/lucene/htdocs_dump"/>
+-->
+          <map:parameter name="pub0-excerpt-dir" value="/home/michiii/oscom_htdocs_dump"/>
           <map:parameter name="pub0-prefix" value="http:/"/>
 
           <map:parameter name="pub1-id" value="conferences"/>

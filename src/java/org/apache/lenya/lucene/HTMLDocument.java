@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLDocument.java,v 1.12 2003/03/06 20:45:42 gregor Exp $
+ * $Id: HTMLDocument.java,v 1.13 2003/03/14 16:07:01 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -158,7 +158,7 @@ public class HTMLDocument {
             doc.add(Field.Text("title", ""));
         }
 
-        System.out.println("HTMLDocument.getLuceneDocument(): title field added: " + title);
+        //System.out.println("HTMLDocument.getLuceneDocument(): title field added: " + title);
 
         // Add the tag-stripped contents as a Reader-valued Text field so it will
         // get tokenized and indexed.
@@ -172,7 +172,7 @@ public class HTMLDocument {
 
         doc.add(Field.Text("contents", contents));
 
-        System.out.println("HTMLDocument.getLuceneDocument(): contents field added: " + contents);
+        //System.out.println("HTMLDocument.getLuceneDocument(): contents field added: " + contents);
 
         return doc;
     }
