@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.11 2003/04/24 13:52:37 gregor Exp $
+ * $Id: Identity.java,v 1.12 2003/06/11 12:16:12 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -91,9 +91,14 @@ public class Identity {
         encryptedPassword = passwordNode.getFirstChild().getNodeValue();
         log.debug("Encrypted Password: " + encryptedPassword);
 
+        // the comment node is optional
         Node commentNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/comment");
-        comment = commentNode.getFirstChild().getNodeValue();
-        log.debug("Comment: " + comment);
+        if (commentNode != null) {
+            comment = commentNode.getFirstChild().getNodeValue();
+            log.debug("Comment: " + comment);
+        } else {
+            log.warn("IMLFile: " + doc.getLocalName() + " doesn't contain a comment field.");
+        }
 
         NodeList groupNodes = XPathAPI.selectNodeList(doc, "/" + ROOT + "/groups/group");
 
