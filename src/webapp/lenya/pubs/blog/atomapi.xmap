@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: atomapi.xmap,v 1.4 2003/09/10 20:48:16 michi Exp $ -->
+<!-- CVS: $Id: atomapi.xmap,v 1.5 2003/09/11 17:56:16 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -46,9 +46,21 @@
 
     <!-- Get entry -->
     <map:pipeline>
-      <map:match pattern="entries/*/*/*/*/index.xml">
-        <map:generate src="content/authoring/entries/{1}/{2}/{3}/{4}/index.xml"/>
-        <map:serialize type="xml"/>
+      <map:match pattern="entries/**/index.xml">
+        <map:select type="request-method">
+          <map:when test="PUT">
+            <map:generate type="stream"/>
+            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="content/authoring/entries/{1}/index.xml"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:serialize type="xml" status-code="204"/> <!-- HTTP status code: 204 No Content -->
+          </map:when>
+          <map:otherwise>
+            <map:generate src="content/authoring/entries/{1}/index.xml"/>
+            <map:serialize type="xml"/>
+          </map:otherwise>
+        </map:select>
       </map:match>
       <map:handle-errors type="500"/>
     </map:pipeline>
