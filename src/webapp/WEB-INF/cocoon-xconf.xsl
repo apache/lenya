@@ -40,7 +40,7 @@
     
     <component-instance name="defaults"       class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
       <values>
-        <skin>lenya-site</skin>
+        <skin>cocooncenter</skin>
       </values>
     </component-instance>
 

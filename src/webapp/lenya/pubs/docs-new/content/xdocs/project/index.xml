@@ -11,7 +11,6 @@
     </authors>
   </header>
   <body>
-<section><title>Welcome to Apache Lenya</title>
 <p>
 Lenya CMS is an <link href="http://www.opensource.org">Open-Source</link>
 Content Management and Publishing System written in 100% pure Java. It
@@ -45,6 +44,6 @@ directly or authentication and authorization can be managed.
 <p>
 You are very welcome to participate in the <link href="http://www.lenya.org">Lenya CMS project</link>.
 Thank you very much for your suggestions and contributions.
-</p></section>
+</p>
   </body>
 </document>
