@@ -14,14 +14,23 @@
  *  limitations under the License.
  *
  */
-/* $Id: ValidateAction.java,v 1.9 2004/03/17 12:53:01 gregor Exp $ */
+
+/* $Id: ValidateAction.java,v 1.10 2004/03/18 14:51:58 egli Exp $  */
+
 package org.apache.lenya.cms.cocoon.acting;
+
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -32,102 +41,95 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 /**
  * Action to validate an xml document with relax ng schema.
  */
 public class ValidateAction extends AbstractConfigurableAction {
     Category log = Category.getInstance(ValidateAction.class);
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
-     *      org.apache.cocoon.environment.SourceResolver, java.util.Map,
-     *      java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
-     */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
-            Parameters parameters) throws Exception {
+
+    /** (non-Javadoc)
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     **/
+    public Map act(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String source,
+        Parameters parameters)
+        throws Exception {
+        File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
+        File schema =
+            new File(
+                sitemap.getAbsolutePath()
+                    + File.separator
+                    + parameters.getParameter("schema"));
+        getLogger().debug("schema: " + schema.getAbsolutePath());
+
         Request request = ObjectModelHelper.getRequest(objectModel);
+
         if (request.getParameter("cancel") != null) {
             getLogger().warn(".act(): Editing has been canceled");
             return null;
         }
-        File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
-        File schema = new File(sitemap.getAbsolutePath() + File.separator
-                + parameters.getParameter("schema"));
-        getLogger().debug("schema: " + schema.getAbsolutePath());
-        File file = new File(sitemap.getAbsolutePath() + File.separator
-                + parameters.getParameter("file"));
-        getLogger().debug("file: " + file.getAbsolutePath());
-        if (file.isFile()) {
-            try {
-                Document document = null;
-                DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
-                parserFactory.setValidating(false);
-                parserFactory.setNamespaceAware(true);
-                parserFactory.setIgnoringElementContentWhitespace(true);
-                DocumentBuilder builder = parserFactory.newDocumentBuilder();
-                try {
-                    document = builder.parse(file.getAbsolutePath());
-                } catch (Exception e) {
-                    getLogger().error(".act(): Exception: " + e.getMessage(), e);
-                    HashMap hmap = new HashMap();
-                    if (e.getMessage() != null) {
-                        hmap.put("message", e.getMessage());
-                    } else {
-                        hmap.put("message", "No message (" + e.getClass().getName() + ")");
-                    }
-                    return hmap;
-                }
-                // validate against relax ng
-                if (schema.isFile()) {
-                    DocumentHelper.writeDocument(document, new File(file.getCanonicalPath()
-                            + ".validate"));
-                    String message = validateDocument(schema, new File(file.getCanonicalPath()
-                            + ".validate"));
-                    if (message != null) {
-                        log.error("RELAX NG Validation failed: " + message);
-                        HashMap hmap = new HashMap();
-                        hmap.put("message", "RELAX NG Validation failed: " + message);
-                        return hmap;
-                    }
-                } else {
-                    log.warn("No such schema: " + schema.getAbsolutePath());
-                }
-                DocumentHelper.writeDocument(document, file);
-                return null;
-            } catch (Exception e) {
-                getLogger().error(".act(): Exception: " + e.getMessage(), e);
+        if (!schema.isFile()) {
+            log.warn("No such schema: " + schema.getAbsolutePath());
+            return null;
+        }
+
+        try {
+            File tmpFile = createTmpFile(request.getParameter("content"));
+            String message = validateDocument(schema, tmpFile);
+            tmpFile.delete();
+            if (message != null) {
                 HashMap hmap = new HashMap();
-                if (e.getMessage() != null) {
-                    hmap.put("message", e.getMessage());
-                } else {
-                    hmap.put("message", "No message (" + e.getClass().getName() + ")");
-                }
+                hmap.put("message", "RELAX NG Validation failed: " + message);
                 return hmap;
             }
-        } else {
-            getLogger().error(".act(): No such file: " + file.getAbsolutePath());
+        } catch (Exception e) {
+            // FIXME: could it be that the tmpFile is not removed in the case of 
+            // an exception? Exceptions happen everytime the validation fails
+            getLogger().error("RELAX NG Validation failed: " + e.getMessage());
             HashMap hmap = new HashMap();
-            hmap.put("message", "No such file: " + file.getAbsolutePath());
+            hmap.put("message", "RELAX NG Validation failed: " + e.getMessage());
             return hmap;
         }
+        return null;
     }
+
     /**
      * Validate document
-     * 
-     * @param schema
-     *            The relax ng schema.
-     * @param file
-     *            The file to validate
+     * @param schema The relax ng schema.
+     * @param file The file to validate
      * @return The validation error message or null.
      */
-    private String validateDocument(File schema, File file) {
-        try {
-            return RelaxNG.validate(schema, file);
-        } catch (Exception e) {
-            getLogger().error(e.getMessage());
-            return "" + e;
-        }
+    private String validateDocument(File schema, File file) throws Exception {
+        return RelaxNG.validate(schema, file);
+
+    }
+
+    private File createTmpFile(String content)
+        throws SAXException, ParserConfigurationException, TransformerException, IOException {
+        File tmpFile = File.createTempFile("OneformEditor", null);
+        getLogger().debug("file: " + tmpFile.getAbsolutePath());
+
+        //write POST content in temporary file
+        FileWriter fileWriter = new FileWriter(tmpFile);
+        fileWriter.write(content);
+        fileWriter.close();
+
+        Document document = null;
+        DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
+        parserFactory.setValidating(false);
+        parserFactory.setNamespaceAware(true);
+        parserFactory.setIgnoringElementContentWhitespace(true);
+        DocumentBuilder builder = parserFactory.newDocumentBuilder();
+
+        document = builder.parse(tmpFile.getAbsolutePath());
+
+        DocumentHelper.writeDocument(document, tmpFile);
+
+        return tmpFile;
     }
 }
