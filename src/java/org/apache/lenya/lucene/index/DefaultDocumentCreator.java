@@ -58,9 +58,9 @@ public class DefaultDocumentCreator extends AbstractDocumentCreator {
             document.add(Field.Text("title", parser.getTitle()));
             document.add(Field.Text("keywords", parser.getKeywords()));
             document.add(Field.Text("contents", parser.getReader()));
-        } catch (ParseException e) {
+        } catch (final IOException e) {
             throw new IOException(e.toString());
-        } catch (IOException e) {
+        } catch (final ParseException e) {
             throw new IOException(e.toString());
         }
 
