@@ -17,7 +17,7 @@
       <block>
         <item>Edit</item>
         <item>Publish</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/ParentChildScreenNewArticle?parentid=/</xsp:attribute>New Article</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/ParentChildScreenNewArticle?parentid=/</xsp:attribute>New&#160;Article</item>
         <item href="front.xml">View&#160;XML</item>
       </block>
       <block>
