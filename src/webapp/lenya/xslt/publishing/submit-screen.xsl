@@ -34,6 +34,7 @@
         </i18n:translate>
         
       </div>
+      <div class="lenya-box-body">
             <form method="GET" action="">
                 <table class="lenya-table-noborder">
                     <tr>
@@ -63,6 +64,7 @@
                 </table>
             </form>
         </div>
+      </div>
     </page:body>
   </page:page>
 </xsl:template>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-$Id: reject-screen.xsl,v 1.6 2004/02/14 08:09:14 roku Exp $
+$Id: reject-screen.xsl,v 1.7 2004/02/27 11:00:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -80,7 +80,8 @@ $Id: reject-screen.xsl,v 1.6 2004/02/14 08:09:14 roku Exp $
                 <i18n:text i18n:key="reject-doc?"/>
                 <i18n:param><xsl:value-of select="document-id"/></i18n:param>
               </i18n:translate>
-            </div>              
+            </div>     
+        <div class="lenya-box-body">
         <form method="GET" action="">
             <table class="lenya-table-noborder">
                 <tr>
@@ -109,6 +110,7 @@ $Id: reject-screen.xsl,v 1.6 2004/02/14 08:09:14 roku Exp $
                 </tr>
             </table>
         </form>
+        </div>         
        </div> 
     </page:body>
   </page:page>

@@ -87,10 +87,6 @@
       <page:title><i18n:text>Publish</i18n:text></page:title>
       <page:body>
         
-        <table class="lenya-table-noborder">
-        <tr>
-        <td>
-        
         <form name="form_publish">
           <input type="hidden" name="lenya.usecase" value="publish"/>          
           <input type="hidden" name="lenya.step" value="publish"/>
@@ -175,9 +171,6 @@
           
         </sch:scheduler-form>
         -->                
-        </td>
-        </tr>
-        </table>
           
       </page:body>
     </page:page>
