@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UniqueDocumentId.java,v 1.10 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: UniqueDocumentId.java,v 1.11 2004/08/16 13:01:46 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -55,7 +55,7 @@ public class UniqueDocumentId {
 
                 int l = lastToken.length();
                 int index = lastToken.lastIndexOf("-");
-                if ((index < l) & (index > 0)) {
+                if (0 < index && index < l) {
                     suffix = lastToken.substring(index + 1);
                     idwithoutsuffix = substring + lastToken.substring(0, index);
                     version = Integer.parseInt(suffix);
