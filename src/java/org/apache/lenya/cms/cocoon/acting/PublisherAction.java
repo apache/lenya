@@ -13,6 +13,8 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.util.Tokenizer;
 
+import org.apache.log4j.Category;
+
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -32,17 +34,17 @@ import org.dom4j.io.SAXReader;
  * @author Michael Wechner
  * @version 2002.02.04
  */
-public class PublisherAction
-    extends AbstractComplementaryConfigurableAction
-    implements Configurable {
+public class PublisherAction extends AbstractComplementaryConfigurableAction implements Configurable {
 
-    private String authoringPath = null;
-    private String livePath = null;
-    private String treeAuthoringPath = null;
-    private String treeLivePath = null;
+  private String authoringPath = null;
+  private String livePath = null;
+  private String treeAuthoringPath = null;
+  private String treeLivePath = null;
     
   //private String replication_queue_href=null;
   private String directoryPrefix=null;
+
+  static Category log=Category.getInstance(PublisherAction.class);
 
 /**
  *
@@ -139,6 +141,7 @@ public class PublisherAction
 	}
 
     // Export static HTML
+    log.debug("KUCKUCK 1");
     exportStaticHTML(docid,request.getServerPort(),exportDirectory);
 	
 	// Get session
@@ -179,6 +182,7 @@ public class PublisherAction
  * Export Static HTML
  */
   public void exportStaticHTML(String docid,int port,String exportDirectory){
+    log.debug("KUCKUCK 2");
     try{
       org.wyona.net.WGet wget=new org.wyona.net.WGet();
       getLogger().info("Export directory: "+exportDirectory);

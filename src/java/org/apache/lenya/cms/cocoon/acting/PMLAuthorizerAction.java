@@ -98,7 +98,7 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
             policyDoc=getPolicyDoc(request);
         }
         catch(Exception e){
-            getLogger().error(".authorize(): "+e);
+            getLogger().error(".authorize(): No policy could be retrieved ("+e+"). Access denied (return false).");
             return false;
         }
         Policy policy=new Policy(policyDoc,getLogger());
@@ -158,9 +158,11 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
         String sitemap_uri=request.getSitemapURI();
         String pmlURLString="http://"+domain;
         if(this.port != null){
+          getLogger().debug(".getPolicyDoc(): Port set by Configuration: "+this.port+" (request-port: "+port+")");
             pmlURLString=pmlURLString+":"+this.port;
         }
         else{
+          getLogger().debug(".getPolicyDoc(): Port set equals to request port: "+port);
             pmlURLString=pmlURLString+":"+port;
         }
         if(this.context != null){
