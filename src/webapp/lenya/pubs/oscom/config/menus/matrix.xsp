@@ -45,7 +45,7 @@
       </block>
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/admin/passwd/index.html</xsp:attribute>Change&#160;Password</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix + "/authoring/matrix/"+projectid+".html?lenya.usecase=logout"</xsp:expr></xsp:attribute>Logout</item>
       </block>
     </menu>
 
