@@ -40,7 +40,7 @@ efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial
     </xsl:when>
     <xsl:otherwise>
       <xsl:choose>
-        <xsl:when test="lenya:publication/@show = 'false'">
+        <xsl:when test="lenya:publication/@lenya:show = 'false'">
           <!-- do not list this publication. Might be a "template" publication -->
         </xsl:when>
         <xsl:otherwise>
