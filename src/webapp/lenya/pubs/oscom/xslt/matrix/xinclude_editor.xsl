@@ -8,9 +8,9 @@
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
 <oscom>
 <!--
-  <xi:include xml:base="cocoon:" href="/authoring/navigation.xml"/>
+  <xi:include xml:base="cocoon:" href="authoring/navigation.xml"/>
   <xsl:for-each select="dir:file">
-    <xi:include xml:base="cocoon:" href="authoring/matrix/body-{@name}"/>
+    <xi:include xml:base="cocoon:" href="authoring/editor-matrix/body-{@name}"/>
   </xsl:for-each>
 -->
 
