@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileUtil.java,v 1.13 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id: FileUtil.java,v 1.14 2004/04/30 13:18:42 andreas Exp $  */
 
 package org.apache.lenya.util;
 
@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Category;
@@ -105,6 +106,52 @@ public class FileUtil {
             destination.write(bytes_buffer, 0, bytes_read);
         }
     }
+    
+    /**
+     * Copy a single File or a complete Directory including its Contents.
+     *
+     * @param src the source File.
+     * @param dest the destiantion File.
+     *
+     * @throws FileNotFoundException if the source File does not exists.
+     * @throws IOException if an error occures in the io system.
+     */
+    public static void copy(File src, File dest)
+        throws FileNotFoundException, IOException {
+        
+        if (src.isFile()) {
+            copySingleFile(src, dest);
+        } else {
+            dest.mkdirs();
+            File[] contents = src.listFiles();
+            for (int i = 0; i < contents.length; i++) {
+                String destPath = dest.getAbsolutePath() + File.separator + contents[i].getName();
+                copy(contents[i], new File(destPath));
+            }
+        }
+    }
+    
+    /**
+     * Copy a single File.
+     *
+     * @param src the source File.
+     * @param dest the destiantion File.
+     *
+     * @throws FileNotFoundException if the source File does not exists.
+     * @throws IOException if an error occures in the io system.
+     */
+    protected static void copySingleFile(File src, File dest)
+        throws FileNotFoundException, IOException {
+
+        dest.getParentFile().mkdirs();
+        dest.createNewFile();
+        FileChannel srcChannel = new FileInputStream(src).getChannel();
+        FileChannel destChannel = new FileOutputStream(dest).getChannel();
+        srcChannel.transferTo(0, srcChannel.size(), destChannel);
+        srcChannel.close();
+        destChannel.close();
+    }    
+    
 
     /**
      * Returns a file by specifying an absolute directory name and a relative file name
