@@ -11,6 +11,10 @@
 <!--
 <xsl:variable name="imagesPrefix">oscom-proposals_files</xsl:variable>
 -->
+<!--
+<xsl:variable name="searchURL">/search/go</xsl:variable>
+-->
+<xsl:variable name="searchURL">/lenya/oscom/search-oscom/lucene</xsl:variable>
 
 <xsl:template match="oscom">
 <html>
@@ -182,7 +186,7 @@ content="text/html; charset=iso-latin-1" />
 </td>
 <td valign="middle">
 <!-- We can put topical banners here -->
-<form method="get" action="/lenya/oscom/search-oscom/lucene">
+<form method="get" action="{$searchURL}">
 <input type="hidden" name="publication-id" value="all" />
 <input type="text" name="queryString" class="search" size="15"/>&#160;<input type="submit" name="find" value="Go" class="searchsubmit" />
 </form>
