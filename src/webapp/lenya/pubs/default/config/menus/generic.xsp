@@ -83,54 +83,19 @@
           <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
           <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>With one Form</i18n:text></item>
         </block>
+        
         <block info="false">
           <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute><i18n:text>Edit Metadata</i18n:text></item>
           <item wf:event="edit" uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
         </block>
 
         <block authoring="false">
+          <item uc:usecase="site.cut" href="?"><i18n:text>Cut</i18n:text></item>
+          <item uc:usecase="site.copy" href="?"><i18n:text>Copy</i18n:text></item>
+          <item uc:usecase="site.paste" href="?"><i18n:text>Paste</i18n:text></item>
+        </block>
         
-        <xsp:logic>
-          
-        {
-          String docId = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
-          
-          if (isDocument
-              &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
-              &amp;&amp; Publication.AUTHORING_AREA.equals(area)
-              &amp;&amp; !"/index".equals(docId)) {
-            <item uc:usecase="cut" uc:step="showscreen" href="?"><i18n:text>Cut</i18n:text></item>
-          }
-          else {
-            <item><i18n:text>Cut</i18n:text></item>
-          }
         
-          if (isDocument
-              &amp;&amp; Publication.AUTHORING_AREA.equals(area)
-              &amp;&amp; !"/index".equals(docId)) {
-            <item uc:usecase="copy" uc:step="showscreen" href="?"><i18n:text>Copy</i18n:text></item>
-          }
-          else {
-            <item><i18n:text>Copy</i18n:text></item>
-          }
-        
-                String clipboard = (String) <input:get-attribute module="session-attr" as="object" name="org.apache.lenya.cms.info.firstdocid"/> + "/";
-                String currentDocumentId = <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "/";
-                
-                if (clipboard != null
-                    &amp;&amp; !"".equals(clipboard)
-              &amp;&amp; Publication.AUTHORING_AREA.equals(area)
-              &amp;&amp; !currentDocumentId.startsWith(clipboard)
-              &amp;&amp; !"/index".equals(docId)) {
-                        <item uc:usecase="paste" uc:step="showscreen" href="?"><i18n:text>Paste</i18n:text></item>
-                }
-                else {
-                        <item><i18n:text>Paste</i18n:text></item>
-                }
-        }
-        </xsp:logic>
-        
-      </block>
       <block authoring="false">
         <item uc:usecase="site.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
         <item uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
