@@ -19,8 +19,10 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
-import java.io.File;
-import java.net.URL;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.dom.DOMResult;
@@ -36,21 +40,25 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.acting.AbstractConfigurableAction;
+import org.apache.cocoon.components.source.SourceUtil;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.commons.lang.StringUtils;
+import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
-import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import org.xml.sax.InputSource;
 import org.xmldb.common.xml.queries.XObject;
 import org.xmldb.common.xml.queries.XPathQuery;
 import org.xmldb.common.xml.queries.XPathQueryFactory;
@@ -96,25 +104,46 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
-        File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
-        File file = new File(sitemap.getAbsolutePath() + File.separator
-                + parameters.getParameter("file"));
-        File schema = new File(sitemap.getAbsolutePath() + File.separator
-                + parameters.getParameter("schema"));
-        File unnumberTagsXSL = new File(sitemap.getAbsolutePath() + File.separator
-                + parameters.getParameter("unnumberTagsXSL"));
-        File numberTagsXSL = new File(sitemap.getAbsolutePath() + File.separator
-                + parameters.getParameter("numberTagsXSL"));
+
+        String xmlUri = parameters.getParameter("file");
+        String schemaUri = parameters.getParameter("schema");
+        String unnumberTagsXslUri = parameters.getParameter("unnumberTagsXSL");
+        String numberTagsXslUri = parameters.getParameter("numberTagsXSL");
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        if (request.getParameter("cancel") != null) {
-            getLogger().warn(".act(): Editing has been canceled");
-            file.delete();
-            return null;
-        } else {
-            if (file.isFile()) {
-                getLogger().debug(".act(): Save modifications to " + file.getAbsolutePath());
+        Source xmlSource = null;
+        Source schemaSource = null;
+        Source unnumberTagsXslSource = null;
+        Source numberTagsXslSource = null;
+
+        try {
+
+            xmlSource = resolver.resolveURI(xmlUri);
+            schemaSource = resolver.resolveURI(schemaUri);
+            unnumberTagsXslSource = resolver.resolveURI(unnumberTagsXslUri);
+            numberTagsXslSource = resolver.resolveURI(numberTagsXslUri);
+
+            if (!(xmlSource instanceof ModifiableSource)) {
+                throw new ProcessingException("Source [" + xmlSource + "] is not writeable.");
+            }
+
+            ModifiableSource modifiableXmlSource = (ModifiableSource) xmlSource;
+
+            if (request.getParameter("cancel") != null) {
+                getLogger().warn(".act(): Editing has been canceled");
+                modifiableXmlSource.delete();
+                return null;
+            }
+
+            else {
+                if (!xmlSource.exists()) {
+                    throw new ProcessingException("The source [" + xmlSource.getURI()
+                            + "] does not exist.");
+                }
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Save modifications to [" + xmlSource.getURI() + "]");
+                }
 
                 try {
                     Document document = null;
@@ -123,7 +152,9 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     parserFactory.setNamespaceAware(true);
                     parserFactory.setIgnoringElementContentWhitespace(true);
                     DocumentBuilder builder = parserFactory.newDocumentBuilder();
-                    document = builder.parse(file.getAbsolutePath());
+
+                    InputSource xmlInputSource = SourceUtil.getInputSource(xmlSource);
+                    document = builder.parse(xmlInputSource);
                     System.setProperty("org.xmldb.common.xml.queries.XPathQueryFactory",
                             "org.xmldb.common.xml.queries.xalan2.XPathQueryFactoryImpl");
 
@@ -261,24 +292,46 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                      */
 
                     // validate against relax ng after the updates
-                    if (schema.isFile()) {
-                        DocumentHelper.writeDocument(document, new File(file.getCanonicalPath()
-                                + ".validate"));
-                        String message = validateDocument(schema, new File(file.getCanonicalPath()
-                                + ".validate"), unnumberTagsXSL);
+                    if (!schemaSource.exists()) {
+                        throw new ProcessingException("Schema [" + schemaSource.getURI()
+                                + "] does not exist.");
+                    }
+
+                    Source validationSource = null;
+                    Source unnumberTagsSource = null;
+
+                    try {
+                        String validationUri = modifiableXmlSource.getURI() + ".validate";
+                        validationSource = resolver.resolveURI(validationUri);
+                        checkModifiability(validationSource);
+
+                        String unnumberTagsUri = modifiableXmlSource.getURI() + ".validate.unnumber";
+                        unnumberTagsSource = resolver.resolveURI(unnumberTagsUri);
+                        checkModifiability(unnumberTagsSource);
+
+                        writeDocument(document, (ModifiableSource) validationSource);
+
+                        String message = validateDocument(schemaSource, validationSource,
+                                (ModifiableSource) unnumberTagsSource, unnumberTagsXslSource);
+
                         if (message != null) {
                             getLogger().error("RELAX NG Validation failed: " + message);
                             HashMap hmap = new HashMap();
                             hmap.put("message", "RELAX NG Validation failed: " + message);
                             return hmap;
                         }
-                    } else {
-                        getLogger().warn("No such schema: " + schema.getAbsolutePath());
+                    } finally {
+                        if (validationSource != null) {
+                            resolver.release(validationSource);
+                        }
+                        if (unnumberTagsSource != null) {
+                            resolver.release(unnumberTagsSource);
+                        }
                     }
 
-                    Document renumberedDocument = renumberDocument(document, unnumberTagsXSL,
-                            numberTagsXSL);
-                    DocumentHelper.writeDocument(renumberedDocument, file);
+                    Document renumberedDocument = renumberDocument(document, unnumberTagsXslSource,
+                            numberTagsXslSource);
+                    writeDocument(document, modifiableXmlSource);
 
                     // check to see if we save and exit
                     if (request.getParameter("save") != null) {
@@ -309,12 +362,63 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     }
                     return hmap;
                 }
-            } else {
-                getLogger().error("No such file: " + file.getAbsolutePath());
-                HashMap hmap = new HashMap();
-                hmap.put("message", "No such file: " + file.getAbsolutePath());
-                return hmap;
             }
+
+        } finally {
+            if (xmlSource != null) {
+                resolver.release(xmlSource);
+            }
+            if (schemaSource != null) {
+                resolver.release(schemaSource);
+            }
+            if (unnumberTagsXslSource != null) {
+                resolver.release(unnumberTagsXslSource);
+            }
+            if (numberTagsXslSource != null) {
+                resolver.release(numberTagsXslSource);
+            }
+        }
+
+    }
+
+    /**
+     * Writes a document to a modifiable source.
+     * @param document The document.
+     * @param source The source.
+     * @throws IOException if an error occurs.
+     * @throws TransformerConfigurationException if an error occurs.
+     * @throws TransformerException if an error occurs.
+     * @throws ProcessingException if an error occurs.
+     */
+    protected void writeDocument(Document document, ModifiableSource source) throws IOException,
+            TransformerConfigurationException, TransformerException, ProcessingException {
+        OutputStream oStream = source.getOutputStream();
+        Writer writer = new OutputStreamWriter(oStream);
+        DocumentHelper.writeDocument(document, writer);
+        if (oStream != null) {
+            oStream.flush();
+            try {
+                oStream.close();
+            } catch (Throwable t) {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Exception closing output stream: ", t);
+                }
+                throw new ProcessingException("Could not write document: ", t);
+            }
+        }
+        if (!source.exists()) {
+            throw new ProcessingException("Could not write source [" + source.getURI() + "]");
+        }
+    }
+
+    /**
+     * Checks if a source is modifiable.
+     * @param validationSource The source.
+     * @throws ProcessingException if the source is not modifiable.
+     */
+    protected void checkModifiability(Source source) throws ProcessingException {
+        if (!(source instanceof ModifiableSource)) {
+            throw new ProcessingException("Cannot write to source [" + source.getURI() + "]");
         }
     }
 
@@ -500,28 +604,53 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     }
 
     /**
-     * Validate document
+     * Validates a document.
+     * @param schema The schema source.
+     * @param xml The input XML source.
+     * @param unnumberXml The source of the temporary unnumbered XML.
+     * @param unnumberTagsXsl The source of the unnumber XSL stylesheet.
+     * @return A string. FIXME: return codes?
      */
-    private String validateDocument(File schema, File file, File unnumberTagsXSL) {
+    private String validateDocument(Source schema, Source xml, ModifiableSource unnumberXml,
+            Source unnumberTagsXsl) {
         try {
-            // Remove tagIDs
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer t = tf.newTransformer(new StreamSource(unnumberTagsXSL));
-            t.transform(new StreamSource(file), new StreamResult(new File(file.getAbsolutePath()
-                    + ".unnumber")));
 
-            // Validate
-            return RelaxNG.validate(schema, new File(file.getAbsolutePath() + ".unnumber"));
+            StreamSource xmlSource = new StreamSource(xml.getInputStream());
+            StreamSource unnumberTagsXslSource = new StreamSource(unnumberTagsXsl.getInputStream());
+            
+            OutputStream outputStream = unnumberXml.getOutputStream();
+            StreamResult unnumberXmlResult = new StreamResult(outputStream);
+            
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer(unnumberTagsXslSource);
+            transformer.transform(xmlSource, unnumberXmlResult);
+            
+            if (outputStream != null) {
+                outputStream.flush();
+                try {
+                    outputStream.close();
+                } catch (Throwable t) {
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("Exception closing output stream: ", t);
+                    }
+                    throw new ProcessingException("Could not write document: ", t);
+                }
+            }
+
+            InputSource schemaInputSource = SourceUtil.getInputSource(schema);
+            InputSource unnumberXmlInputSource = SourceUtil.getInputSource(unnumberXml);
+
+            return RelaxNG.validate(schemaInputSource, unnumberXmlInputSource);
         } catch (Exception e) {
             getLogger().error("Validating failed:", e);
-            return "" + e;
+            return e.getMessage();
         }
     }
 
     /**
      * Renumber document
      */
-    private Document renumberDocument(Document doc, File unnumberTagsXSL, File numberTagsXSL) {
+    private Document renumberDocument(Document doc, Source unnumberTagsXSL, Source numberTagsXSL) {
 
         try {
             DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
@@ -533,12 +662,12 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
             TransformerFactory tf = TransformerFactory.newInstance();
 
             // Remove tagIDs
-            Transformer ut = tf.newTransformer(new StreamSource(unnumberTagsXSL));
+            Transformer ut = tf.newTransformer(new StreamSource(unnumberTagsXSL.getInputStream()));
             Document unnumberedDocument = builder.newDocument();
             ut.transform(new DOMSource(doc), new DOMResult(unnumberedDocument));
 
             // Add tagIDs
-            Transformer nt = tf.newTransformer(new StreamSource(numberTagsXSL));
+            Transformer nt = tf.newTransformer(new StreamSource(numberTagsXSL.getInputStream()));
             Document renumberedDocument = builder.newDocument();
             nt.transform(new DOMSource(unnumberedDocument), new DOMResult(renumberedDocument));
 
