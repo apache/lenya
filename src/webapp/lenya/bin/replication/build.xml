@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+
+<!-- 
+  Replication to Live Servers
+  
+  Depends on jsch-*.jar and ant-contrib-*.jar
+  These two libraries need to be copied to $ANT_HOME/lib
+
+  Also one needs to generate ssh keys, e.g.
+
+  ssh-keygen -t dsa
+  Copy .ssh/id_dsa.pub to remote server .ssh/authorized_keys
+
+  or
+
+  ssh-keygen -t rsa
+  Copy .ssh/id_rsa.pub to remote server .ssh/authorized_keys
+  
+-->
+
+<project default="replicate" basedir="." name="replicator">
+
+  <description>
+    Repplicate the pending and the delete directory to the live servers
+  </description>
+  
+  <target name="init">
+    <property file="local.build.properties"/>
+    <property file="build.properties"/>
+
+    <!--<echoproperties/>-->
+  </target>
+  
+  <target name="replicate" depends="init" description="Replicate data">
+    <pathconvert 
+        property="pending-files.exist"
+        pathsep="/"
+        setonempty="false">
+            <path>
+                <fileset dir="${pending.dir}"/>
+                <fileset dir="${delete.dir}"/>
+            </path>
+    </pathconvert>
+    <antcall target="copy-to-hosts" inheritAll="true"/>
+  </target>
+  
+  <target name="move-to-tmp" if="pending-files.exist">
+    <tstamp>
+  	  <format property="timestamp" pattern="yyMMdd-HHmmss" locale="de"/>
+    </tstamp>
+    <!-- move pending dir to tmp -->
+    <mkdir dir="${pending_tmp.dir}/${timestamp}"/>
+    <move todir="${pending_tmp.dir}/${timestamp}" failonerror="yes">
+  	  <fileset dir="${pending.dir}">
+    	  <include name="**/*"/>
+  	  </fileset>
+    </move>
+    <!-- move delete dir to tmp -->
+    <mkdir dir="${delete_tmp.dir}/${timestamp}"/>
+    <move todir="${delete_tmp.dir}/${timestamp}" failonerror="yes">
+  	  <fileset dir="${delete.dir}">
+    	  <include name="**/*"/>
+  	  </fileset>
+    </move>
+    <!-- wait for Publisher to finish writing the files -->
+    <!--sleep seconds="5"/-->
+  </target>
+  
+  <target name="copy-to-specific-host">
+    
+    <!-- copy files to this hosts --> 
+    <pathconvert 
+      property="this-pending-files.exist"
+      pathsep="/"
+      setonempty="false">
+      <path>
+        <fileset dir="${pending_tmp.dir}/${timestamp}"/>
+      </path>
+    </pathconvert>
+    <antcall target="copy-to-remote"/>
+  
+    <!-- delete remote files -->
+    <pathconvert 
+      property="this-delete-files.exist"
+      pathsep="/"
+      setonempty="false">
+      <path>
+        <fileset dir="${delete_tmp.dir}/${timestamp}"/>
+      </path>
+    </pathconvert> 
+    <antcall target="delete-remote-files"/>
+        
+  </target>
+ 
+  <target name="copy-to-remote" if="this-pending-files.exist">
+   
+    <property name="src.dir" value="${pending_tmp.dir}/${timestamp}"/>
+    <property name="dest.dir" value="${src.dir}_${specific.host}"/>
+    
+    <copy todir="${dest.dir}">
+        <fileset dir="${src.dir}"/>
+    </copy>
+    <echo>Copied tmp directory ${src.dir} to the host specific directory ${dest.dir}</echo>
+  
+    <apply executable="scp" 
+      resultproperty="return.code"
+      errorproperty="error.message"
+      parallel="true">        
+        <arg value="-r"/>
+        <srcfile/>
+        <arg value="${specific.username}@${specific.host}:${specific.remote.dir}"/>      
+        <fileset dir="${dest.dir}">
+          <include name="*"/>
+        </fileset>
+        <dirset dir="${dest.dir}">
+          <include name="*"/>
+        </dirset>
+    </apply>
+    
+    <antcall target="delete-remote-cache"/>
+  
+    <condition property="copy-success">
+      <equals arg1="${return.code}" arg2="0" trim="true"/>
+    </condition>
+    <antcall target="copy-success" inheritAll="true"/>
+  
+    <condition property="copy-fail">
+      <equals arg1="${return.code}" arg2="1" trim="true"/>
+    </condition>
+    <antcall target="copy-fail" inheritAll="true"/> 
+   
+  </target> 
+  
+  <target name="delete-remote-files" if="this-delete-files.exist">
+   
+    <property name="delete_src.dir" value="${delete_tmp.dir}/${timestamp}"/>
+    <property name="delete_dest.dir" value="${delete_src.dir}_${specific.host}"/>    
+    <copy todir="${delete_dest.dir}">
+        <fileset dir="${delete_src.dir}"/>
+    </copy>    
+        
+    <path id="local_delete.path">
+            <fileset dir="${delete_dest.dir}"/>
+    </path>
+    <pathconvert targetos="unix" 
+            property="remote_delete.path" 
+            refid="local_delete.path" 
+            pathsep=" ">
+            <map from="${delete_dest.dir}" to="${specific.remote.dir}"/>
+    </pathconvert>     
+   
+    <echo>delete ${remote_delete.path}</echo>
+                
+    <sshexec 
+            host="${specific.host}" 
+            username="${specific.username}" 
+            keyfile="${local.keyfile}" 
+            command="rm -r ${remote_delete.path}" 
+            failonerror="false"/>
+   
+    <delete dir="${delete_dest.dir}"/> 
+            
+  </target>
+
+  
+
+
+  <target name="delete-remote-cache" description="Delete server cache on remote server" depends="init">
+    <path id="pending_content.path">
+      <fileset dir="${dest.dir}/content"/>
+    </path>
+
+    <property name="remote.cache.dir" value="${specific.remote.dir}/work/cache"/>
+
+    <echo>Local Cache Dir: ${cache.dir}</echo>
+    <echo>Remote Cache Dir: ${remote.cache.dir}</echo>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+            
+    <echo message="Deleting remote server cache: ${specific.username}@${specific.host}:${remote.cache.dir}"/>
+
+<!--
+    <sshexec 
+            host="${specific.host}" 
+            username="${specific.username}" 
+            keyfile="${local.keyfile}" 
+            command="rm -r ${remote.cache.dir}"
+            failonerror="false"/>
+-->
+
+<!--
+   <exec executable="ssh">
+     <arg value="wlssys@$sd0280 'ls ${remote.cache.dir};exit'"/>
+   </exec>
+-->
+
+   <exec executable="${basedir}/delete-remote-cache.sh">
+     <arg value="${specific.username}"/>
+     <arg value="${specific.host}"/>
+     <arg value="${remote.cache.dir}"/>
+   </exec>
+  </target>
+
+
+
+
+
+
+
+    
+  <target name="copy-success" if="copy-success">
+    <echo>Data transfered to remote host ${specific.host}</echo>
+    <delete dir="${dest.dir}"/>
+  </target>
+  
+  <target name="copy-fail" if="copy-fail">
+    <property name="failure.message"
+      value="Cannot copy files to remote host ${specific.host}: ${error.message}"/>
+    <property name="exception.dir" value="${dest.dir}_EXCEPTION" />
+    <move todir="${exception.dir}">
+      <fileset dir="${dest.dir}"/>
+    </move>
+    <echo message="${failure.message}"/>
+    <echo message="${failure.message}" file="${exception.dir}/error.log"/>  
+  </target>  
+
+  <target name="copy-to-hosts" depends="move-to-tmp" if="pending-files.exist">
+
+    <condition property="copy-to-host1">
+      <isset property="remote1.host"/>
+    </condition>
+    <antcall target="copy-to-host1"/>
+
+    <condition property="copy-to-host2">
+      <isset property="remote2.host"/>
+    </condition>
+    <antcall target="copy-to-host2"/>
+
+    <condition property="copy-to-host3">
+      <isset property="remote3.host"/>
+    </condition>
+    <antcall target="copy-to-host3"/>    
+  
+    <condition property="copy-to-host4">
+      <isset property="remote4.host"/>
+    </condition>
+    <antcall target="copy-to-host4"/>
+
+    <antcall target="cleanup"/>
+<!--
+    <echo>Delete stuff within pending and delete directory</echo>
+    <delete dir="${pending_tmp.dir}/${timestamp}"/>
+    <delete dir="${delete_tmp.dir}/${timestamp}"/> 
+-->
+    
+  </target> 
+  
+  <target name="copy-to-host1" if="copy-to-host1">
+    <antcall target="copy-to-specific-host">
+      <param name="specific.host" value="${remote1.host}"/>
+      <param name="specific.username" value="${remote1.username}"/>
+      <param name="specific.keyfile" value="${remote1.keyfile}"/>
+      <param name="specific.remote.dir" value="${remote1.dir}"/>                  
+    </antcall>
+  </target>
+  
+  <target name="copy-to-host2" if="copy-to-host2">
+    <antcall target="copy-to-specific-host">
+      <param name="specific.host" value="${remote2.host}"/>
+      <param name="specific.username" value="${remote2.username}"/>
+      <param name="specific.keyfile" value="${remote2.keyfile}"/>
+      <param name="specific.remote.dir" value="${remote2.dir}"/>                  
+    </antcall>
+  </target>
+  
+  <target name="copy-to-host3" if="copy-to-host3">
+    <antcall target="copy-to-specific-host">
+      <param name="specific.host" value="${remote3.host}"/>
+      <param name="specific.username" value="${remote3.username}"/>
+      <param name="specific.keyfile" value="${remote3.keyfile}"/>
+      <param name="specific.remote.dir" value="${remote3.dir}"/>                  
+    </antcall>
+  </target>      
+  
+  <target name="copy-to-host4" if="copy-to-host4">
+    <antcall target="copy-to-specific-host">
+      <param name="specific.host" value="${remote4.host}"/>
+      <param name="specific.username" value="${remote4.username}"/>
+      <param name="specific.keyfile" value="${remote4.keyfile}"/>
+      <param name="specific.remote.dir" value="${remote4.dir}"/>                  
+    </antcall>
+  </target>
+  
+  <target name="cleanup">
+    <echo>Delete stuff within pending and delete directory</echo>
+    <delete dir="${pending_tmp.dir}/${timestamp}"/>
+    <delete dir="${delete_tmp.dir}/${timestamp}"/> 
+  </target>
+
+</project>
