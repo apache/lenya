@@ -21,7 +21,7 @@
 				<td height="30" width="120" valign="middle" align="right">
 					<!-- DATUM -->
 					<span class="txt-s-black">
-						<xsl:value-of select="head/dateline/story.date/@norm"/>
+						<xsl:value-of select="head/dateline/story.date/@norm"/>&#160;<xsl:value-of select="head/dateline/story.date/@hour"/>:<xsl:value-of select="head/dateline/story.date/@minute"/>
 					</span>
 				</td>
 			</tr>
