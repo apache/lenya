@@ -1,5 +1,5 @@
 /*
-$Id: Configuration.java,v 1.12 2003/07/23 13:21:40 gregor Exp $
+$Id: Configuration.java,v 1.13 2003/10/14 12:47:15 michi Exp $
 <License>
 
  ============================================================================
@@ -121,7 +121,7 @@ public class Configuration {
         URL url = cl.getResource(resourcePathRelativeToClasspath);
 
         if (url == null) {
-            log.error("Could not find resource on classpath: " + resourcePathRelativeToClasspath);
+            log.error(".load(): Could not find resource on classpath: " + resourcePathRelativeToClasspath);
 
             //return null;
         }
@@ -133,7 +133,7 @@ public class Configuration {
         try {
             properties.load(Configuration.class.getResourceAsStream("conf.properties"));
         } catch (Exception e) {
-            log.error(e);
+            log.error(".load(): " + e);
         }
 
         return properties;
