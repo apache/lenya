@@ -4,6 +4,7 @@
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
 >
 
 <menu>
@@ -14,6 +15,7 @@
     <publication-id><xsp-lenya:publication-id/></publication-id>
     <area><xsp-lenya:area/></area>
     <document-id><xsp-lenya:document-id/></document-id>
+    <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
     <servlet-context-path><xsp-lenya:servlet-context-path/></servlet-context-path>
     <publication><xsp-lenya:publication/></publication>
   </url-info>

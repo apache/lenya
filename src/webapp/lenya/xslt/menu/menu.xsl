@@ -52,14 +52,14 @@ src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
      <img border="0" src="/lenya/lenya/menu/images/info_inactive.gif" />
     </xsl:otherwise></xsl:choose>
   </a>
-  <a href="{url-info/context-prefix}/{url-info/publication-id}/authoring{url-info/document-id}">
+  <a href="{url-info/context-prefix}/{url-info/publication-id}/authoring{url-info/document-url}">
    <xsl:choose><xsl:when test="url-info/area = 'authoring'">
     <img border="0" src="/lenya/lenya/menu/images/authoring_active.gif" />
     </xsl:when><xsl:otherwise>
      <img border="0" src="/lenya/lenya/menu/images/authoring_inactive.gif" />
     </xsl:otherwise></xsl:choose>
   </a>
-  <a target="_blank" href="{url-info/context-prefix}/{url-info/publication-id}/live{url-info/document-id}">
+  <a target="_blank" href="{url-info/context-prefix}/{url-info/publication-id}/live{url-info/document-url}">
     <img border="0" src="/lenya/lenya/menu/images/live_inactive.gif" />
   </a>
 </td>
