@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.7 2003/07/24 13:02:40 andreas Exp $
+ $Id: info.xsl,v 1.8 2003/07/24 18:44:19 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -136,16 +136,18 @@
 	<table class="lenya-table">
 		<tr>
 			<th colspan="2">Access Object</th>
-			<th colspan="2">Role</th>
+			<th colspan="2"><xsl:if test="@area = 'authoring'">Role</xsl:if>&#160;</th>
 		</tr>
 		<tr>
 			<xsl:call-template name="form-add-credential">
+				<xsl:with-param name="area" select="@area"/>
 				<xsl:with-param name="type">user</xsl:with-param>
 				<xsl:with-param name="title">User</xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		<tr>
 			<xsl:call-template name="form-add-credential">
+				<xsl:with-param name="area" select="@area"/>
 				<xsl:with-param name="type">group</xsl:with-param>
 				<xsl:with-param name="title">Group</xsl:with-param>
 			</xsl:call-template>
@@ -153,12 +155,18 @@
 		<xsl:if test="@area = 'live'">
 		<tr>
 			<xsl:call-template name="form-add-credential">
+				<xsl:with-param name="area" select="@area"/>
 				<xsl:with-param name="type">iprange</xsl:with-param>
 				<xsl:with-param name="title">IP&#160;range</xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		</xsl:if>
+		
+		<xsl:apply-templates select="lenya-info:credential">
+      <xsl:with-param name="area" select="@area"/>
+		</xsl:apply-templates>
 	</table>
+	
 	</td>
 	</tr>	
 	
@@ -167,40 +175,94 @@
 
 
 <xsl:template name="form-add-credential">
+	<xsl:param name="area"/>
 	<xsl:param name="type"/>
 	<xsl:param name="title"/>
+	<form method="get">
+	<input type="hidden" name="lenya.usecase" value="info"/>
+	<input type="hidden" name="lenya.step" value="showscreen"/>
+	<input type="hidden" name="area" value="{$area}"/>
 	<td><xsl:value-of select="$title"/>:</td>
 	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
 	<td>
-		<xsl:apply-templates select="//lenya-info:items[@type = 'role']">
-			<xsl:with-param name="accreditable" select="$type"/>
-		</xsl:apply-templates>
+		<xsl:choose>
+			<xsl:when test="$area = 'authoring'">
+				<xsl:apply-templates select="//lenya-info:items[@type = 'role']"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<input type="hidden" name="role_id" value="visitor"/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</td>
 	<td><input type="submit" name="add_credential_{$type}" value="Add"/></td>
+	</form>
 </xsl:template>
 
 
 <xsl:template match="lenya-info:items[@type='user' or @type='group' or @type='iprange']">
-  <select name="{@type}">
+  <select name="accreditable_id" class="lenya-form-element">
     <xsl:apply-templates/>
   </select>
 </xsl:template>
 
 
 <xsl:template match="lenya-info:items[@type='role']">
-	<xsl:param name="accreditable"/>
-  <select name="role-{$accreditable}">
+  <select name="role_id">
     <xsl:apply-templates/>
   </select>
 </xsl:template>
 
 
-	<xsl:template match="lenya-info:item">
-  <option name="{@id}">
+<xsl:template match="lenya-info:item">
+  <option value="{@id}">
     <xsl:variable name="name" select="normalize-space(.)"/>
     <xsl:value-of select="@id"/>&#160;
     <xsl:if test="$name != ''"><em>(<xsl:value-of select="$name"/>)</em></xsl:if>
   </option>
+</xsl:template>
+
+
+<xsl:template match="lenya-info:credential">
+	<xsl:param name="area"/>
+	<xsl:variable name="color">
+		<xsl:choose>
+			<xsl:when test="@type = 'parent'">#666666;</xsl:when>
+			<xsl:otherwise>#000000;</xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
+  <tr>
+  	<td/>
+  	<td>
+  		<span style="color: {normalize-space($color)}">
+  		<xsl:value-of select="@accreditable-id"/>
+  	  <xsl:if test="@accreditable-name != ''">
+  		  (<xsl:value-of select="@accreditable-name"/>)
+  	  </xsl:if>
+  	  </span>
+  	</td>
+  	<td>
+  		<xsl:if test="$area = 'authoring'">
+  		<span style="color: {$color}">
+  		<xsl:value-of select="@role-id"/>
+  	  <xsl:if test="@role-name != ''">
+  		  (<xsl:value-of select="@role-name"/>)
+  	  </xsl:if>
+  	  </span>
+  	  </xsl:if>
+  	</td>
+  	<td>
+  		<xsl:if test="not(@type = 'parent')">
+  		<form>
+				<input type="hidden" name="lenya.usecase" value="info"/>
+				<input type="hidden" name="lenya.step" value="showscreen"/>
+				<input type="hidden" name="area" value="{$area}"/>
+  			<input type="hidden" name="accreditable_id" value="{@accreditable-id}"/>
+  			<input type="hidden" name="role_id" value="{@role-id}"/>
+  			<input type="submit" name="delete_credential_{@accreditable-type}" value="Delete"/>
+  		</form>
+  		</xsl:if>
+  	</td>
+  </tr>
 </xsl:template>
 
 </xsl:stylesheet> 

@@ -18,6 +18,12 @@
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.ItemManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Role</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.RoleManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.Accreditable</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.Credential</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.xsp.PolicyHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.xsp.CredentialWrapper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
   </xsp:structure>                                                                                                                          
@@ -114,12 +120,59 @@
 			}
 			</xsp:logic>
       </li:items>
+      
+      String[] operations = { "add", "delete" };
+      
+      for (int j = 0; j &lt; operations.length; j++) {
+					if (request.getParameter(operations[j] + "_credential_" + types[i]) != null) {
+							String area = request.getParameter("area");
+							String roleId = request.getParameter("role_id");
+							
+							String accreditableId = request.getParameter("accreditable_id");
+							Item item = manager.getItem(accreditableId);
+							
+							RoleManager roleManager = (RoleManager)
+									<input:get-attribute module="access-control" name="role-manager" as="object"/>;
+							Role role = roleManager.getRole(roleId);
+							PolicyHelper.manipulateCredential(objectModel, item, role, area, operations[j], this.manager);
+					}
       }
+      
+      }
+      
+      
       
       String[] areas = { "authoring", "live" };
       for (int i = 0; i &lt; areas.length; i++) {
         <li:permissions>
           <xsp:attribute name="area"><xsp:expr>areas[i]</xsp:expr></xsp:attribute>
+          
+          <xsp:logic>
+          	
+          CredentialWrapper[] credentials = PolicyHelper.getURICredentials(objectModel, areas[i], manager);
+          for (int j = 0; j &lt; credentials.length; j++) {
+              <li:credential type="uri">
+								<xsp:attribute name="accreditable-type"><xsp:expr>credentials[j].getType()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="accreditable-id"><xsp:expr>credentials[j].getAccreditableId()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="accreditable-name"><xsp:expr>credentials[j].getAccreditableName()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="role-id"><xsp:expr>credentials[j].getRoleId()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="role-name"><xsp:expr>credentials[j].getRoleName()</xsp:expr></xsp:attribute>
+              </li:credential>
+          }
+          	
+          credentials = PolicyHelper.getParentCredentials(objectModel, areas[i], manager);
+          for (int j = 0; j &lt; credentials.length; j++) {
+              <li:credential type="parent">
+								<xsp:attribute name="accreditable-type"><xsp:expr>credentials[j].getType()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="accreditable-id"><xsp:expr>credentials[j].getAccreditableId()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="accreditable-name"><xsp:expr>credentials[j].getAccreditableName()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="role-id"><xsp:expr>credentials[j].getRoleId()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="role-name"><xsp:expr>credentials[j].getRoleName()</xsp:expr></xsp:attribute>
+              </li:credential>
+          }
+          	
+          </xsp:logic>	
+          
         </li:permissions>
       }
     </xsp:logic>
