@@ -378,7 +378,7 @@
   <taskdef name="computesecdocumentid" classname="org.apache.lenya.cms.ant.ComputeCopyDocumentId"/>
   <target name = "newcopydocumentid">
     <computesecdocumentid
-      area="${firstarea}"
+      area="${authoring.area}"
       firstdocumentid="${node.firstdocumentid}"
       secdocumentid="${node.secdocumentid}"
       />
@@ -503,6 +503,10 @@
 <taskdef name="moveworkflow" classname="org.apache.lenya.cms.ant.MoveWorkflowTask"/>
 <taskdef name="copypolicies" classname="org.apache.lenya.cms.ant.CopyPoliciesTask"/>
 <taskdef name="deleteschedulerentry" classname="org.apache.lenya.cms.ant.DeleteSchedulerEntryTask"/>
+<taskdef name="deletecontent" classname="org.apache.lenya.cms.ant.DeleteContentTask"/>
+<taskdef name="deleteresources" classname="org.apache.lenya.cms.ant.DeleteResourcesTask"/>
+<taskdef name="deletepolicies" classname="org.apache.lenya.cms.ant.DeletePoliciesTask"/>
+<taskdef name="deleterc" classname="org.apache.lenya.cms.ant.DeleteRCTask"/>
 
 <target name = "move">
   <echo>Copy Content</echo>
@@ -563,15 +567,37 @@
     refdocumentid = "${node.refdocumentid}" 
   />
 
-  <echo> Delete document with id ${node.firstdocumentid}</echo> 
-  <delete includeEmptyDirs="true">
-    <fileset dir="${pub.dir}/">
-      <include name="**/${firstarea}/**/${file.firstdocumentdir}/"/>
-      <include name="**/${policies.dir}/${live.area}/${file.firstdocumentdir}/"/>
-      <exclude name="**/${secarea}/**/${file.secdocumentdir}/"/>
-    </fileset>
-  </delete>
+  <deletecontent
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+  />
 
+  <deleteresources
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+  />
+
+  <deletepolicies
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+    policiesDir="${pub.dir}/${policies.dir}"
+  />
+
+  <deleterc
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+    rcmldir="${rcml.dir}"
+    rcbakdir="${rcbak.dir}"
+    srcareadir="${firstarea.dir}"
+  />
 </target>
 
   <target name = "rewrite-links">
