@@ -40,7 +40,7 @@
     <!-- Sitetree Javascript array -->
     <map:pipeline>
       <map:match pattern="output.js">
-	    <map:generate src="pubs/{publication-id}/content/authoring/sitetree.xml"/>
+	    <map:generate src="pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
 	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content" />
 	    <map:serialize type="text"/>
       </map:match>
