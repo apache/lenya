@@ -240,6 +240,7 @@
     <component-instance name="admin.userProfile" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserProfile"/>
     <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserPassword"/>
     <component-instance name="admin.userGroups" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserGroups"/>
+    <component-instance name="ac.login" logger="lenya.ac" class="org.apache.lenya.cms.ac.Login"/>
   </usecases>
       
 
