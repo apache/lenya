@@ -136,12 +136,12 @@
 	      </xsl:call-template>
 	    </select>
 	    <select name="trigger.startYear">
-	      <xsl:call-template name="generateSelectionNames">
-		<xsl:with-param name="currentValue" select="2002"/>
-		<xsl:with-param name="selectedValue"
-                    select="/sch:scheduler/sch:current-date/sch:year"/>
-		<xsl:with-param name="maxValue" select="@value + 2"/>
-	      </xsl:call-template>
+              <xsl:variable name="year"><xsl:value-of select="/sch:scheduler/sch:current-date/sch:year"/></xsl:variable>
+              <xsl:call-template name="generateSelectionNames">
+                <xsl:with-param name="currentValue" select="$year"/>
+                <xsl:with-param name="selectedValue" select="$year"/>
+                <xsl:with-param name="maxValue" select="$year + 2"/>
+              </xsl:call-template>
 	    </select>
 	  </font>
 	</td>
