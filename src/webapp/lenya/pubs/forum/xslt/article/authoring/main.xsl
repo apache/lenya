@@ -21,6 +21,6 @@
  </table>
 </xsl:template>
 
-<xsl:include href="../body.xsl"/>
+<xsl:include href="../body_wyona.xsl"/>
  
 </xsl:stylesheet>  
