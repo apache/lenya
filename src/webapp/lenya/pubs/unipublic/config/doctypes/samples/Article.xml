@@ -15,7 +15,7 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date norm=""/><!-- NOTE: Articles will be sorted by the attribute "millis". After creation the article shall have no such attribute. The attribute will be created during publishing process -->
+                  <!-- NOTE: Articles will be sorted by the attribute "millis". After creation the article shall have no such attribute. The attribute will be created during publishing process -->
                 </dateline>
                 <hedline>
                   <hl1>Titel</hl1>

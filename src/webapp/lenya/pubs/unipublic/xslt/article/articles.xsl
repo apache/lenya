@@ -39,7 +39,7 @@
     </td></tr></table>
     <br/>
   </xsl:if>
-    <div class="art-date"><xsl:apply-templates select="../../../../NewsManagement/PublishDate" mode="article"/></div>
+    <div class="art-date"><xsl:value-of select="body/body.head/dateline/story.date/@norm"/></div>
     <div class="art-pretitle"><xsl:apply-templates select="body/body.head/spitzmarke"/></div>
     <div class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></div>
     <div class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </div>
@@ -50,10 +50,6 @@
     <xsl:apply-templates select="body/body.content/block"/>
     <div class="art-author"><xsl:apply-templates select="body/body.end/tagline"/></div>
   </td>
-</xsl:template>
-
-<xsl:template match="PublishDate" mode="article">
-  <xsl:value-of select="@day"/>.<xsl:value-of select="@month"/>.<xsl:value-of select="@year"/>
 </xsl:template>
 
 <xsl:template match="block">

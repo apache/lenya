@@ -218,14 +218,14 @@ public class ArticleTask
         Document doc=new SAXReader().read("file:"+filename);
 
         //get the PublishedDate Node
-        Element dateE=(Element)doc.selectSingleNode("/NewsML/NewsItem/NewsManagement/PublishDate"); 
+        Element dateE=(Element)doc.selectSingleNode("/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head/dateline/story.date"); 
         if (dateE != null) {
         return false;
         } 
 
         DocumentHelper documentHelper = new DocumentHelper();
 
-        dateE = documentHelper.makeElement(doc, "/NewsML/NewsItem/NewsManagement/PublishDate"); 
+        dateE = documentHelper.makeElement(doc, "/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head/dateline/story.date"); 
         dateE.clearContent();
 
 
@@ -236,12 +236,7 @@ public class ArticleTask
         dateE.addAttribute("hour", hour);
         dateE.addAttribute("minute", minute);
         dateE.addAttribute("millis", millis);
-
-        //set the PublishedDate in the head of article (for the frontpage)
-        Element headDateE = documentHelper.makeElement(doc, "/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head/dateline/story.date");
-        headDateE.clearContent();
-        headDateE.addAttribute("norm", day+"."+month+"."+year);  
-        headDateE.addAttribute("millis" , millis);
+        dateE.addAttribute("norm", day+"."+month+"."+year);  
 
         //write the article
         OutputFormat format = OutputFormat.createPrettyPrint();
