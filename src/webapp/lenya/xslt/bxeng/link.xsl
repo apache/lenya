@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.12 2004/08/25 14:48:22 andreas Exp $
+ $Id$
  -->
 
 <xsl:stylesheet version="1.0"
@@ -45,10 +45,38 @@
     <page:page>
       <page:title>Insert Link</page:title>
       <page:body>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js">&#160;</script>
       <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js">&#160;</script>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/{$documenturl}?lenya.usecase=bxeng&amp;lenya.step=link-tree&amp;language={$chosenlanguage}">&#160;</script>
-      <script> 
+      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/navtree.js">&#160;</script>
+      <script type="text/javascript" >
+        CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
+        PUBLICATION_ID = "<xsl:value-of select="$publicationid"/>";
+        CHOSEN_LANGUAGE = "<xsl:value-of select="$chosenlanguage"/>";
+        DEFAULT_LANGUAGE = "<xsl:value-of select="$defaultlanguage"/>";
+        IMAGE_PATH = "<xsl:value-of select="$contextprefix"/>/lenya/images/tree/";
+        CUT_DOCUMENT_ID = '';
+        ALL_AREAS = "authoring"
+        PIPELINE_PATH = '/authoring/info-sitetree/sitetree-fragment.xml'
+        
+        function LinkRoot(doc, rootElement) {
+            this.doc = doc;
+            this.rootElement = rootElement;
+            this.selected = null;
+        };        
+        
+        LinkRoot.prototype = new NavRoot;
+
+        LinkRoot.prototype.handleItemClick = function(item, event) {
+            setLink('/' + item.href);
+        };
+        
+        function buildTree() {
+          var placeholder = document.getElementById('tree');
+          var root = new LinkRoot(document, placeholder);
+          root.init(PUBLICATION_ID);
+          root.render();
+          root.loadInitialTree('<xsl:value-of select="$area"/>', '<xsl:value-of select="$documentid"/>');
+        };
+     
           var url;
           window.onload = insertText
 
@@ -83,7 +111,7 @@
       </script>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
-<td valign="top" width="20%">
+<td valign="top" width="25%">
     <div id="lenya-info-treecanvas">
 <!-- Build the tree. -->
 	<table border="0" cellpadding="0" cellspacing="0">
@@ -96,20 +124,13 @@
                 </tr>
         </table>
 
-   <div id="lenya-info-tree">
-      <div style="display:none;">
-              <table border="0">
-                      <tr>
-                              <td>
-                                      <a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/">JavaScript Tree Menu</a>
-                              </td>
-                      </tr>
-              </table>
-      </div>
-      <script type="text/javascript">
-         initializeDocument();
-      </script>
-    </div>
+                  <div id="lenya-info-tree">
+                    <div id="tree">
+                      <script type="text/javascript">
+                        buildTree();
+                      </script>
+                    </div>
+                  </div>
 </div>
 </td>
 <td>
