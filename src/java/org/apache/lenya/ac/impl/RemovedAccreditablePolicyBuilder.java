@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RemovedAccreditablePolicyBuilder.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 

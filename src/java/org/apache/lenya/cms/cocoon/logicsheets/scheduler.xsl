@@ -18,7 +18,7 @@
  *
  */
 
-/* $Id: scheduler.xsl,v 1.6 2004/08/13 14:26:15 andreas Exp $  */
+/* $Id$  */
 -->
 
 <xsl:stylesheet version="1.0"

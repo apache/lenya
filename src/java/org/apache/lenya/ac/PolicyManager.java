@@ -21,7 +21,7 @@ import org.apache.avalon.framework.component.Component;
 
 /**
  * A policy manager.
- * @version $Id: PolicyManager.java,v 1.4 2004/08/16 16:21:21 andreas Exp $
+ * @version $Id$
  */
 public interface PolicyManager extends Component {
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: NamespaceHelper.java,v 1.17 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 

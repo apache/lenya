@@ -22,7 +22,7 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * Publication visitor interface.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface PublicationVisitor {
     

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XercesParser.java,v 1.16 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml.parser;
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BuildException.java,v 1.3 2004/08/16 16:06:14 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.cache;
 

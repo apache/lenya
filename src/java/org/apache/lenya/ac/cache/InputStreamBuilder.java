@@ -21,7 +21,7 @@ import java.io.InputStream;
 
 /**
  * Interface for objects capable of building objects from input streams.
- * @version $Id: InputStreamBuilder.java,v 1.3 2004/08/16 16:06:14 andreas Exp $
+ * @version $Id$
  */
 public interface InputStreamBuilder {
 

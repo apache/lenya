@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReservedCheckoutTestAction.java,v 1.5 2004/08/16 12:12:43 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 

@@ -23,8 +23,6 @@ import java.io.OutputStream;
 
 /**
  * Helper class for uploading files.
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
- * @author <a href="mailto:michi@apache.org">Michael Wechner </a>
  * @version $Id$
  */
 public class UploadHelper {

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractDocumentCreator.java,v 1.11 2004/08/02 00:19:42 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 

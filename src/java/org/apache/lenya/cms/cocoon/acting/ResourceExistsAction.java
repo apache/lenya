@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourceExistsAction.java,v 1.9 2004/04/24 20:59:15 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 

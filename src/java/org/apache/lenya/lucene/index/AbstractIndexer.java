@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.22 2004/08/02 06:28:44 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 

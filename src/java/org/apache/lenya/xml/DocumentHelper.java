@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentHelper.java,v 1.29 2004/07/29 16:09:29 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 

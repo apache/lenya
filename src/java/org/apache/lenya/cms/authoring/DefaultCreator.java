@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultCreator.java,v 1.28 2004/03/02 16:43:58 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 

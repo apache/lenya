@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RoleCondition.java,v 1.9 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.workflow;
 

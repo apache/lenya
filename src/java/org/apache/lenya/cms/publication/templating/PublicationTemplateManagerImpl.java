@@ -36,7 +36,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 /**
  * Manager for publication templates.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class PublicationTemplateManagerImpl extends AbstractLogEnabled implements
         PublicationTemplateManager, Serviceable {

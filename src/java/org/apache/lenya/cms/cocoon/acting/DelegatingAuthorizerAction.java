@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DelegatingAuthorizerAction.java,v 1.18 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 

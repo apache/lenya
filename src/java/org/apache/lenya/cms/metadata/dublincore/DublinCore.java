@@ -27,7 +27,7 @@ import org.apache.lenya.cms.publication.DocumentException;
  * The descriptions are citing the <a href="http://www.dublincore.org">Dublin Core website </a>.
  * </p>
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface DublinCore {
 

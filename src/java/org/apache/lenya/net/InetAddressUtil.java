@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: InetAddressUtil.java,v 1.14 2004/06/28 08:52:33 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.net;
 

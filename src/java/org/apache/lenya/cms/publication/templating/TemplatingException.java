@@ -17,7 +17,7 @@
 package org.apache.lenya.cms.publication.templating;
 
 /**
- * @version $Id:$
+ * @version $Id$
  */
 public class TemplatingException extends RuntimeException {
 

@@ -18,7 +18,7 @@
  *
  */
 
-/* $Id: configuration2xslt.xsl,v 1.8 2004/07/11 19:25:08 michi Exp $  */
+/* $Id$  */
 -->
 
 <xsl:stylesheet version="1.0"

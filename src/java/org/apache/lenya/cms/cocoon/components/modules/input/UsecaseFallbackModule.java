@@ -30,7 +30,7 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl;
 
 /**
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements Serviceable {
 

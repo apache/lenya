@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePolicyManager.java,v 1.11 2004/08/25 13:45:59 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 

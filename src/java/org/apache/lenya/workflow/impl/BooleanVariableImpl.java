@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: BooleanVariableImpl.java,v 1.10 2004/04/13 22:04:35 joerg Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 

@@ -21,7 +21,7 @@ import java.util.Collections;
 
 /**
  * The world.
- * @version $Id: World.java,v 1.4 2004/08/16 16:21:22 andreas Exp $
+ * @version $Id$
  */
 public final class World implements Identifiable {
     

@@ -26,7 +26,7 @@ import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
 /**
- * @version $Id:$
+ * @version $Id$
  */
 public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModule {
 

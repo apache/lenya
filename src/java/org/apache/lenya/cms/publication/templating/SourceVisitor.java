@@ -19,7 +19,7 @@ package org.apache.lenya.cms.publication.templating;
 import org.apache.excalibur.source.Source;
 
 /**
- * @version $Id:$
+ * @version $Id$
  */
 public interface SourceVisitor {
 

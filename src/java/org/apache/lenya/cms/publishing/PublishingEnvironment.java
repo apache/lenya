@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublishingEnvironment.java,v 1.26 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 

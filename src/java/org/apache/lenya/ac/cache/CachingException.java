@@ -19,7 +19,7 @@ package org.apache.lenya.ac.cache;
 
 /**
  * Caching exception.
- * @version $Id: CachingException.java,v 1.3 2004/08/16 16:06:14 andreas Exp $
+ * @version $Id$
  */
 public class CachingException extends Exception {
 

@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * A machine (representing an IP address).
- * @version $Id: Machine.java,v 1.5 2004/08/16 16:21:22 andreas Exp $
+ * @version $Id$
  */
 public class Machine implements Identifiable {
 

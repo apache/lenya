@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractAccreditableManager.java,v 1.5 2004/08/16 16:34:06 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 

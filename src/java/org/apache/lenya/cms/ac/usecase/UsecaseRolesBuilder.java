@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
 /**
  * Builder for usecase roles.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseRolesBuilder implements InputStreamBuilder {
 

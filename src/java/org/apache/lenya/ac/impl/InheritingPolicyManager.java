@@ -23,7 +23,7 @@ import org.apache.lenya.ac.PolicyManager;
 
 /**
  * Policy manager which inherits credentials in a policy tree.
- * @version $Id: InheritingPolicyManager.java,v 1.3 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
 public interface InheritingPolicyManager extends PolicyManager {
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IterativeHTMLCrawler.java,v 1.28 2004/07/10 23:18:23 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.search.crawler;
 

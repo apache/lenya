@@ -29,7 +29,7 @@ import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceResolver;
 
 /**
- * @version $Id:$
+ * @version $Id$
  */
 public final class SourceUtil {
 

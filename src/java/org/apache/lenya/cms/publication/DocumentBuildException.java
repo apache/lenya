@@ -20,7 +20,7 @@ package org.apache.lenya.cms.publication;
 /**
  * Document build exception.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class DocumentBuildException extends PublicationException {
     /**

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationFactory.java,v 1.27 2004/06/28 08:32:13 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 

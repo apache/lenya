@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: History.java,v 1.25 2004/08/16 13:26:34 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 

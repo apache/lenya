@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Log4Echo.java,v 1.1 2004/03/16 22:56:15 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 

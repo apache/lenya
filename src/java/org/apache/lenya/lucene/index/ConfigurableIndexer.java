@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableIndexer.java,v 1.17 2004/05/16 23:25:15 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 

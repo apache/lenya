@@ -1,4 +1,4 @@
-/* $Id: LuceneTask.java,v 1.2 2004/08/02 00:19:42 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 

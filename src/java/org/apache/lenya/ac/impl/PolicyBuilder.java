@@ -37,7 +37,7 @@ import org.w3c.dom.Element;
 
 /**
  * Builds policies from input streams.
- * @version $Id: PolicyBuilder.java,v 1.4 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
 public class PolicyBuilder implements InputStreamBuilder {
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLInformation.java,v 1.6 2004/04/30 09:34:23 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 

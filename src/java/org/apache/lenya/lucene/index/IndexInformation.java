@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexInformation.java,v 1.13 2004/07/10 23:17:24 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 

@@ -22,7 +22,7 @@ import org.apache.avalon.framework.component.Component;
 /**
  * An AccreditableManager combines a UserManager, a GroupManager, an IPRangeManager and a
  * RoleManager.
- * @verison $Id: AccreditableManager.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ * @verison $Id$
  */
 public interface AccreditableManager extends Component {
 

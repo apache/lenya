@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexIterator.java,v 1.14 2004/07/31 05:32:02 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 

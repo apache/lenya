@@ -19,7 +19,7 @@ package org.apache.lenya.ac;
 
 /**
  * Item manager.
- * @version $Id: ItemManager.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ * @version $Id$
  */
 public interface ItemManager {
 

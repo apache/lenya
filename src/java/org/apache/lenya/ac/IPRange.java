@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IPRange.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac;
 

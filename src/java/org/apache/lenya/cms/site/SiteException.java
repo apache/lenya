@@ -21,8 +21,7 @@ import org.apache.lenya.cms.publication.PublicationException;
 /**
  * Site structure management exception.
  * 
- * @author <a href="andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: SiteException.java,v 1.1 2004/02/18 18:47:07 andreas Exp $
+ * @version $Id$
  */
 public class SiteException extends PublicationException {
 

@@ -34,7 +34,7 @@ import org.apache.lenya.util.ServletHelper;
 /**
  * Super class for access control actions.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public abstract class AccessControlAction extends ConfigurableServiceableAction {
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationAccessControllerResolver.java,v 1.5 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ac;
 

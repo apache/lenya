@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URIParameterizerImpl.java,v 1.4 2004/03/01 16:18:19 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.uriparameterizer;
 

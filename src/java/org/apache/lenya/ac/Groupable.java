@@ -19,7 +19,7 @@ package org.apache.lenya.ac;
 
 /**
  * Generalized interface of group member objects.
- * @version $Id: Groupable.java,v 1.4 2004/08/16 16:21:22 andreas Exp $
+ * @version $Id$
  */
 public interface Groupable {
     

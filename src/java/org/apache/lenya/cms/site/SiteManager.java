@@ -35,8 +35,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
  * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>f implies d
  * <strong>&lt; </strong>f</li>
  * </ul>*
- * @author <a href="andreas@apache.org">Andreas Hartmann </a>
- * @version $Id: SiteManager.java,v 1.1 2004/02/18 18:47:07 andreas Exp $
+ * @version $Id$
  */
 public interface SiteManager {
 

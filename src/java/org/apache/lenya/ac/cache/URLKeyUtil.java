@@ -25,7 +25,7 @@ import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Utility class to generate String cache keys from webapp URLs.
- * @version $Id: URLKeyUtil.java,v 1.3 2004/08/16 16:06:14 andreas Exp $
+ * @version $Id$
  */
 public final class URLKeyUtil {
 

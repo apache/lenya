@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CocoonTaskWrapper.java,v 1.10 2004/06/28 08:29:46 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.task;
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowDocument.java,v 1.9 2004/05/21 13:20:46 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.workflow;
 

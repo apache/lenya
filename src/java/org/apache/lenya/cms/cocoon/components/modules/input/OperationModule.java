@@ -27,7 +27,7 @@ import org.apache.lenya.cms.usecase.UnitOfWork;
 /**
  * Super class for operation-based input modules.
  *
- * @version $Id:$ 
+ * @version $Id$ 
  */
 public class OperationModule extends AbstractInputModule implements Operation, Serviceable, Initializable {
 

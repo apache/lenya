@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TaskSequence.java,v 1.15 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 

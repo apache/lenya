@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReTokenizeFile.java,v 1.22 2004/07/12 10:21:37 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene;
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourcesManager.java,v 1.13 2004/08/26 22:18:52 roku Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 

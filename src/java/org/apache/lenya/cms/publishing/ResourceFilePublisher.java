@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourceFilePublisher.java,v 1.9 2004/08/16 13:05:40 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 

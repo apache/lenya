@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ServletJob.java,v 1.18 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 

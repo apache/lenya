@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableDocumentCreator.java,v 1.11 2004/05/16 23:23:13 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 

@@ -22,7 +22,7 @@ import java.io.File;
 /**
  * Default DocumentIdToPathMapper implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DefaultDocumentIdToPathMapper
     implements DocumentIdToPathMapper, PathToDocumentIdMapper {

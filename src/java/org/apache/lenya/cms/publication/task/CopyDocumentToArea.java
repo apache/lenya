@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CopyDocumentToArea.java,v 1.2 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.task;
 

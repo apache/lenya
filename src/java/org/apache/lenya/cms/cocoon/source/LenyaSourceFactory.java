@@ -43,7 +43,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * A factory for the Lenya protocol.
- * @version $Id:$
+ * @version $Id$
  */
 public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
         Contextualizable, Serviceable, Configurable {

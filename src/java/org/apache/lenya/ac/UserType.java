@@ -21,7 +21,7 @@ package org.apache.lenya.ac;
  * A user type to be supported by the UserManager
  * Note: the types are configured through access control (ac.xconf)
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class UserType  {
     private String key;

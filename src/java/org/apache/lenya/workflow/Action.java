@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Action.java,v 1.7 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow;
 

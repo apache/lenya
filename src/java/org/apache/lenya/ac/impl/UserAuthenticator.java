@@ -25,7 +25,7 @@ import org.apache.lenya.ac.User;
 
 /**
  * User authenticator.
- * @version $Id: UserAuthenticator.java,v 1.6 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
 public class UserAuthenticator extends AbstractLogEnabled implements Authenticator {
 

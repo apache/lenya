@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TransitionImpl.java,v 1.11 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 

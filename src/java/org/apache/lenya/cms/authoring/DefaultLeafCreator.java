@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultLeafCreator.java,v 1.14 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 

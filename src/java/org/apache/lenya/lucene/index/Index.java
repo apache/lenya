@@ -26,7 +26,7 @@ import org.w3c.dom.Element;
 /**
  * Index.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class Index {
     /**

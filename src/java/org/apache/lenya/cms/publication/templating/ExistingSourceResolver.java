@@ -22,7 +22,7 @@ import org.apache.excalibur.source.Source;
 /**
  * Source visitor to obtain the first existing source.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class ExistingSourceResolver implements SourceVisitor {
     

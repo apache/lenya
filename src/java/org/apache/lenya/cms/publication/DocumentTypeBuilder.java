@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentTypeBuilder.java,v 1.10 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 

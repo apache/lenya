@@ -16,7 +16,7 @@
 -->
 
 <!--
-    $Id: log4j-properties.xsl,v 1.16 2004/08/03 16:27:22 andreas Exp $
+    $Id$
     Description: Create log4j.properties file
 -->
 

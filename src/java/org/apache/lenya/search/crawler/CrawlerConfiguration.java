@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CrawlerConfiguration.java,v 1.9 2004/03/05 11:00:06 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.search.crawler;
 

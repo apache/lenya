@@ -32,8 +32,6 @@ import org.xml.sax.SAXException;
 
 /**
  * Implementation of a Collection. In the collection are xlink inserted.
- * @author <a href="mailto:edith@apache.org">Edith Chevrier </a>
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
  * @version $Id$
  */
 public class XlinkCollection extends CollectionImpl {

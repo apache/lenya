@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Class to manage roles for a usecase.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseRoles {
     

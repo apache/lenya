@@ -43,7 +43,7 @@ import org.apache.lenya.cms.usecase.AbstractOperation;
 /**
  * Source factory following the fallback principle.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class FallbackSourceFactory extends AbstractOperation implements SourceFactory,
         Serviceable, Contextualizable, URIAbsolutizer {

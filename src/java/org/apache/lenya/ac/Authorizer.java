@@ -22,7 +22,7 @@ import org.apache.cocoon.environment.Request;
 
 /**
  * An Authorizer checks if an Identity is authorized to invoke a certain request.
- * @version $Id: Authorizer.java,v 1.3 2004/08/16 16:21:22 andreas Exp $
+ * @version $Id$
  */
 public interface Authorizer extends Component {
     

@@ -27,7 +27,7 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DocumentIdentityMap {
 

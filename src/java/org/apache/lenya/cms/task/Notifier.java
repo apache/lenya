@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Notifier.java,v 1.8 2004/07/10 23:15:54 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 

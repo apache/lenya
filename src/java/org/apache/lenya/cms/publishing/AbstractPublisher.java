@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractPublisher.java,v 1.12 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 

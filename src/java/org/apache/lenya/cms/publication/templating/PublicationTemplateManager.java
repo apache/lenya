@@ -31,7 +31,7 @@ import org.apache.lenya.cms.publication.Publication;
  * <li>all its templates,</li>
  * <li>the core.</li>
  * </ol>
- * @version $Id:$
+ * @version $Id$
  */
 public interface PublicationTemplateManager {
 

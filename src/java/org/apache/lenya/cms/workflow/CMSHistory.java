@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CMSHistory.java,v 1.25 2004/08/02 12:29:25 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.workflow;
 

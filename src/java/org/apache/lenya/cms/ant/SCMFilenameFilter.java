@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SCMFilenameFilter.java,v 1.4 2004/06/01 15:47:05 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 

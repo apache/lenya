@@ -34,7 +34,7 @@ import org.w3c.dom.Document;
 
 /**
  * Policy manager based on Cocoon sitemaps.
- * @version $Id: SitemapPolicyManager.java,v 1.5 2004/08/16 16:42:31 andreas Exp $
+ * @version $Id$
  */
 public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyManager, Serviceable {
 

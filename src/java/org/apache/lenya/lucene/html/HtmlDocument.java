@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HtmlDocument.java,v 1.12 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.html;
 

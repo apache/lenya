@@ -25,7 +25,7 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * Publication visitor which returns the first publication implementing a certain usecase.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class ExistingUsecaseResolver implements PublicationVisitor {
 
