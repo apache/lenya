@@ -21,7 +21,7 @@ public interface Transition {
      * Returns the actions of this transition.
      */
     Action[] getActions();
-
+    
     /**
      * Returns if the transition can fire in a certain situation.
      */

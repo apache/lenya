@@ -12,7 +12,6 @@ import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.Transition;
 
 /**
@@ -22,7 +21,7 @@ import org.apache.lenya.workflow.Transition;
 public class TransitionImpl implements Transition {
 
     /** Creates a new instance of TransitionImpl */
-    protected TransitionImpl(State sourceState, State destinationState) {
+    protected TransitionImpl(StateImpl sourceState, StateImpl destinationState) {
 
         assert sourceState != null;
         assert destinationState != null;
@@ -65,15 +64,15 @@ public class TransitionImpl implements Transition {
         event = anEvent;
     }
 
-    private State source;
+    private StateImpl source;
 
-    public State getSource() {
+    public StateImpl getSource() {
         return source;
     }
 
-    private State destination;
+    private StateImpl destination;
 
-    public State getDestination() {
+    public StateImpl getDestination() {
         return destination;
     }
 
@@ -96,7 +95,7 @@ public class TransitionImpl implements Transition {
      */
     public String toString() {
         
-        String string = getEvent().getCommand() + " [";
+        String string = getEvent().getName() + " [";
         Condition conditions[] = getConditions();
         for (int i = 0; i < conditions.length; i++) {
             if (i > 0) string += ", ";
