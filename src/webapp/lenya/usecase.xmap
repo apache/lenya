@@ -369,6 +369,15 @@
               <map:transform src="xslt/authoring/edit/redirect-to.xsl">
                 <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
               </map:transform>
+              
+              <!-- trigger workflow (FIXME: Cancel should not trigger the workflow) -->
+              <map:act type="workflow">
+                <map:parameter name="area" value="{page-envelope:area}"/>
+                <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+                <map:parameter name="language" value="{page-envelope:document-language}"/>
+                <map:parameter name="event" value="edit"/>
+              </map:act>
+              
               <map:serialize type="html" />
             </map:match>
           </map:match>
