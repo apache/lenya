@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleTask.java,v 1.10 2003/03/06 20:45:54 gregor Exp $
+ * $Id: ArticleTask.java,v 1.11 2003/03/24 17:12:13 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -64,9 +64,13 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import org.lenya.util.DateUtil;
 
 
 /**
@@ -94,6 +98,8 @@ public class ArticleTask extends AbstractTask {
                 setRevisionDateAndId(absoluteAuthoringPath + sources[i]);
 
                 addToHeadlines(sources[i], absoluteAuthoringPath);
+
+                setFirstPublishedDate(absoluteAuthoringPath + sources[i]);
 
                 log.info("Article prepared: " + sourceFile);
             }
@@ -225,6 +231,81 @@ public class ArticleTask extends AbstractTask {
         }
     }
 
+    /**
+     * set the published date to the article, only one time
+     *
+     * @param filename Filename of the article
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    private boolean setFirstPublishedDate(String filename)
+        throws Exception {
+        //get the date
+        Calendar cal = new GregorianCalendar();
+
+        String year = Integer.toString(cal.get(Calendar.YEAR));
+
+        String month = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MONTH) + 1));
+
+        String day = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
+
+        String hour = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.HOUR_OF_DAY)));
+
+        String minute = DateUtil.oneToTwoDigits(Integer.toString(cal.get(Calendar.MINUTE)));
+
+        String millis = getMillis();
+
+        //read the article 
+        Document doc = new SAXReader().read("file:" + filename);
+
+        //get the PublishedDate Node
+        Element dateE = (Element) doc.selectSingleNode("/article/head/dateline/story.date");
+
+        if (dateE != null) {
+            log.debug(".setFirstPublishedDate(): already set");
+
+            return false;
+        }
+
+        DocumentHelper documentHelper = new DocumentHelper();
+
+        dateE = DocumentHelper.makeElement(doc, "/article/head/dateline/story.date");
+
+        dateE.clearContent();
+
+        //set the PublishedDate
+        dateE.addAttribute("year", year);
+
+        dateE.addAttribute("month", month);
+
+        dateE.addAttribute("day", day);
+
+        dateE.addAttribute("hour", hour);
+
+        dateE.addAttribute("minute", minute);
+
+        dateE.addAttribute("millis", millis);
+
+        dateE.addAttribute("norm", day + "." + month + "." + year);
+
+        //write the article
+        OutputFormat format = OutputFormat.createPrettyPrint();
+
+        try {
+            XMLWriter writer = new XMLWriter(new BufferedOutputStream(
+                        new FileOutputStream(filename)), format);
+
+            writer.write(doc);
+
+            writer.close();
+        } catch (Exception e) {
+            log.debug(e);
+        }
+
+        return true;
+    }
 
     /**
      * set the revision date and the compute the revision id
