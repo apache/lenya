@@ -201,7 +201,7 @@
         
       </map:match>
       
-      <map:handle-errors>
+      <map:handle-errors type="500">
         <map:select type="exception">  
           <map:when test="publishing">
             <map:generate src= "sitetreeException.xml"/> 
