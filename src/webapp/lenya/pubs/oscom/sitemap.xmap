@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.13 2003/03/04 19:48:15 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.14 2003/03/04 23:06:58 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -40,8 +40,8 @@
 
   <map:resources>
     <map:resource name="login">
-      <map:generate type="serverpages" src="../../docs/cms/ac/login.xsp"/>
-      <map:transform src="../../stylesheets/cms/ac/login.xsl">
+      <map:generate type="serverpages" src="../../content/ac/login.xsp"/>
+      <map:transform src="../../xslt/ac/login.xsl">
         <map:parameter name="publication_name" value="OSCOM"/>
         <map:parameter name="publication_id" value="oscom"/>
       </map:transform>
@@ -55,7 +55,7 @@
 
     <map:pipeline>
       <map:match pattern="search-oscom/lucene.xml">
-        <map:generate type="serverpages" src="../../docs/cms/search/search-and-results.xsp">
+        <map:generate type="serverpages" src="../../content/search/search-and-results.xsp">
           <map:parameter name="max-hits-per-page" value="5"/>
           <map:parameter name="max-pages" value="7"/>
 
@@ -63,27 +63,27 @@
 
           <map:parameter name="pub0-id" value="all"/>
           <map:parameter name="pub0-name" value="All OSCOM"/>
-          <map:parameter name="pub0-index-dir" value="resources/publication/search/lucene/index"/>
-          <map:parameter name="pub0-excerpt-dir" value="resources/publication/search/lucene/htdocs_dump"/>
+          <map:parameter name="pub0-index-dir" value="resources/search/lucene/index"/>
+          <map:parameter name="pub0-excerpt-dir" value="resources/search/lucene/htdocs_dump"/>
           <map:parameter name="pub0-prefix" value="http:/"/>
 
           <map:parameter name="pub1-id" value="conferences"/>
           <map:parameter name="pub1-name" value="Conferences"/>
-          <map:parameter name="pub1-index-dir" value="resources/publication/search/lucene/index-conferences"/>
-          <map:parameter name="pub1-excerpt-dir" value="resources/publication/search/lucene/htdocs_dump/www.oscom.org"/>
+          <map:parameter name="pub1-index-dir" value="resources/search/lucene/index-conferences"/>
+          <map:parameter name="pub1-excerpt-dir" value="resources/search/lucene/htdocs_dump/www.oscom.org"/>
           <map:parameter name="pub1-prefix" value="http://www.oscom.org"/>
 
           <map:parameter name="pub2-id" value="blog"/>
           <map:parameter name="pub2-name" value="Blog"/>
-          <map:parameter name="pub2-index-dir" value="resources/publication/search/lucene/index-blog"/>
-          <map:parameter name="pub2-excerpt-dir" value="resources/publication/search/lucene/htdocs_dump/blog.oscom.org"/>
+          <map:parameter name="pub2-index-dir" value="resources/search/lucene/index-blog"/>
+          <map:parameter name="pub2-excerpt-dir" value="resources/search/lucene/htdocs_dump/blog.oscom.org"/>
           <map:parameter name="pub2-prefix" value="http://blog.oscom.org"/>
 
 
           <map:parameter name="pub3-id" value="lists"/>
           <map:parameter name="pub3-name" value="Mailing Lists"/>
-          <map:parameter name="pub3-index-dir" value="resources/publication/search/lucene/index-lists"/>
-          <map:parameter name="pub3-excerpt-dir" value="resources/publication/search/lucene/htdocs_dump/lists.oscom.org"/>
+          <map:parameter name="pub3-index-dir" value="resources/search/lucene/index-lists"/>
+          <map:parameter name="pub3-excerpt-dir" value="resources/search/lucene/htdocs_dump/lists.oscom.org"/>
           <map:parameter name="pub3-prefix" value="http://lists.oscom.org"/>
 
         </map:generate>
@@ -96,13 +96,13 @@
         <map:aggregate element="oscom">
           <map:part src="cocoon:/search-oscom/lucene.xml{1}"/>
         </map:aggregate>
-        <map:transform src="../../stylesheets/cms/search/sort.xsl"/>
-        <map:transform src="xslt/Search/Live/main.xsl"/>
+        <map:transform src="../../xslt/search/sort.xsl"/>
+        <map:transform src="xslt/search/live/main.xsl"/>
 <!--
-        <map:transform src="stylesheets/cms/search-and-results.xsl"/>
+        <map:transform src="lenya/xslt/search/search-and-results.xsl"/>
 -->
 <!--
-        <map:transform src="../../stylesheets/cms/search/search-and-results.xsl"/>
+        <map:transform src="../../xslt/search/search-and-results.xsl"/>
 -->
         <map:serialize type="html"/>
       </map:match>
@@ -111,7 +111,7 @@
 
     <map:pipeline>
       <map:match pattern="introduction.html">
-        <map:read src="resources/publication/html/documentation/index.html" mime-type="text/html"/>
+        <map:read src="resources/html/documentation/index.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>    
 
@@ -131,7 +131,7 @@
       </map:match>
 
           <map:match pattern="passwd/*.iml">
-            <map:generate src="docs/publication/access-control/passwd/{1}.iml"/>
+            <map:generate src="content/ac/passwd/{1}.iml"/>
             <map:serialize type="xml"/>
           </map:match>
 
@@ -151,15 +151,10 @@
             </map:act>
             <map:redirect-to uri="login-screen?status=failed" session="true"/>
           </map:match>
-          
-          <map:match pattern="switch-user">
-            <map:generate type="serverpages" src="docs/lenya/ac/switch-user.xsp"/>
-            <map:serialize type="xml"/>
-          </map:match>
-          
+
           <map:match pattern="logout">
-            <map:generate type="serverpages" src="../../docs/cms/ac/logout.xsp"/>
-            <map:transform src="../../stylesheets/cms/ac/logout.xsl">
+            <map:generate type="serverpages" src="../../content/ac/logout.xsp"/>
+            <map:transform src="../../xslt/ac/logout.xsl">
               <map:parameter name="publication_name" value="OSCOM"/>
             </map:transform>
             <map:serialize/>
@@ -168,21 +163,6 @@
           <!--  ####################################################################### -->
           <!--          Everything below is "protected" by policies-sitemap.xmap        -->
           <!--  ####################################################################### -->
-
-          <!-- Identities requested by IMLAuthenticator -->
-<!--
-          <map:match pattern="passwd/*.iml">
-            <map:generate src="docs/lenya/ac/passwd/{1}.iml"/>
-            <map:serialize type="xml"/>
-          </map:match>
--->
-
-          <!-- Policies requested by PMLAuthorizer -->
-<!--
-          <map:match pattern="policies/**">
-            <map:mount uri-prefix="" src="policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-          </map:match>
--->
 
           <!-- The authoring area -->
           <map:match pattern="authoring/**">

@@ -122,7 +122,7 @@ Rem: <ul>
       <map:match pattern="rco/*/*/*/*/index.xml">
         <map:act type="reserved-checkout">
           <map:parameter name="filename" value="content/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
-          <map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
+          <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>
             <map:parameter name="date" value="{date}"/>
@@ -258,7 +258,7 @@ send the following XML:
 <code><![CDATA[
 
       <map:match pattern="revision/*/*/*/*/index.xml">
-        <map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
+        <map:generate type="serverpages" src="../../content/rc/versions-screen.xsp">
           <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/lenya/lenya/pubs/unipublic"/>
           <map:parameter name="filename" value="content/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="content/rcml"/>
@@ -278,14 +278,14 @@ send the following XML:
 <code><![CDATA[
 
       <map:match pattern="view/*/*/*/*/index.xml">
-        <map:generate type="serverpages" src="../../docs/cms/rc/view.xsp">
+        <map:generate type="serverpages" src="../../content/rc/view.xsp">
           <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/lenya/lenya/pubs/unipublic"/>
           <map:parameter name="filename" value="content/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="content/rcml"/>
           <map:parameter name="backupDirectory" value="content/rcbak"/>
         </map:generate>
-          <map:transform src="xslt/Article/Authoring/toArticle.xsl"/>
-          <map:transform src="xslt/Article/Authoring/main.xsl">
+          <map:transform src="xslt/article/authoring/toArticle.xsl"/>
+          <map:transform src="xslt/article/authoring/main.xsl">
              <map:paramete]]><![CDATA[r name="section" value="{2}"/>
           </map:transform>
           <map:serialize type="html"/>

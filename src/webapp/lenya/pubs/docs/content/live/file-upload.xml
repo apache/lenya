@@ -85,7 +85,7 @@
   </map:act>
   <!-- otherwise the action could not validate some of the
   input and we present the upload form again -->
-  <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+  <map:generate type="serverpages" src="../../content/upload-image.xsp"/>
   <map:transform src="../../xslt/upload-image.xsl"/>
   <map:serialize type="html"/>
 </map:match>

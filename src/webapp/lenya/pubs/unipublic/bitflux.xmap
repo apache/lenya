@@ -45,7 +45,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/article.xsl">
-				<map:generate src="xslt/Article/Authoring/bitflux.xsl"/>
+				<map:generate src="xslt/article/authoring/bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/article.xsd">
@@ -62,7 +62,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/dossier.xsl">
-				<map:generate src="xslt/Dossier/Authoring/bitflux.xsl"/>
+				<map:generate src="xslt/dossier/authoring/bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/dossier.xsd">
@@ -80,8 +80,8 @@
                         </map:match>
                         <map:match pattern="stylesheets/newsletter.xsl">
 				<map:generate src="cocoon://unipublic/authoring/newsletter/file.xml"/>
-				<map:transform src="xslt/Newsletter/Authoring/main-bitflux.xsl"/>
-				<map:transform src="xslt/Newsletter/Authoring/newsletter-bitflux.xsl"/>
+				<map:transform src="xslt/newsletter/authoring/main-bitflux.xsl"/>
+				<map:transform src="xslt/newsletter/authoring/newsletter-bitflux.xsl"/>
                                 <map:serialize type="xml"/>
                         </map:match>
                         <map:match pattern="schemas/newsletter.xsd">
@@ -100,7 +100,7 @@
 			</map:match>
 			<map:match pattern="stylesheets/headlines.xsl">
 				<map:generate src="cocoon://unipublic/authoring/index.xhtml"/>
-				<map:transform src="xslt/Front/Authoring/headlines-bitflux.xsl"/>
+				<map:transform src="xslt/front//authoring/headlines-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/headlines.xsd">
@@ -118,7 +118,7 @@
 			</map:match>
 			<map:match pattern="stylesheets/webperls.xsl">
 				<map:generate src="cocoon://unipublic/authoring/index.xhtml"/>
-				<map:transform src="xslt/Front/Authoring/webperls-bitflux.xsl"/>
+				<map:transform src="xslt/front//authoring/webperls-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/webperls.xsd">
@@ -136,7 +136,7 @@
 			</map:match>
 			<map:match pattern="stylesheets/dossierkasten.xsl">
 				<map:generate src="cocoon://unipublic/authoring/index.xhtml"/>
-				<map:transform src="xslt/Front/Authoring/dossier-bitflux.xsl"/>
+				<map:transform src="xslt/front//authoring/dossier-bitflux.xsl"/>
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="schemas/dossierkasten.xsd">

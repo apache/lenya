@@ -18,10 +18,10 @@
  	<xml>
 		<pipeline xml="weekly-column-body.xml" xsd="weekly-column.xsd">
 			<view id="defaultView" default="true">
-				<transform xsl="WeeklyColumn/Authoring/xopus.xsl"></transform>
+				<transform xsl="WeeklyColumn/authoring/xopus.xsl"></transform>
 			</view>
 			<view id="treeView">
-				<transform xsl="Home/Authoring/tree.xsl"></transform>
+				<transform xsl="Home/authoring/tree.xsl"></transform>
 			</view>
 		</pipeline>
     </xml>

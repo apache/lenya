@@ -12,7 +12,7 @@ install.dir=/usr/local/tomcat/webapps/lenya
 # The server cache directory to be cleaned by the 'reset' target
 # Either use an absolute path or a relative one based on the current directory
 
-cache.dir=/usr/local/tomcat/work/localhost/lenya
+cache.dir=/usr/local/tomcat/work/Standalone/localhost/lenya
 
 # Files and directories which should be excluded during 'install' and 'reset'
 # Comma- or space-separated list of patterns

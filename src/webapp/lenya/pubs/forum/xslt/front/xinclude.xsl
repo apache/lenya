@@ -12,7 +12,7 @@
   <articles xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2002/XLink">
     <xsl:for-each select="dir:directory">
       <article href="{@name}">
-      <article xlink:show="embed" xlink:href="docs/publication/{$view}/articles/{@name}/index.xml"/>
+      <article xlink:show="embed" xlink:href="content/{$view}/articles/{@name}/index.xml"/>
 <!--
       <article xlink:show="embed" xlink:href="cocoon:/articles/{@name}/index.xml"/>
 -->

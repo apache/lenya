@@ -5,12 +5,12 @@
   <task id="publish">
     <label>Publish and Export</label>
     <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher">
-      <parameter name="live-path" value="docs/publication/live"/>
-      <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
+      <parameter name="live-path" value="content/live"/>
+      <parameter name="tree-live-path" value="content/live/tree.xml"/>
     </task>
     <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter">
 <!--
-      <parameter name="export-path" value="resources/publication/export/pending"/>
+      <parameter name="export-path" value="resources/export/pending"/>
       <parameter name="substitute-regexp" value="s/\/lenya\/oscom//g"/>
 -->
       <parameter name="my-server-port" value="1313"/>
@@ -20,7 +20,7 @@
   <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter">
     <label>Export</label>
 <!--
-    <parameter name="export-path" value="resources/publication/export/pending"/>
+    <parameter name="export-path" value="resources/export/pending"/>
     <parameter name="substitute-regexp" value="s/\/lenya\/oscom//g"/>
 -->
   </task>

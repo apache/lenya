@@ -16,7 +16,7 @@
 <xsl:include href="../../text_general.xsl"/>
 <xsl:include href="../page.xsl"/>
 <xsl:include href="../articles.xsl"/>
-<xsl:include href="../../Article/relatedContent.xsl"/>
+<xsl:include href="../../article/relatedContent.xsl"/>
 
 </xsl:stylesheet>
 

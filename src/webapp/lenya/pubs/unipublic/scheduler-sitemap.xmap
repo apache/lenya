@@ -40,7 +40,7 @@
       
       <!-- create the current date -->
       <map:match pattern="scheduler-xsp">
-        <map:generate type="serverpages" src="../../docs/cms/scheduler/scheduler.xsp"/>
+        <map:generate type="serverpages" src="../../content/scheduler/scheduler.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       

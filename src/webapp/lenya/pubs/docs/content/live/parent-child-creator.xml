@@ -44,7 +44,7 @@ Normally the "Menus" can be found at <em>content/menus</em>.
 
 <map:pipeline>
   <map:match pattern="lenya/ParentChildScreenNewArticle*">
-    <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
+    <map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/>
     <map:transform src="../../xslt/authoring/parent-child.xsl"/>
     <map:serialize type="html"/>
   </map:match>

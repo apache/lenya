@@ -18,10 +18,10 @@
  	<xml>
 		<pipeline xml="home.xml" xsd="home.xsd">
 			<view id="defaultView" default="true">
-				<transform xsl="Home/Authoring/xopus.xsl"></transform>
+				<transform xsl="Home/authoring/xopus.xsl"></transform>
 			</view>
 			<view id="treeView">
-				<transform xsl="Home/Authoring/tree.xsl"></transform>
+				<transform xsl="Home/authoring/tree.xsl"></transform>
 			</view>
 		</pipeline>
     </xml>

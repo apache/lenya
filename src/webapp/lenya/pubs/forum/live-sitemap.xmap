@@ -47,7 +47,7 @@
 
 <!-- General Wyona -->
       <map:match pattern="images/lenya/**.gif">
-        <map:read src="../../resources/cms/images/{1}.gif" mime-type="images/gif">
+        <map:read src="../../resources/images/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
@@ -57,11 +57,11 @@
         <map:generate type="directory-nolabel" src="content/live/articles/">
           <map:parameter name="depth" value="1"/>
         </map:generate>
-        <map:transform src="xslt/Front/xinclude.xsl">
+        <map:transform src="xslt/front//xinclude.xsl">
           <map:parameter name="view" value="live"/>
         </map:transform>
         <map:transform type="xlink"/>
-        <map:transform src="xslt/Front/sort.xsl"/>
+        <map:transform src="xslt/front//sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -70,13 +70,13 @@
       </map:match>
       <map:match pattern="index.html">
         <map:generate type="file-nolabel" src="cocoon:/index.xml" label="content"/>
-        <map:transform src="xslt/Front/live/main.xsl" label="content"/>
+        <map:transform src="xslt/front//live/main.xsl" label="content"/>
         <map:serialize type="html"/>
       </map:match>
 
       <map:match pattern="index.rss">
         <map:generate src="cocoon:/index.xml"/>
-        <map:transform src="xslt/Front/rdf.xsl"/>
+        <map:transform src="xslt/front//rdf.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -90,7 +90,7 @@
       </map:match>
       <map:match pattern="articles/*/index.html">
         <map:generate src="cocoon:/articles/{1}/index.xml" label="content"/>
-        <map:transform src="xslt/Article/live/main.xsl"/>
+        <map:transform src="xslt/article/live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 

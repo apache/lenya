@@ -51,7 +51,7 @@
            	<code><![CDATA[
 		
      <map:match pattern="authoring/lenya/publishScreen*">
-       <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
+       <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp"/>
        <map:transform src="../../xslt/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>

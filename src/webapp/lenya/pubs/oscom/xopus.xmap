@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.9 2003/03/04 19:48:15 gregor Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.10 2003/03/04 23:06:58 gregor Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -20,12 +20,12 @@
     <map:matchers default="wildcard"/>
     <map:actions>
       <map:action name="xopushandler" src="org.lenya.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus-handler">
-        <xml href="docs/publication/authoring"/>
+        <xml href="content/authoring"/>
         <xsl href="stylesheets/publication"/>
-        <xsd href="docs/publication/doctypes/schemas"/>
+        <xsd href="content/doctypes/schemas"/>
         <temp href="temp"/>
-        <rcmlDirectory href="docs/publication/rcml"/>
-        <backupDirectory href="docs/publication/rcbak"/>
+        <rcmlDirectory href="content/rcml"/>
+        <backupDirectory href="content/rcbak"/>
       </map:action>
     </map:actions>
   </map:components>
@@ -35,38 +35,38 @@
     <!-- DEBUG:GET  -->
     <map:pipeline>
       <map:match pattern="home.xml">
-        <map:generate src="docs/publication/authoring/home.xml"/>
+        <map:generate src="content/authoring/home.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="home.xsl">
-        <map:generate src="xslt/Home/Authoring/xopus.xsl"/>
+        <map:generate src="xslt/home/authoring/xopus.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="home.xsd">
-        <map:read src="docs/publication/doctypes/schemas/home.xsd" mime-type="text/xml"/>
+        <map:read src="content/doctypes/schemas/home.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
 
     <map:pipeline>
       <map:match pattern="weekly-column.xml">
-        <map:generate src="docs/publication/authoring/weekly-column-body.xml"/>
+        <map:generate src="content/authoring/weekly-column-body.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="weekly-column.xsl">
-        <map:generate src="xslt/WeeklyColumn/Authoring/xopus.xsl"/>
+        <map:generate src="xslt/WeeklyColumn/authoring/xopus.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="weekly-column.xsd">
-        <map:read src="docs/publication/doctypes/schemas/weekly-column.xsd" mime-type="text/xml"/>
+        <map:read src="content/doctypes/schemas/weekly-column.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
 
     <map:pipeline>
       <map:match pattern="matrix.xsl">
-        <map:read src="xslt/Matrix/Authoring/body_xopus2.xsl" mime-type="text/xml"/>
+        <map:read src="xslt/matrix/authoring/body_xopus2.xsl" mime-type="text/xml"/>
       </map:match>
       <map:match pattern="matrix.xsd">
-        <map:read src="docs/publication/doctypes/schemas/matrix.xsd" mime-type="text/xml"/>
+        <map:read src="content/doctypes/schemas/matrix.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
     <!-- /DEBUG:GET -->

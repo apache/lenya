@@ -19,13 +19,13 @@
         <task id="publish"/>
       </map:action>
       <map:action name="parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction" logger="oscom.sitemap.action.creator">
-        <tree-authoring href="docs/publication/authoring/tree.xml"/>
-        <docs href="docs/publication/authoring"/>
-        <doctypes href="docs/publication/doctypes/"/>
+        <tree-authoring href="content/authoring/tree.xml"/>
+        <docs href="content/authoring"/>
+        <doctypes href="content/doctypes/"/>
       </map:action>
       <map:action name="reserved-checkout" src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
-        <rcmlDirectory href="docs/publication/rcml"/>
-        <backupDirectory href="docs/publication/rcbak"/>
+        <rcmlDirectory href="content/rcml"/>
+        <backupDirectory href="content/rcbak"/>
       </map:action>
     </map:actions>
     <map:selectors default="browser">
@@ -70,26 +70,26 @@
     <map:pipeline>
       <!-- Rollback Screen -->
       <map:match pattern="authoring/revision/editor-matrix/*.html">
-        <map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
-          <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
+        <map:generate type="serverpages" src="../../content/rc/versions-screen.xsp">
+          <map:parameter name="filename" value="content/authoring/editor-matrix/{1}.xml"/>
           <map:parameter name="docid" value="editor-matrix/{1}.xml"/>
-          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
-          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+          <map:parameter name="rcmlDirectory" value="content/rcml"/>
+          <map:parameter name="backupDirectory" value="content/rcbak"/>
         </map:generate>
-        <map:transform src="../../stylesheets/cms/rc/rollback.xsl"/>
+        <map:transform src="../../xslt/rc/rollback.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Rollback View -->
       <map:match pattern="authoring/view/editor-matrix/*.xml">
-        <map:generate type="serverpages" src="../../docs/cms/rc/view.xsp">
-          <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
-          <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
-          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+        <map:generate type="serverpages" src="../../content/rc/view.xsp">
+          <map:parameter name="filename" value="content/authoring/editor-matrix/{1}.xml"/>
+          <map:parameter name="rcmlDirectory" value="content/rcml"/>
+          <map:parameter name="backupDirectory" value="content/rcbak"/>
         </map:generate>
 <!--
-        <map:transform src="xslt/Article/Authoring/toArticle.xsl"/>
-        <map:transform src="xslt/Article/Authoring/main.xsl">
+        <map:transform src="xslt/article/authoring/toArticle.xsl"/>
+        <map:transform src="xslt/article/authoring/main.xsl">
            <map:parameter name="section" value="{2}"/>
         </map:transform>
 -->
@@ -101,7 +101,7 @@
 <!--
       <map:match pattern="rollback/*/*/*/*/index.xml">
         <map:act type="rollback">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="content/authoring/{1}/{2}/{3}/{4}/index.xml"/>
           <map:redirect-to uri="{location}" session="true"/>
         </map:act>
       </map:match>
@@ -114,12 +114,12 @@
       <!-- images gif -->
 <!--
       <map:match pattern="live/images/**.gif">
-        <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+        <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
       <map:match pattern="images/**.gif">
-        <map:read src="resources/publication/images/live/{1}.gif" mime-type="images/gif">
+        <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
@@ -127,22 +127,22 @@
       <!-- images jpg -->
 <!--
       <map:match pattern="live/images/**.jpg">
-        <map:read src="resources/publication/images/live/{1}.jpg" mime-type="images/jpeg">
+        <map:read src="resources/images/live/{1}.jpg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
       <map:match pattern="images/**.jpg">
-        <map:read src="resources/publication/images/live/{1}.jpg" mime-type="images/jpeg">
+        <map:read src="resources/images/live/{1}.jpg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
       <map:match pattern="live/images/**.jpeg">
-        <map:read src="resources/publication/images/live/{1}.jpeg" mime-type="images/jpeg">
+        <map:read src="resources/images/live/{1}.jpeg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
       <map:match pattern="images/**.jpeg">
-        <map:read src="resources/publication/images/live/{1}.jpeg" mime-type="images/jpeg">
+        <map:read src="resources/images/live/{1}.jpeg" mime-type="images/jpeg">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
@@ -150,75 +150,75 @@
 
       <!-- Menus -->
       <map:match pattern="authoring/menus/index.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/home.xsp"/>
+        <map:generate type="serverpages" src="content/menus/home.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/weekly-column-page.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/weekly-column.xsp"/>
+        <map:generate type="serverpages" src="content/menus/weekly-column.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/finalsettlement.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/final-settlement-values.xsp"/>
+        <map:generate type="serverpages" src="content/menus/final-settlement-values.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/matrix/*.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/matrix.xsp">
+        <map:generate type="serverpages" src="content/menus/matrix.xsp">
           <map:parameter name="projectid" value="{1}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/editor-matrix/*.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/editor-matrix.xsp">
+        <map:generate type="serverpages" src="content/menus/editor-matrix.xsp">
           <map:parameter name="projectid" value="{1}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/overview.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/overview.xsp"/>
+        <map:generate type="serverpages" src="content/menus/overview.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/editor-overview.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/editor-overview.xsp"/>
+        <map:generate type="serverpages" src="content/menus/editor-overview.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/board.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/board.xsp"/>
+        <map:generate type="serverpages" src="content/menus/board.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/news.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/news.xsp"/>
+        <map:generate type="serverpages" src="content/menus/news.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/mailing-lists.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/mailing-lists.xsp"/>
+        <map:generate type="serverpages" src="content/menus/mailing-lists.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
 <!--
       <map:match pattern="authoring/menus/glossary.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/mailing-lists.xsp"/>
+        <map:generate type="serverpages" src="content/menus/mailing-lists.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
 -->
       <map:match pattern="authoring/menus/**.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/generic.xsp"/>
+        <map:generate type="serverpages" src="content/menus/generic.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <!-- XML Navigation -->
       <map:match pattern="authoring/**navigation.xml">
-        <map:generate src="docs/publication/authoring/{1}navigation.xml"/>
+        <map:generate src="content/authoring/{1}navigation.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <!-- XML Home -->
       <map:match pattern="authoring/home.xml">
-        <map:generate src="docs/publication/authoring/home.xml"/>
+        <map:generate src="content/authoring/home.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <!-- XML Weekly Column -->
       <map:match pattern="authoring/weekly-column-body.xml">
-        <map:generate src="docs/publication/authoring/weekly-column-body.xml"/>
+        <map:generate src="content/authoring/weekly-column-body.xml"/>
         <map:serialize type="xml"/>
       </map:match>
    </map:pipeline>
@@ -231,13 +231,13 @@
   <map:pipeline>
     <!-- Overview (sorted by frameworks and cms) -->
     <map:match pattern="authoring/matrix/index.xml">
-      <map:generate type="directory" src="docs/publication/authoring/matrix/"/>
-      <map:transform src="xslt/Matrix/xinclude.xsl"/>
+      <map:generate type="directory" src="content/authoring/matrix/"/>
+      <map:transform src="xslt/matrix/xinclude.xsl"/>
 <!--
       <map:transform type="xinclude"/>
 -->
       <map:transform type="xlink">
-        <map:parameter name="href" value="docs/publication/authoring/overview_dummy.xml"/>
+        <map:parameter name="href" value="content/authoring/overview_dummy.xml"/>
       </map:transform>
       <map:serialize type="xml"/>
     </map:match>
@@ -245,7 +245,7 @@
 
     <!-- Project -->
     <map:match pattern="authoring/matrix/body-*.xml">
-      <map:generate src="docs/publication/authoring/matrix/{1}.xml"/>
+      <map:generate src="content/authoring/matrix/{1}.xml"/>
       <map:serialize type="xml"/>
     </map:match>
 
@@ -259,7 +259,7 @@
     </map:match>
 
     <map:match pattern="authoring/matrix/*-envelope.xsp">
-      <map:generate type="serverpages" src="docs/publication/authoring/matrix-envelope.xsp">
+      <map:generate type="serverpages" src="content/authoring/matrix-envelope.xsp">
         <map:parameter name="projectid" value="{1}"/>
       </map:generate>
       <map:serialize type="xml"/>
@@ -270,8 +270,8 @@
   <!-- Create New CMS Project -->
   <map:pipeline>
     <map:match pattern="authoring/matrix/ParentChildScreenNewCMS*">
-      <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
-      <map:transform src="stylesheets/cms/parent-child-new-cms-project.xsl"/>
+      <map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/>
+      <map:transform src="lenya/xslt/authoring/parent-child-new-cms-project.xsl"/>
       <map:serialize type="html"/>
     </map:match>
     <map:match pattern="authoring/matrix/create*">
@@ -289,10 +289,10 @@
   <map:pipeline>
     <!-- Overview (sorted by frameworks and cms) -->
     <map:match pattern="authoring/editor-matrix/index.xml">
-      <map:generate type="directory" src="docs/publication/authoring/editor-matrix/" label="xml"/>
-      <map:transform src="xslt/Matrix/xinclude_editor.xsl"/>
+      <map:generate type="directory" src="content/authoring/editor-matrix/" label="xml"/>
+      <map:transform src="xslt/matrix/xinclude_editor.xsl"/>
       <map:transform type="xlink">
-        <map:parameter name="href" value="docs/publication/authoring/overview_dummy.xml"/>
+        <map:parameter name="href" value="content/authoring/overview_dummy.xml"/>
       </map:transform>
       <map:serialize type="xml"/>
     </map:match>
@@ -300,7 +300,7 @@
 
     <!-- Project -->
     <map:match pattern="authoring/editor-matrix/body-*.xml">
-      <map:generate src="docs/publication/authoring/editor-matrix/{1}.xml"/>
+      <map:generate src="content/authoring/editor-matrix/{1}.xml"/>
       <map:serialize type="xml"/>
     </map:match>
 
@@ -310,7 +310,7 @@
         <map:part src="cocoon:/authoring/editor-matrix/{1}-envelope.xsp" element="cmsbody"/>
       </map:aggregate>
       <map:transform type="xlink">
-        <map:parameter name="href" value="docs/publication/authoring/dummy.xml"/>
+        <map:parameter name="href" value="content/authoring/dummy.xml"/>
       </map:transform>
 <!--
       <map:transform type="xinclude"/>
@@ -319,7 +319,7 @@
     </map:match>
 
     <map:match pattern="authoring/editor-matrix/*-envelope.xsp">
-      <map:generate type="serverpages" src="docs/publication/authoring/editor-matrix-envelope.xsp">
+      <map:generate type="serverpages" src="content/authoring/editor-matrix-envelope.xsp">
         <map:parameter name="projectid" value="{1}"/>
       </map:generate>
       <map:serialize type="xml"/>
@@ -330,8 +330,8 @@
   <!-- Create New Editor Project -->
   <map:pipeline>
     <map:match pattern="authoring/editor-matrix/ParentChildScreenNewEditor*">
-      <map:generate type="serverpages" src="../../docs/cms/authoring/parent-child.xsp"/>
-      <map:transform src="stylesheets/cms/parent-child-new-editor-project.xsl"/>
+      <map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/>
+      <map:transform src="lenya/xslt/authoring/parent-child-new-editor-project.xsl"/>
       <map:serialize type="html"/>
     </map:match>
     <map:match pattern="authoring/editor-matrix/create*">
@@ -371,7 +371,7 @@
       <map:match pattern="authoring/**.xml">
         <map:aggregate element="lenya">
           <map:part src="cocoon:/authoring/menus/{1}.xml"/>
-          <map:part src="docs/publication/authoring/{1}.xml" element="cmsbody"/>
+          <map:part src="content/authoring/{1}.xml" element="cmsbody"/>
         </map:aggregate>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
@@ -386,10 +386,10 @@
         <map:generate src="cocoon:/authoring/index.xml"/>
         <map:select>
           <map:when test="explorer">
-            <map:transform src="xslt/Home/Authoring/main.xsl"/>
+            <map:transform src="xslt/home/authoring/main.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:transform src="xslt/Home/Authoring/main.xsl"/>
+            <map:transform src="xslt/home/authoring/main.xsl"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
@@ -400,10 +400,10 @@
         <map:generate src="cocoon:/authoring/index.xml"/>
         <map:select>
           <map:when test="explorer">
-            <map:transform src="xslt/Home/Authoring/main_xopus.xsl"/>
+            <map:transform src="xslt/home/authoring/main_xopus.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:transform src="xslt/Home/Authoring/main_xopus.xsl"/>
+            <map:transform src="xslt/home/authoring/main_xopus.xsl"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
@@ -412,21 +412,21 @@
       <!-- Edit News with Xopus2 -->
       <map:match pattern="authoring/xopus2/news.html">
         <map:generate src="cocoon:/authoring/news.xml"/>
-        <map:transform src="xslt/News/Authoring/main_xopus.xsl"/>
+        <map:transform src="xslt/News/authoring/main_xopus.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Edit Weekly Column with Xopus2 -->
       <map:match pattern="authoring/xopus2/weekly-column.html">
         <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
-        <map:transform src="xslt/WeeklyColumn/Authoring/main_xopus.xsl"/>
+        <map:transform src="xslt/WeeklyColumn/authoring/main_xopus.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Edit Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/matrix/*.html">
         <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
-        <map:transform src="xslt/Matrix/Authoring/main_xopus.xsl">
+        <map:transform src="xslt/matrix/authoring/main_xopus.xsl">
           <map:parameter name="projectid" value="{1}"/>
         </map:transform>
         <map:serialize type="html"/>
@@ -435,27 +435,27 @@
       <map:match pattern="authoring/xopus2/clearing/marketinformation/finalsettlement.html">
         <map:aggregate element="lenya">
           <map:part src="cocoon:/authoring/menus/finalsettlement.xml"/>
-          <map:part src="docs/publication/authoring/clearing/marketinformation/finalsettlement.xml" element="cmsbody"/>
+          <map:part src="content/authoring/clearing/marketinformation/finalsettlement.xml" element="cmsbody"/>
         </map:aggregate>
-        <map:transform src="xslt/FinalSettlementValues/Authoring/main_xopus2.xsl"/>
+        <map:transform src="xslt/FinalSettlementValues/authoring/main_xopus2.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Edit Editor Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/editor-matrix/*.html">
         <map:act type="reserved-checkout">
-          <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
-          <map:generate type="serverpages" src="../../docs/cms/rc/{exception}.xsp">
+          <map:parameter name="filename" value="content/authoring/editor-matrix/{1}.xml"/>
+          <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
             <map:parameter name="filename" value="{filename}"/>
             <map:parameter name="date" value="{date}"/>
           </map:generate>
-          <map:transform src="../../stylesheets/cms/rc/rco-exception.xsl"/>
+          <map:transform src="../../xslt/rc/rco-exception.xsl"/>
           <map:serialize type="html"/>
         </map:act>
 
         <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
-        <map:transform src="xslt/Matrix/Authoring/main_editor_xopus.xsl">
+        <map:transform src="xslt/matrix/authoring/main_editor_xopus.xsl">
           <map:parameter name="projectid" value="{1}"/>
         </map:transform>
         <map:serialize type="html"/>
@@ -466,14 +466,14 @@
       <!-- Mailing Lists -->
       <map:match pattern="authoring/mailing-lists.html">
         <map:generate src="cocoon:/authoring/mailing-lists.xml"/>
-        <map:transform src="xslt/Mailing-Lists/Authoring/main.xsl"/>
+        <map:transform src="xslt/Mailing-Lists/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Glossary -->
       <map:match pattern="authoring/glossary.html">
         <map:generate src="cocoon:/authoring/glossary.xml"/>
-        <map:transform src="xslt/Glossary/Authoring/main.xsl"/>
+        <map:transform src="xslt/Glossary/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -483,7 +483,7 @@
       </map:match>
       <map:match pattern="authoring/matrix/index.html">
         <map:generate src="cocoon:/authoring/overview.xml"/>
-        <map:transform src="xslt/Overview/Authoring/main.xsl"/>
+        <map:transform src="xslt/overview/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <!-- /CM/F Overview -->
@@ -494,7 +494,7 @@
       </map:match>
       <map:match pattern="authoring/editor-matrix/index.html">
         <map:generate src="cocoon:/authoring/editor-overview.xml"/>
-        <map:transform src="xslt/Overview/Authoring/main_editor.xsl"/>
+        <map:transform src="xslt/overview/authoring/main_editor.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <!-- Editor Overview -->
@@ -502,51 +502,51 @@
       <!-- Board -->
       <map:match pattern="authoring/board.html">
         <map:generate src="cocoon:/authoring/board.xml"/>
-        <map:transform src="xslt/Board/Authoring/main.xsl"/>
+        <map:transform src="xslt/Board/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- News -->
       <map:match pattern="authoring/news.html">
         <map:generate src="cocoon:/authoring/news.xml"/>
-        <map:transform src="xslt/News/Authoring/main.xsl"/>
+        <map:transform src="xslt/News/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Weekly Column -->
       <map:match pattern="authoring/weekly-column.html">
         <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
-        <map:transform src="xslt/WeeklyColumn/Authoring/main.xsl"/>
+        <map:transform src="xslt/WeeklyColumn/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <map:match pattern="authoring/clearing/marketinformation/finalsettlement.html">
         <map:aggregate element="lenya">
           <map:part src="cocoon:/authoring/menus/finalsettlement.xml"/>
-          <map:part src="docs/publication/authoring/clearing/marketinformation/finalsettlement.xml" element="cmsbody"/>
+          <map:part src="content/authoring/clearing/marketinformation/finalsettlement.xml" element="cmsbody"/>
         </map:aggregate>
-        <map:transform src="xslt/FinalSettlementValues/Authoring/main.xsl"/>
+        <map:transform src="xslt/FinalSettlementValues/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Matrix Project -->
       <map:match pattern="authoring/matrix/*.html">
         <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
-        <map:transform src="xslt/Matrix/Authoring/main.xsl"/>
+        <map:transform src="xslt/matrix/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Editor Matrix Project -->
       <map:match pattern="authoring/editor-matrix/*.html">
         <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
-        <map:transform src="xslt/Matrix/Authoring/main_editor.xsl"/>
+        <map:transform src="xslt/matrix/authoring/main_editor.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- Speakers -->
       <map:match pattern="authoring/**/speakers.html">
         <map:generate src="cocoon:/authoring/{1}/speakers.xml"/>
-        <map:transform src="xslt/Speakers/Authoring/main.xsl"/>
+        <map:transform src="xslt/Speakers/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
@@ -555,17 +555,17 @@
         <map:generate src="cocoon:/authoring/{1}.xml"/>
         <map:select>
           <map:when test="explorer">
-            <map:transform src="xslt/Generic/Authoring/main.xsl"/>
+            <map:transform src="xslt/generic/authoring/main.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:transform src="xslt/Generic/Authoring/main.xsl"/>
+            <map:transform src="xslt/generic/authoring/main.xsl"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="authoring/**.xhtml">
-        <!--<map:read src="docs/publication/authoring/{1}" mime-type="text/xml"/>-->
-        <map:generate src="docs/publication/authoring/{1}.xhtml"/>
+        <!--<map:read src="content/authoring/{1}" mime-type="text/xml"/>-->
+        <map:generate src="content/authoring/{1}.xhtml"/>
         <map:serialize type="xml"/>
       </map:match>
    </map:pipeline>
@@ -577,13 +577,13 @@
        <map:aggregate element="publish-all" label="xml">
          <map:part src="cocoon:/authoring/matrix/index.xml"/>
        </map:aggregate>
-       <map:transform src="xslt/Overview/publishScreen.xsl"/>
-       <map:transform src="../../stylesheets/cms/publishing/main.xsl"/>
+       <map:transform src="xslt/overview/publishScreen.xsl"/>
+       <map:transform src="../../xslt/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>
      <map:match pattern="authoring/lenya/publishScreen*">
-       <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp" label="xml"/>
-       <map:transform src="../../stylesheets/cms/publishing/main.xsl"/>
+       <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp" label="xml"/>
+       <map:transform src="../../xslt/publishing/main.xsl"/>
        <map:serialize type="html"/>
      </map:match>
      <map:match pattern="authoring/lenya/publish*">
