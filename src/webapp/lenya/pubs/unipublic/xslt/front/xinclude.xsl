@@ -23,7 +23,7 @@
 <xsl:template match="Frontpage"  xmlns:xi="http://www.w3.org/2001/XInclude">
  <Articles xmlns:xi="http://www.w3.org/2001/XInclude">
     <xsl:for-each select="Articles/Article">
-      <Article href="{@channel}/{@section}/{@year}/{@dir}" section="{@section}">
+      <Article href="{@channel}/{@section}/{@year}/{@dir}" section="{@section}" channel="{@channel}">
         <xi:include xml:base="cocoon:" href="{@channel}/{@section}/{@year}/{@dir}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
       </Article>
     </xsl:for-each>

@@ -137,7 +137,6 @@
   <br />
  
   <xsl:for-each select="Article">
-    <xsl:variable name="section"><xsl:value-of select="@section"/></xsl:variable>
     <xsl:if test="position()>=3">
 
       <table border="0" cellpadding="0" cellspacing="0" width="316">
@@ -145,7 +144,7 @@
           <td colspan="3">
             <table border="0" cellpadding="0" cellspacing="0" width="316">
               <tr>
-                <td colspan="3"><img src="{$img-unipub}/t_{$section}.gif" width="316" height="13" border="0" alt="{$section}"/></td>
+                <td colspan="3"><a href="{$unipublic}/{@channel}/{@section}/"><img src="{$img-unipub}/t_{@section}.gif" width="316" height="13" border="0" alt="{@section}"/></a></td>
               </tr>
 
               <tr>
