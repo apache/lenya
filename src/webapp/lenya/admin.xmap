@@ -93,6 +93,16 @@
       </map:match>
       
       <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
+      <!-- pattern: internal/{type}/{id}/{page}.xml -->
+      <!-- pattern: internal/{page}.xml -->
+      <map:match pattern="internal/*/*/*.xml">
+        <map:call resource="fallback-page">
+          <map:parameter name="serverpage" value="{1}/{3}"/>
+          <map:parameter name="stylesheet" value="{1}/{3}"/>
+        </map:call>
+      </map:match>
+      
+      <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
       <!-- pattern: internal/{type}/{page}.xml -->
       <!-- pattern: internal/{page}.xml -->
       <map:match pattern="internal/**.xml">
