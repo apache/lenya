@@ -26,7 +26,7 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/dossier.xsl&amp;url-xsd="+domain_prefix+"/schemas/dossier.xsd&amp;url-css="+domain_prefix+"/css/dossier.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/save/dossiers/"+year+"/"+dossierId</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
+        <item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/dossier.xsl&amp;url-xsd="+domain_prefix+"/schemas/dossier.xsd&amp;url-css="+domain_prefix+"/css/dossier.css&amp;url-post="+domain_prefix+"/save/dossiers/"+year+"/"+dossierId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/dossiers/"+year+"/"+dossierId+"/index.html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
       </block>
 
       <block>
@@ -67,6 +67,13 @@
     </menu>
 
     <menu name="Debug" label="Debug">
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/dossiers/"+year+"/"+dossierId+"/index.xml"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/stylesheets/dossier.xsl"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XSLT</item>
+        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/schemas/dossier.xsd"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;XSD</item>
+        <item><xsp:attribute name="href"><xsp:expr>domain_prefix+"/css/dossier.css"</xsp:expr></xsp:attribute>View&#160;Bitflux&#160;CSS</item>
+      </block>
+
       <block>
         <item href="content.xml">View&#160;XML</item>
       </block>

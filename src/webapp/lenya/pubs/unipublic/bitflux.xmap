@@ -19,6 +19,20 @@
   </map:components>
 
   <map:pipelines>
+    <!-- Called from config.xml  -->
+    <!-- Used for Bitflux specific pre- and post-processing of the xml (for all doctypes)  -->
+    <map:pipeline>
+      <map:match pattern="stylesheets/bitflux-include.xsl">
+        <map:generate src="stylesheets/publication/Bitflux/bitflux-include.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="stylesheets/bitflux-back-include.xsl">
+        <map:generate src="stylesheets/publication/Bitflux/bitflux-back-include.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
     <!-- GET -->
     <!-- Article -->
     <map:pipeline>
@@ -60,13 +74,10 @@
 
     <map:pipeline>
     <!-- POST (in the case of Bitflux the action only is used for saving and NOT for opening) -->
-      <map:match pattern="save/*/*/*/*">
+    <!-- Save Dossier -->
+      <map:match pattern="save/dossiers/*/*">
         <map:act type="xopushandler">
-          <map:parameter name="save-filename" value="{1}/{2}/articles/{3}/{4}/index.xml"/>
-
-<!--
-          <map:redirect-to uri="/wyona-cms/unipublic/authoring/{1}/{2}/{3}/{4}/index.html"/>
--->
+          <map:parameter name="save-filename" value="dossiers/{1}/{2}/index.xml"/>
           <!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
           <map:generate src="{reqFilePath}"/>
           <map:transform src="xopus_response.xsl">
@@ -76,7 +87,24 @@
             <map:parameter name="fileType" value="{fileType}"/>
           </map:transform>
           <map:serialize type="xml"/>
+        </map:act>
+        <map:generate src="xopus_error.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
 
+      <!-- Save Article -->
+      <map:match pattern="save/*/*/*/*">
+        <map:act type="xopushandler">
+          <map:parameter name="save-filename" value="{1}/{2}/articles/{3}/{4}/index.xml"/>
+          <!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
+          <map:generate src="{reqFilePath}"/>
+          <map:transform src="xopus_response.xsl">
+            <map:parameter name="reqId" value="{reqId}"/>
+            <map:parameter name="reqType" value="{reqType}"/>
+            <map:parameter name="reqFile" value="{reqFile}"/>
+            <map:parameter name="fileType" value="{fileType}"/>
+          </map:transform>
+          <map:serialize type="xml"/>
         </map:act>
         <map:generate src="xopus_error.xml"/>
         <map:serialize type="xml"/>

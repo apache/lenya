@@ -46,6 +46,22 @@
 
 	       <xsl:apply-templates select="articles" />
 
+	  <!-- Display of Color and Teasertext -->
+	  <xsl:if test="$authoring">
+	    <table cellpadding="1" border="0" width="100%" bgcolor="#cccccc"><tr><td>
+	    <table cellpadding="3" border="0" width="100%" bgcolor="white">
+	      <tr>
+	        <td class="tsr-text"><b>Dossier-Farbe (Hex-Code)</b></td>
+	        <td class="tsr-text"><xsl:value-of select="head/color" /></td>
+	      </tr>
+	      <tr>
+	        <td class="tsr-text"><b>Teaser-Text</b></td>
+	        <td class="tsr-text"><xsl:value-of select="head/teasertext"/></td>
+	      </tr>
+	    </table>
+	    </td></tr></table>
+	  </xsl:if>
+
              </td>
           </tr>
 
