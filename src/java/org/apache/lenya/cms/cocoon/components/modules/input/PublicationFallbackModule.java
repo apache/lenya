@@ -36,14 +36,14 @@ public class PublicationFallbackModule extends FallbackModule {
     }
 
     /**
-     * @throws ConfigurationException
-     * @see org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule#getBaseURIs(java.util.Map)
+     * @see org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule#getBaseURIs(java.util.Map,
+     *      java.lang.String)
      */
-    protected String[] getBaseURIs(Map objectModel) throws ConfigurationException {
-        String[] superUris = super.getBaseURIs(objectModel);
+    protected String[] getBaseURIs(Map objectModel, String name) throws ConfigurationException {
+        String[] superUris = super.getBaseURIs(objectModel, name);
         String[] uris = new String[superUris.length + 1];
 
-        PageEnvelope envelope = getEnvelope(objectModel);
+        PageEnvelope envelope = getEnvelope(objectModel, name);
         String publicationId = envelope.getPublication().getId();
 
         String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"

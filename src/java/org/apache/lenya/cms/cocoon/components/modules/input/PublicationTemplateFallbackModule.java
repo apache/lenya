@@ -29,14 +29,12 @@ import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
 /**
- * This module uses publication templating to resolve the real path for a
- * resource. The current publication ID can be provided as a parameter:
- * <code>{fallback:{pub-id}:foo/bar}</code>. This is especially useful for
- * cocoon:// request which are triggered from non-environment components (e.g.
- * the scheduler).
+ * This module uses publication templating to resolve the real path for a resource. The current
+ * publication ID can be provided as a parameter: <code>{fallback:{pub-id}:foo/bar}</code>. This
+ * is especially useful for cocoon:// request which are triggered from non-environment components
+ * (e.g. the scheduler).
  * 
- * @version $Id: PublicationTemplateFallbackModule.java 157115 2005-03-11
- *          17:21:14Z andreas $
+ * @version $Id$
  */
 public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModule {
 
@@ -49,8 +47,7 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(final String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -60,9 +57,10 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
         }
 
         String resolvedUri = null;
+        PublicationTemplateManager templateManager = null;
 
         try {
-            PublicationTemplateManager templateManager = (PublicationTemplateManager) this.manager
+            templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             Publication publication;
@@ -72,15 +70,17 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
             if (name.indexOf(":") > -1) {
                 String[] parts = name.split(":");
                 if (parts.length > 2) {
-                    throw new RuntimeException("The attribute may not contain more than one colons!");
+                    throw new RuntimeException(
+                            "The attribute may not contain more than one colons!");
                 }
                 String publicationId = parts[0];
                 targetUri = parts[1];
-                
+
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Publication ID provided explicitely: [" + publicationId + "]");
+                    getLogger().debug("Publication ID provided explicitely: [" + publicationId
+                            + "]");
                 }
-                
+
                 SourceResolver resolver = null;
                 Source source = null;
                 try {
@@ -100,19 +100,22 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
                 publication = factory.getPublication(objectModel);
                 targetUri = name;
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Publication resolved from request: [" + publication.getId() + "]");
+                    getLogger().debug("Publication resolved from request: [" + publication.getId()
+                            + "]");
                 }
             }
-            templateManager.setup(publication);
-
             ExistingSourceResolver resolver = new ExistingSourceResolver();
-            templateManager.visit(targetUri, resolver);
+            templateManager.visit(publication, targetUri, resolver);
             resolvedUri = resolver.getURI();
 
         } catch (Exception e) {
             String message = "Resolving path [" + name + "] failed: ";
             getLogger().error(message, e);
             throw new ConfigurationException(message, e);
+        } finally {
+            if (templateManager != null) {
+                this.manager.release(templateManager);
+            }
         }
         return resolvedUri;
     }
@@ -129,8 +132,7 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
     }
 
     /**
-     * Returns the base URI for a certain publication including the prefix
-     * "lenya".
+     * Returns the base URI for a certain publication including the prefix "lenya".
      * @param publication The publication.
      * @return A string.
      */

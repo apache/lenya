@@ -20,10 +20,11 @@ package org.apache.lenya.cms.publication.templating;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -32,14 +33,10 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * Manager for publication templates.
  * 
- * @version $Id: PublicationTemplateManagerImpl.java 123348 2004-12-25 22:49:57Z
- *          gregor $
+ * @version $Id$
  */
 public class PublicationTemplateManagerImpl extends AbstractLogEnabled implements
         PublicationTemplateManager, Serviceable {
-
-    private Publication publication;
-
 
     /**
      * Ctor.
@@ -48,23 +45,16 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#setup(org.apache.lenya.cms.publication.Publication)
+     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.publication.Publication,
+     *      java.lang.String, org.apache.lenya.cms.publication.templating.SourceVisitor)
      */
-    public void setup(Publication _publication) throws ConfigurationException {
-        this.publication = _publication;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(java.lang.String,
-     *      org.apache.lenya.cms.publication.templating.SourceVisitor)
-     */
-    public void visit(String path, SourceVisitor visitor) {
+    public void visit(Publication publication, String path, SourceVisitor visitor) {
 
         SourceResolver resolver = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
-            String[] baseUris = getBaseURIs();
+            String[] baseUris = getBaseURIs(publication);
             for (int i = 0; i < baseUris.length; i++) {
                 String uri = baseUris[i] + "/" + path;
 
@@ -107,21 +97,19 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
     /**
      * Returns the publication.
-     * @return A publication.
+     * @return A publication. protected Publication getPublication1() { return this.publication; }
      */
-    protected Publication getPublication() {
-        return this.publication;
-    }
 
     /**
      * Returns the base URIs in traversing order.
+     * @param publication The original publication.
      * @return An array of strings.
      */
-    protected String[] getBaseURIs() {
+    protected String[] getBaseURIs(Publication publication) {
 
         List uris = new ArrayList();
 
-        Publication[] publications = getPublications();
+        Publication[] publications = getPublications(publication);
         for (int i = 0; i < publications.length; i++) {
             uris.add(getBaseURI(publications[i]));
         }
@@ -144,14 +132,15 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.publication.templating.PublicationVisitor)
+     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.publication.Publication,
+     *      org.apache.lenya.cms.publication.templating.PublicationVisitor)
      */
-    public void visit(PublicationVisitor visitor) {
+    public void visit(Publication publication, PublicationVisitor visitor) {
         SourceResolver resolver = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
-            Publication[] publications = getPublications();
+            Publication[] publications = getPublications(publication);
             for (int i = 0; i < publications.length; i++) {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Visiting publication [" + publications[i] + "]");
@@ -171,20 +160,98 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
     /**
      * Returns the publications in traversing order.
+     * @param publication The original publication.
      * @return An array of strings.
      */
-    protected Publication[] getPublications() {
+    protected Publication[] getPublications(Publication publication) {
 
         List publications = new ArrayList();
 
-        publications.add(getPublication());
+        publications.add(publication);
 
-        Publication[] templates = getPublication().getTemplates();
+        Publication[] templates = publication.getTemplates();
         for (int i = 0; i < templates.length; i++) {
             publications.add(templates[i]);
         }
 
         return (Publication[]) publications.toArray(new Publication[publications.size()]);
     }
-    
+
+    /**
+     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#getSelectableHint(org.apache.lenya.cms.publication.Publication,
+     *      org.apache.avalon.framework.service.ServiceSelector, java.lang.String)
+     */
+    public Object getSelectableHint(Publication publication, ServiceSelector selector,
+            final String originalHint) throws ServiceException {
+        PublicationTemplateManager templateManager = null;
+        Object selectableHint = null;
+
+        try {
+            ExistingServiceVisitor resolver = new ExistingServiceVisitor(selector, originalHint,
+                    getLogger());
+            visit(publication, resolver);
+            selectableHint = resolver.getSelectableHint();
+            if (selectableHint == null) {
+                selectableHint = originalHint;
+            }
+
+        } catch (Exception e) {
+            String message = "Resolving hint [" + originalHint + "] failed: ";
+            getLogger().error(message, e);
+            throw new RuntimeException(message, e);
+        } finally {
+            if (templateManager != null) {
+                this.manager.release(templateManager);
+            }
+        }
+        return selectableHint;
+    }
+
+    /**
+     * Searches for a declared service of the form "publicationId/service".
+     */
+    public class ExistingServiceVisitor implements PublicationVisitor {
+
+        /**
+         * Ctor.
+         * @param selector The service selector to use.
+         * @param hint The hint to check.
+         * @param logger The logger.
+         */
+        public ExistingServiceVisitor(ServiceSelector selector, Object hint, Logger logger) {
+            this.selector = selector;
+            this.hint = hint;
+            this.logger = logger;
+        }
+
+        private ServiceSelector selector;
+        private Object hint;
+        private Object selectableHint = null;
+        private Logger logger;
+
+        /**
+         * @see org.apache.lenya.cms.publication.templating.PublicationVisitor#visit(org.apache.lenya.cms.publication.Publication)
+         */
+        public void visit(Publication publication) {
+            String publicationHint = publication.getId() + "/" + this.hint;
+            boolean success = false;
+            if (this.selector.isSelectable(publicationHint)) {
+                this.selectableHint = publicationHint;
+                success = true;
+            }
+            if (this.logger.isDebugEnabled()) {
+                this.logger.debug("Checking hint [" + publicationHint + "]: " + success);
+            }
+        }
+
+        /**
+         * @return The publication hint that could be selected or <code>null</code> if no hint
+         *         could be selected.
+         */
+        public Object getSelectableHint() {
+            return this.selectableHint;
+        }
+
+    }
+
 }

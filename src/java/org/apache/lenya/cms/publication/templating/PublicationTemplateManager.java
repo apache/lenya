@@ -16,7 +16,8 @@
  */
 package org.apache.lenya.cms.publication.templating;
 
-import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -41,27 +42,32 @@ public interface PublicationTemplateManager {
     String ROLE = PublicationTemplateManager.class.getName();
 
     /**
-     * Hands to publication to the template manager.
-     * @param publication A publication.
-     * @throws ConfigurationException if setting up fails.
-     */
-    void setup(Publication publication) throws ConfigurationException;
-
-    /**
      * <p>
-     * Visits the versions of a source in traversing order.
-     * The source doesn't have to exist to be visited.
+     * Visits the versions of a source in traversing order. The source doesn't have to exist to be
+     * visited.
      * </p>
+     * @param publication The original publication.
      * @param path The path of the source, relatively to the publication directory.
      * @param visitor The visitor.
      */
-    void visit(String path, SourceVisitor visitor);
-    
+    void visit(Publication publication, String path, SourceVisitor visitor);
+
     /**
-     * Visits the publications in traversing order.
-     * The core is not visited.
+     * Visits the publications in traversing order. The core is not visited.
+     * @param publication The original publication.
      * @param visitor The visitor.
      */
-    void visit(PublicationVisitor visitor);
-    
+    void visit(Publication publication, PublicationVisitor visitor);
+
+    /**
+     * Returns the hint for the publiation which declares a service.
+     * @param publication The original publication.
+     * @param selector The service selector.
+     * @param originalHint The original hint.
+     * @return An object.
+     * @throws ServiceException if an error occurs.
+     */
+    Object getSelectableHint(Publication publication, ServiceSelector selector, String originalHint)
+            throws ServiceException;
+
 }

@@ -124,7 +124,7 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
      * @return A string.
      * @throws ConfigurationException if an error occurs.
      */
-    protected String resolveURI(String path, Map objectModel) throws ConfigurationException {
+    protected String resolveURI(final String path, Map objectModel) throws ConfigurationException {
         String resolvedUri = null;
         String checkedUris = "\n";
 
@@ -132,7 +132,7 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
-            String[] _baseUris = getBaseURIs(objectModel);
+            String[] _baseUris = getBaseURIs(objectModel, path);
             Source source = null;
             int i = 0;
             while (resolvedUri == null && i < _baseUris.length) {
@@ -193,10 +193,11 @@ public class FallbackModule extends AbstractPageEnvelopeModule {
     /**
      * Returns the base directory URIs in the order they should be traversed.
      * @param objectModel The object model.
+     * @param attributeName The name of the module attribute.
      * @return An array of strings.
      * @throws ConfigurationException if an error occurs.
      */
-    protected String[] getBaseURIs(Map objectModel) throws ConfigurationException {
+    protected String[] getBaseURIs(Map objectModel, String attributeName) throws ConfigurationException {
         return this.baseUris;
     }
 

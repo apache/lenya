@@ -97,9 +97,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         if (!document.exists()) {
             throw new PublicationException("Document [" + document + "] does not exist!");
         }
-        Publication publication = document.getPublication();
-        publication.getSiteManager().delete(document);
-        deleteDocumentSource(document);
 
         ResourcesManager resourcesManager = document.getResourcesManager();
         resourcesManager.deleteResources();
@@ -115,6 +112,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 this.manager.release(workflowManager);
             }
         }
+        
+        Publication publication = document.getPublication();
+        publication.getSiteManager().delete(document);
+        deleteDocumentSource(document);
     }
 
     /**
@@ -124,7 +125,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void move(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
         copy(sourceDocument, destinationDocument);
-        delete(sourceDocument);
 
         ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
         WorkflowManager workflowManager = null;
@@ -141,6 +141,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 this.manager.release(workflowManager);
             }
         }
+        
+        delete(sourceDocument);
     }
 
     /**
@@ -451,7 +453,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         DocumentIdentityMap identityMap = document.getIdentityMap();
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-
             Document version = identityMap.getFactory().getLanguageVersion(document, languages[i]);
             delete(version);
         }

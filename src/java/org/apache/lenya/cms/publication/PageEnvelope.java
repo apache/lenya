@@ -19,13 +19,11 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.util.Map;
+import java.io.File;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.util.ServletHelper;
 
 /**
  * A page envelope carries a set of information that are needed during the presentation of a
@@ -160,15 +158,21 @@ public class PageEnvelope {
     /**
      * Creates a page envelope from an object model.
      * @param map The identity map to use.
-     * @param objectModel The object model.
+     * @param contextPath The servlet context prefix.
+     * @param webappUrl The web application URL.
+     * @param servletContext The servlet context directory.
      * @throws PageEnvelopeException when something went wrong.
      */
-    public PageEnvelope(DocumentIdentityMap map, Map objectModel) throws PageEnvelopeException {
+    public PageEnvelope(DocumentIdentityMap map, String contextPath, String webappUrl,
+            File servletContext) throws PageEnvelopeException {
         this.identityMap = map;
-        this.objectModel = objectModel;
+        this.context = contextPath;
+        this.webappUrl = webappUrl;
+        this.servletContext = servletContext;
     }
 
-    private Map objectModel;
+    private String webappUrl;
+    private File servletContext;
 
     private DocumentIdentityMap identityMap;
 
@@ -198,16 +202,14 @@ public class PageEnvelope {
      */
     public Publication getPublication() {
         if (this.publication == null) {
-            Request request = ObjectModelHelper.getRequest(this.objectModel);
-            String webappURI = ServletHelper.getWebappURI(request);
             try {
                 Publication pub = PublicationFactory.getInstance(new ConsoleLogger())
-                        .getPublication(this.objectModel);
+                        .getPublication(this.webappUrl, this.servletContext);
                 if (pub.exists()) {
                     this.publication = pub;
-                    if (getIdentityMap().getFactory().isDocument(publication, webappURI)) {
+                    if (getIdentityMap().getFactory().isDocument(publication, this.webappUrl)) {
                         Document _document = getIdentityMap().getFactory().getFromURL(publication,
-                                webappURI);
+                                this.webappUrl);
                         setDocument(_document);
                     }
                 }
@@ -223,9 +225,7 @@ public class PageEnvelope {
      */
     public String getArea() {
         if (this.area == null) {
-            Request request = ObjectModelHelper.getRequest(this.objectModel);
-            String webappURI = ServletHelper.getWebappURI(request);
-            URLInformation info = new URLInformation(webappURI);
+            URLInformation info = new URLInformation(this.webappUrl);
             this.area = info.getArea();
         }
         return this.area;
@@ -246,13 +246,6 @@ public class PageEnvelope {
      * @return a <code>String</code> value
      */
     public String getContext() {
-        if (this.context == null) {
-            Request request = ObjectModelHelper.getRequest(this.objectModel);
-            this.context = request.getContextPath();
-            if (this.context == null) {
-                this.context = "";
-            }
-        }
         return this.context;
     }
 
@@ -280,13 +273,10 @@ public class PageEnvelope {
      */
     public Document getDocument() {
         if (this.document == null) {
-            Request request = ObjectModelHelper.getRequest(this.objectModel);
-            String webappUrl = ServletHelper.getWebappURI(request);
-
             DocumentFactory factory = getIdentityMap().getFactory();
             try {
-                if (factory.isDocument(getPublication(), webappUrl)) {
-                    this.document = getIdentityMap().getFromURL(getPublication(), webappUrl);
+                if (factory.isDocument(getPublication(), this.webappUrl)) {
+                    this.document = getIdentityMap().getFromURL(getPublication(), this.webappUrl);
                 }
             } catch (final DocumentBuildException e) {
                 throw new RuntimeException(e);

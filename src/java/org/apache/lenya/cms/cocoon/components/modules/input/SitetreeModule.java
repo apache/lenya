@@ -67,7 +67,7 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
         Object value = null;
 
         try {
-            PageEnvelope envelope = getEnvelope(objectModel);
+            PageEnvelope envelope = getEnvelope(objectModel, name);
             Publication publication = envelope.getPublication();
             DocumentIdentityMap map = new DocumentIdentityMap();
             TreeSiteManager _manager = (TreeSiteManager) publication.getSiteManager();

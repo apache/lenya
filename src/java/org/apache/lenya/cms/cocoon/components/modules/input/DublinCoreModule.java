@@ -47,7 +47,7 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
             throw new ConfigurationException("The attribute [" + name + "] is not supported!");
         }
 
-        Document document = getEnvelope(objectModel).getDocument();
+        Document document = getEnvelope(objectModel, name).getDocument();
 
         if (document == null) {
             throw new ConfigurationException("There is no document for this page envelope!");

@@ -19,43 +19,73 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Abstract superclass for classes which need access to the page envelope.
+ * 
+ * The web application URL can be provided in the attribute name, separated by a colon (":").
  */
 public abstract class AbstractPageEnvelopeModule extends OperationModule {
-    
+
     /**
      * Get the the page envelope for the given objectModel.
      * @param objectModel the objectModel for which the page enevelope is requested.
+     * @param name The attribute name.
      * @return a <code>PageEnvelope</code>
      * @throws ConfigurationException if the page envelope could not be instantiated.
      */
-    protected PageEnvelope getEnvelope(Map objectModel) throws ConfigurationException {
+    protected PageEnvelope getEnvelope(Map objectModel, String name) throws ConfigurationException {
 
         PageEnvelope envelope = null;
+        String webappUrl = null;
+        Request request = ObjectModelHelper.getRequest(objectModel);
+
+        String[] snippets = name.split(":");
+        if (snippets.length > 1) {
+            webappUrl = snippets[1];
+        } else {
+            webappUrl = ServletHelper.getWebappURI(request);
+        }
 
         if (getLogger().isDebugEnabled()) {
-            Request request = ObjectModelHelper.getRequest(objectModel);
-            getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
+            getLogger().debug("Resolving page envelope for URL [" + webappUrl + "]");
         }
+
+        String contextPath = request.getContextPath();
+        Context context = ObjectModelHelper.getContext(objectModel);
+        String servletContextPath = context.getRealPath("");
 
         try {
             DocumentIdentityMap map = getUnitOfWork().getIdentityMap();
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+                    contextPath,
+                    webappUrl,
+                    new File(servletContextPath));
         } catch (Exception e) {
             throw new ConfigurationException("Resolving page envelope failed: ", e);
         }
 
         return envelope;
+    }
+    
+    /**
+     * @param name The original attribute name.
+     * @return The attribute name without URL attachment.
+     */
+    protected String getAttributeName(String name) {
+        final String[] snippets = name.split(":");
+        return snippets[0];
     }
 
 }

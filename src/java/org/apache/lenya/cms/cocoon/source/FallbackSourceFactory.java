@@ -109,9 +109,8 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
             
             Publication pub = factory.getPublication(publicationId, contextPath);
             if (pub.exists()) {
-                templateManager.setup(pub);
                 ExistingSourceResolver resolver = new ExistingSourceResolver();
-                templateManager.visit(path, resolver);
+                templateManager.visit(pub, path, resolver);
                 resolvedUri = resolver.getURI();
             }
 

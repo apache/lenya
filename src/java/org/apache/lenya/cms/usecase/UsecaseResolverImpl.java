@@ -30,6 +30,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
 /**
  * Usecase resolver implementation.
@@ -104,13 +105,30 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @param webappUrl The web application URL.
      * @param name The plain usecase name.
      * @return A string.
+     * @throws ServiceException if an error occurs.
      */
-    protected String getPublicationUsecaseName(String webappUrl, final String name) {
+    protected String getUsecaseName(String webappUrl, final String name) throws ServiceException {
         String newName = null;
+
         Publication publication = getPublication(webappUrl);
         if (publication != null) {
-            newName = publication.getId() + "/" + name;
+            PublicationTemplateManager templateManager = null;
+            try {
+                templateManager = (PublicationTemplateManager) this.manager
+                        .lookup(PublicationTemplateManager.ROLE);
+                newName = (String) templateManager.getSelectableHint(publication,
+                        this.selector,
+                        name);
+            } finally {
+                if (templateManager != null) {
+                    this.manager.release(templateManager);
+                }
+            }
         }
+        else {
+            newName = name;
+        }
+
         return newName;
     }
 
@@ -159,15 +177,8 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String, java.lang.String)
      */
     public Usecase resolve(String webappUrl, String name) throws ServiceException {
-        Usecase usecase = null;
-        String publicationUsecaseName = getPublicationUsecaseName(webappUrl, name);
-        if (publicationUsecaseName != null && this.selector.isSelectable(publicationUsecaseName)) {
-            usecase = (Usecase) this.selector.select(publicationUsecaseName);
-        } else {
-            usecase = (Usecase) this.selector.select(name);
-
-        }
-        return usecase;
+        Object usecaseName = getUsecaseName(webappUrl, name);
+        return (Usecase) this.selector.select(usecaseName);
     }
 
     /**
@@ -175,9 +186,8 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      *      java.lang.String)
      */
     public boolean isRegistered(String webappUrl, String name) throws ServiceException {
-        String pubName = getPublicationUsecaseName(webappUrl, name);
-        return (pubName != null && this.selector.isSelectable(pubName))
-                || this.selector.isSelectable(name);
+        String usecaseName = getUsecaseName(webappUrl, name);
+        return this.selector.isSelectable(usecaseName);
     }
 
 }

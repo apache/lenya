@@ -58,11 +58,10 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
         try {
             PublicationTemplateManager templateManager = (PublicationTemplateManager) this._manager
                     .lookup(PublicationTemplateManager.ROLE);
-            PageEnvelope envelope = getEnvelope(objectModel);
-            templateManager.setup(envelope.getPublication());
+            PageEnvelope envelope = getEnvelope(objectModel, name);
 
             ExistingUsecaseResolver resolver = new ExistingUsecaseResolver(name);
-            templateManager.visit(resolver);
+            templateManager.visit(envelope.getPublication(), resolver);
 
             Publication publication = resolver.getPublication();
             if (publication != null) {

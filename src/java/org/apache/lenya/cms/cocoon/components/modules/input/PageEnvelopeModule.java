@@ -50,14 +50,16 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
      *      org.apache.avalon.framework.configuration.Configuration,
      *      java.util.Map)
      */
-    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
+    public Object getAttribute(final String attributeName, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
+        
+        final String name = getAttributeName(attributeName);
 
         if (!Arrays.asList(PageEnvelope.PARAMETER_NAMES).contains(name)) {
             throw new ConfigurationException("The attribute [" + name + "] is not supported!");
         }
 
-        PageEnvelope envelope = getEnvelope(objectModel);
+        PageEnvelope envelope = getEnvelope(objectModel, attributeName);
         Object value = null;
 
         try {

@@ -63,7 +63,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
         WorkflowResolver resolver = null;
 
         try {
-            PageEnvelope envelope = getEnvelope(objectModel);
+            PageEnvelope envelope = getEnvelope(objectModel, name);
             Document document = envelope.getDocument();
             if (document != null) {
                 resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
