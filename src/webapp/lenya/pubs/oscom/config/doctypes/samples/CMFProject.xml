@@ -2,7 +2,10 @@
 
 <system type="framework">
   <id/>
-  <editor email="editor@lenya.org">editor</editor>
+  <editor>
+    <name>Editor Name</name>
+    <email>editor@lenya.org</email>
+  </editor>
   <system_name/>
   <description>
 CMF Description
