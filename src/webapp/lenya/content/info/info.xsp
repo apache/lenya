@@ -8,7 +8,17 @@
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
   xmlns:dc="http://dc.org/2003/"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
 >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
+    <xsp:include>java.io.IOException</xsp:include>
+    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
+  </xsp:structure>                                                                                                                          
+
 
 <lenya-info:info>
 
@@ -19,7 +29,7 @@
         <dc:language></dc:language>
    		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
    		<lenya-info:lastmodified></lenya-info:lastmodified>
-  		<lenya-info:documentid></lenya-info:documentid>
+  		<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
   </lenya-info:overview>  
   <lenya-info:meta>  
         <dc:title></dc:title>
@@ -36,8 +46,49 @@
     	<wf:version date="(?)" state="redaktion" user="michael"/>
    		<wf:version date="(?)" event="publish" state="review" user="gregor"/>
   </lenya-info:workflow>  
-  <lenya-info:revisions>
-  </lenya-info:revisions>
+  <rc:revisions>
+      <!--
+    <xsp:logic>
+      String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
+      <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
+
+      Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      String filename=publication.getEnvironment().getAuthoringPath() + "/" +docId;
+      <xsp:content><usecase><xsp:expr>request.getParameter("lenya.usecase")</xsp:expr></usecase></xsp:content>
+      <xsp:content><request_uri><xsp:expr>request.getRequestURI()</xsp:expr></request_uri></xsp:content>
+
+
+      String rootDir=publication.getEnvironment().getPublicationPath();
+
+      String servletContextPath = publication.getServletContext().getCanonicalPath();
+
+      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+      String rcmlDirectory = rcEnvironment.getRCMLDirectory();
+      rcmlDirectory=rootDir+rcmlDirectory;
+      String backupDirectory = rcEnvironment.getBackupDirectory();
+      backupDirectory=rootDir+backupDirectory;
+
+      RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
+
+      org.w3c.dom.Document rcmlDoc=null;
+      try {
+        rcmlDoc=rc.getRCML(filename).getDOMDocumentClone();
+      } catch (Exception e) {
+        <rc:exception>rollback: Unable to get DOM doc for rcml file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
+      }                                                                                                                                    
+      org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
+      org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
+
+      for (int i = 0; i &lt; timeElements.getLength(); i++) {
+        org.w3c.dom.Element time = (org.w3c.dom.Element) timeElements.item(i);
+        time.setAttribute("humanreadable", new Date(new Long(time.getFirstChild().getNodeValue()).longValue()).toString());
+      }
+    </xsp:logic>
+    <xsp:expr>rootE</xsp:expr>  
+    -->
+   </rc:revisions>
+     <lenya-info:permissions>
+  </lenya-info:permissions>  
 </lenya-info:info>
 
 </xsp:page>
