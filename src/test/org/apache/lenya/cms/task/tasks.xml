@@ -35,7 +35,7 @@
 <property name="live.dir" value="content/live"/>
 <property name="replication.dir" value="content/replication/pending"/>
 <property name="export.dir" value="resources/export/pending"/>
-<property name="export.regexp" value="s/\/lenya\/oscom//g"/>
+<property name="export.regexp" value="s/\/lenya\/default//g"/>
 <property name="publish.sources" value=""/>
 
 <target name="test">
