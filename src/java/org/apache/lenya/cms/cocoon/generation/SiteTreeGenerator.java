@@ -58,6 +58,11 @@ public class SiteTreeGenerator extends ServiceableGenerator
     protected final static String Q_ATTR_ATTRIBUTE = I18N_PX + ":" + ATTR_ATTRIBUTE;
     protected final static String ID_ATTRIBUTE = "id";
     protected final static String LANG_ATTRIBUTE = "lang";
+    protected final static String HREF_ATTRIBUTE = "href";
+    protected final static String LINK_ATTRIBUTE = "link";
+    protected final static String VISIBLEINNAV_ATTRIBUTE = "visibleinnav";
+    protected final static String SUFFIX_ATTRIBUTE = "suffix";
+
     // TODO: is this correct re xml namespace?
     protected final static String Q_LANG_ATTRIBUTE = "xml:lang";
     
@@ -129,6 +134,12 @@ public class SiteTreeGenerator extends ServiceableGenerator
     private void generateNodes(SiteTreeNode node) throws SAXException {
         atts.clear();
         atts.addAttribute("", ID_ATTRIBUTE, ID_ATTRIBUTE, CDATA, node.getId());
+        if (node.getHref() != null)
+            atts.addAttribute("", HREF_ATTRIBUTE, HREF_ATTRIBUTE, CDATA, node.getHref());
+        if (node.getSuffix() != null)
+            atts.addAttribute("", SUFFIX_ATTRIBUTE, SUFFIX_ATTRIBUTE, CDATA, node.getSuffix());
+        atts.addAttribute("", LINK_ATTRIBUTE, LINK_ATTRIBUTE, CDATA, Boolean.toString(node.hasLink()));
+        atts.addAttribute("", VISIBLEINNAV_ATTRIBUTE, VISIBLEINNAV_ATTRIBUTE, CDATA, Boolean.toString(node.visibleInNav()));
 
         this.contentHandler.startElement(SiteTree.NAMESPACE_URI, NODE_ELEMENT, NODE_ELEMENT, atts);
         
