@@ -60,42 +60,49 @@ function executeUsecase() {
 	var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
 	var envelope = flowHelper.getPageEnvelope(cocoon);
 	var document = envelope.getDocument();
-	
-	passRequestParameters(flowHelper, usecase);
-	
-	var view = selectView(usecaseName);
-
-	var ready = false;
 	var success = false;
 	
+	passRequestParameters(flowHelper, usecase);
 	usecase.checkPreconditions();
 
-	while (!ready) {
-	
-		cocoon.sendPageAndWait(view, {
-		    "usecase" : usecase
-		});
+    if (usecase.isInteractive()) {
+		var view = selectView(usecaseName);
+		var ready = false;
+		while (!ready) {
 		
-		passRequestParameters(flowHelper, usecase);
-		usecase.advance();
-		
-		if (cocoon.request.getParameter("submit")) {
-			usecase.checkExecutionConditions();
-			if (usecase.getErrorMessages().isEmpty()) {
-				usecase.execute();
+			cocoon.sendPageAndWait(view, {
+			    "usecase" : usecase
+			});
+			
+			passRequestParameters(flowHelper, usecase);
+			usecase.advance();
+			
+			if (cocoon.request.getParameter("submit")) {
+				usecase.checkExecutionConditions();
 				if (usecase.getErrorMessages().isEmpty()) {
-					usecase.checkPostconditions();
+					usecase.execute();
 					if (usecase.getErrorMessages().isEmpty()) {
-						ready = true;
-						success = true;
+						usecase.checkPostconditions();
+						if (usecase.getErrorMessages().isEmpty()) {
+							ready = true;
+							success = true;
+						}
 					}
 				}
 			}
+			else if (cocoon.request.getParameter("cancel")) {
+				ready = true;
+			}
 		}
-		else if (cocoon.request.getParameter("cancel")) {
-			ready = true;
+	}
+	else {
+		usecase.execute();
+		if (usecase.getErrorMessages().isEmpty()) {
+			usecase.checkPostconditions();
+			if (usecase.getErrorMessages().isEmpty()) {
+				success = true;
+			}
 		}
-	
 	}
 	
 	var url = envelope.getContext() + usecase.getTargetURL(success);

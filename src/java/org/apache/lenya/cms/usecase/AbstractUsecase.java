@@ -368,4 +368,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         this.parameters.remove(name);
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#isInteractive()
+     */
+    public boolean isInteractive() {
+        return true;
+    }
+
 }
