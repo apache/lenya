@@ -33,9 +33,15 @@
     <xsp:content><context><xsp:expr>xsp_lenya_context</xsp:expr></context></xsp:content>
     String xsp_lenya_request_uri=request.getRequestURI();
     <xsp:content><request_uri><xsp:expr>xsp_lenya_request_uri</xsp:expr></request_uri></xsp:content>
-    String xsp_lenya_context_prefix=xsp_lenya_request_uri.substring(0,xsp_lenya_request_uri.indexOf("/authoring"));
+
+    String xsp_lenya_context_prefix = null;
+    String xsp_lenya_pub_url = null;
+    if(xsp_lenya_request_uri.indexOf("/authoring") >= 0) {
+        xsp_lenya_context_prefix = xsp_lenya_request_uri.substring(0,xsp_lenya_request_uri.indexOf("/authoring"));
+        xsp_lenya_pub_url = xsp_lenya_request_uri.substring(xsp_lenya_request_uri.indexOf("/authoring")+10);
+    }
     <xsp:content><context_prefix><xsp:expr>xsp_lenya_context_prefix</xsp:expr></context_prefix></xsp:content>
-    String xsp_lenya_pub_url=xsp_lenya_request_uri.substring(xsp_lenya_request_uri.indexOf("/authoring")+10);
+
     String xsp_lenya_sitemap_uri=request.getSitemapURI();
     <xsp:content><sitemap_uri><xsp:expr>xsp_lenya_sitemap_uri</xsp:expr></sitemap_uri></xsp:content>
     String xsp_lenya_prefix=xsp_lenya_request_uri.substring(0,xsp_lenya_request_uri.length()-xsp_lenya_sitemap_uri.length()-1);
