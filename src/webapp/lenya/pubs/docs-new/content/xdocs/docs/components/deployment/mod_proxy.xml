@@ -15,14 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: mod_proxy.xml,v 1.3 2004/03/13 12:42:21 gregor Exp $ -->
+<!-- $Id: mod_proxy.xml,v 1.4 2004/05/21 20:43:45 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
 
 <header> 
-    <title>Proxying Apache Lenya</title>
+    <title>Reverse Proxying Apache Lenya</title>
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
@@ -67,7 +67,7 @@ after making sure that you have the mod_proxy module installed:</p>
 <section>
 <title>Related Links</title>
 <p>
-http://wiki.cocoondev.org/Wiki.jsp?page=ApacheModProxy
+<link href="http://wiki.cocoondev.org/Wiki.jsp?page=ApacheModProxy">http://wiki.cocoondev.org/Wiki.jsp?page=ApacheModProxy</link>
 </p>
 </section>
 </body>
