@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.34 2004/02/23 15:00:15 roku Exp $
    
-   @author Rolf Kulemann (roku at apache.org)
-  
    Copyright 2004 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +15,9 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+  
+ 
+   $Id: cmsui_de.xml,v 1.35 2004/02/23 18:51:44 roku Exp $ 
    
 -->
 
@@ -126,7 +126,7 @@
   <message key="Server Time">Serverzeit</message>  
   <message key="Workflow State">Status</message>
 
-  <!-- administration tab -->
+  <!-- Administration tab -->
   <message key="Administration">Administration</message>
   <message key="really-delete?">{0} wirklich l&#246;schen ?</message>
   <message key="Do you really want to delete the trash ?">Wollen Sie den Papierkorb wirklich leeren ?</message>
@@ -135,7 +135,8 @@
   <message key="Passwd">Passwort &#228;ndern</message>
   <message key="Switch User">Benutzer wechseln</message>
   <message key="Delete Trash">Papierkorb leeren</message>
-
+  <message key="Cocoon and Server Status">Cocoon- und Serverstatus</message>
+  
     <!-- Group Administration -->
   <message key="Profile">Profil</message>  
   <message key="Members">Mitglieder</message>

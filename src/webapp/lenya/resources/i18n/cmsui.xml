@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.29 2004/02/23 15:00:15 roku Exp $
-  
-  @author Rolf Kulemann (roku at apache.org)
-  
+   
    Copyright 2004 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +16,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
+   
+   $Id: cmsui.xml,v 1.30 2004/02/23 18:51:44 roku Exp $
+   
 -->
 
 <catalogue xml:lang="en">
@@ -126,7 +126,7 @@
   <message key="Server Time">Server Time</message>  
   <message key="Workflow State">Workflow State</message>
 
-  <!-- administration tab -->
+  <!-- Administration tab -->
   <message key="Administration">Administration</message>
   <message key="really-delete?">Really delete {0}?</message>
   <message key="Do you really want to delete the trash ?">Do you really want to delete the trash ?</message>
@@ -135,6 +135,7 @@
   <message key="Passwd">Passwd</message>
   <message key="Switch User">Switch User</message>
   <message key="Delete Trash">Delete Trash</message>
+  <message key="Cocoon and Server Status">Cocoon and Server Status</message>
   
     <!-- Group Administration -->
   <message key="Profile">Profile</message>
@@ -200,5 +201,9 @@ c
   <message key="Delete Document">Delete Document</message>
   <message key="cannot-deactivate-unless-children-deactivated">This document cannot be deactivated unless the following child documents are deactivated</message>
   <message key="delete-language-versions?">Do you really want to delete all language versions of this document?</message>
+      <!-- Move document up and down -->
+  <message key="move-down?">Do you really want to move down {1}?</message>
+  <message key="Move document down">Move document down</message>
+  <message key="Move document up">Move document up</message>
 
 </catalogue>
