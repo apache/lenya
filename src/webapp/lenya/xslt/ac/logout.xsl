@@ -18,7 +18,7 @@
 
 <xsl:template match="page">
   <page:page>
-    <page:title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></page:title>
+    <page:title><xsl:call-template name="html-title"/> <!-- FIXME: <xsl:value-of select="$publication_name"/> --></page:title>
     <page:body>
      <h2><xsl:value-of select="$publication_name"/></h2>
 
