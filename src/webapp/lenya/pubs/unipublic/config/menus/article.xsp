@@ -50,7 +50,7 @@
 					<item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+domain_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.xsd&amp;url-css="+domain_prefix+"/css/article.css&amp;url-post="+domain_prefix_bitflux+"/bitflux/save/"+channel+"/"+section+"/"+year+"/"+articleId+"&amp;url-back="+domain_prefix_bitflux+"/authoring/"+channel+"/"+section+"/"+year+"/"+articleId+"/"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
 </block>
 <block>
-<item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/xopus2<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html?filename=content/authoring/<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+<item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/authoring/xopus2<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html?documentid=<xsp:expr>channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
 </block>
 			</menu>
 			<menu name="Tools" label="Help">

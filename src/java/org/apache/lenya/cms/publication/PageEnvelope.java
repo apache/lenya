@@ -30,6 +30,7 @@ public class PageEnvelope {
     static Category log = Category.getInstance(PageEnvelope.class);
 
     public static final String PUBLICATION_ID = "publication-id";
+    public static final String PUBLICATION = "publication";
     public static final String CONTEXT = "context-prefix";
     public static final String AREA = "area";
     public static final String DOCUMENT_ID = "document-id";
@@ -210,6 +211,7 @@ public class PageEnvelope {
         PageEnvelope.AREA,
         PageEnvelope.CONTEXT,
         PageEnvelope.PUBLICATION_ID,
+        PageEnvelope.PUBLICATION,
         PageEnvelope.DOCUMENT_ID,
         PageEnvelope.DOCUMENT_URL
     };

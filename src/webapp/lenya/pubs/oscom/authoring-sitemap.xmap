@@ -41,36 +41,10 @@
     <!-- Rollback -->
                 <map:pipeline>
                         <map:match type="usecase" pattern="rollback">
-                                <map:match type="step" pattern="showscreen">
-                                        <map:generate type="serverpages" src="../../content/rc/versions-screen.xsp"/>
-                                        <map:transform src="../../xslt/rc/rollback.xsl"/>
-                                        <map:serialize type="html"/>
-<!--
-                                        <map:serialize type="xml"/>
--->
-                                </map:match>
                                 <map:match type="step" pattern="view">
                                         <map:generate type="serverpages" src="../../content/rc/view.xsp">
                                         </map:generate>
-<!--
-                                        <map:transform src="xslt/article/authoring/toArticle.xsl"/>
-                                        <map:transform src="xslt/article/authoring/main.xsl">
-                                                <map:parameter name="section" value="{2}"/>
-                                        </map:transform>
-                                        <map:serialize type="html"/>
--->
                                         <map:serialize type="xml"/>
-                                </map:match>
-                                <map:match type="step" pattern="rollback">
-                                        <map:act type="page-envelope">
-                                                <map:act type="rollback">
-                                                        <map:parameter name="rcmlDirectory" value="{rcml-directory}"/>
-                                                        <map:parameter name="backupDirectory" value="{backup-directory}"/>
-                                                        <map:parameter name="publicationPath" value="{publication-path}"/>
-                                                        <map:redirect-to uri="{location}" session="true"/>
-                                                </map:act>
-                                                <map:redirect-to uri="{}" session="true"/>
-                                        </map:act>
                                 </map:match>
                         </map:match>
                 </map:pipeline>
@@ -398,11 +372,7 @@
 
       <!-- Edit Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/matrix/*.html">
-        <map:act type="page-envelope">
           <map:act type="reserved-checkout">
-            <map:parameter name="rcmlDirectory" value="{rcml-directory}"/>
-            <map:parameter name="backupDirectory" value="{backup-directory}"/>
-            <map:parameter name="publicationPath" value="{publication-path}"/>
             <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
               <map:parameter name="user" value="{user}"/>
               <map:parameter name="filename" value="{filename}"/>
@@ -410,7 +380,6 @@
             </map:generate>
             <map:serialize type="xml"/>
           </map:act>
-        </map:act>
 
         <map:generate src="cocoon:/authoring/matrix/{1}.xml"/>
         <map:transform src="xslt/matrix/authoring/main_xopus.xsl">
@@ -430,11 +399,7 @@
 
       <!-- Edit Editor Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/editor-matrix/*.html">
-        <map:act type="page-envelope">
           <map:act type="reserved-checkout">
-            <map:parameter name="rcmlDirectory" value="{rcml-directory}"/>
-            <map:parameter name="backupDirectory" value="{backup-directory}"/>
-            <map:parameter name="publicationPath" value="{publication-path}"/>
             <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
               <map:parameter name="user" value="{user}"/>
               <map:parameter name="filename" value="{filename}"/>
@@ -442,7 +407,6 @@
             </map:generate>
             <map:serialize type="xml"/>
           </map:act>
-        </map:act>
 
         <map:generate src="cocoon:/authoring/editor-matrix/{1}.xml"/>
         <map:transform src="xslt/matrix/authoring/main_editor_xopus.xsl">

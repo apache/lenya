@@ -61,6 +61,9 @@ public class PageEnvelopeModule
         if (name.equals(PageEnvelope.PUBLICATION_ID)) {
             value = envelope.getPublication().getId();
         }
+        if (name.equals(PageEnvelope.PUBLICATION)) {
+            value = envelope.getPublication();
+        }
         if (name.equals(PageEnvelope.DOCUMENT_ID)) {
             value = envelope.getDocumentId();
         }

@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionControllerAction.java,v 1.15 2003/04/30 16:44:24 edith Exp $
+ * $Id: RevisionControllerAction.java,v 1.16 2003/05/20 16:45:19 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -54,6 +54,11 @@ import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.rc.RCEnvironment;
+
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 import java.util.Map;
 
@@ -87,20 +92,6 @@ public class RevisionControllerAction extends AbstractAction {
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
 
-
-        String publicationPath = parameters.getParameter("publicationPath");
-        getLogger().debug(".act(): publicationPath: " + publicationPath);
-
-        // Initialize Revision Controller
-        rcmlDirectory = publicationPath + parameters.getParameter("rcmlDirectory");
-        getLogger().debug("rcmlDirectory : " + rcmlDirectory);
-        backupDirectory = publicationPath + parameters.getParameter("backupDirectory");
-        getLogger().debug("backupDirectory : " +backupDirectory );
-        rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
-        getLogger().debug("revision controller" + rc);
-
-        // /Initialize Revision Controller
-
         // Get request object
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -109,6 +100,32 @@ public class RevisionControllerAction extends AbstractAction {
 
             return null;
         }
+
+        PageEnvelope envelope = null;
+        Publication publication = null;
+
+        try {
+            publication = PublicationFactory.getPublication(objectModel);
+            envelope = new PageEnvelope(publication, request);
+        }
+        catch (Exception e) {
+            getLogger().error("Resolving page envelope failed: ", e);
+        }
+
+        //get Parameters for RC
+        String publicationPath = publication.getEnvironment().getPublicationPath();
+        String servletContextPath = publication.getServletContext().getCanonicalPath();
+        RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+        rcmlDirectory = rcEnvironment.getRCMLDirectory();
+        rcmlDirectory=publicationPath+rcmlDirectory;
+        backupDirectory = rcEnvironment.getBackupDirectory();
+        backupDirectory=publicationPath+backupDirectory;
+
+        // Initialize Revision Controller
+        rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
+        getLogger().debug("revision controller" + rc);
+        // /Initialize Revision Controller
+
 
         // Get session
         Session session = request.getSession(false);
@@ -122,7 +139,9 @@ public class RevisionControllerAction extends AbstractAction {
         Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
         getLogger().debug(".act(): Identity: " + identity);
 
-        filename = request.getParameter("filename");
+        String docId = request.getParameter("documentid");
+        filename =publication.getEnvironment().getAuthoringPath() + "/" +docId ;
+        getLogger().debug(".act(): publicationAuthPath + docId : " + publication.getEnvironment().getAuthoringPath() +" : " +docId );
         username = null;
 
         if (identity != null) {

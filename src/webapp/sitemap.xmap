@@ -679,6 +679,21 @@
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
         
+        <!-- Rollback -->
+        <map:match type="usecase" pattern="rollback">
+          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+
+        <!-- Reserved CheckIn -->
+        <map:match type="usecase" pattern="checkin">
+          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+
+        <!-- Reserved CheckOut -->
+        <map:match type="usecase" pattern="checkout">
+          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+
         <!-- task log -->
         <map:match type="usecase" pattern="view-logs">
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>

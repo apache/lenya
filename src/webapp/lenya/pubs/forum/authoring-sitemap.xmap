@@ -27,32 +27,9 @@
     <map:pipeline>
      <!-- Rollback -->
       <map:match type="usecase" pattern="rollback">
-        <map:match type="step" pattern="showscreen">
-          <map:generate type="serverpages" src="../../content/rc/versions-screen.xsp"/>
-          <map:transform src="../../xslt/rc/rollback.xsl"/>
-          <map:serialize type="html"/>
-        </map:match>
         <map:match type="step" pattern="view">
           <map:generate type="serverpages" src="../../content/rc/view.xsp"/>
-<!--
-          <map:transform src="xslt/article/authoring/toArticle.xsl"/>
-          <map:transform src="xslt/article/authoring/main.xsl">
-            <map:parameter name="section" value="{2}"/>
-          </map:transform>
-          <map:serialize type="html"/>
--->
           <map:serialize type="xml"/>
-        </map:match>
-        <map:match type="step" pattern="rollback">
-          <map:act type="page-envelope">
-            <map:act type="rollback">
-              <map:parameter name="rcmlDirectory" value="{rcml-directory}"/>
-              <map:parameter name="backupDirectory" value="{backup-directory}"/>
-              <map:parameter name="publicationPath" value="{publication-path}"/>
-              <map:redirect-to uri="{location}" session="true"/>
-            </map:act>
-            <map:redirect-to uri="{}" session="true"/>
-          </map:act>
         </map:match>
       </map:match>
      <!-- /Rollback -->
@@ -166,11 +143,7 @@
       </map:match>
       <!-- Edit with Xopus2 -->
       <map:match pattern="xopus2/articles/*/index.html">
-        <map:act type="page-envelope">
           <map:act type="reserved-checkout">
-            <map:parameter name="rcmlDirectory" value="{rcml-directory}"/>
-            <map:parameter name="backupDirectory" value="{backup-directory}"/>
-            <map:parameter name="publicationPath" value="{publication-path}"/>
             <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
               <map:parameter name="user" value="{user}"/>
               <map:parameter name="filename" value="{filename}"/>
@@ -178,7 +151,6 @@
             </map:generate>
             <map:serialize type="xml"/>
           </map:act>
-        </map:act>
         <map:generate src="cocoon:/articles/{1}/article.xml"/>
         <map:select>
           <map:when test="explorer">

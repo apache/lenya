@@ -3,28 +3,32 @@
  <xsp:page
        language="java"
        xmlns:xsp="http://apache.org/xsp"
-       xmlns:util="http://apache.org/xsp/util/2.0"
-       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
        >
 
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.xml.DOMParserFactory</xsp:include>
   </xsp:structure>                                                                                                                          
 
   <rc:backup xmlns:rc="http://www.lenya.org/2002/rc">
 
     <!-- Import Lenya Page Envelope -->
-    <xsp-lenya:util/>
 
     <xsp:logic>
 
-      String filename=request.getParameter("filename");                 
+      String docId=request.getParameter("documentid");                 
       String rollbackTime=request.getParameter("rollbackTime");
-      String rootDir=xspUtilPublicationPath;
 
-      RCEnvironment rcEnvironment = new RCEnvironment(xspUtilServletContextPath);
+      Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      String rootDir=publication.getEnvironment().getPublicationPath();
+      String servletContextPath = publication.getServletContext().getCanonicalPath();
+
+      String filename = publication.getEnvironment().getAuthoringPath() + "/" +docId;    
+ 
+      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
       String rcmlDirectory = rcEnvironment.getRCMLDirectory();
       rcmlDirectory=rootDir+rcmlDirectory;
       String backupDirectory = rcEnvironment.getBackupDirectory();

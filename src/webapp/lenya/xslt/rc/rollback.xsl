@@ -6,7 +6,7 @@
 
 <xsl:variable name="usecase"><xsl:value-of select="/rc:revisions/usecase/."/></xsl:variable>
 <xsl:variable name="requestUri"><xsl:value-of select="/rc:revisions/request_uri/."/></xsl:variable>
-<xsl:variable name="filename"><xsl:value-of select="/rc:revisions/filename/."/></xsl:variable>
+<xsl:variable name="documentId"><xsl:value-of select="/rc:revisions/documentId/."/></xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates select="rc:revisions/XPSRevisionControl"/>
@@ -53,12 +53,12 @@
 					<tr bgcolor="#bbbbbb">
 						<td>
 							<xsl:element name="a">
-							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?lenya.usecase=<xsl:value-of select="$usecase"/>&amp;lenya.step=rollback&amp;filename=<xsl:value-of select="$filename"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
+							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?lenya.usecase=<xsl:value-of select="$usecase"/>&amp;lenya.step=rollback&amp;documentid=<xsl:value-of select="$documentId"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
 
 						</td>
 						<td>
 							<xsl:element name="a">
-							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?lenya.usecase=<xsl:value-of select="$usecase"/>&amp;lenya.step=view&amp;filename=<xsl:value-of select="$filename"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?lenya.usecase=<xsl:value-of select="$usecase"/>&amp;lenya.step=view&amp;documentid=<xsl:value-of select="$documentId"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
 
 						</td>
 						<xsl:apply-templates select="Time"/>

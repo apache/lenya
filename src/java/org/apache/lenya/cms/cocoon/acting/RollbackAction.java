@@ -1,5 +1,5 @@
 /*
- * $Id: RollbackAction.java,v 1.12 2003/04/30 16:44:24 edith Exp $
+ * $Id: RollbackAction.java,v 1.13 2003/05/20 16:45:19 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -94,49 +94,32 @@ public class RollbackAction extends RevisionControllerAction {
         }
 
         // Get parameters                                                                                                                       
-//        String action = request.getParameter("action");
         String rollbackTime = request.getParameter("rollbackTime");
 
-/* FIXME
-        if (action != null) {
-            if (action.equals("rollback")) {
-*/  
-              // Do the rollback to an earlier version
-                long newtime = 0;
+        // Do the rollback to an earlier version
+        long newtime = 0;
 
-                try {
-                    newtime = rc.rollback(filename, username, true,
-                            new Long(rollbackTime).longValue());
-                } catch (FileNotFoundException e) {
-                    getLogger().error("Unable to roll back!" + e);
+        try {
+          newtime = rc.rollback(filename, username, true,
+          new Long(rollbackTime).longValue());
+        } catch (FileNotFoundException e) {
+          getLogger().error("Unable to roll back!" + e);
 
-                    return null;
-                } catch (Exception e) {
-                    getLogger().error("Unable to roll back!" + e);
+          return null;
+        } catch (Exception e) {
+          getLogger().error("Unable to roll back!" + e);
 
-                    return null;
-                }
-
-                getLogger().debug("rollback complete, old (and now current) time was " +
-                    rollbackTime + " backup time is " + newtime);
-
-                String location = request.getHeader("Referer");
-
-                getLogger().debug("redirect to " + location);
-                actionMap.put("location", location);
-                return actionMap;
-
-/*
-            } else {
-                getLogger().error("The action is no defined");
-
-                return null;
-            }
-        } else {
-            getLogger().error("The action is null");
-
-            return null;
+          return null;
         }
-*/
+
+        getLogger().debug("rollback complete, old (and now current) time was " +
+             rollbackTime + " backup time is " + newtime);
+
+        String location = request.getHeader("Referer");
+
+        getLogger().debug("redirect to " + location);
+        actionMap.put("location", location);
+        return actionMap;
+
     }
 }

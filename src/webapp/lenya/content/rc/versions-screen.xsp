@@ -3,32 +3,35 @@
 <xsp:page 
        language="java" 
        xmlns:xsp="http://apache.org/xsp" 
-       xmlns:util="http://apache.org/xsp/util/2.0"
-       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
        >
        
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
   </xsp:structure>                                                                                                                          
 
   <rc:revisions xmlns:rc="http://www.lenya.org/2002/rc">
 
     <!-- Import Lenya Page Envelope -->
-    <xsp-lenya:util/>
-
     <xsp:logic>
-
       String docId = request.getParameter("documentid");
-      String filename=xspUtilPublication.getEnvironment().getAuthoringPath() + "/" +docId;
+      <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
 
-      <xsp:content><filename><xsp:expr>filename</xsp:expr></filename></xsp:content>
+      Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      String filename=publication.getEnvironment().getAuthoringPath() + "/" +docId;
       <xsp:content><usecase><xsp:expr>request.getParameter("lenya.usecase")</xsp:expr></usecase></xsp:content>
+      <xsp:content><request_uri><xsp:expr>request.getRequestURI()</xsp:expr></request_uri></xsp:content>
 
-      String rootDir=xspUtilPublicationPath;
-      RCEnvironment rcEnvironment = new RCEnvironment(xspUtilServletContextPath);
+
+      String rootDir=publication.getEnvironment().getPublicationPath();
+
+      String servletContextPath = publication.getServletContext().getCanonicalPath();
+
+      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
       String rcmlDirectory = rcEnvironment.getRCMLDirectory();
       rcmlDirectory=rootDir+rcmlDirectory;
       String backupDirectory = rcEnvironment.getBackupDirectory();
