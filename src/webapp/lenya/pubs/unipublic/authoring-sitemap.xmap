@@ -83,7 +83,7 @@
     <map:pipeline>
       <map:match pattern="revision/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
-          <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/> 
+          <map:parameter name="rootDir" value="/home/michi/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/> 
           <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
@@ -94,35 +94,28 @@
         </map:generate>
         <map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
         <map:serialize type="html"/>
-<!--
-        <map:serialize type="xml"/>
--->
       </map:match>
 
       <map:match pattern="rollback/*/*/*/*/index.xml">
         <map:act type="rollback">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>                          
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:redirect-to uri="{location}" session="true"/>
         </map:act>
-<!--
-        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
-        <map:serialize type="xml"/>
--->
       </map:match>                                                                                                                          
        
       <map:match pattern="view/*/*/*/*/index.xml">
         <map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
-          <map:parameter name="rootDir" value="/home/edith/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/> 
+          <map:parameter name="rootDir" value="/home/michi/build/jakarta-tomcat-4.0/webapps/wyona-cms/wyona/cms/pubs/unipublic"/> 
           <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
-          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>                                                            
+          <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
         </map:generate>
-          <map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
-          <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
-             <map:parameter name="section" value="{2}"/>
-          </map:transform>                                                                                                                
-          <map:serialize type="html"/>                                                                                                      
-      </map:match>                                                                                                                          
+        <map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+           <map:parameter name="section" value="{2}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
     </map:pipeline>
     <!-- /Rollback -->
 
