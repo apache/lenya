@@ -114,14 +114,11 @@
         <jx:forEach var="item" items="${usecase.getParameter('versions')}">
           <tr>
             <td><jx:out value="${item.date}"/></td>
-            <td><i18n:text><jx:out value="${item.event}"/></i18n:text></td>
+            <td><i18n:text><jx:out value="${item.event.name}"/></i18n:text></td>
             <td><i18n:text><jx:out value="${item.state}"/></i18n:text></td>
             <td>
               <span style="white-space: nobreak">
-              <jx:out value="${item.userid}"/>
-              <jx:if test="${item.username} != ''">
-                (<jx:out value="${item.username}"/>)
-              </jx:if>
+                <jx:out value="${item.userId}"/>
               </span>
             </td>
             <td>

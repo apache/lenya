@@ -17,44 +17,32 @@
 package org.apache.lenya.cms.workflow.usecases;
 
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.workflow.CMSHistory;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.workflow.impl.Version;
 
 /**
- * Invoke a workflow event on the current document. The event is obtained from
- * the <code>lenya.event</code> request parameter.
+ * Display the workflow history tab in the site area
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class History extends DocumentUsecase {
-
+    
     /**
-     * The name of the event request parameter.
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     * TODO get wf variables, get date and machine ip for versions
      */
-    public static final String EVENT = "lenya.event";
+    protected void initParameters() {
+        super.initParameters();
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
-     */
-    protected void doCheckPreconditions() throws Exception {
-        super.doCheckPreconditions();
-        
-        if (!getErrorMessages().isEmpty()) {
-            return;
+        try {
+            WorkflowInstance instance = getWorkflowInstance(getSourceDocument());
+            CMSHistory history = (CMSHistory)instance.getHistory();
+            Version[] versions = history.getVersions();
+            setParameter("versions", versions);
+        } catch (final WorkflowException e) {
+            throw new RuntimeException(e);
         }
-        
-        String eventName = getParameterAsString(EVENT);
-        WorkflowInstance instance = getWorkflowInstance(getSourceDocument());
-        if (!instance.canInvoke(getSituation(), eventName)) {
-            addErrorMessage("The event [" + eventName + "] is not executable on document ["
-                    + getSourceDocument() + "].");
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
-     */
-    protected void doExecute() throws Exception {
-        super.doExecute();
-
     }
 }
