@@ -61,7 +61,7 @@
   <property name="dist.src.dir" value="${dist.root}/${fullname}-src"/>
 
   <!-- The original, unmodified and expanded cocoon.war file upon which we base our package -->
-  <!-- <property name="src.cocoon.dir" value="./src/cocoon"/> -->
+  <property name="src.cocoon.dir" value="../../build/cocoon/build/webapp"/>
 
   <!--
   The files that should be copied into the dist
