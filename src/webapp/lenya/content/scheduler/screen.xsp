@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
+       xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+       >
+       
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.DocumentHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.SiteTree</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.workflow.CMSVersion</xsp:include>
+    <xsp:include>org.apache.lenya.cms.workflow.WorkflowFactory</xsp:include>
+    <xsp:include>org.apache.lenya.workflow.impl.History</xsp:include>
+    <xsp:include>org.apache.lenya.workflow.impl.Version</xsp:include>
+  </xsp:structure>
+
+  <usecase:schedule>
+    
+    <usecase:document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></usecase:document-id>
+    <usecase:document-language><input:get-attribute module="page-envelope" name="document-language" as="string"/></usecase:document-language>
+    <usecase:publication-id><input:get-attribute module="page-envelope" name="publication-id" as="string"/></usecase:publication-id>
+    <usecase:context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></usecase:context-prefix>
+    <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
+    
+    <usecase:user-id><input:get-attribute module="access-control" name="user-id" as="string"/></usecase:user-id>
+    <usecase:ip-address><input:get-attribute module="access-control" name="ip-address" as="string"/></usecase:ip-address>
+    <usecase:role-ids><input:get-attribute module="access-control" name="role-ids" as="string"/></usecase:role-ids>
+
+<!--
+    <not:users>
+    <xsp:logic>
+      
+        try {
+        
+          Document document = (Document)
+            <input:get-attribute module="page-envelope" as="object" name="document"/>;
+          String userId = null;
+          
+          if (WorkflowFactory.newInstance().hasWorkflow(document)) {
+                History history = WorkflowFactory.getHistory(document);
+                Version[] versions = history.getVersions();
+                
+                int i = versions.length - 1;
+                while (userId == null &amp;&amp; i &gt;= 0) {
+                        if (versions[i].getEvent() != null &amp;&amp;
+                            versions[i].getEvent().getName().equals("submit")) {
+                                userId = ((CMSVersion) versions[i]).getUserId();
+                        }
+                        i -= 1;
+                }
+          }
+        
+          if (userId != null) {
+                UserManager userManager = (UserManager)
+                    <input:get-attribute module="access-control" as="object" name="user-manager"/>;
+                User user = userManager.getUser(userId);
+                <not:user>
+                    <xsp:attribute name="id"><xsp:expr>user.getId()</xsp:expr></xsp:attribute>
+                    <xsp:attribute name="name"><xsp:expr>user.getName()</xsp:expr></xsp:attribute>
+                    <xsp:attribute name="email"><xsp:expr>user.getEmail()</xsp:expr></xsp:attribute>
+                </not:user>
+          }
+        }
+        catch (Exception e) {
+            throw new ProcessingException(e);
+        }
+        
+    </xsp:logic>
+    
+    </not:users>
+-->
+
+  </usecase:schedule>
+  
+</xsp:page>

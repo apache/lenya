@@ -231,12 +231,14 @@
           <item uc:usecase="reject" uc:step="showscreen" wf:event="reject" href="?">Reject</item>
           <item uc:usecase="publish" uc:step="showscreen" wf:event="publish"><xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;sources=<xsp:expr>xmlSource</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
           <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument">Deactivate</item>
+          <item uc:usecase="schedule" uc:step="showscreen" href="?">Schedule</item>
         }
         else {
           <item>Submit</item>
           <item>Reject</item>
           <item>Publish</item>
           <item>Deactivate</item>
+          <item>Schedule</item>
         }
       }
 	  </xsp:logic>
