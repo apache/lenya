@@ -55,5 +55,9 @@
   <role name="org.apache.lenya.cms.ac2.cache.SourceCache"
   		shorthand="sourcecache"
   		default-class="org.apache.lenya.cms.ac2.cache.SourceCacheImpl"/>
+  		
+  <role name="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer"
+        shorthand="uriparameterizer"
+        default-class="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerImpl"/>
         
 </role-list>
