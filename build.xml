@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.43 2003/03/10 14:07:55 michi Exp $
+   @version CVS $Id: build.xml,v 1.44 2003/03/18 14:24:54 michi Exp $
 
 -->
 
@@ -288,7 +288,7 @@
   <!-- ============================================================ -->
   <target name="prepare-src" depends="prepare, build-custom-tasks">
   
-    <echo>INFO: Create log4j.properties</echo>
+    <echo>INFO: Create log4j.properties (${build.src}/log4j.properties)</echo>
     <!-- using stylesheet as input file so we don't need a dummy xml -->
     <xslt
         in="${java.dir}/log4j-properties.xsl"
@@ -458,6 +458,10 @@
         <include name="**/*.properties"/>
       </fileset>
     </copy>
+
+    <!-- now create logs directory, where log4j can write to -->
+    <echo>INFO: Create logs directory ${build.webapp}/WEB-INF/logs</echo>
+    <mkdir dir="${build.webapp}/WEB-INF/logs"/>
     
     <!-- now copy any additional libraries in ./lib -->
     <mkdir dir="${build.webapp}/WEB-INF/lib"/>
