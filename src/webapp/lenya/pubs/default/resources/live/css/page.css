@@ -1,0 +1,218 @@
+/* 
+    Document   : page
+    Created on : 11. April 2003, 11:13
+    Author     : andreas
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* page */
+
+#page {
+    padding: 0px;
+    margin: 0px;
+}
+
+/* tabs */
+
+#tabs {
+    border-bottom: solid 5px #DDBBBB;
+    color: Maroon;
+}
+
+#tabs a {
+    text-decoration: none;
+    color: Maroon;
+}
+
+#tabs table {
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 80%;
+}
+
+#tabs td {
+    vertical-align: bottom;
+}
+
+#tabs div {
+    white-space: nowrap;
+}
+
+.tab {
+    padding: .2em .5em;
+    background-color: #FFEEEE;
+    border: solid 1px #BB9999;
+}
+
+.tab-selected {
+    padding: .2em .5em;
+    background-color: #FFCCCC;
+    border: solid 1px #BB9999;
+    border-bottom: solid 1px #DDBBBB;
+}
+
+.tab-separator {
+    border-bottom: solid 1px #BB9999;
+}
+
+.tab-pre-separator {
+    width: 25px;
+    border-bottom: solid 1px #BB9999;
+}
+
+td.tab-post-separator {
+    width: 100%;
+}
+
+/* menu */
+
+#menu {
+    font-family: Verdana, Arial, Sans-serif;
+    background-color: #DDBBBB;
+    border: solid 1px #BB9999;
+    border-left: none;
+    border-top: none;
+    color: Maroon;
+    padding: 0px 0px 5px 25px;
+}
+
+#menu a {
+    text-decoration: none;
+    color: Maroon;
+}
+
+#menu a:hover {
+    text-decoration: underline;
+}
+
+.menublock-1, .menublock-selected-1 {
+    padding: 0px;
+    border-top: solid 1px #DDBBBB;
+    background: #FFCCCC;
+}
+
+.menublock-1 a { }
+.menublock-1 a:visited { }
+
+.menublock-1 .menublock-2 { display: none; }
+
+.menublock-selected-1 .menuitem-1 { background-color: #FFEEEE; }
+.menublock-1          .menuitem-1 { }
+
+.menuitem-1 { padding: 5px 5px 5px 5px; font-size: 80%; }
+.menuitem-2 { padding: 2px 5px 2px 25px; font-size: 80%; }
+.menuitem-selected-2 { padding: 2px 5px 2px 25px; font-size: 80%; color: black; }
+.menuitem-2 a { }
+
+.menuitem-selected-1 {
+    background-color: #FFEEEE;
+    padding: 5px 5px 5px 5px;
+    font-size: 80%;
+}
+
+
+.menuitem-3 { padding: 2px 5px 2px 25px; font-size: 60%; }
+.menuitem-selected-3 { padding: 2px 5px 2px 25px; font-size: 60%; }
+
+/* breadcrumb */
+
+#breadcrumb {
+    padding: 3px 0px 3px 30px;
+    background-color: #FFEEEE;
+    border-top: solid 1px #BB9999;
+    border-bottom: solid 1px #BB9999;
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 80%;
+}
+
+#breadcrumb a {
+    text-decoration: none;
+    color: Maroon;
+}
+
+/* body */
+
+#body {
+    border: none;
+    padding: 1em;
+    margin-left: 10px;
+    font-family: Verdana, Arial, Sans-serif;
+}
+
+#main {
+/*
+    float: left;
+    width: 80%;
+*/
+}
+
+h1 { font-size: 140%; }
+h2 { font-size: 100%; }
+h3 { font-size: 80%; }
+p { font-size: 80%; }
+li { font-size: 80%; }
+
+.crossheading { font-weight: bold; font-size: 110%; }
+
+table.simple {
+    border-collapse: collapse;
+/*
+    background-color: #909090;
+    border-color: #909090;
+*/
+    width: auto;
+}
+
+td.simple {
+    font-size: 80%;
+    padding: 3px;
+    background-color: White;
+    border: solid 1px Navy;
+    vertical-align: top;
+}
+
+img.simple {
+}
+
+#publication-title {
+    font-family: verdana, arial, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    vertical-align: bottom;
+    padding-left: 25px;
+    padding-bottom: 15px;
+    color: Maroon;
+}
+
+#project-logo {
+    padding: 10px 20px 0px 0px;
+    text-align: right;
+}
+
+.media {
+    text-align: center;
+    padding: 10px;
+}
+
+.caption {
+    padding: 5px;
+    text-align: center;
+    font-style: italic;
+    font-size: 80%;
+}
+
+.abstract {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 120%;
+    color: Maroon;
+}
+
+h2 {
+    font-size: 100%;
+    color: Maroon;
+    border-bottom: solid 1px #BB9999;
+    margin-top: 30px;
+}

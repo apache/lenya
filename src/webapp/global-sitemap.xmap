@@ -835,7 +835,7 @@
       <!-- {publication-id}/{area}/{file} -->
       <map:match pattern="*/*/**">
         <map:act type="resource-exists-enhanced">
-          <map:parameter name="url" value="lenya/pubs/{1}/resources/{3}"/>
+          <map:parameter name="url" value="lenya/pubs/{1}/resources/{2}/{3}"/>
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
         </map:act>
