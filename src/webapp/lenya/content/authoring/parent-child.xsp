@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"  
+       >
+
+<xsp:structure>
+  <xsp:include>org.wyona.cms.ac.Identity</xsp:include>
+  <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+</xsp:structure>
+
+<parent-child>
+  <xsp:logic>
+    String referer=request.getHeader("Referer");
+    Session session=request.getSession(true);
+    String status=request.getParameter("status");
+    //if(session.getAttribute("org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri") == null){
+    if(status == null){
+      session.setAttribute("org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri",referer);
+      <xsp:content><referer><xsp:expr>referer</xsp:expr></referer></xsp:content>
+      }
+    else{
+      <xsp:content><referer><xsp:expr>session.getAttribute("org.wyona.cms.cocoon.acting.ParentChildCreatorAction.parent_uri")</xsp:expr></referer></xsp:content>
+      if(status.equals("failed")){
+        <xsp:content><exception/></xsp:content>
+        }
+      }
+    Identity id=null;
+    String context=request.getContextPath();
+    String request_uri=request.getRequestURI();
+    String sitemap_uri=request.getSitemapURI();
+    String prefix=request_uri.substring(0,request_uri.length()-sitemap_uri.length()-1);
+    String context_prefix=context+"/"+prefix;
+    if(session != null){
+      id=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
+      if(id != null){
+        <xsp:content><current_username><xsp:expr>id.getUsername()</xsp:expr></current_username></xsp:content>
+        }
+      else{
+        <xsp:content><no_username_yet/></xsp:content>
+        }
+      }
+    <xsp:content><context><xsp:expr>request.getContextPath()</xsp:expr></context></xsp:content>
+    <xsp:content><prefix><xsp:expr>prefix</xsp:expr></prefix></xsp:content>
+    <xsp:content><parentid><xsp:expr>request.getParameter("parentid")</xsp:expr></parentid></xsp:content>
+    <xsp:content><doctype><xsp:expr>request.getParameter("doctype")</xsp:expr></doctype></xsp:content>
+  </xsp:logic>
+</parent-child>
+
+</xsp:page>

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<rc:exception xmlns:rc="http://www.wyona.org/2002/rc">
+  <rc:file-reserved-checkout-exception/>
+</rc:exception>

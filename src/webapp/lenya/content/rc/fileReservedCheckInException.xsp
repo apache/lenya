@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp">
+
+<rc:exception xmlns:rc="http://www.wyona.org/2002/rc">
+  <xsp:logic>
+    String filename=parameters.getParameter("filename","null");
+    String checkType=parameters.getParameter("checkType","null");
+    String user=parameters.getParameter("user","null");
+    String date=parameters.getParameter("date","null");
+  </xsp:logic>
+  <rc:file-reserved-checkin-exception>
+    <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
+    <rc:checkType><xsp:expr>checkType</xsp:expr></rc:checkType>
+    <rc:user><xsp:expr>user</xsp:expr></rc:user>
+    <rc:date><xsp:expr>date</xsp:expr></rc:date>
+  </rc:file-reserved-checkin-exception>
+</rc:exception>
+
+</xsp:page>

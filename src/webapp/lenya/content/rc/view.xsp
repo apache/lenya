@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:util="http://apache.org/xsp/util/2.0">
+  <xsp:structure>
+    <xsp:include>org.wyona.cms.rc.RevisionController</xsp:include>
+    <xsp:include>org.wyona.xml.DOMParserFactory</xsp:include>
+  </xsp:structure>                                                                                                                          
+<rc:backup xmlns:rc="http://www.wyona.org/2002/rc">
+  <xsp:logic>
+    org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
+    String sitemapPath=input_source.getSystemId();
+    sitemapPath=sitemapPath.substring(5); // Remove "file:" protocol
+    String rootDir=sitemapPath; //parameters.getParameter("rootDir","null");
+    String filename=parameters.getParameter("filename","null");                 
+    String rcmlDirectory=parameters.getParameter("rcmlDirectory","null");
+    String backupDirectory=parameters.getParameter("backupDirectory","null");
+    filename=rootDir+"/"+filename; 
+    rcmlDirectory=rootDir+"/"+rcmlDirectory;
+    backupDirectory=rootDir+"/"+backupDirectory;                                                                                            
+     
+    String rollbackTime=request.getParameter("rollbackTime");
+
+    // Show the contents of an old revision
+    RevisionController rc = new RevisionController(rcmlDirectory,backupDirectory);
+    String backupFilename = rc.getBackupFilename(new Long(rollbackTime).longValue(), filename);
+    DOMParserFactory dpf=new DOMParserFactory();
+    org.w3c.dom.Document doc=null;
+    try {
+      doc = dpf.getDocument(backupFilename);
+    } catch (Exception e) {
+      <rc:exception>rollback: Unable to get view file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
+    }                                                                                                                                       
+    org.w3c.dom.Element rootE= (org.w3c.dom.Element)doc.getDocumentElement();
+  </xsp:logic>
+  <xsp:expr>rootE</xsp:expr>
+</rc:backup>
+</xsp:page>

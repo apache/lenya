@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page language="java"
+          xmlns:xsp="http://apache.org/xsp"
+  xmlns:util="http://apache.org/xsp/util/2.0"
+          xmlns:xsp-request="http://apache.org/xsp/request/2.0">
+
+  <xsp:structure>
+    <xsp:include>org.apache.avalon.framework.context.ContextException</xsp:include>
+    <xsp:include>org.apache.avalon.framework.component.ComponentException</xsp:include>
+    
+    <xsp:include>org.apache.lucene.analysis.Analyzer</xsp:include>
+    <xsp:include>org.apache.lucene.analysis.standard.StandardAnalyzer</xsp:include>
+    <xsp:include>org.apache.lucene.store.*</xsp:include>
+    <xsp:include>org.apache.lucene.document.*</xsp:include>
+    <xsp:include>org.apache.lucene.queryParser.QueryParser</xsp:include>
+    <xsp:include>org.apache.lucene.queryParser.MultiFieldQueryParser</xsp:include>
+    <xsp:include>org.apache.lucene.search.Hits</xsp:include>
+    <xsp:include>org.apache.lucene.search.Searcher</xsp:include>
+    <xsp:include>org.apache.lucene.search.IndexSearcher</xsp:include>
+    <xsp:include>org.apache.lucene.search.Query</xsp:include>
+    
+    <xsp:include>java.util.*</xsp:include>
+    <xsp:include>java.io.*</xsp:include>
+
+    <xsp:include>org.wyona.lucene.ReTokenizeFile</xsp:include>
+    <xsp:include>org.wyona.lucene.Publication</xsp:include>
+    
+  </xsp:structure>
+
+  <xsp:logic>
+   File workDir = null;
+   
+   File indexDir=null;
+   File excerptDir=null;
+
+   String[] fields={"contents","title"};
+   String field="contents";
+/** 
+ * Contextualize this class 
+ */
+  public void contextualize(Context context) throws ContextException {
+    super.contextualize( context );
+    workDir = (File) context.get(Constants.CONTEXT_WORK_DIR);
+    //workDir = (File) context.get(Constants.CONTEXT_CACHE_DIR);
+    //workDir = (File) context.get(Constants.CONTEXT_UPLOAD_DIR);
+    }
+/**
+ *
+ */
+  Hits search(String query_string,String publication_id) throws ProcessingException, IOException{
+      hits=null;
+
+      try{
+        Searcher searcher=new IndexSearcher(indexDir.getAbsolutePath());
+        Analyzer l_analyzer=new StandardAnalyzer();
+        QueryParser l_queryParser = new QueryParser(field,l_analyzer);
+        //MultiFieldQueryParser l_queryParser = new MultiFieldQueryParser("contents", l_analyzer);
+        l_queryParser.setOperator(QueryParser.DEFAULT_OPERATOR_AND);
+        Query l_query = l_queryParser.parse(query_string);
+        //Query l_query = l_queryParser.parse(query_string,fields,l_analyzer);
+
+        hits=searcher.search(l_query);
+        if(hits != null){
+          return hits;
+          }
+        }
+      catch(IOException e){
+        System.err.println(".search(): EXCEPTION: "+e);
+        throw e;
+        }
+      catch(Exception e){
+        System.err.println(".search(): EXCEPTION: "+e);
+        }
+
+      return null;
+      }
+
+/**
+ *
+ */
+  String getPercent(float score){
+    return ""+java.lang.Math.round(score*100.0);
+    }
+
+
+
+
+    Hits hits;
+    int hits_length=-1;
+
+    String[] words=new String[0];
+
+    int hitsPerPage;
+    int maxPages;
+    int start;
+    int end; 
+  </xsp:logic>
+
+  <search-and-results>
+    <xsp:logic>
+      // Get sitemap path
+      org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
+      String sitemapPath=input_source.getSystemId();
+      sitemapPath=sitemapPath.substring(5); // Remove "file:" protocol
+
+
+
+      // Read parameters from sitemap
+      String numberOfPubs = parameters.getParameter("number-of-pubs", "1");
+      Publication[] pubs = new Publication[Integer.parseInt(numberOfPubs)];
+      for(int i = 0;i &lt; pubs.length;i++) {
+          pubs[i] = new Publication();
+          pubs[i].id = parameters.getParameter("pub"+i+"-id","@ID@");
+          pubs[i].name = parameters.getParameter("pub"+i+"-name","@NAME@");
+          pubs[i].indexDir = parameters.getParameter("pub"+i+"-index-dir","@INDEX-DIR@");
+          pubs[i].excerptDir = parameters.getParameter("pub"+i+"-excerpt-dir","@EXCERPT-DIR@");
+          pubs[i].prefix = parameters.getParameter("pub"+i+"-prefix","@PREFIX@");
+      }
+      String param_hits_per_page=parameters.getParameter("max-hits-per-page","13");
+      hitsPerPage=Integer.parseInt(param_hits_per_page);
+      String param_max_pages=parameters.getParameter("max-pages","5");
+      maxPages=Integer.parseInt(param_max_pages);
+
+
+
+
+
+
+      // Read parameters from query string
+      String queryString = <xsp-request:get-parameter name="queryString" default=""/>;
+      String publication_id = <xsp-request:get-parameter name="publication-id" default="levivanya"/>;
+      String sortBy = <xsp-request:get-parameter name="sortBy" default="score"/>;
+
+      String startString = <xsp-request:get-parameter name="start" default="1"/>;
+      String endString = <xsp-request:get-parameter name="end"/>;
+      start=new Integer(startString).intValue();
+      if(endString == null){
+        end=hitsPerPage;
+        }
+      else{
+        end=new Integer(endString).intValue();
+        }
+
+      String fields_para=<xsp-request:get-parameter name="fields" default="all"/>;
+      if(fields_para.equals("title")){
+        fields=new String[1];
+        fields[0]="title";
+
+        field="title";
+        }
+      else{
+        fields=new String[2];
+        fields[0]="contents";
+        fields[1]="title";
+
+        field="contents";
+        }
+
+
+
+      // Set index and excerpt dir
+      int whichPublication=0;
+      for (int i = 0;i &lt; pubs.length;i++) {
+          if (pubs[i].id.equals(publication_id)) {
+              whichPublication = i;
+          }
+      }
+      String param_index_dir=pubs[whichPublication].indexDir;
+      if(param_index_dir.charAt(0) == '/'){
+        indexDir=new File(param_index_dir);
+        }
+      else{
+        indexDir=new File(sitemapPath+File.separator+param_index_dir);
+        }
+      String param_excerpt_dir=pubs[whichPublication].excerptDir;
+      if(param_excerpt_dir.charAt(0) == '/'){
+        excerptDir=new File(param_excerpt_dir);
+        }
+      else{
+        excerptDir=new File(sitemapPath+File.separator+param_excerpt_dir);
+        }
+    </xsp:logic>
+    
+
+    <configuration><xsp:attribute name="checked-pid"><xsp:expr>publication_id</xsp:expr></xsp:attribute>
+      <number-of-publications><xsp:expr>numberOfPubs</xsp:expr></number-of-publications>
+
+      <xsp:logic>
+      for(int i = 0;i &lt; pubs.length;i++) {
+         <publication><xsp:attribute name="pid"><xsp:expr>pubs[i].id</xsp:expr></xsp:attribute>
+           <name><xsp:expr>pubs[i].name</xsp:expr></name>
+           <index-dir><xsp:expr>pubs[i].indexDir</xsp:expr></index-dir>
+           <excerpt-dir><xsp:expr>pubs[i].excerptDir</xsp:expr></excerpt-dir>
+           <prefix><xsp:expr>pubs[i].prefix</xsp:expr></prefix>
+         </publication>
+      }
+      </xsp:logic>
+
+      <hits-per-page><xsp:expr>hitsPerPage</xsp:expr></hits-per-page>
+      <max-pages><xsp:expr>maxPages</xsp:expr></max-pages>
+    </configuration>
+
+<!-- Search Results -->
+      <search>
+        <xsp:logic>
+          java.util.Enumeration para_names=request.getParameterNames();
+          if(para_names.hasMoreElements()){
+            <request-parameters>
+              <xsp:logic>
+              while(para_names.hasMoreElements()){
+                String para_name=(String)para_names.nextElement();
+                String para_value=request.getParameter(para_name);
+                <parameter><xsp:attribute name="name"><xsp:expr>para_name</xsp:expr></xsp:attribute><xsp:attribute name="value"><xsp:expr>para_value</xsp:expr></xsp:attribute></parameter>
+                <xsp:element><xsp:param name="name"><xsp:expr>para_name</xsp:expr></xsp:param><xsp:expr>para_value</xsp:expr></xsp:element>
+                }
+              </xsp:logic>
+            </request-parameters>
+            }
+
+          if(queryString != null &amp;&amp; queryString.length() != 0 &amp;&amp; publication_id != null &amp;&amp; publication_id.length() > 0){
+            try{
+              hits = search(queryString,publication_id);
+              }
+            catch(Exception e){
+              <exception><xsp:expr>e.toString()</xsp:expr></exception>
+              }
+            if(hits != null){
+              hits_length=hits.length();
+              }
+            else{
+              hits_length=-1;
+              hits=null;
+              }
+            <publication-id><xsp:expr>publication_id</xsp:expr></publication-id>
+            <publication-name><xsp:expr>pubs[whichPublication].name</xsp:expr></publication-name>
+            <publication-prefix><xsp:expr>pubs[whichPublication].prefix</xsp:expr></publication-prefix>
+            <sort-by><xsp:expr>sortBy</xsp:expr></sort-by>
+            <query-string><xsp:expr>queryString</xsp:expr></query-string>
+            if(queryString != null){
+              Vector twords=new Vector();
+              <words>
+              <xsp:logic>
+              StringTokenizer st=new StringTokenizer(queryString," ");
+              while(st.hasMoreTokens()){
+                String word=(String)st.nextElement();
+                if(!(word.equals("OR") || word.equals("AND"))){
+                  <word><xsp:expr>word</xsp:expr></word>
+                  twords.addElement(word);
+                  }
+                }
+              words=new String[twords.size()];
+              for(int i=0;i&lt;twords.size();i++){
+                words[i]=(String)twords.elementAt(i);
+<!--
+                <word><xsp:expr>words[i]</xsp:expr></word>
+-->
+                }
+              </xsp:logic>
+              </words>
+              }
+            <start><xsp:expr>start</xsp:expr></start>
+            <end><xsp:expr>end</xsp:expr></end>
+            <fields><xsp:expr>fields_para</xsp:expr></fields>
+
+      try{
+        Analyzer ll_analyzer=new StandardAnalyzer();
+        QueryParser queryParser = new QueryParser(field,ll_analyzer);
+        //MultiFieldQueryParser queryParser = new MultiFieldQueryParser("contents",ll_analyzer);
+        queryParser.setOperator(QueryParser.DEFAULT_OPERATOR_AND);
+        Query ll_query = queryParser.parse(queryString);
+        //Query ll_query = queryParser.parse(queryString,fields,ll_analyzer);
+        <query><xsp:expr>ll_query.toString("contents")</xsp:expr></query>
+        }
+      catch(Exception e){
+        <exception><xsp:expr>e.toString()</xsp:expr></exception>
+        }
+
+            }
+          else{
+            hits_length=-1;
+            hits=null;
+            }
+        </xsp:logic>
+      </search>
+
+          <xsp:logic>
+            if(hits != null){
+        <results><xsp:attribute name="total-hits"><xsp:expr>hits_length</xsp:expr></xsp:attribute>
+        <xsp:logic>
+       if(hits_length &gt; 0){
+     <hits>
+          <xsp:logic>
+              for (int i=start-1;i &lt;= end-1;i++) {
+                if((i &lt; 0) || (i &gt;= hits.length())){
+                  continue;
+                  }
+                Document ldoc=hits.doc(i);
+                String lpath=ldoc.get("path");
+
+                String lurl=ldoc.get("url");
+                String ltitle=ldoc.get("title");
+                String mime_type=ldoc.get("mime-type");
+                
+                if(lpath != null){
+                  <hit>
+                    <score><xsp:attribute name="percent"><xsp:expr>getPercent(hits.score(i))</xsp:expr></xsp:attribute><xsp:expr>hits.score(i)</xsp:expr></score> 
+                    <path><xsp:expr>lpath</xsp:expr></path>
+                  </hit>
+                }
+                else if(lurl != null){
+                  <hit><xsp:attribute name="pos"><xsp:expr>i+1</xsp:expr></xsp:attribute>
+                    <score><xsp:attribute name="percent"><xsp:expr>getPercent(hits.score(i))</xsp:expr></xsp:attribute><xsp:expr>hits.score(i)</xsp:expr></score> 
+                    <uri><xsp:expr>lurl</xsp:expr></uri>
+                    <xsp:logic>
+                    File excerptFile=new File(excerptDir+File.separator+lurl);
+                    if((ltitle != null) &amp;&amp; (ltitle.length() &gt; 0)){
+                      <title><xsp:expr>ltitle</xsp:expr></title>
+                      }
+                    else{
+                      <title><xsp:expr>excerptFile.getName()</xsp:expr></title>
+                      <no-title/>
+                      }
+                    if((mime_type != null) &amp;&amp; (mime_type.length() &gt; 0)){
+                      <mime-type><xsp:expr>mime_type</xsp:expr></mime-type>
+                      }
+                    else{
+                      <no-mime-type/>
+                      }
+
+                    //String[] words={"funds","bonds"};
+                    try{
+                      ReTokenizeFile rtf=new ReTokenizeFile();
+                      String excerpt=rtf.getExcerpt(excerptFile,words);
+                      if(excerpt != null){
+                        excerpt=rtf.emphasizeAsXML(rtf.tidy(excerpt),words);
+
+                        <util:include-expr><util:expr><xsp:expr>excerpt</xsp:expr></util:expr></util:include-expr>
+
+                        // FIXME: Update Cocoon!!!
+                        //org.apache.cocoon.components.language.markup.xsp.XSPUtil.includeString(excerpt,this.manager,this.contentHandler);
+
+
+<!--
+                        <excerpt><word>Vanya</word><xsp:expr>excerpt</xsp:expr></excerpt>
+-->
+/*
+                        this.contentHandler.startElement("","excerpt","excerpt",xspAttr);
+                        this.lexicalHandler.startCDATA();
+                        this.characters(excerpt);
+                        this.lexicalHandler.endCDATA();
+                        this.contentHandler.endElement("","excerpt","excerpt");
+*/
+                        }
+                      else{
+                        throw new Exception("excerpt == null. Maybe file does not contain the words!");
+                        }
+                      }
+                    catch(FileNotFoundException e){
+                      <no-excerpt>
+                        <file><xsp:attribute name="src"><xsp:expr>excerptFile.getAbsolutePath()+" "+words[0]+" "+e</xsp:expr></xsp:attribute></file>
+                      </no-excerpt>
+                      }
+                    catch(Exception e){
+                      <excerpt-exception><xsp:expr>""+e</xsp:expr></excerpt-exception>
+                      }
+
+                    </xsp:logic>
+                  </hit>
+                 }
+              }
+          </xsp:logic>
+     </hits>
+        }
+      else{
+       <no-hits/>
+        }
+     </xsp:logic>
+
+
+           <xsp:logic>
+             int number_of_pages=(hits.length()/hitsPerPage);
+             if(number_of_pages*hitsPerPage != hits.length()){
+               number_of_pages=number_of_pages+1;
+               }
+             if(number_of_pages &gt; maxPages){
+               number_of_pages=maxPages;
+               }
+             if(hits.length() == 0){
+               number_of_pages=0;
+               <no-pages/>
+               }
+             else{
+             <pages>
+           <xsp:logic>
+             for(int i=0;i&lt;number_of_pages;i++){
+               int pstart=i*hitsPerPage+1;
+               int pend=(i+1)*hitsPerPage;
+               if(hits_length &lt; pend){
+                 pend=hits_length;
+                 }
+               String type="other";
+               if(pstart == start){
+                 type="current";
+                 }
+               else if(pstart == start-hitsPerPage){
+                 type="previous";
+                 }
+               else if(pstart == start+hitsPerPage){
+                 type="next";
+                 }
+               <page>
+                 <xsp:attribute name="start"><xsp:expr>pstart</xsp:expr></xsp:attribute>
+                 <xsp:attribute name="end"><xsp:expr>pend</xsp:expr></xsp:attribute>
+                 <xsp:attribute name="type"><xsp:expr>type</xsp:expr></xsp:attribute>
+               </page>
+              }
+           </xsp:logic>
+             </pages>
+             }
+           </xsp:logic>
+        </results>
+            }
+          </xsp:logic>
+<!-- /Search Results -->
+
+  </search-and-results>
+
+</xsp:page>
+

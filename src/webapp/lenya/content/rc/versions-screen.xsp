@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:util="http://apache.org/xsp/util/2.0">
+  <xsp:structure>
+    <xsp:include>org.wyona.cms.rc.RevisionController</xsp:include>
+    <xsp:include>java.io.IOException</xsp:include>
+    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+  </xsp:structure>                                                                                                                          
+<rc:revisions xmlns:rc="http://www.wyona.org/2002/rc">
+  <xsp:logic>
+    org.apache.cocoon.environment.Source input_source=this.resolver.resolve("");
+    String sitemapPath=input_source.getSystemId();
+    sitemapPath=sitemapPath.substring(5); // Remove "file:" protocol
+    String rootDir=sitemapPath; //parameters.getParameter("rootDir","null");
+    String filename=parameters.getParameter("filename","null");
+    String rcmlDirectory=parameters.getParameter("rcmlDirectory","null");
+    String backupDirectory=parameters.getParameter("backupDirectory","null");
+    filename=rootDir+"/"+filename;
+    rcmlDirectory=rootDir+"/"+rcmlDirectory;
+    backupDirectory=rootDir+"/"+backupDirectory;
+
+    String channel=parameters.getParameter("channel","null");
+    String section=parameters.getParameter("section","null");
+    String year=parameters.getParameter("year","null");
+    String articleId=parameters.getParameter("articleId","null");
+    
+    String request_uri=request.getRequestURI();
+    String sitemap_uri=request.getSitemapURI();
+    String prefix=request_uri.substring(0,request_uri.length()-sitemap_uri.length()-1);
+
+    String artId =channel+"/"+section+"/"+year+"/"+articleId+"/"+"index.xml";
+    String uriprefix = prefix;
+
+    RevisionController rc = new RevisionController(rcmlDirectory,backupDirectory);
+    org.w3c.dom.Document rcmlDoc=null;
+    try {
+      rcmlDoc=rc.getRCML(filename).getDOMDocumentClone();
+    } catch (Exception e) {
+      <rc:exception>rollback: Unable to get DOM doc for rcml file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
+    }                                                                                                                                    
+    org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
+    rootE.setAttribute("id", artId);     
+    rootE.setAttribute("uriprefix", uriprefix);     
+
+    org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
+
+    for (int i = 0; i &lt; timeElements.getLength(); i++) {
+      org.w3c.dom.Element time = (org.w3c.dom.Element) timeElements.item(i);
+      time.setAttribute("humanreadable", new Date(new Long(time.getFirstChild().getNodeValue()).longValue()).toString());
+    }
+  </xsp:logic>
+
+  <sitemap-path><xsp:expr>sitemapPath</xsp:expr></sitemap-path>
+  <xsp:expr>rootE</xsp:expr>
+
+</rc:revisions>
+</xsp:page>
