@@ -3,6 +3,7 @@
 <xsp:page
        language="java"
        xmlns:xsp="http://apache.org/xsp"  
+       xmlns:xsp-request="http://apache.org/xsp/request/2.0"
        >
        
   <xsp:structure>
@@ -22,7 +23,7 @@
       if (history != null) {
         for (int i = 0; i &lt; history.size(); i++) {
           String uri = (String) history.elementAt(i);
-          <xsp:content><uri><xsp:expr>uri</xsp:expr></uri></xsp:content>
+          <xsp:content><uri><xsp-request:get-context-path/><xsp:expr>uri</xsp:expr></uri></xsp:content>
         }
       }
     }

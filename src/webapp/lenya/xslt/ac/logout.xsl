@@ -56,7 +56,7 @@ LOGOUT
 </xsl:template>
 
 <xsl:template match="uri">
-<li><a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></li>
+<li><a href="{.}"><xsl:value-of select="."/></a></li>
 </xsl:template>
 
 <xsl:template match="referer">
