@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xopus.xsl,v 1.8 2004/03/13 12:42:14 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:t="http://www.q42.nl/t">
 
@@ -40,9 +40,7 @@
 
                 // Xopus 2.0.0.8
 		xopus_globs.WYONA_CMS_URL="<xsl:value-of select="$context_prefix" />/xopus/XopusInterface";
-		<!-- e.g. xopus_globs.WYONA_CMS_URL="/lenya/oscom/xopus/XopusInterface"; -->
 		xopus_globs.WYONA_CMS_EXIT_URL="<xsl:value-of select="substring-before(/lenya/menu/request_uri,'/xopus2')" /><xsl:value-of select="substring-after(/lenya/menu/request_uri,'/xopus2')"/>";
-		<!-- e.g. xopus_globs.WYONA_CMS_EXIT_URL="/lenya/oscom/authoring/matrix/cocoon.html"; -->
 	</script>
 </xsl:template>
 

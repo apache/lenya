@@ -38,16 +38,16 @@ SFTP_BATCH=$CONTEXT/lenya/bin/copy-recursive.sh
 #
 
 
-PUBLICATION_ID_2=oscom
-EXPORT_DIR_2=$PUBLICATION_DIR/oscom/resources/export
-PENDING_DIR_2=$EXPORT_DIR_2/pending/lenya/oscom
+PUBLICATION_ID_2=default
+EXPORT_DIR_2=$PUBLICATION_DIR/default/resources/export
+PENDING_DIR_2=$EXPORT_DIR_2/pending/lenya/default
 REPLICATION_DIR_2=$EXPORT_DIR_2/replication
 RU_2_1=username
 RH_2_1=127.0.0.1
 RDOCS_2_1=/usr/local/jakarta-tomcat-4.0.4-b3/webapps/ROOT
 RU_2_2=username
 RH_2_2=127.0.0.1
-RDOCS_2_2=/usr/local/apache/htdocs_oscom
+RDOCS_2_2=/usr/local/apache/htdocs_default
 
 
 

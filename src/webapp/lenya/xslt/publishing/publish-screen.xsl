@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publish-screen.xsl,v 1.19 2004/07/29 05:50:14 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -117,7 +117,7 @@
           <input type="hidden" name="role-ids" value="{/usecase:publish/usecase:role-ids}"/>
           <input type="hidden" name="workflow-event" value="publish"/>
 
-          <!-- FIXME: The ant taks and the regular task don't use the same parameter names. Another difference is that the regular task requires a leading slash (also compare blog and oscom publication) -->
+          <!-- FIXME: The ant taks and the regular task don't use the same parameter names. Another difference is that the regular task requires a leading slash (also see the blog publication) -->
           <input type="hidden" name="properties.publish.sources" value="{$sources}"/> <!-- Ant Task -->
           <input type="hidden" name="properties.files2index" value="{$files2index}"/> <!-- Ant Task -->
           <input type="hidden" name="sources" value="{$sources}"/> <!-- Regular Task -->

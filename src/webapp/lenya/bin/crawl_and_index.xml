@@ -34,11 +34,11 @@
   <property file="search.properties"/>
 
   <!-- Dummy arguments -->
-  <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
-  <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/config/search/lucene-cmfsMatrix.xconf"/>
-  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/oscom/content/live/matrix"/>
-  <property name="file" value="src/webapp/lenya/pubs/oscom/content/live/matrix/lenya.xml"/>
-  <property name="index.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene/index/index-cmfsMatrix"/>
+  <property name="crawler.xconf" value="src/webapp/lenya/pubs/default/config/search/crawler.xconf"/>
+  <property name="lucene.xconf" value="src/webapp/lenya/pubs/default/config/search/lucene-cmfsMatrix.xconf"/>
+  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/default/content/live"/>
+  <property name="file" value="src/webapp/lenya/pubs/default/content/live/index.xml"/>
+  <property name="index.dir" value="src/webapp/lenya/pubs/default/work/search/lucene/index/index"/>
   <property name="search.term" value="Lenya"/>
   <!-- /Dummy arguments -->
 

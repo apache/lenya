@@ -69,7 +69,7 @@ public class WGet {
                 }
             }
 
-            byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/oscom//g", "");
+            byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/default//g", "");
         } catch (MalformedURLException e) {
             System.err.println(e);
         } catch (Exception e) {

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: tasks.xml,v 1.4 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id$ -->
 
 <project name="Ant Test Project" default="test" basedir=".">
 
@@ -30,7 +30,7 @@
 <property name="live.tree" value="content/live/tree.xml"/>
 <property name="replication.dir" value="content/replication/pending"/>
 <property name="export.dir" value="resources/export/pending"/>
-<property name="export.regexp" value="s/\/lenya\/oscom//g"/>
+<property name="export.regexp" value="s/\/lenya\/default//g"/>
 <property name="publish.sources" value=""/>
 
 <target name="test">
