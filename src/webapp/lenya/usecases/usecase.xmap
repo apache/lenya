@@ -44,42 +44,17 @@
         This internal sitemap fragment renders the usecase, once the
         executeUsecase() flowscript has completed and issued a redirect,
         which is matched here.
-        The rendering process depends on the name of the usecase. If the
-        name begins with "tab.", the usecase is assumed to be part of the
-        site area. In this case, the navigation for the site area is
-        also rendered, along with the use case. In all other cases, the
-        usecase takes up the full screen. 
-        This behavior will likely be changed in the future.
         -->
-      <map:match pattern="view/**" internal-only="true">
+      <map:match pattern="view/*/**" internal-only="true">
         
-        <map:match type="usecase" pattern="tab.*">
-          <map:generate type="jx" src="{../1}.jx"/>
-          <map:transform type="i18n">
-            <map:parameter name="locale" value="{request:locale}"/>
-          </map:transform>
-          <map:transform src="fallback://lenya/xslt/info/root.xsl" label="content">
-              <map:parameter name="infoarea" value="true"/>
-              <map:parameter name="contextprefix" value="{request:contextPath}"/>
-              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-              <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="tab" value="{../1}"/>
-              <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
-              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-              <map:parameter name="documenturl" value="/{page-envelope:document-url}"/>
-              <map:parameter name="documentextension" value="{page-envelope:document-extension}"/>
-              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-              <map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/>
-            </map:transform>
-          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/info/default.xml"/>
-          <map:serialize type="xhtml"/>
-        </map:match>
-        
-        <map:generate type="jx" src="fallback://lenya/usecases/{1}.jx"/>
+        <map:generate type="jx" src="fallback://lenya/usecases/{2}.jx"/>
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-screen.xsl"/>
+        <map:match pattern="view/menu/**">
+          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/info/default.xml"/>
+        </map:match>
         <map:serialize type="html"/>
       </map:match>
       

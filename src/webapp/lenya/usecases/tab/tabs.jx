@@ -27,6 +27,7 @@
 		These are the tabs. Make sure that each of them has the correct id,
 		target and corresponding number in the Tab() call.
 	 -->
+	<div class="lenya-tabs">
     <table border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td>
@@ -140,4 +141,5 @@
         </jx:if>
       </tr>
     </table>
+  </div>
 </jx:template>

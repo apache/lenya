@@ -35,13 +35,6 @@ public class Nudge extends DocumentUsecase {
     protected static final String DOWN = "down";
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#isInteractive()
-     */
-    public boolean isInteractive() {
-        return false;
-    }
-
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
     protected void doCheckPreconditions() throws Exception {

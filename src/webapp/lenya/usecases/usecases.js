@@ -54,6 +54,7 @@ function executeUsecase() {
     var usecaseName = cocoon.request.getParameter("lenya.usecase");
     var view;
     var proxy;
+    var menu = "nomenu";
     
     var usecaseResolver;
     var usecase;
@@ -68,6 +69,9 @@ function executeUsecase() {
         usecase.setSourceURL(sourceUrl);
         usecase.setName(usecaseName);
         view = usecase.getView();
+        if (view.showMenu()) {
+            menu = "menu";
+        }
 
         passRequestParameters(flowHelper, usecase);
         usecase.checkPreconditions();
@@ -87,7 +91,7 @@ function executeUsecase() {
         var ready = false;
         while (!ready) {
         
-            cocoon.sendPageAndWait("view/" + view.getTemplateURI(), {
+            cocoon.sendPageAndWait("view/" + menu + "/" + view.getTemplateURI(), {
                 "usecase" : proxy
             });
             

@@ -24,7 +24,12 @@
 	border: solid 1px #CCCCCC;
 
 	position: relative;
-	top: 1px;	
+	top: 1px;
+	margin-left: 270px;
+}
+
+.lenya-tabs {
+    margin-left: 270px;
 }
 
 .lenya-tablink {
@@ -80,6 +85,8 @@
 	position: relative;
 	top: 1px;
 
+    width: 230px;
+    float: left;
 }
 
 #lenya-info-tree td {

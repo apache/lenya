@@ -28,12 +28,14 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 public class UsecaseView implements Configurable {
     
     protected static final String ATTRIBUTE_TEMPLATE_URI = "template";
+    protected static final String ATTRIBUTE_SHOW_MENU = "menu";
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration config) throws ConfigurationException {
         this.templateUri = config.getAttribute(ATTRIBUTE_TEMPLATE_URI);
+        this.showMenu = config.getAttributeAsBoolean(ATTRIBUTE_SHOW_MENU, false);
     }
 
     private String templateUri;
@@ -46,6 +48,15 @@ public class UsecaseView implements Configurable {
             throw new RuntimeException("The template URI was not configured!");
         }
         return this.templateUri;
+    }
+    
+    private boolean showMenu;
+    
+    /**
+     * @return If the menubar should be visible on usecase screens.
+     */
+    public boolean showMenu() {
+        return this.showMenu;
     }
     
 }

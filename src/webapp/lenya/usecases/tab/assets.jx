@@ -22,7 +22,9 @@
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
 
-  <div>
+  <jx:import uri="tab/head.jx"/>
+  <page:body>
+    <jx:import uri="tab/sitetree.jx"/>
     <jx:import uri="tab/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
       <table class="lenya-table">
@@ -95,5 +97,5 @@
        </form>
      </jx:if>
     </div>
-  </div>
+  </page:body>
 </page:page>

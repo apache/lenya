@@ -21,7 +21,9 @@
            xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
-  <div>
+  <jx:import uri="tab/head.jx"/>
+  <page:body>
+    <jx:import uri="tab/sitetree.jx"/>
     <jx:import uri="tab/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
       <jx:choose>
@@ -114,5 +116,5 @@
         <jx:otherwise><i18n:text>No overview available.</i18n:text></jx:otherwise>
       </jx:choose>
     </div>
-  </div>
+  </page:body>
 </page:page>
