@@ -89,7 +89,7 @@
     <ant dir="${cocoon.src.dir}" inheritall="false"/>
   </target>
 
-  <target name="prepare-cocoon" depends="build-cocoon">
+  <target name="prepare-cocoon" depends="build-cocoon" unless="gump.skipcocoonbuild">
     <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
