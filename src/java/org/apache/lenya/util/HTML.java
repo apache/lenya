@@ -32,8 +32,9 @@ public class HTML{
 
     try{
       HTML html=new HTML(args[0]);
-      html.getSrcs();
-      html.getHRefs();
+      html.getImageSrcs();
+      html.getAnchorHRefs();
+      html.getLinkHRefs();
       }
     catch(Exception e){
       System.err.println(".main(): "+e);
@@ -54,46 +55,44 @@ public class HTML{
 /**
  *
  */
-  public void getHRefs(){
-    System.out.println(".getHRefs(): INFO: Extract Links");
+  public void getAnchorHRefs(){
+    System.out.println(".getAnchorHRefs(): INFO: Extract Links");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
-      //System.out.println(".getHRefs(): Element Name: "+element.getName());
-
-      // Extract <link href=""/>
-      if(element.getName().equals("link")){
-        System.out.println(".getHRefs(): <link href=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
-        }
-
       // Extract <a href="">content</a>
       SimpleAttributeSet sas=(SimpleAttributeSet)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Tag.A);
       if(sas != null){
-        System.out.println(".getHRefs(): <a href=\"\">content</a>: "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
+        System.out.println(".getAnchorHRefs(): <a href=\"\">content</a>: "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
         }
       }
     }
 /**
  *
  */
-  public void getSrcs(){
-    System.out.println(".getSrcs(): INFO: Extract Sources");
+  public void getLinkHRefs(){
+    System.out.println(".getLinkHRefs(): INFO: Extract Links");
+    ElementIterator iterator=new ElementIterator(doc);
+    Element element;
+    while((element = iterator.next()) != null){
+      // Extract <link href=""/>
+      if(element.getName().equals("link")){
+        System.out.println(".getLinkHRefs(): <link href=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.HREF));
+        }
+      }
+    }
+/**
+ *
+ */
+  public void getImageSrcs(){
+    System.out.println(".getImageSrcs(): INFO: Extract Sources");
     ElementIterator iterator=new ElementIterator(doc);
     Element element;
     while((element = iterator.next()) != null){
       // Extract <im src=""/>
       if(element.getName().equals("img")){
-        System.out.println(".getSrcs(): <im src=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.SRC));
+        System.out.println(".getImageSrcs(): <im src=\"\"/>: "+element.getAttributes().getAttribute(javax.swing.text.html.HTML.Attribute.SRC));
         }
-
-
-
-/*
-      SimpleAttributeSet sas=(SimpleAttributeSet)element.getAttributes().getAttribute(javax.swing.text.html.HTML.Tag.IMG);
-      if(sas != null){
-        System.out.println(".getSrcs(): "+sas.getAttribute(javax.swing.text.html.HTML.Attribute.SRC));
-        }
-*/
       }
     }
 /**
