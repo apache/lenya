@@ -8,8 +8,6 @@
   >
 
   <xsp:structure>
-    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
