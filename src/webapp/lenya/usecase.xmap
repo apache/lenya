@@ -546,7 +546,6 @@
           
           <map:match pattern="rename" type="step">
             <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
-            </map:act>
           </map:match>
           
         </map:match>
