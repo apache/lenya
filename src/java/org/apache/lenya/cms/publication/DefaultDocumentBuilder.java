@@ -59,7 +59,7 @@ import java.util.HashMap;
 
 /**
  * @author andreas
- * @version $Id: DefaultDocumentBuilder.java,v 1.17 2003/09/25 08:21:39 andreas Exp $
+ * @version $Id: DefaultDocumentBuilder.java,v 1.18 2003/09/30 09:15:30 egli Exp $
  *
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
@@ -118,7 +118,6 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
         
-/*
         if (defaultLanguageForced) {
             // unfortunatelly we cannot count on the document to always be available 
             // in the default language. So if the default language is not in the list
@@ -142,7 +141,6 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
                 }
             }
         }
-*/
 
         return document;
     }
@@ -216,22 +214,26 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         return isDocument;
     }
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
-	 */
-	public String buildCanonicalUrl(Publication publication, String area, String documentid, String language){
-		String url =
-			"/"
-				+ publication.getId()
-				+ "/"
-				+ area
-				+ documentid
-				+ "_"
-				+ language
-				+ ".html";
-		return url;
-	}
+    /**
+     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
+     */
+    public String buildCanonicalUrl(
+        Publication publication,
+        String area,
+        String documentid,
+        String language) {
+        String url =
+            "/"
+                + publication.getId()
+                + "/"
+                + area
+                + documentid
+                + "_"
+                + language
+                + ".html";
+        return url;
+    }
 
     /**
      *  (non-Javadoc)
