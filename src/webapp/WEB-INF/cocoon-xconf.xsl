@@ -60,7 +60,7 @@
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
     
-    <component-instance name="defaults" class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
+    <component-instance name="defaults" class="org.apache.cocoon.components.modules.input.DefaultsModule">
       <values>
         <skin>lenya-site</skin>
         <!--
@@ -70,7 +70,7 @@
       </values>
     </component-instance>
 
-    <component-instance name="xopus" class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
+    <component-instance name="xopus" class="org.apache.cocoon.components.modules.input.DefaultsModule">
       <values>
         <context><xsl:value-of select="$xopus-context"/></context>
       </values>
@@ -165,7 +165,7 @@
       |
       |     <parameter name="verbosity" value="2"/>
       +-->
-  <entity-resolver class="org.apache.cocoon.components.resolver.ResolverImpl" logger="core.resolver">
+  <entity-resolver logger="core.resolver">
     <parameter name="catalog" value="{$forrest-publication}/resources/schema/catalog.xcat"/>
     <parameter name="verbosity" value="1"/>
   </entity-resolver>
