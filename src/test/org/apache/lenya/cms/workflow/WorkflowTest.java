@@ -25,7 +25,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
@@ -33,16 +32,9 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuildException;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
@@ -65,7 +57,6 @@ public class WorkflowTest extends AccessControlTest {
      */
     public static void main(String[] args) {
         args = PublicationHelper.extractPublicationArguments(args);
-        documentTypeName = args[0];
         TestRunner.run(getSuite());
     }
 
@@ -82,14 +73,9 @@ public class WorkflowTest extends AccessControlTest {
 
     /**
      * Tests the workflow.
-     * @throws DocumentTypeBuildException when something went wrong.
-     * @throws WorkflowException when something went wrong.
-     * @throws AccessControlException when something went wrong.
-     * @throws PageEnvelopeException when something went wrong.
-     * @throws DocumentBuildException when something went wrong.
+     * @throws Exception when something went wrong.
      */
-    public void testWorkflow() throws DocumentTypeBuildException, WorkflowException,
-            AccessControlException, PageEnvelopeException, DocumentBuildException {
+    public void testWorkflow() throws Exception {
         Publication publication = PublicationHelper.getPublication();
         String url = "/" + publication.getId() + URL;
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
@@ -100,71 +86,74 @@ public class WorkflowTest extends AccessControlTest {
         assertTrue(configDir.exists());
 
         Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
+        
+        WorkflowResolver resolver = null;
+        try {
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
 
-        DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
-        String workflowId = type.getWorkflowFileName();
 
-        WorkflowFactory factory = WorkflowFactory.newInstance();
+            String[] emptyRoles = {};
+            Situation situation = new CMSSituation(emptyRoles, "test", "127.0.0.1");
 
-        String[] emptyRoles = {};
-        Situation situation = factory.buildSituation(emptyRoles, "test", "127.0.0.1");
+            WorkflowInstance instance = resolver.getWorkflowInstance(document);
+            instance.getHistory().initialize(situation);
 
-        WorkflowFactory.initHistory(document, workflowId, situation);
+            for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
+                assertNotNull(instance);
 
-        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
-            WorkflowInstance instance = null;
-            instance = factory.buildInstance(document);
-            assertNotNull(instance);
+                System.out.println("Current state: " + instance.getCurrentState());
 
-            System.out.println("Current state: " + instance.getCurrentState());
+                Identity identity = new Identity();
+                User user = getAccreditableManager().getUserManager().getUser(
+                        situations[situationIndex].getUser());
+                identity.addIdentifiable(user);
 
-            Identity identity = new Identity();
-            User user = getAccreditableManager().getUserManager().getUser(
-                    situations[situationIndex].getUser());
-            identity.addIdentifiable(user);
+                Role[] roles = policy.getRoles(identity);
+                System.out.print("Roles:");
 
-            Role[] roles = policy.getRoles(identity);
-            System.out.print("Roles:");
-
-            for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
-                System.out.print(" " + roles[roleIndex]);
-            }
-
-            System.out.println();
-
-            situation = null;
-
-            try {
-                situation = factory.buildSituation(roles, identity);
-            } catch (WorkflowException e1) {
-                e1.printStackTrace(System.err);
-            }
-
-            Event[] events = instance.getExecutableEvents(situation);
-
-            Event event = null;
-            System.out.print("Events:");
-
-            for (int eventIndex = 0; eventIndex < events.length; eventIndex++) {
-                System.out.print(" " + events[eventIndex]);
-
-                if (events[eventIndex].getName().equals(situations[situationIndex].getEvent())) {
-                    event = events[eventIndex];
+                for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
+                    System.out.print(" " + roles[roleIndex]);
                 }
+
+                System.out.println();
+                
+                String[] roleIds = new String[roles.length];
+                for (int i = 0; i < roles.length; i++) {
+                    roleIds[i] = roles[i].getId();
+                }
+
+                situation = new CMSSituation(roleIds, identity.getUser().getId(), "");
+
+                String[] events = instance.getExecutableEvents(situation);
+
+                String event = null;
+                System.out.print("Events:");
+
+                for (int eventIndex = 0; eventIndex < events.length; eventIndex++) {
+                    System.out.print(" " + events[eventIndex]);
+
+                    if (events[eventIndex].equals(situations[situationIndex].getEvent())) {
+                        event = events[eventIndex];
+                    }
+                }
+
+                assertNotNull(event);
+                System.out.println();
+
+                System.out.println("Executing event: " + event);
+                instance.invoke(situation, event);
+
+                assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
+
+                System.out.println("Variable: " + variableName + " = "
+                        + instance.getValue(variableName));
+                System.out.println("------------------------------------------------------");
             }
-
-            assertNotNull(event);
-            System.out.println();
-
-            System.out.println("Executing event: " + event);
-            instance.invoke(situation, event);
-
-            assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
-
-            System.out.println("Variable: " + variableName + " = "
-                    + instance.getValue(variableName));
-            System.out.println("------------------------------------------------------");
         }
+        finally {
+//            this.manager.release(resolver);
+        }
+
 
         System.out.println("Test completed.");
     }
@@ -220,7 +209,5 @@ public class WorkflowTest extends AccessControlTest {
             return value;
         }
     }
-
-    private static String documentTypeName = "simple";
 
 }
