@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<NewsML>
+  <Catalog Href="http://nzz.wyona.com/newsml/catalog.xml"/>
+  <NewsEnvelope>
+    <TransmissionId>1004500635628</TransmissionId>
+    <DateAndTime>20020325T0457+0100</DateAndTime>
+    <SentFrom>
+      <Party FormalName="NZZ"/>
+    </SentFrom>
+    <SentTo>
+      <Party FormalName="IHT"/>
+    </SentTo>
+  </NewsEnvelope>
+  <NewsItem>
+    <Identification>
+      <NewsIdentifier>
+        <ProviderId>nzz.ch</ProviderId>
+        <DateId>20020325</DateId>
+        <NewsItemId>al-article7RAUR</NewsItemId>
+        <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
+        <PublicIdentifier>urn:newsml:nzz.ch:20020325:al-article7RAUR:1N</PublicIdentifier>
+      </NewsIdentifier>
+    </Identification>
+    <NewsManagement>
+      <FirstCreated>20020325T0130+0100</FirstCreated>
+      <ThisRevisionCreated>20020325T0130+0100</ThisRevisionCreated>
+    </NewsManagement>
+    <NewsComponent EquivalentsList="no">
+      <Role FormalName="TEXT"/>
+      <NewsLines>
+        <HeadLine>Im Traum spricht er am meisten mit mir
+        </HeadLine>
+        <ByLine>Von Adrian Ritter
+        </ByLine>
+        <CreditLine>
+          <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
+        </CreditLine>
+        <CopyrightLine>
+          <Origin Href="http://nzz.wyona.com/newsml/copyrightline.xml"/>
+        </CopyrightLine>
+      </NewsLines>
+      <AdministrativeMetadata>
+        <SystemIdentifier>http://nzz.wyona.com/newsml/2001/10/31/al/article7RAUR.xml</SystemIdentifier>
+      </AdministrativeMetadata>
+      <RightsMetadata>
+        <Copyright>
+          <CopyrightHolder>
+             <Origin Href="http://nzz.wyona.com/newsml/copyrightholder.xml"/>
+          </CopyrightHolder>
+        </Copyright>
+      </RightsMetadata>
+      <DescriptiveMetadata xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+        <up:Channel>magazin</up:Channel>
+        <up:Section>gesundheit</up:Section>
+        <Language FormalName="de"/>
+        <SubjectCode>
+          <Subject FormalName="International"/>
+        </SubjectCode>
+      </DescriptiveMetadata>
+      <ContentItem>
+         <MediaType FormalName="Text"/>
+         <MimeType FormalName="text/vnd.IPTC.NITF"/>
+         <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+<!--
+            <head>
+              <hedline>
+                <hl1>Im Traum spricht er am meisten mit mir </hl1>
+		<dossier>Brain Fair 2002</dossier>
+		<abstract> Parkinson-Patienten leiden an ihrer Krankheit und manchmal an den Reaktionen ihrer Umwelt.
+                             Auch f&#252;r die Partnerin oder den Partner einer erkrankten Person kann dies zur Belastung
+                             werden. An der Brainfair 2002 tauschten sich Betroffene und Forscher dar&#252;ber aus, wie die
+                             Lebensqualit&#228;t erhalten werden kann.
+                </abstract>
+              </hedline>
+            </head>
+-->
+            <body>
+              <body.head>
+                <dateline>
+                  <story.date>3.4.2002</story.date>
+                </dateline>
+                <hedline>
+                  <hl1>Licht im Brennpunkt</hl1>
+                </hedline>
+                <byline>Von Roger Nickl</byline>
+                <abstract>Das Ph&#228;nomen Licht steht im Mittelpunkt des aktuellen wissenschaftshistorischen Kolloquiums der Universit&#228;t und der ETH Z&#252;rich. Der Themenvorschlag stammt vom ETH-Titularprofessor Ambros Speiser. &#220;ber Hintergr&#252;nde der &#246;ffentlichen interdisziplin&#228;ren Veranstaltungsreihe gibt er in einem Interview Auskunft.
+                </abstract>
+              </body.head>
+              <body.content>
+              <related.contents>
+                <related.content title="Artikel">
+                  <link>
+                    <link.title href="../0501/">Kommunizierendes Gehirn</link.title>
+                    <link.text>(unipublic, 15.3.2002)</link.text>
+                  </link>
+                  <link>
+                    <link.title href="../0507/">Wenn die Sprache verlorengeht</link.title>
+                    <link.text>(Podiumsgespr&#228;ch zu Hirnverletzungen)</link.text>
+                  </link>
+                </related.content>
+                <related.content title="Link">
+                  <link>
+                    <link.text>Das Podiumsgespr&#228;ch wurde organisiert von der</link.text>
+                    <link.title href="http://www.parkinson.ch">Schweizerischen Parkinsonvereinigung</link.title>
+                  </link>
+                  <link>
+                    <link.title href="http://www.npi.ch">Neuropsychologisches Institut</link.title>
+                  </link>
+                  <link>
+                    <link.title href="http://www.brainfair2002.ch/">BrainFair 2002</link.title>
+                  </link>
+                </related.content>
+              </related.contents>
+
+                <block>
+                  <p>
+                               		Willi und K&#228;ti Bucher sind seit Jahrzehnten verheiratet und ein eingespieltes Paar. Als
+                                    der pensionierte Lehrer aber 1997 die Diagnose Parkinson erh&#228;lt, wird die Beziehung
+                                    vor eine Herausforderung gestellt. Ihr Mann habe sich immer mehr zur&#252;ckgezogen,
+                                    erz&#228;hlte K&#228;ti Bucher am Podiumsgespr&#228;ch zum Thema &#171;Kommunikation mit
+                                    Parkinson-Patienten&#187; am 23. M&#228;rz an der Uni Irchel. Am einen Tag erlebe sie ihren
+                                    Mann als denjenigen, den sie geheiratet hatte und an einem anderen Tag komme er
+                                    ihr wie ein Fremder vor: &#171;Am meisten spricht er noch mit mir, wenn er tr&#228;umt.&#187;	
+                  </p>
+                  <media media-type="image">
+                    <media-reference mime-type="image/jpeg" source="parkinson-1.jpg" alternate-text="J&#252;rg Haas" copyright="Adrian Ritter">
+                     </media-reference>
+                     <media-caption>
+						Engagierte Leitung des Podiumsgespr&#228;chs zum Thema "Kommunikation
+                                    mit Parkinsonpatienten": Radio DRS-Moderator und
+                                  Parkinsonbetroffener J&#252;rg Haas  
+		     </media-caption>
+                     <up:authorline>Fotos: Adrian Ritter</up:authorline>
+                     <up:authorline>Bilder: Adrian Ritter</up:authorline>
+                  </media>
+
+                  <p>
+					Willi Bucher weiss um seinen R&#252;ckzug, nicht nur seiner Frau
+                                    gegen&#252;ber: &#171;Die Leute schauen doch nur, wie ich zittere und haben
+                                    manchmal sogar das Gef&#252;hl, ich h&#228;tte zuviel Alkohol getrunken. Da
+                                    meidet man instinktiv zuviel Gesellschaft.&#187;
+                  </p>
+ 
+                </block>
+                <block>
+                  <hl2>Alkoholiker unterwegs? </hl2>
+                  <p>
+					Sch&#228;tzungsweise 15'000 Menschen leiden in der Schweiz an
+                                    Parkinson. Dabei sterben die Nervenzellen der sogenannten
+                                    &#171;Schwarzen Substanz&#187; im Gehirn pl&#246;tzlich ab. Auswirkungen
+                                    zeigen sich allerdings erst, wenn bereits 90&#037; dieser Zellen
+                                    abgestorben sind, entsprechend sp&#228;t kann die Diagnose gestellt
+                                    werden.
+                  </p>
+                  <p>
+					Parkinson-Patienten wie Willi Bucher werden f&#228;lschlicherweise mit
+                                    Alkoholkonsum in Verbindung gebracht. Es r&#252;hrt daher, dass zu den
+                                    Symptomen der Krankheit neben dem oft auftretenden Zittern der
+                                    H&#228;nde auch Versteifungen der Muskulatur, verlangsamte
+                                    Bewegungen und Gleichgewichtsst&#246;rungen geh&#246;ren.
+                  </p>
+                  <p>
+					Diese Symptome k&#246;nnen die Kommunikation mit der Umwelt denn
+                                    auch erheblich st&#246;ren. Giuseppe Di Stefano, Neuropsychologe am
+                                    Inselspital Bern, betonte in seinen Ausf&#252;hrungen die Bedeutung von
+                                    Mimik und K&#246;rperhaltung f&#252;r die menschliche Kommunikation.
+                                    Gerade die Mimik k&#246;nne aber bei Parkinson-Patienten
+                                    eingeschr&#228;nkt sein. Die Betroffenen w&#252;rden aufgrund ihres
+                                    manchmal starren, ernsten Gesichtes als desinteressiert erlebt oder
+                                    das Gegen&#252;ber habe den Eindruck, die Person h&#246;re nicht zu, wolle
+                                    nicht reden.
+                  </p>
+                </block>
+                <block>
+                  <hl2>Wie in einem K&#228;fig</hl2>
+                  <p>
+					Dass sich der an Parkinson erkrankte Partner zur&#252;ckziehen will,
+                                    kennt auch Podiums-Teilnehmerin Erika Tones aus eigener
+                                    Erfahrung. Sie versucht dem allerdings entgegen zu wirken: &#171;Ich
+                                    glaube, mein Mann sp&#252;rt auch, dass es ihm gut tut, mit anderen
+                                    Menschen in Kontakt zu sein.&#187; Negative Reaktionen des Umfeldes
+                                    habe er dabei bisher nicht erlebt.
+
+                  </p>
+                  <p>
+					Erika Tones selber muss ihr &#171;Lebenstempo&#187; demjenigen ihres
+                                    Mannes anpassen - &#171;eine Herausforderung&#187;. Sie erlebt die
+                                    Krankheit des Partners insgesamt als anspruchsvolle Arbeit an sich
+                                    selber: &#171;Es ist schon traurig, zu sehen, wie ein Mensch sich
+                                    ver&#228;ndert. Als ob er in einem K&#228;fig sitzen w&#252;rde und man die
+                                    Mauern erst niederreissen m&#252;sste.&#187;
+                  </p>
+                  <media media-type="image">
+                     <media-reference mime-type="image/jpeg" source="parkinson-2.jpg" alternate-text="J&#252;rg Haas"></media-reference>
+                     <media-caption>
+                                                Wenn die Hand zittert, leidet auch die Schrift darunter. An die Wandtafel
+                                    schreiben ist f&#252;r Parkinson-Patient Willi Bucher noch m&#246;glich, das
+                                    Schreiben auf Papier geht nicht mehr. Er hat mit seiner Frau K&#228;ti Bucher
+                                    (links) am Podiumsgespr&#228;ch teilgenommen.                                                                
+                     </media-caption>
+                   </media>                                                                                                    
+                 </block>
+                 <block>
+                   <hl2>Auch die Angeh&#246;rigen brauchen Hilfe</hl2>
+                   <p>
+					Dass nicht nur die Patienten, sondern auch ihre Angeh&#246;rigen Hilfe
+                                    brauchen, davon ist Neuropsychologe Di Stefano &#252;berzeugt. In
+                                    Seminare f&#252;r Angeh&#246;rige k&#228;men allerdings fast nur Frauen von
+                                    erkranken M&#228;nnern und selten M&#228;nner von erkrankten Frauen: &#171;Da
+                                    haben die M&#228;nner noch einen Nachholbedarf.&#187; Dabei w&#228;re es
+                                    wichtig, sich rechtzeitig beraten zu lassen, beispielsweise wenn die
+                                    Beziehung zum Partner unter der Krankheit leide. Davon wusste
+                                    auch Podiums-Moderator J&#252;rg Haas, Radiojournalist und selber
+                                    Parkinsonbetroffener, zu berichten. Er wisse von einigen Paaren, bei
+                                    denen es der Partner oder die Partnerin nicht mehr ausgehalten
+                                    habe.
+                   </p>
+                   <p>
+					Es kann indes noch andere sinnvolle Gr&#252;nde geben, psychologische
+                                    Beratung aufzusuchen. Erwiesen ist n&#228;mlich gem&#228;ss Prof. Claudio
+                                    Bassetti von der Neurologischen Poliklinik des Universit&#228;tsspitals
+                                    Z&#252;rich, dass Parkinson-Patienten im Vergleich zur
+                                    Gesamtbev&#246;lkerung h&#228;ufiger an Depressionen leiden: ein weiteres
+                                    Symptom der Krankheit und nicht etwa eine Nebenwirkung der
+                                    Medikamente, wie er auf eine Frage aus dem Publikum erg&#228;nzte.
+
+	           </p>
+                 </block>
+                 <block>
+                   <hl2>Das Coming-out half</hl2>
+                    <p>
+					  Solche Depressionen hat auch Parkinson-Patient Hans Neuhaus
+                                    erlebt - vor zwei Jahren, als er neben der Krankheit noch
+                                    zus&#228;tzliche Schicksalsschl&#228;ge erlebte. Er habe die Depression
+                                    &#252;berwinden k&#246;nnen, indem er sich aufraffte, sich zu outen, zur
+                                    Krankheit zu stehen.
+                    </p>
+                    <p>
+					Parkinson beim Namen zu nennen, diesen Schritt haben auch die
+                                    anderen Teilnehmerinnen und Teilnehmer des Podiums hinter sich.
+                                    Die Zuh&#246;rerinnen und Zuh&#246;rer, viele selber von Parkinson betroffen,
+                                    bedankten sich mit einem Applaus f&#252;r die offenen und sehr
+                                    pers&#246;nlichen Schilderungen.
+                    </p>
+                  </block>
+                  <block>
+	
+                  </block>
+               </body.content>
+               <body.end>
+                 <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
+               </body.end>
+               <copyrite>
+                 <copyrite.holder>Universit&#228;t Z&#252;rich</copyrite.holder>
+                 <copyrite.year>05.04.2002</copyrite.year>
+               </copyrite>
+             </body>
+             </DataContent>
+          </ContentItem>
+       </NewsComponent>
+    </NewsItem>
+</NewsML>

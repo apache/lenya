@@ -12,6 +12,18 @@
     <xsl:for-each select="dir:directory">
       <article href="{@name}">
       <xi:include xml:base="cocoon:" href="magazin/gesundheit/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+<!--
+      <xi:include xml:base="cocoon:" href="magazin/geist/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+-->
+<!--
+      <xi:include xml:base="cocoon:" href="magazin/recht/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+-->
+<!--
+      <xi:include xml:base="cocoon:" href="magazin/umwelt/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+-->
+<!--
+      <xi:include xml:base="cocoon:" href="campus/uni-news/2002/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+-->
       </article>
     </xsl:for-each>
   </articles>

@@ -50,8 +50,9 @@
           </CopyrightHolder>
         </Copyright>
       </RightsMetadata>
-      <DescriptiveMetadata>
-        <SectionName>Gesundheit</SectionName>
+      <DescriptiveMetadata xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+        <up:Channel>magazin</up:Channel>
+        <up:Section>gesundheit</up:Section>
         <Language FormalName="de"/>
         <SubjectCode>
           <Subject FormalName="International"/>
