@@ -15,13 +15,19 @@
  *
  */
 
-/* $Id: FileAccreditableManager.java,v 1.5 2004/08/16 15:48:37 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -35,13 +41,14 @@ import org.apache.lenya.ac.GroupManager;
 import org.apache.lenya.ac.IPRangeManager;
 import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.impl.AbstractAccreditableManager;
 
 /**
  * File-based accreditable manager.
  */
 public class FileAccreditableManager extends AbstractAccreditableManager implements Serviceable,
-        Parameterizable {
+        Configurable, Parameterizable {
 
     /**
      * Creates a new FileAccreditableManager. If you use this constructor, you have to set the
@@ -55,15 +62,29 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * Creates a new FileAccessController based on a configuration directory.
      * 
      * @param configurationDirectory The configuration directory.
+     * @param userTypes The supported user types.
      */
-    public FileAccreditableManager(File configurationDirectory) {
+    public FileAccreditableManager(File configurationDirectory, UserType[] userTypes) {
         assert configurationDirectory != null;
         assert configurationDirectory.exists();
         assert configurationDirectory.isDirectory();
         this.configurationDirectory = configurationDirectory;
+        this.userTypes = new HashSet(Arrays.asList(userTypes));
     }
 
     private File configurationDirectory;
+    private Set userTypes;
+
+    /**
+     * Returns the supported user types.
+     * @return An array of user types.
+     * @throws AccessControlException if an error occurs.
+     */
+    public UserType[] getUserTypes() throws AccessControlException {
+        if (userTypes == null)
+            throw new AccessControlException("User types not initialized");
+        return (UserType[]) userTypes.toArray(new UserType[userTypes.size()]);
+    }
 
     /**
      * Returns the configuration directory.
@@ -118,6 +139,59 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
             configurationDirectoryPath = parameters.getParameter(DIRECTORY);
             getLogger().debug("Configuration directory: [" + configurationDirectoryPath + "]");
         }
+    }
+
+    protected static final String A_M_TAG = "accreditable-manager";
+    protected static final String U_M_CHILD_TAG = "user-manager";
+    protected static final String U_T_CHILD_TAG = "user-type";
+    protected static final String U_T_CLASS_ATTRIBUTE = "class";
+    protected static final String U_T_CREATE_ATTRIBUTE = "create-use-case";
+    // provided for backward compatibility
+    protected static final String DEFAULT_USER_TYPE_CLASS = FileUser.class.getName();
+    protected static final String DEFAULT_USER_TYPE_KEY = "Local User";
+    protected static final String DEFAULT_USER_CREATE_USE_CASE = "userAddUser";
+
+    /**
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     *      added to read new user-manager block within accreditable-manager
+     */
+    public void configure(Configuration configuration) throws ConfigurationException {
+        // note:
+        // we need to distinguish the case where configure is called from
+        // somewhere else (i.e. not due to the reading of ac.xconf),
+        // from the case where the child user-manager does not exist,
+        // for instance when reading an old ac.xconf which does not yet
+        // have this configuration. So for backward compatibility, we need
+        // to distinguish the 2 cases
+        if (A_M_TAG.equals(configuration.getName())) {
+            userTypes = new HashSet();
+            Configuration umConf = configuration.getChild(U_M_CHILD_TAG, false);
+            if (umConf != null) {
+                Configuration[] typeConfs = umConf.getChildren();
+                for (int i = 0; i < typeConfs.length; i++) {
+                    userTypes.add(new UserType(typeConfs[i].getValue(), typeConfs[i]
+                            .getAttribute(U_T_CLASS_ATTRIBUTE), typeConfs[i]
+                            .getAttribute(U_T_CREATE_ATTRIBUTE)));
+                }
+            } else {
+                getLogger().debug(
+                        "FileAccreditableManager: using default configuration for user types");
+                // no "user-manager" block in access control: provide
+                // a default for backward compatibility
+                userTypes.add(getDefaultUserType());
+            }
+            // maybe todo (or is it overkill?) : validate the parametrized user
+            // types, for example, check if the classes are in the classpath ?
+        }
+    }
+
+    /**
+     * Returns the default user type.
+     * @return A user type.
+     */
+    public static UserType getDefaultUserType() {
+        return new UserType(DEFAULT_USER_TYPE_KEY, DEFAULT_USER_TYPE_CLASS,
+                DEFAULT_USER_CREATE_USE_CASE);
     }
 
     private String configurationDirectoryPath;
@@ -183,7 +257,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
      */
     protected UserManager initializeUserManager() throws AccessControlException {
-        return FileUserManager.instance(getConfigurationDirectory());
+        return FileUserManager.instance(getConfigurationDirectory(), getUserTypes());
     }
 
 }
