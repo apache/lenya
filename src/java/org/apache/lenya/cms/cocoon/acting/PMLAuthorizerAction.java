@@ -1,5 +1,5 @@
 /*
- * $Id: PMLAuthorizerAction.java,v 1.15 2003/03/06 20:45:41 gregor Exp $
+ * $Id: PMLAuthorizerAction.java,v 1.16 2003/03/27 16:53:42 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -92,35 +92,35 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
         authenticator_type = authenticatorConf.getAttribute("type");
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("CONFIGURATION: authenticator type=" + authenticator_type);
+            getLogger().debug(".configure(): authenticator type=" + authenticator_type);
         }
 
         Configuration domainConf = conf.getChild("domain");
         domain = domainConf.getValue("127.0.0.1");
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("CONFIGURATION: domain=" + domain);
+            getLogger().debug(".configure(): domain=" + domain);
         }
 
         Configuration portConf = conf.getChild("port");
         port = portConf.getValue(null);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("CONFIGURATION: port=" + port);
+            getLogger().debug(".configure(): port=" + port);
         }
 
         Configuration contextConf = conf.getChild("context");
         context = contextConf.getValue(null);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("CONFIGURATION: context=" + context);
+            getLogger().debug(".configure(): context=" + context);
         }
 
         Configuration policiesConf = conf.getChild("policies");
         policies = policiesConf.getValue(null);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("CONFIGURATION: policies=" + policies);
+            getLogger().debug(".configure(): policies=" + policies);
         }
     }
 
@@ -134,17 +134,18 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
      *
      * @throws Exception DOCUMENT ME!
      */
-    public boolean authorize(Request request, Map map)
-        throws Exception {
+    public boolean authorize(Request request, Map map) throws Exception {
         String remoteAddress = request.getRemoteAddr();
 
         // Permit ?Identity? and Policy requests for localhost
         String sitemap_uri = request.getRequestURI();
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("POLICIES: " + sitemap_uri + " " + policies);
+            getLogger().debug(".authorize(): Request URI: " + sitemap_uri);
+            getLogger().debug(".authorize(): Policies path: " + policies);
         }
 
+        // Allow accessing policies from localhost
         if (remoteAddress.equals("127.0.0.1") && (sitemap_uri.indexOf(policies) >= 0)) {
             return true;
         }
@@ -193,8 +194,11 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
                 "org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
 
         if (!this.authenticator_type.equals(authenticator_type)) {
-            getLogger().warn(".authorize(): Bad authenticator: " + authenticator_type +
-                " (Authorizer's authenticator: " + this.authenticator_type + ")");
+            if (authenticator_type == null) {
+                getLogger().debug(".authorize(): No authenticator yet");
+            } else {
+                getLogger().warn(".authorize(): Authenticators do not match: " + authenticator_type + " (Authorizer's authenticator: " + this.authenticator_type + ")");
+            }
 
             return false;
         }
@@ -220,6 +224,9 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
         return false;
     }
 
+    /**
+     *
+     */
     private Document getPolicyDoc(Request request) throws Exception {
         String context = request.getContextPath();
         int port = request.getServerPort();
