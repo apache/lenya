@@ -43,6 +43,7 @@
 					<navigation href="navigation.html" label="Navigation"/>
 					<xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
 					<static-resources href="static-resources.html" label="Serving static resources"/>
+					<menubar href="lenya-menubar.html" label="Lenya Menubar"/>
 				</layout>
 				<publication href="publication/" label="Publication">
 					<page-envelope href="pageEnvelope.html" label="Page envelope"/>

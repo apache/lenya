@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Lenya Menubar</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>XSLT</title>
+<p>
+By editing <code>src/webapp/lenya/xslt/menu/menu.xsl</code> one can change the look and feel of the Lenya menu bar.
+This XSLT template is being included by <code>src/webapp/lenya/xslt/menu/root.xsl</code>.
+</p> 
+</section>
+
+</body>
+</document>
