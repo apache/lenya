@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerAction.java,v 1.25 2003/09/08 17:09:15 edith Exp $
+$Id: RevisionControllerAction.java,v 1.26 2003/09/10 12:54:05 edith Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,6 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -151,7 +150,7 @@ public class RevisionControllerAction extends AbstractAction {
 				rcmlDirectory,
 				backupDirectory,
 				publicationPath);
-		getLogger().error("revision controller" + rc);
+		getLogger().debug("revision controller" + rc);
 
 		// /Initialize Revision Controller
 		// Get session
