@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.1 2003/07/17 08:09:36 egli Exp $
+$Id: AccessControlModule.java,v 1.2 2003/07/17 10:19:35 egli Exp $
 <License>
 
  ============================================================================
@@ -75,11 +75,15 @@ import org.apache.lenya.cms.ac2.Identity;
 public class AccessControlModule extends AbstractInputModule {
 
     public static final String USER_ID = "user-id";
+    public static final String USER_NAME = "user-name";
+    public static final String USER_FULLNAME = "user-fullname";
+	public static final String USER_EMAIL = "user-email";
 
     /**
       * The names of the AccessControlModule parameters.
       */
-    public static final String[] PARAMETER_NAMES = { USER_ID };
+    public static final String[] PARAMETER_NAMES =
+        { USER_ID, USER_NAME, USER_FULLNAME, USER_EMAIL };
 
     /**
      *  (non-Javadoc)
@@ -100,7 +104,13 @@ public class AccessControlModule extends AbstractInputModule {
             if (identity != null) {
 
                 if (name.equals(USER_ID)) {
-                    value = identity.getUser();
+                    value = identity.getUser().getId();
+                } else if (name.equals(USER_NAME)) {
+                    value = identity.getUser().getName();
+                } else if (name.equals(USER_FULLNAME)) {
+                    value = identity.getUser().getFullName();
+                } else if (name.equals(USER_EMAIL)) {
+                	value = identity.getUser().getEmail();
                 }
             }
         }
