@@ -58,12 +58,20 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.xml.DocumentHelper;
+
 import org.w3c.dom.Document;
 
+import org.xmldb.common.xml.queries.XPathQuery;
+import org.xmldb.common.xml.queries.XPathQueryFactory;
+import org.xmldb.common.xml.queries.XUpdateQuery;
+import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.17 2003/10/09 22:34:25 stefano Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.18 2003/10/14 14:04:07 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -113,17 +121,16 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     //Document document = DocumentHelper.readDocument(file);
 
                     Document document = null;
-                    javax.xml.parsers.DocumentBuilderFactory parserFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
+                    DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
                     parserFactory.setValidating(false);
                     parserFactory.setNamespaceAware(true);
                     parserFactory.setIgnoringElementContentWhitespace(true);
-                    javax.xml.parsers.DocumentBuilder builder = parserFactory.newDocumentBuilder();
+                    DocumentBuilder builder = parserFactory.newDocumentBuilder();
                     document = builder.parse(file.getAbsolutePath());
                     System.setProperty("org.xmldb.common.xml.queries.XPathQueryFactory", "org.xmldb.common.xml.queries.xalan2.XPathQueryFactoryImpl");
 
-                    org.xmldb.common.xml.queries.XPathQuery xpath = org.xmldb.common.xml.queries.XPathQueryFactory.newInstance().newXPathQuery();
-
-                    org.xmldb.common.xml.queries.XUpdateQuery xq = new org.xmldb.xupdate.lexus.XUpdateQueryImpl();
+                    XPathQuery xpath = XPathQueryFactory.newInstance().newXPathQuery();
+                    XUpdateQuery xq = new XUpdateQueryImpl();
 
                     Enumeration params = request.getParameterNames();
                     while (params.hasMoreElements()) {
@@ -187,6 +194,11 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     } else {
                         return new HashMap();
                     }
+                } catch (NullPointerException e) {
+                    getLogger().error(".act(): NullPointerException", e);
+                    HashMap hmap = new HashMap();
+                    hmap.put("message", "NullPointerException");
+                    return hmap;
                 } catch (Exception e) {
                     getLogger().error(".act(): Exception: " + e.getMessage(), e);
                     HashMap hmap = new HashMap();
