@@ -1,17 +1,23 @@
 
-function getUserManager() {
-    return getManager("user");
+function getAccreditableManager() {
+	return accreditableManager;
 }
 
-function getGroupManager() {
-    return getManager("group");
+var accreditableManager;
+var selector;
+var resolver;
+
+function resolve() {
+    selector = cocoon.getComponent("org.apache.lenya.cms.ac2.AccessControllerResolverSelector");
+	resolver = selector.select(Packages.org.apache.lenya.cms.ac2.AccessControllerResolver.DEFAULT_RESOLVER);
+	var requestUrl = cocoon.parameters["requestUri"];
+	var contextPath = cocoon.parameters["contextPath"];
+	var webappUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(contextPath, requestUrl);
+	var accessController = resolver.resolveAccessController(webappUrl);
+	accreditableManager = accessController.getAccreditableManager();
 }
 
-function getIPRangeManager() {
-    return getManager("iprange");
-}
-
-function getManager(type) {
-    var manager = cocoon.inputModuleGetAttribute("access-control", type + "-manager");
-    return manager;
+function release() {
+	cocoon.releaseComponent(resolver);
+	cocoon.releaseComponent(selector);
 }

@@ -3,7 +3,7 @@
 // Modify an IP range.
 //
 function iprange_change_profile(iprangeId) {
-    iprange_change_profile(iprangeId, true);
+    iprange_change_profile(iprangeId, false);
 }
 
 //
@@ -55,133 +55,139 @@ function getIPString(byteArray) {
 //
 function iprange_change_profile(iprangeId, newRange) {
 
-    var ipRangeManager = getIPRangeManager();
-    var range;
-    if (newRange) {
-        range = new Packages.org.apache.lenya.cms.ac.FileIPRange();
-    }
-    else {
-        range = ipRangeManager.getIPRange(iprangeId);
-    }
-	var name = range.getName();
-	var description = range.getDescription();
+	resolve();
+	try {
+	    var ipRangeManager = getAccreditableManager().getIPRangeManager();
+	    var range;
+	    if (newRange == true) {
+	        range = new Packages.org.apache.lenya.cms.ac.FileIPRange();
+	    }
+	    else {
+	        range = ipRangeManager.getIPRange(iprangeId);
+	    }
+		var name = range.getName();
+		var description = range.getDescription();
+		
+		var net = new Array(4);
+		var mask = new Array(4);
 	
-	var net = new Array(4);
-	var mask = new Array(4);
-
-	for (i = 0; i < 4; i++) {
-        net[i] = getInt(range.getNetworkAddress().getAddress()[i]);
-        mask[i] = getInt(range.getSubnetMask().getAddress()[i]);
-	}
-	
-	var netErrors = new Array(4);
-	var maskErrors = new Array(4);
-	
-    var message = "";
-	
-  	for (i = 0; i < 4; i++) {
-        netErrors[i] = "false";
-        maskErrors[i] = "false";
-   	}
-	
-    while (true) {
-    
-    	var url;
-    	if (newRange) {
-    		url = "ipranges/profile.xml";
-    	}
-    	else {
-    		url = "ipranges/" + iprangeId + "/profile.xml";
-    	}
-    
-	    sendPageAndWait(url, {
-	    	"iprange-id" : iprangeId,
-	    	"name" : name,
-	    	"description" : description,
-	    	"page-title" : "Edit IP Range",
-	    	"net" : java.util.Arrays.asList(net),
-	    	"net-errors" : java.util.Arrays.asList(netErrors),
-	    	"mask" : java.util.Arrays.asList(mask),
-	    	"mask-errors" : java.util.Arrays.asList(maskErrors),
-	    	"new-iprange" : newRange,
-	    	"message" : message
-	    });
-	    
+		for (i = 0; i < 4; i++) {
+	        net[i] = getInt(range.getNetworkAddress().getAddress()[i]);
+	        mask[i] = getInt(range.getSubnetMask().getAddress()[i]);
+		}
+		
+		var netErrors = new Array(4);
+		var maskErrors = new Array(4);
+		
+	    var message = "";
+		
 	  	for (i = 0; i < 4; i++) {
 	        netErrors[i] = "false";
 	        maskErrors[i] = "false";
 	   	}
-	   	message = "";
+		
+	    while (true) {
+	    
+	    	var url;
+	    	if (newRange == true) {
+	    		url = "ipranges/profile.xml";
+	    	}
+	    	else {
+	    		url = "ipranges/" + iprangeId + "/profile.xml";
+	    	}
+	    
+		    cocoon.sendPageAndWait(url, {
+		    	"iprange-id" : iprangeId,
+		    	"name" : name,
+		    	"description" : description,
+		    	"page-title" : "Edit IP Range",
+		    	"net" : java.util.Arrays.asList(net),
+		    	"net-errors" : java.util.Arrays.asList(netErrors),
+		    	"mask" : java.util.Arrays.asList(mask),
+		    	"mask-errors" : java.util.Arrays.asList(maskErrors),
+		    	"new-iprange" : newRange,
+		    	"message" : message
+		    });
+		    
+		  	for (i = 0; i < 4; i++) {
+		        netErrors[i] = "false";
+		        maskErrors[i] = "false";
+		   	}
+		   	message = "";
+		
+		    if (cocoon.request.get("cancel")) {
+		    	break;
+		    }
+		    
+		    if (cocoon.request.get("submit")) {
 	
-	    if (cocoon.request.get("cancel")) {
-	    	break;
+		        var ok = true;
+		        
+	            // get values from request
+			    name = cocoon.request.get("name");
+		       	description = cocoon.request.get("description");
+		       	for (i = 0; i < 4; i++) {
+		       	    net[i] = cocoon.request.get("net-" + (i+1));
+		       	    if (!checkIPNumber(net[i])) {
+		       	        netErrors[i] = "true";
+		       	        ok = false;
+		       	        message = "Please correct the errors.";
+		       	    }
+		       	    
+		       	    mask[i] = cocoon.request.get("mask-" + (i+1));
+		       	    if (!checkIPNumber(mask[i])) {
+		       	        maskErrors[i] = "true";
+		       	        ok = false;
+		       	        message = "Please correct the errors.";
+		       	    }
+		       	}
+		       	
+		       	// initialize new IP range
+		        if (newRange == true) {
+				    iprangeId = cocoon.request.get("iprange-id");
+			        if (ok) {
+		                var existingIPRange = ipRangeManager.getIPRange(iprangeId);
+		                if (existingIPRange != null) {
+		                    message = "This IP range already exists.";
+		                    ok = false;
+		                }
+						else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(iprangeId)) {
+		                	message = "This is not a valid IP range ID. [" + iprangeId + "]";
+		                	ok = false;
+		                }
+		                else {
+		                    range = new Packages.org.apache.lenya.cms.ac.FileIPRange(
+		                        ipRangeManager.getConfigurationDirectory(), iprangeId);
+		                    ipRangeManager.add(range);
+		                }
+		            }
+		        }
+	
+	            // save IP range	    
+		       	if (ok == true) {
+	                range.setName(name);
+	                range.setDescription(description);
+	                range.setNetworkAddress(getIPString(net));
+	                range.setSubnetMask(getIPString(mask));
+	                range.save();
+	                break;
+		       	}
+		    }
+	
 	    }
 	    
-	    if (cocoon.request.get("submit")) {
-
-	        var ok = true;
-	        
-            // get values from request
-		    name = cocoon.request.get("name");
-	       	description = cocoon.request.get("description");
-	       	for (i = 0; i < 4; i++) {
-	       	    net[i] = cocoon.request.get("net-" + (i+1));
-	       	    if (!checkIPNumber(net[i])) {
-	       	        netErrors[i] = "true";
-	       	        ok = false;
-	       	        message = "Please correct the errors.";
-	       	    }
-	       	    
-	       	    mask[i] = cocoon.request.get("mask-" + (i+1));
-	       	    if (!checkIPNumber(mask[i])) {
-	       	        maskErrors[i] = "true";
-	       	        ok = false;
-	       	        message = "Please correct the errors.";
-	       	    }
-	       	}
-	       	
-	       	// initialize new IP range
-	        if (newRange) {
-			    iprangeId = cocoon.request.get("iprange-id");
-		        if (ok) {
-	                var existingIPRange = ipRangeManager.getIPRange(iprangeId);
-	                if (existingIPRange != null) {
-	                    message = "This IP range already exists.";
-	                    ok = false;
-	                }
-					else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(iprangeId)) {
-	                	message = "This is not a valid IP range ID. [" + iprangeId + "]";
-	                	ok = false;
-	                }
-	                else {
-	                    range = new Packages.org.apache.lenya.cms.ac.FileIPRange(
-	                        ipRangeManager.getConfigurationDirectory(), iprangeId);
-	                    ipRangeManager.add(range);
-	                }
-	            }
-	        }
-
-            // save IP range	    
-	       	if (ok) {
-                range.setName(name);
-                range.setDescription(description);
-                range.setNetworkAddress(getIPString(net));
-                range.setSubnetMask(getIPString(mask));
-                range.save();
-                break;
-	       	}
+	    var url;
+	    if (newRange == true) {
+	    	url = "../ipranges.html";
 	    }
-
-    }
-    
-    var url;
-    if (newRange) {
-    	url = "../ipranges.html";
-    }
-    else {
-    	url = "index.html";
-    }
-   	sendPage("redirect.html", { "url" : url });
+	    else {
+	    	url = "index.html";
+	    }
+	   	cocoon.sendPage("redirect.html", { "url" : url });
+   	}
+   	finally {
+   		release();
+   	}
 }
 
 //
@@ -196,39 +202,50 @@ function iprange_add_iprange() {
 //
 function iprange_delete_iprange() {
 
-    var ipRangeManager = getIPRangeManager();
-	var ipRangeId = cocoon.request.get("iprange-id");
-	var range = ipRangeManager.getIPRange(ipRangeId);
-	var name = range.getName();
-	var showPage = true;
-	
-	while (showPage) {
-		sendPageAndWait("ipranges/confirm-delete-common.xml", {
-			"type" : "IP range",
-			"id" : ipRangeId,
-			"name" : name
-		});
-		
-		if (cocoon.request.get("submit")) {
-			ipRangeManager.remove(range);
-			range['delete']();
-			showPage = false;
-		}
-	}
+	resolve();
+	try {
 
-   	sendPage("redirect.html", { "url" : "../ipranges.html" });
+	    var ipRangeManager = getAccreditableManager().getIPRangeManager();
+		var ipRangeId = cocoon.request.get("iprange-id");
+		var range = ipRangeManager.getIPRange(ipRangeId);
+		var name = range.getName();
+		var showPage = true;
+		
+		while (showPage) {
+			cocoon.sendPageAndWait("ipranges/confirm-delete-common.xml", {
+				"type" : "IP range",
+				"id" : ipRangeId,
+				"name" : name
+			});
+			
+			if (cocoon.request.get("cancel")) {
+				break;
+			}
+			
+			if (cocoon.request.get("submit")) {
+				ipRangeManager.remove(range);
+				range['delete']();
+				showPage = false;
+			}
+		}
+	
+	   	cocoon.sendPage("redirect.html", { "url" : "../ipranges.html" });
+   	}
+   	finally {
+   		release();
+   	}
 }
 
 //
 // Change the group affiliation of an IP range.
 //
 function iprange_change_groups(iprangeId) {
-    var range = getIPRangeManager().getIPRange(iprangeId);
+    var range = getAccreditableManager().getIPRangeManager().getIPRange(iprangeId);
     
     var rangeGroupArray = range.getGroups();
     var rangeGroups = new java.util.ArrayList(java.util.Arrays.asList(rangeGroupArray));
     
-    var iterator = getGroupManager().getGroups();
+    var iterator = getAccreditableManager().getGroupManager().getGroups();
     var groups = new java.util.ArrayList();
     while (iterator.hasNext()) {
     	var group = iterator.next();
@@ -238,7 +255,7 @@ function iprange_change_groups(iprangeId) {
     }
     
     while (true) {
-	    sendPageAndWait("ipranges/" + iprangeId + "/groups.xml", {
+	    cocoon.sendPageAndWait("ipranges/" + iprangeId + "/groups.xml", {
 	    	"iprange-id" : iprangeId,
 	    	"groups" : groups,
 	    	"iprange-groups" : rangeGroups
@@ -246,7 +263,7 @@ function iprange_change_groups(iprangeId) {
 	    
 		var groupId = cocoon.request.get("group");
 		if (cocoon.request.get("add_group") && groupId != "") {
-			var group = getGroupManager().getGroup(groupId);
+			var group = getAccreditableManager().getGroupManager().getGroup(groupId);
 			if (!rangeGroups.contains(group)) {
 				rangeGroups.add(group);
 				groups.remove(group);
@@ -255,7 +272,7 @@ function iprange_change_groups(iprangeId) {
 	    
 		var rangeGroupId = cocoon.request.get("iprange_group");
 		if (cocoon.request.get("remove_group") && rangeGroupId != "") {
-			var group = getGroupManager().getGroup(rangeGroupId);
+			var group = getAccreditableManager().getGroupManager().getGroup(rangeGroupId);
 			if (rangeGroups.contains(group)) {
 				rangeGroups.remove(group);
 				groups.add(group);
