@@ -1,5 +1,4 @@
 /*
-$Id: CollectionImpl.java,v 1.5 2003/12/11 16:55:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -72,6 +71,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: CollectionImpl.java,v 1.6 2003/12/30 18:18:56 michi Exp $
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
     
@@ -84,8 +84,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    protected CollectionImpl(Publication publication, String id, String area)
-        throws DocumentException {
+    public CollectionImpl(Publication publication, String id, String area) throws DocumentException {
         super(publication, id, area);
     }
 
@@ -97,8 +96,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    protected CollectionImpl(Publication publication, String id, String area, String language)
-        throws DocumentException {
+    public CollectionImpl(Publication publication, String id, String area, String language) throws DocumentException {
         super(publication, id, area, language);
     }
 
