@@ -123,8 +123,11 @@
       documenttype="${create.doctype}"
       language="${create.language}"
       area="${authoring.area}"/>
-      
-  <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
+
+    <echo>init the workflow history with document-id: ${create.parent-id}/${create.child-id}</echo>      
+    <echo>with document-type: ${create.doctype}</echo>      
+    <echo>with language: ${create.language}</echo>      
+ <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
   <init-history
       documentid="${create.parent-id}/${create.child-id}"
       documenttype="${create.doctype}"
