@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase-bxeng.xmap,v 1.18 2004/07/01 13:02:31 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -79,12 +79,23 @@
     
     
   </map:resources>
-
+  <!-- =========================== Flow ===================================== -->
+  <map:flow language="javascript">
+    <map:script src="../../usecases/edit-document.js"/>
+  </map:flow>
 	<!-- =========================== Pipelines ================================ -->
 	
 	<map:pipelines>
 	  
     <map:pipeline type="noncaching">
+      
+      <map:match pattern="request2document">
+        <map:generate type="stream"/>
+        <map:transform src="../../xslt/bxeng/change-object-path-back.xsl">
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
       
       <map:match type="usecase" pattern="bxeng">
         
@@ -238,23 +249,12 @@
         	  <map:transform src="../../xslt/rc/rco-exception.xsl"/>
 	          <map:call resource="style-cms-page"/>
         	</map:act>
-            <map:generate type="stream"/>
-            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
-              <map:parameter name="source" value="content/{page-envelope:area}/{page-envelope:document-path}"/>
-            </map:transform>
-            <map:transform src="../../xslt/bxeng/change-object-path-back.xsl">
-              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-            </map:transform>
-            <map:transform type="write-source"/>
-            <map:act type="workflow">
-              <map:parameter name="area" value="{page-envelope:area}"/>
-              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-              <map:parameter name="language" value="{page-envelope:document-language}"/>
-              <map:parameter name="event" value="edit"/>
-            </map:act>
-            <map:serialize type="xml" status-code="204"/>
-          </map:when>
           
+          <map:call function="editDocument">
+            <map:parameter name="sourceUri" value="cocoon:/request2document"/>
+          </map:call>
+          </map:when>
+
           <map:otherwise> <!-- GET -->
             <map:generate src="content/authoring/{page-envelope:document-path}"/>
             <map:transform src="../../xslt/bxeng/change-object-path.xsl">

@@ -82,19 +82,3 @@ function publication_image_library() {
     }
     cocoon.sendPage(cocoon.parameters["template"], {"imageInfos" : imageInfos});
 }
-
-/**
- * Saves the edited document submitted by Kupu.
- */
-function save() {
-    cocoon.log.debug("Starting to save Kupu doc.");
-    var flowHelper = new FlowHelper();
-    try {        
-        flowHelper.savePipelineToDocument(cocoon, cocoon.parameters["template"]);
-        flowHelper.triggerWorkflow(cocoon, "edit");
-        cocoon.response.setStatus(204); // Expected by Kupu upon successful save
-    } catch(e) { 
-        cocoon.log.error("Error saving Kupu doc.", e);
-        cocoon.response.setStatus(500);// Send real error page? Kupu wo't display it anyway, but would be cleaner 
-    }
-}
