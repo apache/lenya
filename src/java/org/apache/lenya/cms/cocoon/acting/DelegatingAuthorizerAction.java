@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DelegatingAuthorizerAction.java,v 1.6 2003/07/09 18:53:51 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id
 */
 package org.apache.lenya.cms.cocoon.acting;
 
+import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -84,9 +85,9 @@ import java.util.Map;
  */
 public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
     protected static final String AUTHORIZER_ELEMENT = "authorizer";
-    protected static final String CLASS_ATTRIBUTE = "src";
+    protected static final String TYPE_ATTRIBUTE = "type";
     protected static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
-    private List authorizers = new ArrayList();
+    private List authorizerTypes = new ArrayList();
     private String accessControllerId;
 
     /**
@@ -94,7 +95,7 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
-        
+
         Configuration accessControllerConfiguration = conf.getChild(ACCESS_CONTROLLER_ELEMENT);
         accessControllerId = accessControllerConfiguration.getValue();
         getLogger().debug("Access controller ID: [" + accessControllerId + "]");
@@ -102,16 +103,9 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
         Configuration[] authorizerConfigurations = conf.getChildren(AUTHORIZER_ELEMENT);
 
         for (int i = 0; i < authorizerConfigurations.length; i++) {
-            String className = authorizerConfigurations[i].getAttribute(CLASS_ATTRIBUTE);
-            Authorizer authorizer;
-
-            try {
-                authorizer = (Authorizer) Class.forName(className).newInstance();
-            } catch (Exception e) {
-                throw new ConfigurationException("Creating authorizer failed: ", e);
-            }
-
-            authorizers.add(authorizer);
+            String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
+            authorizerTypes.add(type);
+            getLogger().debug("Adding authorizer [" + type + "]");
         }
     }
 
@@ -119,8 +113,8 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
      * Returns the authorizers of this action.
      * @return An array of authorizers.
      */
-    protected Authorizer[] getAuthorizers() {
-        return (Authorizer[]) authorizers.toArray(new Authorizer[authorizers.size()]);
+    protected String[] getAuthorizerTypes() {
+        return (String[]) authorizerTypes.toArray(new String[authorizerTypes.size()]);
     }
 
     /**
@@ -128,7 +122,7 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
      * @return A boolean value.
      */
     protected boolean hasAuthorizers() {
-        return !authorizers.isEmpty();
+        return !authorizerTypes.isEmpty();
     }
 
     /**
@@ -139,11 +133,14 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
         boolean authorized = false;
 
         if (request != null) {
-            
             AccessController controller = null;
-            
+            ComponentSelector selector = null;
+
             try {
-                controller = (AccessController) manager.lookup(AccessController.ROLE + "/" + accessControllerId);
+                controller = (AccessController) manager.lookup(AccessController.ROLE + "/" +
+                        accessControllerId);
+                selector = (ComponentSelector) manager.lookup(Authorizer.class.getName() + "Selector");
+
                 Session session = request.getSession(true);
                 Identity identity = (Identity) session.getAttribute(Identity.class.getName());
 
@@ -153,28 +150,38 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
 
                 if (identity != null) {
                     if (hasAuthorizers()) {
-                        Authorizer[] authorizers = getAuthorizers();
+                        String[] authorizerTypes = getAuthorizerTypes();
                         int i = 0;
                         authorized = true;
+                        
 
-                        while ((i < authorizers.length) && authorized) {
-                            authorized = authorized &&
-                                authorizers[i].authorize(controller, new FilePolicyManager(), identity, getPublication(), request);
+                        while ((i < authorizerTypes.length) && authorized) {
+                            Authorizer authorizer = (Authorizer) selector.select(authorizerTypes[i]);
 
-                            if (getLogger().isDebugEnabled()) {
-                                getLogger().debug("Authorizer [" + authorizers[i] + "] returned [" +
-                                    authorized + "]");
+                            try {
+                                authorized = authorized &&
+                                    authorizer.authorize(controller, new FilePolicyManager(),
+                                        identity, getPublication(), request);
+
+                                if (getLogger().isDebugEnabled()) {
+                                    getLogger().debug("Authorizer [" + authorizer + "] returned [" +
+                                        authorized + "]");
+                                }
+                            } finally {
+                                if (selector != null) {
+                                    selector.release(authorizer);
+                                } 
                             }
 
                             i++;
                         }
+                        
                     }
                 }
-            }
-            finally {
+            } finally {
                 manager.release(controller);
+                manager.release(selector);
             }
-            
         }
 
         return authorized;
