@@ -42,13 +42,19 @@
 		<lenya-info:overview>
 
     <xsp:logic>
-      Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
+      Object docObject = <input:get-attribute module="page-envelope" as="object" name="document"/>;
+      Document doc = null;
+      if (!"".equals(docObject)) {
+          doc = (Document) docObject;
+      }
       
       boolean exists = false;
       boolean existsLanguage = false;
       try {
-          exists = doc.exists();
-          existsLanguage = doc.existsInAnyLanguage();
+          if (doc != null) {
+              exists = doc.exists();
+              existsLanguage = doc.existsInAnyLanguage();
+          }
       }
       catch (DocumentException e) {
           throw new ProcessingException(e);
