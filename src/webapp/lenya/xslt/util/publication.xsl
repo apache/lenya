@@ -39,8 +39,8 @@
   <li><a href="authoring/">Login&#160;as&#160;Editor</a></li>
 </ul>
 <div class="lenya-publication-item"><a href="../index.html">Other&#160;Publications</a></div>
-<div class="lenya-publication-item"><a href="../docs-new/docs/index.html">Documentation</a></div>
-<div class="lenya-publication-item"><a href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Wiki&#160;Documentation</a></div>
+<div class="lenya-publication-item"><a href="http://cocoon.apache.org/lenya/docs/index.html">Documentation</a></div>
+<div class="lenya-publication-item"><a href="http://wiki.apache.org/cocoon-lenya">Wiki</a></div>
 </div>
 
 <div class="lenya-frontpage">
@@ -56,7 +56,6 @@
 <h2><xsl:value-of select="../lenya:name"/></h2>
 <xsl:apply-templates select="../lenya:pub-version"/>
 (Based on
-<xsl:apply-templates select="../lenya:version"/> <!-- DEPRECATED: replaced by lenya:lenya-version -->
 <xsl:apply-templates select="../lenya:lenya-version"/>
 <xsl:apply-templates select="../lenya:cocoon-version"/>
 )

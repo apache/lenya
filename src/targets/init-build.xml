@@ -100,13 +100,6 @@
       </fileset>
     </copy>
 
-    <!-- copy forrest and default libraries -->
-    <!-- FIXME: shouldn't be publication specific -->
-    <echo>Copy forrest libraries</echo>
-    <copy todir="${build.webapp}/WEB-INF/lib" filtering="off">
-      <fileset dir="src/webapp/lenya/pubs/docs-new/WEB-INF/lib"/>
-    </copy>
-    
     <!-- patch cocoon.xconf -->
     <echo>INFO: patching cocoon.xconf with XSLT stylesheet</echo>
     <xslt
@@ -114,7 +107,6 @@
         out="${build.webapp}/WEB-INF/cocoon.xconf"
         style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
         >
-      <param name="forrest-publication" expression="/lenya/pubs/docs-new"/>
       <param name="hsqldb-server-port" expression="${hsqldb-server.port}"/>
       <param name="xopus-context" expression="${xopus.context}"/>
       <outputproperty name="indent" value="yes"/>

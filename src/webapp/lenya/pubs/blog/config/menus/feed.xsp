@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: feed.xsp,v 1.16 2004/09/01 23:25:32 michi Exp $ -->
+<!-- $Id$ -->
  
 <xsp:page
   language="java"
@@ -59,11 +59,11 @@
  
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
-        <item href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Wiki&#160;Documentation</item>
+	  <item><xsp:attribute name="href">http://cocoon.apache.org/lenya/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
+	  <item href="http://wiki.apache.org/cocoon-lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>
-          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
+	  <item><xsp:attribute name="href">http://cocoon.apache.org/lenya/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
       </block>
     </menu>
@@ -72,9 +72,6 @@
       <block>
         <item href="index.xml">Feed</item>
         <item href="lenya-page-body.xml">Body</item>
-      </block>
-      <block>
-        <item><xsp:attribute name="href">http://www.feedvalidator.org/check.cgi?url=http://127.0.0.1:8080<xsp-request:get-context-path/>/blog/live/feeds/all/index.xml</xsp:attribute>Validate&#160;Live&#160;Feed</item>
       </block>
       <block>
         <item href="/lenya/blog/atomapi/">introspection</item>

@@ -20,7 +20,6 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:param name="forrest-publication"/>
 <xsl:param name="hsqldb-server-port"/>
 <xsl:param name="xopus-context"/>
 
@@ -63,10 +62,6 @@
     <component-instance name="defaults" class="org.apache.cocoon.components.modules.input.DefaultsModule">
       <values>
         <skin>lenya-site</skin>
-        <!--
-        <skin-docs>lenya-site</skin-docs>
-        <skin>forrest-site</skin>
-        -->
       </values>
     </component-instance>
 
@@ -165,12 +160,8 @@
       |
       |     <parameter name="verbosity" value="2"/>
       +-->
-  <entity-resolver logger="core.resolver">
-    <parameter name="catalog" value="{$forrest-publication}/resources/schema/catalog.xcat"/>
-    <parameter name="verbosity" value="1"/>
-  </entity-resolver>
 
-  <xsl:apply-templates select="*[local-name() != 'entity-resolver']"/>
+  <xsl:apply-templates select="*"/>
 
   <accreditable-managers>
     <component-instance logger="lenya.ac.accreditablemanager"

@@ -29,7 +29,7 @@
 
 <xsl:template match="nav:site">
   <div id="search">
-    <form action="{$root}../search-{$area}/lucene"><input class="searchfield" type="text" name="queryString"/><input class="searchsubmit" type="submit" value="Search" name="find"/></form>
+    <form action="{$root}../search-{$area}/lucene"><p><input class="searchfield" type="text" name="queryString"/><input class="searchsubmit" type="submit" value="Search" name="find"/></p></form>
       </div>
 </xsl:template>
 
