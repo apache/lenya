@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.232 2004/08/11 08:34:39 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.233 2004/08/11 08:36:15 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -105,7 +105,7 @@
             <map:generate src="config/notification/notification.xconf"/>
           </map:otherwise>      
         </map:select>
-        <map:transform src="xslt/notification/notification2message.xsl">
+        <map:transform src="{fallback:xslt/notification/notification2message.xsl}">
           <map:parameter name="usecase" value="{2}"/>
         </map:transform>
         <map:serialize type="xml"/>
@@ -114,7 +114,7 @@
       <!-- notification/{publication-id}/{usecase}.xsl -->
       <map:match pattern="notification/*/*.xsl">
         <map:generate src="cocoon:/notification/{1}/{2}.xml"/>
-        <map:transform src="xslt/notification/message2xslt.xsl">
+        <map:transform src="{fallback:xslt/notification/message2xslt.xsl}">
           <map:parameter name="usecase" value="{2}"/>
           <map:parameter name="server-uri" value="http://{request:serverName}:{request:serverPort}"/>
           <map:parameter name="document-url" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
