@@ -1,5 +1,21 @@
 <?xml version="1.0"?>
 <!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: document2html.xsl,v 1.2 2004/03/13 12:42:18 gregor Exp $ --><!--
 This stylesheet contains the majority of templates for converting documentv11
 to HTML.  It renders XML as HTML in this form:
 
@@ -9,8 +25,6 @@ to HTML.  It renders XML as HTML in this form:
 
 ..which site2xhtml.xsl then combines with HTML from the index (book2menu.xsl)
 and tabs (tab2menu.xsl) to generate the final HTML.
-
-$Id: document2html.xsl,v 1.1 2003/04/09 23:28:24 andreas Exp $
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 

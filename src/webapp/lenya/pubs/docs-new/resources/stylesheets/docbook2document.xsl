@@ -1,14 +1,28 @@
 <?xml version="1.0"?>
 <!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: docbook2document.xsl,v 1.2 2004/03/13 12:42:09 gregor Exp $ -->
+    
+<!--
 A prototype Docbook-to-Forrest stylesheet.  Support for the range of Docbook
 tags is very patchy; if you need real Docbook support, use Norm Walsh's
 stylesheets.  Volunteers are needed to improve this!
 
 Credit: original from the jakarta-avalon project
-Revision:
- - Kevin.Ross@iVerticalLeap.com - Moving towards xml.apache.org/forrest document...not yet complete.
- - jefft@apache.org - Lots of fixups, notably the title now works, and footnotes work.
-
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
       <xsl:output method="xml" indent="yes" doctype-system="http://localhost/forrest/dtd/document-v11.dtd" doctype-public="-//APACHE//DTD Documentation V1.1//EN" encoding="UTF-8"/>
