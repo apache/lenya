@@ -9,7 +9,16 @@ This sitemap creates default navigation components.
 
   <map:components>
     <map:generators default="file"/>
-    <map:transformers default="xslt"/>
+    <map:transformers default="xslt">
+    <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
+        <catalogues default="cmsui">
+          <catalogue id="cmsui" name="cmsui" location="resources/i18n"/>           
+         </catalogues>
+         <untranslated-text>untranslated</untranslated-text>
+         <!-- cache-at-startup should be true in non development/debug mode -->
+       <cache-at-startup>false</cache-at-startup>
+      </map:transformer>
+          </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
@@ -30,18 +39,18 @@ This sitemap creates default navigation components.
           <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>
-        </map:transform>
+        </map:transform>       
         <map:serialize type="xml"/>
       </map:act>
       
       <!-- use default navigation schema -->
       <map:transform src="xslt/navigation/{stylesheet}.xsl">
         <map:parameter name="url" value="{url}"/>
-          <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
-         <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+        <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
+        <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>
-      </map:transform>
-      <map:serialize type="xml"/>
+      </map:transform>             
+      <map:serialize type="xml"/>      
       
     </map:resource>
   
@@ -62,11 +71,15 @@ This sitemap creates default navigation components.
           <map:generate src="content/{2}/sitetree.xml"/>
         </map:otherwise>
       </map:select>
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>
       <map:call resource="fallback-transformation">
         <map:parameter name="publication-id" value="{1}"/>
         <map:parameter name="url" value="{3}"/>
         <map:parameter name="stylesheet" value="sitetree2nav"/>
-      </map:call>
+      </map:call>    
+            
     </map:match>
 
     

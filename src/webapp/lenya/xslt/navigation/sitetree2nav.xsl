@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
+    $Id: sitetree2nav.xsl,v 1.17 2004/02/22 17:52:59 roku Exp $
+
     Document   : stylesheet.xsl
     Created on : 30. April 2003, 10:53
     Author     : andreas
@@ -93,7 +95,7 @@ Apply nodes recursively
     
     <xsl:variable name="canonical-language-suffix">
       <xsl:choose>
-        <xsl:when test="not($defaultlanguage = $existinglanguage)">
+        <xsl:when test="$existinglanguage != '' and $defaultlanguage != $existinglanguage">
           <xsl:value-of select="$language-suffix"/>
         </xsl:when>
         <xsl:otherwise>
@@ -142,10 +144,19 @@ Apply nodes recursively
     
     <xsl:attribute name="href"><xsl:value-of select="concat($path-to-context, $canonical-url)"/></xsl:attribute>
     
-    <xsl:apply-templates select="tree:label[lang($existinglanguage)]">
-      <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
-    </xsl:apply-templates>
-    
+    <xsl:choose>
+      <xsl:when test="tree:label[lang($existinglanguage)]">
+        <xsl:apply-templates select="tree:label[lang($existinglanguage)]">
+         <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
+        </xsl:apply-templates>      	  	    
+      </xsl:when>
+      <xsl:otherwise>
+       <xsl:apply-templates select="tree:label[1]">
+         <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
+       </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
+         
     <xsl:apply-templates select="tree:node">
       <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
     </xsl:apply-templates>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.23 2004/02/18 19:26:09 roku Exp $
+  $Id: cmsui.xml,v 1.24 2004/02/22 17:52:59 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -49,6 +49,8 @@
   <message key="Name">Name</message>
   <message key="Full Name">Full Name</message>
   <message key="required fields">required fields</message>
+  <message key="Search">Search</message>
+  <message key="Home">Home</message>
      
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  

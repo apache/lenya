@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.27 2004/02/20 16:22:42 michi Exp $
+   $Id: cmsui_de.xml,v 1.28 2004/02/22 17:52:59 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -49,6 +49,8 @@
   <message key="Name">Name</message>
   <message key="Full Name">Vor-&#160;und&#160;Nachname</message>
   <message key="required fields">Pflichfelder</message> 
+  <message key="Search">Suche</message>
+  <message key="Home">Startseite</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
@@ -103,7 +105,7 @@
   <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
   <message key="Edit with Epoz">Bearbeiten mit Epoz</message>
   <message key="Edit with BXE">Bearbeiten mit BXE</message>
-  <message key="Edit with one Form">Bearbeiten mit Formulareditor</message>
+  <message key="Edit with one Form">Bearbeiten Formulareditor</message>
   <message key="Edit with Forms">Bearbeiten mit Formwizard</message>
   <message key="Edit Metadata">Metadata bearbeiten</message>
   <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
