@@ -60,7 +60,7 @@ The task parameters are:
 Every time an <code>AntTask</code> is invoked, a log file is created unsing
 the <code>XmlLogger</code>
 (<link href="http://ant.apache.org/manual/listeners.html">manual entry</link>,
-<link href="http://nagoya.apache.org/gump/javadoc/ant/build/javadocs/org/apache/tools/ant/XmlLogger.html">JavaDoc</link>).
+<link href="http://issues.apache.org/gump/javadoc/ant/build/javadocs/org/apache/tools/ant/XmlLogger.html">JavaDoc</link>).
 For the location of the log files, see section <link href="#File+Locations">File Locations</link>.
 The log history can be viewed at the URI
 </p>
