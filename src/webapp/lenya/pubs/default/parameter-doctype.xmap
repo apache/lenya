@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: parameter-doctype.xmap,v 1.13 2004/03/13 12:47:21 gregor Exp $ -->
+<!-- $Id: parameter-doctype.xmap,v 1.14 2004/08/11 12:58:39 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -28,7 +28,10 @@
     <map:actions>
       <map:action logger="sitemap.action.sourcetype" name="sourcetype" src="org.apache.forrest.components.sourcetype.SourceTypeAction">
         <sourcetype name="xhtml">
-          <document-element namespace="http://www.w3.org/1999/xhtml" />
+          <document-element namespace="http://www.w3.org/1999/xhtml"/>
+        </sourcetype>
+        <sourcetype name="links">
+          <document-element namespace="http://cocoon.apache.org/lenya/pubs/default/1.0"/>
         </sourcetype>
       </map:action>
     </map:actions>
@@ -39,6 +42,16 @@
   <map:resources/>
 
   <map:pipelines>
+
+    <map:pipeline>
+      <!-- {area}/{uri} -->
+      <map:match pattern="*/index.html">
+        <map:generate type="serverpages" src="../../config/parameters/default.xsp">
+          <map:parameter name="value" value="homepage"/>
+	</map:generate>
+	<map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
 
     <map:pipeline>
       <!-- {area}/{uri} -->

@@ -25,6 +25,13 @@
   <node id="concepts">
     <label xml:lang="en">Concepts (english only)</label>
   </node>
+
+<!-- Menu not finished yet -->
+<!--
+  <node id="links">
+    <label xml:lang="en">Apache Lenya Links</label>
+  </node>
+-->
   
   <node id="features">
     <label xml:lang="en">Features</label>

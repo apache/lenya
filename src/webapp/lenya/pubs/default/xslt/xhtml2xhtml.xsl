@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml2xhtml.xsl,v 1.10 2004/08/10 18:38:49 roku Exp $ -->
+<!-- $Id: xhtml2xhtml.xsl,v 1.11 2004/08/11 12:58:39 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
