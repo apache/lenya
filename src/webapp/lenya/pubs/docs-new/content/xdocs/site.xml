@@ -27,32 +27,32 @@
 					<terms href="policymanagers.html" label="Policy&#160;Managers"/>
 					<terms href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
 				</accesscontrol>
-				<authoring href="authoring" labe="Authoring">
+				<authoring href="authoring/" labe="Authoring">
 					<namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
 					<namespaces href="image-upload.html" label="Image Upload"/>
 					<openoffice href="openoffice.html" label="OpenOffice"/>
 				</authoring>
-				<deployment href="deployment" label="Deployment">
+				<deployment href="deployment/" label="Deployment">
 					<namespaces href="mod_proxy.html" label="mod_proxy"/>
 				</deployment>
 				<misc href="editors/" label="Editors">
 					<namespaces href="htmlform.html" label="HTML Form Editor"/>
 					<namespaces href="bxeng.html" label="Bitflux Editor"/>
 				</misc>
-				<layout href="layout" label="Layout">
+				<layout href="layout/" label="Layout">
 					<navigation href="navigation.html" label="Navigation"/>
 					<xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
 					<static-resources href="static-resources.html" label="Serving static resources"/>
 				</layout>
-				<publication href="publication" label="Publication">
+				<publication href="publication/" label="Publication">
 					<page-envelope href="pageEnvelope.html" label="Page envelope"/>
 					<pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
 					<sitetree href="siteTree.html" label="Site tree"/>
 				</publication>
-				<repository href="repository" label="Repository">
+				<repository href="repository/" label="Repository">
 					<namespaces href="webdav.html" label="WebDAV Servers"/>
 				</repository>
-				<search href="search" label="Search">
+				<search href="search/" label="Search">
 					<namespaces href="lucene.html" label="Searching with Lucene"/>
 				</search>
 				<uri-handling href="uri-handling/" label="URI Handling">
