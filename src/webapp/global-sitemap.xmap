@@ -686,18 +686,20 @@
         </map:act>
         
         <map:transform src="lenya/xslt/menu/menu2xhtml.xsl">
-          <map:parameter name="context-prefix" value="{request:contextPath}"/>
-          <map:parameter name="publication-id" value="{1}"/>
-          <map:parameter name="complete-area" value="{2}"/>
-          <map:parameter name="document-area" value="{page-envelope:area}"/>
-          <map:parameter name="document-url" value="{page-envelope:document-url}"/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{1}"/>
+          <map:parameter name="completearea" value="{2}"/>
+          <map:parameter name="documentarea" value="{page-envelope:area}"/>
+          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+          <map:parameter name="userid" value="{access-control:user-id}"/>
+          <map:parameter name="servertime" value="{date:currentDate}"/>
         </map:transform>
         
         <map:transform src="lenya/xslt/menu/menu2xslt.xsl">
-          <map:parameter name="context-prefix" value="{request:contextPath}"/>
-          <map:parameter name="publication-id" value="{1}"/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="area" value="{2}"/>
-          <map:parameter name="document-url" value="{page-envelope:document-url}"/>
+          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>

@@ -5,10 +5,10 @@
   xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
   >
   
-<xsl:param name="context-prefix"/>
-<xsl:param name="publication-id"/>
+<xsl:param name="contextprefix"/>
+<xsl:param name="publicationid"/>
 <xsl:param name="area"/>
-<xsl:param name="document-id"/>
+<xsl:param name="documentid"/>
   
 <xsl:namespace-alias stylesheet-prefix="xso" result-prefix="xsl"/>
   
@@ -26,8 +26,8 @@
     <html>
       <head>
         <xso:call-template name="title"/>
-        <script src="{$context-prefix}/lenya/menu/menu.js" type="text/javascript"/>
-        <link href="{$context-prefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
+        <script src="{$contextprefix}/lenya/menu/menu.js" type="text/javascript"/>
+        <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
         <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
       </head>
       <body bgcolor="#ffffff" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
@@ -45,9 +45,9 @@
   <xso:template name="title">
     <title>
       Apache Lenya -
-      <xsl:value-of select="$publication-id"/> -
+      <xsl:value-of select="$publicationid"/> -
       <xsl:value-of select="$area"/> -
-      <xsl:value-of select="$document-id"/> -
+      <xsl:value-of select="$documentid"/> -
       <xso:value-of select="xhtml:html/xhtml:head/xhtml:title"/>
     </title>
   </xso:template>

@@ -7,13 +7,15 @@
   xmlns="http://www.w3.org/1999/xhtml"
   >
   
-<xsl:param name="context-prefix"/>
-<xsl:param name="publication-id"/>
-<xsl:param name="document-area"/>
-<xsl:param name="complete-area"/>
-<xsl:param name="document-url"/>
+<xsl:param name="contextprefix"/>
+<xsl:param name="publicationid"/>
+<xsl:param name="documentarea"/>
+<xsl:param name="completearea"/>
+<xsl:param name="documenturl"/>
+<xsl:param name="userid"/>
+<xsl:param name="servertime"/>
 
-<xsl:variable name="image-prefix"><xsl:value-of select="$context-prefix"/>/lenya/menu/images</xsl:variable>
+<xsl:variable name="image-prefix"><xsl:value-of select="$contextprefix"/>/lenya/menu/images</xsl:variable>
  
 <xsl:template match="menu:menu">
     
@@ -38,28 +40,28 @@
         <td background="{$image-prefix}/grau-bg2.gif">
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">admin</xsl:with-param>
-            <xsl:with-param name="tab-document-url">/index.html</xsl:with-param>
+            <xsl:with-param name="tab-documenturl">/index.html</xsl:with-param>
           </xsl:call-template>
           
-          <xsl:variable name="tab-document-url">
+          <xsl:variable name="tab-documenturl">
             <xsl:choose>
-              <xsl:when test="$complete-area = 'admin'">/index.html</xsl:when>
-              <xsl:otherwise><xsl:value-of select="$document-url"/></xsl:otherwise>
+              <xsl:when test="$completearea = 'admin'">/index.html</xsl:when>
+              <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
           
           <xsl:variable name="info-area">
           	<xsl:text>info-</xsl:text>
           	<xsl:choose>
-          		<xsl:when test="$document-area = 'admin'">authoring</xsl:when>
-          		<xsl:otherwise><xsl:value-of select="$document-area"/></xsl:otherwise>
+          		<xsl:when test="$documentarea = 'admin'">authoring</xsl:when>
+          		<xsl:otherwise><xsl:value-of select="$documentarea"/></xsl:otherwise>
           	</xsl:choose>
           </xsl:variable>
           
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area" select="$info-area"/>
             <xsl:with-param name="tab-area-prefix">info</xsl:with-param>
-            <xsl:with-param name="tab-document-url" select="$tab-document-url"/>
+            <xsl:with-param name="tab-documenturl" select="$tab-documenturl"/>
           </xsl:call-template>
           
           <xsl:call-template name="area-tab">
@@ -74,7 +76,7 @@
         
         <td valign="bottom" align="right" colspan="2" background="{$image-prefix}/grau-bg2.gif">
         	<div style="margin-right: 10px; color: #FFFFFF; font-size: 7pt; font-family: verdana, arial, sans-serif">
-            <xsl:apply-templates select="workflow"/>&#160;&#160;User Id: <b><xsl:value-of select="current_username"/></b>&#160;&#160;|&#160;&#160;Server Time: <b><xsl:value-of select="server_time"/></b>
+            <xsl:apply-templates select="workflow"/>&#160;&#160;User Id: <b><xsl:value-of select="$userid"/></b>&#160;&#160;|&#160;&#160;Server Time: <b><xsl:value-of select="$servertime"/></b>
           </div>
           
         <div style="margin-top: 5px;"><img border="0" src="{$image-prefix}/lenya_oben_2.gif" /></div>
@@ -112,11 +114,11 @@
   <xsl:template name="area-tab">
     <xsl:param name="tab-area"/>
     <xsl:param name="tab-area-prefix" select="$tab-area"/>
-    <xsl:param name="tab-document-url" select="$document-url"/>
+    <xsl:param name="tab-documenturl" select="$documenturl"/>
     
-    <a id="{$tab-area-prefix}-tab" href="{$context-prefix}/{$publication-id}/{$tab-area}{$document-url}">
+    <a id="{$tab-area-prefix}-tab" href="{$contextprefix}/{$publicationid}/{$tab-area}{$documenturl}">
       <xsl:choose>
-        <xsl:when test="starts-with($complete-area, $tab-area-prefix)">
+        <xsl:when test="starts-with($completearea, $tab-area-prefix)">
           <img border="0" src="{$image-prefix}/{$tab-area-prefix}_active.gif" />
         </xsl:when>
         <xsl:otherwise>
@@ -147,7 +149,7 @@
     <div id="menu{@label}" class="menuOutline">
     	
       <div class="menuBg">
-      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($complete-area, 'info') or not(@authoring = 'false') and not(starts-with($complete-area, 'info'))]"/>
+      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@authoring = 'false') and not(starts-with($completearea, 'info'))]"/>
       </div>
       
     </div>
@@ -155,7 +157,7 @@
   
   <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block">
-		<xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($complete-area, 'info') or not(@authoring = 'false') and not(starts-with($complete-area, 'info'))]"/>
+		<xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@authoring = 'false') and not(starts-with($completearea, 'info'))]"/>
 		
 		<xsl:if test="position() != last()">
 			<div class="lenya-menubar-separator">
@@ -173,7 +175,7 @@
 						<xsl:value-of select="@href"/>
 						<xsl:apply-templates select="@*[local-name() != 'href']"/>
 						<xsl:text/>
-						<xsl:if test="starts-with($complete-area, 'info-')">
+						<xsl:if test="starts-with($completearea, 'info-')">
 							<xsl:choose>
 								<xsl:when test="contains(@href, '?')"><xsl:text>&amp;</xsl:text></xsl:when>
 								<xsl:otherwise><xsl:text>?</xsl:text></xsl:otherwise>
