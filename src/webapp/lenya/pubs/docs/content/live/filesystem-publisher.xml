@@ -30,7 +30,7 @@
 		Normally the "Menus" can be found at docs/publication/menus
 		</p>
    		</s2>
-                                                                                                                                            
+
    		<s2 title="Sitemap"> 
      		<p>
      		</p>  
@@ -59,9 +59,9 @@
        <map:generate type="serverpages" src="../../docs/cms/publishing/publish-screen.xsp"/>
        <map:transform src="../../stylesheets/cms/Page/publishing/main.xsl"/>
        <map:serialize type="html"/>
-     </map:match>                                                                                                                           
+     </map:match>
 		]]>
-           	</source>                                                                                                                        
+           	</source>
          	</p>
        		</li>
        		<li>call of the publish action
@@ -89,7 +89,7 @@
 		Don't forget to change the sitemap appropriately. 
      		</p>
    		</s2>
-                                                                                                                                            
+
    		<s2 title="Configuration"> 
      		<p>
 		The filesystem publisher has to know the filesystem path of the authoring area and
@@ -117,7 +117,6 @@
       		Finally the Java Class  org.wyona.cms.cocoon.acting.PublisherAction has to be extended.
      		</p>
    		</s2>
-                                                                                                                                            
    	</s1>
   </body>
 </document>
