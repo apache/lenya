@@ -43,44 +43,26 @@
       <center>
 
         <!--START kopf.html-->
-        <xsl:call-template name="Searchbox"/>
+        <xsl:call-template name="Searchbox">
+	  <xsl:with-param name="is-front">true</xsl:with-param>
+	</xsl:call-template>
         <!--ENDE kopf.html-->
 
-        <table border="0" cellpadding="0" cellspacing="0" width="585">
+        <table border="0" cellpadding="0" cellspacing="0" width="585" bordercolor="red">
           <tr>
-            <td width="135" height="50" valign="top" align="right">
-            </td>
-            <td width="315" rowspan="2" valign="bottom">
-              <table border="0" cellpadding="0" cellspacing="0" width="315">
-                <tr>
-                  <td valign="bottom" width="19"><img height="9" width="19" src="{$img-unipub}/eck.gif"/></td>
-                  <td width="150" align="center" valign="bottom"></td>
-                  <td width="108"><img height="63" width="108" src="{$img-unipub}/t_publogo.gif" alt="unipublic"/></td>
-                  <td width="38"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-                </tr>
-              </table>
-            </td>
-            <td width="135" valign="top" align="left">
-            </td>
-          </tr>
-          <tr>
-            <td width="135" align="right" valign="top" rowspan="2">
+            <td width="135" align="right" valign="top" >
               <!-- Navigation und Dossier -->
               <xsl:apply-templates select="FirstColumn"/>
             </td>
-            <td width="135" align="left" valign="bottom" >
-              <img height="21" width="120" src="{$img-unipub}/t_service.gif" alt= "service"/>
-            </td>
-          </tr>
-
-          <tr>
             <td width="315" valign="top">
 
               <!-- Artikel in headlines.xsl-->
+              <img height="9" width="19" src="{$img-unipub}/eck.gif"/><img src="{$img-unipub}/spacer.gif" height="21" alt=" " />
               <xsl:apply-templates select="MainColumn"/>
             </td>
             <td width="135" valign="top">
               <!--Service, Newsletter und Webperlen-->
+	      <img height="21" width="120" src="{$img-unipub}/t_service.gif" alt= "service"/>
               <xsl:apply-templates select="LastColumn"/>
 
             </td>
@@ -88,12 +70,15 @@
 
           <tr>
             <td width="135"></td>
-            <td width="315"></td>
-            <td width="135"></td>
+            <td colspan="2">
+	      <!-- Footer -->
+              <xsl:call-template name="footer">
+                <xsl:with-param name="footer_date" select="/wyona/cmsbody/Page/Content/MainColumn/Articles/Article[1]/body.head/dateline/story.date/@norm" />
+              </xsl:call-template>
+
+            </td>
           </tr>
           
-         <xsl:apply-templates select="MainColumn/Articles" mode="Front_copyright"/> 
-
       
         </table>
       </center>

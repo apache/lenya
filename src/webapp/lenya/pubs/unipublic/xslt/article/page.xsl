@@ -17,21 +17,16 @@
     </head>
 
     <body text="black" link="#333399" alink="#CC0000" vlink="#666666" bgcolor="#F5F5F5" background="{$img-unipub}/bg.gif">
-
+      <div align="center">
       <xsl:call-template name="Searchbox"/>
 
-        <center>
-          <table cellspacing="0" cellpadding="0" border="0" width="585">
+          <table cellspacing="0" cellpadding="0" border="0" width="585" bordercolor="green">
 
-            <tr height="16">
-              <td height="16" width="187" align="center" valign="top">
-                <center><a href="../../../../"><img height="52" width="108" src="{$img-unipub}/t_unipublic_ALT.gif" alt="Unipublic" border="0"/></a></center>
+            <tr>
+       	      <td width="187"></td>
+              <td colspan="2"><a href="../"><img height="13" src="{$img-unipub}/r_{$section}.gif" alt="{$section}" border="0"/></a>
               </td>
-              <td height="16" align="right" width="10"></td>
-              <td width="388" height="16"></td>
             </tr>
-
-            <xsl:call-template name="slider_image"/>
 
             <tr>
               <td valign="top" width="187">
@@ -43,15 +38,26 @@
 
               </td>
               <xsl:apply-templates select="NewsItem/NewsComponent/ContentItem/DataContent/nitf"/>
-              <!--<xsl:apply-templates select="NewsItem/NewsComponent" mode="article"/>-->
            </tr>
 
-           <xsl:apply-templates select="NewsItem/NewsComponent/NewsLines" mode="Article_copyright"/>
-
+           <!-- Footer -->
+	   <tr>
+             <td width="187"></td>
+             <td width="5" bgcolor="white"></td>
+	     <td width="393" bgcolor="white">
+               <xsl:call-template name="footer">
+                 <xsl:with-param name="footer_date"><xsl:apply-templates select="NewsItem/NewsManagement/RevisionDate" /></xsl:with-param>
+               </xsl:call-template>
+             </td>
+           </tr>
          </table>
-       </center>
+       </div>
      </body>
   </html>
+</xsl:template>
+
+<xsl:template match="RevisionDate">
+  <xsl:value-of select="@day"/>.<xsl:value-of select="@month"/>.<xsl:value-of select="@year"/>
 </xsl:template>
 
 </xsl:stylesheet>

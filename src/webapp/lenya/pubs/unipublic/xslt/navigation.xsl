@@ -7,11 +7,17 @@
 <xsl:param name="year"/>
 
 <xsl:template match="MainNavigation" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xsl:param name="is-section" />
   <table border="0" cellpadding="0" cellspacing="0" width="115">
     <xsl:for-each select="Channels/Channel">
-          <tr>
-            <td><img height="21" width="120" src="{$img-unipub}/t_{@name}.gif" border="0" alt="{@name}"/></td>
-          </tr>                                                                                                                             
+
+	  <!-- On the section pages the "magazin" GIF is drawn by page.xsl because of alignment issues (HTML) -->
+	  <xsl:if test="not($is-section) or not(contains(@name,'magazin'))">
+            <tr>
+              <td><img height="21" width="120" src="{$img-unipub}/t_{@name}.gif" border="0" alt="{@name}"/></td>
+            </tr>                                                                                                                             
+	  </xsl:if>
+
           <xsl:for-each select="Sections/Section">
             <xsl:variable name="sectiontext"><xsl:value-of select="."/></xsl:variable>
             <tr>
@@ -45,11 +51,29 @@
           </tr>
     </xsl:for-each>
 
+</table>
+
 <xsl:apply-templates select="../Dossiers"/>
 
-</table>
 </xsl:template>
-
+<xsl:template match="Dossiers">
+	<img src="{$img-unipub}/spacer.gif" alt=" " width="50" height="15" border="0" />
+	<br />
+	<a href="{$unipublic}{$view}/{@href}"><img src="{$img-unipub}/dossiers/doss_rub_title.gif" alt="Dossiers" width="112" height="28" border="0" /></a>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td colspan="2" bgcolor="{Dossier[1]/Color}"><a href="{$unipublic}{$view}/{@href}{Dossier[1]/@href}"><img src="" alt="" width="80" height="60" border="0" /></a></td>
+	  </tr>
+	  <tr>
+	    <td class="tsr-text" bgcolor="white">
+		<span class="tsr-title"><a href="{$unipublic}{$view}/{@href}{Dossier[1]/@href}"><xsl:value-of select="Dossier[1]/Title"/></a></span><br />
+		<xsl:value-of select="Dossier[1]/Teaser"/> 
+	    </td>
+	    <td class="tsr-text" valign="top" bgcolor="white" width="3"><img src="{$img-unipub}/spacer.gif" alt=" " width="3" height="10" border="0" /></td>
+	  </tr>
+	</table>
+</xsl:template>	
+<!--
 <xsl:template match="Dossiers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <tr>
     <td><a href="{@href}"><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></a></td>
@@ -57,5 +81,5 @@
 
   <tr><td class="tsr-text"><span class="tsr-title"><a href="{@href}{Dossier/@href}"><xsl:value-of select="Dossier/Title"/></a></span><br /><xsl:value-of select="Dossier/Teaser"/></td></tr>
 </xsl:template>
-
+-->
 </xsl:stylesheet>

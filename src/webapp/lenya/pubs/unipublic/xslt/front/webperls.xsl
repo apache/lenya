@@ -5,35 +5,27 @@
 <xsl:include href="../variables.xsl"/>
 
 <xsl:template match="Webperls">
-  <table border="0" cellpadding="0" cellspacing="0" width="135">
+  <table border="0" cellpadding="2" cellspacing="0" bgcolor="#CCCCFF">
     <tr>
-      <td rowspan="3" bgcolor="#CCCCFF"><img height="5" width="5" src="{$img-unipub}/1.gif"/></td>
-      <td bgcolor="#CCCCFF"><img height="6" width="125" src="{$img-unipub}/1.gif"/></td>
-      <td rowspan="3" bgcolor="#CCCCFF"><img height="5" width="5" src="{$img-unipub}/1.gif"/></td>
+      <td width="125" class="webperlen"><font color="#333333">
+        <xsl:value-of select="Title"/></font></td>
     </tr>
-    <tr>
-      <td bgcolor="#CCCCFF" width="125" class="{@id}"><font color="#333333">
-        <xsl:value-of select="Title"/></font><br />
-
         <xsl:for-each select="Webperl">
-          <img height="5" width="125" src="{$img-unipub}/1.gif"/><br />
-          <img height="1" width="125" src="{$img-unipub}/white.gif"/>
-          <img height="5" width="125" src="{$img-unipub}/1.gif"/><br />
-          <font color="#333333"><b><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/></b></font>
-            <xsl:apply-templates select="."/><br />
+	  <tr>
+            <td><img height="1" width="131" src="{$img-unipub}/strich_weiss.gif"/></td>
+	  </tr>
+	  <tr>
+            <td class="webperlen"><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/>
+            <xsl:apply-templates select="."/></td>
+	  </tr>
         </xsl:for-each>
 
-          <img height="5" width="125" src="{$img-unipub}/1.gif"/><br />
-          <img height="1" width="125" src="{$img-unipub}/white.gif"/>
-          <img height="5" width="125" src="{$img-unipub}/1.gif"/><br />
-	 <font color="#333333"><b><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/>&#160;<img height="7" width="7" src="{$img-unipub}/t_perle.gif"/>&#160;<img height="7" width="7" src="{$img-unipub}/t_perle.gif"/></b></font>&#160;<a href="{@id}">weitere Perlen ...</a>
-
-      </td>
-    </tr>
-    <tr>
-      <td bgcolor="#CCCCFF"><img height="6" width="125" src="{$img-unipub}/1.gif"/></td>
-    </tr>
-
+	  <tr>
+            <td><img height="1" width="125" src="{$img-unipub}/white.gif"/></td>
+	  </tr>
+	  <tr>
+	    <td class="webperlen"><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/>&#160;<img height="7" width="7" src="{$img-unipub}/t_perle.gif"/>&#160;<img height="7" width="7" src="{$img-unipub}/t_perle.gif"/>&#160;<a href="{@id}">weitere Perlen ...</a></td>
+	  </tr>
 	  </table>
 	</xsl:template>
 

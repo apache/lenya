@@ -5,7 +5,6 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 -->
 
-<xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
 <xsl:template match="cmsbody">
   <xsl:apply-templates/>
 </xsl:template>
@@ -13,12 +12,14 @@
 <!--
 <xsl:include href="../../root.xsl"/>
 -->
+<xsl:include href="../../../../../../../stylesheets/cms/Page/root.xsl"/>
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../foot.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables_authoring.xsl"/>
 <xsl:include href="../../variables.xsl"/>
+<xsl:include href="../variables.xsl"/>
 <!--
 <xsl:include href="../../navigation.xsl"/>
 -->

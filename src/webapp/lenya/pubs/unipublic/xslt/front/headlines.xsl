@@ -10,48 +10,48 @@
 </xsl:template>
 
 <xsl:template match="Articles">
-  <table border="0" cellpadding="0" cellspacing="0" width="315">
-    <tr height="5">
-      <td width="5" bgcolor="#CCCC99" height="5"></td>
-      <td width="150" bgcolor="#CCCC99" height="5"><img src="{$img-unipub}/1.gif" width="10" height="5" border="0"/></td>
-      <td width="5" bgcolor="#CCCC99" height="5"></td>
-      <td width="1" bgcolor="#CCCC99" height="5"></td>
-      <td align="right" width="150" bgcolor="#CCCC99" height="5"></td>
-      <td width="5" bgcolor="#CCCC99" height="5"></td>
-    </tr>
+
+<table cellspacing="0" cellpadding="0" width="315"
+bgcolor="#CCCC99" border="0" bordercolor="blue">
+<tbody>
+<tr>
+<td width="3" height="1"><img height="1" alt=" "
+src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
+<td width="153" height="1"></td>
+<td width="3" height="1"><img height="1" alt=" "
+src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
+<td width="153" height="1"></td>
+<td width="3" height="1"><img height="1" alt=" "
+src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
+</tr>
 
     <xsl:apply-templates select="../Articles" mode="top"/>
 
-    <tr>
-      <td width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="150"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="1"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="150"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-      <td width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-    </tr>
-  <tr height="5">
-    <td width="5" height="1"><img height="1" width="1" src="img_unipublic/1.gif"/></td>
-    <td colspan="4" bgcolor="#cccc99" width="306" height="1"><img height="1" width="10" src="img_unipublic/1.gif"/></td>
-    <td width="5" height="1"><img height="1" width="1" src="img_unipublic/1.gif"/></td>
-  </tr>
-  </table>
+<tr height="1">
+<td width="3" height="1"><img height="1" alt=" "
+src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
+<td width="153" height="1"></td>
+<td width="3" height="1"></td>
+<td width="153" height="1"></td>
+<td width="3" height="1"></td>
+</tr>
+</tbody>
+</table>
 
-  <br />
- 
-  <xsl:for-each select="Article">
-    <xsl:if test="position()>=3">
+<br />
 
-      <table border="0" cellpadding="0" cellspacing="0" width="316">
-        <tr>
-          <td colspan="3">
-            <table border="0" cellpadding="0" cellspacing="0" width="316">
+<xsl:for-each select="Article">
+<xsl:if test="position()>=3">
+
+            <table border="0" bordercolor="green" cellpadding="0" cellspacing="0" width="315">
               <tr>
-                <td colspan="3"><a href="{$unipublic}{$view}/{@channel}/{@section}/"><img src="{$img-unipub}/t_{@section}.gif" width="316" height="13" border="0" alt="{@section}"/></a></td>
+                <td colspan="3"><a href="{$unipublic}{$view}/{@channel}/{@section}/"><img src="{$img-unipub}/t_{@section}.gif" width="315" 
+height="13" border="0" alt="{@section}"/></a></td>
               </tr>
 
               <tr>
-                <td bgcolor="white" colspan="3">&#160;</td>
+                <td bgcolor="white" colspan="3" height="3"><img height="1" alt=" "
+src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
               </tr>
 
               <tr>
@@ -65,14 +65,13 @@
                   </td>
                 <td width="4" bgcolor="white">&#160;</td>
               </tr>
-
               <tr>
-                <td bgcolor="white" colspan="3">&#160;</td>
+                <td bgcolor="white" colspan="3" height="3"><img height="1" alt=" "
+src="{$img-unipub}/spacer.gif" width="1" border="0" /></td>
               </tr>
             </table>
-          </td>
-        </tr>
-      </table>
+            <br />
+
     </xsl:if>
   </xsl:for-each>
 </xsl:template>
@@ -81,33 +80,37 @@
   <tr>
     <xsl:for-each select="Article">
       <xsl:if test="position()&#60;=2">
-        <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-        <td align="right" width="150" bgcolor="#CCCC99" valign="bottom">
+        <td width="3" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+        <td align="right" width="153" bgcolor="#CCCC99" valign="bottom">
           <xsl:apply-templates select="body.head" mode="media-top"/>
         </td>
-        <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
       </xsl:if>
     </xsl:for-each>
+    <td width="3"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
   </tr>
 
   <tr>
-    <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-    <td width="150" valign="top" bgcolor="white" class="tsr-text">
-
-     <p><a href="{Article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[1]/body.head/hedline/hl1"/></span></a><br />
-      <xsl:apply-templates select="Article[1]/body.head/abstract"/>(<xsl:apply-templates select="Article[1]/body.head/dateline/story.date/@norm"/>)</p>
-
+    <td width="3"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+    <td width="153" valign="top" bgcolor="white" >
+      <table cellspacing="0" cellpadding="3" border="0" bordercolor="green">
+       <tr>
+       <td class="tsr-text"><a href="{Article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[1]/body.head/hedline/hl1"/></span></a><br />
+      <xsl:apply-templates select="Article[1]/body.head/abstract"/>(<xsl:apply-templates select="Article[1]/body.head/dateline/story.date/@norm"/>)</td>
+       </tr>
+      </table>
     </td>
-    <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-    <td width="1" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-    <td width="150" valign="top" bgcolor="white" class="tsr-text">
-
-     <p><a href="{Article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[2]/body.head/hedline/hl1"/> </span></a><br />
-      <xsl:apply-templates select="Article[2]/body.head/abstract"/>(<xsl:apply-templates select="Article[2]/body.head/dateline/story.date/@norm"/>)</p>
-
+    <td width="3"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+    <td width="153" valign="top" bgcolor="white">
+      <table cellspacing="0" cellpadding="3" border="0" bordercolor="green">
+       <tr>
+       <td class="tsr-text"><a href="{Article[2]/@href}/"><span class="tsr-title"><xsl:apply-templates select="Article[2]/body.head/hedline/hl1"/> </span></a><br />
+      <xsl:apply-templates select="Article[2]/body.head/abstract"/>(<xsl:apply-templates select="Article[2]/body.head/dateline/story.date/@norm"/>)</td>
+       </tr>
+     </table>
     </td>
-    <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
+    <td width="3"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
   </tr>
 </xsl:template>
+
 
 </xsl:stylesheet>
