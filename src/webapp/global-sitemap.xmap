@@ -260,15 +260,15 @@
       <!-- Lenya page transformation -->
       <!-- lenya-page/{publication-id}/{complete-area}/... -->
       <map:match pattern="lenya-page/*/*/**">
-      	<map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
+        <map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
         
         <map:call resource="i18n"/>
         
-      	<map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/">
+        <map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/">
           <map:transform type="workflowmenu"/>
         </map:act>
         
-      	<map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml">
+        <map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml">
           <map:transform type="usecasemenu"/>
         </map:act>
         
@@ -338,7 +338,7 @@
       
       <!-- menu-xml/{publication-id}/... -->
       <map:match pattern="menu-xml/*/**" internal-only="true">
-        <map:mount uri-prefix="menu-xml/{1}/" src="fallback://menus.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- navigation -->
@@ -348,7 +348,7 @@
 
       <!-- uri-parameter/{publication-id}/{parameter}/{area}/{uri} -->
       <map:match pattern="uri-parameter/*/*/*/**">
-        <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="fallback://parameter-{2}.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="{fallback:parameter-{2}.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
 
       <!-- Access Control Policies -->
@@ -362,9 +362,9 @@
       </map:match>
       
       <!-- Scheduler -->
-    	<map:match pattern="scheduler/**">
+      <map:match pattern="scheduler/**">
         <map:mount uri-prefix="scheduler/" src="lenya/scheduler.xmap" check-reload="true" reload-method="synchron"/>
-     	</map:match>
+       </map:match>
 
       <!-- Info usecases -->
       <map:match type="usecase" pattern="info-*">
@@ -386,9 +386,9 @@
         </map:match>
 
       <!-- Info area -->
-      	<map:match pattern="*/*/info-sitetree/**">
+        <map:match pattern="*/*/info-sitetree/**">
           <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
-      	</map:match>
+        </map:match>
         <map:match pattern="*/info-*/**">
           <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
@@ -437,29 +437,29 @@
       
       <!-- Enter the actual publication -->
       <map:match pattern="*/**">
-        <map:mount uri-prefix="{1}" src="fallback://sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
 
       <map:handle-errors>
-       <map:select type="exception">
-           <map:when test="resourcenotfound">
-             <map:generate src="lenya/content/util/empty.xml" />
+        <map:select type="exception">
+          <map:when test="resourcenotfound">
+            <map:generate src="lenya/content/util/empty.xml" />
             <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
               <map:parameter name="statusCode" value="404"/>
             </map:call>
           </map:when>
-      <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-      </map:otherwise>
+          <map:otherwise>
+            <map:generate type="notifying"/>
+            <map:transform src="stylesheets/system/error2html.xslt">
+              <map:parameter name="contextPath" value="{request:contextPath}"/>
+            </map:transform>
+          </map:otherwise>
         </map:select>
         <map:serialize type="html"/>
       </map:handle-errors>    
 
-    </map:pipeline>
+   </map:pipeline>
 
  </map:pipelines>
 
