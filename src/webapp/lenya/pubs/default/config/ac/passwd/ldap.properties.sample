@@ -1,6 +1,6 @@
 #############################################################################
 # File: ldap.properties.sample
-# $Id: $
+# $Id$
 #############################################################################
 
 #############################################################################
@@ -52,8 +52,3 @@ mgr-dn=
 mgr-pw=
 key-store=.keystore
 security-protocol=ssl
-
-
-# this property is no longer used (deprecated) !
-# partial-user-dn=ou=Others,dc=interactivesystems,dc=info
-
