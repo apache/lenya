@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <identity id="lenya">
-<password type="md5">dcb122dc1dd7eb2bc5cbfc975c5ef6b7</password>
+<password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
 <comment>Lenya</comment>
 <!--<expire year="2002" month="12" day="31"/>-->
 <groups>
