@@ -9,10 +9,8 @@
   <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
   
   <xsl:param name="publication_name"/>
-  <xsl:param name="publication_id"/>
   
   <xsl:variable name="copyright">copyright &#169; 2003 Apache Lenya, Apache Software Foundation</xsl:variable>
-  <xsl:variable name="prefix">/<xsl:value-of select="$publication_id"/></xsl:variable>
   
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -55,10 +53,9 @@
     <div class="lenya-box">
       <div class="lenya-box-title">Login</div>
       <div class="lenya-box-body">
-        <form method="post">
-          <xsl:attribute name="action">
-            <xsl:value-of select="context"/>
-            <xsl:value-of select="$prefix"/>/do-login</xsl:attribute>
+        <form method="get">
+          <input type="hidden" name="lenya.usecase" value="login"/>
+          <input type="hidden" name="lenya.step" value="login"/>
           <table class="lenya-table-noborder">
             <tr>
               <td>Username:</td>
