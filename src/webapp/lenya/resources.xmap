@@ -35,9 +35,9 @@
             <map:read src="pubs/{1}/resources/images/{2}.jpeg" mime-type="image/jpeg" />
           </map:match>
 
-          <!-- matches pub-id/images/**.tar.gz -->
-          <map:match pattern="*/images/**.tar.gz">
-            <map:read src="pubs/{1}/resources/images/{2}.tar.gz" mime-type="application/x-gtar" />
+          <!-- matches pub-id/**.tar.gz -->
+          <map:match pattern="*/**.tar.gz">
+            <map:read src="pubs/{1}/resources/{2}.tar.gz" mime-type="application/x-gtar" />
           </map:match>
 
           <!-- matches pub-id/pdf/**.pdf -->
