@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.45 2004/03/03 09:46:51 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.46 2004/03/10 09:32:15 gregor Exp $ 
    
 -->
 
@@ -48,7 +48,7 @@
   <message key="Description">Beschreibung</message>
   <message key="Name">Name</message>
   <message key="Full Name">Vor-&#160;und&#160;Nachname</message>
-  <message key="required fields">Pflichfelder</message> 
+  <message key="required fields">Pflichtfelder</message> 
   <message key="Search">Suche</message>
   <message key="Home">Startseite</message>
   <message key="Title">Titel</message>
@@ -144,7 +144,7 @@
     <!-- Group Administration -->
   <message key="Profile">Profil</message>  
   <message key="Members">Mitglieder</message>
-  <message key="IP Ranges">IP&#160;Regeln</message>
+  <message key="IP Ranges">IP&#160;Bereiche</message>
   <message key="Edit Profile">Profil&#160;&#228;ndern</message>
   <message key="Edit Members">Mitglieder&#160;bearbeiten</message>
   <message key="Group Administration">Gruppenadministration</message>
