@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: image.xsl,v 1.1 2004/02/05 17:48:01 gregor Exp $
+ $Id: image.xsl,v 1.2 2004/02/14 14:31:03 gregor Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
@@ -27,7 +27,7 @@
                       var link = document.forms["image"].link.value;
                       var caption = document.forms["image"].caption.value;
                       var title = document.forms["image"].title.value;
-                      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" data="{lenya-info:documentnodeid}/'+src+'">'+caption+'</object>'; 
+                      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" name="'+title+'" data="{lenya-info:documentnodeid}/'+src+'">'+caption+'</object>'; 
                       window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
                       window.close();
                    }
