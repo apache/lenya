@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.8 2003/02/26 10:09:36 egli Exp $
+ * $Id: NewArticleCreator.java,v 1.9 2003/02/26 11:15:22 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -92,9 +92,9 @@ public class NewArticleCreator extends DefaultBranchCreator {
     }
 
     protected String getChildFileName(File parentDir, String childId) {
-        return parentDir + File.pathSeparator + "articles"
-	    + File.pathSeparator + childId
-	    + File.pathSeparator + "index.xml";
+        return parentDir + File.separator + "articles"
+	    + File.separator + childId
+	    + File.separator + "index.xml";
     }
 
     protected void transformXML (Document doc, Parameters parameters)

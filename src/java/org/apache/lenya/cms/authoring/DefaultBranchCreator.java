@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultBranchCreator.java,v 1.1 2003/02/26 10:09:36 egli Exp $
+ * $Id: DefaultBranchCreator.java,v 1.2 2003/02/26 11:15:22 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,12 +69,12 @@ public class DefaultBranchCreator extends DefaultCreator {
     }
 
     protected String getChildFileName(File parentDir, String childId) {
-	return parentDir + File.pathSeparator + childId + File.pathSeparator
+	return parentDir + File.separator + childId + File.separator
 	    + "index.xml";
     }
 
     protected String getCildMetaFileName(File parentDir, String childId) {
-	return parentDir + File.pathSeparator + childId + File.pathSeparator
+	return parentDir + File.separator + childId + File.separator
 	    + "indexmeta.xml";
     }
 

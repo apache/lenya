@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.7 2003/02/26 10:09:36 egli Exp $
+ * $Id: DefaultCreator.java,v 1.8 2003/02/26 11:15:22 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -152,8 +152,8 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         String filename = getChildFileName(parentDir, id);
         String filenameMeta = getCildMetaFileName(parentDir, id);
 
-        String doctypeSample = samplesDir + File.pathSeparator + sampleResourceName;
-        String doctypeMeta = samplesDir + File.pathSeparator + sampleMetaName;
+        String doctypeSample = samplesDir + File.separator + sampleResourceName;
+        String doctypeMeta = samplesDir + File.separator + sampleMetaName;
 
 	// Read sample file
         log.debug("Read sample file: " + doctypeSample);

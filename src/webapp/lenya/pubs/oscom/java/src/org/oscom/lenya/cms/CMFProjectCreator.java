@@ -1,5 +1,5 @@
 /*
- * $Id: CMFProjectCreator.java,v 1.1 2003/02/24 22:49:25 michi Exp $
+ * $Id: CMFProjectCreator.java,v 1.2 2003/02/26 11:15:22 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,16 +45,12 @@ package org.oscom.wyona.cms;
 
 import org.apache.log4j.Category;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
+import org.apache.avalon.framework.parameters.Parameters;
 
-import org.dom4j.io.SAXReader;
+import org.w3c.dom.Document;
 
-import org.wyona.cms.authoring.AbstractParentChildCreator;
-
-import java.io.File;
-import java.io.FileWriter;
-
+import org.wyona.cms.authoring.DefaultLeafCreator;
+import org.wyona.xml.DOMUtil;
 
 /**
  * DOCUMENT ME!
@@ -62,100 +58,25 @@ import java.io.FileWriter;
  * @author Michael Wechner
  * @version 2002.12.29
  */
-public class CMFProjectCreator extends AbstractParentChildCreator {
+public class CMFProjectCreator extends DefaultLeafCreator {
     static Category log = Category.getInstance(CMFProjectCreator.class);
 
-    /**
-     * Why do we have to overwrite this method?
-     *
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public short getChildType(short childType) throws Exception {
-        return AbstractParentChildCreator.LEAF_NODE;
+    public CMFProjectCreator() {
+	sampleResourceName = "CMFProject.xml";
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childname DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String getChildName(String childname) throws Exception {
-        return childname;
+    protected void transformXML (Document doc, Parameters parameters)
+	throws Exception {
+
+        DOMUtil du = new DOMUtil();
+        du.setElementValue(doc, "/system/id",
+			   parameters.getParameter("id"));
+        du.setElementValue(doc, "/system/system_name",
+			   parameters.getParameter("childName"));
+	
+        log.debug("system_name = " +
+		  du.getElementValue(doc.getDocumentElement(), 
+				     new org.wyona.xml.XPath("system_name")));
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String generateTreeId(String childId, short childType)
-        throws Exception {
-        return childId;
-    }
-
-    /**
-     * Create the new editor project
-     *
-     * @param samplesDir DOCUMENT ME!
-     * @param parentDir DOCUMENT ME!
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     * @param childName DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public void create(File samplesDir, File parentDir, String childId, short childType,
-        String childName) throws Exception {
-        // Set filenames
-        String id = generateTreeId(childId, childType);
-        String filename = parentDir + "/" + id + ".xml";
-        String doctypeSample = samplesDir + "/CMFProject.xml";
-
-        // Read sample file
-        log.debug(".create(): Try to read file: " + doctypeSample);
-
-        Document doc = new SAXReader().read("file:" + doctypeSample);
-
-        // Replace id
-        Element eid = (Element) doc.selectSingleNode("/system/id");
-
-        if (eid != null) {
-            log.debug(eid.getPath() + " " + eid.getText());
-            eid.addText(id);
-            log.debug(eid.getPath() + " " + eid.getText());
-        }
-
-        // Replace name
-        Element ename = (Element) doc.selectSingleNode("/system/system_name");
-
-        if (ename != null) {
-            log.debug(ename.getPath() + " " + ename.getText());
-            ename.addText(childName);
-            log.debug(ename.getPath() + " " + ename.getText());
-        }
-
-        // Write file
-        File parent = new File(new File(filename).getParent());
-
-        if (!parent.exists()) {
-            parent.mkdirs();
-        }
-
-        FileWriter fileWriter = new FileWriter(filename);
-        doc.write(fileWriter);
-        fileWriter.close();
-    }
 }

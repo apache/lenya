@@ -1,5 +1,5 @@
 /*
- * $Id: CMSProjectCreator.java,v 1.1 2003/02/24 22:49:25 michi Exp $
+ * $Id: CMSProjectCreator.java,v 1.2 2003/02/26 11:15:22 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,15 +45,12 @@ package org.oscom.wyona.cms;
 
 import org.apache.log4j.Category;
 
+import org.apache.avalon.framework.parameters.Parameters;
+
 import org.w3c.dom.Document;
 
-import org.wyona.cms.authoring.AbstractParentChildCreator;
-import org.wyona.xml.DocumentHelper;
+import org.wyona.cms.authoring.DefaultLeafCreator;
 import org.wyona.xml.DOMUtil;
-
-import java.io.File;
-import java.net.URL;
-
 
 /**
  * DOCUMENT ME!
@@ -61,90 +58,26 @@ import java.net.URL;
  * @author Michael Wechner
  * @version 2003.2.11
  */
-public class CMSProjectCreator extends AbstractParentChildCreator {
+public class CMSProjectCreator extends DefaultLeafCreator {
     static Category log = Category.getInstance(CMSProjectCreator.class);
 
-    /**
-     * Why do we have to overwrite this method?
-     *
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public short getChildType(short childType) throws Exception {
-        return AbstractParentChildCreator.LEAF_NODE;
+    public CMSProjectCreator() {
+	sampleResourceName = "CMSProject.xml";
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childname DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String getChildName(String childname) throws Exception {
-        return childname;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public String generateTreeId(String childId, short childType)
-        throws Exception {
-        return childId;
-    }
-
-    /**
-     * Create the new editor project
-     *
-     * @param samplesDir DOCUMENT ME!
-     * @param parentDir DOCUMENT ME!
-     * @param childId DOCUMENT ME!
-     * @param childType DOCUMENT ME!
-     * @param childName DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public void create(File samplesDir, File parentDir, String childId, short childType,
-        String childName) throws Exception {
-        // Set filenames
-        String id = generateTreeId(childId, childType);
-        String filename = parentDir + "/" + id + ".xml";
-        String doctypeSample = samplesDir + "/CMSProject.xml";
-
-        // Read sample file
-        log.debug(".create(): Try to read file: " + doctypeSample);
-
-        Document doc=DocumentHelper.readDocument(new URL("file:" + doctypeSample));
-
+    protected void transformXML (Document doc, Parameters parameters)
+	throws Exception {
 
         DOMUtil du = new DOMUtil();
-        du.setElementValue(doc, "/system/id",id);
-        du.setElementValue(doc, "/system/system_name",childName);
-
-        log.debug(".create(): system_name = "+du.getElementValue(doc.getDocumentElement(), new org.wyona.xml.XPath("system_name")));
-
-
-        // Create parent directory
-        File parent = new File(new File(filename).getParent());
-        if (!parent.exists()) {
-            parent.mkdirs();
-        }
-
-        // Write file
-        java.io.FileOutputStream out=new java.io.FileOutputStream(filename);
-        new org.wyona.xml.DOMWriter(out).printWithoutFormatting(doc);
-        out.close();
+        du.setElementValue(doc, "/system/id",
+			   parameters.getParameter("id"));
+        du.setElementValue(doc, "/system/system_name",
+			   parameters.getParameter("childName"));
+	
+        log.debug("system_name = " +
+		  du.getElementValue(doc.getDocumentElement(), 
+				     new org.wyona.xml.XPath("system_name")));
     }
+
 }
+
