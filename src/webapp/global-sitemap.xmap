@@ -669,6 +669,15 @@
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
+      <!-- Lenya GUI screen -->
+      <map:match pattern="lenya-screen.xsl">
+        <map:generate src="lenya/xslt/util/page2xhtml.xsl"/>
+        <map:transform src="lenya/xslt/util/page2xslt.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      
       <!-- Lenya page transformation -->
       <!-- lenya-page/{publication-id}/{complete-area}/... -->
       <map:match pattern="lenya-page/*/*/**">
