@@ -219,11 +219,11 @@
         <map:match pattern="publish" type="usecase">
         	
           <map:match pattern="showscreen" type="step">
-          	<map:call resource="cms-screen">
-          		<map:parameter name="publication-id" value="{../../1}"/>
-          		<map:parameter name="serverpage" value="publishing/screen.xsp"/>
-          		<map:parameter name="stylesheet" value="publishing/screen.xsl"/>
-          	</map:call>
+            <map:call resource="cms-screen">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="serverpage" value="publishing/screen.xsp"/>
+              <map:parameter name="stylesheet" value="publishing/screen.xsl"/>
+            </map:call>
           </map:match>
           
           <map:match pattern="publish" type="step">
@@ -287,11 +287,11 @@
         <map:match pattern="create" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-						<map:call resource="cms-screen">
-							<map:parameter name="publication-id" value="{../../1}"/>
-							<map:parameter name="serverpage" value="authoring/create.xsp"/>
-							<map:parameter name="stylesheet" value="authoring/create.xsl"/>
-						</map:call>
+            <map:call resource="cms-screen">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="serverpage" value="authoring/create.xsp"/>
+              <map:parameter name="stylesheet" value="authoring/create.xsl"/>
+            </map:call>
           </map:match>
           
           <map:match pattern="create" type="step">
@@ -302,11 +302,11 @@
             </map:act>
             <!-- otherwise the action could not validate some of the -->
             <!-- input and we present the upload form again -->
-						<map:call resource="cms-screen">
-							<map:parameter name="publication-id" value="{../../1}"/>
-							<map:parameter name="serverpage" value="authoring/create.xsp"/>
-							<map:parameter name="stylesheet" value="authoring/create.xsl"/>
-						</map:call>
+            <map:call resource="cms-screen">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="serverpage" value="authoring/create.xsp"/>
+              <map:parameter name="stylesheet" value="authoring/create.xsl"/>
+            </map:call>
           </map:match>
           
         </map:match>
