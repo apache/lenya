@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AntTaskTest.java,v 1.19 2004/03/04 15:41:10 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -129,7 +129,7 @@ public class AntTaskTest extends TestCase {
 
         Parameters parameters = getTaskParameters();
         parameters.setParameter(AntTask.PARAMETER_PUBLICATION_ID, publication.getId());
-        parameters.setParameter(AntTask.PARAMETER_CONTEXT_PREFIX, "/lenya");
+        parameters.setParameter(AntTask.PARAMETER_CONTEXT_PREFIX, "/");
         parameters.setParameter(AntTask.PARAMETER_SERVLET_CONTEXT,
             publication.getServletContext().getCanonicalPath());
         parameters.setParameter(AntTask.TARGET, getTarget());
