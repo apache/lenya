@@ -97,6 +97,7 @@ public class WGet{
 /**
  *
  */
+/*
   public byte[] downloadUsingWgetAndSed(URL url,String prefixSubstitute) throws IOException, HttpException{
     log.debug(".downloadUsingWgetAndSed(): "+url);
 
@@ -119,30 +120,46 @@ public class WGet{
 
     return null;
     }
+*/
 /**
  *
  */
-  public byte[] downloadUsingHttpClient(URL url,String prefixSubstitute) throws IOException, HttpException{
+  public byte[] downloadUsingHttpClient(URL url,String prefixSubstitute){
     log.debug(".downloadUsingHttpClient(): "+url);
 
-    byte[] sresponse=getResource(url);
-    //log.debug(".downloadUsingHttpClient(): Response from remote server: "+new String(sresponse));
+    byte[] sresponse=null;
+    try{
+      sresponse=getResource(url);
+      //log.debug(".downloadUsingHttpClient(): Response from remote server: "+new String(sresponse));
 
-    File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
-    saveToFile(file.getAbsolutePath(),sresponse);
+      File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
+      saveToFile(file.getAbsolutePath(),sresponse);
 
-    substitutePrefix(file.getAbsolutePath(),prefixSubstitute);
+      substitutePrefix(file.getAbsolutePath(),prefixSubstitute);
 
-    List links=getLinks(url);
-    if(links != null){
-      Iterator iterator=links.iterator();
-      while(iterator.hasNext()){
-        String link=(String)iterator.next();
-        URL child_url=new URL(org.wyona.util.URLUtil.complete(url.toString(),link));
-        log.debug(".downloadUsingHttpClient(): Child URL: "+child_url);
-        byte[] child_sresponse=getResource(child_url);
-        saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
+      List links=getLinks(url);
+      if(links != null){
+        Iterator iterator=links.iterator();
+        while(iterator.hasNext()){
+          String link=(String)iterator.next();
+          URL child_url=new URL(org.wyona.util.URLUtil.complete(url.toString(),link));
+          log.debug(".downloadUsingHttpClient(): Child URL: "+child_url);
+          byte[] child_sresponse=getResource(child_url);
+          saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
+          }
         }
+      }
+    catch(MalformedURLException e){
+      log.error(".downloadUsingHttpClient(): "+e);
+      }
+    catch(FileNotFoundException e){
+      log.error(".downloadUsingHttpClient(): "+e);
+      }
+    catch(HttpException e){
+      log.error(".downloadUsingHttpClient(): "+e);
+      }
+    catch(IOException e){
+      log.error(".downloadUsingHttpClient(): "+e);
       }
 
     return sresponse;
