@@ -60,16 +60,16 @@ import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to initialise the sitetree xml file
+ * Ant task to reset the sitetree xml file
  * @author edith
  */
-public class SiteTreeInitialisationTask extends PublicationTask {
+public class SiteTreeResetTask extends PublicationTask {
 	private String area;
 
 	/**
 	 * 
 	 */
-	public SiteTreeInitialisationTask() {
+	public SiteTreeResetTask() {
 		super();
 	}
 
