@@ -2,39 +2,74 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
 >
 
 <xsl:param name="edit" select="'No node selected yet'"/>
 
 <xsl:template match="form">
-<html>
-<body>
-<p>
-Edit Document <b><xsl:value-of select="docid"/></b> (Form: <xsl:value-of select="ftype"/>)
-<br />Edit Node: <b><xsl:value-of select="$edit"/></b>
-</p>
+<page:page>
+<page:title>Edit Document</page:title>
+<page:body>
+  
+<div style="float: left">
+  
+<div class="lenya-box">
+  <div class="lenya-box-title">Information</div>
+  <div class="lenya-box-body">
+  
+<table class="lenya-table-noborder">
+  <tr>
+    <td class="lenya-entry-caption">Document:</td>
+    <td><xsl:value-of select="docid"/></td>
+  </tr>
+  <tr>
+    <td class="lenya-entry-caption">Form:</td>
+    <td><xsl:value-of select="ftype"/></td>
+  </tr>
+  <tr>
+    <td class="lenya-entry-caption">Node:</td>
+    <td><xsl:value-of select="$edit"/></td>
+  </tr>
 
-<xsl:if test="message">
-<p>
-<font color="red"><b>Message:</b></font>
-<br /><xsl:value-of select="message"/>
-<br />(Check log files for more details: lenya/WEB-INF/logs/*)
-</p>
-</xsl:if>
+  <xsl:if test="message">
+    <tr>
+      <td class="lenya-entry-caption"><span class="lenya-error">Message:</span></td>
+      <td>
+        <xsl:value-of select="message"/>
+        <br/>
+        (Check log files for more details: lenya/WEB-INF/logs/*)
+      </td>
+    </tr>
+  </xsl:if>
+
+</table>
+
+</div>
+</div>
 
 <form method="post" action="?lenya.usecase=edit&amp;lenya.step=close&amp;form={ftype}">
-<table border="1">
-<tr>
-  <td colspan="3" align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
-</tr>
-<xsl:apply-templates select="node"/>
-<tr>
-  <td colspan="3" align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
-</tr>
-</table>
+  
+<div class="lenya-box">
+  <div class="lenya-box-title" style="text-align: right">
+    <input type="submit" value="SAVE" name="save"/>&#160;<input type="submit" value="CANCEL" name="cancel"/>
+  </div>
+  <div class="lenya-box-body">
+  
+  <table class="lenya-table">
+    <xsl:apply-templates select="node"/>
+  </table>
+
+  </div>
+  <div class="lenya-box-title" style="text-align: right">
+    <input type="submit" value="SAVE" name="save"/>&#160;<input type="submit" value="CANCEL" name="cancel"/>
+  </div>
+</div>
 </form>
 
-<a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>:
+<div class="lenya-box">
+  <div class="lenya-box-title"><a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a></div>
+  <div class="lenya-box-body">
 <ul>
 <li>&amp;lt; instead of &lt; (left angle bracket <b>must</b> be escaped)</li>
 <li>&amp;amp; instead of &amp; (ampersand <b>must</b> be escaped)</li>
@@ -42,8 +77,13 @@ Edit Document <b><xsl:value-of select="docid"/></b> (Form: <xsl:value-of select=
 <li>&amp;apos; instead of ' (single-quote)</li>
 <li>&amp;quot; instead of " (double-quote)</li>
 </ul>
-</body>
-</html>
+</div>
+</div>
+
+</div>
+
+</page:body>
+</page:page>
 </xsl:template>
 
 <xsl:template match="node">

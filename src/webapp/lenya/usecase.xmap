@@ -346,8 +346,8 @@
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="form" value="{request-param:form}"/>
               </map:transform>
-              <map:transform src="xslt/authoring/edit/form-layout.xsl"/>
-              <map:serialize type="html" />
+              <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}"/>
+              <map:call resource="style-cms-page"/>
             </map:match>
           </map:match>
 
