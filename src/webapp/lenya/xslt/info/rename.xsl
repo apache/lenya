@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.6 2003/07/03 11:53:37 edith Exp $
+ $Id: rename.xsl,v 1.7 2003/07/03 12:59:55 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -47,7 +47,7 @@
           </p>
           <input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value=""/>
           <input type="submit" class="lenya-form-element" value="Rename"/>
-           &#160;&#160;&#160;<input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
         </form>
       </div>
     </div>

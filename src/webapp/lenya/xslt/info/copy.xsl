@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: copy.xsl,v 1.7 2003/07/01 17:57:23 edith Exp $
+ $Id: copy.xsl,v 1.8 2003/07/03 12:59:55 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -46,7 +46,7 @@
           It will be placed on the clipboard, ready to be pasted at the location of your choosing.
         </p>
         <input type="submit" class="lenya-form-element" value="Copy"/>
-        &#160;&#160;&#160;<input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+        <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
     </form>
       </div>
     </div>
