@@ -15,14 +15,14 @@
     xmlns:page="http://www.lenya.org/2003/cms-page"
     >
 
-<xsl:param name="context"/>
+<xsl:param name="contextprefix"/>
 
 <xsl:template match="/page:page">
   <html>
     <head>
       <title><xsl:value-of select="page:title"/></title>
       <link rel="stylesheet" type="text/css"
-        href="{$context}/lenya/css/default.css" title="default css"/>
+        href="{$contextprefix}/lenya/css/default.css" title="default css"/>
     </head>
     <body>
     
@@ -32,7 +32,7 @@
             <h1><xsl:value-of select="page:title"/></h1>
           </td>
           <td class="lenya-project-logo">
-            <img src="{$context}/lenya/images/project-logo-small.png"/>
+            <img src="{$contextprefix}/lenya/images/project-logo-small.png"/>
           </td>
         </tr>
       </table>
