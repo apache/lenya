@@ -37,6 +37,7 @@
 
    String[] fields={"contents","title"};
    String field="contents";
+
 /** 
  * Contextualize this class 
  */
@@ -44,6 +45,7 @@
     super.contextualize( context );
     workDir = (File) context.get(Constants.CONTEXT_WORK_DIR);
     }
+
 /**
  *
  */
@@ -59,6 +61,7 @@
 
         l_queryParser.setOperator(QueryParser.DEFAULT_OPERATOR_AND);
 
+        getLogger().debug(query_string);
         Query l_query = l_queryParser.parse(query_string); // Single field
         //Query l_query = l_queryParser.parse(query_string,fields,l_analyzer); // Multiple fields
 
