@@ -4,31 +4,22 @@
 
   <task id="publish">
     <label>Publish</label>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher">
-      <parameter name="live-path" value="docs/publication/live"/>
-      <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
-    </task>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter">
-      <parameter name="export-path" value="resources/publication/export/pending"/>
-      <parameter name="substitute-regexp" value="s/\/wyona-cms\/unipublic//g"/>
-    </task>
+    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
   </task>
 
   <task id="publish-article">
     <label>Publish Article</label>
     <task id="prepare" class="ch.unizh.unipublic.wyona.cms.ArticleTask"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher">
-<!--    
-      <parameter name="live-path" value="docs/publication/live"/>
-      <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
--->      
-    </task>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter">
-<!--    
-      <parameter name="export-path" value="resources/publication/export/pending"/>
-      <parameter name="substitute-regexp" value="s/\/wyona-cms\/unipublic//g"/>
--->      
-    </task>
+    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+  </task>
+  
+  <task id="publish-dossier">
+    <label>Publish Dossier</label>
+    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+    <!-- FIXME: insert on front page -->
   </task>
   
   <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">

@@ -28,7 +28,14 @@
     <!-- <sampleMeta>Meta.xml</sampleMeta> -->
   </creator>
   <tasks>
-    <task id="publish"/>
+    <task id="publish-dossier"/>
   </tasks>
 </doc>
+
+<doc type="Headlines">
+  <tasks>
+    <task id="publish-headlines"/>
+  </tasks>
+</doc>
+
 </doctypes>
