@@ -12,6 +12,7 @@
   <xsl:if test="not(article)">
     No articles published yet!
   </xsl:if>
+
   <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <xsl:for-each select="article">
         <xsl:apply-templates select="article"/>
@@ -40,7 +41,7 @@
 
 <xsl:template match="body">
   <xsl:apply-templates select="../meta/editor"/>
-  <xsl:apply-templates select="p"/>
+  <xsl:apply-templates select="p[1]"/>
 </xsl:template>
 
 <xsl:template match="p">

@@ -13,7 +13,9 @@
 <xsl:include href="../../page.xsl"/>
 
 <xsl:template name="cmsbody">
+ <table border="0" cellspacing="0" cellpadding="0" width="100%">
   <xsl:apply-templates select="article"/>
+ </table>
 </xsl:template>
 
 <xsl:include href="../body.xsl"/>
