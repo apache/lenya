@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Notifier.java,v 1.6 2004/03/01 16:18:19 gregor Exp $  */
+/* $Id: Notifier.java,v 1.7 2004/06/28 08:30:41 andreas Exp $  */
 
 package org.apache.lenya.cms.task;
 
@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.log4j.Category;
 
@@ -34,6 +35,7 @@ public class Notifier extends ParameterWrapper {
     public static final String PREFIX = "notification";
     public static final String TARGET = "notification";
     public static final String PARAMETER_TO = "tolist";
+    public static final String PARAMETER_FROM = "from";
 
     private TaskManager taskManager;
 
@@ -88,7 +90,14 @@ public class Notifier extends ParameterWrapper {
             Map prefixMap = propertiesMap.getPrefixedMap();
             for (Iterator i = prefixMap.keySet().iterator(); i.hasNext();) {
                 String key = (String) i.next();
-                params.setParameter(key, (String) prefixMap.get(key));
+                String value = (String) prefixMap.get(key);
+                String trimmedValue = value.replace((char) 160, ' ');
+                trimmedValue = trimmedValue.trim();
+                if (log.isDebugEnabled()) {
+                    log.debug("Trimming value [" + value + "] to [" + trimmedValue + "]");
+                    log.debug("First character: [" + value.charAt(0) + "] = [" + (int) value.charAt(0) + "]");
+                }
+                params.setParameter(key, trimmedValue);
             }
 
             try {
