@@ -95,8 +95,7 @@ public class WorkflowFactoryImpl extends WorkflowFactory {
             File workflowDirectory = new File(publicationDirectory, WORKFLOW_DIRECTORY);
             File workflowFile = new File(workflowDirectory, source);
 
-            WorkflowBuilder builder = new WorkflowBuilder();
-            workflow = builder.buildWorkflow(workflowFile);
+            workflow = WorkflowBuilder.buildWorkflow(workflowFile);
         } catch (Exception e) {
             throw new WorkflowBuildException(e);
         }
