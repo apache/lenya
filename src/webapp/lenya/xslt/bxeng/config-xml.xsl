@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: config-xml.xsl,v 1.6 2004/03/13 13:09:51 gregor Exp $ -->
+<!-- $Id: config-xml.xsl,v 1.7 2004/03/26 10:56:46 egli Exp $ -->
 
 <xsl:stylesheet version="1.0" 
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
@@ -26,6 +26,7 @@
 <xsl:param name="BX_xslfile"/>
 <xsl:param name="BX_validationfile"/>
 <xsl:param name="css"/>
+<xsl:param name="script"/>
 <xsl:param name="BX_exitdestination"/>
 <xsl:param name="contextmenufile"/>
 
@@ -68,6 +69,13 @@
 <xsl:template match="files/css/file">
   <file><xsl:value-of select="$css"/></file>
 </xsl:template>
+
+  <xsl:template match="files/scripts/file[position()=last()]">
+    <file><xsl:value-of select="."/></file>
+    <xsl:if test="$script">
+      <file><xsl:value-of select="$script"/></file>
+    </xsl:if>
+  </xsl:template>
 
 <xsl:template match="@*|node()">
   <xsl:copy>
