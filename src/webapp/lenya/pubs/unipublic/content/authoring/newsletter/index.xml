@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<newsletter>
+	<email>
+		<to>unipublic@unizh.ch</to>
+		<cc></cc>
+		<subject>Newsletter 1/2003</subject>
+	</email>
+	<title>Newsletter-Titel</title>
+	<abstract></abstract>
+<articles>
+  <article channel="magazin" section="gesundheit" year="2002" dir="0508"/>
+  <article channel="magazin" section="geist" year="2002" dir="0470"/>
+</articles>
+	<footer></footer>
+</newsletter>
