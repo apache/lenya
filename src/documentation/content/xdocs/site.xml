@@ -20,11 +20,12 @@
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya" tab="project">
     <project-information href="" label="Project" tab="project">
         <index_pm href="index.html" label="About"/>
-		<charter href="charter.html" label="Charter"/>
-		<history href="history.html" label="History"/>
+        <charter href="charter.html" label="Charter"/>
+        <history href="history.html" label="History"/>
         <node-d href="roadmap.html" label="Roadmap"/>
 <!--        <release1.2 href="release.html" label="Release 1.2"/>
--->        <node-i href="license.html" label="License"/>
+-->
+        <node-i href="license.html" label="License"/>
         <resolution href="resolution.html" label="Resolution"/>
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
@@ -33,176 +34,133 @@
         <cvs href="subversion.html" label="Subversion Access"/>
         <install href="source_version.html" label="Installation Instructions"/>
     </installation>
-        <documentation href="docs/" label="Documentation" tab="docs">
-            <index_doc href="index.html" label="Documentation" wholesite="true"/>
-            <whole_docu href="../docu.pdf" label="pdf docu 1.2.x (whole)" />
-            <whole_docu href="../docu.html" label="html docu 1.2.x (whole)" />
-            <docu1.2.x href="1_2_x/" label="1.2.x">
-                    
-                        <components href="components/" label="Components" 
-                            wholesite="true">
-                            <!--resource-types href="resource-types/" 
-                                label="Resource&#160;Types"/-->
-                            <accesscontrol href="accesscontrol/" 
-                                label="Access&#160;Control" >
-                                <ac-terms href="terms.html" label="Basic Terms"/>
-                                <accesscontrollers href="accesscontrollers.html" 
-                                    label="Access&#160;Controllers"/>
-                                <ac-resolvers href="accesscontrollerresolvers.html" 
-                                    label="Access Controller Resolvers"/>
-                                <authenticators href="authenticators.html" 
-                                    label="Authenticators"/>
-                                <authorizers href="authorizers.html" 
-                                    label="Authorizers"/>
-                                <policies href="policymanagers.html" 
-                                    label="Policies and Policy&#160;Managers"/>
-                                <accr-mng href="accreditablemanagers.html" 
-                                    label="Accreditable&#160;Managers"/>
-                                <ssl href="ssl.html" label="SSL Encryption"/>
-                                
-                            </accesscontrol>
-                            <authoring href="authoring/" labe="Authoring">
-                                <namespaces href="adding-document-creator.html" 
-                                    label="Adding a new document creator"/>
-                                <namespaces href="image-upload.html" 
-                                    label="Image Upload"/>
-                                <openoffice href="openoffice.html" label="OpenOffice"/>
-                            </authoring>
-                            <deployment href="deployment/" label="Deployment">
-                                <namespaces href="mod_proxy.html" label="mod_proxy"/>
-                            </deployment>
-                            <misc href="editors/" label="Editors">
-                                <namespaces href="htmlform.html" 
-                                    label="HTML Form Editor"/>
-                                <namespaces href="1form.html" 
-                                    label="HTML One Form Editor"/>
-                                <namespaces href="bxe.html" label="Bitflux Editor"/>
-                                <namespaces href="kupu.html" label="Kupu"/>
-                                <namespaces href="xopus.html" label="Xopus"/>
-                            </misc>
-                            <layout href="layout/" label="Layout">
-                                <navigation href="navigation.html" label="Navigation"/>
-                                <xhtml-templating href="xhtml-templating.html" 
-                                    label="XHTML templating"/>
-                                <static-resources href="static-resources.html" 
-                                    label="Serving static resources"/>
-                                <menubar href="lenya-menubar.html" 
-                                    label="Lenya Menubar"/>
-                            </layout>
-                            <publication href="publication/" label="Publication">
-                                <pageenvelopemodule href="pageenvelopemodule.html" 
-                                    label="PageEnvelopeModule"/>
-                                <sitetree href="siteTree.html" label="Site tree"/>
-                            </publication>
-                            <revisioncontrol href="revisioncontrol/" 
-                                label="Revision Control">
-                                <namespaces href="revisioncontroller.html" 
-                                    label="Revision Controller"/>
-                                <namespaces href="rcml.html" label="RCML"/>
-                                <namespaces href="checkin.html" label="Check In"/>
-                                <namespaces href="checkout.html" label="Check Out"/>
-                                <namespaces href="version.html" label="Revisions"/>
-                                <namespaces href="rollback.html" label="Rollback"/>
-                            </revisioncontrol>
-                            <repository href="repository/" label="Repository">
-                                <namespaces href="webdav.html" label="WebDAV Servers"/>
-                            </repository>
-                            <search href="search/" label="Search">
-                                <namespaces href="lucene.html" 
-                                    label="Searching with Lucene"/>
-                            </search>
-                            <uri-handling href="uri-handling/" label="URI Handling">
-                                <uri-parametrizer href="URIParametrizer.html" 
-                                    label="URI Parametrizer"/>
-                                <standard-uri href="standardURI.html" 
-                                    label="URI Scheme"/>
-                                <usecases href="usecases.html" label="Usecases"/>
-                            </uri-handling>
-                            <asset-management href="asset-management/" 
-                                label="Asset Management">
-                                <asset-management-1 href="management.html" 
-                                    label="Asset Management"/>
-                            </asset-management>
-                            <link-management href="link-management/" 
-                                label="Link Management">
-                                <link-management-1 href="link-management.html" 
-                                    label="Link Management"/>
-                            </link-management>
-                            <meta-data href="metadata/" label="Meta Data">
-                                <meta-data-1 href="metadata.html" 
-                                    label="Meta Data Handling"/>
-                            </meta-data>
-                            <multilingual href="multilingual/" 
-                                label="Multilingual Documents">
-                                <multilingual-1 href="multilingual.html" 
-                                    label="Multilingual Document Handling"/>
-                            </multilingual>
-                            <node-40 href="tasks/" label="Tasks">
-                                <node-41 href="concept.html" label="The Task Concept"/>
-                                <node-42 href="defining.html" label="Defining Tasks"/>
-                                <node-43 href="taskaction.html" label="The TaskAction"/>
-                                <node-44 href="scheduling.html" 
-                                    label="Scheduling a Task"/>
-                                <node-45 label="Included tasks">
-                                    <node-46 href="anttask.html" label="AntTask"/>
-                                    <node-47 href="publisher.html" 
-                                        label="DefaultFilePublisher"/>
-                                    <node-48 href="exporter.html" 
-                                        label="StaticHTMLExporter"/>
-                                    <node-49 href="mailtask.html" label="MailTask"/>
-                                </node-45>
-                                <node-50 href="development.html" 
-                                    label="Developing Tasks"/>
-                            </node-40>
-                            <workflow href="workflow/" label="Workflow">
-                                <introduction href="terms.html" label="Terms"/>
-                                <introduction href="state-machine.html" 
-                                    label="The State Machine"/>
-                                <introduction href="configuration.html" 
-                                    label="Configuration"/>
-                                <introduction href="implementation.html" 
-                                    label="Implementation"/>
-                            </workflow>
-                            <sitemanagement href="sitemanagement/" 
-                                label="Site Management">
-                                <archive href="archive.html" label="Archive"/>
-                                <copy href="copy.html" label="Copy"/>
-                                <deactivate href="deactivate.html" label="Deactivate"/>
-                                <delete href="delete.html" label="Delete"/>
-                                <deletetrash href="deletetrash.html" 
-                                    label="Delete the trash"/>
-                                <move href="move.html" label="Move"/>
-                                <moveupdown href="moveupdown.html" 
-                                    label="Move Up/Down"/>
-                                <rename href="rename.html" label="Rename"/>
-                                <restore href="restore.html" label="Restore"/>
-                            </sitemanagement>
-                        </components>
-                        <specs href="specs/" label="Specifications" wholesite="true">
-                            <namespaces href="namespaces.html" label="Namespaces"/>
-                        </specs>
-                        <misc href="misc/" label="Miscellaneous" wholesite="true">
-                            <coding href="coding-guidelines.html" 
-                                label="Coding Guidelines"/>
-                            <javadoc-error href="javadoc-error.html"/>
-                            <node-e href="unittests.html" label="Unit Tests"/>
-                            <node-e href="xinclude-processor.html" 
-                                label="XInclude Processor"/>
-                        </misc>
-                        <javadoc href="../../apidocs/index.html" label="API (Javadoc)"/>
+    <documentation href="docs/" label="Documentation" tab="docs">
+        <index_doc href="index.html" label="Documentation" wholesite="true"/>
+        <whole_docu href="../docu.pdf" label="pdf docu 1.2.x (whole)" />
+        <whole_docu href="../docu.html" label="html docu 1.2.x (whole)" />
+        <docu1.2.x href="1_2_x/" label="1.2.x">
 
-            </docu1.2.x>
-            <docu1.4 href="1_4/index.html" label="1.4" />
-            <docu2.x href="2_1/index.html" label="2" />
-        </documentation>
+            <components href="components/" label="Components" wholesite="true">
+                            <!--resource-types href="resource-types/"
+                                label="Resource&#160;Types"/-->
+                <accesscontrol href="accesscontrol/" label="Access&#160;Control">
+                    <ac-terms href="terms.html" label="Basic Terms"/>
+                    <accesscontrollers href="accesscontrollers.html" label="Access&#160;Controllers"/>
+                    <ac-resolvers href="accesscontrollerresolvers.html" label="Access Controller Resolvers"/>
+                    <authenticators href="authenticators.html" label="Authenticators"/>
+                    <authorizers href="authorizers.html" label="Authorizers"/>
+                    <policies href="policymanagers.html" label="Policies and Policy&#160;Managers"/>
+                    <accr-mng href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
+                    <ssl href="ssl.html" label="SSL Encryption"/>
+                </accesscontrol>
+                <authoring href="authoring/" labe="Authoring">
+                    <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
+                    <namespaces href="image-upload.html" label="Image Upload"/>
+                    <openoffice href="openoffice.html" label="OpenOffice"/>
+                </authoring>
+                <deployment href="deployment/" label="Deployment">
+                    <namespaces href="mod_proxy.html" label="mod_proxy"/>
+                </deployment>
+                <misc href="editors/" label="Editors">
+                    <namespaces href="htmlform.html" label="HTML Form Editor"/>
+                    <namespaces href="1form.html" label="HTML One Form Editor"/>
+                    <namespaces href="bxe.html" label="Bitflux Editor"/>
+                    <namespaces href="kupu.html" label="Kupu"/>
+                    <namespaces href="xopus.html" label="Xopus"/>
+                </misc>
+                <layout href="layout/" label="Layout">
+                    <navigation href="navigation.html" label="Navigation"/>
+                    <xhtml-templating href="xhtml-templating.html" label="XHTML templating"/>
+                    <static-resources href="static-resources.html" label="Serving static resources"/>
+                    <menubar href="lenya-menubar.html" label="Lenya Menubar"/>
+                </layout>
+                <publication href="publication/" label="Publication">
+                    <pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
+                    <sitetree href="siteTree.html" label="Site tree"/>
+                </publication>
+                <revisioncontrol href="revisioncontrol/" label="Revision Control">
+                    <namespaces href="revisioncontroller.html" label="Revision Controller"/>
+                    <namespaces href="rcml.html" label="RCML"/>
+                    <namespaces href="checkin.html" label="Check In"/>
+                    <namespaces href="checkout.html" label="Check Out"/>
+                    <namespaces href="version.html" label="Revisions"/>
+                    <namespaces href="rollback.html" label="Rollback"/>
+                </revisioncontrol>
+                <repository href="repository/" label="Repository">
+                    <namespaces href="webdav.html" label="WebDAV Servers"/>
+                </repository>
+                <search href="search/" label="Search">
+                    <namespaces href="lucene.html" label="Searching with Lucene"/>
+                </search>
+                <uri-handling href="uri-handling/" label="URI Handling">
+                    <uri-parametrizer href="URIParametrizer.html" label="URI Parametrizer"/>
+                    <standard-uri href="standardURI.html" label="URI Scheme"/>
+                    <usecases href="usecases.html" label="Usecases"/>
+                </uri-handling>
+                <asset-management href="asset-management/" label="Asset Management">
+                    <asset-management-1 href="management.html" label="Asset Management"/>
+                </asset-management>
+                <link-management href="link-management/" label="Link Management">
+                    <link-management-1 href="link-management.html" label="Link Management"/>
+                </link-management>
+                <meta-data href="metadata/" label="Meta Data">
+                    <meta-data-1 href="metadata.html" label="Meta Data Handling"/>
+                </meta-data>
+                <multilingual href="multilingual/" label="Multilingual Documents">
+                    <multilingual-1 href="multilingual.html" label="Multilingual Document Handling"/>
+                </multilingual>
+                <node-40 href="tasks/" label="Tasks">
+                    <node-41 href="concept.html" label="The Task Concept"/>
+                    <node-42 href="defining.html" label="Defining Tasks"/>
+                    <node-43 href="taskaction.html" label="The TaskAction"/>
+                    <node-44 href="scheduling.html" label="Scheduling a Task"/>
+                    <node-45 label="Included tasks">
+                        <node-46 href="anttask.html" label="AntTask"/>
+                        <node-47 href="publisher.html" label="DefaultFilePublisher"/>
+                        <node-48 href="exporter.html" label="StaticHTMLExporter"/>
+                        <node-49 href="mailtask.html" label="MailTask"/>
+                    </node-45>
+                    <node-50 href="development.html" label="Developing Tasks"/>
+                </node-40>
+                <workflow href="workflow/" label="Workflow">
+                    <introduction href="terms.html" label="Terms"/>
+                    <introduction href="state-machine.html" label="The State Machine"/>
+                    <introduction href="configuration.html" label="Configuration"/>
+                    <introduction href="implementation.html" label="Implementation"/>
+                </workflow>
+                <sitemanagement href="sitemanagement/" label="Site Management">
+                    <archive href="archive.html" label="Archive"/>
+                    <copy href="copy.html" label="Copy"/>
+                    <deactivate href="deactivate.html" label="Deactivate"/>
+                    <delete href="delete.html" label="Delete"/>
+                    <deletetrash href="deletetrash.html" label="Delete the trash"/>
+                    <move href="move.html" label="Move"/>
+                    <moveupdown href="moveupdown.html" label="Move Up/Down"/>
+                    <rename href="rename.html" label="Rename"/>
+                    <restore href="restore.html" label="Restore"/>
+                </sitemanagement>
+            </components>
+            <specs href="specs/" label="Specifications" wholesite="true">
+                <namespaces href="namespaces.html" label="Namespaces"/>
+            </specs>
+            <misc href="misc/" label="Miscellaneous" wholesite="true">
+                <coding href="coding-guidelines.html" label="Coding Guidelines"/>
+                <javadoc-error href="javadoc-error.html"/>
+                <node-e href="unittests.html" label="Unit Tests"/>
+                <node-e href="xinclude-processor.html" label="XInclude Processor"/>
+            </misc>
+            <javadoc href="../../apidocs/index.html" label="API (Javadoc)"/>
+        </docu1.2.x>
+        <docu1.4 href="1_4/index.html" label="1.4" />
+        <docu2.x href="2_1/index.html" label="2" />
+    </documentation>
     <community href="community/" label="Community" tab="community">
         <index_com href="index.html" label="Contributing"/>
-		<node-h href="acknowledgements.html" label="Credits"/>
-        <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" 
-            label="SVN Web"/>
-        <node-g 
-            href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27" 
-            label="Bug Tracker"/>
+        <node-h href="acknowledgements.html" label="Credits"/>
+        <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
+        <node-g
+                href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=%27Importance%27"
+                label="Bug Tracker"/>
         <ml href="mailing-lists.html" label="Mailing Lists"/>
         <irc href="irc.html" label="IRC"/>
         <meetings href="meetings.html" label="Meetings and Sprints"/>
@@ -210,61 +168,61 @@
         <website-update href="website-update.html" label="Website Update"/>
     </community>
     <images href="images/">
-       <live href="live/">
-         <navigation.img href="navigation.png"/>
-       </live>
+        <live href="live/">
+            <navigation.img href="navigation.png"/>
+        </live>
     </images>
-	<external-refs>
-		<asf href="http://www.apache.org/"/>
-		<cocoon href="http://cocoon.apache.org/">
-			<cocoon.2.1 href="2.1/">
-				<cocoon.howto href="howto/">
-					<cocoon.howto.patch href="howto-patch.html"/>
-					<cocoon.howto.bugzilla href="bugzilla.html"/>
-				</cocoon.howto>
-				<cocoon.2.1.features href="features.html"/>
-			</cocoon.2.1>
-			<lenya href="lenya/"/>
-                        <mirror href="mirror.cgi"/>
-		</cocoon>
-		<cvs.asf href="http://svn.apache.org/">
-			<cvs.incubator href="dist/incubator/">
-				<incubator.lenya href="lenya/"/>
-			</cvs.incubator>
-		</cvs.asf>
-		<forrest.apache.org href="http://forrest.apache.org/">
-			<forrest.build href="build.html"/>
-		</forrest.apache.org>
-		<issues href="http://issues.apache.org/bugzilla/">
-			<issue.add href="enter_bug.cgi?reporter=&amp;product=Lenya&amp;version=Current+CVS&amp;component=core&amp;rep_platform=Other&amp;op_sys=other&amp;priority=Other&amp;bug_severity=Enhancement&amp;bug_status=NEW&amp;assigned_to=&amp;cc=&amp;bug_file_loc=&amp;short_desc=%5BPatch%5D&amp;comment=&amp;maketemplate=Remember+values+as+bookmarkable+template&amp;form_name=enter_bug"/>
-			<issues.list href="buglist.cgi?">
-				<issues.open.patches href="bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=Blocker&amp;bug_severity=Critical&amp;bug_severity=Major&amp;bug_severity=Normal&amp;bug_severity=Minor&amp;bug_severity=Enhancement&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=short_desc&amp;type0-0-0=substring&amp;value0-0-0=%5BPatch%5D&amp;field0-0-1=noop&amp;type0-0-1=noop&amp;value0-0-1=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time"/>
-				<issues.open.bugs.enhancement href="bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=Enhancement&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=short_desc&amp;type0-0-0=notsubstring&amp;value0-0-0=%5BPatch%5D&amp;field0-0-1=noop&amp;type0-0-1=noop&amp;value0-0-1=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time"/>
-			</issues.list>
-		</issues>
-		<nightly.builds href="http://svn.apache.org/snapshots/lenya/"/>
-		<nzz href="http://www.nzz.ch"/>
-		<opensource.org href="http://www.opensource.org/"/>
-		<releases href="http://www.apache.org/dyn/closer.cgi/lenya/"/>
-		<w3c href="http://www.w3c.org/">
-			<w3c.xml href="XML/"/>
-			<w3c.xslt href="TR/xslt/"/>
-		</w3c>
-		<wiki href="http://wiki.apache.org/">
-      <lenya href="lenya/" >
-         <FAQ href="FAQ"/>
-      </lenya>
-      <cocoon href="cocoon/">
-			  <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
-      </cocoon>
-		</wiki>
-		<wyona href="http://wyona.com" />
-                <java href="http://java.sun.com/j2se/1.4.2/download.html"/>
-                <java.endorsedmechanism href="http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html"/>
-                <jetty href="http://jetty.mortbay.org/jetty/"/>
-                <tomcat5 href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0"/>
-                <tomcat5.setup href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/setup.html"/>
-                <tomcat5.classloader href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html"/>
-                <subversion href="http://subversion.tigris.org/"/>
-	</external-refs>
+    <external-refs>
+        <asf href="http://www.apache.org/"/>
+        <cocoon href="http://cocoon.apache.org/">
+            <cocoon.2.1 href="2.1/">
+                <cocoon.howto href="howto/">
+                    <cocoon.howto.patch href="howto-patch.html"/>
+                    <cocoon.howto.bugzilla href="bugzilla.html"/>
+                </cocoon.howto>
+                <cocoon.2.1.features href="features.html"/>
+            </cocoon.2.1>
+            <lenya href="lenya/"/>
+            <mirror href="mirror.cgi"/>
+        </cocoon>
+        <cvs.asf href="http://svn.apache.org/">
+            <cvs.incubator href="dist/incubator/">
+                <incubator.lenya href="lenya/"/>
+            </cvs.incubator>
+        </cvs.asf>
+        <forrest.apache.org href="http://forrest.apache.org/">
+            <forrest.build href="build.html"/>
+        </forrest.apache.org>
+        <issues href="http://issues.apache.org/bugzilla/">
+            <issue.add href="enter_bug.cgi?reporter=&amp;product=Lenya&amp;version=Current+CVS&amp;component=core&amp;rep_platform=Other&amp;op_sys=other&amp;priority=Other&amp;bug_severity=Enhancement&amp;bug_status=NEW&amp;assigned_to=&amp;cc=&amp;bug_file_loc=&amp;short_desc=%5BPatch%5D&amp;comment=&amp;maketemplate=Remember+values+as+bookmarkable+template&amp;form_name=enter_bug"/>
+            <issues.list href="buglist.cgi?">
+                <issues.open.patches href="bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=Blocker&amp;bug_severity=Critical&amp;bug_severity=Major&amp;bug_severity=Normal&amp;bug_severity=Minor&amp;bug_severity=Enhancement&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=short_desc&amp;type0-0-0=substring&amp;value0-0-0=%5BPatch%5D&amp;field0-0-1=noop&amp;type0-0-1=noop&amp;value0-0-1=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time"/>
+                <issues.open.bugs.enhancement href="bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_severity=Enhancement&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=short_desc&amp;type0-0-0=notsubstring&amp;value0-0-0=%5BPatch%5D&amp;field0-0-1=noop&amp;type0-0-1=noop&amp;value0-0-1=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time"/>
+            </issues.list>
+        </issues>
+        <nightly.builds href="http://svn.apache.org/snapshots/lenya/"/>
+        <nzz href="http://www.nzz.ch"/>
+        <opensource.org href="http://www.opensource.org/"/>
+        <releases href="http://www.apache.org/dyn/closer.cgi/lenya/"/>
+        <w3c href="http://www.w3c.org/">
+            <w3c.xml href="XML/"/>
+            <w3c.xslt href="TR/xslt/"/>
+        </w3c>
+        <wiki href="http://wiki.apache.org/">
+            <lenya href="lenya/">
+                <FAQ href="FAQ"/>
+            </lenya>
+            <cocoon href="cocoon/">
+                <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
+            </cocoon>
+        </wiki>
+        <wyona href="http://wyona.com" />
+        <java href="http://java.sun.com/j2se/1.4.2/download.html"/>
+        <java.endorsedmechanism href="http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html"/>
+        <jetty href="http://jetty.mortbay.org/jetty/"/>
+        <tomcat5 href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0"/>
+        <tomcat5.setup href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/setup.html"/>
+        <tomcat5.classloader href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html"/>
+        <subversion href="http://subversion.tigris.org/"/>
+    </external-refs>
 </site>

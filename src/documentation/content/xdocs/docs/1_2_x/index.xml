@@ -30,7 +30,7 @@
   </header>
   <body>
         <p>
-           In getting started with Lenya, one must learn not only a number of concepts, but a number of details as well. 
+           In getting started with Lenya, one must learn not only a number of concepts, but a number of details as well.
            The Components section will explain the building blocks that make up Lenya, such as the sitemap, publications, and tasks.
         </p>
 
@@ -39,17 +39,17 @@
            This is our stable releases and should be used for productiv environments.
         </p>
         <p>
-           The 1.4. branch reflects our efforts to integrate Jackrabbit and building an even more flexible frameworks. 
-           With the 1.4. branch we are trying to capsulate the functionalities of lenya into plugins. 
+           The 1.4. branch reflects our efforts to integrate Jackrabbit and building an even more flexible frameworks.
+           With the 1.4. branch we are trying to capsulate the functionalities of lenya into plugins.
            This plugins then can be (hopefully) used in all following version independent from the lenya core.
         </p>
         <p>
-           This way we can make flexible changes in 2.0 where we want to refactor the underlinying code base. 
+           This way we can make flexible changes in 2.0 where we want to refactor the underlinying code base.
            The version 2.0 will be have the lenya core and a plugin base arround this way we hope to shorten the development time with lenya.
-           The idea is that the user (or admin) can choose from a width range of plugins that he can use in his (her) application. 
+           The idea is that the user (or admin) can choose from a width range of plugins that he can use in his (her) application.
         </p>
 <p>
-More documentation (work in progress) can be found at the <link href="http://wiki.apache.org/cocoon-lenya/">Apache Lenya Wiki</link>.
+More documentation (work in progress) can be found at the <link href="site:wiki/lenya/">Apache Lenya Wiki</link>.
 </p>
   </body>
 </document>
