@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.46 2004/03/10 09:32:15 gregor Exp $ 
+   $Id: cmsui_de.xml,v 1.47 2004/03/12 16:07:49 roku Exp $ 
    
 -->
 
@@ -36,6 +36,7 @@
   <message key="live">live</message>
   <message key="not">nicht</message>
   <message key="authoring">Bearbeitung</message>
+  <message key="Authoring">Bearbeitung</message>
   <message key="review">Freigabe</message>
   <message key="user">Benutzer</message>
   <message key="Users">Benutzer</message>  
@@ -65,7 +66,9 @@
   <message key="Date">Datum</message>
   <message key="Back">Zur&#252;ck</message>
   <message key="Add">Hinzuf&#252;gen</message>
-  <message key="Create">Erstellen</message>  
+  <message key="Create">Erstellen</message>
+  <message key="The Archive">Archiv</message>
+  <message key="Trash">Papierkorb</message>
   
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>

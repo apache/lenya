@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--$Id: sitetree.xml,v 1.15 2004/03/05 21:12:22 michi Exp $ -->
+<!--$Id: sitetree.xml,v 1.16 2004/03/12 16:07:48 roku Exp $ -->
 
-<site
+<site i18n:attr="label" label="Authoring"
     xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation=
         "http://apache.org/cocoon/lenya/sitetree/1.0
         ../../../../resources/entities/sitetree.xsd"
-    label="Authoring">
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+>
     
   <node id="index">
     <label xml:lang="en">Home</label>

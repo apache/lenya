@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site label="Archive" xmlns="http://apache.org/cocoon/lenya/sitetree/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!-- $Id: sitetree.xml,v 1.2 2004/03/12 16:07:49 roku Exp $ -->
+
+<site i18n:attr="label" label="The Archive" 
+  xmlns="http://apache.org/cocoon/lenya/sitetree/1.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+>
 </site>
