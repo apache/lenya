@@ -110,9 +110,10 @@ public class AntTaskTest extends TestCase {
 
     /**
      * Tests the AntTask class.
-     * Template method, please override {@link #evaluateTest()} and {@link #getTaskId()}.
+     * Template method, please override {@link #evaluateTest()} and {@link #getTarget()} and {@link #prepareTest()}.
      */
     public final void testAntTask() throws Exception {
+        prepareTest();
         doTest(getTarget());
         evaluateTest();
     }
@@ -173,6 +174,13 @@ public class AntTaskTest extends TestCase {
     protected Parameters getTaskParameters() {
         return new Parameters();
     }
+
+	/**
+	 * Override this method to prepare your test.
+	 */
+	protected void prepareTest() throws Exception {
+		System.out.println("prepare");
+	}
 
     /**
      * Override this method to add your test evaluation code.
