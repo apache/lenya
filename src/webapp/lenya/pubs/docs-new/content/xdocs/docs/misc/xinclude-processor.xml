@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>XInclude Processor</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Michael Wechner" email="michi@apache.org"/> 
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Hello World 1</title>
+<source>
+<![CDATA[
+<hello>
+<levi xlink:href="world.xml" xlink:show="embed" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+</hello>
+]]>
+</source>
+</section>
+
+<section>
+<title>Hello World 2</title>
+<source>
+<![CDATA[
+<hello>
+<levi xlink:href="world.xml#xpointer(/world/countries/country[@id='japan'])xpointer(/world/countries/country[@id='china'])" xlink:show="embed" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+</hello>
+]]>
+</source>
+</section>
+
+<section>
+<title>Hello World 3</title>
+<source>
+<![CDATA[
+<hello>
+<levi xlink:href="world.xml#xmlns(solar=http://www.foo.bar/0/solar)xpointer(/solar:world/solar:countries)" xlink:show="embed" xmlns:xlink="http://www.w3.org/1999/xlink"/>
+</hello>
+]]>
+</source>
+</section>
+
+</body>
+</document>

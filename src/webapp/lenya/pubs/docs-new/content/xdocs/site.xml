@@ -123,6 +123,7 @@
 				<coding href="coding-guidelines.html" label="Coding Guidelines"/>
 				<javadoc-error href="javadoc-error.html"/>
 				<node-e href="unittests.html" label="Unit Tests"/>
+				<node-e href="xinclude-processor.html" label="XInclude Processor"/>
 			</misc>
 			<javadoc href="../apidocs/index.html" label="API (Javadoc)"/>
 		</integrator-dev-guide>
