@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+
+<!--
+Forrest site.xml
+
+This file contains an outline of the site's information content.  It is used to:
+- Generate the website menus (though these can be overridden - see docs)
+- Provide semantic, location-independent aliases for internal 'site:' URIs, eg
+<link href="site:changes"> links to changes.html (or ../changes.html if in
+  subdir).
+- Provide aliases for external URLs in the external-refs section.  Eg, <link
+  href="ext:cocoon"> links to http://xml.apache.org/cocoon/ 
+
+See http://xml.apache.org/forrest/linking.html for more info
+-->
+
+<site label="Lenya CMS" href="" xmlns="http://apache.org/forrest/linkmap/1.0">
+
+		<!-- User's Guide -->
+		<user-guide href="user-guide.html"  label="User's Guide">
+			<usr-glitches href="usr-glitches.html" label="Strange Effects">
+				<redirect href="usr-glitches.html#redirect" label="Redirect Problems with IE5 on Mac"/>
+			</usr-glitches>
+			<usr-authorization href="usr-authorization.html" label="Authorization and Authentication">
+				<login href="usr-authorization.html#login" label="Logging in"/>
+				<switch href="usr-authorization.html#switch" label="Switching Users"/>
+				<logout href="usr-authorization.html#logout" label="Logging Out"/>
+				<chgpwd href="usr-authorization.html#chgpwd" label="Changing Password"/>
+			</usr-authorization>
+			<authoring href="authoring" label="Authoring">
+				<usr-create href="usr-create.html" label="Creating Content">
+					<pc href="usr-create.html#pc" label="Parent Child"/>
+					<dc href="usr-create.html#dc" label="Document Collection"/>
+				</usr-create>
+				<usr-import href="usr-import.html" label="Importing Content">
+					<upload href="" label="HTTP Upload"/>
+					<text href="" label="Text"/>
+					<multimedia href="" label="Multimedia (Image, Audio, Video)"/>
+				</usr-import>
+				<edit href="edit" label="Editing Content">
+					<usr-edit-html href="usr-edit-html.html" label="Lenya's HTML Form Editor"/>
+					<usr-edit-xopus href="usr-edit-xopus.html" label="Q42's Xopus (IE5.5 or later)"/>
+					<bitflux href="bitflux.html" label="Bitflux Editor"/>
+					<bitflux-howto href="bitflux-howto.html" label="Bitflux Editor How-To"/>
+					<usr-edit-eonpro href="usr-edit-eonpro.html" label="RealObjects edit-on Pro"/>
+				</edit>
+				<usr-publish href="usr-publish.html" label="Publishing Content" />
+			</authoring>
+		</user-guide>
+
+		<!-- Administrator's Guide -->
+		<administrator-guide href="administrator-guide.html"  label="Administrator's Guide">
+			<adm-authorization href="adm-authorization.html" label="Authorization and Authentication">
+				<create-edit-user-gui href="" label="Creating and Editing Users (Browser Interface)"/>
+				<create-edit-user href="adm-authorization.html#create_edit_user" label="Creating and Editing Users (Command Line)"/>
+				<edit-policies-gui href="" label="Creating and Editing Authorization Policies (Browser Interface)"/>
+				<edit-policies href="adm-authorization.html#edit_policies" label="Creating and Editing Authorization Policies (Command Line)"/>
+				<create-edit-groups href="" label="Creating and Editing Groups/Roles"/>
+			</adm-authorization>
+		</administrator-guide>
+
+
+		<!-- Integrator's Guide -->
+		<integrator-guide href="integrator-guide.html"  label="Integrator's Guide">
+			<int-create-pub href="int-create-pub.html" label="Creating a new Publication"/>
+			<document href="document" label="Pages and Documents">
+				<def-page href="" label="The definition of a Page"/>
+				<def-document href="" label="The definition of a Document"/>
+				<def-page-parts href="" label="The various parts of a Page"/>
+				<parent-child-creator href="parent-child-creator.html" label="Creating a new Document"/>
+				<int-filesystem-publisher href="int-filesystem-publisher.html" label="Making a Document publishable"/>
+				<edit href="edit" label="Making a Document editable">
+					<int-html-form-editor href="int-html-form-editor.html" label="With the HTML Form Editor"/>
+					<xopus href="xopus.html#hookers" label="With Q42's Xopus"/>
+				</edit>
+			</document>
+			<ac href="" label="Authorization and Authentication">
+				<login href="" label="Customizing Login- and Logout-Screen"/>
+				<authenticator href="" label="Replace Default by Alternative Authenticator"/>
+				<authorizer href="" label="Replace Default by Alternative Authorizer"/>
+			</ac>
+			<menus href="" label="Menus">
+				<non-collab href="" label="Non-Collaborative (Authoring, Live)"/>
+				<collab href="" label="Collaborative (Authoring, Staging, Live)"/>
+			</menus>
+			<architecture href="" label="Server Architecture">
+				<server-one href="" label="One Server System (Authoring and Live on one machine)"/>
+				<server-two href="" label="Two Server System (One Authoring and one Live)"/>
+				<server-three href="" label="Three Server System (One Authoring and two or more Live)"/>
+				<server-four href="" label="Four Server System (Two Authoring and two or more Live)"/>
+			</architecture>
+			<int-virtual-server href="int-virtual-server.html" label="Virtual Servers (mandantenfaehig)">
+				<int-proxy-apache href="int-proxy-apache.html" label="Apache as Proxy"/>
+			</int-virtual-server>
+			<change-management href="" label="Change Management"/>
+			<int-performance href="int-performance.html" label="Performance"/>
+			<scalability href="" label="Scalability"/>
+			<leaf URL="http://developer.netscape.com/docs/manuals/browser/sidebar/" label="My sidebar"/>
+			<int-hsqldb href="int-hsqldb.html" label="HSQL Database"/>
+			<servlet href="" label="Servlet Engines">
+				<int-tomcat href="int-tomcat.html" label="Tomcat"/>
+			</servlet>
+			<jvm href="" label="Java Virtual Machine">
+				<encoding href="encoding.html" label="Encoding"/>
+			</jvm>
+		</integrator-guide>
+
+		<!-- Developer's Guide -->
+    <developer-guide href="developer-guide.html"  label="Developer's Guide">
+      <architecture href="architecture.html" label="Architecture"/>
+      <codingGuidelines href="codingGuidelines.html" label="Coding Guidelines"/>
+      <leaf URL="http://xml.apache.org/cocoon" label="Pipeline Processor: Cocoon"/>
+      <access-controller href="access-controller.html" label="Authorization and Authentication">
+	<ac-abstract-authenticator href="" label="Abstract Authenticator"/>
+	<ac-abstract-authorizer href="" label="Abstract Authorizer"/>
+	<ac-concrete-authenticator href="" label="Concrete Authenticator"/>
+	<ac-concrete-authorizer href="" label="Concrete Authorizer"/>
+	<ac-iml-authenticator href="" label="Default Authenticator: IML Authenticator"/>
+	<ac-pml-authorizer href="" label="Default Authorizer: PML Authorizer "/>
+      </access-controller>
+      <authoring href="authoring" label="Authoring">
+	<create-resource href="create-resource.html" label="Creating/Importing Content (Resource)">
+	  <parent-child-creator href="parent-child-creator.html" label="Parent Child Creator"/>
+	  <document-collection href="document-collection.html" label="Document Collection"/>
+	  <upload-text href="" label="HTTP Upload: Text"/>
+	  <upload-image href="http-upload-image.html" label="HTTP Upload: Multimedia (Image, Audio, Video)"/>
+	  <upload-file href="file-upload.html" label="File Upload"/>
+	</create-resource>
+	<edit href="edit" label="Editing Content">
+	  <html-form-editor href="html-form-editor.html" label="Lenya's HTML Form Editor"/>
+	  <xopus2 href="xopus2.html" label="Xopus 2"/>
+	  <xopus href="xopus.html" label="Q42's Xopus (IE5.5 or later)">
+	    <xopus-general href="xopus.html#general" label="General Information"/>
+	    <xopus-req href="xopus.html#req-resp" label="Xopus request and responses (the interface)"/>
+	    <xopus-navigation href="xopus.html#navigation_bar" label="Navigation Bar and Edit/Open Button"/>
+	    <xopus-conf href="xopus.html#confRequestURL" label="Configuration of requested URL by the client Xopus"/>
+	    <xopus-location href="xopus.html#locationXopus" label="Location of Xopus"/>
+	    <xopus-setup href="xopus.html#setupCms" label="Setting up the Lenya CMS for Xopus"/>
+	    <xopus-hooks href="xopus.html#hookers" label="Hooking Xopus to an existing page"/>
+	    <xopus-sample absURI="sample.html" label="Test Xopus"/>
+	  </xopus>
+	  <bitflux href="bitflux.html" label="Bitflux Editor"/>
+	  <bitflux-howto href="bitflux-howto.html" label="Bitflux Editor How-To">
+	    <bitflux-howto-1 href="bitflux-howto.html#01" label="Adapting the sitemap (bitflux.xmap)"/>
+	    <bitflux-howto-2 href="bitflux-howto.html#02" label="Creating the XSLT"/>
+	    <bitflux-howto-3 href="bitflux-howto.html#03" label="Creating the XSD"/>
+	    <bitflux-howto-4 href="bitflux-howto.html#04" label="Creating the CSS"/>
+	    <bitflux-howto-5 href="bitflux-howto.html#05" label="Adding an entry to the menu"/>
+	  </bitflux-howto>
+	  <editonpro href="editonpro.html" label="RealObjects edit-on Pro"/>
+	  <leaf URL="http://xmlwebgui.sourceforge.net/" label="XML Web GUI"/>
+	  <leaf URL="http://sourceforge.net/projects/xsdheditor/" label="XS DHTML Editor"/>
+	  <leaf URL="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnxml/html/xmldocedit.asp" label="Microsoft WYSIWYG XML Editor"/>
+	  <leaf URL="http://wysiwyg.skybuilders.com/" label="skyBuilders WYSIWYG HTML Editor"/>
+	</edit>
+	<dependency-manager href="" label="Dependency Manager"/>
+      </authoring>
+      <cm-markup-language href="cm-markup-language.html" label="Content Management Markup Language"/>
+      <rc href="revision-controller.html" label="Revision Controlling"/>
+      <slide href="slide.html" label="Slide"/>
+      <wf-markup-language href="wf-markup-language.html" label="Workflow Management"/>
+      <workflow href="workflow.html" label="Workflow Management - after Brainstorming Day"/>
+      <xml href="xml.html" label="Working with XML"/>
+      <task-development href="task-development.html" label="Tasks">
+	<tasks-publisher href="tasks-publisher.html" label="The DefaultFilePublisher Task"/>
+	<tasks-exporter href="tasks-exporter.html" label="The StaticHTMLExporter Task"/>
+	<tasks-mailtask href="tasks-mailtask.html" label="The MailTask"/>
+      </task-development>
+      <publishing href="publishing.html" label="Publishing">
+	<filesystem-publisher href="filesystem-publisher.html" label="Filesystem Publisher"/>
+	<command-line-interface href="command-line-interface.html" label="Command Line Interface"/>
+      </publishing>
+      <replication href="replication.html" label="Replication"/>
+      <event-handling href="" label="Event Handling">
+	<leaf URL="http://www.dralasoft.com/products/eventbroker/whitepaper/" label="Publisher-Dispatcher-Notifier-Subscriber Pattern"/>
+	<leaf URL="http://java.sun.com/products/jms/tutorial/1_3_1-fcs/doc/jms_tutorialTOC.html" label="Java Message Service"/>
+	<leaf URL="http://jakarta.apache.org/commons/sandbox/messenger/" label="Apache Commons Messenger"/>
+      </event-handling>
+      <int-syndication href="int-syndication.html" label="Syndication/Aggregation"/>
+      <scheduler href="scheduler.html" label="Scheduler"/>
+      <search href="" label="Search">
+	<lucene href="lucene.html" label="Lucene"/>
+      </search>
+      <testing href="" label="Testing">
+	<leaf URL="http://webtest.canoo.com/webtest/manual/WebTestHome.html" label="Webtest"/>
+	<leaf URL="http://sourceforge.net/projects/aft/" label="Anteater"/>
+	<leaf URL="http://jakarta.apache.org/commons/latka/index.html" label="Latka"/>
+	<leaf URL="http://htmlunit.sourceforge.net" label="HtmlUnit"/>
+	<leaf URL="http://sourceforge.net/projects/httpunit" label="HttpUnit"/>
+	<leaf URL="http://jakarta.apache.org/commons/sandbox/jelly/index.html" label="Jelly"/>
+      </testing>
+      <proxy-generator href="proxy-generator.html" label="Proxy Generator"/>
+      <release-manager href="release-manager.html" label="Release Manager Info"/>
+      <scratchpad absURI="/lenya/scratchpad/index.html" label="Scratchpad"/>
+     <javadoc href="javadoc"  label="Javadoc">
+      <leaf href="index.html" label="Lenya Overview"/>
+      <leaf URL="http://xml.apache.org/cocoon/apidocs/index.html" label="Cocoon Overview"/>
+      <leaf URL="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/http/package-summary.html" label="Servlet API"/>
+      <leaf URL="http://www.dom4j.org/javadoc/index.html" label="dom4j"/>
+      <leaf URL="http://quartz.sourceforge.net/javadoc/index.html" label="Quartz Scheduler"/>
+      <leaf URL="http://java.sun.com/j2se/javadoc/index.html" label="Javadoc Tool Home Page"/>
+    </javadoc>
+  </developer-guide>
+</site>
