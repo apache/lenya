@@ -125,7 +125,6 @@ public class ArticleImageUploadCreatorAction
 	sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
 	getLogger().debug("sitemapPath: " + sitemapPath);
 
-	String absoluteUploadDirName = sitemapPath + File.separator + uploadDirName;
 	String absoluteMetaDirName = sitemapPath + File.separator + metaDirName;
 	
 	Properties properties = new Properties(default_properties);
@@ -142,12 +141,11 @@ public class ArticleImageUploadCreatorAction
 	getLogger().debug(REFERER_PARAM_NAME + ": " + referer);
 
 	String imageXPath = request.getParameter(IMAGEXPATH_PARAM_NAME);
-	String requestingDocumentName = sitemapPath +
-	    request.getParameter(DOCUMENTID_PARAM_NAME);
+	String requestingDocumentPath = request.getParameter(DOCUMENTID_PARAM_NAME);
 	String uploadFile = request.getParameter(UPLOADFILE_PARAM_NAME);
 
 	getLogger().debug("imageXPath: " + imageXPath);
-	getLogger().debug("requestingDocumentName: " + requestingDocumentName);
+	getLogger().debug("requestingDocumentPath: " + requestingDocumentPath);
 	getLogger().debug("uploadFile: " + uploadFile);
 
 	// optional parameters for the meta file which contains dublin
@@ -202,27 +200,28 @@ public class ArticleImageUploadCreatorAction
 	    
 	    // grab the mime type and add it to the dublin core meta
 	    // data as "format" 
-	    //	    String mimeType = ((FilePart)obj).getMimeType();
+// 	    String mimeType = ((FilePart)obj).getMimeType();
 	    String mimeType = "FIXME:";
 	    if (mimeType != null) {
 		dublinCoreParams.put("format", mimeType);
 	    }
 		
-	    String imagePathName = absoluteUploadDirName + File.separator +
-		fileName;
+	    String imagePath = getImagePath(sitemapPath,
+					    uploadDirName,
+					    requestingDocumentPath,
+					    fileName);
 
-	    getLogger().debug("fileName: " + fileName);
-	    getLogger().debug("absoluteUploadDirName: " + absoluteUploadDirName);
 	    getLogger().debug("sitemapPath: " + sitemapPath);
+	    getLogger().debug("imagePath: " + imagePath);
 	    
-	    File dir = new File(absoluteUploadDirName);
+	    File dir = (new File(imagePath)).getParentFile();
 	    if (!dir.exists())
 		dir.mkdir();
 
 	    if (obj instanceof FilePartFile) {
-		((FilePartFile)obj).getFile().renameTo(new File(imagePathName));
+		((FilePartFile)obj).getFile().renameTo(new File(imagePath));
 	    } else {	
-		FileOutputStream out = new FileOutputStream(imagePathName);
+		FileOutputStream out = new FileOutputStream(imagePath);
 		InputStream in = ((FilePart)obj).getInputStream();
 		int read = in.read(buf);
 		while(read > 0) {
@@ -239,7 +238,7 @@ public class ArticleImageUploadCreatorAction
 	    
 	    // insert <media> tags at the location sepecified by the
 	    // cpath in the original document (the referer)
-	    insertMediaTag(requestingDocumentName, imageXPath,
+	    insertMediaTag(sitemapPath + requestingDocumentPath, imageXPath,
 			   fileName, dublinCoreParams);
 	    
 	} else if (obj instanceof String) {
@@ -281,22 +280,22 @@ public class ArticleImageUploadCreatorAction
 
     /**
      * Insert <media> tags at the location specified by the xpath in
-     * the original document (the requestingDocumentName) 
+     * the original document (the requestingDocumentPath) 
      *
-     * @param requestingDocumentName the xml document from where the
+     * @param requestingDocumentPath the xml document from where the
      * image upload request originated.
      * @param imageXPath the xpath after which the image is to be
      * inserted.
-     * @param imagePathName path name of the uploaded image
+     * @param imagePath path name of the uploaded image
      * @param dublinCoreParams a HashMap of additional values
      * according to Dublin Core.
      *
      * @exception DocumentException if an error occurs
      * @exception IOException if an error occurs
      */
-    protected void insertMediaTag(String requestingDocumentName,
+    protected void insertMediaTag(String requestingDocumentPath,
 				  String imageXPath,
-				  String imagePathName,
+				  String imagePath,
 				  HashMap dublinCoreParams)
 	throws DocumentException, IOException {
 
@@ -306,8 +305,8 @@ public class ArticleImageUploadCreatorAction
 	// read the document
 	SAXReader reader = new SAXReader();
 	
-	Document document = reader.read(requestingDocumentName);
-	getLogger().debug("insertMediaTag:" + requestingDocumentName);
+	Document document = reader.read(requestingDocumentPath);
+	getLogger().debug("insertMediaTag:" + requestingDocumentPath);
 
 	// create the media element
 	Element mediaTag = DocumentHelper.createElement("media");
@@ -315,7 +314,7 @@ public class ArticleImageUploadCreatorAction
 
 	mediaTag.addElement("media-reference")
 	    .addAttribute("mime-type", (String)dublinCoreParams.get("format"))
-	    .addAttribute("source", imagePathName)
+	    .addAttribute("source", imagePath)
 	    .addAttribute("alternate-text",
 			  (String)dublinCoreParams.get("title"))
 	    .addAttribute("copyright", (String)dublinCoreParams.get("rights"));
@@ -340,10 +339,33 @@ public class ArticleImageUploadCreatorAction
 
 	// write it back to the file
 	OutputStream out =
-	    new BufferedOutputStream(new FileOutputStream(requestingDocumentName));
+	    new BufferedOutputStream(new FileOutputStream(requestingDocumentPath));
 	XMLWriter writer = new XMLWriter(out, OutputFormat.createPrettyPrint());
 	writer.write(document);
 	writer.close();
+    }
+
+    /**
+     * Figure out where the image is to be stored. The default
+     * implementation simply concatenates the sitemapPath and
+     * uploadDirName (which is defined in the sitemap) with the
+     * filename. Derived classes might want to change this into more
+     * elaborate schemes, i.e. store the image together with the
+     * document where the image is inserted.
+     *
+     * @param sitemapPath a <code>String</code> value
+     * @param uploadDirName a <code>String</code> value
+     * @param requestingDocumentPath a <code>String</code> value
+     * @param fileName a <code>String</code> value
+     * @return a <code>String</code> value
+     */
+    protected String getImagePath(String sitemapPath,
+				  String uploadDirName,
+				  String requestingDocumentPath,
+				  String fileName) {
+	return sitemapPath + File.separator + uploadDirName + File.separator +
+	    fileName;
+	
     }
 }
 
