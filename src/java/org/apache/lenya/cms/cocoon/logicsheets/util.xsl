@@ -83,15 +83,11 @@
       </xsp:content>
 
     Session xsp_lenya_session = request.getSession(true);
-    Identity xsp_lenya_id = null;
-    org.apache.lenya.cms.ac2.Identity xsp_lenya_id_two = null;
     if (xsp_lenya_session != null) {
-      xsp_lenya_id = (Identity)xsp_lenya_session.getAttribute("org.apache.lenya.cms.ac.Identity");
-      xsp_lenya_id_two = (org.apache.lenya.cms.ac2.Identity)xsp_lenya_session.getAttribute("org.apache.lenya.cms.ac2.Identity");
-      if (xsp_lenya_id != null) {
-        <xsp:content><current_username><xsp:expr>xsp_lenya_id.getUsername()</xsp:expr></current_username></xsp:content>
-      } else if (xsp_lenya_id_two != null &amp;&amp; xsp_lenya_id_two.getUser() != null) {
-        <xsp:content><current_username><xsp:expr>xsp_lenya_id_two.getUser().getId()</xsp:expr></current_username></xsp:content>
+      org.apache.lenya.cms.ac2.Identity xsp_lenya_id
+          = (org.apache.lenya.cms.ac2.Identity)xsp_lenya_session.getAttribute(org.apache.lenya.cms.ac2.Identity.class.getName());
+      if (xsp_lenya_id != null &amp;&amp; xsp_lenya_id.getUser() != null) {
+        <xsp:content><current_username><xsp:expr>xsp_lenya_id.getUser().getId()</xsp:expr></current_username></xsp:content>
       } else {
         <xsp:content><no_username_yet/></xsp:content>
       }
