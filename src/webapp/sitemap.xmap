@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.37 2003/02/24 22:47:34 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.38 2003/02/27 10:48:12 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -25,6 +25,9 @@
       <map:transformer name="cinclude" logger="sitemap.transformer.cinclude" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
       <map:transformer name="writeDOMsession" logger="sitemap.transformer.writeDOMsession" src="org.apache.cocoon.transformation.WriteDOMSessionTransformer"/>
       <map:transformer name="readDOMsession" logger="sitemap.transformer.readDOMsession" src="org.apache.cocoon.transformation.ReadDOMSessionTransformer"/>
+      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+        <publication type=""/>
+      </map:transformer>
     </map:transformers>
     <map:readers default="resource">
       <map:reader name="resource" logger="sitemap.reader.resource" src="org.apache.cocoon.reading.ResourceReader"/>
@@ -59,18 +62,38 @@
     </map:view>
   </map:views>
   <map:pipelines>
+
+
     <!-- Welcome to Wyona -->
+    <map:pipeline>
+      <map:match pattern="publications.xml">
+        <map:generate type="directory" src="wyona/cms/pubs"/>
+        <map:transform src="wyona/cms/stylesheets/cms/Page/util/xinclude.xsl"/>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="wyona/cms/pubs/dummy.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
 
     <map:pipeline>
       <map:match pattern="">
         <map:redirect-to uri="index.html"/>
       </map:match>
       <map:match pattern="index.html">
+<!--
+        <map:aggregate element="lenya">
+          <map:part src="cocoon:/publications.xml"/>
+          <map:part src="wyona/cms/docs/cms/introduction.xml"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+-->
         <map:read src="resources/html/index.html" mime-type="text/html"/>
       </map:match>
     </map:pipeline>
-    <!-- Search with Lucene -->
 
+
+    <!-- Search with Lucene -->
     <map:pipeline>
       <map:match pattern="lucene/**">
         <map:mount uri-prefix="lucene" src="wyona/cms/lucene.xmap" check-reload="true" reload-method="synchron"/>
