@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: release.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $ -->
+<!-- $Id: release.xml,v 1.2 2004/08/29 22:41:07 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 <document>
@@ -77,7 +77,7 @@ NG Schema. This prevents invalid markup as produced by other WYSIWYG
 editors, and allows to enforce web site style guidelines. Lenya ships
 (!!!) with the BXE (http://bxe.oscom.org) and Kupu
 (http://kupu.oscom.org) editors out of the box. Lenya asset management
-and link management are integrated inte BXE.
+and link management are integrated into BXE.
 </li>
 <li> A forms editor is available for situations where a full-blown
 WYSIWYG editor is overkill or where legacy browsers need to be
