@@ -22,9 +22,20 @@
       <map:match pattern="introduction.html">
         <map:read src="resources/publication/html/documentation/index.html" mime-type="text/html"/>
       </map:match>
+      <map:match pattern="article.html">
+        <map:read src="resources/publication/html/documentation/article.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="xmlModularisation.html">
+        <map:read src="resources/publication/html/documentation/xmlModularisation.html" mime-type="text/html"/>
+      </map:match>
+      <map:match pattern="xsltModularisation.html">
+        <map:read src="resources/publication/html/documentation/xsltModularisation.html" mime-type="text/html"/>
+      </map:match>
+<!--
       <map:match pattern="*.html">
         <map:read src="resources/publication/html/documentation/{1}.html" mime-type="text/html"/>
       </map:match>
+-->
     </map:pipeline>
 
     <!-- Samples -->
