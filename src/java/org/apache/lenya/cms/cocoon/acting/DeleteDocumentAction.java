@@ -1,5 +1,5 @@
 /*
-$Id: DeleteDocumentAction.java,v 1.13 2003/07/23 13:21:30 gregor Exp $
+$Id: DeleteDocumentAction.java,v 1.14 2003/08/28 13:43:04 egli Exp $
 <License>
 
  ============================================================================
@@ -68,11 +68,6 @@ import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.excalibur.source.Source;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import java.util.Map;
 
 
@@ -85,8 +80,6 @@ import java.util.Map;
 public class DeleteDocumentAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
     private String treeAuthoringPath = null;
-    private String docsPath = null;
-
     /**
      * DOCUMENT ME!
      *
@@ -98,7 +91,6 @@ public class DeleteDocumentAction extends AbstractComplementaryConfigurableActio
         super.configure(conf);
 
         treeAuthoringPath = conf.getChild("tree-authoring").getAttribute("href");
-        docsPath = conf.getChild("docs").getAttribute("href");
         getLogger().debug("CONFIGURATION:\nAUTHORING PATH OF TREE=" + treeAuthoringPath);
     }
 
@@ -161,39 +153,4 @@ public class DeleteDocumentAction extends AbstractComplementaryConfigurableActio
         return true;
     }
 
-    /**
-     * Write input stream to Logger (for debugging)
-     *
-     * @param in an <code>InputStream</code> value
-     *
-     * @return an <code>InputStream</code> value
-     *
-     * @exception Exception if an error occurs
-     */
-    private InputStream intercept(InputStream in) throws Exception {
-        byte[] buffer = new byte[1024];
-        int bytes_read;
-        ByteArrayOutputStream bufferOut = new ByteArrayOutputStream();
-
-        while ((bytes_read = in.read(buffer)) != -1) {
-            bufferOut.write(buffer, 0, bytes_read);
-        }
-
-        getLogger().debug("Intercepted Input Stream:\n\n" + bufferOut.toString());
-
-        return new ByteArrayInputStream(bufferOut.toByteArray());
-    }
-
-    /**
-     * Write output stream to Logger (for debugging)
-     *
-     * @param out an <code>OutputStream</code> value
-     *
-     * @return an <code>OutputStream</code> value
-     *
-     * @exception Exception if an error occurs
-     */
-    private OutputStream intercept(OutputStream out) throws Exception {
-        return null;
-    }
 }
