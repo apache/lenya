@@ -56,7 +56,7 @@
 	    <map:serialize type="text"/>
       </map:match>
     </map:pipeline>
-    
+        
         <!-- Sitetree Javascript array      -->
     <map:pipeline>
       <map:match pattern="**tree.js">
@@ -93,6 +93,7 @@
               <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
               <map:parameter name="area" value="{page-envelope:area}"/>
               <map:parameter name="chosenlanguage" value="{1}"/>
+              <map:parameter name="documentid" value="{../1}"/>
               <map:parameter name="defaultlanguage" value="en"/> <!-- needs to be publication parameter -->
            </map:transform>
 	       <map:serialize type="html"/>

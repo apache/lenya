@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.12 2003/07/11 15:42:37 gregor Exp $
+ $Id: root.xsl,v 1.13 2003/07/16 18:07:14 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -13,6 +13,7 @@
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
 <xsl:param name="area"/>
+<xsl:param name="documentid"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
     
@@ -24,6 +25,7 @@
 <script src="ua.js"/>
 <script src="tree.js"/>
 <script src="lenyasitetree/{$chosenlanguage}"/>
+
 </head>
 
 <body >
@@ -47,7 +49,7 @@
    </div>
 </div>
 
-<div id="lenya-info-content"><iframe src="" id="basefrm" name="basefrm" frameborder="0" width="100%" height="100%"></iframe></div>
+<div id="lenya-info-content"><iframe src="{$contextprefix}/{$publicationid}/{$area}/{$documentid}?lenya.usecase=info&amp;lenya.step=showscreen" id="basefrm" name="basefrm" frameborder="0" width="100%" height="100%"></iframe></div>
 </body>
 </html>
 </xsl:template>
