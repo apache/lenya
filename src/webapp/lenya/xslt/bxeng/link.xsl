@@ -16,7 +16,7 @@
 -->
 
 <!--
- $Id: link.xsl,v 1.7 2004/04/13 13:16:36 gregor Exp $
+ $Id: link.xsl,v 1.8 2004/04/19 14:49:20 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -72,7 +72,9 @@
            // prepend hostname etc for internal links
            url = prefix + url;
           }
+          <![CDATA[
           var content = '<a xmlns="'+window.opener.XHTMLNS+'" href="'+url+'" title="'+title+'">'+text+'</a>'; 
+          ]]>
           window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
           window.close();
           }
