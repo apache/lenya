@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -82,13 +83,42 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
       //return ;
       }
     String docid=request.getParameter("docid");
+    String docids=request.getParameter("docids");
 
+    StringTokenizer st=new StringTokenizer(docids,",");
+    while(st.hasMoreTokens()){
+      String docId=st.nextToken()+".xml";
+      File sourceFile=new File(absoluteAuthoringPath+docId);
+      File destinationFile=new File(absoluteLivePath+docId);
+      if(copyFile(sourceFile,destinationFile)){
+        getLogger().error("Document published: "+sourceFile+" "+destinationFile);
+        }
+      else{
+        getLogger().error("EXCEPTION: Document not published: "+sourceFile+" "+destinationFile);
+        }
+      }
 
+/*
     // Set absolute file paths
     File source=new File(absoluteAuthoringPath+docid+".xml");
     File destination=new File(absoluteLivePath+docid+".xml");
-    getLogger().error("COPY\nsource="+source+"\ndestination="+destination);
-    getLogger().error("COPY\ntree source="+absoluteTreeAuthoringPath+"\ntree destination="+absoluteTreeLivePath);
+    if(copyFile(source,destination)){
+      getLogger().error("COPY\nsource="+source+"\ndestination="+destination);
+      getLogger().error("Document published");
+      }
+    else{
+      getLogger().error("Document not published");
+      }
+*/
+
+    // Update (copy) tree
+    if(copyFile(new File(absoluteTreeAuthoringPath),new File(absoluteTreeLivePath))){
+      getLogger().error("COPY\ntree source="+absoluteTreeAuthoringPath+"\ntree destination="+absoluteTreeLivePath);
+      getLogger().error("Tree published");
+      }
+    else{
+      getLogger().error("Tree not published");
+      }
 
     // Get session
     Session session=request.getSession(true);
@@ -97,19 +127,7 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
       return null;
       }
 
-    if(copyFile(source,destination)){
-      getLogger().error("Document published");
-      }
-    else{
-      getLogger().error("Document not published");
-      }
-    if(copyFile(new File(absoluteTreeAuthoringPath),new File(absoluteTreeLivePath))){
-      getLogger().error("Tree published");
-      }
-    else{
-      getLogger().error("Tree not published");
-      }
-
+    // Return referer
     String parent_uri=(String)session.getAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri");
     HashMap actionMap=new HashMap();
     actionMap.put("parent_uri",parent_uri);
