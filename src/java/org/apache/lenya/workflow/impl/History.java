@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.7 2003/07/23 13:21:08 gregor Exp $
+$Id: History.java,v 1.8 2003/08/05 12:01:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -96,8 +96,8 @@ public abstract class History implements WorkflowListener {
 
     /**
      * Creates a new history object. A new history file is created and initialized.
-     * @param file The history file.
-     * @param workflowFileName The workflow reference.
+     * @param workflowId The workflow ID.
+     * @throws WorkflowException when something went wrong.
      */
     public void initialize(String workflowId) throws WorkflowException {
         try {
@@ -128,10 +128,49 @@ public abstract class History implements WorkflowListener {
     }
 
     private WorkflowInstanceImpl instance = null;
+    private String workflowId = null;
+    
+    /**
+     * Returns the namespace helper for the history file.
+     * @return A namespace helper.
+     * @throws WorkflowException It the helper could not be obtained.
+     */
+    protected NamespaceHelper getNamespaceHelper() throws WorkflowException {
+        NamespaceHelper helper;
+        try {
+            Document document = DocumentHelper.readDocument(getHistoryFile());
+            helper = new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, document);
+        } catch (Exception e) {
+            throw new WorkflowException(e);
+        }
+        return helper;
+    }
+    
+    /**
+     * Returns the workflow ID for this history.
+     * @return A string.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected String getWorkflowId() throws WorkflowException {
+        return getWorkflowId(getNamespaceHelper());
+    }
+
+    /**
+     * Returns the workflow ID for this history.
+     * @param helper The namespace helper for the history document.
+     * @return A string.
+     * @throws WorkflowException when something went wrong.
+     */
+    protected String getWorkflowId(NamespaceHelper helper) throws WorkflowException {
+        if (workflowId == null) {
+            workflowId = helper.getDocument().getDocumentElement().getAttribute(WORKFLOW_ATTRIBUTE);
+        }
+        return workflowId;
+    }
 
     /**
      * Restores the workflow, state and variables of a workflow instance from this history.
-     * @param instance The workflow instance to restore.
+     * @return The workflow instance to restore.
      * @throws WorkflowException if something goes wrong.
      */
     public WorkflowInstanceImpl getInstance() throws WorkflowException {
@@ -141,18 +180,9 @@ public abstract class History implements WorkflowListener {
             }
 
             WorkflowInstanceImpl instance = createInstance();
-            NamespaceHelper helper;
-            String workflowId;
+            NamespaceHelper helper = getNamespaceHelper();
 
-            try {
-                Document document = DocumentHelper.readDocument(getHistoryFile());
-                helper = new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, document);
-            } catch (Exception e) {
-                throw new WorkflowException(e);
-            }
-
-            workflowId = helper.getDocument().getDocumentElement().getAttribute(WORKFLOW_ATTRIBUTE);
-
+            String workflowId = getWorkflowId(helper);
             if (null == workflowId) {
                 throw new WorkflowException("No workflow attribute set in history document!");
             }
@@ -186,10 +216,19 @@ public abstract class History implements WorkflowListener {
     /**
      * Factory method to create a workflow instance object.
      * @return A workflow instance object.
+     * @throws WorkflowException if something goes wrong.
      */
     protected abstract WorkflowInstanceImpl createInstance()
         throws WorkflowException;
 
+    /**
+     * Creates a new version element. This method is called after a tansition invocation.
+     * @param helper The namespace helper of the history document.
+     * @param state The state of the new version.
+     * @param situation The current situation.
+     * @param event The event that was invoked.
+     * @return An XML element.
+     */
     protected Element createVersionElement(NamespaceHelper helper, StateImpl state,
         Situation situation, Event event) {
         Element versionElement = helper.createElement(VERSION_ELEMENT);
