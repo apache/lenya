@@ -97,8 +97,14 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
 
 
         // Replace author
-        Identity identity = (Identity)parameters.get("org.apache.lenya.ac.Identity");
-        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'author']/*[local-name = 'name']");
+        Identity identity = (Identity) parameters.get(Identity.class.getName());
+        
+        element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'author']/*[local-name() = 'name']");
+        
+        if (element == null) {
+            throw new RuntimeException("Element entry/author/name not found.");
+        }
+        
         element.setNodeValue(identity.getUser().getId());
 
         // Replace date created (and issued and modified, FIXME: issued should be set during first time publishing, modified should be set during re-publishing)
