@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.10 2002/04/11 13:09:02 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.11 2002/04/26 14:25:19 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -134,6 +134,9 @@
      </map:match>
 
 <!-- OSCOM -->
+     <map:match pattern="oscom/authoring/**">
+       <map:mount uri-prefix="oscom" src="wyona/cms/pubs/oscom/authoring-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+     </map:match>
      <map:match pattern="oscom/**">
        <map:mount uri-prefix="oscom" src="wyona/cms/pubs/oscom/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
