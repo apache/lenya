@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.9 2002/04/08 15:15:09 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.10 2002/04/11 13:09:02 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -134,11 +134,9 @@
      </map:match>
 
 <!-- OSCOM -->
-<!--
      <map:match pattern="oscom/**">
        <map:mount uri-prefix="oscom" src="wyona/cms/pubs/oscom/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
--->
 
 <!-- Unipublic -->
      <map:match pattern="unipublic/**">
@@ -146,11 +144,9 @@
      </map:match>
 
 <!-- cocooncenter -->
-<!--
      <map:match pattern="cocooncenter/**">
        <map:mount uri-prefix="cocooncenter" src="wyona/cms/pubs/cocooncenter/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
--->
 
 <!-- Materials Science -->
      <map:match pattern="ethz-mat/**">
@@ -159,7 +155,7 @@
 
 <!-- Original Cocoon Sitemap (without SVG and FOP) -->
      <map:match pattern="**">
-       <map:mount uri-prefix="" src="sitemap.xmap.COCOON-WITHOUT-SVG-FOP" check-reload="true" reload-method="synchron"/>
+       <map:mount uri-prefix="" src="cocoon.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
    <map:handle-errors>
