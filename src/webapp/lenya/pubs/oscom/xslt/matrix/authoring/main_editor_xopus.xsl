@@ -21,10 +21,10 @@
  	<xml>
 		<pipeline xml="editor-matrix/{$projectid}.xml" xsd="matrix.xsd">
 			<view id="defaultView" default="true">
-				<transform xsl="Matrix/authoring/body_editor_xopus.xsl"></transform>
+				<transform xsl="matrix/authoring/body_editor_xopus.xsl"></transform>
 			</view>
 			<view id="treeView">
-				<transform xsl="Home/authoring/tree.xsl"></transform>
+				<transform xsl="home/authoring/tree.xsl"></transform>
 			</view>
 		</pipeline>
     </xml>
