@@ -70,10 +70,6 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
       <li>HTML Forms: This is a good choice for users of Mosaic ;-)</li>
       <li>Bitflux: This is a good choice for users of Mozilla.</li>
       <li>One Form: For the power user who needs all the control</li>
-<!--
-      <li>Xopus: This is a good choice for users of IE.</li>
-      <li>Midas: is a good choice for editing xhtml under Mozilla.</li>
--->
     </ul>
 
     <p>Pick your choice of editor (based on your platform) and start
