@@ -41,11 +41,15 @@
     <p>
         <xsl:apply-templates select="authentication_failed"/>
         <xsl:apply-templates select="protected_destination"/>
+<!--
         <xsl:apply-templates select="no_protected_destination"/>
+-->
         <xsl:apply-templates select="current_username"/>
         <xsl:apply-templates select="no_username_yet"/>
         <xsl:apply-templates select="authenticator"/>
+<!--
         <xsl:apply-templates select="no_authenticator_id_yet"/>
+-->
     </p>
         <p>
           <b>NOTE:</b> try user &quot;lenya&quot; and password &quot;levi&quot;
