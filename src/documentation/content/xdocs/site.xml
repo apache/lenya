@@ -24,6 +24,7 @@
         <node-d href="roadmap.html" label="Roadmap"/>
 <!--        <release1.2 href="release.html" label="Release 1.2"/>
 -->        <node-i href="license.html" label="License"/>
+        <resolution href="resolution.html" label="Resolution"/>
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
     <installation href="installation/" label="Installation" tab="installation">

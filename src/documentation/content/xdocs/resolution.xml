@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: license.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document>
+  <header>
+    <title>Resolution for the creation of Apache Lenya Project</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Lenya community" email="dev@lenya.apache.org"/>
+    </authors>
+  </header>
+  <body>
+<section><title>Resolution for the creation of Apache Lenya Project</title>
+<p>
+WHEREAS, the Board of Directors deems it to be in the best
+interests of the Foundation and consistent with the
+Foundation's purpose to establish a Project Management
+Committee charged with the creation and maintenance of
+open-source software related to content management, for
+distribution at no charge to the public.
+</p><p>
+NOW, THEREFORE, BE IT RESOLVED, that a Project Management
+Committee (PMC), to be known as the "Apache Lenya PMC", be and hereby
+is established pursuant to Bylaws of the Foundation; and be it
+further
+</p><p>
+RESOLVED, that the Apache Lenya PMC be and hereby is responsible for
+the creation and maintenance of software related to content
+management, based on software licensed to the Foundation;
+and be it further
+</p><p>
+RESOLVED, that the office of "Vice President, Apache Lenya" be and
+hereby is created, the person holding such office to serve at
+the direction of the Board of Directors as the chair of the
+Apache Lenya PMC, and to have primary responsibility for management of
+the projects within the scope of responsibility of the Apache Lenya
+PMC; and be it further
+</p><p>
+RESOLVED, that the persons listed immediately below be and
+hereby are appointed to serve as the initial members of the
+Apache Lenya PMC:
+</p>
+<ul>
+   <li>Edith Chevier (edith@apache.org)</li>
+   <li>Dale Christ (bigdog@apache.org)</li>
+   <li>Christian Egli (egli@apache.org)</li>
+   <li>Andreas Hartmann (andreas@apache.org)</li>
+   <li>Rolf Kulemann (roku@apache.org)</li>
+   <li>Stefano Mazzocchi (stefano@apache.org)</li>
+   <li>Steven Noels (stevenn@outerthought.org)</li>
+   <li>Gregor J. Rothfuss (gregor@apache.org)</li>
+   <li>Thorsten Scherler (thorsten@apache.org)</li>
+   <li>Michael Wechner (michi@apache.org)</li>
+</ul>
+<p>
+NOW, THEREFORE, BE IT FURTHER RESOLVED, that
+</p><p>
+Rolf Kulemann
+</p><p>
+  be and hereby is appointed to the office of Vice President, Apache Lenya,
+to serve in accordance with and subject to the direction of the
+Board of Directors and the Bylaws of the Foundation until
+death, resignation, retirement, removal or disqualification, or
+until a successor is appointed; and be it further
+</p><p>
+RESOLVED, that the initial Apache Lenya PMC be and hereby is tasked
+with the creation of a set of bylaws intended to encourage open
+development and increased participation in the Lenya Project;
+and be it further
+</p><p>
+RESOLVED, that the initial Apache Lenya PMC be and hereby is tasked
+with the migration and rationalization of the incubating PMC
+Apache Lenya project; and be it further
+</p><p>
+RESOLVED, that all responsibility pertaining to the incubating
+Apache Lenya project encumbered upon the incubator PMC
+be hereafter discharged. 
+</p>
+</section>
+  </body>
+</document>
