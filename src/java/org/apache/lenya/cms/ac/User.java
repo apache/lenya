@@ -1,5 +1,5 @@
 /*
-$Id: User.java,v 1.20 2003/07/17 11:01:18 egli Exp $
+$Id: User.java,v 1.21 2003/07/21 13:38:03 andreas Exp $
 <License>
 
  ============================================================================
@@ -127,6 +127,7 @@ public abstract class User extends AbstractGroupable implements Identifiable {
      * Set the full name
      *
      * @param name the new full name
+     * @deprecated has been superceded by setName(String)
      */
     public void setFullName(String name) {
         setName(name);

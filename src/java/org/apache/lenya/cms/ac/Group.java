@@ -138,4 +138,12 @@ public abstract class Group extends AbstractItem implements Accreditable {
         return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
     }
     
+    /**
+     * Delete a group
+     *
+     * @throws AccessControlException if the delete failed
+     */
+    public void delete() throws AccessControlException {
+    }
+
 }

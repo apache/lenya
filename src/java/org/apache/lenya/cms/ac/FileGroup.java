@@ -77,6 +77,14 @@ public class FileGroup extends Group implements Item {
     public static final String ROLE = "role";
 
     /**
+     * @see org.apache.lenya.cms.ac.Group#delete()
+     */
+    public void delete() throws AccessControlException {
+        super.delete();
+        getFile().delete();
+    }
+
+    /**
      * Creates a new FileGroup object.
      */
     public FileGroup() {
@@ -123,6 +131,16 @@ public class FileGroup extends Group implements Item {
                 "doesn't appear to have the mandatory roles node");
         }
     }
+    
+    /**
+     * Returns the configuration file.
+     * @return A file object.
+     */
+    protected File getFile() {
+        File xmlPath = getConfigurationDirectory();
+        File xmlFile = new File(xmlPath, getId() + GroupManager.SUFFIX);
+        return xmlFile;
+    }
 
     /**
      * Save this group
@@ -132,8 +150,7 @@ public class FileGroup extends Group implements Item {
     public void save() throws AccessControlException {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
         Configuration config = createConfiguration();
-        File xmlPath = getConfigurationDirectory();
-        File xmlfile = new File(xmlPath, getId() + GroupManager.SUFFIX);
+        File xmlfile = getFile();
 
         try {
             serializer.serializeToFile(xmlfile, config);

@@ -193,25 +193,29 @@ public class FileUser extends User implements Item {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
         Configuration config = createConfiguration();
 
-        File xmlPath = getConfigurationDirectory();
-        File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
-
         try {
-            serializer.serializeToFile(xmlfile, config);
+            serializer.serializeToFile(getFile(), config);
         } catch (Exception e) {
             throw new AccessControlException(e);
         }
     }
 
-    /** (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.ac.User#delete()
      */
     public void delete() throws AccessControlException {
         super.delete();
-
+        getFile().delete();
+    }
+    
+    /**
+     * Returns the configuration file.
+     * @return A file object.
+     */
+    protected File getFile() {
         File xmlPath = getConfigurationDirectory();
-        File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
-        xmlfile.delete();
+        File xmlFile = new File(xmlPath, getId() + UserManager.SUFFIX);
+        return xmlFile;
     }
 
     private File configurationDirectory;
