@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.58 2004/04/04 07:37:44 roku Exp $ -->
+<!-- $Id: cmsui.xml,v 1.59 2004/04/14 07:11:40 roku Exp $ -->
 
 <catalogue xml:lang="en">
 
@@ -107,7 +107,7 @@
   <message key="reject-doc?">Do you want to reject the document {0}?</message>
   
   <!-- cms menu -->
-  <message key="New document">New Document</message>
+  <message key="New Document">New Document</message>
   <message key="New Language Version">New Language Version</message>
   <message key="Remove Language Version">Remove Language Version</message>
   <message key="File">File</message>  
