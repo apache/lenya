@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.16 2003/07/17 08:06:53 egli Exp $
+$Id: Publication.java,v 1.17 2003/07/17 11:59:52 egli Exp $
 <License>
 
  ============================================================================
@@ -269,6 +269,15 @@ public class Publication {
      */
     public void setDefaultLanguage(String language) {
         defaultLanguage = language;
+    }
+
+    /**
+     * Get all available languages for this publication
+     * 
+     * @return an <code>Arrary</code> of languages
+     */
+    public String[] getLanguages() {
+        return (String[])languages.toArray(new String[languages.size()]);
     }
 
 }
