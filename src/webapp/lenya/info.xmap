@@ -61,6 +61,7 @@
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
         </map:transform>
         <map:serialize type="text"/>
       </map:match>
@@ -92,7 +93,18 @@
 
     <map:pipeline internal-only="true">
     	
-    	<!-- areas -->
+    	<!-- areas (default language) -->
+      <map:match pattern="cmsbody/*/">
+				<map:generate src="cocoon:/tabs/{1}"/>
+				<map:transform src="xslt/info/info.xsl">
+					<map:parameter name="tab" value="{1}"/>
+					<map:parameter name="documentid" value="{page-envelope:document-id}"/>
+          <map:parameter name="languageexists" value="true"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+      </map:match>
+      
+    	<!-- areas (non-default language) -->
       <map:match pattern="cmsbody/*/_*">
 				<map:generate src="cocoon:/tabs/{1}"/>
 				<map:transform src="xslt/info/info.xsl">
@@ -182,7 +194,7 @@
     
 		<!-- main pipeline -->    
     <map:pipeline>
-      
+    	
       <!-- {publication-id}/{area}/{document-url} -->
       <map:match pattern="*/info-*/**">
         
@@ -201,6 +213,7 @@
             <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
             <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             <map:parameter name="documenturl" value="/{../3}"/>
+            <map:parameter name="documentextension" value="{page-envelope:document-extension}"/>
             <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           </map:transform>
           <map:serialize/>
