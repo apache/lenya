@@ -46,7 +46,7 @@
 </section>
 
 	<section>
-		<title>DefaultAccessController</title>
+		<title>Default Access Controller</title>
 		<p>The DefaultAccessController combines an
 			<link href="authenticators.html">Authenticator</link>, a set of
 			<link href="authorizers.html">Authorizers</link>, an
@@ -63,7 +63,8 @@
     role="org.apache.lenya.cms.ac2.AccessController/global">
     
   <accreditable-manager type="file">
-    <parameter name="directory" value="context:///lenya/config/ac/passwd"/>
+    <parameter name="directory"
+        value="context:///lenya/config/ac/passwd"/>
   </accreditable-manager>
   
   <policy-manager type="file"/>
@@ -77,7 +78,7 @@
 	</section>
 
 <section>
-	<title>BypassableAccessController</title>
+	<title>Bypassable Access Controller</title>
 	<p>The BypassableAccessController is a DefaultAccessController that can be
 		bypassed for certain URL patterns. For URLs that match those patterns
 		(regular expressions), access is granted for free.</p>

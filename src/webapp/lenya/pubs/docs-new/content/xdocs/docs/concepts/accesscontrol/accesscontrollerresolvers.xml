@@ -31,38 +31,41 @@
 	<source><![CDATA[<role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
     shorthand="access-controller-resolvers"
     default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-  <hint shorthand="configurable" class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"/>
-  <hint shorthand="publication" class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
-  <hint shorthand="composable" class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/>
+  <hint shorthand="configurable"
+      class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"/>
+  <hint shorthand="publication"
+      class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
+  <hint shorthand="composable"
+      class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/>
 </role>]]></source>
 	
 </section>
 
 <section>
-	<title>Declaring the AccessControllerResolvers in cocoon.xconf</title>
+	<title>Declaring the Access Controller Resolvers in cocoon.xconf</title>
 	
 	<source><![CDATA[<access-controller-resolvers>
-	<component-instance logger="lenya.ac.accesscontrollerresolver.publication"
-			class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
-			name="publication">
-	</component-instance>
-	<component-instance logger="lenya.ac.accesscontrollerresolver.global"
-			class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
-			name="global">
-		<access-controller type="global"/>
-	</component-instance>
-	<component-instance logger="lenya.ac.accesscontrollerresolver.composable"
-			class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
-			name="composable">
-		<resolver type="publication"/>
-		<resolver type="global"/>
-	</component-instance>
+  <component-instance logger="lenya.ac.accesscontrollerresolver.publication"
+    class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+    name="publication">
+  </component-instance>
+  <component-instance logger="lenya.ac.accesscontrollerresolver.global"
+    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    name="global">
+    <access-controller type="global"/>
+  </component-instance>
+  <component-instance logger="lenya.ac.accesscontrollerresolver.composable"
+    class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+    name="composable">
+    <resolver type="publication"/>
+    <resolver type="global"/>
+  </component-instance>
 </access-controller-resolvers>]]></source>
 	
 </section>
 
 <section>
-	<title>PublicationAccessControllerResolver</title>
+	<title>Publication Access Controller Resolver</title>
 	<p>The PublicationAccessControllerResolver looks for a <code>config/ac.xconf</code>
 		file inside the publication. If you want to use multiple AccessControllers
 		within your Lenya installation, just declare them in the <code>
@@ -71,10 +74,12 @@
 	<source><![CDATA[<?xml version="1.0"?>
 <access-controller type="publication-file">
   <authorizer type="usecase">
-    <config-file src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
+    <config-file
+        src="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
   </authorizer>
   <accreditable-manager>
-    <parameter name="directory" value="context:///lenya/pubs/default/config/ac/passwd"/>
+    <parameter name="directory"
+        value="context:///lenya/pubs/default/config/ac/passwd"/>
   </accreditable-manager>
 </access-controller>]]></source>
 	<p>As you see here, you can put additional configuration code inside the 
@@ -84,9 +89,9 @@
 </section>
 
 <section>
-	<title>ConfigurableAccessControllerResolver</title>
+	<title>Configurable Access Controller Resolver</title>
 	<p>The ConfigurableAccessControllerResolver can be configured with an
-		AccessController directly inside cocoon.xconf:</p>
+		AccessController directly inside <code>cocoon.xconf</code>:</p>
 	<source><![CDATA[<component-instance logger="lenya.ac.accesscontrollerresolver"
     class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
     name="global">
@@ -95,7 +100,7 @@
 </section>
 
 <section>
-	<title>ComposableAccessControllerResolver</title>
+	<title>Composable Access Controller Resolver</title>
 	<p>The ComposableAccessControllerResolver is configured with a list of
 		AccessControllerResolvers. Each one of these resolvers is invoked until one
 		is successful. If no resolver finds an AccessController, the

@@ -15,8 +15,16 @@
 	
 <section>
 	<title>Introduction</title>
-	<p>An authenticator is used to identify a certain entity.</p>
+	<p>An authenticator is used to identify a client.</p>
 </section>
+
+<section>
+	<title>Declaring the Roles in lenya.roles</title>
+	<source><![CDATA[<role name="org.apache.lenya.cms.ac2.Authenticator"
+    shorthand="authenticator"
+    default-class="org.apache.lenya.cms.ac2.UserAuthenticator"/>]]></source>
+</section>
+
 	<section>
 		<title>UserAuthenticator</title>
 		<p>The UserAuthenticator uses the request parameters</p>
@@ -25,6 +33,11 @@
 			<li><code>password</code></li>
 		</ul>
 		<p>to authenticate or reject a user.</p>
+		
+	<source><![CDATA[<component logger="lenya.ac.authenticator"
+    class="org.apache.lenya.cms.ac2.UserAuthenticator"
+    role="org.apache.lenya.cms.ac2.Authenticator"/>]]></source>
+		
 	</section>
 
   </body>
