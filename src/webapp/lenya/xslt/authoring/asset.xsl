@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0"?>
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -65,6 +65,20 @@
       </xsl:choose>
       <div class="lenya-box-body">
 <script>
+function validContent(formField,fieldLabel)
+{
+	var result = true;
+	
+	if (formField.value.match("[ ]*"))
+	{
+		alert('Filenames cannot contain spaces.');
+		formField.focus();
+		result = false;
+	}
+	
+	return result;
+}
+
 function check(fileinput) {
   var i = 0;
   var ext = '<xsl:value-of select="$extensions"/>';
@@ -77,6 +91,7 @@ function check(fileinput) {
     if(thefile.indexOf('.' + _tempArray[i]) != -1)
     {
      // file has one of the accepted extensions.
+     // now check for spaces in the filename
      return true;
      }
   }
@@ -96,27 +111,29 @@ function check(fileinput) {
 	      <input type="hidden" name="lenya.step" value="upload"/>
 	    </xsl:otherwise>
 	  </xsl:choose>
+      <!-- some values appear twice, this is required for roundtripping. -->
 	  <input type="hidden" name="task-id" value="insert-asset"/>
 	  <input type="hidden" name="uploadtype" value="asset"/>
 	  <input type="hidden" name="properties.insert.asset.assetXPath" value="{$assetXPath}"/>
+	  <input type="hidden" name="assetXPath" value="{$assetXPath}"/>
 	  <input type="hidden" name="properties.insert.asset.insertWhere" value="{$insertWhere}"/>
+	  <input type="hidden" name="insertWhere" value="{$insertWhere}"/>
 	  <input type="hidden" name="properties.insert.asset.area" value="{/usecase:asset/usecase:area}"/>
 	  <input type="hidden" name="insert" value="{$insert}"/>
 	  <input type="hidden" name="insertimage" value="{$insertimage}"/>
-	  <input type="hidden" name="assetXPath" value="{$assetXPath}"/>
-	  <input type="hidden" name="insertWhere" value="{$insertWhere}"/>
 	  <input type="hidden" name="properties.insert.asset.document-id" value="{/usecase:asset/usecase:document-id}"/>
 	  <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
       <input type="hidden" name="properties.asset.date" value="{/usecase:asset/usecase:date}"/>
       <input type="hidden" name="properties.insert.asset.insertTemplate" value="{$insertTemplate}"/>
+      <input type="hidden" name="insertTemplate" value="{$insertTemplate}"/>
       <input type="hidden" name="properties.insert.asset.insertReplace" value="{$insertReplace}"/>
+      <input type="hidden" name="insertReplace" value="{$insertReplace}"/>
 	  <table class="lenya-table-noborder">
 	    <xsl:if test="$error = 'true'">
 	      <tr>
 		<td colspan="2" class="lenya-form-caption">
 		  <span	class="lenya-form-message-error">The file name
-		  of the file you are trying to upload either has no
-		  extension, or contains characters which are not
+		  of the file you are trying to upload contains characters which are not
 		  allowed, such as spaces or umlauts. 
 		  </span>
 		</td>
