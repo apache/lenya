@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <NewsML>
-  <Catalog Href="http://nzz.wyona.com/newsml/catalog.xml"/>
+  <Catalog Href="http://newsml/catalog.xml"/>
   <NewsEnvelope>
     <TransmissionId>1004500635628</TransmissionId>
     <DateAndTime>20020325T0457+0100</DateAndTime>
@@ -15,11 +15,11 @@
   <NewsItem>
     <Identification>
       <NewsIdentifier>
-        <ProviderId>nzz.ch</ProviderId>
+        <ProviderId>unipublic.unizh.ch</ProviderId>
         <DateId>20020325</DateId>
-        <NewsItemId>al-article7RAUR</NewsItemId>
+        <NewsItemId>0489</NewsItemId>
         <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
-        <PublicIdentifier>urn:newsml:nzz.ch:20020325:al-article7RAUR:1N</PublicIdentifier>
+        <PublicIdentifier>urn:newsml:unipublic.unzh.ch:20020325:0489:1N</PublicIdentifier>
       </NewsIdentifier>
     </Identification>
     <NewsManagement>
@@ -27,32 +27,33 @@
       <ThisRevisionCreated>20020325T0130+0100</ThisRevisionCreated>
     </NewsManagement>
     <NewsComponent EquivalentsList="no">
+      <TopicSet>
+        <Topic>
+          <TopicType FormalName="campus">
+            <FormalName>uni-news</FormalName>
+            <Description>Uni-News</Description>
+          </TopicType>
+        </Topic>
+      </TopicSet>
       <Role FormalName="TEXT"/>
       <NewsLines>
         <HeadLine>Im Traum spricht er am meisten mit mir
         </HeadLine>
         <ByLine>Von Adrian Ritter
         </ByLine>
-        <CreditLine>
-          <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
-        </CreditLine>
-        <CopyrightLine>
-          <Origin Href="http://nzz.wyona.com/newsml/copyrightline.xml"/>
-        </CopyrightLine>
+        <DateLine>03.04.2002</DateLine>
+        <CreditLine>Universit&#228;t Z&#252;rich</CreditLine>
+        <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
       </NewsLines>
       <AdministrativeMetadata>
-        <SystemIdentifier>http://nzz.wyona.com/newsml/2001/10/31/al/article7RAUR.xml</SystemIdentifier>
+        <SystemIdentifier></SystemIdentifier>
       </AdministrativeMetadata>
       <RightsMetadata>
         <Copyright>
-          <CopyrightHolder>
-             <Origin Href="http://nzz.wyona.com/newsml/copyrightholder.xml"/>
-          </CopyrightHolder>
+          <CopyrightHolder>&#169;Universit&#228;t Z&#252;rich</CopyrightHolder>
         </Copyright>
       </RightsMetadata>
       <DescriptiveMetadata xmlns:up="http://www.unipublic.unizh.ch/2002/up">
-        <up:Channel>magazin</up:Channel>
-        <up:Section>gesundheit</up:Section>
         <Language FormalName="de"/>
         <SubjectCode>
           <Subject FormalName="International"/>
@@ -77,9 +78,6 @@
 -->
             <body>
               <body.head>
-                <dateline>
-                  <story.date>3.4.2002</story.date>
-                </dateline>
                 <hedline>
                   <hl1>Licht im Brennpunkt</hl1>
                 </hedline>
@@ -251,11 +249,6 @@
                <body.end>
                  <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
                </body.end>
-               <copyrite>
-                 <copyrite.holder>Universit&#228;t Z&#252;rich</copyrite.holder>
-                 <copyrite.year>05.04.2002</copyrite.year>
-               </copyrite>
-             </body>
              </DataContent>
           </ContentItem>
        </NewsComponent>

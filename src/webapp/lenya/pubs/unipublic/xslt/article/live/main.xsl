@@ -6,7 +6,7 @@
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
-<xsl:variable name="section"><xsl:value-of select="/NewsML/NewsItem/NewsComponent/DescriptiveMetadata/SectionName"/></xsl:variable>
+<xsl:variable name="section"><xsl:value-of select="/NewsML/NewsItem/NewsComponent/TopicSet/Topic/TopicType/FormalName"/></xsl:variable>
 
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
@@ -109,8 +109,8 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 
 <div align="left"><a href="#topofpage"><font size="1">zum Anfang<br /> <br />
 </font></a> <img height="1" width="390" src="{$img-unipub}/999999.gif" alt=" "/><br />
- <font size="1">&#169; <xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/copyrite/copyrite.holder"/>,
-<xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/copyrite/copyrite.year"/>, 
+ <font size="1">&#169; <xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/CopyrightLine"/>,
+<xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/DateLine"/>, 
 <a href="/ssi_unipublic/impressum.html">Impressum</a></font></div>
 </td>
 </tr>

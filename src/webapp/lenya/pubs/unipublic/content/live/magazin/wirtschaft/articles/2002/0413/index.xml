@@ -15,11 +15,11 @@
   <NewsItem>
     <Identification>
       <NewsIdentifier>
-        <ProviderId>nzz.ch</ProviderId>
+        <ProviderId>unipublic.unizh.ch</ProviderId>
         <DateId>20020325</DateId>
-        <NewsItemId>al-article7RAUR</NewsItemId>
+        <NewsItemId>0413</NewsItemId>
         <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
-        <PublicIdentifier>urn:newsml:nzz.ch:20020325:al-article7RAUR:1N</PublicIdentifier>
+        <PublicIdentifier>urn:newsml:unipublic.unzh.ch:20020325:0413:1N</PublicIdentifier>
       </NewsIdentifier>
     </Identification>
     <NewsManagement>
@@ -27,31 +27,36 @@
       <ThisRevisionCreated>20020325T0130+0100</ThisRevisionCreated>
     </NewsManagement>
     <NewsComponent EquivalentsList="no">
+      <TopicSet>
+        <Topic>
+          <TopicType FormalName="magazin">
+            <FormalName>recht</FormalName>
+            <Description>Recht &#38; Wirtschaft</Description>
+          </TopicType>
+        </Topic>
+      </TopicSet>
       <Role FormalName="TEXT"/>
       <NewsLines>
         <HeadLine>Der Homo oeconomicus - neu definiert </HeadLine>
         <ByLine>Von Adrian Ritter
         </ByLine>
+        <DateLine>03.04.2002</DateLine>
         <CreditLine>
           <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
         </CreditLine>
-        <CopyrightLine>
-          <Origin Href="http://nzz.wyona.com/newsml/copyrightline.xml"/>
-        </CopyrightLine>
+        <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
       </NewsLines>
       <AdministrativeMetadata>
-        <SystemIdentifier>http://nzz.wyona.com/newsml/2001/10/31/al/article7RAUR.xml</SystemIdentifier>
+        <SystemIdentifier></SystemIdentifier>
       </AdministrativeMetadata>
       <RightsMetadata>
         <Copyright>
-          <CopyrightHolder>
-             <Origin Href="http://nzz.wyona.com/newsml/copyrightholder.xml"/>
-          </CopyrightHolder>
+          <CopyrightHolder>Universit&#228;t Z&#252;rich</CopyrightHolder>
         </Copyright>
       </RightsMetadata>
       <DescriptiveMetadata xmlns:up="http://www.unipublic.unizh.ch/2002/up">
         <up:Channel>magazin</up:Channel>
-        <up:Section>gesundheit</up:Section>
+        <up:Section>recht</up:Section>
         <Language FormalName="de"/>
         <SubjectCode>
           <Subject FormalName="International"/>
@@ -77,7 +82,6 @@
             <body>
               <body.head>
                 <dateline>
-                  <story.date>3.4.2002</story.date>
                 </dateline>
                 <hedline>
                   <hl1>Der Homo oeconomicus - neu definiert</hl1>
@@ -250,10 +254,6 @@
                <body.end>
                  <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
                </body.end>
-               <copyrite>
-                 <copyrite.holder>Universit&#228;t Z&#252;rich</copyrite.holder>
-                 <copyrite.year>05.04.2002</copyrite.year>
-               </copyrite>
              </body>
              </DataContent>
           </ContentItem>
