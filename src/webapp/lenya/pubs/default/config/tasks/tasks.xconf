@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
 <tasks>
+    
+  <task id="ant-test" class="org.apache.lenya.cms.task.AntTask">
+    <label>Ant Test</label>
+    <parameter name="target" value="test"/>
+    <parameter name="properties.text" value="The test was successful."/>
+  </task>
 
   <task id="publish" class="org.apache.lenya.cms.task.AntTask">
     <label>Publish</label>
