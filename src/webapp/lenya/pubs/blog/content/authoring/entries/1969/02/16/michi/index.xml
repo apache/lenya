@@ -15,6 +15,6 @@
     <echo:modified>2003-10-23T23:36:30</echo:modified>
 
     <echo:content type="text/xhtml" xml:lang="en-us">
-      <p>Record temperature for February 16, 1969: Mean min <b>17.3</b>, Record high <b>26.1</b></p>
+      <p>Record temperature for February 16, 1969: Record high <b>26.1</b></p>
     </echo:content>
 </echo:entry>
