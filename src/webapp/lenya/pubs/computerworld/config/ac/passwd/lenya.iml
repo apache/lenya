@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<identity id="wyona">
+<password type="md5">dcb122dc1dd7eb2bc5cbfc975c5ef6b7</password>
+<comment>Wyona</comment>
+<!--<expire year="2002" month="12" day="31"/>-->
+<groups>
+  <group>administrator</group>
+  <group>useradministrator</group>
+  <group>editor</group>
+  <group>root</group>
+</groups>
+</identity>
