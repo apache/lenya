@@ -14,7 +14,7 @@
 <body> 
 
 <section>
-<title>Hello World 1</title>
+<title>Hello World</title>
 <source>
 <![CDATA[
 <hello>
@@ -25,7 +25,7 @@
 </section>
 
 <section>
-<title>Hello World 2</title>
+<title>Hello World with XPointer</title>
 <source>
 <![CDATA[
 <hello>
@@ -36,7 +36,7 @@
 </section>
 
 <section>
-<title>Hello World 3</title>
+<title>Hello World with XPointer and Namespace</title>
 <source>
 <![CDATA[
 <hello>
