@@ -3,311 +3,250 @@
               by 
               antonio
               :
-              Disable HSQLDB block (not used by Lenya) SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              Disable HSQLDB block (not used by Lenya) </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              lenya TLP changes SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              lenya TLP changes </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               thorsten
               :
-              Fixed the entity bug SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              Fixed the entity bug </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               andreas
               :
-              escape special characters in BXE link sitetree SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              escape special characters in BXE link sitetree </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               andreas
               :
-              OneFormEditor: check wellformedness before validation SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              OneFormEditor: check wellformedness before validation </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              508 compliance SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              508 compliance </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              charter moved to site SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              charter moved to site </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              resolution moved to site SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              resolution moved to site </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               jwkaltz
               :
               added more parameter descriptions
- SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+ </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              added support for multi paragraph paste into BXE to config SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              added support for multi paragraph paste into BXE to config </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              sitemap components cleanup SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              sitemap components cleanup </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               jwkaltz
               :
               Removed hard-coding of ou=People branch, added possibility to search a
 subtree for a user, and added option to support MS Active Directory
- SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+ </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               jwkaltz
               :
               A sample for ldap.properties; the usage of the various options
 (especially the new ones) are documented within the file
- SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+ </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              move more validation out of XSL and into javascript validation.xml SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              move more validation out of XSL and into javascript validation.xml </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
               move client side ip range validation to validation.xml (currently unused)
-sync trunk with 1.2 for validation.xml SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+sync trunk with 1.2 for validation.xml </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              move js to includes to avoid problems with XML and &amp;&amp; SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              move js to includes to avoid problems with XML and &amp;&amp; </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              #30039 make addMetaData.xsl consistent SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              #30039 make addMetaData.xsl consistent </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              #32000 reliance on cocoon deprecated classes removed SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              #32000 reliance on cocoon deprecated classes removed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              BAD practice to log standard messages with log.error. SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              BAD practice to log standard messages with log.error. </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              BAD practice to log standard messages with log.error. SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              BAD practice to log standard messages with log.error. </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              project-logo.gif is no longer used SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              project-logo.gif is no longer used </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              this is needed to edit homepage documents in bxe SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              this is needed to edit homepage documents in bxe </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              remove misleading comments SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              remove misleading comments </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              eol-style set to native SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              eol-style set to native </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              eol-style set to native SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              eol-style set to native </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              #32119  org.apache.forrest.components.sourcetype.SourceTypeAction references SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              #32119  org.apache.forrest.components.sourcetype.SourceTypeAction references </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              remove misleading comments SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              remove misleading comments </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              recommended version added SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              recommended version added </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              thanks to Josias the javascript is now copied properly SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              thanks to Josias the javascript is now copied properly </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              change to ../cocooon to match what the docs say SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              change to ../cocooon to match what the docs say </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              #32183 keep the visibility attribute if a usecase as archive is invoked SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              #32183 keep the visibility attribute if a usecase as archive is invoked </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              eol style set SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              eol style set </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              getting tests to run SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              getting tests to run </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              getting tests to run SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              getting tests to run </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              getting tests to run SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              getting tests to run </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-               
-            SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+               </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              line endings SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              line endings </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              #29135 convert spaces in asset filenames to underscores SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              #29135 convert spaces in asset filenames to underscores </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              timestamp format fixed SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              timestamp format fixed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              thanks to Josias the IE problem re UTF-8 has been fixed SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              thanks to Josias the IE problem re UTF-8 has been fixed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              more details on how to build Cocoon SVN
-         </description></item><item><title> fix</title><link>changes.html</link><description> fix
+              more details on how to build Cocoon </description></item><item><title> fix</title><link>changes.html</link><description> fix
               by 
               blautenb
               :
               Migrate lenya to TLP
- SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+ </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               antonio
               :
-              Fixing typos SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              Fixing typos </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
               factor out js validation
-add check for empty title to all asset / image upload screens SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+add check for empty title to all asset / image upload screens </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               antonio
               :
-              Don't use underscore text decoration in the lenya menu SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              Don't use underscore text decoration in the lenya menu </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               andreas
               :
-              adding lenya:asset/@size attribute SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              adding lenya:asset/@size attribute </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               andreas
               :
-              adding button to insert asset (fixes bug #31953) SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              adding button to insert asset (fixes bug #31953) </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              hardcoded Xopus path removed SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              hardcoded Xopus path removed </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              schema added SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              schema added </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              false readded SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              false readded </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              homepage readded SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              homepage readded </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              homepage readded SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              homepage readded </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               michi
               :
-              serialize Identity SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              serialize Identity </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
               bring schema for object closer in snyc with xhtml 2 draft and allow the href attritube
 
-we should really migrate to the rng for xhtml 2 SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+we should really migrate to the rng for xhtml 2 </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              remove xul from 1.2 branch SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              remove xul from 1.2 branch </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              #29156  i18n for checkout exceptions SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              #29156  i18n for checkout exceptions </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              #29156  i18n for checkout exceptions SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              #29156  i18n for checkout exceptions </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              update lenya 1.2.1 issues SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              update lenya 1.2.1 issues </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              documentation was moved to its own branch SVN
-         </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
+              documentation was moved to its own branch </description></item><item><title>1.2 fix</title><link>changes.html</link><description>1.2 fix
               by 
               gregor
               :
-              documentation was moved to its own branch SVN
-         </description></item></channel></rss>
+              documentation was moved to its own branch </description></item></channel></rss>
