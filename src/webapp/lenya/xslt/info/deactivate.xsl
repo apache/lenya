@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: deactivate.xsl,v 1.12 2003/10/14 09:47:56 edith Exp $
+ $Id: deactivate.xsl,v 1.13 2003/10/14 12:26:13 edith Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -63,7 +63,7 @@
           <table class="lenya-table-noborder">
             <tr>
               <td class="lenya-entry-caption">Document:</td>
-              <td><xsl:value-of select="$document-id"/></td>
+              <td><xsl:value-of select="$document-id"/> [<xsl:value-of select="$language"/>]</td>
             </tr>
             <tr>
 	      <xsl:apply-templates select="inconsistent-documents"/>
@@ -97,7 +97,7 @@
           <table class="lenya-table-noborder">
             <tr>
               <td class="lenya-entry-caption">Document:</td>
-              <td><xsl:value-of select="$document-id"/></td>
+              <td><xsl:value-of select="$document-id"/> [<xsl:value-of select="$language"/>]</td>
             </tr>
             <tr>
               <td valign="top" class="lenya-entry-caption">Problem:</td>
