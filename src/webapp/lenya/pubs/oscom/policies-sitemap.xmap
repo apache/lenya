@@ -116,6 +116,20 @@
      </map:match>
 <!-- /Authoring -->
 
+<!-- Admin -->
+     <map:match pattern="admin/**">
+       <map:generate src="config/ac/policies/root.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!-- /Admin -->
+
+<!-- Info -->
+     <map:match pattern="info/**">
+       <map:generate src="config/ac/policies/root.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+<!-- /Info -->
+
 
 
 <!-- Everything else -->
