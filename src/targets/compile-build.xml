@@ -60,14 +60,4 @@
       <classpath refid="classpath"/>
     </javac>
   </target>
-
-  <target name="clean" depends="init" description="Cleans the build directories">
-    <delete dir="${build.root}"/>
-    <delete dir="${dist.root}"/>
-
-    <condition property="servlet.engine.tomcat">
-      <equals arg1="${web.app.server}" arg2="Tomcat"/>
-    </condition>
-    <antcall target="clean-tomcat"/>
-  </target>
 </project>

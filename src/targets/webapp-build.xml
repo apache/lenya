@@ -192,6 +192,17 @@
   <!-- ============================================================ -->
   <!-- Clean targets                                                -->
   <!-- ============================================================ -->
+  <target name="clean" depends="init" description="Cleans the build directories">
+    <delete includeEmptyDirs="true">
+      <fileset dir="${build.root}" excludes="${target.reset.excludes}" />
+    </delete>
+    <delete dir="${dist.root}"/>
+
+    <condition property="servlet.engine.tomcat">
+      <equals arg1="${web.app.server}" arg2="Tomcat"/>
+    </condition>
+    <antcall target="clean-tomcat"/>
+  </target>
 
   <target name="clean-tomcat" description="Resets the deployment by also cleaning the servlet engine context" if="servlet.engine.tomcat">
     <!-- Empty server cache - this directory is set in the "local.build.properties" file -->
