@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: config-xml.xsl,v 1.7 2004/03/26 10:56:46 egli Exp $ -->
+<!-- $Id: config-xml.xsl,v 1.8 2004/04/13 13:16:36 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0" 
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
@@ -29,6 +29,7 @@
 <xsl:param name="script"/>
 <xsl:param name="BX_exitdestination"/>
 <xsl:param name="contextmenufile"/>
+<xsl:param name="defaultlanguage"/>
 
 <xsl:template match="/config">
   <xsl:copy>
@@ -76,6 +77,12 @@
       <file><xsl:value-of select="$script"/></file>
     </xsl:if>
   </xsl:template>
+
+<!-- pass default language to link screen for sitetree display -->  
+<xsl:template match="callbacks/element[@name = 'a']/text()">
+  <xsl:value-of select="."/>&amp;language=<xsl:value-of select="$defaultlanguage"/>
+</xsl:template>
+  
 
 <xsl:template match="@*|node()">
   <xsl:copy>
