@@ -14,7 +14,7 @@
 ; See the License for the specific language governing permissions and
 ; limitations under the License.
 
-; $Id: lenya.nsi,v 1.11 2004/06/11 18:14:43 roku Exp $
+; $Id$
 
 ;--------------------------------
 ;Include Modern UI
@@ -25,15 +25,15 @@
 ;Configuration
 
   ;General
-  Name "Apache Lenya 1.2"
-  OutFile "incubating-lenya-1.2-bin.exe"
+  Name "Apache Lenya 1.4-dev"
+  OutFile "apache-lenya-1.4-dev-bin.exe"
   
   CRCCheck on
   SetCompress force
   SetDatablockOptimize on
 
   ;Folder selection page
-  InstallDir "C:\Lenya"
+  InstallDir "C:\apache-lenya"
   
 ;--------------------------------
 ;Interface Settings
@@ -87,20 +87,20 @@ Section "Apache Lenya" SecDummy
   File /r tools
   File /r legal
 
-  CreateDirectory "$SMPROGRAMS\Apache Lenya 1.2"
-  CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Lenya Home Page.lnk" \
+  CreateDirectory "$SMPROGRAMS\$Name"
+  CreateShortCut "$SMPROGRAMS\$Name\Apache Lenya Home Page.lnk" \
                  "http://cocoon.apache.org/lenya/"
 
-  CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Welcome.lnk" \
+  CreateShortCut "$SMPROGRAMS\$Name\Welcome.lnk" \
                  "http://127.0.0.1:8888"
 
-  CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Lenya Documentation.lnk" \
+  CreateShortCut "$SMPROGRAMS\$Name\Lenya Documentation.lnk" \
                  "http://127.0.0.1:8888/docs-new/docs/index.html"
 
-  CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Uninstall Lenya 1.2.lnk" \
+  CreateShortCut "$SMPROGRAMS\$Name\Uninstall $Name.lnk" \
                  "$INSTDIR\Uninstall.exe"
 
-  CreateShortCut "$SMPROGRAMS\Apache Lenya 1.2\Start Lenya.lnk" \
+  CreateShortCut "$SMPROGRAMS\$Name\Start Lenya.lnk" \
                  "$INSTDIR\lenya.bat" \
                  'servlet' \
                  "$INSTDIR\lenya.bat" 1 SW_SHOWNORMAL
@@ -128,7 +128,7 @@ SectionEnd
 
 Section "Uninstall"
 
-  RMDir /r "$SMPROGRAMS\Apache Lenya 1.2"
+  RMDir /r "$SMPROGRAMS\$Name"
   RMDir /r "$INSTDIR"
 
 SectionEnd
