@@ -7,7 +7,10 @@
 <xsl:template match="/">
 <html>
 <body>
-Page not published yet
+Page not published yet.
+<br /><br />
+Click on the menu "File" within the authoring area and click on the menu item "Publish"
+in order to publish this page.
 </body>
 </html>
 </xsl:template>

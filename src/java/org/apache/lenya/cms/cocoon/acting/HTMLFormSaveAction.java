@@ -64,12 +64,13 @@ import org.w3c.dom.Node;
 
 import java.io.*;
 import java.util.*;
+import java.util.Enumeration;
 import java.net.URL;
 
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.1 2003/08/07 16:27:54 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.2 2003/08/08 15:37:36 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -103,12 +104,6 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        java.util.Enumeration params = request.getParameterNames();
-        while (params.hasMoreElements()) {
-            String name = (String) params.nextElement();
-            getLogger().debug(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
-        }
-
         if(request.getParameter("cancel") != null) {
             getLogger().error(".act(): Cancel editing");
         } else {
@@ -117,8 +112,19 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
                 try {
                     Document document = DocumentHelper.readDocument(file);
-                    setNodeValue(document, request.getParameter("system_name"), "/system/system_name");
-                    setNodeValue(document, request.getParameter("description"), "/system/description");
+
+                    Enumeration params = request.getParameterNames();
+                    while (params.hasMoreElements()) {
+                        String name = (String) params.nextElement();
+                        getLogger().debug(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
+                        if (name.indexOf("element.") == 0) {
+                            String xpath = name.substring(8, name.indexOf("["));
+                            String tagID = name.substring(name.indexOf("[") + 1, name.indexOf("]"));
+                            xpath = xpath + "[@tagID=\"" + tagID + "\"]";
+                            getLogger().error(".act(): XPath: " + xpath);
+                            setNodeValue(document, request.getParameter(name), xpath);
+                        }
+                    }
                     DocumentHelper.writeDocument(document, file);
                 } catch (Exception e) {
                     getLogger().error(".act(): Exception: " + e.getMessage(), e);

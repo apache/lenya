@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: usecase-edit.xmap,v 1.2 2003/08/08 12:43:54 michi Exp $ -->
+<!-- CVS: $Id: usecase-edit.xmap,v 1.3 2003/08/08 15:37:36 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -34,36 +34,35 @@
           </map:match>
         </map:match>
 
+<!--
         <map:match pattern="update" type="step">
           <map:match pattern="authoring/matrix/*.html">
-            <map:act type="save">
-              <map:parameter name="file" value="content/authoring/matrix/{1}.xml"/>
-              <!-- FIXME: Error Message -->
-              <map:redirect-to uri="/lenya/index.html" />
-            </map:act>
             <map:redirect-to uri="{1}.html" />
           </map:match>
         </map:match>
+-->
 
         <map:match pattern="close" type="step">
           <map:match pattern="authoring/matrix/*.html">
             <map:act type="save">
-              <map:parameter name="file" value="content/authoring/matrix/{1}.xml"/>
+              <map:parameter name="file" value="work/editor/authoring/matrix/{1}.xml"/>
               <!-- FIXME: Error Message -->
               <map:redirect-to uri="/lenya/index.html" />
             </map:act>
+
+            <map:generate src="work/editor/authoring/matrix/{1}.xml"/>
+            <map:transform src="../../xslt/authoring/edit/unnumberTags.xsl"/>
+            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="content/authoring/matrix/{1}.xml"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:transform src="../../xslt/authoring/edit/redirect-to.xsl">
+              <map:parameter name="uri" value="{1}.html"/>
+            </map:transform>
+            <map:serialize type="html" />
+<!--
             <map:redirect-to uri="{1}.html" />
-          </map:match>
-        </map:match>
-
-
-
-        <!-- DEBUG -->
-        <map:match pattern="number" type="step">
-          <map:match pattern="authoring/matrix/*.html">
-            <map:generate src="content/authoring/matrix/{1}.xml"/>
-            <map:transform src="../../xslt/authoring/edit/numberTags.xsl"/>
-            <map:serialize type="xml" />
+-->
           </map:match>
         </map:match>
       </map:match>

@@ -8,7 +8,7 @@
   <xsl:apply-templates select="*"/>
 </xsl:template>
 
-<!-- FIXME: there is a bug in here!!! (in Xalan?) wenn wir was vor Copy schreiben, funzts, sonst nicht.... -->
+<!-- FIXME: there seems to be something wrong!!! (Xalan?) if something is written in front of Copy, then it works, else it doesn't ... -->
 <xsl:template match="*|text()">
   <xsl:copy>
     <xsl:copy-of select="@*[name()!='tagID']"/>

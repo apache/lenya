@@ -13,11 +13,12 @@ Edit Document <xsl:value-of select="$projectid"/>
 <form method="post" action="?lenya.usecase=edit&amp;lenya.step=close">
 <table>
 <tr>
-  <td>Project Name</td><td><input type="text" name="/system/system_name/{/system/system_name/@tagID}" size="40"><xsl:attribute name="value"><xsl:value-of select="/system/system_name" /></xsl:attribute></input></td>
+  <td>Project Name</td><td><input type="text" name="element./system/system_name[{/system/system_name/@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="/system/system_name" /></xsl:attribute></input></td>
 </tr>
 <tr>
-  <td valign="top">Description</td><td><textarea name="/system/description/{/system/description/@tagID}" cols="40" rows="5"><xsl:value-of select="/system/description" /></textarea></td>
+  <td valign="top">Description</td><td><textarea name="element./system/description[{/system/description/@tagID}]" cols="40" rows="5"><xsl:value-of select="/system/description" /></textarea></td>
 </tr>
+<xsl:apply-templates select="/system/features/feature"/>
 <!--
 <xsl:apply-templates select="/system"/>
 -->
@@ -28,6 +29,13 @@ Edit Document <xsl:value-of select="$projectid"/>
 </form>
 </body>
 </html>
+</xsl:template>
+
+
+<xsl:template match="feature">
+<tr>
+  <td>Feature Title</td><td><input type="text" name="element./system/features/feature/title[{title/@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="title" /></xsl:attribute></input></td>
+</tr>
 </xsl:template>
  
 </xsl:stylesheet>  
