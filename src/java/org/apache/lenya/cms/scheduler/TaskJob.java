@@ -70,6 +70,10 @@ public class TaskJob
         parameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT, servletContextPath);
         parameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath() + "/");
         parameters.setParameter(Task.PARAMETER_SERVER_PORT, Integer.toString(request.getServerPort()));
+        log.debug(
+            "\n-----------------------------------------------" +
+            "\n- Server port from request: " + request.getServerPort() +
+            "\n-----------------------------------------------");
         parameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
         parameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publicationId);
 
