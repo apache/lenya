@@ -19,6 +19,6 @@
   </live>
   <export>
     <destination href="resources/publication/export/pending"/>
-    <substitution regexp="s/\/wyona-cms\/unipublic//g"/>
+    <substitution regexp="s/\/wyona-cms\/computerworld//g"/>
   </export>
 </publication>

@@ -15,44 +15,6 @@
     <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
   </task>
   
-  <task id="publish-dossier">
-    <label>Publish Dossier</label>
-    <task id="insert" class="ch.unizh.unipublic.wyona.cms.InsertDossierTask"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
-  </task>
-
-  <!-- different task names for scheduler
-    
-  <task id="publish-headlines">
-    <label>Publish Headlines</label>
-    <parameter name="sources" value="/frontpage/headlines.xml"/>
-    <parameter name="uris" value="/wyona-cms/unipublic/index.html"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
-  </task>
-
-  <task id="publish-webperls">
-    <label>Publish Webperls</label>
-    <parameter name="sources" value="/frontpage/webperls.xml"/>
-    <parameter name="uris" value="/wyona-cms/unipublic/frontpage/webperls.html"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
-  </task>
-  
-  -->
-
-  <!-- send newsletter -->
-  <task id="send-newsletter">
-    <label>Dispatch Newsletter</label>
-    <task id="send" class="org.wyona.cms.mail.MailTask">
-      <parameter name="server" value="mail.wyona.net"/>
-      <parameter name="from" value="andreas.hartmann@wyona.org"/>
-      <parameter name="uri" value="/authoring/newsletter/mail.xml"/>
-    </task>
-    <task id="clear" class="ch.unizh.unipublic.wyona.cms.ClearNewsletterTask"/>
-  </task>
-  
   <!-- hello world task -->
     
   <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">
