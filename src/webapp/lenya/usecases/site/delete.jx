@@ -28,22 +28,39 @@
       <div class="lenya-box-title">
         <i18n:translate>
           <i18n:text key="delete-doc"/>
-          <i18n:param><q><jx:out value="${usecase.getParameter('documentid')}"/></q></i18n:param>
+          <i18n:param><q><jx:out value="${usecase.getParameter('document').getId()}"/></q></i18n:param>
         </i18n:translate>
       </div>
       <div class="lenya-box-body">
         <form method="get">
-          
-          <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
-          <input type="hidden" name="lenya.usecase" value="delete"/>
-          <input type="hidden" name="parenturl" value="{parent-url}"/>
-          
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+          <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">
+            <tr>
+              <td>
+                <ul>
+                  <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                  <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                </ul>
+              </td>
+            </tr>
             <tr>
               <td>
                 <i18n:translate>
                   <i18n:text key="delete-language-versions?"/>
-                  <i18n:param><strong><jx:out value="${usecase.getParameter('documentid')}"/></strong></i18n:param>
+                  <i18n:param><strong><jx:out value="${usecase.getParameter('document').getId()}"/></strong></i18n:param>
                 </i18n:translate><br/><br/>
               </td>
             </tr>
@@ -61,9 +78,9 @@
             </tr>
             <tr>
               <td>
-                <br/>
-                <input i18n:attr="value" type="submit" value="Delete"/>&#160;
-                <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                <input i18n:attr="value" type="submit" name="submit" value="Delete"/>
+                &#160;
+                <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
               </td>
             </tr>
           </table>

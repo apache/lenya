@@ -17,16 +17,18 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
- * Delete a language version.
+ * Delete a document and all its descendants, including all language versions.
+ * The documents are moved to the trash.
  * 
- * @version $Id$
+ * @version $Id:$
  */
-public class DeleteLanguage extends DocumentUsecase {
+public class Delete extends DocumentUsecase {
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
@@ -39,8 +41,6 @@ public class DeleteLanguage extends DocumentUsecase {
 
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
-        } else if (getSourceDocument().getLanguages().length == 1) {
-            addErrorMessage("The last language version cannot be removed.");
         }
     }
 
@@ -50,10 +50,14 @@ public class DeleteLanguage extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        Document document = getSourceDocument();
-        getDocumentManager().deleteDocument(document);
+        Document source = getSourceDocument();
+        DocumentIdentityMap identityMap = source.getIdentityMap();
 
-        setTargetDocument(DocumentHelper.getExistingLanguageVersion(document));
+        Document target = identityMap.getFactory().getAreaVersion(source, Publication.TRASH_AREA);
+        getDocumentManager().moveAll(source, target);
+
+        Document parent = source.getIdentityMap().getFactory().getParent(source, "/index");
+        setTargetDocument(DocumentHelper.getExistingLanguageVersion(parent));
     }
 
 }

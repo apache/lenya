@@ -109,8 +109,8 @@
                
                  if (isDocument &amp;&amp;
                    !"/index".equals(<input:get-attribute module="page-envelope" as="string" name="document-id"/>)) {
-            <item wf:event="delete" uc:usecase="delete" uc:step="showscreen" href="?"><i18n:text>Delete</i18n:text></item>
-            <item wf:event="archive" uc:usecase="archive" uc:step="showscreen" href="?"><i18n:text>Archive</i18n:text></item>
+            <item wf:event="delete" uc:usecase="site.delete" href="?"><i18n:text>Delete</i18n:text></item>
+            <item wf:event="archive" uc:usecase="site.archive" href="?"><i18n:text>Archive</i18n:text></item>
                  }
                  else {
             <item><i18n:text>Delete</i18n:text></item>

@@ -57,14 +57,14 @@
                 <td class="lenya-entry-caption">
                   <i18n:text>Document ID</i18n:text>: </td>
                 <td>
-                  <jx:out value="${usecase.getParameter('documentId')}"/>
+                  <jx:out value="${usecase.getParameter('document').getId()}"/>
                 </td>
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
                   <i18n:text>Language</i18n:text>*: </td>
                 <td>
-                  <jx:out value="${usecase.getParameter('language')}"/>
+                  <jx:out value="${usecase.getParameter('document').getLanguage()}"/>
                 </td>
               </tr>
               <tr>
