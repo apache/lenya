@@ -198,4 +198,15 @@ public class NamespaceHelper {
 	public Element[] getNextSiblings(Element element, String localName) {
 		return DocumentHelper.getNextSiblings(element, getNamespaceURI(), localName);
 	}
+
+    /**
+     * Returns the preceding siblings of an element with a local name in the namespace
+     * of this NamespaceHelper or <code>null</code> if none exists.
+     * @param element The parent element.
+     * @param localName The local name of the children to return.
+     * @return the preceding siblings.
+     */
+    public Element[] getPrecedingSiblings(Element element, String localName) {
+        return DocumentHelper.getPrecedingSiblings(element, getNamespaceURI(), localName);
+    }
 }

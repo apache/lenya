@@ -49,7 +49,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-
 /**
  * Various utility methods to work with JAXP.
  */
@@ -62,10 +61,10 @@ public class DocumentHelper {
     public static DocumentBuilder createBuilder() throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
-        DocumentBuilder builder = factory.newDocumentBuilder();    
+        DocumentBuilder builder = factory.newDocumentBuilder();
 
-		CatalogResolver cr = new CatalogResolver();
-		builder.setEntityResolver(cr);
+        CatalogResolver cr = new CatalogResolver();
+        builder.setEntityResolver(cr);
         return builder;
     }
 
@@ -74,18 +73,21 @@ public class DocumentHelper {
      * the document element.
      * @param namespaceUri The namespace URL of the root element.
      * @param qualifiedName The qualified name of the root element.
-     * @param documentType The type of document to be created or null. When doctype is not null,
-     *        its Node.ownerDocument attribute is set to the document being created.
+     * @param documentType The type of document to be created or null. When
+     *            doctype is not null, its Node.ownerDocument attribute is set
+     *            to the document being created.
      * @return A new Document object.
      * @throws DOMException if an error occurs
      * @throws ParserConfigurationException if an error occurs
-     * @see org.w3c.dom.DOMImplementation#createDocument(String, String, DocumentType)
+     * @see org.w3c.dom.DOMImplementation#createDocument(String, String,
+     *      DocumentType)
      */
     public static Document createDocument(String namespaceUri, String qualifiedName,
-        DocumentType documentType) throws DOMException, ParserConfigurationException {
+            DocumentType documentType) throws DOMException, ParserConfigurationException {
         DocumentBuilder builder = createBuilder();
         Document document = builder.getDOMImplementation().createDocument(namespaceUri,
-                qualifiedName, documentType);
+                qualifiedName,
+                documentType);
 
         // add xmlns:prefix attribute
         String name = "xmlns";
@@ -95,7 +97,9 @@ public class DocumentHelper {
             name += (":" + qualifiedName.substring(0, index));
         }
 
-        document.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/", name, namespaceUri);
+        document.getDocumentElement().setAttributeNS("http://www.w3.org/2000/xmlns/",
+                name,
+                namespaceUri);
 
         return document;
     }
@@ -108,8 +112,8 @@ public class DocumentHelper {
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
      */
-    public static Document readDocument(File file)
-        throws ParserConfigurationException, SAXException, IOException {
+    public static Document readDocument(File file) throws ParserConfigurationException,
+            SAXException, IOException {
         DocumentBuilder builder = createBuilder();
         return builder.parse(file);
     }
@@ -122,8 +126,8 @@ public class DocumentHelper {
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
      */
-    public static Document readDocument(URL url)
-        throws ParserConfigurationException, SAXException, IOException {
+    public static Document readDocument(URL url) throws ParserConfigurationException, SAXException,
+            IOException {
         DocumentBuilder builder = createBuilder();
         return builder.parse(url.toString());
     }
@@ -136,8 +140,8 @@ public class DocumentHelper {
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
      */
-    public static Document readDocument(URI uri)
-        throws ParserConfigurationException, SAXException, IOException {
+    public static Document readDocument(URI uri) throws ParserConfigurationException, SAXException,
+            IOException {
         DocumentBuilder builder = createBuilder();
         return builder.parse(uri.toString());
     }
@@ -150,8 +154,8 @@ public class DocumentHelper {
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
      */
-    public static Document readDocument(String string)
-        throws ParserConfigurationException, SAXException, IOException  {
+    public static Document readDocument(String string) throws ParserConfigurationException,
+            SAXException, IOException {
         DocumentBuilder builder = createBuilder();
         return builder.parse(string);
     }
@@ -164,13 +168,13 @@ public class DocumentHelper {
      * @throws SAXException if an error occurs
      * @throws IOException if an error occurs
      */
-    public static Document readDocument(InputStream stream)
-        throws ParserConfigurationException, SAXException, IOException {
+    public static Document readDocument(InputStream stream) throws ParserConfigurationException,
+            SAXException, IOException {
         DocumentBuilder builder = createBuilder();
         return builder.parse(stream);
     }
 
-    /** 
+    /**
      * Writes a document to a file. A new file is created if it does not exist.
      * @param document The document to save.
      * @param file The file to save the document to.
@@ -179,7 +183,7 @@ public class DocumentHelper {
      * @throws TransformerException if an error occurs
      */
     public static void writeDocument(Document document, File file)
-        throws TransformerConfigurationException, TransformerException, IOException {
+            throws TransformerConfigurationException, TransformerException, IOException {
         file.getParentFile().mkdirs();
         file.createNewFile();
 
@@ -188,7 +192,7 @@ public class DocumentHelper {
         getTransformer(document.getDoctype()).transform(source, result);
     }
 
-    /** 
+    /**
      * Writes a document to a writer.
      * @param document The document to write.
      * @param writer The writer to write the document to.
@@ -196,20 +200,20 @@ public class DocumentHelper {
      * @throws TransformerException if an error occurs
      */
     public static void writeDocument(Document document, Writer writer)
-        throws TransformerConfigurationException, TransformerException {
+            throws TransformerConfigurationException, TransformerException {
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(writer);
         getTransformer(document.getDoctype()).transform(source, result);
     }
 
-	/**
-	 * Get the tranformer.
-	 * @param documentType the document type
-	 * @return a transformer
-	 * @throws TransformerConfigurationException if an error occurs
-	 */
+    /**
+     * Get the tranformer.
+     * @param documentType the document type
+     * @return a transformer
+     * @throws TransformerConfigurationException if an error occurs
+     */
     protected static Transformer getTransformer(DocumentType documentType)
-        throws TransformerConfigurationException {
+            throws TransformerConfigurationException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -230,18 +234,19 @@ public class DocumentHelper {
      * @param systemId The system identifier.
      * @return the document type
      * @throws ParserConfigurationException if an error occurs
-     * @see org.w3c.dom.DOMImplementation#createDocumentType(java.lang.String, java.lang.String, java.lang.String)
+     * @see org.w3c.dom.DOMImplementation#createDocumentType(java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
     public DocumentType createDocumentType(String qualifiedName, String publicId, String systemId)
-        throws ParserConfigurationException {
+            throws ParserConfigurationException {
         DocumentBuilder builder = createBuilder();
 
         return builder.getDOMImplementation().createDocumentType(qualifiedName, publicId, systemId);
     }
 
     /**
-     * Returns the first child element of an element that belong to a certain namespace
-     * or <code>null</code> if none exists.
+     * Returns the first child element of an element that belong to a certain
+     * namespace or <code>null</code> if none exists.
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
      * @return The first child element or <code>null</code> if none exists.
@@ -251,8 +256,9 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns the first child element of an element that belongs to a certain namespace
-     * and has a certain local name or <code>null</code> if none exists.
+     * Returns the first child element of an element that belongs to a certain
+     * namespace and has a certain local name or <code>null</code> if none
+     * exists.
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
      * @param localName The local name of the children.
@@ -286,7 +292,8 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns all child elements of an element that belong to a certain namespace.
+     * Returns all child elements of an element that belong to a certain
+     * namespace.
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
      * @return The child elements.
@@ -296,8 +303,8 @@ public class DocumentHelper {
     }
 
     /**
-     * Returns all child elements of an element that belong to a certain namespace
-     * and have a certain local name.
+     * Returns all child elements of an element that belong to a certain
+     * namespace and have a certain local name.
      * @param element The parent element.
      * @param namespaceUri The namespace that the childen must belong to.
      * @param localName The local name of the children.
@@ -349,45 +356,79 @@ public class DocumentHelper {
             Node child = children.item(i);
             element.removeChild(child);
         }
-        
+
         Node textNode = element.getOwnerDocument().createTextNode(text);
         element.appendChild(textNode);
     }
 
+    /**
+     * Returns all following sibling elements of an element that belong to a
+     * certain namespace.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @return The following sibling elements.
+     */
+    public static Element[] getNextSiblings(Element element, String namespaceUri) {
+        return getNextSiblings(element, namespaceUri, "*");
+    }
 
-	/**
-	 * Returns all following sibling elements of an element that belong to a certain namespace.
-	 * @param element The parent element.
-	 * @param namespaceUri The namespace that the childen must belong to.
-	 * @return The following sibling elements.
-	 */
-	public static Element[] getNextSiblings(Element element, String namespaceUri) {
-		return getNextSiblings(element, namespaceUri, "*");
-	}
-
-	/**
-	 * Returns all following sibling elements of an element that belong to a certain namespace.
-	 * and have a certain local name.
-	 * @param element The parent element.
-	 * @param namespaceUri The namespace that the childen must belong to.
-	 * @param localName The local name of the children.
-	 * @return The following sibling elements.
-	 */
-	public static Element[] getNextSiblings(Element element, String namespaceUri, String localName) {
-		List childElements = new ArrayList();
+    /**
+     * Returns all following sibling elements of an element that belong to a
+     * certain namespace. and have a certain local name.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @param localName The local name of the children.
+     * @return The following sibling elements.
+     */
+    public static Element[] getNextSiblings(Element element, String namespaceUri, String localName) {
+        List childElements = new ArrayList();
         Element parent = (Element) element.getParentNode();
-		Element[] children=getChildren(parent, namespaceUri, localName);
-         
-		int l = children.length;
-		for (int i = 0; i < children.length; i++) {
-			if (children[i] == element) {
-            	l = i;
-			}
-			if (i>l){	   
-				childElements.add(children[i]);
-			}
-		}
+        Element[] children = getChildren(parent, namespaceUri, localName);
 
-		return (Element[]) childElements.toArray(new Element[childElements.size()]);
-	}
+        int l = children.length;
+        for (int i = 0; i < children.length; i++) {
+            if (children[i] == element) {
+                l = i;
+            }
+            if (i > l) {
+                childElements.add(children[i]);
+            }
+        }
+
+        return (Element[]) childElements.toArray(new Element[childElements.size()]);
+    }
+
+    /**
+     * Returns all preceding sibling elements of an element that belong to a
+     * certain namespace.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @return The preceding sibling elements.
+     */
+    public static Element[] getPrecedingSiblings(Element element, String namespaceUri) {
+        return getPrecedingSiblings(element, namespaceUri, "*");
+    }
+
+    /**
+     * Returns all preceding sibling elements of an element that belong to a
+     * certain namespace. and have a certain local name.
+     * @param element The parent element.
+     * @param namespaceUri The namespace that the childen must belong to.
+     * @param localName The local name of the children.
+     * @return The preceding sibling elements.
+     */
+    public static Element[] getPrecedingSiblings(Element element, String namespaceUri,
+            String localName) {
+        List childElements = new ArrayList();
+        Element parent = (Element) element.getParentNode();
+        Element[] children = getChildren(parent, namespaceUri, localName);
+
+        int i = 0;
+        while (children[i] != element && i < children.length) {
+            childElements.add(children[i]);
+            i++;
+        }
+
+        return (Element[]) childElements.toArray(new Element[childElements.size()]);
+    }
 }
