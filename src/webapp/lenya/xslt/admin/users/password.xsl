@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: password.xsl,v 1.3 2004/04/28 15:00:05 andreas Exp $ -->
+<!-- $Id: password.xsl,v 1.4 2004/04/30 15:26:30 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -66,38 +66,44 @@
                  <xsl:value-of select="id"/>
               </td>
             </tr>
-            <xsl:if test="check-password/text() = 'true'">
-            <tr>
-              <td class="lenya-entry-caption">Old&#160;password:</td>
-              <td>
-                <input class="lenya-form-element-narrow" name="old-password" type="password"/>
-              </td>
-            </tr>
-            </xsl:if>
-            <tr>
-              <td class="lenya-entry-caption">New&#160;password:</td>
-              <td>
-                <input class="lenya-form-element-narrow" name="new-password" type="password">
-                  <xsl:attribute name="value">
-                    <xsl:value-of select="new-password"/>
-                  </xsl:attribute>
-                </input>
-              </td>
-            </tr>
-            <tr>
-              <td class="lenya-entry-caption">Confirm&#160;password:</td>
-              <td>
-                <input class="lenya-form-element-narrow" name="confirm-password" type="password">
-                  <xsl:attribute name="value">
-                    <xsl:value-of select="confirm-password"/>
-                  </xsl:attribute>
-                </input>
-              </td>
-            </tr>
+            
+              <xsl:if test="check-password/text() = 'true'">
+              <tr>
+                <td class="lenya-entry-caption">Old&#160;password:</td>
+                <td>
+                  <input class="lenya-form-element-narrow" name="old-password" type="password"/>
+                </td>
+              </tr>
+              </xsl:if>
+              <tr>
+                <td class="lenya-entry-caption">New&#160;password:</td>
+                <td>
+                  <input class="lenya-form-element-narrow" name="new-password" type="password">
+                    <xsl:attribute name="value">
+                      <xsl:value-of select="new-password"/>
+                    </xsl:attribute>
+                  </input>
+                </td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption">Confirm&#160;password:</td>
+                <td>
+                  <input class="lenya-form-element-narrow" name="confirm-password" type="password">
+                    <xsl:attribute name="value">
+                      <xsl:value-of select="confirm-password"/>
+                    </xsl:attribute>
+                  </input>
+                </td>
+              </tr>
+            
             <tr>
               <td/>
               <td>
-                <input name="submit" type="submit" value="Submit"/>
+                <input name="submit" type="submit" value="Submit">
+                  <xsl:if test="normalize-space(enabled) = 'false'">
+                    <xsl:attribute name="disabled">disabled</xsl:attribute>
+                  </xsl:if>
+                </input>
                 &#160;
                 <input name="cancel" type="submit" value="Cancel"/>
               </td>

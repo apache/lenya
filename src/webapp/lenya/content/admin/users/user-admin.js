@@ -102,8 +102,15 @@ function userChangePassword(checkPassword) {
 	    var newPassword = "";
 	    var confirmPassword = "";
 	    var message = "";
+	    var enabled = "true";
+	    
+	    if (user.getClass().getName().endsWith("LDAPUser")) {
+	        message = "You cannot change the password of this user.";
+	        enabled = false;
+	    }
 	    
 	    var ready = false;
+	    
 	    while (!ready) {
 		    cocoon.sendPageAndWait("users/password.xml", {
 		    	"user-id" : userId,
@@ -111,6 +118,7 @@ function userChangePassword(checkPassword) {
 		    	"confirm-password" : confirmPassword,
 		    	"message" : message,
 		    	"check-password" : checkPassword,
+		    	"enabled" : enabled
 		    });
 		    
 			if (cocoon.request.get("submit")) {	    
