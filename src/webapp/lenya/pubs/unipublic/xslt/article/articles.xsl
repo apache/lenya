@@ -13,6 +13,20 @@
   <td width="5" bgcolor="white" valign="top">&#160;</td>
 
   <td valign="top" bgcolor="white" width="393" class="art-text" id_xopus="body" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
+    <div class="art-pretitle">
+    <p>&#160;</p>
+    <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
+      <xsl:choose>
+        <xsl:when test="body/body.head/media">
+          <xsl:apply-templates select="body/body.head/media[1]/media-reference" mode="image"/>
+        </xsl:when>
+        <xsl:otherwise>
+         <img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Upload Teaser Image" border="0"/> Upload Teaser Image
+        </xsl:otherwise>
+      </xsl:choose>
+    </a>
+    <p>&#160;</p>
+    </div>
     <div class="art-date"><xsl:apply-templates select="../../../../NewsManagement/PublishDate" mode="article"/></div>
     <div class="art-pretitle"><xsl:apply-templates select="head/hedline/dossier"/></div>
     <div class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></div>
@@ -59,21 +73,73 @@
        <xsl:apply-templates select="media-reference" mode="image"/>
     </td></tr>
     <tr>
-    <td class="img-text"><xsl:value-of select="media-caption"/></td>
+    <td class="img-text"><xsl:value-of select="media-caption"/><xsl:apply-templates select="up:authorline|authorline"/></td>
     </tr>
-    <xsl:apply-templates select="up:authorline"/>
   </table>
   <p>&#160;</p>
 </xsl:template>
+
 
 <xsl:template match="media-reference" mode="image">
   <img src="{@source}" alt="{@alternate-text}" />
 </xsl:template>
 
-<xsl:template match="up:authorline">
-  <tr>
-    <td class="img-author">(<xsl:value-of select="."/>)</td>
-  </tr>
+<xsl:template match="up:authorline|authorline">
+    <span class="img-author"> (<xsl:value-of select="."/>)</span>
+</xsl:template>
+
+<!--  General Text Templates  -->
+
+<xsl:template match="bold">
+  <b><xsl:apply-templates/></b>
+</xsl:template>
+
+<xsl:template match="emphasize">
+  <i><xsl:apply-templates/></i>
+</xsl:template>
+
+<xsl:template match="subscript">
+  <sub><xsl:apply-templates/></sub>
+</xsl:template>
+
+<xsl:template match="superscript">
+  <sup><xsl:apply-templates/></sup>
+</xsl:template>
+
+<xsl:template match="itemizedlist">
+  <ul>
+    <xsl:apply-templates/>
+  </ul>
+</xsl:template>
+
+<xsl:template match="listitem">
+  <li><xsl:apply-templates/></li>
+</xsl:template>
+
+<xsl:template match="ulink">
+  <a href="{@url}"><xsl:apply-templates/></a>
+</xsl:template>
+
+<xsl:template match="informaltable">
+  <table width="100%" border="0" cellspacing="1" cellpadding="2" bgcolor="white">  
+    <xsl:apply-templates/>
+  </table>
+</xsl:template>
+
+<xsl:template match="tgroup">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tbody">
+  <xsl:copy><xsl:apply-templates/></xsl:copy>
+</xsl:template>
+
+<xsl:template match="row">
+  <tr><xsl:apply-templates/></tr>
+</xsl:template>
+
+<xsl:template match="entry">
+  <td class="rel-text" bgcolor="#cccccc"><xsl:apply-templates/></td>
 </xsl:template>
 
 </xsl:stylesheet>
