@@ -180,7 +180,7 @@ content="text/html; charset=iso-latin-1" />
 <!-- We can put topical banners here -->
 <form method="get" action="/lenya/oscom/search-oscom/lucene">
 <input type="hidden" name="publication-id" value="all" />
-<input type="text" name="queryString" class="search" size="15"/><input type="submit" name="find" value="Go" class="searchsubmit" />
+<input type="text" name="queryString" class="search" size="15"/>&#160;<input type="submit" name="find" value="Go" class="searchsubmit" />
 </form>
 <!--
 <img src="oscom-proposals_files/spacer.gif" width="1" height="1" border="0" />
