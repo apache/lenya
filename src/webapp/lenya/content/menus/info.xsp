@@ -54,11 +54,13 @@
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=rename&amp;lenya.step=showscreen</xsp:attribute>Rename</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=move-up&amp;lenya.step=move-up</xsp:attribute>Move Up</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=move-down&amp;lenya.step=move-down</xsp:attribute>Move Down</item>
+<!--        
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=add-child&amp;lenya.step=showscreen</xsp:attribute>Add Child Element</item>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=add-sibling&amp;lenya.step=showscreen</xsp:attribute>Insert New Document</item>
       </block>
       <block>
         <item><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=deleteTrash&amp;lenya.step=showscreen</xsp:attribute>Delete Trash</item>
+-->        
       </block>
     </menu>
 
