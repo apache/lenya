@@ -74,8 +74,14 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
 
         DocumentType type;
         org.w3c.dom.Document xmlDocument;
+        File historyFile = getHistoryFile(document);
+        if (!historyFile.exists()) {
+            throw new WorkflowException(
+                "There is no workflow assigned to this document " +
+                "(history file does not exist)!");
+        }
+        
         try {
-            File historyFile = getHistoryFile(document);
             xmlDocument = DocumentHelper.readDocument(historyFile);
             String documentTypeName =
                 xmlDocument.getDocumentElement().getAttribute(DOCTYPE_ATTRIBUTE);
