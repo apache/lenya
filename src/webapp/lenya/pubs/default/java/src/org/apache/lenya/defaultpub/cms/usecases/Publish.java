@@ -16,7 +16,12 @@
  */
 package org.apache.lenya.defaultpub.cms.usecases;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
@@ -40,6 +45,19 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected static final String MISSING_DOCUMENTS = "missingDocuments";
     protected static final String SUBTREE = "subtree";
     protected static final String ALLOW_SINGLE_DOCUMENT = "allowSingleDocument";
+    protected static final String SCHEDULE = "schedule";
+    protected static final String SCHEDULE_TIME = "schedule.time";
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+
+        Date now = new GregorianCalendar().getTime();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        setParameter(SCHEDULE_TIME, format.format(now));
+    }
 
     /**
      * Checks if the workflow event is supported and the parent of the document
@@ -101,11 +119,25 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        super.doExecute();
-        if (isSubtreeEnabled()) {
-            publishAll(getSourceDocument());
+
+        boolean schedule = Boolean.valueOf(getBooleanCheckboxParameter(SCHEDULE)).booleanValue();
+        if (schedule) {
+            deleteParameter(SCHEDULE);
+            String dateString = getParameterAsString(SCHEDULE_TIME);
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            try {
+                Date date = format.parse(dateString);
+                schedule(date);
+            } catch (ParseException e) {
+                addErrorMessage("The scheduler date must be of the form 'yyyy-MM-dd hh:mm:ss'.");
+            }
         } else {
-            publish(getSourceDocument());
+            super.doExecute();
+            if (isSubtreeEnabled()) {
+                publishAll(getSourceDocument());
+            } else {
+                publish(getSourceDocument());
+            }
         }
     }
 

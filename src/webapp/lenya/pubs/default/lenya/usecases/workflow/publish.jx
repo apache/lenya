@@ -83,6 +83,13 @@
               </td>
             </tr>
             <tr>
+              <td><i18n:text>Schedule</i18n:text>:</td>
+              <td>
+                <input type="checkbox" name="schedule"/>
+                <input type="text" name="schedule.time" value="${usecase.getParameter('schedule.time')}"/>
+              </td>
+            </tr>
+            <tr>
               <td/>
               <td>
                 <input i18n:attr="value" type="submit" name="submit" value="Publish"/>
