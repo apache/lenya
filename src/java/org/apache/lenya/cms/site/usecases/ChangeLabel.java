@@ -18,7 +18,6 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
@@ -40,8 +39,11 @@ public class ChangeLabel extends DocumentUsecase {
         if (!getErrorMessages().isEmpty()) {
             return;
         }
+
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
+        } else if (!getSourceDocument().exists()) {
+            addErrorMessage("This usecase can only be invoked on existing documents.");
         }
     }
 
@@ -51,15 +53,15 @@ public class ChangeLabel extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
         Document document = getSourceDocument();
-        if (document != null) {
-            setParameter(DOCUMENT_ID, document.getId());
-            try {
+        try {
+            if (document != null && document.exists()) {
+                setParameter(DOCUMENT_ID, document.getId());
                 SiteManager _manager = document.getPublication().getSiteManager(document
                         .getIdentityMap());
                 setParameter(LABEL, _manager.getLabel(document));
-            } catch (SiteException e) {
-                throw new RuntimeException(e);
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
