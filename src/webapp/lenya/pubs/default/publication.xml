@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.7 2003/11/06 09:51:04 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.8 2004/01/08 14:15:40 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
   <lenya:name>Default Publication</lenya:name>
-  <lenya:version>1.2-dev</lenya:version>
+  <lenya:version>1.2</lenya:version>
   <lenya:description>This publication is a best practice, getting started publication.</lenya:description>
   <lenya:credits>Special thanks to </lenya:credits>
   <lenya:help></lenya:help>

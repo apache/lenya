@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.6 2003/12/17 15:14:17 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.7 2004/01/08 14:15:40 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="false">
   <lenya:name>Apache Lenya Project (Overview and Documentation)</lenya:name>
-  <lenya:version>1.2-dev</lenya:version>
+  <lenya:version>1.2</lenya:version>
   <lenya:description>This publication implements a documentation site
   based around Apache Forrest.</lenya:description>
   <lenya:credits>Special thanks to </lenya:credits>

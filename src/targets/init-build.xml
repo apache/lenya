@@ -9,10 +9,10 @@
     <property name="fullname" value="Apache Lenya CMS"/>
     <property name="Name"     value="Apache Lenya"/>
     <property name="name"     value="lenya:cms"/>
-    <property name="version"  value="1.2-rc1"/>
+    <property name="version"  value="1.2"/>
     <property name="short.version" value="1.2"/>
     <property name="release"  value="1th"/>
-    <property name="year"     value="1999-2003"/>
+    <property name="year"     value="1999-2004"/>
 
     <echo message="------------------- ${fullname} ${version} [${year}] ----------------"/>
     <echo>Building with ${ant.version} using build file ${ant.file}</echo>
