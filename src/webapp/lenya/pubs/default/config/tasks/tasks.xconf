@@ -3,6 +3,7 @@
 <tasks>
 
   <task id="publish" class="org.apache.lenya.cms.task.AntTask">
+    <label>Publish</label>
     <parameter name="target" value="publish"/>
   </task>
 
