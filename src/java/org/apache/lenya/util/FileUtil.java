@@ -1,5 +1,5 @@
 /*
-$Id: FileUtil.java,v 1.10 2003/07/23 13:21:13 gregor Exp $
+$Id: FileUtil.java,v 1.11 2003/08/07 09:06:55 egli Exp $
 <License>
 
  ============================================================================
@@ -75,8 +75,8 @@ import java.util.StringTokenizer;
  * @version 1.11.14
  */
 public class FileUtil {
-    static Category log = Category.getInstance(FileUtil.class);
-
+    private static Category log = Category.getInstance(FileUtil.class);
+    
     /**
      * DOCUMENT ME!
      *
