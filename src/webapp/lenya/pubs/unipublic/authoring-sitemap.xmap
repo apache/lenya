@@ -61,6 +61,13 @@
         <docs href="docs/publication/authoring"/>
         <doctypes href="docs/publication/doctypes/"/>
       </map:action>                                                                                                                         
+      <map:action logger="sitemap.action.upload" name="file-upload"
+        src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+        <map:parameter name="images-dir"
+          value="resources/publication/images/authoring" />
+        <map:parameter name="meta-dir"
+          value="docs/publication/authoring" />
+      </map:action>
     </map:actions>
     <map:selectors default="browser">
       <map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
@@ -382,6 +389,16 @@
           <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
           <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
           <map:serialize type="html"/>
+	</map:match>
+	<map:match type="step" pattern="upload">
+	  <map:act type="file-upload">
+            <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+            <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+            <map:serialize type="html"/>
+            <!-- <map:generate src="docs/cms/upload.xsp" type="serverpages" />
+            <map:transform src="../../../../stylesheets/dynamic-page2html.xsl" />
+            <map:serialize type="html"/> -->
+          </map:act>
 	</map:match>
       </map:match>
 
