@@ -15,7 +15,7 @@
  *
  */
 
-/* @version $Id: DefaultSiteTree.java,v 1.42 2004/04/13 09:20:06 andreas Exp $ */
+/* @version $Id: DefaultSiteTree.java,v 1.43 2004/04/23 14:52:54 andreas Exp $ */
 
 package org.apache.lenya.cms.publication;
 
@@ -117,6 +117,25 @@ public class DefaultSiteTree implements SiteTree {
 
     }
 
+    private long lastModified = 0;
+
+    /**
+     * Checks if the tree file has been modified externally and reloads the site tree.
+     * @throws SiteTreeException when something went wrong.
+     */
+    protected void checkModified() {
+        if (area.equals(Publication.LIVE_AREA)
+            && treefile.isFile()
+            && treefile.lastModified() > lastModified) {
+            try {
+                document = DocumentHelper.readDocument(treefile);
+            } catch (Exception e) {
+                throw new IllegalStateException(e.getMessage());
+            }
+            lastModified = treefile.lastModified();
+        }
+    }
+
     /**
      * Create a new DefaultSiteTree xml document.
      *
@@ -147,6 +166,9 @@ public class DefaultSiteTree implements SiteTree {
      * @return the node that matches the path given in the list of ids
      */
     protected Node findNode(Node node, List ids) {
+
+        checkModified();
+
         if (ids.size() < 1) {
             return node;
         } else {
