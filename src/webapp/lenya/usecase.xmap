@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.236 2004/08/11 08:48:44 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.237 2004/08/11 08:50:38 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -372,7 +372,7 @@
                Kupu uses PUT to transmit the edited file for save.
                The problem is, Kupu removes namespace information. 
                That means we can not use the StreamGenerator, because 
-               it complains about an unbound element.			
+               it complains about an unbound element.
           -->
           <map:match pattern="save" type="step">
             <map:select type="request-method">  
@@ -412,7 +412,7 @@
                   <map:parameter name="source" value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
                 </map:transform>
                 <map:transform type="write-source"/>
-			
+
                 <!-- Trigger workflow with *edit* action -->
                 <map:act type="workflow">
                   <map:parameter name="area" value="{page-envelope:area}"/>
@@ -1138,14 +1138,14 @@
             <map:transform src="xslt/exception/parent-node-not-found.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:when>
-      <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-      </map:otherwise>
+          <map:otherwise>
+            <map:generate type="notifying"/>
+            <map:transform src="../stylesheets/system/error2html.xslt">
+              <map:parameter name="contextPath" value="{request:contextPath}"/>
+            </map:transform>
+          </map:otherwise>
         </map:select>
-            <map:serialize type="html"/>
+        <map:serialize type="html"/>
       </map:handle-errors>
       
     </map:pipeline>
