@@ -52,14 +52,14 @@
         </map:aggregate>
 	    <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
 	       <map:parameter name="chosenlanguage" value="{2}"/>
-           <map:parameter name="defaultlanguage" value="de"/> 
+           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/> 
         </map:transform>
 	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
            <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
            <map:parameter name="area" value="{page-envelope:area}"/>
            <map:parameter name="chosenlanguage" value="{2}"/>
-           <map:parameter name="defaultlanguage" value="de"/> 
+           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/> 
         </map:transform>
 	    <map:serialize type="text"/>
       </map:match>
@@ -90,10 +90,9 @@
     </map:pipeline>
     
     <map:pipeline>
-      <map:match pattern="**">
+      <map:match pattern="content/**">
       	<map:match pattern="*" type="language">
 	       <map:aggregate element="lenya" label="aggregate">
-             <map:part src="cocoon:/menus/info.xml"/>
 	         <map:part element="cmsbody" type="serverpages" src="content/info/info.xsp"/>
 	       </map:aggregate>
 	       <map:transform src="xslt/info/root.xsl" label="content">
@@ -102,12 +101,11 @@
               <map:parameter name="area" value="{page-envelope:area}"/>
               <map:parameter name="chosenlanguage" value="{1}"/>
               <map:parameter name="documentid" value="{../1}"/>
-              <map:parameter name="defaultlanguage" value="de"/> <!-- needs to be publication parameter -->
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
            </map:transform>
 	       <map:serialize type="html"/>
         </map:match>
 	       <map:aggregate element="lenya" label="aggregate">
-             <map:part src="cocoon:/menus/info.xml"/>
 	         <map:part element="cmsbody" type="serverpages" src="content/info/info.xsp"/>
 	       </map:aggregate>
 	       <map:transform src="xslt/info/root.xsl" label="content">
@@ -116,7 +114,38 @@
               <map:parameter name="area" value="{page-envelope:area}"/>
               <map:parameter name="chosenlanguage" value=""/>
               <map:parameter name="documentid" value="{1}"/>
-              <map:parameter name="defaultlanguage" value="de"/> <!-- needs to be publication parameter -->
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+           </map:transform>
+	       <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="**">
+      	<map:match pattern="*" type="language">
+	       <map:aggregate element="lenya" label="aggregate">
+             <map:part src="cocoon:/menus/info.xml"/>
+	       </map:aggregate>
+	       <map:transform src="xslt/menu2/root.xsl" label="content">
+              <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
+              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+              <map:parameter name="area" value="{page-envelope:area}"/>
+              <map:parameter name="chosenlanguage" value="{1}"/>
+              <map:parameter name="documentid" value="{../1}"/>
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+           </map:transform>
+	       <map:serialize type="html"/>
+        </map:match>
+	       <map:aggregate element="lenya" label="aggregate">
+             <map:part src="cocoon:/menus/info.xml"/>
+	       </map:aggregate>
+	       <map:transform src="xslt/menu2/root.xsl" label="content">
+              <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
+              <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+              <map:parameter name="area" value="{page-envelope:area}"/>
+              <map:parameter name="chosenlanguage" value=""/>
+              <map:parameter name="documentid" value="{1}"/>
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
            </map:transform>
 	       <map:serialize type="html"/>
       </map:match>
