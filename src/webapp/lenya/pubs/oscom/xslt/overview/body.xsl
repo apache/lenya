@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.30 2004/03/13 12:42:13 gregor Exp $ -->
+<!-- $Id: body.xsl,v 1.31 2004/08/02 00:26:21 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -103,6 +103,17 @@ For all other inquiries please use OSCOM's <a href="/get-involved/mailing-lists/
   <tr>
     <td>&#160;</td>
 <td>
+
+
+<div>
+<form method="get" action="{$searchURL}">
+<input type="hidden" name="publication-id" value="matrix"/>
+<input type="text" name="queryString" class="search" size="15" value="Search the Matrix"/>
+</form>
+</div>
+
+
+
 <div class="nnbe" style="padding-left: 10px;">
 <a class="nnbr" target="_blank" href="http://www.cms-list.org">cms-list</a>
 </div>

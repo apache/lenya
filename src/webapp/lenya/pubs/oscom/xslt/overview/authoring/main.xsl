@@ -15,13 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: main.xsl,v 1.10 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id: main.xsl,v 1.11 2004/08/02 00:26:21 michi Exp $ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
  
 <xsl:param name="contextprefix"/>
 
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:include href="../../searchURL.xsl"/>
 <xsl:include href="../../html_authoring.xsl"/>
 <xsl:include href="../body.xsl"/>
  
