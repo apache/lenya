@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.38 2003/05/22 11:47:36 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.39 2003/05/22 13:14:54 gregor Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -36,8 +36,8 @@
     
     <!-- Edit Article with Xopus2 -->
     <map:pipeline>
-      <map:match pattern="authoring/xopus2/**.html">
-	<map:act type="reserved-checkout">
+      <map:match pattern="authoring/xopus2/**.xml">
+	<map:act type="reserved-checkout"> 
 	  <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
 	    <map:parameter name="user" value="{user}"/>
 	    <map:parameter name="filename" value="{filename}"/>
@@ -47,7 +47,7 @@
 	  <map:serialize type="html"/>
 	</map:act>
 	
-	<map:act type="uriparametrizer" src="authoring/{1}.html">
+	<map:act type="uriparametrizer" src="authoring/{1}.xml">
 	  <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
 	  <map:aggregate element="lenya" label="aggregation">
 	    <map:part src="cocoon:/lenyamenubar/authoring/article.xml"/>
@@ -113,7 +113,7 @@
 	</map:act>
 	<map:serialize type="html"/>
       </map:match>
-      
+     
       <map:handle-errors type="500">
         <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
 	<map:serialize/>

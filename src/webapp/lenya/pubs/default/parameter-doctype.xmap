@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: parameter-doctype.xmap,v 1.7 2003/05/15 09:48:25 egli Exp $ -->
+<!-- CVS: $Id: parameter-doctype.xmap,v 1.8 2003/05/22 13:14:54 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -41,8 +41,19 @@
 	  <map:serialize type="xml"/>
 	</map:act>
       </map:match>
-      
     </map:pipeline>
     
+    <map:pipeline>
+      <!-- {area}/{uri} -->
+      <map:match pattern="*/**.xml">
+	<map:act type="sourcetype" src="content/{1}/{2}.xml">
+	  <map:generate type="serverpages" src="content/parameters/default.xsp">
+	    <map:parameter name="value" value="{sourcetype}"/>
+	  </map:generate>
+	  <map:serialize type="xml"/>
+	</map:act>
+      </map:match>
+    </map:pipeline>
+
   </map:pipelines>
 </map:sitemap>
