@@ -12,18 +12,20 @@
       <tr>
         <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4">
           <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="13" height="4" /></td>
-        <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="200" height="4">
-          <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="200" height="4" /></td>
-        <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" height="4" width="286">
-          <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="286" height="4" /></td>
-        <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" height="4" width="97">
-          <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="97" height="4" /></td>
-        <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" height="4" width="4"><img
-            src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="4" height="4" /></td>
+          
+        <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" height="4">
+          <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" height="4" /></td>
+          
+        <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="70%" height="4">
+          <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" height="4" /></td>
+          
+        <td background="/lenya/lenya/menu/images/frame-bg_oben.gif" width="101" height="4">
+          <img src="/lenya/lenya/menu/images/frame-bg_oben.gif" width="101" height="4" /></td>
+          
       </tr>
       
       <tr>
-        <td rowspan="2" valign="top" align="right" background="/lenya/lenya/menu/images/grau-bg.gif">
+        <td rowspan="2" valign="bottom" align="right" background="/lenya/lenya/menu/images/grau-bg.gif">
           <img src="/lenya/lenya/menu/images/blau_anfang_oben.gif" />
         </td>
         <td background="/lenya/lenya/menu/images/grau-bg2.gif">
@@ -61,20 +63,22 @@
           </a>
         </td>
         
-        <td align="right" colspan="2" background="/lenya/lenya/menu/images/grau-bg2.gif">
-          <font color="#ffffff" size="-2" face="verdana">
-            <xsl:apply-templates select="workflow"/>
-            User Id: <b><xsl:value-of select="current_username"/></b> | Server Time: <b><xsl:value-of select="server_time"/></b> &#160;&#160;&#160;
-          </font>
+        <td valign="bottom" align="right" colspan="2" background="/lenya/lenya/menu/images/grau-bg2.gif">
+        	<div style="margin-right: 10px; color: #FFFFFF; font-size: 7pt; font-family: verdana, arial, sans-serif">
+            <xsl:apply-templates select="workflow"/>&#160;&#160;User Id: <b><xsl:value-of select="current_username"/></b>&#160;&#160;|&#160;&#160;Server Time: <b><xsl:value-of select="server_time"/></b>
+          </div>
+         <!-- 
         </td>
-        <td background="/lenya/lenya/menu/images/grau-bg.gif" height="4" width="2"><img
-            src="/lenya/lenya/menu/images/grau-bg.gif" width="2" height="4" /></td>
+        <td background="/lenya/lenya/menu/images/grau-bg.gif" height="4" width="2" valign="bottom">
+        -->
+        <div style="margin-top: 5px;"><img border="0" src="/lenya/lenya/menu/images/lenya_oben_2.gif" /></div>
+       </td>
       </tr>
       
       <tr>
-        <td colspan="3" background="/lenya/lenya/menu/images/unten.gif"><img border="0"
+        <td colspan="2" background="/lenya/lenya/menu/images/unten.gif"><img border="0"
             src="/lenya/lenya/menu/images/unten.gif" /></td>
-        <td valign="top" rowspan="2" colspan="2" 
+        <td valign="top" rowspan="2"
           background="/lenya/lenya/menu/images/grau-bg.gif"><img border="0"
             src="/lenya/lenya/menu/images/lenya_unten.gif" /></td>
       </tr>
@@ -83,7 +87,7 @@
         <td width="13" background="/lenya/lenya/menu/images/menu-bg.gif">
           <img border="0" src="/lenya/lenya/menu/images/menu_bg_anfang2.gif" />
         </td>
-        <td colspan="3" valign="top" background="/lenya/lenya/menu/images/menu-bg.gif">
+        <td colspan="2" valign="top" background="/lenya/lenya/menu/images/menu-bg.gif">
           <div id="navTop">
             <div id="navTopBG">
               <xsl:apply-templates select="menus/menu" mode="nav"/>
@@ -98,9 +102,10 @@
   
   
   <xsl:template match="workflow">
-    Workflow State: <b><xsl:value-of select="normalize-space(@state)"/></b> |
-  	<xsl:if test="normalize-space(@is-live) = 'false'">not&#160;</xsl:if>
-    <xsl:text>live |</xsl:text>
+    Workflow State: <b><xsl:value-of select="normalize-space(@state)"/></b>
+    <xsl:text>&#160;&#160;|&#160;&#160;</xsl:text>
+    <xsl:if test="normalize-space(@is-live) = 'false'">not&#160;</xsl:if>
+    <xsl:text>live&#160;&#160;|</xsl:text>
   </xsl:template>
   
     
