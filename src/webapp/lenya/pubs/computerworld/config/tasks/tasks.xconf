@@ -3,12 +3,12 @@
 	<task id="publish">
 		<label>Publish</label>
 		<task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-		<task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+		<!--<task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>-->
 	</task>
 	<task id="publish-article">
 		<label>Publish Article</label>
 		<task id="prepare" class="ch.computerworld.wyona.cms.ArticleTask"/>
 		<task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-		<task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+		<!--<task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>-->
 	</task> 
 </tasks>
