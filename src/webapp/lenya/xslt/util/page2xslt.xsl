@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-    Document   : page2html.xsl
+    Document   : page2xslt.xsl
     Created on : November 20, 2002, 4:17 PM
     Author     : ah
     Description:

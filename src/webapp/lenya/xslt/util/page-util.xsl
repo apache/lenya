@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- $Id: page-util.xsl,v 1.8 2003/11/17 03:39:10 michi Exp $ -->
+<!-- $Id: page-util.xsl,v 1.9 2004/02/08 13:09:19 andreas Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -8,8 +8,8 @@
 
 <!-- includes the default CSS stylesheet -->
 <xsl:template name="include-css">
-  <link rel="stylesheet" type="text/css"
-    href="/lenya/lenya/css/default.css" media="screen"/>
+  <xsl:param name="contextprefix"/>
+  <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" media="screen"/>
 </xsl:template>
     
 <!-- prints a list of $separator-separated strings -->

@@ -14,7 +14,7 @@
   <head>
     <title><xsl:value-of select="$title"/></title>
     <xsl:call-template name="include-css">
-      <xsl:with-param name="context-prefix" select="publish/context"/>
+      <xsl:with-param name="contextprefix" select="publish/context"/>
     </xsl:call-template>
   </head>
 <body>
