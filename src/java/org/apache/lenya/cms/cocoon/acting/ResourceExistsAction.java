@@ -42,6 +42,11 @@
  (INCLUDING  NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT OF THE  USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+ This software  consists of voluntary contributions made  by many individuals
+ on  behalf of the Apache Software  Foundation and was  originally created by
+ Stefano Mazzocchi  <stefano@apache.org>. For more  information on the Apache
+ Software Foundation, please see <http://www.apache.org/>.
+
 */
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -53,6 +58,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.excalibur.source.Source;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -61,6 +67,9 @@ import java.util.Map;
  * The action returns empty <code>Map</code> if it exists, null otherwise.
  * <p>Instead of src attribute, source can be specified using
  * parameter named 'url' (this is old syntax).
+ * <p>In order to differentiate between files and directories, the type can be specified
+ * using the parameter 'type' (&lt;map:parameter name="type" value="file"/&gt; or 
+ * &lt;map:parameter name="type" value="directory"/&gt;). The parameter 'type' is optional.
  * <p>
  * <b>Note:</b> {@link org.apache.cocoon.selection.ResourceExistsSelector}
  * should be preferred to this component, as the semantics of a Selector better
@@ -68,7 +77,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:balld@apache.org">Donald Ball</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: ResourceExistsAction.java,v 1.1 2003/06/22 22:49:26 michi Exp $
+ * @version CVS $Id: ResourceExistsAction.java,v 1.2 2003/06/23 16:27:39 michi Exp $
  */
 public class ResourceExistsAction extends ComposerAction implements ThreadSafe {
 
@@ -77,12 +86,22 @@ public class ResourceExistsAction extends ComposerAction implements ThreadSafe {
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source, Parameters parameters) throws Exception {
         String urlstring = parameters.getParameter("url", source);
+        String typestring = parameters.getParameter("type", "resource");
         Source src = null;
         try {
             src = resolver.resolveURI(urlstring);
-            if (new File(src.getURI().substring(5)).isFile()) { // substring(5) does remove "file:"
-                getLogger().debug(".act(): File exists: " + src.getURI().substring(5));
+            File resource = new File(new URL(src.getURI()).getFile());
+            if (typestring.equals("resource") && src.exists()) {
+                getLogger().debug(".act(): Resource (file or directory) exists: " + src.getURI());
                 return EMPTY_MAP;
+            } else if (typestring.equals("file") && resource.isFile()) {
+                getLogger().debug(".act(): File exists: " + resource);
+                return EMPTY_MAP;
+            } else if (typestring.equals("directory") && resource.isDirectory()) {
+                getLogger().debug(".act(): Directory exists: " + resource);
+                return EMPTY_MAP;
+            } else {
+                getLogger().debug(".act(): Resource " + resource + " as type \"" + typestring + "\" does not exist");
             }
         } catch (Exception e) {
             getLogger().warn(".act(): Exception", e);

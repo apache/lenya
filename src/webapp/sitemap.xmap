@@ -420,7 +420,7 @@
       
       <map:action logger="sitemap.action.multipart" name="multipart" src="org.apache.lenya.cms.cocoon.acting.MultipartHttpServletRequestAction"/>
 
-      <map:action logger="sitemap.action.file-exists" name="file-exists" src="org.apache.lenya.cms.cocoon.acting.ResourceExistsAction"/>
+      <map:action logger="sitemap.action.resource-exists-enhanced" name="resource-exists-enhanced" src="org.apache.lenya.cms.cocoon.acting.ResourceExistsAction"/>
    </map:actions>
 
   <!--+
@@ -775,8 +775,9 @@
       
       <!-- {publication-id}/{area}/{file} -->
       <map:match pattern="*/*/**">
-        <map:act type="file-exists">
+        <map:act type="resource-exists-enhanced">
           <map:parameter name="url" value="lenya/pubs/{1}/resources/{3}"/>
+          <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
         </map:act>
       </map:match>
