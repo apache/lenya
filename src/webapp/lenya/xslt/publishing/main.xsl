@@ -4,11 +4,10 @@
  
 <xsl:import href="../util/page-util.xsl"/>
 
-<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:param name="title" select="'Publish Document'"/>
 <xsl:param name="action" select="'publish'"/>
-<xsl:param name="task-id"/>
 
 <xsl:variable name="separator" select="','"/>
 
@@ -34,7 +33,7 @@
 <form action="{$action}">
 <input type="hidden" name="uris" value="{uris}"/>
 <input type="hidden" name="sources" value="{sources}"/>
-<input type="hidden" name="task-id" value="{$task-id}"/>
+<input type="hidden" name="task-id" value="{task-id}"/>
 <!-- FIXME: arbitrary request parameters set within the menubar should be transfered!
 <input type="hidden" name="server-port" value="1937"/>
 -->

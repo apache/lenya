@@ -42,6 +42,7 @@
     <xsp:content><prefix><xsp:expr>prefix</xsp:expr></prefix></xsp:content>
     <xsp:content><uris><xsp:expr>request.getParameter("uris")</xsp:expr></uris></xsp:content>
     <xsp:content><sources><xsp:expr>request.getParameter("sources")</xsp:expr></sources></xsp:content>
+    <xsp:content><task-id><xsp:expr>request.getParameter("task-id")</xsp:expr></task-id></xsp:content>
     <xsp:content><publication-id><xsp:expr>request.getSession().getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type")</xsp:expr></publication-id></xsp:content>
   </xsp:logic>
 </publish>
