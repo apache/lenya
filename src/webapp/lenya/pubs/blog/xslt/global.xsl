@@ -13,8 +13,6 @@
 <link rel="service.edit" type="application/x.atom+xml" href="introspection.xml" title="AtomAPI"/>
 <link rel="stylesheet" type="text/css" href="css/styles.css" title="default css"/>
 <title>
-  <!-- FIXME: namespace -->
-  <xsl:value-of select="feed/title"/>
   <xsl:value-of select="echo:feed/echo:title"/>
 </title>
 </head>
@@ -24,8 +22,6 @@
 <tr>
 <td colspan="2" id="title">
   <a href="{$relative2root}/index.html">
-    <!-- FIXME: namespace -->
-    <xsl:value-of select="feed/title"/>
     <xsl:value-of select="echo:feed/echo:title"/>
   </a>
 </td>
@@ -38,8 +34,24 @@
 
 <tr>
 <td valign="top" id="content" width="70%">
-    <!-- FIXME: namespace -->
-    <xsl:apply-templates select="feed/entry"/>
+    <xsl:if test="not(echo:feed/echo:entry)">
+    <p>
+    No entries yet!
+    </p>
+    <h3>Add new entry</h3>
+    <p>
+    To create a new entry click on the <b>File</b> menu above and select the menu item <b>Add new entry</b>. Enter <b>id</b> and <b>title</b> and a new entry will be created.
+    </p>
+    <h3>Edit entry</h3>
+    <p>
+    To edit an entry click on the title of the entry. On the entry page click on the <b>File</b> menu and select the menu item <b>Edit with ...</b>.
+    </p>
+    <h3>Publish entry</h3>
+    <p>
+    To publish an entry click on the <b>File</b> menu and select the menu item <b>Publish</b>.
+    </p>
+    </xsl:if>
+
     <xsl:apply-templates select="echo:feed/echo:entry"/>
 </td>
 
