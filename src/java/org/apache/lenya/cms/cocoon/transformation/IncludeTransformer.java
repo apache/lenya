@@ -1,5 +1,5 @@
 /*
- * $Id: IncludeTransformer.java,v 1.2 2003/02/07 12:14:09 ah Exp $
+ * $Id: IncludeTransformer.java,v 1.3 2003/02/10 14:59:42 egliwyona Exp $
  * <License>
  * The Apache Software License
  *
@@ -51,8 +51,6 @@ import org.apache.cocoon.Constants;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.transformation.AbstractDOMTransformer;
 
-import org.apache.log4j.Category;
-
 import org.w3c.dom.Document;
 
 
@@ -63,7 +61,7 @@ import org.w3c.dom.Document;
  * @version 2002.5.30
  */
 public class IncludeTransformer extends AbstractDOMTransformer implements Configurable {
-    static Category log = Category.getInstance(IncludeTransformer.class);
+
     private String domain = "127.0.0.1";
     private String port = null;
     private String context = null;
@@ -119,7 +117,6 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
             String context_publication = context + "/" + publication;
             int port = request.getServerPort();
             String cocoon_base_request = "http://" + domain + ":" + port + context_publication;
-            log.debug("COCOON_BASE_REQUEST: " + cocoon_base_request);
             getLogger().debug("COCOON_BASE_REQUEST: " + cocoon_base_request);
 
             if (href != null) {
@@ -130,7 +127,6 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
                     cocoon_base_request);
             }
         } catch (Exception e) {
-            log.error(e);
             getLogger().error(".transform(): " + e);
         }
 

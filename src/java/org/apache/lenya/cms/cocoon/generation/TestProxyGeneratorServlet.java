@@ -1,5 +1,5 @@
 /*
- * $Id: TestProxyGeneratorServlet.java,v 1.3 2003/02/07 12:14:09 ah Exp $
+ * $Id: TestProxyGeneratorServlet.java,v 1.4 2003/02/10 14:58:22 egliwyona Exp $
  * <License>
  * The Apache Software License
  *
@@ -56,9 +56,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-//import org.apache.log4j.Category;
-
 /**
  * DOCUMENT ME!
  *
@@ -67,7 +64,6 @@ import javax.servlet.http.HttpSession;
  * @version 2002.8.27
  */
 public class TestProxyGeneratorServlet extends HttpServlet {
-    //static Category log=Category.getInstance(TestProxyGeneratorServlet.class);
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
     }
@@ -83,7 +79,6 @@ public class TestProxyGeneratorServlet extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {
-        //log.debug("GET");
         response.setContentType("text/xml");
 
         PrintWriter writer = response.getWriter();
@@ -109,7 +104,6 @@ public class TestProxyGeneratorServlet extends HttpServlet {
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        //log.debug("POST");
         response.setContentType("text/xml");
 
         PrintWriter writer = response.getWriter();
