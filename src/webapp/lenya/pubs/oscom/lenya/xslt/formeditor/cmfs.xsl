@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmfs.xsl,v 1.11 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id: cmfs.xsl,v 1.12 2004/05/07 23:41:59 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -84,10 +84,47 @@
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/editor/name[@tagID='{name/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="name" /></xsl:attribute></input></content>
 </node>
 
-<node name="Editor E-Mail" select="/system/editor/email[@tagID='{email/@tagID}']">
-  <content><input type="text" name="&lt;xupdate:update select=&quot;/system/editor/email[@tagID='{email/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="email" /></xsl:attribute></input></content>
+<xsl:if test="not(email)">
+<node name="Editor E-Mail">
+  <action>
+    <insert name="&lt;xupdate:append select=&quot;/system/editor&quot;&gt;&lt;xupdate:element name=&quot;email&quot;&gt;editor@apache.org&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/>
+  </action>
+</node>
+</xsl:if>
+<xsl:apply-templates select="email"/>
+
+
+<xsl:choose>
+<xsl:when test="@homepage">
+<node name="Editor Homepage" select="/system/editor[@tagID='{@tagID}']/@homepage">
+  <action>
+    <delete name="&lt;xupdate:remove select=&quot;/system/editor[@tagID='{@tagID}']/@homepage&quot;/&gt;"/>
+  </action>
+  <content>
+    <input type="text" name="&lt;xupdate:update select=&quot;/system/editor[@tagID='{@tagID}']/@homepage&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="@homepage" /></xsl:attribute></input>
+  </content>
+</node>
+</xsl:when>
+<xsl:otherwise>
+<!--
+Append attribute
+-->
+</xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
+
+<xsl:template match="email">
+<node name="Editor E-Mail" select="/system/editor/email[@tagID='{@tagID}']">
+  <action>
+    <delete name="&lt;xupdate:remove select=&quot;/system/editor/email[@tagID='{@tagID}']&quot;/&gt;"/>
+  </action>
+  <content>
+    <input type="text" name="&lt;xupdate:update select=&quot;/system/editor/email[@tagID='{@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="." /></xsl:attribute></input></content>
 </node>
 </xsl:template>
+
+
 
 <xsl:template match="programming-language">
 <node name="Programming Language" select="/system/programming-language[@tagID='{@tagID}']">

@@ -15,11 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: CMSProject.xml,v 1.4 2004/03/13 12:42:17 gregor Exp $ -->
+<!-- $Id: CMSProject.xml,v 1.5 2004/05/07 23:46:01 michi Exp $ -->
 
 <system type="cms">
   <id/>
-  <editor>
+  <editor homepage="http://www.apache.org/~editor/">
     <name>editor</name>
     <email>editor@apache.org</email>
   </editor>
