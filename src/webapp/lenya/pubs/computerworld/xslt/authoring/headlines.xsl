@@ -36,7 +36,7 @@
 </xsl:apply-templates>
 					<!-- NEWS LAUFTEXT -->
 					<span class="txt-s-black">
-						<xsl:value-of select="head/abstract"/><br />
+						<xsl:value-of select="head/abstract"/>&#160;
 						<!-- WEITER BUTTON --><a href="{$href}" class="txt-link-red">
 							<img border="0" src="/img/layout/arrow-red.gif" width="9" height="7" alt=""/>weiter</a>
 					</span>

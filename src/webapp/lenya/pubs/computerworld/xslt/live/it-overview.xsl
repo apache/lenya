@@ -55,6 +55,9 @@
 				<tr>
 					<td height="3" width="440" style="background-image:url(/img/layout/lines/linecontent440x3.gif)"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="1"/></td>
 				</tr>
+				<tr>
+					<td height="600" width="440"><img border="0" src="/img/layout/trans1x1.gif" width="1" height="600"/></td>
+				</tr>
 			</table>
 	</xsl:template>
 	<xsl:template match="@*|*">

@@ -34,6 +34,8 @@ style="background-image:url(/img/layout/dot1x3-black.gif)">
 <img src="/img/layout/trans1x1.gif" width="1" height="1" /></td>
 <td width="114" rowspan="6" valign="top" align="center">
 <!-- TITELBILD AKTUELLE AUSGABE -->
+<img border="0" src="/img/{media/media-reference/@source}"
+alt="Aktuelle Ausgabe jetzt am Kiosk" />
 <br/>
                                         <a 
 href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid=preview.xml&amp;xpath=/preview/*[1]">
@@ -42,8 +44,7 @@ Image" border="0"/>
                                         </a>
                                         <br/>
 
-<img border="0" src="/img/{media/media-reference/@source}"
-alt="Aktuelle Ausgabe jetzt am Kiosk" /></td>
+</td>
 </tr>
 
 <tr bgcolor="#EFEFE7"><!-- LEAD -->
