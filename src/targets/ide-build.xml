@@ -20,24 +20,6 @@
     IDE targets
   </description>
 
-  <!-- Generate the Emacs JDE project file -->
-  <target name="emacs-project" depends="prepare" description="Generate the Emacs project files">
-    <path id="jar.files">
-      <fileset dir="${build.webapp}/WEB-INF/lib">
-        <include name="*.jar"/>
-      </fileset>
-      <pathelement path="${build.context}/WEB-INF/classes"/>
-    </path>
-    <property name="jar.files" refid="jar.files"/>
-    <copy file="${tools}/ide/emacs/prj.el.in" tofile="prj.el" filtering="yes">
-      <filterset>
-        <filter token="jar.files" value="${jar.files}"/>
-        <filter token="src" value="${java}"/>
-        <filter token="build.webapp" value="${build.webapp}"/>
-      </filterset>
-    </copy>
-  </target>
-
   <!-- Build the Eclipse projects files -->
   <target name="eclipse-project" depends="prepare" description="Generate the Eclipse project files">
 
@@ -46,27 +28,14 @@
     <!-- prepare the various paths that will form the project -->
     <path id="srcs">
       <!-- main source dir -->
-      <pathelement path="${src}/java"/>
-      <!-- deprecated source dir -->
-      <pathelement path="${src}/deprecated/java"/>
+      <pathelement path="${src.java.dir}"/>
       <!-- test source dir -->
-      <pathelement path="${src}/test"/>
-      <!-- blocks source dirs -->
-      <dirset dir="${blocks}">
-        <include name="*/java"/>
-        <include name="*/java${target.vm}"/>
-      </dirset>
-    </path>
-
-    <path id="mockss">
-      <dirset dir="${src}">
-        <include name="**/mocks"/>
-      </dirset>
+      <pathelement path="${src.test.dir}"/>
     </path>
 
     <path id="libs">
-      <!-- main libs -->
-      <fileset dir="${lib}">
+      <!-- Cocoon libs -->
+      <fileset dir="${cocoon.dir}/${lib.dir}">
         <include name="core/*.jar"/>
         <!-- Currently, we have no JVM dependent libraries       
           <include name="core/jvm${target.vm}/*.jar"/>
@@ -75,33 +44,36 @@
         <include name="local/*.jar"/>
         <include name="endorsed/*.jar"/>
       </fileset>
-      <!-- blocks lib -->
-      <fileset dir="${blocks}">
+      <!-- Cocoon blocks lib -->
+      <fileset dir="${cocoon.dir}/src/blocks">
         <include name="**/*.jar"/>
       </fileset>
-      <!-- tools libs -->
-      <fileset dir="${tools}/lib">
+      <!-- Cocoon tools libs -->
+      <fileset dir="${cocoon.dir}/tools/lib">
         <include name="*.jar"/>
         <exclude name="xalan*.jar"/>
         <exclude name="xml-api*.jar"/>
         <exclude name="xerces*.jar"/>
       </fileset>      
+      <!-- main libs -->
+      <fileset dir="${lib.dir}">
+        <include name="*.jar"/>
+        <include name="endorsed/*.jar"/>
+      </fileset>
     </path>
 
     <!-- convert paths to properties -->
     <property name="srcs" refid="srcs"/>
-    <property name="mockss" refid="mockss"/>
     <property name="libs" refid="libs"/>
 
     <!-- expand properties in the template file -->
-    <copy file="${tools}/ide/eclipse/classpath-tmpl.xml"
+    <copy file="src/resources/dev/eclipse/classpath-tmpl.xml"
           tofile="${build.temp}/classpath-temp.xml"
           filtering="yes"
           overwrite="yes">
       <filterset>
         <filter token="SRC_DIRS" value="${srcs}"/>
         <filter token="LIBS" value="${libs}"/>
-        <filter token="MOCKS_DIRS" value="${mockss}"/>
         <filter token="OUTPUT_DIR" value="${ide.eclipse.outputdir}"/>
       </filterset>
     </copy>
@@ -123,17 +95,14 @@
     <!-- now build the .classpath file -->
     <xslt in="${build.temp}/classpath-temp.xml" out="${basedir}/.classpath"
           processor="trax"
-          style="${tools}/ide/eclipse/make-classpath.xsl">
+          style="src/resources/dev/eclipse/make-classpath.xsl">
        <param name="exportlib" expression="${ide.eclipse.export.libs}"/>
     </xslt>
 
     <!-- copy the project file (expand version) -->
-    <copy file="${tools}/ide/eclipse/project"
+    <copy file="src/resources/dev/eclipse/project"
           tofile="${basedir}/.project"
           overwrite="yes">
-      <filterset>
-        <filter token="VERSION" value="${version}"/>
-      </filterset>
     </copy>
   </target>
 

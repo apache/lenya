@@ -1,13 +1,15 @@
-# Properties controlling the build process
+﻿# Properties controlling the build process
 
 
 #------------------------------------------------------------------------------------
 # The original, unmodified and expanded cocoon webapp directory
 
-cocoon.webapp.dir=../cocoon-2.1.4/build/webapp
-# or Cocoon-2.1.5-dev
-#cocoon.webapp.dir=../cocoon-2.1/build/webapp
+cocoon.webapp.dir=../cocoon-2.1/build/webapp
 
+#------------------------------------------------------------------------------------
+# The root of the Cocoon source tree
+
+cocoon.dir=../cocoon-2.1
 
 #------------------------------------------------------------------------------------
 # Root directories where publications are located
@@ -83,6 +85,12 @@ target.reset.excludes=lenya/resources/bxeng/**,lenya/resources/epoz/**
 
 #anteater.home=/usr/local/anteater
 #webtest.home = /usr/local/canoo-webtest
+
+#------------------------------------------------------------------------------------
+# Eclipse Properties for use with the eclipse-project target
+
+ide.eclipse.outputdir=build/eclipse/classes
+ide.eclipse.export.libs=false
 
 #------------------------------------------------------------------------------------
 # Xopus context name
