@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: usecase-bxeng.xmap,v 1.6 2004/02/05 12:28:48 gregor Exp $ -->
+<!-- $Id: usecase-bxeng.xmap,v 1.7 2004/02/14 16:02:04 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
 	<!-- =========================== Components ================================ -->
@@ -129,6 +129,46 @@
             <map:transform src="bxeng/image.xsl"/>
             <map:serialize/>
           </map:match>
+
+      <map:match pattern="link-show" type="step">
+            <!-- just a dummy xsp since we call the info area directly -->
+           <map:generate type="serverpages" src="../../content/info/assets.xsp"/>
+          <map:transform src="../../xslt/bxeng/link.xsl" label="content">
+            <map:parameter name="infoarea" value="true"/>
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+            <map:parameter name="area" value="authoring"/>
+            <map:parameter name="tab" value="en"/>
+            <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
+            <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+            <map:parameter name="documenturl" value="/{page-envelope:document-url}"/>
+            <map:parameter name="documentextension" value="{page-envelope:document-extension}"/>
+            <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          </map:transform>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+      
+      <!-- {publication-id}/{area}/info-sitetree -->
+      <map:match pattern="link-tree" type="step">
+        <map:aggregate element="lenya" label="aggregate">
+          <map:part src="content/authoring/sitetree.xml"/>
+        </map:aggregate>
+
+        <map:transform src="../../xslt/navigation/sitetree2nav.xsl" label="navtree">
+          <map:parameter name="chosenlanguage" value="de"/>
+          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+        </map:transform>
+
+        <map:transform src="../../xslt/bxeng/sitetree2tree.xsl" label="content">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
+         </map:transform>
+
+        <map:serialize type="text-iso-8859-1"/>
+      </map:match>      
 
       <map:match pattern="**/*.html">
         <!-- configuration -->
