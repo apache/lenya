@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.3 2003/07/14 18:07:01 andreas Exp $
+$Id: DefaultAccessController.java,v 1.4 2003/07/15 12:24:51 egli Exp $
 <License>
 
  ============================================================================
@@ -180,6 +180,9 @@ public class DefaultAccessController
     /**
      * Creates the accreditable manager. 
      * @param configuration The access controller configuration.
+     * 
+     * @throws ServiceException if an error occurs
+     * @throws ConfigurationException if an error occurs
      */
     protected void setupAccreditableManager(Configuration configuration)
         throws ConfigurationException, ServiceException {
@@ -198,6 +201,9 @@ public class DefaultAccessController
     /**
      * Creates the authorizers. 
      * @param configuration The access controller configuration.
+     * 
+     * @throws ServiceException if an error occurs
+     * @throws ConfigurationException if an error occurs
      */
     protected void setupAuthorizers(Configuration configuration)
         throws ServiceException, ConfigurationException {
@@ -215,6 +221,9 @@ public class DefaultAccessController
     /**
      * Creates the policy manager. 
      * @param configuration The access controller configuration.
+     * 
+     * @throws ServiceException if an error occurs
+     * @throws ConfigurationException if an error occurs
      */
     protected void setupPolicyManager(Configuration configuration)
         throws ServiceException, ConfigurationException {

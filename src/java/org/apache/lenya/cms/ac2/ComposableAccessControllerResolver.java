@@ -1,5 +1,5 @@
 /*
-$Id: ComposableAccessControllerResolver.java,v 1.1 2003/07/14 18:07:01 andreas Exp $
+$Id: ComposableAccessControllerResolver.java,v 1.2 2003/07/15 12:24:51 egli Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: ComposableAccessControllerResolver.java,v 1.1 2003/07/14 18:07:01 andreas E
 */
 package org.apache.lenya.cms.ac2;
 
-import java.util.Map;
-
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -101,7 +99,7 @@ public class ComposableAccessControllerResolver
 
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration arg0) throws ConfigurationException {

@@ -110,7 +110,6 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      * @param accreditableManager The accreditable manager.
      * @param policyManager The policy manager.
      * @param identity The identity to authorize.
-     * @param publication The publication.
      * @param request The request to authorize.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.

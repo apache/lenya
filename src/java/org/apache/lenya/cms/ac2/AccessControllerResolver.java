@@ -1,5 +1,5 @@
 /*
-$Id: AccessControllerResolver.java,v 1.1 2003/07/14 18:07:01 andreas Exp $
+$Id: AccessControllerResolver.java,v 1.2 2003/07/15 12:24:51 egli Exp $
 <License>
 
  ============================================================================
@@ -54,8 +54,6 @@ $Id: AccessControllerResolver.java,v 1.1 2003/07/14 18:07:01 andreas Exp $
 </License>
 */
 package org.apache.lenya.cms.ac2;
-
-import java.util.Map;
 
 import org.apache.avalon.framework.component.Component;
 import org.apache.lenya.cms.ac.AccessControlException;
