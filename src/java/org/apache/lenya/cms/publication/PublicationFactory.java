@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.21 2003/11/26 18:22:47 andreas Exp $
+$Id: PublicationFactory.java,v 1.22 2003/12/10 10:51:08 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id: PublicationFactory.java,v 1.21 2003/11/26 18:22:47 andreas Exp $
 */
 package org.apache.lenya.cms.publication;
 
+import org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -249,6 +250,19 @@ public final class PublicationFactory {
             }
         }
         return publication;
+    }
+    
+    /**
+     * Creates a publication using a FOM_Cocoon object. This method is supposed to be
+     * used from a FlowScript. 
+     * @param cocoon The FOM_Cocoon object.
+     * @return A publication.
+     * @throws PublicationException when something went wrong.
+     */
+    public static Publication getPublicationFlow(FOM_Cocoon cocoon) throws PublicationException {
+        Request request = cocoon.getRequest();
+        Context context = cocoon.getContext();
+        return getPublication(request, context);
     }
 
 }
