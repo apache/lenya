@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.16 2002/06/10 13:42:57 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.17 2002/06/27 22:47:12 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -154,6 +154,18 @@
      <map:match pattern="ethz-mat/**">
        <map:mount uri-prefix="ethz-mat" src="wyona/cms/pubs/ethz-mat/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
+
+<!-- wyona.org -->
+     <map:match pattern="wyona.org/**">
+       <map:mount uri-prefix="wyona.org" src="wyona/cms/pubs/wyona.org/live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+     </map:match>
+
+<!-- Scratchpad -->
+<!--
+     <map:match pattern="scratchpad/**">
+       <map:mount uri-prefix="scratchpad" src="wyona/cms/pubs/scratchpad/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+     </map:match>
+-->
 
 <!-- Original Cocoon Sitemap (without SVG and FOP) -->
      <map:match pattern="**">
