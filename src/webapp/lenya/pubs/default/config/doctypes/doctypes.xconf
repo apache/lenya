@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<doctypes>
+
+  <doc type="simple">
+    <children>
+      <doc type="simple"/>
+      <doc type="xhtml"/>
+    </children>
+    <creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator">
+      <sample-name>simple.xml</sample-name>
+    </creator>
+    <tasks>
+      <task id="publish"/>
+    </tasks>
+  </doc>
+
+  <doc type="xhtml">
+    <children>
+      <doc type="simple"/>
+      <doc type="xhtml"/>
+    </children>
+    <creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator">
+      <sample-name>xhtml.xml</sample-name>
+    </creator>
+    <tasks>
+      <task id="publish"/>
+    </tasks>
+  </doc>
+
+</doctypes>
