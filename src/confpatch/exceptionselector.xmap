@@ -18,5 +18,14 @@
 <xmap xpath="/sitemap/components/selectors/selector[@name = 'exception']" 
       unless="/sitemap/components/selectors/selector[@name = 'exception']/exception[@name = 'document-does-not-exist']"
       insert-before="/sitemap/components/selectors/selector[@name = 'exception']/exception[@class = 'java.lang.Throwable']">
-     <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/>
+    <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/>
+    <exception class="org.apache.lenya.cms.task.ExecutionException" name="execution" unroll="true"/>
+    <exception class="org.apache.tools.ant.BuildException" name="build" unroll="true"/>
+    <exception class="org.xml.sax.SAXParseException" name="sax-parsing"/>
+    <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
+    <exception class="org.apache.cocoon.ResourceNotFoundException" name="resourcenotfound"/>
+    <exception class="org.apache.cocoon.ProcessingException" name="processing" unroll="true"/>
+    <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException" name="parent-node-not-found"/>
+    <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
+    <!--         <exception class="org.apache.lenya.cms.site.SiteException" name="sitetree"/> -->
 </xmap>      

@@ -19,25 +19,6 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
-  <!-- =========================== Components ================================ -->
-  <map:components>
-    
-    <map:selectors>
-      <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
-        <exception class="org.apache.lenya.cms.task.ExecutionException" name="execution" unroll="true"/>
-        <exception class="org.apache.tools.ant.BuildException" name="build" unroll="true"/>
-        <exception class="org.xml.sax.SAXParseException" name="sax-parsing"/>
-        <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
-        <exception class="org.apache.cocoon.ResourceNotFoundException" name="resourcenotfound"/>
-        <exception class="org.apache.cocoon.ProcessingException" name="processing" unroll="true"/>
-        <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException" name="parent-node-not-found"/>
-        <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
-        <!--         <exception class="org.apache.lenya.cms.site.SiteException" name="sitetree"/> -->
-      </map:selector>
-    </map:selectors>
-    
-  </map:components>
-  
   <!-- =========================== Views ================================= -->
 
   <map:views>
