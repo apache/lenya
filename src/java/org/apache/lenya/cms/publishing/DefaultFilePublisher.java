@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DefaultFilePublisher.java,v 1.19 2003/07/04 17:41:25 egli Exp $
 <License>
 
  ============================================================================
@@ -221,6 +221,8 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
      * @param resourcesAuthoringPath authoring path for the resources
      * @param resourcesLivePath live path for the resources
      * @param sources array of docIds
+     * 
+     * @throws PublishingException if the publishing of resources fails
      */
     protected void publishResources(String publicationPath, String resourcesAuthoringPath,
         String resourcesLivePath, String[] sources) throws PublishingException {

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AbstractPublisher.java,v 1.10 2003/07/04 17:41:25 egli Exp $
 <License>
 
  ============================================================================
@@ -64,6 +64,10 @@ import org.apache.lenya.cms.task.AbstractTask;
  * @author <a href="mailto:andreas.hartmann@lenya.com">Andreas Hartmann</a>
  */
 public abstract class AbstractPublisher extends AbstractTask implements Publisher {
+    /**
+     * Create an <code>AbstractPublisher</code>.
+     * 
+     */
     protected AbstractPublisher() {
     }
 }

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ExportException.java,v 1.9 2003/07/04 17:41:25 egli Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publishing;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ExportException extends Exception {
     /**
@@ -70,6 +70,8 @@ public class ExportException extends Exception {
 
     /**
      * Creates a new ExportException.
+     * 
+     * @param message the exception message
      */
     public ExportException(String message) {
         super(message);
@@ -77,6 +79,9 @@ public class ExportException extends Exception {
 
     /**
      * Creates a new ExportException.
+     * 
+     * @param message the exception message
+     * @param cause the cause of the exception
      */
     public ExportException(String message, Throwable cause) {
         super(message + " " + cause.getMessage());
@@ -84,6 +89,8 @@ public class ExportException extends Exception {
 
     /**
      * Creates a new ExportException.
+     * 
+     * @param cause  the cause of the exception
      */
     public ExportException(Throwable cause) {
         super(cause.getMessage());

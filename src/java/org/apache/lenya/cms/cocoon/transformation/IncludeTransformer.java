@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: IncludeTransformer.java,v 1.14 2003/07/04 17:45:00 egli Exp $
 <License>
 
  ============================================================================
@@ -64,7 +64,6 @@ import org.apache.cocoon.environment.Request;
 
 import org.apache.excalibur.source.Source;
 
-//import org.apache.cocoon.transformation.AbstractDOMTransformer;
 import org.w3c.dom.Document;
 
 
@@ -96,6 +95,10 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
         }
     }
 
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.cocoon.transformation.AbstractDOMTransformer#transform(org.w3c.dom.Document)
+	 */
     protected Document transform(Document doc) {
         try {
             Source input_source = this.resolver.resolveURI("");

@@ -59,24 +59,32 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
-
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
 
 /**
- *
+ * Input module wrapping the page envelope. This module provides publication
+ * related information such as document-id, area, publication-id.
+ * 
+ * @see org.apache.lenya.cms.publication.PageEnvelope
+ * 
  * @author  andreas
  */
 public class PageEnvelopeModule extends AbstractInputModule {
+	
+    /**
+     * Get the the page envelope for the given objectModel.
+     * 
+     * @param objectModel the objectModel for which the page enevelope is requested.
+     * 
+     * @return a <code>PageEnvelope</code>
+     * 
+     * @throws ConfigurationException if the page envelope could not be instantiated.
+     */
     protected PageEnvelope getEnvelope(Map objectModel)
         throws ConfigurationException {
         PageEnvelope envelope = null;
@@ -90,16 +98,8 @@ public class PageEnvelopeModule extends AbstractInputModule {
         return envelope;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param name DOCUMENT ME!
-     * @param modeConf DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
+    /** (non-Javadoc)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
         throws ConfigurationException {
@@ -125,32 +125,19 @@ public class PageEnvelopeModule extends AbstractInputModule {
         return value;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param modeConf DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+	 */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
         throws ConfigurationException {
         return Arrays.asList(PageEnvelope.PARAMETER_NAMES).iterator();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param name DOCUMENT ME!
-     * @param modeConf DOCUMENT ME!
-     * @param objectModel DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws ConfigurationException DOCUMENT ME!
-     */
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+	 */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
         throws ConfigurationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel) };

@@ -95,7 +95,7 @@ import java.util.Enumeration;
  */
 public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator
     implements Parameterizable {
-    static Category log = Category.getInstance(ProxyGenerator.class);
+    private static Category log = Category.getInstance(ProxyGenerator.class);
 
     // The URI of the namespace of this generator
     private String URI = "http://www.lenya.org/lenya/proxygenerator/1.0";

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Publisher.java,v 1.11 2003/07/04 17:41:25 egli Exp $
 <License>
 
  ============================================================================
@@ -68,6 +68,8 @@ public interface Publisher {
      * @param publicationPath path to the publication
      * @param authoringPath path to the authoring directory
      * @param treeAuthoringPath path to the authoring tree
+     * @param resourcesAuthoringPath path to the authoring resources
+     * @param resourcesLivePath path to the live resources
      * @param livePath path to the live directory
      * @param treeLivePath path to the live tree
      * @param replicationPath path to the replication directory

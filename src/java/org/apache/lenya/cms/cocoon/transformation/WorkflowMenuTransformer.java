@@ -58,11 +58,9 @@ package org.apache.lenya.cms.cocoon.transformation;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 
-import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -94,7 +92,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     public static final String ITEM_ELEMENT = "item";
     public static final String EVENT_ATTRIBUTE = "event";
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String localName, String raw, Attributes attr)
@@ -146,7 +144,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         }
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
@@ -183,6 +181,11 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     private boolean hasWorkflow;
     private WorkflowInstance instance;
 
+	/**
+	 * Get the workflow instance.
+	 * 
+	 * @return a <code>WorkflowInstance</code>
+	 */
     protected WorkflowInstance getInstance() {
         return instance;
     }
