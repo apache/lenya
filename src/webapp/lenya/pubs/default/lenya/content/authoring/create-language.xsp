@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  >
+  
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
+    <xsp:include>java.util.HashMap</xsp:include>
+  </xsp:structure>
+
+  <parent-child>
+    
+    <xsp:logic>
+      String status = <xsp-request:get-parameter name="status"/>;
+
+      // get the parentId
+      String parentId = <xsp-request:get-parameter name="parent-uri"/>;
+      if (parentId == null) {
+        parentId = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
+        // for creation purposes the parentid "/index" (the home page) is special.
+        if (parentId.equals("/index")) {
+          parentId = "/";
+	}
+      }
+
+      if ((status != null) &amp;&amp; (status.equals("failed"))) {
+        <xsp:content><exception/></xsp:content>
+      }
+
+      HashMap map = new HashMap();
+      Publication pub = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      String[] languages = pub.getLanguages();
+      for (int i = 0; i &lt; languages.length; i++) {
+        map.put(languages[i], null);
+      }
+      Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+      String[] usedLanguages = null;
+      try {
+        usedLanguages = doc.getLanguages();
+      } catch (DocumentException e) {}
+      if (usedLanguages != null) {
+      	for (int i = 0; i &lt; usedLanguages.length; i++) {
+      	  map.remove(usedLanguages[i]);
+      	}
+      }
+      String[] validLanguages = (String[])map.keySet().toArray(new String[map.keySet().size()]);
+    </xsp:logic>
+
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
+    <referer><xsp-request:get-uri/></referer>
+    <doctype><xsp:expr><xsp-request:get-parameter name="doctype"/></xsp:expr></doctype>
+    <user-id><input:get-attribute module="access-control" name="user-id"/></user-id>
+    <ip-address><input:get-attribute module="access-control" name="ip-address"/></ip-address>
+    
+    <document-language><input:get-attribute module="page-envelope" name="document-language"/></document-language>
+    <dc:creator><input:get-attribute module="access-control" name="user-id"/> (<input:get-attribute module="access-control" name="user-name"/>)</dc:creator>
+    <dc:subject></dc:subject>
+    <dc:publisher>University of Zurich</dc:publisher>
+    <dc:date><input:get-attribute module="date" name="currentDate"/></dc:date>
+    <dc:rights>University of Zurich</dc:rights>
+    <dc:languages>
+      <xsp:logic>
+	for (int i = 0; i &lt; validLanguages.length; i++) {
+	<xsp:content>
+	  <dc:language><xsp:expr>validLanguages[i]</xsp:expr></dc:language>
+	</xsp:content>
+	}
+      </xsp:logic>
+    </dc:languages>
+
+  </parent-child>
+</xsp:page>

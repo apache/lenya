@@ -1,92 +1,251 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsp:page
-  language="java"
-  xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
-  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
-  xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
-  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
-  xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
-  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  >
-  
+
+<xsp:page 
+    language="java" 
+    xmlns:xsp="http://apache.org/xsp"
+    xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+    xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
+>
+
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
   </xsp:structure>
   
   <menu>
+  	
     <xsp:logic>
-      String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-path"/>;
-      String sourcesParameter = "sources=" + xmlSource;
-      String urisParameter = "uris=" + <input:get-attribute as="string" module="page-envelope" name="document-url"/>;
-      String docType = "";
-      try {
-      Document document = (Document) <input:get-attribute as="object" module="page-envelope" name="document"/>;
-          if (document.exists()) {
-              docType = <input:get-attribute as="string" module="page-envelope" name="document-type"/>;
-          }
-      }
-      catch (Exception e) {
-          throw new ProcessingException(e);
-      }
-      String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
+      String projectid = parameters.getParameter("projectid","null");
     </xsp:logic>
-        
-    <menus>
+    
+    <xsp:logic>
+      String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
+      String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
+      String urisParameter = "uris=" + <input:get-attribute module="page-envelope" as="string" name="document-url"/>;
       
-      <menu label="File" name="File">
-        <block>
-          <item uc:step="showscreen" uc:usecase="create">
-            <xsp:attribute name="href">?doctype=simple</xsp:attribute>New Document (simple)</item>
-          <item uc:step="showscreen" uc:usecase="create">
-            <xsp:attribute name="href">?doctype=xhtml</xsp:attribute>New Document (xhtml)</item>
+      boolean isDocument = false;
+      {
+        Object document = <input:get-attribute module="page-envelope" as="object" name="document"/>;
+        try {
+          if (document != "" &amp;&amp; ((Document) document).exists()) {
+            isDocument = true;
+          }
+        }
+        catch (Exception e) {
+          throw new ProcessingException(e);
+        }
+      }
+    </xsp:logic>
+    
+    <menus>
+      <menu name="File" label="File">
+	<block>
+	  
+	  <xsp:logic>
+	    {
+	      String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
+        if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
+          <item>New Document</item>
+        }
+        else {
+          <item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml">New Document</item>
+        }
+	    }
+	  </xsp:logic>
+	</block>
+	<block>
+	  <xsp:logic>
+	    {
+	    
+	      if (isDocument) {
+          <xsp:content>
+            <item uc:usecase="create-language" uc:step="showscreen" href="?">New language version</item>
+          </xsp:content>
+	      }
+	      else {
+          <xsp:content>
+            <item>New language version</item>
+          </xsp:content>
+	      }
+	    
+	      String[] availableLanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
+	      if (isDocument &amp;&amp; availableLanguages.length &gt; 1) {
+	        <xsp:content>
+	          <item uc:usecase="removelabel" uc:step="showscreen" href="?">Remove language version</item>
+	        </xsp:content>
+	      } else {
+	        <xsp:content>
+	          <item>Remove language version</item>
+	        </xsp:content>
+	      } 
+	    }
+	  </xsp:logic>
+	</block>
+	<block>
+	  <item uc:usecase="logout" href="?">Logout</item>
+	</block>
+      </menu>
+      
+      <menu name="Edit" label="Search">
+        
+        <block info="false">
+          <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?">Edit&#160;with&#160;BXE</item>
+          <item wf:event="edit" uc:usecase="edit" uc:step="open" href="?form=content">Edit&#160;with&#160;Forms</item>
+          <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?">Edit&#160;with&#160;one&#160;Form</item>
         </block>
-        <block>
+        <block info="false">
+          <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute>Edit Metadata</item>
+          <item wf:event="edit" uc:usecase="rename-label" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-uri/>?</xsp:attribute>Edit Navigation Title</item>
+          <item>XML Upload</item>
+        </block>
+
+        <block authoring="false">
+        
+        <xsp:logic>
+          
+        {
+          String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
+          String docId = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
+          
+          if (isDocument
+              &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
+              &amp;&amp; Publication.AUTHORING_AREA.equals(area)
+              &amp;&amp; !"/index".equals(docId)) {
+            <item uc:usecase="cut" uc:step="showscreen" href="?">Cut</item>
+          }
+          else {
+            <item>Cut</item>
+          }
+        
+          if (isDocument
+              &amp;&amp; Publication.AUTHORING_AREA.equals(area)
+              &amp;&amp; !"/index".equals(docId)) {
+            <item uc:usecase="copy" uc:step="showscreen" href="?">Copy</item>
+          }
+          else {
+            <item>Copy</item>
+          }
+        
+        	String clipboard = (String) <input:get-attribute module="session-attr" as="object" name="org.apache.lenya.cms.info.firstdocid"/> + "/";
+        	String currentDocumentId = <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "/";
+        	
+        	if (clipboard != null
+        	    &amp;&amp; !"".equals(clipboard)
+              &amp;&amp; Publication.AUTHORING_AREA.equals(area)
+              &amp;&amp; !currentDocumentId.startsWith(clipboard)
+              &amp;&amp; !"/index".equals(docId)) {
+		        <item uc:usecase="paste" uc:step="showscreen" href="?">Paste</item>
+        	}
+        	else {
+		        <item>Paste</item>
+        	}
+        }
+        </xsp:logic>
+        
+      </block>
+      <block authoring="false">
+        <xsp:logic>
+          if (isDocument &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)) {
+            <item uc:usecase="rename" uc:step="showscreen" href="?">Rename URL</item>
+          }
+          else {
+            <item>Rename URL</item>
+          }
+          
+          if (isDocument) {
+            <item wf:event="edit" uc:usecase="rename-label" uc:step="showscreen" href="?">Edit Navigation Title</item>
+          }
+          else {
+            <item>Edit Navigation Title</item>
+          }
+        </xsp:logic>
+      </block>
+      <block authoring="false">
+        <xsp:logic>
+          if (isDocument
+              &amp;&amp; "".equals(<input:get-attribute module="sitetree" as="string" name="live-node"/>)
+              &amp;&amp; !"/index".equals(<input:get-attribute module="sitetree" as="string" name="document-id"/>)) {
+            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=up</xsp:attribute>Move Up</item>
+            <item uc:usecase="move-node" uc:step="move-node"><xsp:attribute name="href"><xsp-request:get-uri/>?properties.movenode.direction=down</xsp:attribute>Move Down</item>
+          }
+          else {
+            <item>Move Up</item>
+            <item>Move Down</item>
+          }
+        </xsp:logic>
+      </block>
+      <block authoring="false">
+        
+        <xsp:logic>
+       	{
+       	
+       	  if (isDocument &amp;&amp;
+       	    !"/index".equals(<input:get-attribute module="page-envelope" as="string" name="document-id"/>)) {
+            <item wf:event="delete" uc:usecase="delete" uc:step="showscreen" href="?">Delete</item>
+            <item wf:event="archive" uc:usecase="archive" uc:step="showscreen" href="?">Archive</item>
+       	  }
+       	  else {
+            <item>Delete</item>
+            <item>Archive</item>
+       	  }
+       	
+        	String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
+        	if (isDocument &amp;&amp; (area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
+            <item wf:event="restore" uc:usecase="restore" uc:step="showscreen" href="?">Restore</item>
+        	}
+        	else {
+            <item>Restore</item>
+        	}
+      	}
+        </xsp:logic>
+        
+      </block>
+	
+      </menu>
+      
+      <menu name="Workflow" label="Help">
+	<block>
+	  <xsp:logic>
+      {
+        if (isDocument) {
           <item uc:usecase="submit" uc:step="showscreen" wf:event="submit" href="?">Submit</item>
           <item uc:usecase="reject" uc:step="showscreen" wf:event="reject" href="?">Reject</item>
-          <item uc:usecase="publish" uc:step="showscreen" wf:event="publish">
-            <xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
-          <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?">Deactivate</item>
-        </block>
-        <block>
-          <item uc:usecase="logout" uc:step="showscreen" href="?">Logout</item>
-        </block>
+          <item uc:usecase="publish" uc:step="showscreen" wf:event="publish"><xsp:attribute name="href">?<xsp:expr>urisParameter</xsp:expr>&amp;sources=<xsp:expr>xmlSource</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
+          <item uc:usecase="deactivate" uc:step="showscreen" wf:event="deactivate" href="?task-id=deactivateDocument">Deactivate</item>
+        }
+        else {
+          <item>Submit</item>
+          <item>Reject</item>
+          <item>Publish</item>
+          <item>Deactivate</item>
+        }
+      }
+	  </xsp:logic>
+	</block>
       </menu>
-      
-      <menu label="Search" name="Edit">
-<xsp:logic>
+
+      <menu name="Help" label="Debug">
+	<block>
+	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>User Documentation</item>
+	  <item>System Documentation</item>
+	</block>
+  <block>
+	  <item href="http://cocoon.apache.org/lenya">About&#160;Apache&#160;Lenya</item>
+	</block>
+
         <block>
-          <item uc:usecase="edit" uc:step="open" wf:event="edit"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute>Edit&#160;with&#160;Forms</item>
-          <item uc:usecase="bxe" uc:step="open" wf:event="edit" href="?">Edit&#160;with&#160;BXE</item>
-          <item uc:usecase="1formedit" uc:step="open" wf:event="edit" href="?">Edit&#160;with&#160;one&#160;Form</item>
-        </block>
-</xsp:logic>
+          <item uc:usecase="view-logs" uc:step="overview" href="?">View Task Logs</item>
+          <item uc:usecase="schedule" uc:step="showscreen" href="?">Scheduler</item>
 <!--
-        <block>
-          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>HTML&#160;for&#160;BXE</item>
-          <item><xsp:attribute name="href"><xsp:expr>documentId + "-config-bxeng.xml"</xsp:expr></xsp:attribute>Config&#160;for&#160;BXE</item>
-          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.xml"</xsp:expr></xsp:attribute>XML&#160;for&#160;BXE</item>
-          <item href="simple-bxeng.xsl">XSLT&#160;for&#160;BXE</item>
-          <item href="simple-bxeng.css">CSS&#160;for&#160;BXE</item>
-        </block>
+	  <item><xsp:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Rollback</item>
 -->
+	</block>
       </menu>
-      
-      <menu label="Help" name="Tools">
-        <block>
-          <item href="?lenya.usecase=view-logs&amp;lenya.step=overview">View Task Logs</item>
-          <item href="?lenya.usecase=schedule&amp;lenya.step=showscreen">Scheduler</item>
-          <item><xsp:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Rollback</item>
-        </block>
-      </menu>
-      
-      <menu label="Debug" name="Help">
-        <block>
-          <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
-          <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
-        </block>
-      </menu>
-      
     </menus>
+    
   </menu>
 </xsp:page>
+

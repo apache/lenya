@@ -12,10 +12,30 @@
     <label>Publish</label>
     <parameter name="target" value="publish"/>
   </task>
-  
+
   <task id="create" class="org.apache.lenya.cms.task.AntTask">
     <label>Create</label>
     <parameter name="target" value="create"/>
+  </task>
+
+  <task id="create-language" class="org.apache.lenya.cms.task.AntTask">
+    <label>CreateLanguage</label>
+    <parameter name="target" value="create-language"/>
+  </task>
+
+  <task id="remove-language" class="org.apache.lenya.cms.task.AntTask">
+    <label>RemoveLanguage</label>
+    <parameter name="target" value="remove-language"/>
+  </task>
+
+  <task id="rename-label" class="org.apache.lenya.cms.task.AntTask">
+    <label>Edit Navigation Title</label>
+    <parameter name="target" value="rename-label"/>
+  </task>
+
+  <task id="save-meta-data" class="org.apache.lenya.cms.task.AntTask">
+    <label>SaveMetaData</label>
+    <parameter name="target" value="save-meta-data"/>
   </task>
 
   <task id="copyDocument" class="org.apache.lenya.cms.task.AntTask">
@@ -34,8 +54,43 @@
   </task>
 
   <task id="deactivateDocument" class="org.apache.lenya.cms.task.AntTask">
-    <label>DeactivateDocument</label>
+    <label>Deactivate</label>
     <parameter name="target" value="deactivateDocument"/>
+  </task>
+
+  <task id="movenode" class="org.apache.lenya.cms.task.AntTask">
+    <label>Move Node</label>
+    <parameter name="target" value="movenode"/>
+  </task>
+
+  <task id="deleteDocument" class="org.apache.lenya.cms.task.AntTask">
+    <label>DeleteDocument</label>
+    <parameter name="target" value="deleteDocument"/>
+  </task>
+
+  <task id="archiveDocument" class="org.apache.lenya.cms.task.AntTask">
+    <label>ArchiveDocument</label>
+    <parameter name="target" value="archiveDocument"/>
+  </task>
+
+  <task id="remove-asset" class="org.apache.lenya.cms.task.AntTask">
+    <label>RemoveAsset</label>
+    <parameter name="target" value="remove-asset"/>
+  </task>
+
+  <task id="insert-asset" class="org.apache.lenya.cms.task.AntTask">
+    <label>InsertAsset</label>
+    <parameter name="target" value="insert-asset"/>
+  </task>
+
+  <task id="restoreDocument" class="org.apache.lenya.cms.task.AntTask">
+    <label>RestoreDocument</label>
+    <parameter name="target" value="restoreDocument"/>
+  </task>
+
+  <task id="deleteTrash" class="org.apache.lenya.cms.task.AntTask">
+    <label>DeleteTrash</label>
+    <parameter name="target" value="deleteTrash"/>
   </task>
 
 </tasks>

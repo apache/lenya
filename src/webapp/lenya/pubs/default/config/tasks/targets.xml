@@ -13,43 +13,94 @@
 <property name="text" value="Hello World!"/>
 
 <property name="pub.dir" value=""/>
-
-<!-- publishing properties -->
-<property name="authoring.dir" value="content/authoring"/>
-<property name="authoring.area" value="authoring"/>
+<property name="pub.id" value=""/>
 <property name="sitetree" value="sitetree.xml"/>
-<property name="authoring.resource.dir" value="resources/images/authoring"/>
-<property name="live.area" value="live"/>
+<property name="authoring.area" value="authoring"/>
+<property name="authoring.dir" value="content/authoring"/>
+<property name="authoring.resource.dir" value="resources/authoring"/>
 <property name="live.dir" value="content/live"/>
-<property name="live.resource.dir" value="resources/images/live"/>
-<property name="replication.dir" value="content/replication/pending"/>
+<property name="live.resource.dir" value="resources/live"/>
+<property name="live.area" value="live"/>
+<property name="archive.dir" value="content/archive"/>
+<property name="archive.area" value="archive"/>
+<property name="archive.resource.dir" value="resources/archive"/>
+<property name="trash.dir" value="content/trash"/>
+<property name="trash.area" value="trash"/>
+<property name="trash.resource.dir" value="resources/trash"/>
 <property name="rcml.dir" value="content/rcml"/>
 <property name="rcbak.dir" value="content/rcbak"/>
+<property name="policies.dir" value="config/ac/policies"/>
 
-<property name="export.server" value="http://localhost:8080"/>
-<property name="export.dir" value="resources/export/pending"/>
-<property name="export.expression" value="/lenya/default"/>
-<property name="export.replacement" value=""/>
+<!-- workflow-->
+<property name="wf.history.trash.dir" value="content/workflow/history/trash"/>
+
+<!-- publishing properties -->
+<property name="replication.dir" value="content/replication/pending"/>
+<property name="export.server-port" value=""/>
+<property name="export.context-path" value=""/>
+<property name="export.dir" value="work/export/pending"/>
+<property name="export.expression" value="/lenya/unicom/live/"/>
+<property name="export.replacement" value="/"/>
 <property name="export.uris" value=""/>
 
-<property name="publish.documentid" value=""/>
-<property name="publish.language" value=""/>
-<property name="publish.sources" value=""/>
 <property name="servlet.context" value=""/>
 
 <!--copy/move/rename properties -->
 <property name="node.firstdocumentid" value=""/>
 <property name="node.secdocumentid" value=""/>
 <property name="node.newdocumentid" value=""/>
-
 <property name="file.firstdocumentdir" value=""/>
 <property name="file.secdocumentdir" value=""/>
+<property name="firstarea" value=""/>
+<property name="secarea" value=""/>
+<property name="copy.userid" value=""/>
+<property name="copy.ipaddress" value=""/>
+<property name="node.refdocumentid" value=""/>
 
-<target name="test">
-  <echo>This is a test of the AntTask: ${text}</echo>
+<!--properties setted by task SetAreaProperties-->
+<property name="firstarea.dir" value=""/>
+<property name="secarea.dir" value=""/>
+<property name="secarea.resource.dir" value=""/>
+
+<taskdef name="copyresources" classname="org.apache.lenya.cms.ant.CopyResourcesTask"/>
+
+  <taskdef name="mapdocumentidtofile" classname="org.apache.lenya.cms.ant.DocumentIdToFile"/>
+
+  <target name="test">
+    <echo>This is a test of the AntTask: ${text}</echo>
+  </target>
+
+
+<target name="notification">
+	<property name="notification.from" value="andreas@apache.org"/>
+	<property name="notification.tolist" value=""/>
+	<property name="notification.subject" value=""/>
+	<property name="notification.message" value=""/>
+	<property name="mail.mailhost" value="mail.wyona.com"/>
+	
+	<echo>Sending Mail</echo>
+	<echo>From:     [${notification.from}]</echo>
+	<echo>To:       [${notification.tolist}]</echo>
+	<echo>Subject:  [${notification.subject}]</echo>
+	<echo>Message:  [${notification.message}]</echo>
+	<echo>Mailhost: [${mail.mailhost}]</echo>
+	
+	<mail
+		from="${notification.from}"
+		tolist="${notification.tolist}"
+		subject="${notification.subject}"
+		message="${notification.message}"
+		mailhost="${mail.mailhost}"
+		/>
 </target>
 
+
 <target name="publish">
+	
+  <property name="publish.documentid" value=""/>
+  <property name="publish.language" value=""/>
+  <property name="publish.sources" value=""/>
+  
   <echo>-${servlet.context}-</echo>
   <echo>Publish document</echo>
   <echo>Copying files ${publish.sources}</echo>
@@ -59,23 +110,20 @@
   <echo>pub dir : ${pub.dir}</echo>
 
   <copy todir="${pub.dir}/${live.dir}">
-      <!-- FIXME: copy only the file that corresponds to the node that
-      we're publishing -->
     <fileset dir="${pub.dir}/${authoring.dir}">
       <include name="${publish.sources}"/>
     </fileset>
   </copy>
-  
+
   <echo>Publish resources</echo>
-  <echo>Copying files ${publish.documentid}</echo>
+  <echo>Copying files ${publish.resourcepath}/*</echo>
   <echo>from ${pub.dir}/${authoring.resource.dir}</echo>
   <echo>to ${pub.dir}/${live.resource.dir}</echo>
 
-  <copy todir="${pub.dir}/${live.resource.dir}/${publish.documentid}">
-    <fileset dir="${pub.dir}">
-      <include name="${authoring.resource.dir}/${publish.documentid}/*"/>
-    </fileset>
-  </copy>
+  <taskdef name="publishresources" classname="org.apache.lenya.cms.ant.ResourcePublisher"/>
+  <publishresources
+    documentid="${publish.documentid}"
+  />
 
   <taskdef name="publishtree" classname="org.apache.lenya.cms.ant.TreePublisher"/>
 
@@ -85,187 +133,349 @@
   <echo>from tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
   <echo>and insert it in tree ${pub.dir}/${live.dir}/${sitetree}</echo>
 
-<!-- FIXME: language seems not to be implemented yet -->
   <publishtree 
-      documentid= "${publish.documentid}"
+      documentid="${publish.documentid}"
       language="${publish.language}"
       />
-
-
   <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
   
-  <echo>Export:</echo>
+  <echo>Export page as static HTML: ${export.uris}</echo>
   <export
-      path="${export.dir}"
+      server="http://127.0.0.1:${export.server-port}${export.context-path}/${pub.id}/live/"
       uris="${export.uris}"
       expression="${export.expression}"
       replacement="${export.replacement}"
-      server="${export.server}"
-      />
+      path="${export.dir}"
+  />
 </target>
 
-<taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
-
-<target name="create">
+  <taskdef name="init-history" classname="org.apache.lenya.cms.ant.InitWorkflowHistoryTask"/>
+  <target name="create">
     
-  <property name="create.parent-id" value=""/>
-  <property name="create.child-id" value=""/>
-  <property name="create.child-name" value=""/>
-  <property name="create.child-type" value=""/>
-  <property name="create.doctype" value=""/>
-  <property name="create.language" value=""/>
-      
-  <taskdef name="create" classname="org.apache.lenya.cms.ant.DocumentCreatorTask"/>
-  <create
+    <property name="create.parent-id" value=""/>
+    <property name="create.child-id" value=""/>
+    <property name="create.child-name" value=""/>
+    <property name="create.child-type" value=""/>
+    <property name="create.doctype" value=""/>
+    <property name="create.language" value=""/>
+    <property name="create.title" value=""/>
+    <property name="create.creator" value=""/>
+    <property name="create.description" value=""/>
+    <property name="create.subject" value=""/>
+    <property name="create.publisher" value=""/>
+    <property name="create.date" value=""/>
+    <property name="create.rights" value=""/>
+    <property name="create.columns" value=""/>
+    <property name="create.userid" value=""/>
+    <property name="create.ipaddress" value=""/>
+    
+    <taskdef name="create" classname="org.apache.lenya.cms.ant.DocumentCreatorTask"/>
+    <create
+      authoringpath="${authoring.dir}"
+      area="${authoring.area}"
       parentid="${create.parent-id}"
       childid="${create.child-id}"
       childname="${create.child-name}"
       childtype="${create.child-type}"
-      authoringpath="${authoring.dir}"
-      documenttype="${create.doctype}"
-      language="${create.language}"
-      area="${authoring.area}"/>
-
-    <echo>init the workflow history with document-id: ${create.parent-id}/${create.child-id}</echo>      
-    <echo>with document-type: ${create.doctype}</echo>      
-    <echo>with language: ${create.language}</echo>      
-  <init-history
-      documentid="${create.parent-id}/${create.child-id}"
       documenttype="${create.doctype}"
       language="${create.language}"
       />
-      
-</target>
+    
+    <!-- Init the workflow history -->
+    <echo>init the workflow history with document-id: ${create.parent-id}/${create.child-id}</echo>      
+    <echo>with document-type: ${create.doctype}</echo>      
+    <echo>with language: ${create.language}</echo>      
+    <echo>with user ID: ${create.userid}</echo>      
+    <echo>with IP address: ${create.ipaddress}</echo>      
+    <init-history
+      documentid="${create.parent-id}/${create.child-id}"
+      documenttype="${create.doctype}"
+      language="${create.language}"
+      userid="${create.userid}"
+      machineip="${create.ipaddress}"
+      />
+    
+    <!-- Add the meta data to the newly created file. -->
+    <property name="document.file" value=""/>
+    <mapdocumentidtofile
+      area="${authoring.area}" 
+      documentid="${create.parent-id}/${create.child-id}"
+      language="${create.language}"
+      propertyname="document.file" 
+      />
+    <tempfile property="temp.file"/>
+    <xslt in="${document.file}"
+      out="${temp.file}" 
+      force="true"
+      style="${pub.dir}/../unizh/xslt/authoring/addMetaData.xsl">
+      <param name="title" expression="${create.title}"/>
+      <param name="creator" expression="${create.creator}"/>
+      <param name="subject" expression="${create.subject}"/>
+      <param name="description" expression="${create.description}"/>
+      <param name="language" expression="${create.language}"/>
+      <param name="publisher" expression="${create.publisher}"/>
+      <param name="date" expression="${create.date}"/>
+      <param name="rights" expression="${create.rights}"/>
+      <param name="columns" expression="${create.columns}"/>
+    </xslt>
+    <move file="${temp.file}" tofile="${document.file}"/>
+  </target>
+  
+  <!-- Create a copy of an existing document for a new language -->
+  <target name="create-language">
+    
+    <property name="create.document-id" value=""/>
+    <property name="create.doctype" value=""/>
+    <property name="create.child-name" value=""/>
+    <property name="create.old.language" value=""/>
+    <property name="create.new.language" value=""/>
+    <property name="create.title" value=""/>
+    <property name="create.creator" value=""/>
+    <property name="create.description" value=""/>
+    <property name="create.subject" value=""/>
+    <property name="create.publisher" value=""/>
+    <property name="create.date" value=""/>
+    <property name="create.rights" value=""/>
+    <property name="create.userid" value=""/>
+    <property name="create.ipaddress" value=""/>
+    
+    <!-- Add a node to the tree -->
+    <taskdef name="insertlabel" classname="org.apache.lenya.cms.ant.InsertLabelTask"/>
+    <insertlabel
+      documentid="${create.document-id}"
+      labelName="${create.child-name}"
+      language="${create.new.language}"
+      area="${authoring.area}"
+      />
 
-<target name = "newcopydocumentid">
+    <!-- Init the workflow history -->
+    <echo>init the workflow history with document-id: ${create.document-id}</echo>      
+    <echo>with document-type: ${create.doctype}</echo>      
+    <echo>with language: ${create.new.language}</echo>      
+    <init-history
+      documentid="${create.document-id}"
+      documenttype="${create.doctype}"
+      language="${create.new.language}"
+      userid="${create.userid}"
+      machineip="${create.ipaddress}"
+      />
+    
+    <!-- Copy the existing file over -->
+    <property name="document.old.file" value=""/>
+    <mapdocumentidtofile
+      area="${authoring.area}" 
+      documentid="${create.document-id}"
+      language="${create.old.language}"
+      propertyname="document.old.file" 
+      />
+    <echo>Old file: ${document.old.file}</echo>
+    <property name="document.new.file" value=""/>
+    <mapdocumentidtofile
+      area="${authoring.area}" 
+      documentid="${create.document-id}"
+      language="${create.new.language}"
+      propertyname="document.new.file" 
+      />
+    <echo>New file: ${document.new.file}</echo>
+
+    <echo>Add the meta data to the newly created file: ${document.new.file}</echo>
+    <!-- Add the meta data to the newly created file. -->
+    <xslt in="${document.old.file}"
+      out="${document.new.file}" 
+      force="true"
+      style="${pub.dir}/../unizh/xslt/authoring/addMetaData.xsl">
+      <param name="title" expression="${create.title}"/>
+      <param name="creator" expression="${create.creator}"/>
+      <param name="subject" expression="${create.subject}"/>
+      <param name="description" expression="${create.description}"/>
+      <param name="language" expression="${create.new.language}"/>
+      <param name="publisher" expression="${create.publisher}"/>
+      <param name="date" expression="${create.date}"/>
+      <param name="rights" expression="${create.rights}"/>
+    </xslt>
+  </target>
+  
+  <!-- Remove a language from an existing document -->
+  <target name="remove-language">
+    
+    <property name="remove.label.document-id" value=""/>
+    <property name="remove.label.label-name" value=""/>
+    <property name="remove.label.language" value=""/>
+    
+    <!-- Remove a label from a node in the tree -->
+    <echo>Remove label: ${remove.label.label-name}</echo>
+    <echo>for language: ${remove.label.language}</echo>
+    <echo>from document: ${remove.label.document-id}</echo>
+    <echo>in area: ${authoring.area}</echo>
+    <taskdef name="removelabel" classname="org.apache.lenya.cms.ant.RemoveLabelTask"/>
+    <removelabel
+      documentid="${remove.label.document-id}"
+      labelName="${remove.label.label-name}"
+      language="${remove.label.language}"
+      area="${authoring.area}"
+      />
+    <!-- Remove the language document -->
+    <property name="document.file" value=""/>
+    <mapdocumentidtofile
+      area="${authoring.area}" 
+      documentid="${remove.label.document-id}"
+      language="${remove.label.language}"
+      propertyname="document.file" 
+      />
+    <echo>Remove file: ${document.file}</echo>
+    <delete file="${document.file}"/>
+  </target>
+
+  <!-- Save the dublin core meta data -->
+  <target name="save-meta-data">
+    
+    <property name="save.meta.documentid" value=""/>
+    <property name="save.meta.area" value=""/>
+    <property name="save.meta.creator" value=""/>
+    <property name="save.meta.title" value=""/>
+    <property name="save.meta.description" value=""/>
+    <property name="save.meta.subject" value=""/>
+    <property name="save.meta.language" value=""/>
+    <property name="save.meta.publisher" value=""/>
+    <property name="save.meta.rights" value=""/>
+
+    <echo>Writing meta data</echo>
+    <echo>meta.documentid ${save.meta.documentid}</echo>
+    <echo>meta.area ${save.meta.area}</echo>
+    <echo>meta.creator ${save.meta.creator}</echo>
+    <echo>meta.title ${save.meta.title}</echo>
+    <echo>meta.description ${save.meta.description}</echo>
+    <echo>meta.subject ${save.meta.subject}</echo>
+    <echo>meta.language ${save.meta.language}</echo>
+    <echo>meta.publisher ${save.meta.publisher}</echo>
+    <echo>meta.rights ${save.meta.rights}</echo>
+
+    <taskdef name="write-dc-params" classname="org.apache.lenya.cms.ant.WriteDCParametersTask"/>
+    <write-dc-params
+      documentid="${save.meta.documentid}"
+      area="${save.meta.area}"
+      language="${save.meta.language}"
+      title="${save.meta.title}"
+      creator="${save.meta.creator}"
+      subject="${save.meta.subject}"
+      description="${save.meta.description}"
+      publisher="${save.meta.publisher}"
+      rights="${save.meta.rights}"
+      />
+  </target>
+
+  <!-- Remove an asset -->
+  <target name="remove-asset">
+    <property name="remove.asset.document-id" value=""/>
+    <property name="remove.asset.name" value=""/>
+    <echo>Remove file: ${pub.dir}/${authoring.resource.dir}/${remove.asset.document-id}/${remove.asset.name}</echo>
+    <echo>Remove file: ${pub.dir}/${authoring.resource.dir}/${remove.asset.document-id}/${remove.asset.name}.meta</echo>
+    <delete file="${pub.dir}/${authoring.resource.dir}/${remove.asset.document-id}/${remove.asset.name}"/>
+    <delete file="${pub.dir}/${authoring.resource.dir}/${remove.asset.document-id}/${remove.asset.name}.meta"/>
+  </target>
+
+  <!-- Insert an asset -->
+  <target name="insert-asset">
+    <property name="insert.asset.assetXPath" value=""/>
+    <property name="insert.asset.insertWhere" value=""/>
+    <property name="insert.asset.insertTemplate" value="insertAsset.xml"/>
+    <property name="insert.asset.area" value=""/>
+    <property name="insert.asset.document-id" value=""/>
+    <property name="insert.asset.language" value=""/>
+    <property name="asset.data" value=""/>
+    <property name="insert.asset.type" value=""/>
+    <property name="insert.asset.size" value=""/>
+    <property name="insert.asset.caption" value=""/>
+    <property name="insert.asset.link" value=""/>
+
+    <echo>Generate temporary xsl style sheet with ${pub.dir}/../xslt/util/generate-insertAsset-xsl.xsl </echo>
+    <echo>from ${pub.dir}/config/assets/${insert.asset.insertTemplate}</echo>
+    <tempfile property="temp.stylesheet"/>
+    <tempfile property="temp.file"/>
+    <xslt in="${pub.dir}/config/assets/${insert.asset.insertTemplate}"
+      out="${temp.stylesheet}" 
+      force="true"
+      style="${pub.dir}/../../xslt/util/generate-insertAsset-xsl.xsl">
+      <param name="assetXPath" expression="${insert.asset.assetXPath}"/>
+      <param name="insertWhere" expression="${insert.asset.insertWhere}"/>
+    </xslt>
+
+    <property name="document.file" value=""/>
+    <mapdocumentidtofile
+      area="${insert.asset.area}" 
+      documentid="${insert.asset.document-id}"
+      language="${insert.asset.language}"
+      propertyname="document.file" 
+      />
+
+    <basename property="asset.filename" file="${asset.data}"/>
+    <echo>Apply temporary stylesheet (${temp.file}) on document ${document.file}</echo>
+    <echo>with args data: ${asset.filename}</echo>
+    <echo>type: ${insert.asset.type}</echo>
+    <echo>size: ${insert.asset.size}</echo>
+    <echo>caption: ${insert.asset.caption}</echo>
+    <echo>link: ${insert.asset.link}</echo>
+    <xslt in="${document.file}"
+      out="${temp.file}" 
+      force="true"
+      style="${temp.stylesheet}">
+      <param name="data" expression="${asset.filename}"/>
+      <param name="type" expression="${insert.asset.type}"/>
+      <param name="size" expression="${insert.asset.size}"/>
+      <param name="caption" expression="${insert.asset.caption}"/>
+      <param name="link" expression="${insert.asset.link}"/>
+    </xslt>
+    <move file="${temp.file}" tofile="${document.file}"/>
+  </target>
+
   <taskdef name="computesecdocumentid" classname="org.apache.lenya.cms.ant.ComputeCopyDocumentId"/>
-  <computesecdocumentid
-    firstdocumentid="${node.firstdocumentid}"
-    secdocumentid="${node.secdocumentid}"
-    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
-  />
-  <echo>the document id for the copy is now ${node.newdocumentid}</echo>
-</target>
+  <target name = "newcopydocumentid">
+    <computesecdocumentid
+      area="${firstarea}"
+      firstdocumentid="${node.firstdocumentid}"
+      secdocumentid="${node.secdocumentid}"
+      />
+    <echo>the document id for the copy is now ${node.newdocumentid}</echo>
+  </target>
 
-<target name = "newnamedocumentid">
-  <taskdef name="computerenamedocumentid" classname="org.apache.lenya.cms.ant.ComputeRenameDocumentId"/>
-  <computerenamedocumentid
-    firstdocumentid="${node.firstdocumentid}"
-    secdocumentid="${node.secdocumentid}"
-    absolutetreepath="${pub.dir}/${authoring.dir}/${sitetree}"
-  />
-  <echo>the document id for the renamed file is now ${node.newdocumentid}</echo>
-</target>
+  <target name = "newnamedocumentid">
+    <taskdef name="computerenamedocumentid" classname="org.apache.lenya.cms.ant.ComputeRenameDocumentId"/>
+    <computerenamedocumentid
+      area="authoring"
+      firstdocumentid="${node.firstdocumentid}"
+      secdocumentid="${node.secdocumentid}"
+      />
+    <echo>the document id for the renamed file is now ${node.newdocumentid}</echo>
+  </target>
+  
+  <taskdef name="computearchivedocumentid" classname="org.apache.lenya.cms.ant.ComputeArchiveDocumentId"/>
+  
+  <target name = "newarchivedocumentid">
+    <computearchivedocumentid
+      area="${secarea}"
+      firstdocumentid="${node.firstdocumentid}"
+      secdocumentid="${node.secdocumentid}"
+      />
+    <echo>the document id for the ${secarea} is ${node.newdocumentid}</echo>
+  </target>
 
 <taskdef name="mapdocumentidtopath" classname="org.apache.lenya.cms.ant.DocumentIdToPath"/>
 
-<target name = "authdocumentpaths">
+<target name = "firstdocumentpath">
   <mapdocumentidtopath
-    area="${authoring.area}" 
+    area="${firstarea}" 
     documentid="${node.firstdocumentid}"
     propertyname="file.firstdocumentdir" 
   />
+</target>
 
+<target name = "secdocumentpath">
   <mapdocumentidtopath
-    area="${authoring.area}" 
+    area="${secarea}" 
     documentid="${node.newdocumentid}"
     propertyname="file.secdocumentdir" 
   />
 </target>
-
-<target name = "copyDocument" depends="newcopydocumentid, authdocumentpaths">
-  <echo>Copy Content</echo>
-  <copy todir="${file.secdocumentdir}">
-    <fileset dir="${file.firstdocumentdir}"/>
-  </copy>
-  
-  <echo>Copy Resources</echo>
-  <mkdir dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}"/>
-  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}">
-    <fileset dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}/"/>
-  </copy>
-
-  <echo>Copy Workflow</echo>
-  <!-- To Do -->
-
-  <echo> Copy node of firstdocumentid to secdocumentid in</echo>
-  <echo> the tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
-
-  <taskdef name="insertcopynode" classname="org.apache.lenya.cms.ant.InsertCopyNode"/>
-
-  <insertcopynode
-    firstdocumentid="${node.firstdocumentid}"
-    secdocumentid="${node.newdocumentid}"
-    absolutefirsttreepath="${pub.dir}/${authoring.dir}/${sitetree}"
-    absolutesectreepath="${pub.dir}/${authoring.dir}/${sitetree}"
-  />
-</target>
-
-<target name = "move">
-  <echo>Copy Content</echo>
-  <copy todir="${file.secdocumentdir}">
-    <fileset dir="${file.firstdocumentdir}"/>
-  </copy>
-  
-  <echo>Copy Resources</echo>
-  <mkdir dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}"/>
-  <copy todir="${pub.dir}/${authoring.resource.dir}/${node.newdocumentid}">
-    <fileset dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}/"/>
-  </copy>
-
-  <echo>Copy Revision</echo>
-  <mkdir dir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}"/>
-  <copy todir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.newdocumentid}">
-    <fileset dir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}/"/>
-  </copy>
-
-  <echo>Copy Backups</echo>
-  <mkdir dir="${pub.dir}/${rcbak.dir}/${authoring.dir}${node.firstdocumentid}"/>
-  <copy todir="${pub.dir}/${rcbak.dir}/${authoring.dir}/${node.newdocumentid}">
-    <fileset dir="${pub.dir}/${rcbak.dir}/${authoring.dir}${node.firstdocumentid}/"/>
-  </copy>
-
-  <echo>Copy Workflow</echo>
-  <!-- To Do -->
-
-  <echo> Move node of firstdocumentid to secdocumentid in</echo>
-  <echo> the tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
-
-  <taskdef name="movenode" classname="org.apache.lenya.cms.ant.MoveNode"/>
-  <movenode
-    firstdocumentid="${node.firstdocumentid}"
-    secdocumentid="${node.newdocumentid}"
-    absolutefirsttreepath="${pub.dir}/${authoring.dir}/${sitetree}"
-    absolutesectreepath="${pub.dir}/${authoring.dir}/${sitetree}"
-  />
-
-  <echo> Delete document with id ${node.firstdocumentid}</echo> 
-
-  <echo>Delete Content</echo>
-  <delete dir="${file.firstdocumentdir}" includeemptydirs="true"/>
-
-  <echo>Delete Resources</echo>
-  <delete dir="${pub.dir}/${authoring.resource.dir}/${node.firstdocumentid}" includeemptydirs="true"/>
-
-  <echo>Delete Revision</echo>
-  <delete dir="${pub.dir}/${rcml.dir}/${authoring.dir}/${node.firstdocumentid}"/>
-
-  <echo>Delete Backups</echo>
-  <delete dir="${pub.dir}/${rcbak.dir}/${authoring.dir}/${node.firstdocumentid}"/>
-
-  <echo>Delete Workflow</echo>
-  <!-- To Do -->
- 
-</target>
-
-<target name = "moveDocument" depends="newcopydocumentid, authdocumentpaths, move">
-  <echo>moveDocument</echo> 
-</target>
-
-<target name = "renameDocument" depends="newnamedocumentid, authdocumentpaths, move">
-</target>
-
-<taskdef name="mapdocumentidtopath" classname="org.apache.lenya.cms.ant.DocumentIdToPath"/>
 
 <target name = "livedocumentpath">
   <mapdocumentidtopath
@@ -275,49 +485,262 @@
   />
 </target>
 
+<taskdef name="copycontent" classname="org.apache.lenya.cms.ant.CopyContentTask"/>
+<taskdef name="copyworkflow" classname="org.apache.lenya.cms.ant.InitCopyWorkflowTask"/>
+
+<target name = "copyDocument" depends="newcopydocumentid">
+  <echo>Copy Content</echo>
+  <copycontent
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+  />
+ 
+  <copyresources
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+  />
+
+  <echo> Insert copied node</echo>
+
+  <taskdef name="insertcopynode" classname="org.apache.lenya.cms.ant.InsertCopyNode"/>
+
+  <copyworkflow
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.newdocumentid}"
+    firstarea="${firstarea}"
+    secarea="${secarea}"
+    userid="${copy.userid}"
+    machineip="${copy.ipaddress}"
+  />
+
+  <insertcopynode
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.newdocumentid}"
+    firstarea="${firstarea}"
+    secarea="${secarea}"
+  />
+ 
+</target>
+
+<taskdef name="setareaproperties" classname="org.apache.lenya.cms.ant.SetAreaProperties"/>
+<target name = "firstareaproperties">
+  <setareaproperties
+    area="${firstarea}"
+	dirpropertyname="firstarea.dir"
+  />
+</target>
+
+<target name = "secareaproperties">
+  <setareaproperties
+    area="${secarea}"
+	dirpropertyname="secarea.dir"
+  />
+</target>
+				
+<taskdef name="movenode" classname="org.apache.lenya.cms.ant.MoveNode"/>
+<taskdef name="moveworkflow" classname="org.apache.lenya.cms.ant.MoveWorkflowTask"/>
+<taskdef name="copypolicies" classname="org.apache.lenya.cms.ant.CopyPoliciesTask"/>
+<target name = "move">
+  <echo>Copy Content</echo>
+  <copycontent
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+  />
+ 
+  <echo>Copy Resources</echo>
+  <copyresources
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+  />
+
+  <echo>Copy Policies</echo>
+  <copypolicies
+    firstarea = "${firstarea}"
+    firstdocumentid="${node.firstdocumentid}"
+    secarea="${secarea}"
+    secdocumentid="${node.newdocumentid}"
+    policiesDir="${pub.dir}/${policies.dir}"
+  />
+
+  <echo>Copy Revision</echo>
+  <mkdir dir="${pub.dir}/${rcml.dir}/${firstarea.dir}/${file.firstdocumentdir}"/>
+  <copy todir="${pub.dir}/${rcml.dir}/${secarea.dir}/${file.secdocumentdir}">
+    <fileset dir="${pub.dir}/${rcml.dir}/${firstarea.dir}/${file.firstdocumentdir}/"/>
+  </copy>
+
+  <echo>Copy Backups</echo>
+  <mkdir dir="${pub.dir}/${rcbak.dir}/${firstarea.dir}/${file.firstdocumentdir}"/>
+  <copy todir="${pub.dir}/${rcbak.dir}/${secarea.dir}/${file.secdocumentdir}">
+    <fileset dir="${pub.dir}/${rcbak.dir}/${firstarea.dir}/${file.firstdocumentdir}/"/>
+  </copy>
+
+ <moveworkflow
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.newdocumentid}"
+    firstarea="${firstarea}"
+    secarea="${secarea}"
+  />
+
+  <movenode
+    firstdocumentid="${node.firstdocumentid}"
+    secdocumentid="${node.newdocumentid}"
+    firstarea="${firstarea}"
+    secarea="${secarea}"
+    refdocumentid = "${node.refdocumentid}" 
+  />
+
+  <echo> Delete document with id ${node.firstdocumentid}</echo> 
+  <delete includeEmptyDirs="true">
+    <fileset dir="${pub.dir}/">
+      <include name="**/${firstarea}/**/${file.firstdocumentdir}/"/>
+      <include name="**/${policies.dir}/${live.area}/${file.firstdocumentdir}/"/>
+      <exclude name="**/${secarea}/**/${file.secdocumentdir}/"/>
+    </fileset>
+  </delete>
+
+</target>
+
+  <target name = "rewrite-links">
+
+    <taskdef name="linkRewrite" classname="org.apache.lenya.cms.ant.LinkRewriteTask"/>
+    
+    <linkRewrite baseDir="${pub.dir}/${authoring.dir}"
+      stylesheet="${pub.dir}/../unizh/xslt/linkRewrite.xsl"
+      area="${authoring.area}"
+      oldDocumentId="${node.firstdocumentid}"
+      newDocumentId="${node.newdocumentid}"/>
+    
+  </target>
+  
+  <taskdef name="renameLabel" classname="org.apache.lenya.cms.ant.RenameLabelTask"/>
+  
+  <target name = "rename-label">
+    <property name="rename.label.document-id" value=""/>
+    <property name="rename.label.label-name" value=""/>
+    <property name="rename.label.language" value=""/>
+    <property name="rename.label.area" value=""/>
+    
+    <echo>Rename Label</echo>
+    <renameLabel
+      documentid="${rename.label.document-id}"
+      labelName="${rename.label.label-name}"
+      language="${rename.label.language}"
+      area="${rename.label.area}"
+      />
+  </target>
+
+<target name = "moveDocument" depends="firstareaproperties,
+    secareaproperties, newcopydocumentid, firstdocumentpath,
+    secdocumentpath, move, rewrite-links">
+  <echo>moveDocument</echo> 
+</target>
+
+<target name = "renameDocument" depends="firstareaproperties,
+    secareaproperties, newnamedocumentid, firstdocumentpath,
+    secdocumentpath, move, rewrite-links">
+  <echo>renameDocument</echo> 
+</target>
+
+<target name = "setIdentifier">
+  <taskdef name="setidentifier" classname="org.apache.lenya.cms.ant.SetIdentifier"/>
+  <setidentifier
+    area="${firstarea}"
+    documentid="${node.firstdocumentid}"
+  />
+</target>
+
+<target name = "archiveDocument" depends="firstareaproperties,
+  secareaproperties, newarchivedocumentid, firstdocumentpath,
+  secdocumentpath, setIdentifier, move"> 
+  <echo>archiveDocument</echo> 
+</target>
+
+<target name = "deleteDocument" depends="firstareaproperties,
+  secareaproperties, newarchivedocumentid, firstdocumentpath,
+  secdocumentpath, setIdentifier, move"> 
+  <echo>deleteDocument</echo> 
+</target>
+
+<target name = "restoreDocument" depends="firstareaproperties,
+  secareaproperties, newcopydocumentid, firstdocumentpath,
+  secdocumentpath, move"> 
+  <echo>restore Document</echo> 
+</target>
+
 <target name = "deactivateDocument" depends="livedocumentpath">
-  <echo>deactivateDocument</echo> 
-  <echo> Delete node of document ${node.firstdocumentid} from </echo>
-  <echo> the area ${live.area}</echo>
+  <echo>deactivate Document</echo> 
 
-  <taskdef name="deletenode" classname="org.apache.lenya.cms.ant.DeleteNodeTask"/>
+  <taskdef name="deletelanguagenode" classname="org.apache.lenya.cms.ant.DeleteLanguageNodeTask"/>
 
-  <deletenode
+  <deletelanguagenode
+    language ="${node.language}" 
     documentid="${node.firstdocumentid}"
     area="${live.area}"
   />
 
-  <echo> Delete document with id ${node.firstdocumentid} from live</echo> 
+  <echo>Delete Content</echo>
+  <taskdef name="deletecontent" classname="org.apache.lenya.cms.ant.DeleteContentTask"/>
 
-  <echo>Delete Content from live</echo>
-  <delete dir="${file.firstdocumentdir}" includeemptydirs="true"/>
+  <deletecontent
+    language ="${node.language}" 
+    documentid="${node.firstdocumentid}"
+    area="${live.area}"
+  />
 
-  <echo>Delete Resources from live</echo>
-  <delete dir="${pub.dir}/${live.resource.dir}/${node.firstdocumentid}" includeemptydirs="true"/>
+  <echo>Delete Resources</echo>
+  <taskdef name="deactivateresources" classname="org.apache.lenya.cms.ant.DeactivateResourcesTask"/>
 
-  <echo>Delete Meta (To Do)</echo>
-  <!-- To Do -->
+  <deactivateresources
+    language ="${node.language}" 
+    documentid="${node.firstdocumentid}"
+    area="${live.area}"
+  />
 
-  <echo>Delete Workflow (To Do)</echo>
-  <!-- To Do -->
- 
 </target>
 
+<target name = "deleteTrash">
+  <echo>delete the trash</echo> 
+  <!-- To do workflow --> 
+  <delete includeEmptyDirs="true">
+    <fileset dir="${pub.dir}/">
+      <include name="**/${trash.dir}/**"/>
+      <exclude name="**/${trash.dir}/${sitetree}"/>
+      <exclude name="**/${trash.dir}"/>
+      <include name="**/${trash.resource.dir}/**"/>
+      <exclude name="**/${trash.resource.dir}"/>
+      <include name="**/${wf.history.trash.dir}/**"/>
+      <exclude name="**/${wf.history.trash.dir}"/>
+    </fileset>
+  </delete>
 
-<target name="initworkflow">
-    <echo>init the workflow history</echo>
-    <echo>document-id: ${initworkflow.document-id}</echo>      
-    <echo>document-type: ${initworkflow.document-type}</echo>      
-    <echo>language: ${initworkflow.language}</echo>      
-    <echo>user-id: ${initworkflow.user-id}</echo>      
-    <echo>machine-ip: ${initworkflow.machine-ip}</echo>      
-  <init-history
-      documentid="${initworkflow.document-id}"
-      documenttype="${initworkflow.document-type}"
-      language="${initworkflow.language}"
-      userid="${initworkflow.user-id}"
-      machineip="${initworkflow.machine-ip}"
-      />
+  <taskdef name="resetsitetree" classname="org.apache.lenya.cms.ant.SiteTreeResetTask"/>
+  <resetsitetree
+    area="${trash.area}"
+  />
+
+</target>
+
+<target name="movenode">
+	<property name="movenode.documentid" value=""/>
+	<property name="movenode.direction" value=""/>
+	
+	<echo>Moving sitetree node</echo>
+	<echo>Document ID: ${movenode.documentid}</echo>
+	<echo>Direction: ${movenode.direction}</echo>
+	
+  <taskdef name="movenodeupdown" classname="org.apache.lenya.cms.ant.MoveSiteTreeNodeTask"/>
+  <movenodeupdown
+    documentid="${movenode.documentid}"
+    direction="${movenode.direction}"
+  />
 </target>
 
 </project>
