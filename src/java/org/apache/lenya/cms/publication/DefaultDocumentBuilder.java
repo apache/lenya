@@ -56,10 +56,9 @@ package org.apache.lenya.cms.publication;
 
 import java.util.HashMap;
 
-
 /**
  * @author andreas
- * @version $Id: DefaultDocumentBuilder.java,v 1.18 2003/09/30 09:15:30 egli Exp $
+ * @version $Id: DefaultDocumentBuilder.java,v 1.19 2003/10/02 15:29:00 andreas Exp $
  *
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
@@ -88,9 +87,9 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      */
     public Document buildDocument(Publication publication, String url)
         throws DocumentBuildException {
-        
+
         URLInformation info = new URLInformation(url);
-        
+
         String documentURL = info.getDocumentUrl();
         String originalURL = documentURL;
 
@@ -110,14 +109,15 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String documentId = documentURL;
 
         if (!documentId.startsWith("/")) {
-            throw new DocumentBuildException("Document ID [" + documentId +
-                "] does not start with '/'!");
+            throw new DocumentBuildException(
+                "Document ID [" + documentId + "] does not start with '/'!");
         }
 
-        DefaultDocument document = new DefaultDocument(publication, documentId, info.getArea(), language);
+        DefaultDocument document =
+            new DefaultDocument(publication, documentId, info.getArea(), language);
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
-        
+
         if (defaultLanguageForced) {
             // unfortunatelly we cannot count on the document to always be available 
             // in the default language. So if the default language is not in the list
@@ -144,7 +144,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
         return document;
     }
-    
+
     /**
      * Removes all "."-separated extensions from a URL
      * (e.g., <code>/foo.print.html</code> is transformed to <code>/foo</code>).
@@ -165,7 +165,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      * @return A string.
      */
     protected String getLanguage(String urlWithoutSuffix) {
-        
+
         String suffix = "";
         String url = urlWithoutSuffix;
         if (url.length() >= 3 && url.charAt(url.length() - 3) == '_') {
@@ -193,12 +193,10 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
     /**
      * @see org.apache.lenya.cms.publication.DocumentBuilder#isDocument(org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public boolean isDocument(Publication publication, String url)
-        throws DocumentBuildException {
+    public boolean isDocument(Publication publication, String url) throws DocumentBuildException {
         boolean isDocument = false;
 
-        String publicationURI =
-            url.substring(("/" + publication.getId()).length());
+        String publicationURI = url.substring(("/" + publication.getId()).length());
         if (publicationURI.startsWith("/")) {
             publicationURI = publicationURI.substring(1);
 
@@ -223,15 +221,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String area,
         String documentid,
         String language) {
-        String url =
-            "/"
-                + publication.getId()
-                + "/"
-                + area
-                + documentid
-                + "_"
-                + language
-                + ".html";
+        String url = "/" + publication.getId() + "/" + area + documentid + "_" + language + ".html";
         return url;
     }
 
@@ -239,12 +229,23 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
      */
-    public String buildCanonicalUrl(
-        Publication publication,
-        String area,
-        String documentid) {
-        String url =
-            "/" + publication.getId() + "/" + area + documentid + ".html";
+    public String buildCanonicalUrl(Publication publication, String area, String documentid) {
+        String url = "/" + publication.getId() + "/" + area + documentid + ".html";
         return url;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildLanguageVersion(org.apache.lenya.cms.publication.Document, java.lang.String)
+     */
+    public Document buildLanguageVersion(Document document, String language) {
+        DefaultDocument newDocument =
+            new DefaultDocument(
+                document.getPublication(),
+                document.getId(),
+                document.getArea(),
+                language);
+        newDocument.setExtension(document.getExtension());
+        newDocument.setDocumentURL(document.getDocumentURL());
+        return newDocument;
     }
 }
