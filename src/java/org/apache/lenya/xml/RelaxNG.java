@@ -87,7 +87,7 @@ public class RelaxNG {
      * @return A string.
      * @throws Exception if an error occurs.
      */
-    private static String validate(InputSource schemaInputSource, InputSource xmlInputSource)
+    public static String validate(InputSource schemaInputSource, InputSource xmlInputSource)
             throws Exception {
         PropertyMapBuilder properties = new PropertyMapBuilder();
         ByteArrayOutputStream error = new ByteArrayOutputStream();
