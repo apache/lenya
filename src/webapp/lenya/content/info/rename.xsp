@@ -5,10 +5,21 @@
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0"
 >
 
+<xsp:structure>
+  <xsp:include>org.apache.cocoon.environment.Cookie</xsp:include>
+</xsp:structure>
+
 <info>
+<!--
   <document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></document-id>
+-->
+  <document-id>
+    <xsp-cookie:getCookie as="string" name="document-id"/>
+  </document-id>
+  <action>rename</action>
 </info>
 
 </xsp:page>
