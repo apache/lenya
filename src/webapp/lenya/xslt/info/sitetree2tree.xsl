@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.3 2003/06/12 08:20:37 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.4 2003/06/25 15:17:28 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -29,11 +29,23 @@ foldersTree.treeID = "t2"
 </xsl:template>    
     
 <xsl:template match="*[local-name()='node']">
-<xsl:choose><xsl:when test="descendant::*[local-name()='node']"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:choose><xsl:when test="local-name(parent::node())='site'">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gFld("<xsl:value-of select="*[local-name()='label']"/>", "<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>
-<xsl:otherwise>insDoc(<xsl:choose><xsl:when test="local-name(parent::node())='site'">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gLnk("R", "<xsl:value-of select="*[local-name()='label']"/>", "<xsl:value-of select="@id"/>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:otherwise></xsl:choose>
+<xsl:choose><xsl:when test="descendant::*[local-name()='node']"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:choose><xsl:when test="local-name(parent::node())='site'">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gFld("<xsl:value-of select="*[local-name()='label']"/>", "/<xsl:call-template name="getfullpath"><xsl:with-param name="aNode" select="." /></xsl:call-template>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:when>
+<xsl:otherwise>insDoc(<xsl:choose><xsl:when test="local-name(parent::node())='site'">foldersTree</xsl:when><xsl:otherwise><xsl:value-of select="generate-id(..)"/></xsl:otherwise></xsl:choose>, gLnk("R", "<xsl:value-of select="*[local-name()='label']"/>", "/<xsl:call-template name="getfullpath"><xsl:with-param name="aNode" select="." /></xsl:call-template>?lenya.usecase=info&amp;lenya.step=showscreen"))</xsl:otherwise></xsl:choose>
 <xsl:apply-templates />
 </xsl:template>    
 
 <xsl:template match="*[local-name()='label']"/>
+
+
+<xsl:template name="getfullpath">
+	<xsl:param name="aNode" select="."/>
+	<xsl:choose><xsl:when test="local-name($aNode/parent::*)='node'">
+	<xsl:call-template name="getfullpath">
+		     <xsl:with-param name="aNode" select=".." />
+	</xsl:call-template>/<xsl:value-of select="@id"/></xsl:when>
+	<xsl:otherwise>/<xsl:value-of select="../@id"/>
+	</xsl:otherwise></xsl:choose>
+</xsl:template>
+
     
 </xsl:stylesheet> 
