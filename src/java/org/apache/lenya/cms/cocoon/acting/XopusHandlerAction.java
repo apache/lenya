@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.23 2003/03/17 17:41:57 michi Exp $
+ * $Id: XopusHandlerAction.java,v 1.24 2003/04/03 15:05:05 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -112,7 +112,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         xslRoot = conf.getChild("xsl").getAttribute("href");
         xsdRoot = conf.getChild("xsd").getAttribute("href");
         tempRoot = conf.getChild("temp").getAttribute("href");
-        getLogger().debug("CONFIGURATION:\n" + "Relative XML Root Directory: " + xmlRoot + "\n" +
+        getLogger().debug(".configure(): \n" + "Relative XML Root Directory: " + xmlRoot + "\n" +
             "Relative XSL Root Directory: " + xslRoot + "\n" + "Relative XSD Root Directory: " +
             xsdRoot + "\n" + "Relative Temp Directory: " + tempRoot);
 
@@ -150,11 +150,18 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         org.apache.cocoon.environment.Source input_source = resolver.resolve("");
         String sitemapPath = input_source.getSystemId();
         sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
-        getLogger().debug("Absolute SITEMAP Directory: " + sitemapPath);
-        getLogger().debug("Absolute XML Root Directory: " + sitemapPath + xmlRoot);
-        getLogger().debug("Absolute XSL Root Directory: " + sitemapPath + xslRoot);
-        getLogger().debug("Absolute XSD Root Directory: " + sitemapPath + xsdRoot);
-        getLogger().debug("Absolute Temp Root Directory: " + sitemapPath + tempRoot);
+        getLogger().debug(".act(): Absolute Sitemap Directory: " + sitemapPath);
+        getLogger().debug(".act(): Absolute XML Root Directory: " + sitemapPath + xmlRoot);
+        getLogger().debug(".act(): Absolute XSL Root Directory: " + sitemapPath + xslRoot);
+        getLogger().debug(".act(): Absolute XSD Root Directory: " + sitemapPath + xsdRoot);
+        getLogger().debug(".act(): Absolute Temp Root Directory: " + sitemapPath + tempRoot);
+
+
+
+
+
+
+
 
         // Get request object
         HttpRequest httpReq = (HttpRequest) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
@@ -175,30 +182,36 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
 
         // get the root element (should be "request") and its attributes ---> FixMe: Add error handling
         Element root = requestDoc.getDocumentElement();
-        getLogger().debug("root element (should be 'request'): " + root.getTagName());
+        getLogger().debug(".act(): Root element (should be 'request'): " + root.getTagName());
 
         String reqId = root.getAttribute("id");
-        getLogger().debug("Request ID: " + reqId);
+        getLogger().debug(".act(): Request ID: " + reqId);
 
         String reqType = root.getAttribute("type");
-        getLogger().debug("Request Type: " + reqType);
+        getLogger().debug(".act(): Request Type: " + reqType);
 
         // get the first child element for root element (should be "data") and its attributes ---> FixMe: Add error handling
         Element data = (Element) root.getFirstChild();
-        getLogger().debug("first child element (should be 'data'): " + data.getTagName());
+        getLogger().debug(".act(): first child element (should be 'data'): " + data.getTagName());
 
         String reqFile = data.getAttribute("id");
-        getLogger().debug("Requested File: " + reqFile);
+        getLogger().debug(".act(): Requested File: " + reqFile);
 
         String fileType = data.getAttribute("type");
-        getLogger().debug("Requested File's Type: " + fileType);
+        getLogger().debug(".act(): Requested File's Type: " + fileType);
 
         // close the input stream
         reqContent.close();
 
+
+
+
+
+
+
+
         // Define Files
-        File tempFileDir = new File(sitemapPath + relRootDirs.get("temp") + "/" +
-                relRootDirs.get(fileType));
+        File tempFileDir = new File(sitemapPath + relRootDirs.get("temp") + "/" + relRootDirs.get(fileType));
 
         if (!(tempFileDir.exists())) {
             tempFileDir.mkdir();
@@ -207,11 +220,17 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         File tempFile = IOUtils.createFile(tempFileDir, reqFile);
         File permFile = new File(sitemapPath + relRootDirs.get(fileType) + "/" + reqFile);
 
+
+        if(!permFile.exists()) {
+            getLogger().error(".act(): No such file: " + permFile.getAbsolutePath());
+            return null;
+        }
+
         // make a temporary copy of the file to be edited
         if ("xml".equals(fileType) && "open".equals(reqType)) {
             FileUtil.copyFile(permFile, tempFile);
-            getLogger().debug("PERMANENT FILE: " + permFile.getAbsolutePath());
-            getLogger().debug("TEMPORARY FILE: " + tempFile.getAbsolutePath());
+            getLogger().debug(".act(): PERMANENT FILE: " + permFile.getAbsolutePath());
+            getLogger().debug(".act(): TEMPORARY FILE: " + tempFile.getAbsolutePath());
         }
 
         // set sitemap params for response routing
@@ -219,17 +238,23 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
         sitemapParams.put("reqId", reqId);
         sitemapParams.put("reqType", reqType);
         sitemapParams.put("reqFile", reqFile);
+        sitemapParams.put("fileType", fileType);
 
         if ("xml".equals(fileType) && ("open".equals(reqType) || "save".equals(reqType))) {
-            sitemapParams.put("reqFilePath",
-                (String) relRootDirs.get("temp") + "/" + (String) relRootDirs.get(fileType) + "/" +
-                reqFile);
+            sitemapParams.put("reqFilePath", (String) relRootDirs.get("temp") + "/" + (String) relRootDirs.get(fileType) + "/" + reqFile);
+            getLogger().debug(".act(): File to be edited (in temp dir): " + sitemapParams.get("reqFilePath"));
         } else {
             sitemapParams.put("reqFilePath", (String) relRootDirs.get(fileType) + "/" + reqFile);
         }
 
-        sitemapParams.put("fileType", fileType);
-        getLogger().debug("File to be edited (in temp dir): " + sitemapParams.get("reqFilePath"));
+
+        // The xopus sitemap will return the XML
+        if ("open".equals(reqType)) {
+            return sitemapParams;
+        }
+
+
+
 
         // save to temporary file, if needed
         if ("save".equals(reqType) || "checkin".equals(reqType)) {
