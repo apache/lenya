@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.29 2003/08/26 15:55:24 edith Exp $
+ $Id: info.xsl,v 1.30 2003/08/28 09:42:51 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -129,13 +129,13 @@
         <tr>
           <th colspan="2">Meta Data</th>
         </tr>
-        <tr><td>Title:</td><td><input type="text" id="dc:title" name="properties.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
-        <tr><td>Creator:</td><td><input type="hidden" id="dc:creator" name="properties.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
-        <tr><td>Subject:</td><td><input type="text" id="dc:subject" name="properties.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
-        <tr><td>Description:</td><td><input type="text" id="dc:description" name="properties.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
-        <tr><td>Publisher:</td><td><input type="text" id="dc:publisher" name="properties.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
+        <tr><td>Title:</td><td><input type="text" id="dc:title" name="properties.save.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
+        <tr><td>Creator:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
+        <tr><td>Subject:</td><td><input type="text" id="dc:subject" name="properties.save.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
+        <tr><td>Description:</td><td><input type="text" id="dc:description" name="properties.save.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
+        <tr><td>Publisher:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
         <tr><td>Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
-        <tr><td>Rights:</td><td><input type="text" id="dc:rights" name="properties.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
+        <tr><td>Rights:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
       </table>
       <input type="hidden" name="properties.save.meta.documentid" value="{lenya-info:documentid}"/>
       <input type="hidden" name="properties.save.meta.area" value="{lenya-info:area}"/>
