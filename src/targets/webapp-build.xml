@@ -69,11 +69,25 @@
 
     <!-- Patch cocoon.xconf -->
     <echo>INFO: Patch cocoon.xconf</echo>
-    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
+    <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
+          toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
+    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
             srcdir="${build.webapp}/lenya/pubs" 
             includes="*/config/*.xconf"
             excludes="*/config/publication.xconf"
             addComments="true"/>
+    <checksum
+        file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+        property="cocoon.xconf.md5"/>
+    <checksum
+        file="${build.webapp}/WEB-INF/cocoon.xconf"
+        property="${cocoon.xconf.md5}"
+        verifyProperty="cocoon.xconf.isEqual"/>
+    <condition property="cocoon.xconf.copy">
+      <istrue value="${cocoon.xconf.isEqual}"/>
+    </condition>
+    <antcall target="copy-cocoon.xconf"/>
+    <antcall target="delete-cocoon.xconf.ant_patch"/>
             
     <!-- Patch web.xml -->
     <!--
@@ -171,6 +185,19 @@
     </condition>
     <antcall target="successfully-built-message-jetty"/>
 
+  </target>
+
+  <!-- Copy cocoon.xconf -->
+  <target name="copy-cocoon.xconf" if="cocoon.xconf.copy">
+    <echo>INFO: Apply new cocoon.xconf.</echo>
+    <copy
+       file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+       toFile="${build.webapp}/WEB-INF/cocoon.xconf"/>
+  </target>
+  <!-- ... or delete patch file -->
+  <target name="delete-cocoon.xconf.ant_patch" unless="cocoon.xconf.copy">
+    <echo>INFO: Discard patched cocoon.xconf.</echo>
+    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
   </target>
 
   <!--
