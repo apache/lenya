@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase-policies.xml,v 1.5 2004/04/28 16:19:42 andreas Exp $ -->
+<!-- $Id: usecase-policies.xml,v 1.6 2004/06/28 08:42:12 andreas Exp $ -->
     
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 	<usecase id="create">
@@ -28,7 +28,7 @@
         <role id="edit"/>
     </usecase>
 
-	<usecase id="userChangeProfile"><role id="edit"/></usecase>
+	<usecase id="userChangeProfile"><role id="edit"/><role id="admin"/></usecase>
 	<usecase id="userChangePasswordUser"><role id="edit"/></usecase>
 	<usecase id="userChangePasswordAdmin"><role id="admin"/></usecase>
 	<usecase id="userChangeGroups"><role id="admin"/></usecase>
