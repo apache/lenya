@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: IdentityTestCase.java,v 1.10 2003/07/08 12:13:40 egli Exp $
 <License>
 
  ============================================================================
@@ -77,7 +77,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: IdentityTestCase.java,v 1.9 2003/06/30 11:53:52 andreas Exp $
+ * @version CVS $Id: IdentityTestCase.java,v 1.10 2003/07/08 12:13:40 egli Exp $
  */
 public final class IdentityTestCase extends TestCase {
     private Identity identity = null;
@@ -93,16 +93,20 @@ public final class IdentityTestCase extends TestCase {
         TestRunner.run(suite());
     }
 
-    /**
-     *
-     */
+	/**
+	 * Get the test
+	 * 
+	 * @return a <code>Test</code>
+	 */
     public static Test suite() {
         return new TestSuite(IdentityTestCase.class);
     }
 
-    /**
-     *
-     */
+	/**
+	 * Create a Identity test case
+	 * 
+	 * @param test the test
+	 */
     public IdentityTestCase(String test) {
         super(test);
 
@@ -130,6 +134,8 @@ public final class IdentityTestCase extends TestCase {
 
     /**
      * Test if encrypted password exists
+     * 
+     * @throws Exception if an error occurs
      */
     public void testEncryptedPassword() throws Exception {
         assertTrue(Identity.getPassword(doc).equals("8e07dafd13495561db9063ebe4db4b27"));

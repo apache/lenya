@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: RoleManagerTest.java,v 1.6 2003/07/08 12:13:40 egli Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,7 @@ import java.util.Iterator;
 public class RoleManagerTest extends AccessControlTest {
     /**
      * Constructor for RoleManagerTest.
-     * @param arg0
+     * @param arg0 command line args
      */
     public RoleManagerTest(String arg0) {
         super(arg0);
@@ -107,9 +107,11 @@ public class RoleManagerTest extends AccessControlTest {
     final public void testGetRoles() {
     }
 
-    /*
-     * Test for void add(Role)
-     */
+	/**
+	 * Test add(Role)
+	 * 
+	 * @throws AccessControlException if an error occurs
+	 */
     final public void testAddRole() throws AccessControlException {
         File configDir = getConfigurationDirectory();
         String name = "test";
@@ -122,9 +124,10 @@ public class RoleManagerTest extends AccessControlTest {
         assertTrue(manager.getRoles().hasNext());
     }
 
-    /*
+	/**
      * Test for void remove(Role)
-     */
+	 *
+	 */
     final public void testRemoveRole() {
         File configDir = getConfigurationDirectory();
         String name = "test2";

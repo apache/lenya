@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: GroupManagerTest.java,v 1.6 2003/07/08 12:13:40 egli Exp $
 <License>
 
  ============================================================================
@@ -68,7 +68,7 @@ public class GroupManagerTest extends AccessControlTest {
 
     /**
      * Constructor for GroupManagerTest.
-     * @param arg0
+     * @param arg0 command line args
      */
     public GroupManagerTest(String arg0) {
         super(arg0);
