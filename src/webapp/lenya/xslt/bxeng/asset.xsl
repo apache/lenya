@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: asset.xsl,v 1.3 2004/02/14 14:56:15 gregor Exp $
+ $Id: asset.xsl,v 1.4 2004/02/14 16:26:33 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -105,7 +105,7 @@ function check(fileinput) {
 <div class="lenya-box">
       <div class="lenya-box-title">Asset Library</div>
 <form name="assetlibrary" action="">
-<table>
+<table class="lenya-table-noborder">
 <xsl:if test="not(lenya-info:asset)">
 <tr><td colspan="4" class="lenya-form-caption">No Assets available</td></tr>
 </xsl:if>
