@@ -51,7 +51,7 @@
     <pathelement path="${web-inf.dir}/lib/xalan-2.6.0.jar"/>
     <pathelement path="${web-inf.dir}/lib/log4j-1.2.8.jar"/>
     <pathelement path="${web-inf.dir}/lib/excalibur-io-1.1.jar"/>
-    <pathelement path="${web-inf.dir}/lib/lucene-1.4.3.jar"/>
+    <pathelement path="${web-inf.dir}/lib/lucene-1.4.1.jar"/>
     <pathelement path="${web-inf.dir}/lib/websphinx-0.5.jar"/>
     <pathelement path="${web-inf.dir}/lib/xml-commons-resolver-1.1.jar"/>
   </path>
