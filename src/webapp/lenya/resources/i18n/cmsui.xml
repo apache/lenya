@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.48 2004/03/24 12:08:07 roku Exp $ -->
+<!-- $Id: cmsui.xml,v 1.49 2004/03/24 13:39:40 roku Exp $ -->
 
 <catalogue xml:lang="en">
 
@@ -71,7 +71,10 @@
   <message key="Language">Language</message>
   <message key="Subject">Subject</message>
   <message key="Rights">Rights</message>
-
+  <message key="Select File">Select File</message>
+  <message key="Insert">Insert</message>
+  <message key="Insert File">Insert File</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
@@ -233,7 +236,14 @@
   <message key="Cut Document">Cut Document</message>
   <message key="cut-doc">Cut document {0}</message>
   <message key="cut-doc-to-clip?">Do you want to cut the document {0} and move it to the clipboard? You can paste the document later at the location of your choosing.</message>
-  
+
+  <!-- Info Asset -->
+  <message key="Insert Image">Insert Image</message>
+  <message key="Insert Asset">Insert Asset</message>
+  <message key="Asset Upload">Asset Upload</message>
+  <message key="Insert a new Image">Insert a new Image</message>
+  <message key="Upload an Asset">Upload an Asset</message>
+
   <!-- Info workflow  --> 
    <message key="Value">Value</message>
    <message key="Event">Event</message>
@@ -254,13 +264,11 @@
    <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>   
    <message key="failmessage.createdoc.invalidformat">Please enter a valid value in the ID field. A-Z, a-z, 0-9 or - are vaild characters.</message>
    <message key="failmessage.createdoc.required">Please input all required (*)  values.</message>
- 
-    <!-- Asset dialog -->
-    <message key="Insert Image">Insert Image</message>
-    <message key="Insert Asset">Insert Asset</message>
-    <message key="Asset Upload">Asset Upload</message>
-    <message key="Insert a new Image">Insert a new Image</message>
-    <message key="Upload an Asset">Upload an Asset</message>
 
- 
+  <!-- Asset Upload/Insert Dialog -->
+  <message key="Add to Asset Library">Add to Asset Library</message>
+  <message key="Asset Library">Asset Library</message>
+  <message key="No assets available">No assets available</message>
+  <message key="Insert Asset">Insert Asset</message>
+  
 </catalogue>

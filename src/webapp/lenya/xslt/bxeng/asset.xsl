@@ -15,10 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.6 2004/03/13 13:09:52 gregor Exp $ -->
+<!-- $Id: asset.xsl,v 1.7 2004/03/24 13:39:40 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
@@ -39,7 +40,7 @@
 
   <xsl:template match="lenya-info:assets">
     <page:page>
-      <page:title>Insert File</page:title>
+      <page:title><i18n:text>Insert Asset</i18n:text></page:title>
       <page:body>
 <script>
 function insertAsset(src, size) {
@@ -70,7 +71,7 @@ function check(fileinput) {
 }
 </script>
 <div class="lenya-box">
-      <div class="lenya-box-title">Add to Asset Library</div>
+      <div class="lenya-box-title"><i18n:text>Add to Asset Library</i18n:text></div>
 	<form name="fileinput" action="" method="post" enctype="multipart/form-data" onsubmit="return check(fileinput)">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
 	  <input type="hidden" name="lenya.step" value="asset-upload"/>
@@ -92,38 +93,38 @@ function check(fileinput) {
 	      </tr>
 	    </xsl:if>
 	    <tr>
-	      <td class="lenya-form-caption">Select File:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
+	      <td class="lenya-form-caption"><i18n:text>Select File</i18n:text>:</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>
-	      <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
+	      <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/lenya-info:info/lenya-info:assets/lenya-info:creator}"/></td>
+	      <td class="lenya-form-caption"><i18n:text>Creator</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/lenya-info:info/lenya-info:assets/lenya-info:creator}"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
+	      <td class="lenya-form-caption"><i18n:text>Rights</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>
 	      <td/>
 	      <td>
-		<input type="submit" value="Submit" />&#160;
-		<input type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
+		<input i18n:attr="value" type="submit" value="Submit" />&#160;
+		<input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
 	      </td>
 	    </tr>
 	  </table>
 	</form>
 </div>
 <div class="lenya-box">
-      <div class="lenya-box-title">Asset Library</div>
+      <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
 <form name="assetlibrary" action="">
 <table class="lenya-table-noborder">
 <xsl:if test="not(lenya-info:asset)">
-<tr><td colspan="4" class="lenya-form-caption">No Assets available</td></tr>
+<tr><td colspan="4" class="lenya-form-caption"><i18n:text>No assets available</i18n:text></td></tr>
 </xsl:if>
 	    <tr>
-	      <td class="lenya-form-caption" colspan="2">Title:</td><td colspan="2"><input class="lenya-form-element" type="text" name="title"/></td>
+	      <td class="lenya-form-caption" colspan="2"><i18n:text>Title</i18n:text>:</td><td colspan="2"><input class="lenya-form-element" type="text" name="title"/></td>
 	    </tr>
 	    <tr><td colspan="4">&#160;</td></tr>
 <xsl:for-each select="lenya-info:asset">
@@ -131,7 +132,7 @@ function check(fileinput) {
 <td class="lenya-form-caption"><xsl:value-of select="dc:title"/></td>
 <td class="lenya-form-caption"><xsl:value-of select="dc:extent"/> KB</td>
 <td class="lenya-form-caption"><xsl:value-of select="dc:date"/></td>
-<td class="lenya-form-caption"><a href="javascript:insertAsset('{dc:title}','{dc:extent}');">Insert</a></td>
+<td class="lenya-form-caption"><a href="javascript:insertAsset('{dc:title}','{dc:extent}');"><i18n:text>Insert</i18n:text></a></td>
 </tr>
 </xsl:for-each>
     </table>
