@@ -69,7 +69,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
         </li>
         <li>Cocoon:<br/>
             <a href="../download/cocoon-2.1-build-2003.03.11.23.15.tar.gz">cocoon-2.1-build-2003.03.11.23.15.tar.gz</a> or<br/>
-            <a href="../download/cocoon-2.1-build-2003.04.03.18.47.tar.gz">cocoon-2.1-build-2003.04.03.18.47.tar.gz</a>
+            <a href="../download/cocoon-2.1-build-2003.04.03.18.47.tar.gz">cocoon-2.1-build-2003.04.03.18.47.tar.gz</a> (Please note that the Lenya-Forrest publication does not compile with this Cocoon snapshot. You need to remove it and also edit build.xml)
         </li>
         <li>Endorsed Libraries:<br/>
             <a href="../download/endorsed.tar.gz">endorsed.tar.gz</a></li>
