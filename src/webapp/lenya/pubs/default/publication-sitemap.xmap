@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.26 2003/05/13 14:33:18 gregor Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.27 2003/05/14 10:18:20 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -91,7 +91,7 @@
 	  <map:act type="default-create">
 	    <!-- if the action suceeds it returns the referer and we -->
 	    <!-- simply redirect to it. -->
-	    <map:redirect-to uri="{parent_uri}"/>
+	    <map:redirect-to uri="{request:requestURI}"/>
 	  </map:act>
 	  <!-- otherwise the action could not validate some of the -->
 	  <!-- input and we present the upload form again -->

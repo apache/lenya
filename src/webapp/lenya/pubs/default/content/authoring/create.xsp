@@ -5,13 +5,7 @@
   xmlns:xsp="http://apache.org/xsp"  
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  xmlns:xsp-session="http://apache.org/xsp/session/2.0" create-session="true"
   >
-  
-  <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
-    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-  </xsp:structure>
   
   <parent-child>
     
@@ -19,16 +13,7 @@
     <xsp-lenya:util/>
     
     <xsp:logic>
-      String SESSION_PARENT_ID_NAME = 
-          "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri";
-      // fetch the referer
-      String referer = <xsp-request:get-uri/>;
       String status = <xsp-request:get-parameter name="status"/>;
-      if (status == null) {
-        session.setAttribute(SESSION_PARENT_ID_NAME, referer);
-      } else {
-        referer = (String)session.getAttribute(SESSION_PARENT_ID_NAME);
-      }
 
       // get the parentId
       String parentId = <xsp-request:get-parameter name="parent-uri"/>;
@@ -39,10 +24,6 @@
           parentId = "/";
 	}
       }
-
-      <xsp:content>
-	<referer><xsp:expr>referer</xsp:expr></referer>
-      </xsp:content>
 
       if ((status != null) &amp;&amp; (status.equals("failed"))) {
         <xsp:content><exception/></xsp:content>

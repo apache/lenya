@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreatorAction.java,v 1.1 2003/05/08 08:37:10 egli Exp $
+ * $Id: DefaultCreatorAction.java,v 1.2 2003/05/14 10:18:20 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -272,16 +272,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 	// commit (sort of)
 	siteTree.serialize();
 
-        // Redirect to referer
-	String parent_uri = (String) session.getAttribute(
-            "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
-	getLogger().info(".act(): Child added");
-
 	HashMap actionMap = new HashMap();
-	actionMap.put("parent_uri", parent_uri);
-	session.removeAttribute(
-            "org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction.parent_uri");
-
 	return actionMap;
     }
 
