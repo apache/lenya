@@ -15,17 +15,20 @@
  *
  */
 
-/* $Id: FileItemManager.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FileItemManager.java,v 1.4 2004/04/26 12:08:24 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -36,7 +39,6 @@ import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 import org.apache.log4j.Category;
 
-
 /**
  * Abstract superclass for classes that manage items loaded from configuration files.
  */
@@ -46,6 +48,7 @@ public abstract class FileItemManager {
     public static final String PATH = "config" + File.separator + "ac" + File.separator + "passwd";
     private Map items = new HashMap();
     private File configurationDirectory;
+    private DirectoryChangeNotifier notifier;
 
     /**
      * Create a new ItemManager
@@ -53,81 +56,169 @@ public abstract class FileItemManager {
      * @param configurationDirectory where the items are fetched from
      * @throws AccessControlException if the item manager cannot be instantiated
      */
-    protected FileItemManager(File configurationDirectory)
-        throws AccessControlException {
+    protected FileItemManager(File configurationDirectory) throws AccessControlException {
         assert configurationDirectory != null;
 
         if (!configurationDirectory.exists() || !configurationDirectory.isDirectory()) {
-            throw new AccessControlException("The directory [" +
-                configurationDirectory.getAbsolutePath() + "] does not exist!");
+            throw new AccessControlException(
+                "The directory [" + configurationDirectory.getAbsolutePath() + "] does not exist!");
         }
 
         this.configurationDirectory = configurationDirectory;
+        notifier = new DirectoryChangeNotifier(configurationDirectory, getFileFilter());
+        loadItems();
+    }
 
-        File[] itemFiles = configurationDirectory.listFiles(getFileFilter());
+    /**
+     * Reloads the items if an item was changed / added / removed.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected void loadItems() throws AccessControlException {
 
+        boolean changed;
+        try {
+            changed = notifier.hasChanged();
+        } catch (IOException e) {
+            throw new AccessControlException(e);
+        }
+
+        if (changed) {
+
+            if (log.isDebugEnabled()) {
+                log.debug("Item configuration has changed - reloading.");
+            }
+
+            File[] addedFiles = notifier.getAddedFiles();
+
+            for (int i = 0; i < addedFiles.length; i++) {
+                Item item = loadItem(addedFiles[i]);
+                add(item);
+            }
+
+            File[] removedFiles = notifier.getRemovedFiles();
+            for (int i = 0; i < removedFiles.length; i++) {
+                String fileName = removedFiles[i].getName();
+                String id = fileName.substring(0, fileName.length() - getSuffix().length());
+                
+                Item item = (Item) items.get(id);
+                
+                if (item == null) {
+                    throw new AccessControlException("Item with ID [" + id + "] not found.");
+                }
+                
+                remove(item);
+            }
+
+            File[] changedFiles = notifier.getChangedFiles();
+            for (int i = 0; i < changedFiles.length; i++) {
+                Item item = loadItem(changedFiles[i]);
+                update(item);
+            }
+
+        }
+
+    }
+
+    /**
+     * Loads an item from a file.
+     * @param file The file.
+     * @return An item.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected Item loadItem(File file) throws AccessControlException {
+        Configuration config = getItemConfiguration(file);
+
+        String klass = getItemClass(config);
+
+        Item item = null;
+
+        try {
+            item = (Item) Class.forName(klass).newInstance();
+        } catch (Exception e) {
+            String errorMsg =
+                "Exception when trying to instanciate: "
+                    + klass
+                    + " with exception: "
+                    + e.fillInStackTrace();
+
+            // an exception occured when trying to instanciate
+            // a user.
+            log.error(errorMsg);
+            throw new AccessControlException(errorMsg, e);
+        }
+
+        item.setConfigurationDirectory(configurationDirectory);
+
+        try {
+            item.configure(config);
+        } catch (ConfigurationException e) {
+            String errorMsg = "Exception when trying to configure: " + klass;
+            throw new AccessControlException(errorMsg, e);
+        }
+        return item;
+    }
+
+    /**
+     * Returns the class name of an item.
+     * @param config The item configuration.
+     * @return The class name.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected String getItemClass(Configuration config) throws AccessControlException {
+        String klass = null;
+
+        try {
+            klass = config.getAttribute(ItemConfiguration.CLASS_ATTRIBUTE);
+        } catch (ConfigurationException e) {
+            String errorMsg =
+                "Exception when extracting class name from identity file: "
+                    + klass
+                    + config.getAttributeNames();
+            log.error(errorMsg);
+            throw new AccessControlException(errorMsg, e);
+        }
+        return klass;
+    }
+
+    /**
+     * Loads teh configuration of an item from a file.
+     * @param file The file.
+     * @return A configuration.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected Configuration getItemConfiguration(File file) throws AccessControlException {
+        DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
         Configuration config = null;
 
-        for (int i = 0; i < itemFiles.length; i++) {
-            DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+        try {
+            assert file.exists();
+            config = builder.buildFromFile(file);
+        } catch (Exception e) {
+            String errorMsg =
+                "Exception when reading the configuration from file: " + file.getName();
 
-            try {
-                assert itemFiles[i].exists();
-                config = builder.buildFromFile(itemFiles[i]);
-            } catch (Exception e) {
-                String errorMsg = "Exception when reading the configuration from file: " +
-                    itemFiles[i].getName();
-
-                // an exception occured when trying to read the configuration
-                // from the identity file.
-                log.error(errorMsg);
-                throw new AccessControlException(errorMsg, e);
-            }
-
-            String klass = null;
-
-            try {
-                klass = config.getAttribute(ItemConfiguration.CLASS_ATTRIBUTE);
-            } catch (ConfigurationException e) {
-                String errorMsg = "Exception when extracting class name from identity file: " +
-                    klass + config.getAttributeNames();
-                log.error(errorMsg);
-                throw new AccessControlException(errorMsg, e);
-            }
-
-            Item item = null;
-
-            try {
-                item = (Item) Class.forName(klass).newInstance();
-            } catch (Exception e) {
-                String errorMsg = "Exception when trying to instanciate: " + klass +
-                    " with exception: " + e.fillInStackTrace();
-
-                // an exception occured when trying to instanciate
-                // a user.
-                log.error(errorMsg);
-                throw new AccessControlException(errorMsg, e);
-            }
-
-            item.setConfigurationDirectory(configurationDirectory);
-
-            try {
-                item.configure(config);
-            } catch (ConfigurationException e) {
-                String errorMsg = "Exception when trying to configure: " + klass;
-                throw new AccessControlException(errorMsg, e);
-            }
-
-            add(item);
+            // an exception occured when trying to read the configuration
+            // from the identity file.
+            log.error(errorMsg);
+            throw new AccessControlException(errorMsg, e);
         }
+        return config;
     }
-    
+
+    protected void removeItem(File file) {
+    }
+
     /**
      * Returns an item for a given ID.
      * @param id The id.
      * @return An item.
      */
     public Item getItem(String id) {
+        try {
+            loadItems();
+        } catch (AccessControlException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
         return (Item) items.get(id);
     }
 
@@ -137,6 +228,11 @@ public abstract class FileItemManager {
      * @return an array of items
      */
     public Item[] getItems() {
+        try {
+            loadItems();
+        } catch (AccessControlException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
         return (Item[]) items.values().toArray(new Item[items.values().size()]);
     }
 
@@ -149,27 +245,49 @@ public abstract class FileItemManager {
     public void add(Item item) throws AccessControlException {
         assert item != null;
         items.put(item.getId(), item);
+        if (log.isDebugEnabled()) {
+            log.debug("Item [" + item + "] added.");
+        }
         notifyAdded(item);
     }
 
     /**
-     *
      * Remove an item from this manager
-     *
      * @param item to be removed
      * @throws AccessControlException when the notification threw this exception.
      */
     public void remove(Item item) throws AccessControlException {
         items.remove(item.getId());
+        if (log.isDebugEnabled()) {
+            log.debug("Item [" + item + "] removed.");
+        }
         notifyRemoved(item);
     }
-    
+
+    /**
+     * Update an item.
+     * @param item The new version of the item.
+     * @throws AccessControlException when the notification threw this exception.
+     */
+    public void update(Item newItem) throws AccessControlException {
+        items.remove(newItem.getId());
+        items.put(newItem.getId(), newItem);
+        if (log.isDebugEnabled()) {
+            log.debug("Item [" + newItem + "] updated.");
+        }
+    }
+
     /**
      * Returns if the ItemManager contains an object.
      * @param item The object.
      * @return A boolean value.
      */
     public boolean contains(Item item) {
+        try {
+            loadItems();
+        } catch (AccessControlException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
         return items.containsValue(item);
     }
 
@@ -195,7 +313,7 @@ public abstract class FileItemManager {
 
         return filter;
     }
-    
+
     /**
      * Returns the file extension to be used.
      * @return A string.
@@ -203,7 +321,7 @@ public abstract class FileItemManager {
     protected abstract String getSuffix();
 
     private List itemManagerListeners = new ArrayList();
-    
+
     /**
      * Attaches an item manager listener to this item manager.
      * @param listener An item manager listener.
@@ -214,16 +332,16 @@ public abstract class FileItemManager {
             itemManagerListeners.add(listener);
         }
     }
-    
+
     /**
      * Removes an item manager listener from this item manager.
      * @param listener An item manager listener.
      */
     public void removeItemManagerListener(ItemManagerListener listener) {
         log.debug("Removing listener: [" + listener + "]");
-       itemManagerListeners.remove(listener);
+        itemManagerListeners.remove(listener);
     }
-    
+
     /**
      * Notifies the listeners that an item was added.
      * @param item The item that was added.
@@ -231,7 +349,7 @@ public abstract class FileItemManager {
     protected void notifyAdded(Item item) throws AccessControlException {
         log.debug("Item was added: [" + item + "]");
         List clone = new ArrayList(itemManagerListeners);
-        for (Iterator i = clone.iterator(); i.hasNext(); ) {
+        for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
             listener.itemAdded(item);
         }
@@ -244,11 +362,116 @@ public abstract class FileItemManager {
     protected void notifyRemoved(Item item) throws AccessControlException {
         log.debug("Item was removed: [" + item + "]");
         List clone = new ArrayList(itemManagerListeners);
-        for (Iterator i = clone.iterator(); i.hasNext(); ) {
+        for (Iterator i = clone.iterator(); i.hasNext();) {
             ItemManagerListener listener = (ItemManagerListener) i.next();
             log.debug("Notifying listener: [" + listener + "]");
             listener.itemRemoved(item);
         }
+    }
+
+    /**
+     * Helper class to observe a directory for changes.
+     */
+    public static class DirectoryChangeNotifier {
+
+        /**
+         * Ctor.
+         * @param directory The directory to observe.
+         * @param filter A filter to specify the file type to observe.
+         */
+        public DirectoryChangeNotifier(File directory, FileFilter filter) {
+            this.directory = directory;
+            this.filter = filter;
+        }
+
+        private File directory;
+        private FileFilter filter;
+        private Map canonicalPath2LastModified = new HashMap();
+        private static final Category log = Category.getInstance(DirectoryChangeNotifier.class);
+
+        private Set addedFiles = new HashSet();
+        private Set removedFiles = new HashSet();
+        private Set changedFiles = new HashSet();
+
+        /**
+         * Checks if the directory has changed (a new file was added, a file was removed, a file has changed).
+         * @return A boolean value.
+         * @throws IOException when something went wrong.
+         */
+        public boolean hasChanged() throws IOException {
+
+            addedFiles.clear();
+            removedFiles.clear();
+            changedFiles.clear();
+
+            File[] files = directory.listFiles(filter);
+
+            Set newPathSet = new HashSet();
+
+            for (int i = 0; i < files.length; i++) {
+                String canonicalPath = files[i].getCanonicalPath();
+                newPathSet.add(canonicalPath);
+
+                if (!canonicalPath2LastModified.containsKey(canonicalPath)) {
+                    addedFiles.add(new File(canonicalPath));
+
+                    if (log.isDebugEnabled()) {
+                        log.debug("New file: [" + canonicalPath + "]");
+                    }
+
+                } else {
+                    Long lastModifiedObject = (Long) canonicalPath2LastModified.get(canonicalPath);
+                    long lastModified = lastModifiedObject.longValue();
+                    if (lastModified < files[i].lastModified()) {
+                        changedFiles.add(files[i]);
+                        if (log.isDebugEnabled()) {
+                            log.debug("File has changed: [" + canonicalPath + "]");
+                        }
+                    }
+                }
+                Long lastModified = new Long(files[i].lastModified());
+                canonicalPath2LastModified.put(canonicalPath, lastModified);
+            }
+
+            Set oldPathSet = canonicalPath2LastModified.keySet();
+            String[] oldPaths = (String[]) oldPathSet.toArray(new String[oldPathSet.size()]);
+            for (int i = 0; i < oldPaths.length; i++) {
+                if (!newPathSet.contains(oldPaths[i])) {
+                    removedFiles.add(new File(oldPaths[i]));
+                    canonicalPath2LastModified.remove(oldPaths[i]);
+                    if (log.isDebugEnabled()) {
+                        log.debug("File removed: [" + oldPaths[i] + "]");
+                    }
+                }
+            }
+
+            return !addedFiles.isEmpty() || !removedFiles.isEmpty() || !changedFiles.isEmpty();
+        }
+
+        /**
+         * Returns the added files.
+         * @return An array of files.
+         */
+        public File[] getAddedFiles() {
+            return (File[]) addedFiles.toArray(new File[addedFiles.size()]);
+        }
+
+        /**
+         * Returns the removed files.
+         * @return An array of files.
+         */
+        public File[] getRemovedFiles() {
+            return (File[]) removedFiles.toArray(new File[removedFiles.size()]);
+        }
+
+        /**
+         * Returns the changed files.
+         * @return An array of files.
+         */
+        public File[] getChangedFiles() {
+            return (File[]) changedFiles.toArray(new File[changedFiles.size()]);
+        }
+
     }
 
 }
