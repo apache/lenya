@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
+<!-- FIXME: migrate to XUpdate -->
+
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
@@ -29,7 +31,7 @@
 </tr>
 <tr>
   <!-- FIXME: Add parent and children, e.g. feature/title feature/description (see XUpdate) -->
-  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./system/features/feature[{@tagID}]element./system/features/feature"/></td><td colspan="2">Feature</td>
+  <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert-after" value="sibling./system/features/feature[{@tagID}]element.feature"/></td><td colspan="2">Feature</td>
 </tr>
 </xsl:template>
  
