@@ -39,14 +39,24 @@ function sitetree_link_library() {
     var siteTree = pageEnvelope.getPublication().getSiteTree(pageEnvelope.getDocument().getArea());
     var allNodes = siteTree.getNode("/").preOrder();
     var resources = new ArrayList(allNodes.size()-1);
+    var addedResourcesCount = 0;
     
     for(var i=1; i<allNodes.size(); i++) {
-        resources.add(i-1, {
+    	var languageLabel = allNodes.get(i).getLabel(pageEnvelope.getDocument().getLanguage())
+		/* If the current sitree node does not exist in the displayed document's language
+		 * Continue with next node. This is a quick fix for bug #32808.
+		 * Next step would be to offer all links to the available languages.
+		 * by roku 
+		 */
+		if (languageLabel == null) continue;
+		
+        resources.add(addedResourcesCount, {
                 "url" : documentHelper.getDocumentUrl(allNodes.get(i).getAbsoluteId(), pageEnvelope.getDocument().getArea(), null),
-                "label" : allNodes.get(i).getLabel(pageEnvelope.getDocument().getLanguage()).getLabel(),
+                "label" : languageLabel.getLabel(),
                 "id" : allNodes.get(i).getId(),
                 "fullid" : allNodes.get(i).getAbsoluteId(),
                 "language" : pageEnvelope.getDocument().getLanguage()});
+        addedResourcesCount++;
     }
     
     cocoon.sendPage("sitetree_link_library_template", {"resources" : resources});
