@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml2xhtml.xsl,v 1.8 2004/03/13 12:42:16 gregor Exp $ -->
+<!-- $Id: xhtml2xhtml.xsl,v 1.9 2004/03/21 15:57:32 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -61,24 +61,24 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="lenya:asset">
-    <xsl:variable name="extent">
-      <xsl:value-of select="dc:metadata/dc:extent"/>
-    </xsl:variable>
-    <xsl:variable name="suffix">
-      <xsl:call-template name="substring-after-last">
-        <xsl:with-param name="input" select="@src"/>
-        <xsl:with-param name="substr">.</xsl:with-param>
-      </xsl:call-template>
-    </xsl:variable>
-    <div class="asset">
-        <xsl:text>&#160;</xsl:text>
-        <a href="{$nodeid}/{@src}">
-          <xsl:value-of select="text()"/>
-        </a>
-        (<xsl:value-of select="format-number($extent div 1024, '#.#')"/>KB)
-    </div>
-  </xsl:template>
+ <xsl:template match="lenya:asset">
+   <xsl:variable name="extent">
+     <xsl:value-of select="@size"/>
+   </xsl:variable>
+   <xsl:variable name="suffix">
+     <xsl:call-template name="substring-after-last">
+       <xsl:with-param name="input" select="@src"/>
+       <xsl:with-param name="substr">.</xsl:with-param>
+     </xsl:call-template>
+   </xsl:variable>
+   <div class="asset">
+       <xsl:text>&#160;</xsl:text>
+       <a href="{$nodeid}/{@src}">
+         <xsl:value-of select="text()"/>
+       </a>
+       (<xsl:value-of select="number($extent)"/>KB)
+   </div>
+ </xsl:template>
   
     <xsl:template match="xhtml:object" priority="3">
      <xsl:choose>
