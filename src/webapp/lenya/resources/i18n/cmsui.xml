@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.31 2004/02/23 19:43:41 roku Exp $
+   $Id: cmsui.xml,v 1.32 2004/02/23 20:17:36 roku Exp $
    
 -->
 
@@ -205,5 +205,9 @@ c
   <message key="Archive Document">Archive Document</message>
   <message key="archive-doc">Archive document {0}</message>
   <message key="archive-doc?">Do you really want to archive the document {0}?</message>
+
+      <!--Rename document -->
+  <message key="Rename Document">Rename Document</message>
+  <message key="rename-doc">Rename document {0}</message>
 
 </catalogue>

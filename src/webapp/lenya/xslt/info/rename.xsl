@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.17 2004/02/23 08:37:07 roku Exp $
+ $Id: rename.xsl,v 1.18 2004/02/23 20:17:36 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -34,7 +34,12 @@
   
   <xsl:template match="info">
     <div class="lenya-box">
-      <div class="lenya-box-title"><i18n:text>Rename Document</i18n:text></div>
+      <div class="lenya-box-title">
+        <i18n:translate>
+          <i18n:text key="rename-doc"/>
+          <i18n:param><q><xsl:value-of select="source-document-id"/></q></i18n:param>
+        </i18n:translate>            
+      </div>
       <div class="lenya-box-body">
         <script Language="JavaScript">
 function validRequired(formField,fieldLabel)

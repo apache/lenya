@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.36 2004/02/23 19:43:41 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.37 2004/02/23 20:17:36 roku Exp $ 
    
 -->
 
@@ -186,7 +186,7 @@
 
     <!-- Info screen actions-->
   <message key="New Navigation Title">Neuer Titel</message>
-  <message key="Rename Document">Dokument umbenennen</message>
+  <message key="rename-document">Dokument {0} umbenennen</message>
   <message key="New Document ID">Neue Dokument ID</message>
   <message key="No whitespace, no special characters">Keine Leer- oder Sonderzeichen</message>
 
@@ -207,6 +207,10 @@
   <message key="Archive Document">Dokument archivieren</message>
   <message key="archive-doc">Dokument {0} archivieren</message>
   <message key="archive-doc?">Wollen Sie das Dokument {0} wirklich archivieren?</message>
+
+      <!--Rename document -->
+  <message key="Rename Document">Dokument umbenennen</message>
+  <message key="rename-doc">Dokument {0} umbenennen</message>
 
 </catalogue>
 
