@@ -202,6 +202,17 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
         BooleanVariableInstance instance = getVariableInstance(variable);
         return instance.getValue();
     }
+    
+    /**
+     * Sets the value of a state variable.
+     * @param variableName The variable name.
+     * @param value The value to set.
+     */
+    protected void setValue(String variableName, boolean value) throws WorkflowException {
+        BooleanVariable variable = getWorkflowImpl().getVariable(variableName);
+        BooleanVariableInstance instance = getVariableInstance(variable);
+        instance.setValue(value);
+    }
 
     private List listeners = new ArrayList();
 
