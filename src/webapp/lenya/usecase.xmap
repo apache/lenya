@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.198 2004/03/25 11:39:43 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.199 2004/03/30 11:52:49 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -531,9 +531,10 @@
           <map:generate type="stream">
             <map:parameter name="form-name" value="content"/>
           </map:generate>
-            <map:act type="validate">
+          <map:act type="validate">
             <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
             <map:parameter name="schema" value="pubs/{1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
+
             <map:transform src="xslt/authoring/edit/oneform.xsl">
               <map:parameter name="docid" value="{page-envelope:document-id}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>
