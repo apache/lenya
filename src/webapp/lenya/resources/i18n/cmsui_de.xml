@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.60 2004/04/03 20:06:18 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.61 2004/04/04 07:37:44 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -275,6 +275,11 @@
   <message key="Access Object">Zugriffsobjekt</message>
   <message key="Inherited Rights">Geerbte&#160;Rechte</message>
   <message key="visit">besuchen</message>
+  <message key="reviewer">Pr&#252;fer</message>
+  <message key="editor">Bearbeiter</message>
+  <message key="admin">Admin</message>
+  <message key="world">Welt</message>
+  <message key="the world">Die Welt</message>
 
   <!-- Scheduler --> 
   <message key="New job">Neuer&#160;Job</message>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.64 2004/04/03 20:06:18 roku Exp $ -->
+<!-- $Id: info.xsl,v 1.65 2004/04/04 07:37:44 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -438,16 +438,16 @@
   	  <xsl:if test="@type = 'parent' and not(preceding-sibling::lenya-info:credential[@type = 'parent'])"><i18n:text>Inherited Rights</i18n:text>:</xsl:if>
   	</td>
   	<td>
-  		<span style="color: {normalize-space($color)}">
-  		<xsl:value-of select="@accreditable-id"/>
-  	  <xsl:if test="@accreditable-name != ''">
-  		  (<xsl:value-of select="@accreditable-name"/>)
-  	  </xsl:if>
-  	  </span>
+      <span style="color: {normalize-space($color)}">
+        <i18n:text><xsl:value-of select="@accreditable-id"/></i18n:text>
+  	    <xsl:if test="@accreditable-name != ''">
+  		  (<i18n:text><xsl:value-of select="@accreditable-name"/></i18n:text>)
+  	    </xsl:if>
+      </span>
   	</td>
   	<td>
       <xsl:if test="$larea != 'live'">
-        <span style="color: {$color}"><xsl:value-of select="@role-id"/>
+        <span style="color: {$color}"><i18n:text><xsl:value-of select="@role-id"/></i18n:text>
           <xsl:if test="@role-name != ''">(<xsl:value-of select="@role-name"/>)</xsl:if>
         </span>
       </xsl:if>
