@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.11 2003/06/10 14:40:51 egli Exp $
+ * $Id: FileUser.java,v 1.12 2003/06/11 10:23:23 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -160,9 +160,9 @@ public class FileUser extends User {
 		child = new DefaultConfiguration(EMAIL);
 		child.setValue(email);
 		config.addChild(child);
-		// add email
+		// add password node
 		child = new DefaultConfiguration(PASSWORD);
-		child.setValue(email);
+		child.setValue(encryptedPassword);
 		child.setAttribute(PASSWORD_ATTRIBUTE, "md5");
 		config.addChild(child);
 		// add group nodes
