@@ -445,22 +445,6 @@
     
   </target>
   
-  <taskdef name="renameLabel" classname="org.apache.lenya.cms.ant.RenameLabelTask"/>
-  
-  <target name = "rename-label">
-    <property name="rename.label.document-id" value=""/>
-    <property name="rename.label.label-name" value=""/>
-    <property name="rename.label.language" value=""/>
-    <property name="rename.label.area" value=""/>
-    
-    <echo>Rename Label</echo>
-    <renameLabel
-      documentid="${rename.label.document-id}"
-      labelName="${rename.label.label-name}"
-      language="${rename.label.language}"
-      area="${rename.label.area}"
-      />
-  </target>
 
 <target name = "moveDocument" depends="firstareaproperties,
     secareaproperties, newcopydocumentid, firstdocumentpath,

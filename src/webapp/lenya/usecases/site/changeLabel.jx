@@ -14,11 +14,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!-- $Id$ -->
+<!-- $Id: renameLabel.jx 123364 2004-12-26 16:11:27Z gregor $ -->
 <page:page xmlns:c="http://apache.org/cocoon/templates/jx/1.0" 
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" 
-           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" >
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+           xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+           >
            
   <page:title>
     <i18n:text>Edit Navigation Title</i18n:text>
@@ -30,15 +32,36 @@
           <i18n:text key="rename-label-doc"/>
           <i18n:param>
             <q>
-              <jx:out value="${usecase.getParameter('documentid')}"/>
+              <jx:out value="${usecase.getParameter('documentId')}"/>
             </q>
           </i18n:param>
         </i18n:translate>
       </div>
       <div class="lenya-box-body">
         <form method="get" action="">
-          <input type="hidden" name="lenya.usecase" value="rename-label"/>
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+          <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">
+            <tr>
+              <td colspan="2">
+                <ul>
+                  <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                  <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+                    <li>
+                      <i18n:text>
+                        <jx:out value="${message}"/>
+                      </i18n:text>
+                    </li>
+                  </jx:forEach>
+                </ul>
+              </td>
+            </tr>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>New Navigation Title</i18n:text>:</td>
               <td><input type="text" class="lenya-form-element" name="label" value="${usecase.getParameter('label')}"/></td>
@@ -47,8 +70,9 @@
               <td/>
               <td>
                 <br/>
-                <input i18n:attr="value" type="submit" value="Save"/>&#160;
-                <input i18n:attr="value" type="button" onClick="location.href='${requesturi}';" value="Cancel"/>
+                <input i18n:attr="value" type="submit" name="submit" value="Save"/>
+                &#160;
+                <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
               </td>
             </tr>
           </table>
