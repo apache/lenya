@@ -1,5 +1,5 @@
 /*
-$Id: RCML.java,v 1.17 2003/08/26 15:51:12 edith Exp $
+$Id: RCML.java,v 1.18 2003/10/22 14:56:16 edith Exp $
 <License>
 
  ============================================================================
@@ -73,7 +73,7 @@ import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
+ * Handle with the RCML file
  *
  * @author Michael Wechner
  * @author Marc Liyanage
@@ -94,24 +94,29 @@ public class RCML {
      * Creates a new RCML object.
      */
     public RCML() {
+        /*Deprecated
         maximalNumberOfEntries = new org.apache.lenya.xml.Configuration().maxNumberOfRollbacks;
+        */
+        maximalNumberOfEntries = 10;
         maximalNumberOfEntries = (2 * maximalNumberOfEntries) + 1;
     }
 
     /**
      * create a RCML-File if no one exists already
      *
-     * @param rcmlDirectory DOCUMENT ME!
-     * @param filename DOCUMENT ME!
-     * @param rootDirectory DOCUMENT ME!
+     * @param rcmlDirectory The rcml directory.
+     * @param filename The path of the file from the publication (e.g. for file with 
+     * absolute path home/.../jakarta-tomcat-4.1.24/webapps/lenya/lenya/pubs/{publication id}/content/authoring/foo/bar.xml
+     * the filename is content/authoring/foo/bar.xml)
+     * @param rootDirectory The publication directory
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public RCML(String rcmlDirectory, String filename, String rootDirectory)
         throws Exception {
         this();
         rcmlFile = new File(rcmlDirectory , filename + ".rcml");
-
+     
         if (!rcmlFile.isFile()) {
             // The rcml file does not yet exist, so we create it now...
             //
@@ -154,8 +159,8 @@ public class RCML {
     /**
      * Call the methode write, if the document is dirty
      *
-     * @throws IOException DOCUMENT ME!
-     * @throws Exception DOCUMENT ME!
+     * @throws IOException if an error occurs
+     * @throws Exception if an error occurs
      */
     public void finalize() throws IOException, Exception {
         if (this.isDirty()) {
@@ -163,18 +168,13 @@ public class RCML {
             write();
         }
     }
-
     /**
-     * Write the xml RCML-document in the RCML-file. Limit the number of entries to the value
-     * maximalNumberOfEntries (2maxNumberOfRollbacks(configured)+1)
+     * Write the xml RCML-document in the RCML-file. 
      *
-     * @throws IOException DOCUMENT ME!
-     * @throws Exception DOCUMENT ME!
+     * @throws IOException if an error occurs
+     * @throws Exception if an error occurs
      */
     public void write() throws IOException, Exception {
-        log.debug("RCML.write(): writing out file: " + rcmlFile.getAbsolutePath());
-        pruneEntries(maximalNumberOfEntries);
-
         XPSFileOutputStream xpsfos = new XPSFileOutputStream(rcmlFile.getAbsolutePath());
         new DOMWriter(xpsfos).print(this.document);
         xpsfos.close();
@@ -190,8 +190,8 @@ public class RCML {
      * @param identity The identity of the user
      * @param time Time at which the check in/out is made
      *
-     * @throws IOException DOCUMENT ME!
-     * @throws Exception DOCUMENT ME!
+     * @throws IOException if an error occurs
+     * @throws Exception if an error occurs
      */
     public void checkOutIn(short type, String identity, long time)
         throws IOException, Exception {
@@ -250,7 +250,7 @@ public class RCML {
      *
      * @return CheckOutEntry The entry of the check out
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public CheckOutEntry getLatestCheckOutEntry() throws Exception {
         XPointerFactory xpf = new XPointerFactory();
@@ -275,7 +275,7 @@ public class RCML {
      *
      * @return CheckInEntry The entry of the check in
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public CheckInEntry getLatestCheckInEntry() throws Exception {
         XPointerFactory xpf = new XPointerFactory();
@@ -300,7 +300,7 @@ public class RCML {
      *
      * @return RCMLEntry The entry of the check out/in
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public RCMLEntry getLatestEntry() throws Exception {
         CheckInEntry cie = getLatestCheckInEntry();
@@ -326,7 +326,7 @@ public class RCML {
      *
      * @return Vector of all check out and check in entries in this RCML-file
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public Vector getEntries() throws Exception {
         XPointerFactory xpf = new XPointerFactory();
@@ -352,40 +352,37 @@ public class RCML {
     }
 
     /**
-     * Prune the list of entries. Keep only entriesToKeep items at the front of the list
+     * Prune the list of entries and delete the corresponding backups. Limit the number of entries to the value
+     * maximalNumberOfEntries (2maxNumberOfRollbacks(configured)+1)
      *
-     * @param entriesToKeep The number of entries to keep
+     * @param backupDir The backup directory
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
-    public void pruneEntries(int entriesToKeep) throws Exception {
+    public void pruneEntries(String backupDir) throws Exception {
         XPointerFactory xpf = new XPointerFactory();
 
         Vector entries = xpf.select(document.getDocumentElement(),
                 "xpointer(/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn)");
 
-        Configuration conf = new Configuration();
-        String backupDir = conf.getBackupDirectory();
-
-        for (int i = entriesToKeep; i < entries.size(); i++) {
+        for (int i = maximalNumberOfEntries; i < entries.size(); i++) {
             Element current = (Element) entries.get(i);
 
             // remove the backup file associated with this entry
             String time = current.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
             File backupFile = new File(backupDir + "/" + time + ".bak");
             backupFile.delete();
-
             // remove the entry from the list
             current.getParentNode().removeChild(current);
         }
     }
 
     /**
-     * DOCUMENT ME!
+     * Get a clone document 
      *
-     * @return DOCUMENT ME!
+     * @return org.w3c.dom.Document The clone document
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public org.w3c.dom.Document getDOMDocumentClone() throws Exception {
         Document documentClone = new DOMParserFactory().getDocument();
@@ -395,23 +392,23 @@ public class RCML {
     }
 
     /**
-     * DOCUMENT ME!
+     * Check if the document is dirty
      *
-     * @return DOCUMENT ME!
+     * @return boolean dirty 
      */
     public boolean isDirty() {
         return dirty;
     }
 
 	/**
-	 * DOCUMENT ME!
+	 * Set the value dirty to true
 	 */
     protected void setDirty() {
         dirty = true;
     }
 
 	/**
-	 * DOCUMENT ME!
+	 * Set the value dirty to false
 	 */
     protected void clearDirty() {
         dirty = false;
@@ -420,7 +417,7 @@ public class RCML {
     /**
      * Delete the latest check in
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception if an error occurs
      */
     public void deleteFirstCheckIn() throws Exception {
         XPointerFactory xpf = new XPointerFactory();
