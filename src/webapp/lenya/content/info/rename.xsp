@@ -28,6 +28,7 @@
     <request-uri><xsp-request:get-uri/></request-uri>
     <last-id><xsp:expr>lastid</xsp:expr></last-id>
     <first-document-id><xsp:expr>firstdocumentid</xsp:expr></first-document-id>
+    <area><xsp-session:get-attribute name="org.apache.lenya.cms.info.area"/></area>
     <task-id>renameDocument</task-id>
   </info>
 </page>

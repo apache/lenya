@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: cut.xsl,v 1.9 2003/07/04 13:29:14 edith Exp $
+ $Id: cut.xsl,v 1.10 2003/07/28 16:44:52 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -15,6 +15,7 @@
   
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
+  <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="action"><xsl:value-of select="/page/info/action"/></xsl:variable>
 
   <xsl:template match="/">
@@ -39,6 +40,7 @@
           <xsl:attribute name="action"></xsl:attribute>
           <p>
             <input type="hidden" name="documentid" value="{$document-id}"/>
+            <input type="hidden" name="area" value="{$area}"/>
             <input type="hidden" name="action" value="{$action}"/>
             <input type="hidden" name="lenya.usecase" value="cut"/>
             <input type="hidden" name="lenya.step" value="cut"/>

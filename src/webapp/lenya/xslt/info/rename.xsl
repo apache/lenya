@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.8 2003/07/04 13:29:14 edith Exp $
+ $Id: rename.xsl,v 1.9 2003/07/28 16:44:52 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -16,6 +16,7 @@
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="first-document-id"><xsl:value-of select="/page/info/first-document-id"/></xsl:variable>
   <xsl:variable name="last-id"><xsl:value-of select="/page/info/last-id"/></xsl:variable>
+  <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
 
   <xsl:template match="/">
@@ -39,8 +40,10 @@
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
           <p>
-          <input type="hidden" name="properties.node.firstdocumentid" value="{$first-document-id}"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
+          <xsl:call-template name="task-parameters">
+            <xsl:with-param name="prefix" select="''"/>
+          </xsl:call-template>
           <input type="hidden" name="lenya.usecase" value="rename"/>
           <input type="hidden" name="lenya.step" value="rename"/>
 	      Rename <xsl:value-of select="last-id"/> to 
@@ -52,4 +55,12 @@
       </div>
     </div>
   </xsl:template>
+
+<xsl:template name="task-parameters">
+  <xsl:param name="prefix" select="'task.'"/>
+  <input type="hidden" name="{$prefix}properties.node.firstdocumentid" value="{$first-document-id}"/>
+  <input type="hidden" name="{$prefix}properties.firstarea" value="{$area}"/>
+  <input type="hidden" name="{$prefix}properties.secarea" value="{$area}"/>
+</xsl:template>
+
 </xsl:stylesheet>

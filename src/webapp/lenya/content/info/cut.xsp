@@ -11,8 +11,8 @@
 <info>
   <request-uri><xsp-request:get-uri/></request-uri>
   <document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></document-id>
+  <area><xsp-session:get-attribute name="org.apache.lenya.cms.info.area"/></area>
   <action>moveDocument</action>
-
 </info>
 </page>
 

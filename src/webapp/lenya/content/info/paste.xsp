@@ -11,6 +11,8 @@
   <info>
     <first-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstdocid"/></first-document-id>
     <sec-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></sec-document-id>
+    <first-area><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstarea"/></first-area>
+    <sec-area><xsp-session:get-attribute name="org.apache.lenya.cms.info.area"/></sec-area>
     <task-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.action"/></task-id>
     <request-uri><xsp-request:get-uri/></request-uri>
   </info>
