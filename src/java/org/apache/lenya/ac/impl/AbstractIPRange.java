@@ -70,7 +70,7 @@ import org.apache.log4j.Category;
  * 
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: AbstractIPRange.java,v 1.2 2004/02/02 02:50:39 stefano Exp $
+ * @version $Id: AbstractIPRange.java,v 1.3 2004/02/18 13:46:53 gregor Exp $
  */
 public abstract class AbstractIPRange extends AbstractGroupable implements IPRange {
 
@@ -218,7 +218,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * @return A boolean value.
      */
     public static boolean isValidSubnet(InetAddress networkAddress, InetAddress subnetMask) {
-        // TODO
+        // TODO implement class
         return false;
     }
 
