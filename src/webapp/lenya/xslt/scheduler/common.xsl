@@ -27,8 +27,6 @@
     <table class="scheduler-job" border="0" cellpadding="0" cellspacing="0">
 
       <tr> 
-        <th><strong>Add new job</strong></th>
-        <th>Task</th>
         <th>Day</th>
         <th>Time</th>
         <th>&#160;</th>
@@ -38,12 +36,6 @@
       <form method="GET">
         
         <!-- hidden input fields for parameters -->
-        
-        <td>
-          &#160;
-        </td>
-        
-	<td></td>
         
 	<td>
 	  <font size="2">
