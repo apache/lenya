@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.5 2003/07/28 20:07:07 gregor Exp $
+$Id: DefaultDocumentBuilder.java,v 1.6 2003/07/29 14:23:10 andreas Exp $
 <License>
 
  ============================================================================
@@ -101,6 +101,11 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String language = getLanguage(documentUrl);
         String fullLanguage = "".equals(language) ? "" : ("_" + language);
         documentUrl = documentUrl.substring(0, documentUrl.length() - fullLanguage.length());
+
+        if ("".equals(language)) {
+            language = publication.getDefaultLanguage();
+        }
+
 
         String documentId = documentUrl;
 
