@@ -81,12 +81,12 @@
       </fileset>
     </copy>
 
-    <!--    
-    <echo>INFO: Copy publication libraries from ${pubs.root.dirs}/WEB-INF/lib to ${build.webapp}/WEB-INF/lib</echo>
-    <copy todir="${build.webapp}/WEB-INF/lib">
-      <fileset dir="${pubs.root.dirs}/WEB-INF">
+    <!-- now copy legal dir (licenses) -->
+    <echo>INFO: Copy Licenses</echo>
+    <mkdir dir="${build.webapp}/legal"/>
+    <copy todir="${build.webapp}/legal">
+      <fileset dir="legal"/>
     </copy>
-    -->
 
   </target>
 
