@@ -874,6 +874,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/util/empty.xml"/>
             <map:transform src="xslt/info/rename-label.xsl">
+              <map:parameter name="use-request-parameters" value="true"/>
               <map:parameter name="requesturi" value="{request:requestURI}"/>
               <map:parameter name="area" value="{page-envelope:area}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename-label.xsl,v 1.2 2003/09/12 17:40:07 egli Exp $
+ $Id: rename-label.xsl,v 1.3 2003/10/27 15:44:43 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -16,6 +16,7 @@
   <xsl:param name="label"/>
   <xsl:param name="documentid"/>
   <xsl:param name="taskid"/>
+  <xsl:param name="lenya.event"/>
 
   <xsl:template match="/">
     <page:page>
@@ -32,6 +33,7 @@
 	      <input type="hidden" name="properties.rename.label.area" value="{$area}"/>
 	      <input type="hidden" name="lenya.usecase" value="rename-label"/>
 	      <input type="hidden" name="lenya.step" value="rename-label"/>
+	      <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
 	      
 	      <table class="lenya-table-noborder">
 		<tr>
