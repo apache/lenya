@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.22 2003/09/03 09:14:51 andreas Exp $
+ $Id: root.xsl,v 1.23 2003/09/03 10:01:25 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -67,72 +67,6 @@ function findIDbyLink(srclink)
 ]]>
 }
 </script>
-<style>
-#lenya-info-tree {
-    font-size: 8px; 
-    font-family: verdana,helvetica, sans-serif; 
-    text-decoration: none;
-    color: black;	
-    background-color: transparent;
-}
-
-#lenya-info-tree a:hover {
-    color: #FF3333;
-    background-color: transparent;
-}
-   
-#lenya-info-tree td {
-    font-size: 8px; 
-    font-family: verdana,helvetica, sans-serif; 
-}
-   
-#lenya-info-treecanvas { border: dotted 1px #CCCCCC; width: 200px; float: left; padding: 10px; margin: 2px; font-size: 8pt; }
-#lenya-info-content { height: 600px; width: 700px; float: left; }
-
-	.lenya-tab {
-	width: auto;
-	font-family: verdana, sans-serif;
-	font-size:  x-small;
-	background-color: #F5F4E9; 
-	padding: 20px;
-	color: black;
-	border: solid 1px #CCCCCC;
-	position: relative;
-	top: 1px;
-}
-
-.lenya-tablink {
-	color: #666666;
-	font-size: x-small;
-	display: inline; /*mandatory*/
-	margin-right: .5em;
-	padding: 0px 1em;
-	position: relative;
-	top: 1px;
-	
-	text-decoration: none;
-	
-	background-color: #DDDCCF; 
-	border: solid 1px #CCCCCC;
-}
-
-.lenya-tablink-active {
-	color: black;
-	font-size:  x-small;
-	display: inline; /*mandatory*/
-	margin-right: .5em;
-	padding: 0px 1em;
-	position: relative;
-	top: 1px;
-	
-	text-decoration: none;
-	
-	background-color: #F5F4E9; 
-	border: solid 1px #CCCCCC;
-	border-bottom: solid 1px #F5F4E9;
-	z-index: 1;
-}	
-</style>	
 </head>
 
 <body>

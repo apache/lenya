@@ -3,7 +3,7 @@
 .lenya-tab {
 	width: auto;
 	font-family: verdana, sans-serif;
-	font-size: x-small;
+	font-size: small;
 	background-color: #F5F4E9; 
 	padding: 20px;
 	color: black;
@@ -14,7 +14,7 @@
 
 .lenya-tablink {
 	color: #666666;
-	font-size: x-small;
+	font-size: 10pt;
 	display: inline; /*mandatory*/
 	margin-right: .5em;
 	padding: 0px 1em;
@@ -29,7 +29,7 @@
 
 .lenya-tablink-active {
 	color: black;
-	font-size: x-small;
+	font-size: 10pt;
 	display: inline; /*mandatory*/
 	margin-right: .5em;
 	padding: 0px 1em;
@@ -45,21 +45,14 @@
 }
 
 #lenya-info-tree {
-    font-size: 8pt; 
     font-family: verdana,helvetica, sans-serif; 
     text-decoration: none;
     color: black;	
     background-color: transparent;
 }
 
-#lenya-info-tree a:hover {
-    color: #FF3333;
-    background-color: transparent;
-}
-   
 #lenya-info-tree td {
-    font-size: 8pt; 
-    font-family: verdana,helvetica, sans-serif; 
+    font-family: verdana, helvetica, sans-serif; 
 }
    
 #lenya-info-treecanvas { border: dotted 1px #CCCCCC; width: 200px; float: left; padding: 10px; margin: 2px; font-size: 8pt; }

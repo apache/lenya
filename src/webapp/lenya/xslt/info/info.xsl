@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.33 2003/09/02 20:23:27 felix Exp $
+ $Id: info.xsl,v 1.34 2003/09/03 10:01:25 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -26,62 +26,35 @@
     </xsl:call-template>
 </head>
 <body>
-	<style>
-	.lenya-tab {
-	width: auto;
-	font-family: verdana, sans-serif;
-	font-size:  x-small;
-	background-color: #F5F4E9; 
-	padding: 20px;
-	color: black;
-	border: solid 1px #CCCCCC;
-	position: relative;
-	top: 1px;
-}
-
-.lenya-tablink {
-	color: #666666;
-	font-size: x-small;
-	display: inline; /*mandatory*/
-	margin-right: .5em;
-	padding: 0px 1em;
-	position: relative;
-	top: 1px;
-	
-	text-decoration: none;
-	
-	background-color: #DDDCCF; 
-	border: solid 1px #CCCCCC;
-}
-
-.lenya-tablink-active {
-	color: black;
-	font-size:  x-small;
-	display: inline; /*mandatory*/
-	margin-right: .5em;
-	padding: 0px 1em;
-	position: relative;
-	top: 1px;
-	
-	text-decoration: none;
-	
-	background-color: #F5F4E9; 
-	border: solid 1px #CCCCCC;
-	border-bottom: solid 1px #F5F4E9;
-	z-index: 1;
-}	
-	</style>
 	<!-- 
 		These are the tabs. Make sure that each of them has the correct id,
 		target and corresponding number in the Tab() call.
 	 -->
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">overview</xsl:with-param></xsl:call-template>Overview</a>
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">meta</xsl:with-param></xsl:call-template>Meta</a>
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template>Assets</a>
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a>
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a>
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC Auth</a>
-	<a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC Live</a>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>
+				<table border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">overview</xsl:with-param></xsl:call-template>Overview</a></td>
+						<td><div class="lenya-tab-separator"/></td>
+						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">meta</xsl:with-param></xsl:call-template>Meta</a></td>
+						<td><div class="lenya-tab-separator"/></td>
+						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template>Assets</a></td>
+						<td><div class="lenya-tab-separator"/></td>
+						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a></td>
+						<td><div class="lenya-tab-separator"/></td>
+						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a></td>
+						<td><div class="lenya-tab-separator"/></td>
+						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC Auth</a></td>
+						<td><div class="lenya-tab-separator"/></td>
+						<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC Live</a></td>
+					</tr>
+				</table>
+			</td>
+			<td><div class="lenya-tab-separator"/></td>
+		</tr>
+	</table>
+	
 
 	<!--  
 		These are the different content blocks of the tabs, each one needs to
