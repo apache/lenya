@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.211 2004/05/23 12:52:44 gregor Exp $ -->
+<!-- $Id: usecase.xmap,v 1.212 2004/05/26 15:13:29 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -550,7 +550,9 @@
 		<map:transform src="xslt/authoring/edit/addSourceTags.xsl">
 		  <map:parameter name="source" value="pubs/{../1}/content/authoring/{page-envelope:document-path}"/>
 		</map:transform>
-		<map:transform type="write-source"/>
+		<map:transform type="write-source">
+                  <map:parameter name="serializer" value="xml"/>
+		</map:transform>
 		<map:transform src="xslt/authoring/edit/redirect-to.xsl">
 		  <map:parameter name="uri" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
 		</map:transform>
@@ -601,7 +603,9 @@
               <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                 <map:parameter name="source" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
               </map:transform>
-              <map:transform type="write-source"/>
+              <map:transform type="write-source">
+                <map:parameter name="serializer" value="xml"/>
+              </map:transform>
               <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
               <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
@@ -764,7 +768,9 @@
                     <map:parameter name="source" value="pubs/{1}/content/{2}/{page-envelope:document-path}"/>
                     <!--<map:parameter name="source" value="pubs/{1}/test-xopus.xml"/>-->
                   </map:transform>
-                  <map:transform type="write-source"/>
+                  <map:transform type="write-source">
+                    <map:parameter name="serializer" value="xml"/>
+                  </map:transform>
                   <map:serialize type="xml"/>
                 </map:when>
                 <map:otherwise> <!-- GET: Open -->
