@@ -30,7 +30,7 @@
 <ul>
   <li><code>svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</code> ->This is our documentation and website source tree</li>
   <li><code>svn co https://svn.apache.org/repos/asf/lenya/site/ lenya.apache.org</code> ->This is our deployed website tree (it is the svn-root for our website)</li>
-  <li><link href="ext:forrest.build">Build Forrest</link></li>
+  <li><link href="ext:forrest.install">Install Forrest</link></li>
   <li><code>go to the root of lenya/docu</code></li>
   <li><code>forrest</code></li>
   <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code>)</li>

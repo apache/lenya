@@ -191,6 +191,7 @@
         <cvs.asf href="http://svn.apache.org/"/>
         <forrest.apache.org href="http://forrest.apache.org/">
             <forrest.build href="build.html"/>
+            <forrest.install href="docs/your-project.html#installing"/>
         </forrest.apache.org>
         <issues href="http://issues.apache.org/bugzilla/">
             <issue.add href="enter_bug.cgi?reporter=&amp;product=Lenya&amp;version=Current+CVS&amp;component=core&amp;rep_platform=Other&amp;op_sys=other&amp;priority=Other&amp;bug_severity=Enhancement&amp;bug_status=NEW&amp;assigned_to=&amp;cc=&amp;bug_file_loc=&amp;short_desc=%5BPatch%5D&amp;comment=&amp;maketemplate=Remember+values+as+bookmarkable+template&amp;form_name=enter_bug"/>
