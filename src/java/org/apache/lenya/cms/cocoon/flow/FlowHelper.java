@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FlowHelper.java,v 1.13 2004/08/27 22:23:38 roku Exp $  */
+/* $Id: FlowHelper.java,v 1.14 2004/08/27 22:32:14 roku Exp $  */
 
 package org.apache.lenya.cms.cocoon.flow;
 
@@ -179,7 +179,7 @@ public class FlowHelper {
     }
 
     /**
-     * Saves the result of a pipeline call to the current document associated with the PageEnvelope.
+     * Saves the result of a pipeline call to the document associated with the current  PageEnvelope.
      * @param cocoon The Cocoon Object Flow Model
      * @param pipeline The name of the pipeline to call. 
      * Do not use any protocols in the name, since "cocoon:/" is prepended by default and
@@ -206,7 +206,7 @@ public class FlowHelper {
     }
     
     /**
-     * Trigger a workflow event for the current document associated with the PageEnevelope.
+     * Trigger a workflow event for the document associated with the current PageEnvelope.
      * @param cocoon The Cocoon Flow Object Model
      * @param event The name of the workflow event to trigger.
      * @throws WorkflowException If an workflow error occurs
