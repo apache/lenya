@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: feed.xsp,v 1.14 2004/03/13 12:31:32 gregor Exp $ -->
+<!-- $Id: feed.xsp,v 1.15 2004/06/01 17:50:51 michi Exp $ -->
  
 <xsp:page
   language="java"
@@ -74,6 +74,9 @@
       <block>
         <item href="index.xml">Feed</item>
         <item href="lenya-page-body.xml">Body</item>
+      </block>
+      <block>
+        <item><xsp:attribute name="href">http://www.feedvalidator.org/check.cgi?url=http://127.0.0.1:8080<xsp-request:get-context-path/>/blog/live/feeds/all/index.xml</xsp:attribute>Validate&#160;Live&#160;Feed</item>
       </block>
       <block>
         <item href="/lenya/blog/atomapi/">introspection</item>
