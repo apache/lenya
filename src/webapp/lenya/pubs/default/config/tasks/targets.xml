@@ -29,6 +29,7 @@
 <property name="export.uris" value=""/>
 
 <property name="publish.documentid" value=""/>
+<property name="publish.language" value=""/>
 <property name="publish.sources" value=""/>
 <property name="servlet.context" value=""/>
 
@@ -46,6 +47,8 @@
   <echo>pub dir : ${pub.dir}</echo>
 
   <copy todir="${pub.dir}/${live.dir}">
+      <!-- FIXME: copy only the file that corresponds to the node that
+      we're publishing -->
     <fileset dir="${pub.dir}/${authoring.dir}">
       <include name="${publish.sources}"/>
     </fileset>
@@ -70,7 +73,7 @@
   <echo>and insert it in tree ${pub.dir}/${live.dir}/${authoring.tree}</echo>
 
   <publishtree 
-      documentid= "${publish.documentid}" 
+      documentid= "${publish.documentid}"
       absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${authoring.tree}"
       absolutetreelivepath = "${pub.dir}/${live.dir}/${authoring.tree}" 
       />
@@ -89,11 +92,11 @@
 
 <target name="create">
     
-  <property name="create.parent-id"/>
-  <property name="create.child-id"/>
-  <property name="create.child-name"/>
-  <property name="create.child-type"/>
-  <property name="create.doctype"/>
+  <property name="create.parent-id" value=""/>
+  <property name="create.child-id" value=""/>
+  <property name="create.child-name" value=""/>
+  <property name="create.child-type" value=""/>
+  <property name="create.doctype" value=""/>
     
   <taskdef name="create" classname="org.apache.lenya.cms.ant.DocumentCreatorTask"/>
   <create
@@ -101,9 +104,9 @@
       childid="${create.child-id}"
       childname="${create.child-name}"
       childtype="${create.child-type}"
-      docspath="${authoring.dir}"
+      authoringpath="${authoring.dir}"
       documenttype="${create.doctype}"
-      treeauthoringpath="${authoring.tree}"/>
+      treefile="${authoring.tree}"/>
 </target>
 
 </project>
