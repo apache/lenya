@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UserAuthenticator.java,v 1.4 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: UserAuthenticator.java,v 1.5 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -30,7 +30,7 @@ import org.apache.lenya.ac.User;
 public class UserAuthenticator extends AbstractLogEnabled implements Authenticator {
 
     /**
-     * @see org.apache.lenya.cms.ac2.Authenticator#authenticate(org.apache.cocoon.environment.Request)
+     * @see org.apache.lenya.ac.Authenticator#authenticate(org.apache.cocoon.environment.Request)
      */
     public boolean authenticate(AccreditableManager accreditableManager, Request request)
         throws AccessControlException {

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationAccessControllerResolver.java,v 1.4 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: PublicationAccessControllerResolver.java,v 1.5 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.cms.ac;
 
@@ -50,7 +50,7 @@ public class PublicationAccessControllerResolver
     /**
      * This implementation uses the publication ID in combination with the context path
      * as cache key.
-     * @see org.apache.lenya.cms.ac2.AbstractAccessControllerResolver#generateCacheKey(java.lang.String, org.apache.excalibur.source.SourceResolver)
+     * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#generateCacheKey(java.lang.String, org.apache.excalibur.source.SourceResolver)
      */
     protected Object generateCacheKey(String webappUrl, SourceResolver resolver)
         throws AccessControlException {
@@ -67,7 +67,7 @@ public class PublicationAccessControllerResolver
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
+     * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#doResolveAccessController(java.lang.String)
      */
     public AccessController doResolveAccessController(String webappUrl)
         throws AccessControlException {

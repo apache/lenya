@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SitemapPolicyManager.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: SitemapPolicyManager.java,v 1.3 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.cms.ac;
 
@@ -39,7 +39,7 @@ public class SitemapPolicyManager
     implements PolicyManager, Serviceable {
 
     /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(org.apache.lenya.cms.ac2.AccreditableManager, java.lang.String)
+     * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager, java.lang.String)
      */
     public Policy getPolicy(AccreditableManager accreditableManager, String url)
         throws AccessControlException {
@@ -97,7 +97,7 @@ public class SitemapPolicyManager
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.PolicyManager#accreditableRemoved(org.apache.lenya.cms.ac2.AccreditableManager, org.apache.lenya.cms.ac2.Accreditable)
+     * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager, org.apache.lenya.ac.Accreditable)
      */
     public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable) throws AccessControlException {
         // TODO Auto-generated method stub

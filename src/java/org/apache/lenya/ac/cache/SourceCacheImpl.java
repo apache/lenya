@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SourceCacheImpl.java,v 1.2 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: SourceCacheImpl.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
 
 package org.apache.lenya.ac.cache;
 
@@ -73,7 +73,7 @@ public class SourceCacheImpl
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.cache.SourceCache#get(java.lang.String, org.apache.lenya.cms.ac2.cache.InputStreamBuilder)
+     * @see org.apache.lenya.ac.cache.SourceCache#get(java.lang.String, org.apache.lenya.ac.cache.InputStreamBuilder)
      */
     public Object get(String sourceUri, InputStreamBuilder builder) throws CachingException {
 

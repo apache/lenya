@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Machine.java,v 1.2 2004/03/03 12:56:31 gregor Exp $  */
+/* $Id: Machine.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
 
 package org.apache.lenya.ac;
 
@@ -58,7 +58,7 @@ public class Machine implements Identifiable {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.Accreditable#getAccreditables()
+     * @see org.apache.lenya.ac.Accreditable#getAccreditables()
      */
     public Accreditable[] getAccreditables() {
         Accreditable[] ranges = getIPRanges();

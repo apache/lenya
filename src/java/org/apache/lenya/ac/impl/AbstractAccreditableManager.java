@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractAccreditableManager.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: AbstractAccreditableManager.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -149,7 +149,7 @@ public abstract class AbstractAccreditableManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AccreditableManager#getUserManager()
+	 * @see org.apache.lenya.ac.AccreditableManager#getUserManager()
 	 */
     public UserManager getUserManager() throws AccessControlException {
         if (userManager == null) {
@@ -160,7 +160,7 @@ public abstract class AbstractAccreditableManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AccreditableManager#getGroupManager()
+	 * @see org.apache.lenya.ac.AccreditableManager#getGroupManager()
 	 */
     public GroupManager getGroupManager() throws AccessControlException {
         if (groupManager == null) {
@@ -171,7 +171,7 @@ public abstract class AbstractAccreditableManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AccreditableManager#getRoleManager()
+	 * @see org.apache.lenya.ac.AccreditableManager#getRoleManager()
 	 */
     public RoleManager getRoleManager() throws AccessControlException {
         if (roleManager == null) {
@@ -182,7 +182,7 @@ public abstract class AbstractAccreditableManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AccreditableManager#getIPRangeManager()
+	 * @see org.apache.lenya.ac.AccreditableManager#getIPRangeManager()
 	 */
     public IPRangeManager getIPRangeManager() throws AccessControlException {
         if (ipRangeManager == null) {

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileAccreditableManager.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FileAccreditableManager.java,v 1.4 2004/03/08 16:48:21 gregor Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -161,28 +161,28 @@ public class FileAccreditableManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AbstractAccreditableManager#initializeGroupManager()
+	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
 	 */
     protected GroupManager initializeGroupManager() throws AccessControlException {
         return FileGroupManager.instance(getConfigurationDirectory());
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AbstractAccreditableManager#initializeIPRangeManager()
+	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
 	 */
     protected IPRangeManager initializeIPRangeManager() throws AccessControlException {
         return FileIPRangeManager.instance(getConfigurationDirectory());
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AbstractAccreditableManager#initializeRoleManager()
+	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
 	 */
     protected RoleManager initializeRoleManager() throws AccessControlException {
         return FileRoleManager.instance(getConfigurationDirectory());
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.AbstractAccreditableManager#initializeUserManager()
+	 * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
 	 */
     protected UserManager initializeUserManager() throws AccessControlException {
         return FileUserManager.instance(getConfigurationDirectory());

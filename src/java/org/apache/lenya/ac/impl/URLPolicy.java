@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLPolicy.java,v 1.4 2004/03/08 16:03:40 gregor Exp $  */
+/* $Id: URLPolicy.java,v 1.5 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -72,7 +72,7 @@ public class URLPolicy implements Policy {
     }
 
 	/**
-	 * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
+	 * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
 	 */
 	public Role[] getRoles(Identity identity) throws AccessControlException {
         obtainPolicies();

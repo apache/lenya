@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultPolicy.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: DefaultPolicy.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -117,7 +117,7 @@ public class DefaultPolicy implements Policy {
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.Policy#getRoles(org.apache.lenya.cms.ac2.Identity)
+	 * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
 	 */
     public Role[] getRoles(Identity identity) {
         Accreditable[] accreditables = identity.getAccreditables();
@@ -152,7 +152,7 @@ public class DefaultPolicy implements Policy {
     private boolean isSSL;
 
     /**
-	 * @see org.apache.lenya.cms.ac2.Policy#isSSLProtected()
+	 * @see org.apache.lenya.ac.Policy#isSSLProtected()
 	 */
     public boolean isSSLProtected() throws AccessControlException {
         return isSSL;
@@ -168,7 +168,7 @@ public class DefaultPolicy implements Policy {
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.Policy#isEmpty()
+	 * @see org.apache.lenya.ac.Policy#isEmpty()
 	 */
     public boolean isEmpty() throws AccessControlException {
         return getCredentials().length == 0;

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RemovedAccreditablePolicyBuilder.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: RemovedAccreditablePolicyBuilder.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -51,7 +51,7 @@ public class RemovedAccreditablePolicyBuilder extends PolicyBuilder {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.PolicyBuilder#getAccreditable(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.ac.impl.PolicyBuilder#getAccreditable(java.lang.String, java.lang.String)
      */
     protected Accreditable getAccreditable(String elementName, String id)
         throws AccessControlException {

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UsecaseAuthorizer.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: UsecaseAuthorizer.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
 
 package org.apache.lenya.cms.ac.usecase;
 
@@ -75,8 +75,8 @@ public class UsecaseAuthorizer
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.AccreditableManager,
-	 *      org.apache.lenya.cms.ac2.PolicyManager, org.apache.lenya.cms.ac2.Identity,
+	 * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.lenya.ac.AccreditableManager,
+	 *      org.apache.lenya.ac.PolicyManager, org.apache.lenya.ac.Identity,
 	 *      org.apache.cocoon.environment.Request)
 	 */
     public boolean authorize(Request request) throws AccessControlException {

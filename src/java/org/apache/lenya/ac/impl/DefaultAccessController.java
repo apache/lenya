@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultAccessController.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: DefaultAccessController.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -74,7 +74,7 @@ public class DefaultAccessController
     private Authenticator authenticator;
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessController#authenticate(org.apache.cocoon.environment.Request)
+     * @see org.apache.lenya.ac.AccessController#authenticate(org.apache.cocoon.environment.Request)
      */
     public boolean authenticate(Request request) throws AccessControlException {
 
@@ -85,7 +85,7 @@ public class DefaultAccessController
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessController#authorize(org.apache.cocoon.environment.Request)
+     * @see org.apache.lenya.ac.AccessController#authorize(org.apache.cocoon.environment.Request)
      */
     public boolean authorize(Request request) throws AccessControlException {
 
@@ -383,7 +383,7 @@ public class DefaultAccessController
     }
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
+     * @see org.apache.lenya.ac.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
      */
     public void setupIdentity(Request request) throws AccessControlException {
         Session session = request.getSession(true);

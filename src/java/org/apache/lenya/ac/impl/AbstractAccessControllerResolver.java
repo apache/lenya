@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractAccessControllerResolver.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: AbstractAccessControllerResolver.java,v 1.3 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -39,7 +39,7 @@ public abstract class AbstractAccessControllerResolver
     private CacheMap cache = new CacheMap(CAPACITY);
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#resolveAccessController(java.lang.String)
+     * @see org.apache.lenya.ac.AccessControllerResolver#resolveAccessController(java.lang.String)
      */
     public AccessController resolveAccessController(String webappUrl)
         throws AccessControlException {
@@ -103,7 +103,7 @@ public abstract class AbstractAccessControllerResolver
         throws AccessControlException;
 
     /**
-     * @see org.apache.lenya.cms.ac2.AccessControllerResolver#release(org.apache.lenya.cms.ac2.AccessController)
+     * @see org.apache.lenya.ac.AccessControllerResolver#release(org.apache.lenya.ac.AccessController)
      */
     public void release(AccessController controller) {
         /*

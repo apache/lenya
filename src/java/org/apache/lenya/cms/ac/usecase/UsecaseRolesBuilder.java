@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UsecaseRolesBuilder.java,v 1.2 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: UsecaseRolesBuilder.java,v 1.3 2004/03/08 16:48:21 gregor Exp $  */
 
 package org.apache.lenya.cms.ac.usecase;
 
@@ -39,7 +39,7 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
     protected static final String ID_ATTRIBUTE = "id";
 
     /**
-     * @see org.apache.lenya.cms.ac2.cache.InputStreamBuilder#build(java.io.InputStream)
+     * @see org.apache.lenya.ac.cache.InputStreamBuilder#build(java.io.InputStream)
      */
     public Object build(InputStream stream) throws BuildException {
 

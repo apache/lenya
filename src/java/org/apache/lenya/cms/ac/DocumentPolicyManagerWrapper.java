@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentPolicyManagerWrapper.java,v 1.3 2004/03/03 12:56:33 gregor Exp $  */
+/* $Id: DocumentPolicyManagerWrapper.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
 
 package org.apache.lenya.cms.ac;
 
@@ -174,7 +174,7 @@ public class DocumentPolicyManagerWrapper
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#buildURLPolicy(org.apache.lenya.cms.ac2.AccreditableManager,
+	 * @see org.apache.lenya.ac.impl.InheritingPolicyManager#buildURLPolicy(org.apache.lenya.ac.AccreditableManager,
 	 *      java.lang.String)
 	 */
     public DefaultPolicy buildURLPolicy(AccreditableManager controller, String url)
@@ -183,7 +183,7 @@ public class DocumentPolicyManagerWrapper
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#buildSubtreePolicy(org.apache.lenya.cms.ac2.AccreditableManager,
+	 * @see org.apache.lenya.ac.impl.InheritingPolicyManager#buildSubtreePolicy(org.apache.lenya.ac.AccreditableManager,
 	 *      java.lang.String)
 	 */
     public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url)
@@ -192,7 +192,7 @@ public class DocumentPolicyManagerWrapper
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#getPolicies(org.apache.lenya.cms.ac2.AccreditableManager,
+	 * @see org.apache.lenya.ac.impl.InheritingPolicyManager#getPolicies(org.apache.lenya.ac.AccreditableManager,
 	 *      java.lang.String)
 	 */
     public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
@@ -201,8 +201,8 @@ public class DocumentPolicyManagerWrapper
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#saveURLPolicy(java.lang.String,
-	 *      org.apache.lenya.cms.ac2.DefaultPolicy)
+	 * @see org.apache.lenya.ac.impl.InheritingPolicyManager#saveURLPolicy(java.lang.String,
+	 *      org.apache.lenya.ac.impl.DefaultPolicy)
 	 */
     public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
         getPolicyManager().saveURLPolicy(getPolicyURL(url), policy);
@@ -210,15 +210,15 @@ public class DocumentPolicyManagerWrapper
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#saveSubtreePolicy(java.lang.String,
-	 *      org.apache.lenya.cms.ac2.DefaultPolicy)
+	 * @see org.apache.lenya.ac.impl.InheritingPolicyManager#saveSubtreePolicy(java.lang.String,
+	 *      org.apache.lenya.ac.impl.DefaultPolicy)
 	 */
     public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
         getPolicyManager().saveSubtreePolicy(getPolicyURL(url), policy);
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(org.apache.lenya.cms.ac2.AccreditableManager,
+	 * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager,
 	 *      java.lang.String)
 	 */
     public Policy getPolicy(AccreditableManager controller, String url)
@@ -227,8 +227,8 @@ public class DocumentPolicyManagerWrapper
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.PolicyManager#accreditableRemoved(org.apache.lenya.cms.ac2.AccreditableManager,
-	 *      org.apache.lenya.cms.ac2.Accreditable)
+	 * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager,
+	 *      org.apache.lenya.ac.Accreditable)
 	 */
     public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
         throws AccessControlException {

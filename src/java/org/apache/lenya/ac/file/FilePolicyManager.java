@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePolicyManager.java,v 1.4 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FilePolicyManager.java,v 1.5 2004/03/08 16:48:21 gregor Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -248,7 +248,7 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.PolicyManager#getPolicy(AccreditableManager, Publication,
+	 * @see org.apache.lenya.ac.PolicyManager#getPolicy(AccreditableManager, Publication,
 	 *      java.lang.String)
 	 */
     public Policy getPolicy(AccreditableManager controller, String url)
@@ -337,7 +337,7 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.InheritingPolicyManager#getPolicies(org.apache.lenya.cms.ac2.AccreditableManager,
+	 * @see org.apache.lenya.ac.impl.InheritingPolicyManager#getPolicies(org.apache.lenya.ac.AccreditableManager,
 	 *      java.lang.String)
 	 */
     public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
@@ -429,8 +429,8 @@ public class FilePolicyManager
     }
 
     /**
-	 * @see org.apache.lenya.cms.ac2.PolicyManager#accreditableRemoved(org.apache.lenya.cms.ac2.AccreditableManager,
-	 *      org.apache.lenya.cms.ac2.Accreditable)
+	 * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager,
+	 *      org.apache.lenya.ac.Accreditable)
 	 */
     public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
         throws AccessControlException {
