@@ -79,7 +79,7 @@
     <map:pipeline type="noncaching">
       
       <map:match pattern="*/**.rng">
-        <map:generate src="config/doctypes/schemas/{2}.rng"/>
+        <map:generate src="fallback://config/doctypes/schemas/{2}.rng"/>
         <map:serialize type="xml"/>
       </map:match>
       
