@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.46 2003/10/08 15:49:22 egli Exp $
+ $Id: info.xsl,v 1.47 2003/10/13 13:12:54 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -75,7 +75,7 @@
 	<xsl:when test="dc:title">
    <table class="lenya-table-noborder">
    <tr><td class="lenya-entry-caption">Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
-   <tr><td class="lenya-entry-caption">Abstract:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
+   <tr><td class="lenya-entry-caption">Description:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
    <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:apply-templates select="lenya-info:workflow-state"/></td></tr>
    <tr><td class="lenya-entry-caption">Live:</td><td><xsl:apply-templates select="lenya-info:is-live"/></td></tr>
    <!--
