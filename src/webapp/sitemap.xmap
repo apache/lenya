@@ -44,12 +44,16 @@
       <buffer-size>1024</buffer-size>
       <encoding>UTF-8</encoding>
     </map:serializer>
+    <map:serializer logger="sitemap.serializer.html-iso-8859-1" mime-type="text/html" name="html-iso-8859-1" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
+      <buffer-size>1024</buffer-size>
+      <encoding>ISO-8859-1</encoding>
+    </map:serializer>
     <map:serializer logger="sitemap.serializer.xhtml" mime-type="text/html" name="xhtml" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
       <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
       <encoding>UTF-8</encoding>
     </map:serializer>
-    <map:serializer logger="sitemap.serializer.xhtml-bxeng" mime-type="text/html" name="xhtml-bxeng" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
+    <map:serializer logger="sitemap.serializer.xhtml-iso-8859-1" mime-type="text/html" name="xhtml-iso-8859-1" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
       <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
       <encoding>ISO-8859-1</encoding>
