@@ -3,6 +3,15 @@
   <property name="test.pub.id" value="test"/>
   <property name="test.pub.source.id" value="default"/>
 
+  <path id="classpath.default">
+    <path refid="classpath"/>
+    <pathelement location="${build.test}" />
+    <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
+    <fileset dir="${build.root}/lenya/webapp/WEB-INF/lib">
+      <include name="ant**.jar"/>
+    </fileset>
+  </path>
+      
   <!-- Runs all tests -->
   <target name="test" depends="tests.junit, tests.anteater" description="Runs all tests"/>
   
@@ -50,7 +59,8 @@
   <target name="tests.junit"	depends="init, tests.prepare,
   			test.identity,
   			test.workflow,
-  			test.anttask"
+  			test.anttask,
+  			test.creator"
   />
 
   
@@ -77,14 +87,7 @@
       <jvmarg value="-enableassertions"/>
       <arg value="${install.dir}"/>
       <arg value="${test.pub.id}"/>
-      <classpath refid="classpath"/>
-      <classpath>
-        <pathelement location="${build.test}" />
-        <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
-        <fileset dir="${build.root}/lenya/webapp/WEB-INF/lib">
-          <include name="ant**.jar"/>
-        </fileset>
-      </classpath>
+      <classpath refid="classpath.default"/>
     </java>
   </target>
   
@@ -96,14 +99,18 @@
       <arg value="${install.dir}"/>
       <arg value="${test.pub.id}"/>
       <arg value="simple"/> <!-- document type -->
-      <classpath refid="classpath"/>
-      <classpath>
-        <pathelement location="${build.test}" />
-        <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
-        <fileset dir="${build.root}/lenya/webapp/WEB-INF/lib">
-          <include name="ant**.jar"/>
-        </fileset>
-      </classpath>
+      <classpath refid="classpath.default"/>
+    </java>
+  </target>  
+  
+
+  <!-- DocumentCreator Test -->
+  <target name="test.creator" depends="test.pub.prepare">
+    <java fork="yes" classname="org.apache.lenya.cms.authoring.DocumentCreatorTest">
+      <jvmarg value="-enableassertions"/>
+      <arg value="${install.dir}"/>
+      <arg value="${test.pub.id}"/>
+      <classpath refid="classpath.default"/>
     </java>
   </target>  
 
