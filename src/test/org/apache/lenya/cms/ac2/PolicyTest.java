@@ -90,8 +90,8 @@ public class PolicyTest extends AccessControlTest {
         TestRunner.run(PolicyTest.class);
     }
 
-    protected static final String URL = "/authoring/index.html";
-    protected static final String SAVE_URL = "/authoring/tutorial.html";
+    protected static final String URL = "/test/authoring/index.html";
+    protected static final String SAVE_URL = "/test/authoring/tutorial.html";
 
     /**
      * A test.
@@ -118,10 +118,7 @@ public class PolicyTest extends AccessControlTest {
      */
     protected Policy getPolicy(String url) throws AccessControlException {
         Policy policy =
-            new FilePolicyManager().getPolicy(
-                getAccreditableManager(),
-                PublicationHelper.getPublication(),
-                url);
+            getPolicyManager().getPolicy(getAccessController().getAccreditableManager(), url);
 
         return policy;
     }
@@ -131,19 +128,14 @@ public class PolicyTest extends AccessControlTest {
      * @throws AccessControlException when something went wrong.
      */
     public void testSavePolicy() throws AccessControlException {
-        PolicyManager manager = new FilePolicyManager();
         DefaultPolicy urlPolicy =
-            manager.buildURLPolicy(
-                getAccreditableManager(),
-                PublicationHelper.getPublication(),
-                URL);
+            getPolicyManager().buildURLPolicy(getAccessController().getAccreditableManager(), URL);
         DefaultPolicy newPolicy = new DefaultPolicy();
 
         Credential[] credentials = urlPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            Credential credential =
-                new Credential(credentials[i].getAccreditable());
+            Credential credential = new Credential(credentials[i].getAccreditable());
             Role[] roles = credentials[i].getRoles();
 
             for (int j = 0; j < roles.length; j++) {
@@ -153,42 +145,30 @@ public class PolicyTest extends AccessControlTest {
             newPolicy.addCredential(credential);
         }
 
-        assertEquals(
-            urlPolicy.getCredentials().length,
-            newPolicy.getCredentials().length);
+        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 
-        new FilePolicyManager().saveURLPolicy(
-            PublicationHelper.getPublication(),
-            SAVE_URL,
-            newPolicy);
+        getPolicyManager().saveURLPolicy(SAVE_URL, newPolicy);
 
         newPolicy =
-            manager.buildURLPolicy(
-                getAccreditableManager(),
-                PublicationHelper.getPublication(),
+            getPolicyManager().buildURLPolicy(
+                getAccessController().getAccreditableManager(),
                 SAVE_URL);
-        assertEquals(
-            urlPolicy.getCredentials().length,
-            newPolicy.getCredentials().length);
+        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 
         Credential[] newCredentials = newPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            Credential credential =
-                new Credential(credentials[i].getAccreditable());
+            Credential credential = new Credential(credentials[i].getAccreditable());
 
             Credential newCredential = null;
 
             for (int k = 0; k < newCredentials.length; k++) {
-                if (newCredentials[k]
-                    .getAccreditable()
-                    .equals(credential.getAccreditable())) {
+                if (newCredentials[k].getAccreditable().equals(credential.getAccreditable())) {
                     newCredential = newCredentials[k];
                 }
             }
 
-            System.out.println(
-                "Accreditable: [" + credential.getAccreditable() + "]");
+            System.out.println("Accreditable: [" + credential.getAccreditable() + "]");
             assertNotNull(newCredential);
 
             Set oldRoles = new HashSet(Arrays.asList(credential.getRoles()));

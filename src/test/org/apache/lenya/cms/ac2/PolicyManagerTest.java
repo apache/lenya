@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PolicyManagerTest.java,v 1.1 2003/07/14 18:08:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,6 +53,7 @@ $Id
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
+
 package org.apache.lenya.cms.ac2;
 
 import junit.textui.TestRunner;
@@ -61,15 +62,14 @@ import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
 
 /**
- * @author andreas
- *
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class AccessControllerTest extends AccessControlTest {
+public class PolicyManagerTest extends AccessControlTest {
 
     /**
-     * @param test A test.
+     * @param test
      */
-    public AccessControllerTest(String test) {
+    public PolicyManagerTest(String test) {
         super(test);
     }
 
@@ -82,12 +82,23 @@ public class AccessControllerTest extends AccessControlTest {
         TestRunner.run(AccessControllerTest.class);
     }
 
+    private static String[] URLS = { "/test/authoring/index.html" };
+
     /**
      * The test.
      * @throws AccessControlException when something went wrong.
      */
     public void testAccessController() throws AccessControlException {
-        assertNotNull(getAccessController());
+        
+        DefaultAccessController controller = (DefaultAccessController) getAccessController(); 
+        PolicyManager policyManager = controller.getPolicyManager();
+        assertNotNull(policyManager);
+        
+        for (int i = 0; i < URLS.length; i++) {
+            Policy policy = policyManager.getPolicy(controller.getAccreditableManager(), URLS[i]);
+            assertNotNull(policy);
+            assertTrue(policy.getRoles(getIdentity()).length > 0);
+        }
     }
 
 }

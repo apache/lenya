@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ExcaliburTest.java,v 1.1 2003/07/14 18:08:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,41 +53,35 @@ $Id
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.ac2;
 
-import junit.textui.TestRunner;
+package org.apache.lenya.cms;
 
-import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.ac.AccessControlException;
+import java.io.InputStream;
+
+import org.apache.avalon.excalibur.testcase.ExcaliburTestCase;
 
 /**
- * @author andreas
- *
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class AccessControllerTest extends AccessControlTest {
+public abstract class ExcaliburTest extends ExcaliburTestCase {
 
     /**
-     * @param test A test.
+     * @param test The test.
      */
-    public AccessControllerTest(String test) {
+    public ExcaliburTest(String test) {
         super(test);
     }
 
-    /**
-     * The main method.
-     * @param args The command-line arguments.
-     */
-    public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
-        TestRunner.run(AccessControllerTest.class);
-    }
+    public static final String CONFIGURATION = "/" +
+        ExcaliburTest.class.getPackage().getName().replace('.', '/') + "/lenya.xtest";
 
     /**
-     * The test.
-     * @throws AccessControlException when something went wrong.
+     * @see org.apache.avalon.excalibur.testcase.ExcaliburTestCase#prepare()
      */
-    public void testAccessController() throws AccessControlException {
-        assertNotNull(getAccessController());
+    protected void prepare() throws Exception {
+        System.out.println(CONFIGURATION);
+        InputStream stream = ExcaliburTest.class.getResourceAsStream(CONFIGURATION);
+        prepare(stream);
     }
 
 }

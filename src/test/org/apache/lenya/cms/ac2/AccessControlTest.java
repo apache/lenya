@@ -55,9 +55,15 @@ $Id
 */
 package org.apache.lenya.cms.ac2;
 
+import java.io.File;
+
+import org.apache.avalon.framework.component.ComponentSelector;
+import org.apache.lenya.cms.ExcaliburTest;
+import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.User;
-
+import org.apache.lenya.cms.ac2.file.FileAccreditableManager;
+import org.apache.lenya.cms.ac2.file.FilePolicyManager;
 
 /**
  * @author andreas
@@ -65,12 +71,101 @@ import org.apache.lenya.cms.ac.User;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class AccessControlTest extends org.apache.lenya.cms.ac.AccessControlTest {
+public class AccessControlTest extends ExcaliburTest {
+
+    private AccessControllerResolver accessControllerResolver;
+    private DefaultAccessController accessController;
+    private AccreditableManager accreditableManager;
+    private ComponentSelector selector;
+
     /**
      * @param test The test.
      */
     public AccessControlTest(String test) {
         super(test);
+    }
+
+    /**
+     * Returns the access controller.
+     * @return An access controller.
+     */
+    public DefaultAccessController getAccessController() {
+        return accessController;
+    }
+
+    protected static final String URL = "/test/authoring/index.html";
+
+    /** @see junit.framework.TestCase#setUp() */
+    protected void setUp() throws Exception {
+
+        if (PublicationHelper.getPublication() == null) {
+            String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
+            PublicationHelper.extractPublicationArguments(args);
+        }
+
+        super.setUp();
+
+        accessControllerResolver =
+            (AccessControllerResolver) manager.lookup(AccessControllerResolver.ROLE);
+
+        assertNotNull(accessControllerResolver);
+        getLogger().info(
+            "Using access controller resolver: [" + accessControllerResolver.getClass() + "]");
+
+        String contextUri =
+            "file://" + PublicationHelper.getPublication().getServletContext().getAbsolutePath();
+        accessController =
+            (DefaultAccessController)
+                (
+                    (
+                        PublicationAccessControllerResolver) accessControllerResolver)
+                            .resolveAccessController(
+                URL,
+                contextUri);
+
+        assertNotNull(accessController);
+        getLogger().info("Resolved access controller: [" + accessController.getClass() + "]");
+
+        File servletContext = PublicationHelper.getPublication().getServletContext();
+        ((FilePolicyManager) accessController.getPolicyManager()).setPoliciesDirectory(
+            servletContext);
+
+        File accreditablesDirectory =
+            new File(
+                PublicationHelper.getPublication().getDirectory(),
+                "config/ac/passwd".replace('/', File.separatorChar));
+        ((FileAccreditableManager) accessController.getAccreditableManager())
+            .setConfigurationDirectory(accreditablesDirectory);
+
+        String role = AccreditableManager.ROLE + "Selector";
+        selector = (ComponentSelector) manager.lookup(role);
+
+    }
+
+    /**
+     * The teardown method for JUnit
+     *
+     * @exception  Exception  Description of Exception
+     * @since
+     */
+    public void tearDown() throws Exception {
+        super.tearDown();
+
+        if (accessControllerResolver != null) {
+            if (accessController != null) {
+                accessControllerResolver.release(accessController);
+            }
+            manager.release(accessControllerResolver);
+        }
+
+        if (selector != null) {
+            if (accreditableManager != null) {
+                selector.release(accreditableManager);
+                accreditableManager = null;
+            }
+            manager.release(selector);
+            selector = null;
+        }
     }
 
     protected static final String USERNAME = "lenya";
@@ -81,7 +176,8 @@ public class AccessControlTest extends org.apache.lenya.cms.ac.AccessControlTest
      * @throws AccessControlException when something went wrong.
      */
     protected Identity getIdentity() throws AccessControlException {
-        User user = getAccreditableManager().getUserManager().getUser(USERNAME);
+        DefaultAccessController controller = (DefaultAccessController) getAccessController();
+        User user = controller.getAccreditableManager().getUserManager().getUser(USERNAME);
         assertNotNull(user);
 
         Identity identity = new Identity();
@@ -89,4 +185,13 @@ public class AccessControlTest extends org.apache.lenya.cms.ac.AccessControlTest
 
         return identity;
     }
+    
+    protected FilePolicyManager getPolicyManager() {
+        return (FilePolicyManager) getAccessController().getPolicyManager();
+    }
+    
+    protected AccreditableManager getAccreditableManager() {
+        return getAccessController().getAccreditableManager();
+    }
+
 }

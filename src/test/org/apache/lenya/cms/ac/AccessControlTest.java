@@ -78,6 +78,7 @@ import java.io.File;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class AccessControlTest extends TestCase {
+
     /**
      * Constructor.
      * @param test The test to execute.
@@ -146,6 +147,7 @@ public class AccessControlTest extends TestCase {
 
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
+        
         if (PublicationHelper.getPublication() == null) {
             String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
             PublicationHelper.extractPublicationArguments(args);

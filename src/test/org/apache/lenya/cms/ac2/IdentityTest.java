@@ -43,7 +43,7 @@ public class IdentityTest extends AccessControlTest {
      */
     public void testIdentity() throws AccessControlException {
         Identity identity = new Identity();
-        User user = getAccreditableManager().getUserManager().getUser(USER_ID);
+        User user = getAccessController().getAccreditableManager().getUserManager().getUser(USER_ID);
         System.out.println("Adding user to identity: [" + user + "]");
         identity.addIdentifiable(user);
         

@@ -56,7 +56,6 @@ $Id
 package org.apache.lenya.cms.workflow;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import junit.textui.TestRunner;
@@ -66,11 +65,9 @@ import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac.UserManager;
+import org.apache.lenya.cms.ac2.AccessControlTest;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.file.FileAccreditableManager;
-import org.apache.lenya.cms.ac2.file.FilePolicyManager;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -86,14 +83,13 @@ import org.apache.lenya.workflow.WorkflowInstance;
 
 import java.io.File;
 
-
 /**
  * @author andreas
  *
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class WorkflowTest extends TestCase {
+public class WorkflowTest extends AccessControlTest {
     /**
      * Constructor.
      * @param test The test to execute.
@@ -133,8 +129,12 @@ public class WorkflowTest extends TestCase {
      * @throws DocumentBuildException when something went wrong.
      */
     public void testWorkflow()
-        throws DocumentTypeBuildException, WorkflowException, AccessControlException, 
-            PageEnvelopeException, DocumentBuildException {
+        throws
+            DocumentTypeBuildException,
+            WorkflowException,
+            AccessControlException,
+            PageEnvelopeException,
+            DocumentBuildException {
         Publication publication = PublicationHelper.getPublication();
         String url = "/" + publication.getId() + URL;
         Document document = DefaultDocumentBuilder.getInstance().buildDocument(publication, url);
@@ -143,8 +143,7 @@ public class WorkflowTest extends TestCase {
         assertTrue(configDir.exists());
 
         File configurationDirectory = new File(publication.getDirectory(), "config/ac");
-        FileAccreditableManager accreditableManager = new FileAccreditableManager(configurationDirectory);
-        Policy policy = new FilePolicyManager().getPolicy(accreditableManager, publication, URL);
+        Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
 
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
         String workflowId = type.getWorkflowFileName();
@@ -159,9 +158,10 @@ public class WorkflowTest extends TestCase {
 
             System.out.println("Current state: " + instance.getCurrentState());
 
-            User user = UserManager.instance(configDir).getUser(situations[situationIndex].getUser());
-
             Identity identity = new Identity();
+            User user =
+                getAccreditableManager().getUserManager().getUser(
+                    situations[situationIndex].getUser());
             identity.addIdentifiable(user);
 
             Role[] roles = policy.getRoles(identity);
@@ -202,19 +202,21 @@ public class WorkflowTest extends TestCase {
 
             assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
 
-            System.out.println("Variable: " + variableName + " = " +
-                instance.getValue(variableName));
+            System.out.println(
+                "Variable: " + variableName + " = " + instance.getValue(variableName));
             System.out.println("------------------------------------------------------");
         }
 
         System.out.println("Test completed.");
     }
 
-    private static final TestSituation[] situations = {
-        new TestSituation("lenya", "submit", false), new TestSituation("roger", "reject", false),
-        new TestSituation("lenya", "submit", false), new TestSituation("roger", "publish", true),
-        new TestSituation("roger", "deactivate", false)
-    };
+    private static final TestSituation[] situations =
+        {
+            new TestSituation("lenya", "submit", false),
+            new TestSituation("roger", "reject", false),
+            new TestSituation("lenya", "submit", false),
+            new TestSituation("roger", "publish", true),
+            new TestSituation("roger", "deactivate", false)};
 
     /**
      * A test situation.
@@ -263,16 +265,6 @@ public class WorkflowTest extends TestCase {
         }
     }
 
-    private static String documentTypeName;
+    private static String documentTypeName = "simple";
 
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        if (documentTypeName == null) {
-            String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
-            PublicationHelper.extractPublicationArguments(args);
-            documentTypeName = "simple";
-        }
-    }
 }
