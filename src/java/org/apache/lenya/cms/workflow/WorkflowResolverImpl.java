@@ -43,7 +43,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
@@ -72,8 +71,7 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
             if (doctype.hasWorkflow()) {
                 String workflowFileName = doctype.getWorkflowFileName();
 
-                PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                Publication publication = factory.getPublication(this.objectModel);
+                Publication publication = document.getPublication();
 
                 File workflowDirectory = new File(publication.getDirectory(), WORKFLOW_DIRECTORY);
                 File workflowFile = new File(workflowDirectory, workflowFileName);
