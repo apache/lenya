@@ -40,27 +40,17 @@
  
 <xsl:template match="menu:menu">
     
-	<div id="lenya-menubar">
-	  
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="lenya-menubar-menu">
-      <tr>
-        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif'); width: 13px; height: 4px;">
-          <img src="{$image-prefix}/frame-bg_oben.gif" width="13" height="4" alt=""/></td>
-        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif'); height: 4px;">
-          <img src="{$image-prefix}/frame-bg_oben.gif" height="4" alt=""/></td>
-        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif'); width: 70%; height: 4px;">
-          <img src="{$image-prefix}/frame-bg_oben.gif" height="4" alt=""/></td>
-        <td style="background-image: url('{$image-prefix}/frame-bg_oben.gif'); width: 101px; height: 4px;">
-          <img src="{$image-prefix}/frame-bg_oben.gif" width="101" height="4" alt=""/></td>
-      </tr>
-      
-      <tr>
-        <td class="lenya-menubar-td-left" rowspan="2" valign="bottom" align="right"
-            style="background-image: url('{$contextprefix}/lenya/menu/images/grau-bg.gif')">
-          <img src="{$image-prefix}/blau_anfang_oben.gif" alt=""/>
-        </td>
-        <td style="background-image: url('{$image-prefix}/grau-bg2.gif'); white-space: nowrap;">
+  <!-- Lenya graphic -->
+  <div id="lenya-logo">
+    <img src="{$image-prefix}/lenya-logo.gif" alt="Lenya" />
+  </div>
 
+  <div id="lenya-menus">
+
+    <!-- The main tabs for the different areas of Lenya -->
+    <div id="lenya-areas">
+      <ul>
+  
         <!-- ADMIN TAB -->
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'admin']/@show = 'false')">
           <xsl:call-template name="area-tab">
@@ -68,7 +58,6 @@
           </xsl:call-template>
         </xsl:if>
           
-
         <!-- INFO/SITE TAB -->
         <xsl:variable name="info-area">
           <xsl:text>info-</xsl:text>
@@ -101,58 +90,40 @@
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'live']/@show = 'false')">
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">live</xsl:with-param>
-            <xsl:with-param name="target">external</xsl:with-param>
+            <xsl:with-param name="target">_blank</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
           
-        </td>
-        
-        <td class="lenya-menubar-td-infoline" valign="bottom" align="right" colspan="2"
-            style="background-image: url('{$image-prefix}/grau-bg2.gif')">
-        	<div class="lenya-menubar-infoline">
-        	  
-        	  <xsl:if test="$workflowstate != ''">
-        	    <xsl:call-template name="workflow"/>
-        	  </xsl:if>
-            &#160;<i18n:text>User</i18n:text>: <strong><xsl:value-of select="$userid"/></strong>&#160;&#160;|&#160;&#160;<i18n:text>Server Time</i18n:text>: <strong><xsl:value-of select="$servertime"/></strong>
-          </div>
-          
-        <div style="margin-top: 5px;"><img style="border: 0px;" src="{$image-prefix}/lenya_oben_2.gif" alt=""/></div>
-       </td>
-      </tr>
-      
-      <tr>
-        <td colspan="2" style="background-image: url('{$image-prefix}/unten.gif')"><img style="border: 0px"
-            src="{$image-prefix}/unten.gif" alt=""/></td>
-        <td valign="top" rowspan="2"
-          style="background-image: url('{$image-prefix}/grau-bg.gif')"><img style="border: 0px"
-            src="{$image-prefix}/lenya_unten.gif" alt=""/></td>
-      </tr>
-      
-      <tr valign="top">
-        <td valign="top" colspan="3">
-          <div id="navTop">
-            <div id="navTopBG">
-            	<div style="height: 100%; padding: 3px 0px;">
-						    <div style="float:left; width:12px; border-right: solid 1px #999999;">&#160;</div>
-  	            <xsl:apply-templates select="menu:menus/menu:menu" mode="nav"/>&#160;
-            	</div>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </table>
-    
-    <xsl:apply-templates select="menu:menus/menu:menu" mode="menu"/>
-	</div>
-	
+      </ul>
+    </div>
+ 
+    <!-- General information about the state  of the page, etc. -->
+    <div id="lenya-info">
+      <ul>
+        <xsl:if test="$workflowstate != ''">
+          <xsl:call-template name="workflow"/>
+        </xsl:if>
+        <li id="info-user"><i18n:text>User</i18n:text>: <span id="logged-user"><xsl:value-of select="$userid"/></span></li>
+        <li id="info-time"><i18n:text>Server Time</i18n:text>: <span id="server-time"><xsl:value-of select="$servertime"/></span></li>
+      </ul>
+    </div>
+
+    <!-- drop down menus for area options -->
+    <div id="lenya-options">
+      <ul>
+        <xsl:apply-templates select="menu:menus/menu:menu" mode="nav"/>
+      </ul>
+    </div>
+
+  </div>
+
 </xsl:template>
   
   
   <xsl:template name="area-tab">
     <xsl:param name="tab-area"/>
     <xsl:param name="tab-area-prefix" select="$tab-area"/>
-    <xsl:param name="target" select="'internal'"/>
+    <xsl:param name="target" select="'_self'"/>
     
     <xsl:variable name="tab-documenturl">
       <xsl:choose>
@@ -162,100 +133,98 @@
         <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    
-    <a id="{$tab-area-prefix}-tab"
-       href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}"
-       rel="{$target}">
-       <!--
-       target="{$target}"
-       -->
+
+    <xsl:variable name="tab-name">
       <xsl:choose>
-        <xsl:when test="starts-with($completearea, $tab-area-prefix)">
-          <img style="border: 0px" src="{$image-prefix}/{$tab-area-prefix}_active.gif" alt="active {$tab-area-prefix} tab"/>
-        </xsl:when>
+        <xsl:when test="starts-with($tab-area, 'info')">Site</xsl:when>
         <xsl:otherwise>
-           <img style="border: 0px" src="{$image-prefix}/{$tab-area-prefix}_inactive.gif" alt="inactive {$tab-area-prefix} tab"/>
+          <xsl:value-of select="$tab-area"/>
         </xsl:otherwise>
       </xsl:choose>
-    </a>
+    </xsl:variable>
+    
+    <xsl:choose>
+      <xsl:when test="starts-with($completearea, $tab-area-prefix)">
+        <li id="area-{$tab-area}-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}" target="{$target}"><span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
+      </xsl:when>
+      <xsl:otherwise>
+        <li id="area-{$tab-area}"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}" target="{$target}"><span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   
   <xsl:template name="workflow">
-    <i18n:text>Workflow State</i18n:text>: <b class="lenya-menubar-highlight"><i18n:text><xsl:value-of select="$workflowstate"/></i18n:text></b>
-    <xsl:text>&#160;&#160;|&#160;&#160;</xsl:text>
-    <xsl:if test="$islive = 'false'"><i18n:text>not</i18n:text>&#160;</xsl:if>
-    <i18n:text>live</i18n:text><xsl:text>&#160;&#160;|</xsl:text>
+    <li id="info-state"><i18n:text>Workflow State</i18n:text>: <span id="workflow-state"><i18n:text><xsl:value-of select="$workflowstate"/></i18n:text></span></li>
+    <li id="info-live">
+      <xsl:choose>
+        <xsl:when test="$islive = 'false'">
+          <i18n:text>not live</i18n:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <i18n:text>live</i18n:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </li>
   </xsl:template>
   
-    
   <xsl:template match="menu:menu" mode="nav">
-    <div id="nav{@label}" class="click" style="float:left; width: 100px; border-right: 1px solid #999999;">
-      &#160;&#160;<xsl:value-of select="@name"/>
-    </div>
+    <li id="nav{position()}"><xsl:value-of select="@name"/>
+      <ul id="menu{position()}">
+        <xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+      </ul>
+    </li>
   </xsl:template>
-  
-  <xsl:template match="menu:menu[not(*)]" mode="nav">
-    <div id="nav{@label}" class="click" style="float:left; width: 100px; border-right: 1px solid #999999;">
-      &#160;&#160;<span class="lenya-menubar-menu-disabled"><xsl:value-of select="@name"/></span>
-    </div>
-  </xsl:template>
-  
-  
-  <xsl:template match="menu:menu" mode="menu">
-    <div id="menu{@label}" class="menuOutline">
-      <div class="menuBg" style="">
-      	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]" mode="submenu"/>
-      </div>
-    </div>
-  </xsl:template>
-  
-  
-  <!-- match blocks with not area='false' -->
-  <xsl:template match="menu:block" mode="submenu">
-    <xsl:apply-templates select="menu:title"/>
 
-    <!-- * is menu:item and menu:menu -->
-    <xsl:apply-templates select="*[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]" mode="submenu"/>
+  <xsl:template match="menu:menu[not(*)]" mode="nav">
+    <li id="nav{position()}" class="disabled">
+      <xsl:value-of select="@name"/>
+    </li>
+  </xsl:template>
+ 
+  <!-- match blocks with not area='false' -->
+  <xsl:template match="menu:block">
+    <xsl:apply-templates select="menu:title"/>
+    <xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
 		
     <xsl:if test="position() != last()">
-      <div class="lenya-menubar-separator">
-        <img src="{$image-prefix}/pixel.gif" height="1" alt="" />
-      </div>
+      <li class="lenya-menu-separator"></li>
     </xsl:if>
   </xsl:template>
   
-  <xsl:template match="menu:menu" mode="submenu">
-    <span class="mI"><strong><xsl:value-of select="@name"/></strong></span>
-    <xsl:apply-templates mode="submenu"/>
-  </xsl:template>
   
   <xsl:template match="menu:title">
-    <span class="mI"><strong><xsl:apply-templates/></strong></span>
+    <xsl:apply-templates/>
   </xsl:template>
   	
   <!-- match items with not area='false' -->
-  <xsl:template match="menu:item" mode="submenu">
-		<xsl:choose>
-			<xsl:when test="@href">
-				<a class="mI">
-					<xsl:attribute name="href">
-						<xsl:value-of select="@href"/>
-						<xsl:apply-templates select="@*[local-name() != 'href']"/>
-						<xsl:text/>
-						<xsl:if test="starts-with($completearea, 'info-')">
-							<xsl:choose>
-								<xsl:when test="contains(@href, '?')"><xsl:text>&amp;</xsl:text></xsl:when>
-								<xsl:otherwise><xsl:text>?</xsl:text></xsl:otherwise>
-							</xsl:choose>
-							 <xsl:text>lenya.area=info</xsl:text>
-						</xsl:if>
-					</xsl:attribute><xsl:value-of select="."/></a>
-			</xsl:when>
-			<xsl:otherwise>
-				<span class="mI"><xsl:value-of select="."/></span>
-			</xsl:otherwise>
-		</xsl:choose>
+  <xsl:template match="menu:item">
+    <xsl:choose>
+      <xsl:when test="@href">
+        <li><a>
+          <xsl:attribute name="href">
+            <xsl:value-of select="@href"/>
+            <xsl:apply-templates select="@*[local-name() != 'href']"/>
+            <xsl:text/>
+            <xsl:if test="starts-with($completearea, 'info-')">
+              <xsl:choose>
+                <xsl:when test="contains(@href, '?')">
+                  <xsl:text>&amp;</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:text>?</xsl:text>
+                </xsl:otherwise>
+              </xsl:choose>
+              <xsl:text>lenya.area=info</xsl:text>
+            </xsl:if>
+          </xsl:attribute>
+          <span><xsl:value-of select="."/></span>
+        </a></li>
+      </xsl:when>
+      <xsl:otherwise>
+        <li class="disabled"><xsl:value-of select="."/></li>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   
