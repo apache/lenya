@@ -7,7 +7,7 @@
 
 SCP=/usr/bin/scp
 
-CONTEXT=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya
+CONTEXT=/usr/local/jakarta-tomcat-4.0.4-b3/webapps/lenya
 PUBLICATION_DIR=$CONTEXT/lenya/pubs
 
 SFTP_BATCH=$CONTEXT/lenya/bin/copy-recursive.sh
@@ -23,10 +23,10 @@ PUBLICATION_ID_1=unipublic
 EXPORT_DIR_1=$PUBLICATION_DIR/unipublic/resources/export
 PENDING_DIR_1=$EXPORT_DIR_1/pending/lenya/unipublic
 REPLICATION_DIR_1=$EXPORT_DIR_1/replication
-RU_1_1=michiii
+RU_1_1=username
 RH_1_1=127.0.0.1
-RDOCS_1_1=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/ROOT
-RU_1_2=michiii
+RDOCS_1_1=/usr/local/jakarta-tomcat-4.0.4-b3/webapps/ROOT
+RU_1_2=username
 RH_1_2=127.0.0.1
 RDOCS_1_2=/usr/local/apache/htdocs_unipublic
 
@@ -36,10 +36,10 @@ PUBLICATION_ID_2=oscom
 EXPORT_DIR_2=$PUBLICATION_DIR/oscom/resources/export
 PENDING_DIR_2=$EXPORT_DIR_2/pending/lenya/oscom
 REPLICATION_DIR_2=$EXPORT_DIR_2/replication
-RU_2_1=michiii
+RU_2_1=username
 RH_2_1=127.0.0.1
-RDOCS_2_1=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/ROOT
-RU_2_2=michiii
+RDOCS_2_1=/usr/local/jakarta-tomcat-4.0.4-b3/webapps/ROOT
+RU_2_2=username
 RH_2_2=127.0.0.1
 RDOCS_2_2=/usr/local/apache/htdocs_oscom
 
@@ -49,11 +49,11 @@ PUBLICATION_ID_3=forum
 EXPORT_DIR_3=$PUBLICATION_DIR/forum/resources/export
 PENDING_DIR_3=$EXPORT_DIR_3/pending/lenya/forum
 REPLICATION_DIR_3=$EXPORT_DIR_3/replication
-RU_3_1=michi
-RH_3_1=cvs.lenya.org
+RU_3_1=username
+RH_3_1=hostname
 RDOCS_3_1=/usr/local/apache/htdocs_oscom/news
-RU_3_2=michi
-RH_3_2=cvs.lenya.org
+RU_3_2=username
+RH_3_2=hostname
 RDOCS_3_2=/usr/local/apache/htdocs_oscom/news
 
 
