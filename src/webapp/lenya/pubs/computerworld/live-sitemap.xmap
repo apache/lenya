@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.10 2003/01/29 18:04:20 gregorcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.11 2003/01/31 10:24:47 felixcms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -54,7 +54,7 @@
 					<map:parameter name="id" value="/index.html"/>
 					<map:parameter name="front" value="yes"/>
 				</map:transform>
-<!--				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> -->
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- Detail Article view -->
@@ -71,7 +71,7 @@
 					<map:parameter name="id" value="/news/"/>
 					<map:parameter name="front" value="no"/>
 				</map:transform>
-<!--				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> -->
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> 
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- Include only articles specified in headlines.xml -->
@@ -98,7 +98,7 @@
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/today.xsl"/>
-<!--				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> -->
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> 
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- ALL it-kalender overview -->
@@ -116,7 +116,7 @@
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/today.xsl"/>
-<!--				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> -->
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- Include ALL it-stellen -->
@@ -174,7 +174,7 @@
 				<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl">
 					<map:parameter name="id" value="/{1}"/>
 				</map:transform>
-<!--				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> -->
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
 		</map:pipeline>
