@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.16 2003/04/04 16:01:39 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/04/08 16:22:13 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -8,9 +8,7 @@
 
   <map:components>
 
-    <map:generators default="file">
-      <map:generator name="servletproxy" src="org.lenya.cms.cocoon.generation.ProxyGenerator"/>
-    </map:generators>
+    <map:generators default="file" />
     <map:transformers default="xslt">
       <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
         <publication type="unipublic"/>

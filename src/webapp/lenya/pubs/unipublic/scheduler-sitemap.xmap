@@ -75,21 +75,6 @@
       </map:match>
       
     </map:pipeline>    
-    
-    <!-- Admin interface -->
-<!--    
-    <map:pipeline>
-      <map:match pattern="admin/pubid/**">
-        <map:generate type="servletproxy"
-	  src="/lenya/servlet/QuartzSchedulerServlet"/>
-        <map:transform src="../../xslt/scheduler/sort.xsl"/>
-        <map:transform src="../../xslt/scheduler/adminPublication.xsl">
-	  <map:parameter name="documentID" value="{1}"/>
-	</map:transform>
-        <map:serialize type="html"/>
-      </map:match>
-    </map:pipeline>    
--->
 
   </map:pipelines>
 </map:sitemap>

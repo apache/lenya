@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id: authoring-sitemap.xmap,v 1.35 2003/04/01 13:18:49 gregor Exp $ -->
+<!-- $Id: authoring-sitemap.xmap,v 1.36 2003/04/08 16:22:12 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
   <map:components>
@@ -9,22 +9,6 @@
     <map:matchers default="wildcard" />
    <!-- =========================== Actions ================================ -->
     <map:actions>
-      <map:action name="reserved-checkout"
-        src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction"
-        logger="sitemap.action.reserved-checkout">
-        <rcmlDirectory href="content/rcml"/>
-        <backupDirectory href="content/rcbak"/>
-      </map:action>
-      <map:action name="reserved-checkin"
-        src="org.lenya.cms.cocoon.acting.ReservedCheckinAction"
-        logger="sitemap.action.reserved-checkin">
-        <rcmlDirectory href="content/rcml"/>
-        <backupDirectory href="content/rcbak"/>
-      </map:action>
-      <map:action name="rollback" src="org.lenya.cms.cocoon.acting.RollbackAction">
-        <rcmlDirectory href="content/rcml"/>
-        <backupDirectory href="content/rcbak"/>
-      </map:action>
       <!-- tasks -->
       <map:action name="task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
       <!-- request parameters -->

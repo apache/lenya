@@ -73,9 +73,7 @@ Existing cookies are being forward. New cookies are not being forwarded.
 <source><![CDATA[
 
 <map:components>
-  <map:generators default="file">
-    <map:generator name="proxygen" src="org.lenya.cms.cocoon.generation.ProxyGenerator" logger="webapp.proxygen"/>
-  </map:generators>
+  <map:generators default="file" />
 </map:components>
 
 ]]></source>
@@ -83,16 +81,6 @@ Existing cookies are being forward. New cookies are not being forwarded.
 
    <section><title>Sitemap: Pipeline</title>
 <source><![CDATA[
-
-<map:pipeline>
-  <map:match pattern="test-proxy-generator.xml">
-    <map:generate type="proxygen" src="/lenya/servlet/TestProxyGeneratorServlet"/>
-<!--
-    <map:generate type="proxygen" src="http://127.0.0.1:8080/lenya/servlet/TestProxyGeneratorServlet"/>
--->
-    <map:serialize type="xml"/>
-  </map:match>
-</map:pipeline>
 
 ]]></source>
    </section>

@@ -14,21 +14,6 @@
       <map:action name="publisher" src="org.lenya.cms.cocoon.acting.TaskAction">
         <task id="publish"/>
       </map:action>
-<!--
-      <map:action name="publisher" src="org.lenya.cms.cocoon.acting.PublisherAction">
-        <authoring href="content/authoring/"/>
-        <live href="content/live/"/>
-        <tree-authoring href="content/authoring/tree.xml"/>
-        <tree-live href="content/live/tree.xml"/>
-        <export-directory prefix="resources/export/pending"/>
-        <export-url-prefix substitute="s/\/lenya\/forum/\/news/g"/>
-      </map:action>
--->
-      <map:action name="parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
-        <tree-authoring href="content/authoring/tree.xml"/>
-        <docs href="content/authoring"/>
-        <doctypes href="content/doctypes/"/>
-      </map:action>
     </map:actions>
     <map:selectors default="browser"/>
     </map:selectors>
@@ -116,9 +101,6 @@
 
       <map:match pattern="index.rss">
         <!-- Redirect to Live Area -->
-<!--
-        <map:redirect-to uri="../index.rss"/>
--->
         <map:generate src="cocoon:/index.xml"/>
         <map:transform src="xslt/front/rdf.xsl"/>
         <map:serialize type="xml"/>

@@ -8,9 +8,7 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    <map:actions>
-      <map:action name="request" src="org.lenya.cms.cocoon.acting.RequestParamAction"/>
-    </map:actions>
+    <map:actions />
     <map:selectors default="browser"/>
   </map:components>
 

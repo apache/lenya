@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.12 2003/03/19 12:38:39 edith Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.13 2003/04/08 16:22:12 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -45,43 +45,9 @@
 
   <map:pipelines>
     <map:pipeline>
-      <map:match pattern="authoring/introduction.html">
-        <map:redirect-to uri="../introduction.html"/>
-      </map:match>
-      <map:match pattern="introduction.html">
-        <map:read src="resources/html/index.html" mime-type="text/html"/>
-      </map:match>
-      <map:match pattern="authoring/customizing.html">
-        <map:redirect-to uri="../customizing.html"/>
-      </map:match>
-      <map:match pattern="customizing.html">
-        <map:read src="resources/html/customizing.html" mime-type="text/html"/>
-      </map:match>
-      <map:match pattern="authoring/submitStory.html">
-        <map:redirect-to uri="../submitStory.html"/>
-      </map:match>
-      <map:match pattern="submitStory.html">
-        <map:read src="resources/html/submitStory.html" mime-type="text/html"/>
-      </map:match>
-      <map:match pattern="authoring/gettingStarted.html">
-        <map:redirect-to uri="../gettingStarted.html"/>
-      </map:match>
-      <map:match pattern="gettingStarted.html">
-        <map:read src="resources/html/gettingStarted.html" mime-type="text/html"/>
-      </map:match>
-    </map:pipeline>    
-
-    <map:pipeline>
       <map:match pattern="live/**">
         <map:mount uri-prefix="" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-
-          <!-- The authoring area -->
-<!--
-          <map:match pattern="authoring/**">
-            <map:mount uri-prefix="authoring" src="authoring-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-          </map:match>
--->
 
       <!-- Xopus Interface -->
       <map:match pattern="xopus/**">
@@ -127,21 +93,6 @@
           <!--          Everything below is "protected" by policies-sitemap.xmap        -->
           <!--  ####################################################################### -->
 
-          <!-- Identities requested by IMLAuthenticator -->
-<!--
-          <map:match pattern="passwd/*.iml">
-            <map:generate src="docs/lenya/ac/passwd/{1}.iml"/>
-            <map:serialize type="xml"/>
-          </map:match>
--->
-
-          <!-- Policies requested by PMLAuthorizer -->
-<!--
-          <map:match pattern="policies/**">
-            <map:mount uri-prefix="" src="policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-          </map:match>
--->
-
           <!-- The authoring area -->
           <map:match pattern="authoring/**">
             <map:mount uri-prefix="authoring" src="authoring-sitemap.xmap" check-reload="true" reload-method="synchron"/>
@@ -154,12 +105,6 @@
         </map:act>
         <map:call resource="login"/>
       </map:match>
-
-<!--
-      <map:match pattern="**">
-        <map:mount uri-prefix="" src="live-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
--->
 
       <map:handle-errors>
         <map:transform src="context://stylesheets/system/error2html.xsl"/>

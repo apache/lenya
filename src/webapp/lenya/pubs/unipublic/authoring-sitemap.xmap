@@ -20,16 +20,9 @@
 				<rcmlDirectory href="content/rcml"/>
 				<backupDirectory href="content/rcbak"/>
 			</map:action>
-			<!-- tasks -->
-			<map:action name="task" logger="sitemap.action.task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
 			<!-- dossier selection -->
 			<map:action name="dossier" src="ch.unizh.unipublic.lenya.cms.DossierAction"/>
 
-			<map:action name="parent-child" logger="sitemap.action.parent-child" src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
-				<tree-authoring href="content/authoring/tree.xml"/>
-				<docs href="content/authoring"/>
-				<doctypes href="content/doctypes/"/>
-			</map:action>
 			<map:action logger="action.upload" name="file-upload" src="org.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
 				<resources-root href="resources/images/live"/>
 				<docs-root href="content/authoring"/>
