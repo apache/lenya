@@ -26,10 +26,11 @@
 <ol>
   <li><a href="#preamble">Preamble</a></li>
   <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#download">Download</a></li>
   <li><a href="#publications">Sample Publications</a></li>
-  <li><a href="#tutorial">Tutorial</a></li>
   <li><a href="docs/">Documentation</a>
     <ol>
+      <li><a href="docs/tutorial/index.html">Tutorial</a></li>
       <li><a href="docs/index.html#userguide">User's Guide</a></li>
       <li><a href="docs/index.html#adminguide">Administrator's Guide</a></li>
       <li><a href="docs/index.html#integratorguide">Integrator's Guide (and Deployment Guide)</a></li>
@@ -85,12 +86,32 @@ You are very welcome to participate in the <a href="http://www.wyona.org">Wyona 
 Thank you very much for your suggestions and contributions.
 </p>
 
+<a name="download"></a>
+<h2>Download</h2>
+<p>
+Regular stable snapshots can be downloaded from the <a
+href="http://www.wyona.org/download/index.html">Wyona CMS homepage</a>.
+</p>
+<p>
+For those living on the bleeding edge, we provide anonymous CVS access to the
+current development version.<br/><br/>
+
+<code>cvs -d  :pserver:anonwyonacms@194.191.122.220:/repository checkout
+          wyonacms</code><br/>
+or (bash syntax)<br/><br/>
+<code>export CVSROOT=:pserver:anonwyonacms@194.191.122.220:/repository<br /><br/>
+cvs checkout wyonacms
+</code>
+
+</p>
+
+
 <a name="publications"></a>
 <h2>Sample Publications</h2>
 <p>
 We are working on a catalog of sample publications. The idea is that an
-"integrator" can pull out an appropriate publication and reuse it for
-building efficiently its own publication. The <a href="#tutorial">tutorial</a> describes how to do that.
+"integrator" can pull out an appropriate publication and reuse it for building
+efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial</a> describes how to do that.
 </p>
 <ol>
   <li><b>Department:</b> <a href="ethz-mat/index.html">Materials Science</a> (Original Website: <a href="http://mat.ethz.ch">http://mat.ethz.ch</a>, NOTE: The Department of Materials Science does not use Wyona CMS yet)</li>
@@ -104,19 +125,6 @@ building efficiently its own publication. The <a href="#tutorial">tutorial</a> d
   <li><b>Documentation:</b> <a href="docs/">Wyona CMS</a> (<a href="http://www.docbook.org">DocBook</a>)</li>
 </ol>
 
-<a name="tutorial"></a>
-<h2>Tutorial</h2>
-<ol>
-  <li>Copy Approriate Sample Publication
-      <br>(for instance: <code>cp -r wyona/cms/pubs/ethz-mat wyona/cms/pubs/my-pub</code>)</li>
-  <li>Configure sitemap.xmap 
-      <br>(for instance: replace ethz-mat by my-pub)</li>
-  <li>Set Prefix for Stylesheets: wyona/cms/pubs/my-pub/stylesheets/Configuration/read.xsl
-      <br>(for instance: replace ethz-mat by my-pub)</li>
-  <li>Set Name of Publication: wyona/cms/pubs/my-pub/stylesheets/wyona/cms/conf/conf.xsl
-      <br>(for instance: replace "Materials Science" by "My Publication")</li>
-  <li>Start modifying the XML, XSLT and protected-sitemap.xmap</li>
-</ol>
 <!--
 <ol>
   <li>HTML</li>
