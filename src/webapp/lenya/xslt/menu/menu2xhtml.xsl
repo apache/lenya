@@ -12,6 +12,7 @@
 <xsl:param name="documentarea"/>
 <xsl:param name="completearea"/>
 <xsl:param name="documenturl"/>
+<xsl:param name="documentid"/>
 <xsl:param name="userid"/>
 <xsl:param name="servertime"/>
 <xsl:param name="workflowstate"/>
@@ -118,6 +119,7 @@
       <xsl:choose>
         <!-- index.html for link from/to admin area -->
         <xsl:when test="$tab-area = 'admin' or $documentarea = 'admin'">/index.html</xsl:when>
+        <xsl:when test="starts-with($completearea, 'info') and $documentid = '/'">/index.html</xsl:when>
         <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
