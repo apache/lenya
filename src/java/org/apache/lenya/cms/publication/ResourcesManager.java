@@ -1,5 +1,5 @@
 /*
-$Id: ResourcesManager.java,v 1.7 2003/12/01 16:05:29 andreas Exp $
+$Id: ResourcesManager.java,v 1.8 2003/12/01 16:46:03 andreas Exp $
 <License>
 
  ============================================================================
@@ -156,7 +156,7 @@ public class ResourcesManager {
             resources[i].delete();
         }
         File directory = getPath();
-        if (directory.listFiles().length == 0) {
+        if (directory.isDirectory() && directory.listFiles().length == 0) {
             directory.delete();
         }
     }
