@@ -9,7 +9,7 @@
 <xsl:param name="publication_name"/>
 <xsl:param name="publication_id"/>
 
-<xsl:variable name="copyright">copyright &#169; 2002 lenya.org</xsl:variable>
+<xsl:variable name="copyright">copyright &#169; 2003 Apache Lenya, Apache Software Foundation</xsl:variable>
 <xsl:variable name="prefix">/<xsl:value-of select="$publication_id"/></xsl:variable>
 
 <xsl:template match="/">

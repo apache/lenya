@@ -5,7 +5,7 @@
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:param name="publication_name"/>
-<xsl:variable name="copyright">copyright &#169; 2003 lenya.org</xsl:variable>
+<xsl:variable name="copyright">copyright &#169; 2003 Lenya, Apache Software Foundation</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
