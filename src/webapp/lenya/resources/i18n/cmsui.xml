@@ -312,4 +312,12 @@
   <message key="lenya.imageupload.info.noimages">No images available.</message>  
   <message key="lenya.imageupload.links.hint">External links have to start with 'http://', internal links have to start with '/'</message>  
 
+  <!-- Revision Controller -->
+  <message key="Reason">Reason</message>
+  <message key="Filename">File name</message>
+  <message key="lenya.rc.nocheckout">Resource could not be checked out</message>
+  <message key="lenya.rc.checkedoutalready">The resource has already been checked out by another user</message>
+  <message key="lenya.rc.nocheckin">Resource could not be checked in</message>
+  <message key="Generic Exception">Generic Exception</message>
+  <message key="Check the log files.">Check the log files.</message>
 </catalogue>

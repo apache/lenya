@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -15,12 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: rco-exception.xsl,v 1.13 2004/05/22 19:43:41 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   >
   <xsl:import href="../util/page-util.xsl"/>
   
@@ -34,18 +35,20 @@
 
   <xsl:template match="rc:file-reserved-checkout-exception">
     <page:page>
-      <page:title>File Reserved Checkout Exception</page:title>
+      <page:title><i18n:text>lenya.rc.nocheckout</i18n:text></page:title>
       <page:body>
  	    <div class="lenya-box">
-    	  <div class="lenya-box-title"> Could not check out the file </div>
+    	  <div class="lenya-box-title"><i18n:text>lenya.rc.nocheckout</i18n:text></div>
 	      <div class="lenya-box-body">
-	        <p> Reason : The resource has already been checked out by another user
-            </p>
+	        <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
             <table>
-              <tr><td>User:</td><td><xsl:value-of select="rc:user"/></td></tr>
-              <tr><td>Date:</td><td><xsl:value-of select="rc:date"/></td></tr>
-              <tr><td>Filename:</td><td><xsl:value-of select="rc:filename"/></td></tr>
+              <tr><td><i18n:text>User</i18n:text>:</td><td><xsl:value-of select="rc:user"/></td></tr>
+              <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
+              <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
+            <form>
+              <input type="button" value="OK" onClick="history.go(-1)"/>
+            </form>		
   	      </div>
   	    </div>
       </page:body>
@@ -54,17 +57,16 @@
   
   <xsl:template match="rc:file-reserved-checkin-exception">
     <page:page>
-      <page:title>File Reserved Checkin Exception</page:title>
+      <page:title><i18n:text>lenya.rc.nocheckin</i18n:text></page:title>
       <page:body>
  	    <div class="lenya-box">
-          <div class="lenya-box-title">File not checked in yet</div>
+          <div class="lenya-box-title"><i18n:text>lenya.rc.nocheckin</i18n:text></div>
     	  <div class="lenya-box-body">
-	        <p> The resource has already been checked out:
-            </p>
+	        <p><i18n:text>lenya.rc.checkedoutalready</i18n:text></p>
             <table>
-              <tr><td>User:</td><td><xsl:value-of select="rc:user"/></td></tr>
-              <tr><td>Date:</td><td><xsl:value-of select="rc:date"/></td></tr>
-              <tr><td>Filename:</td><td><xsl:value-of select="rc:filename"/></td></tr>
+              <tr><td><i18n:text>User</i18n:text>:</td><td><xsl:value-of select="rc:user"/></td></tr>
+              <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
+              <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
             <form>
               <input type="button" value="OK" onClick="history.go(-1)"/>
@@ -78,16 +80,16 @@
 
   <xsl:template match="rc:generic-exception">
     <page:page>
-      <page:title>Generic Exception</page:title>
+      <page:title><i18n:text>Generic Exception</i18n:text></page:title>
       <page:body>
  	    <div class="lenya-box">
-	    <div class="lenya-box-title">Generic Exception</div>
+	    <div class="lenya-box-title"><i18n:text>Generic Exception</i18n:text></div>
 	      <div class="lenya-box-body">
-            <p>Reason: <xsl:value-of select="rc:message"/><br />
-            Check the log files.
+            <p><i18n:text>Reason</i18n:text>: <xsl:value-of select="rc:message"/><br />
+            <i18n:text>Check the log files.</i18n:text>
             </p>
             <table>
-              <tr><td>Filename:</td><td><xsl:value-of select="rc:filename"/></td></tr>
+              <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
             <form>
               <input type="button" value="OK" onClick="history.go(-1)"/>
