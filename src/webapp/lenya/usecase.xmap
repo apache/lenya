@@ -553,7 +553,7 @@
             <map:act type="user-admin-add">
               <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
-            <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
+            <map:redirect-to uri="{request:requestURI}?lenya.usecase=user-add&amp;lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
           </map:match>
           
         </map:match>
@@ -570,7 +570,7 @@
             <map:act type="user-admin-modify">
               <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
-            <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
+            <map:redirect-to uri="{request:requestURI}?lenya.usecase=user-add&amp;lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
           </map:match>
           
         </map:match>
@@ -587,7 +587,7 @@
             <map:act type="user-admin-delete">
               <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
-            <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
+            <map:redirect-to uri="{request:requestURI}?lenya.usecase=user-add&amp;lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
           </map:match>
           
         </map:match>
