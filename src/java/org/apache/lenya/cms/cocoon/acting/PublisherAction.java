@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -41,6 +42,7 @@ public class PublisherAction
     private String treeLivePath = null;
     
   //private String replication_queue_href=null;
+  private String directoryPrefix=null;
 
 /**
  *
@@ -53,6 +55,8 @@ public class PublisherAction
     treeAuthoringPath = conf.getChild("tree-authoring").getAttribute("href");
     treeLivePath = conf.getChild("tree-live").getAttribute("href");
 
+    directoryPrefix=conf.getChild("export-directory").getAttribute("prefix");
+
     //replication_queue_href=conf.getChild("replication-queue").getAttribute("href");
     if (getLogger().isDebugEnabled()) {
 	getLogger().debug("CONFIGURATION:\nauthoring path=" +
@@ -62,6 +66,7 @@ public class PublisherAction
 			  treeLivePath);
 	
 	//getLogger().debug("CONFIGURATION:\nReplication Queue: href="+replication_queue_href);
+      getLogger().debug("CONFIGURATION:\nDirectory Prefix: href="+directoryPrefix);
     }
   }
     /**
@@ -87,6 +92,8 @@ public class PublisherAction
 	String absoluteTreeAuthoringPath = sitemapParentPath + treeAuthoringPath;
 	String absoluteTreeLivePath = sitemapParentPath + treeLivePath;
 
+    String exportDirectory=sitemapParentPath+directoryPrefix;
+
 	// Get request object
 	Request request = (Request)objectModel.get(Constants.REQUEST_OBJECT);
 
@@ -96,11 +103,13 @@ public class PublisherAction
 	}
 	
 	// Get parameters
+/*
 	String submit = request.getParameter("submit");
 	if (submit.equals("cancel")) {
 	    // cancel
 	    //return ;
 	}
+*/
 	String docid = request.getParameter("docid");
 	String docids = request.getParameter("docids");
 
@@ -128,6 +137,9 @@ public class PublisherAction
 	} else {
 	    getLogger().error("Tree not published");
 	}
+
+    // Export static HTML
+    exportStaticHTML(docid,request.getServerPort(),exportDirectory);
 	
 	// Get session
 	Session session = request.getSession(true);
@@ -163,4 +175,21 @@ public class PublisherAction
 	    return false;
 	}
     }
-}
+/**
+ * Export Static HTML
+ */
+  public void exportStaticHTML(String docid,int port,String exportDirectory){
+    try{
+      org.wyona.net.WGet wget=new org.wyona.net.WGet();
+      getLogger().info("Export directory: "+exportDirectory);
+      wget.setDirectoryPrefix(exportDirectory);
+      URL url=new URL("http://127.0.0.1:"+port+docid);
+      getLogger().info("Export static HTML: "+url);
+      byte[] response=wget.download(url);
+      wget.saveToFile(url.getFile(),response);
+      }
+    catch(Exception e){
+      getLogger().error(""+e);
+      }
+    }
+  }
