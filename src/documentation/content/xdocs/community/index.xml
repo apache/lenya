@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 43150 2004-07-27 19:41:17Z thorsten $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document>
+  <header>
+    <title>The Apache Lenya Community</title>
+    <version/>
+    <type/>
+  </header>
+  <body>
+	<p>
+		Here you will find information on how to interact with and become a member 
+		of the Apache Lenya community.
+	</p>
+<section>
+	<title>Contribute code</title>
+	<p>
+		You can contribute code as e.g. an "Enhancement Patch". 
+		For this, you file a bug entry in Bugzilla, using the links provided below. 
+		The bug entries in Bugzilla should provide a description of what the patch does, 
+		and how to apply it. Any further discussion should occur on the Lenya Developer list (see <link href="site:ml">mailing lists</link>)
+	</p>
+	<section>
+		<title>Preparing a Patch</title>
+			<ul>
+				<li>See the Cocoon documentation <link href="site:cocoon.howto.patch">How to Prepare a Patch</link> and <link href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</link>.</li>
+				<li>Make sure you follow the <link href="site:coding">coding guidelines</link>.</li>
+				<li>Test your patch by applying it to a fresh checkout of Lenya. In Eclipse for instance, this is done by choosing "apply patch" in the team perspective.</li>
+				<li>Follow this link to enter your patch in Bugzilla: <link href="site:issue.add">add a new patch</link>.</li>
+			</ul>
+	</section>
+	<section>
+		<title>Apply open patches</title>
+		<p>
+			If you as committer feel that you have some spare time, here is a list of open issues.
+			Just go ahead fix them ;-).
+		</p>
+		<ul>
+			<li><link href="ext:issues.open.bugs.enhancement">list of all provided enhancement bugs</link></li>
+			<li><link href="ext:issues.open.patches">list of all provided patches</link></li>
+		</ul>
+	</section>
+</section>
+  </body>
+</document>
