@@ -3,15 +3,28 @@
 ======================================================================
 OSCOM CMS List
 
-$Id: overview-body.xml,v 1.4 2002/10/06 12:00:34 michicms Exp $
+$Id: overview-body.xml,v 1.5 2002/10/06 12:09:07 michicms Exp $
 ======================================================================
 -->
 <oscom topic="system overviews">
+
 <system type="cms">
-  <id>8</id>
+  <id>aegir-cms</id>
+  <system_name>Aegir CMS</system_name>
+  <main_url>http://www.aegir-cms.org</main_url>
+  <license>
+    <license_name>HKLC Nadmin Studio Interface Licence</license_name>
+    <license_url>http://www.aegir-cms.org/Licensing/</license_url>
+  </license>
+</system>
+
+
+<system type="cms">
+  <id>bitflux</id>
   <system_name>Bitflux</system_name>
   <system_version>1.0</system_version>
   <system_startdate>Fall 1999</system_startdate>
+  <main_url>http://www.bitflux.org</main_url>
   <url>
     <url_homepage>http://www.bitflux.ch/</url_homepage>
     <url_faq><![CDATA[http://www.bitflux.ch/]]></url_faq>
@@ -237,16 +250,6 @@ license.</license_description>
   <license>
     <license_name>Apache Software License</license_name>
     <license_url>http://www.wyona.org/license.html</license_url>
-  </license>
-</system>
-
-<system type="cms">
-  <id>aegir-cms</id>
-  <system_name>Aegir CMS</system_name>
-  <main_url>http://www.aegir-cms.org</main_url>
-  <license>
-    <license_name>HKLC Nadmin Studio Interface Licence</license_name>
-    <license_url>http://www.aegir-cms.org/Licensing/</license_url>
   </license>
 </system>
 
