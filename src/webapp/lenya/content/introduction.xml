@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: introduction.xml,v 1.15 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id: introduction.xml,v 1.16 2004/05/11 22:41:13 michi Exp $ -->
 
 <div xmlns="http://www.w3.org/1999/xhtml" class="lenya-frontpage">
 <h2>Welcome to Apache Lenya</h2>
@@ -32,7 +32,7 @@ components is <a href="http://cocoon.apache.org">Cocoon</a> from the
 </p>
 		
 <p>
-Lenya supports inline WYSIWYG editors. Your site editors do
+Lenya supports inline WYSIWYG editors such as <a href="http://kupu.oscom.org">Kupu</a> or <a href="http://bxe.oscom.org">BXE</a>. Your site editors do
 not have to learn XML. This is possible thanks to the support
 of XML, XSLT and XML Schema on the client side.
 An administration interface allows advanced users to
