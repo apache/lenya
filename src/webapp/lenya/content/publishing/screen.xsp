@@ -22,8 +22,8 @@
     <!-- FIXME: this should be defined in the workflow schema -->
     <usecase:task-id>publish</usecase:task-id>
     
-    <!-- add date for scheduler -->
-    <xsp-scheduler:current-date/>
+    <!-- add scheduler data -->
+    <xsp-scheduler:insert-data/>
     
   </usecase:publish>
   
