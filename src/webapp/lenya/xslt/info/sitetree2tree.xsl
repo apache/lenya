@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.18 2003/08/11 13:30:38 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.19 2003/08/20 15:31:55 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -23,11 +23,11 @@
 
 //Environment variables are usually set at the top of this file.
 USETEXTLINKS = 1
-STARTALLOPEN = 1
+STARTALLOPEN = 0
 USEFRAMES = 1
 USEICONS = 0
 WRAPTEXT = 1
-PERSERVESTATE = 0
+PERSERVESTATE = 1
 HIGHLIGHT = 1
 foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen")
 		<xsl:apply-templates select="s:site"/>
@@ -38,12 +38,12 @@ foldersTree.treeID = "t2"
 
 <xsl:template match="s:site">
     <xsl:param name="parentPath"/>
-    <xsl:param name="lenyaarea"/>
-     <xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("<xsl:value-of select="@label"/>", ""))</xsl:when>
-<xsl:otherwise>insDoc(foldersTree, gLnk("R", "<xsl:value-of select="@label"/>", ""))</xsl:otherwise></xsl:choose>
+    <xsl:param name="lenyaarea"><xsl:value-of select="translate(@label, 'ALT', 'alt')"/></xsl:param>
+     <xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("<xsl:value-of select="@label"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:when>
+<xsl:otherwise>insDoc(foldersTree, gLnk("R", "<xsl:value-of select="@label"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:otherwise></xsl:choose>
 <xsl:apply-templates>
             <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
-            <xsl:with-param name="lenyaarea"><xsl:value-of select="translate(@label, 'ALT', 'alt')"/></xsl:with-param>
+            <xsl:with-param name="lenyaarea"><xsl:value-of select="$lenyaarea"/></xsl:with-param>
 </xsl:apply-templates>   
 </xsl:template>
 
@@ -51,8 +51,8 @@ foldersTree.treeID = "t2"
     <xsl:param name="parentPath"/>
     <xsl:param name="lenyaarea"/>
 
-<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:value-of select="generate-id(..)"/>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:when>
-  <xsl:otherwise>insDoc(<xsl:value-of select="generate-id(..)"/>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:otherwise></xsl:choose>
+<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:value-of select="generate-id(..)"/>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:when>
+  <xsl:otherwise>insDoc(<xsl:value-of select="generate-id(..)"/>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$lenyaarea"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:otherwise></xsl:choose>
 <xsl:apply-templates>
 <xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
 <xsl:with-param name="lenyaarea"><xsl:value-of select="$lenyaarea"/></xsl:with-param>

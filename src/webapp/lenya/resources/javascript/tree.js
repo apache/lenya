@@ -1,4 +1,4 @@
-// $Id: tree.js,v 1.7 2003/07/31 12:04:29 gregor Exp $
+// $Id: tree.js,v 1.8 2003/08/20 15:31:55 gregor Exp $
 //**************************************************************** 
 // TreeView by Marcelino Martins http://www.treeview.net
 //**************************************************************** 
@@ -86,6 +86,17 @@ function initializeFolder(level, lastNode, leftSide)
   } 
 } 
  
+function setLanguageTabs(url) 
+{
+   // rewrite the links of the language tabs when a node is clicked
+   area = url.substring(url.indexOf('lenya.area=')+11, url.length);
+   urlhead = url.substring(0, url.indexOf(area)); // strip usecase   
+   urltail = url.substring(url.indexOf(area)+area.length, url.indexOf('_')); // strip usecase
+   url = urlhead +'info'+ urltail;
+   getElById('en').href = url+'_en.html?lenya.language=en&lenya.area='+area;
+   getElById('de').href = url+'_de.html?lenya.language=de&lenya.area='+area;
+}
+
 function drawFolder(insertAtObj) 
 { 
   var nodeName = ""
@@ -609,6 +620,7 @@ function clickOnLink(clickedId, target, windowName) {
     highlightObjLink(findObj(clickedId));
     if (isLinked(target)) {
         window.open(target,windowName);
+        setLanguageTabs(target);
     }
 }
 

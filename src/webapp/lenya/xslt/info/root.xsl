@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.16 2003/08/13 14:33:27 andreas Exp $
+ $Id: root.xsl,v 1.17 2003/08/20 15:31:55 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -60,12 +60,12 @@ function findIDbyLink(srclink)
 </head>
 
 <body>
-<a>
+<a id="de">
 	<xsl:call-template name="activate">
 		<xsl:with-param name="tablanguage">de</xsl:with-param>
 	</xsl:call-template>
 </a>
-<a> 
+<a id="en"> 
 	<xsl:call-template name="activate">
 		<xsl:with-param name="tablanguage">en</xsl:with-param>
 	</xsl:call-template>
@@ -92,7 +92,8 @@ function findIDbyLink(srclink)
 
 <xsl:template name="activate">
 	<xsl:param name="tablanguage"/>
-   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.language=<xsl:value-of select="$tablanguage"/></xsl:attribute>
+	<xsl:variable name="docidwithoutlanguage"><xsl:value-of select="substring-before($documentid, '_')"/></xsl:variable>
+   <xsl:attribute name="href"><xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$docidwithoutlanguage"/>_<xsl:value-of select="$tablanguage"/>.html?lenya.language=<xsl:value-of select="$tablanguage"/></xsl:attribute>
    <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$chosenlanguage = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 
