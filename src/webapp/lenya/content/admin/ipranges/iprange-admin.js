@@ -197,7 +197,7 @@ function iprangeChangeProfile(newRange) {
 	
 	    }
 	    
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
    		release();
@@ -243,7 +243,7 @@ function iprangeDeleteIPRange() {
 			}
 		}
 	
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
    		release();
@@ -310,6 +310,6 @@ function iprangeChangeGroups() {
 			break;
 		}
 	}
-   	sendPage("redirect.html", { "url" : redirectUri });
+   	cocoon.redirectTo(redirectUri);
 }
 

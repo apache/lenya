@@ -55,7 +55,7 @@ function groupChangeProfile() {
 	
 	    }
 	    
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
 	   	release();
@@ -146,7 +146,7 @@ function groupChangeMembers() {
 				break;
 			}
 		}
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
 	   	release();
@@ -204,7 +204,7 @@ function groupAddGroup() {
 				break;
 			}
 		}
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
 	   	release();
@@ -249,7 +249,7 @@ function groupDeleteGroup() {
 			}
 		}
 	
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
    		release();
