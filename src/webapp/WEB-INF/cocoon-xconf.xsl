@@ -236,8 +236,8 @@
       role="org.apache.lenya.cms.usecase.UnitOfWorkImpl"/>
       
   <usecases>
-    <component-instance name="addUser" logger="lenya.admin" class="org.apache.lenya.cms.admin.AddUser"/>
-    <component-instance name="userProfile" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserProfile"/>
+    <component-instance name="admin.addUser" logger="lenya.admin" class="org.apache.lenya.cms.admin.AddUser"/>
+    <component-instance name="admin.userProfile" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserProfile"/>
   </usecases>
       
 
