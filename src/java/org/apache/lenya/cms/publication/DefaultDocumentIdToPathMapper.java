@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentIdToPathMapper.java,v 1.8 2003/07/23 13:21:11 gregor Exp $
+$Id: DefaultDocumentIdToPathMapper.java,v 1.9 2003/07/24 12:48:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,53 +57,63 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-
 /**
  * @author egli
  *
  *
  */
 public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
-	
+
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
      */
     public File getFile(Publication publication, String area, String documentId, String language) {
-        assert documentId.startsWith("/");
-        File file = new File(publication.getDirectory(),
-                "content" + File.separator + area + File.separator + getPath(documentId, language));
-
+        File file = new File(getDirectory(publication, area, documentId), getFilename(language));
         return file;
     }
-    
-	/**
-	 * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFiles(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
-	 */
-	public File getDirectory(Publication publication, String area, String documentId) {
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFiles(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+     */
+    public File getDirectory(Publication publication, String area, String documentId) {
         assert documentId.startsWith("/");
         // remove leading slash
         documentId = documentId.substring(1);
         documentId = documentId.replace('/', File.separatorChar);
-        
-		File file = new File(publication.getDirectory(),
-			"content" + File.separator + area + File.separator + documentId);
 
-		return file;
-	}
+        if (area.equals(Publication.INFO_AREA)) {
+            area = Publication.AUTHORING_AREA;
+        }
+
+        File file =
+            new File(
+                publication.getDirectory(),
+                "content" + File.separator + area + File.separator + documentId);
+
+        return file;
+    }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String, java.lang.String)
      */
     public String getPath(String documentId, String language) {
         assert documentId.startsWith("/");
+        // remove leading slash
+        documentId = documentId.substring(1);
+        return documentId + "/" + getFilename(language);
+    }
+
+    /**
+     * Constructs the filename for a given language.
+     * @param language The language.
+     * @return A string value.
+     */
+    protected String getFilename(String language) {
         String languageSuffix = "";
         if (language != null && !"".equals(language)) {
             languageSuffix = "_" + language;
         }
-        
-        // remove leading slash
-        documentId = documentId.substring(1);
-
-        return documentId + "/" + "index" + languageSuffix + ".xml";
+        return "index" + languageSuffix + ".xml";
     }
+
 }
