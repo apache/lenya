@@ -165,14 +165,14 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this.indent + "<" + qname + "> (ignoreAElement = "
-                    + this.ignoreAElement + ")");
+                    + isIgnoreAElement() + ")");
             this.indent += "  ";
         }
 
         AttributesImpl newAttrs = null;
         if (lookingAtAElement(name)) {
 
-            this.ignoreAElement = false;
+            setIgnoreAElement(false);
 
             String href = attrs.getValue(ATTRIBUTE_HREF);
             if (href != null) {
@@ -228,7 +228,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             if (targetDocument.exists()) {
                                 rewriteLink(newAttrs, targetDocument, anchor);
                             } else {
-                                this.ignoreAElement = true;
+                                setIgnoreAElement(true);
                             }
                         }
                     }
@@ -241,10 +241,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         }
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreAElement);
+            getLogger().debug(this.indent + "ignoreAElement: " + isIgnoreAElement());
         }
 
-        if (!(lookingAtAElement(name) && this.ignoreAElement)) {
+        if (!(lookingAtAElement(name) && isIgnoreAElement())) {
             if (newAttrs != null) {
                 attrs = newAttrs;
             }
@@ -318,8 +318,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             this.indent = this.indent.substring(2);
             getLogger().debug(this.indent + "</" + qname + ">");
         }
-        if (lookingAtAElement(name) && this.ignoreAElement) {
-            this.ignoreAElement = false;
+        if (lookingAtAElement(name) && isIgnoreAElement()) {
+            setIgnoreAElement(false);
         } else {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(this.indent + "</" + qname + "> sent");
@@ -353,5 +353,17 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      */
     public void recycle() {
         this.ignoreAElement = false;
+    }
+    /**
+     * @return Returns the ignoreAElement.
+     */
+    protected boolean isIgnoreAElement() {
+        return ignoreAElement;
+    }
+    /**
+     * @param ignoreAElement The ignoreAElement to set.
+     */
+    protected void setIgnoreAElement(boolean ignoreAElement) {
+        this.ignoreAElement = ignoreAElement;
     }
 }
