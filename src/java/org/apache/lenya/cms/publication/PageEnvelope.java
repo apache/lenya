@@ -85,10 +85,16 @@ public class PageEnvelope {
         return rcEnvironment;
     }
 
+    /**
+     * Returns the context.
+     */
     public String getContext() {
         return context;
     }
     
+    /**
+     * Returns the area (authoring/live).
+     */
     public String getArea() {
         return area;
     }

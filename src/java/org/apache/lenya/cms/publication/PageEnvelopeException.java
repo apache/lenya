@@ -1,5 +1,5 @@
 /*
- * $Id: PageEnvelopeException.java,v 1.2 2003/04/24 13:52:38 gregor Exp $
+ * $Id: PageEnvelopeException.java,v 1.3 2003/05/07 17:18:59 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,13 +63,13 @@ public class PageEnvelopeException
      * Creates a new PageEnvelopeException.
      */
     public PageEnvelopeException(String message, Throwable cause) {
-        super(message + " " + cause.getMessage());
+        super(message, cause);
     }
 
     /**
      * Creates a new PageEnvelopeException.
      */
     public PageEnvelopeException(Throwable cause) {
-        super(cause.getMessage());
+        super(cause);
     }
 }
