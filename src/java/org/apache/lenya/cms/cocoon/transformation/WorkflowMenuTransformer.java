@@ -64,8 +64,6 @@ import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
@@ -149,7 +147,6 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
      */
     public void setup(SourceResolver resolver, Map objectModel, String src, Parameters parameters)
         throws ProcessingException, SAXException, IOException {
-        Publication publication = PublicationFactory.getPublication(objectModel);
 
         PageEnvelope envelope = null;
 
