@@ -24,8 +24,6 @@
         <charter href="charter.html" label="Charter"/>
         <history href="history.html" label="History"/>
         <node-d href="roadmap.html" label="Roadmap"/>
-<!--        <release1.2 href="release.html" label="Release 1.2"/>
--->
         <node-i href="license.html" label="License"/>
         <resolution href="resolution.html" label="Resolution"/>
         <node-i href="related-projects.html" label="Related Projects"/>
@@ -42,8 +40,6 @@
         <docu1.2.x href="1_2_x/" label="1.2.x">
 
             <components href="components/" label="Components" wholesite="true">
-                            <!--resource-types href="resource-types/"
-                                label="Resource&#160;Types"/-->
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">
                     <ac-terms href="terms.html" label="Basic Terms"/>
                     <accesscontrollers href="accesscontrollers.html" label="Access&#160;Controllers"/>
@@ -60,7 +56,7 @@
                     <openoffice href="openoffice.html" label="OpenOffice"/>
                 </authoring>
                 <deployment href="deployment/" label="Deployment">
-                    <namespaces href="mod_proxy.html" label="mod_proxy"/>
+                    <namespaces href="proxying.html" label="Proxying"/>
                 </deployment>
                 <misc href="editors/" label="Editors">
                     <namespaces href="htmlform.html" label="HTML Form Editor"/>
@@ -79,6 +75,8 @@
                     <pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
                     <sitetree href="siteTree.html" label="Site tree"/>
                 </publication>
+                <resource-types href="resource-types/"
+                    label="Resource&#160;Types"/>
                 <revisioncontrol href="revisioncontrol/" label="Revision Control">
                     <namespaces href="revisioncontroller.html" label="Revision Controller"/>
                     <namespaces href="rcml.html" label="RCML"/>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: mod_proxy.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+
+<document> 
+
+<header> 
+    <title>Reverse Proxying Apache Lenya</title>
+    <version>0.1</version> 
+    <type>Documentation</type> 
+    <authors>
+      <person name="Lenya community" email="dev@lenya.apache.org"/>
+    </authors> 
+</header> 
+<body> 
+
+<section>
+<title>Introduction</title>
+<p>The Lenya LinkRewritingTransformer enables a flexible way of proxy configuration. 
+    It is possible to define different proxies for each pair of area (authoring and live), 
+    and encryption (not encrypted or SSL). The Lenya part of the
+    proxy configuration is done in <code>$PUBLICATION/config/publication.xconf</code>
+    If you specify your proxy setup in that file, the LinkRewritingTransformer will rewrite links in your
+    publication to match these settings.
+</p>
+</section>
+
+<section>
+<title>Configuration in publication.xconf</title>
+<p>The publication.xconf of the default publication has proxying disabled by default:
+</p>
+<source>
+<![CDATA[
+<publication>
+  <languages>
+    <language default="true">en</language>
+    <language>de</language>
+  </languages>
+  <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
+  <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
+  <breadcrumb-prefix/>
+
+  <!--
+  <proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/>
+  <proxy area="live" ssl="false" url="http://www.host.com/default"/>
+  <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
+  <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
+  -->
+</publication>
+]]>
+</source>
+<p>A possible configuration for two servers (an authoring server and a live server) may look like:</p>
+<source>
+<![CDATA[
+<publication>
+  <languages>
+    <language default="true">de</language>
+    <language>en</language>
+  </languages>
+  <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
+  <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
+  <breadcrumb-prefix>University of Zurich</breadcrumb-prefix>
+
+  <proxy url="https://cms.live.ch/lenya/sandbox" ssl="true" area="live"/>
+  <proxy url="http://cms.sandbox.live.ch/lenya" ssl="false" area="live"/>
+  <proxy url="https://cms.authoring.ch/lenya/sandbox/authoring" ssl="true" area="authoring"/>
+  <proxy url="http://cms.authoring.ch/lenya/sandbox/authoring" ssl="false" area="authoring"/>
+</publication>
+]]>
+</source>
+<ul><li> There is an ssl enabled authoring server (cms.authoring.ch) and the URL you get is e.g.
+         <code>http://cms.authoring.com/lenya/sandbox/authoring/index.html</code>.</li>
+    <li> There is an ssl enabled live server with (cms.live.ch and cms.sandbox.live.ch) and the URL you get on 
+        the live side is e.g. <code>http://cms.sandbox.live.ch/lenya/index.html</code> </li></ul>
+<p><strong>Note:</strong>
+Up to now, session is only working if you add /lenya after your domain because the cookie which is  
+sent to the client stores the web application context. Therefore the browser did not send back the cookie 
+if you request a page like http://cms.sandbox.live.ch/index.html. 
+This is also mentioned on the <link href="http://wiki.apache.org/cocoon/ApacheModProxy">Cocoon Wiki page on proxying</link>. 
+With Apache 2.1 a recently introduced proxy directive for translating the cookie path 
+    <code>ProxyPassReverseCookiePath</code> will be available, which will allow you to get 
+    the cookie path translated by Apache with <code>ProxyPassReverseCookiePath&#160;/lenya&#160;/</code>
+     so that the cookie is always sent back to the server. 
+        As of today even the trunk version of Apache httpd does not have this feature. 
+            If you still want to use it with Apache 2.0 you will have to apply a patch 
+                <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=10722">
+http://issues.apache.org/bugzilla/show_bug.cgi?id=10722</link> and rebuild the Apache modules mod_proxy and 
+mod_http_proxy. The patch should work with Apache 2.0.49+ (I use it with 2.0.52 without any problems). 
+   The configuration of the Apache webserver that goes with this configuration is described next.</p>
+</section>
+<section>
+<title>Apache Webserver setup / Rewrite Rules</title>
+<p>Before you start, make sure you have <code>mod_proxy</code> and <code>mod_rewrite</code> setup correctly.</p>
+<section>
+<title>Rules for the authoring server</title>
+<p>This sample configuration uses <code>cms.authoring.ch</code> as the host name.</p>
+<ul><li>  redirects logins to SSL </li>
+<li>  runs the authoring server over port 80 </li>
+<li>  publications are all mounted under cms.client.com/yourpub </li>
+<li>  you can use this setup for your live server if you do not want to mount your publication in a 
+    virtualhost. Just replace authoring with live, and put the proxy / rewrite directives in a 
+    &lt;Location&gt; rule </li></ul>
+<source>
+<![CDATA[
+<VirtualHost cms.authoring.ch:80>
+    ....
+
+    #All Content should be served by tomcat (i.e. lenya)
+    ProxyRequests    Off
+    RewriteEngine    On
+    RewriteLog       /var/log/apache2/cms.authoring.rewrite.log
+    RewriteLogLevel  0
+    RewriteRule      ^/([^/\.]+)$  $1/   [R]
+    RewriteRule       ^/([^/\.]+)/$ http://cms.authoring.ch/lenya/$1/authoring/index.html [R,L]
+
+    RewriteCond      %{QUERY_STRING} lenya\.usecase=login(.*)
+    RewriteRule      ^/(.*)   https://%{SERVER_NAME}/$1 [R,L]
+
+    RewriteRule      ^/(.*)   http://cms.authoring.ch:8080/$1  [P,L]
+    ProxyPassReverse / http://cms.authoring.ch:8080/
+
+
+</VirtualHost>
+
+<VirtualHost cms.authoring.ch:443>
+   ....
+    RewriteEngine On
+
+    RewriteRule      ^/([^/\.]+)$  $1/   [R]
+    RewriteRule       ^/([^/\.]+)/$ http://cms.authoring.ch/lenya/$1/authoring/index.html [R,L]
+
+    RewriteRule      ^/(.*)   http://%{SERVER_NAME}:8080/$1  [P,L]
+    ProxyPassReverse / http://cms.authoring.ch:8080/
+</VirtualHost>
+]]>
+</source>
+</section>
+<section>
+<title>Rules for the live server</title>
+<p>This sample configuration uses <code>cms.sandbox.live.ch</code> as the host name.</p>
+<ul><li>  each publication is mounted as a seperate virtualhost </li>
+<li>The publication in this sample is named sandbox</li>
+<li>  Files within the directory static and files with the extension php are not redirected to Lenya. </li>
+<li>  Certificate is issued for www.client.com </li></ul>
+<source>
+<![CDATA[
+<VirtualHost cms.sandbox.live.ch:80>
+    .... 
+ 
+    ProxyRequests Off
+    RewriteEngine On
+    RewriteLog       "/var/log/apache2/cms.sandbox.rewrite.log"
+    RewriteLogLevel  1
+
+    RewriteRule       ^/$ /lenya/index.html [R]
+    RewriteRule      ^/[^(lenya)](.*) /lenya$0  [R]
+    RewriteRule      ^/static/?(.*)  $0 [L]
+    RewriteRule      ^/(.*)\.php  $0 [L]
+
+    # Not carefully tested yet -> login should use https
+    #RewriteCond      %{QUERY_STRING} lenya\.usecase=login(.*)
+    #RewriteRule      ^/lenya/(.*)/live/(.*)$   https://cms.live.ch/$1/$2 [R,L]
+
+    RewriteRule      ^/lenya/[^/]+/live/(.*)$ /lenya/$1 [R,L]
+
+    RewriteRule      ^/(.*\.css$) http://cms.live.ch:8080/$1  [L]
+    RewriteRule      ^/(.*/authoring/.*) http://cms.live.ch:8080/$1  [L]
+    RewriteRule      ^/lenya/(.*) http://cms.live.ch:8080/lenya/sandbox/live/$1  [P]
+
+    ProxyPassReverse  / http://cms.live.ch:8080/
+
+</VirtualHost>
+ 
+<VirtualHost cms.live.ch:443>
+      ......
+       
+    ProxyRequests Off
+    RewriteEngine On
+
+# RewriteRules for css and images
+     RewriteRule      ^/lenya/sandbox/(.*)/images/(.*)$ http://cms.live.ch:8080/lenya/sandbox/$1/images/$2 [L]
+     RewriteRule      ^/(.*\.css$) http://cms.live.ch:8080/$1  [L]
+
+     RewriteRule      ^/(lenya/[^/]+)/(.*)$   http://cms.live.ch:8080/$1/live/$2  [P,L]
+
+     ProxyPassReverse / http://cms.live.ch:8080/
+</VirtualHost>
+]]>
+</source>
+</section>
+</section>
+</body>
+</document>
