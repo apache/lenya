@@ -39,13 +39,13 @@
       	  <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
       	  <lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
       	  <dc:language><input:get-attribute module="page-envelope" name="document-language"/></dc:language>
-      	  <dc:title><input:get-attribute module="page-envelope" name="document-dc-title"/></dc:title>
-      	  <dc:creator><input:get-attribute module="page-envelope" name="document-dc-creator"/></dc:creator>
-      	  <dc:subject><input:get-attribute module="page-envelope" name="document-dc-subject"/></dc:subject>
-      	  <dc:description><input:get-attribute module="page-envelope" name="document-dc-description"/></dc:description>
-      	  <dc:date><input:get-attribute module="page-envelope" name="document-dc-date-created"/></dc:date>
-      	  <dc:publisher><input:get-attribute module="page-envelope" name="document-dc-publisher"/></dc:publisher>
-      	  <dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
+      	  <dc:title><input:get-attribute module="dublincore" name="title"/></dc:title>
+      	  <dc:creator><input:get-attribute module="dublincore" name="creator"/></dc:creator>
+      	  <dc:subject><input:get-attribute module="dublincore" name="subject"/></dc:subject>
+      	  <dc:description><input:get-attribute module="dublincore" name="description"/></dc:description>
+      	  <dc:date><input:get-attribute module="dublincore" name="created"/></dc:date>
+      	  <dc:publisher><input:get-attribute module="dublincore" name="publisher"/></dc:publisher>
+      	  <dc:rights><input:get-attribute module="dublincore" name="rights"/></dc:rights>
       	</lenya-info:meta>
       }
     </xsp:logic>
