@@ -18,7 +18,7 @@
  *
  */
 
-/* $Id: configuration2xslt.xsl,v 1.5 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id: configuration2xslt.xsl,v 1.6 2004/05/16 21:48:58 michi Exp $  */
 -->
 
 <xsl:stylesheet version="1.0"
@@ -47,7 +47,8 @@
       
         <xsl:for-each select="luc:field">
           <luc:field name="{@name}" type="{@type}">
-            <xsl-out:value-of select="{@xpath}"/>
+            <xsl:apply-templates select="@xpath"/>
+            <xsl:apply-templates select="xpath"/>
           </luc:field>
         </xsl:for-each>
       
@@ -60,6 +61,16 @@
 
 <xsl:template match="luc:variable">
   <xsl-out:variable name="{@name}" select="{@value}"/>
+</xsl:template>
+
+
+<xsl:template match="@xpath">
+  <xsl-out:value-of select="{.}"/>
+</xsl:template>
+
+
+<xsl:template match="xpath">
+  <xsl-out:value-of select="{.}"/>
 </xsl:template>
 
 </xsl:stylesheet> 
