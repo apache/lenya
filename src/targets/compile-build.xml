@@ -76,9 +76,4 @@
       </classpath>
     </java>
   </target>
-
-  <target name="clean" depends="init" description="Cleans the build directories">
-    <delete dir="${build.root}"/>
-    <delete dir="${dist.root}"/>
-  </target>
 </project>

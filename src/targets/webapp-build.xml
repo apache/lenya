@@ -186,6 +186,14 @@
     </delete>
   </target>
 
+  <!-- Cleans the build directory, with the exception of target.reset.excludes -->
+  <target name="clean" depends="init" description="Cleans the build directories">
+    <delete includeEmptyDirs="true">
+      <fileset dir="${build.root}" excludes="${target.reset.excludes}" />
+    </delete>
+    <delete dir="${dist.root}"/>
+  </target>
+
   <!-- Install the webapp -->
   <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
     <!-- Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir} -->
