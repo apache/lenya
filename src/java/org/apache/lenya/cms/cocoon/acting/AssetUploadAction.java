@@ -1,5 +1,5 @@
 /*
-$Id: AssetUploadAction.java,v 1.1 2003/08/22 19:04:33 egli Exp $
+$Id: AssetUploadAction.java,v 1.2 2003/08/25 20:15:38 egli Exp $
 <License>
 
  ============================================================================
@@ -95,7 +95,7 @@ import java.util.Map;
  */
 public class AssetUploadAction extends AbstractConfigurableAction {
 
-    public static final String UPLOADASSET_PARAM_NAME = "properties.asset.file";
+    public static final String UPLOADASSET_PARAM_NAME = "properties.asset.data";
     public static final String UPLOADASSET_PARAM_PREFIX = "properties.asset.";
 
     public static final String UPLOADASSET_RETURN_FILESIZE = "mime-type";
