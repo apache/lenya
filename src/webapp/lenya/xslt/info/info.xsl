@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.18 2003/08/19 15:31:35 egli Exp $
+ $Id: info.xsl,v 1.19 2003/08/19 17:06:53 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -131,6 +131,7 @@
     <form>
       <input type="hidden" name="lenya.usecase" value="asset"/>
       <input type="hidden" name="lenya.step" value="showscreen"/>
+      <input type="hidden" name="insert" value="false"/>
       <input type="hidden" name="properties.asset.document-id">
         <xsl:attribute name="value">
           <xsl:value-of select="lenya-info:documentid"/>
