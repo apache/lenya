@@ -81,11 +81,11 @@ public class URLPolicy implements Policy {
         addRoles(urlPolicy, identity, roles);
         
         String url = "";
-        String[] directories = url.split("/");
+        String[] directories = getUrl().split("/");
         for (int i = 0; i < directories.length; i++) {
-            
+            url += directories[i] + "/";
+            addRoles(identity, url, roles);
         }
-        addRoles(identity, url, roles);
         return (Role[]) roles.toArray(new Role[roles.size()]);
     }
     
