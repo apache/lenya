@@ -68,11 +68,6 @@
       }
     </xsp:logic>
 
-    <tabs>
-      <tab label="info" show="false"/>
-      <tab label="live" show="false"/>
-    </tabs>
-    
     <menus>
       <menu i18n:attr="name" name="File" label="File">
 	<block>
@@ -100,6 +95,10 @@
   <block>
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
+	</block>
+
+        <block>
+          <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View Task Logs</i18n:text></item>
 	</block>
       </menu>
     </menus>
