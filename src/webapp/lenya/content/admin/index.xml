@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
 
+<!--
+   $Id: index.xml,v 1.2 2004/02/16 19:10:07 roku Exp $
+-->
+
 <page:page
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     >
 
-  <page:title>Administration</page:title>
+  <page:title><i18n:text>Administration</i18n:text></page:title>
   <page:body/>
   
 </page:page>
