@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.249 2004/08/23 20:01:39 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.250 2004/08/25 12:16:53 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -631,7 +631,7 @@
               <map:otherwise>
               </map:otherwise>
             </map:select>
-            <map:generate type="serverpages" src="{fallback:content/authoring/asset.xsp}"/>
+            <map:generate type="serverpages" src="{fallback:content/info/assets.xsp}"/>
             <map:transform src="{fallback:xslt/authoring/asset.xsl}">
               <map:parameter name="use-request-parameters" value="true"/>
             </map:transform>
