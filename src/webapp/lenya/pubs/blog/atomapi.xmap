@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: atomapi.xmap,v 1.1 2003/09/09 23:09:44 michi Exp $ -->
+<!-- CVS: $Id: atomapi.xmap,v 1.2 2003/09/09 23:17:22 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -35,20 +35,8 @@
             <map:generate type="directory" src="content/authoring/entries/{1}/"/>
             <map:serialize type="xml"/>
           </map:when>
-          <map:otherwise> <!-- Introspection -->
-            <map:generate src="sitemap.xmap"/>
-            <map:serialize type="xml"/>
-          </map:otherwise>
-        </map:select>
-
-        <map:select type="request-parameter">
-           <map:parameter name="parameter-name" value="entry"/>
-          <map:when test="">
-            <map:generate src="content/authoring/entries/2003/07/28/1/index.xml"/>
-            <map:serialize type="xml"/>
-          </map:when>
           <map:otherwise>
-            <map:generate src="content/authoring/entries/1998/10/29/levi/index.xml"/>
+            <map:generate src="sitemap.xmap"/>
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
