@@ -70,7 +70,7 @@ import java.net.URL;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.3 2003/08/11 16:03:42 michi Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.4 2003/08/12 17:07:50 michi Exp $
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -134,6 +134,13 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
             }
         } else if(request.getParameter("insert") != null) {
             getLogger().error(".act(): Insert");
+            Enumeration params = request.getParameterNames();
+            while (params.hasMoreElements()) {
+                String name = (String) params.nextElement();
+                getLogger().error(".act(): Parameter: " + name + " (" + request.getParameter(name)  + ")");
+            }
+        } else if(request.getParameter("delete") != null) {
+            getLogger().error(".act(): Delete");
             Enumeration params = request.getParameterNames();
             while (params.hasMoreElements()) {
                 String name = (String) params.nextElement();

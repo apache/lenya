@@ -5,15 +5,16 @@
 >
 
 <xsl:param name="docid"/>
+<xsl:param name="doctype"/>
 
 <xsl:template match="/">
 <html>
 <body>
 <p>
-Edit Document <b><xsl:value-of select="$docid"/></b>
+Edit Document <b><xsl:value-of select="$docid"/></b> (Document Type: <xsl:value-of select="$doctype"/>)
 </p>
 
-<form method="post" action="?lenya.usecase=edit&amp;lenya.step=close">
+<form method="post" action="?lenya.usecase=edit&amp;lenya.step=close&amp;doctype={$doctype}">
 <table border="1">
 <tr>
   <td colspan="3" align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
