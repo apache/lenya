@@ -4,6 +4,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+    xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
     >
  
 <xsl:import href="../util/page-util.xsl"/>
@@ -24,23 +25,22 @@
 
 <xsl:template match="/usecase:publish">
 
-
   <page:page>
     <page:title>Publish</page:title>
     <page:body>
-      <p>
-        <form action="">
+      <form name="form_publish">
         
         <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
-        <input type="hidden" name="lenya.usecase" value="publish"/>
         <input type="hidden" name="lenya.step" value="publish"/>
         <input type="hidden" name="task-id" value="{$task-id}"/>
-        <xsl:call-template name="task-parameters">
-          <xsl:with-param name="prefix" select="''"/>
-        </xsl:call-template>
+        
+				<input type="hidden" name="properties.publish.sources" value="{$sources}"/>
+				<input type="hidden" name="properties.publish.documentid" value="{$document-id}"/>
+				<input type="hidden" name="properties.export.uris" value="{$uris}"/>
+				<input type="hidden" name="properties.publish.language" value="{$document-language}"/>
         
         <div class="menu">Do you really want to publish the following source<xsl:text/>
-          <xsl:if test="contains(sources, $separator)">s</xsl:if>
+          <xsl:if test="contains($sources, $separator)">s</xsl:if>
           <xsl:text/>?
         </div>
         
@@ -51,7 +51,7 @@
         </ul>
         
         <div class="menu">And do you really want to publish the following uri<xsl:text/>
-          <xsl:if test="contains(uris, $separator)">s</xsl:if>
+          <xsl:if test="contains($uris, $separator)">s</xsl:if>
           <xsl:text/>?
         </div>
         
@@ -60,41 +60,25 @@
             <xsl:with-param name="list-string" select="$uris"/>
           </xsl:call-template>
         </ul>
+        
+        <not:notification>
+        	<not:preset>
+        		<xsl:apply-templates select="not:users/not:user"/>
+        	</not:preset>
+        	<not:textarea/>
+        </not:notification>
 
-        <input type="submit" value="YES, publish now"/>
-        <!--<input type="submit" name="submit" value="cancel"/>-->
-            &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
+        <input type="submit" name="lenya.usecase" value="publish"/>
+        &#160;&#160;&#160;
+        <input type="button" onClick="location.href='';" value="Cancel"/>
+
+        <xsl:call-template name="scheduler-form">
+        	<xsl:with-param name="form-name">form_publish</xsl:with-param>
+        </xsl:call-template>
+
       </form>
-    </p>
-
-<p>
-&#160;<br />
-</p>
-
-<p>
-<div class="menu">
-Or publish later ...
-</div>
-</p>
-    
-    <p>
-
-     <xsl:call-template name="scheduler-form">
-       <xsl:with-param name="task-id" select="$task-id"/>
-     </xsl:call-template>
-
-    </p>
     </page:body>
   </page:page>
-</xsl:template>
-
-
-<xsl:template name="task-parameters">
-  <xsl:param name="prefix" select="'task.'"/>
-  <input type="hidden" name="{$prefix}properties.publish.sources" value="{$sources}"/>
-  <input type="hidden" name="{$prefix}properties.publish.documentid" value="{$document-id}"/>
-  <input type="hidden" name="{$prefix}properties.export.uris" value="{$uris}"/>
-  <input type="hidden" name="{$prefix}properties.publish.language" value="{$document-language}"/>
 </xsl:template>
 
 

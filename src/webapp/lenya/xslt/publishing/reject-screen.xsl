@@ -21,13 +21,15 @@
     	
 		<form method="GET" action="">
 		
-		<input type="hidden" name="lenya.usecase" value="transition-ant"/>
+		<input type="hidden" name="lenya.usecase" value="transition"/>
 		<input type="hidden" name="lenya.event" value="{$lenya.event}"/>
 		<input type="hidden" name="task-id" value="ant"/>
 		<input type="hidden" name="target" value="mail"/>
 		
 		<not:notification>
-			<xsl:copy-of select="not:users"/>
+			<not:preset>
+				<xsl:copy-of select="not:users"/>
+			</not:preset>
 		</not:notification>
 
     <input type="submit" name="submit" value="Reject"/>
