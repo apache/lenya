@@ -111,6 +111,16 @@ public abstract class Group extends AbstractItem implements Accreditable {
         members.remove(member);
         member.removedFromGroup(this);
     }
+    
+    /**
+     * Removes all members from this group.
+     */
+    public void removeAllMembers() {
+        Groupable[] members = getMembers();
+        for (int i = 0; i < members.length; i++) {
+            remove(members[i]); 
+        }
+    }
 
     /**
      * Returns if this group contains this member.
