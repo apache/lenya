@@ -63,7 +63,6 @@ import org.apache.lenya.cms.ac2.Identity;
 
 import java.util.Map;
 
-
 /**
  * @author andreas
  *
@@ -84,7 +83,6 @@ public class DefaultAuthenticatorAction extends UserAuthenticatorAction {
 
         if (authenticated) {
             Identity identity = new Identity();
-
             User user = getUser(username);
             identity.addIdentifiable(user);
 
@@ -98,5 +96,5 @@ public class DefaultAuthenticatorAction extends UserAuthenticatorAction {
 
         return authenticated;
     }
-    
+
 }
