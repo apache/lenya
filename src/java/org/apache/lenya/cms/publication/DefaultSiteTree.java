@@ -544,7 +544,7 @@ public class DefaultSiteTree implements SiteTree {
             parentId,
             id,
             subtreeRoot.getLabels(),
-            true,
+            subtreeRoot.visibleInNav(),
             subtreeRoot.getHref(),
             subtreeRoot.getSuffix(),
             subtreeRoot.hasLink(),
