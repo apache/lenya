@@ -13,18 +13,18 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-
+                                                                                                                                                             
 chmod u+x ./tools/bin/antRun
 chmod u+x ./tools/bin/ant
-
+                                                                                                                                                             
 # ----- Verify and Set Required Environment Variables -------------------------
-
+                                                                                                                                                             
 if [ "$TERM" = "cygwin" ] ; then
   S=';'
 else
   S=':'
 fi
-
+                                                                                                                                                             
 # ----- Ignore system CLASSPATH variable
 OLD_CLASSPATH="$CLASSPATH"
 unset CLASSPATH
@@ -46,8 +46,9 @@ ANT_OPTS="$OLD_ANT_OPTS"
 export ANT_HOME ANT_OPTS
 unset OLD_ANT_HOME
 unset OLD_ANT_OPTS
-
+                                                                                                                                                             
 # ----- Restore CLASSPATH
 CLASSPATH="$OLD_CLASSPATH"
 export CLASSPATH
 unset OLD_CLASSPATH
+
