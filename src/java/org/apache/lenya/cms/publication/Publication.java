@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.52 2004/07/26 08:32:31 roku Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -231,5 +231,12 @@ public interface Publication {
      * for this version.
      */
     Proxy getProxy(Document document, boolean isSslProtected);
+    
+    /**
+     * Returns an array of XPaths representing attributes to be rewritten
+     * when a document URL has changed.
+     * @return An array of strings.
+     */
+    String[] getRewriteAttributeXPaths();
     
 }

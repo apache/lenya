@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -42,34 +43,24 @@ public abstract class AbstractPublication implements Publication {
             INFO_AREA_PREFIX + ARCHIVE_AREA, INFO_AREA_PREFIX + TRASH_AREA };
 
     private String id;
-
     private PublishingEnvironment environment;
-
     private File servletContext;
-
     private DocumentIdToPathMapper mapper = null;
-
     private ArrayList languages = new ArrayList();
-
     private String defaultLanguage = null;
-
     private String breadcrumbprefix = null;
-
     private String sslprefix = null;
-
     private String livemountpoint = null;
-
     private HashMap siteTrees = new HashMap();
-
+    private String[] rewriteAttributeXPaths = { };
     private boolean hasSitetree = true;
 
     private static final String ELEMENT_PROXY = "proxy";
-
     private static final String ATTRIBUTE_AREA = "area";
-
     private static final String ATTRIBUTE_URL = "url";
-
     private static final String ATTRIBUTE_SSL = "ssl";
+    private static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
+    private static final String ATTRIBUTE_XPATH = "xpath";
 
     /**
      * Creates a new instance of Publication
@@ -160,6 +151,14 @@ public abstract class AbstractPublication implements Publication {
                             + "]");
                 }
             }
+            
+            Configuration[] rewriteAttributeConfigs = config.getChildren(ELEMENT_REWRITE_ATTRIBUTE);
+            List xPaths = new ArrayList();
+            for (int i = 0; i < rewriteAttributeConfigs.length; i++) {
+                String xPath = rewriteAttributeConfigs[i].getAttribute(ATTRIBUTE_XPATH);
+                xPaths.add(xPath);
+            }
+            this.rewriteAttributeXPaths = (String[]) xPaths.toArray(new String[xPaths.size()]);
 
         } catch (PublicationException e) {
             throw e;
@@ -598,4 +597,10 @@ public abstract class AbstractPublication implements Publication {
         return proxy;
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getRewriteAttributeXPaths()
+     */
+    public String[] getRewriteAttributeXPaths() {
+        return this.rewriteAttributeXPaths;
+    }
 }
