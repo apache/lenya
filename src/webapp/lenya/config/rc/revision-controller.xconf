@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Document   : rcml.xml
-    Created on : April 15, 2003 
-    Author     : ec
+   $Id: revision-controller.xconf,v 1.2 2004/01/07 14:01:38 gregor Exp $
     Description:
         Configuration of the revision controller.
 -->
