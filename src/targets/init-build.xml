@@ -81,7 +81,7 @@
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
   <!-- build cocoon unless this is a gump build -->
-  <target name="build-cocoon" depends="init" unless="gump.build">
+  <target name="build-cocoon" depends="init" unless="gump.skipcocoonbuild">
     <echo>Building Cocoon with our properties</echo>
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
