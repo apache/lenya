@@ -78,7 +78,10 @@
   
   <xsl:template match="member">
     <option value="{@id}">
-      <xsl:value-of select="."/>
+    	<xsl:value-of select="@id"/>
+    	<xsl:if test="normalize-space(.)">
+    		&#160;<em>(<xsl:value-of select="normalize-space(.)"/>)</em>
+    	</xsl:if>
     </option>
   </xsl:template>
   
