@@ -32,7 +32,7 @@
     <map:pipeline>
       <map:match pattern="xopus2/**.html">
         <map:aggregate element="lenya" label="lenyapage">
-          <map:part src="cocoon:/menus/gregor.xml"/>
+          <map:part src="cocoon:/menus/test.xml"/>
           <map:part src="content/xdocs/{1}.xml" element="cmsbody"/>
         </map:aggregate>
         <map:transform src="xslt/xopus2-article.xsl">
@@ -59,13 +59,9 @@
     <!-- /ParentChild Content Creator: New Document -->
 
     <map:pipeline>
-      <map:match pattern="menus/**.xml">
-        <map:generate type="serverpages" src="content/menus/generic.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
 
 <!-- test for new menubar -->
-      <map:match pattern="menus/new.xml">
+      <map:match pattern="menus/test.xml">
         <map:generate type="serverpages" src="content/menus/new.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
@@ -85,10 +81,10 @@
       <map:match pattern="**.html">
 
           <map:aggregate element="lenya" label="lenyapage">
-            <map:part src="cocoon:/menus/sdfdsafs.xml"/>
+            <map:part src="cocoon:/menus/test.xml"/>
             <map:part src="cocoon:/{1}.xhtml" element="cmsbody"/>
           </map:aggregate>
-          <map:transform src="xslt/authoring-main.xsl"/>
+          <map:transform src="../../xslt/menu2/root.xsl"/>
           <map:serialize type="html"/>
       </map:match>
     </map:pipeline>

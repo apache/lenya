@@ -21,6 +21,11 @@
       </map:match>
     </map:pipeline>
     <map:pipeline>
+      <map:match pattern="menu2/**">
+        <map:read src="resources/misc/menu2/{1}"/>
+      </map:match>
+    </map:pipeline>
+    <map:pipeline>
       <map:match pattern="images/**">
         <map:read src="resources/images/{1}"/>
       </map:match>

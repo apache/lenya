@@ -2,8 +2,9 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
  
-<xsl:include href="../../../xslt/menu/root.xsl"/>
+<xsl:include href="../../../xslt/menu2/root.xsl"/>
 
+<!--
 <xsl:template match="lenya/cmsbody">
     <xsl:apply-templates/>
  </xsl:template>
@@ -22,7 +23,6 @@
 	</xsl:template>
 
 	<xsl:template match="img/@src">
-		<!-- only match skin, not menu -->
 		<xsl:choose>
 			<xsl:when test="starts-with(., 'skin')">
 				<xsl:attribute name="src">../<xsl:value-of select="."/></xsl:attribute>
@@ -36,6 +36,7 @@
 		</xsl:choose>
 	</xsl:template>
 
+-->
 
 <xsl:template match="@*|*">
     <xsl:copy>

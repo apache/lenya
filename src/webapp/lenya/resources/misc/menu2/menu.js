@@ -23,7 +23,7 @@ LUI.prototype = {
     for (var i=0; i<tabDef.length; i++) {
       var name = tabDef[i].name;
       var selected = ((this._selTabID==tabDef[i].name)?'selected':'');
-      var icon = (tabDef[i].icon?tabDef[i].icon:'media/nix.gif');
+      var icon = (tabDef[i].icon?tabDef[i].icon:'/lenya/lenya/menu2/media/nix.gif');
       var href = tabDef[i].href;
       s += tabTplStr.replace(/\$name/g, name).replace(/\$selected/g, selected).replace(/\$icon/g, icon).replace(/\$href/g, href);
     }
@@ -35,7 +35,7 @@ LUI.prototype = {
     var s = '';
     for (var i=0; i<menubarDef.length; i++) {
       var name = menubarDef[i].name;
-      var icon = (menubarDef[i].icon?menubarDef[i].icon:'media/nix.gif');
+      var icon = (menubarDef[i].icon?menubarDef[i].icon:'/lenya/lenya/menu2/media/nix.gif');
       s += menuTplStr.replace(/\$name/g, name).replace(/\$icon/g, icon);
     }
     this._menubar.innerHTML = s;
