@@ -3,9 +3,23 @@
    |    INSTALL BINARY    |
    +----------------------+
 
+Jetty
+-----
 
 
 1) Start up Lenya by executing lenya.bat on Windows or lenya.sh on Unix.
 
 
 2) Open http://localhost:8888/ with your browser
+
+
+
+Tomcat
+------
+
+
+1) Copy lenya.war into .../TOMCAT_PREFIX/webapps directory
+
+2) Copy endorsed libraries into .../TOMCAT_PREFIX/common/endorsed directory
+
+3) Startup Tomcat
