@@ -42,33 +42,10 @@
       </map:match>
     </map:pipeline>
 
-    <!-- ParentChild Content Creator: New Document -->
-    <map:pipeline>
-      <map:match pattern="lenya/ParentChildScreenNewArticle*">
-	<map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/>
-	<map:transform src="../../xslt/authoring/new-document.xsl"/>
-	<map:serialize type="html"/>
-      </map:match>
-      <map:match pattern="lenya/create*">
-	<map:act type="parent-child">
-	  <map:redirect-to uri="{parent_uri}" session="true"/>
-	</map:act>
-	<map:redirect-to uri="ParentChildScreenNewArticle?status=failed" session="true"/>
-      </map:match>
-    </map:pipeline>
-    <!-- /ParentChild Content Creator: New Document -->
     
     <!-- Export -->
     <map:pipeline>
-    
-      <map:match pattern="lenya/publishScreen*">
-        <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp"/>
-        <map:transform src="../../xslt/publishing/main.xsl">
-          <map:parameter name="use-request-parameters" value="true"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:match>
-      
+          
       <map:match pattern="lenya/publish*">
         <map:act type="request">
           <map:parameter name="parameters" value="true"/>

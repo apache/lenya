@@ -26,12 +26,10 @@ how sitemaps work is therefore crucial to customize Lenya.
 <li>webapp/lenya/lenya.xmap</li>
 <li>webapp/lenya/lucene.xmap</li>
 <li>webapp/lenya/navigation.xmap</li>
-<li>webapp/lenya/openoffice.xmap</li>
+<li>webapp/lenya/import.xmap</li>
 <li>webapp/lenya/resources.xmap</li>
 <li>webapp/lenya/pubs/default/doctypes.xmap</li>
 <li>webapp/lenya/pubs/default/parameter-doctype.xmap</li>
-<li>webapp/lenya/pubs/default/parameter-document-id.xmap</li>
-<li>webapp/lenya/pubs/default/policies-sitemap.xmap</li>
 <li>webapp/lenya/pubs/default/publication-sitemap.xmap</li>
 <li>webapp/lenya/pubs/default/sitemap.xmap</li>
 </ol>
@@ -86,11 +84,6 @@ This Sitemap contains the functionality for the Lucene Search engine. It is moun
 <p>
 This Sitemap defines the doctypes used in a publication, and enables mixing and matching of doctypes
 throughout a publication. 
-</p>
-</section>
-<section><title>13) The Policies Sitemap</title> 
-<p>
-The Policies Sitemap contains the access control policies for a publication.  
 </p>
 </section>
 <section><title>14) The Publication Sitemap</title> 

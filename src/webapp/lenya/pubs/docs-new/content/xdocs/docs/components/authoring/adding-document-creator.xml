@@ -47,7 +47,7 @@ The pipelines of the usecases are located within <code>usecase.xmap</code>:
     <map:match type="lenya-usecase" pattern="create">
       <map:match type="lenya-step" pattern="showscreen">
         <map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/>
-        <map:transform src="../../xslt/authoring/parent-child.xsl"/>
+        <map:transform src="../../xslt/authoring/create.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
