@@ -59,8 +59,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
           <table class="lenya-table-noborder">
             <tr>
               <td>
-              <i18n:text>Username</i18n:text>
-              :</td>
+              <i18n:text>Username</i18n:text>:</td>
               <td>
                 <input class="lenya-form-element" name="username"
                 type="text" />
@@ -68,8 +67,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             </tr>
             <tr>
               <td>
-              <i18n:text>Password</i18n:text>
-              :</td>
+              <i18n:text>Password</i18n:text>:</td>
               <td>
                 <input class="lenya-form-element" name="password"
                 type="password" />
