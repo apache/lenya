@@ -5,7 +5,8 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
-  <div>
+  <jx:import uri="tab/head.jx"/>
+  <page:body>
     <jx:import uri="admin/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
     
@@ -18,28 +19,24 @@
       </table>
       
       <div style="margin: 10px 0px">
-        <!--
-        <xsl:call-template name="add-user"/>
-        -->
+        <table class="lenya-table-noborder">
+      	  <tr>
+    	    <td>
+      		  <i18n:text>Add User</i18n:text>:&#160;
+    	    </td>
+    	    <jx:forEach var="type" items="${usecase.getParameter('userTypes')}">
+    	      <td>
+    	        <form method="GET">
+                <input type="hidden" name="lenya.usecase" value="admin.addUser"/>
+                <input type="hidden" name="className" value="${type.getClassName()}"/>
+                <input type="hidden" name="userType" value="${type.getKey()}"/>
+                <input i18n:attr="value" type="submit" value="${type.getKey()}"/>
+              </form>
+    	      </td>
+    	    </jx:forEach>
+          </tr>
+        </table>
       </div>
-      
-      <table class="lenya-table-noborder">
-    	  <tr>
-  	    <td>
-    		  <i18n:text>Add User</i18n:text>:&#160;
-  	    </td>
-  	    <jx:forEach var="type" items="${usecase.getParameter('userTypes')}">
-  	      <td>
-  	        <form method="GET">
-              <input type="hidden" name="lenya.usecase" value="admin.addUser"/>
-              <input type="hidden" name="className" value="${type.getClassName()}"/>
-              <input type="hidden" name="userType" value="${type.getKey()}"/>
-              <input i18n:attr="value" type="submit" value="${type.getKey()}"/>
-            </form>
-  	      </td>
-  	    </jx:forEach>
-        </tr>
-      </table>
       
       <table cellspacing="0" class="lenya-table">
         <tr>
@@ -80,5 +77,5 @@
       </table>
         
   </div>
-  </div>
+  </page:body>
 </page:page>

@@ -5,7 +5,8 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
-  <div>
+  <jx:import uri="tab/head.jx"/>
+  <page:body>
     <jx:import uri="admin/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
     
@@ -18,21 +19,17 @@
       </table>
       
       <div style="margin: 10px 0px">
-        <!--
-        <xsl:call-template name="add-user"/>
-        -->
+        <table class="lenya-table-noborder">
+      	  <tr>
+            <td>
+              <form method="GET">
+                <input type="hidden" name="lenya.usecase" value="admin.addGroup"/>
+                <input i18n:attr="value" type="submit" value="Add Group"/>
+              </form>
+            </td>
+          </tr>
+        </table>
       </div>
-      
-      <table class="lenya-table-noborder">
-    	  <tr>
-          <td>
-            <form method="GET">
-              <input type="hidden" name="lenya.usecase" value="admin.addGroup"/>
-              <input i18n:attr="value" type="submit" value="Add Group"/>
-            </form>
-          </td>
-        </tr>
-      </table>
       
       <table cellspacing="0" class="lenya-table">
         <tr>
@@ -59,5 +56,5 @@
         </jx:forEach>
       </table>
     </div>
-  </div>
+  </page:body>
 </page:page>
