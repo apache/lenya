@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: asset-upload.xsl,v 1.3 2004/08/25 09:52:25 andreas Exp $ -->
+
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
@@ -99,33 +117,17 @@ Override this template to add scripts etc.
           </xsl:if>
           <tr>
             <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
-            <td colspan="4"><input class="lenya-form-element" type="text" name="title" value="{dc:title}"/></td>
+            <td colspan="4">
+              <input id="assetTitle" class="lenya-form-element" type="text" name="properties.insert.asset.title" value=""/>
+              <input type="hidden" id="assetSource" name="properties.asset.data" value=""/>
+              <input type="hidden" id="assetExtent" name="extent" value=""/>
+            </td>
           </tr>
-          <xsl:for-each select="lenya-info:asset">
-            <tr>
-              <td/>
-              <td>
-                <input type="hidden" name="source" value=""/>
-                <input type="hidden" name="extent" value=""/>
-                <input type="radio" name="asset"
-                  onclick="document.forms[&quot;assetlibrary&quot;].title.value = '{dc:title}';
-                           document.forms[&quot;assetlibrary&quot;].source.value = '{dc:source}';
-                           document.forms[&quot;assetlibrary&quot;].extent.value = '{dc:extent}';"/>
-              </td>
-              <td><xsl:value-of select="dc:title"/></td>
-              <td><xsl:value-of select="dc:extent"/> KB</td>
-              <td><xsl:value-of select="dc:date"/></td>
-              <!--
-              <td><a href="javascript:insertAsset('{dc:source}','{dc:extent}');"><i18n:text>Insert</i18n:text></a></td>
-              -->
-            </tr>
-          </xsl:for-each>
+          <xsl:apply-templates select="lenya-info:asset"/>
           <tr>
             <td/>
             <td colspan="4">
-              <input type="button" value="Insert" i18n:attr="value"
-                     onclick="insertAsset(document.forms[&quot;assetlibrary&quot;].source.value,
-                                          document.forms[&quot;assetlibrary&quot;].extent.value);"/>
+              <xsl:call-template name="library-buttons"/>
             </td>
           </tr>
         </table>
@@ -133,5 +135,25 @@ Override this template to add scripts etc.
     </div>
   </div>
 </xsl:template>
+
+
+<xsl:template match="lenya-info:asset">
+  <tr>
+    <td/>
+    <td>
+      <input type="radio" name="asset"
+        onclick="document.getElementById('assetTitle').value = '{dc:title}';
+                 document.getElementById('assetSource').value = '{dc:source}';
+                 document.getElementById('assetExtent').value = '{dc:extent}';"/>
+    </td>
+    <td><xsl:value-of select="dc:title"/></td>
+    <td><xsl:value-of select="dc:extent"/> KB</td>
+    <td><xsl:value-of select="dc:date"/></td>
+  </tr>
+</xsl:template>
+
+
+<xsl:template name="library-buttons"/>
+
 
 </xsl:stylesheet>
