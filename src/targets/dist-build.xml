@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.9 2004/05/14 15:12:04 michi Exp $ -->
+<!-- $Id: dist-build.xml,v 1.10 2004/05/14 23:53:28 michi Exp $ -->
 
 <project name="dist">
 
@@ -51,6 +51,11 @@
     </copy>
     <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${dist.root}/${distname}-bin/endorsed"/>
 
+    <!-- Copy Jetty -->
+    <copy todir="${dist.root}/${distname}-bin/tools">
+      <fileset dir="tools"/>
+    </copy>
+    <delete dir="${dist.root}/${distname}-bin/tools/anttasks"/>
   </target>
 
   <target name="dist-bin" depends="prepare-dist-bin" description="Build a regular binary distribution tar ball">

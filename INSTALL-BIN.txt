@@ -7,7 +7,9 @@ Jetty
 -----
 
 
-1) Start up Lenya by executing lenya.bat on Windows or lenya.sh on Unix.
+1) Start up Lenya by executing lenya.bat on Windows or lenya.sh on Unix, e.g.
+
+   sh lenya.sh servlet
 
 
 2) Open http://localhost:8888/ with your browser

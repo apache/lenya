@@ -17,7 +17,7 @@
 # -----------------------------------------------------------------------------
 # Lenya Unix Shell Script
 #
-# $Id: lenya.sh,v 1.4 2004/03/26 18:47:04 egli Exp $
+# $Id: lenya.sh,v 1.5 2004/05/14 23:53:28 michi Exp $
 # -----------------------------------------------------------------------------
 
 # Configuration variables
@@ -139,6 +139,23 @@ JETTY_ADMIN_ARGS="-Djetty.admin.port=$JETTY_ADMIN_PORT"
 JETTY_LIBRARIES="-Dloader.jar.repositories=$LENYA_HOME/tools/jetty/lib,$ENDORSED_LIBS"
 
 # ----- Do the action ----------------------------------------------------------
+
+if [ -d build ]; then
+    echo "INFO: build/lenya/webapp directory already exists."
+else
+    if [ -f lenya.war ]; then
+        echo "INFO: lenya.war will be unpacked ..."
+        mkdir -p build/lenya/webapp
+        cp lenya.war build/lenya/webapp/.
+        cd build/lenya/webapp
+        $JAVA_HOME/bin/jar -xf lenya.war
+        cd ../../..
+        rm build/lenya/webapp/lenya.war
+    else
+        echo "INFO: No such war file lenya.war or build directory!"
+        exit 1
+    fi
+fi
 
 case "$ACTION" in
   cli)
