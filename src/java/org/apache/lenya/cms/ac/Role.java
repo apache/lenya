@@ -42,5 +42,9 @@ public class Role {
         return getName().hashCode();
     }
     
+    public String toString() {
+        return getName();
+    }
+    
     
 }
