@@ -27,6 +27,8 @@
       File[] resources = resourceMgr.getResources();
     </xsp:logic>
     <lenya-info:assets>
+      <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
+      <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-node-id"/></lenya-info:documentnodeid>
       <xsp:logic>
 	if (resources != null) {
 	  for(int i = 0; i &lt; resources.length; i++) {
@@ -40,8 +42,6 @@
 	  } 
 	}
       </xsp:logic>
-      <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
-      <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-node-id"/></lenya-info:documentnodeid>
     </lenya-info:assets>     
   </lenya-info:info>
   
