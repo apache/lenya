@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.14 2003/08/11 13:30:38 gregor Exp $
+ $Id: info.xsl,v 1.15 2003/08/14 08:20:16 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -235,7 +235,7 @@
 	<xsl:param name="type"/>
 	<xsl:param name="title"/>
 	<form method="get">
-	<input type="hidden" name="lenya.usecase" value="info"/>
+	<input type="hidden" name="lenya.usecase" value="info-ac-{substring($area, 1, 4)}"/>
 	<input type="hidden" name="lenya.step" value="showscreen"/>
 	<input type="hidden" name="area" value="{$area}"/>
 	<td><xsl:value-of select="$title"/>:</td>
@@ -315,7 +315,7 @@
   	<td>
   		<xsl:if test="not(@type = 'parent')">
   		<form>
-				<input type="hidden" name="lenya.usecase" value="info"/>
+				<input type="hidden" name="lenya.usecase" value="info-ac-{substring($area, 1, 4)}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
 				<input type="hidden" name="area" value="{$area}"/>
   			<input type="hidden" name="accreditable_id" value="{@accreditable-id}"/>
