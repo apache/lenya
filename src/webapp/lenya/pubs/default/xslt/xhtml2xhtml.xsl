@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml2xhtml.xsl,v 1.9 2004/03/21 15:57:32 gregor Exp $ -->
+<!-- $Id: xhtml2xhtml.xsl,v 1.10 2004/08/10 18:38:49 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -23,13 +23,14 @@
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
-    exclude-result-prefixes="xhtml lenya dc"
+    exclude-result-prefixes="xhtml lenya"
     >
 
 <xsl:param name="rendertype" select=""/>
 <xsl:param name="nodeid"/>
 
 <xsl:template match="/xhtml:html">
+  <xsl:copy-of select="lenya:meta"/>
   <div id="body">
     <xsl:if test="$rendertype = 'edit'">
       <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
