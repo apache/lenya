@@ -17,7 +17,8 @@
       <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
         <exception class="org.apache.lenya.cms.task.ExecutionException" name="execution" unroll="true"/>
         <exception class="org.apache.tools.ant.BuildException" name="build" unroll="true"/>
-        <exception class="org.xml.sax.SAXException" name="sax"/>
+        <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
+        <exception class="org.apache.cocoon.ResourceNotFoundException" name="resourcenotfound"/>
         <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException"
 	  name="parent-node-not-found"/>
 <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
@@ -796,6 +797,10 @@
 	    <map:transform src="xslt/exception/parent_node_not_found.xsl"/>
 	    <map:call resource="style-cms-page"/>
           </map:when>
+	  <map:when test="resourcenotfound">
+	    <map:transform src="xslt/exception/not_published_yet.xsl"/>
+	    <map:call resource="style-cms-page"/>
+	  </map:when>
 	  <map:when test="sax">
 	    <map:transform src="xslt/exception/not_published_yet.xsl"/>
 	    <map:call resource="style-cms-page"/>
