@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.17 2003/08/15 08:30:56 andreas Exp $
+ $Id: info.xsl,v 1.18 2003/08/19 15:31:35 egli Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -81,79 +81,111 @@
    </table>
 </xsl:template>
 
-<xsl:template match="lenya-info:meta">
-   <form>
-   <table class="lenya-table-noborder">
-   <tr><td>Title:</td><td><input type="text" id="dc:title" name="properties.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
-   <tr><td>Creator:</td><td><input type="text" id="dc:creator" name="properties.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input></td></tr>
-   <tr><td>Subject:</td><td><input type="text" id="dc:subject" name="properties.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
-   <tr><td>Description:</td><td><input type="text" id="dc:description" name="properties.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
-   <tr><td>Publisher:</td><td><input type="text" id="dc:publisher" name="properties.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
-   <tr><td>Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
-   <tr><td>Rights:</td><td><input type="text" id="dc:rights" name="properties.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
-   </table>
-   <input type="submit" value="Update Metadata"/>
-   </form>
-</xsl:template>
-
-
-<xsl:template match="lenya-info:assets">
-	<table class="lenya-table-noborder">
- <!--   <xsl:for-each select="lenya-info:asset>-->
-     <tr><td>asset.gif<xsl:value-of select="."/></td><td><a href="">delete</a></td></tr> 
-    <!-- </xsl:for-each>-->
-    </table>
-          <form>
-             <input type="file" name="asset" size="40"/>
-             <input type="submit" value="Upload Asset"/>
-          </form>
-</xsl:template>
-
-
-<xsl:template match="rc:revisions/XPSRevisionControl">
-   <table class="lenya-table-noborder">
-		<xsl:for-each select="CheckIn">
-			
-			<xsl:choose>
-				
-				<xsl:when test="position()=1">
-					<tr>
-						<td>Current version</td>
-						<td>&#160;</td>
-						<xsl:apply-templates select="Time"/>
-						<xsl:apply-templates select="Identity"/>
-					</tr>
-				</xsl:when>
-
-				<!-- Note, important: The timestamp we're inserting into the anchor
-				     in each row is actually the one from the *previous* version, thus the
-					 position()-1 calculation. This is because in order to roll back
-					 to a given version, we need to reactivate the backup file which was
-					 written *before* that version was checked in.
-				 --> 
-
-				<xsl:when test="position()>1">
-					<xsl:variable name="timeIndex" select="position() - 1"/>
-					<tr>
-						<td>
-							<xsl:element name="a">
-							<xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;documentid=<xsl:value-of select="lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
-
-						</td>
-						<td>
-							<xsl:element name="a">
-							<xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;documentid=<xsl:value-of select="lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
-
-						</td>
-						<xsl:apply-templates select="Time"/>
-						<xsl:apply-templates select="Identity"/>
-					</tr>
-				</xsl:when>
-			</xsl:choose>
-		
-		</xsl:for-each>
+  <xsl:template match="lenya-info:meta">
+    <form>
+      <table class="lenya-table">
+        <tr>
+          <th colspan="2">Meta Data</th>
+        </tr>
+        <tr><td>Title:</td><td><input type="text" id="dc:title" name="properties.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
+        <tr><td>Creator:</td><td><input type="text" id="dc:creator" name="properties.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input></td></tr>
+        <tr><td>Subject:</td><td><input type="text" id="dc:subject" name="properties.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
+        <tr><td>Description:</td><td><input type="text" id="dc:description" name="properties.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
+        <tr><td>Publisher:</td><td><input type="text" id="dc:publisher" name="properties.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
+        <tr><td>Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
+        <tr><td>Rights:</td><td><input type="text" id="dc:rights" name="properties.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
       </table>
-</xsl:template>
+      <input type="submit" value="Update Metadata"/>
+    </form>
+  </xsl:template>
+
+  <xsl:template match="lenya-info:assets">
+    <table class="lenya-table">
+      <tr>
+        <th colspan="2">Assets</th>
+      </tr>
+      <xsl:for-each select="lenya-info:asset">
+        <tr>
+          <td><xsl:value-of select="."/></td>
+          <td>
+            <form>
+              <input type="hidden" name="lenya.usecase" value="asset"/>
+              <input type="hidden" name="lenya.step" value="remove"/>
+              <input type="hidden" name="task-id" value="remove-asset"/>
+              <input type="hidden" name="properties.asset.document-id">
+                <xsl:attribute name="value">
+                  <xsl:value-of select="../lenya-info:documentid"/>
+                </xsl:attribute>
+              </input>
+              <input type="hidden" name="properties.asset.name">
+                <xsl:attribute name="value">
+                  <xsl:value-of select="."/>
+                </xsl:attribute>
+              </input>
+              <input type="submit" value="Delete"/>
+            </form>
+          </td>
+        </tr> 
+      </xsl:for-each>
+    </table>
+    <form>
+      <input type="hidden" name="lenya.usecase" value="asset"/>
+      <input type="hidden" name="lenya.step" value="showscreen"/>
+      <input type="hidden" name="properties.asset.document-id">
+        <xsl:attribute name="value">
+          <xsl:value-of select="lenya-info:documentid"/>
+        </xsl:attribute>
+      </input>
+      <!--       <input type="file" name="asset" size="40"/> -->
+      <input type="submit" value="Upload New Asset"/>
+    </form>
+  </xsl:template>
+
+
+  <xsl:template match="rc:revisions/XPSRevisionControl">
+    <table class="lenya-table-noborder">
+      <xsl:for-each select="CheckIn">
+        
+        <xsl:choose>
+          
+          <xsl:when test="position()=1">
+            <tr>
+              <td>Current version</td>
+              <td>&#160;</td>
+              <xsl:apply-templates select="Time"/>
+              <xsl:apply-templates select="Identity"/>
+            </tr>
+          </xsl:when>
+          
+          <!-- Note, important: The timestamp we're inserting into the anchor
+          in each row is actually the one from the *previous* version, thus the
+          position()-1 calculation. This is because in order to roll back
+          to a given version, we need to reactivate the backup file which was
+          written *before* that version was checked in.
+          --> 
+          
+          <xsl:when test="position()>1">
+            <xsl:variable name="timeIndex" select="position() - 1"/>
+            <tr>
+              <td>
+                <xsl:element name="a">
+                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;documentid=<xsl:value-of select="lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
+                
+              </td>
+              <td>
+                <xsl:element name="a">
+                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;documentid=<xsl:value-of select="lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+                
+              </td>
+              <xsl:apply-templates select="Time"/>
+              <xsl:apply-templates select="Identity"/>
+            </tr>
+          </xsl:when>
+        </xsl:choose>
+        
+      </xsl:for-each>
+    </table>
+  </xsl:template>
 
 <xsl:template match="Time">
 	<td align="right"><xsl:value-of select="@humanreadable"/></td>
