@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.6 2003/09/11 17:55:41 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.7 2003/09/12 00:36:05 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:name>Lenya's Weblog</lenya:name>
@@ -36,6 +36,8 @@ might be helpful
 <code>export HTTP_PROXY=http://127.0.0.1:4444</code>
 <br />
 <code>python wxAtomClientApp.py</code>
+<br />
+<a href="http://www.diveintomark.org/atom/">Testing the client</a>
 <br />
 <code>java -classpath lib/axis.jar org.apache.axis.utils.tcpmon</code>
 (Listen Port # 4444, Act as a ... Proxy, Options: HTTP Proxy Support)
