@@ -22,5 +22,22 @@ java -classpath lib/xmldb-common-2003-09-02.jar:lib/xmldb-xupdate-2003-09-02.jar
 ]]>
 </source>
 </section>
+
+<section>
+<title>Editing attributes</title>
+<source>
+<![CDATA[
+<xsl:template match="xhtml:table">
+  <node name="Background Color" select="/*/xhtml:table[@tagID='{@tagID}']/@class">
+    <content>
+      <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:table[@tagID='{@tagID}']/@class&quot;&gt;" cols="40" rows="2">
+        <xsl:value-of select="@class"/>
+      </textarea>
+    </content>
+  </node>
+</xsl:template>
+]]>
+</source>
+</section>
 </body>
 </document>
