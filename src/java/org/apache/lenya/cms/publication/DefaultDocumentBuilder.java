@@ -59,7 +59,7 @@ import java.util.HashMap;
 
 /**
  * @author andreas
- * @version $Id: DefaultDocumentBuilder.java,v 1.16 2003/09/17 15:17:22 michi Exp $
+ * @version $Id: DefaultDocumentBuilder.java,v 1.17 2003/09/25 08:21:39 andreas Exp $
  *
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
@@ -95,8 +95,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String originalURL = documentURL;
 
         String extension = getExtension(documentURL);
-        String fullExtension = "".equals(extension) ? "" : ("." + extension);
-        documentURL = documentURL.substring(0, documentURL.length() - fullExtension.length());
+        documentURL = removeExtensions(documentURL);
 
         String language = getLanguage(documentURL);
         String fullLanguage = "".equals(language) ? "" : ("_" + language);
@@ -146,6 +145,20 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 */
 
         return document;
+    }
+    
+    /**
+     * Removes all "."-separated extensions from a URL
+     * (e.g., <code>/foo.print.html</code> is transformed to <code>/foo</code>).
+     * @param url The URL to trim.
+     * @return A URL string.
+     */
+    protected String removeExtensions(String url) {
+        int dotIndex = url.indexOf(".");
+        if (dotIndex > -1) {
+            url = url.substring(0, dotIndex);
+        }
+        return url;
     }
 
     /**
