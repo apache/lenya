@@ -243,6 +243,10 @@
     <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserPassword"/>
     <component-instance name="admin.userGroups" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserGroups"/>
     <component-instance name="authoring.create" logger="lenya.authoring" class="org.apache.lenya.cms.authoring.Create"/>
+    <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
+    <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
+    <component-instance name="tab.acLive" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
+    <component-instance name="tab.acTrash" logger="lenya.site" class="org.apache.lenya.cms.ac.AccessControl"/>
     <component-instance name="tab.assets" logger="lenya.site" class="org.apache.lenya.cms.site.Assets"/>
     <component-instance name="tab.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.Metadata"/>
     <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.Overview"/>
