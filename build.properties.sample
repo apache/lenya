@@ -36,7 +36,8 @@ tomcat.cache.dir=work/Standalone/localhost/lenya
 
 
 #------------------------------------------------------------------------------------
-# Where the 'install' build target should copy the endorsed libraries
+# Where the 'install' build target should copy the endorsed libraries relative to the
+# tomcat install dir.
 
 tomcat.endorsed.dir=common/endorsed
 
@@ -57,7 +58,7 @@ tomcat.endorsed.dir=common/endorsed
 #hsqldb-server.port=19002
 
 
-#------------------------------------------------------------------------------------
+h#------------------------------------------------------------------------------------
 # Enable multipart requests (for security reasons turned off resp. set to false)
 
 #enable.uploads=true
