@@ -12,7 +12,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:mail="http://www.lenya.org/2002/mail">
 
-<xsl:output method="text"/>
+<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
     
 <xsl:strip-space elements="footer"/>
     

@@ -3,9 +3,6 @@
 
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:param name="documentid"/>
-<xsl:param name="authoring"/>
-
 <xsl:template match="newsletter">
   <html>
     <head>
