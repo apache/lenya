@@ -191,7 +191,7 @@ public class CMSHistory extends HistoryImpl {
         try {
             date = df.parse(element.getAttribute(DATE_ATTRIBUTE));
         } catch (final ParseException e) {
-            throw new WorkflowException("Could not parse workflow date: " +e.toString());
+            throw new WorkflowException("Could not parse workflow date: ", e);
         }
         cmsVersion.setDate(date);
 
