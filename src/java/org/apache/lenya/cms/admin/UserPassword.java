@@ -1,18 +1,25 @@
 /*
- * Created on 20.09.2004
+ * Copyright  1999-2004 The Apache Software Foundation
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
 package org.apache.lenya.cms.admin;
 
 import org.apache.lenya.ac.User;
 
 /**
- * @author nobby
- * 
- * TODO To change the template for this generated type comment go to Window - Preferences - Java -
- * Code Style - Code Templates
+ * Usecase to change a user's password.
  */
 public class UserPassword extends AccessControlUsecase {
 
@@ -23,7 +30,7 @@ public class UserPassword extends AccessControlUsecase {
     protected static final String CHECK_PASSWORD = "checkPassword";
 
     /**
-     *  
+     * Ctor.
      */
     public UserPassword() {
         super();
@@ -52,8 +59,7 @@ public class UserPassword extends AccessControlUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        
-        user.setPassword(getParameter(NEW_PASSWORD));
+        this.user.setPassword(getParameter(NEW_PASSWORD));
     }
 
     private User user;

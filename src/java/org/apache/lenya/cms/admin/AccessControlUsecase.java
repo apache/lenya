@@ -58,7 +58,7 @@ public class AccessControlUsecase extends AbstractUsecase {
         AccessControllerResolver resolver = null;
         
         try {
-            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE + "Selector");
             resolver =
                 (AccessControllerResolver) selector.select(
                     AccessControllerResolver.DEFAULT_RESOLVER);
@@ -83,7 +83,7 @@ public class AccessControlUsecase extends AbstractUsecase {
                     }
                     selector.release(resolver);
                 }
-                manager.release(selector);
+                this.manager.release(selector);
             }
         }
 
@@ -94,24 +94,24 @@ public class AccessControlUsecase extends AbstractUsecase {
      * @return Returns the groupManager.
      */
     protected GroupManager getGroupManager() {
-        return groupManager;
+        return this.groupManager;
     }
     /**
      * @return Returns the ipRangeManager.
      */
     protected IPRangeManager getIpRangeManager() {
-        return ipRangeManager;
+        return this.ipRangeManager;
     }
     /**
      * @return Returns the roleManager.
      */
     protected RoleManager getRoleManager() {
-        return roleManager;
+        return this.roleManager;
     }
     /**
      * @return Returns the userManager.
      */
     protected UserManager getUserManager() {
-        return userManager;
+        return this.userManager;
     }
 }
