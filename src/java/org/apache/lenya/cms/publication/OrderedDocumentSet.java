@@ -1,5 +1,5 @@
 /*
-$Id: OrderedDocumentSet.java,v 1.1 2003/11/27 14:01:49 andreas Exp $
+$Id: OrderedDocumentSet.java,v 1.2 2004/02/18 18:45:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -58,36 +58,129 @@ package org.apache.lenya.cms.publication;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
+ * <p>
  * A document set which is ordered by dependence, starting with the document
  * which does not require any other documents.
+ * </p>
+ * 
+ * <p>Dependence on a set of documents must be a strict partial order <strong>&lt;</strong>:</p>
+ * <ul>
+ * <li>irreflexive: d<strong>&lt;</strong>d does not hold for any document d</li>
+ * <li>antisymmetric: d<strong>&lt;</strong>e and e<strong>&lt;</strong>d implies d=e</li>
+ * <li>transitive: d<strong>&lt;</strong>e and e<strong>&lt;</strong>f implies d<strong>&lt;</strong>f</li>
+ * </ul>
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class OrderedDocumentSet extends DocumentSet {
-    
+
     private List documents = new ArrayList();
 
     /**
+     * This method throws an exception when a loop in the
+     * dependency graph occurs.
+     * 
      * @see org.apache.lenya.cms.publication.DocumentSet#add(org.apache.lenya.cms.publication.Document)
      */
     public void add(Document document) {
-        
+
         Publication publication = document.getPublication();
         int i = 0;
-        
+
         try {
-            while (i < documents.size() && publication.dependsOn(document, (Document) documents.get(i))) {
+            while (i < documents.size()
+                && publication.dependsOn(document, (Document) documents.get(i))) {
                 i++;
+            }
+
+            documents.add(i, document);
+        
+            if (!check()) {
+                documents.remove(i);
+                throw new PublicationException("The dependence relation is not a strict partial order!");
             }
         } catch (PublicationException e) {
             StringWriter writer = new StringWriter();
             e.printStackTrace(new PrintWriter(writer));
             throw new IllegalStateException(writer.toString());
         }
-        documents.add(i, document);
+        
+    }
+
+    /**
+     * Checks if the dependence relation is a strict partial order.
+     * @return A boolean value.
+     * @throws PublicationException when something went wrong.
+     */
+    protected boolean check() throws PublicationException {
+        boolean isStrictPartialOrder = isIrreflexive() && isAntisymmetric() && isTransitive();
+        return isStrictPartialOrder;
+    }
+
+    /**
+     * Checks if the dependence relation is antisymmetric.
+     * @return A boolean value.
+     * @throws PublicationException when something went wrong.
+     */
+    protected boolean isAntisymmetric() throws PublicationException {
+        Document[] documents = getDocuments();
+        boolean isAntisymmetric = true;
+        for (int i = 0; i < documents.length; i++) {
+            Publication publication = documents[i].getPublication();
+            for (int j = i + 1; j < documents.length; j++) {
+                if (publication.dependsOn(documents[i], documents[j])
+                    && publication.dependsOn(documents[j], documents[i])
+                    && !(documents[i].equals(documents[j]))) {
+                    isAntisymmetric = false;
+                }
+            }
+        }
+        return isAntisymmetric;
+    }
+
+    /**
+     * Checks if the dependence relation is transitive.
+     * @return A boolean value.
+     * @throws PublicationException when something went wrong.
+     */
+    protected boolean isTransitive() throws PublicationException {
+        Document[] documents = getDocuments();
+        boolean isTransitive = true;
+        for (int i = 0; i < documents.length; i++) {
+            Publication publication = documents[i].getPublication();
+            for (int j = i + 1; j < documents.length; j++) {
+                for (int k = j + 1; k < documents.length; k++) {
+                    if (publication.dependsOn(documents[i], documents[j])
+                        && publication.dependsOn(documents[j], documents[k])
+                        && !publication.dependsOn(documents[i], documents[k])) {
+                        isTransitive = false;
+                    }
+                }
+            }
+        }
+        return isTransitive;
+    }
+
+    /**
+     * Checks if the dependence relation is irreflexive.
+     * @return
+     * @throws PublicationException
+     */
+    protected boolean isIrreflexive() throws PublicationException {
+        Document[] documents = getDocuments();
+        boolean isIrreflexive = true;
+        for (int i = 0; i < documents.length; i++) {
+            Publication publication = documents[i].getPublication();
+            if (publication.dependsOn(documents[i], documents[i])) {
+                isIrreflexive = false;
+            }
+        }
+        return isIrreflexive;
     }
 
     /**
@@ -100,12 +193,38 @@ public class OrderedDocumentSet extends DocumentSet {
     }
 
     /**
-     * Returns the documents contained in this set.
+     * Returns the documents contained in this set in ascending order.
      * 
      * @return An array of documents.
      */
     public Document[] getDocuments() {
         return (Document[]) documents.toArray(new Document[documents.size()]);
+    }
+
+    /**
+     * Visits the document set in ascending order (required document before
+     * requiring document).
+     * @param visitor The visitor.
+     * @throws DocumentException when a loop occurs or an error occurs during visiting.
+     */
+    public void visitAscending(DocumentSetVisitor visitor) throws DocumentException {
+        visit(visitor);
+    }
+
+    /**
+     * Visits the document set in descending order (requiring document before
+     * required document).
+     * @param visitor The visitor.
+     * @throws DocumentException when a loop occurs or an error occurs during visiting.
+     */
+    public void visitDescending(DocumentSetVisitor visitor) throws DocumentException {
+        Document[] documents = getDocuments();
+        List list = Arrays.asList(documents);
+        Collections.reverse(list);
+        documents = (Document[]) list.toArray(new Document[list.size()]);
+        for (int i = 0; i < documents.length; i++) {
+            documents[i].accept(visitor);
+        }
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentSet.java,v 1.2 2003/10/29 15:31:12 andreas Exp $ <License>
+ * $Id: DocumentSet.java,v 1.3 2004/02/18 18:45:19 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -57,6 +57,16 @@ public class DocumentSet {
 	 */
     public DocumentSet() {
     }
+    
+    /**
+     * Ctor.
+     * @param documents The initial documents.
+     */
+    public DocumentSet(Document[] documents) {
+        for (int i = 0; i < documents.length; i++) {
+            add(documents[i]);
+        }
+    }
 
     private List documents = new ArrayList();
 
@@ -88,5 +98,18 @@ public class DocumentSet {
     public boolean isEmpty() {
         return documents.isEmpty();
     }
+    
+    /**
+     * Visits the document set.
+     * @param visitor The visitor.
+     * @throws DocumentException if an error occurs during visiting.
+     */
+    public void visit(DocumentSetVisitor visitor) throws DocumentException {
+        Document[] documents = getDocuments();
+        for (int i = 0; i < documents.length; i++) {
+            documents[i].accept(visitor);
+        }
+    }
+    
 
 }

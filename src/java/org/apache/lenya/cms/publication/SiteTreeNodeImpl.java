@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.25 2004/02/04 09:48:09 egli Exp $
+$Id: SiteTreeNodeImpl.java,v 1.26 2004/02/18 18:45:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -71,8 +71,8 @@ import org.w3c.dom.NodeList;
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: egli $
- * @version $Revision: 1.25 $
+ * @author $Author: andreas $
+ * @version $Revision: 1.26 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -96,7 +96,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getParentId()
      * @deprecated use getParent().getId() instead
      */
@@ -123,60 +122,54 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getId()
      */
     public String getId() {
         if (node == node.getOwnerDocument().getDocumentElement()) {
             return "";
         }
-        return node
-            .getAttributes()
-            .getNamedItem(ID_ATTRIBUTE_NAME)
-            .getNodeValue();
+        return node.getAttributes().getNamedItem(ID_ATTRIBUTE_NAME).getNodeValue();
     }
 
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#getAbsoluteParentId()
-	 * @deprecated use getParent().getAbsoluteId() instead
-	 */
-	public String getAbsoluteParentId() {
-		SiteTreeNode parent = this.getParent();
-		return (parent == null) ? "" : parent.getAbsoluteId();
-	}
-
-	/**
-	 *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#getAbsoluteId()
-	 */
-	public String getAbsoluteId() {
-		String absoluteId = "";
-		Node currentNode = node;
-		NamedNodeMap attributes = null;
-		Node idAttribute = null;
-
-		while (currentNode != null) {
-			attributes = currentNode.getAttributes();
-
-			if (attributes == null) {
-				break;
-			}
-
-			idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
-
-			if (idAttribute == null) {
-				break;
-			}
-
-			absoluteId = "/" + idAttribute.getNodeValue() + absoluteId;
-			currentNode = currentNode.getParentNode();
-		}
-
-		return absoluteId;		
-	}
     /**
-     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#getAbsoluteParentId()
+     * @deprecated use getParent().getAbsoluteId() instead
+     */
+    public String getAbsoluteParentId() {
+        SiteTreeNode parent = this.getParent();
+        return (parent == null) ? "" : parent.getAbsoluteId();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#getAbsoluteId()
+     */
+    public String getAbsoluteId() {
+        String absoluteId = "";
+        Node currentNode = node;
+        NamedNodeMap attributes = null;
+        Node idAttribute = null;
+
+        while (currentNode != null) {
+            attributes = currentNode.getAttributes();
+
+            if (attributes == null) {
+                break;
+            }
+
+            idAttribute = attributes.getNamedItem(ID_ATTRIBUTE_NAME);
+
+            if (idAttribute == null) {
+                break;
+            }
+
+            absoluteId = "/" + idAttribute.getNodeValue() + absoluteId;
+            currentNode = currentNode.getParentNode();
+        }
+
+        return absoluteId;
+    }
+
+    /**
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getLabels()
      */
     public Label[] getLabels() {
@@ -206,7 +199,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getLabel(java.lang.String)
      */
     public Label getLabel(String xmlLanguage) {
@@ -216,7 +208,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
         for (int i = 0; i < labels.length; i++) {
             language = labels[i].getLanguage();
-            
+
             // FIXME: This expression is too complicated 
             // considering there can no longer be any labels with
             // a null language, i.e. each label must have a language.
@@ -232,7 +224,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#addLabel(org.apache.lenya.cms.publication.Label)
      */
     public void addLabel(Label label) {
@@ -249,7 +240,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#removeLabel(org.apache.lenya.cms.publication.Label)
      */
     public void removeLabel(Label label) {
@@ -279,7 +269,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getHref()
      */
     public String getHref() {
@@ -293,7 +282,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getSuffix()
      */
     public String getSuffix() {
@@ -307,7 +295,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#hasLink()
      */
     public boolean hasLink() {
@@ -320,7 +307,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         }
     }
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren()
      */
     public SiteTreeNode[] getChildren() {
@@ -338,7 +324,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#removeChildren()
      */
     public SiteTreeNode[] removeChildren() {
@@ -354,7 +339,6 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren()
      */
     public SiteTreeNode[] getNextSiblings() {
@@ -371,20 +355,19 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         return (SiteTreeNode[]) siblingElements.toArray(new SiteTreeNode[siblingElements.size()]);
     }
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#getNextSiblingDocumentId()
-	 */
-	public String getNextSiblingDocumentId() {
-		SiteTreeNode[] siblings = getNextSiblings();
-        if (siblings != null && siblings.length >0 ){
-			return siblings[0].getAbsoluteId();       	 
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#getNextSiblingDocumentId()
+     */
+    public String getNextSiblingDocumentId() {
+        SiteTreeNode[] siblings = getNextSiblings();
+        if (siblings != null && siblings.length > 0) {
+            return siblings[0].getAbsoluteId();
         } else {
-        	return null;
+            return null;
         }
-	}
+    }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#accept(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
      */
     public void accept(SiteTreeNodeVisitor visitor) throws DocumentException {
@@ -409,34 +392,28 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     }
 
     /**
-     * (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTreeNode#acceptSubtree(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
      */
     public void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException {
-      List orderedNodes = this.postOrder();
-      for (int i = 0; i < orderedNodes.size(); i++) {
-          SiteTreeNode node = (SiteTreeNode)orderedNodes.get(i);
-          node.accept(visitor);  
-      }
+        List orderedNodes = this.postOrder();
+        for (int i = 0; i < orderedNodes.size(); i++) {
+            SiteTreeNode node = (SiteTreeNode) orderedNodes.get(i);
+            node.accept(visitor);
+        }
     }
 
     /**
-     *  (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNode#postOrder()
-	 */
-	public List postOrder(){
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#postOrder()
+     */
+    public List postOrder() {
         List list = new ArrayList();
         SiteTreeNode[] children = this.getChildren();
-        if (children == null) {
-            log.info("The node " + this.getId() + " has no children");
-        } else {
-            for (int i = 0; i < children.length; i++) {
-                List orderedChildren = children[i].postOrder();
-                list.addAll(orderedChildren);
-            }
+        for (int i = 0; i < children.length; i++) {
+            List orderedChildren = children[i].postOrder();
+            list.addAll(orderedChildren);
         }
-        list.add(this);   
-		return list;
+        list.add(this);
+        return list;
     }
     /**
      * @see org.apache.lenya.cms.publication.SiteTreeNode#setLabel(org.apache.lenya.cms.publication.Label)
@@ -502,5 +479,19 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         }
 
         return parent;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#preOrder()
+     */
+    public List preOrder() {
+        List list = new ArrayList();
+        list.add(this);
+        SiteTreeNode[] children = this.getChildren();
+        for (int i = 0; i < children.length; i++) {
+            List orderedChildren = children[i].preOrder();
+            list.addAll(orderedChildren);
+        }
+        return list;
     }
 }

@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.17 2004/02/04 09:54:24 egli Exp $
+$Id: SiteTreeNode.java,v 1.18 2004/02/18 18:45:19 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,8 +62,8 @@ import java.util.List;
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
- * @author $Author: egli $
- * @version $Revision: 1.17 $
+ * @author $Author: andreas $
+ * @version $Revision: 1.18 $
  */
 public interface SiteTreeNode {
 
@@ -230,6 +230,12 @@ public interface SiteTreeNode {
      */
     void setLabel(Label label);
 
+    /**
+     * Give a list of the children and this node in a pre order way
+     * @return The list
+     */
+    List preOrder();
+    
 	/**
      * Give a list of the children and this node in a post order way
 	 * @return The list

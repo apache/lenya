@@ -62,7 +62,7 @@ import java.util.Date;
  * A typical CMS document.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DefaultDocument.java,v 1.38 2004/01/26 10:21:38 michi Exp $
+ * @version $Id: DefaultDocument.java,v 1.39 2004/02/18 18:45:19 andreas Exp $
  */
 public class DefaultDocument implements Document {
     
@@ -410,6 +410,13 @@ public class DefaultDocument implements Document {
      */
     public String toString() {
         return getPublication().getId() + ":" + getArea() + ":" + getId() + ":" + getLanguage();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#accept(org.apache.lenya.cms.publication.DocumentSetVisitor)
+     */
+    public void accept(DocumentSetVisitor visitor) throws DocumentException {
+        visitor.visitDocument(this);
     }
 
 }
