@@ -314,7 +314,7 @@
                 <map:parameter name="stylesheet" value="authoring/create.xsl"/>
               </map:call>
             </map:act>
-            <map:redirect-to uri="{request:requestURI}?lenya.usecase=create&amp;lenya.step=showscreen&amp;status=duplicate-id"/>
+            <map:redirect-to uri="{request:requestURI}?doctype={request-param:properties.create.doctype}&amp;lenya.usecase=create&amp;lenya.step=showscreen&amp;status=duplicate-id"/>
           </map:match>
           
         </map:match>
