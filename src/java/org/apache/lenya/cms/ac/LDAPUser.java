@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.17 2003/10/27 17:39:57 andreas Exp $ <License>
+ * $Id: LDAPUser.java,v 1.18 2003/10/27 17:56:14 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -88,6 +88,14 @@ public class LDAPUser extends FileUser {
 	 * Creates a new LDAPUser object.
 	 */
 	public LDAPUser() {
+	}
+	
+	/**
+	 * Creates a new LDAPUser object.
+	 * @param configurationDirectory The configuration directory.
+	 */
+	public LDAPUser(File configurationDirectory) {
+		setConfigurationDirectory(configurationDirectory);
 	}
 
 	/**
