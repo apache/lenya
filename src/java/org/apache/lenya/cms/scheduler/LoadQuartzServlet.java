@@ -34,7 +34,7 @@ import org.wyona.cms.publishing.PublishingEnvironment;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.10 2002/11/17 21:29:21 michicms Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.11 2002/11/22 10:07:34 ah Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
 
@@ -156,6 +156,11 @@ public class LoadQuartzServlet extends HttpServlet {
         throws IOException {
 
        log.debug(".handleRequest() : server-port:"+request.getServerPort());
+    log.debug(
+        "\n----------------------------------------------------------------" +
+        "\n- Incoming request at URI: " + request.getRequestURI() +
+        "\n----------------------------------------------------------------");
+    
 
 	// Fetch all the params from the post request. In particular
 	// we are interested in the following parameters: 
