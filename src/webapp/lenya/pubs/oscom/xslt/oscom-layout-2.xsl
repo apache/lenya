@@ -2,8 +2,6 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:error="http://apache.org/cocoon/error/2.0" xmlns:n-rdf="http://my.netscape.com/rdf/simple/0.9/" xmlns:oscom="http://www.oscom.org/2002/oscom">
 
-<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
-
 <xsl:variable name="oscombarcolor">#ffa500</xsl:variable>
 <!--
 <xsl:variable name="navbarcolor">#3366cc</xsl:variable>
@@ -14,7 +12,7 @@
 <html>
 <head>
 <meta name="generator" content="HTML Tidy, see www.w3.org" />
-<title>OSCOM - CMS Matrix</title>
+<title>OSCOM - Matrix</title>
 <meta http-equiv="Content-Type"
 content="text/html; charset=iso-latin-1" />
 <meta http-equiv="Content-Language" content="EN" />

@@ -379,6 +379,9 @@
           <map:part src="content/authoring/{1}.xml" element="cmsbody"/>
         </map:aggregate>
         <map:transform type="xinclude"/>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="content/authoring/{1}.xml"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
