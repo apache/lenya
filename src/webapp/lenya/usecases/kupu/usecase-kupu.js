@@ -79,7 +79,7 @@ function publication_image_library() {
         
         for(var j=0; j<imageResources.length; j++) {
             var metaDoc = org.apache.lenya.xml.DocumentHelper.readDocument(resourcesMgr.getMetaFile(imageResources[j]));
-            title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
+            var title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
             
             imageInfos.add({
                     "url" : pageEnvelope.getContext() + "/" + resourcesMgr.getResourceUrl(imageResources[j]),
