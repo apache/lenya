@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: message2xslt.xsl,v 1.7 2004/05/17 14:53:46 andreas Exp $ -->
+<!-- $Id$ -->
 
 <!--
 	This stylesheet converts a notification message to a named stylesheet.
@@ -34,7 +34,7 @@
 <xsl:namespace-alias stylesheet-prefix="xslt" result-prefix="xsl"/>
     
 <xsl:template match="/">
-	<xslt:stylesheet exclude-result-prefixes="not">
+	<xslt:stylesheet exclude-result-prefixes="not" version="1.0">
 		<xsl:apply-templates/>
 	</xslt:stylesheet>
 </xsl:template>
