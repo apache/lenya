@@ -16,6 +16,9 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -29,6 +32,11 @@ public class UsecaseView implements Configurable {
     
     protected static final String ATTRIBUTE_TEMPLATE_URI = "template";
     protected static final String ATTRIBUTE_SHOW_MENU = "menu";
+    protected static final String ELEMENT_PARAMETER = "parameter";
+    protected static final String ATTRIBUTE_NAME = "name";
+    protected static final String ATTRIBUTE_VALUE = "value";
+    
+    private Map parameters = new HashMap();
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -36,6 +44,13 @@ public class UsecaseView implements Configurable {
     public void configure(Configuration config) throws ConfigurationException {
         this.templateUri = config.getAttribute(ATTRIBUTE_TEMPLATE_URI);
         this.showMenu = config.getAttributeAsBoolean(ATTRIBUTE_SHOW_MENU, false);
+        
+        Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
+        for (int i = 0; i < parameterConfigs.length; i++) {
+            String name = parameterConfigs[i].getAttribute("name");
+            String value = parameterConfigs[i].getAttribute("value");
+            this.parameters.put(name, value);
+        }
     }
 
     private String templateUri;
@@ -57,6 +72,14 @@ public class UsecaseView implements Configurable {
      */
     public boolean showMenu() {
         return this.showMenu;
+    }
+    
+    /**
+     * @param name The parameter name.
+     * @return The parameter value.
+     */
+    public String getParameter(String name) {
+        return (String) this.parameters.get(name);
     }
     
 }

@@ -427,4 +427,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#setView(org.apache.lenya.cms.usecase.UsecaseView)
+     */
+    public void setView(UsecaseView view) {
+        this.view = view;
+    }
+
 }

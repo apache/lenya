@@ -156,4 +156,9 @@ public interface Usecase {
      */
     UsecaseView getView();
 
+    /**
+     * @param view The view of the usecase.
+     */
+    void setView(UsecaseView view);
+
 }
