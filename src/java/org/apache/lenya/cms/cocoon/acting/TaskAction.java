@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.14 2003/05/27 15:34:03 egli Exp $
+ * $Id: TaskAction.java,v 1.15 2003/06/06 13:29:53 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,14 +59,21 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.task.*;
+import org.apache.lenya.cms.workflow.WorkflowFactory;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.cms.publication.DefaultDocument;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.workflow.Event;
+import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 
 /**
@@ -169,6 +176,27 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         task.parameterize(taskParameters);
         task.execute(publication.getServletContext().getCanonicalPath());
 
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+        
+        PageEnvelope envelope = new PageEnvelope(publication, request);
+        Document document = new DefaultDocument(publication, envelope.getDocumentId());
+        
+        if (factory.hasWorkflow(document)) {
+            String eventName = request.getParameter("lenya.event");
+            WorkflowInstance instance = factory.buildInstance(document);
+            Situation situation = factory.buildSituation(objectModel);
+            
+            Event event = null;
+            Event events[] = instance.getExecutableEvents(situation);
+            for (int i = 0; i < events.length; i++) {
+                if (events[i].getName().equals(eventName)) {
+                    event = events[i];
+                }
+            }
+            assert event != null;
+            instance.invoke(situation, event);
+        }
+        
         //------------------------------------------------------------
         // get session
         //------------------------------------------------------------
