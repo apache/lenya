@@ -71,7 +71,7 @@ public class RCML{
             log.error(e);
             }
           }
-/**
+/** initialise the RCML-document. Delete all entries
  *
  */
 
@@ -83,6 +83,9 @@ public class RCML{
 	}
 
 	
+/**Call the methode write, if the document is dirty
+ *
+ */
 
 	public void finalize() throws IOException, Exception {
 	
@@ -93,7 +96,9 @@ public class RCML{
 		
 	}
 		
-
+/** Write the xml RCML-document in the RCML-file. Limit the number of entries to the value maximalNumberOfEntries (2*maxNumberOfRollbacks(configured)+1)
+ *
+ **/
 	public void write() throws IOException, Exception {
 	
 		log.debug("RCML.write(): writing out file: " + rcmlFile.getAbsolutePath());
@@ -116,7 +121,7 @@ public class RCML{
     maximalNumberOfEntries=2*maximalNumberOfEntries+1;
     //maximalNumberOfEntries=5;
     }
-/**
+/** create a RCML-File if no one exists already
  *
  */
   public RCML(String rcmlDirectory, String filename) throws Exception{
@@ -152,8 +157,10 @@ public class RCML{
 		}
 
 	}
-/**
- *
+/**Write a new entry for a check out or a check in the RCML-File made by the user with identity at time
+ *@param type co for a check out, ci for a check in
+ *@param identity The identity of the user
+ *@param time Time at which the check in/out is made
  */
      public void checkOutIn(short type, String identity, long time) throws IOException, Exception
           {
@@ -210,8 +217,8 @@ public class RCML{
      }
      
      
-/**
- *
+/** get the latest check out
+ * @return CheckOutEntry The entry of the check out
  */
 	public CheckOutEntry getLatestCheckOutEntry() throws Exception {
 
@@ -233,7 +240,9 @@ public class RCML{
 
 	}
 
-
+/** get the latest check in
+ * @return CheckInEntry The entry of the check in
+ */                                                                                                                                         
 	public CheckInEntry getLatestCheckInEntry() throws Exception {
 
 		XPointerFactory xpf = new XPointerFactory();
@@ -254,7 +263,9 @@ public class RCML{
 
 	}
 
-
+/** get the latest entry (a check out or check in)
+ * @return RCMLEntry The entry of the check out/in
+ */                                                                                                                                         
 	public RCMLEntry getLatestEntry() throws Exception {
 
 		CheckInEntry cie = getLatestCheckInEntry();
@@ -313,7 +324,9 @@ public class RCML{
 	*/          
           
 
-          
+/** get all check in and check out  
+ * @return Vector of all check out and check in entries in this RCML-file
+ */
 	public Vector getEntries() throws Exception {
 
 		XPointerFactory xpf=new XPointerFactory();
@@ -342,9 +355,9 @@ public class RCML{
           
           
 
-	// Prune the list of entries. Keep <entriesToKeep> items
-	// at the front of the list.
-	//
+/** Prune the list of entries. Keep only entriesToKeep items at the front of the list
+ * @param entriesToKeep The number of entries to keep
+ **/
  	public void pruneEntries(int entriesToKeep) throws Exception {
 
 		XPointerFactory xpf = new XPointerFactory();
@@ -398,7 +411,7 @@ public class RCML{
          
           
           
-/**
+/** Delete the latest check in 
  *
  */
      public void deleteFirstCheckIn() throws Exception

@@ -162,8 +162,9 @@ public class RevisionController
   public String toString(){
     return "rcmlDir="+rcmlDirectory+" , rcbakDir="+backupDir;
     }
-/**
- *
+/** Get the RCML File for the file source
+ * @param source The filename of a document. 
+ * @return RCML The corresponding RCML file. 
  */
 	public RCML getRCML(String source) 
 			throws FileNotFoundException, IOException, Exception {
@@ -178,8 +179,13 @@ public class RevisionController
 	}
 
 
-/**
- *
+/**Try to make a reserved check out of the file source for a user with identity
+ * @param source The filename of the file to check out
+ * @param identity The identity of the user
+ * @return File File to check out
+ * @exception FileReservedCheckOutException if the document is already checked out by another user
+ * @exception FileNotFoundException if the file couldn't be found
+ * @exception Exception  if another problem occurs 
  */
      public File reservedCheckOut(String source, String identity) 
           throws FileNotFoundException, FileReservedCheckOutException, IOException, Exception
@@ -210,9 +216,12 @@ public class RevisionController
           
 		  return file;
           }
-/**
- * backup=true: A backup will be created
- * backup=false: No backup will be made
+/**Try to make a reserved check in of the file destination for a user with identity. A backup copy can be made.
+ * @param destination The file we want to check in 
+ * @param identity The identity of the user
+ * @param backup if true, a backup will be created, else no backup will be made.
+ * @exception FileReservedCheckInException if the document couldn't be checked in (for instance because it is already checked out by someone other ...)
+ * @exception Exception if other problems occur
  */
 
 	public long reservedCheckIn(String destination, String identity, boolean backup)
@@ -367,9 +376,15 @@ public class RevisionController
 
 	}
 */
-/**
- * Rolls back to the given point in time
- *
+/**Rolls back to the given point in time 
+ * @param destination File which will be rolled back
+ * @param identity The identity of the user
+ * @param backupFlag If true, a backup of the current version will be made before the rollback
+ * @param time The time point of the desired version
+ * @exception FileReservedCheckOutException if the current version couldn't be checked out
+ * @exception FileReservedCheckInException if the current version couldn't be checked in again
+ * @exception FileNotFoundException if a file couldn't be found
+ * @exception Exception if another problem occurs
  */
 	public long rollback(String destination, String identity, boolean backupFlag, long time)
 			throws FileReservedCheckInException, FileReservedCheckOutException, FileNotFoundException, Exception {
@@ -417,8 +432,10 @@ public class RevisionController
 		return newtime;
 		
 	}
-/**
- *
+/** Delete the check in and roll back the file to the backup at time
+ * @param time The time point of the back version we want to retrieve
+ * @param destination The File for which we want undo the check in
+ * @exception exception FileNotFoundException if the back  version or the current version couldn't be found
  */
      public void undoCheckIn(long time,String destination)
           throws Exception
