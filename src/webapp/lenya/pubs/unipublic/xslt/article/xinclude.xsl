@@ -12,7 +12,7 @@
   <xsl:copy>
     <xsl:apply-templates select="@*" />
     <head xmlns:xlink="http://www.w3.org/2002/XLink" xmlns:xi="http://www.w3.org/2001/XInclude" xlink:show="embed"  
-      xlink:href="../../../../../dossiers/{@id}/index.xml#xpointer(/dossier/head)" />
+      xlink:href="../../../../dossiers/{@id}/index.xml#xpointer(/dossier/head)" />
   </xsl:copy>
 </xsl:template>
 

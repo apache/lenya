@@ -5,56 +5,31 @@
   <branch relURI="" doctype="Front" menuName="Home">
     <branch relURI="magazin" doctype="Channel" menuName="Magazin">
       <branch relURI="geist" doctype="Section" menuName="Geist">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>
       <branch relURI="gesundheit" doctype="Section" menuName="Gesundheit">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>
         <branch relURI="recht" doctype="Section" menuName="Recht">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>
         <branch relURI="umwelt" doctype="Section" menuName="Umwelt">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>
     </branch>
     <branch relURI="campus" doctype="Channel" menuName="Campus">
       <branch relURI="berufungen" doctype="Section" menuName="Berufungen">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>
       <branch relURI="lorbeeren" doctype="Section" menuName="Lorbeeren">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>                                                                                                                                   <branch relURI="portraits" doctype="Section" menuName="Portraits">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>                                                                                                                                   <branch relURI="publikationen" doctype="Section" menuName="Publikationen">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
       </branch>                                                                                                                                   <branch relURI="uni-news" doctype="Section" menuName="Uni-News">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
-        </branch>
-      </branch>                                                                                                                                      
-    </branch>
-    <branch relURI="channel" doctype="Channel" menuName="Magazin">
-      <branch relURI="section" doctype="Section" menuName="Gesundheit">
-        <branch relURI="articles" doctype="Articles" menuName="Articles">
-          <branch relURI="year" doctype="Year" menuName="2002"/>
-        </branch>
-      </branch>
+      </branch>                                                                                                                        
     </branch>
     <branch relURI="dossiers" doctype="Channel" menuName="Dossiers">
       <branch relURI="2002" doctype="Year" menuName="2002"/>

@@ -41,10 +41,10 @@
         <item>-----------------</item>
       </separator>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?docid=<xsp:expr>xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html,"+xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr>&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishArticleScreen?docid=<xsp:expr>xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.html,"+xsp_wyona_context_prefix+"/"+channel+"/"+section+"/"+year+"/index.html"</xsp:expr>&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
 <!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid<xsp:expr>"/"+channel+"/"+section+"/"+year+"/"+articleId</xsp:expr>/index.html</xsp:attribute>Schedule</item>            
 -->
       </block>
       <separator>
@@ -60,7 +60,7 @@
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rco/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkout&#160;XML</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rci/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkin&#160;XML</item>
 <!--
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rollback.xml?rollback=/"+channel+"/"+section+"/articles/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rollback.xml?rollback=/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
 -->
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
 

@@ -12,7 +12,7 @@
 <xsl:template match="nitf">
   <td width="5" bgcolor="white" valign="top">&#160;</td>
 
-  <td valign="top" bgcolor="white" width="393" class="art-text" id_xopus="body" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
+  <td valign="top" bgcolor="white" width="393" class="art-text">
   <xsl:if test="$authoring">
     <table cellpadding="1" border="0" width="100%" bgcolor="#cccccc"><tr><td>
     <table cellpadding="3" border="0" width="100%" bgcolor="white">

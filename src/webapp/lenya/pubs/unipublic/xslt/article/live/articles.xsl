@@ -12,7 +12,7 @@
 <xsl:template match="nitf">
   <td width="5" bgcolor="white" valign="top">&#160;</td>
 
-  <td valign="top" bgcolor="white" width="393" class="art-text" id_xopus="body" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
+  <td valign="top" bgcolor="white" width="393" class="art-text">
 <!--
     <div class="art-pretitle">
     <p>&#160;</p>
