@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.27 2003/11/26 13:49:09 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.28 2003/11/26 15:43:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -104,21 +104,23 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                 passed = false;
 
                 AttributesImpl attributes = new AttributesImpl(attr);
-                int hrefIndex = attributes.getIndex("href");
 
-                if (!containsEvent(event)) {
-                    if (hrefIndex > -1) {
+                int hrefIndex = attributes.getIndex("href");
+                if (hrefIndex > -1) {
+
+                    if (!containsEvent(event)) {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Removing href attribute");
                         }
                         attributes.removeAttribute(hrefIndex);
+                    } else {
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("Adding event to href attribute");
+                        }
+                        String href = attributes.getValue("href");
+                        attributes.setValue(hrefIndex, href + "&lenya.event=" + event);
                     }
-                } else {
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("Adding event to href attribute");
-                    }
-                    String href = attributes.getValue("href");
-                    attributes.setValue(hrefIndex, href + "&lenya.event=" + event);
+
                 }
 
                 super.startElement(uri, localName, raw, attributes);
@@ -159,17 +161,17 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             } catch (Exception e) {
                 throw new ProcessingException(e);
             }
-            
+
             try {
                 this.events = getInstance().getExecutableEvents(situation);
-                
+
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Executable events: ");
                     for (int i = 0; i < events.length; i++) {
                         getLogger().debug("    [" + events[i] + "]");
                     }
                 }
-                
+
             } catch (WorkflowException e) {
                 throw new ProcessingException(e);
             }
