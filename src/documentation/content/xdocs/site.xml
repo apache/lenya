@@ -75,8 +75,9 @@
                     <pageenvelopemodule href="pageenvelopemodule.html" label="PageEnvelopeModule"/>
                     <sitetree href="siteTree.html" label="Site tree"/>
                 </publication>
-                <resource-types href="resource-types/"
-                    label="Resource&#160;Types"/>
+                <resource-types href="resource-types/" label="Resource&#160;Types">
+                  <resource-types-1 href="resource-types.html" label="Resource&#160;Types"/>
+                </resource-types>    
                 <revisioncontrol href="revisioncontrol/" label="Revision Control">
                     <namespaces href="revisioncontroller.html" label="Revision Controller"/>
                     <namespaces href="rcml.html" label="RCML"/>
