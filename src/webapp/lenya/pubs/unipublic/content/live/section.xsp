@@ -16,12 +16,12 @@
 
 <Content xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2002/XLink">
   <FirstColumn>
-    <navigation xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></navigation>
+    <navigation xlink:show="embed"><xsp:attribute name="href" prefix="xlink" uri="http://www.w3.org/2002/XLink">cocoon:<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/navigation.xml</xsp:attribute></navigation>
     <dossier xlink:href="cocoon:dossier.xml" xlink:show="embed"/>
   </FirstColumn>
   <MainColumn>
-    <nav_years xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:tree.xml</xsp:attribute></nav_years>
-    <articles xlink:show="embed"><xsp:attribute name="xlink:href">cocoon:<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/articles.xml</xsp:attribute></articles>
+    <nav_years xlink:show="embed"><xsp:attribute name="href" prefix="xlink" uri="http://www.w3.org/2002/XLink">cocoon:tree.xml</xsp:attribute></nav_years>
+    <articles xlink:show="embed"><xsp:attribute name="href" prefix="xlink" uri="http://www.w3.org/2002/XLink">cocoon:<xsp:expr>channel+"/"+section+"/"+year</xsp:expr>/articles.xml</xsp:attribute></articles>
   </MainColumn>
 </Content>
 </Page>
