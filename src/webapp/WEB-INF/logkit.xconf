@@ -13,13 +13,23 @@
       <format type="cocoon">
         %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
       </format>
-      <append>true</append>
+      <!--
+        append=false: Will override existing log files on Cocoon startup
+        append=true: Will append to the existing log files
+      -->
+      <append>false</append>
+      <!--
+        rotation: allows you to rotate log files one they meet certain
+                  criteria. In example below, files are rotated once they
+                  are one hour old or bigger than 100 Mb.
+
       <rotation type="revolving" init="1" max="4">
         <or>
           <size>100m</size>
           <time>01:00:00</time>
         </or>
       </rotation>
+      -->
     </cocoon>
 
     <cocoon id="sitemap">
@@ -28,13 +38,7 @@
       <format type="cocoon">
         %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
       </format>
-      <append>true</append>
-      <rotation type="revolving" init="1" max="4">
-        <or>
-          <size>100m</size>
-          <time>01:00:00</time>
-        </or>
-      </rotation>
+      <append>false</append>
     </cocoon>
 
     <cocoon id="access">
@@ -42,37 +46,34 @@
       <format type="cocoon">
         %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
       </format>
-      <append>true</append>
-      <rotation type="revolving" init="1" max="4">
-        <or>
-          <size>100m</size>
-          <time>01:00:00</time>
-        </or>
-      </rotation>
+      <append>false</append>
     </cocoon>
    
+    <!--
+      This log file gets only messages with log level ERROR and below.
+    -->
     <priority-filter id="error" log-level="ERROR">
       <cocoon>
         <filename>${context-root}/WEB-INF/logs/error.log</filename>
         <format type="cocoon">
           %7.7{priority} %{time}   [%{category}] (%{uri}) %{thread}/%{class:short}: %{message}\n%{throwable}
         </format>
-        <append>true</append>
-        <rotation type="revolving" init="1" max="4">
-          <or>
-            <size>100m</size>
-            <time>01:00:00</time>
-          </or>
-        </rotation>
+        <append>false</append>
       </cocoon>
     </priority-filter>
   </targets>
 
   <categories>
+    <!--
+      log-level: One of DEBUG, INFO, WARN, ERROR, FATAL-ERROR.
+    -->
     <category name="core" log-level="DEBUG">
+      <category name="startup" log-level="DEBUG"/>
+      <category name="roles" log-level="DEBUG"/>
+      <category name="manager" log-level="DEBUG"/>
+      <category name="store" log-level="DEBUG"/>
       <log-target id-ref="core"/>
       <log-target id-ref="error"/>
-      <category name="store-janitor" log-level="INFO"/>
     </category>
     <category name="sitemap" log-level="DEBUG">
       <log-target id-ref="sitemap"/>
