@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Apache Lenya: Acknowledgements</title>
+    <title>Acknowledgements</title>
     <version/>
     <type/>
     <authors>
@@ -11,33 +11,65 @@
     </authors>
   </header>
   <body>
-<section><title>Acknowledgements</title>
-<p>Committers</p>
+<section>
+<title>Committers</title>
 <ul>
-<li>Andreas Hartmann</li>
-<li>Christian Egli</li>
-<li>Edith Chevrier</li>
-<li>Felix M&#228;der</li>
-<li>Giacomo Pati</li>
-<li>Gregor J. Rothfuss</li>
-<li>J&#252;rgen Bigalke</li>
-<li>Marc Liyanage</li>
-<li>Marc von Wattenwyl</li>
-<li>Margrit John</li>
-<li>Martin L&#252;thi</li>
-<li>Memo Birgi</li>
-<li>Michael Wechner</li>
-<li>Rene Niedermowe</li>
-<li>Thomas Werschlein</li>
-<li>Thorsten Scherler</li>
-<li>Urs St&#246;ckli</li>
+<li><strong>Michael Wechner</strong> (michi at apache.org)
+<p>
+Lenya was originally started by Michael in early 1999 to manage the content of
+the journal of pattern formation. Michael previously did basic research in physics
+by writing computer simulations on dendritic growth.
+</p>
+<p>
+In early 2000 Michael co-founded Wyona, which continued to develop Lenya on the basis
+of the interactive newspaper edition of <link href="http://www.nzz.ch">Neue Z&#252;rcher Zeitung</link>.
+The name Lenya is a combination of the names of his two sons Levi and Vanya.
+<br />&#160;
+</p>
+</li>
+<li><strong>Andreas Hartmann</strong> (andreas at apache.org)</li>
+<li><strong>Christian Egli</strong> (egli at apache.org)</li>
+<li><strong>Edith Chevrier</strong> (edith at apache.org)</li>
+<li><strong>Felix M&#228;der</strong> (felix at apache.org))</li>
+<li><strong>Giacomo Pati</strong> (giacomo at apache.org)</li>
+<li><strong>Gregor J. Rothfuss</strong> (gregor at apache.org)</li>
+<li><strong>J&#252;rgen Bigalke</strong></li>
+<li><strong>Marc Liyanage</strong></li>
+<li><strong>Memo Birgi</strong></li>
+<li><strong>Rene Niedermowe</strong></li>
+<li><strong>Thorsten Scherler</strong></li>
 </ul>
-<p>Contributors</p>
+</section>
+<section>
+<title>Other Contributors</title>
 <ul>
-<li>Kars Veiling</li>
-<li>Lon Boonen</li>
-<li>Markus Vaterlaus</li>
-<li>Stephen England</li>
+<li><strong>Kars Veiling</strong></li>
+<li><strong>Lon Boonen</strong>
+<p>
+Lon is the original creator of Xopus. He helped a lot to integrate Xopus into Lenya.
+Recently he rewrote the JavaScript of the Lenya menubar.
+<br />&#160;
+</p>
+</li>
+<li><strong>Christian Stocker</strong>
+<p>
+Christian is the original creator of the Bitflux Editor. He helped a lot to integrate Bitflux Editor into Lenya.
+<br />&#160;
+</p>
+</li>
+<li><strong>Markus Vaterlaus</strong></li>
+<li><strong>Marc von Wattenwyl</strong></li>
+<li><strong>Margrit John</strong></li>
+<li><strong>Martin L&#252;thi</strong></li>
+<li><strong>Stephen England</strong>
+<p>
+Stephen has created the Lenya logo.
+<br />&#160;
+</p>
+</li>
+<li><strong>Thomas Werschlein</strong></li>
+<li><strong>Urs St&#246;ckli</strong></li>
+<li><strong>Martin Hitz</strong></li>
 </ul>
 </section>
   </body>
