@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.40 2003/08/14 13:48:53 andreas Exp $
+$Id: PageEnvelope.java,v 1.41 2003/08/14 16:34:16 egli Exp $
 <License>
 
  ============================================================================
@@ -87,6 +87,8 @@ public class PageEnvelope {
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
     public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
+    public static final String DOCUMENT_DC_PUBLISHER = "document-dc-publisher";
+    public static final String DOCUMENT_DC_DATE_CREATED = "document-dc-date-created";
     public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
@@ -261,23 +263,25 @@ public class PageEnvelope {
     public static final String[] PARAMETER_NAMES =
         {
             PageEnvelope.AREA,
-            PageEnvelope.CONTEXT,
-            PageEnvelope.PUBLICATION_ID,
-            PageEnvelope.PUBLICATION,
-            PageEnvelope.DOCUMENT_ID,
-            PageEnvelope.DOCUMENT_URL,
-            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
-            PageEnvelope.DOCUMENT_PATH,
-			PageEnvelope.DEFAULT_LANGUAGE,
-            PageEnvelope.DOCUMENT_LANGUAGE,
-			PageEnvelope.DOCUMENT_LANGUAGES,
-            PageEnvelope.DOCUMENT_DC_TITLE,
-            PageEnvelope.DOCUMENT_DC_CREATOR,
-            PageEnvelope.DOCUMENT_DC_SUBJECT,
-            PageEnvelope.DOCUMENT_DC_DESCRIPTION,
-            PageEnvelope.DOCUMENT_DC_RIGHTS,
-            PageEnvelope.DOCUMENT_LASTMODIFIED,
-			PageEnvelope.BREADCRUMB_PREFIX };
+                PageEnvelope.CONTEXT,
+                PageEnvelope.PUBLICATION_ID,
+                PageEnvelope.PUBLICATION,
+                PageEnvelope.DOCUMENT_ID,
+                PageEnvelope.DOCUMENT_URL,
+                PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
+                PageEnvelope.DOCUMENT_PATH,
+                PageEnvelope.DEFAULT_LANGUAGE,
+                PageEnvelope.DOCUMENT_LANGUAGE,
+                PageEnvelope.DOCUMENT_LANGUAGES,
+                PageEnvelope.DOCUMENT_DC_TITLE,
+                PageEnvelope.DOCUMENT_DC_CREATOR,
+                PageEnvelope.DOCUMENT_DC_PUBLISHER,
+                PageEnvelope.DOCUMENT_DC_SUBJECT,
+                PageEnvelope.DOCUMENT_DC_DATE_CREATED,
+                PageEnvelope.DOCUMENT_DC_DESCRIPTION,
+                PageEnvelope.DOCUMENT_DC_RIGHTS,
+                PageEnvelope.DOCUMENT_LASTMODIFIED,
+                PageEnvelope.BREADCRUMB_PREFIX };
 
     /**
      * @param string The context.
