@@ -76,14 +76,25 @@
     </init-param>
   </xsl:template>
 
-  <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = last()]">
-    <xsl:copy-of select="."/>
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'form-encoding']">
     <init-param>
       <param-name>form-encoding</param-name>
       <param-value>UTF-8</param-value>
     </init-param>
   </xsl:template>
   
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = last()-1]">
+    <xsl:copy-of select="."/>
+    <init-param>
+      <param-name>logger-class</param-name>
+      <param-value>org.apache.avalon.excalibur.logger.Log4JLoggerManager</param-value>
+    </init-param>
+    <init-param>
+      <param-name>log4j-config</param-name>
+      <param-value>/WEB-INF/log4j.xconf</param-value>
+    </init-param>
+  </xsl:template>
+
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
