@@ -8,14 +8,18 @@ package org.lenya.cms.publication;
 
 import org.lenya.cms.publishing.PublishingEnvironment;
 
+import org.apache.log4j.Category;
+
 /**
  *
  * @author  andreas
  */
 public class Publication {
+    Category log = Category.getInstance(Publication.class);
     
     /** Creates a new instance of Publication */
     public Publication(String id, String servletContextPath) {
+        log.debug("Servlet Context Path: " + servletContextPath);
         assert id != null;
         this.id = id;
         environment = new PublishingEnvironment(servletContextPath, id);

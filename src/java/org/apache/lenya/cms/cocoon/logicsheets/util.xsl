@@ -85,12 +85,15 @@
             String publicationPath = inputSource.getSystemId();
             String directories[] = publicationPath.split("/");
             String publicationId = directories[directories.length - 1];
-            String path = publicationPath.substring(
-                0, publicationPath.indexOf("/lenya/pubs/" + publicationId));
-            path = path.replaceAll("file:/", "");
+            String path = publicationPath.substring(0, publicationPath.indexOf("/lenya/pubs/" + publicationId));
+            // FIXME:
+            path = path.replaceAll("file:", "");
+            //path = path.replaceAll("file:/", "");
             path = path.replace('/', File.separatorChar);
             
             xspUtilServletContextPath = path;
+            <xsp:content><publication-path><xsp:expr>publicationPath</xsp:expr></publication-path></xsp:content>
+            <xsp:content><servlet-context-path><xsp:expr>path</xsp:expr></servlet-context-path></xsp:content>
             xspUtilPublication = new Publication(publicationId, path);
         }
     

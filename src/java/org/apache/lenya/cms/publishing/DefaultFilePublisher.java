@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.12 2003/04/03 19:23:13 andreas Exp $
+ * $Id: DefaultFilePublisher.java,v 1.13 2003/04/14 09:41:15 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -74,7 +74,8 @@ import java.util.StringTokenizer;
  */
 public class DefaultFilePublisher extends AbstractFilePublisher {
     static Category log = Category.getInstance(DefaultFilePublisher.class);
-    public static final String PARAMETER_SOURCES = "sources";
+    public static final String PARAMETER_SOURCES = "properties.publish.sources";
+    //public static final String PARAMETER_SOURCES = "sources";
 
     /**
      * Default implementation of <code>publish</code> which simply
@@ -156,15 +157,14 @@ public class DefaultFilePublisher extends AbstractFilePublisher {
      * @param contextPath a <code>String</code> value
      * @exception ExecutionException if an error occurs
      */
-    public void execute(String contextPath)
-	throws ExecutionException {
+    public void execute(String contextPath) throws ExecutionException {
+        log.error(".execute(): Context Path: " + contextPath);
         try {
             String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
 
             Parameters taskParameters = new Parameters();
 
-            PublishingEnvironment environment =
-		new PublishingEnvironment(contextPath, publicationId);
+            PublishingEnvironment environment = new PublishingEnvironment(contextPath, publicationId);
 
             // read default parameters from PublishingEnvironment
             taskParameters.setParameter(PublishingEnvironment.PARAMETER_AUTHORING_PATH,

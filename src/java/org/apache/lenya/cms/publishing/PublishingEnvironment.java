@@ -1,5 +1,5 @@
 /*
- * $Id: PublishingEnvironment.java,v 1.11 2003/04/09 15:57:13 andreas Exp $
+ * $Id: PublishingEnvironment.java,v 1.12 2003/04/14 09:41:15 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -85,6 +85,7 @@ public class PublishingEnvironment implements Configurable {
      */
     public PublishingEnvironment(String contextPath, String publicationId) {
         this(PublishingEnvironment.getPublicationPath(contextPath, publicationId));
+        log.debug("Context Path and Publication Id: " + contextPath + "::" + publicationId);
     }
 
     /**
@@ -96,6 +97,7 @@ public class PublishingEnvironment implements Configurable {
         setPublicationPath(publicationPath);
 
         String configurationFilePath = publicationPath + CONFIGURATION_FILE;
+
         File configurationFile = new File(configurationFilePath);
 
         try {
