@@ -66,7 +66,7 @@
 	    <div class="lenya-box-title">Generic Exception</div>
 	      <div class="lenya-box-body">
             <p>
-            Check the log files :-)
+            Check the log files.
             </p>
             <table>
               <tr><td>Filename:</td><td><xsl:value-of select="rc:filename"/></td></tr>

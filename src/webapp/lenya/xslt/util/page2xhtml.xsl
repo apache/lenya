@@ -51,17 +51,6 @@
           </td>
         </tr>
       </table>
-<!--    
-      <div>
-        
-      </div>
-      <div class="lenya-header">
-        
-      </div>
-      <div class="lenya-body">
-        <xsl:copy-of select="page:body/*"/>
-      </div>
--->      
     </body>
   </html>
 </xsl:template>

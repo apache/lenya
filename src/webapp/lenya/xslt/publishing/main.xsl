@@ -26,8 +26,6 @@
 </xsl:template>
 
 <xsl:template match="publish">
-<!--<xsl:apply-templates/>-->
-<!--Referer: <xsl:value-of select="referer"/><br />-->
 <p>
 <h1><xsl:value-of select="$title"/></h1>
 <form action="{$action}">
@@ -63,7 +61,6 @@
 </ul>
 
 <input type="submit" value="YES"/>
-<!--<input type="submit" name="submit" value="cancel"/>-->
 &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
 </form>
 </p>

@@ -21,15 +21,7 @@
 
 <xsl:template match="lenya:publications">
 <div class="lenya-sidebar">
-<!--<div class="lenya-padding">-->
 <div class="lenya-sidebar-heading">Publications</div>
-<!--
-<p>
-We are working on a catalog of sample publications. The idea is that an
-"integrator" can pull out an appropriate publication and reuse it for building
-efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial</a> describes how to do that.
-</p>
--->
 <xsl:for-each select="lenya:publication">
   <xsl:choose>
     <xsl:when test="lenya:XPSEXCEPTION">
@@ -55,7 +47,6 @@ efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial
     </xsl:otherwise>
   </xsl:choose>
 </xsl:for-each>
-<!--</div>-->
 </div>
 </xsl:template>
 

@@ -69,7 +69,6 @@
 		
 		</xsl:for-each>
 		
-		<!--<xsl:apply-templates select="CheckIn"/>-->
 	</table>
 	</body>
 </html>
