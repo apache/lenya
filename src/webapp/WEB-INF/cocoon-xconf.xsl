@@ -44,9 +44,10 @@
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
     
-    <component-instance name="defaults"       class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
+    <component-instance name="defaults" class="org.apache.cocoon.components.modules.input.DefaultsMetaModule">
       <values>
-        <skin>lenya-site</skin>
+        <skin-docs>lenya-site</skin-docs>
+        <skin>forrest-site</skin>
       </values>
     </component-instance>
 
