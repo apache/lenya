@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+>
+
+<menu>
+
+<!--
+  <xsp-wyona:util/>
+-->
+  <context>/wyona-cms</context>
+  <context_prefix>/wyona-cms/ethz-mat</context_prefix>
+  <prefix>ethz-mat</prefix>
+
+</menu>
+
+</xsp:page>
