@@ -85,11 +85,15 @@
     for more, see http://www.xml.com/pub/a/2003/07/02/dive.html -->
    <xsl:template name="object2img">
       <img border="0">
-        <xsl:attribute name="src">          
-          <xsl:if test="not(starts-with(@data, '/'))">
-            <xsl:value-of select="$nodeid"/>/
-          </xsl:if>
-          <xsl:value-of select="@data"/>
+        <xsl:attribute name="src">
+          <xsl:choose>
+            <xsl:when test="not(starts-with(@data, '/'))">
+              <xsl:value-of select="$nodeid"/>/<xsl:value-of select="@data"/>
+            </xsl:when>
+            <xsl:otherwise>            
+              <xsl:value-of select="@data"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:attribute>
         <xsl:attribute name="alt">
           <!-- the overwritten title (stored in @name) has precedence over dc:title -->
