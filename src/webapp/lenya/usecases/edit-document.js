@@ -42,13 +42,23 @@ function editDocument() {
         var resolver = cocoon.getComponent(SourceResolver.ROLE);
         var dstUri = flowHelper.getPageEnvelope(cocoon).getDocument().getSourceURI();
         
+
+	/* do the actual copying */
+
         SourceUtil.copy(resolver, cocoon.parameters["sourceUri"], dstUri, _getParameter("useBuffer", "false") == "true");
+
+
+	/* are we supposed to check the document in after saving ? */
 
         if(_getParameter("noCheckin", "false") == "false")
             flowHelper.reservedCheckIn(cocoon, _getParameter("backup", "true") == "true");
 
+
+	/* do we need to trigger any worklow on the just saved document? */
+
         if(_getParameter("noWorkflow", "false") == "false")
             flowHelper.triggerWorkflow(cocoon, _getParameter("workflowEvent", "edit"));
+
 
         if(_getParameter("noStatus", "false") == "false")
             cocoon.sendStatus(_getParameter("status", 204));
@@ -56,6 +66,10 @@ function editDocument() {
             cocoon.redirectTo(_getParameter("redirectUrl", "FIXME"));
         
     } catch (exception) {
+
+	/* FIXME: This is unclean because the flow will not return a value
+	   if there is an exception */
+
         cocoon.log.error("Can not edit document.", exception.toString());
     } finally {
         if(resolver != null)
