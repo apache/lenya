@@ -69,21 +69,38 @@
       <map:call resource="style-cms-page"/>
     </map:resource>
     
-    <map:resource name="usecase-create">
+    <map:resource name="cms-screen">
+      
       <!-- use publication-specific schema if available -->
-      <map:act src="pubs/{publication-id}/content/authoring/create.xsp" type="resource-exists">
-        <map:generate src="pubs/{../publication-id}/content/authoring/create.xsp" type="serverpages"/>
-        <map:transform src="pubs/{../publication-id}/xslt/authoring/create.xsl">
-          <map:parameter name="use-request-parameters" value="true"/>
-        </map:transform>
-        <map:serialize/>
-      </map:act>
-      <!-- otherwise use default schema -->
-      <map:generate src="content/authoring/create.xsp" type="serverpages"/>
-      <map:transform src="xslt/authoring/create.xsl">
-        <map:parameter name="use-request-parameters" value="true"/>
-      </map:transform>
+      <map:select type="resource-exists">
+<!--        <map:parameter name="prefix" value=""/>-->
+        <map:when test="lenya/pubs/{publication-id}/content/{serverpage}">
+          <map:generate src="pubs/{publication-id}/content/{serverpage}" type="serverpages"/>
+        </map:when>
+        <map:otherwise>
+          <map:generate src="content/{serverpage}" type="serverpages"/>
+        </map:otherwise>
+      </map:select>
+      
+      <map:select type="resource-exists">
+        <map:when test="lenya/pubs/{publication-id}/lenya/xslt/{stylesheet}">
+          <map:transform src="pubs/{publication-id}/lenya/xslt/{stylesheet}"/>
+        </map:when>
+        <map:otherwise>
+          <map:transform src="xslt/{stylesheet}"/>
+        </map:otherwise>
+      </map:select>
+      
+      <map:call resource="style-cms-page"/>
       <map:serialize/>
+    </map:resource>
+    
+    <map:resource name="usecase-create">
+      <map:call resource="cms-screen">
+        <map:parameter name="publication-id" value="{../publication-id}"/>
+        <map:parameter name="serverpage" value="authoring/create.xsp"/>
+        <map:parameter name="stylesheet" value="authoring/create.xsl"/>
+      </map:call>
     </map:resource>
     
   </map:resources>
@@ -235,8 +252,10 @@
         <map:match pattern="create-workflow" type="usecase">
 
           <map:match pattern="showscreen" type="step">
-            <map:call resource="usecase-create">
+            <map:call resource="cms-screen">
               <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="serverpage" value="authoring/create.xsp"/>
+              <map:parameter name="stylesheet" value="authoring/create.xsl"/>
             </map:call>
           </map:match>
           
@@ -245,9 +264,6 @@
               <map:parameter name="task-id" value="create-workflow"/>
               <map:redirect-to uri="{request:requestURI}"/>
             </map:act>
-            <map:call resource="usecase-create">
-              <map:parameter name="publication-id" value="{../../1}"/>
-            </map:call>
           </map:match>
 
         </map:match>

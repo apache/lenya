@@ -330,6 +330,7 @@
     <!-- <header-name>myparam</header-name> -->
    </map:selector>
    <map:selector logger="sitemap.selector.host" name="host" src="org.apache.cocoon.selection.HostSelector"/>
+   <map:selector logger="sitemap.selector.resource-exists" name="resource-exists" src="org.apache.cocoon.selection.ResourceExistsSelector"/>
   
 
 <!-- FIXME: Cocoon M1 -->
