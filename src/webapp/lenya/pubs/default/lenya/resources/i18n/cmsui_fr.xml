@@ -17,17 +17,17 @@
    limitations under the License.
 
    
-   $Id: cmsui_fr.xml,v 1.3 2004/04/14 08:53:55 roku Exp $
+   $Id: cmsui_fr.xml,v 1.4 2004/04/14 11:07:14 roku Exp $
    @translators Olivier Lange <wire at petit-atelier dot ch>
    
 -->
 
 <catalogue xml:lang="fr">
  
-  <message key="default.createdoc.idtaken">The ID you've entered is already taken. Please choose another one.</message>
+  <message key="default.createdoc.idtaken">L'identifiant (ID) que vous avez choisi est déj&#224; utilisé. Veuillez en choisir un autre.</message>
  
   <message key="Create new language version">Créer une nouvelle traduction</message>
   <message key="New language for existing Document">Nouvelle traduction pour un document existant</message>
-  <message key="default.createdoc.info.all-language-versions-exists">There are already versions of this document for all languages.</message>
+  <message key="default.createdoc.info.all-language-versions-exists">Les traductions de ce document existent déj&#224; dans toutes les langues.</message>
 
 </catalogue>
