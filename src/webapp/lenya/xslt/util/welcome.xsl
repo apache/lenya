@@ -5,7 +5,7 @@
 <xsl:template match="/">
 <html>
 <head>
-  <title>Welcome to Lenya CMS</title>
+  <title>Lenya - Content Management System</title>
   <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
 </head>
 <body>
@@ -17,7 +17,7 @@
 </html>
 </xsl:template>
 
-<xsl:template match="publications">
+<xsl:template match="publications" xmlns:lenya="http://lenya.org/2003/publication">
 <h2>Publications</h2>
 <!--
 <p>
@@ -28,7 +28,7 @@ efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial
 -->
 <ol>
 <xsl:for-each select="publication">
-  <li><a href="{@pid}/introduction.html"><xsl:apply-templates select="publication/name"/></a></li>
+  <li><a href="{@pid}/introduction.html"><xsl:apply-templates select="lenya:publication/lenya:name"/></a></li>
 </xsl:for-each>
 </ol>
 </xsl:template>
