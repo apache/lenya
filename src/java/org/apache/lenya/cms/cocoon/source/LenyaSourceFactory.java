@@ -44,7 +44,11 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
- * A factory for the Lenya protocol.
+ * A factory for the "lenya" scheme (virtual protocol), which is used to 
+ * resolve any src="lenya:..." attributes in sitemaps. This implementation constructs
+ * the path to the source document from the page envelope and delegates
+ * any further resolving to the "context" source resolver of Cocoon.
+ * 
  * @version $Id$
  */
 public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
