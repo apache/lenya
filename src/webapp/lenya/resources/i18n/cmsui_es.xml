@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   
-  $Id: cmsui_es.xml,v 1.4 2004/04/16 11:34:01 roku Exp $
+  $Id: cmsui_es.xml,v 1.5 2004/04/17 18:01:40 roku Exp $
   
   @translators Salvador Cobrero <salvador_cobrero_jimenez at dmr-consulting dot com>
   
@@ -136,7 +136,6 @@
   <message key="About Apache Lenya">Acerca&#160;de&#160;Apache&#160;Lenya</message>
   <message key="Apache Lenya Homepage">Sitio&#160;web&#160;de&#160;Apache&#160;Lenya</message>
   <message key="Edit with Kupu">Editar con Kupu</message>
-  <message key="Edit with Epoz">Editar&#160;con&#160;Epoz</message>
   <message key="Edit with BXE">Editar&#160;con&#160;BXE</message>
   <message key="Edit with one Form">Editar&#160;con&#160;Formulario&#160;Único</message>
   <message key="Edit with Forms">Editar&#160;con&#160;Formularios</message>

@@ -16,7 +16,7 @@
 -->
 
 <!-- 
-	$Id: cmsui_fr.xml,v 1.4 2004/04/17 07:22:46 roku Exp $ 
+	$Id: cmsui_fr.xml,v 1.5 2004/04/17 18:01:40 roku Exp $ 
 	@translators Olivier Lange <wire at petit-atelier dot ch>
 	-->
 
@@ -136,7 +136,6 @@
   <message key="User Documentation">Documentation utilisateur</message>
   <message key="About Apache Lenya">A propos de Apache Lenya</message>
   <message key="Apache Lenya Homepage">Accueil de Apache Lenya</message>
-  <message key="Edit with Epoz">Editer avec Epoz</message>
   <message key="Edit with Kupu">Editer avec Kupu</message>
   <message key="Edit with BXE">Editer avec BXE</message>
   <message key="Edit with one Form">Editer avec un formulaire&#160;simple</message>

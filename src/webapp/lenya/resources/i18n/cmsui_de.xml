@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.62 2004/04/17 07:22:46 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.63 2004/04/17 18:01:40 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -132,7 +132,7 @@
   <message key="User Documentation">Benutzerdokumentation</message>
   <message key="About Apache Lenya">Über Apache Lenya</message>
   <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
-  <message key="Edit with Epoz">Bearbeiten mit Epoz</message>
+  <message key="Edit with Kupu">Bearbeiten mit Kupu</message>
   <message key="Edit with BXE">Bearbeiten mit BXE</message>
   <message key="Edit with one Form">Bearbeiten mit Formulareditor</message>
   <message key="Edit with Forms">Bearbeiten mit Formwizard</message>
