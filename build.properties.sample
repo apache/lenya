@@ -49,8 +49,8 @@ tomcat.endorsed.dir=common/endorsed
 # Comma- or space-separated list of patterns
 # All files are included when commented
 
-target.install.excludes=lenya/resources/bxeng,lenya/resources/epoz
-target.reset.excludes=lenya/resources/bxeng,lenya/resources/epoz
+target.install.excludes=lenya/resources/bxeng/**,lenya/resources/epoz/**
+target.reset.excludes=lenya/resources/bxeng/**,lenya/resources/epoz/**
 
 #target.install.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**,**/oscom/config/ac/passwd/*.iml
 #target.reset.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**,**/oscom/config/ac/passwd/*.iml
