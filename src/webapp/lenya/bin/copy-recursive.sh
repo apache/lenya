@@ -9,11 +9,15 @@ SOURCE_DIRECTORY=/home/michiii/tmp
 
 DESTINATION_DIRECTORY=/home/michiii/backup
 
-BATCH_FILE=/home/michiii/sftp-batch.txt
+BATCH_FILE_DIR=`pwd`
+PUT_BATCH_FILE=$BATCH_FILE_DIR/sftp-put-batch.txt
+MKDIR_BATCH_FILE=$BATCH_FILE_DIR/sftp-mkdir-batch.txt
 
 USERNAME=michiii
 
 HOSTNAME=127.0.0.1
+
+SFTP_CMD=/usr/bin/sftp
 
 #########################################################
 # FUNCTIONS
@@ -21,8 +25,18 @@ HOSTNAME=127.0.0.1
 
 
 toString(){
+  echo ""
   echo "INFO: .toString(): SourceDirectory: $SOURCE_DIRECTORY"
   echo "INFO: .toString(): DestinationDirectory: $DESTINATION_DIRECTORY"
+  echo "INFO: .toString(): BatchFileDirectory: $BATCH_FILE_DIR"
+  echo "INFO: .toString(): BatchFileMkdir: $MKDIR_BATCH_FILE"
+  echo "INFO: .toString(): BatchFilePut: $PUT_BATCH_FILE"
+  echo "INFO: .toString(): RemoteUsername: $USERNAME"
+  echo "INFO: .toString(): RemoteHostname: $HOSTNAME"
+  echo ""
+  echo ""
+  echo ""
+  echo ""
   }
 
 browseDirectory(){
@@ -77,17 +91,19 @@ createDirectory(){
   DPARENT=`dirname $DEST_DIR$RELATIVE_DIR`
 
 
-  echo "INFO: .createDirectory(): lcd $LPARENT"
-  echo "INFO: .createDirectory(): cd $DPARENT"
-  echo "INFO: .createDirectory(): mkdir $NAME"
+  #echo "INFO: .createDirectory(): lcd $LPARENT"
+  #echo "INFO: .createDirectory(): cd $DPARENT"
+  #echo "INFO: .createDirectory(): mkdir $NAME"
   echo ""
 
-  ##echo "# Create Directory:" >> $BATCH_FILE
-  echo "lcd $LPARENT" >> $BATCH_FILE
-  echo "cd $DPARENT" >> $BATCH_FILE
-  echo "mkdir $NAME" >> $BATCH_FILE
-  ##echo "#" >> $BATCH_FILE
-  ##echo "#" >> $BATCH_FILE
+  echo "pwd" > $MKDIR_BATCH_FILE
+  echo "lcd $LPARENT" >> $MKDIR_BATCH_FILE
+  echo "cd $DPARENT" >> $MKDIR_BATCH_FILE
+  echo "mkdir $NAME" >> $MKDIR_BATCH_FILE
+  echo "quit" >> $MKDIR_BATCH_FILE
+
+  $SFTP_CMD -b $MKDIR_BATCH_FILE $USERNAME@$HOSTNAME
+  ##rm $MKDIR_BATCH_FILE
   }
 
 copyFile(){
@@ -106,17 +122,14 @@ copyFile(){
   DPARENT=`dirname $DFILE`
   NAME=`basename $LFILE`
 
-  echo "INFO: .copyFile(): lcd $LPARENT"
-  echo "INFO: .copyFile(): cd $DPARENT"
-  echo "INFO: .copyFile(): put $NAME"
+  #echo "INFO: .copyFile(): lcd $LPARENT"
+  #echo "INFO: .copyFile(): cd $DPARENT"
+  #echo "INFO: .copyFile(): put $NAME"
   echo ""
 
-  ##echo "# Copy File:" >> $BATCH_FILE
-  echo "lcd $LPARENT" >> $BATCH_FILE
-  echo "cd $DPARENT" >> $BATCH_FILE
-  echo "put $NAME" >> $BATCH_FILE
-  ##echo "#" >> $BATCH_FILE
-  ##echo "#" >> $BATCH_FILE
+  echo "lcd $LPARENT" >> $PUT_BATCH_FILE
+  echo "cd $DPARENT" >> $PUT_BATCH_FILE
+  echo "put $NAME" >> $PUT_BATCH_FILE
   }
 
 
@@ -124,25 +137,30 @@ copyFile(){
 # MAIN
 #########################################################
 
+toString
 
 SOURCE_DIRECTORY=$1
 DESTINATION_DIRECTORY=$2
-BATCH_FILE=$3
-if ! ([ $SOURCE_DIRECTORY ] && [ $DESTINATION_DIRECTORY ] && [ $BATCH_FILE ]);then
-  echo "Usage: copy-recursive.sh \"SourceDirectory DestinationDirectory BatchFile\""
+BATCH_FILE_DIR=$3
+USERNAME=$4
+HOSTNAME=$5
+if ! ([ $SOURCE_DIRECTORY ] && [ $DESTINATION_DIRECTORY ] && [ $BATCH_FILE_DIR ] && [ $USERNAME ] && [ $HOSTNAME ]);then
+  echo "Usage: copy-recursive.sh \"SourceDirectory DestinationDirectory BatchFileDirectory RemoteUsername RemoteHostname\""
   exit 0
 fi
 
+PUT_BATCH_FILE=$BATCH_FILE_DIR/sftp-batch-put.txt
+MKDIR_BATCH_FILE=$BATCH_FILE_DIR/sftp-mkdir-batch.txt
+PUT_BATCH_FILE=$BATCH_FILE_DIR/sftp-put-batch.txt
+
 toString
 
-echo "pwd" > $BATCH_FILE
-##echo "# BEGIN: Batch File" >> $BATCH_FILE
-##echo "#" >> $BATCH_FILE
-##echo "#" >> $BATCH_FILE
-##echo "open $USERNAME@$HOSTNAME" >> $BATCH_FILE
+#exit 0
 
+echo "pwd" > $PUT_BATCH_FILE
 CURRENT_DIRECTORY=$SOURCE_DIRECTORY
 browseDirectory $CURRENT_DIRECTORY $SOURCE_DIRECTORY $DESTINATION_DIRECTORY
+echo "quit" >> $PUT_BATCH_FILE
 
-##echo "# END: Batch File" >> $BATCH_FILE
-echo "quit" >> $BATCH_FILE
+$SFTP_CMD -b $PUT_BATCH_FILE $USERNAME@$HOSTNAME
+##rm $PUT_BATCH_FILE
