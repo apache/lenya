@@ -33,7 +33,8 @@
       executable="xsltproc" 
       failonerror="false" 
       failifexecutionfails="false" 
-      outputproperty="xsltproc.output"/>
+      outputproperty="xsltproc.output"
+    />
     
     <fail unless="xsltproc.output">:            
       ********************************************
@@ -45,7 +46,8 @@
     <exec dir="${build.webapp}/lenya/resources/kupu" 
       executable="make" 
       failonerror="true" 
-      failifexecutionfails="false"/>
+      failifexecutionfails="false"
+    />
 
   </target>
 </project>
