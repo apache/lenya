@@ -119,8 +119,8 @@
   </accreditable-managers>
 
   <authorizers>
-    <component-instance class="org.apache.lenya.cms.ac2.PolicyAuthorizer" logger="lenya.ac.authorizer" name="policy"/>
-    <component-instance class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer" name="workflow"/>
+    <component-instance class="org.apache.lenya.cms.ac2.PolicyAuthorizer" logger="lenya.ac.authorizer.policy" name="policy"/>
+    <component-instance class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer.workflow" name="workflow"/>
   </authorizers>
   
   <policy-managers>
