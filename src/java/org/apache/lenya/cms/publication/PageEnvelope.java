@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.28 2003/07/15 14:55:49 egli Exp $
+$Id: PageEnvelope.java,v 1.29 2003/07/15 15:03:40 egli Exp $
 <License>
 
  ============================================================================
@@ -140,6 +140,13 @@ public class PageEnvelope {
 	 * @throws PageEnvelopeException if an error occurs.
 	 */
     protected void init(Publication publication, Request request)
+    	// FIXME: this method is mainly needed because the deprecated 
+    	// constructor PageEnvelope(Map objectModel) needs to handle an exception in
+    	// one of the arguments to another constructor. That's why the constructor
+    	// functionality is factored out into this method.
+    	// If the deprecated constructor PageEnvelope(Map objectModel) is removed
+    	// this method might not be needed anymore and the functionality could
+    	// be moved back to the constructor PageEnvelope(Publication publication, Request request).
         throws PageEnvelopeException {
         assert publication != null;
         assert request != null;
