@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.10 2003/03/04 23:06:58 gregor Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.11 2003/03/13 14:18:44 michi Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -21,7 +21,7 @@
     <map:actions>
       <map:action name="xopushandler" src="org.lenya.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus-handler">
         <xml href="content/authoring"/>
-        <xsl href="stylesheets/publication"/>
+        <xsl href="xslt"/>
         <xsd href="content/doctypes/schemas"/>
         <temp href="temp"/>
         <rcmlDirectory href="content/rcml"/>
