@@ -1,5 +1,5 @@
 /*
-$Id: RCML.java,v 1.14 2003/07/14 14:24:20 egli Exp $
+$Id: RCML.java,v 1.15 2003/07/25 18:59:04 gregor Exp $
 <License>
 
  ============================================================================
@@ -139,37 +139,6 @@ public class RCML {
         } else {
             DOMParserFactory dpf = new DOMParserFactory();
             document = dpf.getDocument(rcmlFile.getAbsolutePath());
-        }
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            log.info("Usage: java RCML rcmlDirectory datafilename rootDirectory");
-
-            return;
-        }
-
-        try {
-            RCML rcml = new RCML(args[0], args[1], args[2]);
-            rcml.checkOutIn(RCML.co, "michi", new Date().getTime());
-
-            new DOMWriter(new PrintWriter(System.out)).print(rcml.document);
-
-            CheckOutEntry coe = rcml.getLatestCheckOutEntry();
-            log.info("\n");
-
-            if (coe == null) {
-                log.info("Not checked out");
-            } else {
-                log.info("Checked out: " + coe.getIdentity() + " " + coe.getTime());
-            }
-        } catch (Exception e) {
-            log.error(e);
         }
     }
 

@@ -1,5 +1,5 @@
 /*
-$Id: RevisionController.java,v 1.19 2003/07/23 13:21:35 gregor Exp $
+$Id: RevisionController.java,v 1.20 2003/07/25 18:59:04 gregor Exp $
 <License>
 
  ============================================================================
@@ -125,59 +125,6 @@ public class RevisionController {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param args DOCUMENT ME!
-     */
-
-    /* FIXME
-        public static void main(String[] args) {
-            if (args.length != 4) {
-                log.info("Usage: " + new RevisionController().getClass().getName() +
-                    " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
-
-                return;
-            }
-
-            String identityS = args[0];
-            String source = args[1];
-            String identityD = args[2];
-            String destination = args[3];
-            RevisionController rc = new RevisionController();
-            File in = null;
-
-            try {
-                in = rc.reservedCheckOut(source, identityS);
-            } catch (FileNotFoundException e) // No such source file
-             {
-                log.error(e);
-            } catch (FileReservedCheckOutException e) // Source has been checked out already
-             {
-                log.error(e);
-                log.error(e.source + "is already check out by " + e.checkOutUsername + " since " +
-                    e.checkOutDate);
-                return;
-
-            } catch (IOException e) { // Cannot create rcml file
-                log.error(e);
-                return;
-
-            } catch (Exception e) {
-                log.error(e);
-                return;
-            }
-
-            try {
-                rc.reservedCheckIn(destination, identityD, true);
-            } catch (FileReservedCheckInException e) {
-                log.error(e);
-            } catch (Exception e) {
-                log.error(e);
-            }
-        }
-    */
-
-    /**
      * Shows Configuration
      *
      * @return DOCUMENT ME!
@@ -198,12 +145,12 @@ public class RevisionController {
      * @throws Exception DOCUMENT ME!
      */
     public RCML getRCML(String source) throws FileNotFoundException, IOException, Exception {
-        File file = new File(rootDir + source);
+/*        File file = new File(rootDir + source);
 
         if (!file.isFile()) {
             throw new FileNotFoundException(file.getAbsolutePath());
         }
-
+*/
         return new RCML(rcmlDir, source, rootDir);
     }
 
