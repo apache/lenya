@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerWrapper.java,v 1.25 2004/01/07 18:37:23 andreas Exp $
+$Id: SchedulerWrapper.java,v 1.26 2004/01/09 11:14:39 andreas Exp $
 <License>
 
  ============================================================================
@@ -416,7 +416,7 @@ public class SchedulerWrapper {
 
         return document;
     }
-    
+
     /**
      * Returns the snapshot of a certain job group.
      * @param helper The namespace helper.
@@ -436,7 +436,7 @@ public class SchedulerWrapper {
         }
         return element;
     }
-    
+
     /**
      * Returns the job wrappers for a certain job group.
      * @param jobGroupName The job group.
@@ -444,7 +444,7 @@ public class SchedulerWrapper {
      * @throws SchedulerException when something went wrong.
      */
     protected JobWrapper[] getJobWrappers(String jobGroupName) throws SchedulerException {
-        
+
         List wrappers = new ArrayList();
         String[] jobNames = getScheduler().getJobNames(jobGroupName);
 
@@ -453,7 +453,7 @@ public class SchedulerWrapper {
             Trigger trigger = getTrigger(jobNames[nameIndex], jobGroupName);
             wrappers.add(new JobWrapper(jobDetail, trigger));
         }
-        
+
         return (JobWrapper[]) wrappers.toArray(new JobWrapper[wrappers.size()]);
     }
 
@@ -473,11 +473,11 @@ public class SchedulerWrapper {
      * @throws SchedulerException when something went wrong.
      */
     public void restoreJobs(String jobGroup) throws SchedulerException {
-        
+
         log.debug("--------------------------------------------------");
         log.debug("Restoring jobs for job group [" + jobGroup + "]");
         log.debug("--------------------------------------------------");
-        
+
         try {
             JobWrapper[] jobs = getStore().restoreJobs(getPublication(jobGroup));
             for (int i = 0; i < jobs.length; i++) {
@@ -537,6 +537,34 @@ public class SchedulerWrapper {
             } catch (PublicationException e) {
                 throw new SchedulerException(e);
             }
+        }
+    }
+
+    /**
+     * Deletes the jobs for a certain document. This method is called when
+     * a document has been moved or deleted.
+     * @param document A document.
+     * @throws SchedulerException when something went wrong.
+     * @throws PublicationException when something went wrong.
+     */
+    public void deleteJobs(org.apache.lenya.cms.publication.Document document)
+        throws SchedulerException, PublicationException {
+            
+        log.debug("Deleting jobs for document [" + document + "]");
+            
+        String jobGroup = document.getPublication().getId();
+        JobWrapper[] jobs = getJobWrappers(jobGroup);
+        boolean changed = false;
+        for (int i = 0; i < jobs.length; i++) {
+            ServletJob job = jobs[i].getJob();
+            String documentUrl = job.getDocumentUrl(jobs[i].getJobDetail());
+            if (documentUrl.equals(document.getCompleteURL())) {
+                deleteJob(jobs[i].getJobDetail().getName(), jobGroup);
+                changed = true;
+            }
+        }
+        if (changed) {
+            getStore().writeSnapshot(getPublication(jobGroup), getJobWrappers(jobGroup));
         }
     }
 

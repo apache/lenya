@@ -71,7 +71,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: CollectionImpl.java,v 1.6 2003/12/30 18:18:56 michi Exp $
+ * @version $Id: CollectionImpl.java,v 1.7 2004/01/09 11:14:39 andreas Exp $
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
     
@@ -290,6 +290,13 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 "The collection [" + this +"] does not contain the document [" + document + "]");
         }
         return documents().indexOf(document);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Collection#size()
+     */
+    public int size() throws DocumentException {
+        return documents().size();
     }
 
 }

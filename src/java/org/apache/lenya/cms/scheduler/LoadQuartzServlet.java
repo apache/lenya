@@ -1,5 +1,5 @@
 /*
-$Id: LoadQuartzServlet.java,v 1.34 2004/01/07 18:37:23 andreas Exp $
+$Id: LoadQuartzServlet.java,v 1.35 2004/01/09 11:14:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,9 @@ $Id: LoadQuartzServlet.java,v 1.34 2004/01/07 18:37:23 andreas Exp $
 */
 package org.apache.lenya.cms.scheduler;
 
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
@@ -92,7 +95,7 @@ import javax.servlet.http.HttpServletResponse;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.34 2004/01/07 18:37:23 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.35 2004/01/09 11:14:40 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     private static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -103,6 +106,7 @@ public class LoadQuartzServlet extends HttpServlet {
     public static final String PREFIX = "scheduler";
     public static final String PARAMETER_ACTION = "action";
     public static final String PARAMETER_PUBLICATION_ID = "publication-id";
+    public static final String PARAMETER_DOCUMENT_URL = "document-url";
     public static final String CONFIGURATION_ELEMENT = "scheduler-configurations";
 
     /**
@@ -114,6 +118,11 @@ public class LoadQuartzServlet extends HttpServlet {
     }
 
     /**
+     * Maps servlet context names to servlets.
+     */
+    private static Map servlets = new HashMap();
+
+    /**
      * Initializes the servlet.
      * @param config The servlet configuration.
      * @throws ServletException when something went wrong.
@@ -121,10 +130,21 @@ public class LoadQuartzServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        this.servletContext = config.getServletContext();
         this.schedulerConfigurations = config.getInitParameter(CONFIGURATION_ELEMENT);
+        this.servletContext = config.getServletContext();
+        
         log.debug(
             ".init(): Servlet Context Path: " + getServletContextDirectory().getAbsolutePath());
+            
+        try {
+            log.debug("Storing servlet");
+            String contextPath = getServletContextDirectory().getCanonicalPath();
+            log.debug("  Context path: [" + contextPath + "]");
+            servlets.put(contextPath, this);
+        } catch (IOException e) {
+            throw new ServletException(e);
+        }
+            
         log.debug(".init(): Scheduler Configurations: " + this.schedulerConfigurations);
 
         try {
@@ -218,6 +238,7 @@ public class LoadQuartzServlet extends HttpServlet {
     protected static final String ADD = "add";
     protected static final String MODIFY = "modify";
     protected static final String DELETE = "delete";
+    protected static final String DOCUMENT_DELETED = "document-deleted";
 
     /**
      * Handles a servlet request.
@@ -277,6 +298,17 @@ public class LoadQuartzServlet extends HttpServlet {
             } else if (action.equals(DELETE)) {
                 String jobId = getJobId(schedulerParameters);
                 getScheduler().deleteJob(jobId, publicationId);
+            } else if (action.equals(DOCUMENT_DELETED)) {
+
+                Publication publication =
+                    PublicationFactory.getPublication(
+                        publicationId,
+                        getServletContextDirectory().getAbsolutePath());
+
+                String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
+                org.apache.lenya.cms.publication.Document document =
+                    publication.getDocumentBuilder().buildDocument(publication, documentUrl);
+                deleteDocumentJobs(document);
             }
 
             // handle the remainder of the request by simply returning all
@@ -291,6 +323,19 @@ public class LoadQuartzServlet extends HttpServlet {
             log.error("Can't create job snapshot: ", e);
             throw new IOException(e.getMessage() + " (view log for details)");
         }
+    }
+
+    /**
+     * Deletes
+     * @param document
+     * @throws DocumentBuildException
+     * @throws SchedulerException
+     * @throws PublicationException
+     */
+    public void deleteDocumentJobs(org.apache.lenya.cms.publication.Document document)
+        throws DocumentBuildException, SchedulerException, PublicationException {
+        log.debug("Requested to delete jobs for document URL [" + document.getCompleteURL() + "]");
+        getScheduler().deleteJobs(document);
     }
 
     /**
@@ -357,5 +402,46 @@ public class LoadQuartzServlet extends HttpServlet {
                 getScheduler().restoreJobs(publicationId);
             }
         }
+    }
+
+    public static final String SERVLET_URL = "/servlet/QuartzSchedulerServlet";
+
+    /**
+     * Returns the servlet for a certain canonical servlet context path.
+     * @param contextPath The canonical servlet context path.
+     * @return A LoadQuartzServlet.
+     */
+    public static LoadQuartzServlet getServlet(String contextPath) {
+        return (LoadQuartzServlet) servlets.get(contextPath);
+    }
+
+    /**
+     * Generates the request URI needed to delete the jobs for a certain document.
+     * @param document The document.
+     * @return A string.
+     */
+    public static String getDeleteDocumentRequestURI(
+        String port,
+        String servletContextPath,
+        org.apache.lenya.cms.publication.Document document) {
+
+        NamespaceMap requestParameters = new NamespaceMap(PREFIX);
+        requestParameters.put(PARAMETER_ACTION, DOCUMENT_DELETED);
+        requestParameters.put(PARAMETER_PUBLICATION_ID, document.getPublication().getId());
+        requestParameters.put(PARAMETER_DOCUMENT_URL, document.getCompleteURL());
+
+        String requestUri = "http://127.0.0.1:" + port + servletContextPath + "?";
+        Map map = requestParameters.getMap();
+
+        String[] keys = (String[]) map.keySet().toArray(new String[map.keySet().size()]);
+        for (int i = 0; i < keys.length; i++) {
+            if (i > 0) {
+                requestUri += "&";
+            }
+            String value = (String) map.get(keys[i]);
+            requestUri += keys[i] + "=" + value;
+        }
+
+        return requestUri;
     }
 }

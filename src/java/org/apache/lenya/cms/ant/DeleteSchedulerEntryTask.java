@@ -1,5 +1,5 @@
 /*
- * $Id: MoveSchedulerEntryTask.java,v 1.1 2004/01/07 18:37:24 andreas Exp $ <License>
+ * $Id: DeleteSchedulerEntryTask.java,v 1.1 2004/01/09 11:14:39 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -40,6 +40,8 @@
  */
 package org.apache.lenya.cms.ant;
 
+import java.io.File;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -48,7 +50,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publication.SiteTreeNodeVisitor;
-import org.apache.lenya.cms.scheduler.SchedulerStore;
+import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -56,21 +58,19 @@ import org.apache.tools.ant.BuildException;
  * 
  * @author <a href="andreas@apache.org">Andreas Hartmann</a>
  */
-public class MoveSchedulerEntryTask extends PublicationTask implements SiteTreeNodeVisitor {
+public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTreeNodeVisitor {
 
     /**
      * @see org.apache.tools.ant.Task#execute()
      */
     public void execute() throws BuildException {
         try {
-            log("document id for the source: " + sourceDocumentId);
-            log("area for the source: " + sourceArea);
-            log("document id for the destination: " + destinationDocumentId);
-            log("area for the destination: " + destinationArea);
+            log("Document ID: [" + documentId + "]");
+            log("Area:        [" + area + "]");
 
             Publication publication = getPublication();
-            SiteTree tree = publication.getSiteTree(sourceArea);
-            SiteTreeNode node = tree.getNode(sourceDocumentId);
+            SiteTree tree = publication.getSiteTree(area);
+            SiteTreeNode node = tree.getNode(documentId);
 
             node.acceptSubtree(this);
         } catch (Exception e) {
@@ -78,34 +78,28 @@ public class MoveSchedulerEntryTask extends PublicationTask implements SiteTreeN
         }
     }
 
-    private String sourceArea, destinationArea, sourceDocumentId, destinationDocumentId;
+    private String area, documentId, servletContextPath;
 
     /**
-     * @param string The area of the source.
+     * @param string The area.
      */
-    public void setSourceArea(String string) {
-        sourceArea = string;
+    public void setArea(String string) {
+        area = string;
     }
 
     /**
-     * @param string The document-id corresponding to the source.
+     * @param string The document-id.
      */
-    public void setSourceDocumentId(String string) {
-        sourceDocumentId = string;
+    public void setDocumentId(String string) {
+        documentId = string;
     }
 
     /**
-     * @param string The area of the destination.
+     * Sets the servlet context path.
+     * @param servletContextPath A string.
      */
-    public void setDestinationArea(String string) {
-        destinationArea = string;
-    }
-
-    /**
-     * @param string The document-id corresponding to the destination.
-     */
-    public void setDestinationDocumentId(String string) {
-        destinationDocumentId = string;
+    public void setServletContextPath(String servletContextPath) {
+        this.servletContextPath = servletContextPath;
     }
 
     /**
@@ -116,22 +110,21 @@ public class MoveSchedulerEntryTask extends PublicationTask implements SiteTreeN
 
         Label[] labels = node.getLabels();
         for (int i = 0; i < labels.length; i++) {
-            
+
             String language = labels[i].getLanguage();
             DocumentBuilder builder = publication.getDocumentBuilder();
-            
+
             try {
-                String sourceUrl = builder.buildCanonicalUrl(publication, sourceArea, sourceDocumentId, language);
-                Document sourceDocument = builder.buildDocument(publication, sourceUrl);
-                
-                String destinationUrl = builder.buildCanonicalUrl(publication, destinationArea, destinationDocumentId, language);
-                Document destinationDocument = builder.buildDocument(publication, destinationUrl);
-                
-                log("move scheduler entry");
-                
-                SchedulerStore store = new SchedulerStore();
-                store.documentMoved(sourceDocument, destinationDocument);
-                
+                String url = builder.buildCanonicalUrl(publication, area, documentId, language);
+                Document document = builder.buildDocument(publication, url);
+
+                String servletContext = new File(servletContextPath).getCanonicalPath();
+                log("Deleting scheduler entry for document [" + document + "]");
+                log("Resolving servlet [" + servletContext + "]");
+
+                LoadQuartzServlet servlet = LoadQuartzServlet.getServlet(servletContext);
+                servlet.deleteDocumentJobs(document);
+
             } catch (Exception e) {
                 throw new DocumentException(e);
             }

@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerStore.java,v 1.1 2004/01/07 18:37:23 andreas Exp $
+$Id: SchedulerStore.java,v 1.2 2004/01/09 11:14:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -78,7 +78,7 @@ import org.w3c.dom.Element;
  * Store for scheduler jobs.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: SchedulerStore.java,v 1.1 2004/01/07 18:37:23 andreas Exp $
+ * @version CVS $Id: SchedulerStore.java,v 1.2 2004/01/09 11:14:40 andreas Exp $
  */
 public class SchedulerStore {
 
@@ -298,37 +298,6 @@ public class SchedulerStore {
             throw new SchedulerException(e);
         }
         return wrapper;
-    }
-
-    /**
-     * Called when a document has moved. This updates the corresponding
-     * entry in the scheduler store.
-     * @param source The source document.
-     * @param destination The destination document.
-     */
-    public void documentMoved(
-        org.apache.lenya.cms.publication.Document source,
-        org.apache.lenya.cms.publication.Document destination)
-        throws SchedulerException {
-
-        Publication publication = source.getPublication();
-        if (!publication.equals(destination.getPublication())) {
-            throw new SchedulerException("Source and destination document must be in the same publication!");
-        }
-
-        JobWrapper[] wrappers = restoreJobs(publication);
-        boolean changed = false;
-        for (int i = 0; i < wrappers.length; i++) {
-            ServletJob job = wrappers[i].getJob();
-            String documentUrl = job.getDocumentUrl(wrappers[i].getJobDetail());
-            if (documentUrl.equals(source.getCompleteURL())) {
-                job.setDocumentUrl(wrappers[i].getJobDetail(), destination.getCompleteURL());
-                changed = true;
-            }
-        }
-        if (changed) {
-            writeSnapshot(publication, wrappers);
-        }
     }
 
     /**
