@@ -101,7 +101,6 @@
     <echo>Copy forrest libraries</echo>
     <copy todir="${build.webapp}/WEB-INF/lib" filtering="off">
       <fileset dir="src/webapp/lenya/pubs/docs-new/WEB-INF/lib"/>
-      <fileset dir="src/webapp/lenya/pubs/default/WEB-INF/lib"/>
     </copy>
     
     <!-- patch cocoon.xconf -->
