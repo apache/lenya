@@ -832,9 +832,7 @@
           
           <map:match pattern="rename" type="step">
             <map:act type="task">
-              <map:parameter name="publication-id" value="{../../1}"/>
-              <map:parameter name="task-id" value="{request-param:task-id}"/>
-              <map:redirect-to session="true" uri="{request:requestURI}"/>
+              <map:redirect-to session="true" uri="{request:contextPath}/{../../../1}/{../../../2}/"/>
             </map:act>
           </map:match>
           
