@@ -26,6 +26,8 @@ function Folder(folderDescription, hreference) //constructor
   ICONPATH = CONTEXT_PREFIX + '/lenya/images/tree/';
   this.desc = folderDescription; 
   this.hreference = hreference;
+  this.area = "";
+  this.documentid = "";
   this.id = -1;
   this.navObj = 0;
   this.iconImg = 0; 
@@ -40,15 +42,17 @@ function Folder(folderDescription, hreference) //constructor
   this.isLastNode=false;
   this.parentObj = null;
   this.maySelect=true;
-  this.prependHTML = ""
+  this.prependHTML = "";
  
   //dynamic data 
   this.isOpen = false
   this.isLastOpenedFolder = false
   this.isRendered = 0
+  this.isLoaded = false
  
   //methods 
   this.initialize = initializeFolder 
+  this.reinitialize = reinitializeFolder 
   this.setState = setStateFolder 
   this.addChild = addChild 
   this.createIndex = createEntryIndex 
@@ -82,9 +86,9 @@ function initializeFolder(level, lastNode, leftSide)
 
   if (level>0)
     if (lastNode) //the last child in the children array 
-		leftSide = leftSide + "0"
-	else
-		leftSide = leftSide + "1"
+    leftSide = leftSide + "0"
+  else
+    leftSide = leftSide + "1"
 
   this.isLastNode = lastNode
  
@@ -100,6 +104,34 @@ function initializeFolder(level, lastNode, leftSide)
     } 
   } 
 } 
+
+// call this after ading new children
+function reinitializeFolder() 
+{ 
+  var i=0;       
+  var nc = this.nChildren 
+  var leftSide;
+   
+  if (this.level>0) {
+    if (this.isLastNode) { //the last child in the children array 
+      leftSide = this.leftSideCoded + "0"
+    } else {
+      leftSide = this.leftSideCoded + "1"
+    }
+  }
+
+  if (nc > 0) 
+  { 
+    var level = this.level + 1 
+    for (i=0 ; i < nc; i++)  
+    { 
+      if (i == nc-1) 
+        this.children[i].initialize(level, 1, leftSide)
+      else 
+        this.children[i].initialize(level, 0, leftSide)
+    } 
+  } 
+} 
  
 function setAreaTabs(url) 
 {
@@ -109,12 +141,12 @@ function setAreaTabs(url)
 
    // make sure the area tabs are there (they are not in the link popup, for instance)
    if (authoringTab != null && liveTab != null) {
-   area = url.substring(url.indexOf('lenya.area=')+11, url.length);
-   urlhead = url.substring(0, url.indexOf(area)); // strip usecase   
-   urltail = url.substring(url.indexOf(area)+area.length, url.indexOf('?')); // strip usecase
-	   authoringTab.href = urlhead +'authoring'+ urltail;
-	   liveTab.href = urlhead +'live'+ urltail;
-	}
+     area = url.substring(url.indexOf('lenya.area=')+11, url.length);
+     urlhead = url.substring(0, url.indexOf(area)); // strip usecase   
+     urltail = url.substring(url.indexOf(area)+area.length, url.indexOf('?')); // strip usecase
+     authoringTab.href = urlhead +'authoring'+ urltail;
+     liveTab.href = urlhead +'live'+ urltail;
+  }
 }
 
 
@@ -135,7 +167,7 @@ function drawFolder(insertAtObj)
  
   if (this.level>0) 
     if (this.isLastNode) //the last child in the children array 
-	    leftSide = leftSide + "<td valign=top>" + auxEv + "<img name='nodeIcon" + this.id + "' id='nodeIcon" + this.id + "' src='" + nodeName + "' width=16 height=22 border=0></a></td>"
+      leftSide = leftSide + "<td valign=top>" + auxEv + "<img name='nodeIcon" + this.id + "' id='nodeIcon" + this.id + "' src='" + nodeName + "' width=16 height=22 border=0></a></td>"
     else 
       leftSide = leftSide + "<td valign=top background=" + ICONPATH + "ftv2vertline.gif>" + auxEv + "<img name='nodeIcon" + this.id + "' id='nodeIcon" + this.id + "' src='" + nodeName + "' width=16 height=22 border=0></a></td>"
 
@@ -156,13 +188,13 @@ function drawFolder(insertAtObj)
   }
   else
   {
-	  if (this.prependHTML == "")
+    if (this.prependHTML == "")
         docW = docW + "<img src=" + ICONPATH + "ftv2blank.gif height=2 width=2>"
   }
   if (WRAPTEXT)
-	  docW = docW + "</td>"+this.prependHTML+"<td valign=middle width=100%>"
+    docW = docW + "</td>"+this.prependHTML+"<td valign=middle width=100%>"
   else
-	  docW = docW + "</td>"+this.prependHTML+"<td valign=middle nowrap width=100%>"
+    docW = docW + "</td>"+this.prependHTML+"<td valign=middle nowrap width=100%>"
   if (USETEXTLINKS) 
   { 
     docW = docW + this.linkHTML(true) 
@@ -179,13 +211,13 @@ function drawFolder(insertAtObj)
 
   if (insertAtObj == null)
   {
-	  if (supportsDeferral) {
-		  doc.write("<div id=domRoot></div>") //transition between regular flow HTML, and node-insert DOM DHTML
-		  insertAtObj = getElById("domRoot")
-		  insertAtObj.insertAdjacentHTML("beforeEnd", docW)
-	  }
-	  else
-		  doc.write(docW)
+    if (supportsDeferral) {
+      doc.write("<div id=domRoot></div>") //transition between regular flow HTML, and node-insert DOM DHTML
+      insertAtObj = getElById("domRoot")
+      insertAtObj.insertAdjacentHTML("beforeEnd", docW)
+    }
+    else
+      doc.write(docW)
   }
   else
   {
@@ -233,7 +265,7 @@ function setStateFolder(isOpen)
   }  
   this.isOpen = isOpen;
 
-  if (this.getID()!=foldersTree.getID() && PERSERVESTATE && !this.isOpen) //closing
+  if (this.getID()!=foldersTree.getID() && PRESERVESTATE && !this.isOpen) //closing
   {
      currentOpen = GetCookie("clickedFolder")
      if (currentOpen != null) {
@@ -241,11 +273,11 @@ function setStateFolder(isOpen)
          SetCookie("clickedFolder", currentOpen)
      }
   }
-	
+  
   if (!this.isOpen && this.isLastOpenedfolder)
   {
-		lastOpenedFolder = null;
-		this.isLastOpenedfolder = false;
+    lastOpenedFolder = null;
+    this.isLastOpenedfolder = false;
   }
   propagateChangesInState(this) 
 } 
@@ -267,7 +299,7 @@ function propagateChangesInState(folder)
     if (folder.isOpen) 
       folder.children[i].folderMstr(folder.navObj)
     else 
-  	  folder.children[i].esconde() 
+      folder.children[i].esconde() 
 } 
  
 function escondeFolder() 
@@ -283,19 +315,19 @@ function linkFolderHTML(isTextLink)
 
   if (this.hreference) 
   { 
-	if (USEFRAMES)
-	  docW = docW + "<a href='" + this.hreference + "' TARGET=\"basefrm\" "
-	else
-	  docW = docW + "<a href='" + this.hreference + "' TARGET=_top "
+  if (USEFRAMES)
+    docW = docW + '<a href="' + this.hreference + '" TARGET="basefrm" '
+  else
+    docW = docW + '<a href="' + this.hreference + '" TARGET="_self" '
         
     if (isTextLink) {
-        docW += "id=\"itemTextLink"+this.id+"\" ";
+        docW += 'id="itemTextLink'+this.id+'" ';
     }
 
     if (browserVersion > 0) 
-      docW = docW + "onClick='javascript:clickOnFolder(\""+this.getID()+"\")'"
+      docW = docW + 'onClick="javascript:clickOnFolder(\''+this.getID()+'\')"'
 
-    docW = docW + ">"
+    docW = docW + '>'
   } 
   else {
 //    docW = docW + "<a>" 
@@ -330,7 +362,7 @@ function nodeImageSrc() {
 
   if (this.isLastNode) //the last child in the children array 
   { 
-    if (this.nChildren == 0)
+    if (this.isLoaded && this.nChildren == 0)
       srcStr = ICONPATH + "ftv2lastnode.gif"
     else
       if (this.isOpen)
@@ -340,7 +372,7 @@ function nodeImageSrc() {
   } 
   else 
   { 
-    if (this.nChildren == 0)
+    if (this.isLoaded && this.nChildren == 0)
       srcStr = ICONPATH + "ftv2node.gif"
     else
       if (this.isOpen)
@@ -357,7 +389,7 @@ function iconImageSrc() {
   else
     return(this.iconSrcClosed)
 } 
- 
+
 // Definition of class Item (a document or link inside a Folder) 
 // ************************************************************* 
  
@@ -366,6 +398,8 @@ function Item(itemDescription, itemLink, target) // Constructor
   // constant data 
   this.desc = itemDescription 
   this.link = itemLink    
+  this.area = ""
+  this.documentid = ""
   this.id = -1 //initialized in initalize() 
   this.navObj = 0 //initialized in render() 
   this.iconImg = 0 //initialized in render() 
@@ -401,13 +435,18 @@ function initializeItem(level, lastNode, leftSide)
   this.leftSideCoded = leftSide
   this.isLastNode = lastNode
 } 
- 
+
+function escapeQuotes(s)
+{
+  return s.replace(/\'/g, '\\\'');
+}
+
 function drawItem(insertAtObj) 
 { 
   var leftSide = leftSideHTML(this.leftSideCoded)
   var docW = ""
 
-  var fullLink = "href=\""+this.link+"\" target=\""+this.target+"\" onClick=\"clickOnLink('"+this.getID()+"\', '"+this.link+"','"+this.target+"');return false;\"";
+  var fullLink = "href=\""+this.link+"\" target=\""+this.target+"\" onClick=\"clickOnLink('"+this.getID()+"\', '"+escapeQuotes(this.link)+"','"+this.target+"');return false;\"";
   this.isRendered = 1
 
   if (this.level>0) 
@@ -427,7 +466,7 @@ function drawItem(insertAtObj)
       docW = docW + "<a " + fullLink  + " id=\"itemIconLink"+this.id+"\">" + "<img id='itemIcon"+this.id+"' " + "src='"+this.iconSrc+"' border=0>" + "</a>"
   }
   else
-	  if (this.prependHTML == "")
+    if (this.prependHTML == "")
         docW = docW + "<img src=" + ICONPATH + "ftv2blank.gif height=2 width=3>"
 
   if (WRAPTEXT)
@@ -446,7 +485,7 @@ function drawItem(insertAtObj)
  
   if (insertAtObj == null)
   {
-	  doc.write(docW)
+    doc.write(docW)
   }
   else
   {
@@ -480,6 +519,8 @@ function forceOpeningOfAncestorFolders() {
 
 function escondeBlock() 
 { 
+  if (this.navObj.style==null || typeof this.navObj.style.display == 'undefined') return;
+  
   if (browserVersion == 1 || browserVersion == 3) { 
     if (this.navObj.style.display == "none") 
       return 
@@ -559,21 +600,21 @@ function totalHeight() //used with browserVersion == 2
 
 
 function leftSideHTML(leftSideCoded) {
-	var i;
-	var retStr = "";
+  var i;
+  var retStr = "";
 
-	for (i=0; i<leftSideCoded.length; i++)
-	{
-		if (leftSideCoded.charAt(i) == "1")
-		{
-			retStr = retStr + "<td valign=top background=" + ICONPATH + "ftv2vertline.gif><img src='" + ICONPATH + "ftv2vertline.gif' width=16 height=22></td>"
-		}
-		if (leftSideCoded.charAt(i) == "0")
-		{
-			retStr = retStr + "<td valign=top><img src='" + ICONPATH + "ftv2blank.gif' width=16 height=22></td>"
-		}
-	}
-	return retStr
+  for (i=0; i<leftSideCoded.length; i++)
+  {
+    if (leftSideCoded.charAt(i) == "1")
+    {
+      retStr = retStr + "<td valign=top background=" + ICONPATH + "ftv2vertline.gif><img src='" + ICONPATH + "ftv2vertline.gif' width=16 height=22></td>"
+    }
+    if (leftSideCoded.charAt(i) == "0")
+    {
+      retStr = retStr + "<td valign=top><img src='" + ICONPATH + "ftv2blank.gif' width=16 height=22></td>"
+    }
+  }
+  return retStr
 }
 
 function getID()
@@ -615,19 +656,27 @@ function clickOnFolder(folderId)
 } 
  
 function clickOnNode(folderId) 
-{ 
-  clickOnNodeObj(findObj(folderId))
+{
+  folderObj = findObj(folderId);
+  if (INCREMENTAL_LOADING && folderObj.id!=foldersTree.id && !folderObj.isLoaded) {
+    loadSubTree(folderObj);
+    folderObj.isLoaded = true;
+  }
+
+  clickOnNodeObj(folderObj)  
 }
 
 function clickOnNodeObj(folderObj) 
 { 
   var state = 0 
   var currentOpen
- 
-  state = folderObj.isOpen 
-  folderObj.setState(!state) //open<->close  
+  
+  state = folderObj.isOpen;
+  if (folderObj.isLoaded || !INCREMENTAL_LOADING) {
+    folderObj.setState(!state); //open<->close
+  }
 
-  if (folderObj.id!=foldersTree.id && PERSERVESTATE)
+  if (folderObj.id!=foldersTree.id && PRESERVESTATE)
   {
     currentOpen = GetCookie("clickedFolder")
     if (currentOpen == null)
@@ -643,19 +692,288 @@ function clickOnNodeObj(folderObj)
   }
 }
 
-function clickOnLink(clickedId, target, windowName) {  
-    highlightObjLink(findObj(clickedId));
+function clickOnLink(clickedId, target, windowName) {
+    clickedObj = findObj(clickedId);
+    highlightObjLink(clickedObj);
     if (isLinked(target)) {
         window.open(target,windowName);
         setAreaTabs(target);
+    }
+    if (typeof clickedObj.setState != 'undefined') {
+      clickedObj.setState(true); // open the clicked folder
     }
 }
 
 function ld  ()
 {
-	return document.links.length-1
+  return document.links.length-1
 }
  
+
+
+
+
+// Dynamic Loading Functions 
+// *************************
+
+
+function loadInitialTree(area, documentid)
+{
+  var url = CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS;  
+  var xml = loadSitetreeFragment(url);
+  if (xml!=null) initialTreeLoaded(xml);
+}
+
+function loadSubTree(clicked) 
+{
+  area = clicked.area;
+  documentid = clicked.documentid;  
+  
+  var url = CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS;
+
+  var xml = loadSitetreeFragment(url);
+  if (xml!=null) subTreeLoaded(xml, clicked, area);
+}
+  
+function loadSitetreeFragment(url)
+{
+  if (xmlhttp==null) createXMLHttp();
+  
+  // alert('load subtree for '+url);
+  // do synchronous loading 
+  // (maybe should be changed to async loading to avoid stall if something goes wrong)
+  // (i've had problems with async on mozilla, maybe should use the onload thing?) 
+  xmlhttp.open("GET",url,false);  
+  /* xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4) {
+      alert('response: '+xmlhttp.responseText);
+      //subTreeLoaded(xmlhttp.responseXML, clicked);
+    }
+  } */
+  xmlhttp.setRequestHeader('Accept','text/xml');
+  xmlhttp.send(null);
+  
+  var xml = xmlhttp.responseXML;
+  if( xml == null || xml.documentElement == null) {
+    alert('Error: could not load sitetree xml');
+    return null;
+  } 
+  return xml;
+}
+
+function initialTreeLoaded(xml)
+{
+  var root = xml.documentElement;
+
+  // loop through all tree children
+  var cs = root.childNodes;
+  var l = cs.length;
+  for (var i = 0; i < l; i++) {
+     if (cs[i].tagName == "nav:site") {
+        addLoadedSite(cs[i]);
+     }
+  }
+  foldersTree.isLoaded = true;
+}
+
+function subTreeLoaded(xml, clicked, area)
+{
+  var root = xml.documentElement;
+
+  // loop through all tree children
+  var cs = root.childNodes;
+  var l = cs.length;
+  for (var i = 0; i < l; i++) {
+     if (cs[i].tagName == "nav:node") {
+        addLoadedNode(cs[i], clicked, area);
+     } 
+  }
+  clicked.reinitialize();   
+}
+
+function addLoadedSite(site)
+{
+  var folder = site.getAttribute('folder');
+  var area = site.getAttribute('area');
+  var label = site.getAttribute('label');
+  var langSuffix = '';
+  if (CHOSEN_LANGUAGE!=DEFAULT_LANGUAGE) langSuffix = '_'+CHOSEN_LANGUAGE;
+  
+  label = addProtectedStyle(label, site);
+  label = addLabelStyle(label);
+
+  var newSite;  
+  if (folder=='true') {
+    if (isNodeProtected(site)) {
+      newSite = insFld(foldersTree, gFld(label));
+    } else {
+      newSite = insFld(foldersTree,
+        gFld(label, makeHref(area, langSuffix)));
+    }
+    addNodesRec(site, newSite, area);
+  } else {
+    if (isNodeProtected(site)) {
+      newSite = insDoc(foldersTree, gLnk("S", label));
+    } else {
+      newSite = insDoc(foldersTree,
+        gLnk("S", label, makeHref(area, langSuffix))
+      );
+    }
+  }
+  newSite.area = area;
+  newSite.documentid = "/";
+}
+
+// you can override the makeHref function to create your own links
+// useful e.g. for link lookup in xopus or bxe.
+var makeHref = function makeDefaultHref(area, link)
+{
+  return CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/info-"+area+"/"+link+"?lenya.usecase=info-overview&lenya.step=showscreen"; 
+}
+
+function addNodesRec(parentNode, parentFolder, area)
+{
+    var cs = parentNode.childNodes;
+    var l = cs.length;
+    for (var i = 0; i < l; i++) {
+       if (cs[i].tagName == "nav:node") {
+          parentFolder.isLoaded = true;
+          loadedNode = addLoadedNode(cs[i], parentFolder, area);
+          if (cs[i].getAttribute('folder')=='true') addNodesRec(cs[i], loadedNode, area); 
+       } 
+    }
+}
+
+function addLoadedNode(item, parent, area)
+{
+  var folder = item.getAttribute('folder');
+  if (folder=='true') return addLoadedFolder(item, parent, area);
+  else return addLoadedDoc(item, parent, area);
+}
+
+function addLoadedDoc(doc, parent, area)
+{
+  var href = doc.getAttribute('href');
+  var label = getLabel(doc);
+    
+  label = addNoLanguageStyle(label, doc);
+  label = addCutStyle(label, doc);
+  label = addProtectedStyle(label, doc);
+  label = addLabelStyle(label);
+  
+  var newDoc;
+  if (isNodeProtected(doc)) {
+    newDoc = insDoc(parent,
+      gLnk("S", label)
+    );
+  } else {
+    newDoc = insDoc(parent,
+      gLnk("S", label, makeHref(area, href))
+    );
+  }
+  newDoc.area = area;
+  newDoc.documentid = "/" + doc.getAttribute('basic-url');
+  return newDoc;
+
+}
+
+function addLoadedFolder(folder, parent, area)
+{
+  var href = folder.getAttribute('href');
+  var label = getLabel(folder);
+    
+  label = addNoLanguageStyle(label, folder);
+  label = addCutStyle(label, folder);
+  label = addProtectedStyle(label, folder);
+  label = addLabelStyle(label);
+  
+  var newFolder;
+  if (isNodeProtected(folder)) {  
+    newFolder = insFld(parent,
+     gFld(label)
+    );
+  } else {
+    newFolder = insFld(parent,
+     gFld(label, makeHref(area, href))
+    );
+  }
+  newFolder.area = area;
+  newFolder.documentid = "/" + folder.getAttribute('basic-url');
+  return newFolder;
+}
+
+function getLabel(node) 
+{
+    var cs = node.childNodes;
+    var l = cs.length;
+    for (var i = 0; i < l; i++) {
+       if (cs[i].tagName=='nav:label' && cs[i].getAttribute('xml:lang')==CHOSEN_LANGUAGE) {
+          return cs[i].firstChild.nodeValue;
+       } 
+    }
+    // if chosen language not found, try default language:
+    for (var i = 0; i < l; i++) {
+       if (cs[i].tagName=='nav:label' && cs[i].getAttribute('xml:lang')==DEFAULT_LANGUAGE) {
+          return cs[i].firstChild.nodeValue;
+       } 
+    }
+    // if default language not found either, try any language:
+    for (var i = 0; i < l; i++) {
+       if (cs[i].tagName=='nav:label') {
+          return cs[i].firstChild.nodeValue;
+       } 
+    }
+    return '';
+}
+
+function addLabelStyle(label) {
+  return "<span style=\"padding: 0px 5px;\">"+label+"</span>";
+}
+
+function addNoLanguageStyle(label, node)
+{
+  if (!existsChosenLanguage(node)) { // document does not exists in this language
+    return "<span class=\"lenya-info-nolanguage\">" + label + "</span>";
+  }
+  return label;
+}
+
+function addCutStyle(label, node)
+{
+  if (CUT_DOCUMENT_ID=='/'+node.getAttribute('basic-url')) { 
+    return "<span class=\"lenya-info-cut\">[" + label + "]</span>";
+  }
+  return label;
+}
+
+function addProtectedStyle(label, node)
+{
+  if (isNodeProtected(node)) { 
+    return "<span class=\"lenya-info-protected\">[" + label + "]</span>";
+  }
+  return label;
+}
+
+function isNodeProtected(node) 
+{
+  var prot = node.getAttribute('protected');
+  if (prot == 'true') return true;
+  return false;
+}
+
+// check if the node has a label of the chosen language
+function existsChosenLanguage(node) 
+{
+    var cs = node.childNodes;
+    var l = cs.length;
+    for (var i = 0; i < l; i++) {
+       if (cs[i].tagName=='nav:label' && cs[i].getAttribute('xml:lang')==CHOSEN_LANGUAGE) {
+          return true;
+       } 
+    }
+    return false;
+}
+
 
 // Auxiliary Functions 
 // *******************
@@ -707,7 +1025,7 @@ function highlightObjLink(nodeObj) {
     }
   }
   lastClicked = nodeObj;
-  if (PERSERVESTATE)
+  if (PRESERVESTATE)
     SetCookie('highlightedTreeviewLink', nodeObj.getID());
 }
 
@@ -767,34 +1085,34 @@ function oldGLnk(target, description, linkData)
   //Backwards compatibility code
   if (USEFRAMES)
   {
-	  if (target==0) 
-	  { 
-		fullLink = "'"+linkData+"' target=\"basefrm\"" 
-	  } 
-	  else 
-	  { 
-		if (target==1) 
-		   fullLink = "'http://"+linkData+"' target=_blank" 
-		else 
-		   if (target==2)
-			  fullLink = "'http://"+linkData+"' target=\"basefrm\"" 
-		   else
-			  fullLink = linkData+" target=\"_top\"" 
-	  } 
+    if (target==0) 
+    { 
+    fullLink = "'"+linkData+"' target=\"basefrm\"" 
+    } 
+    else 
+    { 
+    if (target==1) 
+       fullLink = "'http://"+linkData+"' target=_blank" 
+    else 
+       if (target==2)
+        fullLink = "'http://"+linkData+"' target=\"basefrm\"" 
+       else
+        fullLink = linkData+" target=\"_top\"" 
+    } 
   }
   else
   {
-	  if (target==0) 
-	  { 
-		fullLink = "'"+linkData+"' target=_top" 
-	  } 
-	  else 
-	  { 
-		if (target==1) 
-		   fullLink = "'http://"+linkData+"' target=_blank" 
-		else 
-		   fullLink = "'http://"+linkData+"' target=_top" 
-	  } 
+    if (target==0) 
+    { 
+    fullLink = "'"+linkData+"' target=_top" 
+    } 
+    else 
+    { 
+    if (target==1) 
+       fullLink = "'http://"+linkData+"' target=_blank" 
+    else 
+       fullLink = "'http://"+linkData+"' target=_top" 
+    } 
   }
 
   linkItem = new Item(description, fullLink)   
@@ -812,19 +1130,19 @@ function insDoc(parentFolder, document)
 } 
 
 function preLoadIcons() {
-	var auxImg
-	auxImg = new Image();
-	auxImg.src = ICONPATH + "ftv2vertline.gif";
-	auxImg.src = ICONPATH + "ftv2mlastnode.gif";
-	auxImg.src = ICONPATH + "ftv2mnode.gif";
-	auxImg.src = ICONPATH + "ftv2plastnode.gif";
-	auxImg.src = ICONPATH + "ftv2pnode.gif";
-	auxImg.src = ICONPATH + "ftv2blank.gif";
-	auxImg.src = ICONPATH + "ftv2lastnode.gif";
-	auxImg.src = ICONPATH + "ftv2node.gif";
-	auxImg.src = ICONPATH + "ftv2folderclosed.gif";
-	auxImg.src = ICONPATH + "ftv2folderopen.gif";
-	auxImg.src = ICONPATH + "ftv2doc.gif";
+  var auxImg
+  auxImg = new Image();
+  auxImg.src = ICONPATH + "ftv2vertline.gif";
+  auxImg.src = ICONPATH + "ftv2mlastnode.gif";
+  auxImg.src = ICONPATH + "ftv2mnode.gif";
+  auxImg.src = ICONPATH + "ftv2plastnode.gif";
+  auxImg.src = ICONPATH + "ftv2pnode.gif";
+  auxImg.src = ICONPATH + "ftv2blank.gif";
+  auxImg.src = ICONPATH + "ftv2lastnode.gif";
+  auxImg.src = ICONPATH + "ftv2node.gif";
+  auxImg.src = ICONPATH + "ftv2folderclosed.gif";
+  auxImg.src = ICONPATH + "ftv2folderopen.gif";
+  auxImg.src = ICONPATH + "ftv2doc.gif";
 }
 
 //Open some folders for initial layout, if necessary
@@ -832,8 +1150,8 @@ function setInitialLayout() {
   if (browserVersion > 0 && !STARTALLOPEN)
     clickOnNodeObj(foldersTree);
   
-  if (!STARTALLOPEN && (browserVersion > 0) && PERSERVESTATE)
-		PersistentFolderOpening();
+  if (!STARTALLOPEN && (browserVersion > 0) && PRESERVESTATE)
+    PersistentFolderOpening();
 }
 
 //Used with NS4 and STARTALLOPEN
@@ -864,7 +1182,7 @@ function hideWholeTree(nodeObj, hideThisOne, nodeObjMove) {
     if (browserVersion == 2) {
       heightContained = heightContained + heightContainedInChild + nodeObj.children[i].navObj.clip.height
       childrenMove = childrenMove + heightContainedInChild
-	}
+  }
   }
 
   return heightContained;
@@ -876,33 +1194,33 @@ function hideWholeTree(nodeObj, hideThisOne, nodeObjMove) {
 // ******************************************
 
 if(typeof HTMLElement!="undefined" && !HTMLElement.prototype.insertAdjacentElement){
-	HTMLElement.prototype.insertAdjacentElement = function (where,parsedNode)
-	{
-		switch (where){
-		case 'beforeBegin':
-			this.parentNode.insertBefore(parsedNode,this)
-			break;
-		case 'afterBegin':
-			this.insertBefore(parsedNode,this.firstChild);
-			break;
-		case 'beforeEnd':
-			this.appendChild(parsedNode);
-			break;
-		case 'afterEnd':
-			if (this.nextSibling) 
-				this.parentNode.insertBefore(parsedNode,this.nextSibling);
-			else this.parentNode.appendChild(parsedNode);
-			break;
-		}
-	}
+  HTMLElement.prototype.insertAdjacentElement = function (where,parsedNode)
+  {
+    switch (where){
+    case 'beforeBegin':
+      this.parentNode.insertBefore(parsedNode,this)
+      break;
+    case 'afterBegin':
+      this.insertBefore(parsedNode,this.firstChild);
+      break;
+    case 'beforeEnd':
+      this.appendChild(parsedNode);
+      break;
+    case 'afterEnd':
+      if (this.nextSibling) 
+        this.parentNode.insertBefore(parsedNode,this.nextSibling);
+      else this.parentNode.appendChild(parsedNode);
+      break;
+    }
+  }
 
-	HTMLElement.prototype.insertAdjacentHTML = function(where,htmlStr)
-	{
-		var r = this.ownerDocument.createRange();
-		r.setStartBefore(this);
-		var parsedHTML = r.createContextualFragment(htmlStr);
-		this.insertAdjacentElement(where,parsedHTML)
-	}
+  HTMLElement.prototype.insertAdjacentHTML = function(where,htmlStr)
+  {
+    var r = this.ownerDocument.createRange();
+    r.setStartBefore(this);
+    var parsedHTML = r.createContextualFragment(htmlStr);
+    this.insertAdjacentElement(where,parsedHTML)
+  }
 }
 
 function getElById(idVal) {
@@ -918,7 +1236,7 @@ function getElById(idVal) {
 
 // Functions for cookies
 // Note: THESE FUNCTIONS ARE OPTIONAL. No cookies are used unless
-// the PERSERVESTATE variable is set to 1 (default 0)
+// the PRESERVESTATE variable is set to 1 (default 0)
 // The separator currently in use is ^ (chr 94)
 // *********************************************************** 
 
@@ -983,54 +1301,54 @@ function GetCookie(name)
 {  
   name = CookieBranding(name)
 
-	var arg = name + "=";  
-	var alen = arg.length;  
-	var clen = document.cookie.length;  
-	var i = 0;  
+  var arg = name + "=";  
+  var alen = arg.length;  
+  var clen = document.cookie.length;  
+  var i = 0;  
 
-	while (i < clen) {    
-		var j = i + alen;    
-		if (document.cookie.substring(i, j) == arg)      
-			return getCookieVal (j);    
-		i = document.cookie.indexOf(" ", i) + 1;    
-		if (i == 0) break;   
-	}  
-	return null;
+  while (i < clen) {    
+    var j = i + alen;    
+    if (document.cookie.substring(i, j) == arg)      
+      return getCookieVal (j);    
+    i = document.cookie.indexOf(" ", i) + 1;    
+    if (i == 0) break;   
+  }  
+  return null;
 }
 
 function getCookieVal(offset) {  
-	var endstr = document.cookie.indexOf (";", offset);  
-	if (endstr == -1)    
-	endstr = document.cookie.length;  
-	return unescape(document.cookie.substring(offset, endstr));
+  var endstr = document.cookie.indexOf (";", offset);  
+  if (endstr == -1)    
+  endstr = document.cookie.length;  
+  return unescape(document.cookie.substring(offset, endstr));
 }
 
 function SetCookie(name, value) 
 {  
-	var argv = SetCookie.arguments;  
-	var argc = SetCookie.arguments.length;  
-	var expires = (argc > 2) ? argv[2] : null;  
-	//var path = (argc > 3) ? argv[3] : null;  
-	var domain = (argc > 4) ? argv[4] : null;  
-	var secure = (argc > 5) ? argv[5] : false;  
-	var path = "/"; //allows the tree to remain open across pages with diff names & paths
+  var argv = SetCookie.arguments;  
+  var argc = SetCookie.arguments.length;  
+  var expires = (argc > 2) ? argv[2] : null;  
+  //var path = (argc > 3) ? argv[3] : null;  
+  var domain = (argc > 4) ? argv[4] : null;  
+  var secure = (argc > 5) ? argv[5] : false;  
+  var path = "/"; //allows the tree to remain open across pages with diff names & paths
 
   name = CookieBranding(name)
 
-	document.cookie = name + "=" + escape (value) + 
-	((expires == null) ? "" : ("; expires=" + expires.toGMTString())) + 
-	((path == null) ? "" : ("; path=" + path)) +  
-	((domain == null) ? "" : ("; domain=" + domain)) +    
-	((secure == true) ? "; secure" : "");
+  document.cookie = name + "=" + escape (value) + 
+  ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) + 
+  ((path == null) ? "" : ("; path=" + path)) +  
+  ((domain == null) ? "" : ("; domain=" + domain)) +    
+  ((secure == true) ? "; secure" : "");
 }
 
 function ExpireCookie (name) 
 {  
-	var exp = new Date();  
-	exp.setTime (exp.getTime() - 1);  
-	var cval = GetCookie (name);  
+  var exp = new Date();  
+  exp.setTime (exp.getTime() - 1);  
+  var cval = GetCookie (name);  
   name = CookieBranding(name)
-	document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString();
+  document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString();
 }
 
 
@@ -1040,7 +1358,7 @@ var STARTALLOPEN = 0
 var USEFRAMES = 1
 var USEICONS = 1
 var WRAPTEXT = 0
-var PERSERVESTATE = 0
+var PRESERVESTATE = 0
 var ICONPATH = ''
 var HIGHLIGHT = 0
 var HIGHLIGHT_COLOR = 'white';
@@ -1062,6 +1380,8 @@ var doc = document
 var supportsDeferral = false
 var cookieCutter = '^' //You can change this if you need to use ^ in your xID or treeID values
 
+var xmlhttp=null;
+
 doc.yPos = 0
 
 // Main function
@@ -1069,7 +1389,7 @@ doc.yPos = 0
 
 // This function uses an object (navigator) defined in
 // ua.js, imported in the main html page (left frame).
-function initializeDocument() 
+function initializeDocument(area, documentid) 
 { 
   preLoadIcons();
   switch(navigator.family)
@@ -1089,7 +1409,7 @@ function initializeDocument()
     case 'safari':
       browserVersion = 1 //Safari Beta 3 seems to behave like IE in spite of being based on Konkeror
       break;
-	default:
+  default:
       browserVersion = 0 //other, possibly without DHTML  
       break;
   }
@@ -1097,23 +1417,25 @@ function initializeDocument()
   supportsDeferral = ((navigator.family=='ie4' && navigator.version >= 5 && navigator.OS != "mac") || browserVersion == 3);
   supportsDeferral = supportsDeferral & (!BUILDALL)
   if (!USEFRAMES && browserVersion == 2)
-  	browserVersion = 0;
+    browserVersion = 0;
   eval(String.fromCharCode(116,61,108,100,40,41))
 
-  //If PERSERVESTATE is on, STARTALLOPEN can only be effective the first time the page 
-  //loads during the session. For subsequent (re)loads the PERSERVESTATE data stored 
+  //If PRESERVESTATE is on, STARTALLOPEN can only be effective the first time the page 
+  //loads during the session. For subsequent (re)loads the PRESERVESTATE data stored 
   //in cookies takes over the control of the initial expand/collapse
-  if (PERSERVESTATE && GetCookie("clickedFolder") != null)
+  if (PRESERVESTATE && GetCookie("clickedFolder") != null)
     STARTALLOPEN = 0
 
+  if (INCREMENTAL_LOADING) loadInitialTree(area, documentid);
+  
   //foldersTree (with the site's data) is created in an external .js (demoFramesetNode.js, for example)
   foldersTree.initialize(0, true, "") 
   if (supportsDeferral && !STARTALLOPEN)
-	  foldersTree.renderOb(null) //delay construction of nodes
+    foldersTree.renderOb(null) //delay construction of nodes
   else {
     renderAllTree(foldersTree, null);
 
-    if (PERSERVESTATE && STARTALLOPEN)
+    if (PRESERVESTATE && STARTALLOPEN)
       storeAllNodesInClickCookie(foldersTree)
 
     //To force the scrollable area to be big enough
@@ -1126,7 +1448,7 @@ function initializeDocument()
 
   setInitialLayout()
 
-  if (PERSERVESTATE && GetCookie('highlightedTreeviewLink')!=null  && GetCookie('highlightedTreeviewLink')!="") {
+  if (PRESERVESTATE && GetCookie('highlightedTreeviewLink')!=null  && GetCookie('highlightedTreeviewLink')!="") {
     var nodeObj = findObj(GetCookie('highlightedTreeviewLink'))
     if (nodeObj!=null){
       nodeObj.forceOpeningOfAncestorFolders()
@@ -1135,8 +1457,34 @@ function initializeDocument()
     else
       SetCookie('highlightedTreeviewLink', '')
   }
+
+  if (INCREMENTAL_LOADING && xmlhttp==null) { 
+    createXMLHttp();
+  }
 } 
 
+// create the xmlhttp object
+function createXMLHttp() 
+{
+    /*@cc_on @*/
+    /*@if (@_jscript_version >= 5)
+    // JScript gives us Conditional compilation, we can cope with old IE versions.
+    // and security blocked creation of the objects.
+     try {
+      xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+     } catch (e) {
+      try {
+       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch (E) {
+       xmlhttp = false;
+      }
+     }
+    @end @*/
+    if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+      xmlhttp = new XMLHttpRequest();
+    }
+}
+    
 // Load a page as if a node on the tree was clicked (synchronize frames)
 // (Highlights selection if highlight is available.)
 function loadSynchPage(srclink) 
@@ -1167,5 +1515,4 @@ function findIDbyLink(srclink)
   else {
     return i;
   }
-}
- 
+} 

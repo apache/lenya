@@ -182,6 +182,13 @@ public class AccessControlSitetreeTransformer
 
         Attributes attributes = attr;
 
+        if (isFragmentNode(uri, localName)) {
+            String area = attr.getValue("area"); // FIXME: don't hardcode
+            String base = attr.getValue("base");
+            if (area!=null && base!=null) {
+                documentId = "/"+area+base;
+            }
+        }
         if (isNode(uri, localName)) {
             String id = attr.getValue(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME);
             if (id != null) {
@@ -240,6 +247,17 @@ public class AccessControlSitetreeTransformer
     protected boolean isNode(String uri, String localName) {
         return uri.equals(DefaultSiteTree.NAMESPACE_URI)
             && (localName.equals(SiteTreeNodeImpl.NODE_NAME) || localName.equals("site"));
+    }
+
+   /**
+     * Returns if an element represents a fragment node.
+     * @param uri The namespace URI.
+     * @param localName The local name.
+     * @return A boolean value.
+     */
+    protected boolean isFragmentNode(String uri, String localName) {
+        return uri.equals(DefaultSiteTree.NAMESPACE_URI)
+            && (localName.equals("fragment"));
     }
 
 }

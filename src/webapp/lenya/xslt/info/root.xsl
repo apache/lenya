@@ -35,7 +35,17 @@
   
   <xsl:variable name="extension"><xsl:if test="$documentextension != ''">.</xsl:if><xsl:value-of select="$documentextension"/></xsl:variable>
   
-  <xsl:template match="/">
+<!-- Decide whether to load the sitetree incrementally. 
+     true:  The sitetree.js will only contain the root node of the tree.  
+            All other nodes will be loaded dynamically by tree.js when needed.
+            Useful for large trees.
+     false: The sitetree.js will contain the whole sitetree structure and tree.js 
+            won't load anything dynamically. Useful for small trees or for browsers
+            which don't support xmlhttp requests. 
+-->
+  <xsl:variable name="incremental-loading" select="'true'"/>
+
+   <xsl:template match="/">
     <html>
       <head>
         
@@ -44,7 +54,7 @@
         <!-- These three scripts define the tree, do not remove-->
         <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js"/>
         <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js"/>
-        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/sitetree.js?language={$chosenlanguage}"/>
+        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/sitetree.js?language={$chosenlanguage}&amp;incremental={$incremental-loading}"/>
       </head>
 
       <body>
@@ -75,8 +85,12 @@
                         </tr>
                       </table>
                     </div>
-                    <script>
-                      initializeDocument();
+                    <xsl:variable name="language-suffix"><xsl:if test="$chosenlanguage != $defaultlanguage">_<xsl:value-of select="$chosenlanguage"/></xsl:if></xsl:variable>
+                    <xsl:variable name="url">
+                      <xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', $area, $documentid, $language-suffix, $extension)"/>
+                    </xsl:variable>
+                      <script>
+                      initializeDocument('<xsl:value-of select="$area"/>', '<xsl:value-of select="$documentid"/>');
                       <xsl:variable name="language-suffix"><xsl:if test="$chosenlanguage != $defaultlanguage">_<xsl:value-of select="$chosenlanguage"/></xsl:if></xsl:variable>
                       loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/info-<xsl:value-of select="$area"/><xsl:value-of select="$documentid"/><xsl:value-of select="$language-suffix"/><xsl:value-of select="$extension"/>');
                     </script>

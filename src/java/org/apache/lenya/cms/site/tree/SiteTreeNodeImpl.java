@@ -264,7 +264,8 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
-            ContainerUtil.enableLogging(newNode, getLogger());
+            // FIXME: the if is a workaround
+            if (getLogger()!=null) ContainerUtil.enableLogging(newNode, getLogger());
             childElements.add(newNode);
         }
 

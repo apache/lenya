@@ -204,6 +204,12 @@ public interface SiteTree {
     SiteTreeNode getNode(String documentId);
 
     /**
+     * Return the top level nodes in the sitetree.
+     * @return the top nodes in the sitetree, or empty array if there are none
+     */
+    SiteTreeNode[] getTopNodes();
+    
+    /**
      * Move up the node amongst its siblings.
      * 
      * @param documentid The document id of the node.

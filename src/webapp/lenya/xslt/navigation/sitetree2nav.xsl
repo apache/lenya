@@ -42,6 +42,23 @@
 </xsl:template>
 
 
+<xsl:template match="tree:fragment">
+  <nav:fragment>
+    <xsl:copy-of select="@*"/> 
+    <xsl:choose>
+      <xsl:when test="@base">
+         <xsl:apply-templates>
+          <xsl:with-param name="previous-url" select="concat(substring-after(@base, '/'), '/')"/>
+        </xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </nav:fragment>
+</xsl:template>
+
+
 <xsl:template match="tree:site">
 
   <nav:site url="{$root}{$url}" request-url="{$url}">
@@ -82,6 +99,7 @@ Apply nodes recursively
   
     <xsl:copy-of select="@id"/>
     <xsl:copy-of select="@protected"/>
+    <xsl:copy-of select="@folder"/>
   
     <!-- basic url - for all nodes -->
   

@@ -20,6 +20,9 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
+    <map:generators default="file">
+      <map:generator name="sitetree-fragment" label="content,data" logger="sitemap.generator.sitetree-fragment" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.lenya.cms.cocoon.generation.SitetreeFragmentGenerator"/>
+    </map:generators>
     <map:matchers default="wildcard">
       <map:matcher name="language" logger="sitemap.matcher.wildcardrequestparameter" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
         <parameter-name>lenya.language</parameter-name>
@@ -80,27 +83,67 @@
       
       <!-- {publication-id}/{area}/info-sitetree -->
       <map:match pattern="*/*/info-sitetree/sitetree.js">
-        <map:aggregate element="lenya" label="aggregate">
-          <map:part src="cocoon:/{1}/authoring/sitetree.xml"/>
-          <map:part src="cocoon:/{1}/archive/sitetree.xml"/>
-          <map:part src="cocoon:/{1}/trash/sitetree.xml"/>
-        </map:aggregate>
-        <map:act type="set-header">
-          <map:parameter name="Cache-Control" value="pre-check=0" />
-          <map:parameter name="Expires" value="-1" />
-        </map:act>
-        <map:transform src="fallback://lenya/xslt/navigation/sitetree2nav.xsl" label="navtree">
-          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-        </map:transform>
-        <map:transform src="fallback://lenya/xslt/info/sitetree2tree.xsl" label="content">
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{request-param:incremental}"/>
+          <map:when test="true">
+            <map:generate src="content/util/empty.xml" />
+            <map:act type="set-header">
+              <map:parameter name="Cache-Control" value="pre-check=0" />
+              <map:parameter name="Expires" value="-1" />
+            </map:act>
+          </map:when>
+          <map:otherwise>
+            <map:aggregate element="lenya" label="aggregate">
+              <map:part src="cocoon:/{1}/authoring/sitetree.xml"/>
+              <map:part src="cocoon:/{1}/archive/sitetree.xml"/>
+              <map:part src="cocoon:/{1}/trash/sitetree.xml"/>
+            </map:aggregate>
+            <map:act type="set-header">
+              <map:parameter name="Cache-Control" value="pre-check=0" />
+              <map:parameter name="Expires" value="-1" />
+            </map:act>
+            <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
+              <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+            </map:transform>
+          </map:otherwise>
+        </map:select>
+      
+        <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
+          <map:parameter name="incremental" value="{request-param:incremental}"/>
+          <map:parameter name="areas" value="authoring,archive,trash"/>
         </map:transform>
+      
         <map:serialize type="text"/>
+      </map:match>
+ 
+      <!-- {publication-id}/{area}/info-sitetree -->
+      <map:match pattern="*/*/info-sitetree/sitetree-fragment.xml">
+        <map:generate type="sitetree-fragment">
+          <map:parameter name="areas" value="{request-param:areas}"/>
+          <map:parameter name="area" value="{request-param:area}"/>
+          <map:parameter name="documentid" value="{request-param:documentid}"/>
+          <map:parameter name="initial" value="{request-param:initial}"/>
+        </map:generate>
+        <!-- <map:call resource="i18n"/> -->
+        <map:transform type="access-control-sitetree">
+          <map:parameter name="publication-id" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+        </map:transform>
+        <map:act type="set-header">
+          <map:parameter name="Cache-Control" value="pre-check=0" />
+          <map:parameter name="Expires" value="-1" />
+        </map:act>
+        <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
+          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
+          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
     

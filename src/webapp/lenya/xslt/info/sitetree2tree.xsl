@@ -34,8 +34,10 @@
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
 <xsl:param name="cutdocumentid"/>
-   
-<xsl:template match="lenya">
+<xsl:param name="incremental"/>
+<xsl:param name="areas"/>
+
+<xsl:template match="/">
     <xsl:param name="parentPath"/>
 // You can find instructions for this file at http://www.treeview.net
 
@@ -45,14 +47,34 @@ STARTALLOPEN = 0
 USEFRAMES = 0
 USEICONS = 0
 WRAPTEXT = 1
-PERSERVESTATE = 1
+PRESERVESTATE = 1
 HIGHLIGHT = 1
 HIGHLIGHT_BG = "#DDDCCF"
 HIGHLIGHT_COLOR = "#666666"
 CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
+PUBLICATION_ID = "<xsl:value-of select="$publicationid"/>";
+CHOSEN_LANGUAGE = "<xsl:value-of select="$chosenlanguage"/>";
+DEFAULT_LANGUAGE = "<xsl:value-of select="$defaultlanguage"/>";
+CUT_DOCUMENT_ID = "<xsl:value-of select="$cutdocumentid"/>";
+ALL_AREAS = "<xsl:value-of select="$areas"/>"
+PIPELINE_PATH = '/authoring/info-sitetree/sitetree-fragment.xml'
+<xsl:choose>
+  <xsl:when test="$incremental='true'">
+INCREMENTAL_LOADING = true;
+  </xsl:when>
+  <xsl:otherwise>
+INCREMENTAL_LOADING = false;
+  </xsl:otherwise>
+</xsl:choose>
+
+<!-- incremental loading does not work with the preserve state mechanism (cookies) -->
+if (INCREMENTAL_LOADING) PRESERVESTATE=0;
 
 foldersTree = gFld("&lt;strong&gt;<xsl:value-of select="$publicationid"/>&lt;/strong&gt;")
-		<xsl:apply-templates select="s:site"/>
+
+  <xsl:if test="$incremental!='true'">
+    <xsl:apply-templates select="lenya/s:site"/>
+  </xsl:if>
 
 //Set this string if Treeview and other configuration files may also be loaded in the same session
 foldersTree.treeID = "t2"
