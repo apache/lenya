@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <system type="cms">
   <id>lenya</id>
   <editor>
@@ -7,16 +6,14 @@
     <email>michi@apache.org</email>
   </editor>
   <system_name>Apache Lenya</system_name>
-  <description>
-Lenya is a CMS based on the XML publishing/application framework <a href="http://cocoon.apache.org">Cocoon</a> from the Apache Software Foundation.
+  <description>Lenya is a CMS based on the XML publishing/application framework <a href="http://cocoon.apache.org">Cocoon</a> from the Apache Software Foundation.
 Hence it is totally based on XML, XSLT and other related open standards.
-Lenya supports inline WYSIWYG editing within a Web browser, where Xopus and Bitflux are both
-shipped together with Lenya.
+Lenya supports browser based inline WYSIWYG editors, such as Xopus, Bitflux and Epoz.
   </description>
-  <main_url>http://www.wyona.org</main_url>
+  <main_url>http://cocoon.apache.org/lenya/</main_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_url>http://www.wyona.org/license.html</license_url>
+    <license_url>http://cocoon.apache.org/lenya/project/license.html</license_url>
   </license>
   <programming-language>Java</programming-language>
   <related-info>
@@ -32,7 +29,7 @@ shipped together with Lenya.
   <features>
     <feature>
       <title>WYSIWYG Editing</title>
-      <description>Xopus and Bitflux Edior have been integrated into Lenya. Mozile and Midas are planned for the next release.</description>
+      <description>Xopus, Bitflux Edior and Epoz have been integrated into Lenya.</description>
     </feature>
     <feature>
       <title>WYSIWYC areas</title>
@@ -52,7 +49,7 @@ shipped together with Lenya.
     </feature>
     <feature>
       <title>Authentication and Authorization Framework</title>
-      <description>Access Control policies are being matched per request. Possible subjects are user, group (role), IP-number and "world". LDAP authentication is planned for the next release.</description>
+      <description>Access Control policies are being matched per request. Possible subjects are user, group, IP-number and "world". LDAP authentication has also been integrated.</description>
     </feature>
     <feature>
       <title>Multi-server deployment</title>
