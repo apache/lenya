@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.220 2004/07/25 11:56:24 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.221 2004/07/25 12:03:01 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -660,11 +660,7 @@
                 <map:serialize/>
               </map:act>
               
-              <map:generate src="pubs/{1}/publication.xml"/> <!-- used as dummy file -->
-              <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-                <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
-              </map:transform>
-              <map:serialize type="html" />
+              <map:redirect-to uri="{request:requestURI}"/>
             </map:match>
           </map:match>
         </map:match>
