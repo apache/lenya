@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: oscom-layout-2.xsl,v 1.27 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id: oscom-layout-2.xsl,v 1.28 2004/05/12 16:16:39 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -214,7 +214,7 @@ content="text/html; charset=iso-latin-1" />
 </a>
 </td>
 <td valign="middle">
-  <img src="{$imagesPrefix}/spacer.gif" width="100" height="1" border="0" />
+  <img src="{$imagesPrefix}/pixel.gif" width="100" height="1" border="0" />
 </td>
 <td valign="middle">
 <!-- We can put topical banners here -->
@@ -223,7 +223,7 @@ content="text/html; charset=iso-latin-1" />
 <input type="text" name="queryString" class="search" size="15"/>&#160;<input type="submit" name="find" value="Go" class="searchsubmit" />
 </form>
 <!--
-<img src="{$imagesPrefix}/spacer.gif" width="1" height="1" border="0" />
+<img src="{$imagesPrefix}/pixel.gif" width="1" height="1" border="0" />
 -->
 </td>
 </tr>
@@ -249,14 +249,14 @@ content="text/html; charset=iso-latin-1" />
   <a href="../index.html" class="navigationwhite">Home</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
   <a href="/Conferences/" class="navigationwhite">Conferences</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
@@ -265,35 +265,35 @@ content="text/html; charset=iso-latin-1" />
   </a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
   <a href="/Projects/" class="navigationwhite">Projects</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
   <a href="/Mailing%20lists/" class="navigationwhite">Mailing lists</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
   <a href="http://blog.oscom.org/" class="navigationwhite">Blog</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 
 <td height="21" class="topnavigation" align="left">
   <a href="/Organization/" class="navigationwhite">Organization</a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 
 </tr>
@@ -308,7 +308,7 @@ content="text/html; charset=iso-latin-1" />
 
 <tr>
 <td valign="top" width="100%" bgcolor="#ffa500"><img
-src="{$imagesPrefix}/spacer.gif" width="760" height="1"
+src="{$imagesPrefix}/pixel.gif" width="760" height="1"
 border="0" /></td>
 </tr>
 </tbody>
@@ -333,7 +333,7 @@ border="0" /></td>
 </table>
 </td>
 <!--right column: navigation-->
-<td valign="top"><img src="{$imagesPrefix}/spacer.gif"
+<td valign="top"><img src="{$imagesPrefix}/pixel.gif"
 width="24" height="16" border="0" /></td>
 <td valign="top" align="left" width="200" class="rightbar">
 <!-- @NAVIGATION@ -->
@@ -416,7 +416,7 @@ width="24" height="16" border="0" /></td>
   </a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 </xsl:template>
 
@@ -436,7 +436,7 @@ width="24" height="16" border="0" /></td>
   </a>
 </td>
 <td height="21" width="19" align="left">
-  <img src="{$imagesPrefix}/spacer.gif" width="19" height="14" />
+  <img src="{$imagesPrefix}/pixel.gif" width="19" height="14" />
 </td>
 </xsl:template>
 
