@@ -48,9 +48,13 @@ alt="Aktuelle Ausgabe jetzt am Kiosk" /></td>
 
 <tr bgcolor="#EFEFE7"><!-- LEAD -->
 <td width="325" valign="middle"><span class="txt-s-black"><xsl:apply-templates select="item[1]/p" /><!-- 
-WEITER BUTTON -->&#160;<a href="/print/index.html"
+WEITER BUTTON -->&#160;
+<!--
+<a href="/print/index.html"
 class="txt-link-red"><img border="0" src="/img/layout/arrow-red.gif"
-width="9" height="7" alt="&#187;" />weiter</a></span></td>
+width="9" height="7" alt="&#187;" />weiter</a>
+-->
+</span></td>
 </tr>
 
 <tr bgcolor="#EFEFE7">

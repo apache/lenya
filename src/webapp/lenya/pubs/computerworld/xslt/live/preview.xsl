@@ -58,9 +58,14 @@ class="txt-s-black"><b><xsl:value-of select="item[2]/title"/></b></span></td>
 
 <tr bgcolor="#FFFFFF"><!-- LEAD -->
 <td width="325" valign="middle"><span class="txt-s-black"><xsl:apply-templates select="item[2]/p" /><!-- 
-WEITER BUTTON -->&#160;<a href="/print/index.html"
+WEITER BUTTON -->&#160;
+<!--
+<a href="/print/index.html"
 class="txt-link-red"><img border="0" src="/img/layout/arrow-red.gif"
-width="9" height="7" alt="&#187;" />weiter</a></span></td>
+width="9" height="7" alt="&#187;" />weiter</a>
+-->
+
+</span></td>
 </tr>
 
 <tr bgcolor="#FFFFFF">
