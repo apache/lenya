@@ -46,7 +46,7 @@
 </xsl:template>
 
 <xsl:template match="echo:content[@type='application/xhtml+xml']">
-  <xsl:copy-of select="node()"/>
+  <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="echo:content">
@@ -69,6 +69,12 @@ by
 
 <xsl:template name="permalink">
   <a href="index.html">Permalink</a>
+</xsl:template>
+
+<xsl:template match="*[namespace-uri() = '']">
+  <xsl:element name="{local-name()}" namespace="http://www.w3.org/1999/xhtml">
+    <xsl:apply-templates select="@*|node()"/>
+  </xsl:element>
 </xsl:template>
  
 </xsl:stylesheet>  
