@@ -93,12 +93,9 @@
 			<map:match pattern="revision/*/*/*/*/index.xml">
 				<map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
 					<map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+					<map:parameter name="docid" value="{1}/{2}/{3}/{4}/index.xml"/>
 					<map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
 					<map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
-					<map:parameter name="channel" value="{1}"/>
-					<map:parameter name="section" value="{2}"/>
-					<map:parameter name="year" value="{3}"/>
-					<map:parameter name="articleId" value="{4}"/>
 				</map:generate>
 				<map:transform src="../../stylesheets/cms/Page/rc/rollback.xsl"/>
 				<map:serialize type="html"/>

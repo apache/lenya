@@ -19,17 +19,13 @@
     rcmlDirectory=rootDir+"/"+rcmlDirectory;
     backupDirectory=rootDir+"/"+backupDirectory;
 
-    String channel=parameters.getParameter("channel","null");
-    String section=parameters.getParameter("section","null");
-    String year=parameters.getParameter("year","null");
-    String articleId=parameters.getParameter("articleId","null");
     
     String request_uri=request.getRequestURI();
     String sitemap_uri=request.getSitemapURI();
     String prefix=request_uri.substring(0,request_uri.length()-sitemap_uri.length()-1);
 
-    String artId =channel+"/"+section+"/"+year+"/"+articleId+"/"+"index.xml";
-    String uriprefix = prefix;
+    String artId = parameters.getParameter("docid","null");
+    String uriprefix = request_uri.substring(0,request_uri.indexOf("/authoring")) + File.separator + "authoring";
 
     RevisionController rc = new RevisionController(rcmlDirectory,backupDirectory);
     org.w3c.dom.Document rcmlDoc=null;
@@ -41,6 +37,8 @@
     org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
     rootE.setAttribute("id", artId);     
     rootE.setAttribute("uriprefix", uriprefix);     
+    rootE.setAttribute("request_uri", request_uri);     
+    rootE.setAttribute("sitemap_uri", sitemap_uri);     
 
     org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
 

@@ -68,34 +68,35 @@
 
     <!-- Rollback -->
     <map:pipeline>
+      <!-- Rollback Screen -->
       <map:match pattern="authoring/revision/editor-matrix/*.html">
         <map:generate type="serverpages" src="../../docs/cms/rc/versions-screen.xsp">
           <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
+          <map:parameter name="docid" value="editor-matrix/{1}.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
-          <map:parameter name="channel" value="channel"/>
-          <map:parameter name="section" value="section"/>
-          <map:parameter name="year" value="year"/>
-          <map:parameter name="articleId" value="articleId"/>
         </map:generate>
         <map:transform src="../../stylesheets/cms/Page/rc/rollback.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
-<!--
-      <map:match pattern="view/*/*/*/*/index.xml">
+      <!-- Rollback View -->
+      <map:match pattern="authoring/view/editor-matrix/*.xml">
         <map:generate type="serverpages" src="../../docs/cms/rc/view.xsp">
-          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
+          <map:parameter name="filename" value="docs/publication/authoring/editor-matrix/{1}.xml"/>
           <map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
           <map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
         </map:generate>
+<!--
         <map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
         <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
            <map:parameter name="section" value="{2}"/>
         </map:transform>
-        <map:serialize type="html"/>
-      </map:match>
 -->
+        <map:serialize type="xml"/>
+      </map:match>
+
+
 
 <!--
       <map:match pattern="rollback/*/*/*/*/index.xml">
@@ -154,6 +155,10 @@
       </map:match>
       <map:match pattern="authoring/menus/weekly-column-page.xml">
         <map:generate type="serverpages" src="docs/publication/menus/weekly-column.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/menus/finalsettlement.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/final-settlement-values.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="authoring/menus/matrix/*.xml">
@@ -427,6 +432,15 @@
         <map:serialize type="html"/>
       </map:match>
 
+      <map:match pattern="authoring/xopus2/clearing/marketinformation/finalsettlement.html">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/authoring/menus/finalsettlement.xml"/>
+          <map:part src="docs/publication/authoring/clearing/marketinformation/finalsettlement.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="stylesheets/publication/Page/FinalSettlementValues/Authoring/main_xopus2.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
       <!-- Edit Editor Matrix Project with Xopus2 -->
       <map:match pattern="authoring/xopus2/editor-matrix/*.html">
         <map:act type="reserved-checkout">
@@ -503,6 +517,15 @@
       <map:match pattern="authoring/weekly-column.html">
         <map:generate src="cocoon:/authoring/weekly-column-page.xml"/>
         <map:transform src="stylesheets/publication/Page/WeeklyColumn/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <map:match pattern="authoring/clearing/marketinformation/finalsettlement.html">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/authoring/menus/finalsettlement.xml"/>
+          <map:part src="docs/publication/authoring/clearing/marketinformation/finalsettlement.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="stylesheets/publication/Page/FinalSettlementValues/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
