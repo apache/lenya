@@ -1,5 +1,5 @@
 /*
-$Id: SiteTree.java,v 1.15 2003/07/25 16:42:46 edith Exp $
+$Id: SiteTree.java,v 1.16 2003/08/19 13:17:51 edith Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,7 @@ package org.apache.lenya.cms.publication;
  * DOCUMENT ME!
  *
  * @author $Author: edith $
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public interface SiteTree {
 	
@@ -179,4 +179,11 @@ public interface SiteTree {
 	 * @throws SiteTreeException when an error occurs.
 	 */
 	void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid) throws SiteTreeException;
+
+	/**
+	 * Save the SiteTree.
+	 *
+	 * @throws SiteTreeException if the saving failed
+	 */
+	void save()throws SiteTreeException;
 }

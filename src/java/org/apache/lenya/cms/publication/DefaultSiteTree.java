@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.28 2003/08/14 16:30:53 egli Exp $
+$Id: DefaultSiteTree.java,v 1.29 2003/08/19 13:17:51 edith Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -541,13 +541,18 @@ public class DefaultSiteTree implements SiteTree {
         }
     }
 
-    /**
-     * Save the DefaultSiteTree.
-     *
-     * @throws IOException if the save failed
-     * @throws TransformerException if the document could not be transformed
-     */
-    public void save() throws IOException, TransformerException {
-        DocumentHelper.writeDocument(document, treefile);
+    /** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#save()
+	 */
+	public void save() throws SiteTreeException {
+        try {
+			DocumentHelper.writeDocument(document, treefile);
+		} catch (TransformerException e) {
+			throw new SiteTreeException(
+				"The document  " + document.getLocalName() + " could not be transformed");
+		} catch (IOException e) {
+			throw new SiteTreeException(
+				"The saving of document" + document.getLocalName() + " failed");
+		}
     }
 }
