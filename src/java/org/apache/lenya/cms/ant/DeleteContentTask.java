@@ -25,7 +25,6 @@ import java.io.IOException;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -58,7 +57,7 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
             String language = labels[i].getLanguage();
             Document doc;
             try {
-                doc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
+                doc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: LanguageVersions.java,v 1.5 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -31,12 +31,17 @@ public class LanguageVersions extends DocumentSet {
      */
     public LanguageVersions(Document document) throws DocumentException {
         String[] languages = document.getLanguages();
-        DocumentBuilder builder = document.getPublication().getDocumentBuilder();
         add(document);
-        
+
         for (int i = 0; i < languages.length; i++) {
             if (!document.getLanguage().equals(languages[i])) {
-                Document languageVersion = builder.buildLanguageVersion(document, languages[i]);
+                Document languageVersion;
+                try {
+                    languageVersion = document.getIdentityMap().getFactory()
+                            .getLanguageVersion(document, languages[i]);
+                } catch (DocumentBuildException e) {
+                    throw new DocumentException(e);
+                }
                 add(languageVersion);
             }
         }

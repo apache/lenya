@@ -202,27 +202,4 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         return url;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String, java.lang.String)
-     */
-    public String buildCanonicalUrl(Publication publication, String area, String documentId) {
-        return buildCanonicalUrl(publication, area, documentId, publication.getDefaultLanguage());
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildLanguageVersion(org.apache.lenya.cms.publication.Document,
-     *      java.lang.String)
-     */
-    public Document buildLanguageVersion(Document document, String language) {
-        DefaultDocument newDocument = new DefaultDocument(document.getIdentityMap(), document
-                .getId(), document.getArea(), language);
-        newDocument.setExtension(document.getExtension());
-        String url = buildCanonicalDocumentUrl(document.getPublication(), document.getId(),
-                language);
-        newDocument.setDocumentURL(url);
-
-        return newDocument;
-    }
-
 }

@@ -87,7 +87,7 @@ public class DeleteSchedulerEntryTask extends PublicationTask implements SiteTre
             String language = labels[i].getLanguage();
 
             try {
-                Document document = getIdentityMap().get(area, documentId, language);
+                Document document = getIdentityMap().getFactory().get(area, documentId, language);
 
                 String servletContext = new File(servletContextPath).getCanonicalPath();
                 log("Deleting scheduler entry for document [" + document + "]");

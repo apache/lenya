@@ -244,7 +244,8 @@ public class LoadQuartzServlet extends HttpServlet {
 
                 String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
                 DocumentIdentityMap map = new DocumentIdentityMap(publication);
-                org.apache.lenya.cms.publication.Document document = map.get(documentUrl);
+                org.apache.lenya.cms.publication.Document document = map.getFactory().getFromURL(
+                        documentUrl);
                 deleteDocumentJobs(document);
             }
 

@@ -74,9 +74,9 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                 resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
                 Publication publication = PublicationFactory.getPublication(resolver, request);
                 DocumentIdentityMap map = new DocumentIdentityMap(publication);
-                if (map.isDocument(url)) {
+                if (map.getFactory().isDocument(url)) {
 
-                    Document document = map.get(url);
+                    Document document = map.getFactory().getFromURL(url);
                     WorkflowFactory factory = WorkflowFactory.newInstance();
 
                     if (factory.hasWorkflow(document)) {

@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
@@ -35,15 +35,18 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 public class DocumentLanguagesHelper {
 
     private PageEnvelope pageEnvelope = null;
+    private DocumentIdentityMap identityMap;
 
     /**
-	 * Create a new DocumentlanguageHelper.
+     * Create a new DocumentlanguageHelper.
      * @param map The identity map.
-	 * @param objectModel the objectModel
-	 * @throws ProcessingException if the page envelope could not be created.
-	 */
-    public DocumentLanguagesHelper(DocumentIdentityMap map, Map objectModel) throws ProcessingException {
+     * @param objectModel the objectModel
+     * @throws ProcessingException if the page envelope could not be created.
+     */
+    public DocumentLanguagesHelper(DocumentIdentityMap map, Map objectModel)
+            throws ProcessingException {
         try {
+            this.identityMap = map;
             this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);
@@ -51,45 +54,50 @@ public class DocumentLanguagesHelper {
     }
 
     /**
-	 * Compute the URL for a given language and the parameters given in the contructor.
-	 * 
-	 * @param language the language
-	 * 
-	 * @return the url for the given language
-	 * 
-	 * @throws ProcessingException if the document for the given language could not be created.
-	 */
+     * Compute the URL for a given language and the parameters given in the contructor.
+     * 
+     * @param language the language
+     * 
+     * @return the url for the given language
+     * 
+     * @throws ProcessingException if the document for the given language could not be created.
+     */
     public String getUrl(String language) throws ProcessingException {
         Document doc = getDocument(language);
-        return pageEnvelope.getContext() + doc.getCompleteURL();
+        return pageEnvelope.getContext() + doc.getCanonicalWebappURL();
     }
 
     /**
-	 * Compute the info area URL for a given language and the parameters given in the contructor.
-	 * 
-	 * @param language the language
-	 * 
-	 * @return the url for the given language
-	 * 
-	 * @throws ProcessingException if the document for the given language could not be created.
-	 */
+     * Compute the info area URL for a given language and the parameters given in the contructor.
+     * 
+     * @param language the language
+     * 
+     * @return the url for the given language
+     * 
+     * @throws ProcessingException if the document for the given language could not be created.
+     */
     public String getInfoUrl(String language) throws ProcessingException {
         Document doc = getDocument(language);
         return pageEnvelope.getContext() + doc.getCompleteInfoURL();
     }
 
     /**
-	 * Create a document for a given language and the parameters given in the contructor.
-	 * 
-	 * @param language the language
-	 * 
-	 * @return the document with the given language
-	 * 
-	 * @throws ProcessingException if the document for the given language could not be created.
-	 */
+     * Create a document for a given language and the parameters given in the contructor.
+     * 
+     * @param language the language
+     * 
+     * @return the document with the given language
+     * 
+     * @throws ProcessingException if the document for the given language could not be created.
+     */
     protected Document getDocument(String language) throws ProcessingException {
-        DocumentBuilder builder = pageEnvelope.getPublication().getDocumentBuilder();
-        Document document = builder.buildLanguageVersion(pageEnvelope.getDocument(), language);
+        Document document;
+        try {
+            document = this.identityMap.getFactory().getLanguageVersion(
+                    pageEnvelope.getDocument(), language);
+        } catch (DocumentBuildException e) {
+            throw new ProcessingException(e);
+        }
         return document;
     }
 }

@@ -131,7 +131,7 @@ public class RevisionControllerAction extends AbstractAction {
                 }
             }
 
-            Document srcDoc = map.get(document.getArea(), documentid, language);
+            Document srcDoc = map.getFactory().get(document.getArea(), documentid, language);
             File newFile = srcDoc.getFile();
             filename = newFile.getCanonicalPath();
 

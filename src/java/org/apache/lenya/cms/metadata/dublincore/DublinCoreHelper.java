@@ -57,13 +57,13 @@ public final class DublinCoreHelper {
         String identifier = null;
         
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
-        Document baseDocument = map.get(area, documentId);
+        Document baseDocument = map.getFactory().get(area, documentId);
         String[] languages = baseDocument.getLanguages();
         
         int i = 0;
         if (languages.length > 0) {
             while (identifier == null && i < languages.length) {
-                Document document = map.get(area, documentId, languages[i]);
+                Document document = map.getFactory().get(area, documentId, languages[i]);
                 log.debug("document file : " + document.getFile().getAbsolutePath());
                 DublinCore dublincore = document.getDublinCore();
                 log.debug("dublincore title : "

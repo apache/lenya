@@ -34,6 +34,7 @@ import org.apache.lenya.util.ServletHelper;
 public class DocumentHelper {
 
     private Map objectModel;
+    private DocumentIdentityMap identityMap;
 
     /**
      * Ctor.
@@ -42,6 +43,13 @@ public class DocumentHelper {
      */
     public DocumentHelper(Map objectModel) {
         this.objectModel = objectModel;
+        Publication publication;
+        try {
+            publication = PublicationFactory.getPublication(objectModel);
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+        this.identityMap = new DocumentIdentityMap(publication);
     }
 
     /**
@@ -59,10 +67,8 @@ public class DocumentHelper {
 
         String url = null;
         try {
-            Publication publication = PublicationFactory.getPublication(objectModel);
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
-                    objectModel);
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(
+                    this.identityMap, objectModel);
 
             if (documentId == null) {
                 documentId = envelope.getDocument().getId();
@@ -81,8 +87,8 @@ public class DocumentHelper {
                 language = envelope.getDocument().getLanguage();
             }
 
-            DocumentBuilder builder = publication.getDocumentBuilder();
-            url = builder.buildCanonicalUrl(publication, documentArea, documentId, language);
+            Document document = this.identityMap.getFactory().get(documentArea, documentId, language);
+            url = document.getCanonicalWebappURL();
 
             String contextPath = request.getContextPath();
             if (contextPath == null) {
@@ -109,47 +115,24 @@ public class DocumentHelper {
      */
     public String getCompleteParentUrl() throws ProcessingException {
 
-        PageEnvelope envelope;
+        String parentUrl;
+        String contextPath;
         try {
             Publication publication = PublicationFactory.getPublication(objectModel);
             DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
+            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+                    objectModel);
+            Document document = envelope.getDocument();
+
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            contextPath = request.getContextPath();
+
+            Document parent = map.getFactory().getParent(document, "/index");
+            parentUrl = parent.getCanonicalWebappURL();
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
 
-        Document document = envelope.getDocument();
-        Publication publication = envelope.getPublication();
-
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        String webappUrl = ServletHelper.getWebappURI(request);
-        URLInformation info = new URLInformation(webappUrl);
-        String completeArea = info.getCompleteArea();
-        DocumentBuilder builder = publication.getDocumentBuilder();
-
-        String parentId;
-
-        int lastSlashIndex = document.getId().lastIndexOf("/");
-        if (lastSlashIndex > 0) {
-            parentId = document.getId().substring(0, lastSlashIndex);
-        } else {
-            parentId = "/index";
-        }
-
-        String parentUrl = builder.buildCanonicalUrl(publication, completeArea, parentId);
-        Document parentDocument;
-
-        try {
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            parentDocument = map.get(parentUrl);
-            parentDocument = getExistingLanguageVersion(parentDocument, document.getLanguage());
-        } catch (Exception e) {
-            throw new ProcessingException(e);
-        }
-        parentUrl = builder.buildCanonicalUrl(publication, completeArea, parentDocument.getId(),
-                parentDocument.getLanguage());
-
-        String contextPath = request.getContextPath();
         if (contextPath == null) {
             contextPath = "";
         }
@@ -181,11 +164,10 @@ public class DocumentHelper {
      * @return A document.
      * @throws DocumentException when an error occurs.
      */
-    public static Document getExistingLanguageVersion(Document document, String preferredLanguage)
-            throws DocumentException {
+    public static Document getExistingLanguageVersion(final Document document,
+            String preferredLanguage) throws DocumentException {
 
         Publication publication = document.getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
 
         String[] languages = document.getLanguages();
 
@@ -206,36 +188,15 @@ public class DocumentHelper {
             existingLanguage = languages[0];
         }
 
-        document = builder.buildLanguageVersion(document, existingLanguage);
-
-        return document;
-    }
-
-    /**
-     * Returns the parent document of a document in the same language.
-     * @param document The document.
-     * @return A document or <code>null</code> if the document parameter is a top-level document.
-     * @throws ProcessingException when the parent document could not be created.
-     */
-    public static Document getParentDocument(Document document) throws ProcessingException {
-
-        Document parent = null;
-        String id = document.getId();
-        int lastSlashIndex = id.lastIndexOf("/");
-        if (lastSlashIndex > 0) {
-            String parentId = id.substring(0, lastSlashIndex);
-            Publication publication = document.getPublication();
-            DocumentBuilder builder = publication.getDocumentBuilder();
-            String url = builder.buildCanonicalUrl(publication, document.getArea(), parentId,
-                    document.getLanguage());
-            try {
-                parent = document.getIdentityMap().get(url);
-            } catch (DocumentBuildException e) {
-                throw new ProcessingException(e);
-            }
+        Document existingVersion = null;
+        try {
+            existingVersion = document.getIdentityMap().getFactory().getLanguageVersion(document,
+                    existingLanguage);
+        } catch (DocumentBuildException e) {
+            throw new DocumentException(e);
         }
 
-        return parent;
+        return existingVersion;
     }
 
 }

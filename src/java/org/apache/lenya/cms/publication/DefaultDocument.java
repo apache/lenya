@@ -181,9 +181,13 @@ public class DefaultDocument implements Document {
         List documentLanguages = new ArrayList();
         String[] allLanguages = getPublication().getLanguages();
 
-        DocumentBuilder builder = getPublication().getDocumentBuilder();
         for (int i = 0; i < allLanguages.length; i++) {
-            Document version = builder.buildLanguageVersion(this, allLanguages[i]);
+            Document version;
+            try {
+                version = getIdentityMap().getFactory().getLanguageVersion(this, allLanguages[i]);
+            } catch (DocumentBuildException e) {
+                throw new DocumentException(e);
+            }
             if (version.exists()) {
                 documentLanguages.add(allLanguages[i]);
             }
@@ -372,6 +376,20 @@ public class DefaultDocument implements Document {
      */
     public DocumentIdentityMap getIdentityMap() {
         return this.identityMap;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getCanonicalWebappURL()
+     */
+    public String getCanonicalWebappURL() {
+        return getCompleteURL();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getCanonicalDocumentURL()
+     */
+    public String getCanonicalDocumentURL() {
+        return getDocumentURL();
     }
 
 }

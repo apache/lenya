@@ -65,6 +65,12 @@ public interface Document {
      * @return A publication object.
      */
     Publication getPublication();
+    
+    /**
+     * Returns the canonical web application URL.
+     * @return A string.
+     */
+    String getCanonicalWebappURL();
 
     /**
      * Returns the complete URL of this document in the info area:<br/>
@@ -77,6 +83,7 @@ public interface Document {
      * Returns the complete URL of this document:<br/>
      * /{publication-id}/{area}{document-id}{language-suffix}.{extension}
      * @return A string.
+     * @deprecated Use {@link #getCanonicalWebappURL()} instead.
      */
     String getCompleteURL();
 
@@ -86,14 +93,22 @@ public interface Document {
      * /{publication-id}/{area}{document-id}.{extension}
      * The URL always starts with a slash (/).
      * @return A string.
+     * @deprecated Use {@link #getCanonicalWebappURL()} instead.
      */
     String getCompleteURLWithoutLanguage();
+    
+    /**
+     * Returns the canonical document URL.
+     * @return A string.
+     */
+    String getCanonicalDocumentURL();
 
     /**
      * Returns the URL of this document:
      * {document-id}{language-suffix}.{extension}
      * The URL always starts with a slash (/).
      * @return A string.
+     * @deprecated Use {@link #getCanonicalDocumentURL()} instead.
      */
     String getDocumentURL();
 

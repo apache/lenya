@@ -88,7 +88,7 @@ public class PageEnvelope {
             }
 
             webappURI = ServletHelper.getWebappURI(request);
-            Document document = map.get(webappURI);
+            Document document = map.getFactory().getFromURL(webappURI);
             setDocument(document);
 
         } catch (Exception e) {

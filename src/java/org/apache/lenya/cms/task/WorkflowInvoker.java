@@ -174,7 +174,7 @@ public class WorkflowInvoker extends ParameterWrapper {
             WorkflowFactory factory = WorkflowFactory.newInstance();
             try {
                 DocumentIdentityMap map = new DocumentIdentityMap(publication);
-                document = map.get(webappUrl);
+                document = map.getFactory().getFromURL(webappUrl);
             } catch (DocumentBuildException e) {
                 throw new ExecutionException(e);
             }

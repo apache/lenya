@@ -214,9 +214,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             getLogger().debug(this.indent + "webapp URL: [" + webappUrl + "]");
                             getLogger().debug(this.indent + "anchor:     [" + anchor + "]");
                         }
-                        if (this.identityMap.isDocument(webappUrl)) {
+                        if (this.identityMap.getFactory().isDocument(webappUrl)) {
 
-                            Document targetDocument = this.identityMap.get(webappUrl);
+                            Document targetDocument = this.identityMap.getFactory().getFromURL(
+                                    webappUrl);
 
                             if (getLogger().isDebugEnabled()) {
                                 getLogger().debug(
@@ -224,8 +225,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                                                 + targetDocument + "]");
                             }
 
-                            targetDocument = this.identityMap.get(getCurrentDocument().getArea(),
-                                    targetDocument.getId(), targetDocument.getLanguage());
+                            targetDocument = this.identityMap.getFactory().get(
+                                    getCurrentDocument().getArea(), targetDocument.getId(),
+                                    targetDocument.getLanguage());
 
                             if (targetDocument.exists()) {
                                 rewriteLink(newAttrs, targetDocument, anchor);
@@ -268,7 +270,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      */
     protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor)
             throws AccessControlException, PublicationException {
-        String webappUrl = targetDocument.getCompleteURL();
+        String webappUrl = targetDocument.getCanonicalWebappURL();
         Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
 
         Proxy proxy = targetDocument.getPublication().getProxy(targetDocument,

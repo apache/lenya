@@ -23,8 +23,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -76,7 +74,7 @@ public class InitRCTask extends TwoDocumentsOperationTask {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) {
         try {
@@ -90,7 +88,7 @@ public class InitRCTask extends TwoDocumentsOperationTask {
             for (int i = 0; i < labels.length; i++) {
                 String language = labels[i].getLanguage();
                 Document destDoc;
-                destDoc = getIdentityMap().get(getSecarea(), destDocumentid, language);
+                destDoc = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
                 String filename = destDoc.getFile().getCanonicalPath();
                 filename = filename.substring(publicationPath.length());
                 rc.reservedCheckIn(filename, getUserId(), true);

@@ -21,8 +21,6 @@ package org.apache.lenya.cms.publication.task;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.task.ExecutionException;
 
 /**
@@ -65,7 +63,7 @@ public abstract class DocumentTask extends PublicationTask {
     protected Document getDocument(String documentId, String area, String language)
             throws ExecutionException {
         try {
-            return getIdentityMap().get(area, documentId, language);
+            return getIdentityMap().getFactory().get(area, documentId, language);
         } catch (DocumentBuildException e) {
             throw new ExecutionException(e);
         }

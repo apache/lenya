@@ -59,8 +59,8 @@ public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 
             log("init workflow history");
             try {
-                srcDoc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
-                destDoc = getIdentityMap().get(getSecarea(), destDocumentid, language);
+                srcDoc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
+                destDoc = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

@@ -33,6 +33,7 @@ public class DocumentIdentityMap {
 
     private Publication publication;
     private Map key2document = new HashMap();
+    private DocumentFactory factory;
 
     /**
      * Ctor.
@@ -40,6 +41,17 @@ public class DocumentIdentityMap {
      */
     public DocumentIdentityMap(Publication publication) {
         this.publication = publication;
+    }
+    
+    /**
+     * Returns the document factory.
+     * @return A document factory.
+     */
+    public DocumentFactory getFactory() {
+        if (this.factory == null) {
+            this.factory = new DocumentFactory(this);
+        }
+        return this.factory;
     }
 
     /**
@@ -51,16 +63,6 @@ public class DocumentIdentityMap {
     }
     
     /**
-     * Checks if a webapp URL represents a document.
-     * @param webappUrl A web application URL.
-     * @return A boolean value.
-     * @throws DocumentBuildException if an error occurs.
-     */
-    public boolean isDocument(String webappUrl) throws DocumentBuildException {
-        return getPublication().getDocumentBuilder().isDocument(getPublication(), webappUrl);
-    }
-    
-    /**
      * Returns a document.
      * @param area The area.
      * @param documentId The document ID.
@@ -68,7 +70,7 @@ public class DocumentIdentityMap {
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    public Document get(String area, String documentId, String language)
+    protected Document get(String area, String documentId, String language)
             throws DocumentBuildException {
         String key = getKey(area, documentId, language);
         Document document = (Document) key2document.get(key);
@@ -82,23 +84,12 @@ public class DocumentIdentityMap {
     }
 
     /**
-     * Returns a document.
-     * @param area The area.
-     * @param documentId The document ID.
-     * @return A document.
-     * @throws DocumentBuildException If an error occurs.
-     */
-    public Document get(String area, String documentId) throws DocumentBuildException {
-        return get(area, documentId, getPublication().getDefaultLanguage());
-    }
-
-    /**
      * Returns the document identified by a certain web application URL.
      * @param webappUrl The web application URL.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    public Document get(String webappUrl) throws DocumentBuildException {
+    protected Document getFromURL(String webappUrl) throws DocumentBuildException {
         DocumentBuilder builder = getPublication().getDocumentBuilder();
         if (!builder.isDocument(getPublication(), webappUrl)) {
             throw new DocumentBuildException("The webapp URL [" + webappUrl

@@ -66,26 +66,6 @@ public class TreeSiteManager extends AbstractSiteManager {
     }
 
     /**
-     * Returns the parent of a document.
-     * @param resource The resource.
-     * @return A resource.
-     * @throws SiteException if an error occurs.
-     */
-    protected Document getParent(Document resource) throws SiteException {
-        Document parent = null;
-        int lastSlashIndex = resource.getId().lastIndexOf("/");
-        if (lastSlashIndex > 0) {
-            String parentId = resource.getId().substring(0, lastSlashIndex);
-            try {
-                parent = getIdentityMap().get(parentId, resource.getArea());
-            } catch (PublicationException e) {
-                throw new SiteException(e);
-            }
-        }
-        return parent;
-    }
-
-    /**
      * Returns the ancestors of a resource, beginning with the parent.
      * @param resource The resource.
      * @return A list of resources.
@@ -93,7 +73,12 @@ public class TreeSiteManager extends AbstractSiteManager {
      */
     protected List getAncestors(Document resource) throws SiteException {
         List ancestors = new ArrayList();
-        Document parent = getParent(resource);
+        Document parent;
+        try {
+            parent = getIdentityMap().getFactory().getParent(resource);
+        } catch (DocumentBuildException e) {
+            throw new SiteException(e);
+        }
         if (parent != null) {
             ancestors.add(parent);
             ancestors.addAll(getAncestors(parent));
@@ -140,7 +125,8 @@ public class TreeSiteManager extends AbstractSiteManager {
         try {
             for (int i = 0; i < resources.length; i++) {
                 SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                resources[i] = getIdentityMap().get(descendant.getAbsoluteId(), resource.getArea());
+                resources[i] = getIdentityMap().getFactory().get(resource.getArea(),
+                        descendant.getAbsoluteId());
                 if (log.isDebugEnabled()) {
                     log.debug("    Descendant: [" + resources[i] + "]");
                 }
@@ -294,7 +280,7 @@ public class TreeSiteManager extends AbstractSiteManager {
 
             for (int i = 1; i < allNodes.size(); i++) {
                 SiteTreeNode node = (SiteTreeNode) allNodes.get(i);
-                documents[i - 1] = getIdentityMap().get(area, node.getAbsoluteId());
+                documents[i - 1] = getIdentityMap().getFactory().get(area, node.getAbsoluteId());
             }
             return documents;
         } catch (DocumentBuildException e) {

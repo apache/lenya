@@ -72,7 +72,7 @@ public class DeactivateResourcesTask extends PublicationTask {
 
                 Document doc;
                 try {
-                    doc =getIdentityMap().get(area, documentid, language);
+                    doc =getIdentityMap().getFactory().get(area, documentid, language);
                 } catch (DocumentBuildException e) {
                     throw new BuildException(e);
                 }

@@ -28,7 +28,6 @@ import java.util.regex.Pattern;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -128,7 +127,6 @@ public class DocumentReferencesHelper {
             PathToDocumentIdMapper fileMapper = (PathToDocumentIdMapper) mapper;
             String documentId = null;
             String language = null;
-            DocumentBuilder builder = publication.getDocumentBuilder();
             File[] inconsistentFiles;
             try {
                 inconsistentFiles = Grep.find(publication.getContentDirectory(area),
@@ -173,18 +171,14 @@ public class DocumentReferencesHelper {
 
                     documentId = fileMapper.getDocumentId(publication, area, inconsistentFiles[i]);
                     log.debug("documentId: " + documentId);
+
                     language = fileMapper.getLanguage(inconsistentFiles[i]);
+                    if (language == null) {
+                        language = publication.getDefaultLanguage();
+                    }
                     log.debug("language: " + language);
 
-                    String url = null;
-                    if (language != null) {
-                        url = builder.buildCanonicalUrl(publication, area, documentId, language);
-                        log.debug("url: " + url);
-                    } else {
-                        url = builder.buildCanonicalUrl(publication, area, documentId);
-                        log.debug("url: " + url);
-                    }
-                    documents.add(identityMap.get(url));
+                    documents.add(identityMap.getFactory().get(area, documentId, language));
                 }
             } catch (IOException e) {
                 throw new ProcessingException(e);
@@ -210,7 +204,6 @@ public class DocumentReferencesHelper {
         ArrayList unpublishedReferences = new ArrayList();
         Pattern internalLinkPattern = getInternalLinkPattern();
         Publication publication = pageEnvelope.getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
         try {
             String[] internalLinks = Grep.findPattern(pageEnvelope.getDocument().getFile(),
                     internalLinkPattern, 1);
@@ -231,21 +224,17 @@ public class DocumentReferencesHelper {
                     language = publication.getDefaultLanguage();
                 }
                 log.debug("language: " + language);
-                
-                Document liveDocument = identityMap.get(Publication.LIVE_AREA, docId, language);
+
+                Document liveDocument = identityMap.getFactory().get(Publication.LIVE_AREA, docId,
+                        language);
                 if (!liveDocument.exists()) {
                     // the docId has not been published for the given language
-                    String url = null;
-                    if (language != null) {
-                        url = builder.buildCanonicalUrl(publication, Publication.AUTHORING_AREA,
-                                docId, language);
-                        log.debug("url: " + url);
-                    } else {
-                        url = builder.buildCanonicalUrl(publication, Publication.AUTHORING_AREA,
-                                docId);
-                        log.debug("url: " + url);
+                    String liveLanguage = language;
+                    if (liveLanguage == null) {
+                        liveLanguage = publication.getDefaultLanguage();
                     }
-                    unpublishedReferences.add(identityMap.get(url));
+                    unpublishedReferences.add(identityMap.getFactory().getLanguageVersion(
+                            liveDocument, liveLanguage));
                 }
             }
         } catch (Exception e) {

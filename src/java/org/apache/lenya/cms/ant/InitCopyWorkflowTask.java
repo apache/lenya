@@ -97,8 +97,8 @@ public class InitCopyWorkflowTask extends TwoDocumentsOperationTask {
 			
 			log("init workflow history");
 			try {
-				document = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
-				newdocument = getIdentityMap().get(getSecarea(), destDocumentid, language);
+				document = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
+				newdocument = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}

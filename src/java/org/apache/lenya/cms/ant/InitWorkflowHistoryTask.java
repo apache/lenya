@@ -19,7 +19,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
@@ -75,7 +74,7 @@ public class InitWorkflowHistoryTask extends PublicationTask {
         }
         Document document;
         try {
-            document = getIdentityMap().get(Publication.AUTHORING_AREA, getDocumentId(), language);
+            document = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, getDocumentId(), language);
             log(".execute(): " + document.getLanguage());
         } catch (DocumentBuildException e) {
             throw new BuildException(e);

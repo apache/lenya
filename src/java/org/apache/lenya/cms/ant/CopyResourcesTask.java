@@ -64,7 +64,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
         String language = labels[0].getLanguage();
         Document srcDoc;
         try {
-            srcDoc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
+            srcDoc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }
@@ -80,7 +80,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
         Document destDoc;
         try {
-            destDoc = getIdentityMap().get(getSecarea(), destDocumentid, language);
+            destDoc = getIdentityMap().getFactory().get(getSecarea(), destDocumentid, language);
         } catch (DocumentBuildException e) {
             throw new BuildException(e);
         }

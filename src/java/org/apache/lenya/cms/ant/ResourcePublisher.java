@@ -31,7 +31,7 @@ import org.apache.tools.ant.BuildException;
 /**
  * Resource publisher.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class ResourcePublisher extends PublicationTask {
 
@@ -43,10 +43,10 @@ public class ResourcePublisher extends PublicationTask {
     public void execute() throws BuildException {
 
         try {
-            Document authoringDocument = getIdentityMap().get(Publication.AUTHORING_AREA, documentId);
+            Document authoringDocument = getIdentityMap().getFactory().get(Publication.AUTHORING_AREA, documentId);
             ResourcesManager authoringManager = new ResourcesManager(authoringDocument);
 
-            Document liveDocument = getIdentityMap().get(Publication.LIVE_AREA, documentId);
+            Document liveDocument = getIdentityMap().getFactory().get(Publication.LIVE_AREA, documentId);
             ResourcesManager liveManager = new ResourcesManager(liveDocument);
             
             // find all resource files and their associated meta files

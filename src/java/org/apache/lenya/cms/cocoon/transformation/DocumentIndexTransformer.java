@@ -148,13 +148,13 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                 String childId = documentId + "/" + children[i].getId();
 
                 //get child document with the same language than the parent document
-                String url = builder.buildCanonicalUrl(publication, area, childId, language);
                 Document doc;
                 try {
-                    doc = this.identityMap.get(url);
+                    doc = this.identityMap.getFactory().get(area, childId, language);
                 } catch (DocumentBuildException e) {
                     throw new SAXException(e);
                 }
+                String url = doc.getCanonicalWebappURL();
                 File file = doc.getFile();
 
                 if (!file.exists()) {
@@ -189,12 +189,12 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     int j = 0;
                     while (!file.exists() && j < languages.size()) {
                         String newlanguage = (String) languages.get(j);
-                        url = builder.buildCanonicalUrl(publication, area, childId, newlanguage);
                         try {
-                            doc = this.identityMap.get(url);
+                            doc = this.identityMap.getFactory().get(area, childId, newlanguage);
                         } catch (DocumentBuildException e) {
                             throw new SAXException(e);
                         }
+                        url = doc.getCanonicalWebappURL();
                         file = doc.getFile();
 
                         j++;

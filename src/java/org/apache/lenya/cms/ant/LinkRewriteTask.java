@@ -33,7 +33,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.avalon.excalibur.io.FileUtil;
-import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.tools.ant.BuildException;
@@ -164,13 +164,12 @@ public class LinkRewriteTask extends PublicationTask {
     }
 
     /**
-     * 
      * @param file
      * @param transformer
-     * @param oldDocumentId
-     * @param newDocumentId
-     * @throws FileNotFoundException
      * @throws TransformerException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
      */
     private void replace_internal(File file, Transformer transformer)
         throws TransformerException, ParserConfigurationException, SAXException, IOException {
@@ -225,7 +224,7 @@ public class LinkRewriteTask extends PublicationTask {
      * 
      * @param rootDirName
      * @param stylesheet
-     * @param oldDcoumentId
+     * @param oldDocumentId
      * @param newDocumentId
      * 
      * @throws FileNotFoundException
@@ -235,7 +234,7 @@ public class LinkRewriteTask extends PublicationTask {
         String rootDirName,
         String stylesheet,
         String area,
-        String oldDcoumentId,
+        String oldDocumentId,
         String newDocumentId)
         throws TransformerException, ParserConfigurationException, SAXException, IOException {
 
@@ -245,31 +244,14 @@ public class LinkRewriteTask extends PublicationTask {
         Transformer transformer = tFactory.newTransformer(new StreamSource(stylesheet));
 
         Publication publication = getPublication();
-        DocumentBuilder builder = publication.getDocumentBuilder();
-
-        // replace all internal links
-        String oldURL =
-            getContextPrefix() + builder.buildCanonicalUrl(publication, area, oldDcoumentId);
-        String newURL =
-            getContextPrefix() + builder.buildCanonicalUrl(publication, area, newDocumentId);
-
-        log("Replace '" + oldURL + "' by '" + newURL + "'");
-        transformer.setParameter("idbefore", oldURL);
-        transformer.setParameter("idafter", newURL);
-
-        replace_internal(rootDir, transformer);
 
         // now also do the replacement for all language versions
         String[] languages = publication.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             String language = languages[i];
 
-            oldURL =
-                getContextPrefix()
-                    + builder.buildCanonicalUrl(publication, area, oldDcoumentId, language);
-            newURL =
-                getContextPrefix()
-                    + builder.buildCanonicalUrl(publication, area, newDocumentId, language);
+            String oldURL = getUrl(area, oldDocumentId, language);
+            String newURL = getUrl(area, newDocumentId, language);
 
             log("Replace '" + oldURL + "' by '" + newURL + "'");
             transformer.setParameter("idbefore", oldURL);
@@ -277,5 +259,24 @@ public class LinkRewriteTask extends PublicationTask {
 
             replace_internal(rootDir, transformer);
         }
+    }
+
+    /**
+     * Returns the complete URL for a certain area, document ID, and language.
+     * 
+     * @param area The area.
+     * @param documentId The document ID.
+     * @param language The language.
+     * @return A string.
+     */
+    protected String getUrl(String area, String documentId, String language) {
+        org.apache.lenya.cms.publication.Document newDocument;
+        try {
+            newDocument = getIdentityMap().getFactory().get(area, documentId, language);
+        } catch (DocumentBuildException e) {
+            throw new RuntimeException(e);
+        }
+        String newURL = getContextPrefix() + newDocument.getCanonicalWebappURL();
+        return newURL;
     }
 }

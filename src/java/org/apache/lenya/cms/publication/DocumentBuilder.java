@@ -63,25 +63,4 @@ public interface DocumentBuilder {
         String documentid,
         String language);
 
-    /**
-     * Builds an URL corresponding to a cms document from the publication, 
-     * the area and the document id
-     * 
-     * @param publication The publication the document belongs to.
-     * @param area The area the document belongs to.
-     * @param documentid The document id of the document.
-     * @return a String The builded url
-     */
-    String buildCanonicalUrl(
-        Publication publication,
-        String area,
-        String documentid);
-    
-    /**
-     * Builds a clone of a document for another language. 
-     * @param document The document to clone.
-     * @param language The language of the target document.
-     * @return A document.
-     */
-    Document buildLanguageVersion(Document document, String language);
 }

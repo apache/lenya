@@ -75,7 +75,7 @@ public class WorkflowInvokerAction extends AbstractAction {
 
         Publication pub = PublicationFactory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(pub);
-        Document document = map.get(area, documentId, language);
+        Document document = map.getFactory().get(area, documentId, language);
 
         WorkflowFactory factory = WorkflowFactory.newInstance();
 

@@ -79,8 +79,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         String url = null;
         try {
             DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            if (map.isDocument(webappUrl)) {
-                Document document = map.get(webappUrl);
+            if (map.getFactory().isDocument(webappUrl)) {
+                Document document = map.getFactory().getFromURL(webappUrl);
                 if (document.existsInAnyLanguage()) {
                     url = "/" + document.getArea() + document.getId();
                     if (getLogger().isDebugEnabled()) {

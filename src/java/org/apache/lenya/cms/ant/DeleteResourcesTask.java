@@ -45,7 +45,7 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
     /**
      * Delete the resources of the documents corresponding to this node
      * 
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) {
 
@@ -58,7 +58,7 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
             String language = labels[i].getLanguage();
             Document srcDoc;
             try {
-                srcDoc = getIdentityMap().get(getFirstarea(), srcDocumentid, language);
+                srcDoc = getIdentityMap().getFactory().get(getFirstarea(), srcDocumentid, language);
             } catch (DocumentBuildException e) {
                 throw new BuildException(e);
             }

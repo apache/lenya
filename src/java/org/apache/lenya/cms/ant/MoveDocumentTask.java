@@ -21,7 +21,6 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -134,8 +133,8 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 
 			log("move workflow history");
 			try {
-				document = getIdentityMap().get(firstarea, srcDocumentid, language);
-				newDocument = getIdentityMap().get(secarea, destDocumentid, language);
+				document = getIdentityMap().getFactory().get(firstarea, srcDocumentid, language);
+				newDocument = getIdentityMap().getFactory().get(secarea, destDocumentid, language);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}

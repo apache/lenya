@@ -32,7 +32,6 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.site.tree.SiteTree;
 
 /**
  * Action that checks the sitetree if there is a node with the current document-id. This is used to
@@ -80,7 +79,7 @@ public class DocumentIdExistsAction extends AbstractAction {
         Publication publication = PublicationFactory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
         PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
-        Document document = map.get(envelope.getDocument().getArea(), documentId);
+        Document document = map.getFactory().get(envelope.getDocument().getArea(), documentId);
 
         if (!document.existsInAnyLanguage()) {
             return Collections.EMPTY_MAP;

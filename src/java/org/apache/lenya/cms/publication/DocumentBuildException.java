@@ -15,10 +15,13 @@
  *
  */
 
-/* $Id: DocumentBuildException.java,v 1.5 2004/03/01 16:18:17 gregor Exp $  */
-
 package org.apache.lenya.cms.publication;
 
+/**
+ * Document build exception.
+ *
+ * @version $Id:$
+ */
 public class DocumentBuildException extends PublicationException {
     /**
      * Constructor.
