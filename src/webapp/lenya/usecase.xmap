@@ -10,7 +10,14 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    <map:actions/>
+    <map:actions>
+      <map:action name="user-admin-add"
+	src="org.apache.lenya.cms.cocoon.acting.UserAdminAddAction"/> 
+      <map:action name="user-admin-modify"
+	src="org.apache.lenya.cms.cocoon.acting.UserAdminModifyAction"/> 
+      <map:action name="user-admin-delete"
+	src="org.apache.lenya.cms.cocoon.acting.UserAdminDeleteAction"/> 
+    </map:actions>
     <map:selectors>
       <map:selector name="exception" logger="sitemap.selector.exception"
 	src="org.apache.cocoon.selection.ExceptionSelector">
@@ -601,9 +608,10 @@
 	  </map:match>
 	  
 	  <map:match type="step" pattern="add">
-	    <map:generate type="serverpages" src="content/ac/user-edit.xsp"/>
-	    <map:transform src="xslt/ac/user-edit.xsl"/>
-	    <map:serialize />
+	    <map:act type="user-admin-add">
+	      <map:redirect-to uri="{request:requestURI}"/>
+	    </map:act>
+	    <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/> 
 	  </map:match>
 	  
 	</map:match>
@@ -617,9 +625,10 @@
 	  </map:match>
 	  
 	  <map:match type="step" pattern="modify">
-	    <map:generate type="serverpages" src="content/ac/user-edit.xsp"/>
-	    <map:transform src="xslt/ac/user-edit.xsl"/>
-	    <map:serialize />
+	    <map:act type="user-admin-modify">
+	      <map:redirect-to uri="{request:requestURI}"/>
+	    </map:act>
+	    <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/> 
 	  </map:match>
 	  
 	</map:match>
@@ -633,9 +642,10 @@
 	  </map:match>
 	  
 	  <map:match type="step" pattern="delete">
-	    <map:generate type="serverpages" src="content/ac/user-edit.xsp"/>
-	    <map:transform src="xslt/ac/user-edit.xsl"/>
-	    <map:serialize />
+	    <map:act type="user-admin-delete">
+	      <map:redirect-to uri="{request:requestURI}"/>
+	    </map:act>
+	    <map:redirect-to uri="{request:requestURI}?lenya.step=showscreen&amp;user-id={request-param:user-id}"/> 
 	  </map:match>
 	  
 	</map:match>
