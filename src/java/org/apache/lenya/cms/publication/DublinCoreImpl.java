@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCoreImpl.java,v 1.13 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: DublinCoreImpl.java,v 1.14 2004/04/23 16:42:51 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -240,7 +240,7 @@ public class DublinCoreImpl {
 
         if (metaElement == null) {
             metaElement = namespaceHelper.createElement(META);
-            Element[] children = namespaceHelper.getChildren(documentElement);
+            Element[] children = DocumentHelper.getChildren(documentElement);
             if (children.length == 0) {
                 documentElement.appendChild(metaElement);
             } else {
