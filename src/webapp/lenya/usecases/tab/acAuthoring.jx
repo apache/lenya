@@ -15,16 +15,9 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
-
-<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
-           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
-           xmlns="http://www.w3.org/1999/xhtml" 
-           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
-  <div>
-    <jx:import uri="tab/tabs.jx"/>
-    <div id="contentblock1" class="lenya-tab">
-      <!-- TODO xinclude schedule output for this document here -->
-    </div>
-  </div>
-</page:page>
+<!-- $Id: ac.jx 156161 2005-03-04 15:23:21Z andreas $ -->
+<jx:import uri="tab/ac/ac.jx"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"/>
