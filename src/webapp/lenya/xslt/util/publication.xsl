@@ -50,7 +50,7 @@
 
 <xsl:template match="lenya:readme">
 <h3>Readme</h3>
-  <xsl:copy-of select="*"/>
+  <xsl:copy-of select="."/>
 </xsl:template>
 
 <xsl:template match="lenya:tests">
