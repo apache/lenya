@@ -54,25 +54,7 @@
   Known issues
   ------------
 
-  The following generated list is a raw excerpt of known issues/bugs in Lenya 1.2.
-  
-  26959	[OSCOM] demo and/or Form Editor broken
-  27470	Upgrade all source files to ASF 2.0 license
-  27650 source writing transformer discards content after <!--
-  27905 NEW		Save+Exit in BXE using jetty takes forever
-  29023 Search engine delivers wrong URLs in hitlist
-  29312 Publishing a document does not update index of Lucene
-  26564 WGet has windows file locking issues
-  26576 Edit->"Image upload" in default pub is not working
-  26987 Absolute paths in pages of exported static site
-  27252 Can't delete a page (in the default publication)
-  28448 Switch all encodings to UTF-8
-  29014 PNG assets are not accepted as images
-  29168 No hitlist for "Sort By" set to "Title"
-  29295 Dead links on publication intro pages cause useability probl
-  
-  The above list changes frequently. The updates can be found at
-  http://makeashorterlink.com/?P22462778 .
+  http://makeashorterlink.com/?P22462778 has a list of known issues/bugs in Lenya 1.2.1
   
   The Apache issue tracker is available at 
   http://nagoya.apache.org/bugzilla/ .
