@@ -635,8 +635,9 @@
         <map:serialize type="html" />
       </map:match>
       
+      <!-- ant log -->
       <map:match pattern="*/ant-log.html">
-        <map:generate src="lenya/pubs/{1}/content/ant-log.xml"/>
+        <map:generate src="lenya/pubs/{1}/config/ant-log.xml"/>
         <map:transform src="lenya/xslt/util/log.xsl"/>
         <map:serialize/>
       </map:match>
