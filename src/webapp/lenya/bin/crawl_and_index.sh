@@ -67,7 +67,9 @@ case "$1" in
         if [ -f $XPDF ]; then
             find $HTDOCS_DUMP_DIR -name "*.pdf" -print -exec $XPDF -htmlmeta {} {}.txt \;
         else
-            echo "WARNING: Xpdf not installed: $XPDF"
+            LOG_MESSAGE="Xpdf not installed: $XPDF"
+            echo "WARNING: $LOG_MESSAGE"
+            java -cp $CLASSPATH org.apache.lenya.util.Log4Echo warn "$LOG_MESSAGE"
         fi
 	;;
     search)
