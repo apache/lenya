@@ -42,7 +42,7 @@ Several items, e.g. the servlet container, may be replaced by other products.
   
   <li>
     <p>
-    <strong>Apache Cocoon</strong> (required: Cocoon 2.1.2)<br/>
+    <strong>Apache Cocoon</strong> (required: Cocoon 2.1.4)<br/>
     <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
     </p>
   </li>
