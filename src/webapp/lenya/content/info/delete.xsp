@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: delete.xsp,v 1.10 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -26,9 +26,9 @@
 
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.DocumentHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.util.DocumentHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.util.DocumentReferencesHelper</xsp:include>
   </xsp:structure>
   
   <page>

@@ -35,7 +35,7 @@
     <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentLanguagesHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.util.DocumentLanguagesHelper</xsp:include>
   </xsp:structure>
   
   <lenya-info:info>

@@ -27,7 +27,7 @@
 <xsp:structure>
   <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
   <xsp:include>org.apache.lenya.cms.site.tree.SiteTreeNode</xsp:include>
-  <xsp:include>org.apache.lenya.cms.publication.DocumentHelper</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.util.DocumentHelper</xsp:include>
 </xsp:structure>
 
 <page>
