@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-$Id: page2xhtml.xsl,v 1.14 2004/03/07 19:15:28 gregor Exp $
+$Id: page2xhtml.xsl,v 1.15 2004/03/08 14:15:02 egli Exp $
 -->
 
 <xsl:stylesheet version="1.0"
@@ -45,6 +45,7 @@ $Id: page2xhtml.xsl,v 1.14 2004/03/07 19:15:28 gregor Exp $
           <td valign="top">
             <div id="main">
               <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
+              <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
               <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
             </div>
           </td>
