@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleImageUploadCreatorAction.java,v 1.31 2003/04/24 13:52:38 gregor Exp $
+ * $Id: ArticleImageUploadCreatorAction.java,v 1.32 2003/05/02 16:31:48 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,7 +49,6 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
 
 import org.apache.cocoon.acting.AbstractConfigurableAction;
-import org.apache.cocoon.components.request.multipart.*;
 import org.apache.cocoon.environment.Context;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -70,6 +69,8 @@ import java.io.*;
 
 import java.util.*;
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.servlet.multipart.MultipartHttpServletRequest;
+import org.apache.cocoon.servlet.multipart.Part;
 
 
 /**
@@ -242,16 +243,18 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
 
             return null;
         }
-
-        Object obj = request.get(UPLOADFILE_PARAM_NAME);
-        getLogger().debug(obj.getClass().getName());
-
+        
         // upload the file to the uploadDir
-        if (obj instanceof FilePart) {
-            getLogger().debug("Uploading file: " + ((FilePart) obj).getFileName());
+        if (!(request instanceof MultipartHttpServletRequest)) {
+            getLogger().error("Not a multipart request!");
+        }
+        else {
+            
+            Part part = (Part) request.get(UPLOADFILE_PARAM_NAME);
+            getLogger().debug("Uploading file: " + part.getFileName());
 
             String identifier = (String) dublinCoreParams.get("identifier");
-            String originalFileName = ((FilePart) obj).getFileName();
+            String originalFileName = part.getFileName();
             String fileName = null;
 
             if (identifier.equals("")) {
@@ -290,7 +293,19 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
                 getLogger().info(".act(): Create directories: " + dir);
                 dir.mkdirs();
             }
+            
+            File uploadedFile = new File(dir, part.getFileName());
+            uploadedFile.createNewFile();
+            
+            FileOutputStream out = new FileOutputStream(uploadedFile);
+            InputStream in = part.getInputStream();
+            int read = in.read(buf);
+            while (read > 0) {
+                out.write(buf, 0, read);
+                read = in.read(buf);
+            }
 
+/*            
             if (obj instanceof FilePartFile) {
                 ((FilePartFile) obj).getFile().renameTo(new File(imagePath));
             } else {
@@ -305,7 +320,7 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
 
                 out.close();
             }
-
+*/
             // create an extra file containing the meta description for
             // the image.
             String metaDataFilePath = getMetaDataPath(sitemapPath, metaRoot, documentId,
@@ -316,10 +331,6 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
             // cpath in the original document (the referer)
             insertMediaTag(sitemapPath + docsRoot + File.separator + documentId, imageXPath,
                 fileName, dublinCoreParams);
-        } else {
-            getLogger().debug("parameter " + UPLOADFILE_PARAM_NAME + " is not of type FilePart");
-
-            return null;
         }
 
         return Collections.unmodifiableMap(results);
