@@ -89,22 +89,29 @@
 
       <!-- Frontpage -->
       <map:match pattern="">
-        <map:generate src="docs/publication/live/frontpage/index.xml"/>
+        <!--<map:generate src="docs/publication/live/frontpage/index.xml"/>-->
+        <map:generate type="directory" src="docs/publication/live/magazin/gesundheit/articles/2002"/>
+         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+        <map:transform type="xinclude"/>
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
       <map:match pattern="index.html">
-        <map:generate src="docs/publication/live/frontpage/index.xml"/>
+        <!--<map:generate src="docs/publication/live/frontpage/index.xml"/>-->
+        <map:generate type="directory" src="docs/publication/live/magazin/gesundheit/articles/2002"/>
+         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+        <map:transform type="xinclude"/>
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+<!--
       <map:match pattern="index.xml">
         <map:generate src="docs/publication/live/frontpage/index.xml"/>
         <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl"/>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
-
+-->
       <!-- Section -->
       <map:match pattern="*/*/">
         <map:redirect-to uri="2002/" session="true"/>

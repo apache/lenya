@@ -2,6 +2,8 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
+<xsl:include href="../../head.xsl"/>
+
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
@@ -23,15 +25,14 @@ function aboWindow() {
 <link rel="stylesheet" type="text/css" href="{$unipublic}/unipublic.mac.css"/>
 <script type="text/javascript" language="JavaScript">
 <xsl:comment>
-<!--
-//antiframe
-if (top.frames.length > 0) {top.location.href = self.location;}
- //CSS Triage
-if (navigator.appVersion.indexOf ('Win') >= 0) {
+
+<!--antiframe-->
+if (top.frames.length &#62; 0) {top.location.href = self.location;}
+ <!--CSS Triage-->
+if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
    seite = '{$unipublic}/unipublic.win.css';
-   document.write('<link rel="stylesheet" type="text/css" href="'+seite+'">');
+   document.write('&#60;link rel="stylesheet" type="text/css" href="'+seite+'">');
 }
--->
 </xsl:comment>
 </script>
 
@@ -54,6 +55,7 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 <center>
 
 <!--START kopf.html-->
+<!--
 <center>
 <form action="http://www.unizh.ch/cgi-bin/unisearch" method="post">
 <input type="hidden" value="www.unipublic.unizh.ch" name="url"/>
@@ -87,7 +89,8 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 
 </form>
 </center>
-
+-->
+<xsl:call-template name="Searchbox"/>
 <!--ENDE kopf.html-->
 
 <table border="0" cellpadding="0" cellspacing="0" width="585">
@@ -111,7 +114,6 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 <table border="0" cellpadding="0" cellspacing="0" width="115">
 
 <tr>
-<!--<td><img height="25" src="{$img-unipub}/m_gesund.gif" border="0" alt="gesundheit" width="115"/></td>-->
 <td><a href="{$unipublic}/magazin/gesundheit/2002/"><img height="25" src="{$img-unipub}/m_gesund.gif" border="0" name="gesund" alt="Gesundheit" width="115"/></a></td>
 </tr>
 
@@ -121,9 +123,6 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 
 <tr>
 <td><img height="25" src="{$img-unipub}/m_geist.gif" border="0" alt="geist" width="115"/></td>
-<!--
-<td><a href="{$unipublic}/magazin/gesellschaft/2002/"><img height="25" src="{$img-unipub}/m_geist.gif" border="0" name="geist" alt="geist &#38; gesellschaft" width="115"/></a></td>
--->
 </tr>
 
 <tr>
@@ -222,23 +221,20 @@ if (navigator.appVersion.indexOf ('Win') >= 0) {
 <tr>
 <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 <td width="150" valign="top" bgcolor="white" class="tsr-text">
-<p><a href="magazin/gesellschaft/2002/0515/"><span class="tsr-title">Rauschen im musikalischen Museum</span></a><br />
- In der Vorlesungsreihe &#171;Inventur im Museum&#187; des
-Musikwissenschaftlichen Seminars wird unser musikalischer Kanon
-hinterfragt. Gastreferenten aus Deutschland und der Schweiz
-sezieren jeweils ein &#171;grosses&#187; Werk. Zum Auftakt
-konfrontierte Hans-Joachim Hinrichsen gewohnte H&#246;rweisen von
-Bruckners &#171;Achter&#187; mit neuen T&#246;nen. (3.4.2002)</p>
+
+
+<p><a href="{@href}"><span class="tsr-title"><xsl:apply-templates select="sections/section/articles/article[1]/body.head/hedline/hl1"/></span></a><br />
+<xsl:apply-templates select="sections/section/articles/article[1]/body.head/abstract"/></p>
+
+
 </td>
 <td width="5" bgcolor="#CCCC99"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 <td width="1" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 <td width="150" valign="top" bgcolor="white" class="tsr-text">
-<p><span class="tsr-title">Universit&#228;t Z&#252;rich zu
-ZB-Pl&#228;nen</span><br />
- Die geplante Abspaltung der ZB vom gemeinsamen Katalog mit der
-ETH-Bibliothek hat negative Folgen auf mehreren Ebenen. Eine
-Erg&#228;nzung zum gestern hier ver&#246;ffentlichten Artikel.
-(5.4.2002)</p>
+
+<p><a href="{@href}"><span class="tsr-title"><xsl:apply-templates select="sections/section/articles/article[1]/body.head/hedline/hl1[1]"/> </span></a><br />
+<xsl:apply-templates select="sections/section/articles/article[1]/body.head/abstract"/>(5.4.2002)</p>
+
 </td>
 <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 </tr>
@@ -255,7 +251,7 @@ Erg&#228;nzung zum gestern hier ver&#246;ffentlichten Artikel.
 
 <br />
  
-
+<xsl:for-each select="sections/section/articles/article">
 <table border="0" cellpadding="0" cellspacing="0" width="316">
 <tr>
 <td colspan="3">
@@ -271,11 +267,11 @@ Erg&#228;nzung zum gestern hier ver&#246;ffentlichten Artikel.
 <tr>
 <td width="4" bgcolor="white">&#160;</td>
 <td bgcolor="white" class="tsr-text">
-<p><a href="../campus/uni-news/2002/0513/"><img src="{$unipublic}/campus/uni-news/2002/0513/bild-headline.jpg" width="80" height="60" border="0" alt="unijournal" align="right"/></a><span class="tsr-title">unijournal 2/2002 erschienen</span><br />
- Welche Muse den &#171;Heldenverehrer&#187; Thomas Hirschhorn
-gek&#252;sst hat, wieso Doktorierende ihr Schneckenhaus verlassen
-und was Jahresringe mit Frauenf&#246;rderung zu tun haben, erfahren
-Sie im neuen unijournal. (3.4.2002)</p>
+
+
+<p><a href="../campus/uni-news/2002/0513/"><img src="{$unipublic}/campus/uni-news/2002/0513/bild-headline.jpg" width="80" height="60" border="0" alt="unijournal" align="right"/></a><span class="tsr-title"><xsl:apply-templates select="body.head/hedline/hl1"/> </span><br />
+<xsl:apply-templates select="body.head/abstract"/></p>
+
 </td>
 <td width="4" bgcolor="white">&#160;</td>
 </tr>
@@ -287,7 +283,8 @@ Sie im neuen unijournal. (3.4.2002)</p>
 </td>
 </tr>
 </table>
-
+</xsl:for-each>
+<!--
 <table border="0" cellpadding="0" cellspacing="0" width="316">
 <tr>
 <td colspan="3"><img src="{$img-unipub}/t_umwelt.gif" width="316" height="13" border="0" alt="Umwelt &#38; Technik"/></td>
@@ -350,6 +347,7 @@ verbunden. Ein Nachruf. (26.3.2002)</p>
 </td>
 </tr>
 </table>
+-->
 </td>
 <td width="135" valign="top">
 <table border="0" cellpadding="0" cellspacing="0" width="126">
