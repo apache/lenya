@@ -9,8 +9,9 @@
   <leaf name="Cambridge/Boston"/>
   <leaf name="Tokyo"/>
 </branch>
-<leaf name="CMF/S Overview" href="matrix/index.html"/>
-<leaf name="Editor Overview" href="http://www.bris.ac.uk/is/projects/cms/ttw/ttw2.html"/>
+<leaf name="CMF/S&#160;Overview" href="matrix/index.html"/>
+<leaf name="Editor&#160;Overview" href="http://www.bris.ac.uk/is/projects/cms/ttw/ttw.html"/>
+<leaf name="Search&#160;Engine&#160;Overview"/>
 <!--
 <leaf name="Glossary" href="glossary.html"/>
 -->

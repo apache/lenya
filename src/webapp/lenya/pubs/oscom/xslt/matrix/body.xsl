@@ -10,16 +10,19 @@
 <xsl:template match="system">
  <font face="verdana">
 
- <h3>Content Management
+ <h3>
 <xsl:choose>
   <xsl:when test="@type='cms'">
-System
+Content Management System
   </xsl:when>
   <xsl:when test="@type='framework'">
-Framework
+Content Management Framework
+  </xsl:when>
+  <xsl:when test="@type='editor'">
+TTW WYSIWYG Editor
   </xsl:when>
   <xsl:otherwise>
-<xsl:value-of select="."/>
+No such type: <xsl:value-of select="@type"/>
   </xsl:otherwise>
 </xsl:choose>
 </h3>
