@@ -30,11 +30,6 @@
      alert("<i18n:translate><i18n:text key="upload-with-missing-title"/></i18n:translate>"); 
      return false;
     }
-    // regular expression to check for spaces in filenames (but allow them in paths)
-    if (thefile.search(/[\\\/]+[\s]*[^\\\/]*/) != -1) {
-     alert("spaces"); 
-     return false;
-    }
     var _tempArray = new Array();
     _tempArray = ext.split(delimiter);
     for(i in _tempArray) { 
@@ -45,4 +40,41 @@
      alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n"+ext+"\n</i18n:param></i18n:translate>"); 
      return false;
   } 
+function validRequired(formField,fieldLabel)
+{
+	var result = true;
+
+	if (formField.value == "")
+	{
+		alert('<i18n:text key="failmessage.createdoc.required"/>');
+		formField.focus();
+		result = false;
+	}
+	
+	return result;
+}
+
+function validContent(formField,fieldLabel)
+{
+	var result = true;
+	
+	if (formField.value.match("[^a-zA-Z0-9\\-]+"))
+	{
+		alert('<i18n:text key="failmessage.createdoc.invalidformat"/>');
+		formField.focus();
+		result = false;
+	}
+	
+	return result;
+}
+
+function check_num(obj) {
+  var value = parseInt(obj.value);
+  if (value &amp;&amp; 0 &lt;= value &amp;&amp; value &lt;= 255) {
+  obj.value = "" + parseInt(obj.value);
+  }
+  else {
+    obj.value = "0";
+  }
+}
 </script>
