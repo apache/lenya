@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -15,17 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: exception.xsp,v 1.4 2004/03/13 12:31:31 gregor Exp $ -->
-
-<xsp:page language="java" xmlns:xsp="http://apache.org/xsp">
-
-<rc:exception xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0">
-  <xsp:logic>
-    String filename=parameters.getParameter("filename","null");
-  </xsp:logic>
-  <rc:genericException>
-    <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
-  </rc:genericException>
-</rc:exception>
-
-</xsp:page>
+<!-- $Id: index_de.xml,v 1.1 2004/05/25 10:28:03 roku Exp $ -->
+    
+<wf:history xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0" workflow="workflow.xml">
+<wf:version date="23.10.2003 15:03:10" state="authoring">
+<wf:identity>
+<wf:user id="lenya"/>
+<wf:machine ip-address="127.0.0.1"/>
+</wf:identity>
+</wf:version>
+</wf:history>
