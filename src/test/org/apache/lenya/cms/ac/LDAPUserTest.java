@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUserTest.java,v 1.2 2003/06/24 14:37:35 felix Exp $
+ * $Id: LDAPUserTest.java,v 1.3 2003/06/25 09:15:45 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,6 +49,7 @@
 
 package org.apache.lenya.cms.ac;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
@@ -63,30 +64,39 @@ public class LDAPUserTest extends TestCase {
 
     /**
      * Constructor for LDAPUserTest.
-     * @param arg0
+     * @param arg0 a <code>String</code>
      */
     public LDAPUserTest(String arg0) {
         super(arg0);
     }
 
+	/**
+	 * 
+	 * @param args an array of <code>String</code>
+	 */
     public static void main(String[] args) {
         junit.textui.TestRunner.run(LDAPUserTest.class);
     }
 
-    /*
+    /**
      * @see TestCase#setUp()
      */
     protected void setUp() throws Exception {
         super.setUp();
     }
 
-    /*
+    /**
      * @see TestCase#tearDown()
      */
     protected void tearDown() throws Exception {
         super.tearDown();
     }
 
+	/**
+	 * get a publication
+	 * 
+	 * @return a <code>Publication</code>
+	 */
     final public Publication getPublication() {
         String publicationId = "default";
         String servletContextPath =
@@ -96,6 +106,14 @@ public class LDAPUserTest extends TestCase {
             servletContextPath);
     }
 
+	/**
+	 * Create and save an ldap user
+	 * 
+	 * @param userName name of the user
+	 * @param email of the user
+	 * @param ldapId ldap id of the user
+	 * @throws AccessControlException if the creating or the saving fails
+	 */
     final public void createAndSaveUser(
         String userName,
         String email,
@@ -114,7 +132,12 @@ public class LDAPUserTest extends TestCase {
         FileGroup editorGroup = new FileGroup(publication, editorGroupName);
         FileGroup adminGroup = new FileGroup(publication, adminGroupName);
 
-        LDAPUser user = new LDAPUser(publication, userName, email, ldapId);
+        LDAPUser user = null;
+        try {
+            user = new LDAPUser(publication, userName, email, ldapId);
+        } catch (ConfigurationException e) {
+			throw new AccessControlException("Could not create user", e);
+        }
 
         editorRole.save();
         adminRole.save();
@@ -132,6 +155,13 @@ public class LDAPUserTest extends TestCase {
 
     }
 
+	/**
+	 * Test loading an LDAPUser
+	 * 
+	 * @param userName the name of the user
+	 * @return an <code>LDAPUser</code>
+	 * @throws AccessControlException of the loading fails
+	 */
     final public LDAPUser loadUser(String userName)
         throws AccessControlException {
         Publication publication = getPublication();
@@ -149,6 +179,9 @@ public class LDAPUserTest extends TestCase {
 //		assertTrue(fullName.equals(" Felix Maeder - Wayona"));
 //    }
 
+	/**
+	 * Test the setter of the full name
+	 */
     final public void testSetFullName() {
         // the setFullName method is supposed to do nothing
 
@@ -163,6 +196,11 @@ public class LDAPUserTest extends TestCase {
 //        assertTrue(user.authenticate("sekret"));
 //    }
 
+	/**
+	 * Test the ldap id getter
+	 * 
+	 * @throws AccessControlException if the test fails
+	 */
     final public void testGetLdapId() throws AccessControlException {
         String userName = "felix";
         String ldapId = "m400032";
@@ -173,6 +211,11 @@ public class LDAPUserTest extends TestCase {
         assertEquals(ldapId, user.getLdapId());
     }
 
+	/**
+	 * Test settinf the ldap id
+	 * 
+	 * @throws AccessControlException if the test fails
+	 */
     final public void testSetLdapId() throws AccessControlException {
         String userName = "felix";
         String newLdapId = "foo";
@@ -188,6 +231,11 @@ public class LDAPUserTest extends TestCase {
         assertEquals(newLdapId, user.getLdapId());
     }
 
+	/**
+	 * Test save
+	 * 
+	 * @throws AccessControlException if the test fails
+	 */
     final public void testSave() throws AccessControlException {
         String userName = "felix";
         createAndSaveUser(userName, "felix@wyona.com", "m400032");
@@ -196,6 +244,10 @@ public class LDAPUserTest extends TestCase {
         assertNotNull(user);
     }
 
+	/**
+	 * Test the deletion of a ldap user
+	 *
+	 */
     final public void testDelete() {
         //TODO Implement delete().
     }
