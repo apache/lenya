@@ -71,14 +71,14 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.tools.ant.BuildException;
 
 /**
- * This task is used to rewrite internal links after a cut'n'paste operattion, i.e.
+ * This task is used to rewrite internal links after a cut'n'paste operation, i.e.
  * after a document has changed its document-id. It finds all relevant documents
  * which have a link to the document that changed its document-id and changes this
  * link with the help of an xslt.
  * 
  * @author Christian Egli
  * 
- * @version $Id: LinkRewriteTask.java,v 1.1 2003/10/22 16:21:01 egli Exp $
+ * @version $Id: LinkRewriteTask.java,v 1.2 2003/11/03 12:57:18 egli Exp $
  *
  */
 public class LinkRewriteTask extends PublicationTask {
