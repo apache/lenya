@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.component.ComponentManager;
 import org.apache.avalon.framework.component.ComponentSelector;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -52,8 +53,10 @@ public class PolicyHelper {
 
     /**
      * Ctor.
+     * @param logger The logger.
      */
-    public PolicyHelper() {
+    public PolicyHelper(Logger logger) {
+        this.logger = logger;
     }
 
     private DefaultAccessController accessController;
@@ -62,6 +65,15 @@ public class PolicyHelper {
     private InheritingPolicyManager policyManager;
     private ComponentManager manager;
     private String url;
+    private Logger logger;
+    
+    /**
+     * Returns the logger.
+     * @return A logger.
+     */
+    protected Logger getLogger() {
+        return logger;
+    }
 
     /**
      * Initializes this helper.
@@ -329,6 +341,8 @@ public class PolicyHelper {
             User[] userArray = userManager.getUsers();
             for (int i = 0; i < userArray.length; i++) {
                 Identity identity = new Identity();
+                identity.enableLogging(getLogger());
+                identity.initialize();
                 identity.addIdentifiable(userArray[i]);
                 Role[] roles = policy.getRoles(identity);
                 for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {

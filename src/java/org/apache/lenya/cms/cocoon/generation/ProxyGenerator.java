@@ -15,7 +15,7 @@
  *  
  */
 
-/* $Id: ProxyGenerator.java,v 1.23 2004/06/28 12:20:56 andreas Exp $ */
+/* $Id$ */
 
 package org.apache.lenya.cms.cocoon.generation;
 
@@ -39,14 +39,16 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.excalibur.xml.sax.SAXParser;
-import org.apache.log4j.Category;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributesImpl;
 
+/**
+ * Proxy generator.
+ *
+ * @version $Id:$
+ */
 public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements
         Parameterizable {
-    private static Category log = Category.getInstance(ProxyGenerator.class);
 
     // The URI of the namespace of this generator
     private String URI = "http://apache.org/cocoon/lenya/proxygenerator/1.0";
@@ -64,7 +66,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
     public void generate() throws SAXException {
         Request request = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
 
-        log.debug("\n----------------------------------------------------------------"
+        getLogger().debug("\n----------------------------------------------------------------"
                 + "\n- Request: (" + request.getClass().getName() + ") at port "
                 + request.getServerPort()
                 + "\n----------------------------------------------------------------");
@@ -78,7 +80,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             if (submitMethod.equals("POST")) {
                 // FIXME: Andreas
                 if (request instanceof HttpRequest) {
-                    java.io.InputStream is = intercept(((HttpRequest) request).getInputStream());
+                    intercept(((HttpRequest) request).getInputStream());
                 }
             }
 
@@ -143,14 +145,14 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             HostConfiguration hostConfiguration = new HostConfiguration();
             hostConfiguration.setHost(url.getHost(), url.getPort());
 
-            log.debug("\n----------------------------------------------------------------"
+            getLogger().debug("\n----------------------------------------------------------------"
                     + "\n- Starting session at URI: " + url + "\n- Host:                    "
                     + url.getHost() + "\n- Port:                    " + url.getPort()
                     + "\n----------------------------------------------------------------");
 
             int result = httpClient.executeMethod(hostConfiguration, httpMethod);
 
-            log.debug("\n----------------------------------------------------------------"
+            getLogger().debug("\n----------------------------------------------------------------"
                     + "\n- Result:                    " + result
                     + "\n----------------------------------------------------------------");
 
@@ -198,29 +200,13 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
         try {
             url = new URL(this.source);
-            log.debug(".createURL(): " + url);
+            getLogger().debug(".createURL(): " + url);
         } catch (MalformedURLException e) {
             url = new URL("http://127.0.0.1:" + request.getServerPort() + this.source);
-            log.debug(".createURL(): Add localhost and port: " + url);
+            getLogger().debug(".createURL(): Add localhost and port: " + url);
         }
 
         return url;
     }
 
-    private void attribute(AttributesImpl attr, String name, String value) {
-        attr.addAttribute("", name, name, "CDATA", value);
-    }
-
-    private void start(String name, AttributesImpl attr) throws SAXException {
-        super.contentHandler.startElement(URI, name, name, attr);
-        attr.clear();
-    }
-
-    private void end(String name) throws SAXException {
-        super.contentHandler.endElement(URI, name, name);
-    }
-
-    private void data(String data) throws SAXException {
-        super.contentHandler.characters(data.toCharArray(), 0, data.length());
-    }
 }
