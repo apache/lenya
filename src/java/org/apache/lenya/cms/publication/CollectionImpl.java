@@ -71,7 +71,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: CollectionImpl.java,v 1.7 2004/01/09 11:14:39 andreas Exp $
+ * @version $Id: CollectionImpl.java,v 1.8 2004/02/25 15:39:00 edith Exp $
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
     
@@ -203,12 +203,14 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected void save() throws DocumentException {
         try {
-            NamespaceHelper helper =
-                new NamespaceHelper(
-                    Collection.NAMESPACE,
-                    Collection.DEFAULT_PREFIX,
-                    ELEMENT_COLLECTION);
+            
+            NamespaceHelper helper = getNamespaceHelper();
             Element collectionElement = helper.getDocument().getDocumentElement();
+            
+            Element[] existingDocumentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
+            for (int i = 0; i < existingDocumentElements.length; i++) {
+                collectionElement.removeChild(existingDocumentElements[i]);
+            }
 
             Document[] documents = getDocuments();
 
