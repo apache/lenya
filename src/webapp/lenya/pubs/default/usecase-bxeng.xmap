@@ -252,6 +252,7 @@
           
           <map:call function="editDocument">
             <map:parameter name="sourceUri" value="cocoon:/request2document"/>
+            <map:parameter name="noCheckin" value="true"/>
           </map:call>
           </map:when>
 
