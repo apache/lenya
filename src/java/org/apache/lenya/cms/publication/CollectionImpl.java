@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CollectionImpl.java,v 1.11 2004/03/10 09:19:45 edith Exp $  */
+/* $Id: CollectionImpl.java,v 1.12 2004/05/03 13:55:10 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -29,7 +29,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Category;
+import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -175,16 +178,22 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             for (int i = 0; i < existingDocumentElements.length; i++) {
                 collectionElement.removeChild(existingDocumentElements[i]);
             }
+            
+            collectionElement.normalize();
+            
+            NodeList emptyTextNodes = XPathAPI.selectNodeList(collectionElement, "text()");
+            for (int i = 0; i < emptyTextNodes.getLength(); i++) {
+                Node node = emptyTextNodes.item(i);
+                node = collectionElement.removeChild(node);
+            }
 
             Document[] documents = getDocuments();
-
             for (int i = 0; i < documents.length; i++) {
                 Element documentElement = createDocumentElement(documents[i], helper);
                 collectionElement.appendChild(documentElement);
             }
-
             DocumentHelper.writeDocument(helper.getDocument(), getFile());
-
+            
         } catch (DocumentException e) {
             throw e;
         } catch (Exception e) {
