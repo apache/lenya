@@ -99,6 +99,9 @@
     <map:view name="orig" from-position="first">
       <map:serialize type="xml"/>
     </map:view>
+    <map:view name="xhtml" from-position="last">
+      <map:serialize type="xml"/>
+    </map:view>
   </map:views>
 
   <!-- =========================== Pipelines ================================ -->
@@ -387,6 +390,12 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+
+      <map:match pattern="newsletter/file.xml">
+        <map:generate src="docs/publication/authoring/newsletter/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
 
       <map:match pattern="newsletter/index.html">
         <map:aggregate element="wyona">

@@ -63,6 +63,26 @@
 				<map:read src="resources/publication/styles/dossier-article-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
+                <!-- Newsletter -->
+                <map:pipeline>  
+                        <map:match pattern="newsletter/index.xml">
+                                <map:generate src="docs/publication/authoring/newsletter/index.xml"/>
+                                <map:serialize type="xml"/>
+                        </map:match>
+                        <map:match pattern="stylesheets/newsletter.xsl">
+				<map:generate src="cocoon://unipublic/authoring/newsletter/file.xml"/>
+				<map:transform src="stylesheets/publication/Page/Newsletter/Authoring/main-bitflux.xsl"/>
+				<map:transform src="stylesheets/publication/Page/Newsletter/Authoring/newsletter-bitflux.xsl"/>
+                                <map:serialize type="xml"/>
+                        </map:match>
+                        <map:match pattern="schemas/newsletter.xsd">
+                                <map:read src="docs/publication/doctypes/schemas/newsletter-bitflux.xsd" mime-type="text/xml"/>
+                        </map:match>
+                        <map:match pattern="css/newsletter.css">
+                                <map:read src="resources/publication/styles/newsletter-bitflux.css" mime-type="text/css"/>
+                        </map:match>
+                </map:pipeline>
+
 		<!-- Frontpage: Headlines -->
 		<map:pipeline>
 			<map:match pattern="headlines.xml">
@@ -166,6 +186,16 @@
 				<map:generate src="xopus_error.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
+                        <!-- Save Newsletter -->
+                        <map:match pattern="save/newsletter">
+                                <map:act type="xopushandler">
+                                        <map:parameter name="save-filename" value="newsletter/index.xml"/>
+                                        <map:generate src="docs/cms/bitflux_response_ok.xml"/>
+                                        <map:serialize type="xml"/>
+                                </map:act>
+                                <map:generate src="xopus_error.xml"/>
+                                <map:serialize type="xml"/>
+                        </map:match>
 			<!-- Save Generic -->
 			<map:match pattern="save/*">
 				<map:act type="xopushandler">
