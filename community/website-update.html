@@ -203,11 +203,25 @@
 </li>
   
 <li>
-<span class="codefrag">$LENYA_HOME &gt; ant export-forrest -Dpublication=docs-new</span>
+<span class="codefrag">export FORREST_HOME=.../xml-forrest/build/dist/shbat</span>
+</li>
+  
+<li>
+<span class="codefrag">export PATH=$FORREST_HOME/bin:$PATH</span>
+</li>
+  
+<li>
+<span class="codefrag">cd $LENYA_HOME</span>
+</li>
+  
+<li>
+<span class="codefrag">ant export-forrest -Dpublication=docs-new</span>
 </li>
   
 <li>Copy the pages from <span class="codefrag">$LENYA_HOME/build/lenya/export/docs-new/build/site</span> to <span class="codefrag">cocoon-site/site/lenya</span>
 </li>
+  
+<li>Copy the Javadoc (ant javadoc, ant install, cp)</li>
   
 <li>Add, remove, commit to <span class="codefrag">cocoon-site</span>
 </li>
