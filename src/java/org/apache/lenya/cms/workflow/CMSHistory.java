@@ -20,6 +20,8 @@
 package org.apache.lenya.cms.workflow;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.lenya.cms.publication.Document;
@@ -184,7 +186,13 @@ public class CMSHistory extends HistoryImpl {
             throws WorkflowException {
         Version version = super.restoreVersion(helper, element);
         CMSVersion cmsVersion = new CMSVersion(version.getEvent(), version.getState());
-        Date date = new Date(element.getAttribute(DATE_ATTRIBUTE));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date;
+        try {
+            date = df.parse(element.getAttribute(DATE_ATTRIBUTE));
+        } catch (final ParseException e) {
+            throw new WorkflowException("Could not parse workflow date: " +e.toString());
+        }
         cmsVersion.setDate(date);
 
         Element identityElement = helper.getFirstChild(element, IDENTITY_ELEMENT);
