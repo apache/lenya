@@ -16,7 +16,7 @@
 -->
 
 <!-- 
-	$Id: cmsui_fr.xml,v 1.3 2004/04/14 08:26:01 roku Exp $ 
+	$Id: cmsui_fr.xml,v 1.4 2004/04/17 07:22:46 roku Exp $ 
 	@translators Olivier Lange <wire at petit-atelier dot ch>
 	-->
 
@@ -55,7 +55,7 @@
   <message key="Title">Titre</message>
   <message key="Last modified">Dernière&#160;mise&#160;à&#160;jour</message>
   <message key="Overview">Résumé</message>
-  <message key="Role">Rôle</message>
+  <message key="Role">R&#244;le</message>
   <message key="View">Vue</message>
   <message key="Assets">Actifs</message>
   <message key="true">oui</message>
@@ -111,7 +111,7 @@
   <message key="reject-doc?">Voulez-vous rejeter le document {0}?</message>
 
   <!-- cms menu -->
-  <message key="New Document">Nouveau document</message>
+  <message key="New document">Nouveau document</message>
   <message key="New Language Version">Nouvelle traduction</message>
   <message key="Remove Language Version">Supprimer la traduction</message>
   <message key="File">Fichier</message>
@@ -139,8 +139,8 @@
   <message key="Edit with Epoz">Editer avec Epoz</message>
   <message key="Edit with Kupu">Editer avec Kupu</message>
   <message key="Edit with BXE">Editer avec BXE</message>
-  <message key="Edit with one Form">Editer avec l'éditeur de formulaire</message>
-  <message key="Edit with Forms">Editer avec l'assitant Formulaire</message>
+  <message key="Edit with one Form">Editer avec un formulaire&#160;simple</message>
+  <message key="Edit with Forms">Editer avec l'assistant Formulaire</message>
   <message key="Edit Metadata">Editer&#160;les&#160;méta-données</message>
   <message key="Edit Navigation Title">Editer&#160;le&#160;titre&#160;de&#160;navigation</message>
   <message key="Rename URL">Renommer&#160;URL</message>
@@ -228,7 +228,7 @@
   <message key="deactivate-doc?">Voulez-vous vraiment désactiver le document {0}?</message>
   <message key="Delete Document">Supprimer le document</message>
   <message key="delete-doc">Supprimer le document {0}</message>
-  <message key="cannot-deactivate-unless-children-deactivated">Ce document ne peut pas être désactivé tant que les documents subordonnés suivants n'auront pas été également désactivés</message>
+  <message key="cannot-deactivate-unless-children-deactivated">Ce document ne peut pas &#234;tre désactivé tant que les documents subordonnés suivants n'auront pas été également désactivés</message>
   <message key="delete-language-versions?">Voulez-vous vraiment supprimer toutes les traductions du document {0}?</message>
       <!-- Archive document -->
   <message key="Archive Document">Archiver le document</message>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.61 2004/04/04 07:37:44 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.62 2004/04/17 07:22:46 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -23,10 +23,10 @@
   <message key="Save">Speichern</message>
   <message key="Submit">Einreichen</message>
   <message key="Cancel">Abbrechen</message>
-  <message key="Delete">L&#246;schen</message>
+  <message key="Delete">Löschen</message>
   <message key="NOTE">HINWEIS</message>
-  <message key="No referer">Keine R&#252;ckverweiseite</message>  
-  <message key="Referer">R&#252;ckverweis</message>
+  <message key="No referer">Keine Rückverweiseite</message>  
+  <message key="Referer">Rückverweis</message>
   <message key="EXCEPTION">AUSNAHME</message>  
   <message key="User">Benutzer</message>
   <message key="live">live</message>
@@ -49,19 +49,19 @@
   <message key="Search">Suche</message>
   <message key="Home">Startseite</message>
   <message key="Title">Titel</message>
-  <message key="Last modified">Letzte&#160;&#196;nderung</message>
-  <message key="Overview">&#220;bersicht</message>  
+  <message key="Last modified">Letzte&#160;Änderung</message>
+  <message key="Overview">Übersicht</message>  
   <message key="Role">Rolle</message>
   <message key="View">Anzeigen</message>
   <message key="Assets">Anlagen</message>
   <message key="true">ja</message>
   <message key="false">nein</message>
   <message key="Rename">Umbenennen</message>
-  <message key="Modify">&#196;ndern</message>
+  <message key="Modify">Ändern</message>
   <message key="Document">Dokument</message>
   <message key="Date">Datum</message>
-  <message key="Back">Zur&#252;ck</message>
-  <message key="Add">Hinzuf&#252;gen</message>
+  <message key="Back">Zurück</message>
+  <message key="Add">Hinzufügen</message>
   <message key="Create">Erstellen</message>
   <message key="The Archive">Archiv</message>
   <message key="Trash">Papierkorb</message>
@@ -71,22 +71,22 @@
   <message key="Language">Sprache</message>
   <message key="Subject">Betrifft</message>
   <message key="Rights">Rechte</message>
-  <message key="Select File">Datei w&#228;hlen</message>
-  <message key="select-object">{0}&#160;ausw&#228;hlen</message>
-  <message key="Insert">Einf&#252;gen</message>
-  <message key="Insert File">Datei einf&#252;gen</message>
-  <message key="upload-with-invalid-extension">Es d&#252;rfen nur Dateien mit folgenden Endungen hochgeladen werden{0}</message>
-  <message key="filename-format-exception">Der Name der gew&#228;hlten Datei enth&#228;lt Umlaute, Leerzeichen, unerlaubte Zeichen oder besitzt keine g&#252;ltige Endung.</message>
+  <message key="Select File">Datei wählen</message>
+  <message key="select-object">{0}&#160;auswählen</message>
+  <message key="Insert">Einfügen</message>
+  <message key="Insert File">Datei einfügen</message>
+  <message key="upload-with-invalid-extension">Es dürfen nur Dateien mit folgenden Endungen hochgeladen werden{0}</message>
+  <message key="filename-format-exception">Der Name der gewählten Datei enthält Umlaute, Leerzeichen, unerlaubte Zeichen oder besitzt keine gültige Endung.</message>
   <message key="Creation Date">Erstelldatum</message>
-  <message key="File Size">Dateigr&#246;sse</message>
+  <message key="File Size">Dateigrösse</message>
   <message key="Image">Bild</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} einreichen</message>
-  <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht einreichen?</message>  
+  <message key="submit-for-approval?">Möchten Sie {0} zur Durchsicht einreichen?</message>  
   
   <!-- publish screen --> 
-  <message key="Publish">Ver&#246;ffentlichen</message>    
+  <message key="Publish">Veröffentlichen</message>    
   <message key="Source File(s)">Quelldatei(en)</message>
    
   <!-- logn screen -->        
@@ -109,18 +109,18 @@
   <!-- cms menu -->
   <message key="New Document">Neues Dokument</message>
   <message key="New Language Version">Neue Sprachversion</message>
-  <message key="Remove Language Version">Sprachversion l&#246;schen</message>
+  <message key="Remove Language Version">Sprachversion löschen</message>
   <message key="File">Datei</message>  
   <message key="Edit">Bearbeiten</message>
   <message key="Workflow">Arbeitsfluss</message>
   <message key="Deactivate">Deaktivieren</message>
   <message key="Schedule">Zeitsteuerung</message>  
   <message key="Copy">Kopieren</message>  
-  <message key="Paste">Einf&#252;gen</message>
+  <message key="Paste">Einfügen</message>
   <message key="Cut">Ausschneiden</message>
   <message key="Help">Hilfe</message>
   <message key="Debug">Debug</message>
-  <message key="Delete">L&#246;schen</message>
+  <message key="Delete">Löschen</message>
   <message key="Archive">Archivieren</message>
   <message key="Restore">Wiederherstellen</message>
   <message key="Move Up">Nach oben</message>
@@ -130,7 +130,7 @@
   <message key="Support">Support</message>
   <message key="System Documentation">Systemdokumentation</message>
   <message key="User Documentation">Benutzerdokumentation</message>
-  <message key="About Apache Lenya">&#220;ber Apache Lenya</message>
+  <message key="About Apache Lenya">Über Apache Lenya</message>
   <message key="Apache Lenya Homepage">Apache Lenya Startseite</message>
   <message key="Edit with Epoz">Bearbeiten mit Epoz</message>
   <message key="Edit with BXE">Bearbeiten mit BXE</message>
@@ -146,11 +146,11 @@
 
   <!-- Administration tab -->
   <message key="Administration">Administration</message>
-  <message key="really-delete?">{0} wirklich l&#246;schen ?</message>
+  <message key="really-delete?">{0} wirklich löschen ?</message>
   <message key="Do you really want to delete the trash ?">Wollen Sie den Papierkorb wirklich leeren ?</message>
-  <message key="delete-object">{0} l&#246;schen</message>
-  <message key="delete-object?">Wollen Sie {0} wirklich l&#246;schen ?</message>  
-  <message key="Passwd">Passwort &#228;ndern</message>
+  <message key="delete-object">{0} löschen</message>
+  <message key="delete-object?">Wollen Sie {0} wirklich löschen ?</message>  
+  <message key="Passwd">Passwort ändern</message>
   <message key="Switch User">Benutzer wechseln</message>
   <message key="Delete Trash">Papierkorb leeren</message>
   <message key="Cocoon and Server Status">Cocoon- und Serverstatus</message>
@@ -159,10 +159,10 @@
   <message key="Profile">Profil</message>  
   <message key="Members">Mitglieder</message>
   <message key="IP Ranges">IP&#160;Bereiche</message>
-  <message key="Edit Profile">Profil&#160;&#228;ndern</message>
+  <message key="Edit Profile">Profil&#160;ändern</message>
   <message key="Edit Members">Mitglieder&#160;bearbeiten</message>
   <message key="Group Administration">Gruppenadministration</message>
-  <message key="Add Group">Gruppe hinzuf&#252;gen</message>
+  <message key="Add Group">Gruppe hinzufügen</message>
   <message key="Group Data">Gruppendetails</message>
   
     <!-- User Administration -->
@@ -170,15 +170,15 @@
   <message key="User ID">Benutzer</message>
   <message key="CMS User ID">CMS&#160;Benutzer</message>
   <message key="LDAP ID">LDAP&#160;ID</message>
-  <message key="Confirm password">Passwort&#160;best&#228;tigen</message>
-  <message key="Add User">Benutzer hinzuf&#252;gen</message>
+  <message key="Confirm password">Passwort&#160;bestätigen</message>
+  <message key="Add User">Benutzer hinzufügen</message>
   <message key="User Administration">Benutzeradministration</message>
   <message key="User Details">Benutzerdetails</message>
   <message key="All Groups">Alle Gruppen</message>
   <message key="User Groups">Benutzergruppen</message>
   <message key="Group Affiliation">Gruppenmitgliedschaften</message>
-  <message key="Change Password">Passwort &#228;ndern</message>
-  <message key="Edit Group Affiliation">Mitgliedschaften &#228;ndern</message>
+  <message key="Change Password">Passwort ändern</message>
+  <message key="Edit Group Affiliation">Mitgliedschaften ändern</message>
   
     <!-- IP Range Administration -->
   <message key="IP Range">IP&#160;Bereich</message>
@@ -186,16 +186,16 @@
   <message key="Network Address">IP&#160;Adresse</message>
   <message key="Subnet Mask">Netzwerkmaske</message>
   <message key="IP Range Administration">IP Administration</message>
-  <message key="Add IP Range">IP Bereich&#160;hinzuf&#252;gen</message>
+  <message key="Add IP Range">IP Bereich&#160;hinzufügen</message>
   <message key="IP Range Profile">IP Bereichsprofil</message>
 
   <!-- Site tab (info screens) -->
-  <message key="Available Languages">Verf&#252;gbare Sprachen</message>
-  <message key="This document is not available in this language.">Das Dokument ist in der gew&#252;nschten Sprache nicht vorhanden.</message>
+  <message key="Available Languages">Verfügbare Sprachen</message>
+  <message key="This document is not available in this language.">Das Dokument ist in der gewünschten Sprache nicht vorhanden.</message>
   <message key="Document ID">Dokument ID</message>
   <message key="Versions">Versionen</message>
-  <message key="SSL Encryption">SSL&#160;Verschl&#252;sselung</message>
-  <message key="Rollback to this version">Zu dieser Version zur&#252;cksetzen</message>
+  <message key="SSL Encryption">SSL&#160;Verschlüsselung</message>
+  <message key="Rollback to this version">Zu dieser Version zurücksetzen</message>
   <message key="AC Archive">Rechte&#160;Archiv</message>
   <message key="AC Trash">Rechte&#160;Papierkorb</message>
   <message key="AC Auth">Rechte&#160;Auth</message>
@@ -211,7 +211,7 @@
       <!-- Scheduler -->
   <message key="No active jobs">Keine aktiven Aufgaben.</message>
   <message key="The job date has expired">Das Datum der Aufgabe ist abgelaufen.</message>
-  <message key="check the log files">Bitte &#252;berpr&#252;fen Sie die Log-Dateien.</message>
+  <message key="check the log files">Bitte überprüfen Sie die Log-Dateien.</message>
   <message key="Task">Aufgabe</message>
   <message key="Day">Tag</message>
   <message key="Time">Zeit</message>
@@ -220,9 +220,9 @@
   <message key="Deactivate Document">Dokument deaktivieren</message>
   <message key="deactivate-doc">Dokument {0} deaktivieren</message>
   <message key="deactivate-doc?">Wollen Sie das Dokument {0} wirklich deaktivieren?</message>
-  <message key="Delete Document">Dokument l&#246;schen</message>
+  <message key="Delete Document">Dokument löschen</message>
   <message key="cannot-deactivate-unless-children-deactivated">Dieses Dokument kann erst deaktiviert werden, wenn alle untergeordneten Dokumente deaktiviert worden sind.</message>
-  <message key="delete-language-versions?">Wollen Sie wirklich alle Sprachversionen des Dokuments {0} l&#246;schen?</message>
+  <message key="delete-language-versions?">Wollen Sie wirklich alle Sprachversionen des Dokuments {0} löschen?</message>
   
       <!-- Archive document -->
   <message key="Archive Document">Dokument archivieren</message>
@@ -234,21 +234,21 @@
       <!-- Copy document -->
   <message key="Copy Document">Dokument kopieren</message>
   <message key="copy-doc">Kopieren von Dokument {0}</message>
-  <message key="copy-doc-to-clip?">Wollen Sie das Dokument {0} in die Zwischenablage kopieren? Sie k&#246;nnen das Dokument sp&#228;ter an gew&#252;nschter Stelle einf&#252;gen.</message>
+  <message key="copy-doc-to-clip?">Wollen Sie das Dokument {0} in die Zwischenablage kopieren? Sie können das Dokument später an gewünschter Stelle einfügen.</message>
       <!-- Paste document -->
-  <message key="Paste Document">Dokument einf&#252;gen</message>
-  <message key="paste-doc">Dokument {0} einf&#252;gen</message>
-  <message key="paste-doc-from-clip?">Wollen Sie das Dokument {0} aus der Zwischenablage einf&#252;gen?</message>
+  <message key="Paste Document">Dokument einfügen</message>
+  <message key="paste-doc">Dokument {0} einfügen</message>
+  <message key="paste-doc-from-clip?">Wollen Sie das Dokument {0} aus der Zwischenablage einfügen?</message>
       <!-- Cut document -->
   <message key="Cut Document">Dokument ausschneiden</message>
   <message key="cut-doc">Ausschneiden von Dokument {0}</message>
-  <message key="cut-doc-to-clip?">Wollen Sie das Dokument {0} ausschneiden und in die Zwischenablage verschieben? Sie k&#246;nnen das Dokument sp&#228;ter an gew&#252;nschter Stelle einf&#252;gen.</message>
+  <message key="cut-doc-to-clip?">Wollen Sie das Dokument {0} ausschneiden und in die Zwischenablage verschieben? Sie können das Dokument später an gewünschter Stelle einfügen.</message>
 
   <!-- Info Asset -->
-  <message key="Insert Image">Bild einf&#252;gen</message>
-  <message key="Insert Asset">Anlage einf&#252;gen</message>
+  <message key="Insert Image">Bild einfügen</message>
+  <message key="Insert Asset">Anlage einfügen</message>
   <message key="Asset Upload">Analge hochladen</message>
-  <message key="Insert a new Image">Neues bild einf&#252;gen</message>
+  <message key="Insert a new Image">Neues bild einfügen</message>
   <message key="Upload an Asset">Anlage hochladen</message>
    
   <!-- Info workflow  --> 
@@ -261,21 +261,21 @@
   <message key="edit">bearbeiten</message>
   <message key="submit">einreichen</message>
   <message key="reject">ablehnen</message>
-  <message key="publish">ver&#246;ffentlichen</message>
+  <message key="publish">veröffentlichen</message>
 
   <!-- Info asset  --> 
   <message key="New Asset">Neue Anlage</message>
 
   <!-- Info RC  --> 
   <message key="Current Version">Aktuelle Version</message>
-  <message key="Rollback to this revision">Zu dieser version zur&#252;cksetzen</message>
+  <message key="Rollback to this revision">Zu dieser version zurücksetzen</message>
 
   <!-- Info AC  --> 
-  <message key="SSL Encryption">SSL&#160;Verschl&#252;sselung</message>
+  <message key="SSL Encryption">SSL&#160;Verschlüsselung</message>
   <message key="Access Object">Zugriffsobjekt</message>
   <message key="Inherited Rights">Geerbte&#160;Rechte</message>
   <message key="visit">besuchen</message>
-  <message key="reviewer">Pr&#252;fer</message>
+  <message key="reviewer">Prüfer</message>
   <message key="editor">Bearbeiter</message>
   <message key="admin">Admin</message>
   <message key="world">Welt</message>
@@ -284,22 +284,22 @@
   <!-- Scheduler --> 
   <message key="New job">Neuer&#160;Job</message>
   <message key="Active jobs">Aktive Aufgaben</message>
-  <message key="Publish and Export">Ver&#246;ffentlichen und&#160;exportieren</message>
-  <message key="doc-has-links-to-unpublished">Dieses Dokument hat Referenzen auf folgende unver&#246;ffentlichte Dokumente:</message>
+  <message key="Publish and Export">Veröffentlichen und&#160;exportieren</message>
+  <message key="doc-has-links-to-unpublished">Dieses Dokument hat Referenzen auf folgende unveröffentlichte Dokumente:</message>
 
   <!-- New Document -->
-  <message key="Please check the following possible causes of the exception">Bitte &#252;berpr&#252;fen Sie folgende Ursachen f&#252;r die Ausnahme.</message>
-  <message key="Parent ID">&#220;bergerodnete ID</message>
+  <message key="Please check the following possible causes of the exception">Bitte überprüfen Sie folgende Ursachen für die Ausnahme.</message>
+  <message key="Parent ID">Übergerodnete ID</message>
   <message key="exception.cause.createdoc.whitespace-in-id">Die ID darf keine Leerzeichen enthalten.</message>
   <message key="exception.cause.createdoc.id-in-use">Die ID ist schon vergeben.</message>   
-    <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen g&#252;ltigen Wert f&#252;r "ID" ein. G&#252;ltige Zeichen sind A-Z, a-z, 0-9 oder -</message>
-    <message key="failmessage.createdoc.required">Bitte f&#252;llen Sie alle Pflichfelder (*) aus..</message>
+    <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen gültigen Wert für "ID" ein. Gültige Zeichen sind A-Z, a-z, 0-9 oder -</message>
+    <message key="failmessage.createdoc.required">Bitte füllen Sie alle Pflichfelder (*) aus..</message>
 
   <!-- Asset Upload/Insert Dialog -->
-  <message key="Add to Asset Library">Zur Bibliothek hinzuf&#252;gen</message>
+  <message key="Add to Asset Library">Zur Bibliothek hinzufügen</message>
   <message key="Asset Library">Objektbibliothek</message>
-  <message key="No assets available">Keine Objekte verf&#252;gbar</message>
-  <message key="Insert Asset">Objekt einf&#252;gen</message>
+  <message key="No assets available">Keine Objekte verfügbar</message>
+  <message key="Insert Asset">Objekt einfügen</message>
 
 </catalogue>
 
