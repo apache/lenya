@@ -224,7 +224,7 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
     }
     
 	if (ldap) {
-	    var ldapUser = new LDAPUser();
+	    var ldapUser = new Packages.org.apache.lenya.cms.ac.LDAPUser();
 	    if (!ldapUser.existsUser(ldapId)) {
 	    	messages.add("This LDAP user ID does not exist.");
 	    }
