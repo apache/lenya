@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.13 2003/07/16 18:07:14 gregor Exp $
+ $Id: root.xsl,v 1.14 2003/07/17 13:28:00 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -25,10 +25,39 @@
 <script src="ua.js"/>
 <script src="tree.js"/>
 <script src="lenyasitetree/{$chosenlanguage}"/>
+<script>// Load a page as if a node on the tree was clicked (synchronize frames)
+// (Highlights selection if highlight is available.)
+function loadSynchPage(srclink) 
+{
+	var docObj;
+	var linkID;
+	linkID = findIDbyLink(srclink);
+	docObj = findObj(linkID);
+	docObj.forceOpeningOfAncestorFolders();
+	clickOnLink(linkID,docObj.srclink,'basefrm'); 
 
+    //Scroll the tree window to show the selected node
+    //Other code in these functions needs to be changed to work with
+    //frameless pages, but this code should, I think, simply be removed
+   document.body.scrollTop=docObj.navObj.offsetTop
+}
+
+function findIDbyLink(srclink)
+{
+<![CDATA[
+  var i=0;
+  for(i=0;i<nEntries&&indexOfEntries[i].link!=srclink;i++);
+  if (i >= nEntries)
+    return null; //example: node removed in DB
+  else
+    return i;
+]]>
+}
+</script>
+	
 </head>
 
-<body >
+<body>
 <a>
 	<xsl:call-template name="activate">
 		<xsl:with-param name="tablanguage">de</xsl:with-param>
@@ -45,7 +74,9 @@
 
    <div id="lenya-info-tree">
       <div style="display:none;"><table border="0"><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a></td></tr></table></div>
-   <script>initializeDocument()</script>
+   <script>initializeDocument();
+  loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info&amp;lenya.step=showscreen');
+   </script>
    </div>
 </div>
 
