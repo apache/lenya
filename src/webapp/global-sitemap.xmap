@@ -480,6 +480,11 @@
       <map:serialize/>
     </map:resource>
    
+    <map:resource name="i18n">
+      <map:transform type="i18n">
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>
+    </map:resource>
  </map:resources>
 
 <!-- ========================== Action sets ================================ -->
@@ -619,9 +624,7 @@
       <map:match pattern="lenya-page/*/*/**">
       	<map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
         
-        <map:transform type="i18n">      
-          <map:parameter name="locale" value="{request:locale}"/>
-        </map:transform>      	
+        <map:call resource="i18n"/>
         
       	<map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/">
           <map:transform type="workflowmenu"/>
@@ -644,9 +647,7 @@
           <map:parameter name="islive" value="{workflow:variable.is_live}"/>
         </map:transform>
         
-        <map:transform type="i18n">      
-          <map:parameter name="locale" value="{request:locale}"/>
-        </map:transform>        
+        <map:call resource="i18n"/>
         
         <map:transform src="lenya/xslt/menu/menu2xslt.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
