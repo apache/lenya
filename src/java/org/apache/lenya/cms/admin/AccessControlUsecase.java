@@ -46,6 +46,7 @@ public class AccessControlUsecase extends AbstractUsecase {
     private GroupManager groupManager;
     private IPRangeManager ipRangeManager;
     private RoleManager roleManager;
+    private AccessController accessController;
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
@@ -53,7 +54,7 @@ public class AccessControlUsecase extends AbstractUsecase {
     protected void doInitialize() throws Exception {
         super.doInitialize();
         
-        AccessController accessController = null;
+        accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         
@@ -78,9 +79,6 @@ public class AccessControlUsecase extends AbstractUsecase {
         } finally {
             if (selector != null) {
                 if (resolver != null) {
-                    if (accessController != null) {
-                        resolver.release(accessController);
-                    }
                     selector.release(resolver);
                 }
                 this.manager.release(selector);
@@ -113,5 +111,11 @@ public class AccessControlUsecase extends AbstractUsecase {
      */
     protected UserManager getUserManager() {
         return this.userManager;
+    }
+    /**
+     * @return Returns the accessController.
+     */
+    protected AccessController getAccessController() {
+        return this.accessController;
     }
 }
