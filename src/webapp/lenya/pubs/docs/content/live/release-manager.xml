@@ -22,6 +22,7 @@
 <p>Checkout:</p>
 <ul>
 <li>cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co -r HEAD xml-cocoon2</li>
+<li>cvs -d :pserver:anoncvs@cvs.apache.org:/home/cvspublic co cocoon-2.1</li>
 </ul>
 
 <p>Update:</p>
