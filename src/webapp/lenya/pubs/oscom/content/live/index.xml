@@ -12,9 +12,14 @@
 
 <news xmlns:xi="http://www.w3.org/2001/XInclude">
 <!-- FIXME: something wrong with regard to the view "links", which is needed for Lucene -->
+<!--
   <wyonasite name="OSCOM">
     <xi:include href="/news.rss" xml:base="cocoon:"/>
   </wyonasite>
+-->
+  <cmsinfosite name="OSCOM Blog">
+    <xi:include href="rss-rdf/oscom.rdf"/>
+  </cmsinfosite>
   <site name="Freshmeat">
     <xi:include href="rss-rdf/fm.rdf"/>
   </site>
