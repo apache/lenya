@@ -47,7 +47,7 @@ alt="Aktuelle Ausgabe jetzt am Kiosk" /></td>
 </tr>
 
 <tr bgcolor="#EFEFE7"><!-- LEAD -->
-<td width="325" valign="middle"><span class="txt-s-black"><xsl:apply-templates select="item[1]/p" /><!-- 
+<td width="325" valign="middle"><span class="txt-s-black"><xsl:value-of select="item[1]/p" /><!-- 
 WEITER BUTTON -->&#160;
 <!--
 <a href="/print/index.html"
@@ -69,7 +69,7 @@ class="txt-s-black"><b><xsl:value-of select="item[2]/title"/></b></span></td>
 </tr>
 
 <tr bgcolor="#FFFFFF"><!-- LEAD -->
-<td width="325" valign="middle"><span class="txt-s-black"><xsl:apply-templates select="item[2]/p" /><!-- 
+<td width="325" valign="middle"><span class="txt-s-black"><xsl:value-of select="item[2]/p" /><!-- 
 WEITER BUTTON -->&#160;
 <!--
 <a href="/print/index.html"
