@@ -72,7 +72,7 @@
     <!-- jakarta logo -->
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-      <td valign="top" class="bannercell">
+      <td valign="top" class="lenya-ant-bannercell">
         <a href="http://jakarta.apache.org/">
         <img src="http://jakarta.apache.org/images/jakarta-logo.gif" alt="http://jakarta.apache.org" align="left" border="0"/>
         </a>
@@ -106,8 +106,8 @@
   <!-- build status -->
   <table width="100%">
     <xsl:attribute name="class">
-      <xsl:if test="@error">failed</xsl:if>
-      <xsl:if test="not(@error)">complete</xsl:if>
+      <xsl:if test="@error">lenya-ant-failed</xsl:if>
+      <xsl:if test="not(@error)">lenya-ant-complete</xsl:if>
     </xsl:attribute>
     <tr>
       <xsl:if test="@error">
@@ -128,14 +128,14 @@
     </tr>
   </table>
   <table border="1" cellspacing="2" cellpadding="3" width="100%" style="font-size:80%">
-    <tr class="a"><td width="1">ant.file</td><td><xsl:value-of select="substring-after(message[contains(text(),'ant.file')], '->')"/></td></tr>
-    <tr class="b"><td width="1">ant.version</td><td><xsl:value-of select="substring-after(message[contains(text(),'ant.version')], '->')"/></td></tr>
-    <tr class="a"><td width="1">java.version</td><td><xsl:value-of select="substring-after(message[contains(text(),'java.vm.version')], '->')"/></td></tr>
-    <tr class="b"><td width="1">os.name</td><td><xsl:value-of select="substring-after(message[contains(text(),'os.name')], '->')"/></td></tr>
+    <tr class="lenya-ant-a"><td width="1">ant.file</td><td><xsl:value-of select="substring-after(message[contains(text(),'ant.file')], '->')"/></td></tr>
+    <tr class="lenya-ant-b"><td width="1">ant.version</td><td><xsl:value-of select="substring-after(message[contains(text(),'ant.version')], '->')"/></td></tr>
+    <tr class="lenya-ant-a"><td width="1">java.version</td><td><xsl:value-of select="substring-after(message[contains(text(),'java.vm.version')], '->')"/></td></tr>
+    <tr class="lenya-ant-b"><td width="1">os.name</td><td><xsl:value-of select="substring-after(message[contains(text(),'os.name')], '->')"/></td></tr>
   </table>
   <!-- build information -->
   <h3>Build events</h3>
-  <table class="log" border="1" cellspacing="2" cellpadding="3" width="100%">
+  <table class="lenya-ant-log" border="1" cellspacing="2" cellpadding="3" width="100%">
   <tr>
     <th nowrap="yes" align="left" width="1%">target</th>
     <th nowrap="yes" align="left" width="1%">task</th>
@@ -162,12 +162,12 @@
   <tr valign="top">
     <!-- alternated row style -->
     <xsl:attribute name="class">
-      <xsl:if test="position() mod 2 = 1">a</xsl:if>
-      <xsl:if test="position() mod 2 = 0">b</xsl:if>
+      <xsl:if test="position() mod 2 = 1">lenya-ant-a</xsl:if>
+      <xsl:if test="position() mod 2 = 0">lenya-ant-b</xsl:if>
     </xsl:attribute>
     <td nowrap="yes" width="1%"><xsl:value-of select="../../@name"/></td>
     <td nowrap="yes" style="text-align:right" width="1%">[ <xsl:value-of select="../@name"/> ]</td>
-    <td class="{@priority}" nowrap="yes">
+    <td class="lenya-ant-{@priority}" nowrap="yes">
             <xsl:value-of select="text()"/>
     </td>
   </tr>
