@@ -33,6 +33,7 @@ public class HelloWorld extends HttpServlet {
     log.warn("GET");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
+    writer.print("<?xml version=\"1.0\"?>");
     writer.print("<servlet class=\""+this.getClass().getName()+"\">");
     writer.print("<request method=\"GET\">");
     writer.print(getParameters(request));
@@ -47,6 +48,7 @@ public class HelloWorld extends HttpServlet {
     log.warn("POST");
     response.setContentType("text/xml");
     PrintWriter writer = response.getWriter();
+    writer.print("<?xml version=\"1.0\"?>");
     writer.print("<servlet class=\""+this.getClass().getName()+"\">");
     writer.print("<request method=\"POST\">");
     writer.print(getParameters(request));
