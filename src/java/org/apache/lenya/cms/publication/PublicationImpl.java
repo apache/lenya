@@ -58,22 +58,31 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_SSL = "ssl";
 
+    private boolean isConfigLoaded = false;
+
     /**
      * Creates a new instance of Publication
      * @param _id the publication id
      * @param servletContextPath the servlet context of this publication
-     * @throws PublicationException if there was a problem reading the config
-     *             file
+     * @throws PublicationException if there was a problem reading the config file
      */
     protected PublicationImpl(String _id, String servletContextPath) throws PublicationException {
-        assert _id != null;
         this.id = _id;
+        this.servletContext = new File(servletContextPath);
+    }
 
-        assert servletContextPath != null;
+    /**
+     * Loads the configuration.
+     */
+    protected void loadConfiguration() {
 
-        File _servletContext = new File(servletContextPath);
-        assert _servletContext.exists();
-        this.servletContext = _servletContext;
+        if (isConfigLoaded) {
+            return;
+        }
+        
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Loading configuration for publication [" + getId() + "]");
+        }
 
         File configFile = new File(getDirectory(), CONFIGURATION_FILE);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
@@ -143,31 +152,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
                             + ssl + "]");
                 }
             }
-        } catch (final ConfigurationException e) {
-            throw new PublicationException("Problem with config file: "
-                    + configFile.getAbsolutePath(), e);
-        } catch (final SAXException e) {
-            throw new PublicationException("Problem with config file: "
-                    + configFile.getAbsolutePath(), e);
-        } catch (final IOException e) {
-            throw new PublicationException("Problem with config file: "
-                    + configFile.getAbsolutePath(), e);
-        } catch (final InstantiationException e) {
-            throw new PublicationException("Problem with config file: "
-                    + configFile.getAbsolutePath(), e);
-        } catch (final IllegalAccessException e) {
-            throw new PublicationException("Problem with config file: "
-                    + configFile.getAbsolutePath(), e);
-        } catch (final PublicationException e) {
-            throw new PublicationException("Problem with config file: "
-                    + configFile.getAbsolutePath(), e);
-        } catch (final ClassNotFoundException e) {
-            throw new PublicationException("Problem with config file: "
-                    + configFile.getAbsolutePath(), e);
+        } catch (final Exception e) {
+            throw new RuntimeException("Problem with config file: " + configFile.getAbsolutePath(),
+                    e);
         }
 
         this.breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
 
+        isConfigLoaded = true;
     }
 
     /**
@@ -197,8 +189,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     /**
      * Return the directory of a specific area.
-     * @param area a <code>File</code> representing the root of the area
-     *            content directory.
+     * @param area a <code>File</code> representing the root of the area content directory.
      * @return the directory of the given content area.
      */
     public File getContentDirectory(String area) {
@@ -219,6 +210,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      * @return a <code>DocumentIdToPathMapper</code>
      */
     public DocumentIdToPathMapper getPathMapper() {
+        if (this.mapper == null) {
+            loadConfiguration();
+        }
         return this.mapper;
     }
 
@@ -236,6 +230,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      * @return the default language
      */
     public String getDefaultLanguage() {
+        if (this.defaultLanguage == null) {
+            loadConfiguration();
+        }
         return this.defaultLanguage;
     }
 
@@ -252,15 +249,17 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      * @return an <code>Array</code> of languages
      */
     public String[] getLanguages() {
+        loadConfiguration();
         return (String[]) this.languages.toArray(new String[this.languages.size()]);
     }
 
     /**
-     * Get the breadcrumb prefix. It can be used as a prefix if a publication is
-     * part of a larger site
+     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger
+     * site
      * @return the breadcrumb prefix
      */
     public String getBreadcrumbPrefix() {
+        loadConfiguration();
         return this.breadcrumbprefix;
     }
 
@@ -271,7 +270,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      * @return A document builder.
      */
     public DocumentBuilder getDocumentBuilder() {
-
+        loadConfiguration();
         if (this.documentBuilder == null) {
             throw new IllegalStateException(
                     "The document builder was not defined in publication.xconf!");
@@ -336,7 +335,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      *      boolean)
      */
     public Proxy getProxy(Document document, boolean isSslProtected) {
-
+        loadConfiguration();
         Object key = getProxyKey(document.getArea(), isSslProtected);
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
 
@@ -355,6 +354,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      * @see org.apache.lenya.cms.publication.Publication#getSiteManager()
      */
     public SiteManager getSiteManager() throws SiteException {
+        loadConfiguration();
         SiteManager manager;
         try {
             manager = (SiteManager) this.siteManagerClass.newInstance();
