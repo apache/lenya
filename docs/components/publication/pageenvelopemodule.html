@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>The PageEnvelopeModule</title>
+<link type="text/css" href="../../../skin/page.css" rel="stylesheet">
+</head>
+<body text="#000000" bgcolor="#FFFFFF">
+<!--================= start Banner ==================-->
+<table summary="header with logos" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--================= start Group Logo ==================-->
+<td valign="bottom" bgcolor="#FFFFFF">
+<div class="headerlogo">
+<a href="http://cocoon.apache.org"><img border="0" class="logoImage" alt="Apache Cocoon" src="../../../images/cocoon-project-logo-big.png"></a>
+</div>
+<span class="textheader">Apache Cocoon</span>
+<!--================= start Tabs ==================-->
+<div class="tab">
+<table summary="tab bar" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="10" valign="bottom">
+<div class="tab-separator">
+<img alt="" width="10" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../project/index.html"><font face="Arial, Helvetica, Sans-serif">Project Information</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../installation/index.html"><font face="Arial, Helvetica, Sans-serif">Installation</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-left-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-left-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-selected">
+<a href="../../index.html"><font color="#000000">Documentation</font></a>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right-selected.png)" valign="top" width="5"><img alt="" src="../../../skin/images/tab-corner-right-selected.png"></td><td valign="bottom" class="tab">
+<div class="tab-separator">
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-left.png"></td><td rowspan="2" valign="bottom" class="tab">
+<div class="tab-not-selected-shadow">
+<div class="tab-not-selected">
+<a href="../../../community/index.html"><font face="Arial, Helvetica, Sans-serif">Community</font></a>
+</div>
+</div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="top" width="5" height="5"><img alt="" src="../../../skin/images/tab-corner-right.png"></td>
+</tr>
+<tr>
+<td style="background-image: url(../../../skin/images/tab-left.png)" valign="bottom">
+<div class="tab-not-selected-shadow-left">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td><td style="background-image: url(../../../skin/images/tab-right.png)" valign="bottom">
+<div class="tab-not-selected-shadow-right">
+<img alt="" width="4" src="../../../skin/images/spacer.gif"></div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<!--================= end Tabs ==================-->
+</td>
+<!--================= end Group Logo ==================-->
+<!--================= start Project Logo ==================--><td width="100%" valign="bottom" align="right" bgcolor="#FFFFFF">
+<div style="padding: 10px" class="headerlogo">
+<a href="http://cocoon.apache.org/lenya"><img border="0" class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png"></a>
+</div>
+<div class="tab-separator"></div>
+</td>
+<!--================= end Project Logo ==================-->
+</tr>
+</table>
+<!--================= end Banner ==================-->
+<div class="tab-bar">
+<img alt="" height="5" src="../../../skin/images/spacer.gif"></div>
+<!--================= start Menu, NavBar, Content ==================-->
+<table summary="page content" bgcolor="#ffffff" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top">
+<table summary="menu" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<!--================= start left top NavBar ==================-->
+<!--================= end left top NavBar ==================-->
+<td valign="top">
+<div class="tab-subbar">
+<img width="10" height="5" alt="" src="../../../skin/images/spacer.gif"></div>
+</td><td valign="top">
+<!--================= start Menu items ==================-->
+<div class="menu">
+<div class="menutitle"></div>
+<div class="menuitemgroup">
+<div class="menutitle">Integrator/Dev Guide</div>
+<div class="menuitemgroup">
+<div class="menutitle">Components</div>
+<div class="menuitemgroup">
+<div class="menutitle">Publication</div>
+<div class="menuitemgroup">
+<div class="menuitem">
+<a href="pageEnvelope.html">Page envelope</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">PageEnvelopeModule</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Overview">Overview</a>
+</div>
+<div class="menupageitem">
+<a href="#Module+Parameters">Module Parameters</a>
+</div>
+<div class="menupageitem">
+<a href="#Sitemap+usage">Sitemap usage</a>
+</div>
+<div class="menupageitem">
+<a href="#XSP+usage">XSP usage</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="siteTree.html">Site tree</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--================= end Menu items ==================-->
+</td><td valign="top">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr>
+<td></td><td height="5"><img alt="" width="150" height="1" src="../../../skin/images/spacer.gif"></td><td></td>
+</tr>
+</table>
+</td><td valign="top" width="100%">
+<table summary="content" width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top" colspan="3">
+<div class="tab-subbar">&nbsp;&nbsp;</div>
+</td>
+</tr>
+<!--================= start Content==================-->
+<tr>
+<td align="left" width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td><td align="left" width="100%">
+<div class="content">
+<table cellspacing="0" cellpadding="0" class="title">
+<tr>
+<td valign="middle">
+<h1>The PageEnvelopeModule</h1>
+</td><td nowrap="nowrap" width="40" align="center"><a class="dida" href="pageenvelopemodule.pdf"><img alt="PDF" src="../../../skin/images/pdfdoc.gif" border="0"><br>
+          PDF</a></td>
+</tr>
+</table>
+
+
+<a name="N101C9"></a><a name="Overview"></a>
+<h3>Overview</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+The <span class="codefrag">PageEnvelopeModule</span> is an <span class="codefrag">InputModule</span>
+that provides access to the <span class="codefrag">PageEnvelope</span> parameters. For
+documentation on input modules see section <a href="http://cocoon.apache.org/2.1/userdocs/concepts/modules.html">Modules</a>
+of the Cocoon documentation.
+</p>
+</div>
+  
+
+<a name="N101DF"></a><a name="Module+Parameters"></a>
+<h3>Module Parameters</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+  
+<dt>publication-id</dt>
+  
+<dd>The current publication ID.</dd>
+  
+<dt>context-prefix</dt>
+  
+<dd>The context prefix of the web application, e.g. <span class="codefrag">/lenya</span>.</dd>
+  
+<dt>area</dt>
+  
+<dd>The CMS area, <span class="codefrag">authoring</span> or <span class="codefrag">live</span>.</dd>
+  
+<dt>publication</dt>
+  
+<dd>The current publication</dd>
+  
+<dt>document-id</dt>
+  
+<dd>The document ID, i.e. the path of the document in the sitetree.</dd>
+  
+<dt>document-url</dt>
+  
+<dd>The URL of the document within the area, e.g., <span class="codefrag">/news/index.html</span>
+</dd>
+  
+<dt>document-path</dt>
+  
+<dd>The file path where this document is physically located in the
+  file system.</dd>
+  
+<dt>document-language</dt>
+  
+<dd>The language of this document.</dd>
+  
+<dt>document-type</dt>
+  
+<dd>The document type.</dd>
+
+</dl>
+</div>
+
+
+<a name="N10229"></a><a name="Sitemap+usage"></a>
+<h3>Sitemap usage</h3>
+<div style="margin-left: 0 ; border: 2px">
+<pre class="code">
+&lt;map:parameter name="document-id" value="{page-envelope:document-id}"/&gt;
+</pre>
+</div>
+
+
+<a name="N10234"></a><a name="XSP+usage"></a>
+<h3>XSP usage</h3>
+<div style="margin-left: 0 ; border: 2px">
+<pre class="code">
+&lt;xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"&gt;
+
+&lt;usecase:url&gt;
+  &lt;input:get-attribute
+      module="page-envelope" as="string" name="document-url"/&gt;
+&lt;/usecase:url&gt;
+  
+&lt;/xsp:page&gt;       
+
+</pre>
+</div>
+
+
+  
+</div>
+</td><td width="10"><img width="10" height="1" alt="" src="../../../skin/images/spacer.gif"></td>
+</tr>
+<!--================= end Content==================-->
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+<br>
+</td>
+</tr>
+</table>
+<!--================= end Menu, NavBar, Content ==================-->
+<!--================= start Footer ==================-->
+<div class="footer">
+<table summary="footer" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+<td colspan="2" height="1"><img height="1" width="1" alt="" src="../../../skin/images/spacer.gif"><a href="../../../skin/images/label.gif"></a><a href="../../../skin/images/page.gif"></a><a href="../../../skin/images/chapter.gif"></a><a href="../../../skin/images/chapter_open.gif"></a><a href="../../../skin/images/current.gif"></a></td>
+</tr>
+<tr>
+<td colspan="2" class="copyright" align="center" width="90%"><span class="footnote">Copyright &copy;
+                2002-2003&nbsp;The Apache Software Foundation. All rights reserved.
+                <br>
+<script type="text/javascript" language="JavaScript"><!--
+                  document.write(" - "+"Last Published: " + document.lastModified);
+                  //  --></script></span></td><td nowrap="nowrap" align="right" class="logos"><a href="http://validator.w3.org/check/referer"><img width="88" height="31" alt="Valid HTML 4.01!" src="../../../skin/images/valid-html401.png" class="logoImage" border="0"></a><a href="http://jigsaw.w3.org/css-validator/"><img width="88" height="31" alt="Valid CSS!" src="../../../skin/images/vcss.png" class="logoImage" border="0"></a></td>
+</tr>
+</table>
+</div>
+<!--================= end Footer ==================-->
+</body>
+</html>
