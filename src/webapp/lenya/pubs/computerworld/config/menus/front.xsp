@@ -32,21 +32,18 @@
 					</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Preview</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Print Issue</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/small-preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Small Preview</item>
-				</block>
-				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/"+articleId+"&amp;task-id=publish</xsp:attribute>Publish&#160;this Page
-					</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/small-preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Magazine</item>
 				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule&#160;Headlines</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/preview.xml&amp;documentType=Preview</xsp:attribute>Schedule&#160;Print Issue</item>
 				</block>
 				<block>
 					<!--
@@ -70,12 +67,12 @@
 							<xsp:expr>
                 "/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/preview.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/preview.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/preview.xsd&amp;url-css="+bitflux_prefix+"/css/preview.css&amp;url-post="+bitflux_prefix+"/save/preview.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
 						</xsp:attribute>
-        Edit&#160;Preview
+        Edit&#160;Print Issue
 </item>
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/small-preview.xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/small-preview.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/small-preview.xsd&amp;url-css="+bitflux_prefix+"/css/small-preview.css&amp;url-post="+bitflux_prefix+"/save/small-preview.xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
-						</xsp:attribute>Edit&#160;Small Preview
+						</xsp:attribute>Edit&#160;Magazine
 					</item>
 				</block>
 				<!--

@@ -5,7 +5,9 @@
 		<xsp:logic>
     String articleId=parameters.getParameter("articleId","null");
   </xsp:logic>
-		<live_uri><xsp:expr>"/news/"+articleId+".html"</xsp:expr></live_uri>
+		<live_uri>
+			<xsp:expr>"/news/"+articleId+".html"</xsp:expr>
+		</live_uri>
 		<xsp:logic>
     String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
@@ -28,6 +30,9 @@
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-article</xsp:attribute>Publish</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.<xsp:expr>urisParameter</xsp:expr>&amp;task.<xsp:expr>sourcesParameter</xsp:expr>&amp;documentType=Article</xsp:attribute>Schedule&#160;Article</item>
 				</block>
 				<block>
 					<item>
