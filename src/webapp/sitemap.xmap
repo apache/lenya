@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.5 2002/01/16 16:32:12 michicms Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.6 2002/01/25 16:44:52 michicms Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -99,24 +99,6 @@
 
   </map:matchers>
 
-<!--
-  <map:actions>
-   <map:action name="authorizer" logger="sitemap.action.authorizer"
-               src="org.wyona.cms.cocoon.acting.PMLAuthorizerAction">
-     <authenticator id="global"/>
-     <policies>policies/</policies>
-     <public href="login-screen"/>
-     <public href="do-login"/>
-     <public href="switch-user"/>
-     <public href="logout"/>
-   </map:action>
-   <map:action name="authenticator" logger="sitemap.action.authenticator"
-               src="org.wyona.cms.cocoon.acting.IMLAuthenticatorAction">
-     <id>global</id>
-     <passwd>passwd/</passwd>
-   </map:action>
-  </map:actions>
--->
  </map:components>
 
  <map:pipelines>
@@ -148,13 +130,6 @@
      <map:match pattern="ethz-mat/**">
        <map:mount uri-prefix="ethz-mat" src="wyona/cms/pubs/ethz-mat/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
-
-<!-- HTML Form Editor -->
-<!--
-         <map:match pattern="uni**">
-          <map:mount uri-prefix="uni" src="uni/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-         </map:match>
--->
 
 <!-- Original Cocoon Sitemap (without SVG and FOP) -->
      <map:match pattern="**">
