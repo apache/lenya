@@ -33,10 +33,12 @@ efficiently its own publication. The <a href="docs/tutorial/index.html">tutorial
 <xsl:for-each select="lenya:publication">
   <xsl:choose>
     <xsl:when test="lenya:XPSEXCEPTION">
+<!--
       <div class="lenya-publication-item">
         <font color="red">Exception:</font>
         (publication id = <xsl:value-of select="@pid"/>) <xsl:value-of select="lenya:XPSEXCEPTION"/>
       </div>
+-->
     </xsl:when>
     <xsl:otherwise>
       <xsl:choose>
