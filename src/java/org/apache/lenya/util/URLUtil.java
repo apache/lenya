@@ -19,6 +19,8 @@
 
 package org.apache.lenya.util;
 
+import java.util.Locale;
+
 
 /**
  * DOCUMENT ME!
@@ -46,7 +48,7 @@ public class URLUtil {
      */
     public static String complete(String parent, String child) {
         String url = child;
-        String urlLowCase = child.toLowerCase();
+        String urlLowCase = child.toLowerCase(Locale.ENGLISH);
         String currentURLPath = parent.substring(0, parent.lastIndexOf("/"));
         String rootURL = parent.substring(0, parent.indexOf("/", 8));
 

@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import websphinx.RobotExclusion;
@@ -236,7 +237,7 @@ public class IterativeHTMLCrawler implements Configurable {
      */
     public URL addURL(String urlCandidate, String currentURLPath)
         throws MalformedURLException {
-        URL url = new URL(parseHREF(urlCandidate, urlCandidate.toLowerCase(), currentURLPath));
+        URL url = new URL(parseHREF(urlCandidate, urlCandidate.toLowerCase(Locale.ENGLISH), currentURLPath));
         //completeURL(currentURL,urlCandidate)  new URL(currentURLPath+"/"+urlCandidate);
 
         if (filterURL(urlCandidate, currentURLPath, urlsToCrawlLowerCase)) {
@@ -350,7 +351,7 @@ public class IterativeHTMLCrawler implements Configurable {
      * @return DOCUMENT ME!
      */
     public boolean filterURL(String url, String currentURLPath, java.util.TreeSet links) {
-        String urlLowCase = url.toLowerCase();
+        String urlLowCase = url.toLowerCase(Locale.ENGLISH);
 
         if (!(urlLowCase.startsWith("http://") || urlLowCase.startsWith("https://"))) {
             url = parseHREF(url, urlLowCase, currentURLPath);

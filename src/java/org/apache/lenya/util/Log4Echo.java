@@ -19,6 +19,8 @@
 
 package org.apache.lenya.util;
 
+import java.util.Locale;
+
 import org.apache.log4j.Category;
 
 
@@ -39,7 +41,7 @@ public class Log4Echo {
             return;
         }
 
-        String level = args[0].toLowerCase();
+        String level = args[0].toLowerCase(Locale.ENGLISH);
         String message = args[1];
         if (level.equals("debug")) {
             log.debug(message);

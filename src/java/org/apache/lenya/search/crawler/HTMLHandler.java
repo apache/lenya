@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
@@ -181,7 +182,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
      * @param attribs DOCUMENT ME!
      */
     public void handleAnchor(MutableAttributeSet attribs) {
-        String href = new String();
+        String href = "";
 
         href = (String) attribs.getAttribute(HTML.Attribute.HREF);
 
@@ -232,9 +233,8 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
      * @param attribs DOCUMENT ME!
      */
     public void handleMeta(MutableAttributeSet attribs) {
-        String name = new String();
-
-        String content = new String();
+        String name = "";
+        String content = "";
 
         name = (String) attribs.getAttribute(HTML.Attribute.NAME);
 
@@ -244,7 +244,7 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
             return;
         }
 
-        name = name.toUpperCase();
+        name = name.toUpperCase(Locale.ENGLISH);
 
         if (name.equals("DESCRIPTION")) {
             description = content;

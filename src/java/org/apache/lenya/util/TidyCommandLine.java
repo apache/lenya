@@ -47,7 +47,7 @@ public class TidyCommandLine {
         }
 
         try {
-            new TidyCommandLine().tidy(new URL(args[0]), new File(args[1]), new File(args[2]), true);
+        	new TidyCommandLine().tidy(new URL(args[0]), new File(args[1]), new File(args[2]), true);
         } catch (Exception e) {
             System.err.println(e);
         }

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.apache.lenya.lucene.html.HTMLParser;
@@ -128,7 +129,7 @@ public class ReTokenizeFile {
         int index = -1;
 
         for (int i = 0; i < words.length; i++) {
-            index = content.toLowerCase().indexOf(words[i].toLowerCase());
+            index = content.toLowerCase(Locale.ENGLISH).indexOf(words[i].toLowerCase(Locale.ENGLISH));
 
             if (index >= 0) {
                 int start = index - offset;
@@ -207,7 +208,7 @@ public class ReTokenizeFile {
     public String emphasizeAsXML(String string, String[] words) {
         String emphasizedString = "... Hello <word>World</word>! ...";
 
-        String lowerCaseString = string.toLowerCase();
+        String lowerCaseString = string.toLowerCase(Locale.ENGLISH);
 
         for (int i = 0; i < words.length; i++) {
             String word = words[i].toLowerCase();
@@ -258,7 +259,7 @@ public class ReTokenizeFile {
         // test if the file contains xml data and extract the encoding
         int endOfFirstTag = content.indexOf(">");
         if(endOfFirstTag > 0 && content.charAt(endOfFirstTag-1) == '?') {
-            String upperLine = content.substring(0, endOfFirstTag).toUpperCase();
+            String upperLine = content.substring(0, endOfFirstTag).toUpperCase(Locale.ENGLISH);
             int encStart = upperLine.indexOf("ENCODING=")+10;
             int encEnd = -1;
 

@@ -24,6 +24,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
@@ -250,7 +251,7 @@ public class SwingHTMLHandler extends ParserCallback {
 
             if (name.equals(LUCENE_TAG_NAME)) {
                 String tagName = (String) valueObject;
-                HTML.Tag tag = HTML.getTag(tagName.toLowerCase());
+                HTML.Tag tag = HTML.getTag(tagName.toLowerCase(Locale.ENGLISH));
                 setLuceneTag(tag);
             }
 
