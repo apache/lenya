@@ -217,8 +217,8 @@ public class UploadAction extends AbstractConfigurableAction {
      * @param request The request.
      */
     protected void logRequestParameters(Request request) {
-        for (Enumeration enum = request.getParameterNames(); enum.hasMoreElements();) {
-            String param = (String) enum.nextElement();
+        for (Enumeration pEnum = request.getParameterNames(); pEnum.hasMoreElements();) {
+            String param = (String) pEnum.nextElement();
             getLogger().debug(
                     param + ": " + request.getParameter(param) + " [" + request.get(param) + "]");
         }
