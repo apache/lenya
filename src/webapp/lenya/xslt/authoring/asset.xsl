@@ -150,7 +150,7 @@ function check(fileinput) {
 	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights"/></td>
+	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
             <xsl:if test="$insert = 'true'">
