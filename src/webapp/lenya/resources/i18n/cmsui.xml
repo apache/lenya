@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.26 2004/02/22 20:46:13 roku Exp $
+  $Id: cmsui.xml,v 1.27 2004/02/23 08:37:07 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -59,6 +59,7 @@
   <message key="Assets">Assets</message>
   <message key="true">yes</message>
   <message key="false">no</message>
+  <message key="Rename">Rename</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
@@ -180,4 +181,10 @@ c
   <message key="AC Live">AC&#160;Live</message>
   <message key="Scheduler">Scheduler</message>
 
+    <!-- Info screen actions-->
+  <message key="New Navigation Title">New Navigation Title</message>
+  <message key="Rename Document">Rename Document</message>
+  <message key="New Document ID">New Document ID</message>
+  <message key="No whitespace, no special characters">No whitespace, no special characters</message>
+ 
 </catalogue>

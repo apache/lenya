@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.31 2004/02/22 20:46:13 roku Exp $
+   $Id: cmsui_de.xml,v 1.32 2004/02/23 08:37:07 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -59,6 +59,7 @@
   <message key="Assets">Anlagen</message>
   <message key="true">ja</message>
   <message key="false">nein</message>
+  <message key="Rename">Umbenennen</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
@@ -179,6 +180,12 @@
   <message key="AC Auth">Rechte&#160;Auth</message>
   <message key="AC Live">Rechte&#160;Live</message>
   <message key="Scheduler">Zeitsteuerung</message>
+
+    <!-- Info screen actions-->
+  <message key="New Navigation Title">Neuer Titel</message>
+  <message key="Rename Document">Dokument umbenennen</message>
+  <message key="New Document ID">Neue Dokument ID</message>
+  <message key="No whitespace, no special characters">Keine Leer- oder Sonderzeichen</message>
 
 </catalogue>
 

@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.16 2004/01/26 17:40:41 edith Exp $
+ $Id: rename.xsl,v 1.17 2004/02/23 08:37:07 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
   
@@ -23,7 +24,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>Rename Document</page:title>
+      <page:title><i18n:text>Rename Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
         <xsl:apply-templates select="info"/>
@@ -33,7 +34,7 @@
   
   <xsl:template match="info">
     <div class="lenya-box">
-      <div class="lenya-box-title">Rename Document</div>
+      <div class="lenya-box-title"><i18n:text>Rename Document</i18n:text></div>
       <div class="lenya-box-body">
         <script Language="JavaScript">
 function validRequired(formField,fieldLabel)
@@ -71,15 +72,15 @@ function validateForm(theForm)
           
           <table class="lenya-table-noborder">
             <tr>
-              <td class="lenya-entry-caption">New Document ID:</td>
-              <td><input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value="{$destination-id}"/> (No whitespace, no special characters)</td>
+              <td class="lenya-entry-caption"><i18n:text>New Document ID</i18n:text>:</td>
+              <td><input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value="{$destination-id}"/> (<i18n:text>No whitespace, no special characters</i18n:text>)</td>
             </tr>
             <tr>
               <td/>
               <td>
                 <br/>
-                <input type="submit" value="Rename"/>&#160;
-                <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                <input i18n:attr="value" type="submit" value="Rename"/>&#160;
+                <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
               </td>
             </tr>
           </table>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.55 2004/02/20 09:11:26 andreas Exp $
+ $Id: info.xsl,v 1.56 2004/02/23 08:37:07 roku Exp $
  -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
@@ -29,27 +30,27 @@
 	 -->
 	<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">overview</xsl:with-param></xsl:call-template>Overview</a></td>
+			<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">overview</xsl:with-param></xsl:call-template><i18n:text>Overview</i18n:text></a></td>
 			<xsl:if test="$languageexists = 'true'">
 				<xsl:if test="$documentid != '/'">
-					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">meta</xsl:with-param></xsl:call-template>Meta</a></td>
-					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template>Assets</a></td>
-					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template>Workflow</a></td>
-					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template>Revisions</a></td>
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">meta</xsl:with-param></xsl:call-template><i18n:text>Meta</i18n:text></a></td>
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">assets</xsl:with-param></xsl:call-template><i18n:text>Assets</i18n:text></a></td>
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">workflow</xsl:with-param></xsl:call-template><i18n:text>Workflow</i18n:text></a></td>
+					<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">revisions</xsl:with-param></xsl:call-template><i18n:text>Versions</i18n:text></a></td>
 				</xsl:if>
 				<xsl:choose>
   				<xsl:when test="$area = 'authoring'">
-            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC&#160;Auth</a></td>
-            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC&#160;Live</a></td>
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template><i18n:text>AC Auth</i18n:text></a></td>
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template><i18n:text>AC Live</i18n:text></a></td>
 				  </xsl:when>
   				<xsl:when test="$area = 'archive'">
-            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-archive</xsl:with-param></xsl:call-template>AC&#160;Archive</a></td>
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-archive</xsl:with-param></xsl:call-template><i18n:text>AC Archive</i18n:text></a></td>
 				  </xsl:when>
   				<xsl:when test="$area = 'trash'">
-            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-trash</xsl:with-param></xsl:call-template>AC&#160;Trash</a></td>
+            <td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-trash</xsl:with-param></xsl:call-template><i18n:text>AC Trash</i18n:text></a></td>
 				  </xsl:when>
         </xsl:choose>
-				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">scheduler</xsl:with-param></xsl:call-template>Scheduler</a></td>
+				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">scheduler</xsl:with-param></xsl:call-template><i18n:text>Scheduler</i18n:text></a></td>
 			</xsl:if>
 		</tr>
 	</table>
@@ -86,21 +87,21 @@
 	<xsl:choose>
 	<xsl:when test="dc:title">
    <table class="lenya-table-noborder">
-   <tr><td class="lenya-entry-caption">Title:</td><td><xsl:value-of select="dc:title"/></td></tr>
-   <tr><td class="lenya-entry-caption">Description:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
-   <tr><td class="lenya-entry-caption">Workflow State:</td><td><xsl:apply-templates select="lenya-info:workflow-state"/></td></tr>
-   <tr><td class="lenya-entry-caption">Live:</td><td><xsl:apply-templates select="lenya-info:is-live"/></td></tr>
-   <tr><td class="lenya-entry-caption">Available Languages:</td><td><xsl:apply-templates select="lenya-info:languages"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Title</i18n:text>:</td><td><xsl:value-of select="dc:title"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td><td><xsl:value-of select="lenya-info:abstract"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Workflow State</i18n:text>:</td><td><i18n:text><xsl:apply-templates select="lenya-info:workflow-state"/></i18n:text></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Live</i18n:text>:</td><td><i18n:text><xsl:apply-templates select="lenya-info:is-live"/></i18n:text></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Available Languages</i18n:text>:</td><td><xsl:apply-templates select="lenya-info:languages"/></td></tr>
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
-   <tr><td class="lenya-entry-caption">Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
-   <tr><td class="lenya-entry-caption">Document ID:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Last modified</i18n:text>:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
    </table>
   </xsl:when>
   <xsl:when test="$languageexists = 'false'">
-  	This document is not available in this language.<br/><br/>
-  	Available Languages: <xsl:apply-templates select="lenya-info:languages"/>
+  	<i18n:text>This document is not available in this language.</i18n:text><br/><br/>
+  	<i18n:text>Available Languages</i18n:text>: <xsl:apply-templates select="lenya-info:languages"/>
   </xsl:when>
-  <xsl:otherwise>No overview available.</xsl:otherwise>
+  <xsl:otherwise><i18n:text>No overview available.</i18n:text></xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
@@ -142,13 +143,13 @@
 	<xsl:if test="lenya-info:exception-user != ''">
 	  <tr><td colspan="2" class="lenya-form-message-error">Could not update the meta data as the document has been checked out by <xsl:value-of select="lenya-info:exception-user"/> since <xsl:value-of select="lenya-info:exception-date"/>.</td></tr>
 	</xsl:if>
-        <tr><td class="lenya-entry-caption">Title:</td><td><input type="text" id="dc:title" name="properties.save.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
-        <tr><td class="lenya-entry-caption">Subject:</td><td><input type="text" id="dc:subject" name="properties.save.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
-        <tr><td class="lenya-entry-caption">Description:</td><td><textarea id="dc:description" name="properties.save.meta.description" rows="3" class="lenya-form-element"><xsl:value-of select="dc:description"/></textarea></td></tr>
-        <tr><td class="lenya-entry-caption">Publisher:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
-        <tr><td class="lenya-entry-caption">Rights:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
-        <tr><td class="lenya-entry-caption">Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
-        <tr><td class="lenya-entry-caption">Creator:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Title</i18n:text>:</td><td><input type="text" id="dc:title" name="properties.save.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Subject</i18n:text>:</td><td><input type="text" id="dc:subject" name="properties.save.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td><td><textarea id="dc:description" name="properties.save.meta.description" rows="3" class="lenya-form-element"><xsl:value-of select="dc:description"/></textarea></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Publisher</i18n:text>:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Rights</i18n:text>:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Date of creation</i18n:text>:</td><td><xsl:value-of select="dc:date"/></td></tr>
+        <tr><td class="lenya-entry-caption"><i18n:text>Creator</i18n:text>:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
         <tr><td/><td><br/>
               <xsl:choose>
                 <xsl:when test="$area = 'authoring'"><input type="submit" value="Update Metadata"/></xsl:when>
@@ -169,9 +170,9 @@
   <xsl:template match="lenya-info:assets">
     <table class="lenya-table">
       <tr>
-        <th>Assets</th>
-        <th>File Size</th>
-        <th>Creation Date</th>
+        <th><i18n:text>Assets</i18n:text></th>
+        <th><i18n:text>File Size</i18n:text></th>
+        <th><i18n:text>Creation Date</i18n:text></th>
         <th></th>
       </tr>
       <xsl:for-each select="lenya-info:asset">
@@ -229,7 +230,7 @@
           
           <xsl:when test="position()=1">
             <tr>
-              <td>Current version</td>
+              <td><i18n:text>Current Version</i18n:text></td>
               <td>&#160;</td>
               <xsl:apply-templates select="Time"/>
               <xsl:apply-templates select="Identity"/>
@@ -250,13 +251,13 @@
               <td>
                 <xsl:element name="a">
                   <xsl:if test="$area = 'authoring'"><xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute></xsl:if>
-                  Rollback to this version
+                  <i18n:text>Rollback to this Version</i18n:text>
                 </xsl:element>
               </td>
               <td>
                 <xsl:element name="a">
                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>
-                 View</xsl:element>
+                 <i18n:text>View</i18n:text></xsl:element>
               </td>
               <xsl:apply-templates select="../Time"/>
               <xsl:apply-templates select="../Identity"/>
@@ -290,7 +291,7 @@
        		        <xsl:if test="@ssl = 'true'">
 	        	      <xsl:attribute name="checked">checked</xsl:attribute>
        	 	        </xsl:if>
-        	        SSL Encryption
+        	        <i18n:text>SSL Encryption</i18n:text>
                     </input>
                   </xsl:when>
                   <xsl:otherwise>
@@ -298,7 +299,7 @@
        		          <xsl:if test="@ssl = 'true'">
 	        	        <xsl:attribute name="checked">checked</xsl:attribute>
        		          </xsl:if>
-        	          SSL Encryption
+        	          <i18n:text>SSL Encryption</i18n:text>
                     </input>
                   </xsl:otherwise>
                 </xsl:choose>              
@@ -309,21 +310,21 @@
 	<td>
 	<table class="lenya-table">
 		<tr>
-			<th colspan="2">Access Object</th>
-			<th colspan="2"><xsl:if test="@area = 'authoring'">Role</xsl:if>&#160;</th>
+			<th colspan="2"><i18n:text>Access Object</i18n:text></th>
+			<th colspan="2"><xsl:if test="@area = 'authoring'"><i18n:text>Role</i18n:text></xsl:if>&#160;</th>
 		</tr>
 		<tr>
 			<xsl:call-template name="form-add-credential">
 				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">user</xsl:with-param>
-				<xsl:with-param name="title">User</xsl:with-param>
+				<xsl:with-param name="title"><i18n:text>User</i18n:text></xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		<tr>
 			<xsl:call-template name="form-add-credential">
 				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">group</xsl:with-param>
-				<xsl:with-param name="title">Group</xsl:with-param>
+				<xsl:with-param name="title"><i18n:text>Group</i18n:text></xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		<xsl:if test="@area = 'live'">
@@ -331,7 +332,7 @@
 			<xsl:call-template name="form-add-credential">
 				<xsl:with-param name="larea" select="@area"/>
 				<xsl:with-param name="type">iprange</xsl:with-param>
-				<xsl:with-param name="title">IP&#160;range</xsl:with-param>
+				<xsl:with-param name="title"><i18n:text>IP Range</i18n:text></xsl:with-param>
 			</xsl:call-template>
 		</tr>
 		</xsl:if>
@@ -379,7 +380,7 @@
     	</form>
   	</xsl:when>
   	<xsl:otherwise>
-  	  No visitor role found which can be assigned in the live area.
+  	  <i18n:text>No visitor role found which can be assigned in the live area</i18n:text>.
   	</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
