@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.16 2003/08/13 18:43:41 andreas Exp $
+$Id: FilePolicyManager.java,v 1.17 2003/08/28 10:06:03 andreas Exp $
 <License>
 
  ============================================================================
@@ -118,7 +118,6 @@ public class FilePolicyManager
     public FilePolicyManager() {
     }
 
-    private File policyDirectory;
     private SourceResolver resolver;
     private SourceCache cache;
     

@@ -1,5 +1,5 @@
 /*
-$Id: PolicyBuilder.java,v 1.7 2003/08/13 13:11:45 andreas Exp $
+$Id: PolicyBuilder.java,v 1.8 2003/08/28 10:07:02 andreas Exp $
 <License>
 
  ============================================================================
@@ -95,8 +95,6 @@ public class PolicyBuilder implements InputStreamBuilder {
     }
 
     private AccreditableManager accreditableManager;
-
-    private static PolicyBuilder instance;
 
     protected static final String POLICY_ELEMENT = "policy";
     protected static final String GROUP_ELEMENT = "group";
