@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.6 2004/02/13 22:44:54 roku Exp $
+$Id: cmsui_de.xml,v 1.7 2004/02/13 23:13:28 roku Exp $
 $Author: roku $
 <License>
 
@@ -60,7 +60,9 @@ $Author: roku $
   <message key="Cancel">Abbrechen</message>
   <message key="Back to Page">Zur&#252;ck zur Seite</message>
   <message key="NOTE">HINWEIS</message>
-      
+  <message key="No referer">Keine R&#252;ckverweiseite</message>  
+  <message key="Referer">R&#252;ckverweis</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -75,6 +77,12 @@ $Author: roku $
   <message key="Password">Passwort</message>    
   <message key="Username">Benutzername</message>                
   <message key="Authentication failed">Anmeldung ist fehlgeschlagen</message>  
-  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1}</message> 
+  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1}</message>
+
+  <!-- logout screen -->
+  <message key="logout-from-pub">Abmelden von der {0} Publikation</message>
+  <message key="Your history">Ihr Verlauf</message>
+  <message key="Login to authoring area">An Autorenbereich anmelden</message>
+
 </catalogue>
 

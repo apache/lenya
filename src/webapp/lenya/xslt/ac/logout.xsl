@@ -3,6 +3,7 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
     >
@@ -12,7 +13,7 @@
 <xsl:param name="publication_name"/>
 <xsl:param name="contextprefix"/>
 
-<xsl:variable name="copyright">copyright &#169; 2003-2004 Apache Software Foundation</xsl:variable>
+<xsl:variable name="copyright">Copyright &#169; 2003-2004 Apache Software Foundation</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
@@ -35,7 +36,10 @@
 </xsl:template>
 
 <xsl:template name="html-title">
-LOGOUT from the <xsl:call-template name="pubname" /> Publication
+  <i18n:translate>
+    <i18n:text i18n:key="logout-from-pub"/>
+    <i18n:param><xsl:call-template name="pubname" /></i18n:param>
+  </i18n:translate>
 </xsl:template>
 
 <xsl:template name="pubname">
@@ -49,12 +53,12 @@ LOGOUT from the <xsl:call-template name="pubname" /> Publication
 
   <div class="lenya-box">
     <div class="lenya-box-body">
-      <a href="{$contextprefix}/{$publication_name}/authoring/index.html">Login to Authoring Area</a>
+      <a href="{$contextprefix}/{$publication_name}/authoring/index.html"><i18n:text>Login to authoring area</i18n:text></a>
     </div>
   </div>
 
   <div class="lenya-box">
-    <div class="lenya-box-title">Your history</div>
+    <div class="lenya-box-title"><i18n:text>Your history</i18n:text></div>
     <div class="lenya-box-body">
       <ul>
         <xsl:apply-templates select="uri"/>
@@ -69,12 +73,12 @@ LOGOUT from the <xsl:call-template name="pubname" /> Publication
 </xsl:template>
 
 <xsl:template match="referer">
-<p>Referer: <a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></p>
+<p><i18n:text>Referer</i18n:text>: <a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></p>
 </xsl:template>
 
 <xsl:template match="no_referer">
 <p>
-<font color="red">EXCEPTION:</font> No referer
+<font color="red">EXCEPTION:</font> <i18n:text>No referer</i18n:text>
 </p>
 </xsl:template>
 

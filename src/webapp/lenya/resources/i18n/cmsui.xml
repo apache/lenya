@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-$Id: cmsui.xml,v 1.4 2004/02/13 22:44:54 roku Exp $
+$Id: cmsui.xml,v 1.5 2004/02/13 23:13:28 roku Exp $
 $Author: roku $
 <License>
 
@@ -61,6 +61,8 @@ $Author: roku $
   <message key="Cancel">Cancel</message>
   <message key="Back to Page">Back to page</message>
   <message key="NOTE">NOTE</message>
+  <message key="No referer">No referer</message>
+  <message key="Referer">Referer</message>
  
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for Approval</message>  
@@ -70,12 +72,17 @@ $Author: roku $
   <message key="Publish">Publish</message>  
   <message key="Source File(s)">Source File(s)</message>
 
-  <!-- logn screen -->        
+  <!-- login screen -->
   <message key="login-to-pub">LOGIN to the {0} Publication</message>
   <message key="Login">Login</message>
   <message key="Password">Password</message>
   <message key="Username">Username</message>
   <message key="Authentication failed">Authentication failed</message>
   <message key="try-user-lenya">Try user {0} and password {1}</message>
+
+  <!-- logout screen -->
+  <message key="logout-from-pub">LOGOUT from the {0} Publication</message>
+  <message key="Your history">Your history</message>
+  <message key="Login to authoring area">Login to authoring area</message>
 
 </catalogue>
