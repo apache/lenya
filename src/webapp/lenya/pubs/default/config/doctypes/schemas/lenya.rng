@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.rng,v 1.4 2004/03/13 12:34:17 gregor Exp $ -->
+<!-- $Id$ -->
 
 <grammar ns="http://www.w3.org/1999/xhtml"
          xmlns="http://relaxng.org/ns/structure/1.0"
@@ -40,6 +40,7 @@
   <element name="lenya:asset">
     <attribute name="src"><ref name="Text.datatype"/></attribute>
     <attribute name="type"><ref name="Text.datatype"/></attribute>
+    <attribute name="size"><ref name="Number.datatype"/></attribute>
     <text/>
   </element>
 </define>
