@@ -278,6 +278,34 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         return valueString;
     }
 
+    public String getParameterAsString(String name, String defaultValue) {
+        String valueString = defaultValue;
+        Object value = getParameter(name);
+        if (value != null) {
+            valueString = value.toString();
+        }
+        return valueString;
+    }
+
+    public int getParameterAsInteger(String name, int defaultValue) {
+        int valueInt = defaultValue;
+        Object value = getParameter(name);
+        if (value != null) {
+            valueInt = Integer.valueOf(value.toString()).intValue();
+        }
+        return valueInt;
+    }
+
+    public boolean getParameterAsBoolean(String name, boolean defaultValue) {
+        boolean valueBoolean = defaultValue;
+        Object value = getParameter(name);
+        if (value != null) {
+            valueBoolean = Boolean.valueOf(value.toString()).booleanValue();
+        }
+
+        return valueBoolean;
+    }
+
     /**
      * Return a map of all parameters
      * @return the map
