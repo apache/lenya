@@ -20,7 +20,7 @@
 
     <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
       <catalogues default="cmsui">
-        <catalogue id="cmsui" name="cmsui" location="lenya/resources/i18n"/>           
+        <catalogue id="cmsui" name="cmsui" location="cocoon://i18n-dictionaries"/>           
        </catalogues>
        <untranslated-text>untranslated</untranslated-text>
        <cache-at-startup>true</cache-at-startup>
@@ -222,6 +222,15 @@
 <!-- =========================== Pipelines ================================= -->
 
   <map:pipelines>
+      <!-- i18n dictionaries (pub local and global) are merged/aggregated here -->
+      <map:pipeline type="noncaching">
+        <!-- FIXME: Why cant I use pattern="i18n-dictionaries/**"? Results into an endless loop with StackOverflowError-->
+        <map:match pattern="i18n-dictionaries**">
+          <map:generate src="lenya/resources/i18n{1}"/>
+          <map:serialize/>
+        </map:match>
+      </map:pipeline>
+
 
     <map:pipeline>
       
