@@ -1,5 +1,5 @@
 /*
-$Id: PolicyHelper.java,v 1.6 2003/08/19 18:46:03 andreas Exp $
+$Id: PolicyHelper.java,v 1.7 2003/08/20 18:52:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,11 +67,14 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Item;
 import org.apache.lenya.cms.ac.Role;
+import org.apache.lenya.cms.ac.User;
+import org.apache.lenya.cms.ac.UserManager;
 import org.apache.lenya.cms.ac2.AccessControllerResolver;
 import org.apache.lenya.cms.ac2.Accreditable;
 import org.apache.lenya.cms.ac2.Credential;
 import org.apache.lenya.cms.ac2.DefaultAccessController;
 import org.apache.lenya.cms.ac2.DefaultPolicy;
+import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.ac2.InheritingPolicyManager;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -330,6 +333,42 @@ public class PolicyHelper {
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
         }
+    }
+    
+    /**
+     * Returns the users with a certain role on the current URL.
+     * @param roleId The role ID.
+     * @return An array of users.
+     * @throws ProcessingException when something went wrong.
+     */
+    public User[] getUsersWithRole(String roleId) throws ProcessingException {
+        List users = new ArrayList();
+        try {
+            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(), getUrl());
+            UserManager userManager = accessController.getAccreditableManager().getUserManager();
+            for (Iterator i = userManager.getUsers(); i.hasNext(); ) {
+                User user = (User) i.next();
+                Identity identity = new Identity();
+                identity.addIdentifiable(user);
+                Role[] roles = policy.getRoles(identity);
+                for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
+                    if (roles[roleIndex].getId().equals(roleId)) {
+                        users.add(user);
+                    }
+                }
+            }
+        } catch (AccessControlException e) {
+            throw new ProcessingException(e);
+        }
+        return (User[]) users.toArray(new User[users.size()]);
+    }
+
+    /**
+     * Returns the URL.
+     * @return A string.
+     */
+    public String getUrl() {
+        return url;
     }
 
 }
