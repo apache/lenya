@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.16 2004/05/04 13:50:30 michi Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.17 2004/05/10 12:09:11 andreas Exp $ -->
 
 <project name="webapp">
 
@@ -46,6 +46,7 @@
       <fileset dir="${src.webapp.dir}">
         <exclude name="lenya/pubs/**"/>
         <exclude name="WEB-INF/*-xconf.xsl"/>
+        <exclude name="WEB-INF/*-xml.xsl"/>
       </fileset>
     </copy>
 
@@ -59,6 +60,13 @@
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
             srcdir="${build.webapp}/lenya/pubs" 
             includes="*/config/cocoon.xconf"
+            addComments="true"/>
+            
+    <!-- Patch web.xml -->
+    <echo>INFO: Patch web.xml</echo>
+    <xpatch file="${build.webapp}/WEB-INF/web.xml"
+            srcdir="${build.webapp}/lenya/pubs" 
+            includes="*/config/web.xml"
             addComments="true"/>
             
     <!-- Patch publication tests -->
