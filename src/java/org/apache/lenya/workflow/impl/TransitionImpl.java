@@ -1,5 +1,5 @@
 /*
-$Id: TransitionImpl.java,v 1.5 2003/07/23 13:21:08 gregor Exp $
+$Id: TransitionImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,6 +60,8 @@ import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Transition;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +72,12 @@ import java.util.List;
  * @author  andreas
  */
 public class TransitionImpl implements Transition {
-    /** Creates a new instance of TransitionImpl */
+    
+    /**
+     * Ctor.
+     * @param sourceState The source state.
+     * @param destinationState The destination state.
+     */
     protected TransitionImpl(StateImpl sourceState, StateImpl destinationState) {
         assert sourceState != null;
         assert destinationState != null;
@@ -164,15 +171,19 @@ public class TransitionImpl implements Transition {
         return destination;
     }
 
-    /** Returns if the transition can fire in a certain situation.
-     *
+    /** 
+     * Returns if the transition can fire in a certain situation.
+     * @param situation The situation.
+     * @param instance The workflow instance.
+     * @throws WorkflowException when an error occurs.
+     * @return A boolean value.
      */
-    public boolean canFire(Situation situation) {
+    public boolean canFire(Situation situation, WorkflowInstance instance) throws WorkflowException {
         Condition[] conditions = getConditions();
         boolean canFire = true;
 
         for (int i = 0; i < conditions.length; i++) {
-            if (!conditions[i].isComplied(situation)) {
+            if (!conditions[i].isComplied(situation, instance)) {
                 canFire = false;
             }
         }
@@ -180,7 +191,7 @@ public class TransitionImpl implements Transition {
         return canFire;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#toString()
      */
     public String toString() {

@@ -1,5 +1,5 @@
 /*
-$Id: ActionImpl.java,v 1.5 2003/07/23 13:21:08 gregor Exp $
+$Id: ActionImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,7 +65,11 @@ import org.apache.lenya.workflow.WorkflowInstance;
  * @author  andreas
  */
 public class ActionImpl implements Action {
-    /** Creates a new instance of ActionImpl */
+    
+    /**
+     * Creates a new instance of ActionImpl.
+     * @param actionId The action ID.
+     */
     protected ActionImpl(String actionId) {
         assert actionId != null;
         id = actionId;
@@ -82,14 +86,14 @@ public class ActionImpl implements Action {
         return id;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
         return getId();
     }
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.workflow.Action#execute(org.apache.lenya.workflow.WorkflowInstance)
      */
     public void execute(WorkflowInstance instance) throws WorkflowException {

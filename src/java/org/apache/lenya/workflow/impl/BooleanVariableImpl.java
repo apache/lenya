@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariableImpl.java,v 1.5 2003/07/23 13:21:08 gregor Exp $
+$Id: BooleanVariableImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,12 @@ import org.apache.lenya.workflow.BooleanVariable;
  * @author  andreas
  */
 public class BooleanVariableImpl implements BooleanVariable {
-    /** Creates a new instance of BooleanVariableImpl */
+    
+    /**
+     * Creates a new instance of BooleanVariableImpl.
+     * @param variableName The variable name.
+     * @param initialValue The initial value of the corresponding variable instances.
+     */
     protected BooleanVariableImpl(String variableName, boolean initialValue) {
         assert variableName != null;
         name = variableName;
@@ -82,7 +87,7 @@ public class BooleanVariableImpl implements BooleanVariable {
 
     private boolean initialValue;
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.workflow.BooleanVariable#getInitialValue()
      */
     public boolean getInitialValue() {

@@ -1,5 +1,5 @@
 /*
-$Id: RoleCondition.java,v 1.7 2003/09/02 13:17:22 andreas Exp $
+$Id: AbstractCondition.java,v 1.1 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,39 +53,42 @@ $Id: RoleCondition.java,v 1.7 2003/09/02 13:17:22 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.workflow;
+package org.apache.lenya.workflow.impl;
 
-import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.lenya.workflow.impl.AbstractCondition;
-
 
 /**
+ * @author andreas
  *
- * @author  andreas
+ * To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RoleCondition extends AbstractCondition {
-    
+public abstract class AbstractCondition implements Condition {
+
+    private String expression;
+
     /**
-     * Returns if the condition is complied in a certain situation.
-     * The condition is complied when the current user has the
-     * role that is required by the RoleCondition.
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Situation, WorkflowInstance)
+     * @see org.apache.lenya.workflow.impl.AbstractCondition#setExpression(java.lang.String)
      */
-    public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
-        CMSSituation situationImpl = (CMSSituation) situation;
-        String[] roles = situationImpl.getRoleIds();
-
-        boolean complied = false;
-
-        for (int i = 0; i < roles.length; i++) {
-            if (getExpression().equals(roles[i])) {
-                complied = true;
-            }
-        }
-
-        return complied;
+    public void setExpression(String expression) throws WorkflowException {
+        assert expression != null;
+        this.expression = expression.trim();
     }
 
+    /**
+     * Returns the expression of this condition.
+     * @return A string.
+     */
+    public String getExpression() {
+        return expression;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getExpression();
+    }
+    
 }

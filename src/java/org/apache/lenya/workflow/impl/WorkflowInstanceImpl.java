@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInstanceImpl.java,v 1.7 2003/07/23 13:21:07 gregor Exp $
+$Id: WorkflowInstanceImpl.java,v 1.8 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -109,13 +109,14 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     /** Returns the events that can be invoked in a certain situation.
      * @param situation The situation to check.
      * @return The events that can be invoked.
+     * @throws WorkflowException when something went wrong.
      */
-    public Event[] getExecutableEvents(Situation situation) {
+    public Event[] getExecutableEvents(Situation situation) throws WorkflowException {
         Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
         Set executableEvents = new HashSet();
 
         for (int i = 0; i < transitions.length; i++) {
-            if (transitions[i].canFire(situation)) {
+            if (transitions[i].canFire(situation, this)) {
                 executableEvents.add(transitions[i].getEvent());
             }
         }
@@ -126,6 +127,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     /** Invoke an event on this workflow instance.
      * @param situation The situation when the event was invoked.
      * @param event The event that was invoked.
+     * @throws WorkflowException when the event may not be invoked.
      */
     public void invoke(Situation situation, Event event)
         throws WorkflowException {
@@ -204,8 +206,9 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
 
     /**
      * Factory method to create a workflow object for a given identifier.
-     * @param workflow The workflow identifier.
+     * @param workflowName The workflow identifier.
      * @return A workflow object.
+     * @throws WorkflowException when the workflow could not be created.
      */
     protected abstract WorkflowImpl getWorkflow(String workflowName)
         throws WorkflowException;
@@ -214,6 +217,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * Returns a workflow state for a given name.
      * @param id The state id.
      * @return A workflow object.
+     * @throws WorkflowException when the state was not found.
      */
     protected State getState(String id) throws WorkflowException {
         return getWorkflowImpl().getState(id);
@@ -240,6 +244,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * Returns the corresponding instance of a workflow variable.
      * @param variable A variable of the corresponding workflow.
      * @return A variable instance object.
+     * @throws WorkflowException when the variable instance was not found.
      */
     protected BooleanVariableInstance getVariableInstance(BooleanVariable variable)
         throws WorkflowException {
@@ -250,7 +255,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
         return (BooleanVariableInstance) variableInstances.get(variable);
     }
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.workflow.WorkflowInstance#getValue(java.lang.String)
      */
     public boolean getValue(String variableName) throws WorkflowException {
@@ -264,6 +269,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * Sets the value of a state variable.
      * @param variableName The variable name.
      * @param value The value to set.
+     * @throws WorkflowException when the variable was not found.
      */
     protected void setValue(String variableName, boolean value)
         throws WorkflowException {
@@ -274,7 +280,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
 
     private List listeners = new ArrayList();
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.workflow.WorkflowInstance#addWorkflowListener(org.apache.lenya.workflow.WorkflowListener)
      */
     public void addWorkflowListener(WorkflowListener listener) {
@@ -283,7 +289,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
         }
     }
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.workflow.WorkflowInstance#removeWorkflowListener(org.apache.lenya.workflow.WorkflowListener)
      */
     public void removeWorkflowListener(WorkflowListener listener) {

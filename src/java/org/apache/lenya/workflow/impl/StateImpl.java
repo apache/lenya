@@ -1,5 +1,5 @@
 /*
-$Id: StateImpl.java,v 1.4 2003/07/23 13:21:08 gregor Exp $
+$Id: StateImpl.java,v 1.5 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,11 @@ import org.apache.lenya.workflow.State;
  * @author  andreas
  */
 public class StateImpl implements State {
-    /** Creates a new instance of StateImpl */
+    
+    /**
+     * Creates a new instance of StateImpl
+     * @param stateId The state ID.
+     */
     protected StateImpl(String stateId) {
         assert stateId != null;
         id = stateId;
@@ -72,20 +76,21 @@ public class StateImpl implements State {
     private String id;
 
     /**
-     * @return
+     * Returns the state ID.
+     * @return A string.
      */
     public String getId() {
         return id;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
         return getId();
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object object) {
@@ -100,7 +105,7 @@ public class StateImpl implements State {
         return result;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {

@@ -1,5 +1,5 @@
 /*
-$Id: Condition.java,v 1.3 2003/07/23 13:21:13 gregor Exp $
+$Id: Condition.java,v 1.4 2003/09/02 13:17:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,22 +55,24 @@ $Id: Condition.java,v 1.3 2003/07/23 13:21:13 gregor Exp $
 */
 package org.apache.lenya.workflow;
 
-
 /**
  *
  * @author  andreas
  */
 public interface Condition {
+
     /**
      * Returns if the condition is complied in a certain situation.
      * @param situation The situation to check.
+     * @param instance The workflow instance to check the condition on.
      * @return if the condition is complied.
+     * @throws WorkflowException when the expression could not be evaluated.
      */
-    boolean isComplied(Situation situation);
+    boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException;
 
     /** Sets the expression for this condition.
      * @param expression The expression.
-     *
+     * @throws WorkflowException when the expression is not valid.
      */
-    void setExpression(String expression);
+    void setExpression(String expression) throws WorkflowException;
 }

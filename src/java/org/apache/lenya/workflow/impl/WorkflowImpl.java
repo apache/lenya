@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowImpl.java,v 1.5 2003/08/28 10:17:20 andreas Exp $
+$Id: WorkflowImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -71,7 +71,11 @@ import java.util.Set;
  * @author  andreas
  */
 public class WorkflowImpl implements Workflow {
-    /** Creates a new instance of WorkflowImpl */
+    
+    /**
+     * Creates a new instance of WorkflowImpl.
+     * @param initialState the initial state of the workflow.
+     */
     protected WorkflowImpl(StateImpl initialState) {
         this.initialState = initialState;
         addState(initialState);
@@ -90,12 +94,17 @@ public class WorkflowImpl implements Workflow {
     private Set transitions = new HashSet();
     private Map states = new HashMap();
 
+    /**
+     * Adds a state.
+     * @param state A state.
+     */
     private void addState(StateImpl state) {
         states.put(state.getId(), state);
     }
 
     /**
      * Adds a transition.
+     * @param transition The transition.
      */
     protected void addTransition(TransitionImpl transition) {
         assert transition != null;
@@ -104,6 +113,10 @@ public class WorkflowImpl implements Workflow {
         addState(transition.getDestination());
     }
 
+    /**
+     * Returns the transitions.
+     * @return An array of transitions.
+     */
     protected TransitionImpl[] getTransitions() {
         return (TransitionImpl[]) transitions.toArray(new TransitionImpl[transitions.size()]);
     }
@@ -146,10 +159,20 @@ public class WorkflowImpl implements Workflow {
         return states.containsValue(state);
     }
 
+    /**
+     * Returns the states.
+     * @return An array of states.
+     */
     protected StateImpl[] getStates() {
         return (StateImpl[]) states.values().toArray(new StateImpl[states.size()]);
     }
 
+    /**
+     * Returns the state with a certain name.
+     * @param name The state name.
+     * @return A state.
+     * @throws WorkflowException when the state does not exist.
+     */
     protected StateImpl getState(String name) throws WorkflowException {
         if (!states.containsKey(name)) {
             throw new WorkflowException("Workflow does not contain the state '" + name + "'!");
@@ -160,6 +183,10 @@ public class WorkflowImpl implements Workflow {
 
     private Map events = new HashMap();
 
+    /**
+     * Adds an event.
+     * @param event An event.
+     */
     protected void addEvent(EventImpl event) {
         assert event != null;
         events.put(event.getName(), event);
@@ -184,6 +211,10 @@ public class WorkflowImpl implements Workflow {
 
     private Map variables = new HashMap();
 
+    /**
+     * Adds a variable.
+     * @param variable A variable.
+     */
     protected void addVariable(BooleanVariableImpl variable) {
         assert variable != null;
         variables.put(variable.getName(), variable);

@@ -1,5 +1,5 @@
 /*
-$Id: EventImpl.java,v 1.5 2003/07/23 13:21:08 gregor Exp $
+$Id: EventImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,11 @@ import org.apache.lenya.workflow.Event;
  * @author  andreas
  */
 public class EventImpl implements Event {
-    /** Creates a new instance of EventImpl */
+    
+    /**
+     * Creates a new instance of EventImpl
+     * @param eventName The event name.
+     */
     protected EventImpl(String eventName) {
         assert eventName != null;
         name = eventName;
@@ -72,9 +76,8 @@ public class EventImpl implements Event {
     private String name;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns a string expression of this object.
+     * @return A string.
      */
     public String toString() {
         return getName();
@@ -109,7 +112,7 @@ public class EventImpl implements Event {
         return getName().hashCode();
     }
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.workflow.Event#getName()
      */
     public String getName() {

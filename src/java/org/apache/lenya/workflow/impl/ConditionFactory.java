@@ -1,5 +1,5 @@
 /*
-$Id: ConditionFactory.java,v 1.5 2003/07/23 13:21:08 gregor Exp $
+$Id: ConditionFactory.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,9 +64,20 @@ import org.apache.lenya.workflow.WorkflowException;
  * @author  andreas
  */
 public final class ConditionFactory {
+    
+    /**
+     * Ctor.
+     */
     private ConditionFactory() {
     }
 
+    /**
+     * Creates a condition.
+     * @param className The condition class name.
+     * @param expression The condition expression.
+     * @return A condition.
+     * @throws WorkflowException when creating the condition failed.
+     */
     protected static Condition createCondition(String className, String expression)
         throws WorkflowException {
         assert className != null;

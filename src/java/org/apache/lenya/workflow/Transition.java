@@ -1,5 +1,5 @@
 /*
-$Id: Transition.java,v 1.5 2003/07/23 13:21:13 gregor Exp $
+$Id: Transition.java,v 1.6 2003/09/02 13:17:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -80,8 +80,10 @@ public interface Transition {
      * Returns if the transition can fire in a certain situation.
      * 
      * @param situation the situation for which the query is requested.
+     * @param instance The workflow instance to invoke the transition on.
      * 
      * @return true if the transition can fire in the given situation.
+     * @throws WorkflowException when an error occurs.
      */
-    boolean canFire(Situation situation);
+    boolean canFire(Situation situation, WorkflowInstance instance) throws WorkflowException;
 }

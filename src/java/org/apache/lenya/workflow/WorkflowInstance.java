@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInstance.java,v 1.6 2003/07/23 13:21:13 gregor Exp $
+$Id: WorkflowInstance.java,v 1.7 2003/09/02 13:17:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,23 +74,28 @@ public interface WorkflowInstance {
      */
     State getCurrentState();
 
-
-    Event[] getExecutableEvents(Situation situation);
+    /**
+     * Returns the executable events in a certain situation.
+     * @param situation The situation.
+     * @return An array of events.
+     * @throws WorkflowException when something went wrong.
+     */
+    Event[] getExecutableEvents(Situation situation) throws WorkflowException;
 
     /**
      * Indicates that the user invoked an event.
      * 
-     * @param user The user who invoked the event.
+     * @param situation The situation in which the event was invoked.
      * @param event The event that was invoked.
-     * @throws WorkflowException
+     * @throws WorkflowException when something went wrong.
      */
     void invoke(Situation situation, Event event) throws WorkflowException;
 
     /**
      * Returns the current value of a variable.
-     * @param variable A variable.
+     * @param variableName A variable name.
      * @return A boolean value.
-     * @throws WorkflowException
+     * @throws WorkflowException when the variable does not exist.
      */
     boolean getValue(String variableName) throws WorkflowException;
 

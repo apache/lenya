@@ -1,5 +1,5 @@
 /*
-$Id: RoleCondition.java,v 1.7 2003/09/02 13:17:22 andreas Exp $
+$Id: BooleanVariableCondition.java,v 1.1 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,39 +53,58 @@ $Id: RoleCondition.java,v 1.7 2003/09/02 13:17:22 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.workflow;
+package org.apache.lenya.workflow.impl;
 
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.lenya.workflow.impl.AbstractCondition;
-
 
 /**
+ * @author andreas
  *
- * @author  andreas
+ * To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RoleCondition extends AbstractCondition {
-    
+public class BooleanVariableCondition extends AbstractCondition {
+
+    private String variableName;
+    private boolean value;
+
     /**
-     * Returns if the condition is complied in a certain situation.
-     * The condition is complied when the current user has the
-     * role that is required by the RoleCondition.
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Situation, WorkflowInstance)
+     * Returns the variable value to check.
+     * @return A boolean value.
+     */
+    protected boolean getValue() {
+        return value;
+    }
+
+    /**
+     * Returns the variable name to check.
+     * @return A string.
+     */
+    protected String getVariableName() {
+        return variableName;
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Condition#setExpression(java.lang.String)
+     */
+    public void setExpression(String expression) throws WorkflowException {
+        super.setExpression(expression);
+        String[] sides = expression.split("=");
+        if (sides.length != 2) {
+            throw new WorkflowException(
+                "The expression '" + expression + "' must be of the form 'name = [true|false]'");
+        }
+        variableName = sides[0].trim();
+        value = Boolean.getBoolean(sides[1]);
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation)
      */
     public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
-        CMSSituation situationImpl = (CMSSituation) situation;
-        String[] roles = situationImpl.getRoleIds();
-
-        boolean complied = false;
-
-        for (int i = 0; i < roles.length; i++) {
-            if (getExpression().equals(roles[i])) {
-                complied = true;
-            }
-        }
-
-        return complied;
+        return instance.getValue(getVariableName()) == getValue();
     }
 
 }

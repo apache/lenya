@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariableAssignmentImpl.java,v 1.3 2003/07/23 13:21:08 gregor Exp $
+$Id: BooleanVariableAssignmentImpl.java,v 1.4 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,6 +67,12 @@ import org.apache.lenya.workflow.WorkflowInstance;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment {
+    
+    /**
+     * Ctor.
+     * @param variable The variable.
+     * @param value The value.
+     */
     protected BooleanVariableAssignmentImpl(BooleanVariableImpl variable, boolean value) {
         assert variable != null;
         this.variable = variable;
@@ -77,7 +83,7 @@ public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment 
     private BooleanVariableImpl variable;
     private boolean value;
 
-    /* (non-Javadoc)
+    /**
      * @see org.apache.lenya.workflow.BooleanVariableAssignment#execute()
      */
     public void execute(WorkflowInstance instance) throws WorkflowException {

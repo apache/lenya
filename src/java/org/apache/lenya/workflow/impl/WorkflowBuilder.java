@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowBuilder.java,v 1.8 2003/08/20 18:54:14 andreas Exp $
+$Id: WorkflowBuilder.java,v 1.9 2003/09/02 13:17:21 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,6 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -83,6 +82,10 @@ import javax.xml.parsers.ParserConfigurationException;
  * @author  andreas
  */
 public class WorkflowBuilder {
+    
+    /**
+     * Ctor.
+     */
     protected WorkflowBuilder() {
     }
 
@@ -109,10 +112,17 @@ public class WorkflowBuilder {
         return workflow;
     }
 
+    /**
+     * Builds a workflow object from an XML document.
+     * @param document The XML document.
+     * @return A workflow implementation.
+     * @throws ParserConfigurationException when something went wrong.
+     * @throws SAXException when something went wrong.
+     * @throws IOException when something went wrong.
+     * @throws WorkflowException when something went wrong.
+     */
     protected static WorkflowImpl buildWorkflow(Document document)
         throws ParserConfigurationException, SAXException, IOException, WorkflowException {
-        NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX,
-                document);
 
         Element root = document.getDocumentElement();
         StateImpl initialState = null;
@@ -172,6 +182,11 @@ public class WorkflowBuilder {
         return workflow;
     }
 
+    /**
+     * Checks if a state element contains the initial state. 
+     * @param element An XML element.
+     * @return A boolean value.
+     */
     protected static boolean isInitialStateElement(Element element) {
         assert element.getLocalName().equals(STATE_ELEMENT);
 
@@ -197,6 +212,11 @@ public class WorkflowBuilder {
     protected static final String VALUE_ATTRIBUTE = "value";
     protected static final String NAME_ATTRIBUTE = "name";
 
+    /**
+     * Builds a state from an XML element.
+     * @param element An XML element.
+     * @return A state.
+     */
     protected static StateImpl buildState(Element element) {
         assert element.getLocalName().equals(STATE_ELEMENT);
 
@@ -206,6 +226,15 @@ public class WorkflowBuilder {
         return state;
     }
 
+    /**
+     * Builds a transition from an XML element.
+     * @param element An XML element.
+     * @param states A map from state IDs to states.
+     * @param events A map from event IDs to events.
+     * @param variables A map from variable names to variables.
+     * @return A transition.
+     * @throws WorkflowException when something went wrong.
+     */
     protected static TransitionImpl buildTransition(Element element, Map states, Map events,
         Map variables) throws WorkflowException {
         assert element.getLocalName().equals(TRANSITION_ELEMENT);
@@ -265,6 +294,11 @@ public class WorkflowBuilder {
         return transition;
     }
 
+    /**
+     * Builds an event from an XML element.
+     * @param element An XML element.
+     * @return An event.
+     */
     protected static EventImpl buildEvent(Element element) {
         String id = element.getAttribute(ID_ATTRIBUTE);
         assert id != null;
@@ -274,6 +308,12 @@ public class WorkflowBuilder {
         return event;
     }
 
+    /**
+     * Builds a condition from an XML element.
+     * @param element An XML element.
+     * @return A condition.
+     * @throws WorkflowException when something went wrong.
+     */
     protected static Condition buildCondition(Element element)
         throws WorkflowException {
         String className = element.getAttribute(CLASS_ATTRIBUTE);
@@ -283,6 +323,11 @@ public class WorkflowBuilder {
         return condition;
     }
 
+    /**
+     * Builds an action from an XML element.
+     * @param element An XML element.
+     * @return An action.
+     */
     protected static Action buildAction(Element element) {
         String id = element.getAttribute(ID_ATTRIBUTE);
         Action action = new ActionImpl(id);
@@ -290,6 +335,11 @@ public class WorkflowBuilder {
         return action;
     }
 
+    /**
+     * Builds a boolean variable from an XML element.
+     * @param element An XML element.
+     * @return A boolean variable.
+     */
     protected static BooleanVariableImpl buildVariable(Element element) {
         String name = element.getAttribute(NAME_ATTRIBUTE);
         String value = element.getAttribute(VALUE_ATTRIBUTE);
@@ -297,6 +347,13 @@ public class WorkflowBuilder {
         return new BooleanVariableImpl(name, Boolean.getBoolean(value));
     }
 
+    /**
+     * Builds an assignment object from an XML element.
+     * @param variables A map from variable names to variables.
+     * @param element An XML element.
+     * @return An assignment object.
+     * @throws WorkflowException when something went wrong.
+     */
     protected static BooleanVariableAssignmentImpl buildAssignment(Map variables, Element element)
         throws WorkflowException {
         String variableName = element.getAttribute(VARIABLE_ATTRIBUTE);
