@@ -280,6 +280,7 @@
         
         <map:call resource="i18n"/>
         
+        <!-- Generate the meta-stylesheet -->
         <map:select type="request-parameter">
           <map:parameter name="parameter-name" value="uiml"/>
           <map:when test="xul">
