@@ -1,5 +1,5 @@
 /*
-$Id: TaskAction.java,v 1.23 2003/07/29 17:54:24 edith Exp $
+$Id: TaskAction.java,v 1.24 2003/08/25 09:53:24 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,23 +66,10 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
 import org.apache.lenya.cms.task.*;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowInstance;
-
-import java.io.File;
-
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * An action that executes a task.
@@ -108,8 +95,7 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
      *
      * @throws ConfigurationException DOCUMENT ME!
      */
-    public void configure(Configuration configuration)
-        throws ConfigurationException {
+    public void configure(Configuration configuration) throws ConfigurationException {
         super.configure(configuration);
 
         try {
@@ -133,95 +119,18 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
      *
      * @throws java.lang.Exception DOCUMENT ME!
      */
-    public java.util.Map act(Redirector redirector, SourceResolver sourceResolver, Map objectModel,
-        String str, Parameters parameters) throws java.lang.Exception {
-        Publication publication = PublicationFactory.getPublication(objectModel);
-        File publicationDirectory = publication.getDirectory();
+    public java.util.Map act(
+        Redirector redirector,
+        SourceResolver sourceResolver,
+        Map objectModel,
+        String str,
+        Parameters parameters)
+        throws java.lang.Exception {
 
-        // Get request object
+        DefaultTaskWrapper wrapper = new CocoonTaskWrapper(objectModel, parameters);
+        wrapper.execute();
+
         Request request = ObjectModelHelper.getRequest(objectModel);
-
-        if (request == null) {
-            getLogger().error("No request object");
-
-            return null;
-        }
-
-        taskId = parameters.getParameter("task-id", taskId);
-
-        if (taskId == null) {
-            throw new IllegalStateException("No task id provided!");
-        }
-
-        //------------------------------------------------------------
-        // prepare default parameters
-        //------------------------------------------------------------
-        Parameters taskParameters = new Parameters();
-
-        taskParameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT,
-            publication.getServletContext().getCanonicalPath());
-        taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath() + "/");
-        taskParameters.setParameter(Task.PARAMETER_SERVER_PORT,
-            Integer.toString(request.getServerPort()));
-        taskParameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
-        taskParameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
-
-        // set parameters using the request parameters
-        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
-            String name = (String) e.nextElement();
-            taskParameters.setParameter(name, request.getParameter(name));
-        }
-
-        String[] parameterNames = parameters.getNames();
-		// set parameters using the request parameters
-		for (int i = 0; i < parameterNames.length; i++) {
-			taskParameters.setParameter(parameterNames[i], parameters.getParameter(parameterNames[i]));
-		}
-
-        //------------------------------------------------------------
-        // execute task
-        //------------------------------------------------------------
-        getLogger().debug("\n-------------------------------------------------" +
-            "\n- Executing task '" + getTaskId() + "'" +
-            "\n-------------------------------------------------");
-            
-        String eventName = request.getParameter("lenya.event");
-        boolean hasWorkflow = false;
-        WorkflowFactory factory = null;
-        Document document = null;
-        
-        if (eventName != null) {
-            // check for workflow instance first (task can initialize the workflow history)
-            factory = WorkflowFactory.newInstance();
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-            document = envelope.getDocument();
-            hasWorkflow = factory.hasWorkflow(document);
-        }
-
-        TaskManager manager = new TaskManager(publication.getDirectory().getCanonicalPath());
-        Task task = manager.getTask(getTaskId());
-
-        task.parameterize(taskParameters);
-
-        //FIXME The new workflow is set before the end of the transition because the document id
-        // and so the document are sometimes changing during the transition (ex archiving , ...) 
-		if (eventName != null && hasWorkflow) {
-			WorkflowInstance instance = factory.buildInstance(document);
-			Situation situation = factory.buildSituation(objectModel);
-
-			Event event = null;
-			Event[] events = instance.getExecutableEvents(situation);
-
-			for (int i = 0; i < events.length; i++) {
-				if (events[i].getName().equals(eventName)) {
-					event = events[i];
-				}
-			}
-
-			assert event != null;
-			instance.invoke(situation, event);
-		}
-        task.execute(publication.getServletContext().getCanonicalPath());
 
         //------------------------------------------------------------
         // get session
@@ -237,7 +146,8 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         //------------------------------------------------------------
         // Return referer
         //------------------------------------------------------------
-        String parent_uri = (String) session.getAttribute(
+        String parent_uri =
+            (String) session.getAttribute(
                 "org.apache.lenya.cms.cocoon.acting.TaskAction.parent_uri");
         HashMap actionMap = new HashMap();
         actionMap.put("parent_uri", parent_uri);
