@@ -79,7 +79,7 @@ import org.apache.log4j.Category;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: RevisionControllerAction.java,v 1.32 2004/02/02 02:50:37 stefano Exp $
+ * @version $Id: RevisionControllerAction.java,v 1.33 2004/02/10 15:33:16 andreas Exp $
  */
 public class RevisionControllerAction extends AbstractAction {
     Category log = Category.getInstance(RevisionControllerAction.class);
@@ -134,7 +134,7 @@ public class RevisionControllerAction extends AbstractAction {
         //get Parameters for RC
         String publicationPath = publication.getDirectory().getCanonicalPath();
         RCEnvironment rcEnvironment =
-        RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
+            RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
         rcmlDirectory = rcEnvironment.getRCMLDirectory();
         rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         backupDirectory = rcEnvironment.getBackupDirectory();
@@ -155,10 +155,7 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        org.apache.lenya.ac.Identity identityTwo =
-            (org.apache.lenya.ac.Identity) session.getAttribute(Identity.class.getName());
         getLogger().debug(".act(): Identity: " + identity);
-        getLogger().debug(".act(): Identity: " + identityTwo);
 
         //FIXME: hack because of the uri for the editor bitflux. The filename cannot be get from the page-envelope 
 
@@ -186,7 +183,8 @@ public class RevisionControllerAction extends AbstractAction {
 
             DocumentBuilder builder = publication.getDocumentBuilder();
 
-            String srcUrl = builder.buildCanonicalUrl(publication, document.getArea(), documentid, language);
+            String srcUrl =
+                builder.buildCanonicalUrl(publication, document.getArea(), documentid, language);
             Document srcDoc = builder.buildDocument(publication, srcUrl);
             File newFile = srcDoc.getFile();
             filename = newFile.getCanonicalPath();
@@ -205,8 +203,6 @@ public class RevisionControllerAction extends AbstractAction {
             if (user != null) {
                 username = user.getId();
             }
-        } else if (identityTwo != null) {
-            username = identityTwo.getUser().getId();
         } else {
             getLogger().error(".act(): No identity yet");
         }
