@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: logout.xsl,v 1.16 2004/03/13 12:42:18 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -30,7 +30,7 @@
 <xsl:param name="publication_name"/>
 <xsl:param name="contextprefix"/>
 
-<xsl:variable name="copyright">Copyright &#169; 2003-2004 The Apache Software Foundation</xsl:variable>
+<xsl:variable name="copyright">Copyright &#169; 2003-2005 The Apache Software Foundation</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
