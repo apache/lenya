@@ -2,7 +2,7 @@ WHEREAS, the Board of Directors deems it to be in the best
 interests of the Foundation and consistent with the
 Foundation's purpose to establish a Project Management
 Committee charged with the creation and maintenance of
-open-source software related to project documentation, for
+open-source software related to content management, for
 distribution at no charge to the public.
 
 NOW, THEREFORE, BE IT RESOLVED, that a Project Management
@@ -11,8 +11,8 @@ is established pursuant to Bylaws of the Foundation; and be it
 further
 
 RESOLVED, that the Lenya PMC be and hereby is responsible for
-the creation and maintenance of software related to project
-documentation, based on software licensed to the Foundation;
+the creation and maintenance of software related to content
+management, based on software licensed to the Foundation;
 and be it further
 
 RESOLVED, that the office of "Vice President, Lenya" be and
@@ -26,8 +26,6 @@ RESOLVED, that the persons listed immediately below be and
 hereby are appointed to serve as the initial members of the
 Lenya PMC:
 
-(ADD YOUR NAME AND EMAIL HERE)
-
    * Edith Chevier (edith@apache.org)
    * Dale Christ (bigdog@apache.org)
    * Christian Egli (egli@apache.org)
@@ -40,10 +38,7 @@ Lenya PMC:
 
 NOW, THEREFORE, BE IT FURTHER RESOLVED, that
 
-(PROPOSED NAMES, add more nominations if needed and add your vote)
-
-Andreas Hartmann (declined) +1 +1
-Rolf Kulemann (accepted/declined) +1 +1 +1 +1
+Rolf Kulemann
 
   be and hereby is appointed to the office of Vice President, Lenya,
 to serve in accordance with and subject to the direction of the
