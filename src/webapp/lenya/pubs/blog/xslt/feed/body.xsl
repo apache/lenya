@@ -13,14 +13,14 @@
 
 <xsl:template match="entry">
   <div class="dateline"><xsl:value-of select="issued"/></div>
-  <div class="title"><a href="../../entries/{id}/index.html"><xsl:value-of select="title"/></a></div>
+  <div class="title"><a href="../../entries/{normalize-space(id)}/index.html"><xsl:value-of select="title"/></a></div>
   <xsl:apply-templates select="summary"/>
 
   <xsl:apply-templates select="content"/>
   <xsl:apply-templates select="echo:content"/>
 
   <p class="issued">
-  <b>Posted <xsl:apply-templates select="author"/> at <xsl:value-of select="issued"/></b>&#160;|&#160;<a href="../../entries/{id}/index.html">Permalink</a>
+  <b>Posted <xsl:apply-templates select="author"/> at <xsl:value-of select="issued"/></b>&#160;|&#160;<a href="../../entries/{normalize-space(id)}/index.html">Permalink</a>
   </p>
 </xsl:template>
 
