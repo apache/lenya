@@ -10,6 +10,10 @@
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   >
   
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+  </xsp:structure>
+  
   <menu>
     <xsp:logic>
       String bitflux_prefix = <xsp-request:get-context-path/> + "/" + <input:get-attribute as="string" module="page-envelope" name="publication-id"/> + "/bitflux";
@@ -17,7 +21,16 @@
       String xmlSource = <input:get-attribute as="string" module="page-envelope" name="document-url"/>.replaceFirst(".html", replacementString);
       String sourcesParameter = "sources=" + xmlSource;
       String urisParameter = "uris=" + <input:get-attribute as="string" module="page-envelope" name="document-url"/>;
-      String docType = <input:get-attribute as="string" module="page-envelope" name="document-type"/>;
+      String docType = "";
+      try {
+      Document document = (Document) <input:get-attribute as="object" module="page-envelope" name="document"/>;
+          if (document.exists()) {
+              docType = <input:get-attribute as="string" module="page-envelope" name="document-type"/>;
+          }
+      }
+      catch (Exception e) {
+          throw new ProcessingException(e);
+      }
       String documentId = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/authoring" + <input:get-attribute module="page-envelope" as="string" name="document-id"/> + "_" + <input:get-attribute module="page-envelope" as="string" name="document-language"/>;
     </xsp:logic>
         
