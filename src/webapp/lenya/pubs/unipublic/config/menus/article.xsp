@@ -54,7 +54,7 @@
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rollback.xml?rollback=/"+channel+"/"+section+"/articles/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
 -->
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rollback/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Rollback</item>
 
       </block>
       <block>

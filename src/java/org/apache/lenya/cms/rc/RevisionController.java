@@ -368,14 +368,13 @@ public class RevisionController
 	}
 	*/
 
-/*
-	public String getBackupFilename(long time) {
+	public String getBackupFilename(long time, String filename) {
 	
-        	File backupFile=new File(backupDir+"/"+destination+".bak."+time);
+//        	File backupFile=new File(backupDir+"/"+destination+".bak."+time);
+        	File backup=new File(backupDir+"/"+filename+".bak."+time);
 		return backup.getAbsolutePath();
 
 	}
-*/
 /**Rolls back to the given point in time 
  * @param destination File which will be rolled back
  * @param identity The identity of the user
