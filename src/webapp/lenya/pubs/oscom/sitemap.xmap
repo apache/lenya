@@ -62,17 +62,6 @@
     </map:pipeline>
 <!-- /Images -->
 
-<!-- XML Home -->
-   <map:pipeline>
-     <map:match pattern="authoring/home.xml">
-       <map:generate src="content/authoring/home.xml"/>
-       <map:serialize type="xml"/>
-     </map:match>
-   </map:pipeline>
-<!-- /XML Home -->
-
-
-
 <!-- Matrix Overview (sorted by frameworks and cms) -->
     <map:pipeline>
       <map:match pattern="*/matrix/">
@@ -167,11 +156,7 @@
   <map:pipeline>
       <!-- XML -->
       <map:match pattern="authoring/**.xml">
-        <map:aggregate element="lenya">
-          <map:part src="cocoon:/authoring/menus/{1}.xml"/>
-          <map:part src="content/authoring/{1}.xml" element="cmsbody"/>
-        </map:aggregate>
-        <!--<map:transform type="xinclude"/>-->
+        <map:generate src="content/authoring/{1}.xml"/>
         <map:transform type="xlink">
           <map:parameter name="href" value="content/authoring/{1}.xml"/>
         </map:transform>
@@ -179,32 +164,18 @@
       </map:match>
 
       <!-- Home -->
-      <map:match pattern="authoring/">
-        <map:redirect-to uri="matrix/index.html"/>
+      <map:match pattern="*/">
+        <map:redirect-to uri="index.html"/>
       </map:match>
-
-      <map:match pattern="authoring/index.html">
-        <map:redirect-to uri="matrix/index.html"/>
-      </map:match>
-
 
       <!-- Generic (XHTML) -->
-      <map:match pattern="authoring/**.html">
-        <map:generate src="cocoon:/authoring/{1}.xml"/>
-        <map:select>
-          <map:when test="explorer">
-            <map:transform src="xslt/generic/authoring/main.xsl"/>
-          </map:when>
-          <map:otherwise>
-            <map:transform src="xslt/generic/authoring/main.xsl"/>
-          </map:otherwise>
-        </map:select>
+      <map:match pattern="*/**.html">
+        <map:aggregate element="lenya">
+          <map:part src="content/{1}/{2}.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="xslt/generic/{1}/main.xsl"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/xhtml/{2}.xml"/>
         <map:serialize type="html"/>
-      </map:match>
-      <map:match pattern="authoring/**.xhtml">
-        <!--<map:read src="content/authoring/{1}" mime-type="text/xml"/>-->
-        <map:generate src="content/authoring/{1}.xhtml"/>
-        <map:serialize type="xml"/>
       </map:match>
    </map:pipeline>
 

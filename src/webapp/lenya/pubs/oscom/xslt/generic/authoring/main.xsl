@@ -7,4 +7,4 @@
 <xsl:include href="../../html_authoring.xsl"/>
 <xsl:include href="../body.xsl"/>
  
-</xsl:stylesheet>  
+</xsl:stylesheet>
