@@ -9,7 +9,7 @@
 
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.DocumentHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentReferencesHelper</xsp:include>
   </xsp:structure>
   
