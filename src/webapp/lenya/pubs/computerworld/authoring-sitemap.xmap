@@ -1,0 +1,410 @@
+<?xml version="1.0"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+	<!-- =========================== Components ================================ -->
+	<map:components>
+		<map:generators default="file">
+			<map:generator name="file" src="org.apache.cocoon.generation.FileGenerator"/>
+			<map:generator name="servletproxy" src="org.wyona.cms.cocoon.generation.ProxyGenerator"/>
+		</map:generators>
+		<map:transformers default="xslt">
+			<map:transformer name="xslt" src="org.apache.cocoon.transformation.TraxTransformer" pool-min="20" pool-max="30" pool-grow="5"/>
+			<map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer" pool-min="20" pool-max="30" pool-grow="5">
+				<publication type="computerworld"/>
+			</map:transformer>
+			<map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer" pool-min="20" pool-max="30" pool-grow="5"/>
+		</map:transformers>
+		<map:readers default="resource"/>
+		<map:serializers default="html"/>
+		<map:matchers default="wildcard">
+			<map:matcher name="usecase" logger="sitemap.matcher.usecase" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+				<parameter-name>usecase</parameter-name>
+			</map:matcher>
+			<map:matcher name="step" logger="sitemap.matcher.step" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+				<parameter-name>step</parameter-name>
+			</map:matcher>
+		</map:matchers>
+		<!-- =========================== Actions ================================ -->
+		<map:actions>
+			<map:action name="reserved-checkout" src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+				<rcmlDirectory href="docs/publication/rcml"/>
+				<backupDirectory href="docs/publication/rcbak"/>
+			</map:action>
+			<map:action name="reserved-checkin" src="org.wyona.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin">
+				<rcmlDirectory href="docs/publication/rcml"/>
+				<backupDirectory href="docs/publication/rcbak"/>
+			</map:action>
+			<map:action name="rollback" src="org.wyona.cms.cocoon.acting.RollbackAction">
+				<rcmlDirectory href="docs/publication/rcml"/>
+				<backupDirectory href="docs/publication/rcbak"/>
+			</map:action>
+			<!-- tasks -->
+			<map:action name="task" src="org.wyona.cms.cocoon.acting.TaskAction"/>
+			<!-- request parameters -->
+			<map:action name="request-parameters" src="org.apache.cocoon.acting.RequestParamAction"/>
+			<map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
+				<tree-authoring href="docs/publication/authoring/tree.xml"/>
+				<docs href="docs/publication/authoring"/>
+				<doctypes href="docs/publication/doctypes/"/>
+			</map:action>
+			<map:action logger="action.upload" name="file-upload" src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+				<resources-root href="resources/publication/images/live"/>
+				<docs-root href="docs/publication/authoring"/>
+				<meta-root href="docs/publication/authoring"/>
+				<insert-image-before value="false"/>
+			</map:action>
+		</map:actions>
+		<!-- =========================== Selectors ================================ -->
+		<map:selectors default="browser">
+			<map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
+				<!--
+           # NOTE: The appearance indicates the search order. This is very important since
+           #       some words may be found in more than one browser description. (MSIE is
+           #       presented as "Mozilla/4.0 (Compatible; MSIE 4.01; ...")
+      -->
+				<browser name="explorer" useragent="MSIE"/>
+				<browser name="pocketexplorer" useragent="MSPIE"/>
+				<browser name="handweb" useragent="HandHTTP"/>
+				<browser name="avantgo" useragent="AvantGo"/>
+				<browser name="imode" useragent="DoCoMo"/>
+				<browser name="opera" useragent="Opera"/>
+				<browser name="lynx" useragent="Lynx"/>
+				<browser name="java" useragent="Java"/>
+				<browser name="wap" useragent="Nokia"/>
+				<browser name="wap" useragent="UP"/>
+				<browser name="wap" useragent="Wapalizer"/>
+				<browser name="mozilla5" useragent="Mozilla/5"/>
+				<browser name="mozilla5" useragent="Netscape6/"/>
+				<browser name="netscape" useragent="Mozilla"/>
+			</map:selector>
+		</map:selectors>
+	</map:components>
+	<!-- =========================== Views     ================================ -->
+	<map:views>
+		<map:view name="orig" from-position="first">
+			<map:serialize type="xml"/>
+		</map:view>
+		<map:view name="xhtml" from-position="last">
+			<map:serialize type="xml"/>
+		</map:view>
+		<map:view name="output" from-label="gregor">
+			<map:serialize type="xml"/>
+		</map:view>
+		<map:view name="content" from-label="content">
+			<map:serialize type="xml"/>
+		</map:view>
+	</map:views>
+	<!-- =========================== Pipelines ================================ -->
+	<map:pipelines>
+		<!-- Rollback -->
+		<map:pipeline>
+			<map:match pattern="revision/*">
+				<map:generate type="serverpages" src="../../docs/cms/revision-control/versions-screen.xsp">
+					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
+					<map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
+					<map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+					<map:parameter name="articleId" value="{4}"/>
+				</map:generate>
+				<map:transform src="../../stylesheets/cms/Page/rollback.xsl"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<map:match pattern="rollback/*">
+				<map:act type="rollback">
+					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
+					<map:redirect-to uri="{location}" session="true"/>
+				</map:act>
+			</map:match>
+			<map:match pattern="view/*">
+				<map:generate type="serverpages" src="../../docs/cms/revision-control/view.xsp">
+					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
+					<map:parameter name="rcmlDirectory" value="docs/publication/rcml"/>
+					<map:parameter name="backupDirectory" value="docs/publication/rcbak"/>
+				</map:generate>
+				<map:transform src="stylesheets/publication/Page/Article/Authoring/toArticle.xsl"/>
+				<map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+				<map:serialize type="html"/>
+			</map:match>
+		</map:pipeline>
+		<!-- /Rollback -->
+		<!-- Publisher  -->
+		<map:pipeline>
+			<!-- ===================================================================== -->
+			<!-- Publish
+                     The task ID of the publishing task is forwarded as request parameter
+                      from the menu. This simplifies publishing of different document types. -->
+			<!-- ===================================================================== -->
+			<map:match pattern="wyona/publishScreen*">
+				<map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
+				<map:transform src="../../stylesheets/cms/Page/Publish/main.xsl">
+					<map:parameter name="use-request-parameters" value="true"/>
+				</map:transform>
+				<map:serialize type="html"/>
+			</map:match>
+			<map:match pattern="wyona/publish*">
+				<map:act type="request-parameters">
+					<map:parameter name="parameters" value="true"/>
+					<map:act type="task">
+						<map:parameter name="task-id" value="{task-id}"/>
+						<map:redirect-to uri="{parent_uri}" session="true"/>
+					</map:act>
+					<map:redirect-to uri="publishScreen?status=failed" session="true"/>
+				</map:act>
+			</map:match>
+		</map:pipeline>
+		<!-- /Publisher  -->
+		<!-- ParentChild Content Creator: New Document -->
+		<map:pipeline>
+			<map:match pattern="wyona/ParentChildScreenNewArticle*">
+				<map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+				<map:transform src="../../stylesheets/cms/Page/new-document.xsl"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<map:match pattern="wyona/create*">
+				<map:act type="parent-child">
+					<map:redirect-to uri="{parent_uri}" session="true"/>
+				</map:act>
+				<map:redirect-to uri="ParentChildScreenNewArticle?status=failed" session="true"/>
+			</map:match>
+		</map:pipeline>
+		<!-- /ParentChild Content Creator: New Document -->
+		<!-- Authoring -->
+		<!-- Menus -->
+		<map:pipeline>
+			<map:match pattern="menus/front.xml">
+				<map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="menus/*/article.xml">
+				<map:generate type="serverpages" src="docs/publication/menus/article.xsp">
+					<map:parameter name="articleId" value="{1}"/>
+				</map:generate>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="menus/**.xml">
+				<map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
+				<map:serialize type="xml"/>
+			</map:match>
+		</map:pipeline>
+		<!-- graphics -->
+		<map:pipeline>
+			<!-- General Wyona -->
+			<map:match pattern="images/wyona/cms/**.gif">
+				<map:read src="../../resources/cms/images/{1}.gif" mime-type="images/gif">
+					<map:parameter name="expires" value="2000000000"/>
+				</map:read>
+			</map:match>
+			<!-- /General Wyona -->
+			<map:match pattern="css/**.css">
+				<map:read mime-type="text/css" src="resources/publication/styles/live/{1}.css"/>
+			</map:match>
+			<map:match pattern="img/layout/**.*">
+				<map:read mime-type="image/{2}" src="resources/publication/images/live/layout/{1}.{2}"/>
+			</map:match>
+			<map:match pattern="img/categories/**.*">
+				<map:read mime-type="image/{2}" src="resources/publication/images/live/categories/{1}.{2}"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Upload and append image -->
+		<map:pipeline>
+			<map:match type="usecase" pattern="uploadimage">
+				<map:match type="step" pattern="showxml">
+					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:serialize type="xml"/>
+				</map:match>
+				<map:match type="step" pattern="showscreen">
+					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:transform src="stylesheets/cms/Page/upload-image.xsl"/>
+					<map:serialize type="html"/>
+				</map:match>
+				<map:match type="step" pattern="showteaserscreen">
+					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:transform src="stylesheets/cms/Page/upload-teaserimage.xsl"/>
+					<map:serialize type="html"/>
+				</map:match>
+				<map:match type="step" pattern="upload">
+					<map:act type="file-upload">
+						<!-- if the action suceeds it returns the referer and we	    simply redirect to it. -->
+						<map:redirect-to uri="{$referer}"/>
+					</map:act>
+					<!-- otherwise the action could not validate some of the	  input and we present the upload form again -->
+					<map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+					<map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+					<map:serialize type="html"/>
+				</map:match>
+			</map:match>
+		</map:pipeline>
+		<!-- Frontpage -->
+		<map:pipeline>
+			<map:match pattern="">
+				<map:redirect-to uri="index.html" session="true"/>
+			</map:match>
+			<map:match pattern="index.html">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part element="cmsbody" src="docs/publication/authoring/index.html"/>
+					<map:part src="docs/publication/authoring/preview.xml"/>
+					<map:part src="docs/publication/authoring/small-preview.xml"/>
+					<map:part src="docs/publication/authoring/sitetree.xml"/>
+					<map:part src="cocoon:/all-headlines"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Authoring/main.xsl" label="content">
+					<map:parameter name="id" value="/index.html"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<!-- Include ALL articles -->
+			<map:match pattern="all-headlines">
+				<map:generate type="directory" src="docs/publication/authoring/news/"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/xinclude.xsl"/>
+				<map:transform type="xlink">
+					<map:parameter name="href" value="docs/publication/live/news/dummy.xml"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Used to build the bitflux stylesheets for headlines dynamically  -->
+		<map:pipeline>
+			<map:match pattern="headlines.xml">
+				<map:generate src="docs/publication/authoring/headlines.xml"/>
+				<map:transform src="stylesheets/publication/Page/xinclude.xsl"/>
+				<map:transform type="xlink">
+					<map:parameter name="href" value="docs/publication/authoring/headlines.xml"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+			</map:match>
+			<!-- did not work for some reason	
+		<map:match pattern="xinclude-index">
+				<map:generate src="docs/publication/live/index.html"/>
+				<map:transform src="stylesheets/publication/Page/Live/xinclude-index.xsl"/>
+				<map:transform type="xlink">
+					<map:parameter name="href" value="docs/publication/live/index.html"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+		</map:match> 
+		-->
+		</map:pipeline>
+		<!-- Article -->
+		<!-- Checkout -->
+		<map:pipeline>
+			<map:match pattern="rco/*">
+				<map:act type="reserved-checkout">
+					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
+					<!--
+          <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
+-->
+					<!--
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkout-exception.xsp">
+-->
+					<map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+						<map:parameter name="user" value="{user}"/>
+						<map:parameter name="filename" value="{filename}"/>
+						<map:parameter name="date" value="{date}"/>
+					</map:generate>
+					<map:serialize type="xml"/>
+				</map:act>
+				<map:generate src="docs/publication/authoring/{1}"/>
+				<map:serialize type="xml"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Checkin -->
+		<map:pipeline>
+			<map:match pattern="rci/*">
+				<map:act type="reserved-checkin">
+					<map:parameter name="filename" value="docs/publication/authoring/{1}"/>
+					<!--
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkin-exception.xsp">
+-->
+					<map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+						<map:parameter name="user" value="{user}"/>
+						<map:parameter name="filename" value="{filename}"/>
+						<map:parameter name="checkType" value="{checkType}"/>
+						<map:parameter name="date" value="{date}"/>
+					</map:generate>
+					<map:serialize type="xml"/>
+				</map:act>
+				<map:generate src="docs/publication/authoring/{1}"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="*/index.xhtml">
+				<map:generate src="docs/publication/authoring/{1}/index.xhtml"/>
+				<map:transform src="stylesheets/publication/Page/Article/migrate-xhtml2xml.xsl"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<!--  Not needed    -->
+			<!--
+      <map:match pattern="*/*/*/*/article.xml">
+        <map:generate type="serverpages" src="docs/publication/authoring/article.xsp">
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+          <map:parameter name="id" value="{4}"/>
+        </map:generate>
+        <map:transform type="xlink"/>
+        <map:serialize type="xml"/>
+      </map:match>
+-->
+			<map:match pattern="*/*/*/*/">
+				<map:redirect-to uri="index.html" session="true"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Article Main -->
+		<map:pipeline>
+			<map:match pattern="*/index.html">
+				<map:aggregate element="wyona">
+					<map:part src="cocoon:/menus/{1}/article.xml"/>
+					<map:part src="cocoon:/{1}/index.xml" element="cmsbody"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Article/xinclude.xsl"/>
+				<map:transform type="xlink">
+					<map:parameter name="href" value="docs/publication/authoring/{1}/index.xml"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+					<map:parameter name="documentid" value="{1}//index.xml"/>
+					<map:parameter name="authoring" value="true"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<!-- Detail Article view -->
+			<map:match pattern="news/**.html">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part element="cmsbody" src="docs/publication/authoring/index.html"/>
+					<map:part src="docs/publication/authoring/news/{1}.xml"/>
+					<map:part src="docs/publication/authoring/small-preview.xml"/>
+					<map:part src="docs/publication/authoring/sitetree.xml"/>
+					<map:part src="cocoon:/all-headlines"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Authoring/news.xsl">
+					<map:parameter name="id" value="/news/"/>
+					<map:parameter name="documentid" value="news/{1}.xml"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<!-- All Articles view -->
+			<map:match pattern="overview.html">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part elemcent="cmsbody" src="cocoon:/all-headlines"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Authoring/overview.xsl" label="content"/>
+				<map:serialize type="html"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Samples for resource/document creation -->
+		<map:pipeline>
+			<map:match pattern="doctypes/samples/*.xml">
+				<map:generate src="docs/publication/doctypes/samples/{1}.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+		</map:pipeline>
+		<!-- XML -->
+		<map:pipeline>
+			<map:match pattern="**.xml">
+				<map:generate src="docs/publication/authoring/{1}.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+		</map:pipeline>
+	</map:pipelines>
+</map:sitemap>

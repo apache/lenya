@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:bxe="http://bitfluxeditor.org/schema/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="p">
+		<xs:annotation>
+			<xs:documentation>Paragraph</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>P</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="item">
+		<xs:annotation>
+			<xs:documentation>Item</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Item</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="media"/>
+					<xs:element ref="p" maxOccurs="unbounded"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="media">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Media</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Media</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:insertafter>
+					<bxe:element>p</bxe:element>
+				</bxe:insertafter>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="media-reference"/>
+				<xs:element ref="media-caption" minOccurs="0"/>
+				<xs:element ref="authorline" minOccurs="0"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="media-reference">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Reference</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Reference</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:requiredattributes>source</bxe:requiredattributes>
+				<bxe:requiredattributes>alternate-text</bxe:requiredattributes>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="media-caption" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Caption</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Caption</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:insertafter>
+					<bxe:element>authorline</bxe:element>
+				</bxe:insertafter>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="authorline" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Author</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>Author</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+				<bxe:insertafter>
+					<bxe:element>media-caption</bxe:element>
+				</bxe:insertafter>
+			</xs:appinfo>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="small-preview">
+		<xs:annotation>
+			<xs:documentation>Small Preview</xs:documentation>
+			<xs:appinfo>
+				<bxe:name>small-preview</bxe:name>
+				<bxe:returnelement>none</bxe:returnelement>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="item" maxOccurs="3"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

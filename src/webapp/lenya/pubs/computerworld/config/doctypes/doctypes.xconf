@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doctypes>
+	<doc type="Article">
+		<tasks>
+			<task id="publish"/>
+		</tasks>
+	</doc>
+	<doc type="Article">
+		<creator src="org.wyona.cms.authoring.DefaultParentChildCreator"/>
+		<tasks>
+			<task id="publish-article"/>
+		</tasks>
+	</doc>
+	<doc type="Preview">
+		<tasks>
+			<task id="publish"/>
+		</tasks>
+	</doc>
+</doctypes>

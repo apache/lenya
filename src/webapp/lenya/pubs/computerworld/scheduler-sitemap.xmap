@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:generators default="file">
+      <map:generator  name="request" src="org.apache.cocoon.generation.RequestGenerator"/>
+      <map:generator  name="servletproxy" src="org.wyona.cms.cocoon.generation.ProxyGenerator"/>
+    </map:generators>
+    <map:transformers default="xslt"/>
+    <map:readers default="resource"/>
+    <map:serializers default="html"/>
+    <map:matchers default="wildcard"/>
+    <map:actions>
+      <map:action name="request-parameter" src="org.apache.cocoon.acting.RequestParamAction"/>
+    </map:actions>
+    <map:selectors>
+      <map:selector name="parameter" src="org.apache.cocoon.selection.ParameterSelectorFactory"/>
+    </map:selectors>
+   </map:components>
+
+  <map:resources/>
+
+  <map:pipelines>
+
+    <!-- scheduler aggregation pipeline -->
+    <map:pipeline internal-only="true">
+
+      <!-- load document types -->    
+      <map:match pattern="document-types">
+        <map:generate src="docs/publication/doctypes/doctypes.xconf"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- load task list -->
+      <map:match pattern="tasks">
+        <map:generate src="docs/publication/tasks.xconf"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- create the current date -->
+      <map:match pattern="scheduler-xsp">
+        <map:generate type="serverpages" src="../../docs/cms/scheduler/scheduler.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- create the current job snapshot -->
+      <map:match pattern="scheduler-servlet">
+        <map:generate type="servletproxy" src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/sort.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+    </map:pipeline>
+
+    <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
+    <map:pipeline>
+      <map:match pattern="docid/**">
+        <map:aggregate element="scheduler" prefix="sch" ns="http://www.wyona.org/2002/sch">
+          <map:part src="cocoon:/document-types"/>
+          <map:part src="cocoon:/tasks"/>
+          <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
+          <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
+        </map:aggregate>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl">
+	  <map:parameter name="documentUri" value="{1}"/>
+	  <map:parameter name="publication-id" value="unipublic"/>
+	</map:transform>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+	</map:transform>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler-document.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+          <map:parameter name="documentUri" value="{1}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+      
+      <map:match pattern="pubid/**">
+        <map:aggregate element="scheduler" prefix="sch" ns="http://www.wyona.org/2002/sch">
+          <map:part src="cocoon:/document-types"/>
+          <map:part src="cocoon:/tasks"/>
+          <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
+          <map:part src="cocoon:/scheduler-servlet" strip-root="true"/>
+        </map:aggregate>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filter.xsl">
+	  <map:parameter name="publication-id" value="{1}"/>
+	</map:transform>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/filterTasks.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+	</map:transform>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/scheduler-admin.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+          <map:parameter name="publication-id" value="{1}"/>
+        </map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+      
+    </map:pipeline>    
+    
+    <!-- Admin interface -->
+<!--    
+    <map:pipeline>
+      <map:match pattern="admin/pubid/**">
+        <map:generate type="servletproxy"
+	  src="/wyona-cms/servlet/QuartzSchedulerServlet"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/sort.xsl"/>
+        <map:transform src="../../stylesheets/cms/Page/Scheduler/adminPublication.xsl">
+	  <map:parameter name="documentID" value="{1}"/>
+	</map:transform>
+        <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>    
+-->
+
+  </map:pipelines>
+</map:sitemap>

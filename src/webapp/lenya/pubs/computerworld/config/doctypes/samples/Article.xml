@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<article>
+ <head>
+   <title>hier steht der titel</title>
+   <abstract>abstract</abstract>
+   <date>16. Dezember 2002</date>
+ </head>
+
+ <body>
+   <p>hier kommt der lauftext.</p>
+   <p>mehrere absaetze sind moeglich.</p>
+ </body>
+</article>

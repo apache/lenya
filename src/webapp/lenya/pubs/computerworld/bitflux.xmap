@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+	<!-- =========================== Components ================================ -->
+	<map:components>
+		<map:generators default="file">
+			<map:generator name="file" src="org.apache.cocoon.generation.FileGenerator"/>
+		</map:generators>
+		<map:transformers default="xslt">
+			<map:transformer name="xslt" src="org.apache.cocoon.transformation.TraxTransformer"/>
+			<map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+				<publication type="computerworld"/>
+			</map:transformer>
+			<map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
+		</map:transformers>
+		<map:readers default="resource">
+			<map:reader name="resource" src="org.apache.cocoon.reading.ResourceReader"/>
+		</map:readers>
+		<map:serializers default="html">
+			<map:serializer name="html" src="org.apache.cocoon.serialization.HTMLSerializer"/>
+		</map:serializers>
+		<map:matchers default="wildcard">
+			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcherFactory"/>
+		</map:matchers>
+		<!-- =========================== Actions ================================ -->
+		<map:actions>
+			<map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.xopus-handler">
+				<xml href="docs/publication/authoring"/>
+				<xsl href="stylesheets/publication"/>
+				<xsd href="docs/publication/doctypes/schemas"/>
+				<temp href="temp"/>
+			</map:action>
+		</map:actions>
+	</map:components>
+	<!-- =========================== Pipelines ================================ -->
+	<map:pipelines>
+		<!-- Called from config.xml  -->
+		<!-- Used for Bitflux specific pre- and post-processing of the xml (for all doctypes)  -->
+		<map:pipeline>
+			<map:match pattern="stylesheets/bitflux-include.xsl">
+				<map:generate src="stylesheets/publication/Bitflux/bitflux-include.xsl"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="stylesheets/bitflux-back-include.xsl">
+				<map:generate src="stylesheets/publication/Bitflux/bitflux-back-include.xsl"/>
+				<map:serialize type="xml"/>
+			</map:match>
+		</map:pipeline>
+		<!-- GET -->
+		<!-- Article -->
+		<map:pipeline>
+			<map:match pattern="news/**.xml">
+				<map:generate src="docs/publication/authoring/news/{1}.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="article.xml">
+				<map:generate src="docs/publication/authoring/news/1.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="stylesheets/article.xsl">
+				<map:generate src="docs/publication/authoring/index.html"/>
+				<map:transform src="stylesheets/publication/Page/Article/Authoring/bitflux.xsl"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="schemas/article.xsd">
+				<map:read src="docs/publication/doctypes/schemas/article.xsd" mime-type="text/xml"/>
+			</map:match>
+			<map:match pattern="css/article.css">
+				<map:read src="resources/publication/styles/authoring/article-bitflux.css" mime-type="text/css"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Small Preview -->
+		<map:pipeline>
+			<map:match pattern="small-preview.xml">
+				<map:generate src="docs/publication/authoring/small-preview.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="stylesheets/small-preview.xsl">
+				<map:generate src="docs/publication/authoring/index.html"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/small-preview-bitflux.xsl"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="schemas/small-preview.xsd">
+				<map:read src="docs/publication/doctypes/schemas/small-preview.xsd" mime-type="text/xml"/>
+			</map:match>
+			<map:match pattern="css/small-preview.css">
+				<map:read src="resources/publication/styles/authoring/small-preview-bitflux.css" mime-type="text/css"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Frontpage: Headlines -->
+		<map:pipeline>
+			<map:match pattern="preview.xml">
+				<map:generate src="docs/publication/authoring/preview.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="stylesheets/preview.xsl">
+				<!--
+				<map:generate src="http://127.0.0.1:7080/wyona-cms/computerworld/index.html?cocoon-view=content"/>
+				-->
+				<map:generate src="docs/publication/live/index.html"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/preview-bitflux.xsl"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="schemas/preview.xsd">
+				<map:read src="docs/publication/doctypes/schemas/preview.xsd" mime-type="text/xml"/>
+			</map:match>
+			<map:match pattern="css/preview.css">
+				<map:read src="resources/publication/styles/authoring/preview-bitflux.css" mime-type="text/css"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Generic -->
+		<map:pipeline>
+			<map:match pattern="css/bitflux.css">
+				<map:read src="resources/publication/styles/authoring/bitflux.css" mime-type="text/css"/>
+			</map:match>
+		</map:pipeline>
+		<!-- /GET -->
+		<map:pipeline>
+			<!-- POST (in the case of Bitflux the action only is used for saving and NOT for opening) -->
+			<!-- Save Article -->
+			<map:match pattern="save/*">
+				<map:act type="xopushandler">
+					<map:parameter name="save-filename" value="{1}"/>
+					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
+					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+					<!-- Is not needed since Bitflux uses the request parameter "url-back" to do the redirecton
+               We only send a "status ok" back to Bitflux
+          <map:generate src="{reqFilePath}"/>
+          <map:transform src="xopus_response.xsl">
+            <map:parameter name="reqId" value="{reqId}"/>
+            <map:parameter name="reqType" value="{reqType}"/>
+            <map:parameter name="reqFile" value="{reqFile}"/>
+            <map:parameter name="fileType" value="{fileType}"/>
+          </map:transform>
+          -->
+					<map:serialize type="xml"/>
+				</map:act>
+				<map:generate src="xopus_error.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<!-- Save Generic -->
+			<map:match pattern="save/*">
+				<map:act type="xopushandler">
+					<map:parameter name="save-filename" value="{1}"/>
+					<!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
+					<map:generate src="docs/cms/bitflux_response_ok.xml"/>
+					<map:serialize type="xml"/>
+				</map:act>
+				<map:generate src="xopus_error.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<!-- Error handling -->
+			<map:handle-errors>
+				<map:transform src="context://stylesheets/system/error2html.xsl"/>
+				<map:serialize status-code="500"/>
+			</map:handle-errors>
+		</map:pipeline>
+		<!-- /POST -->
+		<!-- Authoring crap -->
+		<map:pipeline>
+			<map:match pattern="authoring-index">
+				<map:aggregate element="wyona" label="gregor">
+					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part element="cmsbody" src="docs/publication/authoring/index.html"/>
+					<map:part src="docs/publication/live/preview.xml"/>
+					<!--			<map:part src="docs/publication/authoring/navigation.xml"/> -->
+					<map:part src="cocoon://all-headlines"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Authoring/main.xsl"/>
+				<map:serialize type="html"/>
+			</map:match>
+			<map:match pattern="menus/front.xml">
+				<map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
+				<map:serialize type="xml"/>
+			</map:match>
+		</map:pipeline>
+	</map:pipelines>
+</map:sitemap>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<sitetree>
+	<block id="aktuell">
+		<node id="/index.html" link="/index.html" name="index" target="">
+			<name>
+				<line>Home</line>
+			</name>
+		</node>
+		<node id="" link="/dossier/" name="dossier" target="">
+			<name>
+				<line>Dossier</line>
+			</name>
+		</node>
+		<node id="3" link="/archiv/" name="archiv" target="">
+			<name>
+				<line>Archiv</line>
+			</name>
+		</node>
+	</block>
+	<block id="infos">
+		<node id="/feedback.html" link="/feedback.html" name="feedback" target="">
+			<name>
+				<line>Feedback</line>
+			</name>
+		</node>
+		<node id="/impressum.html" link="/impressum.html" name="impressum" target="">
+			<name>
+				<line>Impressum</line>
+			</name>
+		</node>
+		<node id="/datenschutz.html" link="/datenschutz.html" name="datenschutz" target="">
+			<name>
+				<line>Datenschutz</line>
+			</name>
+		</node>
+	</block>
+	<block id="verlag">
+		<node id="/kontakt.html" link="/kontakt.html" name="kontakt" target="">
+			<name>
+				<line>Kontakt</line>
+			</name>
+		</node>
+		<node id="/aboservice.html" link="/aboservice.html" name="aboservice" target="">
+			<name>
+				<line>Abo Service</line>
+			</name>
+		</node>
+		<node id="/mediadaten.html" link="/mediadaten.html" name="mediadaten" target="">
+			<name>
+				<line>Mediadaten</line>
+			</name>
+		</node>
+		<node id="/about.html" link="/about.html" name="about" target="">
+			<name>
+				<line>Über uns</line>
+			</name>
+		</node>
+	</block>
+</sitetree>
