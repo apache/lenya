@@ -9,7 +9,7 @@
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="/">
-  <xsl:apply-templates select="NewsML"/>
+  <xsl:apply-templates select="Page/Content/NewsML"/>
 </xsl:template>
 
 <xsl:template match="NewsML">
