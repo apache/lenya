@@ -1,5 +1,5 @@
 /*
-$Id: UserAuthenticator.java,v 1.4 2003/08/07 14:53:43 andreas Exp $
+$Id: UserAuthenticator.java,v 1.5 2003/08/15 09:49:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,9 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        getLogger().debug("Authenticating username [" + username + "] with password [" + password + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Authenticating username [" + username + "] with password [" + password + "]");
+        }
 
         if (username == null || password == null) {
             throw new AccessControlException("Username or password is null!");
@@ -105,12 +107,12 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
 
         User user = accreditableManager.getUserManager().getUser(username);
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Authenticating user: " + user);
+            getLogger().debug("Authenticating user: [" + user + "]");
         }
 
         boolean authenticated = false;
         if (user != null && user.authenticate(password)) {
-            getLogger().debug("User [" + user + "] authenticated.");
+            getLogger().info("User [" + user + "] authenticated.");
             if (!identity.contains(user)) {
                 identity.addIdentifiable(user);
             }
@@ -118,9 +120,9 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
         }
         else {
             if (user == null) {
-                getLogger().warn(".authenticate(): No such user: " + username);
+                getLogger().warn("No such user: [" + username + "]");
             }
-            getLogger().warn(".authenticate(): User [" + username + "] not authenticated.");
+            getLogger().warn("User [" + username + "] not authenticated.");
         }
 
         return authenticated;

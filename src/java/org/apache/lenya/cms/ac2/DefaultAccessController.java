@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.12 2003/08/13 13:13:36 andreas Exp $
+$Id: DefaultAccessController.java,v 1.13 2003/08/15 09:49:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -139,10 +139,8 @@ public class DefaultAccessController
                     authorized
                         && authorizers[i].authorize(request);
 
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(
-                        "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
-                }
+                getLogger().info(
+                    "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
 
                 i++;
             }
@@ -191,7 +189,7 @@ public class DefaultAccessController
             configuration.getChild(ACCREDITABLE_MANAGER_ELEMENT);
         String accreditableManagerType =
             accreditableManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
-        getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
+        getLogger().info("AccreditableManager type: [" + accreditableManagerType + "]");
 
         accreditableManagerSelector =
             (ServiceSelector) manager.lookup(AccreditableManager.ROLE + "Selector");
@@ -214,7 +212,7 @@ public class DefaultAccessController
             String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
             Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
             authorizers.put(type, authorizer);
-            getLogger().debug("Adding authorizer [" + type + "]");
+            getLogger().info("Adding authorizer [" + type + "]");
         }
     }
     
@@ -248,7 +246,7 @@ public class DefaultAccessController
         String policyManagerType = policyManagerConfiguration.getAttribute(TYPE_ATTRIBUTE);
         policyManagerSelector = (ServiceSelector) manager.lookup(PolicyManager.ROLE + "Selector");
         policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
-        getLogger().debug("Policy manager type: [" + policyManagerType + "]");
+        getLogger().info("Policy manager type: [" + policyManagerType + "]");
     }
     
     /**
