@@ -56,25 +56,48 @@
 -->
 
       <!-- Menus -->
-      <map:match pattern="authoring/menus/mailing-lists.xml">
-        <map:generate type="serverpages" src="docs/publication/menus/mailing-lists.xsp"/>
+      <map:match pattern="authoring/menus/index.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/home.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/menus/*.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/{1}.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <!-- XML -->
       <map:match pattern="authoring/**.xml">
         <map:aggregate element="wyona">
-          <map:part src="cocoon:/authoring/menus/mailing-lists.xml"/>
+          <map:part src="cocoon:/authoring/menus/{1}.xml"/>
           <map:part src="docs/publication/authoring/{1}.xml" element="cmsbody"/>
         </map:aggregate>
         <!--<map:transform type="xinclude"/>-->
         <map:serialize type="xml"/>
       </map:match>
 
+      <!-- Home -->
+      <map:match pattern="authoring/">
+        <map:generate src="cocoon:/authoring/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="authoring/index.html">
+        <map:generate src="cocoon:/authoring/index.xml"/>
+        <map:transform src="stylesheets/publication/Page/Home/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
       <!-- Mailing Lists -->
       <map:match pattern="authoring/mailing-lists.html">
         <map:generate src="cocoon:/authoring/mailing-lists.xml"/>
         <map:transform src="stylesheets/publication/Page/Mailing-Lists/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Board -->
+      <map:match pattern="authoring/board.html">
+        <map:generate src="cocoon:/authoring/board.xml"/>
+        <map:transform src="stylesheets/publication/Page/Board/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
    </map:pipeline>

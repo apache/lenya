@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<oscom>
+
+<board>
+  <member>
+    <name>Eric Wiseman</name>
+  </member>
+  <member>
+    <name>Gregor Rothfuss</name>
+    <email>gregor.rothfuss@REMOVEpostnuke.com</email>
+  </member>
+  <member>
+    <name>Henri Bergius</name>
+  </member>
+  <member>
+    <name>Michael Wechner</name>
+    <email>michael.wechner@wyona.org</email>
+  </member>
+</board>
+
+</oscom>
