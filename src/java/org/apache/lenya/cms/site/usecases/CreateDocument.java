@@ -50,6 +50,24 @@ public class CreateDocument extends Create {
     }
     
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
+     */
+    protected void doCheckExecutionConditions() throws Exception {
+        
+        String documentId = getParameterAsString(DOCUMENT_ID);
+
+        if (documentId.equals("")) {
+            addErrorMessage("The document ID is required.");
+        }
+
+        if (documentId.matches("[^a-zA-Z0-9\\-]+")) {
+            addErrorMessage("The document ID is not valid.");
+        }
+
+        super.doCheckExecutionConditions();
+    }
+    
+    /**
      * @see org.apache.lenya.cms.site.usecases.Create#createDocument()
      */
     protected Document createDocument() throws Exception {

@@ -58,16 +58,7 @@ public abstract class Create extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
-        String documentId = getParameterAsString(DOCUMENT_ID);
         String navigationTitle = getParameterAsString(DublinCore.ELEMENT_TITLE);
-
-        if (documentId.equals("")) {
-            addErrorMessage("The document ID is required.");
-        }
-
-        if (documentId.matches("[^a-zA-Z0-9\\-]+")) {
-            addErrorMessage("The document ID is not valid.");
-        }
 
         if (navigationTitle.equals("")) {
             addErrorMessage("The navigation title is required.");
