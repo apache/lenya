@@ -1,5 +1,5 @@
 /*
- * $Id: FileUserTest.java,v 1.3 2003/06/06 17:24:47 egli Exp $
+ * $Id: FileUserTest.java,v 1.4 2003/06/10 13:51:19 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
- 
+
 package org.apache.lenya.cms.ac;
 
 import java.io.File;
@@ -67,7 +67,7 @@ import junit.framework.TestCase;
 public class FileUserTest extends TestCase {
 
 	private HashMap roles = new HashMap();
-	private HashMap groups = new HashMap(); 
+	private HashMap groups = new HashMap();
 	/**
 	 * Constructor for FileUserTest.
 	 * @param arg0
@@ -96,26 +96,28 @@ public class FileUserTest extends TestCase {
 
 	final public Publication getPublication() {
 		String publicationId = "default";
-		String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-		return PublicationFactory.getPublication(publicationId, servletContextPath);
+		String servletContextPath =
+			"/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
+		return PublicationFactory.getPublication(
+			publicationId,
+			servletContextPath);
 	}
-	
+
 	final public Map getRoles() {
 		return roles;
 	}
-	
+
 	final public Map getGroups() {
 		return groups;
 	}
-	
+
 	final public FileUser createAndSaveUser(
-		String name,
+		String userName,
 		String fullName,
 		String email,
 		String password) {
 
 		Publication publication = getPublication();
-		String userName = "alice";
 		String editorGroupName = "editorGroup";
 		String adminGroupName = "adminGroup";
 		String editorRoleName = "editorRole";
@@ -125,14 +127,15 @@ public class FileUserTest extends TestCase {
 		FileRole adminRole = new FileRole(publication, adminRoleName);
 		this.roles.put(editorRoleName, editorRole);
 		this.roles.put(adminRoleName, adminRole);
-		
+
 		FileGroup editorGroup = new FileGroup(publication, editorGroupName);
 		FileGroup adminGroup = new FileGroup(publication, adminGroupName);
 		this.groups.put(editorGroupName, editorGroup);
-		this.groups.put(adminGroupName, adminGroup);		
-		
-		FileUser user = new FileUser(publication, userName, fullName, email, password);
-		
+		this.groups.put(adminGroupName, adminGroup);
+
+		FileUser user =
+			new FileUser(publication, userName, fullName, email, password);
+
 		try {
 			editorRole.save();
 			adminRole.save();
@@ -157,13 +160,14 @@ public class FileUserTest extends TestCase {
 		}
 		return user;
 	}
-	
-	final public FileUser loadUser(String userName) throws AccessControlException {
+
+	final public FileUser loadUser(String userName)
+		throws AccessControlException {
 		Publication publication = getPublication();
 		UserManager manager = UserManager.instance(publication);
 		return (FileUser) manager.getUser(userName);
 	}
-	
+
 	final public void testSave() {
 		Publication publication = getPublication();
 		String userName = "alice";
@@ -236,5 +240,31 @@ public class FileUserTest extends TestCase {
 				"alice@wonderland.org",
 				"secret");
 		assertTrue(user.getId().equals(id));
+	}
+
+	final public void testDelete() {
+		String id = "albert";
+		FileUser user =
+			createAndSaveUser(
+				id,
+				"Albert Einstein",
+				"albert@physics.org",
+				"secret");
+		Publication publication = getPublication();
+		UserManager manager = null;
+		try {
+			manager = UserManager.instance(publication);
+		} catch (AccessControlException e1) {
+			e1.printStackTrace();
+		}
+		assertNotNull(manager);
+
+		assertNotNull(manager.getUser(id));
+		try {
+			user.delete();
+		} catch (AccessControlException e) {
+			e.printStackTrace();
+		}
+		assertNull(manager.getUser(id));
 	}
 }
