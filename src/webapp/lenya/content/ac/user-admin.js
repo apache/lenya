@@ -32,7 +32,7 @@ function user_change_profile(userId) {
 	// at the moment the loop is executed only once (no form validation)
 	
     while (true) {
-	    sendPageAndWait("lenya.usecase.change_profile/profile.html", {
+	    sendPageAndWait("users/lenya.usecase.change_profile/profile.xml", {
 	    	"user-id" : userId,
 	    	"fullname" : fullName,
 	    	"email" : email
@@ -75,7 +75,7 @@ function user_change_password(checkPassword, userId) {
     var message = "";
     
     while (true) {
-	    sendPageAndWait("lenya.usecase.change_password/password.html", {
+	    sendPageAndWait("users/lenya.usecase.change_password/password.xml", {
 	    	"user-id" : userId,
 	    	"new-password" : newPassword,
 	    	"confirm-password" : confirmPassword,
@@ -129,7 +129,7 @@ function user_change_groups(userId) {
     }
     
     while (true) {
-	    sendPageAndWait("lenya.usecase.change_groups/groups.html", {
+	    sendPageAndWait("users/lenya.usecase.change_groups/groups.xml", {
 	    	"user-id" : userId,
 	    	"groups" : groups,
 	    	"user-groups" : userGroups

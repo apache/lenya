@@ -43,7 +43,8 @@
     
     <map:pipeline>
       
-      <map:match pattern="lenya.usecase.change_*/*.html">
+      <!-- The 'users' URI step is needed to highlight the menu item. -->
+      <map:match pattern="internal/users/lenya.usecase.change_*/*.xml">
         <map:generate src="content/ac/user-{2}.xsp" type="serverpages"/>
         <map:transform src="xslt/ac/user-{2}.xsl"/>
         <map:serialize type="xml"/>
@@ -101,6 +102,7 @@
     </map:pipeline>
 
     <map:pipeline>
+      
       <map:match pattern="internal/index.html">
         <map:generate src="content/admin/index.xml"/>
         <map:serialize type="xml"/>
@@ -111,12 +113,10 @@
         <map:transform src="xslt/admin/status2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
-      <map:serialize type="html"/>
-<!--
-    <map:serialize type="xml"/>
--->
-   </map:match>
-   </map:pipeline>
+        <map:serialize type="html"/>
+      </map:match>
+      
+    </map:pipeline>
 
     
     <!-- =================================================================== -->
@@ -125,21 +125,12 @@
     
     <map:pipeline>
       
-      <!-- sitetree -->
-      <map:match pattern="sitetree/**.xml">
-        <map:generate src="content/admin/sitetree.xml"/>
-        <map:transform src="xslt/navigation/sitetree2nav.xsl">
-          <map:parameter name="url" value="{1}"/>
-        </map:transform>
-      </map:match>
-      
       <map:match pattern="cmsbody/**">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml"/>
           <map:part src="cocoon:/internal/{1}"/>
 				</map:aggregate>
-        <map:transform src="xslt/admin/page.xsl"/>
-        <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:transform src="xslt/admin/page2xhtml.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:serialize type="xml"/>
