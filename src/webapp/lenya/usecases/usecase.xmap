@@ -21,7 +21,7 @@
       
       <!-- view for usecases that take up the full screen -->
       <map:match pattern="view/**">
-        <map:generate type="jx" src="{1}.jx"/>
+        <map:generate type="jx" src="fallback://lenya/usecases/{1}.jx"/>
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
