@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xsl,v 1.17 2004/03/13 12:42:09 gregor Exp $ -->
+<!-- $Id: publication.xsl,v 1.18 2004/04/05 12:41:42 michi Exp $ -->
 
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
@@ -57,7 +57,12 @@
 
 <xsl:template match="lenya:description">
 <h2><xsl:value-of select="../lenya:name"/></h2>
-(Based on Lenya <b><xsl:value-of select="../lenya:version"/></b>)
+<xsl:apply-templates select="../lenya:pub-version"/>
+(Based on
+<xsl:apply-templates select="../lenya:version"/> <!-- DEPRECATED: replaced by lenya:lenya-version -->
+<xsl:apply-templates select="../lenya:lenya-version"/>
+<xsl:apply-templates select="../lenya:cocoon-version"/>
+)
 <p>
 <h3>About</h3>
   <xsl:apply-templates />
@@ -69,6 +74,18 @@
 <xsl:template match="lenya:readme">
 <h3>Readme</h3>
   <xsl:apply-templates />
+</xsl:template>
+
+<xsl:template match="lenya:version|lenya:lenya-version">
+Lenya <b><xsl:value-of select="."/></b>
+</xsl:template>
+
+<xsl:template match="lenya:cocoon-version">
+,&#160;Cocoon <b><xsl:value-of select="."/></b>
+</xsl:template>
+
+<xsl:template match="lenya:pub-version">
+Version: <b><xsl:value-of select="."/></b><br/>
 </xsl:template>
 
 <xsl:template match="lenya:tests">
