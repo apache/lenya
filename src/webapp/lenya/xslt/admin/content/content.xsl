@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: content.xsl,v 1.1 2003/08/08 08:43:29 gregor Exp $
+ $Id: content.xsl,v 1.2 2003/08/08 08:50:26 gregor Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -43,7 +43,7 @@
  	      Do you really want to delete the trash ?
           </p>
           <input type="submit" class="lenya-form-element" value="Delete trash"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}/../';" value="Cancel"/>
         </form>
       </div>
     </div>
