@@ -70,7 +70,7 @@
   
   
   <xsl:template match="group">
-    <a href="../groups/{@id}/index.html"><xsl:value-of select="@id"/></a>
+    <a href="groups/{@id}/index.html"><xsl:value-of select="@id"/></a>
     <xsl:if test="position() != last()">, <xsl:text/>
     </xsl:if>
   </xsl:template>
