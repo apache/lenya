@@ -162,13 +162,11 @@
 		<map:pipeline>
 			<map:match pattern="wyona/ParentChildScreenNewArticle*">
 				<map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
-				<!--
 				<map:transform src="../../stylesheets/cms/Page/new-document.xsl"/>
--->
 				<!--
 				<map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
--->
 				<map:transform src="stylesheets/cms/Page/article-creator.xsl"/>
+-->
 				<map:serialize type="html"/>
 			</map:match>
 			<map:match pattern="wyona/create*">
