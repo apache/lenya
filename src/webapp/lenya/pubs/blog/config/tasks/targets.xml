@@ -4,37 +4,37 @@
 
 <!-- Common Properties -->
 <property name="pub.dir" value=""/>
+<property name="pub.id" value=""/>
 
 <!-- Publishing Properties -->
 <property name="authoring.dir" value="content/authoring"/>
 <property name="live.dir" value="content/live"/>
 
+<property name="export.server-port" value=""/>
+<property name="export.context-path" value=""/>
+<property name="export.expression" value="/lenya/blog/live/"/>
+<property name="export.replacement" value="/"/>
+<property name="export.dir" value="work/export/pending"/>
+
+<!-- Input from Publishing Screen -->
 <property name="publish.sources" value=""/>
-
-<!--
-<property name="authoring.area" value="authoring"/>
-<property name="sitetree" value="sitetree.xml"/>
-<property name="authoring.resource.dir" value="resources/images/authoring"/>
-<property name="live.area" value="live"/>
-<property name="live.resource.dir" value="resources/images/live"/>
-<property name="replication.dir" value="content/replication/pending"/>
-
-<property name="export.server" value="http://localhost:8080"/>
-<property name="export.dir" value="resources/export/pending"/>
-<property name="export.expression" value="/lenya/default"/>
-<property name="export.replacement" value=""/>
 <property name="export.uris" value=""/>
+<!-- /Input from Publishing Screen -->
+<!-- /Publishing Properties -->
 
-<property name="publish.documentid" value=""/>
-<property name="publish.language" value=""/>
--->
+
+
+
 
 <target name="publish">
+  <echo>Start publish</echo>
   <echo>Publication Directory : ${pub.dir}</echo>
+
+
+  <echo>Copy source (XML) files</echo>
   <echo>Files to copy: ${publish.sources}</echo>
   <echo>Authoring Directory: ${authoring.dir}</echo>
   <echo>Live Directory: ${live.dir}</echo>
-
   <copy todir="${pub.dir}/${live.dir}">
     <fileset dir="${pub.dir}/${authoring.dir}">
       <include name="${publish.sources}"/> <!-- NOTE: Need to be relative paths, e.g. levi/index.xml:vanya/index.xml -->
@@ -42,59 +42,18 @@
   </copy>
 
 
-
-
-
-
-
-
-
-  <!-- FIXME: copy only the file that corresponds to the node that we're publishing -->
-
-
-<!--
-  <echo>Publish resources</echo>
-  <echo>Copying files ${publish.documentid}</echo>
-  <echo>from ${pub.dir}/${authoring.resource.dir}</echo>
-  <echo>to ${pub.dir}/${live.resource.dir}</echo>
--->
-
-<!--
-  <copy todir="${pub.dir}/${live.resource.dir}/${publish.documentid}">
-    <fileset dir="${pub.dir}">
-      <include name="${authoring.resource.dir}/${publish.documentid}/*"/>
-    </fileset>
-  </copy>
--->
-
-<!--
-  <taskdef name="publishtree" classname="org.apache.lenya.cms.ant.TreePublisher"/>
-
-  <echo>Publish tree</echo>
-  <echo>Copy node for ${publish.documentid}</echo>
-  <echo>for language ${publish.language}</echo>
-  <echo>from tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
-  <echo>and insert it in tree ${pub.dir}/${live.dir}/${sitetree}</echo>
-
-  <publishtree 
-      documentid= "${publish.documentid}"
-      language="${publish.language}"
-      />
--->
-
-<!--
+  <echo>Export page as static HTML</echo>
+  <echo>Pages to export: ${export.server-port} ${export.context-path} ${export.uris}</echo>
   <taskdef name="export" classname="org.apache.lenya.cms.ant.StaticHTMLExporter"/>
-  
-  <echo>Export:</echo>
   <export
-      path="${export.dir}"
-      uris="${export.uris}"
-      expression="${export.expression}"
-      replacement="${export.replacement}"
-      server="${export.server}"
-      />
--->
+    server="http://127.0.0.1:${export.server-port}${export.context-path}/${pub.id}/live/"
+    uris="${export.uris}"
+    expression="${export.expression}"
+    replacement="${export.replacement}"
+    path="${export.dir}"
+  />
 
+  <echo>End publish</echo>
 </target>
 
 </project>

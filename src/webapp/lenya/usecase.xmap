@@ -248,6 +248,8 @@
             <map:act type="task">
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="task-id" value="{request-param:task-id}"/>
+              <map:parameter name="properties.export.server-port" value="{request:serverPort}"/>
+              <map:parameter name="properties.export.context-path" value="{request:contextPath}"/>
               <map:redirect-to session="true" uri="{request:requestURI}"/>
             </map:act>
           </map:match>
