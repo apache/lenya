@@ -29,7 +29,7 @@
     <echo:modified>2003-02-05T12:29:29Z</echo:modified>
 
     <echo:content type="text/plain" xml:lang="en-us" mode="escaped">
-      <![CDATA[ Plain Text (as CDATA) ]]>
+      <![CDATA[ Plain Text (as CDATA): < & > ]]>
     </echo:content>
 
 <!--
