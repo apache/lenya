@@ -2,10 +2,14 @@
 
 <system type="cms">
   <id>typo3</id>
+  <editor email="pog@gmx.de">Patrick Ogay</editor>
   <system_name>Typo3</system_name>
-  <main_url>http://www.typo3.com</main_url>
+<description>
+TYPO3 is a free Open Source content management system for enterprise purposes on the web and in intranets. It offers full flexibility and extendability while featuring an accomplished set of ready-made interfaces, functions and modules.
+</description>
+  <main_url>http://www.typo3.org</main_url>
   <license>
-    <license_name>???</license_name>
-    <license_url>http://???</license_url>
+    <license_name>GPL</license_name>
+    <license_url>http://sourceforge.net/projects/typo3/</license_url>
   </license>
 </system>
