@@ -14,7 +14,7 @@
 
 </script>
   </head>
-  <body class="admin">
+  <body class="authoring">
     <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
       <tbody>
         <tr id="tabrow">
@@ -22,18 +22,20 @@
         </tr>
         <tr id="menurow" valign="top">
           <td>
-            <div id="menucontent"></div>
+            <div id="menubar"></div>
           </td>
         </tr>
         <tr id="contentrow">
           <td>
+            <div><img src="/lenya/lenya/menu2/media/nix.gif" id="mask" /></div>
             <iframe id="page" name="page" src="{$context_prefix}{live_uri}" xsrc="{$context_prefix}{live_uri}"><xsl:apply-templates select="cmsbody" /></iframe>
-        </td>
+          </td>
         </tr>
       </tbody>
     </table>
     <div id="tabTemplate" class="template"><div id="$name" class="tab$selected" onclick="lui._doClickTab(this.id, '$href');" href="$href" unselectable="on"><img src="$icon" height="16" align="absmiddle" />$name</div></div>
-    <div id="menuTemplate" class="template"><div id="$name" class="menu" onmouseover="this.className='menuover';" onmouseout="this.className='menu';" onclick="lui._doClickMenu(this.id);" unselectable="on"><img src="media/grau.gif" width="1" height="16" hspace="0" align="right" /><img src="$icon" height="16" align="absmiddle" />$name</div></div>
+    <div id="menubuttonTemplate" class="template"><div class="menubuttoncontainer"><div id="$name" class="menubutton" onmouseover="this.className='menubuttonover';" onmouseout="this.className='menubutton';" onclick="lui._doClickMenuButton(this.id);" unselectable="on"><img src="/lenya/lenya/menu2/media/grau.gif" width="1" height="16" hspace="0" align="right" /><img src="$icon" height="16" align="absmiddle" />$name</div><br/><div id="menu_$name" class="menu"></div></div></div>
+    <div id="menuitemTemplate" class="template"><div id="$name" class="menuitem" onmouseover="this.className='menuitemover';" onmouseout="this.className='menuitem';" onclick="lui._doClickMenuItem('$id', '$href');" unselectable="on" href="$href">$name</div></div>
   </body>
 </html>
 </xsl:template>
