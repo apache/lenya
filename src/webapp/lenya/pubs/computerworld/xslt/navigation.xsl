@@ -4,12 +4,9 @@
 <xsl:param name="id"/>
 <xsl:param name="authoring"/>
 
-<xsl:variable name="prefix">/wyona-cms/computerworld</xsl:variable>
-<!--
-  <xsl:if test="$authoring">
-  <xsl:variable name="prefix">{$prefix}/authoring</xsl:variable>
-</xsl:if>
- -->
+<xsl:variable name="prefix">/wyona-cms/computerworld<xsl:if test="$authoring">/authoring</xsl:if>
+</xsl:variable>
+
 <xsl:template match="span[@id = 'navigation']">
         <xsl:apply-templates select="/wyona/sitetree"/>
 </xsl:template>
