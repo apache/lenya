@@ -40,7 +40,7 @@
         <xsl:otherwise>
           <div class="lenya-publication-item">
             <a href="{@pid}/introduction.html">
-            <xsl:apply-templates select="lenya:publication/lenya:name"/></a>
+            <xsl:value-of select="lenya:publication/lenya:name"/></a>
           </div>
         </xsl:otherwise>
       </xsl:choose>

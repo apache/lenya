@@ -32,7 +32,7 @@
             <h1><xsl:value-of select="page:title"/></h1>
           </td>
           <td class="lenya-project-logo">
-            <img src="{$contextprefix}/lenya/images/project-logo-small.png"/>
+            <img src="{$contextprefix}/lenya/images/project-logo-small.png" alt="Apache Lenya Project Logo"/>
           </td>
         </tr>
       </table>
@@ -42,7 +42,7 @@
       <table class="lenya-body" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <xsl:if test="//xhtml:div[@class = 'lenya-sidebar']">
-            <td class="lenya-sidebar" width="20%">
+            <td class="lenya-sidebar">
               <xsl:copy-of select="//xhtml:div[@class = 'lenya-sidebar']/node()"/>
             </td>
           </xsl:if>
