@@ -28,7 +28,25 @@
 		</authors>
 	</header>
 	<body>
-<p>
+        <section id="apacheCon">
+                <title>Come to ApacheCon US 2004</title>
+                 <p>
+          <link href="http://apachecon.com/2004/US/">
+            <img src="http://apache.org/images/ac2004_170x100.gif"
+              alt="apachecon 2004 logo" width="170" height="100" />
+          </link>
+          </p><p>
+          <link href="http://apachecon.com/2004/US/">ApacheCon US 2004</link>
+            (13-17 November 2004). ApacheCon is the conference for all
+            things Apache. Come along and learn about a range of new
+            technologies, meet some Apache folks and share the knowledge.
+            See more information about
+           <link href="http://www.apache.org/foundation/conferences.html">Apache Conferences</link>.
+        </p>
+        </section>
+        <section id="introduction" >
+                <title>Introduction</title>
+                <p>
 Apache Lenya is an Open-Source Content Management System written in Java and based on open standards such as 
 XML and XSLT. Lenya is built on top of Apache Cocoon and other components from the Apache Software Stack. 
 Its XML-centric architecture allows for content delivery targeted to the capabilities of various devices, 
@@ -40,17 +58,20 @@ such as robust Caching, multi-channel output, it's many connectivity options to 
 customized solutions to meet your specific needs that are not already covered by Apache Lenya today.</p>
 <p>
 Download Apache Lenya <link href="ext:incubator.lenya">here</link>.
-</p><p>
-The Apache Lenya Community
 </p>
-		<section>
-			<title><strong>News</strong></title>
-			<ul>
-				<li>
-					<strong>Incubating Apache Lenya 1.2 released</strong> (June 27, 2004)
-				</li>
-			</ul>
-		</section>
+        </section>
+
+        <section id="news">
+      <title>News and events</title>
+      <ul>
+       
+        <li>The Lenya project has evolved to become a "top-level" Apache
+         project.
+        </li>
+        <li><strong>Incubating Apache Lenya 1.2 released</strong> (June 27, 2004) </li>
+      </ul>
+    </section>
+		
 		<section>
 			<title>
 				<strong>Features</strong>

@@ -155,13 +155,16 @@ which will be used to configure the chosen Forrest skin.
         To define the css definition of a new element that you may have used
         in the class attribute of a <p> node.
         e.g. <p class="quote"/>
-    -->
-    <!-- p.quote {
-      margin-left: 2em;
-      padding: .5em;
-      background-color: #f0f0f0;
-      font-family: monospace;
-    } -->
+    
+    .imageFloat {
+      margin: 2;
+      padding: 2;
+      float:left;
+    } 
+    .stopFloat{
+    clear: both;
+    float: none;
+    }-->
   </extra-css>
 
   <colors>

@@ -29,23 +29,11 @@
     </authors>
   </header>
   <body>
+        <note> This is just a brainstorming draft not the actual finished documentation</note>
         <p>
-           In getting started with Lenya, one must learn not only a number of concepts, but a number of details as well. 
-           The Components section will explain the building blocks that make up Lenya, such as the sitemap, publications, and tasks.
+           After capsulating all functionality into plugins, we can make flexible changes in 2.0 where we want to refactor the underlinying code base of the core. 
+           The version 2.0 will be have the lenya core and a plugin base arround this way we hope to shorten the development time with lenya.
+           The idea is that the user (or admin) can choose from a width range of plugins that he can use in his (her) application. 
         </p>
-
-        <p>
-           You can find here release specific documentation. Although right now we have here the documentation mainly for 1.2.x..
-           This is our stable releases and should be used for productiv environments.
-        </p>
-        <p>
-           The 1.4. branch is in Draft status that means that it can be that are just RT (random thoughts) and not yet a documentation.
-        </p>
-        <p>
-           The version 2.0 docu is in brainstorming status that means we just collecting ideas.
-        </p>
-<p>
-More documentation (work in progress) can be found at the <link href="http://wiki.apache.org/cocoon-lenya/">Apache Lenya Wiki</link>.
-</p>
   </body>
 </document>

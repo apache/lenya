@@ -39,10 +39,14 @@
            This is our stable releases and should be used for productiv environments.
         </p>
         <p>
-           The 1.4. branch is in Draft status that means that it can be that are just RT (random thoughts) and not yet a documentation.
+           The 1.4. branch reflects our efforts to integrate Jackrabbit and building an even more flexible frameworks. 
+           With the 1.4. branch we are trying to capsulate the functionalities of lenya into plugins. 
+           This plugins then can be (hopefully) used in all following version independent from the lenya core.
         </p>
         <p>
-           The version 2.0 docu is in brainstorming status that means we just collecting ideas.
+           This way we can make flexible changes in 2.0 where we want to refactor the underlinying code base. 
+           The version 2.0 will be have the lenya core and a plugin base arround this way we hope to shorten the development time with lenya.
+           The idea is that the user (or admin) can choose from a width range of plugins that he can use in his (her) application. 
         </p>
 <p>
 More documentation (work in progress) can be found at the <link href="http://wiki.apache.org/cocoon-lenya/">Apache Lenya Wiki</link>.
