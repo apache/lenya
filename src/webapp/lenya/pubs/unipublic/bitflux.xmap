@@ -112,7 +112,7 @@
 		</map:pipeline>
 		<!-- Frontpage: Webperlen -->
 		<map:pipeline>
-			<map:match pattern="webperls.xml">
+			<map:match pattern="frontpage/webperls.xml">
 				<map:generate src="docs/publication/authoring/frontpage/webperls.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
@@ -130,7 +130,7 @@
 		</map:pipeline>
 		<!-- Frontpage: Dossierkasten -->
 		<map:pipeline>
-			<map:match pattern="dossierkasten.xml">
+			<map:match pattern="frontpage/dossier.xml">
 				<map:generate src="docs/publication/authoring/frontpage/dossier.xml"/>
 				<map:serialize type="xml"/>
 			</map:match>
