@@ -264,3 +264,10 @@ h2 {
     font-size: 10px;
     margin: 10px 10px 10px 5px;
 }
+
+#footer {
+    padding: 5px;
+	font-size: 60%;
+    text-align: right;
+    border-top: solid 1px #BB9999;
+}

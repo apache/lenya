@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.2 2004/03/13 12:24:30 roku Exp $
+   $Id$
    
 -->
 
@@ -29,4 +29,5 @@
   <message key="New language for existing Document">New language for existing Document</message>
   <message key="default.createdoc.info.all-language-versions-exists">There are already versions of this document for all languages.</message>
 
+  <message key="last_published">Last Published</message>
 </catalogue>

@@ -15,23 +15,23 @@
  *
  */
 
-/* $Id: Publish.java,v 1.2 2004/03/20 11:46:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.defaultpub.cms.task;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.avalon.framework.parameters.ParameterException;
-import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentHelper;
+import org.apache.lenya.cms.publication.DublinCore;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.SiteTree;
-import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publication.task.PublicationTask;
 import org.apache.lenya.cms.task.ExecutionException;
@@ -47,7 +47,11 @@ public class Publish extends PublicationTask {
 
     public static final String PARAMETER_DOCUMENT_ID = "document-id";
     public static final String PARAMETER_DOCUMENT_LANGUAGE = "document-language";
+    public static final String PARAMETER_USER_NAME = "user-name";
+    public static final String PARAMETER_USER_EMAIL = "user-email";
 
+    private static final String format = "yyyy-MM-dd HH:mm:ss";
+    
     /**
      * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
@@ -66,7 +70,16 @@ public class Publish extends PublicationTask {
                 if (log.isDebugEnabled()) {
                     log.debug("Can execute task: parent is published.");
                 }
+                String date = new SimpleDateFormat(format).format(new Date());
+                reservedCheckOut(authoringDocument);
+                setPublicationDate(authoringDocument, date);
+                setModificationDate(authoringDocument, date);
+                setPublisher(authoringDocument);
+                authoringDocument.getDublinCore().save();
+                reservedCheckIn(authoringDocument, true);
+
                 publish(authoringDocument);
+
                 setResult(SUCCESS);
             }
 
@@ -79,20 +92,53 @@ public class Publish extends PublicationTask {
     }
 
     /**
+     * set the publisher (the user-id, the user-name and the user-email seperate with a |) 
+     * @param document The document.
+     * @throws PublicationException When something went wrong.
+     * @throws ParameterException When something went wrong.
+     */
+    public void setPublisher(Document document) throws PublicationException, ParameterException {
+        String userId = getParameters().getParameter(PARAMETER_USER_ID);
+        String userName = getParameters().getParameter(PARAMETER_USER_NAME);
+        String userEmail = getParameters().getParameter(PARAMETER_USER_EMAIL);
+        String publisher = document.getDublinCore().getFirstValue(DublinCore.ELEMENT_PUBLISHER);
+        document.getDublinCore().setValue(DublinCore.ELEMENT_PUBLISHER, userId + "|" + userName + "|" + userEmail);
+    }
+
+    /**set the date of the publication, the date of the last change  
+     * @param document The document.
+     * @param date The date in the format yyyy-MM-dd HH:mm:ss.
+     * @throws PublicationException When something went wrong
+     */
+    public void setModificationDate(Document document,String date) throws PublicationException {
+        String lastModDate = document.getDublinCore().getFirstValue(DublinCore.TERM_MODIFIED);
+        document.getDublinCore().setValue(DublinCore.TERM_MODIFIED, date);
+    }
+    
+    /** set the date of the first publication
+     * @param document The document.
+     * @param date The date in the format yyyy-MM-dd HH:mm:ss.
+     * @throws PublicationException When something went wrong
+     */
+    public void setPublicationDate(Document document,String date) throws PublicationException {
+        String publicationDate = document.getDublinCore().getFirstValue(DublinCore.TERM_ISSUED);
+        if (publicationDate != null && !publicationDate.equals("")){
+            return;
+        }
+        document.getDublinCore().setValue(DublinCore.TERM_ISSUED, date);
+    }
+
+    /**
      * Checks if the preconditions are complied.
      * @param document The document to publish. 
      * @return
-     * @throws PublicationException
      * @throws ExecutionException
-     * @throws DocumentException
+     * @throws Exception
+     * @throws IOException
      */
     protected boolean checkPreconditions(Document document)
         throws
-            PublicationException,
-            DocumentException,
-            ProcessingException,
-            SiteTreeException,
-            ExecutionException {
+            ExecutionException, IOException, Exception {
         boolean OK = true;
 
         if (!canWorkflowFire(document)) {
@@ -111,6 +157,11 @@ public class Publish extends PublicationTask {
             }
         }
 
+        if (!canCheckOut(document)){
+            log.error("Cannot execute task: the document is checked out by another user.");
+            OK = false;
+        } 
+        
         return OK;
     }
 

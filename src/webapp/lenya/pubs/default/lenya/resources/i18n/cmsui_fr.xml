@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui_fr.xml,v 1.5 2004/04/17 07:22:46 roku Exp $
+   $Id$
    
    @translators Olivier Lange <wire at petit-atelier dot ch>
    
@@ -29,5 +29,6 @@
   <message key="Create new language version">Créer une nouvelle traduction</message>
   <message key="New language for existing Document">Nouvelle traduction d'un document existant</message>
   <message key="default.createdoc.info.all-language-versions-exists">Les traductions de ce document existent déjà dans toutes les langues.</message>
+  <message key="last_published">Mise à jour</message>
   
 </catalogue>

@@ -24,6 +24,8 @@
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
     xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     exclude-result-prefixes="page xhtml"
     >
     
@@ -67,10 +69,48 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <td colspan="2" valign="top">
+            <div id="footer">
+              <xsl:apply-templates select="lenya:meta/dcterms:modified"/>
+              <xsl:apply-templates select="lenya:meta/dc:publisher"/>
+            </div>
+          </td>
+        </tr>
       </table>
       </div>
     </body>
   </html>
+</xsl:template>
+
+<xsl:template match="dcterms:modified">
+  <xsl:variable name="date"><xsl:value-of select="."/></xsl:variable>
+  <i18n:text>last_published</i18n:text>:
+    <xsl:if test="$date!=''">
+    <i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss" pattern="EEE, d MMM yyyy HH:mm:ss z" value="{$date}"/> 
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="dc:publisher">
+  <xsl:variable name="user"><xsl:value-of select="."/></xsl:variable>
+  <xsl:variable name="user-id"><xsl:value-of select="substring-before($user,'|')"/></xsl:variable>
+  <xsl:variable name="rest"><xsl:value-of select="substring-after($user,'|')"/></xsl:variable>
+  <xsl:variable name="user-name"><xsl:value-of select="substring-before($rest,'|')"/></xsl:variable>
+  <xsl:variable name="user-email"><xsl:value-of select="substring-after($rest,'|')"/></xsl:variable>
+
+  <xsl:if test="$user != ''">
+    <xsl:choose>
+      <xsl:when test="$user-email != ''">
+      / <a>
+          <xsl:attribute name="href"><xsl:value-of select="concat('mailto:',$user-email)"/></xsl:attribute> 
+          <xsl:value-of select="$user-name"/>
+        </a>
+      </xsl:when>
+      <xsl:otherwise>
+       / <xsl:value-of select="$user-name"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="@*|node()" priority="-1">
