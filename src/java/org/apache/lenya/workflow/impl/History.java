@@ -98,8 +98,6 @@ public abstract class History implements WorkflowListener {
 
             Element historyElement = helper.getDocument().getDocumentElement();
             historyElement.setAttribute(WORKFLOW_ATTRIBUTE, workflowId);
-            createVariableElements(helper);
-            saveVariables(helper);
 
             DocumentHelper.writeDocument(helper.getDocument(), file);
         } catch (Exception e) {
@@ -247,23 +245,15 @@ public abstract class History implements WorkflowListener {
                     "*[local-name() = '" + VARIABLE_ELEMENT + "']" +
                     "[@" + NAME_ATTRIBUTE + " = '" + name + "']");
                 if (element == null) {
-                    throw new WorkflowException("Variable element for variable '" + name + "' not found!");
+                    element = helper.createElement(VARIABLE_ELEMENT);
+                    element.setAttribute(NAME_ATTRIBUTE, name);
+                    parent.appendChild(element);
                 }
                 element.setAttribute(VALUE_ATTRIBUTE, Boolean.toString(value));
                 
             } catch (TransformerException e) {
                 throw new WorkflowException(e);
             }
-        }
-    }
-    
-    protected void createVariableElements(NamespaceHelper helper) throws WorkflowException {
-        Element parent = helper.getDocument().getDocumentElement();
-        BooleanVariable variables[] = getInstance().getWorkflowImpl().getVariables();
-        for (int i = 0; i < variables.length; i++) {
-            Element element = helper.createElement(VARIABLE_ELEMENT);
-            element.setAttribute(NAME_ATTRIBUTE, variables[i].getName());
-            parent.appendChild(element);
         }
     }
     
