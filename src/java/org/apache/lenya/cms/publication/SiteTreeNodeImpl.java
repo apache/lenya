@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.21 2003/09/23 13:46:02 edith Exp $
+$Id: SiteTreeNodeImpl.java,v 1.22 2004/01/07 13:22:42 egli Exp $
 <License>
 
  ============================================================================
@@ -73,8 +73,8 @@ import java.util.List;
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: edith $
- * @version $Revision: 1.21 $
+ * @author $Author: egli $
+ * @version $Revision: 1.22 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -206,7 +206,10 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
         for (int i = 0; i < labels.length; i++) {
             language = labels[i].getLanguage();
-
+            
+            // FIXME: This expression is too complicated 
+            // considering there can no longer be any labels with
+            // a null language, i.e. each label must have a language.
             if ((((xmlLanguage == null) || (xmlLanguage.equals(""))) && (language == null))
                 || ((language != null) && (language.equals(xmlLanguage)))) {
                 label = labels[i];
