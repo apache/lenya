@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexInformation.java,v 1.11 2004/04/14 13:06:41 michi Exp $  */
+/* $Id: IndexInformation.java,v 1.12 2004/04/22 17:02:30 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -53,7 +53,8 @@ public class IndexInformation {
         collectFiles(dumpDirectory, filter, index);
         this.startTime = new GregorianCalendar();
 
-        log.info(getFileNumber() + " files to index");
+        log.info(length + " files to index");
+        //log.info(getFileNumber() + " files to index");
     }
 
     private String index;
@@ -68,10 +69,15 @@ public class IndexInformation {
         return creating;
     }
 
-    private List files = new ArrayList();
+    //private List files = new ArrayList();
+    private int length = 0;
 
+    /**
+     *
+     */
     protected void addFile(File file) {
-        files.add(file);
+        //files.add(file);
+	length++;
     }
 
     /**
@@ -79,11 +85,13 @@ public class IndexInformation {
      *
      * @return DOCUMENT ME!
      */
+/*
     public File[] getFiles() {
         Collections.sort(files);
 
         return (File[]) files.toArray(new File[files.size()]);
     }
+*/
 
     private int currentFile = 0;
 
@@ -108,9 +116,11 @@ public class IndexInformation {
      *
      * @return number of files to index
      */
+/*
     public int getFileNumber() {
         return files.size();
     }
+*/
 
     private Calendar startTime;
 
@@ -129,10 +139,12 @@ public class IndexInformation {
      * @return indexing progress
      */
     public String printProgress() {
-        double percent = (double) currentFile / (double) getFileNumber();
+        double percent = (double) currentFile / (double) length;
+        //double percent = (double) currentFile / (double) getFileNumber();
         DateFormat format = new SimpleDateFormat("HH:mm:ss");
 
-        return "added document " + getCurrentFile() + " of " + getFileNumber() + " (" +
+        //return "added document " + getCurrentFile() + " of " + getFileNumber() + " (" +
+        return "added document " + getCurrentFile() + " of " + length + " (" +
         (int) (percent * 100) + "%" + ", remaining time: " +
         format.format(getEstimatedTime().getTime()) + ")";
     }
@@ -144,7 +156,8 @@ public class IndexInformation {
         long elapsedMillis = new Date().getTime() - getStartTime().getTime().getTime();
 
         double millisPerFile = (double) elapsedMillis / (double) currentFile;
-        long estimatedMillis = (long) (millisPerFile * getFileNumber()) - elapsedMillis;
+        long estimatedMillis = (long) (millisPerFile * length) - elapsedMillis;
+        //long estimatedMillis = (long) (millisPerFile * getFileNumber()) - elapsedMillis;
 
         GregorianCalendar estimatedCalendar = new GregorianCalendar();
         estimatedCalendar.setTimeInMillis(estimatedMillis);
