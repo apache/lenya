@@ -3,23 +3,29 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
-  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
-  xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0"
->
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:xsp-cookie="http://apache.org/xsp/cookie/2.0">
 
-<xsp:structure>
-  <xsp:include>org.apache.cocoon.environment.Cookie</xsp:include>
-</xsp:structure>
+  <xsp:structure>
+    <xsp:include>java.util.StringTokenizer</xsp:include>
+  </xsp:structure>
 
 <info>
-<!--
-  <document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></document-id>
--->
-  <document-id>
-    <xsp-cookie:getCookie as="string" name="document-id"/>
-  </document-id>
-  <action>rename</action>
+  <xsp:logic>
+    String firstdocumentid =<xsp-session:get-attribute name="org.apache.lenya.cms.info.documentid"/>;
+    String lastid="";
+    StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
+    int l = st.countTokens();
+    for (int i = 1; i &lt; l; i++) {
+      st.nextToken();
+    }
+    lastid= st.nextToken();
+  </xsp:logic>
+
+  <request-uri><xsp-request:get-uri/></request-uri>
+  <last-id><xsp:expr>lastid</xsp:expr></last-id>
+  <first-document-id><xsp:expr>firstdocumentid</xsp:expr></first-document-id>
+  <task-id>renameDocument</task-id>
 </info>
 
 </xsp:page>
