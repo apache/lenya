@@ -27,6 +27,7 @@ import java.util.Set;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.DocumentManager;
 
@@ -351,7 +352,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
 
     private DocumentManager documentManager;
 
-    protected DocumentManager getDocumentManager() {
+    protected DocumentManager getDocumentManager() throws ServiceException {
+        if (this.documentManager == null) {
+           if (getLogger().isDebugEnabled())
+               getLogger().debug("AbstractUsecase.getDocumentManager() does not yet have instance, looking up role [" + DocumentManager.ROLE + "]");
+
+           this.documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+        }
+
         return this.documentManager;
     }
 
@@ -360,7 +368,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      */
     public final void initialize() throws Exception {
         super.initialize();
-        this.documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
     }
 
     /**

@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -114,9 +115,10 @@ public class ChangeNodeID extends DocumentUsecase {
      * @throws DocumentException if an error occurs.
      * @throws DocumentBuildException if an error occurs.
      * @throws PublicationException if an error occurs.
+     * @throws ServiceException if an access error to a an Avalon service occurs
      */
     protected Document moveAllLanguageVersions(Document document) throws DocumentException,
-            DocumentBuildException, PublicationException {
+            DocumentBuildException, PublicationException, ServiceException {
         Document newDocument = null;
 
         DocumentIdentityMap identityMap = document.getIdentityMap();
