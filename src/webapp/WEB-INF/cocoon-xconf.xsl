@@ -168,16 +168,16 @@
   </component>
   
   <access-controller-resolvers>
-    <component-instance logger="lenya.ac.accesscontrollerresolver"
+    <component-instance logger="lenya.ac.accesscontrollerresolver.publication"
         class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
         name="publication">
     </component-instance>
-    <component-instance logger="lenya.ac.accesscontrollerresolver"
+    <component-instance logger="lenya.ac.accesscontrollerresolver.global"
         class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
         name="global">
       <access-controller type="global"/>
     </component-instance>
-    <component-instance logger="lenya.ac.accesscontrollerresolver"
+    <component-instance logger="lenya.ac.accesscontrollerresolver.composable"
         class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
         name="composable">
       <resolver type="publication"/>
