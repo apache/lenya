@@ -58,7 +58,7 @@
         <docs href="docs/publication/authoring"/>
         <doctypes href="docs/publication/doctypes/"/>
       </map:action>                                                                                                                         
-      <map:action logger="sitemap.action.upload" name="file-upload"
+      <map:action logger="action.upload" name="file-upload"
         src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
         <map:parameter name="images-dir"
           value="resources/publication/images/authoring" />
@@ -413,13 +413,11 @@
 	</map:match>
 	<map:match type="step" pattern="upload">
 	  <map:act type="file-upload">
-            <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
-            <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
-            <map:serialize type="html"/>
-            <!-- <map:generate src="docs/cms/upload.xsp" type="serverpages" />
-            <map:transform src="../../../../stylesheets/dynamic-page2html.xsl" />
-            <map:serialize type="html"/> -->
+	    <map:redirect-to uri="{$referer}"/>
           </map:act>
+	  <map:generate type="serverpages" src="../../docs/cms/upload-image.xsp"/>
+	  <map:transform src="../../stylesheets/cms/Page/upload-image.xsl"/>
+	  <map:serialize type="html"/>
 	</map:match>
       </map:match>
 
