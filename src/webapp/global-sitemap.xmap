@@ -152,9 +152,7 @@
       <map:match pattern="publications.xml">
         <map:generate type="directory" src="lenya/pubs"/>
         <map:transform src="lenya/xslt/util/xinclude.xsl"/>
-        <map:transform type="xlink">
-          <map:parameter name="href" value="lenya/pubs/dummy.xml"/>
-        </map:transform>
+        <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

@@ -15,12 +15,13 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.13 2004/05/11 07:38:44 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:echo="http://purl.org/atom/ns#"
   xmlns:ent="http://www.purl.org/NET/ENT/1.0/"
+  xmlns="http://www.w3.org/1999/xhtml"
 >
 
 <xsl:import href="../entry/body.xsl"/>

@@ -15,18 +15,24 @@
   limitations under the License.
 -->
 
-<!-- $Id: xinclude.xsl,v 1.7 2004/05/26 08:13:45 egli Exp $ -->
+<!-- $Id$ -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" 
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xi="http://www.w3.org/2001/XInclude"
+  >
 
 <xsl:param name="feedid"/>
+<xsl:param name="area"/>
 
 <xsl:template match="/">
   <xsl:apply-templates select="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0"/>
 </xsl:template>                                                                                                                             
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
-<feed xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/atom/ns#" version="0.3" xml:lang="en">
-  <description xlink:href="feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)xpointer(/atom:feed/atom:link)xpointer(/atom:feed/atom:modified)" xlink:show="replace"/>
+<echo:feed xmlns:echo="http://purl.org/atom/ns#" xmlns="http://www.w3.org/1999/xhtml" version="0.3" xml:lang="en">
+  <xi:include href="content/{$area}/feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)"/>
+  <xi:include href="content/{$area}/feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:link)"/>
+  <xi:include href="content/{$area}/feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:modified)"/>
 
   <xsl:for-each select="dir:directory">
     <xsl:variable name="year"><xsl:value-of select="@name"/></xsl:variable>
@@ -36,12 +42,12 @@
         <xsl:variable name="day"><xsl:value-of select="@name"/></xsl:variable>
         <xsl:for-each select="dir:directory">
           <xsl:variable name="entryid"><xsl:value-of select="@name"/></xsl:variable>
-          <entry xlink:href="entries/{$year}/{$month}/{$day}/{$entryid}/index.xml" xlink:show="replace"/>
+            <xi:include href="content/{$area}/entries/{$year}/{$month}/{$day}/{$entryid}/index.xml"/>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:for-each>
-</feed>
+</echo:feed>
 </xsl:template>
 
 </xsl:stylesheet>

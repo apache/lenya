@@ -15,12 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: xinclude.xsl,v 1.7 2004/04/20 14:06:20 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
     >
@@ -32,7 +31,11 @@
 <lenya:publications>
   <xsl:for-each select="dir:directory">
     <lenya:publication pid="{@name}">
-      <lenya:publication xlink:href="{@name}/publication.xml" xlink:show="replace"/>
+        <xi:include href="lenya/pubs/{@name}/publication.xml">
+          <xi:fallback>
+            <lenya:name name="{@name}"/>
+          </xi:fallback>
+        </xi:include>
     </lenya:publication>
   </xsl:for-each>
 </lenya:publications>

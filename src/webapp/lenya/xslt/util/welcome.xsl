@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: welcome.xsl,v 1.14 2004/03/13 12:42:09 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -41,26 +41,14 @@
 <div class="lenya-sidebar-heading">Publications</div>
 <xsl:for-each select="lenya:publication">
   <xsl:choose>
-    <xsl:when test="lenya:XPSEXCEPTION">
-<!--
-      <div class="lenya-publication-item">
-        <font color="red">Exception:</font>
-        (publication id = <xsl:value-of select="@pid"/>) <xsl:value-of select="lenya:XPSEXCEPTION"/>
-      </div>
--->
+    <xsl:when test="lenya:publication/@lenya:show = 'false'">
+      <!-- do not list this publication. Might be a "template" publication -->
     </xsl:when>
     <xsl:otherwise>
-      <xsl:choose>
-        <xsl:when test="lenya:publication/@lenya:show = 'false'">
-          <!-- do not list this publication. Might be a "template" publication -->
-        </xsl:when>
-        <xsl:otherwise>
-          <div class="lenya-publication-item">
-            <a href="{@pid}/introduction.html">
-            <xsl:value-of select="lenya:publication/lenya:name"/></a>
-          </div>
-        </xsl:otherwise>
-      </xsl:choose>
+      <div class="lenya-publication-item">
+        <a href="{@pid}/introduction.html">
+        <xsl:value-of select="lenya:publication/lenya:name|lenya:publication/lenya:name/@name"/></a>
+      </div>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:for-each>
