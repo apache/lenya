@@ -367,7 +367,6 @@
    <map:action logger="sitemap.action.set-header" name="set-header" src="org.apache.cocoon.acting.HttpHeaderAction"/>
    <map:action logger="sitemap.action.clear-cache" name="clear-cache" src="org.apache.cocoon.acting.ClearCacheAction"/>
    <map:action logger="sitemap.action.clear-persistent-store" name="clear-persistent-store" src="org.apache.cocoon.acting.ClearPersistentStoreAction"/>
-  
 
     <map:action name="session" src="org.apache.cocoon.webapps.session.acting.SessionAction"/>
 
@@ -424,8 +423,6 @@
         <doctypes href="config/doctypes/"/>
       </map:action>
       
-      <map:action logger="sitemap.action.multipart" name="multipart" src="org.apache.lenya.cms.cocoon.acting.MultipartHttpServletRequestAction"/>
-
       <map:action logger="sitemap.action.resource-exists-enhanced" name="resource-exists-enhanced" src="org.apache.lenya.cms.cocoon.acting.ResourceExistsAction"/>
       
       <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction" logger="lenya.sitemap.action.authorizer"/>
