@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: revisions.xsp,v 1.5 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -32,6 +32,7 @@
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>java.io.IOException</xsp:include>
+    <xsp:include>java.io.File</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
@@ -44,14 +45,14 @@
     String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
     Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
 
-      String rootDir=publication.getEnvironment().getPublicationPath();
+      String rootDir=publication.getDirectory().getCanonicalPath() + File.separator;
 
       String servletContextPath = publication.getServletContext().getCanonicalPath();
       
       RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
-      String rcmlDirectory = rcEnvironment.getRCMLDirectory();
+      String rcmlDirectory = "content" + File.separator + "rcml";
       rcmlDirectory=rootDir+rcmlDirectory;
-      String backupDirectory = rcEnvironment.getBackupDirectory();
+      String backupDirectory = "content" + File.separator + "rcbak";
       backupDirectory=rootDir+backupDirectory;
 
       RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
