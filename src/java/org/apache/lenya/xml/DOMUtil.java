@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMUtil.java,v 1.17 2004/07/16 10:20:26 andreas Exp $  */
+/* $Id: DOMUtil.java,v 1.18 2004/07/16 15:01:08 andreas Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -42,7 +42,7 @@ public class DOMUtil {
     XPointerFactory xpf = null;
 
     /**
-     *  
+     * Ctor.
      */
     public DOMUtil() {
         dpf = new DOMParserFactory();
@@ -50,7 +50,8 @@ public class DOMUtil {
     }
 
     /**
-     *  
+     * Main method, used to test the class.
+     * @param args The command line arguments.
      */
     public static void main(String[] args) {
         try {
@@ -93,6 +94,12 @@ public class DOMUtil {
     }
 
     /**
+     * Creates a DOM document from a string.
+     * 
+     * @param xml The string.
+     * @return A DOM document.
+     * @throws Exception if an error occurs.
+     * 
      * @deprecated Use {@link DocumentHelper#readDocument(java.lang.String)} instead.
      */
     public Document create(String xml) throws Exception {
@@ -100,6 +107,13 @@ public class DOMUtil {
     }
 
     /**
+     * Selects an array of elements using an XPath.
+     * 
+     * @param document The document.
+     * @param xpath The XPath.
+     * @return An array of elements.
+     * @throws Exception if the XPath does not return a <code>NodeList</code> consisting of elements.
+     * 
      * @deprecated Use
      *             {@link org.apache.xpath.XPathAPI#selectNodeList(org.w3c.dom.Node, java.lang.String)}
      *             instead.
@@ -138,14 +152,30 @@ public class DOMUtil {
     }
 
     /**
-     *  
+     * Returns the concatenation string of all text nodes which are children of an element.
+     * The XPath is resolved against the document element.
+     * 
+     * @param document The document.
+     * @param xpath The XPath of the element to resolve.
+     * @return A string.
+     * @throws Exception if an error occurs.
+     * 
+     * @deprecated Use {@link DocumentHelper#getSimpleElementText(org.w3c.dom.Element) instead.}
      */
     public String getElementValue(Document document, XPath xpath) throws Exception {
         return getElementValue(document.getDocumentElement(), xpath);
     }
 
     /**
-     *  
+     * Returns the concatenation string of all text nodes which are children of an element.
+     * The XPath is resolved against a certain element.
+     * 
+     * @param element The element to resolve the XPath against.
+     * @param xpath The XPath of the element to resolve.
+     * @return A string.
+     * @throws Exception if an error occurs.
+     * 
+     * @deprecated Use {@link DocumentHelper#getSimpleElementText(org.w3c.dom.Element) instead.}
      */
     public String getElementValue(Element element, XPath xpath) throws Exception {
         String value = "";
@@ -167,6 +197,17 @@ public class DOMUtil {
     /**
      * Check if elements exists This method just checks the root element! TODO: Implementation is
      * not really finished, or is it!
+     * 
+     * Replacement code:
+     * 
+     * <code>
+     * Node node = XPathAPI.selectSingleNode(element, xPath);
+     * if (node != null && node instanceof Element) {
+     *     exists = true;
+     * }
+     * </code>
+     * 
+     * @deprecated See replacement code.
      */
     public boolean elementExists(Element element, XPath xpath) throws Exception {
         log.debug(xpath);
@@ -184,7 +225,11 @@ public class DOMUtil {
     }
 
     /**
-     * Get element via XPath
+     * Get element via XPath.
+     * 
+     * @deprecated Use
+     *             {@link org.apache.xpath.XPathAPI#selectSingleNode(org.w3c.dom.Node, java.lang.String)}
+     *             instead.
      */
     public Element getElement(Element element, XPath xpath) throws Exception {
         log.debug(xpath);
@@ -227,6 +272,10 @@ public class DOMUtil {
      * @return a value of type 'Element[]'
      * 
      * @exception Exception if an error occurs
+     * 
+     * @deprecated Use
+     *             {@link org.apache.xpath.XPathAPI#selectNodeList(org.w3c.dom.Node, java.lang.String)}
+     *             instead.
      */
     public Element[] getAllElements(Document document, XPath xpath) throws Exception {
         Vector nodes = xpf.select(document.getDocumentElement(), "xpointer(" + xpath.toString()
@@ -265,7 +314,20 @@ public class DOMUtil {
     }
 
     /**
-     *  
+     * Returns the concatenation string of all text nodes which are children of an element.
+     * 
+     * @param element The element.
+     * @return A string.
+     * @throws Exception if an error occurs.
+     * 
+     * Replacement code:
+     * 
+     * <code>
+     * Element element = (Element) XPathAPI.selectSingleNode(document, xPath);
+     * String value = DocumentHelper.getSimpleElementText(element, "...");
+     * </code>
+     * 
+     * @deprecated See replacement code.
      */
     public String getElementValue(Element element) throws Exception {
         String value = "";
@@ -293,7 +355,14 @@ public class DOMUtil {
      * 
      * @return a value of type 'String'
      * 
-     * @exception Exception if an error occurs
+     * Replacement code:
+     * 
+     * <code>
+     * Element element = (Element) XPathAPI.selectSingleNode(document, xPath);
+     * String value = element.getAttribute("...");
+     * </code>
+     * 
+     * @deprecated See replacement code.
      */
     public String getAttributeValue(Element element, XPath xpath) throws Exception {
         Element el = getElement(element, new XPath(xpath.getElementName()));
@@ -309,6 +378,15 @@ public class DOMUtil {
      * @param value a value of type 'String'
      * 
      * @exception Exception if an error occurs
+     * 
+     * Replacement code:
+     * 
+     * <code>
+     * Element element = (Element) XPathAPI.selectSingleNode(document, xPath);
+     * DocumentHelper.setSimpleElementText(element, "...");
+     * </code>
+     * 
+     * @deprecated See replacement code.
      */
     public void setElementValue(Document document, String xpath, String value) throws Exception {
         Element[] elements = select(document, xpath);
@@ -330,7 +408,15 @@ public class DOMUtil {
     }
 
     /**
-     *  
+     * Replacement code:
+     * 
+     * <code>
+     * Element parent = (Element) XPathAPI.selectSingleNode(document, xPath);
+     * Element child = NamespaceHelper.createElement("...", "...");
+     * parent.appendChild(child);
+     * </code>
+     * 
+     * @deprecated See replacement code.
      */
     public void addElement(Document document, String xpath, String value) throws Exception {
         XPath xp = new XPath(xpath);
@@ -344,7 +430,14 @@ public class DOMUtil {
     }
 
     /**
-     *  
+     * Replacement code:
+     * 
+     * <code>
+     * Element element = (Element) XPathAPI.selectSingleNode(document, xPath);
+     * element.setAttribute("...", "...");
+     * </code>
+     * 
+     * @deprecated See replacement code.
      */
     public void setAttributeValue(Document document, String xpath, String value) throws Exception {
         Vector nodes = xpf.select(document, "xpointer(" + xpath + ")");
@@ -362,7 +455,17 @@ public class DOMUtil {
     }
 
     /**
-     *  
+     * <ul>
+     * <li>If the XPath expression denotes an element, the child nodes of this element are replaced by a single
+     * text node.</li>
+     * <li>If the XPath expression denotes an attribute, the attribute value is set.</li>
+     * <li>Otherwise, an error is logged.</li>
+     * </ul>
+     * 
+     * @param document The document to resolve the XPath against.
+     * @param xpath The XPath.
+     * @param value A string.
+     * @throws Exception if an error occurs.
      */
     public void setValue(Document document, XPath xpath, String value) throws Exception {
         short type = xpath.getType();
@@ -377,7 +480,15 @@ public class DOMUtil {
     }
 
     /**
-     *  
+     * Replacement code:
+     * 
+     * <code>
+     * Element parent = XPathAPI.selectSingleNode(...);
+     * Element child = document.createElementNS("http://...", "...");
+     * parent.appendChild(child);
+     * </code>
+     * 
+     * @deprecated See replacement code.
      */
     public Node createNode(Document document, XPath xpath) throws Exception {
         log.debug(xpath);
