@@ -6,7 +6,6 @@
        xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
        xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
        xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
-       xmlns:xsp-scheduler="http://apache.org/cocoon/lenya/xsp/scheduler/1.0"
        xmlns:xsp-request="http://apache.org/xsp/request/2.0"
        >
        
@@ -32,9 +31,6 @@
     
     <!-- FIXME: this should be defined in the workflow schema -->
     <usecase:task-id>publish</usecase:task-id>
-    
-    <!-- add scheduler data -->
-    <xsp-scheduler:insert-data/>
     
 	<not:users>
 	<xsp:logic>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:xsp-scheduler="http://apache.org/cocoon/lenya/xsp/scheduler/1.0"
+       xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
+       xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+       >
+       
+  <sch:scheduler>
+    <xsp-scheduler:insert-data/>
+  </sch:scheduler>
+  
+</xsp:page>
