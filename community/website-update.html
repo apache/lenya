@@ -177,20 +177,19 @@
   
 <li>Add, remove, commit to <span class="codefrag">cocoon-site</span>
 </li>
+
+</ul>
+<p>There is a cron job on minotaur which will do 'svn update'
+every 12 hours (see ~thorsten/bin/mycrontab).
+<br>
+If you want to do it manually then ...</p>
+<ul>
   
 <li>Login to <span class="codefrag">minotaur.apache.org</span>
 </li>
   
 <li>
-<span class="codefrag">minotaur@apache.org &gt; umask 0002</span>
-</li>
-  
-<li>
-<span class="codefrag">minotaur@apache.org &gt; cd /www/cocoon.apache.org/lenya</span>
-</li>
-  
-<li>
-<span class="codefrag">minotaur@apache.org &gt; cvs update -dP</span>
+<span class="codefrag">minotaur@apache.org &gt; ~thorsten/bin/lenya-update.sh</span>
 </li>
 
 </ul>
