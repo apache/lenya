@@ -51,6 +51,9 @@
         <node-50 href="development.html" label="Developing Tasks"/>
       </node-40>
     </concepts>
+    <specs href="customization/" label="Customization">
+      <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
+    </specs>
     <specs href="specs/" label="Specifications">
       <namespaces href="namespaces.html" label="Namespaces"/>
     </specs>
