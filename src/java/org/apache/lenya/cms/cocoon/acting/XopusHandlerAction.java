@@ -1,6 +1,8 @@
 package org.wyona.cms.cocoon.acting;
 
 import java.io.Reader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.InputStream;
 import java.io.IOException;
@@ -17,10 +19,13 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.util.PostInputStream;
+import org.apache.cocoon.util.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.dom4j.io.XMLWriter;
+import org.dom4j.io.DOMReader;
 
 /**
  * Interfaces with Xopus: handles the requests and replies to them
@@ -54,7 +59,7 @@ public class XopusHandlerAction extends ComposerAction {
       request.append((char)n);
     }
     
-    // construct DOM tree from the request contents
+    // construct DOM document from the request contents
     Reader reqReader = new StringReader(request.toString());
     Parser parser = (Parser) this.manager.lookup(Parser.ROLE);
     Document requestDoc = parser.newDocument();
@@ -86,7 +91,24 @@ public class XopusHandlerAction extends ComposerAction {
     sitemapParams.put("reqType", reqType);
     sitemapParams.put("reqFile", reqFile);
     sitemapParams.put("fileType", fileType);
+    
+    // save to temporary file, if needed
+    if (reqType.equals("save") || reqType.equals("checkin")) {    
+      File tempFileDir = new File("xopustmp");
+      if (!(tempFileDir.exists())) tempFileDir.mkdir();
+      File tempFile = IOUtils.createFile(tempFileDir, reqFile); 
+      IOUtils.serializeString(tempFile, request.toString());
+    }
+    
+    // save to permanent file, if needed
+    if (reqType.equals("checkin")) {
+//      write(data);
+    }
+    
     return sitemapParams;
     
   }
 }
+
+//      IOUtils.serializeObject(tempFile, (Object) data);
+
