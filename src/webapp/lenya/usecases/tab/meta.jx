@@ -61,9 +61,9 @@
           <tr>
             <td class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
             <td>
-              <textarea id="description" name="description" rows="3" class="lenya-form-element">
-                <jx:out value="${usecase.getParameter('description')}"/>
-              </textarea>
+              <!-- N.B.: do not put spaces or carriage returns inside the
+                   textarea element - these would be rendered -->
+              <textarea id="description" name="description" rows="3" class="lenya-form-element"><jx:out value="${usecase.getParameter('description')}"/></textarea>
             </td>
           </tr>
           <tr>
