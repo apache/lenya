@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.6 2003/05/09 23:26:37 andreas Exp $
+$Id: site2xhtml.xsl,v 1.7 2003/05/13 15:48:23 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -192,7 +192,6 @@ $Id: site2xhtml.xsl,v 1.6 2003/05/09 23:26:37 andreas Exp $
               <a href="{$skin-img-dir}/chapter.gif"/>
               <a href="{$skin-img-dir}/chapter_open.gif"/>
               <a href="{$skin-img-dir}/current.gif"/>
-              <a href="/favicon.ico"/>
             </td>
           </tr>
           <tr>
