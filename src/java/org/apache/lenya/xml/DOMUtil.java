@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMUtil.java,v 1.15 2004/06/25 16:05:15 michi Exp $  */
+/* $Id: DOMUtil.java,v 1.16 2004/07/16 10:15:41 andreas Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -90,7 +90,7 @@ public class DOMUtil {
     }
 
     /**
-       *
+       * @deprecated Use {@link DocumentHelper#readDocument(String)} instead.
        */
     public Document create(String xml) throws Exception {
         return dpf.getDocument(new StringReader(xml));

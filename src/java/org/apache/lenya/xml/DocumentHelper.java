@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentHelper.java,v 1.26 2004/04/26 08:35:59 andreas Exp $  */
+/* $Id: DocumentHelper.java,v 1.27 2004/07/16 10:15:41 andreas Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -147,6 +147,21 @@ public class DocumentHelper {
         throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder builder = createBuilder();
         return builder.parse(uri.toString());
+    }
+
+    /**
+     * Reads a document from a string.
+     * @return A document.
+     * @param string The string to load the document from.
+     * 
+     * @throws ParserConfigurationException if an error occurs
+     * @throws SAXException if an error occurs
+     * @throws IOException if an error occurs
+     */
+    public static Document readDocument(String string)
+        throws ParserConfigurationException, SAXException, IOException  {
+        DocumentBuilder builder = createBuilder();
+        return builder.parse(string);
     }
 
     /**
