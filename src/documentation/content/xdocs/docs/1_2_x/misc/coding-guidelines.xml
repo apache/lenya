@@ -39,6 +39,7 @@
         We are using the commit and then review approach. 
         Still <strong>nothing</strong> that have not been tested should not be
         committed. First test then commit!!!
+      </p>
     </section>
     <section>
       <title>Java Code</title>
