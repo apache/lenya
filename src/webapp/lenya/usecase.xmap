@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.197 2004/03/19 10:21:35 gregor Exp $ -->
+<!-- $Id: usecase.xmap,v 1.198 2004/03/25 11:39:43 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -23,7 +23,7 @@
   <map:components>
     
     <map:generators default="file">
-      <map:generator label="content,data" logger="sitemap.generator.epozstream" name="epozstream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.lenya.cms.cocoon.generation.StreamGenerator"/>
+      <map:generator label="content,data" logger="sitemap.generator.kupustream" name="kupustream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.lenya.cms.cocoon.generation.StreamGenerator"/>
     </map:generators>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
@@ -173,8 +173,8 @@
     </map:pipeline>
 
     <map:pipeline>
-      <map:match pattern="epoz-stream">
-        <map:generate type="epozstream"/>
+      <map:match pattern="kupu-stream">
+        <map:generate type="kupustream"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
@@ -379,17 +379,17 @@
         </map:match>
         
         <!-- ************************************************************** -->
-        <!-- ** Epoz                                                     ** -->
+        <!-- ** Kupu                                                     ** -->
         <!-- **                                                          ** -->
         <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
         <!-- **       publication-specific DocumentIdToPathMapper which  ** -->
         <!-- **       is configured within config/publication.xconf      ** -->
         <!-- ************************************************************** -->
-        <map:match pattern="epoz" type="usecase">
+        <map:match pattern="kupu" type="usecase">
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
-              <!-- Check for Epoz -->
-              <map:act type="resource-exists" src="resources/epoz/common/epozeditor.js">
+              <!-- Check for Kupu-->
+              <map:act type="resource-exists" src="resources/kupu/common/kupueditor.js">
 
                 <map:act type="reserved-checkout">
                   <map:generate type="serverpages" src="content/rc/{exception}.xsp">
@@ -402,20 +402,20 @@
                   <map:serialize type="html"/>
                 </map:act>
 
-                <map:generate src="resources/epoz/apache-lenya/epozmacros.html"/>
-                <map:transform src="resources/epoz/apache-lenya/epozmacros-xhtml.xsl">
-                  <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=content"/>
+                <map:generate src="resources/kupu/apache-lenya/kupumacros.html"/>
+                <map:transform src="resources/kupu/apache-lenya/kupumacros-xhtml.xsl">
+                  <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=content"/>
                   <map:parameter name="context" value="{request:contextPath}"/>
                   <map:parameter name="document-path" value="{page-envelope:document-path}"/>
                   <map:parameter name="root" value="{page-envelope:context-prefix}"/>
-                  <map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=save"/>
+                  <map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=save"/>
                   <map:parameter name="reload-on-save" value="0"/> <!-- 1 means you can see the saving -->
                   <map:parameter name="use-css" value="1"/>
                   <map:parameter name="redirect-to" value="{page-envelope:document-name}.html"/>
                 </map:transform>
 	        <map:serialize type="html"/>
               </map:act>
-              <map:generate src="resources/misc/epoz/download.xhtml"/>
+              <map:generate src="resources/misc/kupu/download.xhtml"/>
               <map:call resource="style-cms-page"/>
               <map:serialize type="html"/>
             </map:match>
@@ -424,7 +424,7 @@
           <map:match pattern="content" type="step">
             <map:match pattern="*/authoring/**.html">
 	      <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
-              <map:transform src="resources/epoz/apache-lenya/epozcontent-xhtml.xsl">
+              <map:transform src="resources/kupu/apache-lenya/kupucontent-xhtml.xsl">
                 <map:parameter name="css" value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
               </map:transform>
 	      <map:serialize type="xhtml"/>
@@ -433,7 +433,7 @@
 
           <!-- 
                Epoz uses PUT to transmit the edited file for save.
-               The problem is, Epoz removes namespace information. 
+               The problem is, Kupu removes namespace information. 
                That means we can not use the StreamGenerator, because 
                it complains about an unbound element.			
           -->
@@ -453,11 +453,11 @@
                 </map:act>
 
                 <map:aggregate element="edit-envelope">
-                  <map:part element="edited" src="cocoon:/epoz-stream"/>
+                  <map:part element="edited" src="cocoon:/kupu-stream"/>
                   <map:part element="original" src="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
                 </map:aggregate>
 
-                <map:transform src="resources/epoz/apache-lenya/epozsave-xhtml.xsl"/>
+                <map:transform src="resources/kupu/apache-lenya/kupusave-xhtml.xsl"/>
 
                 <map:act type="reserved-checkin">
                   <map:generate src="content/rc/{exception}.xsp" type="serverpages">
@@ -491,7 +491,7 @@
         </map:match>
 
         <!-- ************************************************************** -->
-        <!-- ********  /Epoz Editor *************************************** -->
+        <!-- ********  /Kupu Editor *************************************** -->
         <!-- ************************************************************** -->
 
 

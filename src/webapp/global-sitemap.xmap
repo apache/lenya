@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.57 2004/03/21 23:55:15 gregor Exp $ -->
+<!-- $Id: global-sitemap.xmap,v 1.58 2004/03/25 11:39:43 roku Exp $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -611,8 +611,8 @@
 
     <!-- Editor Epoz -->
     <map:pipeline>
-      <map:match pattern="epoz/**">
-        <map:read src="lenya/resources/epoz/{1}"/>
+      <map:match pattern="kupu/**">
+        <map:read src="lenya/resources/kupu/{1}"/>
       </map:match>
     </map:pipeline>
 

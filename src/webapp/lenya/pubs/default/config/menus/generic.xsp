@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: generic.xsp,v 1.70 2004/03/13 12:34:17 gregor Exp $ -->
+<!-- $Id: generic.xsp,v 1.71 2004/03/25 11:39:43 roku Exp $ -->
 
 <xsp:page 
     language="java" 
@@ -123,7 +123,7 @@
       <menu i18n:attr="name" name="Edit" label="Search">
         
         <block info="false">
-          <item wf:event="edit" uc:usecase="epoz" uc:step="open" href="?"><i18n:text>Edit with Epoz</i18n:text></item>
+          <item wf:event="edit" uc:usecase="kupu" uc:step="open" href="?"><i18n:text>Edit with Kupu</i18n:text></item>
           <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?"><i18n:text>Edit with BXE</i18n:text></item>
           <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>Edit with Forms</i18n:text></item>
           <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>Edit with one Form</i18n:text></item>
