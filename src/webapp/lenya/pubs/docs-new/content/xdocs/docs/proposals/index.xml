@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Hello Forrest</title>
+    <title>Proposals</title>
     <version/>
     <type/>
     <authors>
@@ -11,9 +11,11 @@
     </authors>
   </header>
   <body>
-<section><title>Forrest as a Lenya Publication</title>
-<p>Thanks to Gregor, Andreas and Christian we now have Forrest as a Lenya publication.</p>
-<p>Click on the menu "File" and then click on the item "Edit with Xopus2" to edit this page.</p>
-</section>
+    <section><title>Introduction</title>
+      <p>This section contains proposals for enhancement of Lenya
+      which have been submitted. They reflect the ideas as they were
+      when the proposal was submitted. They are not necessary an
+      acurate description if and how the proposal was implemented.</p>
+    </section>
   </body>
 </document>
