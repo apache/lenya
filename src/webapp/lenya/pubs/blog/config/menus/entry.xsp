@@ -54,7 +54,7 @@
 -->
       </block>
       <block>
-        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr></xsp:attribute>Publish</item>
+        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute>Publish</item>
       </block>
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
