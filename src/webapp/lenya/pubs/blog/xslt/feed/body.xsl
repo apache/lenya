@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: body.xsl,v 1.11 2004/02/15 17:50:23 gregor Exp $ -->
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:echo="http://purl.org/atom/ns#"
@@ -13,7 +13,7 @@
 
 <xsl:template name="permalink">
   <xsl:param name="id"/>
-  <xsl:text><a href="../../entries/{normalize-space($id)}/index.html">Permalink</a></xsl:text>
+  <a href="../../entries/{normalize-space($id)}/index.html">Permalink</a>
 </xsl:template>
 
 </xsl:stylesheet>  
