@@ -35,7 +35,7 @@
 			<xs:documentation>title</xs:documentation>
 			<xs:appinfo>
 				<bxe:name>Title</bxe:name>
-				<bxe:returnelement><![CDATA[<item>item</item>]]></bxe:returnelement>
+				<bxe:returnelement>p</bxe:returnelement>
 				<bxe:insertafter>
 					<bxe:element>item</bxe:element>
 				</bxe:insertafter>
@@ -51,15 +51,14 @@
 				<bxe:insertafter>
 					<bxe:element>item</bxe:element>
 				</bxe:insertafter>
+ 	  <bxe:addalso><![CDATA[<title>title</title>]]></bxe:addalso>
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
-			<xs:sequence>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="title"/>
 					<xs:element ref="p" maxOccurs="unbounded"/>
 				</xs:choice>
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="media">
@@ -125,14 +124,12 @@
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
-			<xs:sequence>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="date"/>
 					<xs:element ref="edition"/>
 					<xs:element ref="media" minOccurs="0"/>
 					<xs:element ref="item" maxOccurs="3"/>
 				</xs:choice>
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

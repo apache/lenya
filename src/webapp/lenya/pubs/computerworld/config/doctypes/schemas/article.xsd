@@ -11,7 +11,139 @@
 				</bxe:insertafter>
 			</xs:appinfo>
 		</xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='bold' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='email' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='itemizedlist' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
 	</xs:element>
+	
+	<xs:element name='emphasize'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Italic</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Italic</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='bold' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='bold'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Bold</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Bold</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='subscript' type='xs:string'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Subscript</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Subscript</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:element>
+
+<xs:element name='superscript'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Superscript</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Superscript</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='ulink' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='ulink'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>External Link</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>External Link</bxe:name>
+ 	  <bxe:requiredattributes>url</bxe:requiredattributes>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='email'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Email</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Email</bxe:name>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='itemizedlist'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Itemized List</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Itemized List</bxe:name>
+ 	  <bxe:addalso><![CDATA[bxlistitem]]></bxe:addalso>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='bxlistitem' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name='bxlistitem'>
+  <xs:annotation>
+    <xs:documentation xml:lang='en'>Listitem</xs:documentation>
+    <xs:appinfo>
+ 	  <bxe:name>Listitem</bxe:name>
+ 	  <bxe:returnelement>bxlistitem</bxe:returnelement>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:complexType mixed='true'>
+    <xs:choice minOccurs='0' maxOccurs='unbounded'>
+      <xs:element ref='bold' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='emphasize' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='subscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='superscript' minOccurs='0' maxOccurs='unbounded'/>
+      <xs:element ref='itemizedlist' minOccurs='0' maxOccurs='unbounded'/>
+    </xs:choice>
+  </xs:complexType>
+</xs:element>
+
 		<xs:element name="byline">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Byline</xs:documentation>
@@ -31,11 +163,9 @@
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
-			<xs:sequence>
 				<xs:choice maxOccurs="unbounded">
 					<xs:element ref="p" maxOccurs="unbounded"/>
 				</xs:choice>
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="abstract">
@@ -66,13 +196,11 @@
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
-			<xs:sequence>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="title"/>
 					<xs:element ref="abstract"/>
 					<xs:element ref="byline"/>
 				</xs:choice>
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="article">
@@ -84,12 +212,10 @@
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
-			<xs:sequence>
 				<xs:choice maxOccurs="unbounded">
 					<xs:element ref="head"/>
 					<xs:element ref="body"/>
 				</xs:choice>
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

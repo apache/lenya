@@ -22,11 +22,9 @@
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
-			<xs:sequence>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="p" maxOccurs="unbounded"/>
 				</xs:choice>
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="small-preview">
@@ -38,11 +36,9 @@
 			</xs:appinfo>
 		</xs:annotation>
 		<xs:complexType mixed="true">
-			<xs:sequence>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
 					<xs:element ref="item" maxOccurs="3"/>
 				</xs:choice>
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

@@ -3,7 +3,7 @@ item {
 	display: block;
 }
 
-media {
+media, p {
 	display: block;
 	margin: 0em 0;
 }
