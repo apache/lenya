@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: related-projects.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -44,13 +44,6 @@ More information on Cocoon-based projects can be found at
 <link href="http://cocoon.apache.org/link/projects.html">http://cocoon.apache.org/link/projects.html</link>.
 </p>
 
-<section><title>CocoBlog</title>
-<p>
-CocoBlog is a free <link href="http://newhome.weblogs.com/historyOfWeblogs">weblog</link> software based on Apache Cocoon and Apache XIndice
-<link href="http://www.beblogging.com/blog/docs">http://www.beblogging.com/blog/docs</link>.
-</p>
-</section>
-
 <section><title>Cocoon</title>
 <p>
 Apache Cocoon is an XML publishing framework that raises the usage of XML and XSLT
@@ -75,6 +68,24 @@ versioning, as well as many other services.
 </p>
 <p>
 <link href="http://jakarta.apache.org/slide/">http://jakarta.apache.org/slide/</link>
+</p>
+</section>
+
+<section><title>Jackrabbit</title>
+<p>
+The Jackrabbit Project has been formed to develop an open source implementation of the Content Repository for Java Technology API (JCR), being specified within the Java Community Process as JSR-170.
+</p>
+<p>
+<link href="http://incubator.apache.org/jackrabbit/">http://incubator.apache.org/jackrabbit/</link>
+</p>
+</section>
+
+<section><title>Forrest</title>
+<p>
+Apache Forrest is an XML standards-oriented documentation framework based on Apache Cocoon, providing XSLT stylesheets and schemas, images and other resources. Forrest uses these to render the XML source content into a website via command-line, robot, or a dynamic web application.
+</p>
+<p>
+<link href="http://forrest.apache.org/">http://forrest.apache.org/</link>
 </p>
 </section>
 
