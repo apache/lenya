@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.207 2004/05/10 14:58:29 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.208 2004/05/16 19:54:27 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -531,7 +531,6 @@
 		
 		<map:act type="oneformeditorsave">
 		  <map:parameter name="file" value="pubs/{../1}/work/oneformeditor/authoring/{../2}.xml"/>
-		  <map:parameter name="encoding" value="ISO-8859-1"/>
 		  <map:parameter name="schema" value="pubs/{../1}/config/doctypes/schemas/{page-envelope:document-type}.rng"/>
 		  
 		  <map:generate src="pubs/{../../1}/content/authoring/{page-envelope:document-path}"/>
