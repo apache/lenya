@@ -1,5 +1,5 @@
 /*
-$Id: WGet.java,v 1.26 2003/07/23 13:21:40 gregor Exp $
+$Id: WGet.java,v 1.27 2003/08/19 18:47:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -166,11 +166,11 @@ public class WGet {
 
             substitutePrefix(file.getAbsolutePath(), prefixSubstitute, substituteReplacement);
         } catch (MalformedURLException e) {
-            log.error(".downloadUsingHttpClient(): " + e);
+            log.error(".downloadUsingHttpClient(): ", e);
         } catch (FileNotFoundException e) {
-            log.error(".downloadUsingHttpClient(): " + e);
+            log.error(".downloadUsingHttpClient(): ", e);
         } catch (IOException e) {
-            log.error(".downloadUsingHttpClient(): " + e);
+            log.error(".downloadUsingHttpClient(): ", e);
         }
 
         List links = null;
@@ -178,7 +178,7 @@ public class WGet {
         try {
             links = getLinks(url);
         } catch (IOException ioe) {
-            log.error(".downloadUsingHttpClient(): " + ioe);
+            log.error(".downloadUsingHttpClient(): ", ioe);
         }
 
         if (links != null) {
@@ -195,7 +195,7 @@ public class WGet {
                     saveToFile(createFileName(child_url, prefixSubstitute, substituteReplacement),
                         child_sresponse);
                 } catch (Exception e) {
-                    log.error(".downloadUsingHttpClient(): " + e);
+                    log.error(".downloadUsingHttpClient(): ", e);
                 }
             }
         }
@@ -259,7 +259,7 @@ public class WGet {
             org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
             links = html.getImageSrcs(false);
         } catch (Exception e) {
-            log.error(".getLinks() Exception 423432: " + e);
+            log.error(".getLinks() Exception 423432: ", e);
         }
 
         if (links != null) {
@@ -298,7 +298,7 @@ public class WGet {
                 fout.write(buffer, 0, bytes_read);
             }
         } catch (Exception e) {
-            log.error(".substitutePrefix(): " + e);
+            log.error(".substitutePrefix(): ", e);
         }
 
         return null;
