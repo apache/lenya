@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: sitemap.xmap,v 1.10 2003/04/01 13:18:49 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.11 2003/04/23 12:44:45 edith Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
   <map:components>
@@ -92,7 +92,7 @@
 	</map:act>
 	<map:call resource="login"/>
       </map:match>
-      <map:handle-errors>
+      <map:handle-errors type="500">
 	<map:transform src="context://stylesheets/system/error2html.xsl"/>
 	<map:serialize status-code="500"/>
       </map:handle-errors>
