@@ -37,13 +37,6 @@
 
 <!-- Redirects -->
     <map:pipeline>
-      <!-- Publication -->
-      <map:match pattern="">
-        <map:redirect-to uri="introduction.html"/>
-      </map:match>
-      <map:match pattern="index.html">
-        <map:redirect-to uri="introduction.html"/>
-      </map:match>
       <!-- Home -->
       <map:match pattern="*/">
         <map:redirect-to uri="index.html"/>
