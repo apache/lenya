@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.8 2004/02/12 10:19:06 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.9 2004/02/12 10:24:55 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,6 +59,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
@@ -129,7 +130,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     }
 
     private UsecaseAuthorizer authorizer;
-    private ServiceSelector selector = null;
+    private ComponentSelector componentSelector = null;
+    private ServiceSelector serviceSelector = null;
     private Role[] roles;
     private Publication publication;
     private AccessControllerResolver acResolver;
@@ -142,7 +144,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
         getLogger().debug("Setting up transformer");
 
-        selector = null;
+        componentSelector = null;
+        serviceSelector = null;
         acResolver = null;
         authorizer = null;
 
@@ -152,11 +155,19 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             roles = PolicyAuthorizer.getRoles(request);
 
             publication = PublicationFactory.getPublication(objectModel);
-            selector =
-                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            acResolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+
+            Object selector = manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            if (selector instanceof ComponentSelector) {
+                componentSelector = (ComponentSelector) selector;
+                acResolver =
+                    (AccessControllerResolver) componentSelector.select(
+                        AccessControllerResolver.DEFAULT_RESOLVER);
+            } else {
+                serviceSelector = (ServiceSelector) selector;
+                acResolver =
+                    (AccessControllerResolver) serviceSelector.select(
+                        AccessControllerResolver.DEFAULT_RESOLVER);
+            }
             getLogger().debug("Resolved AC resolver [" + acResolver + "]");
 
             String webappUrl = ServletHelper.getWebappURI(request);
@@ -184,11 +195,17 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
      */
     public void dispose() {
         getLogger().debug("Disposing transformer");
-        if (selector != null) {
+        if (componentSelector != null) {
             if (acResolver != null) {
-                selector.release(acResolver);
+                componentSelector.release(acResolver);
             }
-            manager.release(selector);
+            manager.release(componentSelector);
+        }
+        if (serviceSelector != null) {
+            if (acResolver != null) {
+                serviceSelector.release(acResolver);
+            }
+            manager.release(serviceSelector);
         }
     }
 
