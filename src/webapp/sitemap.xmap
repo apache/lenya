@@ -604,6 +604,13 @@
       </map:match>
     </map:pipeline>
 
+    <!-- Admin Area -->
+    <map:pipeline>
+      <map:match pattern="*/admin/**">
+        <map:mount uri-prefix="{1}/admin" src="lenya/admin.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+
     <!-- Search with Lucene -->
     <map:pipeline>
       <map:match pattern="lucene/**">
