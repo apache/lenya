@@ -1,5 +1,5 @@
 /*
-$Id: Notifier.java,v 1.3 2003/08/29 11:49:36 andreas Exp $
+$Id: Notifier.java,v 1.4 2003/09/02 13:16:38 andreas Exp $
 <License>
 
  ============================================================================
@@ -140,7 +140,12 @@ public class Notifier extends ParameterWrapper {
                 throw new ExecutionException(e);
             }
             log.info("    Executing notification target ...");
-            task.execute(taskParameters.get(Task.PARAMETER_SERVLET_CONTEXT));
+            try {
+                task.execute(taskParameters.get(Task.PARAMETER_SERVLET_CONTEXT));
+            }
+            catch (Exception e) {
+                log.error("Error during notification: ", e);
+            }
             log.info("    Notification target executed.");
         }
     }
