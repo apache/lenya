@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+xmlns:dc="http://purl.org/dc/elements/1.1/" 
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
+xhtml:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" 
+lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
+
+    <!-- the root element indicates the doctype -->
+    <lenya:meta>
+        <dc:title>How to create a new doctype</dc:title>
+        <dc:creator>Michael Wechner</dc:creator>
+        <dc:subject>doctype</dc:subject>
+        <dc:description>Abstract that can be used on an overview page</dc:description>
+        <dc:publisher/>
+        <dc:contributor/>
+        <dc:date>2003-5-21</dc:date>
+        <dc:type/>
+        <dc:format/>
+        <dc:identifier/>
+        <dc:source/>
+        <dc:language>en</dc:language>
+        <dc:relation/>
+        <dc:coverage/>
+        <dc:rights>DC Rights</dc:rights>
+    </lenya:meta>
+  <head>
+    <title>Lenya Tutorial - How to create a new doctype</title>
+  </head>
+  <body>
+    <h1>Lenya Tutorial - How to create a new doctype</h1>
+
+    <p>NOTE: Also see the <a href="http://wiki.cocoondev.org/Wiki.jsp?page=LenyaAddingCustomDocType">Wiki</a></p>
+
+    <h2>The standard way</h2>
+
+    <p>
+    Add a link where people can click on: <i>config/menus/menu.xsp</i>
+    </p>
+
+    <p>
+    Create a usecase sitemap where the "flow" is defined: <i>usecase-create-my_doctype.xmap</i>
+    </p>
+
+    <p>
+    Define what class shall be used for the actual creation: <i>config/doctypes/doctypes.xconf</i>
+    </p>
+    
+    <p>
+    In many cases a new document is created based on a sample: <i>config/doctypes/samples/my_doctype.xml</i>
+    The name of the sample needs to be configured within <i>config/doctypes/doctypes.xconf</i>
+    </p>
+    
+    <p>
+    Add doctype such that XSLT can be found: <i>parameter-doctype.xmap</i>
+    </p>
+    
+    <p>
+    Create XSLT: <i>xslt/my_doctype2xhtml.xsl</i>
+    </p>
+    
+    <p>
+    OPTIONAL: Create new menu: <i>menus.xmap</i>, <i>config/menus/my_doctype.xsp</i>
+    </p>
+    
+    <p>
+    OPTIONAL: Create workflow: <i>config/workflow/my_doctype.xml</i>, <i>config/doctypes/doctypes.xconf</i>
+    </p>
+
+  </body>
+</html>
