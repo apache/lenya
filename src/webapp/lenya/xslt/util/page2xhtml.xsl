@@ -37,6 +37,7 @@
 <xsl:if test="count(xhtml:script) &gt; 0">
  <script><xsl:value-of select="xhtml:script" /> </script>
 </xsl:if>
+      <xsl:copy-of select="page:head/*"/>
     </head>
     <body>
     
