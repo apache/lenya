@@ -65,12 +65,10 @@
 
 <xsl:template match="p">
   <xsl:param name="block-position"/>
-  <xsl:if test="$authoring">
-    <p>
-    <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;xpath=/article/body/block[{$block-position}]/p[{position()}]">Upload Image</a>
-    </p>
-  </xsl:if>
   <p>
+    <xsl:if test="$authoring and not(preceding-sibling::media)">
+      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{position()}]"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+    </xsl:if>
     <xsl:if test="not(preceding-sibling::p)">
       <xsl:apply-templates select="../hl2" mode="block"/>
     </xsl:if>
