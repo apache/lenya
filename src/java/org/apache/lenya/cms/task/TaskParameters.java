@@ -1,5 +1,5 @@
 /*
-$Id: TaskParameters.java,v 1.1 2003/08/25 15:40:55 andreas Exp $
+$Id: TaskParameters.java,v 1.2 2003/08/27 14:36:07 egli Exp $
 <License>
 
  ============================================================================
@@ -60,7 +60,6 @@ import java.util.Map;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.log4j.Category;
 
 /**
  * @author andreas
@@ -69,8 +68,6 @@ import org.apache.log4j.Category;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class TaskParameters extends ParameterWrapper {
-    private static Category log = Category.getInstance(TaskParameters.class);
-
     public static final String[] REQUIRED_KEYS =
         {
             Task.PARAMETER_SERVLET_CONTEXT,
@@ -113,8 +110,8 @@ public class TaskParameters extends ParameterWrapper {
         try {
             publication =
                 PublicationFactory.getPublication(
-                    (String) get(Task.PARAMETER_PUBLICATION_ID),
-                    (String) get(Task.PARAMETER_SERVLET_CONTEXT));
+                    get(Task.PARAMETER_PUBLICATION_ID),
+                    get(Task.PARAMETER_SERVLET_CONTEXT));
         } catch (PublicationException e) {
             throw new ExecutionException(e);
         }
