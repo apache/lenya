@@ -87,7 +87,7 @@ alt="{$sectiontext}"/>
 Gesundheit
 </xsl:template>
 
-<xsl:template match="section[@type='geist']" mode="section-name">
+<xsl:template match="section[@type='gesellschaft']" mode="section-name">
 Geist &#38; Gesellschaft
 </xsl:template>
 
@@ -95,7 +95,7 @@ Geist &#38; Gesellschaft
 Umwelt &#38; Technik
 </xsl:template>
 
-<xsl:template match="section[@type='recht']" mode="section-name">
+<xsl:template match="section[@type='wirtschaft']" mode="section-name">
 Recht &#38; Wirtschaft
 </xsl:template>
 
@@ -123,7 +123,7 @@ Publikationen
 Exception: Section has no name!
 </xsl:template>
 
-<xsl:template match="type[normalize-space(text())='geist']" mode="section-name">
+<xsl:template match="type[normalize-space(text())='gesellschaft']" mode="section-name">
 Geist &#38; Gesellschaft
 </xsl:template>
 

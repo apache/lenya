@@ -4,13 +4,13 @@
 <tree>
   <branch relURI="" doctype="Front" menuName="Home">
     <branch relURI="magazin" doctype="Channel" menuName="Magazin">
-      <branch relURI="geist" doctype="Section" menuName="Geist">
+      <branch relURI="gesellschaft" doctype="Section" menuName="Geist">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
       </branch>
       <branch relURI="gesundheit" doctype="Section" menuName="Gesundheit">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
       </branch>
-        <branch relURI="recht" doctype="Section" menuName="Recht">
+        <branch relURI="wirtschaft" doctype="Section" menuName="Recht">
          <branch relURI="2002" doctype="Year" menuName="2002"/>
       </branch>
         <branch relURI="umwelt" doctype="Section" menuName="Umwelt">

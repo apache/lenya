@@ -4,9 +4,9 @@
     <Channel name="magazin">
       <Sections>
         <Section id="gesundheit" highlighted="false">Gesundheit</Section>
-        <Section id="geist" highlighted="false">Geist &#38; Gesellschaft</Section>
+        <Section id="gesellschaft" highlighted="false">Geist &#38; Gesellschaft</Section>
         <Section id="umwelt" highlighted="false">Unwelt &#38; Technik</Section>
-        <Section id="recht" highlighted="false">Recht &#38; Wirtschaft</Section>
+        <Section id="wirtschaft" highlighted="false">Recht &#38; Wirtschaft</Section>
       </Sections>
     </Channel>
     <Channel name="campus">
