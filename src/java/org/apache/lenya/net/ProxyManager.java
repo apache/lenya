@@ -1,5 +1,4 @@
 /*
-$Id: ProxyManager.java,v 1.10 2003/07/23 13:21:40 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,6 +60,7 @@ import org.apache.log4j.Category;
 
 import org.w3c.dom.*;
 
+import java.io.File;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -70,7 +70,8 @@ import java.util.Vector;
  * based on the hostname of the host that want to be reached.
  *
  * @author Philipp Klaus
- * @version 0.8.0
+ * @author Michael Wechner
+ * @version $Id: ProxyManager.java,v 1.11 2003/12/08 18:03:44 michi Exp $
  */
 public class ProxyManager {
     static Category log = Category.getInstance(ProxyManager.class);
@@ -170,10 +171,14 @@ public class ProxyManager {
         Document document = null;
 
         try {
-            document = dpf.getDocument(fname);
+            if (new File(fname).exists()) {
+                document = dpf.getDocument(fname);
+            } else {
+                log.warn("No such file or directory: " + fname);
+                return null;
+            }
         } catch (Exception e) {
-            log.error(".readConfig(" + fname + "): " + e);
-
+            log.error(e);
             return null;
         }
 

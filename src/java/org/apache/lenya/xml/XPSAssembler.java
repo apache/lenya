@@ -72,7 +72,7 @@ import java.util.*;
  * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  *
  * @author Michael Wechner
- * @version $Id: XPSAssembler.java,v 1.16 2003/10/02 03:55:19 michi Exp $
+ * @version $Id: XPSAssembler.java,v 1.17 2003/12/08 18:03:44 michi Exp $
  */
 public class XPSAssembler implements XPSInclude {
     static Category log = Category.getInstance(XPSAssembler.class);
@@ -110,17 +110,16 @@ public class XPSAssembler implements XPSInclude {
     }
 
     /**
-     * DOCUMENT ME!
+     * Usage of XPSAssembler
      *
-     * @param args DOCUMENT ME!
+     * @param args URI
      */
     public static void main(String[] args) {
         XPSAssembler xpsa = new XPSAssembler();
 
         if (args.length != 1) {
             System.err.println("Usage:");
-            System.err.println(" java " + xpsa.getClass().getName() +
-                " \"../x/xps/samples/tbs/xml/invoices/invoice.xml\"");
+            System.err.println(" java " + xpsa.getClass().getName() + " \"../x/xps/samples/tbs/xml/invoices/invoice.xml\"");
             System.err.println(" java " + xpsa.getClass().getName() + " \"file:/...\"");
             System.err.println(" java " + xpsa.getClass().getName() + " \"http://localhost/...\"");
 
@@ -322,14 +321,12 @@ public class XPSAssembler implements XPSInclude {
      * @return DOCUMENT ME!
      */
     public Vector include(String[] args, XPSSourceInformation sourceInfo) {
-        XPSSourceInformation currentInfo = new XPSSourceInformation(args[0], sourceInfo,
-                sourceInfo.cocoon);
+        XPSSourceInformation currentInfo = new XPSSourceInformation(args[0], sourceInfo, sourceInfo.cocoon);
 
         sourceInfo.addChild(currentInfo);
 
         if (currentInfo.checkLoop(sourceInfo, currentInfo.url)) {
-            log.warn(".include(): EXCEPTION: Loop detected: " + sourceInfo.url.getFile());
-
+            log.warn("EXCEPTION: Loop detected: " + sourceInfo.url.getFile());
             return null;
         }
 
@@ -362,11 +359,11 @@ public class XPSAssembler implements XPSInclude {
 
         boolean writtenToCache = tryWritingToCache(currentInfo, newDocument);
 
-        if (currentInfo.url.getRef() == null) // No XPointer specified
-         {
+        if (currentInfo.url.getRef() == null) {
+            log.error("No XPointer. Return the root node in order to add the whole document.");
             nodes.addElement(newRoot);
-        } else // XPointer
-         {
+        } else {
+            log.error("XPointer: " + currentInfo.url.getRef());
             try {
                 nodes = xpf.select(newRoot, currentInfo.url.getRef());
 
@@ -387,8 +384,7 @@ public class XPSAssembler implements XPSInclude {
                     }
 
                     default: {
-                        log.error(".include(): Node Type (" + nodeType +
-                            ") can't be a child of Element");
+                        log.error(".include(): Node Type (" + nodeType + ") can't be a child of Element");
                         nodes.removeElementAt(i);
 
                         break;
@@ -396,7 +392,7 @@ public class XPSAssembler implements XPSInclude {
                     }
                 }
             } catch (Exception e) {
-                log.error(".include() 34543: " + e);
+                log.error("", e);
             }
         }
 
@@ -496,6 +492,7 @@ public class XPSAssembler implements XPSInclude {
 
             for (int i = 0; i < args.size(); i++) {
                 arguments[i] = (String) args.elementAt(i);
+                log.debug("Arguments: " + arguments[i]);
             }
 
             Vector newChildren = null;

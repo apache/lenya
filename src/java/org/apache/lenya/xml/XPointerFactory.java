@@ -1,5 +1,4 @@
 /*
-$Id: XPointerFactory.java,v 1.12 2003/07/23 13:21:29 gregor Exp $
 <License>
 
  ============================================================================
@@ -70,7 +69,7 @@ import java.util.*;
  * DOCUMENT ME!
  *
  * @author Michael Wechner, lenya
- * @version 0.4.16
+ * @version $Id: XPointerFactory.java,v 1.13 2003/12/08 18:03:44 michi Exp $
  */
 public class XPointerFactory {
     static Category log = Category.getInstance(XPointerFactory.class);
@@ -163,23 +162,18 @@ public class XPointerFactory {
     }
 
     /**
-     * DOCUMENT ME!
+     * Parse reference for xpointer and namespaces
      *
-     * @param reference DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param reference xmlns(...)xpointer(...)xpointer(...)
      *
      * @exception MalformedXPointerException xpointer(xpath)
      */
-    public Vector parse(String reference) throws MalformedXPointerException {
-        Vector xpaths = new Vector();
-        tokenize(reference, xpaths);
-
-        return xpaths;
+    public void parse(String reference, Vector xpaths, Vector namespaces) throws MalformedXPointerException {
+        tokenize(reference, xpaths, namespaces);
     }
 
     /**
-     * DOCUMENT ME!
+     * Select nodes by xpaths
      *
      * @param node DOCUMENT ME!
      * @param reference DOCUMENT ME!
@@ -189,12 +183,15 @@ public class XPointerFactory {
      * @exception Exception ...
      */
     public Vector select(Node node, String reference) throws Exception {
-        Vector xpaths = parse(reference);
+        Vector xpaths = new Vector();
+        Vector namespaces = new Vector();
+        parse(reference, xpaths, namespaces);
 
         Vector nodes = new Vector();
 
         for (int i = 0; i < xpaths.size(); i++) {
-            Vector n = xpointer.select(node, (String) xpaths.elementAt(i));
+            log.error((String) xpaths.elementAt(i));
+            Vector n = xpointer.select(node, (String) xpaths.elementAt(i), namespaces);
 
             for (int j = 0; j < n.size(); j++) {
                 nodes.addElement(n.elementAt(j));
@@ -212,21 +209,34 @@ public class XPointerFactory {
      *
      * @exception MalformedXPointerException xpointer(xpath)xpointer(xpath)
      */
-    public void tokenize(String xpointer, Vector xpaths)
-        throws MalformedXPointerException {
-        if ((xpointer.indexOf("xpointer(") == 0) &&
-                (xpointer.charAt(xpointer.length() - 1) == ')')) {
+    public void tokenize(String xpointer, Vector xpaths, Vector namespaces) throws MalformedXPointerException {
+        if ((xpointer.indexOf("xpointer(") == 0) && (xpointer.charAt(xpointer.length() - 1) == ')')) {
+
             String substring = xpointer.substring(9, xpointer.length());
-            int i = substring.indexOf(")xpointer(");
+            int i = substring.indexOf(")");
 
             if (i >= 0) {
+                log.debug("XPath: " + substring.substring(0, i));
                 xpaths.addElement(substring.substring(0, i));
-                tokenize(substring.substring(i + 1, substring.length()), xpaths);
+                tokenize(substring.substring(i + 1, substring.length()), xpaths, namespaces);
             } else {
                 xpaths.addElement(substring.substring(0, substring.length() - 1));
-
                 return;
             }
+	} else if ((xpointer.indexOf("xmlns(") == 0) && (xpointer.charAt(xpointer.length() - 1) == ')')) {
+            String substring = xpointer.substring(6, xpointer.length());
+            int i = substring.indexOf(")");
+
+            if (i >= 0) {
+                log.debug("Namespace: " + substring.substring(0, i));
+                namespaces.addElement(substring.substring(0, i));
+                tokenize(substring.substring(i + 1, substring.length()), xpaths, namespaces);
+            } else {
+                xpaths.addElement(substring.substring(0, substring.length() - 1));
+                return;
+            }
+	} else if (xpointer.equals("")) {
+                return;
         } else {
             throw new MalformedXPointerException(xpointer);
         }

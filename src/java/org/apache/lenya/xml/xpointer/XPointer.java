@@ -1,5 +1,4 @@
 /*
-$Id: XPointer.java,v 1.10 2003/07/23 13:21:46 gregor Exp $
 <License>
 
  ============================================================================
@@ -55,16 +54,16 @@ $Id: XPointer.java,v 1.10 2003/07/23 13:21:46 gregor Exp $
 */
 package org.apache.lenya.xml.xpointer;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Node;
 
-import java.util.*;
+import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
+ * XPointer interface
  *
- * @author Michael Wechner, lenya
- * @version 0.2.21
+ * @author Michael Wechner
+ * @version $Id: XPointer.java,v 1.11 2003/12/08 18:03:44 michi Exp $
  */
 public interface XPointer {
 	
@@ -78,5 +77,5 @@ public interface XPointer {
      *
      * @exception Exception ...
      */
-    Vector select(Node node, String selectString) throws Exception;
+    Vector select(Node node, String selectString, Vector namespaces) throws Exception;
 }

@@ -1,5 +1,4 @@
 /*
-$Id: XalanXPointer.java,v 1.12 2003/07/23 13:21:46 gregor Exp $
 <License>
 
  ============================================================================
@@ -67,10 +66,10 @@ import java.util.*;
 
 
 /**
- * DOCUMENT ME!
+ * XPointer implementation
  *
- * @author Michael Wechner, lenya
- * @version 0.4.16
+ * @author Michael Wechner
+ * @version $Id: XalanXPointer.java,v 1.13 2003/12/08 18:03:44 michi Exp $
  */
 public class XalanXPointer implements XPointer {
     private static Category log = Category.getInstance(XalanXPointer.class);
@@ -103,7 +102,8 @@ public class XalanXPointer implements XPointer {
         String xpath = args[1];
 
         try {
-            Vector nodes = xpointer.select(root, xpath);
+            Vector namespaces = new Vector();
+            Vector nodes = xpointer.select(root, xpath, namespaces);
 
             for (int i = 0; i < nodes.size(); i++) {
                 Node node = (Node) nodes.elementAt(i);
@@ -132,16 +132,37 @@ public class XalanXPointer implements XPointer {
      *
      * @exception Exception ...
      */
-    public Vector select(Node node, String xpath) throws Exception {
+    public Vector select(Node node, String xpath, Vector namespaces) throws Exception {
         NodeList children = node.getChildNodes();
 
-        log.debug(node.getNodeName() + "  " + xpath);
+        log.error("Select " + xpath + " from node " + node.getNodeName());
 
-        NodeList nl = XPathAPI.selectNodeList(node, xpath);
+        NodeList nl = null;
+        if (namespaces.size() > 0) {
+            org.w3c.dom.Document doc = org.apache.lenya.xml.DocumentHelper.createDocument("", "foo", null);
+            for (int i = 0; i < namespaces.size(); i++) {
+                String namespace = (String)namespaces.elementAt(i);
+                String prefix = namespace.substring(0, namespace.indexOf("="));
+                String namespaceURI = namespace.substring(namespace.indexOf("=") + 1);
+                log.debug("Namespace: " + prefix + " " + namespaceURI);
+
+                doc.getDocumentElement().setAttribute("xmlns:" + prefix, namespaceURI);
+            }
+            nl = XPathAPI.selectNodeList(node, xpath, doc.getDocumentElement());
+        } else {
+            nl = XPathAPI.selectNodeList(node, xpath);
+        }
+
+
+	if (nl != null && nl.getLength() == 0) {
+            log.warn("No such nodes: " + xpath);
+            return new Vector();
+        }
 
         Vector nodes = new Vector();
 
         for (int i = 0; i < nl.getLength(); i++) {
+            log.warn("Nodes: " + ((Node) nl.item(i)).getNodeName());
             nodes.addElement(nl.item(i));
         }
 
