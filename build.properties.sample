@@ -51,6 +51,9 @@ tomcat.webapps.dir=${tomcat.home.dir}/webapps/lenya
 # The server cache directory to be cleaned by the 'reset' target
 # NOTE: This path is not necessarily relative to tomcat.home.dir
 
+# Tomcat 5.x
+#tomcat.cache.dir=${tomcat.home.dir}/work/Catalina/localhost/lenya
+# Tomcat 4.x
 tomcat.cache.dir=${tomcat.home.dir}/work/Standalone/localhost/lenya
 
 
