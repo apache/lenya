@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvokerAction.java,v 1.7 2003/12/05 17:38:47 andreas Exp $
+$Id: WorkflowInvokerAction.java,v 1.8 2003/12/30 15:42:37 gregor Exp $
 <License>
 
  ============================================================================
@@ -76,6 +76,7 @@ import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
  * Action to invoke a workflow transition independently from the request document URL.
  * Parameters:
  * <ul>
+ *   <li><strong>area:</strong> The area.</li>
  *   <li><strong>document-id:</strong> The document id.</li>
  *   <li><strong>language:</strong> The language.</li>
  *   <li><strong>event:</strong> The event to invoke.</li>
