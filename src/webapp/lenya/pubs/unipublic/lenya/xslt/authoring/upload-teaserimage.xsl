@@ -28,7 +28,7 @@
       <input type="hidden" name="identifier" value="teaser"/>
       <table border="0">
 	<tr>
-	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile"/></td>
+	  <td>Browse File&#160;</td><td><input type="file" name="uploadFile" size="80"/></td>
 	</tr>
 <!--
 	<tr>
