@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.5 2003/08/21 21:46:08 michi Exp $ -->
+<!-- $Id: config.xml,v 1.6 2003/08/29 11:34:46 michi Exp $ -->
 <config>
     <files>
         <input>
@@ -50,5 +50,28 @@
         
         
     </files>
+
+    <buttons>
+    <dimension  width="120" height="140" buttonwidth="20" buttonheight="20"/>
+        <button name="b" col="1" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+        <button name="i" col="0" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+        <button name="underline" col="2" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+        <button name="strikethrough" col="3" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+        <button name="subscript" col="4" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+        <button name="superscript" col="5" row="1" action="ToggleTextClass" ns="http://www.w3.org/1999/xhtml"/>
+        <button name="link" col="0" row="5" action="InsertLink"/>
+        <button name="create_table" col="2" row="5" action="InsertTable"/>
+        <button name="Unordered_List" col="3" row="2" action="UnorderedList"/>
+        <button name="Ordered_List" col="2" row="2" action="OrderedList"/>
+
+        <button name="Copy" col="0" row="4" action="ClipboardCopy"/>
+        <button name="Cut" col="1" row="4" action="ClipboardCut"/>
+        <button name="Paste" col="2" row="4" action="ClipboardPaste"/>
+        <button name="Image" col="3" row="5" action="InsertImage"/>
+        <button name="Save" col="1" row="6" action="DocumentSave"/>
+        <button name="Undo" col="3" row="6" action="Undo"/>
+        <button name="Redo" col="4" row="6" action="Redo"/>
+
+    </buttons>
 
 </config>
