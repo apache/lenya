@@ -182,8 +182,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
                 try {
 
-                    if (newAttrs == null)
-                        newAttrs = new AttributesImpl(attrs);
+                    newAttrs = new AttributesImpl(attrs);
 
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug(this.indent + "href URL: [" + href + "]");
