@@ -1,5 +1,5 @@
 /*
-$Id: XPSFileOutputStream.java,v 1.10 2003/07/23 13:21:13 gregor Exp $
+$Id: XPSFileOutputStream.java,v 1.11 2003/10/01 09:28:40 edith Exp $
 <License>
 
  ============================================================================
@@ -61,6 +61,8 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import org.apache.avalon.excalibur.io.FileUtil;
 
 
 /**
@@ -127,7 +129,11 @@ public class XPSFileOutputStream extends FileOutputStream {
             "Constructing an XPSFileOutputStream using a FileDescriptor is not suported because we depend on a filename");
     }
 
-    // FIXME: the hashCode() is probably not good enough
+    /**
+	 * @param realname DOCUMENT ME!
+	 * @return DOCUMENT ME!
+	 */
+	// FIXME: the hashCode() is probably not good enough
     //        We need to find a better source of a random
     //        string that is available to a static method.
     //
@@ -135,11 +141,17 @@ public class XPSFileOutputStream extends FileOutputStream {
         return realname + XPSFileOutputStream.suffixBase + "." + Runtime.getRuntime().hashCode();
     }
 
-    protected String getRealFilename() {
+    /**
+	 * @return DOCUMENT ME!
+	 */
+	protected String getRealFilename() {
         return this.realFilename;
     }
 
-    protected void setRealFilename(String filename) {
+    /**
+	 * @param filename DOCUMENT ME!
+	 */
+	protected void setRealFilename(String filename) {
         this.realFilename = filename;
     }
 
@@ -150,7 +162,15 @@ public class XPSFileOutputStream extends FileOutputStream {
      */
     public void close() throws IOException {
         super.close();
-        new File(getTempFilename(getRealFilename())).renameTo(new File(getRealFilename()));
+        File temp =  new File(getTempFilename(getRealFilename()));
+		File file =  new File(getRealFilename());
+        FileUtil.copyFile(temp, file);
+        boolean deleted = temp.delete();
+        if (deleted) {
+        	log.debug("The temporary file "+temp.getAbsolutePath() +"is deleted");
+        } else {
+			log.debug("The temporary file "+temp.getAbsolutePath() +" couldn't be deleted");
+        }
         log.debug(".close(): mv " + getTempFilename(getRealFilename()) + " " + getRealFilename());
     }
 
