@@ -71,7 +71,8 @@
     font-family: verdana, helvetica, sans-serif; 
 }
    
-#lenya-info-treecanvas a { font-size: small; color: black; color: #666666; text-decoration: none; }
+#lenya-info-treecanvas a { font-size: small; color: #333333; text-decoration: none; }
+#lenya-info-treecanvas .lenya-info-nolanguage { color: #AAAAAA; }
 #lenya-info-treecanvas a:hover { text-decoration: underline; }
 
 #lenya-info-content {
