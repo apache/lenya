@@ -249,14 +249,14 @@
 		<w3c href="http://www.w3c.org/">
 			<w3c.xml href="XML/"/>
 			<w3c.xslt href="TR/xslt/"/>
-                </w3c>
-                <wiki href="http://wiki.apache.org">
-                  <lenya href="lenya/">
-                     <FAQ href="FAQ"/>
-                  </lenya>
-                  <cocoon href="cocoon/">
-		     <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
-                  </cocoon>
+		</w3c>
+		<wiki href="http://wiki.apache.org/">
+      <lenya href="lenya/" >
+         <FAQ href="FAQ"/>
+      </lenya>
+      <cocoon href="cocoon/">
+			  <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
+      </cocoon>
 		</wiki>
 		<wyona href="http://wyona.com" />
                 <java href="http://java.sun.com/j2se/1.4.2/download.html"/>
