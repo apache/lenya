@@ -60,15 +60,6 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
         return email;
     }
 
-    /**
-     * Get the full name
-     * 
-     * @return a <code>String</code>
-     * @deprecated has been superceded by getName()
-     */
-    public String getFullName() {
-        return getName();
-    }
 
     /**
      * Set the email address
@@ -77,16 +68,6 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * Set the full name
-     * 
-     * @param name the new full name
-     * @deprecated has been superceded by setName(String)
-     */
-    public void setFullName(String name) {
-        setName(name);
     }
 
     /**

@@ -143,31 +143,6 @@ public class LDAPUserTest extends AccessControlTest {
         return (LDAPUser) manager.getUser(userName);
     }
 
-    //    final public void testGetFullName() throws AccessControlException {
-    //		String userName = "felix";
-    //		createAndSaveUser(userName, "felix@wyona.com", "m400032");
-    //		LDAPUser user = null;
-    //		user = loadUser(userName);
-    //		assertNotNull(user);
-    //		String fullName = user.getFullName();
-    //		assertTrue(fullName.equals(" Felix Maeder - Wayona"));
-    //    }
-
-    /**
-     * Test the setter of the full name
-     */
-    final public void testSetFullName() {
-        // the setFullName method is supposed to do nothing
-    }
-
-    //    final public void testAuthenticate() throws AccessControlException {
-    //        String userName = "felix";
-    //        createAndSaveUser(userName, "felix@wyona.com", "m400032");
-    //        User user = null;
-    //        user = loadUser(userName);
-    //        assertNotNull(user);
-    //        assertTrue(user.authenticate("sekret"));
-    //    }
 
     /**
      * Test the ldap id getter
