@@ -29,79 +29,84 @@ import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceResolver;
 
 /**
- * @version $Id$
+ * @version $Id:$
  */
 public final class SourceUtil {
 
     /**
-     * <p>Copies one Source to another using a source buffer i.e.
-     * the source Source is buffered before it is copied to its final destination.</p>
-     * <p>The optional buffering is sometimes useful, if the source Source somehow depends on
-     * the destination Source. This situation may occur e.g. if source Source is a Cocoon pipeline.</p> 
-     * <p><em>NOTE:</em>o.a.e..s.SourceUtil.copy does not close streams on an exception!!</p>
+     * <p>
+     * Copies one Source to another using a source buffer i.e. the source Source is buffered before
+     * it is copied to its final destination.
+     * </p>
+     * <p>
+     * The optional buffering is sometimes useful, if the source Source somehow depends on the
+     * destination Source. This situation may occur e.g. if source Source is a Cocoon pipeline.
+     * </p>
+     * <p>
+     * <em>NOTE:</em> o.a.e..s.SourceUtil.copy does not close streams on an exception!!
+     * </p>
      * @param source
      * @param destination
-     * @param useBuffer If true, the source data will be read into a buffer before it is written to the final destination.
+     * @param useBuffer If true, the source data will be read into a buffer before it is written to
+     *            the final destination.
      * @throws IOException If an error occures.
      */
-    public static void copy(Source source, ModifiableSource destination, boolean useBuffer) 
-    throws IOException {
+    public static void copy(Source source, ModifiableSource destination, boolean useBuffer)
+            throws IOException {
         InputStream sourceInputStream = null;
         OutputStream destOutputStream = null;
         try {
             sourceInputStream = source.getInputStream();
             destOutputStream = destination.getOutputStream();
-            if(useBuffer) {
+            if (useBuffer) {
                 final ByteArrayOutputStream sourceBos = new ByteArrayOutputStream();
                 CopyUtils.copy(sourceInputStream, sourceBos);
                 CopyUtils.copy(sourceBos.toByteArray(), destOutputStream);
-            }
-            else
+            } else
                 CopyUtils.copy(sourceInputStream, destOutputStream);
         } finally {
-            if(destOutputStream != null) {
+            if (destOutputStream != null) {
                 destOutputStream.flush();
-                destOutputStream.close();    
+                destOutputStream.close();
             }
-            if(sourceInputStream != null) {
+            if (sourceInputStream != null) {
                 sourceInputStream.close();
             }
-        }       
+        }
     }
-    
+
     /**
-     * Copies one Source to another. 
-     * The source Source is optionally buffered.
+     * Copies one Source to another. The source Source is optionally buffered.
      * @param resolver The SourceResolver to use for lookin up Sources.
      * @param sourceUri The source to be copied.
      * @param destUri The URI to copy to.
-     * @param useBuffer If true, the source Source is buffered before copied to the final destination.
+     * @param useBuffer If true, the source Source is buffered before copied to the final
+     *            destination.
      * @throws IOException If an error occures.
      * @throws SourceException If the destination is not modifiable.
      * @see #copy(Source, ModifiableSource, boolean)
      */
-    public static void copy(SourceResolver resolver, String sourceUri, String destUri, boolean useBuffer) 
-    throws IOException, SourceException {
+    public static void copy(SourceResolver resolver, String sourceUri, String destUri,
+            boolean useBuffer) throws IOException, SourceException {
         Source source = null;
         Source dest = null;
         try {
             source = resolver.resolveURI(sourceUri);
             dest = resolver.resolveURI(destUri);
-            
-            if(!(dest instanceof ModifiableSource))
-                throw new SourceException("Destination '"+ dest.getURI() + "' is not modifiable.");
-            
-            copy(source, (ModifiableSource) dest, useBuffer);            
-        }
-        finally {
-            if(source != null)
+
+            if (!(dest instanceof ModifiableSource))
+                throw new SourceException("Destination '" + dest.getURI() + "' is not modifiable.");
+
+            copy(source, (ModifiableSource) dest, useBuffer);
+        } finally {
+            if (source != null)
                 resolver.release(source);
-            if(dest != null)
+            if (dest != null)
                 resolver.release(dest);
         }
     }
-    
-    /** 
+
+    /**
      * Copies a Source without buffering.
      * @param resolver A SourceResolver instance.
      * @param sourceUri The source URI to copy from.
@@ -109,8 +114,8 @@ public final class SourceUtil {
      * @throws IOException If an error occures.
      * @see #copy(SourceResolver, String, String, boolean)
      */
-    public static void copy(SourceResolver resolver, String sourceUri, String destUri) 
-    throws IOException {
+    public static void copy(SourceResolver resolver, String sourceUri, String destUri)
+            throws IOException {
         copy(resolver, sourceUri, destUri, false);
     }
 }
