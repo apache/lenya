@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
- 
+
   <xsl:include href="menu.xsl"/>
   
   <xsl:template match="/">
@@ -16,7 +16,7 @@
       <head>
 	<title>Apache Lenya - <xsl:value-of select="menu/url-info/publication-id"/> - <xsl:value-of select="menu/url-info/area"/> - <xsl:value-of select="menu/url-info/document-id"/> - <xsl:value-of select="cmsbody/html/head/title"/></title>
 	<script type="text/javascript" src="/lenya/lenya/menu/menu.js" />
-	<link type="text/css" rel="stylesheet" href="/lenya/lenya/css/default.css" />
+	<link type="text/css" rel="stylesheet" href="/lenya/lenya/css/menu.css" />
       </head>
       
       <body bgcolor="#ffffff" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
