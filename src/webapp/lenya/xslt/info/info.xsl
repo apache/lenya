@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.24 2003/08/21 14:24:58 egli Exp $
+ $Id: info.xsl,v 1.25 2003/08/21 16:33:44 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -20,7 +20,7 @@
 <xsl:template match="lenya-info:info">    
     <html>
 <head>
-	<title></title>
+	<title>info</title>
     <xsl:call-template name="include-css">
       <xsl:with-param name="context-prefix" select="publish/context"/>
     </xsl:call-template>
