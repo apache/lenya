@@ -18,6 +18,7 @@ package org.apache.lenya.transaction;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.activity.Initializable;
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -54,10 +55,18 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
            if (getLogger().isDebugEnabled())
                getLogger().debug("AbstractOperation.getUnitOfWork() does not yet have instance, looking up role [" + UnitOfWork.ROLE + "]");
 
-           this.unitOfWork = (UnitOfWork) this.manager.lookup(UnitOfWork.ROLE);
+           this.unitOfWork = new UnitOfWorkImpl();
+           ContainerUtil.enableLogging(this.unitOfWork, getLogger());
         }
 
         return this.unitOfWork;
+    }
+    
+    /**
+     * @param unit The unit of work.
+     */
+    public void setUnitOfWork(UnitOfWork unit) {
+        this.unitOfWork = unit;
     }
 
     protected ServiceManager manager;

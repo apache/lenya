@@ -32,7 +32,6 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.TransactionableFactory;
 
 /**
@@ -241,11 +240,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             destinationTree.setLabel(destinationDocument.getId(), label);
         }
 
-        try {
-            destinationTree.save();
-        } catch (TransactionException e) {
-            throw new SiteException(e);
-        }
+        sourceDocument.getIdentityMap().getUnitOfWork().registerDirty(destinationTree);
     }
 
     /**
@@ -279,11 +274,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             tree.removeNode(document.getId());
         }
 
-        try {
-            tree.save();
-        } catch (TransactionException e) {
-            throw new SiteException(e);
-        }
+        document.getIdentityMap().getUnitOfWork().registerDirty(tree);
     }
 
     /**
@@ -304,11 +295,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         SiteTree tree = getTree(document);
         tree.setLabel(document.getId(), labelObject);
-        try {
-            tree.save();
-        } catch (TransactionException e) {
-            throw new SiteException(e);
-        }
+        document.getIdentityMap().getUnitOfWork().registerDirty(tree);
     }
 
     /**
@@ -370,11 +357,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (node == null) {
             Label[] labels = { label };
             tree.addNode(document.getId(), labels, null, null, false);
-            try {
-                tree.save();
-            } catch (TransactionException e) {
-                throw new SiteException(e);
-            }
+            document.getIdentityMap().getUnitOfWork().registerDirty(tree);
         } else {
             tree.addLabel(document.getId(), label);
         }

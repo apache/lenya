@@ -37,4 +37,9 @@ public interface Operation {
      */
     UnitOfWork getUnitOfWork() throws ServiceException;
     
+    /**
+     * @param unit The unit of work.
+     */
+    void setUnitOfWork(UnitOfWork unit);
+
 }

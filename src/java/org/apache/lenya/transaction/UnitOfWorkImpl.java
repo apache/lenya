@@ -17,25 +17,24 @@
 package org.apache.lenya.transaction;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 
 /**
  * Default implementation of a unit of work.
  * 
  * @version $Id: UnitOfWorkImpl.java 159567 2005-03-31 07:27:09Z andreas $
  */
-public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Serviceable {
+public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 
     /**
      * Ctor.
      */
     public UnitOfWorkImpl() {
-        // do nothing
     }
 
     private List identityMaps = new ArrayList();
@@ -47,20 +46,63 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Se
         return (IdentityMap[]) this.identityMaps.toArray(new IdentityMap[this.identityMaps.size()]);
     }
 
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
-
     /**
      * @see org.apache.lenya.transaction.UnitOfWork#addIdentityMap(org.apache.lenya.transaction.IdentityMap)
      */
     public void addIdentityMap(IdentityMap map) {
         this.identityMaps.add(map);
+        map.setUnitOfWork(this);
+    }
+
+    private Set newObjects = new HashSet();
+    private Set modifiedObjects = new HashSet();
+    private Set removedObjects = new HashSet();
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#registerNew(org.apache.lenya.transaction.Transactionable)
+     */
+    public void registerNew(Transactionable object) {
+        this.newObjects.add(object);
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#registerDirty(org.apache.lenya.transaction.Transactionable)
+     */
+    public void registerDirty(Transactionable object) {
+        System.out.println(this + " register dirty: " + object);
+        this.modifiedObjects.add(object);
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#registerRemoved(org.apache.lenya.transaction.Transactionable)
+     */
+    public void registerRemoved(Transactionable object) {
+        this.removedObjects.add(object);
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#commit()
+     */
+    public void commit() throws TransactionException {
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("commit");
+        }
+        for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.create();
+            t.save();
+        }
+        for (Iterator i = this.modifiedObjects.iterator(); i.hasNext(); ) {
+            Transactionable t = (Transactionable) i.next();
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("save [" + t + "]");
+            }
+            t.save();
+        }
+        for (Iterator i = this.removedObjects.iterator(); i.hasNext(); ) {
+            Transactionable t = (Transactionable) i.next();
+            t.delete();
+        }
     }
 
 }

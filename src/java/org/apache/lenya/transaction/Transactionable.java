@@ -28,6 +28,18 @@ public interface Transactionable {
      * @throws TransactionException if an error occurs.
      */
     void save() throws TransactionException;
+
+    /**
+     * Deletes the object.
+     * @throws TransactionException if an error occurs.
+     */
+    void delete() throws TransactionException;
+    
+    /**
+     * Creates the object.
+     * @throws TransactionException if an error occurs.
+     */
+    void create() throws TransactionException;
     
     /**
      * Checks the object in.

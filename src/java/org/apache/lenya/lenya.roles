@@ -78,10 +78,6 @@
   	    shorthand="publication-template-manager"
   	    default-class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"/>
         
-  <role name="org.apache.lenya.transaction.UnitOfWork"
-  	    shorthand="unit-of-work"
-  	    default-class="org.apache.lenya.transaction.UnitOfWorkImpl"/>
-        
   <role name="org.apache.lenya.cms.usecase.Operation"
   	    shorthand="operation"
   	    default-class="org.apache.lenya.cms.usecase.AbstractOperation"/>

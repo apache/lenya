@@ -197,6 +197,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
             clearInfoMessages();
             doExecute();
             dumpErrorMessages();
+            
+            if (getErrorMessages().size() == 0) {
+                getUnitOfWork().commit();
+            }
+            
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");

@@ -68,4 +68,20 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
         return (TransactionableFactory) this.factories.get(type);
     }
 
+    private UnitOfWork unitOfWork;
+
+    /**
+     * @see org.apache.lenya.transaction.IdentityMap#getUnitOfWork()
+     */
+    public UnitOfWork getUnitOfWork() {
+        return this.unitOfWork;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.IdentityMap#setUnitOfWork(org.apache.lenya.transaction.UnitOfWork)
+     */
+    public void setUnitOfWork(UnitOfWork unit) {
+        this.unitOfWork = unit;
+    }
+
 }

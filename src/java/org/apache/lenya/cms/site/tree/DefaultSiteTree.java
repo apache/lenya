@@ -600,4 +600,16 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         return SiteTree.TRANSACTIONABLE_TYPE;
     }
 
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#delete()
+     */
+    public void delete() throws TransactionException {
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#create()
+     */
+    public void create() throws TransactionException {
+    }
+
 }

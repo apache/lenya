@@ -138,6 +138,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             siteManager.delete(document);
+            document.delete();
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -151,8 +152,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 this.manager.release(selector);
             }
         }
-
-        deleteDocumentSource(document);
     }
 
     /**
@@ -441,31 +440,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 }
                 if (destination != null) {
                     sourceResolver.release(destination);
-                }
-                this.manager.release(sourceResolver);
-            }
-        }
-    }
-
-    /**
-     * Deletes the source of a document.
-     * @param document The document to delete.
-     * @throws PublicationException when something went wrong.
-     */
-    protected void deleteDocumentSource(Document document) throws PublicationException {
-
-        SourceResolver sourceResolver = null;
-        Source source = null;
-        try {
-            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = sourceResolver.resolveURI(document.getSourceURI());
-            ((ModifiableSource) source).delete();
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        } finally {
-            if (sourceResolver != null) {
-                if (source != null) {
-                    sourceResolver.release(source);
                 }
                 this.manager.release(sourceResolver);
             }

@@ -98,5 +98,12 @@ public class OperationModule extends AbstractInputModule implements Operation, S
             }
         }
     }
+
+    /**
+     * @see org.apache.lenya.transaction.Operation#setUnitOfWork(org.apache.lenya.transaction.UnitOfWork)
+     */
+    public void setUnitOfWork(UnitOfWork unit) {
+        this.unitOfWork = unit;
+    }
     
 }

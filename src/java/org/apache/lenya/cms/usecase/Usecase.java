@@ -19,13 +19,14 @@ package org.apache.lenya.cms.usecase;
 import java.util.List;
 
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.transaction.Operation;
 
 /**
  * Usecase interface.
  * 
  * @version $Id$
  */
-public interface Usecase {
+public interface Usecase extends Operation {
 
     /**
      * The <code>Usecase</code> role.

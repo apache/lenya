@@ -29,6 +29,9 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
@@ -547,6 +550,34 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public String getTransactionableType() {
         return Document.TRANSACTIONABLE_TYPE;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#delete()
+     */
+    public void delete() throws TransactionException {
+        SourceResolver sourceResolver = null;
+        Source source = null;
+        try {
+            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = sourceResolver.resolveURI(getSourceURI());
+            ((ModifiableSource) source).delete();
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        } finally {
+            if (sourceResolver != null) {
+                if (source != null) {
+                    sourceResolver.release(source);
+                }
+                this.manager.release(sourceResolver);
+            }
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#create()
+     */
+    public void create() throws TransactionException {
     }
 
 }

@@ -47,4 +47,27 @@ public interface UnitOfWork {
      */
     void addIdentityMap(IdentityMap map);
 
+    /**
+     * Registers an object as new.
+     * @param object The object.
+     */
+    void registerNew(Transactionable object);
+    
+    /**
+     * Registers an object as modified.
+     * @param object The object.
+     */
+    void registerDirty(Transactionable object);
+    
+    /**
+     * Registers an object as removed.
+     * @param object The object.
+     */
+    void registerRemoved(Transactionable object);
+    
+    /**
+     * Commits the transaction.
+     * @throws TransactionException if an error occurs.
+     */
+    void commit() throws TransactionException;
 }

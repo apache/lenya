@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.lenya.transaction.UnitOfWork;
+
 /**
  * Proxy which holds the parameters of a usecase. It is used to restore the usecase after the
  * flowscript is re-entered and to pass the usecase parameters to a JX template.
@@ -33,6 +36,7 @@ public class UsecaseProxy {
     private String name;
     private String sourceUrl;
     private UsecaseView view;
+    private UnitOfWork unitOfWork;
 
     /**
      * Ctor.
@@ -50,6 +54,11 @@ public class UsecaseProxy {
         this.infoMessages = usecase.getInfoMessages();
         this.sourceUrl = usecase.getSourceURL();
         this.view = usecase.getView();
+        try {
+            this.unitOfWork = usecase.getUnitOfWork();
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -57,6 +66,7 @@ public class UsecaseProxy {
      * @param usecase The usecase.
      */
     public void setup(Usecase usecase) {
+        usecase.setUnitOfWork(this.unitOfWork);
         usecase.setName(this.name);
         usecase.setSourceURL(this.sourceUrl);
         usecase.setView(this.view);
