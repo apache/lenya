@@ -15,12 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: introduction.xml,v 1.16 2004/05/11 22:41:13 michi Exp $ -->
+<!-- $Id: introduction.xml,v 1.17 2004/07/31 03:37:30 michi Exp $ -->
 
 <div xmlns="http://www.w3.org/1999/xhtml" class="lenya-frontpage">
 <h2>Welcome to Apache Lenya</h2>
 <p>
-You have successfully installed Apache Lenya <strong>1.2</strong>. To start, click on any of the publications on the left.</p>
+You have successfully installed Apache Lenya <strong>1.2.1-dev</strong>. To start, click on any of the publications on the left.</p>
 
 <h3>About Apache Lenya</h3>
 <p>
