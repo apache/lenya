@@ -4,11 +4,12 @@
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
-
+<xsl:include href="../../variables.xsl"/>
+<!--
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
-
+-->
 <xsl:template match="/">
 
 <html>

@@ -34,7 +34,7 @@
         <HeadLine>Im Traum spricht er am meisten mit mir
         </HeadLine>
         <ByLine>Von Adrian Ritter </ByLine>
-        <DateLine>055555.04.2002</DateLine>
+        <DateLine year="2002" month="04" day="05"/>
         <CreditLine>Universit&#228;t Z&#252;rich </CreditLine>
         <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
       </NewsLines>

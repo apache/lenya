@@ -41,7 +41,7 @@
         </HeadLine>
         <ByLine>Von Adrian Ritter
         </ByLine>
-        <DateLine>03.04.2002</DateLine>
+        <DateLine year="2002" month="04" day="08"/>
         <CreditLine>
           <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
         </CreditLine>

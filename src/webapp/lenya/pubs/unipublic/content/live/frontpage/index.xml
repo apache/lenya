@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <frontpage>
 <articles>
   <article channel="magazin" section="gesundheit" year="2002" dir="0508" href="magazin/gesundheit/2002/0508"/>
@@ -7,6 +6,6 @@
   <article channel="magazin" section="geist" year="2002" dir="0470" href="magazin/geist/2002/0470"/>
   <article channel="magazin" section="umwelt" year="2002" dir="0385" href="magazin/umwelt/2002/0385"/>
   <article channel="magazin" section="recht" year="2002" dir="0413" href="magazin/recht/2002/0413"/>
-  <article channel="campus" section="uni-news" year="2002" dir="0489" href="campus/uni-news/2002/0489"/>
 </articles>
+
 </frontpage>

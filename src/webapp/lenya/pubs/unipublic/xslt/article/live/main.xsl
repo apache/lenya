@@ -4,12 +4,14 @@
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
-
+<xsl:include href="../../variables.xsl"/>
+<!--
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
 <xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
+<xsl:variable name="channel"><xsl:value-of select="/NewsML/NewsItem/NewsComponent/TopicSet/Topic/TopicType/@FormalName"/></xsl:variable>
 <xsl:variable name="section"><xsl:value-of select="/NewsML/NewsItem/NewsComponent/TopicSet/Topic/TopicType/FormalName"/></xsl:variable>
-
+-->
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
 <xsl:template match="/">
@@ -69,7 +71,7 @@
 <p>&#160;</p>
 </td>
 <td valign="top" bgcolor="white" width="388" class="art-text">
-<p class="art-date"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/DateLine"/></p>
+<p class="art-date"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/NewsLines/DateLine" mode="article"/></p>
 
 <p class="art-pretitle"><xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/head/hedline/dossier"/></p>
 
@@ -117,6 +119,10 @@
 </a>
 </td>
 </tr>
+</xsl:template>
+
+<xsl:template match="DateLine" mode="article">
+<xsl:value-of select="@day"/>.<xsl:value-of select="@month"/>.<xsl:value-of select="@year"/>
 </xsl:template>
 
 <xsl:template match="NewsComponent/NewsLines/CopyrightLine" mode="copyright">

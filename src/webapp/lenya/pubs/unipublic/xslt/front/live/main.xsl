@@ -4,13 +4,10 @@
 
 <xsl:include href="../../head.xsl"/>
 <xsl:include href="../../HTMLhead.xsl"/>
-
-<xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
-<xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
-<xsl:variable name="img-unipub"><xsl:value-of select="$unipublic"/>/img_unipublic</xsl:variable>
+<xsl:include href="../../variables.xsl"/>
+<xsl:include href="../../navigation.xsl"/>
 
 <xsl:template match="/">
-
 <html>
 <head>
 <title>unipublic - Das Online-Magazin der Universit&#228;t Z&#252;rich</title>
@@ -29,12 +26,10 @@ function aboWindow() {
 
 <style type="text/css">
 <xsl:comment>
-
 .tsr-title { font-weight: bold; font-size: 10px; font-family: Geneva, Verdana, Helvetica, Arial, Swiss, "Nu Sans Regular"; text-transform: uppercase }
 .tsr-text { font-size: 10px; font-family: Geneva, Verdana, Helvetica, Arial, Swiss, "Nu Sans Regular" }
 .webperlen { font-size: 10px; font-family: Geneva, Verdana, Helvetica, Arial, Swiss, "Nu Sans Regular" }
 .top-title { font-size: 18px; font-family: Geneva, Verdana, Helvetica, Arial, Swiss, "Nu Sans Regular"; text-transform: uppercase }
-
 </xsl:comment>
 </style>
 
@@ -65,92 +60,9 @@ function aboWindow() {
 
 <tr>
 <td width="135" align="right" valign="top">
-<table border="0" cellpadding="0" cellspacing="0" width="115">
 
-<tr>
-<td><a href="{$unipublic}/magazin/gesundheit/2002/"><img height="25" src="{$img-unipub}/m_gesund.gif" border="0" name="gesund" alt="Gesundheit" width="115"/></a></td>
-</tr>
+<xsl:call-template name="navigation"/>
 
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" src="{$img-unipub}/m_geist.gif" border="0" alt="geist" width="115"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/m_umwelt.gif" border="0" alt="umwelt &#38; technik"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" src="{$img-unipub}/m_recht.gif" border="0" alt="recht &#38; wirtschaft" width="115"/></td> </tr>
-
-<tr>
-<td align="right"><img height="19" width="100" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td align="right"><img height="21" width="103" src="{$img-unipub}/t_camp.gif" border="0" alt="campus"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_news.gif" border="0" alt="uni-news"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_portrait.gif" border="0" alt="Portraits"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_lorbeer.gif" border="0" alt="lorbeeren"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_beruf.gif" border="0" alt="berufungen"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/c_publik.gif" border="0" alt="publikationen"/></td>
-</tr>
-
-<tr>
-<td><img height="19" width="100" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><a href="dossiers/2002/"><img src="{$unipublic}/img/dossiers.gif" width="120" height="21" border="0"/></a></td>
-</tr>
-
-<tr>
-<td class="tsr-text"><span class="tsr-title"><a href="dossiers/2002/brainfair/">BrainFair 2002</a></span><br />
- Hirn im Focus</td>
-</tr>
-</table>
 </td>
 <td width="315" valign="top">
 <table border="0" cellpadding="0" cellspacing="0" width="315">
@@ -175,6 +87,7 @@ function aboWindow() {
 <tr>
 <td width="5" bgcolor="white"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
 <td width="150" valign="top" bgcolor="white" class="tsr-text">
+
 
 
 <p><a href="{articles/article[1]/@href}/"><span class="tsr-title"><xsl:apply-templates select="articles/article[1]/body.head/hedline/hl1"/></span></a><br />
@@ -207,12 +120,15 @@ function aboWindow() {
 <br />
  
 <xsl:for-each select="articles/article">
+<xsl:if test="position()>=3">
+<xsl:variable name="section"><xsl:value-of select="@section"/></xsl:variable>
+
 <table border="0" cellpadding="0" cellspacing="0" width="316">
 <tr>
 <td colspan="3">
 <table border="0" cellpadding="0" cellspacing="0" width="316">
 <tr>
-<td colspan="3"><img src="{$img-unipub}/t_uninews.gif" width="316" height="13" border="0" alt="uni-news"/></td>
+<td colspan="3"><img src="{$img-unipub}/t_{$section}.gif" width="316" height="13" border="0" alt="{$section}"/></td>
 </tr>
 
 <tr>
@@ -238,6 +154,7 @@ function aboWindow() {
 </td>
 </tr>
 </table>
+</xsl:if>
 </xsl:for-each>
 
 </td>

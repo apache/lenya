@@ -6,7 +6,9 @@
 
   <map:components>
     <map:generators default="file"/>
-    <map:transformers default="xslt"/>
+    <map:transformers default="xslt">
+    <map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
+    </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
@@ -88,31 +90,36 @@
       </map:match>
 
       <!-- Frontpage -->
-      <map:match pattern="index.html">
-        <map:generate src="docs/publication/live/frontpage/index.xml"/> 
-        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/> 
-        <map:transform type="xinclude"/>
-        <!--<map:transform src="stylesheets/publication/Page/Front/newsml.xsl"/> would be nice to have-->
-        <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
       <map:match pattern="">
-        <map:generate src="docs/publication/live/frontpage/index.xml"/> 
-        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/> 
+        <map:redirect-to uri="index.html" session="true"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:generate src="cocoon:/index.xml"/> 
         <map:transform type="xinclude"/>
         <!--<map:transform src="stylesheets/publication/Page/Front/newsml.xsl"/> would be nice to have-->
         <map:transform src="stylesheets/publication/Page/Front/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
-<!--
+
       <map:match pattern="index.xml">
-        <map:generate src="docs/publication/live/frontpage/index.xml"/>
-        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl"/>
+        <map:generate src="docs/publication/live/frontpage/page.xml"/>
+        <map:transform type="xinclude"/>
+        <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- Section -->
+      <map:match pattern="*/*/*/index.xml">
+        <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
+        <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+        </map:transform>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
--->
-      <!-- Section -->
+
       <map:match pattern="*/*/">
         <map:redirect-to uri="2002/" session="true"/>
       </map:match>
