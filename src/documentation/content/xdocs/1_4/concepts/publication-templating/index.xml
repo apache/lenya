@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<document> 
+  <header> 
+    <title>Publication Templating</title> 
+  </header>
+  <body>
+    
+    <section>
+      <title>What is Publication Templating?</title>
+      <p>
+        Imagine you are a company or organisation with some departments which want to edit
+        their content using a Lenya-based CMS. All departments use similar publications,
+        sharing lots of functionality. The layout is based on a common corporate identity,
+        but some departments want to use their own logo or tweak the navigation menu style.
+      </p>
+      <p>
+        If all departments develop their own publications, it will be very hard to keep them
+        consistent, to add changes to all publications or to update them to a newer Lenya version.
+        This can be simplified using publication templates. You define a base (template) publication
+        which all others are derived from.         
+      </p>
+      
+<source xml:space="preserve">
+                        +----------------------+
+                        | Template Publication |
+                        +----------------------+
+                                    |
+           +-----------------+------+---------------------+
+           |                 |                            |
+   +--------------+  +--------------+             +--------------+
+   | Department A |  | Department B |     ...     | Department X |
+   +--------------+  +--------------+             +--------------+
+</source>     
+
+      <p>Multiple layers of templates are supported.</p>
+
+<source xml:space="preserve">
+                    +--------------------------------+
+                    | University Website Publication |
+                    +--------------------------------+
+                                    |
+           +-----------------+------+------------------------+
+           |                 |                               |
+   +------------+  +--------------------+             +-------------+
+   | Uni Zurich |  | Harvard University |     ...     | UC Berkeley |
+   +------------+  +--------------------+             +-------------+
+                             |
+              +----------+---+-----------+
+              |          |               |
+        +----------+  +-----+       +---------+
+        | Business |  | Law |  ...  | Medical |
+        +----------+  +-----+       +---------+
+</source>
+ 
+    </section>
+    
+    <section>
+      <title>The Concept of Publication Templating</title>
+      
+      <ul>
+        <li>There is a publication <em>my-pub</em>.</li>
+        <li>It depends on a template which is called <em>template(my-pub)</em>.</li>
+        <li>When a file is requested using the templating mechanism (<code>fallback://xslt/page2xhtml.xsl</code>),
+            it is searched in a certain traversing order:
+          <ol>
+            <li><code>context://lenya/pubs/my-pub/xslt/page2xhtml.xsl</code></li>
+            <li><code>context://lenya/pubs/template(my-pub)/xslt/page2xhtml.xsl</code></li>
+            <li><code>context://lenya/pubs/template(template(my-pub))/xslt/page2xhtml.xsl</code></li>
+            <li>...</li>
+            <li><code>context://xslt/page2xhtml.xsl</code></li>
+          </ol>
+        </li>
+      </ul>
+      
+      <p>
+        Note that, in contrast to the fallback mechanism in Lenya 1.2, the prefix <code>lenya</code> is not used,
+        but the path is resolved relatively to the <code>context://</code> root. 
+      </p>
+      
+    </section>
+    
+    <section>
+      <title>Declaration of a Template</title>
+      <p>The template of a publication is declared in <code>my-pub/config/publication.xconf</code>:</p>
+      
+<source xml:space="preserve"><![CDATA[<publication>
+  ...
+  <templates>
+    <template id="my-template"/>
+  </templates>
+  ...
+</publication>]]></source>
+    </section>
+    
+    <section>
+      <title>Usage</title>
+      <p>To invoke publication templating, it is necessary to use the <code>fallback://</code>
+      protocol for all relevant files. For an XSLT stylesheet, the according pipeline looks as follows:</p>
+      
+      <source xml:space="preserve"><![CDATA[<map:transform src="fallback://xslt/doctypes/doctype2xhtml.xsl">]]></source>
+    </section>
+    
+    <section>
+      <title>XSLT Include and Import</title>
+      <p>
+        To leverage the publication templating concept, it is necessary to apply it to included
+        or imported stylesheets as well. Fortunately, we can make use of the <code>fallback://</code>
+        protocol in XSLT stylesheets. At the moment, this only works with Xalan which means you
+        have to use this one as the default transformer.
+      </p>
+      <source xml:space="preserve"><![CDATA[<xsl:include href="fallback://header.xsl"/>]]></source>
+      <p>
+        To simplify overriding of XSLT stylesheets, it would be useful to import the template
+        stylesheet. For this purpose, an additional template source factory could be used, which
+        skips the current publication when resolving the file:
+      </p>
+      <source xml:space="preserve"><![CDATA[<xsl:import href="template://template/xslt/common/header.xsl"/>]]></source>
+    </section>
+    
+    <section>
+      <title>Sitemaps</title>
+      <p>
+        If a sitemap is loaded from a template publication, it is very important that the sitemap
+        is completely fallback-enabled. Otherwise, the source resolver will resolve sources relatively
+        to the template sitemap instead of using the overridden ones.
+      </p>
+      <p>
+        In <code>lenya/global-sitemap.xmap</code>, all publication sitemaps are mounted
+        using the fallback module, for instance
+      </p>
+      <source xml:space="preserve"><![CDATA[<!-- Enter the actual publication -->
+<map:match pattern="*/**">
+  <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}"/>
+</map:match>]]></source>
+    </section>
+    
+    <section>
+      <title>Usecases</title>
+      <p>
+        The <link href="../usecase-framework/index.html">usecase framework</link>
+        supports publication templating by default.
+      </p>
+      <p>
+        If you can't (or don't want to) use the usecase framework, you have to implement
+        your own usecase sitemap. The traversing order for usecase sitemaps is
+      </p>
+      <ol>
+        <li><code>context://lenya/pubs/my-pub/usecase.xmap</code></li>
+        <li><code>context://lenya/pubs/template(my-pub)/usecase.xmap</code></li>
+        <li><code>context://lenya/pubs/template(template(my-pub))/usecase.xmap</code></li>
+        <li>...</li>
+        <li><code>context://lenya/usecase.xmap</code></li>
+      </ol>
+      <p>
+        This behaviour is achieved by the usecase fallback module which is called in <code>global-sitemap.xmap</code>:
+      </p>
+<source xml:space="preserve"><![CDATA[<map:match type="usecase" pattern="*">
+  <map:mount src="{usecase-fallback:{1}}" uri-prefix=""/>
+</map:match>]]></source>
+      <p>
+        The decision which <code>usecase.xmap</code> to choose is based on the usecase configuration
+        in <code>publication.xconf</code>. To declare a usecase to be implemented by a publication,
+        add the corresponding entry:
+      </p>
+<source xml:space="preserve"><![CDATA[<publication>
+  ...
+  <usecases>
+    <usecase name="create"/>
+  </usecases>
+  ...
+</publication>]]></source>
+    </section>
+    
+  </body>
+</document>
