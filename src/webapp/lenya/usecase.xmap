@@ -9,7 +9,7 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-
+    
     <map:actions>
       <map:action name="user-admin-add" src="org.apache.lenya.cms.cocoon.acting.UserAdminAddAction"/>
       <map:action name="user-admin-modify" src="org.apache.lenya.cms.cocoon.acting.UserAdminModifyAction"/>
@@ -300,8 +300,35 @@
           </map:match>
           
         </map:match>
-        
-        
+	
+	<map:match pattern="upload" type="usecase">
+
+	  <map:match pattern="showscreen" type="step">
+	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
+	    <map:transform src="xslt/authoring/upload-image.xsl"/>
+	    <map:serialize type="html"/>
+	  </map:match>
+
+	  <map:match type="step" pattern="showteaserscreen">
+	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
+	    <map:transform src="xslt/authoring/upload-teaserimage.xsl"/>
+	    <map:serialize type="html"/>
+	  </map:match>
+
+	  <map:match type="step" pattern="upload">
+	    <map:act type="file-upload">
+	      <!-- if the action suceeds it returns the referer and we
+	      simply redirect to it. -->
+	      <map:redirect-to uri="{request:requestURI}"/>
+	    </map:act>
+	    <!-- otherwise the action could not validate some of the
+	    input and we present the upload form again --> 
+	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
+	    <map:transform src="xslt/authoring/upload-image.xsl"/>
+	    <map:serialize type="html"/>
+	  </map:match>
+	</map:match>
+	
         <!--Rollback-->
         <map:match pattern="rollback" type="usecase">
           
@@ -594,7 +621,7 @@
         <!-- ============================================================ -->
         <!-- UserAdmin -->
         <!-- ============================================================ -->
-        
+          
         <map:match pattern="user-add" type="usecase">
           
           <map:match pattern="showscreen" type="step">
