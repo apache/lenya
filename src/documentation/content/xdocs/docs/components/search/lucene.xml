@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lucene.xml,v 1.1 2004/07/01 23:59:23 thorsten Exp $ -->
+<!-- $Id: lucene.xml,v 1.2 2004/07/12 02:57:31 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -158,6 +158,54 @@ whereas the lucene.xconf has the following elements
     </indexer>
 -->
 </lucene>
+]]>
+</source>
+</section>
+
+<section>
+<title>Indexing XML documents</title>
+
+<p>
+In order to index XML documents one needs to configure the <code>org.apache.lenya.lucene.index.ConfigurableIndexer</code> (see above).
+</p>
+
+<p>
+With namespaces:
+</p>
+<source>
+<![CDATA[
+<?xml version="1.0"?>
+
+<luc:document xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0">
+  <luc:field name="currwfstate" type="Text" xpath="/wf:history/wf:version[last()]/@state">
+    <namespace prefix="wf">http://apache.org/cocoon/lenya/workflow/1.0</namespace>
+  </luc:field>
+</luc:document>
+]]>
+</source>
+
+<p>
+Concatenating element values and setting default values in case element value doesn't exist:
+</p>
+<source>
+<![CDATA[
+<?xml version="1.0"?>
+
+<luc:document xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0">
+  <luc:field name="title" type="Text" xpath="/article/head/title"/>
+  <luc:field name="subtitle" type="Text" xpath="/article/head/subtitle"/>
+  <luc:field name="lead" type="UnStored" xpath="/article/head/abstract"/>
+  <luc:field name="contents" type="UnStored" xpath="/"/>
+  <luc:field name="author" type="UnStored"/>
+    <namespace prefix="lenya">http://apache.org/cocoon/lenya/page-envelope/1.0</namespace>
+    <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    <xpath>/*/lenya:meta/dc:contributor</xpath>
+  </luc:field>
+  <luc:field name="date" type="Text">
+    <namespace prefix="lenya">http://apache.org/cocoon/lenya/page-envelope/1.0</namespace>
+    <xpath default="1969">/*/lenya:meta/year</xpath><text>.</text><xpath default="02">/*/lenya:meta/month</xpath><text>.</text><xpath default="16">/*/lenya:meta/day</xpath>
+  </luc:field>
+</luc:document>
 ]]>
 </source>
 </section>
