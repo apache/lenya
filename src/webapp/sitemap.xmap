@@ -23,8 +23,7 @@
         <catalogue id="cmsui" name="cmsui" location="lenya/resources/i18n"/>           
        </catalogues>
        <untranslated-text>untranslated</untranslated-text>
-         <!-- cache-at-startup should be true in non development/debug mode -->
-       <cache-at-startup>false</cache-at-startup>
+       <cache-at-startup>true</cache-at-startup>
     </map:transformer>
       
     <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
