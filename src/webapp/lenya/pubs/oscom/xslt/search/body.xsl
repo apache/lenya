@@ -61,37 +61,58 @@ the Matrix or within <a href="lucene">General</a>
 Limit your search to field:
 <xsl:choose>
 <xsl:when test="configuration/@checked-pid = 'matrix'">
+  <input type="checkbox" name="matrix.fields" value="contents">
+    <xsl:if test="search/fields/field[1]='contents'">
+      <xsl:attribute name="checked">checked</xsl:attribute>
+    </xsl:if>
+    Contents
+  </input>
+  <input type="checkbox" name="matrix.fields" value="title">
+    <xsl:if test="search/fields/field[1]='title'">
+      <xsl:attribute name="checked">checked</xsl:attribute>
+    </xsl:if>
+    Title
+  </input>
+  <input type="checkbox" name="matrix.fields" value="license">
+    <xsl:if test="search/fields/field[1]='license'">
+      <xsl:attribute name="checked">checked</xsl:attribute>
+    </xsl:if>
+    License
+  </input>
+
+<!--
     <select name="matrix.fields">
       <option value="contents">
-        <xsl:if test="search/fields='contents'">
+        <xsl:if test="search/fields/field[1]='contents'">
           <xsl:attribute name="selected">selected</xsl:attribute>
         </xsl:if>
         Contents (Title and Body)
       </option>
       <option value="title">
-        <xsl:if test="search/fields='title'">
+        <xsl:if test="search/fields/field[1]='title'">
           <xsl:attribute name="selected">selected</xsl:attribute>
         </xsl:if>
         Title
       </option>
       <option value="license">
-        <xsl:if test="search/fields='license'">
+        <xsl:if test="search/fields/field[1]='license'">
           <xsl:attribute name="selected">selected</xsl:attribute>
         </xsl:if>
         License
       </option>
     </select>
+    -->
 </xsl:when>
 <xsl:otherwise>
     <select name="dummy-index-id.fields">
       <option value="contents">
-        <xsl:if test="search/fields='contents'">
+        <xsl:if test="search/fields/field[1]='contents'">
           <xsl:attribute name="selected">selected</xsl:attribute>
         </xsl:if>
         Contents (Title and Body)
       </option>
       <option value="title">
-        <xsl:if test="search/fields='title'">
+        <xsl:if test="search/fields/field[1]='title'">
           <xsl:attribute name="selected">selected</xsl:attribute>
         </xsl:if>
         Title

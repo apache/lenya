@@ -83,7 +83,7 @@
     <select name="{@pid}.fields">
     <xsl:for-each select="search-fields/field">
       <option value="{.}">
-        <xsl:if test="/search-and-results/search/fields = .">
+        <xsl:if test="/search-and-results/search/fields/field = .">
           <xsl:attribute name="selected">selected</xsl:attribute>
         </xsl:if>
         <xsl:value-of select="."/>

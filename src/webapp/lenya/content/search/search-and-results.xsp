@@ -293,7 +293,7 @@
               }
             <start><xsp:expr>start</xsp:expr></start>
             <end><xsp:expr>end</xsp:expr></end>
-            <fields><xsp:expr>fields_para</xsp:expr></fields>
+            <fields><field><xsp:expr>fields_para</xsp:expr></field></fields>
 
       try{
         Analyzer ll_analyzer=new StandardAnalyzer();
