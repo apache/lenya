@@ -40,14 +40,17 @@ function editDocument() {
     try {
         var flowHelper = new FlowHelper();
         var resolver = cocoon.getComponent(SourceResolver.ROLE);
-        var dstUri = flowHelper.getDocumentHelper(cocoon).getSourceUri(flowHelper.getPageEnvelope(cocoon).getDocument());
+        var document = flowHelper.getPageEnvelope(cocoon).getDocument();
+        var dstUri = flowHelper.getDocumentHelper(cocoon).getSourceUri(document);
+        var wfFactory = Packages.org.apache.lenya.cms.workflow.WorkflowFactory.newInstance();
         
         SourceUtil.copy(resolver, cocoon.parameters["sourceUri"], dstUri, _getParameter("useBuffer", "false") == "true");
 
         if(_getParameter("noCheckin", "false") == "false")
             flowHelper.reservedCheckIn(cocoon, _getParameter("backup", "true") == "true");
 
-        if(_getParameter("noWorkflow", "false") == "false")
+        var hasWorkflow = wfFactory.hasWorkflow(document);
+        if(hasWorkflow)
             flowHelper.triggerWorkflow(cocoon, _getParameter("workflowEvent", "edit"));
 
         if(_getParameter("noStatus", "false") == "false")
