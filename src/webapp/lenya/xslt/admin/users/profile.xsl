@@ -39,8 +39,8 @@
           <table class="lenya-table-noborder">
             
             <xsl:apply-templates select="messages"/>
-            <xsl:apply-templates select="id"/>
             <xsl:apply-templates select="ldapid"/>
+            <xsl:apply-templates select="id"/>
             <xsl:apply-templates select="fullname"/>
             <xsl:apply-templates select="email"/>
             <xsl:apply-templates select="description"/>
@@ -79,7 +79,7 @@
   <xsl:template match="id">
 		<tr>
 			
-			<td class="lenya-entry-caption">User&#160;ID&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption">CMS&#160;User&#160;ID&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				 <xsl:choose>
 					 <xsl:when test="../@new = 'true'">
@@ -118,7 +118,7 @@
   
   <xsl:template match="email">
 		<tr>
-			<td class="lenya-entry-caption">E-Mail&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption">Email&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				<input class="lenya-form-element" name="email" type="text" value="{normalize-space(.)}"/>
 			</td>
