@@ -30,7 +30,15 @@
     <menu name="Search" label="Search">
       <block>
         <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
+        <item href="http://www.dentedreality.com.au/xoomle/search/">XooMLe</item>
         <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
+      </block>
+      <separator>
+        <item>-----------------</item>
+      </separator>
+      <block>
+        <item href="../../search/lucene">Search&#160;within&#160;this&#160;Publication</item>
+        <item>Index&#160;this&#160;Publication</item>
       </block>
     </menu>
 

@@ -37,13 +37,13 @@
   <h3>Results (Publication <xsl:value-of select="../search/publication-id"/>)</h3>
   <xsl:apply-templates select="../search/exception"/>
   <xsl:choose>
-    <xsl:when test="hit">
+    <xsl:when test="hits">
       <p>Total Hits: <xsl:value-of select="@total-hits"/></p>
       <table width="90%" cellpadding="4" border="1">
         <tr>
           <td>&#160;</td><td>Score</td><td>URL resp. File</td>
         </tr>
-      <xsl:apply-templates select="hit"/>
+      <xsl:apply-templates select="hits/hit"/>
       </table>
     </xsl:when>
     <xsl:otherwise>
@@ -67,6 +67,8 @@
       <td>
         Title: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/><xsl:apply-templates select="no-title"/></a>
         <br />
+        <font size="-1">Excerpt: <xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
+        <br />
         <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="uri"/></a></font>
       </td>
     </xsl:when>
@@ -83,6 +85,14 @@
 
 <xsl:template match="no-title">
 No Title!
+</xsl:template>
+
+<xsl:template match="excerpt">
+...&#160;<xsl:value-of select="."/>&#160;...
+</xsl:template>
+
+<xsl:template match="no-excerpt">
+No excerpt available!
 </xsl:template>
 
 <xsl:template match="exception">

@@ -23,12 +23,16 @@ public class ReTokenizeFile{
       }
  
     try{
-      String s=null;
-      s=new ReTokenizeFile().reTokenize(new File(args[0]));
       String[] words=new String[args.length-1]; //{"Cocoon","Wyona"};
       for(int i=1;i<args.length;i++){
         words[i-1]=args[i];
         }
+
+      String s=null;
+
+/*
+      s=new ReTokenizeFile().reTokenize(new File(args[0]));
+*/
       s=new ReTokenizeFile().getExcerpt(new File(args[0]),words);
       System.err.println(".main(): Excerpt: "+s);
       }
@@ -63,7 +67,9 @@ public class ReTokenizeFile{
     while((chars_read=reader.read(chars)) > 0){
       writer.write(chars,0,chars_read);
       }
+    String html=writer.toString();
 
+/*
     InputStream in=new FileInputStream(file.getAbsolutePath());
     byte[] buffer=new byte[1024];
     int bytes_read;
@@ -72,17 +78,29 @@ public class ReTokenizeFile{
       bufferOut.write(buffer,0,bytes_read);
       }
     in.close();
+    String html=bufferOut.toString();
+*/
 
-    String html=writer.toString();
-    //String html=bufferOut.toString();
 
     //if(true) return html;
 
-    int index=html.toLowerCase().indexOf(words[0].toLowerCase());
-    int offset=20;
-    int start=index-offset;
-    int end=index+words[0].length()+offset;
+    int index=-1;
+    for(int i=0;i<words.length;i++){
+      index=html.toLowerCase().indexOf(words[i].toLowerCase());
+      if(index >= 0){
+        System.out.println("ReTokenizeFile.getExcerpt(File,String[]): Word matched: "+words[i]);
 
-    return html.substring(start,end);
+        int offset=100;
+        int start=index-offset;
+        if(start < 0) start=0;
+        int end=index+words[i].length()+offset;
+        if(end >= html.length()) end=html.length()-1;
+
+        return html.substring(start,end);
+        }
+      }
+
+    System.out.println("ReTokenizeFile.getExcerpt(File,String[]): No word matches: "+index);
+    return null;
     }
   }
