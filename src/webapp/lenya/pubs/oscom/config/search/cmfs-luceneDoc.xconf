@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<luc:document xmlns:luc="http://www.wyona.org/2003/lucene">
+<luc:document xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0">
 <!--
   <luc:variable name="" value=""/>
 -->

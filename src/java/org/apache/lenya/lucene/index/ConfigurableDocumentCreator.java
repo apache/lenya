@@ -94,12 +94,12 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: ConfigurableDocumentCreator.java,v 1.7 2003/11/13 22:55:17 michi Exp $
+ * @version $Id: ConfigurableDocumentCreator.java,v 1.8 2003/11/13 23:23:36 michi Exp $
  */
 public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
     Category log = Category.getInstance(ConfigurableDocumentCreator.class);
   
-    public static final String LUCENE_NAMESPACE = "http://www.wyona.org/2003/lucene";
+    public static final String LUCENE_NAMESPACE = "http://apache.org/cocoon/lenya/lucene/1.0";
     public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
 
     /**

@@ -12,7 +12,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xsl-out="http://www.wyona.org/2002/xslt"
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
-    xmlns:luc="http://www.wyona.org/2003/lucene"
+    xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     >
 
