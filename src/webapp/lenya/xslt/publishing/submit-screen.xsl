@@ -2,6 +2,7 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
     xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -17,10 +18,22 @@
 <xsl:template match="/usecase:submit">
 
   <page:page>
-    <page:title>Submit for Approval: <xsl:value-of select="document-id"/></page:title>
-    <page:body>
-        <div class="lenya-box">
-            <div class="lenya-box-title">Do you want to submit <xsl:value-of select="document-id"/> for approval?</div>
+    <page:title>
+      <i18n:translate>
+        <i18n:text i18n:key="submit-for-approval"/>
+        <i18n:param><xsl:value-of select="document-id"/></i18n:param>
+      </i18n:translate>      
+    </page:title>      
+    <page:body>            
+      <div class="lenya-box">
+      <div class="lenya-box-title">
+      
+        <i18n:translate>
+          <i18n:text i18n:key="submit-for-approval?"/>
+          <i18n:param><xsl:value-of select="document-id"/></i18n:param>
+        </i18n:translate>
+        
+      </div>
             <form method="GET" action="">
                 <table class="lenya-table-noborder">
                     <tr>
@@ -40,8 +53,8 @@
                     <tr>
                         <td/>
                         <td>
-                            <input type="submit" name="submit" value="Submit"/> &#160;
-                            <input type="button" onClick="location.href='{usecase:referer}';" value="Cancel"/>
+                            <input i18n:attr="value" type="submit" name="submit" value="Submit"/> &#160;
+                            <input i18n:attr="value" type="button" onClick="location.href='{usecase:referer}';" value="Cancel"/>
                         </td>
                     </tr>
                     <tr>
