@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<doctypes>
+  <doc type="entry">
+    <creator src="org.apache.lenya.cms.authoring.NewBlogEntryCreator">
+      <sample-name>entry.xml</sample-name>
+    </creator>
+  </doc>
+</doctypes>

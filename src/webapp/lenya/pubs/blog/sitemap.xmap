@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+
+<!-- CVS: $Id: sitemap.xmap,v 1.1 2003/08/05 19:50:47 michi Exp $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+  <map:views/>
+
+  <map:resources/>
+
+  <map:pipelines>
+  
+    <!-- Redirects -->
+    <map:pipeline>
+      <map:match pattern="">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+      <map:match pattern="*/">
+        <map:redirect-to uri="feeds/all/index.html"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- Entries -->
+    <map:pipeline>
+      <map:match pattern="*/entries/*/*/*/*/index.xml">
+        <map:aggregate element="feed">
+          <map:part src="content/{1}/feeds/all/index.xml"/>
+          <map:part src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+        </map:aggregate>
+        <map:transform src="xslt/entry/aggregate.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/index.html">
+        <map:aggregate element="lenya">
+          <map:part src="cocoon:/{1}/menubar/entry.xml"/>
+          <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="xslt/entry/main-{1}.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:handle-errors type="500">
+        <!-- FIXME: can also contain other errors than "not published yet" -->
+        <map:transform src="xslt/error2html.xsl"/>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <!-- Feeds -->
+    <map:pipeline>
+      <map:match pattern="*/feeds/*/index.xml">
+        <map:generate type="directory" src="content/{1}/entries">
+          <map:parameter name="depth" value="4"/>
+          <map:parameter name="reverse" value="true"/>
+        </map:generate>
+        <map:transform src="xslt/feed/xinclude.xsl">
+          <map:parameter name="feedid" value="{2}"/>
+        </map:transform>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="content/{1}/dummy.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/feeds/*/index.html">
+        <map:aggregate element="lenya">
+          <map:part src="cocoon:/{1}/menubar/feed.xml"/>
+          <map:part src="cocoon:/{1}/feeds/{2}/index.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="xslt/feed/main-{1}.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:handle-errors type="500">
+        <map:transform src="context://stylesheets/system/error2html.xsl"/>
+        <map:serialize status-code="500"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <!-- Menubars -->
+    <map:pipeline>
+      <map:match pattern="authoring/menubar/entry.xml">
+        <map:generate type="serverpages" src="config/menus/entry.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/menubar/feed.xml">
+        <map:generate type="serverpages" src="config/menus/feed.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="live/menubar/*.xml">
+        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>

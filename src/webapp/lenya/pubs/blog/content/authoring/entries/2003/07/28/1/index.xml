@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<echo:entry xmlns:echo="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
+    <echo:title>My First Entry</echo:title>
+    <echo:subtitle>In which a newbie learns to blog...</echo:subtitle>
+    <echo:summary>A very boring entry; just learning how to blog here...</echo:summary>
+
+    <echo:author>
+      <echo:name>Bob B. Bobbington</echo:name>
+      <echo:homepage>http://bob.name/</echo:homepage>
+      <echo:weblog>http://bob.blog/</echo:weblog>
+    </echo:author>
+    <echo:contributor>
+      <echo:name>Yo-Yo Dyne</echo:name>
+      <echo:homepage>http://yoyo.dyne.name/</echo:homepage>
+      <echo:weblog>http://blog.yoyo.dyne.name/</echo:weblog>
+    </echo:contributor>
+    <!-- and another couple contributors could go here -->
+
+    <echo:link>http://bob.blog/28</echo:link>
+    <echo:id>2003/07/28/1</echo:id>
+
+    <echo:created>2003-02-05T12:29:29Z</echo:created>
+    <echo:issued>2003-02-05T08:29:29-04:00</echo:issued>
+    <echo:modified>2003-02-05T12:29:29Z</echo:modified>
+
+    <echo:content type="application/xhtml+xml" xml:lang="en-us">
+      <p>Hello, <em>weblog</em> world! 2 &lt; 4!</p>
+    </echo:content>
+
+    <echo:content type="text/html" xml:lang="en-us">
+      <p>Hello, <em>weblog</em> world! 2 &lt; 5!</p>
+    </echo:content>
+
+    <echo:content type="text/plain" xml:lang="en-us" mode="escaped">
+      <![CDATA[ Hello, _weblog_ world! 2 < 6! ]]>
+    </echo:content>
+
+    <echo:content type="image/png" xml:lang="en-us" src="http://bob.blog/helloworld.png" />
+
+    <ent:topic id="introductory">Hello</ent:topic>
+</echo:entry>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!-- CVS: $Id: usecase-create.xmap,v 1.1 2003/08/05 19:50:47 michi Exp $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+  <map:views />
+
+  <map:resources />
+
+  <map:pipelines>
+
+    <map:pipeline>
+      <map:match pattern="authoring/feeds/*/index.html">
+        <map:match type="usecase" pattern="create">
+          <map:match type="step" pattern="showscreen">
+            <map:generate type="serverpages" src="content/create.xsp"/>
+            <map:transform src="xslt/create.xsl"/>
+            <map:serialize type="html"/>
+          </map:match>
+
+          <map:match type="step" pattern="execute">
+            <map:act type="parent-child">
+              <map:redirect-to uri="index.html" session="true"/>
+            </map:act>
+            <map:redirect-to uri="index.html?lenya.usecase=create&amp;lenya.step=showscreen&amp;status=failed" session="true"/>
+          </map:match>
+        </map:match>
+      </map:match>
+    </map:pipeline>
+
+  </map:pipelines>
+</map:sitemap>

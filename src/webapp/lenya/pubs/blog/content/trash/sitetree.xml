@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id: sitetree.xml,v 1.1 2003/08/05 19:50:48 michi Exp $ -->
+
+<site
+    xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
+    label="Trash">
+    
+  <node id="entries">
+    <label xml:lang="en">Entries</label>
+    <label xml:lang="de">Eintr&#228;ge</label>
+  </node>
+  
+</site>

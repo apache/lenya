@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- $Id: publication.xml,v 1.1 2003/08/05 19:50:47 michi Exp $ -->
+
+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
+<lenya:name>Lenya's Weblog</lenya:name>
+<lenya:description>
+This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo"</a> specification for syndicating, archiving and
+editing episodic web sites (e.g. weblogs).
+
+<h3>Customizing the layout</h3>
+The fonts and colors can be customized by editing the file <code>resources/css/styles.css</code>.
+The positioning can be customized by editing the file <code>xslt/global.xsl</code>. The following CSS resources
+might be helpful
+<br /><a href="http://www.w3schools.com/css/css_reference.asp">CSS2 Reference</a>
+<br /><a href="http://www.csszengarden.com">The Beauty of CSS Design</a>
+
+<h3>Weblog Resources</h3>
+<a href="http://www.intertwingly.net/wiki/pie/Syntax">Doctypes</a> (entry, feed, etc.)
+<br />
+<a href="http://www.imc.org/atom-syntax/mail-archive/maillist.html">Mailing List</a>
+<br />
+<a href="http://intertwingly.net/stories/2003/07/01/example.necho">XML proposal of doctype entry</a>
+<br />
+<a href="http://www.dynamicobjects.com/d2r/archives/001921.html">A Review of Blogging APIs</a>
+<br />
+<a href="http://btrott.typepad.com/typepad/atom.xml">Sample Feed by TypePad</a>
+</lenya:description>
+<!--
+<lenya:readme>
+<a href="README.txt">README</a>
+</lenya:readme>
+-->
+
+<lenya:tests>
+  <lenya:test>Entry example: <a href="live/entries/1969/02/16/michi/index.xml">XML</a>, <a href="live/entries/1969/02/16/michi/index.html">HTML</a></lenya:test>
+  <lenya:test>Feed example: <a href="live/feeds/all/index.xml">XML</a>, <a href="live/feeds/all/index.html">HTML</a></lenya:test>
+</lenya:tests>
+</lenya:publication>

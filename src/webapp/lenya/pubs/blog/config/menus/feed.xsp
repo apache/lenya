@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+>
+
+<menu>
+
+  <xsp-lenya:util/>
+
+  <url-info>
+    <context-prefix><xsp-request:get-context-path/></context-prefix>
+    <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
+    <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
+    <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
+<!--
+    <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
+    <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
+-->
+  </url-info>
+
+  <live_uri>/index.html</live_uri>
+
+  <menus>
+    <menu name="File" label="File">
+      <block>
+        <item href="?lenya.usecase=create&amp;lenya.step=showscreen&amp;doctype=entry">Add&#160;new&#160;Entry</item>
+      </block>
+      <block>
+        <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>
+      </block>
+    </menu>
+
+    <menu name="Search" label="Search">
+      <block>
+        <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
+        <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
+      </block>
+    </menu>
+
+    <menu name="Help" label="Help">
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
+        <item href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Wiki&#160;Documentation</item>
+      </block>
+      <block>
+        <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
+      </block>
+    </menu>
+
+    <menu name="Debug" label="Debug">
+      <block>
+        <item href="index.xml">XML</item>
+      </block>
+    </menu>
+  </menus>
+
+</menu>
+
+</xsp:page>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<entry xmlns="http://example.com/newformat#" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
+
+  <lenya:meta xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:title>My First Entry</dc:title>
+    <dc:creator>Michael Wechner</dc:creator>
+    <dc:subject>DC Subject</dc:subject>
+    <dc:description>DC Description</dc:description>
+    <dc:publisher/>
+    <dc:contributor/>
+    <dc:date>2003-5-21</dc:date>
+    <dc:type/>
+    <dc:format/>
+    <dc:identifier/>
+    <dc:source/>
+    <dc:language>en</dc:language>
+    <dc:relation/>
+    <dc:coverage/>
+    <dc:rights>DC Rights</dc:rights>
+  </lenya:meta>
+
+    <title>My First Entry</title>
+    <subtitle>In which a newbie learns to blog...</subtitle>
+    <summary>A very boring entry; just learning how to blog here...</summary>
+
+    <author>
+      <name>Bob B. Bobbington</name>
+      <homepage>http://bob.name/</homepage>
+      <weblog>http://bob.blog/</weblog>
+    </author>
+    <contributor>
+      <name>Yo-Yo Dyne</name>
+      <homepage>http://yoyo.dyne.name/</homepage>
+      <weblog>http://blog.yoyo.dyne.name/</weblog>
+    </contributor>
+    <!-- and another couple contributors could go here -->
+
+    <link>http://bob.blog/28</link>
+    <id>2003/07/28/1</id>
+
+    <created>2003-02-05T12:29:29Z</created>
+    <issued>2003-02-05T08:29:29-04:00</issued>
+    <modified>2003-02-05T12:29:29Z</modified>
+
+    <content type="application/xhtml+xml" xml:lang="en-us">
+      <p xmlns="...">Hello, <em>weblog</em> world! 2 &lt; 4!</p>
+    </content>
+
+    <content type="text/html" xml:lang="en-us">
+      <p>Hello, <em>weblog</em> world! 2 &lt; 4!</p>
+    </content>
+
+    <content type="text/plain" xml:lang="en-us" mode="escaped">
+      <![CDATA[ Hello, _weblog_ world! 2 < 4! ]]>
+    </content>
+
+    <content type="image/png" xml:lang="en-us" src="http://bob.blog/helloworld.png" />
+
+    <ent:topic id="introductory">Hello</ent:topic>
+</entry>

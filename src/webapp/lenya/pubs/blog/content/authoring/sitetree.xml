@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id: sitetree.xml,v 1.1 2003/08/05 19:50:48 michi Exp $ -->
+
+<site
+  xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
+  label="Authoring"
+>
+    
+  <node id="entries">
+    <label xml:lang="en">Entries</label>
+    <label xml:lang="de">Entraege</label>
+    <node id="2003">
+      <label xml:lang="en">2003</label>
+      <label xml:lang="de">2003</label>
+      <node id="07">
+        <label xml:lang="en">07</label>
+        <label xml:lang="de">07</label>
+        <node id="28">
+          <label xml:lang="en">28</label>
+          <label xml:lang="de">28</label>
+          <node id="1">
+            <label xml:lang="en">My First Entry</label>
+            <label xml:lang="de">Mein Erster Eintrag</label>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node id="2001">
+      <label xml:lang="en">2001</label>
+      <label xml:lang="de">2001</label>
+      <node id="07">
+        <label xml:lang="en">07</label>
+        <label xml:lang="de">07</label>
+        <node id="07">
+          <label xml:lang="en">07</label>
+          <label xml:lang="de">07</label>
+          <node id="vanya">
+            <label xml:lang="en">My Second Entry</label>
+            <label xml:lang="de">Mein Zweiter Eintrag</label>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node id="1998">
+      <label xml:lang="en">1998</label>
+      <label xml:lang="de">1998</label>
+    </node>
+    <node id="1969">
+      <label xml:lang="en">1969</label>
+      <label xml:lang="de">1969</label>
+    </node>
+  </node>
+  
+</site>
