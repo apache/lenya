@@ -311,7 +311,23 @@
                 else if(lurl != null){
                   <hit><xsp:attribute name="pos"><xsp:expr>i+1</xsp:expr></xsp:attribute>
                     <score><xsp:attribute name="percent"><xsp:expr>getPercent(hits.score(i))</xsp:expr></xsp:attribute><xsp:expr>hits.score(i)</xsp:expr></score> 
-                    <uri><xsp:expr>lurl</xsp:expr></uri>
+                    <xsp:logic>
+                      String parent = "";
+                      String filename = "";
+                      String querystring = "";
+                      if(lurl.lastIndexOf("/") &gt; -1) {
+                          parent = lurl.substring(0,lurl.lastIndexOf("/"));
+                          filename = lurl.substring(lurl.lastIndexOf("/")+1);
+                      }
+                      if(lurl.indexOf("?") &gt; -1) {
+                          querystring = lurl.substring(lurl.indexOf("?"));
+                      }
+                    <uri>
+                      <xsp:attribute name="parent"><xsp:expr>parent</xsp:expr></xsp:attribute>
+                      <xsp:attribute name="filename"><xsp:expr>filename</xsp:expr></xsp:attribute>
+                      <xsp:attribute name="querystring"><xsp:expr>querystring</xsp:expr></xsp:attribute>
+                      <xsp:expr>lurl</xsp:expr></uri>
+                    </xsp:logic>
                     <xsp:logic>
                     File excerptFile=new File(excerptDir+File.separator+lurl);
                     if((ltitle != null) &amp;&amp; (ltitle.length() &gt; 0)){

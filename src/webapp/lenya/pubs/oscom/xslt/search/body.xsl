@@ -141,15 +141,21 @@ Limit your search to field:
     </xsl:when>
     <xsl:when test="uri">
       <td>
-        <a><xsl:attribute name="href"><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
+        <xsl:variable name="url"><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:choose><xsl:when test="uri/@filename = 'index.html'"><xsl:value-of select="normalize-space(uri/@parent)"/>/</xsl:when><xsl:otherwise><xsl:value-of select="normalize-space(uri)"/></xsl:otherwise></xsl:choose></xsl:variable>
+
+        <a href="{$url}"><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
         <br />
         <font size="-1"><xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
         <br />
-        <font size="-1">URL: <a><xsl:attribute name="href"><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:apply-templates select="uri"/></a></font>
-        <br /><br />
+        <font size="-1">URL: <a href="{$url}"><xsl:value-of select="$url"/></a></font>
+        <br />
+
+
 <!--
         <font size="-1">Mime-Type: <xsl:apply-templates select="mime-type"/><xsl:apply-templates select="no-mime-type"/></font>
+        <br />
 -->
+        <br />
       </td>
     </xsl:when>
     <xsl:otherwise>
