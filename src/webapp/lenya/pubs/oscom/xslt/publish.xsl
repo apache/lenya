@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
  
-<xsl:import href="../util/page-util.xsl"/>
-
-<xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+<xsl:import href="../../../xslt/util/page-util.xsl"/>
 
 <xsl:param name="title" select="'Publish Document'"/>
+<xsl:param name="action" select="'publish'"/>
 
 <xsl:variable name="separator" select="','"/>
 
@@ -15,7 +14,7 @@
   <head>
     <title><xsl:value-of select="$title"/></title>
     <xsl:call-template name="include-css">
-      <xsl:with-param name="context-prefix" select="concat(publish/context, '/', publish/publication-id)"/>
+      <xsl:with-param name="context-prefix" select="publish/context"/>
     </xsl:call-template>
   </head>
 <body>
@@ -27,12 +26,14 @@
 <xsl:template match="publish">
 <p>
 <h1><xsl:value-of select="$title"/></h1>
-<form action="">
-<input type="hidden" name="lenya.usecase" value="publish"/>
-<input type="hidden" name="lenya.step" value="execute"/>
-<input type="hidden" name="uris" value="{uris}"/>
+<form action="{$action}">
+
 <input type="hidden" name="sources" value="{sources}"/> <!-- DefaultFilePublisher -->
+<input type="hidden" name="uris" value="{uris}"/> <!-- StaticHTMLExporter -->
+
 <input type="hidden" name="properties.publish.sources" value="{sources}"/> <!-- AntTask -->
+<input type="hidden" name="properties.export.uris" value="{uris}"/> <!-- AntTask -->
+
 <input type="hidden" name="task-id" value="{task-id}"/>
 <!-- FIXME: arbitrary request parameters set within the menubar should be transfered!
 <input type="hidden" name="server-port" value="1937"/>

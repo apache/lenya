@@ -87,7 +87,6 @@
       <map:match pattern="*/matrix/index.xml">
         <map:generate type="directory" src="content/{1}/matrix/"/>
         <map:transform src="xslt/matrix/xinclude.xsl"/>
-        <!--<map:transform type="xinclude"/>-->
         <map:transform type="xlink">
           <map:parameter name="href" value="content/{1}/overview_dummy.xml"/>
         </map:transform>
@@ -144,7 +143,7 @@
   <!-- Create New CMS Project -->
   <map:pipeline>
     <map:match pattern="authoring/matrix/ParentChildScreenNewCMS*">
-      <map:generate type="serverpages" src="../../content/authoring/parent-child.xsp"/>
+      <map:generate type="serverpages" src="lenya/content/authoring/parent-child.xsp"/>
       <map:transform src="lenya/xslt/authoring/parent-child-new-cms-project.xsl"/>
       <map:serialize type="html"/>
     </map:match>
@@ -201,7 +200,7 @@
          <map:part src="cocoon:/authoring/matrix/index.xml"/>
        </map:aggregate>
        <map:transform src="xslt/overview/publishScreen.xsl"/>
-       <map:transform src="../../xslt/publishing/main.xsl"/>
+       <map:transform src="xslt/publish.xsl"/>
        <map:serialize type="html"/>
      </map:match>
 
