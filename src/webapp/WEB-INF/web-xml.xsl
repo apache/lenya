@@ -10,24 +10,24 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:param name="enableUploads"/>
+  <xsl:param name="enableUploads"/>
 
-<xsl:template match="/">
-  <xsl:text disable-output-escaping="yes">
-    <![CDATA[
-<!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
-    "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
-    ]]>
-  </xsl:text>
+  <xsl:template match="/">
+    <xsl:text disable-output-escaping="yes">
+      <![CDATA[
+      <!DOCTYPE web-app
+      PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+      "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+      ]]>
+    </xsl:text>
 
-  <xsl:apply-templates select="@*|node()"/>
-</xsl:template>    
+    <xsl:apply-templates select="@*|node()"/>
+  </xsl:template>    
 
-<xsl:template match="/web-app/servlet[position() = count(/web-app/servlet)]">
-<!--
+  <xsl:template match="/web-app/servlet[position() = count(/web-app/servlet)]">
+    <!--
     <xsl:copy-of select="."/>
--->
+    -->
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
@@ -40,12 +40,12 @@
         <param-name>scheduler-configurations</param-name>
         <param-value>/lenya/config/scheduler/scheduler.xconf</param-value>
       </init-param>
-    <load-on-startup>1</load-on-startup>
+      <load-on-startup>1</load-on-startup>
     </servlet>
     <xsl:comment>/Scheduler</xsl:comment>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="/web-app/servlet-mapping[position() = count(/web-app/servlet-mapping)]">
+  <xsl:template match="/web-app/servlet-mapping[position() = count(/web-app/servlet-mapping)]">
     <xsl:copy-of select="."/>
     
     <xsl:comment>Scheduler</xsl:comment>
@@ -54,21 +54,27 @@
       <url-pattern>/servlet/QuartzSchedulerServlet</url-pattern>
     </servlet-mapping>
     <xsl:comment>/Scheduler</xsl:comment>
-</xsl:template>
+  </xsl:template>
 
-<xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'enable-uploads']">
-<init-param>
-  <param-name>enable-uploads</param-name>
-  <param-value><xsl:value-of select="$enableUploads"/></param-value>
-</init-param>
-</xsl:template>
-    
-    
-<xsl:template match="@*|node()">
-  <xsl:copy>
-    <xsl:apply-templates select="@*|node()"/>
-  </xsl:copy>
-</xsl:template>
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'enable-uploads']">
+    <init-param>
+      <param-name>enable-uploads</param-name>
+      <param-value><xsl:value-of select="$enableUploads"/></param-value>
+    </init-param>
+  </xsl:template>
+  
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'overwrite-uploads']">
+    <init-param>
+      <param-name>overwrite-uploads</param-name>
+      <param-value>allow</param-value>
+    </init-param>
+  </xsl:template>
+  
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
 
 
 </xsl:stylesheet> 
