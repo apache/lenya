@@ -13,6 +13,7 @@
     <tasks>
       <task id="publish"/>
     </tasks>
+    <workflow src="workflow.xml"/>
   </doc>
 
   <doc type="xhtml">
