@@ -17,12 +17,16 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.1 2004/03/13 09:59:45 roku Exp $
+   $Id: cmsui.xml,v 1.2 2004/03/13 12:24:30 roku Exp $
    
 -->
 
 <catalogue xml:lang="en">
  
-  <message key="default.doc.create.idtaken">The ID you've entered is already taken. Please choose another one.</message>
+  <message key="default.createdoc.idtaken">The ID you've entered is already taken. Please choose another one.</message>
  
+  <message key="Create new language version">Create new language version</message>
+  <message key="New language for existing Document">New language for existing Document</message>
+  <message key="default.createdoc.info.all-language-versions-exists">There are already versions of this document for all languages.</message>
+
 </catalogue>

@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.1 2004/03/13 09:59:45 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.2 2004/03/13 12:24:30 roku Exp $ 
    
 -->
 
@@ -25,5 +25,9 @@
 
   <message key="default.doc.create.idtaken">Die eingebene ID ist schon vergeben. Bitte w&#228;hlen Sie eine andere ID.</message>
 
+  <message key="Create new language version">Neue Sprachversion anlegen</message>
+  <message key="New language for existing Document">Neue Sprachversion f&#252;r existierendes Dokument anlegen</message>
+  <message key="default.createdoc.info.all-language-versions-exists">Das Dokument existiert bereits in allen notwendigen Sprachen.</message>
+  
 </catalogue>
 

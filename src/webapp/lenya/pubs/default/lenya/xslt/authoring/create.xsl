@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: create.xsl,v 1.12 2004/03/13 11:54:20 roku Exp $ -->
+<!-- $Id: create.xsl,v 1.13 2004/03/13 12:24:30 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -86,7 +86,7 @@ function validateForm(theForm)
           <table class="lenya-table-noborder">
             <xsl:if test="$status != ''">
               <tr>
-                <td class="lenya-form-message-error" colspan="2"><i18n:text key="default.doc.create.idtaken"/></td>
+                <td class="lenya-form-message-error" colspan="2"><i18n:text key="default.createdoce.idtaken"/></td>
               </tr>
             </xsl:if>
             <tr>
