@@ -135,7 +135,7 @@
 		<tr>
 			<td class="lenya-entry-caption">Password</td>
 			<td>
-				<input type="password" class="lenya-form-element" name="password" value="{normalize-space(.)}"/>
+				<input type="password" class="lenya-form-element" name="new-password" value="{normalize-space(.)}"/>
 			</td>
 		</tr>
 	</xsl:template>  

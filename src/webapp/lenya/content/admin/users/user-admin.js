@@ -291,7 +291,7 @@ function add_user(ldap) {
 			fullName = cocoon.request.get("fullname");
 			description = cocoon.request.get("description");
 			ldapId = cocoon.request.get("ldapid");
-			password = cocoon.request.get("password");
+			password = cocoon.request.get("new-password");
 			confirmPassword = cocoon.request.get("confirm-password");
 			
 			messages = validate(userManager, ldap, userId, email, password, confirmPassword);
