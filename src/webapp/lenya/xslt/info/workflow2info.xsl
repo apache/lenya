@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: workflow2info.xsl,v 1.1 2003/08/15 08:30:56 andreas Exp $
+ $Id: workflow2info.xsl,v 1.2 2003/08/15 13:14:30 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -24,8 +24,11 @@
 			<h2>History</h2>
 			<table class="lenya-table">
 				<tr>
+					<th>Date</th>
 					<th>Event</th>
 					<th>State</th>
+					<th>User</th>
+					<th>IP Address</th>
 				</tr>
 				<xsl:apply-templates select="wf:version"/>
 			</table>
@@ -35,11 +38,19 @@
 
 <xsl:template match="wf:version">
 	<tr>
+		<td><xsl:value-of select="@date"/></td>
+		<td><xsl:value-of select="@event"/></td>
+		<td><xsl:value-of select="@state"/></td>
 		<td>
-			<xsl:value-of select="@event"/>
+			<span style="white-space: nobreak">
+			<xsl:value-of select="wf:identity/wf:user/@id"/>
+			<xsl:if test="wf:identity/wf:user/@name != ''">
+				(<xsl:value-of select="wf:identity/wf:user/@name"/>)
+			</xsl:if>
+			</span>
 		</td>
 		<td>
-			<xsl:value-of select="@state"/>
+			<xsl:value-of select="wf:identity/wf:machine/@ip-address"/>
 		</td>
 	</tr>
 </xsl:template>
