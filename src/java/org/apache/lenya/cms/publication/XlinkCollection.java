@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection. In the collection are xlink inserted.
  * @author <a href="mailto:edith@apache.org">Edith Chevrier </a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
- * @version $Id: XlinkCollection.java,v 1.7 2004/07/10 23:13:35 andreas Exp $
+ * @version $Id$
  */
 public class XlinkCollection extends CollectionImpl {
 
@@ -100,15 +100,14 @@ public class XlinkCollection extends CollectionImpl {
      */
     protected NamespaceHelper getNamespaceHelper() throws DocumentException,
             ParserConfigurationException, SAXException, IOException {
+
         NamespaceHelper helper = super.getNamespaceHelper();
-        if (!exists()) {
-            Element collectionElement = helper.getDocument().getDocumentElement();
-            String namespaceDeclaration = collectionElement.getAttributeNS(
+        Element collectionElement = helper.getDocument().getDocumentElement();
+        String namespaceDeclaration = collectionElement.getAttributeNS(
                     "http://www.w3.org/2000/xmlns/", "xlink");
-            if (namespaceDeclaration == null || !namespaceDeclaration.equals(XLink.XLINK_NAMESPACE)) {
-                collectionElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink",
-                        XLink.XLINK_NAMESPACE);
-            }
+        if (namespaceDeclaration == null || !namespaceDeclaration.equals(XLink.XLINK_NAMESPACE)) {
+            collectionElement.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink",
+                    XLink.XLINK_NAMESPACE);
         }
         return helper;
     }
