@@ -1,5 +1,5 @@
 /*
-$Id: NamespaceMap.java,v 1.5 2003/07/23 13:21:14 gregor Exp $
+$Id: NamespaceMap.java,v 1.6 2003/08/25 09:55:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -179,4 +179,24 @@ public class NamespaceMap {
     public static String getShortName(String prefix, String key) {
         return key.substring(prefix.length() + SEPARATOR.length());
     }
+    
+    /**
+     * Puts all key-value-pairs of map into this map.
+     * @param map A map.
+     */
+    public void putAll(Map map) {
+        for (Iterator i = map.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            put(key, (String) map.get(key));
+        }
+    }
+    
+    /**
+     * Returns a map with prefixed keys.
+     * @return A map.
+     */
+    public Map getPrefixedMap() {
+        return new HashMap(getMapObject());
+    }
+    
 }
