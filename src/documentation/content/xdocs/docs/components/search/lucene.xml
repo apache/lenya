@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lucene.xml,v 1.2 2004/07/12 02:57:31 michi Exp $ -->
+<!-- $Id: lucene.xml,v 1.3 2004/07/27 03:08:08 michi Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -52,6 +52,7 @@ src/webapp/lenya/pubs/$PUB_ID/work/search/htdocs_dump/$AREA
 <source>
 <![CDATA[
 src/webapp/global-sitemap.xmap
+src/webapp/lenya/lucene.xmap
 ]]>
 </source>
 </section>
