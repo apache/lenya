@@ -21,8 +21,8 @@ be used to configure the chosen Forrest skin.
 -->
 
  <!DOCTYPE skinconfig PUBLIC
-        "-//APACHE//DTD Skin Configuration V0.6-2//EN"
-        "skinconfig-v06-2.dtd">
+        "-//APACHE//DTD Skin Configuration V0.6-3//EN"
+        "skinconfig-v06-3.dtd">
 <!-- FIXME: Do not use the forrest.apache.org systemId until either we do
   not use document() anymore or Xalan Issue 28341 is fixed. -->
 
@@ -122,7 +122,7 @@ be used to configure the chosen Forrest skin.
   <!-- Heading types can be clean|underlined|boxed  -->
   <headings type="underlined"/>
 
-    <feedback to="lenya-user@cocoon.apache.org"
+  <feedback to="lenya-user@cocoon.apache.org"
     href="mailto:lenya-user@cocoon.apache.org?subject=Feedback &#160;" >
     Send feedback about the website to:
   </feedback>
