@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.32 2003/09/02 13:19:23 andreas Exp $
+ $Id: info.xsl,v 1.33 2003/09/02 20:23:27 felix Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -117,7 +117,7 @@
    <tr><td>Workflow State:</td><td><xsl:value-of select="lenya-info:workflow-state"/></td></tr>
    <tr><td>Current Language:</td><td><xsl:value-of select="dc:language"/></td></tr>
    <tr><td>Available Languages:</td><td><xsl:value-of select="lenya-info:languages"/></td></tr>
-   <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr>
+   <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
    <tr><td>Last modified:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
    <tr><td>Document ID:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
    </table>

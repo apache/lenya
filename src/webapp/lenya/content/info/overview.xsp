@@ -55,7 +55,7 @@
       <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
       
       <lenya-info:languages><xsp:expr>documentLanguagesString</xsp:expr></lenya-info:languages>       
-      <lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
+      <!-- <lenya-info:lastmodifiedby></lenya-info:lastmodifiedby> -->
       <lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
       <lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
       <lenya-info:area></lenya-info:area>
