@@ -3,12 +3,11 @@
 DIRNAME=`dirname $0`
 echo "INFO: dirname = $DIRNAME"
 
-HOME=/home/username
 WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
-PDFBOX=/home/username/src/PDFBox-0.5.5
-XPDF=/home/username/bin/xpdf-2.01-linux/pdftotext
+PDFBOX=$HOME/src/PDFBox-0.5.5
+XPDF=$HOME/bin/xpdf-2.01-linux/pdftotext
 
 CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.5.0.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar
 

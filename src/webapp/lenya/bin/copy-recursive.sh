@@ -5,15 +5,15 @@
 # DEFAULT CONFIGURATION
 #########################################################
 
-SOURCE_DIRECTORY=/home/username/tmp
+SOURCE_DIRECTORY=$HOME/tmp
 
-DESTINATION_DIRECTORY=/home/username/backup
+DESTINATION_DIRECTORY=$HOME/backup
 
 BATCH_FILE_DIR=`pwd`
 PUT_BATCH_FILE=$BATCH_FILE_DIR/sftp-put-batch.txt
 MKDIR_BATCH_FILE=$BATCH_FILE_DIR/sftp-mkdir-batch.txt
 
-USERNAME=username
+USERNAME=$USER
 
 HOSTNAME=127.0.0.1
 
