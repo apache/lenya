@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import org.apache.avalon.framework.service.ServiceException;
+
 /**
  * Operation interface.
  * 
@@ -31,7 +33,8 @@ public interface Operation {
     /**
      * Returns the unit of work object.
      * @return A unit of work.
+     * @throws a service exception if the unit-of-work component could not be retrieved by the service manager
      */
-    UnitOfWork getUnitOfWork();
+    UnitOfWork getUnitOfWork() throws ServiceException;
     
 }

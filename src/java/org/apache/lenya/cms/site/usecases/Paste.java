@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -54,6 +55,8 @@ public class Paste extends DocumentUsecase {
             String id;
             try {
                 id = clipboard.getDocument(getUnitOfWork().getIdentityMap()).getId();
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
             } catch (DocumentBuildException e) {
                 throw new RuntimeException(e);
             }

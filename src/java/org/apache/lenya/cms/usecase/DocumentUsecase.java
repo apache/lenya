@@ -17,6 +17,7 @@
 
 package org.apache.lenya.cms.usecase;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -145,6 +146,8 @@ public class DocumentUsecase extends AbstractUsecase {
         try {
             this.targetDocument = getUnitOfWork().getIdentityMap().getFactory()
                     .getFromURL(getSourceDocument().getPublication(), url);
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }

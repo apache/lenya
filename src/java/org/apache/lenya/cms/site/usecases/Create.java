@@ -157,8 +157,8 @@ public abstract class Create extends AbstractUsecase {
     protected Document getSourceDocument() {
         Document document = null;
         String url = getSourceURL();
-        DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
         try {
+            DocumentFactory factory = getUnitOfWork().getIdentityMap().getFactory();
             if (factory.isDocument(getPublication(), url)) {
                 document = factory.getFromURL(getPublication(), url);
             }
