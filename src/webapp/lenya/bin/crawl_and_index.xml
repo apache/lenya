@@ -14,30 +14,28 @@
 <target name="init">
   <echo message="INFO: Init"/>
 
+  <property name="lenya.dir" value="../../../.."/>
 <!--
+  <property name="lenya.dir" value="/home/michi/src/lenya-0.8-dev-src-20030325022718"/>
+-->
+
+
+  <!-- Dummy arguments -->
   <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/content/crawler.xconf"/>
--->
-  <property name="crawler.xconf" value="/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/oscom/content/crawler.xconf"/>
-<!--
   <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/content/lucene.xconf"/>
--->
-  <property name="lucene.xconf" value="/home/michiii/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/oscom/content/lucene.xconf"/>
+  <!-- /Dummy arguments -->
 
-
-  <property name="lenya.src.dir" value="/home/michiii/src/lenya"/>
+  <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
 
   <path id="class.path">
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/classes"/>
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/xercesImpl-2.1.0.jar"/>
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/xml-apis.jar"/>
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/xalan-2.4.1.jar"/>
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/log4j-1.2.3.jar"/>
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/excalibur-io-1.1.jar"/>
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/lucene-1.3-dev1.jar"/>
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/websphinx.jar"/>
-<!--
-    <pathelement path="../../../../build/lenya/webapp/WEB-INF/lib/avalon-framework-4.1.3.jar"/>
--->
+    <pathelement path="${lenya.dir.web-inf}/classes"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xercesImpl-2.1.0.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xml-apis.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/xalan-2.4.1.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/log4j-1.2.3.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/excalibur-io-1.1.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/lucene-1.3-dev1.jar"/>
+    <pathelement path="${lenya.dir.web-inf}/lib/websphinx.jar"/>
   </path>
 </target>
 
@@ -68,6 +66,13 @@
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
+
+<!--
+  <java classname="org.lenya.lucene.index.Index">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+-->
 
   <java classname="org.lenya.lucene.IndexHTML">
     <arg value="${lucene.xconf}"/>
