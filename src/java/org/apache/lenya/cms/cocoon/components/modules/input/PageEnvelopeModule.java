@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.30 2003/09/26 10:16:39 andreas Exp $
+$Id: PageEnvelopeModule.java,v 1.31 2003/10/10 15:41:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 
-import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer;
@@ -84,7 +83,7 @@ import java.util.Map;
  * 
  * @author  andreas
  */
-public class PageEnvelopeModule extends AbstractInputModule implements Serviceable {
+public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
 
     private ServiceManager manager;
 
