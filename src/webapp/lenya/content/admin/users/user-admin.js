@@ -65,7 +65,7 @@ function userChangeProfile(userId) {
 		    }
 	
 	    }
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally  {
 	   	release();
@@ -151,7 +151,7 @@ function userChangePassword(checkPassword) {
 	
 	    }
 	    
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
    		release();
@@ -228,7 +228,7 @@ function userChangeGroups() {
 			    ready = true;
 			}
 		}
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
    		release();
@@ -366,7 +366,7 @@ function addUser(ldap) {
 		    	ready = true;
 		    }
 		}
-	   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+	   	cocoon.redirectTo(redirectUri);
    	}
    	finally {
    		release();
@@ -418,5 +418,5 @@ function userDeleteUser() {
    		release();
    	}
 	
-   	cocoon.sendPage("redirect.html", { "url" : redirectUri });
+   	cocoon.redirectTo(redirectUri);
 }

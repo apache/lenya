@@ -25,11 +25,6 @@
   <map:pipelines>
     
     <map:pipeline type="noncaching">
-      <map:match pattern="redirect.xml">
-        <map:generate src="../../content/admin/common/redirect.xsp" type="serverpages"/>
-        <map:transform src="../../xslt/admin/common/redirect.xsl"/>
-        <map:serialize/>
-      </map:match>
       
       <map:match pattern="form.xml">
         <map:generate type="serverpages" src="lenya/content/authoring/upload.xsp"/>

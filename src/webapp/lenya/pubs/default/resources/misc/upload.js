@@ -23,5 +23,5 @@ function uploadDocument() {
         }
     }
     
-    cocoon.sendPage("redirect.xml", { "url" : redirectUri });
+    cocoon.redirectTo(redirectUri);
 }
