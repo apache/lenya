@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.32 2003/05/16 09:23:36 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.33 2003/05/16 15:36:10 andreas Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -8,14 +8,7 @@
     <map:generators default="file" />
     <map:matchers default="wildcard"/>
     <map:actions />
-    <map:selectors>
-      <map:selector name="exception" logger="sitemap.selector.exception"
-	src="org.apache.cocoon.selection.ExceptionSelector">
-	<exception name="execution" class="org.apache.lenya.cms.task.ExecutionException" />
-	<exception name="publishing" class="org.apache.lenya.cms.publishing.PublishingException"/>
-	<exception name="sitetree" class="org.apache.lenya.cms.publication.SiteTreeException"/>
-      </map:selector>
-    </map:selectors>
+    <map:selectors/>
   </map:components>
 
   <map:views>
@@ -27,35 +20,6 @@
   <map:resources/>
 
   <map:pipelines>
-    <!-- Publisher  -->
-    <map:pipeline>
-      <map:match type="usecase" pattern="publish">
-        <map:match type="step" pattern="showscreen">
-          <map:generate type="serverpages" src="../../content/publishing/publish-screen.xsp"/>
-          <map:transform src="../../xslt/publishing/screen.xsl">
-            <map:parameter name="use-request-parameters" value="true"/>
-          </map:transform>
-          <map:serialize type="html"/>
-        </map:match>
-        <map:match type="step" pattern="publish">
-	  <map:act type="task">
-	    <map:parameter name="task-id" value="{request-param:task-id}"/>
-	    <map:redirect-to uri="{request:requestURI}" session="true"/>
-	  </map:act>
-        </map:match>
-      </map:match>
-<!--
-        <map:handle-errors>
-          <map:select type="exception">  
-            <map:when test="publishing">
-              <map:generate src= "sitetreeException.xml"/> 
-            </map:when>  
-          </map:select>  
-          <map:serialize/>
-        </map:handle-errors>
--->
-    </map:pipeline>
-    <!-- /Publisher  -->
 
     <map:pipeline>
       <map:match pattern="**/">

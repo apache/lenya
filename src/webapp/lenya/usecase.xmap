@@ -11,7 +11,14 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions/>
-    <map:selectors/>
+    <map:selectors>
+      <map:selector name="exception" logger="sitemap.selector.exception"
+	src="org.apache.cocoon.selection.ExceptionSelector">
+	<exception name="execution" class="org.apache.lenya.cms.task.ExecutionException" />
+	<exception name="publishing" class="org.apache.lenya.cms.publishing.PublishingException"/>
+	<exception name="sitetree" class="org.apache.lenya.cms.publication.SiteTreeException"/>
+      </map:selector>
+    </map:selectors>
   </map:components>
   
   <map:views>
@@ -107,7 +114,7 @@
           </map:transform>
           <map:serialize type="html"/>
 
-      </map:match>
+      </map:match> <!-- usecase -->
       
       <!-- Schedule Publication -->
       <map:match type="usecase" pattern="schedule-publication">
@@ -118,8 +125,8 @@
           </map:call>
           <map:transform src="xslt/scheduler/admin-publication.xsl"/>
           <map:serialize type="html"/>
-        </map:match>
-      </map:match>
+        </map:match> <!-- step -->
+      </map:match> <!-- usecase -->
       
       <!--
       View Logs
@@ -133,7 +140,7 @@
             <map:parameter name="context-prefix" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize/>
-        </map:match>
+        </map:match> <!-- step -->
       
         <map:match type="step" pattern="log">
           <map:act type="request">
@@ -146,9 +153,18 @@
             <map:parameter name="context-prefix" value="{request:contextPath}"/>
           </map:transform>
         <map:serialize/>
-        </map:match>
+        </map:match> <!-- step -->
       
-      </map:match>
+      </map:match> <!-- usecase -->
+      
+    </map:match> <!-- uri -->
+    
+    </map:pipeline>
+      
+    <map:pipeline>
+    
+    <!-- {publication-id}/{area}/{uri}-->
+    <map:match pattern="*/*/**">
       
       <!--
       Publish
@@ -185,6 +201,15 @@
         
       </map:match>
       
+      <map:handle-errors>
+        <map:select type="exception">  
+          <map:when test="publishing">
+            <map:generate src= "sitetreeException.xml"/> 
+          </map:when>  
+        </map:select>  
+        <map:serialize/>
+      </map:handle-errors>
+        
     </map:pipeline>
     
   </map:pipelines>
