@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexIterator.java,v 1.13 2004/07/29 05:49:06 michi Exp $  */
+/* $Id: IndexIterator.java,v 1.14 2004/07/31 05:32:02 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -238,9 +238,9 @@ public class IndexIterator {
             //id = id.replace(File.separatorChar, '\u0000'));
             return id;
         } else {
-            log.warn("Length of dumping directory is less than length of file name!");
+            log.warn("Length of dumping directory is less than length of file name! Absolute path is being returned as id.");
+            return file.getAbsolutePath();
         }
-        return null;
     }
 
     /**
