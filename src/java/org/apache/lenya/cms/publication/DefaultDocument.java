@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.20 2003/07/31 11:56:42 andreas Exp $
+$Id: DefaultDocument.java,v 1.21 2003/08/08 08:35:58 gregor Exp $
 <License>
 
  ============================================================================
@@ -105,9 +105,11 @@ public class DefaultDocument implements Document {
 
         assert (publication != null) && !"".equals(publication);
         this.publication = publication;
+
+		setArea(area);
+
 		this.dublincore =  new DublinCore(this);
 
-        setArea(area);
     }
 
 	/**
@@ -124,9 +126,10 @@ public class DefaultDocument implements Document {
 		assert (publication != null) && !"".equals(publication);
 		this.publication = publication;
 		this.language = language;
+		setArea(area);
+
 		this.dublincore =  new DublinCore(this);
 
-		setArea(area);
 	}
 
     /**
