@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.admin;
 
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -49,9 +48,10 @@ public class AccessControlUsecase extends AbstractUsecase {
     private AccessController accessController;
 
     /**
+     * FIXME: This method resolves the AccessController, it has to be released after it is used!
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
      */
-    protected void doInitialize() throws Exception {
+    protected void doInitialize() {
         super.doInitialize();
         
         accessController = null;
@@ -75,7 +75,7 @@ public class AccessControlUsecase extends AbstractUsecase {
             this.ipRangeManager = accreditableManager.getIPRangeManager();
 
         } catch (Exception e) {
-            throw new ConfigurationException("Initialization failed: ", e);
+            throw new RuntimeException("Initialization failed: ", e);
         } finally {
             if (selector != null) {
                 if (resolver != null) {
