@@ -1,5 +1,5 @@
 /*
-$Id: DocumentOperationTask.java,v 1.1 2003/09/01 12:47:59 edith Exp $
+$Id: DocumentOperationTask.java,v 1.2 2003/09/09 10:26:44 edith Exp $
 <License>
 
  ============================================================================
@@ -72,8 +72,6 @@ public abstract class DocumentOperationTask extends PublicationTask implements S
 
 		private String firstarea;
 		private String firstdocumentid;
-		private String secarea;
-		private String secdocumentid;
 
 	/**
 	 * 
@@ -98,20 +96,6 @@ public abstract class DocumentOperationTask extends PublicationTask implements S
 	}
 
 	/**
-	 * @return String The area of the destination.
-	 */
-	public String getSecarea() {
-		return secarea;
-	}
-
-	/**
-	 * @return String The document-id corresponding to the destination.
-	 */
-	public String getSecdocumentid() {
-		return secdocumentid;
-	}
-
-	/**
 	 * @param string The area of the source.
 	 */
 	public void setFirstarea(String string) {
@@ -123,20 +107,6 @@ public abstract class DocumentOperationTask extends PublicationTask implements S
 	 */
 	public void setFirstdocumentid(String string) {
 		firstdocumentid = string;
-	}
-
-	/**
-	 * @param string The area of the destination.
-	 */
-	public void setSecarea(String string) {
-		secarea = string;
-	}
-
-	/**
-	 * @param string The document-id corresponding to the destination.
-	 */
-	public void setSecdocumentid(String string) {
-		secdocumentid = string;
 	}
 
 	/**
@@ -152,8 +122,6 @@ public abstract class DocumentOperationTask extends PublicationTask implements S
 		try {
 			log("document-id for the source" + this.getFirstdocumentid());
 			log("area for the source" + this.getFirstarea());
-			log("document-id for the destination" + this.getSecdocumentid());
-			log("area for the destination" + this.getSecarea());
 
 			Publication publication= getPublication();
 			SiteTree tree = publication.getSiteTree(getFirstarea());

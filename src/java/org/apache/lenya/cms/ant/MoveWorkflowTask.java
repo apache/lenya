@@ -1,5 +1,5 @@
 /*
-$Id: MoveWorkflowTask.java,v 1.1 2003/09/01 12:47:59 edith Exp $
+$Id: MoveWorkflowTask.java,v 1.2 2003/09/09 10:26:44 edith Exp $
 <License>
 
  ============================================================================
@@ -72,7 +72,7 @@ import org.apache.tools.ant.BuildException;
  * @author edith
  *
  */
-public class MoveWorkflowTask extends DocumentOperationTask {
+public class MoveWorkflowTask extends TwoDocumentsOperationTask {
 
 	/**
 	 * 
@@ -88,38 +88,42 @@ public class MoveWorkflowTask extends DocumentOperationTask {
 		Publication publication= getPublication();
 		DefaultDocumentBuilder builder = DefaultDocumentBuilder.getInstance();
 
-		String parentid = node.getAbsoluteParentId();
-		String srcDocumentid = parentid + "/" +node.getId();
-		String destDocumentid = srcDocumentid.replaceFirst(getFirstdocumentid(),getSecdocumentid());
-
-
 		Label[] labels = node.getLabels(); 
 		for (int i=0 ; i<labels.length; i ++){
 			String language = labels[i].getLanguage();
+
+			String parentid = node.getAbsoluteParentId();
+			String srcDocumentid = parentid + "/" +node.getId();
+			String destDocumentid = srcDocumentid.replaceFirst(this.getFirstdocumentid(),this.getSecdocumentid());
+
 			String srcUrl = builder.buildCanonicalUrl(publication, getFirstarea(), srcDocumentid, language);
 			String destUrl = builder.buildCanonicalUrl(publication, getSecarea(), destDocumentid, language);
 
-			//move workflow
+			log("url for the source : "+srcUrl);
+			log("url for the destination : "+destUrl);
+
 			Document srcDoc;
 			Document destDoc;
+			WorkflowFactory factory = WorkflowFactory.newInstance();
+			
+			log("init workflow history");
 			try {
-				srcDoc = builder.buildDocument(publication, srcUrl);
-				destDoc = builder.buildDocument(publication, destUrl);
+				srcDoc = DefaultDocumentBuilder.getInstance().buildDocument(publication, srcUrl);
+				destDoc = DefaultDocumentBuilder.getInstance().buildDocument(publication, destUrl);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}
 
-			WorkflowFactory factory = WorkflowFactory.newInstance();
-			
-			log("move workflow history");
+			log("move workflow history of "+srcDoc.getFile().getAbsolutePath()+" to " + destDoc.getFile().getAbsolutePath());
 			try {
 				if (factory.hasWorkflow(srcDoc)) {
+					log("has workflow");
 					WorkflowFactory.moveHistory(srcDoc, destDoc);
+					log("workflow moved");
 				}
 			} catch (WorkflowException e) {
 				throw new BuildException(e);
 			}
-			
 		}
 	}
 
