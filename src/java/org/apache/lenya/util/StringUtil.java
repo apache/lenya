@@ -58,12 +58,13 @@ package org.apache.lenya.util;
  * String utilities
  *
  * @author Michael Wechner
- * @version $Id: StringUtil.java,v 1.13 2004/02/16 15:15:54 michi Exp $
+ * @version $Id: StringUtil.java,v 1.14 2004/02/25 16:35:22 michi Exp $
  */
 public class StringUtil {
 
     /**
      * Reverse string
+     * TODO: Can be replaced by org.apache.commons.lang.StringUtils.reverse(String)
      */
     public static String reverse(String s) {
         StringBuffer sb = new StringBuffer();
