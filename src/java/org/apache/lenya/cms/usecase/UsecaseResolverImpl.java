@@ -27,7 +27,7 @@ import org.apache.avalon.framework.service.Serviceable;
 /**
  * Usecase resolver implementation.
  *
- * @version $Id:$ 
+ * @version $Id$ 
  */
 public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseResolver,
         Serviceable, Disposable {

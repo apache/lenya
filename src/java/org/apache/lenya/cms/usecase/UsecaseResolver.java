@@ -21,7 +21,7 @@ import org.apache.avalon.framework.service.ServiceException;
 /**
  * Usecase resolver interface.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface UsecaseResolver {
 

@@ -19,7 +19,7 @@ package org.apache.lenya.cms.usecase;
 /**
  * Usecase exception.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseException extends Exception {
 

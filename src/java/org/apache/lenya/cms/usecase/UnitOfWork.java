@@ -21,7 +21,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 /**
  * This is a "Unit of Work" object (see "Unit of Work" pattern by Martin Fowler).
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface UnitOfWork {
     

@@ -24,7 +24,7 @@ import org.apache.lenya.workflow.Situation;
 /**
  * Usecase interface.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface Usecase {
 

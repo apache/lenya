@@ -26,7 +26,7 @@ import org.apache.avalon.framework.service.Serviceable;
 /**
  * Abstract operation implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class AbstractOperation extends AbstractLogEnabled implements Operation, Serviceable,
         Initializable, Disposable {

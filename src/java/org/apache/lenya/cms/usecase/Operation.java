@@ -19,7 +19,7 @@ package org.apache.lenya.cms.usecase;
 /**
  * Operation interface.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface Operation {
 

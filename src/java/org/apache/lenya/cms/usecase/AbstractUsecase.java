@@ -37,7 +37,7 @@ import org.apache.lenya.workflow.WorkflowException;
 /**
  * Abstract usecase implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class AbstractUsecase extends AbstractOperation implements Usecase, Contextualizable {
 
