@@ -196,27 +196,32 @@
   	
   <!-- match items with not area='false' -->
   <xsl:template match="menu:item" mode="menu">
-		<xsl:choose>
-			<xsl:when test="@href">
-			  <xul:menuitem label="{.}">
-					<xsl:attribute name="value">
-						<xsl:value-of select="@href"/>
-						<xsl:apply-templates select="@*[local-name() != 'href']"/>
-						<xsl:text/>
+    <xsl:choose>
+      <xsl:when test="@href">
+        <xul:menuitem label="{.}">
+
+	<!-- For whatever reason the value, event, loadURL mechanism doesn't work anymore -->
+	<!--
+        <xsl:attribute name="value">
+	-->
+          <xsl:attribute name="oncommand">
+	    window.location = '<xsl:value-of select="@href"/>
+            <xsl:apply-templates select="@*[local-name() != 'href']"/>
+            <xsl:text/>
 						<xsl:if test="starts-with($completearea, 'info-')">
 							<xsl:choose>
 								<xsl:when test="contains(@href, '?')"><xsl:text>&amp;</xsl:text></xsl:when>
 								<xsl:otherwise><xsl:text>?</xsl:text></xsl:otherwise>
 							</xsl:choose>
 							 <xsl:text>lenya.area=info</xsl:text>
-						</xsl:if>
-					</xsl:attribute>
-		      </xul:menuitem>
-			</xsl:when>
-			<xsl:otherwise>
-			    <xul:menuitem label="{.}" disabled="true"/>
-			</xsl:otherwise>
-		</xsl:choose>
+						</xsl:if>'
+          </xsl:attribute>
+        </xul:menuitem>
+      </xsl:when>
+      <xsl:otherwise>
+        <xul:menuitem label="{.}" disabled="true"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   

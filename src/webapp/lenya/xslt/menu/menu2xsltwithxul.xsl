@@ -18,9 +18,9 @@
 <!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
   >
   
 <xsl:param name="contextprefix"/>
@@ -36,7 +36,12 @@
   
   <xso:stylesheet version="1.0"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    >
+    <!--
+    exclude-result-prefixes="xhtml">
+    -->
     <!--
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"-->
 <!--    exclude-result-prefixes="xhtml"-->
@@ -56,7 +61,7 @@
       <xso:apply-templates select="xhtml:html/xhtml:head/xhtml:link"/>
       
       <xul:window
-          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:xhtml="http://www.w3.org/1999/xhtml"
           xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
           
           
@@ -73,10 +78,9 @@
           <xul:spacer flex="1" />
           <xul:box style="overflow: auto;" flex="100" id="lenya-content-box">
               <xul:vbox flex="1">
-                  <html>
-                  <body>
-                  	<xso:apply-templates select="xhtml:html/xhtml:body/node()"/>
-                  </body></html>
+                  <xhtml:html>
+                    <xso:apply-templates select="xhtml:html/xhtml:body"/>
+		  </xhtml:html>
               </xul:vbox>
           </xul:box>
       </xul:window>
