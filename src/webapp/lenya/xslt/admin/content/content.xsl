@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: content.xsl,v 1.4 2004/02/16 18:28:58 roku Exp $
+ $Id: content.xsl,v 1.5 2004/02/16 18:49:30 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -33,18 +33,15 @@
 
   <xsl:template match="info">
     <div class="lenya-box">
-      <div class="lenya-box-title"><i18n:text>Delete the Trash</i18n:text></div>
+      <div class="lenya-box-title"><i18n:text>Do you really want to delete the trash ?</i18n:text></div>
       <div class="lenya-box-body">
         <form method="get" action="index.html">
           <input type="hidden" name="lenya.usecase" value="deleteTrash"/>
           <input type="hidden" name="lenya.step" value="deleteTrash"/>
-          <input type="hidden" name="task-id" value="{$task-id}"/>
-          <p>
- 	        <i18n:text>Do you really want to delete the trash ?</i18n:text>
-          </p>
-          <input i18n:attr="value" type="submit" value="Delete trash"/>
+          <input type="hidden" name="task-id" value="{$task-id}"/>          
+          <input i18n:attr="value" type="submit" value="Yes"/>
           &#160;
-          <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}/../';" value="Cancel"/>
+          <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}/../';" value="No"/>
         </form>
       </div>
     </div>

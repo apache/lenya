@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.19 2004/02/16 18:28:58 roku Exp $
+   $Id: cmsui_de.xml,v 1.20 2004/02/16 18:49:30 roku Exp $
 
    Copyright 2004 Rolf Kulemann (roku at apache.org)
 
@@ -35,7 +35,9 @@
   <message key="review">Freigabe</message>
   <message key="user">Benutzer</message>
   <message key="group">Gruppe</message>
-
+  <message key="Yes">Ja</message>
+  <message key="No">Nein</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
@@ -101,13 +103,12 @@
   <!-- administration tab -->
   <message key="Administration">Administration</message>
   <message key="really-delete?">{0} wirklich l&#246;schen ?</message>
-  <message key="Delete Trash">Papierkorb leeren</message>
-  <message key="Delete the Trash">Papierkorb leeren</message>
   <message key="Do you really want to delete the trash ?">Wollen Sie den Papierkorb wirklich leeren ?</message>
   <message key="delete-object">{0} l&#246;schen</message>
   <message key="delete-object?">Wollen Sie {0} wirklich l&#246;schen ?</message>  
   <message key="Passwd">Passwort &#228;ndern</message>
-  <message key="Change User">Benutzer wechseln</message>
-  
+  <message key="Switch User">Benutzer wechseln</message>
+  <message key="Delete Trash">Papierkorb leeren</message>
+
 </catalogue>
 
