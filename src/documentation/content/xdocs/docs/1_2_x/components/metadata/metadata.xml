@@ -89,7 +89,7 @@
 	warning saying that the checkout or checkin failed and who was
 	locking the document since what date and time.</p>
 
-	<p>Once the document is checked out the madifications are
+	<p>Once the document is checked out the modifications are
 	applied with the help of an ant task. There is a target named
 	<code>save-meta-data</code> which simply invokes the ant task
 	<code>WriteDCParametersTask</code>.  This task saves the meta
