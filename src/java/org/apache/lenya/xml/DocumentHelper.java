@@ -1,5 +1,5 @@
 /*
- * $Id: DocumentHelper.java,v 1.2 2003/02/07 16:38:28 ah Exp $
+ * $Id: DocumentHelper.java,v 1.3 2003/02/07 17:16:02 michicms Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,7 +45,7 @@ package org.wyona.xml;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
+import java.net.URL;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 
@@ -87,7 +87,7 @@ public class DocumentHelper {
      * Creates a document. A xmlns:prefix="namespaceUri" attribute is added to
      * the document element.
      *
-     * @param namespaceUri The namespace URI of the root element.
+     * @param namespaceUri The namespace URL of the root element.
      * @param qualifiedName The qualified name of the root element.
      * @param documentType The type of document to be created or null. When doctype is not null,
      *        its Node.ownerDocument attribute is set to the document being created.
@@ -130,17 +130,17 @@ public class DocumentHelper {
     }
     
     /**
-     * Reads a document from a URI.
+     * Reads a document from a URL.
      * @return A document.
-     * @param uri The URI to load the document from.
+     * @param url The URL to load the document from.
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
      */
-    public static Document readDocument(URI uri)
+    public static Document readDocument(URL url)
             throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder builder = createBuilder();
-        return builder.parse(uri.toString());
+        return builder.parse(url.toString());
     }
     
     /** Writes a document to a file. A new file is created if it does not exist.
