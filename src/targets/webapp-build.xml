@@ -156,12 +156,15 @@
       </fileset>
     </copy>
 
-    <!-- now copy legal dir (licenses) -->
-    <echo>INFO: Copy Licenses</echo>
-    <mkdir dir="${build.webapp}/legal"/>
-    <copy todir="${build.webapp}/legal">
-      <fileset dir="legal"/>
-    </copy>
+    <condition property="servlet.engine.tomcat">
+      <equals arg1="${web.app.server}" arg2="Tomcat"/>
+    </condition>
+    <antcall target="successfully-built-message-tomcat"/>
+
+    <condition property="servlet.engine.jetty">
+      <equals arg1="${web.app.server}" arg2="Jetty"/>
+    </condition>
+    <antcall target="successfully-built-message-jetty"/>
 
   </target>
 
