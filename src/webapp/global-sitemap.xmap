@@ -662,9 +662,11 @@
 
 
       <!-- Editor Bitflux -->
+      <!--
       <map:match pattern="bitflux/**">
         <map:mount uri-prefix="bitflux" src="lenya/bitflux.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
+      -->
     </map:pipeline>
 
     <map:pipeline>
@@ -693,6 +695,7 @@
           <map:parameter name="completearea" value="{2}"/>
           <map:parameter name="documentarea" value="{page-envelope:area}"/>
           <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="userid" value="{access-control:user-id}"/>
           <map:parameter name="servertime" value="{date:currentDate}"/>
           <map:parameter name="workflowstate" value="{workflow:state}"/>
