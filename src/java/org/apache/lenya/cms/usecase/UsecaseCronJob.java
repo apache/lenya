@@ -101,25 +101,7 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
         Usecase usecase = null;
         try {
 
-            Environment env = CocoonComponentManager.getCurrentEnvironment();
-
-            Request request = ContextHelper.getRequest(this.context);
-            Map attributes = new HashMap();
-            for (Enumeration e = request.getAttributeNames(); e.hasMoreElements();) {
-                String key = (String) e.nextElement();
-                attributes.put(key, request.getAttribute(key));
-            }
-
-            Map requestParameters = new HashMap();
-            for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
-                String key = (String) e.nextElement();
-                requestParameters.put(key, request.getParameter(key));
-            }
-
-            Map objectModel = ContextHelper.getObjectModel(this.context);
-            objectModel.put(ObjectModelHelper.REQUEST_OBJECT, new CommandLineRequest(env, request
-                    .getContextPath(), request.getServletPath(), getSourceURL(), attributes,
-                    requestParameters));
+            setupOriginalRequest();
 
             authorizeRequest();
 
@@ -165,10 +147,35 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
     }
 
     /**
+     * Creates a new request object based on the information from the original request which
+     * triggered the usecase.
+     */
+    protected void setupOriginalRequest() {
+        Environment env = CocoonComponentManager.getCurrentEnvironment();
+
+        Request request = ContextHelper.getRequest(this.context);
+        Map attributes = new HashMap();
+        for (Enumeration e = request.getAttributeNames(); e.hasMoreElements();) {
+            String key = (String) e.nextElement();
+            attributes.put(key, request.getAttribute(key));
+        }
+
+        Map requestParameters = new HashMap();
+        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+            String key = (String) e.nextElement();
+            requestParameters.put(key, request.getParameter(key));
+        }
+
+        Map objectModel = ContextHelper.getObjectModel(this.context);
+        objectModel.put(ObjectModelHelper.REQUEST_OBJECT, new CommandLineRequest(env, request
+                .getContextPath(), request.getServletPath(), getSourceURL(), attributes,
+                requestParameters));
+    }
+
+    /**
      * Initializes the session with the access control information.
      * @throws AccessControlException if an error occurs.
-     * @throws ServiceException if the access controller resolver could not be
-     *             created.
+     * @throws ServiceException if the access controller resolver could not be created.
      */
     protected void authorizeRequest() throws AccessControlException, ServiceException {
 
