@@ -634,6 +634,13 @@
         <map:transform src="lenya/xslt/util/navigation2html.xsl"/>
         <map:serialize type="html" />
       </map:match>
+      
+      <map:match pattern="*/ant-log.html">
+        <map:generate src="lenya/pubs/{1}/content/ant-log.xml"/>
+        <map:transform src="lenya/xslt/util/log.xsl"/>
+        <map:serialize/>
+      </map:match>
+      
       <!-- Enter the actual publication -->
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
