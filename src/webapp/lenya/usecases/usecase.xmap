@@ -40,8 +40,18 @@
         <map:serialize/>
       </map:match>
       
-      <!-- view for usecases that take up the full screen -->
-      <map:match pattern="view/**">
+      <!-- 
+        This internal sitemap fragment renders the usecase, once the
+        executeUsecase() flowscript has completed and issued a redirect,
+        which is matched here.
+        The rendering process depends on the name of the usecase. If the
+        name begins with "tab.", the usecase is assumed to be part of the
+        site area. In this case, the navigation for the site area is
+        also rendered, along with the use case. In all other cases, the
+        usecase takes up the full screen. 
+        This behavior will likely be changed in the future.
+        -->
+      <map:match pattern="view/**" internal-only="true">
         
         <map:match type="usecase" pattern="tab.*">
           <map:generate type="jx" src="{../1}.jx"/>
