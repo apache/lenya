@@ -1,5 +1,5 @@
 /*
- * $Id: UserManager.java,v 1.3 2003/06/02 09:21:51 egli Exp $
+ * $Id: GroupManager.java,v 1.1 2003/06/02 09:21:51 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -19,11 +19,11 @@
  *
  * 3. All advertising materials mentioning features or use of this
  *    software must display the following acknowledgment: "This product
- *    includes software developed by Wyona (http://www.wyona.org)"
+ *    includes software developed by Wyona (http://www.wyona.com)"
  *
  * 4. The name "Lenya" must not be used to endorse or promote products
  *    derived from this software without prior written permission. For
- *    written permission, please contact contact@wyona.org
+ *    written permission, please contact contact@wyona.com
  *
  * 5. Products derived from this software may not be called "Lenya" nor
  *    may "Lenya" appear in their names without prior written permission
@@ -31,13 +31,13 @@
  *
  * 6. Redistributions of any form whatsoever must retain the following
  *    acknowledgment: "This product includes software developed by Wyona
- *    (http://www.wyona.org)"
+ *    (http://www.wyona.com)"
  *
  * THIS SOFTWARE IS PROVIDED BY Wyona "AS IS" WITHOUT ANY WARRANTY EXPRESS
  * OR IMPLIED, INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  * Wyona WILL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY YOU AS A RESULT
- * OF USING THIS SOFTWARE. IN NO EVENT WILL Wyona BE LIABLE FOR ANY SPECIAL,
+ * OF USING THIS SOFTWARE. IN NO EVENT WILL lenya BE LIABLE FOR ANY SPECIAL,
  * INDIRECT OR CONSEQUENTIAL DAMAGES OR LOST PROFITS EVEN IF Wyona HAS BEEN
  * ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. Wyona WILL NOT BE LIABLE
  * FOR ANY THIRD PARTY CLAIMS AGAINST YOU.
@@ -46,7 +46,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-
+ 
 package org.apache.lenya.cms.ac;
 
 import java.util.Iterator;
@@ -59,43 +59,47 @@ import org.apache.log4j.Category;
  * 
  * 
  */
-public class UserManager extends ItemManager {
-	static Category log = Category.getInstance(UserManager.class);
+public class GroupManager extends ItemManager {
+	static Category log = Category.getInstance(GroupManager.class);
 
-	protected static final String SUFFIX = "iml";
-		
-	private UserManager(Publication publication)
+	protected static final String SUFFIX = "gml";
+
+	/**
+	 * @param publication
+	 * @throws AccessControlException
+	 */
+	private GroupManager(Publication publication)
 		throws AccessControlException {
-		
 		super(publication);
 	}
 
+
 	public static ItemManager instance(Publication publication)
 		throws AccessControlException {
-		return UserManager.instance(publication);
+		return GroupManager.instance(publication);
 	}
 
-	public Iterator getUsers() {
+	public Iterator getGroups() {
 		return super.getItems();
 	}
 
-	public void add(User user) {
-		super.add(user);
+	public void add(Group group) {
+		super.add(group);
 	}
 
-	public void remove(User user) {
-		super.remove(user);
+	public void remove(Group group) {
+		super.remove(group);
 	}
 
-	public User getUser(String userId) {
-		User user = null;
-		Iterator iter = getUsers();
+	public Group getGroup(String groupName) {
+		Group group = null;
+		Iterator iter = getGroups();
 		while (iter.hasNext()) {
-			User element = (User) iter.next();
-			if (element.getId().equals(userId)) {
-				user = element;
+			Group element = (Group) iter.next();
+			if (element.getName().equals(groupName)) {
+				group = element;
 			}
 		}
-		return user;
+		return group;
 	}
 }
