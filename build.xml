@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.7 2002/01/15 14:20:50 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.8 2002/01/15 16:07:19 giacomo Exp $
 
 -->
 
@@ -41,7 +41,7 @@
   <property file="build.properties"/>
 
   <!-- Project version and name -->
-  <property name="version" value="2.0-dev"/>
+  <property name="version" value="2.1-dev"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
 
   
@@ -287,6 +287,13 @@
       </fileset>
     </copy>
 
+    <copy todir="${build.webapp}" overwrite="yes">
+      <fileset dir="${src.webapp.dir}">
+        <include name="sitemap.xmap*"/>
+        <include name="cocoon.xconf"/>
+      </fileset>
+    </copy>
+
     <!-- now copy our compiled classes -->
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
 
@@ -333,13 +340,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="dist" depends="clean, war" description="Build a distribution tar ball">
-
-    <copy todir="${dist.bin.dir}">
-      <fileset dir="${src.dist.dir}">
-        <include name="**/*"/>
-      </fileset>
-    </copy>
+  <target name="dist" depends="distclean, war" description="Build a binary distribution tar ball">
 
     <tar tarfile="${dist.bin.tarfile}" basedir="${dist.root}" includes="${fullname}/**"/>
 
@@ -354,18 +355,14 @@
   The dist-src target prepares the source distribution tarball for
   developers. It also depends on the clean target to remove all build stuff.
   -->
-  <target name="dist-src" depends="clean">
+  <target name="dist-src" depends="distclean" description="Builds a tar ball containing the sources for developers">
 
     <mkdir dir="${dist.src.dir}"/>
 
     <copy todir="${dist.src.dir}">
-      <fileset dir="${src.dist-src.dir}">
-        <include name="**/*"/>
-      </fileset>
-    </copy>
-
-    <copy todir="${dist.src.dir}">
       <fileset dir=".">
+        <include name="README"/>
+        <include name="build.properties.sample"/>
         <include name="src/**"/>
         <include name="${lib.dir}/**"/>
         <include name="build.xml"/>
@@ -399,7 +396,7 @@
 
   <target name="distclean" depends="clean" description="Cleans everything to the original state">
     <delete dir="${build.root}"/>
-    <delete file="${dist.root}"/>
+    <delete dir="${dist.root}"/>
   </target>
 
 </project>

@@ -133,17 +133,12 @@
 
 <!-- Documentation -->
      <map:match pattern="docs/**">
-       <map:mount uri-prefix="docs" src="wyona/cms/pubs/docs/" check-reload="true" reload-method="synchron"/>
+       <map:mount uri-prefix="docs" src="wyona/cms/pubs/wyona-cms-docs/" check-reload="true" reload-method="synchron"/>
      </map:match>
 
 <!-- Materials Science -->
      <map:match pattern="ethz-mat/**">
        <map:mount uri-prefix="ethz-mat" src="wyona/cms/pubs/ethz-mat/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-     </map:match>
-
-<!-- Otego News -->
-     <map:match pattern="otego-news/**">
-       <map:mount uri-prefix="otego-news" src="wyona/cms/pubs/otego-news/sitemap.xmap" check-reload="true" reload-method="synchron"/>
      </map:match>
 
 <!-- HTML Form Editor -->
