@@ -24,10 +24,9 @@
 
 
 <lenya-info:info>
-
   <lenya-info:overview>
-        <dc:title></dc:title>
-  		<lenya-info:abstract></lenya-info:abstract>
+        <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
+		<lenya-info:abstract></lenya-info:abstract>
   		<lenya-info:status></lenya-info:status>
         <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
    		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
@@ -41,7 +40,7 @@
         <dc:description><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></dc:description>
         <dc:date></dc:date>
         <dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
-  </lenya-info:meta>  
+        </lenya-info:meta>
   <lenya-info:assets>
 		<lenya-info:asset/>
   </lenya-info:assets>  
@@ -52,10 +51,8 @@
   <rc:revisions>
 <!--
     <xsp:logic>
-      String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
       <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
 
-      Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
       String rootDir=publication.getEnvironment().getPublicationPath();
       String filename= "authoring" + docId + "/index.xml";
       <xsp:content><usecase><xsp:expr>request.getParameter("lenya.usecase")</xsp:expr></usecase></xsp:content>

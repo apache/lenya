@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.14 2003/07/23 13:21:11 gregor Exp $
+$Id: DefaultDocument.java,v 1.15 2003/07/24 18:39:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -65,8 +65,9 @@ import java.util.Date;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class DefaultDocument implements Document {
-	private org.w3c.dom.Document domdocument = null;
-	private File infofile = null;
+	private String id;
+	private Publication publication;
+	private DublinCore dublincore;
 	
     /**
      * Creates a new instance of DefaultDocument.
@@ -81,8 +82,7 @@ public class DefaultDocument implements Document {
 
         assert (publication != null) && !"".equals(publication);
         this.publication = publication;
-        this.dublincore =  new DublinCore((Document)this);
-
+        this.dublincore =  new DublinCore(this);
     }
 
     /**
@@ -98,14 +98,10 @@ public class DefaultDocument implements Document {
 
         assert (publication != null) && !"".equals(publication);
         this.publication = publication;
-		this.dublincore =  new DublinCore((Document)this);
+		this.dublincore =  new DublinCore(this);
 
         setArea(area);
     }
-
-    private String id;
-    private Publication publication;
-	private DublinCore dublincore;
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getFile()

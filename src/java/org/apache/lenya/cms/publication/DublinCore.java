@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.4 2003/07/23 14:35:01 gregor Exp $
+$Id: DublinCore.java,v 1.5 2003/07/24 18:39:24 gregor Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,12 @@ import org.w3c.dom.Text;
  */
 public class DublinCore {
 	private Document cmsdocument;
-	private File servletContext;
+	private File infofile;
+	private String p;
+    private NodeList nodelist;
+    private String string;	
+
+	private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
 
     /** 
      * Creates a new instance of Dublin Core
@@ -82,22 +87,15 @@ public class DublinCore {
      */
     protected DublinCore(Document mydocument) {
     	this.cmsdocument = mydocument;
+    	this.infofile = cmsdocument.getPublication().getPathMapper().getFile(cmsdocument.getPublication(), cmsdocument.getPublication().AUTHORING_AREA, cmsdocument.getId(), cmsdocument.getLanguage());
+        this.p = infofile.getPath();
     }
 
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
 	public String getTitle() throws PublicationException {
-		File infofile = cmsdocument.getPublication().getPathMapper().getFile(cmsdocument.getPublication(), cmsdocument.getArea(), cmsdocument.getId(), cmsdocument.getLanguage());
-		Element domelement;
-		
-		try {
-			domelement = DocumentHelper.readDocument(infofile).getDocumentElement();
-		} catch (Exception e) {
-			throw new PublicationException(e);
-		}
-		domelement = DocumentHelper.getFirstChild(domelement, "http://apache.org/cocoon/lenya/page-envelope/1.0", "name");
-		return null;
+		return getDCNode("title");
 	}
 
 	/**
@@ -112,7 +110,7 @@ public class DublinCore {
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
 	public String getCreator() throws PublicationException{ 
-			return null;
+		return getDCNode("creator");
 		}
 
 	/**
@@ -127,7 +125,18 @@ public class DublinCore {
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
 	public String getSubject() throws PublicationException { 
-			return null;
+		return getDCNode("subject");
+	}
+
+	private String getDCNode(String node) {
+			try {
+				nodelist = DocumentHelper.readDocument(infofile).getElementsByTagNameNS(DC_NAMESPACE, node);
+				string = nodelist.item(0).getFirstChild().getNodeValue();
+			} catch (Exception e) {
+				string = e.toString();
+			}
+			
+			return string;
 		}
 
 	/**
@@ -142,7 +151,7 @@ public class DublinCore {
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
 	public String getDescription() throws PublicationException { 
-			return null;
+		return getDCNode("description");
 		}
 	
 	/**
@@ -157,7 +166,7 @@ public class DublinCore {
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
 	public String getRights() throws PublicationException { 
-			return null;
+		return getDCNode("rights");
 		}
 
 	/**
