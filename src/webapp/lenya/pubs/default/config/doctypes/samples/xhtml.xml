@@ -31,7 +31,7 @@
   <body>
     <h1>Default Publication</h1>
     <p>Welcome to the default Lenya publication!</p>
-    <p>Te purpose of this publication is</p>
+    <p>The purpose of this publication is</p>
     <ul>
       <li>to show beginners the basic functionality of the Lenya CMS,</li>
       <li>to provide an "out of the box" publication that can be easily adapted and used, and</li>
