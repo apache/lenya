@@ -26,15 +26,17 @@
 				<sch:minute><xsp:expr>calendar.get(java.util.Calendar.MINUTE)</xsp:expr></sch:minute>
 				<sch:second><xsp:expr>calendar.get(java.util.Calendar.SECOND)</xsp:expr></sch:second>
     
-			try {
-				org.apache.lenya.cms.publication.PageEnvelope envelope
-						= org.apache.lenya.cms.publication.PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-				<sch:publication-id><xsp:expr>envelope.getPublication().getId()</xsp:expr></sch:publication-id>
-				<sch:document-url><xsp:expr>envelope.getDocument().getDocumentURL()</xsp:expr></sch:document-url>
-			}
-			catch (org.apache.lenya.cms.publication.PageEnvelopeException e) {
-				throw new ProcessingException(e);
-			}
+    	org.apache.lenya.cms.cocoon.scheduler.SchedulerHelper helper = 
+    		new org.apache.lenya.cms.cocoon.scheduler.SchedulerHelper(objectModel, parameters, getLogger());
+    	java.util.Map parameters = helper.createParameters();
+    	for (java.util.Iterator i = parameters.keySet().iterator(); i.hasNext(); ) {
+    			String key = (String) i.next();
+    			String value = (String) parameters.get(key);
+    			<sch:parameter>
+    				<xsp:attribute name="name"><xsp:expr>key</xsp:expr></xsp:attribute>
+    				<xsp:attribute name="value"><xsp:expr>value</xsp:expr></xsp:attribute>
+    			</sch:parameter>
+    	}
     
     }
   </xsp:logic>
