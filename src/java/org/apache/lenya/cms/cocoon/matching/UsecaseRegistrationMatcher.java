@@ -14,6 +14,9 @@
  *  limitations under the License.
  *
  */
+
+/* $Id$  */
+
 package org.apache.lenya.cms.cocoon.matching;
 
 import java.util.Collections;
