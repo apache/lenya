@@ -20,6 +20,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
@@ -85,14 +86,22 @@ public class Paste extends DocumentUsecase {
                 targetArea,
                 potentialDocumentId,
                 language);
-        Document availableDocument = getDocumentManager().getAvailableDocument(potentialDocument);
+        DocumentManager documentManager = null;
+        try {
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            Document availableDocument = documentManager.getAvailableDocument(potentialDocument);
 
-        if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
-            getDocumentManager().copyAll(clippedDocument, availableDocument);
-        } else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-            getDocumentManager().moveAll(clippedDocument, availableDocument);
-        } else {
-            throw new RuntimeException("This clipboard method is not supported!");
+            if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
+                documentManager.copyAll(clippedDocument, availableDocument);
+            } else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+                documentManager.moveAll(clippedDocument, availableDocument);
+            } else {
+                throw new RuntimeException("This clipboard method is not supported!");
+            }
+        } finally {
+            if (documentManager != null) {
+                this.manager.release(documentManager);
+            }
         }
     }
 }

@@ -18,7 +18,6 @@ package org.apache.lenya.cms.usecase;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +26,7 @@ import java.util.Set;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.publication.DocumentManager;
 
 /**
  * Abstract usecase implementation.
@@ -350,41 +347,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         this.context = _context;
     }
 
-    private DocumentManager documentManager;
-
-    /**
-     * Retrieves a document manager, which allows the use cases to manipulate documents (move, copy, add documents to publications, ...)
-     *
-     * @return a DocumentManager, which is a service to manipulate documents
-     * @throws ServiceException if the document manager component can not be initialized by the component framework
-     */
-    protected DocumentManager getDocumentManager() throws ServiceException {
-        if (this.documentManager == null) {
-           if (getLogger().isDebugEnabled())
-               getLogger().debug("AbstractUsecase.getDocumentManager() does not yet have instance, looking up role [" + DocumentManager.ROLE + "]");
-
-           this.documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-        }
-
-        return this.documentManager;
-    }
-
     /**
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public final void initialize() throws Exception {
         super.initialize();
-    }
-
-    /**
-     * @see org.apache.avalon.framework.activity.Disposable#dispose()
-     */
-    public void dispose() {
-        super.dispose();
-
-        if (this.documentManager != null) {
-            this.manager.release(documentManager);
-        }
     }
 
     /**

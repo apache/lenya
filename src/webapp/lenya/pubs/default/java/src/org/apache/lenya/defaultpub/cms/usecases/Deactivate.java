@@ -19,6 +19,7 @@ package org.apache.lenya.defaultpub.cms.usecases;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
@@ -92,11 +93,14 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         boolean success = false;
 
         WorkflowManager wfManager = null;
+        DocumentManager documentManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             Document liveDocument = publication.getAreaVersion(authoringDocument,
                     Publication.LIVE_AREA);
-            getDocumentManager().deleteDocument(liveDocument);
+            
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            documentManager.deleteDocument(liveDocument);
 
             wfManager.invoke(authoringDocument, getEvent());
             success = true;
@@ -109,6 +113,9 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             }
             if (wfManager != null) {
                 this.manager.release(wfManager);
+            }
+            if (documentManager != null) {
+                this.manager.release(documentManager);
             }
         }
 

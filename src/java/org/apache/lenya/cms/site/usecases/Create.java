@@ -30,6 +30,7 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -85,7 +86,16 @@ public abstract class Create extends AbstractUsecase {
 
         Document document = createDocument();
         Publication publication = document.getPublication();
-        getDocumentManager().addDocument(document);
+        DocumentManager documentManager = null;
+        try {
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            documentManager.addDocument(document);
+        }
+        finally {
+            if (documentManager != null) {
+                this.manager.release(documentManager);
+            }
+        }
 
         SiteManager _manager = publication.getSiteManager();
         _manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));

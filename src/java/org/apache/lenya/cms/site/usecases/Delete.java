@@ -18,6 +18,7 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.UniqueDocumentId;
@@ -25,8 +26,8 @@ import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
- * Delete a document and all its descendants, including all language versions.
- * The documents are moved to the trash.
+ * Delete a document and all its descendants, including all language versions. The documents are
+ * moved to the trash.
  * 
  * @version $Id:$
  */
@@ -77,7 +78,15 @@ public class Delete extends DocumentUsecase {
         Document target = identityMap.getFactory().get(source.getPublication(),
                 Publication.TRASH_AREA,
                 availableId);
-        getDocumentManager().moveAll(source, target);
+        DocumentManager documentManager = null;
+        try {
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            documentManager.moveAll(source, target);
+        } finally {
+            if (documentManager != null) {
+                this.manager.release(documentManager);
+            }
+        }
 
         setTargetDocument(target);
     }

@@ -22,6 +22,7 @@ import java.util.Collections;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
@@ -62,12 +63,20 @@ public class CreateDocument extends Create {
         String nodeId = getParameterAsString(DOCUMENT_ID);
         Document parent = getSourceDocument();
         String language = getParameterAsString(LANGUAGE);
-        String[] messages = getDocumentManager().canCreate(getUnitOfWork().getIdentityMap(),
-                getArea(),
-                parent,
-                nodeId,
-                language);
-        addErrorMessages(messages);
+        DocumentManager documentManager = null;
+        try {
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            String[] messages = documentManager.canCreate(getUnitOfWork().getIdentityMap(),
+                    getArea(),
+                    parent,
+                    nodeId,
+                    language);
+            addErrorMessages(messages);
+        } finally {
+            if (documentManager != null) {
+                this.manager.release(documentManager);
+            }
+        }
     }
 
     /**

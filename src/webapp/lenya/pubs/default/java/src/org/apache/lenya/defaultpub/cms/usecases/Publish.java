@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
@@ -160,15 +161,20 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected void publish(Document authoringDocument) {
 
         WorkflowManager wfManager = null;
+        DocumentManager documentManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            getDocumentManager().copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            documentManager.copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
             wfManager.invoke(authoringDocument, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (wfManager != null) {
                 this.manager.release(wfManager);
+            }
+            if (documentManager != null) {
+                this.manager.release(documentManager);
             }
         }
     }
