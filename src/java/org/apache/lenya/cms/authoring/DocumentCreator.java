@@ -102,7 +102,7 @@ public class DocumentCreator {
 
         try {
             log.debug("Get sitetree of area: " + area);
-            siteTree = publication.getSiteTree(area);
+            siteTree = publication.getTree(area);
         } catch (Exception e) {
             throw new CreatorException(e);
         }

@@ -202,7 +202,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         creator.init(doctypeConf);
 
         // add a node to the tree
-        SiteTree siteTree = publication.getSiteTree(Publication.AUTHORING_AREA);
+        SiteTree siteTree = publication.getTree(Publication.AUTHORING_AREA);
         Label[] labels = new Label[1];
         labels[0] = new Label(childname, language);
         siteTree.addNode(parentid, creator.generateTreeId(childid, childType), labels, visibleInNav);

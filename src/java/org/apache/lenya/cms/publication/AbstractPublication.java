@@ -319,13 +319,40 @@ public abstract class AbstractPublication implements Publication {
      * 
      * @throws SiteTreeException if an error occurs
      */
-    public SiteTree getSiteTree(String area) throws SiteTreeException {
+    public SiteTree getTree(String area) throws SiteTreeException {
 
         SiteTree sitetree = null;
 
         if (hasSitetree) {
             if (siteTrees.containsKey(area)) {
                 sitetree = (SiteTree) siteTrees.get(area);
+            } else {
+                sitetree = new DefaultSiteTree(getDirectory(), area);
+                siteTrees.put(area, sitetree);
+            }
+        }
+        return sitetree;
+    }
+
+    /**
+     * Get the sitetree for a specific area of this publication. Sitetrees are created on demand and
+     * are cached.
+     *
+     * @deprecated Please use getTree() because this method returns the interface and not a specific implementation
+     * @see getTree()
+     * 
+     * @param area the area
+     * @return the sitetree for the specified area
+     * 
+     * @throws SiteTreeException if an error occurs
+     */
+    public DefaultSiteTree getSiteTree(String area) throws SiteTreeException {
+
+        DefaultSiteTree sitetree = null;
+
+        if (hasSitetree) {
+            if (siteTrees.containsKey(area)) {
+                sitetree = (DefaultSiteTree) siteTrees.get(area);
             } else {
                 sitetree = new DefaultSiteTree(getDirectory(), area);
                 siteTrees.put(area, sitetree);

@@ -55,27 +55,27 @@ public class SitetreeModule extends AbstractInputModule {
             Publication publication = envelope.getPublication();
 
             if (name.equals(AUTHORING_NODE)) {
-                SiteTree authoringTree = publication.getSiteTree(Publication.AUTHORING_AREA);
+                SiteTree authoringTree = publication.getTree(Publication.AUTHORING_AREA);
                 value = authoringTree.getNode(envelope.getDocument().getId());
             }
 
             if (name.equals(LIVE_NODE)) {
-                SiteTree liveTree = publication.getSiteTree(Publication.LIVE_AREA);
+                SiteTree liveTree = publication.getTree(Publication.LIVE_AREA);
                 value = liveTree.getNode(envelope.getDocument().getId());
             }
 
             if (name.equals(TRASH_NODE)) {
-                SiteTree trashTree = publication.getSiteTree(Publication.TRASH_AREA);
+                SiteTree trashTree = publication.getTree(Publication.TRASH_AREA);
                 value = trashTree.getNode(envelope.getDocument().getId());
             }
             
             if (name.equals(ARCHIVE_NODE)) {
-                SiteTree archiveTree = publication.getSiteTree(Publication.ARCHIVE_AREA);
+                SiteTree archiveTree = publication.getTree(Publication.ARCHIVE_AREA);
                 value = archiveTree.getNode(envelope.getDocument().getId());
             }
             
             if (name.equals(FIRST_CHILD_ID)) {
-                SiteTree siteTree = publication.getSiteTree(envelope.getDocument().getArea());
+                SiteTree siteTree = publication.getTree(envelope.getDocument().getArea());
                 SiteTreeNode node = siteTree.getNode(envelope.getDocument().getId()); 
                 SiteTreeNode[] children = node.getChildren(envelope.getDocument().getLanguage());
                 if (children.length > 0){

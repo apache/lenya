@@ -160,7 +160,21 @@ public interface Publication {
      * 
      * @throws SiteTreeException if an error occurs 
      */
-    SiteTree getSiteTree(String area) throws SiteTreeException;
+    SiteTree getTree(String area) throws SiteTreeException;
+
+    /**
+     * Get the sitetree for a specific area of this publication. 
+     * Sitetrees are created on demand and are cached.
+     *
+     * @deprecated Please use getTree() because this method returns the interface and not a specific implementation
+     * @see getTree()
+     * 
+     * @param area the area
+     * @return the sitetree for the specified area
+     * 
+     * @throws SiteTreeException if an error occurs 
+     */
+    DefaultSiteTree getSiteTree(String area) throws SiteTreeException;
 
     /**
      * Returns the document builder of this instance.

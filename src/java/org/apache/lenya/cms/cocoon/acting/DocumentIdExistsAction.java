@@ -84,7 +84,7 @@ public class DocumentIdExistsAction extends AbstractAction {
             PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
 
         SiteTree siteTree =
-            pageEnvelope.getPublication().getSiteTree(area);
+            pageEnvelope.getPublication().getTree(area);
 
         if (siteTree.getNode(documentId) != null) {
             return Collections.EMPTY_MAP;
