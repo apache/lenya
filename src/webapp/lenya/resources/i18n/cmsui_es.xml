@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   
-  $Id: cmsui_es.xml,v 1.6 2004/05/07 13:54:36 thorsten Exp $
+  $Id$
   
   @translators 
 	Salvador Cobrero <salvador_cobrero_jimenez at dmr-consulting dot com>
@@ -55,11 +55,11 @@
   <message key="Search">Buscar</message>
   <message key="Home">Inicio</message>
   <message key="Title">Título</message>
-  <message key="Last modified">Último modificicación </message>
+  <message key="Last modified">Última modificación </message>
   <message key="Overview">General</message>
   <message key="Role">Rol</message>
   <message key="View">Ver</message>
-  <message key="Assets">Objetos</message>
+  <message key="Assets">Activos</message>
   <message key="true">sí</message>
   <message key="false">no</message>
   <message key="Rename">Renombrar</message>
@@ -73,7 +73,7 @@
   <message key="Trash">Papelera</message>
   <message key="Publisher">Editor</message>
   <message key="Navigation Title">Título&#160;de&#160;la&#160;Navegación</message>
-  <message key="Creator">Creador</message>
+  <message key="Creator">Autor</message>
   <message key="Language">Lenguaje</message>
   <message key="Subject">Tema</message>
   <message key="Rights">Permisos</message>
@@ -97,7 +97,7 @@
 
   <!-- login screen -->
   <message key="login-to-pub">Entrar&#160;a&#160;la&#160;publicación&#160;{0}</message>
-  <message key="Login">Login</message>
+  <message key="Login">Conexión</message>
   <message key="Password">Contraseña</message>
   <message key="Username">Nombre&#160;de&#160;usuario</message>
   <message key="Authentication failed">Error&#160;en&#160;la&#160;autentificación</message>
@@ -118,7 +118,7 @@
   <message key="Remove Language Version">Eliminar&#160;versión&#160;de&#160;idioma</message>
   <message key="File">Archivo</message>  
   <message key="Edit">Editar</message>
-  <message key="Workflow">Workflow</message>
+  <message key="Workflow">Flujo de trabajo</message>
   <message key="Deactivate">Desactivar</message>
   <message key="Schedule">Horario</message>
   <message key="Copy">Copiar</message>  
@@ -149,7 +149,7 @@
   
   <!-- cms tabs -->	
   <message key="Server Time">Hora&#160;del&#160;servidor</message>  
-  <message key="Workflow State">Estado&#160;del&#160;workflow</message>
+  <message key="Workflow State">Estado&#160;del&#160;flujo de trabajo</message>
 
   <!-- Administration tab -->
   <message key="Administration">Administración</message>
@@ -271,7 +271,7 @@
   <message key="publish">publicar</message>
 
   <!-- Info asset  --> 
-  <message key="New Asset">Nuevo Asset</message>
+  <message key="New Asset">Nuevo Activo</message>
   
   <!-- Info RC  --> 
   <message key="Current Version">Versión Actual</message>
@@ -304,6 +304,5 @@
   <message key="Add to Asset Library">Añadir librer&#237;a de Objetos</message>
   <message key="Asset Library">Librer&#237;a de objetos</message>
   <message key="No assets available">No hay objetos disponibles</message>
-  <message key="Insert Asset">Insertar Objeto</message>>
-
+  <message key="Insert Asset">Insertar Objeto</message>
 </catalogue>
