@@ -91,7 +91,7 @@ import javax.xml.transform.stream.StreamResult;
  * Various utility methods to work with JAXP.
  *
  * @author Andreas Hartmann
- * @version $Id: DocumentHelper.java,v 1.19 2003/08/13 09:46:24 michi Exp $
+ * @version $Id: DocumentHelper.java,v 1.20 2003/08/31 13:04:31 andreas Exp $
  */
 public class DocumentHelper {
     /**
@@ -213,6 +213,7 @@ public class DocumentHelper {
      */
     public static void writeDocument(Document document, File file)
         throws TransformerConfigurationException, TransformerException, IOException {
+        file.getParentFile().mkdirs();
         file.createNewFile();
 
         DOMSource source = new DOMSource(document);
