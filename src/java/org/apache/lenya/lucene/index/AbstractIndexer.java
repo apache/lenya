@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.13 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id: AbstractIndexer.java,v 1.14 2004/03/17 16:11:55 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -90,8 +90,7 @@ public abstract class AbstractIndexer implements Indexer {
      *   <li>new documents, to be indexed.</li>
      * </ol>
      */
-    public void updateIndex(File dumpDirectory, File index)
-        throws Exception {
+    public void updateIndex(File dumpDirectory, File index) throws Exception {
         deleteStaleDocuments(dumpDirectory, index);
         doIndex(dumpDirectory, index, false);
     }
@@ -112,6 +111,10 @@ public abstract class AbstractIndexer implements Indexer {
      * @param create <b>true</b> means the index will be created from scratch, <b>false</b> means it will be indexed incrementally
      */
     public void doIndex(File dumpDirectory, File index, boolean create) {
+        if (!index.isDirectory()) {
+            index.mkdirs();
+            log.warn("Directory has been created: " + index.getAbsolutePath());
+        }
         try {
             IndexWriter writer = new IndexWriter(index.getAbsolutePath(), new StandardAnalyzer(), create);
             writer.maxFieldLength = 1000000;
