@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.16 2003/02/11 20:33:17 andreas Exp $
+ * $Id: LoadQuartzServlet.java,v 1.17 2003/02/11 20:38:23 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -86,7 +86,7 @@ import org.wyona.xml.DocumentHelper;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@wyona.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.16 2003/02/11 20:33:17 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.17 2003/02/11 20:38:23 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -253,8 +253,8 @@ public class LoadQuartzServlet extends HttpServlet {
         log.debug("-------------------- End Session Attributes --------------------");
 
         // the publicationID is fetched from the session
-        // String publicationId = (String) request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
-        String publicationId = request.getParameter("publication");
+        String publicationId = (String) request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+        // String publicationId = request.getParameter("publication");
 
         if ((publicationId == null) || publicationId.equals("")) {
             log.debug("No publication ID provided");
