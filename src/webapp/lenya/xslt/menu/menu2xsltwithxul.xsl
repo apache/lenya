@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xsltwithxul.xsl,v 1.1 2004/09/01 21:59:46 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
