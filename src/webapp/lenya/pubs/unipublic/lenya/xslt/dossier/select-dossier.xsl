@@ -19,6 +19,7 @@
   <html>
     <head>
       <title>Assign Article to Dossier</title>
+<link rel="stylesheet" type="text/css" href="/wyona-cms/wyona/default.css" />
     </head>
     <body>
       <h1>Assign Article to Dossier</h1>
