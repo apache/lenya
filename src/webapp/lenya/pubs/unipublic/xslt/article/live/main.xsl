@@ -8,7 +8,7 @@
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables_live.xsl"/>
 <xsl:include href="../../variables.xsl"/>
-<xsl:include href="articles.xsl"/>
+<xsl:include href="../articles.xsl"/>
 <xsl:include href="../page.xsl"/>
 <xsl:include href="../relatedContent.xsl"/>
 <xsl:include href="../dossier.xsl"/>
