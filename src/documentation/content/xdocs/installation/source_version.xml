@@ -468,7 +468,7 @@
           </p>
 
           <source>
-            $LENYA_HOME > build.bat reset
+            $LENYA_HOME > build.bat clean 
           </source>
 
           <p>
@@ -476,7 +476,7 @@
           </p>
 
           <source>
-            $LENYA_HOME > ./build.sh reset
+            $LENYA_HOME > ./build.sh clean
           </source>
         </li>
         <li>
