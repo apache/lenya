@@ -143,6 +143,18 @@
         <map:transform src="stylesheets/publication/Page/Board/Live/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
+
+      <!-- Mailing Lists -->
+      <map:match pattern="live/mailing-lists.html">
+        <map:generate src="cocoon:/live/mailing-lists.xml"/>
+        <map:transform src="stylesheets/publication/Page/Mailing-Lists/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="mailing-lists.html">
+        <map:generate src="cocoon:/live/mailing-lists.xml"/>
+        <map:transform src="stylesheets/publication/Page/Mailing-Lists/Live/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
    </map:pipeline>
  </map:pipelines>
 </map:sitemap>

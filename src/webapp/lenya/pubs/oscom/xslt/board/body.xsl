@@ -10,6 +10,12 @@
 
 <xsl:template match="board">
  <font face="verdana">
+ <h3>Board of Directors</h3>
+<p>
+The board of directors of OSCOM is responsible
+for the management and oversight of the business and 
+affairs of the organization in accordance with the bylaws.
+</p>
  <p>
  The current board of directors includes:
  </p>

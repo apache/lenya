@@ -3,26 +3,39 @@
 <oscom>
 
 <mailing-lists>
+<public>
  <list>
    <name>General</name>
+   <description>The general list for OSCOM - where people can ask
+   and answer questions or make comments with regard to Open Source 
+   Content Management</description>
    <address>general@oscom.org</address>
    <public>http://www.oscom.org/mailman/listinfo/general</public>
    <admin>http://www.oscom.org/mailman/admin/general</admin>
  </list>
+</public>
 
+<private>
  <list>
-   <name>Speakers</name>
+   <name>Speakers (San Francisco)</name>
+<!--
+   <description/>
+-->
    <address>speakers@oscom.org</address>
    <public>http://www.oscom.org/mailman/listinfo/speakers</public>
    <admin>http://www.oscom.org/mailman/admin/speakers</admin>
  </list>
 
  <list>
-   <name>Organization Committee San Francisco</name>
+   <name>Organization Committee (San Francisco)</name>
+<!--
+   <description/>
+-->
    <address>oc-1@oscom.org</address>
    <public>http://www.oscom.org/mailman/listinfo/oc-1</public>
    <admin>http://www.oscom.org/mailman/admin/oc-1</admin>
  </list>
+</private>
 </mailing-lists>
 
 </oscom>
