@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.17 2003/08/15 13:10:19 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.18 2003/09/09 11:33:10 andreas Exp $
 <License>
 
  ============================================================================
@@ -89,8 +89,6 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
     public boolean authorize(Request request)
         throws AccessControlException {
 
-        getLogger().debug("Authorizing workflow");
-
         boolean authorized = true;
 
         String requestUri = request.getRequestURI();
@@ -105,7 +103,12 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
 
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Authorizing workflow for event [" + event + "]");
+        }
+            
         if (event != null) {
+            
             try {
                 resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
                 Publication publication = PublicationFactory.getPublication(resolver, request);
@@ -128,6 +131,9 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                         while (!authorized && (i < events.length)) {
                             if (events[i].getName().equals(event)) {
                                 authorized = true;
+                            }
+                            if (getLogger().isDebugEnabled()) {
+                                getLogger().debug("    Event [" + events[i] + "] is executable.");
                             }
 
                             i++;
