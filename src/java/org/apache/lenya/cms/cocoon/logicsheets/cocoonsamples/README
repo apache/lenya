@@ -1,0 +1,11 @@
+Cocoon Logisheets
+-----------------
+
+If you want to take a look at some Cocoon logisheets,
+then you have to open the Cocoon library:
+
+WEB-INF/lib/cocoon-VERSION.jar
+
+Then within the following directory you will find some examples:
+
+org/apache/cocoon/components/language/markup/xsp/java
