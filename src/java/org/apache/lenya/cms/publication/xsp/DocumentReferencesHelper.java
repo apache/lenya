@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.13 2003/11/03 18:19:07 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.14 2004/01/07 13:33:44 egli Exp $
 <License>
 
  ============================================================================
@@ -82,7 +82,7 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class DocumentReferencesHelper {
 
@@ -192,6 +192,7 @@ public class DocumentReferencesHelper {
                             area,
                             inconsistentFiles[i]);
                     language = fileMapper.getLanguage(inconsistentFiles[i]);
+
                     String url = null;
                     if (language != null) {
                         url =
@@ -250,13 +251,25 @@ public class DocumentReferencesHelper {
 
             for (int i = 0; i < internalLinks.length; i++) {
                 String docId = internalLinks[i];
-		String language = null;
-                
-		if (internalLinksLanguages[i] != null) {
-		    // trim the leading '_'
-		    language = internalLinksLanguages[i].substring(1);
-		}
+                String language = null;
+
+                if (internalLinksLanguages[i] != null) {
+                    // trim the leading '_'
+                    language = internalLinksLanguages[i].substring(1);
+                }
+
                 SiteTreeNode documentNode = sitetree.getNode(docId);
+
+                if (language == null) {
+                    String url =
+                        "/"
+                            + publication.getId()
+                            + "/"
+                            + pageEnvelope.getDocument().getArea()
+                            + docId
+                            + ".html";
+                    language = builder.buildDocument(publication, url).getLanguage();
+                }
                 if (documentNode == null
                     || documentNode.getLabel(language) == null) {
                     // the docId has not been published for the given language
@@ -269,12 +282,12 @@ public class DocumentReferencesHelper {
                                 docId,
                                 language);
                     } else {
-			url =
-			    builder.buildCanonicalUrl(
-                            	publication,
-                            	Publication.AUTHORING_AREA,
-                            	docId);
-		    }
+                        url =
+                            builder.buildCanonicalUrl(
+                                publication,
+                                Publication.AUTHORING_AREA,
+                                docId);
+                    }
                     unpublishedReferences.add(
                         builder.buildDocument(publication, url));
                 }
