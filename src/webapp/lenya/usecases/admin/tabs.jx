@@ -63,7 +63,14 @@
         <jx:set var="urlPrefix" value="${contextPath + steps[1]}"/>
         
         <td>
-          <a class="lenya-tablink" href="/${urlPrefix}/admin/content.html"><i18n:text>Delete Trash</i18n:text></a>
+          <jx:choose>
+            <jx:when test="${usecase.getView().getParameter('tab').equals('trash')}">
+              <a href="?lenya.usecase=admin.emptyTrash" class="lenya-tablink-active"><i18n:text>Delete Trash</i18n:text></a>
+            </jx:when>
+            <jx:otherwise>
+              <a href="?lenya.usecase=admin.emptyTrash" class="lenya-tablink"><i18n:text>Delete Trash</i18n:text></a>
+            </jx:otherwise>
+          </jx:choose>
         </td>
         <td>
           <a class="lenya-tablink" href="/${urlPrefix}/admin/lucene.html"><i18n:text>Search</i18n:text></a>

@@ -321,6 +321,11 @@
     <component-instance name="admin.ipRanges" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRanges">
       <view template="admin/ipRanges" menu="true"/>
     </component-instance>
+    <component-instance name="admin.emptyTrash" logger="lenya.admin" class="org.apache.lenya.cms.site.usecases.EmptyTrash">
+      <view template="admin/emptyTrash" menu="true">
+        <parameter name="tab" value="trash"/>
+      </view>
+    </component-instance>
 
     <!--
     <component-instance name="admin.addIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddIPRange"/>

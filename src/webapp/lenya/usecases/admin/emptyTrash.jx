@@ -1,0 +1,29 @@
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:body>
+    <jx:import uri="admin/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+    <h1><i18n:text>Delete Trash</i18n:text></h1>
+      
+    <jx:import uri="templates/messages.jx"/>
+    <p>
+    <strong><i18n:text>Documents in trash</i18n:text>:</strong>
+    </p>
+    <ul style="list-style-type: none">
+      <jx:forEach var="document" items="${usecase.getParameter('documents')}">
+        <li><jx:out value="${document.getId()}"/></li>
+      </jx:forEach>
+    </ul>
+    <form>
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+      <input i18n:attr="value" name="submit" type="submit" value="Empty"/>
+    </form>
+    </div>
+  </page:body>
+</page:page>
