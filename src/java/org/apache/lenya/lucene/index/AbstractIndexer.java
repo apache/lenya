@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.21 2004/08/02 00:19:42 michi Exp $  */
+/* $Id: AbstractIndexer.java,v 1.22 2004/08/02 06:28:44 michi Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -113,25 +113,32 @@ public abstract class AbstractIndexer implements Indexer {
         File indexDir = new File(config.resolvePath(config.getIndexDir()));
         log.debug("Index dir: " + indexDir);
 
+
 	String id = IndexIterator.createID(file, dumpDir);
 
-	// Delete from index
-        IndexReader reader = IndexReader.open(indexDir.getAbsolutePath());
-	Term term = new Term("id", id);
-        log.debug(term.toString());
-        int numberOfDeletedDocuments = reader.delete(term);
-        if (numberOfDeletedDocuments == 1) {
-            log.info("Document has been deleted: " + term);
+	boolean createNewIndex = false;
+        if (!IndexReader.indexExists(indexDir)) {
+            log.warn("Index does not exist yet: " + indexDir);
+            createNewIndex = true;
         } else {
-            log.warn("No such document found in this index: " + term);
+	    // Delete from index
+            IndexReader reader = IndexReader.open(indexDir.getAbsolutePath());
+	    Term term = new Term("id", id);
+            log.debug(term.toString());
+            int numberOfDeletedDocuments = reader.delete(term);
+            if (numberOfDeletedDocuments == 1) {
+                log.info("Document has been deleted: " + term);
+            } else {
+                log.warn("No such document found in this index: " + term);
+            }
+            //log.debug("Number of deleted documents: " + numberOfDeletedDocuments);
+            //log.debug("Current number of documents in this index: " + reader.numDocs());
+            reader.close();
         }
-        //log.debug("Number of deleted documents: " + numberOfDeletedDocuments);
-        //log.debug("Current number of documents in this index: " + reader.numDocs());
-        reader.close();
 
 	// Append to index
         Document doc = getDocumentCreator().getDocument(new File(dumpDir, id), dumpDir);
-        IndexWriter writer = new IndexWriter(indexDir, new StandardAnalyzer(), false);
+        IndexWriter writer = new IndexWriter(indexDir, new StandardAnalyzer(), createNewIndex);
         writer.maxFieldLength = 1000000;
         writer.addDocument(doc);
         //log.debug("Document has been added: " + doc);
