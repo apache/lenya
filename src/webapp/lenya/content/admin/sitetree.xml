@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
+   $Id: sitetree.xml,v 1.10 2004/02/16 19:04:01 roku Exp $
+
     Document   : sitetree.xml
     Created on : 11. April 2003, 11:05
     Author     : andreas
@@ -17,37 +19,37 @@
     
   <node id="index" href="index.html">
     <label xml:lang="en">Home</label>
-    <label xml:lang="de">Home</label>
+    <label xml:lang="de">Startseite</label>
   </node>
   
   <node id="users" href="users.html">
     <label xml:lang="en">Users</label>
-    <label xml:lang="de">Users</label>
+    <label xml:lang="de">Benutzer</label>
   </node>
 
   <node id="groups" href="groups.html">
     <label xml:lang="en">Groups</label>
-    <label xml:lang="de">Groups</label>
+    <label xml:lang="de">Gruppen</label>
   </node>
   
   <node id="ipranges" href="ipranges.html">
     <label xml:lang="en">IP Ranges</label>
-    <label xml:lang="de">IP Ranges</label>
+    <label xml:lang="de">IP Regeln</label>
   </node>
   
   <node id="content" href="content.html">
     <label xml:lang="en">Delete Trash</label>
-    <label xml:lang="de">Delete Trash</label>
+    <label xml:lang="de">Papierkorb leeren</label>
   </node>
 
   <node id="lucene" href="lucene.html">
     <label xml:lang="en">Search</label>
-    <label xml:lang="de">Search</label>
+    <label xml:lang="de">Suche</label>
   </node>
 
   <node id="status" href="status.html">
     <label xml:lang="en">Cocoon and Server Status</label>
-    <label xml:lang="de">Cocoon and Server Status</label>
+    <label xml:lang="de">Server Status</label>
   </node>
   
 </site>
