@@ -54,7 +54,7 @@
 							Document languageDocument = builder.buildDocument(doc.getPublication(), url);
 						
 							<lenya-info:language>
-								<xsp:attribute name="href"><input:get-attribute module="page-envelope" as="string" name="context-prefix"/><xsp:expr>languageDocument.getCompleteURL()</xsp:expr></xsp:attribute>
+								<xsp:attribute name="href"><input:get-attribute module="page-envelope" as="string" name="context-prefix"/><xsp:expr>languageDocument.getCompleteInfoURL()</xsp:expr></xsp:attribute>
 								<xsp:expr>documentLanguages[i]</xsp:expr>
 							</lenya-info:language>
 						}

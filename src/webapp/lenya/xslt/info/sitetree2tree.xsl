@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.26 2003/09/04 15:28:46 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.27 2003/09/04 17:04:54 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -44,7 +44,7 @@ foldersTree.treeID = "t2"
   	<xsl:text>.html</xsl:text>
   </xsl:variable>
   
-  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/', @area, '/', $suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
+  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', @area, '/', $suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
   <xsl:choose>
   	<xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$link"/>"))</xsl:when>
     <xsl:otherwise>insDoc(foldersTree, gLnk("S", "&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$link"/>"))</xsl:otherwise>
@@ -57,7 +57,7 @@ foldersTree.treeID = "t2"
 <xsl:template match="s:node">
   <xsl:param name="parentPath"/>
   <xsl:variable name="tree-area" select="ancestor::s:site/@area"/>
-  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/', $tree-area, '/', @basic-url, @suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
+  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', $tree-area, '/', @basic-url, @suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
   <xsl:variable name="exists-language" select="s:label[lang($chosenlanguage)]"/>
   <xsl:variable name="no-language-pre"><xsl:if test="not($exists-language)">&lt;span class='lenya-info-nolanguage'&gt;</xsl:if></xsl:variable>
   <xsl:variable name="no-language-post"><xsl:if test="not($exists-language)">&lt;/span&gt;</xsl:if></xsl:variable>

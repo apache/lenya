@@ -731,11 +731,8 @@
       </map:pipeline>
       <!-- /Edit XHTML with Midas -->
 
-      <!-- Info area -->
+      <!-- Info usecases -->
       <map:pipeline>
-      	<map:match pattern="*/*/info-sitetree/**">
-          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
-      	</map:match>
         <map:match type="usecase" pattern="info-*">
           <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
@@ -745,6 +742,16 @@
       <map:pipeline>
         <map:match type="usecase" pattern="*">
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      </map:pipeline>
+
+      <!-- Info area -->
+      <map:pipeline>
+      	<map:match pattern="*/*/info-sitetree/**">
+          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+      	</map:match>
+        <map:match pattern="*/info-*/**">
+          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
       </map:pipeline>
 

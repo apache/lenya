@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.29 2003/09/03 17:44:46 egli Exp $
+$Id: DefaultDocument.java,v 1.30 2003/09/04 17:04:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -65,11 +65,11 @@ import java.util.Date;
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class DefaultDocument implements Document {
-	private String id;
-	private Publication publication;
-	private DublinCore dublincore;
+    private String id;
+    private Publication publication;
+    private DublinCore dublincore;
 
-	/**
+    /**
      * Creates a new instance of DefaultDocument.
      * @param publication The publication the document belongs to.
      * @param id The document ID (starting with a slash).
@@ -80,9 +80,9 @@ public class DefaultDocument implements Document {
         assert id.startsWith("/");
         this.id = id;
 
-        assert (publication != null) && !"".equals(publication);
+        assert(publication != null) && !"".equals(publication);
         this.publication = publication;
-        this.dublincore =  new DublinCoreProxy(this);
+        this.dublincore = new DublinCoreProxy(this);
     }
 
     /**
@@ -96,36 +96,36 @@ public class DefaultDocument implements Document {
         assert id.startsWith("/");
         this.id = id;
 
-        assert (publication != null) && !"".equals(publication);
+        assert(publication != null) && !"".equals(publication);
         this.publication = publication;
 
-		setArea(area);
+        setArea(area);
 
-		this.dublincore =  new DublinCoreProxy(this);
+        this.dublincore = new DublinCoreProxy(this);
 
     }
 
-	/**
-	 * Creates a new instance of DefaultDocument.
-	 * 
-	 * @param publication The publication the document belongs to.
-	 * @param id The document ID (starting with a slash).
-	 * @param area The area.
-	 * @param language the language
-	 */
-	protected DefaultDocument(Publication publication, String id, String area, String language) {
-		assert id != null;
-		assert id.startsWith("/");
-		this.id = id;
+    /**
+     * Creates a new instance of DefaultDocument.
+     * 
+     * @param publication The publication the document belongs to.
+     * @param id The document ID (starting with a slash).
+     * @param area The area.
+     * @param language the language
+     */
+    protected DefaultDocument(Publication publication, String id, String area, String language) {
+        assert id != null;
+        assert id.startsWith("/");
+        this.id = id;
 
-		assert (publication != null) && !"".equals(publication);
-		this.publication = publication;
-		this.language = language;
-		setArea(area);
+        assert(publication != null) && !"".equals(publication);
+        this.publication = publication;
+        this.language = language;
+        setArea(area);
 
-		this.dublincore =  new DublinCoreProxy(this);
+        this.dublincore = new DublinCoreProxy(this);
 
-	}
+    }
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getId()
@@ -134,16 +134,16 @@ public class DefaultDocument implements Document {
         return id;
     }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getNodeId()
-	 */
-	public String getNodeId() {
-		String[] ids = id.split("/");
-		String nodeId = ids[ids.length - 1];
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getNodeId()
+     */
+    public String getNodeId() {
+        String[] ids = id.split("/");
+        String nodeId = ids[ids.length - 1];
 
-		return nodeId;
-	}
-	
+        return nodeId;
+    }
+
     /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
@@ -151,27 +151,29 @@ public class DefaultDocument implements Document {
         return publication;
     }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getLastModified()
-	 */
-	public Date getLastModified() {
-		return new Date(getFile().lastModified());
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getLastModified()
+     */
+    public Date getLastModified() {
+        return new Date(getFile().lastModified());
+    }
 
-
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDublinCore()
-	 */
-	public DublinCore getDublinCore() {
-		return dublincore;
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDublinCore()
+     */
+    public DublinCore getDublinCore() {
+        return dublincore;
+    }
 
     /**
      * Returns the file for this document.
      * @return A file object.
      */
     public File getFile() {
-        return getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(),
+        return getPublication().getPathMapper().getFile(
+            getPublication(),
+            getArea(),
+            getId(),
             getLanguage());
     }
 
@@ -184,9 +186,9 @@ public class DefaultDocument implements Document {
         return language;
     }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getLanguage()
-	 */
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getLanguage()
+     */
     public String[] getLanguages() throws DocumentException {
         ArrayList languages = new ArrayList();
         SiteTree sitetree;
@@ -203,10 +205,8 @@ public class DefaultDocument implements Document {
             throw new DocumentException(e);
         }
 
-        return (String[])languages.toArray(new String[languages.size()]);
+        return (String[]) languages.toArray(new String[languages.size()]);
     }
-
-
 
     /**
      * Sets the language of this document.
@@ -234,11 +234,22 @@ public class DefaultDocument implements Document {
     }
 
     /**
+     * @see Document#getCompleteInfoURL(String)
+     */
+    public String getCompleteInfoURL() {
+        return "/"
+            + getPublication().getId()
+            + "/"
+            + Publication.INFO_AREA_PREFIX
+            + getArea()
+            + getDocumentURL();
+    }
+
+    /**
      * @see Document#getCompleteURL(String)
      */
     public String getCompleteURLWithoutLanguage() {
         String extensionSuffix = "".equals(getExtension()) ? "" : ("." + getExtension());
-
 
         return "/" + getPublication().getId() + "/" + getArea() + getId() + extensionSuffix;
     }
@@ -248,7 +259,7 @@ public class DefaultDocument implements Document {
      * @param area A string.
      */
     protected void setArea(String area) {
-        assert Publication.isValidArea(area); 
+        assert Publication.isValidArea(area);
         this.area = area;
     }
 
@@ -271,7 +282,7 @@ public class DefaultDocument implements Document {
     }
 
     private String documentURL;
-    
+
     /**
      * Sets the document URL.
      * @param url The document URL (without publication ID and area).
@@ -280,7 +291,7 @@ public class DefaultDocument implements Document {
         assert url != null;
         this.documentURL = url;
     }
-    
+
     /**
      * @see org.apache.lenya.cms.publication.Document#getDocumentURL()
      */
@@ -288,31 +299,31 @@ public class DefaultDocument implements Document {
         return documentURL;
     }
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.Document#exists()
-	 */
-	public boolean exists() throws DocumentException {
-		SiteTree sitetree;
-		try {
-			sitetree = getPublication().getSiteTree(getArea());
-			SiteTreeNode node = sitetree.getNode(getId());
-			return (node != null) && (node.getLabel(getLanguage()) != null);
-		} catch (SiteTreeException e) {
-			throw new DocumentException(e);
-		}
-	}
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.Document#exists()
+     */
+    public boolean exists() throws DocumentException {
+        SiteTree sitetree;
+        try {
+            sitetree = getPublication().getSiteTree(getArea());
+            SiteTreeNode node = sitetree.getNode(getId());
+            return (node != null) && (node.getLabel(getLanguage()) != null);
+        } catch (SiteTreeException e) {
+            throw new DocumentException(e);
+        }
+    }
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
-	 */
-	public boolean existsInAnyLanguage() throws DocumentException {
-		SiteTree sitetree;
-		try {
-			sitetree = getPublication().getSiteTree(getArea());
-			SiteTreeNode node = sitetree.getNode(getId());
-			return (node != null);
-		} catch (SiteTreeException e) {
-			throw new DocumentException(e);
-		}
-	}
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
+     */
+    public boolean existsInAnyLanguage() throws DocumentException {
+        SiteTree sitetree;
+        try {
+            sitetree = getPublication().getSiteTree(getArea());
+            SiteTreeNode node = sitetree.getNode(getId());
+            return (node != null);
+        } catch (SiteTreeException e) {
+            throw new DocumentException(e);
+        }
+    }
 }

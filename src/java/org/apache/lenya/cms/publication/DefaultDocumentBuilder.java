@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.14 2003/08/27 16:45:17 egli Exp $
+$Id: DefaultDocumentBuilder.java,v 1.15 2003/09/04 17:04:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -88,12 +88,10 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      */
     public Document buildDocument(Publication publication, String url)
         throws DocumentBuildException {
-        String publicationURI = url.substring(("/" + publication.getId()).length());
-
-        String area = publicationURI.split("/")[1];
-
-        String documentURL = publicationURI.substring(("/" + area).length());
         
+        URLInformation info = new URLInformation(url);
+        
+        String documentURL = info.getDocumentUrl();
         String originalURL = documentURL;
 
         String extension = getExtension(documentURL);
@@ -110,7 +108,6 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
             language = publication.getDefaultLanguage();
         }
 
-
         String documentId = documentURL;
 
         if (!documentId.startsWith("/")) {
@@ -118,7 +115,7 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
                 "] does not start with '/'!");
         }
 
-        DefaultDocument document = new DefaultDocument(publication, documentId, area, language);
+        DefaultDocument document = new DefaultDocument(publication, documentId, info.getArea(), language);
         document.setExtension(extension);
         document.setDocumentURL(originalURL);
         

@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.18 2003/09/03 12:10:08 egli Exp $
+$Id: Document.java,v 1.19 2003/09/04 17:04:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -88,6 +88,13 @@ public interface Document {
      * @return A publication object.
      */
     Publication getPublication();
+
+    /**
+     * Returns the complete URL of this document in the info area:<br/>
+     * /{publication-id}/info-{area}{document-id}{language-suffix}.{extension}
+     * @return A string.
+     */
+    String getCompleteInfoURL();
 
     /**
      * Returns the complete URL of this document:<br/>

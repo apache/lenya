@@ -44,7 +44,7 @@
             </xsl:choose>
           </xsl:variable>
           
-          <a id="info-tab" href="{url-info/context-prefix}/{url-info/publication-id}/{url-info/area}{$document-url}?lenya.usecase=info-overview&amp;lenya.step=showscreen">
+          <a id="info-tab" href="{url-info/context-prefix}/{url-info/publication-id}/info-{url-info/area}{$document-url}?lenya.usecase=info-overview&amp;lenya.step=showscreen">
             <xsl:choose><xsl:when test="$infoarea = 'true'">
                 <img border="0" src="/lenya/lenya/menu/images/info_active.gif" />
               </xsl:when><xsl:otherwise>
@@ -129,6 +129,14 @@
                   <xsl:attribute name="href">
                     <xsl:value-of select="@href"/>
                     <xsl:apply-templates select="@*[local-name() != 'href']"/>
+                    <xsl:text/>
+                    <xsl:if test="$infoarea = 'true'">
+                    	<xsl:choose>
+                    		<xsl:when test="contains(@href, '?')"><xsl:text>&amp;</xsl:text></xsl:when>
+                    		<xsl:otherwise><xsl:text>?</xsl:text></xsl:otherwise>
+                      </xsl:choose>
+                   		<xsl:text>lenya.area=info</xsl:text>
+                    </xsl:if>
                   </xsl:attribute><xsl:value-of select="."/></a>
               </xsl:when>
               <xsl:otherwise>

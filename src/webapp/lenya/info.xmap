@@ -184,7 +184,7 @@
     <map:pipeline>
       
       <!-- {publication-id}/{area}/{document-url} -->
-      <map:match pattern="*/*/**">
+      <map:match pattern="*/info-*/**">
         
         <map:match pattern="info-*" type="usecase">
           
@@ -212,6 +212,10 @@
           -->
           
         </map:match>
+        
+        <!-- no usecase: redirect to info-overview usecase -->
+        <map:redirect-to uri="{request:requestURI}?lenya.usecase=info-overview&amp;lenya.step=showscreen" session="true"/>
+        
       </map:match>
     </map:pipeline>
     

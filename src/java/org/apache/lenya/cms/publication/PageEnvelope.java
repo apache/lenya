@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.47 2003/09/03 12:10:08 egli Exp $
+$Id: PageEnvelope.java,v 1.48 2003/09/04 17:04:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -185,11 +185,13 @@ public class PageEnvelope {
         }
 
         // plausibility check
+        /*
         if (!webappURI
             .startsWith(
                 "/" + getPublication().getId() + "/" + document.getArea() + document.getId())) {
             throw new PageEnvelopeException(createExceptionMessage(request));
         }
+        */
     }
 
     /**

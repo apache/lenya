@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.27 2003/08/27 16:57:51 egli Exp $
+$Id: Publication.java,v 1.28 2003/09/04 17:04:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -75,7 +75,6 @@ import java.util.HashMap;
 public class Publication {
     public static final String AUTHORING_AREA = "authoring";
     public static final String LIVE_AREA = "live";
-    public static final String INFO_AREA = "info";
     public static final String ADMIN_AREA = "admin";
 	public static final String ARCHIVE_AREA = "archive";
 	public static final String TRASH_AREA = "trash";
@@ -92,9 +91,10 @@ public class Publication {
     public static final String PUBLICATION_PREFIX_URI = "lenya/pubs";
     public static final String CONFIGURATION_PATH = "config";
     public static final String CONTENT_PATH = "content";
+    public static final String INFO_AREA_PREFIX = "info-";
 
     private static final String[] areas =
-        { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA, ARCHIVE_AREA, TRASH_AREA };
+        { AUTHORING_AREA, LIVE_AREA, ADMIN_AREA, ARCHIVE_AREA, TRASH_AREA };
 
     protected static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
 

@@ -1,5 +1,5 @@
 /*
-$Id: IdentityDocumentIdToPathMapper.java,v 1.1 2003/08/28 10:12:02 andreas Exp $
+$Id: IdentityDocumentIdToPathMapper.java,v 1.2 2003/09/04 17:04:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,10 +68,6 @@ public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String, java.lang.String)
      */
     public File getFile(Publication publication, String area, String documentId, String language) {
-        if (area.equals(Publication.INFO_AREA)) {
-            area = Publication.AUTHORING_AREA;
-        }
-
         File areaDirectory =
             new File(publication.getDirectory(), Publication.CONTENT_PATH + File.separator + area);
         File file = new File(areaDirectory, getPath(documentId, language));
