@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<lucene>
+  <update-index type="new"/>
+<!--
+  <update-index type="incremental"/>
+-->
+
+  <index-dir src="../../work/search/lucene/index/live/index"/>
+  <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump/live"/>
+
+  <indexer class="org.apache.lenya.lucene.index.DefaultIndexer"/>
+</lucene>
