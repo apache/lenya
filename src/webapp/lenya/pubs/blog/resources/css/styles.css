@@ -15,6 +15,23 @@ td#title {
   /*border: 1pt solid blue;*/
 }
 
+td#title a {
+  text-decoration: none;
+  color: #006699;
+}
+
+td#title a:hover {
+  color: #ff6600;
+}
+
+td#title a:visited {
+  color: #006699;
+}
+
+td#title a:visited:hover {
+  color: #ff6600;
+}
+
 td#subtitle {
   padding-left: 10pt;
   padding-top: 5pt;
@@ -43,7 +60,23 @@ td#sidebar {
   /*border: 1pt solid green;*/
 }
 
+td#sidebar a {
+  text-decoration: none;
+  color: #3366cc;
+}
 
+td#sidebar a:hover {
+  color: #ff6600;
+}
+
+td#sidebar a:visited {
+  color: #909090;
+}
+
+td#sidebar a:visited:hover {
+  color: #ff6600;
+  background-color: transparent;
+}
 
 div.sidebar-title {
   font-style: verdana, sans-serif;
@@ -60,10 +93,6 @@ div.sidebar-content {
   color: #000000;
   padding: 5pt;
   /*border: 1pt solid red;*/
-}
-
-td#sidebar a {
-  text-decoration: none;
 }
 
 p.issued {
@@ -87,6 +116,20 @@ div.title {
 
 div.title a {
   text-decoration: none;
+  color: #3366cc;
+}
+
+div.title a:hover {
+  color: #ff6600;
+}
+
+div.title a:visited {
+  color: #909090;
+}
+
+div.title a:visited:hover {
+  color: #ff6600;
+  background-color: transparent;
 }
 
 div.subtitle {

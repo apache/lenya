@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.1 2003/08/05 19:50:47 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.2 2003/08/30 11:47:00 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:name>Lenya's Weblog</lenya:name>
@@ -13,6 +13,7 @@ The positioning can be customized by editing the file <code>xslt/global.xsl</cod
 might be helpful
 <br /><a href="http://www.w3schools.com/css/css_reference.asp">CSS2 Reference</a>
 <br /><a href="http://www.csszengarden.com">The Beauty of CSS Design</a>
+<br /><a href="http://www.lightsphere.com/colors/">216 Color Square</a>
 
 <h3>Weblog Resources</h3>
 <a href="http://www.intertwingly.net/wiki/pie/Syntax">Doctypes</a> (entry, feed, etc.)
