@@ -17,13 +17,27 @@
         <map:generate type="serverpages" src="content/search/search-and-results.xsp" label="xml">
           <map:parameter name="max-hits-per-page" value="3"/>
           <map:parameter name="max-pages" value="7"/>
+
           <map:parameter name="number-of-pubs" value="1"/>
+<!--
+          <map:parameter name="number-of-pubs" value="2"/>
+-->
+
           <map:parameter name="pub0-id" value="{1}"/>
           <map:parameter name="pub0-name" value="{1}"/>
           <map:parameter name="pub0-index-dir" value="pubs/{1}/work/search/lucene/index/{2}/index"/>
           <map:parameter name="pub0-search-fields" value="title,contents"/>
           <map:parameter name="pub0-excerpt-dir" value="pubs/{1}/work/search/lucene/htdocs_dump/{2}"/>
           <map:parameter name="pub0-prefix" value=""/>
+
+<!--
+          <map:parameter name="pub1-id" value="matrix"/>
+          <map:parameter name="pub1-name" value="Matrix"/>
+          <map:parameter name="pub1-index-dir" value="pubs/oscom/work/search/lucene/index/index-cmfsMatrix"/>
+          <map:parameter name="pub1-search-fields" value="title,contents,license"/>
+          <map:parameter name="pub1-excerpt-dir" value="pubs/oscom/content/authoring/matrix"/>
+          <map:parameter name="pub1-prefix" value="http://www.oscom.org/matrix"/>
+-->
         </map:generate>
         <map:transform src="xslt/search/sort.xsl"/>
         

@@ -20,25 +20,17 @@
 <h1>Search with Lucene (Area: <xsl:value-of select="$area"/>)</h1>
   <form>
 <table bgcolor="#dddddd">
-<!--
-<tr><td>
-    <xsl:for-each select="configuration/publication">
-      <xsl:choose>
-        <xsl:when test="@pid = ../@checked-pid">
-          <input type="radio" name="publication-id"><xsl:attribute name="value"><xsl:value-of select="@pid"/></xsl:attribute><xsl:attribute name="checked"/></input><xsl:value-of select="name"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <input type="radio" name="publication-id"><xsl:attribute name="value"><xsl:value-of select="@pid"/></xsl:attribute></input><xsl:value-of select="name"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-</td></tr>
--->
+
+
 <tr><td>
     <input type="text" name="queryString" size="60">
       <xsl:attribute name="value"><xsl:value-of select="search/query-string"/></xsl:attribute>
     </input>
 </td></tr>
+
+
+<xsl:apply-templates select="configuration"/>
+
 <tr><td>
     Sort by 
     <select name="sortBy">
@@ -56,23 +48,9 @@
       </option>
     </select>
 </td></tr>
-<tr><td>
-    Fields
-    <select name="fields">
-      <option value="all">
-        <xsl:if test="search/fields='all'">
-          <xsl:attribute name="selected">selected</xsl:attribute>
-        </xsl:if>
-        Contents (Title or Body)
-      </option>
-      <option value="title">
-        <xsl:if test="search/fields='title'">
-          <xsl:attribute name="selected">selected</xsl:attribute>
-        </xsl:if>
-        Title
-      </option>
-    </select>
-</td></tr>
+
+
+
 <tr><td align="right">
     <input type="submit" name="find" value="Search"/>
 </td></tr>
@@ -84,6 +62,40 @@
 </body>
 </html>
 </xsl:template>
+
+
+
+<xsl:template match="configuration">
+    <xsl:for-each select="publication">
+<tr><td>
+      <xsl:choose>
+        <xsl:when test="@pid = ../@checked-pid">
+          <input type="radio" name="publication-id"><xsl:attribute name="value"><xsl:value-of select="@pid"/></xsl:attribute><xsl:attribute name="checked"/></input><xsl:value-of select="name"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <input type="radio" name="publication-id"><xsl:attribute name="value"><xsl:value-of select="@pid"/></xsl:attribute></input><xsl:value-of select="name"/>
+        </xsl:otherwise>
+      </xsl:choose>
+</td></tr>
+
+<tr><td>
+    Fields
+    <select name="{@pid}.fields">
+    <xsl:for-each select="search-fields/field">
+      <option value="{.}">
+        <xsl:if test="/search-and-results/search/fields = .">
+          <xsl:attribute name="selected">selected</xsl:attribute>
+        </xsl:if>
+        <xsl:value-of select="."/>
+      </option>
+    </xsl:for-each>
+    </select>
+</td></tr>
+    </xsl:for-each>
+</xsl:template>
+
+
+
 
 <xsl:template match="results">
   <h3>Results (Publication <xsl:value-of select="../search/publication-name"/>)</h3>

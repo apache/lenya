@@ -143,12 +143,24 @@
         end=new Integer(endString).intValue();
         }
 
-      String fields_para=<xsp-request:get-parameter name="fields" default="all"/>;
+      String fields_para = request.getParameter(publication_id + ".fields");
+      //String fields_para = <!--<xsp-request:get-parameter name="fields" default="null"/>-->;
+
+      field = fields_para;
+      fields = new String[1];
+      fields[0] = field;
+/*
       if(fields_para.equals("title")){
         fields=new String[1];
         fields[0]="title";
 
         field="title";
+        }
+      if(fields_para.equals("license")){
+        fields=new String[1];
+        fields[0]="license";
+
+        field="license";
         }
       else{
         fields=new String[2];
@@ -157,6 +169,7 @@
 
         field="contents";
         }
+*/
 
 
 
