@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import junit.framework.TestCase;
@@ -25,6 +23,11 @@ import junit.textui.TestRunner;
 import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 
+/**
+ * Dublin Core test.
+ * 
+ * @version $Id:$
+ */
 public class DublinCoreTest extends TestCase {
 
     private static final String AREA = "authoring";
@@ -70,12 +73,12 @@ public class DublinCoreTest extends TestCase {
                     DOCUMENT_ID,
                     LANGUAGE));
         DublinCore dcCore = doc.getDublinCore();
-        String title = dcCore.getTitle();
-        String subject = dcCore.getSubject();
-        String creator = dcCore.getCreator();
-        String dateIssued = dcCore.getDateIssued();
+        String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
+        String subject = dcCore.getFirstValue(DublinCore.ELEMENT_SUBJECT);
+        String creator = dcCore.getFirstValue(DublinCore.ELEMENT_CREATOR);
+        String dateIssued = dcCore.getFirstValue(DublinCore.TERM_ISSUED);
 
-        dcCore.setCreator(CREATOR);
+        dcCore.setValue(DublinCore.ELEMENT_CREATOR, CREATOR);
         dcCore.save();
 
         Document doc2 =
@@ -88,11 +91,11 @@ public class DublinCoreTest extends TestCase {
                     LANGUAGE));
 
         DublinCore dcCore2 = doc2.getDublinCore();
-        assertEquals(title, dcCore2.getTitle());
-        assertEquals(subject, dcCore2.getSubject());
-        assertEquals(dateIssued, dcCore2.getDateIssued());
-        assertFalse(creator.equals(dcCore2.getCreator()));
-        assertEquals(CREATOR, dcCore2.getCreator());
+        assertEquals(title, dcCore2.getFirstValue(DublinCore.ELEMENT_TITLE));
+        assertEquals(subject, dcCore2.getFirstValue(DublinCore.ELEMENT_SUBJECT));
+        assertEquals(dateIssued, dcCore2.getFirstValue(DublinCore.TERM_ISSUED));
+        assertFalse(creator.equals(dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR)));
+        assertEquals(CREATOR, dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR));
     }
 
     /** @see junit.framework.TestCase#setUp() */
