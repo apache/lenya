@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMWriter.java,v 1.14 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -259,7 +259,7 @@ public class DOMWriter {
             out.print("?>\n\n");
 
             Element root = ((Document) node).getDocumentElement();
-            root.setAttribute("xmlns:xlink", "http://www.w3.org/xlink");
+            root.setAttribute("xmlns:xlink", XLink.XLINK_NAMESPACE);
             printWithoutFormatting(root);
             out.flush();
 
