@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.14 2003/08/28 10:06:44 andreas Exp $
+$Id: DefaultAccessController.java,v 1.15 2003/10/16 08:57:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,10 @@ $Id: DefaultAccessController.java,v 1.14 2003/08/28 10:06:44 andreas Exp $
 */
 package org.apache.lenya.cms.ac2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
@@ -95,10 +97,11 @@ public class DefaultAccessController
 
     private ServiceSelector authorizerSelector;
     private Map authorizers = new HashMap();
+    private List authorizerKeys = new ArrayList();
 
     private ServiceSelector policyManagerSelector;
     private PolicyManager policyManager;
-    
+
     private Authenticator authenticator;
 
     /**
@@ -121,6 +124,9 @@ public class DefaultAccessController
 
         boolean authorized = false;
 
+        getLogger().info("=========================================================");
+        getLogger().info("Beginning authorization.");
+        
         if (hasAuthorizers()) {
             Authorizer[] authorizers = getAuthorizers();
             int i = 0;
@@ -128,15 +134,16 @@ public class DefaultAccessController
 
             while ((i < authorizers.length) && authorized) {
 
+                getLogger().info("---------------------------------------------------------");
+                getLogger().info("Invoking authorizer [" + authorizers[i] + "]");
+
                 if (authorizers[i] instanceof PolicyAuthorizer) {
                     PolicyAuthorizer authorizer = (PolicyAuthorizer) authorizers[i];
                     authorizer.setAccreditableManager(accreditableManager);
                     authorizer.setPolicyManager(policyManager);
                 }
 
-                authorized =
-                    authorized
-                        && authorizers[i].authorize(request);
+                authorized = authorized && authorizers[i].authorize(request);
 
                 getLogger().info(
                     "Authorizer [" + authorizers[i] + "] returned [" + authorized + "]");
@@ -144,6 +151,10 @@ public class DefaultAccessController
                 i++;
             }
         }
+        getLogger().info("=========================================================");
+        getLogger().info("Authorization complete, result: [" + authorized + "]");
+        getLogger().info("=========================================================");
+
 
         return authorized;
     }
@@ -210,17 +221,19 @@ public class DefaultAccessController
         for (int i = 0; i < authorizerConfigurations.length; i++) {
             String type = authorizerConfigurations[i].getAttribute(TYPE_ATTRIBUTE);
             Authorizer authorizer = (Authorizer) authorizerSelector.select(type);
+            authorizerKeys.add(type);
             authorizers.put(type, authorizer);
             getLogger().info("Adding authorizer [" + type + "]");
         }
     }
-    
+
     /**
      * Configures the authorizers.
      * @param configuration The main configuration.
      * @throws ConfigurationException when something went wrong.
      */
-    protected void configureAuthorizers(Configuration configuration) throws ConfigurationException {
+    protected void configureAuthorizers(Configuration configuration)
+        throws ConfigurationException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
 
         for (int i = 0; i < authorizerConfigurations.length; i++) {
@@ -247,7 +260,7 @@ public class DefaultAccessController
         policyManager = (PolicyManager) policyManagerSelector.select(policyManagerType);
         getLogger().info("Policy manager type: [" + policyManagerType + "]");
     }
-    
+
     /**
      * Sets up the authenticator.
      * @throws ServiceException when something went wrong.
@@ -281,7 +294,14 @@ public class DefaultAccessController
      * @return An array of authorizers.
      */
     public Authorizer[] getAuthorizers() {
-        return (Authorizer[]) authorizers.values().toArray(new Authorizer[authorizers.size()]);
+        
+        Authorizer[] authorizerArray = new Authorizer[authorizers.size()];
+        for (int i = 0; i < authorizers.size(); i++) {
+            String key = (String) authorizerKeys.get(i);
+            authorizerArray[i] = (Authorizer) authorizers.get(key);
+        }
+        
+        return authorizerArray;
     }
 
     /**
@@ -317,7 +337,7 @@ public class DefaultAccessController
             }
             getManager().release(authorizerSelector);
         }
-        
+
         if (authenticator != null) {
             getManager().release(authenticator);
         }
@@ -366,9 +386,11 @@ public class DefaultAccessController
         if (!hasValidIdentity(session)) {
             Identity identity = new Identity();
             String remoteAddress = request.getRemoteAddr();
-            
+
             Machine machine = new Machine(remoteAddress);
-            for (Iterator i = accreditableManager.getIPRangeManager().getIPRanges(); i.hasNext(); ) {
+            for (Iterator i = accreditableManager.getIPRangeManager().getIPRanges();
+                i.hasNext();
+                ) {
                 IPRange range = (IPRange) i.next();
                 if (range.contains(machine)) {
                     machine.addIPRange(range);
@@ -395,5 +417,5 @@ public class DefaultAccessController
         }
         return valid;
     }
-    
+
 }
