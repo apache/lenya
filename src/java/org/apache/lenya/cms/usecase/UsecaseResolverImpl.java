@@ -16,21 +16,29 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Usecase resolver implementation.
- *
- * @version $Id$ 
+ * 
+ * @version $Id$
  */
 public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseResolver,
-        Serviceable, Disposable {
+        Serviceable, Disposable, Contextualizable {
 
     /**
      * Ctor.
@@ -44,7 +52,16 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String)
      */
     public Usecase resolve(String name) throws ServiceException {
-        return (Usecase) this.selector.select(name);
+        Usecase usecase = null;
+        String publicationUsecaseName = getPublicationUsecaseName(name);
+        if (this.selector.isSelectable(publicationUsecaseName)) {
+            usecase = (Usecase) this.selector.select(publicationUsecaseName);
+        }
+        else {
+            usecase = (Usecase) this.selector.select(name);
+            
+        }
+        return usecase;
     }
 
     private ServiceManager manager;
@@ -81,7 +98,49 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      * @see org.apache.lenya.cms.usecase.UsecaseResolver#isRegistered(java.lang.String)
      */
     public boolean isRegistered(String name) throws ServiceException {
-        return this.selector.isSelectable(name);
+        return this.selector.isSelectable(getPublicationUsecaseName(name))
+                || this.selector.isSelectable(name);
     }
-    
+
+    /**
+     * Returns the name of the publication-overridden usecase to be resolved.
+     * @param name The plain usecase name.
+     * @return A string.
+     */
+    protected String getPublicationUsecaseName(String name) {
+        return getPublication().getId() + "/" + name;
+    }
+
+    private Context context;
+
+    /**
+     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
+     */
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
+    }
+
+    /**
+     * Returns the context.
+     * @return A context.
+     */
+    protected Context getContext() {
+        return this.context;
+    }
+
+    /**
+     * Returns the publication the usecase was invoked in.
+     * @return A publication.
+     */
+    protected Publication getPublication() {
+        Map objectModel = ContextHelper.getObjectModel(getContext());
+        Publication publication;
+        try {
+            publication = PublicationFactory.getPublication(objectModel);
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+        return publication;
+    }
+
 }
