@@ -159,7 +159,8 @@
     <map:transformer name="session-pre" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.webapps.session.transformation.SessionPreTransformer"/>
     <map:transformer name="session-post" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.webapps.session.transformation.SessionPostTransformer"/>
     
-    <map:transformer logger="sitemap.transformer.menufilter" name="menufilter" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/>
+    <map:transformer logger="lenya.sitemap.transformer.workflowmenu" name="workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/>
+    <map:transformer logger="lenya.sitemap.transformer.usecasemenu" name="usecasemenu" src="org.apache.lenya.cms.cocoon.transformation.UsecaseMenuTransformer"/>
 
 
    <map:transformer logger="sitemap.transformer.sql" name="sql" src="org.apache.cocoon.transformation.SQLTransformer"/>
