@@ -1,5 +1,5 @@
 /*
-$Id: TaskWrapper.java,v 1.2 2003/08/25 09:59:49 andreas Exp $
+$Id: TaskWrapper.java,v 1.3 2003/08/29 11:38:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,8 @@ $Id: TaskWrapper.java,v 1.2 2003/08/25 09:59:49 andreas Exp $
 */
 package org.apache.lenya.cms.task;
 
-import org.apache.avalon.framework.parameters.Parameters;
+import java.util.Map;
+
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
@@ -81,9 +82,16 @@ public interface TaskWrapper {
     Element save(NamespaceHelper helper);
     
     /**
-     * Returns the task wrapper parameters.
-     * @return A parameter object.
+     * @param helper The namespace helper of the document.
+     * Restores the wrapper parameters from an XML element.
+     * @param element An XML element.
      */
-    Parameters getParameters();
+    void restore(NamespaceHelper helper, Element element);
+    
+    /**
+     * Returns the task wrapper parameters.
+     * @return A map.
+     */
+    Map getParameters();
     
 }
