@@ -4,7 +4,7 @@
 <block>
 <title>Feeds</title>
 <content>
-<a href="index.xml">Echo Feed</a>
+<a href="index.xml">Echo/Atom Feed</a>
 <br />RSS Feed
 </content>
 </block>
@@ -12,15 +12,7 @@
 <block>
 <title>Archives&#160;by&#160;Date</title>
 <content>
-August 2003
-<br />July 2003
-<br />June 2003
-<br />May 2003
-<br />April 2003
-<br />March 2003
-<br />February 2003
-<br />January 2003
-<br />December 2002
+<a href="/lenya/blog/live/2003/07/">July 2003</a>
 </content>
 </block>
 
@@ -29,6 +21,7 @@ August 2003
 <content>
 <a href="http://cocoon.apache.org/lenya/">Lenya</a>
 <br /><a href="http://cocoon.apache.org">Cocoon</a>
+<br /><a href="http://www.apache.org">Apache</a>
 </content>
 </block>
 

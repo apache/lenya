@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.27 2003/08/31 19:30:21 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.28 2003/08/31 19:47:13 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -164,8 +164,11 @@
     </map:pipeline>
 
     <!-- Archives -->
+    <map:pipeline>
+<!--
     <map:pipeline type="noncaching">
-      <map:match pattern="*/archives/*/*/">
+-->
+      <map:match pattern="*/*/*/index.xml">
         <map:generate type="directory" src="content/{1}/entries/{2}/{3}/">
           <map:parameter name="depth" value="2"/>
           <map:parameter name="reverse" value="true"/>
@@ -177,6 +180,21 @@
           <map:parameter name="href" value="content/{1}/dummy.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/*/*/lenya-page-body.xml">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon:/{1}/{2}/{3}/index.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/*/*/">
+        <map:aggregate element="lenya">
+          <map:part src="cocoon:/{1}/menubar/archive.xml"/>
+          <map:part src="cocoon:/{1}/{2}/{3}/lenya-page-body.xml"/>
+        </map:aggregate>
+        <map:transform src="xslt/feed/main-{1}.xsl"/>
+        <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">
         <map:serialize type="xml"/>
@@ -192,6 +210,11 @@
       </map:match>
       <map:match pattern="authoring/menubar/feed.xml">
         <map:generate type="serverpages" src="config/menus/feed.xsp"/>
+        <map:transform type="usecasemenu"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="authoring/menubar/archive.xml">
+        <map:generate type="serverpages" src="config/menus/archive.xsp"/>
         <map:transform type="usecasemenu"/>
         <map:serialize type="xml"/>
       </map:match>
