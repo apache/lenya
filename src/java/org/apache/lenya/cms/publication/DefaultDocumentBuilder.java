@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.13 2003/08/21 10:30:02 egli Exp $
+$Id: DefaultDocumentBuilder.java,v 1.14 2003/08/27 16:45:17 egli Exp $
 <License>
 
  ============================================================================
@@ -194,8 +194,6 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
             int slashIndex = publicationURI.indexOf("/");
             if (slashIndex > -1) {
-                String area = publicationURI.substring(0, slashIndex);
-
                 String documentUri = publicationURI.substring(slashIndex);
                 if (documentUri.startsWith("/")) {
                     isDocument = true;
