@@ -152,6 +152,19 @@ One needs to configure <code>Domain.xml</code>
 <![CDATA[
 cd /home/michiii/build/axis-1_1RC2
 java -cp lib/axis.jar org.apache.axis.utils.tcpmon
+
+Enter "Listen Port# 3333" for instance
+
+Select "Act as a... Listener"
+
+Enter "Target Hostname 195.226.6.70" for instance
+Enter "Target Port# 8080" for instance
+
+Click "Add" and a new tab saying "3333" should show up
+
+Click on this new tab to view the requests and responses
+
+Enter within your browser "http://127.0.0.1:3333/lenya/index.html"
 ]]>
 </source>
 </section>
