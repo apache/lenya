@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>opencms</id>
+  <system_name>OpenCms</system_name>
+  <main_url>http://www.opencms.org/</main_url>
+  <license>
+    <license_name>GNU Lesser General Public License (LGPL)</license_name>
+    <license_url>http://www.fsf.org/licenses/licenses.html#LGPL</license_url>
+  </license>
+</system>

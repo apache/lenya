@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>kontentor</id>
+  <system_name>Kontentor</system_name>
+  <main_url>http://demo.iuveno-net.de/iuveno/Products/Kontentor/CVS</main_url>
+  <license>
+    <license_name>GPL (GNU Public License)</license_name>
+    <license_url>http://www.gnu.org/licenses/gpl.html</license_url>
+  </license>
+</system>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>cofax</id>
+  <system_name>Cofax</system_name>
+  <main_url>http://www.cofax.org/</main_url>
+  <license>
+    <license_name>Cofax Software License (based on apache)</license_name>
+    <license_description></license_description>
+    <license_url>http://www.cofax.org/site/docs/license.jsp</license_url>
+  </license>
+</system>

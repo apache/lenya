@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>silva</id>
+  <system_name>Silva</system_name>
+  <main_url>http://www.infrae.nl/products/silva</main_url>
+  <license>
+    <license_name>Apache like Software License</license_name>
+    <license_url>http://www.zope.org/Members/faassen/Silva/LICENSE.txt</license_url>
+  </license>
+</system>

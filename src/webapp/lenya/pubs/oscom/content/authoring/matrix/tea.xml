@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="framework">
+  <id>tea</id>
+  <system_name>Tea Trove</system_name>
+  <main_url>http://teatrove.sourceforge.net</main_url>
+  <faq_url><![CDATA[http://opensource.go.com/Tea/faq.html]]></faq_url>
+  <license>
+    <license_name>Tea Software License (based on Apache)</license_name>
+    <license_description></license_description>
+    <license_url>http://opensource.go.com/license.html</license_url>
+  </license>
+</system>

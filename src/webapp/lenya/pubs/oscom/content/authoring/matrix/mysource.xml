@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>mysource</id>
+  <system_name>MySource</system_name>
+  <main_url>http://mysource.squiz.net/</main_url>
+  <license>
+    <license_name>Apache License</license_name>
+    <license_url>http://mysource.squiz.net/what_is_it/licence</license_url>
+  </license>
+</system>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>callisto</id>
+  <system_name>Callisto</system_name>
+  <main_url>http://www.callistocms.com</main_url>
+  <license>
+    <license_name>GPL (General Public License)</license_name>
+    <license_url>http://www.opensource.org/licenses/gpl-license.html</license_url>
+  </license>
+</system>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>typo3</id>
+  <system_name>Typo3</system_name>
+  <main_url>http://www.typo3.com</main_url>
+  <license>
+    <license_name>???</license_name>
+    <license_url>http://???</license_url>
+  </license>
+</system>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>jahia</id>
+  <system_name>Jahia CMS and Portal Server</system_name>
+  <main_url>http://www.jahia.org</main_url>
+  <license>
+    <license_name>Jahia Collaborative Open Source License</license_name>
+    <license_description>[oscom comment]not an approved open-source
+license.</license_description>
+    <license_url>http://www.jahia.org/jahia/Jahia/pid/145</license_url>
+  </license>
+</system>

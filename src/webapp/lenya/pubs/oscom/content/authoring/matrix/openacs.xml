@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>openacs</id>
+  <system_name>OpenACS</system_name>
+  <main_url>http://openacs.org/</main_url>
+  <license>
+    <license_name>GNU General Public License (GPL)</license_name>
+    <license_description></license_description>
+    <license_url>http://www.gnu.org/licenses/gpl.html</license_url>
+  </license>
+</system>

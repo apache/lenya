@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="framework">
+  <id>slide</id>
+  <system_name>Slide</system_name>
+  <main_url>http://jakarta.apache.org/slide/</main_url>
+  <faq_url><![CDATA[http://faq.globalvision.com.au/cgi-bin/fom]]></faq_url>
+  <license>
+    <license_name>Apache Software License</license_name>
+    <license_description></license_description>
+    <license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
+  </license>
+</system>
