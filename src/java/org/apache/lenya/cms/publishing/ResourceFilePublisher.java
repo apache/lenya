@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourceFilePublisher.java,v 1.8 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id: ResourceFilePublisher.java,v 1.9 2004/08/16 13:05:40 andreas Exp $  */
 
 package org.apache.lenya.cms.publishing;
 
@@ -68,7 +68,7 @@ public class ResourceFilePublisher extends DefaultFilePublisher {
             File destinationDir = new File(absoluteResourceLivePath +
                     FileUtil.getPath(sources[index]));
 
-            if ((sourceDir == null) || !sourceDir.isDirectory()) {
+            if (!sourceDir.isDirectory()) {
                 // Hmm, the source dir doesn't exist. Ok, this
                 // document possibly doesn't have any related
                 // resources (e.g. images, etc.). Skip it.
