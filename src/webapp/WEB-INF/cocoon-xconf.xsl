@@ -66,6 +66,7 @@
 <xsl:template match="cocoon">
   <xsl:copy>
   <xsl:copy-of select="@*"/>
+  <xsl:attribute name="user-roles">/WEB-INF/classes/org/apache/lenya/lenya.roles</xsl:attribute>
   
     <!--+
       | Entity resolution catalogs
@@ -108,6 +109,13 @@
   </entity-resolver>
 
   <xsl:apply-templates select="*[local-name() != 'entity-resolver']"/>
+
+  <component logger="lenya.ac"
+      class="org.apache.lenya.cms.ac2.file.FileAccessController"
+      role="org.apache.lenya.cms.ac2.AccessController/unicms">
+    <parameter name="directory" value="context:///lenya/pubs/unizh/config/ac"/>
+  </component>
+
   </xsl:copy>
 </xsl:template>
 
