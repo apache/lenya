@@ -158,6 +158,7 @@ public class WGet{
     substitutePrefix(file.getAbsolutePath(),prefixSubstitute);
 
     getLinks(url);
+    getMoreLinks(url);
 
     return sresponse;
     }
@@ -216,6 +217,23 @@ public class WGet{
       }
     catch(Exception e){
       log.error(".getLinks(): "+e);
+      }
+
+    return null;
+    }
+/**
+ *
+ */
+  public URL[] getMoreLinks(URL url) throws IOException{
+    log.debug(".getMoreLinks(): "+url);
+
+    org.wyona.search.crawler.ContentHandler handler=new org.wyona.search.crawler.HTMLHandler();
+    handler.parse(((HttpURLConnection)url.openConnection()).getInputStream());
+    java.util.List links=handler.getLinks();
+
+    java.util.Iterator iterator=links.iterator();
+    while(iterator.hasNext()){
+      log.debug(".getMoreLinks(): Another Link: "+(String)iterator.next());
       }
 
     return null;
