@@ -1,5 +1,5 @@
 /*
- * $Id: HTMLFormWriteAction.java,v 1.4 2003/02/17 16:20:56 egli Exp $
+ * $Id: HTMLFormWriteAction.java,v 1.5 2003/02/18 17:04:37 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -72,9 +72,6 @@ import java.util.StringTokenizer;
 public class HTMLFormWriteAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
         
-    //  String[] public_hrefs=null;
-    //  boolean logRequests=false;
-
     /**
      * DOCUMENT ME!
      *
@@ -85,24 +82,6 @@ public class HTMLFormWriteAction extends AbstractComplementaryConfigurableAction
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
 
-        /*
-            Configuration[] publics=conf.getChildren("public");
-            public_hrefs=new String[publics.length];
-            for(int i=0;i<publics.length;i++){
-              public_hrefs[i]=publics[i].getAttribute("href");
-              getLogger().debug("CONFIGURATION: public: "+public_hrefs[i]);
-              }
-            Configuration log=conf.getChild("log");
-            if(log.getValue("off").equals("on")){
-              logRequests=true;
-              }
-            if(logRequests){
-              getLogger().debug("CONFIGURATION: log requests: on");
-              }
-            else{
-              getLogger().debug("CONFIGURATION: log requests: off");
-              }
-        */
     }
 
     /**
@@ -118,61 +97,14 @@ public class HTMLFormWriteAction extends AbstractComplementaryConfigurableAction
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
-        if (23 > 2) {
-            HashMap actionMap = new HashMap();
+    public Map act(Redirector redirector, SourceResolver resolver,
+		   Map objectModel, String src,
+		   Parameters parameters)
+	throws Exception {
+        
+	HashMap actionMap = new HashMap();
 
-            return actionMap;
-        }
+	return actionMap;
 
-        return null;
-
-        /*
-            // Get request object
-            Request req=(Request)objectModel.get(Constants.REQUEST_OBJECT);
-            if(req == null){
-              getLogger().error ("No request object");
-              return null;
-              }
-            Session session=req.getSession(true);
-            if(session == null){
-              getLogger().error("No session object");
-              return null;
-              }
-
-            // Get uri
-            String request_uri=req.getRequestURI();
-            String sitemap_uri=req.getSitemapURI();
-            getLogger().error("request-uri="+request_uri);
-            getLogger().error("sitemap-uri="+sitemap_uri);
-
-            // Set history
-            Stack history=(Stack)session.getAttribute("org.wyona.cms.cocoon.acting.History");
-            if(history == null){
-              history=new Stack(10);
-              session.setAttribute("org.wyona.cms.cocoon.acting.History",history);
-              }
-            history.push(sitemap_uri);
-
-            // Check public uris from configuration above. Should only be used during development before the implementation of a concrete authorizer.
-            for(int i=0;i<public_hrefs.length;i++){
-              if(sitemap_uri.equals(public_hrefs[i])){
-                getLogger().error("Permission granted: "+request_uri);
-                HashMap actionMap=new HashMap();
-                return actionMap;
-                }
-              }
-
-            session.setAttribute("protected_destination",request_uri);
-
-            HashMap actionMap=new HashMap();
-            if(authorize(req,actionMap)){
-              getLogger().error("Permission granted: "+request_uri);
-              return actionMap;
-              }
-            getLogger().error("Permission denied: "+request_uri);
-            return null;
-        */
     }
 }
