@@ -44,9 +44,24 @@ public class Metadata extends SiteUsecase {
         super.doInitialize();
 
         try {
-        	dc = getDocument().getDublinCore();
-        } catch (Exception e) {
-            throw new DocumentBuildException("Initialization failed: ", e);
+        	dc = getSourceDocument().getDublinCore();
+            setParameter(dc.ELEMENT_CREATOR, dc.getFirstValue(dc.ELEMENT_CREATOR));
+            setParameter(dc.ELEMENT_TITLE, dc.getFirstValue(dc.ELEMENT_TITLE));
+            setParameter(dc.ELEMENT_DESCRIPTION, dc.getFirstValue(dc.ELEMENT_CREATOR));
+            setParameter(dc.ELEMENT_SUBJECT, dc.getFirstValue(dc.ELEMENT_SUBJECT));
+            setParameter(dc.ELEMENT_PUBLISHER, dc.getFirstValue(dc.ELEMENT_PUBLISHER));
+            setParameter(dc.ELEMENT_RIGHTS, dc.getFirstValue(dc.ELEMENT_RIGHTS));
+            setParameter(dc.ELEMENT_TYPE, dc.getFirstValue(dc.ELEMENT_TYPE));
+            setParameter(dc.ELEMENT_DATE, dc.getFirstValue(dc.ELEMENT_DATE));
+            setParameter(dc.ELEMENT_FORMAT, dc.getFirstValue(dc.ELEMENT_FORMAT));
+            setParameter(dc.ELEMENT_SOURCE, dc.getFirstValue(dc.ELEMENT_SOURCE));
+            setParameter(dc.ELEMENT_LANGUAGE, dc.getFirstValue(dc.ELEMENT_LANGUAGE));
+            setParameter(dc.ELEMENT_RELATION, dc.getFirstValue(dc.ELEMENT_RELATION));
+            setParameter(dc.ELEMENT_COVERAGE, dc.getFirstValue(dc.ELEMENT_COVERAGE));
+        }
+        catch (Exception e) {
+        	getLogger().error("Unable to load Dublin Core metadata.", e);
+        	addErrorMessage("Unable to load Dublin Core metadata.");
         }
     }
             
@@ -90,31 +105,8 @@ public class Metadata extends SiteUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
-    /* TODO load dc parameters 
-     * TODO deal with exception handling, maybe in the interface?*/
     public void setParameter(String name, Object value) {
         super.setParameter(name, value);
         
-        if (true) {
-/*            try {
-                setParameter(dc.ELEMENT_CREATOR, dc.getFirstValue(dc.ELEMENT_CREATOR));
-                setParameter(dc.ELEMENT_TITLE, dc.getFirstValue(dc.ELEMENT_TITLE));
-                setParameter(dc.ELEMENT_DESCRIPTION, dc.getFirstValue(dc.ELEMENT_CREATOR));
-                setParameter(dc.ELEMENT_SUBJECT, dc.getFirstValue(dc.ELEMENT_SUBJECT));
-                setParameter(dc.ELEMENT_PUBLISHER, dc.getFirstValue(dc.ELEMENT_PUBLISHER));
-                setParameter(dc.ELEMENT_RIGHTS, dc.getFirstValue(dc.ELEMENT_RIGHTS));
-                setParameter(dc.ELEMENT_TYPE, dc.getFirstValue(dc.ELEMENT_TYPE));
-                setParameter(dc.ELEMENT_DATE, dc.getFirstValue(dc.ELEMENT_DATE));
-                setParameter(dc.ELEMENT_FORMAT, dc.getFirstValue(dc.ELEMENT_FORMAT));
-                setParameter(dc.ELEMENT_SOURCE, dc.getFirstValue(dc.ELEMENT_SOURCE));
-                setParameter(dc.ELEMENT_LANGUAGE, dc.getFirstValue(dc.ELEMENT_LANGUAGE));
-                setParameter(dc.ELEMENT_RELATION, dc.getFirstValue(dc.ELEMENT_RELATION));
-                setParameter(dc.ELEMENT_COVERAGE, dc.getFirstValue(dc.ELEMENT_COVERAGE));
-            	
-            }
-            catch (Exception e) {
-                addErrorMessage("Unable to load Dublin Core metadata.");
-            }
-*/        }
     }
 }
