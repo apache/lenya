@@ -15,9 +15,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowBuildException;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -37,14 +36,14 @@ public class WorkflowBuilder {
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/workflow/1.0";
     public static final String DEFAULT_PREFIX = "wf";
 
-    public static Workflow buildWorkflow(File file) throws WorkflowBuildException {
+    public static Workflow buildWorkflow(File file) throws WorkflowException {
         Workflow workflow;
 
         try {
             Document document = DocumentHelper.readDocument(file);
             workflow = buildWorkflow(document);
         } catch (Exception e) {
-            throw new WorkflowBuildException(e);
+            throw new WorkflowException(e);
         }
 
         return workflow;
@@ -55,16 +54,17 @@ public class WorkflowBuilder {
             ParserConfigurationException,
             SAXException,
             IOException,
-            WorkflowBuildException {
+            WorkflowException {
 
         NamespaceHelper helper =
             new NamespaceHelper(NAMESPACE, DEFAULT_PREFIX, document);
 
         Element root = document.getDocumentElement();
-        State initialState = null;
+        StateImpl initialState = null;
 
         Map states = new HashMap();
         Map events = new HashMap();
+        Map variables = new HashMap();
 
         // load states
         NodeList stateElements =
@@ -82,12 +82,22 @@ public class WorkflowBuilder {
         assert initialState != null;
         WorkflowImpl workflow = new WorkflowImpl(initialState);
 
+        // load variables
+        NodeList variableElements =
+            root.getElementsByTagNameNS(NAMESPACE, VARIABLE_ELEMENT);
+        for (int i = 0; i < variableElements.getLength(); i++) {
+            Element element = (Element) variableElements.item(i);
+            BooleanVariableImpl variable = buildVariable(element);
+            variables.put(variable.getName(), variable);
+            workflow.addVariable(variable);
+        }
+
         // load events
         NodeList eventElements =
             root.getElementsByTagNameNS(NAMESPACE, EVENT_ELEMENT);
         for (int i = 0; i < eventElements.getLength(); i++) {
             EventImpl event = buildEvent((Element) eventElements.item(i));
-            String id = event.getId();
+            String id = event.getName();
             events.put(id, event);
         }
 
@@ -99,7 +109,8 @@ public class WorkflowBuilder {
                 buildTransition(
                     (Element) transitionElements.item(i),
                     states,
-                    events);
+                    events,
+                    variables);
             workflow.addTransition(transition);
         }
 
@@ -123,6 +134,11 @@ public class WorkflowBuilder {
 	protected static final String SOURCE_ATTRIBUTE = "source";
 	protected static final String DESTINATION_ATTRIBUTE = "destination";
 	protected static final String CLASS_ATTRIBUTE = "class";
+    protected static final String VARIABLE_ELEMENT = "variable";
+    protected static final String ASSIGNMENT_ELEMENT = "assign";
+    protected static final String VARIABLE_ATTRIBUTE = "variable";
+    protected static final String VALUE_ATTRIBUTE = "value";
+    protected static final String NAME_ATTRIBUTE = "name";
 
     protected static StateImpl buildState(Element element) {
         assert element.getLocalName().equals(STATE_ELEMENT);
@@ -135,8 +151,9 @@ public class WorkflowBuilder {
     protected static TransitionImpl buildTransition(
         Element element,
         Map states,
-        Map events)
-        throws WorkflowBuildException {
+        Map events,
+        Map variables)
+        throws WorkflowException {
         assert element.getLocalName().equals(TRANSITION_ELEMENT);
 
         String sourceId = element.getAttribute(SOURCE_ATTRIBUTE);
@@ -145,8 +162,8 @@ public class WorkflowBuilder {
         assert sourceId != null;
         assert destinationId != null;
 
-        State source = (State) states.get(sourceId);
-        State destination = (State) states.get(destinationId);
+        StateImpl source = (StateImpl) states.get(sourceId);
+        StateImpl destination = (StateImpl) states.get(destinationId);
 
         assert source != null;
         assert destination != null;
@@ -176,6 +193,14 @@ public class WorkflowBuilder {
             transition.addCondition(condition);
         }
 
+        // load assignments
+        NodeList assignmentElements =
+            element.getElementsByTagNameNS(NAMESPACE, ASSIGNMENT_ELEMENT);
+        for (int i = 0; i < assignmentElements.getLength(); i++) {
+            BooleanVariableAssignmentImpl action = buildAssignment(variables, (Element) assignmentElements.item(i));
+            transition.addAction(action);
+        }
+
         // load actions
         NodeList actionElements =
             element.getElementsByTagNameNS(NAMESPACE, ACTION_ELEMENT);
@@ -195,7 +220,7 @@ public class WorkflowBuilder {
     }
 
     protected static Condition buildCondition(Element element)
-        throws WorkflowBuildException {
+        throws WorkflowException {
         String className = element.getAttribute(CLASS_ATTRIBUTE);
         String expression = DocumentHelper.getSimpleElementText(element);
         Condition condition =
@@ -207,6 +232,22 @@ public class WorkflowBuilder {
         String id = element.getAttribute(ID_ATTRIBUTE);
         Action action = new ActionImpl(id);
         return action;
+    }
+    
+    protected static BooleanVariableImpl buildVariable(Element element) {
+        String name = element.getAttribute(NAME_ATTRIBUTE);
+        String value = element.getAttribute(VALUE_ATTRIBUTE);
+        return new BooleanVariableImpl(name, Boolean.getBoolean(value));
+    }
+    
+    protected static BooleanVariableAssignmentImpl buildAssignment(Map variables, Element element) throws WorkflowException {
+        String variableName = element.getAttribute(VARIABLE_ATTRIBUTE);
+        
+        String valueString = element.getAttribute(VALUE_ATTRIBUTE);
+        boolean value = Boolean.valueOf(valueString).booleanValue();
+        
+        BooleanVariableImpl variable = (BooleanVariableImpl) variables.get(variableName);
+        return new BooleanVariableAssignmentImpl(variable, value);
     }
 
 }
