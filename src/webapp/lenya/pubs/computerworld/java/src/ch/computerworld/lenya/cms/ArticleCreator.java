@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.11 2003/03/06 20:45:54 gregor Exp $
+ * $Id: ArticleCreator.java,v 1.12 2003/04/02 15:03:05 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,10 +60,6 @@ import java.util.Map;
  */
 public class ArticleCreator extends DefaultLeafCreator {
     static Category log = Category.getInstance(ArticleCreator.class);
-
-    public ArticleCreator() {
-	sampleResourceName = "Article.xml";
-    }
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
