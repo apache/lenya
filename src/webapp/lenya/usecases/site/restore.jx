@@ -38,22 +38,7 @@
       <div class="lenya-box-body">
         <jx:choose>
           <jx:when test="${not(empty(usecase.getErrorMessages()))}">		
-            <ul>
-              <jx:forEach var="message" items="${usecase.getErrorMessages()}">
-                <li>
-                  <i18n:text>
-                    <jx:out value="${message}"/>
-                  </i18n:text>
-                </li>
-              </jx:forEach>
-              <jx:forEach var="message" items="${usecase.getInfoMessages()}">
-                <li>
-                  <i18n:text>
-                    <jx:out value="${message}"/>
-                  </i18n:text>
-                </li>
-              </jx:forEach>
-            </ul>
+            <jx:import uri="templates/messages.jx"/>
             <input type="button" class="lenya-form-element" onClick="location.href='${requesturi}';" value="Back"/>
           </jx:when>
           <jx:otherwise>
