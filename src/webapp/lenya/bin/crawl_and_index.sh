@@ -7,8 +7,9 @@ echo "INFO: HOME = $HOME"
 WEBAPP_DIR=$HOME/src/cocoon-lenya/build/lenya/webapp
 LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
 JAVA=/usr/lib/j2sdk1.4/bin/java
-PDFBOX=$HOME/src/PDFBox-0.5.5
-XPDF=$HOME/bin/xpdf-2.01-linux/pdftotext
+
+XPDF=$HOME/bin/xpdf-2.02pl1-linux/pdftotext
+#XPDF=$HOME/bin/xpdf-2.01-linux/pdftotext
 
 CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.5.0.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar
 
@@ -52,7 +53,11 @@ case "$1" in
         HTDOCS_DUMP_DIR=$2
 
         echo "INFO: HTDOCS_DUMP_DIR = $HTDOCS_DUMP_DIR"
-        ##find $HTDOCS_DUMP_DIR -name "*.pdf" -print -exec $XPDF -htmlmeta {} {}.txt \;
+        if [ -f $XPDF ]; then
+            find $HTDOCS_DUMP_DIR -name "*.pdf" -print -exec $XPDF -htmlmeta {} {}.txt \;
+        else
+            echo "WARNING: Xpdf not installed: $XPDF"
+        fi
 	;;
     *)
         echo "Usage: $0 {crawl|index|xpdf}"
@@ -86,14 +91,5 @@ exit 0
 
 
 
-
-echo ""
-echo "=========================================================="
-echo "Target: extract_text_from_pdf"
-echo "=========================================================="
-echo ""
-
-CLASSPATH=$CLASSPATH:$PDFBOX/classes
-##$JAVA -cp $CLASSPATH org.pdfbox.Main $FILE_PDF $FILE_PDF.txt
 
 ##http://www.adobe.com/products/acrobat/access_simple_form.html

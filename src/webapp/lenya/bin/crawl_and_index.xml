@@ -113,6 +113,17 @@
   </exec>
 </target>
 
+<target name="pdfbox" description="Extract text from PDF with PDFBox" depends="init">
+  <echo>INFO: Extract text from PDF with PDFBox</echo>
+
+  <echo>FIXME: Not implemented yet</echo>
+<!--
+PDFBOX=$HOME/src/PDFBox-0.5.5
+CLASSPATH=$CLASSPATH:$PDFBOX/classes
+##$JAVA -cp $CLASSPATH org.pdfbox.Main $FILE_PDF $FILE_PDF.txt
+-->
+</target>
+
 <target name="show-config" description="Show configuration" depends="init">
   <echo>INFO: Show configuration</echo>
 
