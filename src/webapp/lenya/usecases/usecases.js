@@ -69,8 +69,6 @@ function executeUsecase() {
 	
 	usecase.setName(usecaseName);
 	
-	var envelope = flowHelper.getPageEnvelope(cocoon);
-	var document = envelope.getDocument();
 	var success = false;
 	
 	passRequestParameters(flowHelper, usecase);
@@ -116,7 +114,7 @@ function executeUsecase() {
 		}
 	}
 	
-	var url = envelope.getContext() + usecase.getTargetURL(success) + getTargetQueryString(usecaseName);
+	var url = request.getContextPath() + usecase.getTargetURL(success) + getTargetQueryString(usecaseName);
 	cocoon.redirectTo(url);
 	
 }
