@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+ 
+<NewsML>
+  <Catalog Href=""/><!--Catalog contains the controlled vocabularies used by unipublic.unizh.ch-->
+
+<!--
+  <NewsEnvelope>
+//    <TransmissionId>1004500635628</TransmissionId>
+    <DateAndTime>20020325T0457+0100</DateAndTime>
+  </NewsEnvelope>
+-->
+  <NewsItem>
+<!--
+    <Identification>
+      <NewsIdentifier>
+        <ProviderId>unipublic.unizh.ch</ProviderId>
+        <DateId>20020325</DateId>
+        <NewsItemId>0465</NewsItemId>
+        <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
+//        <PublicIdentifier>urn:newsml:unipublic.unizh.ch:20020325:0465:1N</PublicIdentifier>
+      </NewsIdentifier>
+    </Identification>
+-->
+<!--
+    <NewsManagement>
+      <FirstCreated>20020325T0130+0100</FirstCreated>
+      <ThisRevisionCreated>20020325T0130+0100</ThisRevisionCreated>
+    </NewsManagement>
+-->
+ 
+    <NewsComponent EquivalentsList="no">                                                                                                    
+<!--
+      <TopicSet>
+        <Topic>
+          <TopicType FormalName="magazin">
+            <FormalName>gesundheit</FormalName>
+            <Description>Gesundheit</Description>
+          </TopicType>
+        </Topic>
+      </TopicSet>
+-->
+      <Role FormalName="TEXT"/>
+      <NewsLines>
+        <HeadLine> NewsLines HeadLine</HeadLine>
+        <ByLine>NewsLines Von Autor</ByLine>
+        <DateLine year="2002" month="04" day="03"/>
+        <CreditLine>Universit&#228;t Z&#252;rich </CreditLine>
+        <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
+      </NewsLines>
+<!--
+      <AdministrativeMetadata>
+        <SystemIdentifier>http://www.unipublic.unizh.ch/docs/publication/live/magazin/gesundheit/articles/2002/0465/index.xml</SystemIdentifier>
+      </AdministrativeMetadata>
+      <RightsMetadata>
+        <Copyright>
+          <CopyrightHolder>Universit&#228;t Z&#252;rich </CopyrightHolder>
+        </Copyright>
+      </RightsMetadata>                                                                                                                           <DescriptiveMetadata>
+        <Language FormalName="de"/>
+        <SubjectCode>
+          <Subject FormalName="Gesundheit"/>
+        </SubjectCode>
+      </DescriptiveMetadata>
+-->
+ 
+      <ContentItem>
+         <MediaType FormalName="Text"/>
+         <MimeType FormalName="text/vnd.IPTC.NITF"/>
+         <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+           <nitf>
+            <head>
+              <hedline>
+                <hl1>Titel</hl1>
+                <dossier>Dossier</dossier>
+                <abstract>Abstract</abstract> 
+              </hedline>
+            </head>
+            <body>
+              <body.head>
+                <dateline>                                                                                                                                    <story.date norm="03.04.2002"/>
+                </dateline>
+                <hedline>
+                  <hl1> Head Titel</hl1>
+                </hedline>
+                <byline>Autor</byline>
+                <abstract>Abstract</abstract>
+<!--
+                <media media-type="image">
+                  <media-reference source="bild-headline.gif" alternate-text="Zellteilung" copyright=""/>
+                </media>
+-->
+              </body.head>
+              <body.content>
+                <block>
+                  <hl2>Titel</hl2> 
+                    <p>Paragraph
+                    </p>
+                </block>
+               </body.content>
+               <body.end>
+                 <tagline>Tagline</tagline>
+               </body.end>
+             </body>
+            </nitf>
+           </DataContent>
+          </ContentItem>
+       </NewsComponent>
+    </NewsItem>
+</NewsML>                                                                                                                                   
