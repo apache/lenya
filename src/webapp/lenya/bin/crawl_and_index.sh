@@ -28,7 +28,7 @@ case "$1" in
         CRAWLER_CONF=$2
 
         echo "INFO: crawler.xconf = $CRAWLER_CONF"
-        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.CrawlerConfiguration $CRAWLER_CONF
+        $JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.CrawlerConfiguration $CRAWLER_CONF
         echo ""
         $JAVA -cp $CLASSPATH org.apache.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 	;;
