@@ -88,22 +88,31 @@
     </map:pipeline>
 
     <map:pipeline type="noncaching">
+
       <map:match pattern="entries/**.xml">
+
        <map:select type="request-method">
+
           <map:when test="PUT">
             <map:generate type="stream"/>
             <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
               <map:parameter name="source" value="content/authoring/entries/{1}.xml"/>
             </map:transform>
-            <map:transform type="write-source"/>
+            <map:transform type="write-source">
+              <map:parameter name="serializer" value="xml"/>
+            </map:transform>
             <map:serialize type="xml" status-code="204"/> <!-- HTTP status code: 204 No Content -->
           </map:when>
+
           <map:otherwise> <!-- GET -->
             <map:generate src="content/authoring/entries/{1}.xml"/>
             <map:serialize type="xml"/>
           </map:otherwise>
+
         </map:select>
+
       </map:match>
+
       <map:handle-errors>
         <map:select type="exception">
            <map:when test="resourcenotfound">
@@ -125,6 +134,7 @@
         </map:select>
         <map:serialize type="html"/>
       </map:handle-errors>
+
     </map:pipeline>
 
   </map:pipelines>
