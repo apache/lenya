@@ -194,7 +194,7 @@
             <item>Edit Navigation Title</item>
           }
           if (isDocument) {
-            <item uc:usecase="change-visibility" uc:step="showscreen" href="?"><i18n:text>Change node visibility</i18n:text></item>
+            <item wf:event="edit" uc:usecase="change-visibility" uc:step="showscreen" href="?"><i18n:text>Change node visibility</i18n:text></item>
           }
           else {
             <item>Change node visibility</item>
