@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.49 2004/04/30 08:19:21 andreas Exp $  */
+/* $Id: Publication.java,v 1.50 2004/04/30 13:32:20 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -31,7 +31,6 @@ public interface Publication {
     String AUTHORING_AREA = "authoring";
     String STAGING_AREA = "staging";
     String LIVE_AREA = "live";
-    String PENDING_AREA = "pending";
     String ADMIN_AREA = "admin";
     String ARCHIVE_AREA = "archive";
     String TRASH_AREA = "trash";
@@ -49,6 +48,7 @@ public interface Publication {
     String PUBLICATION_PREFIX_URI = "lenya/pubs";
     String CONFIGURATION_PATH = "config";
     String CONTENT_PATH = "content";
+    String PENDING_PATH = "pending";    
     String INFO_AREA_PREFIX = "info-";
     String SEARCH_AREA_PREFIX = "search-";
     String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
