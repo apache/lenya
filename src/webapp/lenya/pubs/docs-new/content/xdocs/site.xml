@@ -45,6 +45,7 @@
       <node-36 href="pageEnvelope.html" label="Page envelope"/>
       <node-37 href="navigation.html" label="Navigation"/>
       <node-38 href="xhtml-templating.html" label="XHTML templating"/>
+      <node-381 href="static-resources.html" label="Serving static resources"/>
       <node-39 label="Metadata"/>
       <node-40 href="tasks/" label="Tasks">
         <node-41 href="concept.html" label="The Task Concept"/>
