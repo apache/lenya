@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PageEnvelopeModule.java,v 1.38 2004/03/16 11:12:16 gregor Exp $  */
+/* $Id: PageEnvelopeModule.java,v 1.39 2004/05/23 17:27:06 roku Exp $  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -213,9 +213,9 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                 envelope.getDocument().getArea() + envelope.getDocument().getDocumentURL();
 
             Request request = ObjectModelHelper.getRequest(objectModel);
-
-            map = parameterizer.parameterize(request.getRequestURI(), source, parameters);
+            map = parameterizer.parameterize(filterURI(request.getRequestURI()), filterURI(source), parameters);                
             documentType = (String) map.get(URI_PARAMETER_DOCTYPE);
+            
         } finally {
             if (parameterizer != null) {
                 manager.release(parameterizer);
@@ -247,5 +247,22 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+    
+    /**
+     * uri will be filtered by certain rules 
+     * i.e. session information encoded within the uri will be removed.
+     * @param uri The uri to be filtered
+     * @return uri filtered by certain rules i.e
+     */
+    // FIXME Maybe make this more configureable
+    private String filterURI(final String uri) 
+    {
+        final int index = uri.indexOf(";jsessionid");
+        
+        if(index >= 0)
+            return uri.substring(0, index);                        
+        else
+            return uri;        
     }
 }
