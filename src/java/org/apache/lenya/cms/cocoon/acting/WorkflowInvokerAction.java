@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInvokerAction.java,v 1.6 2003/12/05 17:26:29 andreas Exp $
+$Id: WorkflowInvokerAction.java,v 1.7 2003/12/05 17:38:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -105,57 +105,47 @@ public class WorkflowInvokerAction extends AbstractAction {
         String documentId = parameters.getParameter(DOCUMENT_ID);
         String language = parameters.getParameter(LANGUAGE);
         String eventName = parameters.getParameter(EVENT);
-        
-        if (eventName == null) {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(getClass().getName() + " invoked.");
-                getLogger().debug("    Not triggering workflow - no event provided.");
-            }
-        }
-        else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(getClass().getName() + " invoked.");
-                getLogger().debug("    Area:        [" + area + "]");
-                getLogger().debug("    Document ID: [" + documentId + "]");
-                getLogger().debug("    Language:    [" + language + "]");
-                getLogger().debug("    Event:       [" + eventName + "]");
-            }
 
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
-            Publication publication = envelope.getPublication();
-            DocumentBuilder builder = publication.getDocumentBuilder();
-            String url = builder.buildCanonicalUrl(publication, area, documentId, language);
-            Document document = builder.buildDocument(publication, url);
-        
-            WorkflowFactory factory = WorkflowFactory.newInstance();
-
-            if (factory.hasWorkflow(document)) {
-            
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("    Invoking workflow event");
-                }
-            
-                SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
-                Situation situation = factory.buildSituation(objectModel);
-                Event[] events = instance.getExecutableEvents(situation);
-                Event event = null;
-
-                for (int i = 0; i < events.length; i++) {
-                    if (events[i].getName().equals(eventName)) {
-                        event = events[i];
-                    }
-                }
-
-                assert event != null;
-                instance.invoke(situation, event);
-            }
-            else {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("    Document has no workflow."); 
-                }
-            }
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug(getClass().getName() + " invoked.");
+            getLogger().debug("    Area:        [" + area + "]");
+            getLogger().debug("    Document ID: [" + documentId + "]");
+            getLogger().debug("    Language:    [" + language + "]");
+            getLogger().debug("    Event:       [" + eventName + "]");
         }
 
+        PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
+        Publication publication = envelope.getPublication();
+        DocumentBuilder builder = publication.getDocumentBuilder();
+        String url = builder.buildCanonicalUrl(publication, area, documentId, language);
+        Document document = builder.buildDocument(publication, url);
+
+        WorkflowFactory factory = WorkflowFactory.newInstance();
+
+        if (factory.hasWorkflow(document)) {
+
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("    Invoking workflow event");
+            }
+
+            SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
+            Situation situation = factory.buildSituation(objectModel);
+            Event[] events = instance.getExecutableEvents(situation);
+            Event event = null;
+
+            for (int i = 0; i < events.length; i++) {
+                if (events[i].getName().equals(eventName)) {
+                    event = events[i];
+                }
+            }
+
+            assert event != null;
+            instance.invoke(situation, event);
+        } else {
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("    Document has no workflow.");
+            }
+        }
 
         return Collections.EMPTY_MAP;
     }
