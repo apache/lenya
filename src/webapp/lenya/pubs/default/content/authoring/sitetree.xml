@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--
-    Document   : sitetree.xml
-    Created on : 11. April 2003, 11:05
-    Author     : andreas
-    Description:
-        Purpose of the document follows.
--->
+<!--$Id: sitetree.xml,v 1.10 2003/07/10 10:29:22 gregor Exp $ -->
 
 <site
     xmlns="http://www.lenya.org/2003/sitetree"
@@ -16,28 +9,35 @@
         ../../../../resources/entities/sitetree.xsd">
     
   <node id="index">
-    <label>Home</label>
+    <label xml:lang="en">Home</label>
+    <label xml:lang="de">Home</label>
   </node>
   
   <node id="tutorial">
-    <label>Tutorial</label>
+    <label xml:lang="en">Tutorial</label>
+    <label xml:lang="de">Tutorial</label>
   </node>
 
   <node id="concepts">
-    <label>Concepts</label>
+    <label xml:lang="en">Concepts</label>
+    <label xml:lang="de">Konzepte</label>
   </node>
   
   <node id="features">
-    <label>Features</label>
+    <label xml:lang="en">Features</label>
+    <label xml:lang="de">Funktionen</label>
   </node>
 
   <node id="doctypes">
-    <label>Document Type Examples</label>
+    <label xml:lang="en">Document Type Examples</label>
+    <label xml:lang="de">Dokumenttyp Beispiele</label>
     <node id="simple-document">
-      <label>Simple Doctype</label>
+      <label xml:lang="en">Simple Doctype</label>
+      <label xml:lang="de">Einfacher Dokumenttyp</label>
     </node>
      <node id="xhtml-document">
-      <label>XHTML Doctype</label>
+      <label xml:lang="en">XHTML Doctype</label>
+      <label xml:lang="de">XHTML Dokumenttyp</label>
     </node>
  </node>
   

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.9 2003/07/08 14:41:31 gregor Exp $
+ $Id: root.xsl,v 1.10 2003/07/10 10:29:22 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -10,9 +10,8 @@
 
 <xsl:include href="../menu/root.xsl"/>
 
-<xsl:param name="contextprefix"/>
-<xsl:param name="publicationid"/>
-<xsl:param name="area"/>
+<xsl:param name="language"/>
+<xsl:param name="defaultlanguage"/>
     
 <xsl:template match="lenya/cmsbody">
 <html>
@@ -21,12 +20,12 @@
 <!-- These three scripts define the tree, do not remove-->
 <script src="ua.js"/>
 <script src="tree.js"/>
-<script src="output.js"/>
+<script src="lenyasitetree/{$language}"/>
 </head>
 
 <body >
-<a href="#" id="link1" class="lenya-tablink-active">de</a>
-<a href="#" id="link2" class="lenya-tablink">en</a>
+<a href="#" id="link1"><xsl:call-template name="activate"><xsl:with-param name="tablanguage">de</xsl:with-param></xsl:call-template></a>
+<a href="#" id="link2"><xsl:call-template name="activate"><xsl:with-param name="tablanguage">en</xsl:with-param></xsl:call-template></a>
 
 <div id="lenya-info-treecanvas">
 <!-- Build the tree. -->
@@ -40,6 +39,11 @@
 <div id="lenya-info-content"><iframe src="" id="basefrm" name="basefrm" frameborder="0" width="100%" height="100%"></iframe></div>
 </body>
 </html>
+</xsl:template>
+
+<xsl:template name="activate">
+	<xsl:param name="tablanguage"/>
+   <xsl:attribute name="class">lenya-tablink<xsl:choose><xsl:when test="$language = $tablanguage">-active</xsl:when><xsl:otherwise/></xsl:choose></xsl:attribute><xsl:value-of select="$tablanguage"/>
 </xsl:template>
 
 </xsl:stylesheet> 

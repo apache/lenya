@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.9 2003/07/08 14:41:31 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.10 2003/07/10 10:29:22 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -13,6 +13,8 @@
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
 <xsl:param name="area"/>
+<xsl:param name="language"/>
+<xsl:param name="defaultlanguage"/>
 
 <xsl:template match="/*[local-name()='site']">
     <xsl:param name="parentPath"/>

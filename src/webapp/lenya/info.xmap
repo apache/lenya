@@ -30,21 +30,16 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline>
-      <map:match pattern="info.xml">
-	    <map:generate type="serverpages" src="content/info/info.xsp"/>
-	    <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-
     <!-- Sitetree Javascript array -->
     <map:pipeline>
-      <map:match pattern="output.js">
+      <map:match pattern="**lenyasitetree/*">
 	    <map:generate src="pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml"/>
 	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
         <map:parameter name="contextprefix" value="{page-envelope:context-prefix}"/>
         <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
-       <map:parameter name="area" value="{page-envelope:area}"/>
+        <map:parameter name="area" value="{page-envelope:area}"/>
+        <map:parameter name="language" value="{1}"/>
+        <map:parameter name="defaultlanguage" value="en"/> <!-- needs to be publication parameter -->
       </map:transform>
 	    <map:serialize type="text"/>
       </map:match>
@@ -52,7 +47,7 @@
     
         <!-- Sitetree Javascript array      -->
     <map:pipeline>
-      <map:match pattern="tree.js">
+      <map:match pattern="**tree.js">
 	    <map:read src="resources/javascript/tree.js"/>
 	    <map:serialize type="text"/>
       </map:match>
@@ -60,7 +55,7 @@
 
         <!-- Sitetree Javascript array      -->
     <map:pipeline>
-      <map:match pattern="ua.js">
+      <map:match pattern="**ua.js">
 	    <map:read src="resources/javascript/ua.js"/>
 	    <map:serialize type="text"/>
       </map:match>
@@ -68,27 +63,35 @@
 
         <!-- Sitetree Javascript array      -->
     <map:pipeline>
-      <map:match pattern="tabs.js">
+      <map:match pattern="**tabs.js">
 	    <map:read src="resources/javascript/tabs.js"/>
 	    <map:serialize type="text"/>
       </map:match>
     </map:pipeline>
     
     <map:pipeline>
-      <map:match pattern="**/tabs.js">
-	    <map:read src="resources/javascript/tabs.js"/>
-	    <map:serialize type="text"/>
+      <map:match pattern="**?lenya.language=*">
+	    <map:aggregate element="lenya" label="aggregate">
+          <map:part src="cocoon:/menus/info.xml"/>
+	      <map:part element="cmsbody" type="serverpages" src="content/info/info.xsp"/>
+	    </map:aggregate>
+	    <map:transform src="xslt/info/root.xsl" label="content">
+           <map:parameter name="language" value="{2}"/>
+        </map:transform>
+	    <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
-    
-    
+
     <map:pipeline>
       <map:match pattern="**">
 	    <map:aggregate element="lenya" label="aggregate">
           <map:part src="cocoon:/menus/info.xml"/>
 	      <map:part element="cmsbody" type="serverpages" src="content/info/info.xsp"/>
 	    </map:aggregate>
-	    <map:transform src="xslt/info/root.xsl" label="content" />
+	    <map:transform src="xslt/info/root.xsl" label="content">
+           <map:parameter name="language" value="de"/> <!-- needs to be replaced with default language-->
+           <map:parameter name="defaultlanguage" value="en"/> <!-- needs to be publication parameter -->
+        </map:transform>
 	    <map:serialize type="html"/>
       </map:match>
     </map:pipeline>
