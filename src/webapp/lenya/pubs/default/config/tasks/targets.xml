@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-$Id: targets.xml,v 1.26 2004/01/31 12:09:10 gregor Exp $
+$Id: targets.xml,v 1.27 2004/03/11 21:33:54 gregor Exp $
 -->
 
 <project name="Ant Test Project" default="test" basedir=".">
@@ -548,13 +548,13 @@ $Id: targets.xml,v 1.26 2004/01/31 12:09:10 gregor Exp $
     firstarea="${firstarea}"
     secarea="${secarea}"
   />
-  
+<!-- FIXME: temporarily disabled. see http://nagoya.apache.org/bugzilla/show_bug.cgi?id=27252  
   <deleteschedulerentry
     documentid="${node.firstdocumentid}"
     area="${firstarea}"
     servletcontextpath="${servlet.context}"
   />
-
+-->
   <movenode
     firstdocumentid="${node.firstdocumentid}"
     secdocumentid="${node.newdocumentid}"
