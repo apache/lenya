@@ -24,7 +24,7 @@
       <title><xsl:value-of select="page:title"/></title>
       <link rel="stylesheet" type="text/css"
         href="{$contextprefix}/lenya/css/default.css" title="default css"/>
-      <xsl:apply-templates select="script" />
+      <xsl:apply-templates select="xhtml:script" />
     </head>
     <body>
     
