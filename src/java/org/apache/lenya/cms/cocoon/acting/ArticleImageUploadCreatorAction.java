@@ -27,11 +27,32 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.io.OutputFormat;
 
+/**
+ * The class <code>ArticleImageUploadCreatorAction</code> implements
+ * an action that allows for image upload. 
+ *
+ * @author <a href="mailto:christian.egli@wyona.org">Christian Egli</a>
+ */
 public class ArticleImageUploadCreatorAction
     extends AbstractConfigurableAction implements ThreadSafe  {
 
     Properties default_properties = null;
+
+    /**
+     * The variable <code>uploadDirName</code> is configured trough
+     * parameters to the action in the sitemap. It defines the path to
+     * where images are uploaded.
+     *
+     */
     protected String uploadDirName = null;
+
+    /**
+     * The variable <code>metaDirName</code> is configured trough
+     * parameters to the action in the sitemap. It defines where meta
+     * files which contain dublin core information for the uploaded
+     * image are to be stored.
+     *
+     */
     protected String metaDirName = null;
 
     /**
