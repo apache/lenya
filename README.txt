@@ -1,29 +1,22 @@
-
-  W Y O N A    C O N T E N T - M A N A G E M E N T - S Y S T E M
-  ==============================================================
+  A P A C H E    L E N Y A
+  ========================
 
 
   Contents
   --------
 
-  -Hardware Requirements
-  -Installation Instruction
+  - Note on Incubation
+  - Installation Instruction
 
 
-  Hardware Requirements
-  ---------------------
+  Note on Incubation
+  ------------------
 
-  It's advisable to have a lot of RAM and a fast CPU.
-  You will be able to develop without a problem when you have
-  1GB of RAM and a 1GHz Processor. The system is also
-  running pretty fast when you have a Laptop with 96MB RAM and a 255MHz
-  processor. But the startup will take quite some time and
-  developing is very hard.
-
+  Apache Lenya is an effort undergoing incubation at the Apache Software Foundation, sponsored by the ASF's Cocoon project. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.
 
 
   Installation Instruction
   ------------------------
 
-  Read the INSTALL-BIN file in this directory for the installation of the binary version (war).
-  Read the INSTALL-SRC file in this directory for the installation of the source version.
+  - Read the INSTALL-BIN file in this directory for the installation of the binary version (war file).
+  - Read the INSTALL-SRC file in this directory for the installation of the source version.
