@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.1 2003/04/08 14:08:56 gregor Exp $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:generators default="file" />
+    <map:matchers default="wildcard">
+<!-- FIXME: Factor out to root sitemap -->
+      <map:matcher name="lenya-usecase" logger="sitemap.matcher.wrpmatcher" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>lenya.usecase</parameter-name>
+      </map:matcher>
+<!-- FIXME: Factor out to root sitemap -->
+      <map:matcher name="lenya-step" logger="sitemap.matcher.wrpmatcher" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>lenya.step</parameter-name>
+      </map:matcher>
+    </map:matchers>
+    <map:actions>
+<!-- FIXME: Factor out to root sitemap -->
+      <map:action name="task" logger="sitemap.action.task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
+    </map:actions>
+  </map:components>
+
+  <map:views>
+  </map:views>
+
+  <map:resources/>
+
+  <map:pipelines>
+
+        <!-- Xopus Interface -->
+<!-- FIXME: Factor out to root sitemap -->
+    <map:pipeline>
+      <map:match pattern="xopus/**">
+           <map:mount uri-prefix="xopus" src="xopus.xmap"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- CSS -->
+<!-- FIXME: Factor out to root sitemap -->
+    <map:pipeline>
+      <map:match pattern="**css/**.css">
+        <map:read src="../ina/resources/css/live/{2}.css" mime-type="text/css" />
+      </map:match>
+    </map:pipeline>
+
+    <!-- images -->
+<!-- FIXME: Factor out to root sitemap -->
+    <map:pipeline>
+      <map:match pattern="**images/**.gif">
+        <map:read src="../ina/resources/images/live/{2}.gif" mime-type="image/gif" />
+      </map:match>
+    </map:pipeline>
+
+
+    <!-- Menubar -->
+    <map:pipeline>
+      <map:match pattern="authoring/menubar/article.xml">
+        <map:generate type="serverpages" src="../ina/content/menubars/article.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="live/menubar/article.xml">
+        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- Redirect to introduction -->
+<!-- FIXME: Factor out to root sitemap -->
+    <map:pipeline>
+      <map:match pattern="">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+    </map:pipeline>    
+
+  </map:pipelines>
+</map:sitemap>
