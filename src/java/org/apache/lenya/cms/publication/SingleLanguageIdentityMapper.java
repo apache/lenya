@@ -1,5 +1,4 @@
 /*
-$Id: SingleLanguageIdentityMapper.java,v 1.1 2003/08/29 11:33:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,6 +56,7 @@ package org.apache.lenya.cms.publication;
 
 /**
  * @author andreas
+ * @version $Id: SingleLanguageIdentityMapper.java,v 1.2 2003/10/31 10:24:20 michi Exp $
  *
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
