@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: revisioncontroller.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN"
+"document-v11.dtd">
+<document>
+  <header>
+    <title>Revision Controller</title>
+    <version />
+    <type />
+    <authors>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+    </authors>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>The Revision Controller controls the different reserved
+      check-in and check-out of documents, the backup versions and the
+      rollback. It is filesystem oriented</p>
+    </section>
+
+    <section>
+      <title>Check-in / Check-out</title>
+      <p>The 
+      <link href="checkin.html">check-in</link>
+      and 
+      <link href="checkout.html">check-out</link>
+      are reserved: a checked out document cannot be checked out by
+      another user.</p>
+      <p>A user "System" exists, who can force internally a checkin</p>
+      <p>The different check-in/check-out states (the checkin/out,
+      the time, the user's identity) of a document are stored in an
+      xml file with a own markup language: the 
+      <link href="rcml.html">RCML-file.</link></p>
+    </section>
+
+    <section>
+      <title>Versions</title>
+      <p>When a document is checked in, the old version of the
+      document is copied ( 
+      <link href="version.html">backup</link>
+      )</p>
+    </section>
+
+    <section>
+      <title>Rollback</title>
+      <p>It is also possible to retrieve an old version with the 
+      <link href="rollback.html">rollback</link>
+      </p>
+    </section>
+    
+    <section>
+      <title>Package</title>
+      <source>org.apache.lenya.cms.rc</source>
+    </section>
+  </body>
+</document>
+

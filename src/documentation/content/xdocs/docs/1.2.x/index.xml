@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+
+<document>
+  <header>
+    <title>Apache Lenya Documentation</title>
+    <version/>
+    <type/>
+    <authors>
+      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+    </authors>
+  </header>
+  <body>
+        <p>
+           In getting started with Lenya, one must learn not only a number of concepts, but a number of details as well. 
+           The Components section will explain the building blocks that make up Lenya, such as the sitemap, publications, and tasks.
+        </p>
+
+        <p>
+           You can find here release specific documentation. Although right now we have here the documentation mainly for 1.2.x..
+           This is our stable releases and should be used for productiv environments.
+        </p>
+        <p>
+           The 1.4. branch reflects our efforts to integrate Jackrabbit and building an even more flexible frameworks. 
+           With the 1.4. branch we are trying to capsulate the functionalities of lenya into plugins. 
+           This plugins then can be (hopefully) used in all following version independent from the lenya core.
+        </p>
+        <p>
+           This way we can make flexible changes in 2.0 where we want to refactor the underlinying code base. 
+           The version 2.0 will be have the lenya core and a plugin base arround this way we hope to shorten the development time with lenya.
+           The idea is that the user (or admin) can choose from a width range of plugins that he can use in his (her) application. 
+        </p>
+<p>
+More documentation (work in progress) can be found at the <link href="http://wiki.apache.org/cocoon-lenya/">Apache Lenya Wiki</link>.
+</p>
+  </body>
+</document>
