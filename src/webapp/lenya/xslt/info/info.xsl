@@ -108,6 +108,7 @@
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
    <tr><td class="lenya-entry-caption"><i18n:text>Last modified</i18n:text>:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
    <tr><td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Resource Type</i18n:text>:</td><td><xsl:value-of select="lenya-info:resource-type"/></td></tr>
    </table>
   </xsl:when>
   <xsl:when test="$languageexists = 'false'">
