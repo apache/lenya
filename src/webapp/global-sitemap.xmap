@@ -98,7 +98,6 @@
       <transformer-factory>org.apache.xalan.processor.TransformerFactoryImpl</transformer-factory>
     </map:transformer>
 
-    <map:transformer logger="sitemap.transformer.xinclude" name="xinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
     <map:transformer logger="sitemap.transformer.cinclude" name="cinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
     <map:transformer logger="sitemap.transformer.encodeURL" name="encodeURL" src="org.apache.cocoon.transformation.EncodeURLTransformer"/>
     <map:transformer logger="sitemap.transformer.write-source" name="write-source" src="org.apache.cocoon.transformation.SourceWritingTransformer"/>
