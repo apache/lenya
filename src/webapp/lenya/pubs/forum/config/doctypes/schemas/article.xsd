@@ -2,32 +2,24 @@
 
 <ElementType content="eltOnly" model="closed" name="article">
  <group>
-  <element type="about" minOccurs="1" maxOccurs="1"/>
-  <element type="features" minOccurs="1" maxOccurs="1"/>
+  <element type="head" minOccurs="1" maxOccurs="1"/>
+  <element type="body" minOccurs="1" maxOccurs="1"/>
  </group>
 </ElementType>
 
-<ElementType content="eltOnly" model="closed" name="about">
- <group>
-  <element type="p" minOccurs="1" maxOccurs="*"/>
- </group>
-</ElementType>
-
-<ElementType content="eltOnly" model="closed" name="features">
- <group>
-  <element type="feature" minOccurs="1" maxOccurs="3"/>
- </group>
-</ElementType>
-
-<ElementType content="eltOnly" model="closed" name="feature">
+<ElementType content="eltOnly" model="closed" name="head">
  <group>
   <element type="title" minOccurs="1" maxOccurs="1"/>
+ </group>
+</ElementType>
+
+<ElementType content="eltOnly" model="closed" name="body">
+ <group>
   <element type="p" minOccurs="1" maxOccurs="*"/>
  </group>
 </ElementType>
 
-<ElementType content="mixed" model="open" name="title" dt:type="string"/>
-
+<ElementType content="mixed" model="open" name="title" dt:type="html"/>
 <ElementType content="mixed" model="open" name="p" dt:type="html"/>
 
 </Schema>

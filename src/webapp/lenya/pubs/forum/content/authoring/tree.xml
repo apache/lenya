@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<!-- this tree is handcrafted -->
+<tree>
+  <branch relURI="" doctype="Front" menuName="Home">
+<!--
+    <branch relURI="g06" doctype="Group" menuName="Polymer Chemistry">
+      <branch relURI="members" doctype="Members" menuName="Members">
+        <leaf relURI="m01" doctype="Member" menuName="Liese Meitner"/>
+        <leaf relURI="m02" doctype="Member" menuName="Linus Pauling"/>
+      </branch>
+      <leaf doctype="f" menuName="Research" URL="http://www.ethz.ch"/>
+      <leaf doctype="f" menuName="Open Positions" URL="http://www.ethz.ch"/>
+      <leaf doctype="f" menuName="Related Topics" URL="http://www.ethz.ch"/>
+    </branch>
+    <branch relURI="g07" doctype="Group" menuName="Polymer Physics">
+      <branch relURI="members" doctype="Members" menuName="Members">
+        <leaf relURI="m01" doctype="Member" menuName="Nils Bohr"/>
+        <leaf relURI="m02" doctype="Member" menuName="Werner Heisenberg"/>
+      </branch>
+      <leaf relURI="research" doctype="Generic" menuName="Research" URL="http://www.ethz.ch"/>
+      <leaf relURI="positions" doctype="Generic" menuName="Open Positions"/>
+      <leaf relURI="related" doctype="Generic" menuName="Related Topics"/>
+    </branch>
+    <leaf relURI="related-topics.xhtml" doctype="Generic" menuName="Related Topics"/>
+    <branch relURI="related-topics" doctype="generic" menuName="More Related Topics"/>
+    <leaf doctype="f" menuName="ETH Homepage" URL="http://www.ethz.ch"/>
+-->
+  </branch>
+</tree>

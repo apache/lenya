@@ -21,6 +21,11 @@
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
       </map:action>
+      <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
+        <tree-authoring href="docs/publication/authoring/tree.xml"/>
+        <docs href="docs/publication/authoring"/>
+        <doctypes href="docs/publication/doctypes/"/>
+      </map:action>
     </map:actions>
     <map:selectors default="browser">
       <map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
@@ -53,6 +58,7 @@
 
    <!-- Wyona CMS -->
     <map:pipeline>
+     <!-- Publisher -->
       <map:match pattern="wyona/publishScreen*">
         <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
         <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
@@ -64,7 +70,26 @@
         </map:act>
         <map:redirect-to uri="publishScreen?status=failed" session="true"/>
       </map:match>
+     <!-- /Publisher -->
+
+     <!-- ParentChild Content Creator: New Article -->
+      <map:match pattern="wyona/ParentChildScreenNewArticle*">
+        <map:generate type="serverpages" src="../../docs/cms/parent-child.xsp"/>
+        <map:transform src="stylesheets/cms/Page/parent-child-new-article.xsl"/>
+<!--
+        <map:transform src="../../stylesheets/cms/Page/parent-child.xsl"/>
+-->
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="wyona/create*">
+        <map:act type="parent-child">
+          <map:redirect-to uri="{parent_uri}" session="true"/>
+        </map:act>
+        <map:redirect-to uri="ParentChildScreenNewArticle?status=failed" session="true"/>
+      </map:match>
+     <!-- /ParentChild Content Creator: New Article -->
     </map:pipeline>
+   <!-- /Wyona CMS -->
 
     <map:pipeline>
       <map:match pattern="menus/front.xml">
