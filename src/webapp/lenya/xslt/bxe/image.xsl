@@ -32,7 +32,7 @@
     <xsl:variable name="noimages"/>
     <xsl:param name="error"/>
 
-    <xsl:param name="extensions" select="'gif jpg png'"/>
+    <xsl:param name="extensions" select="'gif jpg png swf'"/>
     <xsl:param name="contextprefix"/>
 
     <xsl:template match="lenya-info:assets">
@@ -47,13 +47,13 @@
                    
                    ext = '<xsl:value-of select="$extensions"/>';
                    
-                   function insertImage(src) { 
+                   function insertImage(src, type) { 
                       var nodeid = '<xsl:value-of select="lenya-info:documentnodeid"/>/';
                       var link = document.forms["image"].link.value;
                       var caption = document.forms["image"].caption.value;
                       var title = document.forms["image"].title.value;
                       <![CDATA[
-                      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" data="'+nodeid + src+'">'+caption+'</object>'; 
+                      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" type="'+type+'" data="'+nodeid + src+'">'+caption+'</object>'; 
                       ]]>
                       window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
                       window.close();
@@ -153,7 +153,7 @@
                                     <xsl:for-each select="lenya-info:asset">
                                         <xsl:choose>
                                             <xsl:when 
-                                                test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png'">
+                                                test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png' or dc:format = 'application/x-shockwave-flash'">
                                                 <tr>
                                                     <td 
                                                         colspan="2">
@@ -170,7 +170,7 @@
                                                     </td>
                                                     <td>
                                                         <a 
-                                                            href="javascript:insertImage('{dc:source}');">
+                                                            href="javascript:insertImage('{dc:source}', '{dc:format}');">
                                                              <i18n:text>Insert</i18n:text></a>
                                                     </td>
                                                 </tr>

@@ -282,7 +282,7 @@
   </xsl:template>
 
 <xsl:template match="lenya-info:asset">
-  <xsl:if test="$insertimage != 'true' or (contains(dc:source, '.jpg') or contains(dc:source, '.gif') or contains(dc:source, '.png'))">
+  <xsl:if test="$insertimage != 'true' or (contains(dc:source, '.jpg') or contains(dc:source, '.gif') or contains(dc:source, '.png') or contains(dc:source, '.swf'))">
   <tr>
     <td/>
     <td>
