@@ -24,6 +24,7 @@ import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.tools.ant.BuildException;
 
 public class InitWorkflowHistoryTask extends PublicationTask {
@@ -86,7 +87,9 @@ public class InitWorkflowHistoryTask extends PublicationTask {
                     getMachineIp());
             DocumentType type = DocumentTypeBuilder.buildDocumentType(getDocumentType(),
                     getPublication());
-            WorkflowFactory.initHistory(document, type.getWorkflowFileName(), situation);
+            WorkflowFactory factory = WorkflowFactory.newInstance();
+            WorkflowInstance instance = factory.buildNewInstance(document, type.getWorkflowFileName());
+            instance.getHistory().initialize(situation);
         } catch (Exception e) {
             throw new BuildException(e);
         }

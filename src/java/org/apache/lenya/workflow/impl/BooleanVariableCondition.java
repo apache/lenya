@@ -22,15 +22,12 @@ package org.apache.lenya.workflow.impl;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.log4j.Category;
 
 /**
  * Implementation of a boolean variable condition.
  */
 public class BooleanVariableCondition extends AbstractCondition {
     
-    private static final Category log = Category.getInstance(BooleanVariableCondition.class);
-
     private String variableName;
     private boolean value;
 
@@ -64,9 +61,9 @@ public class BooleanVariableCondition extends AbstractCondition {
         variableName = sides[0].trim();
         value = Boolean.valueOf(sides[1].trim()).booleanValue();
         
-        if (log.isDebugEnabled()) {
-            log.debug("Expression:    [" + sides[1].trim() + "]");
-            log.debug("Setting value: [" + value + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Expression:    [" + sides[1].trim() + "]");
+            getLogger().debug("Setting value: [" + value + "]");
         }
     }
 
@@ -74,10 +71,10 @@ public class BooleanVariableCondition extends AbstractCondition {
      * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.WorkflowInstance)
      */
     public boolean isComplied(Situation situation, WorkflowInstance instance) throws WorkflowException {
-        if (log.isDebugEnabled()) {
-            log.debug("Checking boolean variable condition");
-            log.debug("    Condition value: [" + getValue() + "]");
-            log.debug("    Variable value:  [" + instance.getValue(getVariableName()) + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Checking boolean variable condition");
+            getLogger().debug("    Condition value: [" + getValue() + "]");
+            getLogger().debug("    Variable value:  [" + instance.getValue(getVariableName()) + "]");
         }
         return instance.getValue(getVariableName()) == getValue();
     }

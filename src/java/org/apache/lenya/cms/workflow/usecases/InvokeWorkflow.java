@@ -17,8 +17,6 @@
 package org.apache.lenya.cms.workflow.usecases;
 
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
@@ -29,6 +27,9 @@ import org.apache.lenya.workflow.WorkflowInstance;
  */
 public class InvokeWorkflow extends DocumentUsecase {
 
+    /**
+     * The name of the event request parameter.
+     */
     public static final String EVENT = "lenya.event";
 
     /**
@@ -44,8 +45,9 @@ public class InvokeWorkflow extends DocumentUsecase {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         String eventName = getParameterAsString(EVENT);
-
-        if (canExecuteWorkflow(eventName, getSourceDocument())) {
+        
+        WorkflowInstance instance = getWorkflowInstance(getSourceDocument());
+        if (!instance.canInvoke(getSituation(), eventName)) {
             addErrorMessage("The event [" + eventName + "] is not executable on document ["
                     + getSourceDocument() + "].");
         }

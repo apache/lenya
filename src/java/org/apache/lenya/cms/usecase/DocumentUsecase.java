@@ -134,15 +134,6 @@ public class DocumentUsecase extends WorkflowUsecase {
     }
     
     /**
-     * Checks if an event can be executed on the source document.
-     * @param event The event.
-     * @return A boolean value.
-     */
-    protected boolean canExecuteWorkflow(String event) {
-        return canExecuteWorkflow(event, getSourceDocument());
-    }
-
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {

@@ -177,7 +177,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper {
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
         final WorkflowDocument wf = (WorkflowDocument) WorkflowFactory.newInstance()
-                .buildInstance(getPageEnvelope(cocoon).getDocument());
+                .buildExistingInstance(getPageEnvelope(cocoon).getDocument());
         wf.invoke(getSituation(cocoon), event);
     }
 

@@ -29,26 +29,29 @@ import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 
-
 /**
  * Implementation of a workflow schema.
  */
 public class WorkflowImpl implements Workflow {
-    
+
     /**
      * Creates a new instance of WorkflowImpl.
+     * @param name The name.
      * @param initialState the initial state of the workflow.
      */
-    protected WorkflowImpl(StateImpl initialState) {
+    protected WorkflowImpl(String name, StateImpl initialState) {
         this.initialState = initialState;
+        this.name = name;
         addState(initialState);
     }
 
     private State initialState;
+    private String name;
 
-    /** Returns the initial state of this workflow.
+    /**
+     * Returns the initial state of this workflow.
      * @return The initial state.
-     *
+     *  
      */
     public State getInitialState() {
         return initialState;
@@ -83,19 +86,21 @@ public class WorkflowImpl implements Workflow {
         return (TransitionImpl[]) transitions.toArray(new TransitionImpl[transitions.size()]);
     }
 
-    /** Returns the destination state of a transition.
+    /**
+     * Returns the destination state of a transition.
      * @param transition A transition.
      * @return The destination state.
-     *
+     *  
      */
     protected State getDestination(Transition transition) {
         return ((TransitionImpl) transition).getDestination();
     }
 
-    /** Returns the transitions that leave a state.
+    /**
+     * Returns the transitions that leave a state.
      * @param state A state.
      * @return The transitions that leave the state.
-     *
+     *  
      */
     public Transition[] getLeavingTransitions(State state) {
         Set leavingTransitions = new HashSet();
@@ -113,7 +118,8 @@ public class WorkflowImpl implements Workflow {
     /**
      * Checks if this workflow contains a state.
      * @param state The state to check.
-     * @return <code>true</code> if the state is contained, <code>false</code> otherwise.
+     * @return <code>true</code> if the state is contained, <code>false</code>
+     *         otherwise.
      */
     protected boolean containsState(State state) {
         return states.containsValue(state);
@@ -181,8 +187,7 @@ public class WorkflowImpl implements Workflow {
      * @return A variable.
      * @throws WorkflowException if no variable with the given name exists.
      */
-    public BooleanVariableImpl getVariable(String name)
-        throws WorkflowException {
+    public BooleanVariableImpl getVariable(String name) throws WorkflowException {
         if (!variables.containsKey(name)) {
             throw new WorkflowException("Workflow does not contain the variable '" + name + "'!");
         }
@@ -195,7 +200,8 @@ public class WorkflowImpl implements Workflow {
      * @return An array of variables.
      */
     protected BooleanVariableImpl[] getVariables() {
-        return (BooleanVariableImpl[]) variables.values().toArray(new BooleanVariableImpl[variables.size()]);
+        return (BooleanVariableImpl[]) variables.values().toArray(new BooleanVariableImpl[variables
+                .size()]);
     }
 
     /**
@@ -204,9 +210,16 @@ public class WorkflowImpl implements Workflow {
     public String[] getVariableNames() {
         BooleanVariableImpl[] variables = getVariables();
         String[] names = new String[variables.length];
-        for (int i = 0; i <names.length; i++) {
+        for (int i = 0; i < names.length; i++) {
             names[i] = variables[i].getName();
         }
         return names;
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflow#getName()
+     */
+    public String getName() {
+        return this.name;
     }
 }

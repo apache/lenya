@@ -19,13 +19,14 @@
 
 package org.apache.lenya.workflow.impl;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * Abstract base class for workflow conditions.
  */
-public abstract class AbstractCondition implements Condition {
+public abstract class AbstractCondition extends AbstractLogEnabled implements Condition {
 
     private String expression;
 

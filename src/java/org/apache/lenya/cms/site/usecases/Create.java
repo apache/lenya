@@ -29,12 +29,10 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
  * Abstract superclass for usecases to create a resource.
@@ -80,16 +78,13 @@ public abstract class Create extends DocumentUsecase {
 
         Document document = createDocument();
         Publication publication = document.getPublication();
-        String documentTypeName = getDocumentTypeName();
-
-        DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
-                publication);
 
         SiteManager manager = publication.getSiteManager(document.getIdentityMap());
         manager.add(document);
         manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
 
-        WorkflowFactory.initHistory(document, documentType.getWorkflowFileName(), getSituation());
+        WorkflowInstance instance = getWorkflowInstance(document);
+        instance.getHistory().initialize(getSituation());
 
         setMetaData(document);
         setTargetDocument(document);

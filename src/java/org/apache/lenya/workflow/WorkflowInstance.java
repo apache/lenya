@@ -44,26 +44,32 @@ public interface WorkflowInstance {
      * Returns the executable events in a certain situation.
      * @param situation The situation.
      * @return An array of events.
-     * @throws WorkflowException when something went wrong.
      */
-    Event[] getExecutableEvents(Situation situation) throws WorkflowException;
+    String[] getExecutableEvents(Situation situation);
+    
+    /**
+     * Checks if an event can be executed in a certain situation.
+     * @param situation The situation.
+     * @param event The event.
+     * @return A boolean value.
+     */
+    boolean canInvoke(Situation situation, String event);
 
     /**
      * Indicates that the user invoked an event.
      * 
      * @param situation The situation in which the event was invoked.
      * @param event The event that was invoked.
-     * @throws WorkflowException when something went wrong.
+     * @throws WorkflowException if the event cannot be invoked in this situation.
      */
-    void invoke(Situation situation, Event event) throws WorkflowException;
+    void invoke(Situation situation, String event) throws WorkflowException;
 
     /**
      * Returns the current value of a variable.
      * @param variableName A variable name.
      * @return A boolean value.
-     * @throws WorkflowException when the variable does not exist.
      */
-    boolean getValue(String variableName) throws WorkflowException;
+    boolean getValue(String variableName);
 
     /**
      * Adds a workflow listener.
@@ -81,6 +87,13 @@ public interface WorkflowInstance {
      * Returns if the transition for a certain event is synchronized.
      * @param event An event.
      * @return A boolean value.
+     * @throws WorkflowException if the event is not supported.
      */
-    boolean isSynchronized(Event event) throws WorkflowException;
+    boolean isSynchronized(String event) throws WorkflowException;
+    
+    /**
+     * @return The history of this workflow instance.
+     */
+    History getHistory();
+    
 }

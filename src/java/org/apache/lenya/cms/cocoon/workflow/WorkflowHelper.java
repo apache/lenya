@@ -35,6 +35,7 @@ import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * Workflow helper.
+ * @deprecated Use WorkflowResolver instead.
  */
 public class WorkflowHelper {
 

@@ -32,8 +32,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.Event;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 
@@ -63,6 +62,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
+        WorkflowResolver workflowResolver = null;
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Authorizing workflow for event [" + event + "]");
@@ -78,20 +78,19 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                 if (map.getFactory().isDocument(url)) {
 
                     Document document = map.getFactory().getFromURL(url);
-                    WorkflowFactory factory = WorkflowFactory.newInstance();
+                    workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
 
-                    if (factory.hasWorkflow(document)) {
-                        SynchronizedWorkflowInstances instance = factory
-                                .buildSynchronizedInstance(document);
+                    if (workflowResolver.hasWorkflow(document)) {
+                        SynchronizedWorkflowInstances instance = workflowResolver.getSynchronizedInstance(document);
 
                         authorized = false;
 
-                        Situation situation = WorkflowHelper.buildSituation(request);
-                        Event[] events = instance.getExecutableEvents(situation);
+                        Situation situation = workflowResolver.getSituation();
+                        String[] events = instance.getExecutableEvents(situation);
                         int i = 0;
 
                         while (!authorized && (i < events.length)) {
-                            if (events[i].getName().equals(event)) {
+                            if (events[i].equals(event)) {
                                 authorized = true;
                             }
                             if (getLogger().isDebugEnabled()) {
@@ -108,6 +107,9 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
             } finally {
                 if (resolver != null) {
                     manager.release(resolver);
+                }
+                if (workflowResolver != null) {
+                    this.manager.release(workflowResolver);
                 }
             }
         }

@@ -28,10 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.BooleanVariable;
 import org.apache.lenya.workflow.BooleanVariableInstance;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.Transition;
@@ -39,20 +39,19 @@ import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.WorkflowListener;
-import org.apache.log4j.Category;
-
 
 /**
  * Implementation of a workflow instance.
  */
-public abstract class WorkflowInstanceImpl implements WorkflowInstance {
-    
-    private static final Category log = Category.getInstance(WorkflowInstanceImpl.class);
-    
+public abstract class WorkflowInstanceImpl extends AbstractLogEnabled implements WorkflowInstance {
+
     /**
      * Creates a new instance of WorkflowInstanceImpl.
+     * @param workflow The workflow implementation to use.
      */
-    protected WorkflowInstanceImpl() {
+    protected WorkflowInstanceImpl(WorkflowImpl workflow) {
+        this.workflow = workflow;
+        initVariableInstances();
     }
 
     private WorkflowImpl workflow;
@@ -73,58 +72,59 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
         return workflow;
     }
 
-    /** Returns the events that can be invoked in a certain situation.
-     * @param situation The situation to check.
-     * @return The events that can be invoked.
-     * @throws WorkflowException when something went wrong.
+    /**
+     * @see org.apache.lenya.workflow.WorkflowInstance#getExecutableEvents(org.apache.lenya.workflow.Situation)
      */
-    public Event[] getExecutableEvents(Situation situation) throws WorkflowException {
-        
-        if (log.isDebugEnabled()) {
-            log.debug("Resolving executable events");
+    public String[] getExecutableEvents(Situation situation) {
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Resolving executable events");
         }
-        
+
         Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
         Set executableEvents = new HashSet();
 
-        for (int i = 0; i < transitions.length; i++) {
-            if (transitions[i].canFire(situation, this)) {
-                executableEvents.add(transitions[i].getEvent());
-                if (log.isDebugEnabled()) {
-                    log.debug("    [" + transitions[i].getEvent() + "] can fire.");
+        try {
+            for (int i = 0; i < transitions.length; i++) {
+                if (transitions[i].canFire(situation, this)) {
+                    executableEvents.add(transitions[i].getEvent().getName());
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("    [" + transitions[i].getEvent() + "] can fire.");
+                    }
+                } else {
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("    [" + transitions[i].getEvent() + "] can not fire.");
+                    }
                 }
             }
-            else {
-                if (log.isDebugEnabled()) {
-                    log.debug("    [" + transitions[i].getEvent() + "] can not fire.");
-                }
+
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("    Resolving executable events completed.");
             }
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("    Resolving executable events completed.");
-        }
-        
-        return (Event[]) executableEvents.toArray(new Event[executableEvents.size()]);
+        return (String[]) executableEvents.toArray(new String[executableEvents.size()]);
     }
 
-    /** Invoke an event on this workflow instance.
-     * @param situation The situation when the event was invoked.
-     * @param event The event that was invoked.
-     * @throws WorkflowException when the event may not be invoked.
+    /**
+     * @see org.apache.lenya.workflow.WorkflowInstance#invoke(org.apache.lenya.workflow.Situation,
+     *      java.lang.String)
      */
-    public void invoke(Situation situation, Event event)
-        throws WorkflowException {
+    public void invoke(Situation situation, String event) throws WorkflowException {
+
         if (!Arrays.asList(getExecutableEvents(situation)).contains(event)) {
-            throw new WorkflowException("The event '" + event +
-                "' cannot be invoked in the situation '" + situation + "'.");
+            throw new WorkflowException("The event '" + event
+                    + "' cannot be invoked in the situation '" + situation + "'.");
         }
 
-        fire(getNextTransition(event));
+        TransitionImpl transition = getNextTransition(event);
+        fire(transition);
 
-        for (Iterator iter = listeners.iterator(); iter.hasNext();) {
+        for (Iterator iter = this.listeners.iterator(); iter.hasNext();) {
             WorkflowListener listener = (WorkflowListener) iter.next();
-            listener.transitionFired(this, situation, event);
+            listener.transitionFired(this, situation, event, transition.getDestination());
         }
     }
 
@@ -134,25 +134,26 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @return A transition.
      * @throws WorkflowException if no single transition would fire.
      */
-    protected TransitionImpl getNextTransition(Event event) throws WorkflowException {
+    protected TransitionImpl getNextTransition(String event) throws WorkflowException {
         TransitionImpl nextTransition = null;
         Transition[] transitions = getWorkflow().getLeavingTransitions(getCurrentState());
 
         for (int i = 0; i < transitions.length; i++) {
-            if (transitions[i].getEvent().equals(event)) {
-                
+            if (transitions[i].getEvent().getName().equals(event)) {
+
                 if (nextTransition != null) {
-                    throw new WorkflowException("More than one transition found for event [" + event + "]!");
+                    throw new WorkflowException("More than one transition found for event ["
+                            + event + "]!");
                 }
-                
+
                 nextTransition = (TransitionImpl) transitions[i];
             }
         }
-        
+
         if (nextTransition == null) {
             throw new WorkflowException("No transition found for event [" + event + "]!");
         }
-        
+
         return nextTransition;
     }
 
@@ -167,54 +168,26 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
         for (int i = 0; i < actions.length; i++) {
             actions[i].execute(this);
         }
-
-        setCurrentState(transition.getDestination());
     }
-
-    private State currentState;
 
     /**
-     * Sets the current state of this instance.
-     * @param state The state to set.
-     */
-    protected void setCurrentState(State state) {
-        this.currentState = state;
-    }
-
-    /** Returns the current state of this WorkflowInstance.
+     * Returns the current state of this WorkflowInstance.
      * @return A state object.
      */
     public State getCurrentState() {
-        return currentState;
-    }
 
-    /**
-     * Sets the workflow of this instance.
-     * @param workflow A workflow object.
-     */
-    protected void setWorkflow(WorkflowImpl workflow) {
-        this.workflow = workflow;
-        setCurrentState(getWorkflow().getInitialState());
-        initVariableInstances();
+        State state = null;
+        try {
+            if (getHistory().isInitialized()) {
+                state = getHistory().getLastState();
+            } else {
+                state = getWorkflow().getInitialState();
+            }
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
+        }
+        return state;
     }
-
-    /**
-     * Sets the workflow of this instance.
-     * @param workflowName The identifier of the workflow.
-     * @throws WorkflowException if something goes wrong.
-     */
-    protected void setWorkflow(String workflowName) throws WorkflowException {
-        setWorkflow(getWorkflow(workflowName));
-    }
-
-    /**
-     * Factory method to create a workflow object for a given identifier.
-     * @param workflowName The workflow identifier.
-     * @return A workflow object.
-     * @throws WorkflowException when the workflow could not be created.
-     */
-    protected abstract WorkflowImpl getWorkflow(String workflowName)
-        throws WorkflowException;
 
     /**
      * Returns a workflow state for a given name.
@@ -250,22 +223,28 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @throws WorkflowException when the variable instance was not found.
      */
     protected BooleanVariableInstance getVariableInstance(BooleanVariable variable)
-        throws WorkflowException {
-        if (!variableInstances.containsKey(variable)) {
+            throws WorkflowException {
+        if (!this.variableInstances.containsKey(variable)) {
             throw new WorkflowException("No instance for variable '" + variable.getName() + "'!");
         }
 
-        return (BooleanVariableInstance) variableInstances.get(variable);
+        return (BooleanVariableInstance) this.variableInstances.get(variable);
     }
 
     /**
      * @see org.apache.lenya.workflow.WorkflowInstance#getValue(java.lang.String)
      */
-    public boolean getValue(String variableName) throws WorkflowException {
-        BooleanVariable variable = getWorkflowImpl().getVariable(variableName);
-        BooleanVariableInstance instance = getVariableInstance(variable);
+    public boolean getValue(String variableName) {
+        boolean value = false;
+        try {
+            BooleanVariable variable = getWorkflowImpl().getVariable(variableName);
+            BooleanVariableInstance instance = getVariableInstance(variable);
+            value = instance.getValue();
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
+        }
 
-        return instance.getValue();
+        return value;
     }
 
     /**
@@ -274,8 +253,7 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
      * @param value The value to set.
      * @throws WorkflowException when the variable was not found.
      */
-    protected void setValue(String variableName, boolean value)
-        throws WorkflowException {
+    protected void setValue(String variableName, boolean value) throws WorkflowException {
         BooleanVariable variable = getWorkflowImpl().getVariable(variableName);
         BooleanVariableInstance instance = getVariableInstance(variable);
         instance.setValue(value);
@@ -300,11 +278,18 @@ public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     }
 
     /**
-     * @see org.apache.lenya.workflow.WorkflowInstance#isSynchronized(org.apache.lenya.workflow.Event)
+     * @see org.apache.lenya.workflow.WorkflowInstance#isSynchronized(String)
      */
-    public boolean isSynchronized(Event event) throws WorkflowException {
+    public boolean isSynchronized(String event) throws WorkflowException {
         Transition nextTransition = getNextTransition(event);
         return nextTransition.isSynchronized();
     }
 
+    /**
+     * @see org.apache.lenya.workflow.WorkflowInstance#canInvoke(org.apache.lenya.workflow.Situation,
+     *      java.lang.String)
+     */
+    public boolean canInvoke(Situation situation, String event) {
+        return Arrays.asList(getExecutableEvents(situation)).contains(event);
+    }
 }

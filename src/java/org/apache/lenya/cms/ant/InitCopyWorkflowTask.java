@@ -21,13 +21,12 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.tools.ant.BuildException;
 
 
@@ -106,8 +105,12 @@ public class InitCopyWorkflowTask extends TwoDocumentsOperationTask {
 				if (factory.hasWorkflow(document)) {
 					String[] roles = new String[0];
 					Situation situation =
-						WorkflowFactory.newInstance().buildSituation(roles, getUserId(), getMachineIp());
-					WorkflowFactory.initHistory(document, newdocument, situation);
+						factory.buildSituation(roles, getUserId(), getMachineIp());
+                    
+                    WorkflowInstance sourceInstance = factory.buildExistingInstance(document);
+                    String workflowName = sourceInstance.getWorkflow().getName();
+                    WorkflowInstance destInstance = factory.buildNewInstance(newdocument, workflowName);
+                    destInstance.getHistory().initialize(situation);
 				}
 			} catch (WorkflowException e) {
 				throw new BuildException(e);

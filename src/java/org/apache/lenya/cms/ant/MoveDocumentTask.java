@@ -27,6 +27,7 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -35,137 +36,144 @@ import org.apache.tools.ant.BuildException;
  */
 public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVisitor {
 
-	private String firstarea;
-	private String firstdocumentid;
-	private String secarea;
-	private String secdocumentid;
+    private String firstarea;
+    private String firstdocumentid;
+    private String secarea;
+    private String secdocumentid;
 
-	/**
-	 *  
-	 */
-	public MoveDocumentTask() {
-		super();
-	}
+    /**
+     *  
+     */
+    public MoveDocumentTask() {
+        super();
+    }
 
-	/**
-	 * @return String The area of the source.
-	 */
-	public String getFirstarea() {
-		return firstarea;
-	}
+    /**
+     * @return String The area of the source.
+     */
+    public String getFirstarea() {
+        return firstarea;
+    }
 
-	/**
-	 * @return String The document-id corresponding to the source.
-	 */
-	public String getFirstdocumentid() {
-		return firstdocumentid;
-	}
+    /**
+     * @return String The document-id corresponding to the source.
+     */
+    public String getFirstdocumentid() {
+        return firstdocumentid;
+    }
 
-	/**
-	 * @return String The area of the destination.
-	 */
-	public String getSecarea() {
-		return secarea;
-	}
+    /**
+     * @return String The area of the destination.
+     */
+    public String getSecarea() {
+        return secarea;
+    }
 
-	/**
-	 * @return String The document-id corresponding to the destination.
-	 */
-	public String getSecdocumentid() {
-		return secdocumentid;
-	}
+    /**
+     * @return String The document-id corresponding to the destination.
+     */
+    public String getSecdocumentid() {
+        return secdocumentid;
+    }
 
-	/**
-	 * @param string
-	 *            The area of the source.
-	 */
-	public void setFirstarea(String string) {
-		firstarea = string;
-	}
+    /**
+     * @param string
+     *            The area of the source.
+     */
+    public void setFirstarea(String string) {
+        firstarea = string;
+    }
 
-	/**
-	 * @param string
-	 *            The document-id corresponding to the source.
-	 */
-	public void setFirstdocumentid(String string) {
-		firstdocumentid = string;
-	}
+    /**
+     * @param string
+     *            The document-id corresponding to the source.
+     */
+    public void setFirstdocumentid(String string) {
+        firstdocumentid = string;
+    }
 
-	/**
-	 * @param string
-	 *            The area of the destination.
-	 */
-	public void setSecarea(String string) {
-		secarea = string;
-	}
+    /**
+     * @param string
+     *            The area of the destination.
+     */
+    public void setSecarea(String string) {
+        secarea = string;
+    }
 
-	/**
-	 * @param string
-	 *            The document-id corresponding to the destination.
-	 */
-	public void setSecdocumentid(String string) {
-		secdocumentid = string;
-	}
+    /**
+     * @param string
+     *            The document-id corresponding to the destination.
+     */
+    public void setSecdocumentid(String string) {
+        secdocumentid = string;
+    }
 
-	/**
-	 * move the workflow files
-	 * 
-	 * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
-	 */
-	public void visitSiteTreeNode(SiteTreeNode node) {
-		Label[] labels = node.getLabels();
-		for (int i = 0; i < labels.length; i++) {
-			String language = labels[i].getLanguage();
+    /**
+     * move the workflow files
+     * 
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
+     */
+    public void visitSiteTreeNode(SiteTreeNode node) {
+        Label[] labels = node.getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            String language = labels[i].getLanguage();
 
-			String srcDocumentid = node.getAbsoluteId();
-			String destDocumentid = srcDocumentid.replaceFirst(firstdocumentid, secdocumentid);
+            String srcDocumentid = node.getAbsoluteId();
+            String destDocumentid = srcDocumentid.replaceFirst(firstdocumentid, secdocumentid);
 
-			// TODO: content(fix the build file)
-			// TODO: resources (fix the build file)
-			// TODO: rcml (fix the build file)
-			// TODO: rcbak (fix the build file)
+            // TODO: content(fix the build file)
+            // TODO: resources (fix the build file)
+            // TODO: rcml (fix the build file)
+            // TODO: rcbak (fix the build file)
 
-			//move workflow
+            //move workflow
 
-			Document document;
-			Document newDocument;
-			WorkflowFactory factory = WorkflowFactory.newInstance();
+            Document document;
+            Document newDocument;
+            WorkflowFactory factory = WorkflowFactory.newInstance();
 
-			log("move workflow history");
-			try {
-				document = getIdentityMap().getFactory().get(firstarea, srcDocumentid, language);
-				newDocument = getIdentityMap().getFactory().get(secarea, destDocumentid, language);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			try {
-				if (factory.hasWorkflow(document)) {
-					WorkflowFactory.moveHistory(document, newDocument);
-				}
-			} catch (WorkflowException e) {
-				throw new BuildException(e);
-			}
+            log("move workflow history");
+            try {
+                document = getIdentityMap().getFactory().get(firstarea, srcDocumentid, language);
+                newDocument = getIdentityMap().getFactory().get(secarea, destDocumentid, language);
+            } catch (DocumentBuildException e) {
+                throw new BuildException(e);
+            }
+            try {
+                if (factory.hasWorkflow(document)) {
+                    
+                    WorkflowInstance sourceInstance = factory.buildExistingInstance(document);
+                    String workflowName = sourceInstance.getWorkflow().getName();
+                    
+                    WorkflowInstance destInstance = factory.buildNewInstance(newDocument, workflowName);
+                    destInstance.getHistory().replaceWith(sourceInstance.getHistory());
+                    
+                    sourceInstance.getHistory().delete();
+                }
+            } catch (WorkflowException e) {
+                throw new BuildException(e);
+            }
 
-		}
-	}
+        }
+    }
 
-	/**
-	 * @see org.apache.tools.ant.Task#execute()
-	 */
-	public void execute() throws BuildException {
-		try {
-			log("document id for the source" + this.getFirstdocumentid());
-			log("area for the source" + this.getFirstarea());
-			log("document id for the destination" + this.getSecdocumentid());
-			log("area for the destination" + this.getSecarea());
+    /**
+     * @see org.apache.tools.ant.Task#execute()
+     */
+    public void execute() throws BuildException {
+        try {
+            log("document id for the source" + this.getFirstdocumentid());
+            log("area for the source" + this.getFirstarea());
+            log("document id for the destination" + this.getSecdocumentid());
+            log("area for the destination" + this.getSecarea());
 
-			SiteTree tree = getSiteTree(getFirstarea());
-			SiteTreeNode node = tree.getNode(getFirstdocumentid());
+            SiteTree tree = getSiteTree(getFirstarea());
+            SiteTreeNode node = tree.getNode(getFirstdocumentid());
 
-			node.acceptSubtree(this);
-		} catch (Exception e) {
-			throw new BuildException(e);
-		}
-	}
+            node.acceptSubtree(this);
+        } catch (Exception e) {
+            throw new BuildException(e);
+        }
+    }
 
 }

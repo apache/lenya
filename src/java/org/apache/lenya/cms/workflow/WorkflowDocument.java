@@ -20,22 +20,26 @@
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.workflow.Event;
-import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.History;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.WorkflowImpl;
 import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 
+/**
+ * Workflow instance for CMS documents.
+ *
+ * @version $Id:$
+ */
 public class WorkflowDocument extends WorkflowInstanceImpl {
 	
 	/**
-	 * Create a new <code>WorkflowDocument</code>
-	 * 
+	 * Ctor.
+	 * @param workflow The workflow.
 	 * @param document the document
-	 * 
-	 * @throws WorkflowException if an error occurs
+	 * @throws WorkflowException if an error occurs.
 	 */
-    protected WorkflowDocument(Document document) throws WorkflowException {
+    protected WorkflowDocument(WorkflowImpl workflow, Document document) throws WorkflowException {
+        super(workflow);
         assert document != null;
         this.document = document;
     }
@@ -49,32 +53,20 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
     public Document getDocument() {
         return document;
     }
+    
+    private History history;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param situation DOCUMENT ME!
-     * @param eventName DOCUMENT ME!
-     *
-     * @throws WorkflowException DOCUMENT ME!
+     * @see org.apache.lenya.workflow.WorkflowInstance#getHistory()
      */
-    public void invoke(Situation situation, String eventName)
-        throws WorkflowException {
-        assert eventName != null;
-
-        Event event = ((WorkflowImpl) getWorkflow()).getEvent(eventName);
-        invoke(situation, event);
-    }
-
-    /** (non-Javadoc)
-     * @see org.apache.lenya.workflow.impl.WorkflowInstanceImpl#getWorkflow(java.lang.String)
-     */
-    protected WorkflowImpl getWorkflow(String workflowName)
-        throws WorkflowException {
-        assert workflowName != null && !"".equals(workflowName);
-        WorkflowImpl workflow = (WorkflowImpl) WorkflowFactory.buildWorkflow(document.getPublication(),
-                workflowName);
-
-        return workflow;
+    public History getHistory() {
+        try {
+            if (this.history == null) {
+                this.history = new CMSHistory(this);
+            }
+        } catch (WorkflowException e) {
+            throw new RuntimeException(e);
+        }
+        return this.history;
     }
 }

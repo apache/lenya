@@ -31,9 +31,10 @@ public interface WorkflowListener {
      * @param instance The workflow instance.
      * @param situation The situation before the transition has fired.
      * @param event The event that was invoked.
+     * @param resultingState The resulting state.
      * 
      * @throws WorkflowException if an error occured
      */
-    void transitionFired(WorkflowInstance instance, Situation situation, Event event)
+    void transitionFired(WorkflowInstance instance, Situation situation, String event, State resultingState)
         throws WorkflowException;
 }

@@ -20,7 +20,6 @@ import java.util.Arrays;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
@@ -53,9 +52,8 @@ public class SiteUsecase extends DocumentUsecase {
         super.doInitialize();
         doc = getSourceDocument();
         try {
-            WorkflowFactory factory = WorkflowFactory.newInstance();
-            if (factory.hasWorkflow(getSourceDocument())) {
-                instance = factory.buildInstance(getSourceDocument());
+            if (hasWorkflow(getSourceDocument())) {
+                instance = getWorkflowInstance(getSourceDocument());
                 setParameter(STATE, instance.getCurrentState().toString());
                 String[] variableNames = instance.getWorkflow().getVariableNames();
                 if (Arrays.asList(variableNames).contains(ISLIVE)) {

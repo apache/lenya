@@ -29,7 +29,6 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.log4j.Category;
@@ -197,21 +196,8 @@ public class WorkflowInvoker extends ParameterWrapper {
                 Situation situation = factory.buildSituation(getRoleIDs(), getUserId(),
                         getMachineIp());
 
-                Event event = null;
-                Event[] events = instance.getExecutableEvents(situation);
-
-                log.debug("Resolved executable events.");
-
-                for (int i = 0; i < events.length; i++) {
-                    if (events[i].getName().equals(getEventName())) {
-                        event = events[i];
-                    }
-                }
-
-                assert event != null;
-
                 log.debug("Invoking transition.");
-                instance.invoke(situation, event);
+                instance.invoke(situation, getEventName());
                 log.debug("Invoking transition completed.");
 
             } catch (Exception e) {

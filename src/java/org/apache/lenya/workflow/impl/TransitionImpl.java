@@ -19,6 +19,7 @@
 
 package org.apache.lenya.workflow.impl;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
@@ -26,7 +27,6 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.log4j.Category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,8 @@ import java.util.List;
 /**
  * Implementation of a transition.
  */
-public class TransitionImpl implements Transition {
+public class TransitionImpl extends AbstractLogEnabled implements Transition {
     
-    private static final Category log = Category.getInstance(TransitionImpl.class);
     
     /**
      * Ctor.
@@ -138,8 +137,8 @@ public class TransitionImpl implements Transition {
         int i = 0;
         while (canFire && i < conditions.length) {
             canFire = canFire && conditions[i].isComplied(situation, instance);
-            if (log.isDebugEnabled()) {
-                log.debug("Condition [" + conditions[i] + "] returns [" + canFire + "]");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Condition [" + conditions[i] + "] returns [" + canFire + "]");
             }
             i++;
         }

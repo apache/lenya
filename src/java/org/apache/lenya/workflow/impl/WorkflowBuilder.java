@@ -26,13 +26,15 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -41,28 +43,30 @@ import org.xml.sax.SAXException;
 /**
  * Utility class to build a workflow schema from a file.
  */
-public class WorkflowBuilder {
-
-    private static final Category log = Category.getInstance(WorkflowBuilder.class);
+public class WorkflowBuilder extends AbstractLogEnabled {
 
     /**
      * Ctor.
+     * @param logger The logger to use.
      */
-    protected WorkflowBuilder() {
+    public WorkflowBuilder(Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
     }
 
     /**
      * Builds a workflow schema from a file.
+     * @param name The workflow name.
      * @param file The file.
      * @return A workflow schema implementation.
-     * @throws WorkflowException if the file does not represent a valid workflow schema.
+     * @throws WorkflowException if the file does not represent a valid workflow
+     *             schema.
      */
-    public static WorkflowImpl buildWorkflow(File file) throws WorkflowException {
+    public WorkflowImpl buildWorkflow(String name, File file) throws WorkflowException {
         WorkflowImpl workflow;
 
         try {
             Document document = DocumentHelper.readDocument(file);
-            workflow = buildWorkflow(document);
+            workflow = buildWorkflow(name, document);
         } catch (Exception e) {
             throw new WorkflowException(e);
         }
@@ -72,6 +76,7 @@ public class WorkflowBuilder {
 
     /**
      * Builds a workflow object from an XML document.
+     * @param name The workflow name.
      * @param document The XML document.
      * @return A workflow implementation.
      * @throws ParserConfigurationException when something went wrong.
@@ -79,8 +84,8 @@ public class WorkflowBuilder {
      * @throws IOException when something went wrong.
      * @throws WorkflowException when something went wrong.
      */
-    protected static WorkflowImpl buildWorkflow(Document document)
-        throws ParserConfigurationException, SAXException, IOException, WorkflowException {
+    protected WorkflowImpl buildWorkflow(String name, Document document) throws ParserConfigurationException,
+            SAXException, IOException, WorkflowException {
 
         Element root = document.getDocumentElement();
         StateImpl initialState = null;
@@ -103,11 +108,11 @@ public class WorkflowBuilder {
             }
         }
 
-        WorkflowImpl workflow = new WorkflowImpl(initialState);
+        WorkflowImpl workflow = new WorkflowImpl(name, initialState);
 
         // load variables
-        NodeList variableElements =
-            root.getElementsByTagNameNS(Workflow.NAMESPACE, VARIABLE_ELEMENT);
+        NodeList variableElements = root.getElementsByTagNameNS(Workflow.NAMESPACE,
+                VARIABLE_ELEMENT);
 
         for (int i = 0; i < variableElements.getLength(); i++) {
             Element element = (Element) variableElements.item(i);
@@ -127,12 +132,14 @@ public class WorkflowBuilder {
         }
 
         // load transitions
-        NodeList transitionElements =
-            root.getElementsByTagNameNS(Workflow.NAMESPACE, TRANSITION_ELEMENT);
+        NodeList transitionElements = root.getElementsByTagNameNS(Workflow.NAMESPACE,
+                TRANSITION_ELEMENT);
 
         for (int i = 0; i < transitionElements.getLength(); i++) {
-            TransitionImpl transition =
-                buildTransition((Element) transitionElements.item(i), states, events, variables);
+            TransitionImpl transition = buildTransition((Element) transitionElements.item(i),
+                    states,
+                    events,
+                    variables);
             workflow.addTransition(transition);
         }
 
@@ -140,15 +147,15 @@ public class WorkflowBuilder {
     }
 
     /**
-     * Checks if a state element contains the initial state. 
+     * Checks if a state element contains the initial state.
      * @param element An XML element.
      * @return A boolean value.
      */
-    protected static boolean isInitialStateElement(Element element) {
+    protected boolean isInitialStateElement(Element element) {
         String initialAttribute = element.getAttribute(INITIAL_ATTRIBUTE);
 
         return (initialAttribute != null)
-            && (initialAttribute.equals("yes") || initialAttribute.equals("true"));
+                && (initialAttribute.equals("yes") || initialAttribute.equals("true"));
     }
 
     protected static final String STATE_ELEMENT = "state";
@@ -173,7 +180,7 @@ public class WorkflowBuilder {
      * @param element An XML element.
      * @return A state.
      */
-    protected static StateImpl buildState(Element element) {
+    protected StateImpl buildState(Element element) {
         String id = element.getAttribute(ID_ATTRIBUTE);
         StateImpl state = new StateImpl(id);
 
@@ -189,15 +196,11 @@ public class WorkflowBuilder {
      * @return A transition.
      * @throws WorkflowException when something went wrong.
      */
-    protected static TransitionImpl buildTransition(
-        Element element,
-        Map states,
-        Map events,
-        Map variables)
-        throws WorkflowException {
+    protected TransitionImpl buildTransition(Element element, Map states, Map events, Map variables)
+            throws WorkflowException {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Building transition");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Building transition");
         }
 
         String sourceId = element.getAttribute(SOURCE_ATTRIBUTE);
@@ -207,21 +210,22 @@ public class WorkflowBuilder {
         StateImpl destination = (StateImpl) states.get(destinationId);
 
         TransitionImpl transition = new TransitionImpl(source, destination);
+        ContainerUtil.enableLogging(transition, getLogger());
 
         // set event
-        Element eventElement =
-            (Element) element.getElementsByTagNameNS(Workflow.NAMESPACE, EVENT_ELEMENT).item(0);
+        Element eventElement = (Element) element.getElementsByTagNameNS(Workflow.NAMESPACE,
+                EVENT_ELEMENT).item(0);
         String id = eventElement.getAttribute(ID_ATTRIBUTE);
         Event event = (Event) events.get(id);
         transition.setEvent(event);
 
-        if (log.isDebugEnabled()) {
-            log.debug("    Event: [" + event + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("    Event: [" + event + "]");
         }
 
         // load conditions
-        NodeList conditionElements =
-            element.getElementsByTagNameNS(Workflow.NAMESPACE, CONDITION_ELEMENT);
+        NodeList conditionElements = element.getElementsByTagNameNS(Workflow.NAMESPACE,
+                CONDITION_ELEMENT);
 
         for (int i = 0; i < conditionElements.getLength(); i++) {
             Condition condition = buildCondition((Element) conditionElements.item(i));
@@ -229,18 +233,18 @@ public class WorkflowBuilder {
         }
 
         // load assignments
-        NodeList assignmentElements =
-            element.getElementsByTagNameNS(Workflow.NAMESPACE, ASSIGNMENT_ELEMENT);
+        NodeList assignmentElements = element.getElementsByTagNameNS(Workflow.NAMESPACE,
+                ASSIGNMENT_ELEMENT);
 
         for (int i = 0; i < assignmentElements.getLength(); i++) {
-            BooleanVariableAssignmentImpl action =
-                buildAssignment(variables, (Element) assignmentElements.item(i));
+            BooleanVariableAssignmentImpl action = buildAssignment(variables,
+                    (Element) assignmentElements.item(i));
             transition.addAction(action);
         }
 
         // load actions
-        NodeList actionElements =
-            element.getElementsByTagNameNS(Workflow.NAMESPACE, ACTION_ELEMENT);
+        NodeList actionElements = element
+                .getElementsByTagNameNS(Workflow.NAMESPACE, ACTION_ELEMENT);
 
         for (int i = 0; i < actionElements.getLength(); i++) {
             Action action = buildAction((Element) actionElements.item(i));
@@ -261,12 +265,14 @@ public class WorkflowBuilder {
      * @param element An XML element.
      * @return An event.
      */
-    protected static EventImpl buildEvent(Element element) {
+    protected EventImpl buildEvent(Element element) {
         String id = element.getAttribute(ID_ATTRIBUTE);
         EventImpl event = new EventImpl(id);
 
         return event;
     }
+
+    private ConditionFactory conditionFactory = null;
 
     /**
      * Builds a condition from an XML element.
@@ -274,10 +280,13 @@ public class WorkflowBuilder {
      * @return A condition.
      * @throws WorkflowException when something went wrong.
      */
-    protected static Condition buildCondition(Element element) throws WorkflowException {
+    protected Condition buildCondition(Element element) throws WorkflowException {
         String className = element.getAttribute(CLASS_ATTRIBUTE);
         String expression = DocumentHelper.getSimpleElementText(element);
-        Condition condition = ConditionFactory.createCondition(className, expression);
+        if (this.conditionFactory == null) {
+            this.conditionFactory = new ConditionFactory(getLogger());
+        }
+        Condition condition = this.conditionFactory.createCondition(className, expression);
 
         return condition;
     }
@@ -287,7 +296,7 @@ public class WorkflowBuilder {
      * @param element An XML element.
      * @return An action.
      */
-    protected static Action buildAction(Element element) {
+    protected Action buildAction(Element element) {
         String id = element.getAttribute(ID_ATTRIBUTE);
         Action action = new ActionImpl(id);
 
@@ -299,7 +308,7 @@ public class WorkflowBuilder {
      * @param element An XML element.
      * @return A boolean variable.
      */
-    protected static BooleanVariableImpl buildVariable(Element element) {
+    protected BooleanVariableImpl buildVariable(Element element) {
         String name = element.getAttribute(NAME_ATTRIBUTE);
         String value = element.getAttribute(VALUE_ATTRIBUTE);
 
@@ -313,8 +322,8 @@ public class WorkflowBuilder {
      * @return An assignment object.
      * @throws WorkflowException when something went wrong.
      */
-    protected static BooleanVariableAssignmentImpl buildAssignment(Map variables, Element element)
-        throws WorkflowException {
+    protected BooleanVariableAssignmentImpl buildAssignment(Map variables, Element element)
+            throws WorkflowException {
         String variableName = element.getAttribute(VARIABLE_ATTRIBUTE);
 
         String valueString = element.getAttribute(VALUE_ATTRIBUTE);

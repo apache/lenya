@@ -20,7 +20,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
 
 /**
  * Delete a language version.
@@ -52,9 +51,8 @@ public class DeleteLanguage extends DocumentUsecase {
         
         document.getFile().delete();
         
-        WorkflowFactory workflowFactory = WorkflowFactory.newInstance();
-        if (workflowFactory.hasWorkflow(document)) {
-            WorkflowFactory.getHistory(document).delete();
+        if (hasWorkflow(document)) {
+            getWorkflowInstance(document).getHistory().delete();
         }
         
         setTargetDocument(DocumentHelper.getExistingLanguageVersion(document));

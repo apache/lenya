@@ -23,12 +23,10 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.workflow.CMSHistory;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.WorkflowInstance;
 
 /**
@@ -52,14 +50,15 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             throws ConfigurationException {
 
         Object value = null;
+        WorkflowResolver resolver = null;
 
         try {
             PageEnvelope envelope = getEnvelope(objectModel);
             Document document = envelope.getDocument();
 
-            WorkflowFactory factory = WorkflowFactory.newInstance();
-            if (factory.hasWorkflow(document)) {
-                WorkflowInstance instance = factory.buildInstance(document);
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            if (resolver.hasWorkflow(document)) {
+                WorkflowInstance instance = resolver.getWorkflowInstance(document);
                 if (name.equals(STATE)) {
                     value = instance.getCurrentState().toString();
                 } else if (name.startsWith(VARIABLE_PREFIX)) {
@@ -69,7 +68,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                         value = Boolean.valueOf(instance.getValue(variableName));
                     }
                 } else if (name.equals(HISTORY_PATH)) {
-                    value = ((CMSHistory) WorkflowFactory.getHistory(document)).getHistoryPath();
+                    value = ((CMSHistory) instance.getHistory()).getHistoryPath();
                 } else {
                     throw new ConfigurationException("The attribute [" + name
                             + "] is not supported!");
@@ -79,6 +78,11 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             throw e;
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute failed: ", e);
+        }
+        finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
         return value;
     }

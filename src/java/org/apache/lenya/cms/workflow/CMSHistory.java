@@ -1,51 +1,49 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Copyright 1999-2004 The Apache Software Foundation
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *  
  */
 
-/* $Id$  */
+/* $Id$ */
 
 package org.apache.lenya.cms.workflow;
 
 import java.io.File;
 
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.workflow.History;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.impl.History;
+import org.apache.lenya.workflow.impl.HistoryImpl;
 import org.apache.lenya.workflow.impl.Version;
-import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
-public class CMSHistory extends History {
+public class CMSHistory extends HistoryImpl {
     public static final String HISTORY_PATH = "content/workflow/history";
 
     /**
      * Creates a new CMSHistory object.
      * 
-     * @param document the document to which the CMSHistory is attached
+     * @param workflowDocument the document to which the CMSHistory is attached
+     * @throws WorkflowException if an error occurs.
      */
-    protected CMSHistory(Document document) {
-        setDocument(document);
+    protected CMSHistory(WorkflowDocument workflowDocument) throws WorkflowException {
+        super(workflowDocument);
     }
-
-    private Document document;
 
     public static final String IDENTITY_ELEMENT = "identity";
     public static final String USER_ELEMENT = "user";
@@ -55,7 +53,8 @@ public class CMSHistory extends History {
     public static final String IP_ATTRIBUTE = "ip-address";
 
     /**
-     * @see org.apache.lenya.workflow.impl.History#createVersionElement(org.apache.lenya.xml.NamespaceHelper, org.apache.lenya.workflow.Situation)
+     * @see org.apache.lenya.workflow.impl.HistoryImpl#createVersionElement(org.apache.lenya.xml.NamespaceHelper,
+     *      org.apache.lenya.workflow.Situation)
      */
     protected Element createVersionElement(NamespaceHelper helper, Situation situation) {
         Element element = super.createVersionElement(helper, situation);
@@ -106,10 +105,12 @@ public class CMSHistory extends History {
 
     /**
      * Returns the path of the history file inside the publication directory.
-     * @param document A CMS document.
      * @return A string.
      */
-    public String getHistoryPath(Document document) {
+    public String getHistoryPath() {
+        
+        Document document = ((WorkflowDocument) getInstance()).getDocument();
+        
         DocumentIdToPathMapper pathMapper = document.getPublication().getPathMapper();
         String documentPath = pathMapper.getPath(document.getId(), document.getLanguage());
 
@@ -124,46 +125,13 @@ public class CMSHistory extends History {
     }
 
     /**
-     * @see org.apache.lenya.workflow.impl.History#getHistoryFile()
+     * @see org.apache.lenya.workflow.impl.HistoryImpl#getHistoryFile()
      */
     protected File getHistoryFile() {
-        return getHistoryFile(getDocument());
-    }
-
-    /**
-     * Returns the history file for a certain document.
-     * @param document The document.
-     * @return A file.
-     */
-    protected File getHistoryFile(Document document) {
-        File historyFile =
-            new File(document.getPublication().getDirectory(), getHistoryPath(document));
+        WorkflowDocument document = (WorkflowDocument) getInstance();
+        File historyFile = new File(document.getDocument().getPublication().getDirectory(),
+                getHistoryPath());
         return historyFile;
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.impl.History#createInstance()
-     */
-    protected WorkflowInstanceImpl createInstance() throws WorkflowException {
-        return new WorkflowDocument(getDocument());
-    }
-
-    /**
-     * Get the document
-     * 
-     * @return the Document
-     */
-    public Document getDocument() {
-        return document;
-    }
-
-    /**
-     * Set the document
-     * 
-     * @param document the document
-     */
-    public void setDocument(Document document) {
-        this.document = document;
     }
 
     /**
@@ -173,28 +141,26 @@ public class CMSHistory extends History {
      * @param situation The current situation.
      * @throws WorkflowException when something went wrong.
      */
-    protected void initialize(Document newDocument, Situation situation) throws WorkflowException {
-        String workflowId = getWorkflowId();
+    protected void initialize(WorkflowDocument newDocument, Situation situation)
+            throws WorkflowException {
         CMSHistory newHistory = new CMSHistory(newDocument);
-        newHistory.initialize(workflowId, situation);
+        newHistory.initialize(situation);
     }
 
     /**
-     * Moves this history to a new document.
-     * @param newDocument The new document.
-     * @throws WorkflowException when something went wrong.
+     * @see org.apache.lenya.workflow.History#replaceWith(org.apache.lenya.workflow.History)
      */
-    protected void move(Document newDocument) throws WorkflowException {
-        assert newDocument != null;
-        move(getHistoryFile(newDocument));
-        setDocument(newDocument);
+    public void replaceWith(History otherHistory) throws WorkflowException {
+        CMSHistory history = (CMSHistory) otherHistory;
+        history.copy(getHistoryFile());
     }
 
     /**
-     * @see org.apache.lenya.workflow.impl.History#restoreVersion(NamespaceHelper, org.w3c.dom.Element)
+     * @see org.apache.lenya.workflow.impl.HistoryImpl#restoreVersion(NamespaceHelper,
+     *      org.w3c.dom.Element)
      */
     protected Version restoreVersion(NamespaceHelper helper, Element element)
-        throws WorkflowException {
+            throws WorkflowException {
         Version version = super.restoreVersion(helper, element);
         CMSVersion cmsVersion = new CMSVersion(version.getEvent(), version.getState());
 
@@ -209,29 +175,22 @@ public class CMSHistory extends History {
     }
 
     /**
-     * Returns the history path of this history.
-     * @return A string.
-     */
-    public String getHistoryPath() {
-        return getHistoryPath(getDocument());
-    }
-
-    /**
-     * Additionally to deleting the workflow history, the parent directories
-     * are deleted up to the workflow history directory.
-     * @see org.apache.lenya.workflow.impl.History#delete()
+     * Additionally to deleting the workflow history, the parent directories are
+     * deleted up to the workflow history directory.
+     * @see org.apache.lenya.workflow.impl.HistoryImpl#delete()
      */
     public void delete() throws WorkflowException {
         super.delete();
-        
-        File stopDirectory = new File(getDocument().getPublication().getDirectory(), HISTORY_PATH);
+
+        Document document = ((WorkflowDocument) getInstance()).getDocument();
+        File stopDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
         if (!stopDirectory.isDirectory())
             throw new WorkflowException("Stop dir '" + stopDirectory.getAbsolutePath()
                     + "' is not a directory");
         if (!getHistoryFile().getAbsolutePath().startsWith(stopDirectory.getAbsolutePath()))
             throw new WorkflowException("Start dir '" + getHistoryFile().getAbsolutePath()
-                    + "' is not a descending sibling of stop directory '" + stopDirectory.getAbsolutePath()
-                    + "'.");
+                    + "' is not a descending sibling of stop directory '"
+                    + stopDirectory.getAbsolutePath() + "'.");
 
         File parent = getHistoryFile().getParentFile();
 

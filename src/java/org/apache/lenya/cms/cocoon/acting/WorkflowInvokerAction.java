@@ -23,16 +23,14 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.AbstractAction;
+import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.Event;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 
@@ -45,7 +43,7 @@ import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
  * <li><strong>event: </strong> The event to invoke.</li>
  * </ul>
  */
-public class WorkflowInvokerAction extends AbstractAction {
+public class WorkflowInvokerAction extends ServiceableAction {
 
     public static final String AREA = "area";
     public static final String DOCUMENT_ID = "document-id";
@@ -77,31 +75,29 @@ public class WorkflowInvokerAction extends AbstractAction {
         Publication pub = pubFactory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(pub);
         Document document = map.getFactory().get(area, documentId, language);
+        
+        WorkflowResolver workflowResolver = null;
+        
+        try {
+            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            if (workflowResolver.hasWorkflow(document)) {
 
-        WorkflowFactory factory = WorkflowFactory.newInstance();
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("    Invoking workflow event");
+                }
 
-        if (factory.hasWorkflow(document)) {
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Invoking workflow event");
-            }
-
-            SynchronizedWorkflowInstances instance = factory.buildSynchronizedInstance(document);
-            Situation situation = WorkflowHelper.buildSituation(objectModel);
-            Event[] events = instance.getExecutableEvents(situation);
-            Event event = null;
-
-            for (int i = 0; i < events.length; i++) {
-                if (events[i].getName().equals(eventName)) {
-                    event = events[i];
+                SynchronizedWorkflowInstances instance = workflowResolver.getSynchronizedInstance(document);
+                Situation situation = workflowResolver.getSituation();
+                instance.invoke(situation, eventName);
+            } else {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("    Document has no workflow.");
                 }
             }
-
-            assert event != null;
-            instance.invoke(situation, event);
-        } else {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Document has no workflow.");
+        }
+        finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
             }
         }
 

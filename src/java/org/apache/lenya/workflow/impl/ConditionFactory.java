@@ -19,6 +19,9 @@
 
 package org.apache.lenya.workflow.impl;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.WorkflowException;
 
@@ -26,12 +29,14 @@ import org.apache.lenya.workflow.WorkflowException;
 /**
  * Factory to build conditions.
  */
-public final class ConditionFactory {
+public final class ConditionFactory extends AbstractLogEnabled {
     
     /**
      * Ctor.
+     * @param logger The logger to use.
      */
-    private ConditionFactory() {
+    public ConditionFactory(Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
     }
 
     /**
@@ -41,7 +46,7 @@ public final class ConditionFactory {
      * @return A condition.
      * @throws WorkflowException when creating the condition failed.
      */
-    protected static Condition createCondition(String className, String expression)
+    protected Condition createCondition(String className, String expression)
         throws WorkflowException {
 
         Condition condition;
@@ -49,6 +54,7 @@ public final class ConditionFactory {
         try {
             Class clazz = Class.forName(className);
             condition = (Condition) clazz.newInstance();
+            ContainerUtil.enableLogging(condition, getLogger());
             condition.setExpression(expression);
         } catch (ClassNotFoundException e) {
             throw new WorkflowException(e);

@@ -102,4 +102,8 @@
   	    shorthand="flowhelper"
   	    default-class="org.apache.lenya.cms.cocoon.flow.FlowHelperImpl"/>
         
+  <role name="org.apache.lenya.cms.workflow.WorkflowResolver"
+  	    shorthand="workflow-resolver"
+  	    default-class="org.apache.lenya.cms.workflow.WorkflowResolverImpl"/>
+        
 </role-list>

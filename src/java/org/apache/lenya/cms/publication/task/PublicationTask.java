@@ -40,7 +40,6 @@ import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.WorkflowException;
@@ -152,7 +151,7 @@ public abstract class PublicationTask extends AbstractTask {
                 } catch (WorkflowException e) {
                     throw new ExecutionException(e);
                 }
-                Event event = getExecutableEvent(instance, situation);
+                String event = getExecutableEvent(instance, situation);
 
                 if (event == null) {
                     canFire = false;
@@ -203,12 +202,12 @@ public abstract class PublicationTask extends AbstractTask {
                 }
                 Situation situation = factory.buildSituation(getRoleIDs(), userId, machineIp);
 
-                Event event = getExecutableEvent(instance, situation);
+                String event = getExecutableEvent(instance, situation);
 
                 assert event != null;
 
                 if (log.isDebugEnabled()) {
-                    log.debug("Invoking event [" + event.getName() + "]");
+                    log.debug("Invoking event [" + event + "]");
                 }
                 instance.invoke(situation, event);
                 if (log.isDebugEnabled()) {
@@ -235,13 +234,13 @@ public abstract class PublicationTask extends AbstractTask {
      * @throws ParameterException when the {@link #PARAMETER_WORKFLOW_EVENT}
      *             parameter could not be resolved.
      */
-    protected Event getExecutableEvent(SynchronizedWorkflowInstances instance, Situation situation)
+    protected String getExecutableEvent(SynchronizedWorkflowInstances instance, Situation situation)
             throws WorkflowException, ParameterException {
 
         String workflowEvent = getEventName();
 
-        Event event = null;
-        Event[] events = instance.getExecutableEvents(situation);
+        String event = null;
+        String[] events = instance.getExecutableEvents(situation);
 
         if (log.isDebugEnabled()) {
             log.debug("Workflow event name: [" + workflowEvent + "]");
@@ -249,7 +248,7 @@ public abstract class PublicationTask extends AbstractTask {
         }
 
         for (int i = 0; i < events.length; i++) {
-            if (events[i].getName().equals(workflowEvent)) {
+            if (events[i].equals(workflowEvent)) {
                 event = events[i];
             }
         }

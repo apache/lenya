@@ -21,11 +21,11 @@ package org.apache.lenya.cms.usecase;
 
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.lenya.cms.cocoon.workflow.WorkflowHelper;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.workflow.WorkflowFactory;
-import org.apache.lenya.workflow.Event;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
@@ -65,13 +65,7 @@ public class WorkflowUsecase extends AbstractUsecase {
     protected void triggerWorkflow(String event, Document document) {
         try {
             WorkflowInstance instance = getWorkflowInstance(document);
-            Event executableEvent = getExecutableEvent(event, document);
-
-            if (executableEvent == null) {
-                throw new RuntimeException("The event [" + event
-                        + "] is not executable on document [" + document + "]");
-            }
-            instance.invoke(getSituation(), executableEvent);
+            instance.invoke(getSituation(), event);
         } catch (WorkflowException e) {
             throw new RuntimeException(e);
         }
@@ -84,41 +78,45 @@ public class WorkflowUsecase extends AbstractUsecase {
      * @throws WorkflowException if an error occurs.
      */
     protected WorkflowInstance getWorkflowInstance(Document document) throws WorkflowException {
-        WorkflowFactory factory = WorkflowFactory.newInstance();
-        WorkflowInstance instance = factory.buildInstance(document);
+        
+        WorkflowInstance instance = null;
+        WorkflowResolver resolver = null;
+        try {
+            resolver = (WorkflowResolver) manager.lookup(WorkflowResolver.ROLE);
+            instance = resolver.getWorkflowInstance(document);
+        } catch (ServiceException e) {
+            throw new WorkflowException(e);
+        }
+        finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
+        }
         return instance;
     }
 
     /**
-     * Returns the event object if an event is exectuable.
+     * Returns if a document has a workflow.
      * @param document The document.
-     * @param event The name of the event.
-     * @return An event or <code>null</code> if the event is not executable.
+     * @return A boolean value.
+     * @throws WorkflowException if an error occurs.
      */
-    protected Event getExecutableEvent(String event, Document document) {
-        Event[] events;
+    protected boolean hasWorkflow(Document document) throws WorkflowException {
+        
+        boolean hasWorkflow = false;
+        WorkflowResolver resolver = null;
         try {
-            events = getWorkflowInstance(document).getExecutableEvents(getSituation());
-        } catch (WorkflowException e) {
-            throw new RuntimeException(e);
+            resolver = (WorkflowResolver) manager.lookup(WorkflowResolver.ROLE);
+            hasWorkflow = resolver.hasWorkflow(document);
+        } catch (ServiceException e) {
+            throw new WorkflowException(e);
         }
-        Event executableEvent = null;
-        for (int i = 0; i < events.length; i++) {
-            if (events[i].getName().equals(event)) {
-                executableEvent = events[i];
+        finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
             }
         }
-        return executableEvent;
-    }
-
-    /**
-     * Checks if a certain event can be executed on a workflow instance.
-     * @param document The document.
-     * @param event The event.
-     * @return A boolean value.
-     */
-    protected boolean canExecuteWorkflow(String event, Document document) {
-        return getExecutableEvent(event, document) != null;
+        return hasWorkflow;
     }
 
 }
