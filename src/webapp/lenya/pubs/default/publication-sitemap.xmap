@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.50 2003/09/12 12:58:46 andreas Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.51 2003/09/12 16:51:10 andreas Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -88,11 +88,8 @@
     the lenya body, the actual document. -->
     <map:pipeline>
       <map:match pattern="**.html">
-        <map:act src="{1}.html" type="uriparametrizer">
-          <map:parameter name="doctype" value="cocoon://uri-parameter/{page-envelope:publication-id}/doctype"/>
-          <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{doctype}{page-envelope:document-url}"/>
-          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../1}.xml"/>
-        </map:act>
+        <map:generate src="cocoon:/lenyabody/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}.xml"/>
         <map:serialize type="html"/>
       </map:match>
       
