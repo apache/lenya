@@ -36,7 +36,7 @@ public class PageEnvelopeAction
           envelope = new PageEnvelope(resolver, request);
         }
         catch (Exception e) {
-          getLogger().error(e.getMessage());
+          getLogger().error(e.getMessage(), e);
           return null;
         }        
         Map result = new HashMap();
