@@ -6,16 +6,19 @@
 
 <xsl:include href="../../../../../xslt/menu/root.xsl"/>
 
+<xsl:include href="../../page_lenya.xsl"/>
+
 <xsl:template match="cmsbody">
   <xsl:call-template name="page"/>
 </xsl:template>
 
-<xsl:include href="../../page_lenya.xsl"/>
+
+<xsl:include href="../body_lenya.xsl"/>
+
 
 <xsl:template name="cmsbody">
   <xsl:apply-templates select="front"/>
 </xsl:template>
 
-<xsl:include href="../body_lenya.xsl"/>
  
 </xsl:stylesheet>  

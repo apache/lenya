@@ -4,8 +4,11 @@
  
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<xsl:variable name="context_prefix">/lenya/forum</xsl:variable>
-<xsl:variable name="image_path"><xsl:value-of select="$context_prefix"/>/images</xsl:variable>
+<!--
+<xsl:variable name="contextPrefix">/lenya/forum</xsl:variable>
+-->
+<xsl:variable name="contextPrefix"><xsl:value-of select="/lenya/menu/context_prefix/."/></xsl:variable>
+<xsl:variable name="image_path"><xsl:value-of select="$contextPrefix"/>/images</xsl:variable>
 
 <xsl:template name="page">
 <html>
@@ -13,7 +16,7 @@
 <table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="%100">
  <tr>
   <td colspan="3">
-  <a><xsl:attribute name="href"><xsl:value-of select="$context_prefix"/><xsl:if test="/lenya/menu/authoring">/authoring</xsl:if>/index.html</xsl:attribute><img src="{$image_path}/lenya-org-forum.jpg" border="0"/></a>
+  <a><xsl:attribute name="href"><xsl:value-of select="$contextPrefix"/><xsl:if test="/lenya/menu/authoring">/authoring</xsl:if>/index.html</xsl:attribute><img src="{$image_path}/lenya-org-forum.jpg" border="0"/></a>
   </td>
  </tr>
  <tr>
