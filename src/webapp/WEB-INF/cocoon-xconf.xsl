@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cocoon-xconf.xsl,v 1.43 2004/04/15 09:36:14 andreas Exp $ -->
+<!-- $Id: cocoon-xconf.xsl,v 1.44 2004/04/22 10:01:31 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -184,7 +184,7 @@
   <component logger="lenya.ac.accesscontroller.bypassable"
       class="org.apache.lenya.ac.impl.BypassableAccessController"
       role="org.apache.lenya.ac.AccessController/bypassable">
-    <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
+    <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
   </component>
 
   <access-controller-resolvers>
