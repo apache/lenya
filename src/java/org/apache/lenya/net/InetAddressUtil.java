@@ -56,38 +56,49 @@ package org.apache.lenya.net;
 
 import java.net.InetAddress;
 
+import org.apache.log4j.Category;
+
 /**
  * A utility class for InetAddress
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.1 2003/07/24 16:23:52 michi Exp $
+ * @version $Id: InetAddressUtil.java,v 1.2 2003/10/20 17:03:04 andreas Exp $
  */
 public class InetAddressUtil {
+	
+	private static final Category log = Category.getInstance(InetAddressUtil.class);
+	
     /**
      *
      */
     public static boolean contains(InetAddress network, InetAddress netmask, InetAddress ip) {
+    	
         short classPart = 3;
         int networkC = getClassPart(network, classPart);
         int netmaskC = getClassPart(netmask, classPart);
         int ipC = getClassPart(ip, classPart);
 
-        System.out.println(networkC);
-        System.out.println(netmaskC);
-        System.out.println(ipC);
-
         int firstHostAddress = networkC +1;
         int broadcastAddress = networkC + (256 - netmaskC -1);
         int lastHostAddress = broadcastAddress -1;
 
-        System.out.println(firstHostAddress);
-        System.out.println(lastHostAddress);
+        boolean contained = firstHostAddress <= ipC && ipC <= lastHostAddress;
 
-        if (firstHostAddress <= ipC && ipC <= lastHostAddress) {
-            return true;
-        }
+//		if (log.isDebugEnabled()) {
+			log.debug("---------------------------------------");
+			log.debug("Checking IP address");
+			log.debug("    Network:            [" + network.getHostAddress() + "]");
+			log.debug("    Netmask:            [" + netmask.getHostAddress() + "]");
+			log.debug("    Address:            [" + ip.getHostAddress() + "]");
+			log.debug("    Network class part: [" + networkC + "]");
+			log.debug("    Netmask class part: [" + netmaskC + "]");
+			log.debug("    Address class part: [" + ipC + "]");
+			log.debug("    First host address: [" + firstHostAddress + "]");
+			log.debug("    Last host address:  [" + lastHostAddress + "]");
+			log.debug("    Contained:          [" + contained + "]");
+//		}
 
-        return false;
+        return contained;
     }
 
     /**
