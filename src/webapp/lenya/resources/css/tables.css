@@ -18,6 +18,7 @@ table.lenya-table th {
 	font-weight: bold;
 	padding: 3px 10px;
 	text-align: left;
+	font-size: small;
 }
 
 table.lenya-table td {

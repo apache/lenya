@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.6 2003/07/23 14:34:59 gregor Exp $
+ $Id: info.xsl,v 1.7 2003/07/24 13:02:40 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -10,9 +10,11 @@
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns="http://www.w3.org/1999/xhtml"
     >
  <xsl:import href="../util/page-util.xsl"/>
-    
+ 
+ 
 <xsl:template match="lenya-info:info">    
     <html>
 <head>
@@ -32,7 +34,8 @@
 	<a href="#" onclick="Tab(3)" id="link3" class="lenya-tablink">Assets</a>
 	<a href="#" onclick="Tab(4)" id="link4" class="lenya-tablink">Workflow</a>
 	<a href="#" onclick="Tab(5)" id="link5" class="lenya-tablink">Revisions</a>
-	<a href="#" onclick="Tab(6)" id="link6" class="lenya-tablink">Permissions</a>
+	<a href="#" onclick="Tab(6)" id="link6" class="lenya-tablink">AC Auth.</a>
+	<a href="#" onclick="Tab(7)" id="link7" class="lenya-tablink">AC Live</a>
 
 	<!--  
 		These are the different content blocks of the tabs, each one needs to
@@ -73,7 +76,12 @@
 	</div>
 	<div id="contentblock6" class="lenya-tab">
           <table class="lenya-table-noborder">
-              <xsl:apply-templates select="lenya-info:permissions"/>
+              <xsl:apply-templates select="lenya-info:permissions[@area='authoring']"/>
+          </table>
+	</div>
+	<div id="contentblock7" class="lenya-tab">
+          <table class="lenya-table-noborder">
+              <xsl:apply-templates select="lenya-info:permissions[@area='live']"/>
           </table>
 	</div>
 </body>
@@ -100,22 +108,99 @@
    <tr><td>Rights:</td><td><input type="text" id="dc:rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>
 </xsl:template>
 
+
 <xsl:template match="lenya-info:assets">
  <!--   <xsl:for-each select="lenya-info:asset>-->
      <tr><td>asset.gif<xsl:value-of select="."/></td><td><a href="">delete</a></td></tr> 
     <!-- </xsl:for-each>-->
 </xsl:template>
 
+
 <xsl:template match="rc:revisions">
 <tr><td>1.0</td><td>Felix Maeder</td><td>2003-04-01 18:01</td><td><a href="#">view</a></td><td><a href="#">restore</a></td></tr>
 </xsl:template>
+
 
 <xsl:template match="wf:version">
 <tr><td><xsl:value-of select="@state"/></td><td><xsl:value-of select="@user"/></td><td><xsl:value-of select="@date"/></td></tr>
 </xsl:template>
 
+
 <xsl:template match="lenya-info:permissions">
-Permission GUI goes here
+
+  <tr>
+    <td><input type="checkbox" name="ssl"/> SSL Encryption</td>
+	</tr>
+	<tr>
+	<td>
+	<table class="lenya-table">
+		<tr>
+			<th colspan="2">Access Object</th>
+			<th colspan="2">Role</th>
+		</tr>
+		<tr>
+			<xsl:call-template name="form-add-credential">
+				<xsl:with-param name="type">user</xsl:with-param>
+				<xsl:with-param name="title">User</xsl:with-param>
+			</xsl:call-template>
+		</tr>
+		<tr>
+			<xsl:call-template name="form-add-credential">
+				<xsl:with-param name="type">group</xsl:with-param>
+				<xsl:with-param name="title">Group</xsl:with-param>
+			</xsl:call-template>
+		</tr>
+		<xsl:if test="@area = 'live'">
+		<tr>
+			<xsl:call-template name="form-add-credential">
+				<xsl:with-param name="type">iprange</xsl:with-param>
+				<xsl:with-param name="title">IP&#160;range</xsl:with-param>
+			</xsl:call-template>
+		</tr>
+		</xsl:if>
+	</table>
+	</td>
+	</tr>	
+	
+	
+</xsl:template>
+
+
+<xsl:template name="form-add-credential">
+	<xsl:param name="type"/>
+	<xsl:param name="title"/>
+	<td><xsl:value-of select="$title"/>:</td>
+	<td><xsl:apply-templates select="//lenya-info:items[@type = $type]"/></td>
+	<td>
+		<xsl:apply-templates select="//lenya-info:items[@type = 'role']">
+			<xsl:with-param name="accreditable" select="$type"/>
+		</xsl:apply-templates>
+	</td>
+	<td><input type="submit" name="add_credential_{$type}" value="Add"/></td>
+</xsl:template>
+
+
+<xsl:template match="lenya-info:items[@type='user' or @type='group' or @type='iprange']">
+  <select name="{@type}">
+    <xsl:apply-templates/>
+  </select>
+</xsl:template>
+
+
+<xsl:template match="lenya-info:items[@type='role']">
+	<xsl:param name="accreditable"/>
+  <select name="role-{$accreditable}">
+    <xsl:apply-templates/>
+  </select>
+</xsl:template>
+
+
+	<xsl:template match="lenya-info:item">
+  <option name="{@id}">
+    <xsl:variable name="name" select="normalize-space(.)"/>
+    <xsl:value-of select="@id"/>&#160;
+    <xsl:if test="$name != ''"><em>(<xsl:value-of select="$name"/>)</em></xsl:if>
+  </option>
 </xsl:template>
 
 </xsl:stylesheet> 

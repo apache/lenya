@@ -5,6 +5,7 @@
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
   xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:li="http://apache.org/cocoon/lenya/info/1.0"
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -15,6 +16,8 @@
     <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.ItemManager</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
   </xsp:structure>                                                                                                                          
@@ -83,8 +86,47 @@
     filename: <xsp:expr>filename</xsp:expr>
 -->
    </rc:revisions>
-     <lenya-info:permissions>
-  </lenya-info:permissions>  
+   
+    <xsp:logic>
+      String[] types = { "user", "group", "iprange", "role" };
+      for (int i = 0; i &lt; types.length; i++) {
+      <li:items>
+        <xsp:attribute name="type"><xsp:expr>types[i]</xsp:expr></xsp:attribute>
+      <xsp:logic>
+      ItemManager manager = null;
+      
+      if (types[i].equals("user")) {
+          manager = (ItemManager) <input:get-attribute module="access-control" name="user-manager" as="object"/>;
+      }
+      else if (types[i].equals("group")) {
+          manager = (ItemManager) <input:get-attribute module="access-control" name="group-manager" as="object"/>;
+      }
+      else if (types[i].equals("iprange")) {
+          manager = (ItemManager) <input:get-attribute module="access-control" name="iprange-manager" as="object"/>;
+      }
+      else if (types[i].equals("role")) {
+          manager = (ItemManager) <input:get-attribute module="access-control" name="role-manager" as="object"/>;
+      }
+           
+      for (java.util.Iterator items = manager.getItems(); items.hasNext(); ) {
+          Item item = (Item) items.next();
+          <li:item>
+            <xsp:attribute name="id"><xsp:expr>item.getId()</xsp:expr></xsp:attribute>
+            <xsp:expr>item.getName()</xsp:expr>
+          </li:item>
+			}
+			</xsp:logic>
+      </li:items>
+      }
+      
+      String[] areas = { "authoring", "live" };
+      for (int i = 0; i &lt; areas.length; i++) {
+        <li:permissions>
+          <xsp:attribute name="area"><xsp:expr>areas[i]</xsp:expr></xsp:attribute>
+        </li:permissions>
+      }
+    </xsp:logic>
+   
 </lenya-info:info>
 
 </xsp:page>
