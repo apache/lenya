@@ -9,7 +9,8 @@
     <type>Documentation</type> 
     <authors>
       <person name="Jan Prill" email="JanPrill@blauton.de"/> 
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
+      <person name="Andreas Hartmann" email="andreas@apache.org"/> 
+      <person name="Gregor J. Rothfuss" email="gregor@apache.org"/> 
     </authors> 
 </header> 
 <body> 
@@ -20,10 +21,10 @@
 structure:</p>
 
 <source>
-your_home
+your_home (or c:\ on Windows, NOT My Dcouments)
     /src
-        /lenya                  $LENYA_HOME
-        /cocoon-2.1-M1          $COCOON_HOME
+        /cocoon-lenya           $LENYA_HOME
+        /cocoon-2.1             $COCOON_HOME
             /build
                 /webapp         $COCOON_WEBAPP
     /build
@@ -54,8 +55,8 @@ your_home
     <p>
     <strong>MS Windows:</strong><br/>
     Basically this is setting the <code>JAVA_HOME</code> environment variable and
-    double-clicking on tomcat-4.1.24.exe. Decide to run Tomcat as a Windows NT/2000/XP-Service.
-    </p>
+    double-clicking on tomcat-4.1.24.exe. Decide to run Tomcat as a Windows NT/2000/XP-Service.</p>
+   <warning>Make sure you do install at a location with spaces in the path</warning>
   </li>
   <li>
     <p>
@@ -93,7 +94,7 @@ your_home
     <ul>
       <li><code>JAVA_HOME = C:\Programme\j2sdk1.4.1_01</code></li>
       <li><code>ANT_HOME = C:\Programme\Apache Group\apache-ant-1.5.2</code></li>
-      <li><code>CATALINA_HOME = C:\Programme\Apache Group\Tomcat 4.1</code></li>
+      <li><code>CATALINA_HOME = C:\build\tomcat-4.1.24</code></li>
       <li><code>CLASSPATH = .\;C:\Programme\Apache Group\apache-ant-1.5.2\lib</code></li>
       <li><code>PATH = &lt;snip&gt;;C:\Programme\j2sdk1.4.1_01\bin;C:\Programme\Apache Group\apache-ant-1.5.2\bin</code></li>
     </ul>
@@ -103,14 +104,11 @@ your_home
     <p>
     <strong>Get Apache Cocoon</strong> (see <link href="prerequisites.html">Prerequisites</link>)
     </p>
-    <p>
-    <strong>Note:</strong> The current CVS version of Lenya works only with Cocoon Milestone 1
-    and newer versions.
-    </p>
+    <warning>The current CVS version of Lenya works only with Cocoon  2.1
+    and newer versions.</warning>
   </li>
   <li>
     <p>
-    If you use a Cocoon source version:
     <strong>Compile Cocoon</strong>
     </p>
     <p>
@@ -120,7 +118,7 @@ your_home
     <strong>MS Windows</strong>
     </p>
 <source>
-$COCOON_HOME > build -Dinclude.webapp.libs=yes webapp
+$COCOON_HOME > build.bat
 </source>
     <p>
     <strong>Unix</strong>

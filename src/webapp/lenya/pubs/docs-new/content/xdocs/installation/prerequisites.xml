@@ -42,21 +42,10 @@ Several items, e.g. the servlet container, may be replaced by other products.
   
   <li>
     <p>
-    <strong>Apache Cocoon</strong> (recommended: Cocoon 2.1 M1 for the CVS version of Lenya)<br/>
+    <strong>Apache Cocoon</strong> (recommended: Cocoon 2.1 or later)<br/>
     <link href="http://cocoon.apache.org/mirror.cgi">Cocoon download page</link>
     </p>
-    <p><strong>Note:</strong> The files in <code>tools/bin</code> in the Cocoon 2.1 M1 tarball on the Apache
-    site have DOS line ends.
-    So you'll need to do the following if you're building on some forms of UNIX:
-    </p>
-    <ul>
-      <li><code>chmod 755 $LENYA_HOME/build.sh</code></li>
-      <li>fix the line ends of <code>ant</code> and <code>antRun</code> in <code>$LENYA_HOME/tools/bin</code></li>
-      <li>make those executable as well</li>
-    </ul>
-    <p/>
   </li>
-  
 </ul>
 
 </body>
