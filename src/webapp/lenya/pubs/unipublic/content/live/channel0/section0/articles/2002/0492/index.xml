@@ -60,7 +60,7 @@
       <ContentItem>
          <MediaType FormalName="Text"/>
          <MimeType FormalName="text/vnd.IPTC.NITF"/>
-         <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf">
+         <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
             <head>
               <hedline>
                 <hl1>Im Traum spricht er am meisten mit mir </hl1>
@@ -128,7 +128,8 @@
                                     mit Parkinsonpatienten": Radio DRS-Moderator und
                                   Parkinsonbetroffener J&#252;rg Haas  
 		     </media-caption>
-                     <media-author type="Fotos"> Adrian Ritter</media-author>
+                     <up:authorline>Fotos: Adrian Ritter</up:authorline>
+                     <up:authorline>Bilder: Adrian Ritter</up:authorline>
                   </media>
 
                   <p>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+                xmlns:up="http://www.unipublic.unizh.ch/2002/up"
+>
 
 <xsl:variable name="unipublic">/wyona-cms/unipublic</xsl:variable>
 <xsl:variable name="img-uni"><xsl:value-of select="$unipublic"/>/img_uni</xsl:variable>
@@ -159,9 +161,21 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="p">
+<p>
+<xsl:if test="not(preceding-sibling::p)">
+  <xsl:apply-templates select="../hl2" mode="block"/>
+</xsl:if>
+<xsl:apply-templates/>
+</p>
+</xsl:template>
+
+<xsl:template match="hl2" mode="block">
+<span class="art-title3"><xsl:value-of select="."/></span><br />
+</xsl:template>
+
 <xsl:template match="hl2">
-<p><span class="art-title3"><xsl:value-of select="."/></span><br />
-<xsl:value-of select="../p"/></p>
+<!-- Comment -->
 </xsl:template>
 
 <!--<xsl:template match="media/@media-type[text()='image']">-->
@@ -175,7 +189,7 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <tr>
 <td class="img-text"><xsl:value-of select="media-caption"/></td>
 </tr>
-<xsl:apply-templates select="media-author"/>
+<xsl:apply-templates select="up:authorline"/>
 </table>
 <p>&#160;</p>
 </xsl:template>
@@ -184,9 +198,9 @@ if (navigator.appVersion.indexOf ('Win') &#62;= 0) {
 <img src="{@source}" alt="{@alternate-text}" />
 </xsl:template>
 
-<xsl:template match="media-author">
+<xsl:template match="up:authorline">
 <tr>
-<td class="img-author"><xsl:value-of select="@type"/>: <xsl:value-of select="."/></td>
+<td class="img-author">(<xsl:value-of select="."/>)</td>
 </tr>
 </xsl:template>
 
