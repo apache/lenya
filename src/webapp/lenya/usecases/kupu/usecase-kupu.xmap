@@ -161,7 +161,7 @@
                  throws an access violation upon loading of xslts from the internet.
              -->
             <map:parameter name="import-stylesheet-url"
-              value="{request:scheme}://{request:serverName}:{request:serverPort}{page-envelope:context-prefix}/kupu/common/kupudrawers/{1}drawer.xsl"/>
+              value="{request:scheme}://{request:serverName}:{request:serverPort}{page-envelope:context-prefix}/kupu/common/kupudrawers/drawer.xsl"/>
           </map:generate>  
           <map:serialize type="xml"/>
         </map:match>
