@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.16 2003/07/28 20:07:07 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.17 2003/07/31 11:57:18 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -27,7 +27,7 @@ STARTALLOPEN = 1
 USEFRAMES = 1
 USEICONS = 0
 WRAPTEXT = 1
-PERSERVESTATE = 1
+PERSERVESTATE = 0
 HIGHLIGHT = 1
 foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info&amp;lenya.step=showscreen")
 		<xsl:apply-templates select="s:site"/>

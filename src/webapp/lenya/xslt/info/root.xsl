@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.14 2003/07/17 13:28:00 gregor Exp $
+ $Id: root.xsl,v 1.15 2003/07/31 11:57:18 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -34,8 +34,8 @@ function loadSynchPage(srclink)
 	linkID = findIDbyLink(srclink);
 	docObj = findObj(linkID);
 	docObj.forceOpeningOfAncestorFolders();
-	clickOnLink(linkID,docObj.srclink,'basefrm'); 
-
+	clickOnLink(linkID,docObj.srclink,'basefrm');
+	
     //Scroll the tree window to show the selected node
     //Other code in these functions needs to be changed to work with
     //frameless pages, but this code should, I think, simply be removed
@@ -47,10 +47,12 @@ function findIDbyLink(srclink)
 <![CDATA[
   var i=0;
   for(i=0;i<nEntries&&indexOfEntries[i].link!=srclink;i++);
-  if (i >= nEntries)
-    return null; //example: node removed in DB
-  else
+  if (i >= nEntries) {
+     return null; //example: node removed in DB
+  }
+  else {
     return i;
+  }
 ]]>
 }
 </script>
@@ -74,13 +76,16 @@ function findIDbyLink(srclink)
 
    <div id="lenya-info-tree">
       <div style="display:none;"><table border="0"><tr><td><a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a></td></tr></table></div>
-   <script>initializeDocument();
-  loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info&amp;lenya.step=showscreen');
+    </div>
+  <script>initializeDocument();
+ loadSynchPage('<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info&amp;lenya.step=showscreen&amp;lenya.area=authoring');
    </script>
-   </div>
 </div>
-
-<div id="lenya-info-content"><iframe src="{$contextprefix}/{$publicationid}/{$area}/{$documentid}?lenya.usecase=info&amp;lenya.step=showscreen" id="basefrm" name="basefrm" frameborder="0" width="100%" height="100%"></iframe></div>
+<div id="lenya-info-content"><iframe src="" id="basefrm" name="basefrm" frameborder="0" width="100%" height="100%"></iframe>
+  <script>
+   	frames['basefrm'].location.href = '<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="$documentid"/>?lenya.usecase=info&amp;lenya.step=showscreen';
+   </script>
+</div>
 </body>
 </html>
 </xsl:template>
