@@ -45,6 +45,8 @@ import org.xml.sax.SAXException;
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
 
+    public static final String SITE_TREE_FILENAME = "sitetree.xml";
+
     private Document document = null;
     private File treefile = null;
     // the area is only retained to provide some more info when raising an exception.
