@@ -281,6 +281,7 @@ if $cygwin; then
     ;;
   esac
 fi
+
 # Execute ant using eval/exec to preserve spaces in paths,
 # java options, and ant args
 ant_sys_opts=
