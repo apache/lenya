@@ -1,5 +1,5 @@
 /*
- * $Id: WGet.java,v 1.17 2003/02/18 18:03:16 egli Exp $
+ * $Id: WGet.java,v 1.18 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.net;
+package org.lenya.net;
 
 import org.apache.log4j.Category;
 
@@ -83,7 +83,7 @@ public class WGet {
      */
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.out.println("Usage: org.wyona.net.WGet [URL] -P/home/wyona/download");
+            System.out.println("Usage: org.lenya.net.WGet [URL] -P/home/wyona/download");
 
             return;
         }
@@ -176,7 +176,7 @@ public class WGet {
                 String link = (String) iterator.next();
 
                 try {
-                    URL child_url = new URL(org.wyona.util.URLUtil.complete(url.toString(), link));
+                    URL child_url = new URL(org.lenya.util.URLUtil.complete(url.toString(), link));
 
                     byte[] child_sresponse = getResource(child_url);
                     saveToFile(createFileName(child_url), child_sresponse);
@@ -245,7 +245,7 @@ public class WGet {
         List links = null;
 
         try {
-            org.wyona.util.HTML html = new org.wyona.util.HTML(url.toString());
+            org.lenya.util.HTML html = new org.lenya.util.HTML(url.toString());
             links = html.getImageSrcs(false);
         } catch (Exception e) {
             log.error(".getLinks() Exception 423432: " + e);

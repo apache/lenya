@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.15 2003/02/04 11:39:33 gregorcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.16 2003/03/04 17:47:01 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -11,7 +11,7 @@
 		</map:readers>
 		<map:transformers default="xslt">
 			<map:transformer name="xslt" src="org.apache.cocoon.transformation.TraxTransformer"/>
-			<map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+			<map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
 				<publication type="computerworld"/>
 			</map:transformer>
 			<map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>

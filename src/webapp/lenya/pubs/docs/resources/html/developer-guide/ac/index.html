@@ -39,7 +39,7 @@ Author: Michael Wechner (michael.wechner@wyona.org)
       &lt;map:act type="authorizer"&gt;
         &lt;map:parameter name="log" value="off"/> &lt;!-- URI history per client --&gt;
         &lt;map:parameter name="public" value="identify;authenticate"/>
-        &lt;map:parameter name="concrete-authorizer" value="org.wyona.cms.ac.PMLAuthorizer"/>
+        &lt;map:parameter name="concrete-authorizer" value="org.lenya.cms.ac.PMLAuthorizer"/>
         &lt;!--&lt;map:parameter name="concrete-authorizer" value="org.oasis-open.xacml.Authorizer"/>--&gt;
 
         &lt;map:match pattern="identify"&gt;
@@ -51,8 +51,8 @@ Author: Michael Wechner (michael.wechner@wyona.org)
         &lt;map:match pattern="authenticate"&gt;
           &lt;map:act type="authenticator"&gt;
             &lt;map:parameter name="log" value="on"/>
-            &lt;map:parameter name="concrete-authenticator" value="org.wyona.cms.ac.IMLAuthenticator"/>
-            &lt;!--&lt;map:parameter name="concrete-authenticator" value="org.wyona.cms.ac.LDAPAuthenticator"/>--&gt;
+            &lt;map:parameter name="concrete-authenticator" value="org.lenya.cms.ac.IMLAuthenticator"/>
+            &lt;!--&lt;map:parameter name="concrete-authenticator" value="org.lenya.cms.ac.LDAPAuthenticator"/>--&gt;
 
             &lt;map:redirect-to uri="{protected_destination}" session="true"/>
           &lt;/map:act&gt;
@@ -127,8 +127,8 @@ Example PML-Document "levi.iml.pml":
 <h2>Authenticator</h2>
 <p>
 The authenticator should be exchangeable.
-<br>Example 1: org.wyona.cms.ac.IMLAuthenticator (donald.iml)
-<br>Example 2: org.wyona.cms.ac.LDAPAuthenticator (LDAP on central server)
+<br>Example 1: org.lenya.cms.ac.IMLAuthenticator (donald.iml)
+<br>Example 2: org.lenya.cms.ac.LDAPAuthenticator (LDAP on central server)
 </p>
 
 <p>

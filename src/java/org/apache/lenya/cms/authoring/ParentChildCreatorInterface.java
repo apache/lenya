@@ -1,5 +1,5 @@
 /*
- * $Id: ParentChildCreatorInterface.java,v 1.3 2003/03/03 18:49:30 egli Exp $
+ * $Id: ParentChildCreatorInterface.java,v 1.4 2003/03/04 17:46:34 gregor Exp $
 
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  */
 
-package org.wyona.cms.authoring;
+package org.lenya.cms.authoring;
 
 import java.io.File;
 import java.util.Map;

@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.36 2003/03/04 00:16:37 michi Exp $
+   @version CVS $Id: build.xml,v 1.37 2003/03/04 17:46:33 gregor Exp $
 
 -->
 
@@ -81,7 +81,7 @@
   <property name="dist.bin.dir" value="${dist.root}/${fullname}"/>
 
   <!-- The javadoc destination directory -->
-  <property name="dist.bin.javadocs" value="${build.webapp}/wyona/cms/pubs/docs/resources/html/javadoc"/>
+  <property name="dist.bin.javadocs" value="${build.webapp}/lenya/pubs/docs/resources/html/javadoc"/>
 
   <!-- The filename of the final end-user war package -->
   <property name="dist.bin.warfile" value="${dist.bin.dir}/${ant.project.name}.war"/>
@@ -163,9 +163,9 @@
       <format property="SNAPSHOT_STAMP" pattern="yyyyMMddhhmmss"/>
     </tstamp>
     
-    <property name="fullname" value="Wyona CMS"/>
+    <property name="fullname" value="Lenya CMS"/>
     <property name="Name"     value="Lenya"/>
-    <property name="name"     value="wyona:cms"/>
+    <property name="name"     value="lenya:cms"/>
     <property name="version"  value="2.1-dev"/>
     <property name="short.version" value="2.1"/>
     <property name="release"  value="1th"/>
@@ -185,7 +185,7 @@
 <!--
     <property name="packages"      value="org.wyona.*,org.w3c.*,ch.ethz.*,ch.unizh.*"/>
 -->
-    <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
+    <property name="resource.dir"  value="${src.webapp.dir}/resources/styles"/>
 
     <property name="today"         value="${TODAY}"/>
     <echo message="Today is ${today}"/>
@@ -395,7 +395,7 @@
     <echo>INFO: Copy files from ${src.webapp.dir} to ${build.webapp}</echo>
     <copy todir="${build.webapp}">
       <fileset dir="${src.webapp.dir}">
-        <exclude name="wyona/cms/pubs/**"/>
+        <exclude name="lenya/pubs/**"/>
       </fileset>
     </copy>
 
@@ -403,14 +403,14 @@
     Copy publications
     -->
     <echo>INFO: Copy publications from ${src.webapp.dir}/wyona/cms/pubs to ${build.webapp}/wyona/cms/pubs</echo>
-    <copy todir="${build.webapp}/wyona/cms/pubs">
+    <copy todir="${build.webapp}/lenya/pubs">
 <!--
       <fileset dir="/home/michiii/src/lenya-pubs"/>
 -->
 <!--
       <fileset dir="${pubs.root.dirs}"/>
 -->
-      <fileset dir="${src.webapp.dir}/wyona/cms/pubs"/>
+      <fileset dir="${src.webapp.dir}/lenya/pubs"/>
     </copy>
 
     <!-- create directory classes within webapp -->

@@ -10,7 +10,7 @@
       <map:generator name="directory-nolabel" logger="forum.sitemap.generator.directory" src="org.apache.cocoon.generation.DirectoryGenerator"/>
     </map:generators>
     <map:transformers default="xslt">
-      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+      <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
         <publication type="forum"/>
       </map:transformer>
     </map:transformers>

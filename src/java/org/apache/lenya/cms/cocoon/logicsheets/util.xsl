@@ -17,7 +17,7 @@
       <xsl:apply-templates select="@*"/>
 
       <xsp:structure>
-        <xsp:include>org.wyona.cms.ac.Identity</xsp:include>
+        <xsp:include>org.lenya.cms.ac.Identity</xsp:include>
         <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
       </xsp:structure>
 
@@ -43,7 +43,7 @@
     Session xsp_wyona_session=request.getSession(false);
     Identity xsp_wyona_id=null;
     if(xsp_wyona_session != null){
-      xsp_wyona_id=(Identity)xsp_wyona_session.getAttribute("org.wyona.cms.ac.Identity");
+      xsp_wyona_id=(Identity)xsp_wyona_session.getAttribute("org.lenya.cms.ac.Identity");
       if(xsp_wyona_id != null){
         <xsp:content><current_username><xsp:expr>xsp_wyona_id.getUsername()</xsp:expr></current_username></xsp:content>
         }

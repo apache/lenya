@@ -1,5 +1,5 @@
 /*
- * $Id: StaticHTMLExporter.java,v 1.8 2003/02/17 11:58:11 egli Exp $
+ * $Id: StaticHTMLExporter.java,v 1.9 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,11 +41,11 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.publishing;
+package org.lenya.cms.publishing;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.log4j.Category;
-import org.wyona.cms.task.ExecutionException;
+import org.lenya.cms.task.ExecutionException;
 
 import java.net.URL;
 import java.util.StringTokenizer;
@@ -85,7 +85,7 @@ public class StaticHTMLExporter extends AbstractExporter {
         try {
             String exportDirectory = publicationPath + exportPath;
 
-            org.wyona.net.WGet wget = new org.wyona.net.WGet();
+            org.lenya.net.WGet wget = new org.lenya.net.WGet();
             log.info(".export(): Export directory: " + exportDirectory);
             wget.setDirectoryPrefix(exportDirectory);
 

@@ -1,5 +1,5 @@
 /*
- * $Id: DOMWriter.java,v 1.5 2003/02/20 13:40:42 gregor Exp $
+ * $Id: DOMWriter.java,v 1.6 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.xml;
+package org.lenya.xml;
 
 import org.apache.log4j.Category;
 
@@ -118,7 +118,7 @@ public class DOMWriter {
      */
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: java org.wyona.xml.DOMWriter \"file.xml\"");
+            System.err.println("Usage: java org.lenya.xml.DOMWriter \"file.xml\"");
             System.err.println("Description: Reads \"file.xml\" and writes it to standard output");
 
             return;

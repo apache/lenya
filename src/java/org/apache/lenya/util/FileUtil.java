@@ -1,5 +1,5 @@
 /*
- * $Id: FileUtil.java,v 1.4 2003/02/17 13:06:57 egli Exp $
+ * $Id: FileUtil.java,v 1.5 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.util;
+package org.lenya.util;
 
 import org.apache.log4j.Category;
 
@@ -98,7 +98,7 @@ public class FileUtil {
 
         if (args[0].equals("--concatPath")) {
 	    // FIXME:
-            File file = org.wyona.util.FileUtil.file("/root/temp/jpf-1.9/java/wyona/x/xps/samples/invoices/invoices",
+            File file = org.lenya.util.FileUtil.file("/root/temp/jpf-1.9/java/wyona/x/xps/samples/invoices/invoices",
                     "../addresses/wyona.xml");
             System.out.println(file.getAbsolutePath());
         } else {

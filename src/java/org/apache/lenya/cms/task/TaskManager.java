@@ -1,5 +1,5 @@
 /*
- * $Id: TaskManager.java,v 1.4 2003/02/20 13:40:41 gregor Exp $
+ * $Id: TaskManager.java,v 1.5 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.task;
+package org.lenya.cms.task;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;

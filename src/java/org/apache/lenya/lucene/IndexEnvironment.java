@@ -1,5 +1,5 @@
 /*
- * $Id: IndexEnvironment.java,v 1.4 2003/02/07 12:14:22 ah Exp $
+ * $Id: IndexEnvironment.java,v 1.5 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.lucene;
+package org.lenya.lucene;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -91,7 +91,7 @@ public class IndexEnvironment implements Configurable {
      */
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: org.wyona.lucene.IndexEnvironment lucene.xconf");
+            System.err.println("Usage: org.lenya.lucene.IndexEnvironment lucene.xconf");
 
             return;
         }

@@ -1,5 +1,5 @@
 /*
- * $Id: TokenMgrError.java,v 1.2 2003/02/07 12:14:22 ah Exp $
+ * $Id: TokenMgrError.java,v 1.3 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,13 +41,13 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.lucene.html;
+package org.lenya.lucene.html;
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class TokenMgrError extends Error {
     /*

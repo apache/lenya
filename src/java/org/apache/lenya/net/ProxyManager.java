@@ -1,5 +1,5 @@
 /*
- * $Id: ProxyManager.java,v 1.4 2003/02/20 13:40:42 gregor Exp $
+ * $Id: ProxyManager.java,v 1.5 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,13 +41,13 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.net;
+package org.lenya.net;
 
 import org.apache.log4j.Category;
 
 import org.w3c.dom.*;
 
-import org.wyona.xml.*;
+import org.lenya.xml.*;
 
 import java.util.Properties;
 import java.util.Vector;
@@ -89,7 +89,7 @@ public class ProxyManager {
      */
     public static void main(String[] args) {
         if ((args.length > 2) || (args.length < 1)) {
-            System.err.println("Usage: java org.wyona.net.ProxyManager host [configfile.xml]");
+            System.err.println("Usage: java org.lenya.net.ProxyManager host [configfile.xml]");
 
             return;
         }

@@ -1,5 +1,5 @@
 /*
- * $Id: ServletJob.java,v 1.5 2003/02/20 13:40:41 gregor Exp $
+ * $Id: ServletJob.java,v 1.6 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,13 +41,13 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.scheduler;
+package org.lenya.cms.scheduler;
 
 import org.quartz.*;
 
 import javax.servlet.http.HttpServletRequest;
 import org.w3c.dom.Element;
-import org.wyona.xml.NamespaceHelper;
+import org.lenya.xml.NamespaceHelper;
 
 
 /**

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.6 2003/01/06 00:57:52 michicms Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.7 2003/03/04 17:47:42 gregor Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -19,7 +19,7 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions>
-      <map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus-handler">
+      <map:action name="xopushandler" src="org.lenya.cms.cocoon.acting.XopusHandlerAction" logger="sitemap.action.xopus-handler">
         <xml href="docs/publication/authoring"/>
         <xsl href="stylesheets/publication"/>
         <xsd href="docs/publication/doctypes/schemas"/>

@@ -37,7 +37,7 @@
            	<code><![CDATA[
 		
 <map:actions>
-  <map:action name="publisher" src="org.wyona.cms.cocoon.acting.PublisherAction">
+  <map:action name="publisher" src="org.lenya.cms.cocoon.acting.PublisherAction">
     <authoring href="docs/publication/authoring/"/>
     <live href="docs/publication/live/"/>
     <tree-authoring href="docs/publication/authoring/tree.xml"/>
@@ -106,7 +106,7 @@
 
    		<section><title>Publisher-Action</title>
      		<p>
-      		Finally the Java Class  org.wyona.cms.cocoon.acting.PublisherAction has to be extended.
+      		Finally the Java Class  org.lenya.cms.cocoon.acting.PublisherAction has to be extended.
      		</p>
    		</section>
    	</section>

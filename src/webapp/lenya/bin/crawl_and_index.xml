@@ -38,7 +38,7 @@
 <target name="crawl" description="Crawl" depends="init">
   <echo>INFO: Crawl (${crawler.xconf})</echo>
 
-  <java classname="org.wyona.search.crawler.IterativeHTMLCrawler">
+  <java classname="org.lenya.search.crawler.IterativeHTMLCrawler">
     <arg value="src/webapp/wyona/cms/pubs/oscom/docs/publication/crawler.xconf"/>
     <classpath refid="class.path"/>
   </java>
@@ -52,7 +52,7 @@
 </target>
 
 <!--
-<taskdef name="index" classname="org.wyona.search.crawler.IterativeHTMLCrawler">
+<taskdef name="index" classname="org.lenya.search.crawler.IterativeHTMLCrawler">
   <classpath>
     <fileset dir="./" includes="build/wyona-cms/classes"/>
   </classpath>

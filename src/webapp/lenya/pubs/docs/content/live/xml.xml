@@ -20,8 +20,8 @@ The XML utility classes are:
 </p>
 <source><![CDATA[
 
-import org.wyona.xml.DocumentHelper;
-import org.wyona.xml.NamespaceHelper;
+import org.lenya.xml.DocumentHelper;
+import org.lenya.xml.NamespaceHelper;
 
 ]]></source>
 <section><title>Creating a Document</title>

@@ -3,7 +3,7 @@
  </License>
  */
 
-package org.wyona.xml;
+package org.lenya.xml;
 
 import java.util.StringTokenizer;
 

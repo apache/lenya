@@ -7,7 +7,7 @@
   <map:components>
     <map:generators default="file"/>
     <map:transformers default="xslt">
-      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+      <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
         <publication type="unipublic"/>
       </map:transformer>
       <map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>

@@ -4,22 +4,22 @@
 
   <task id="publish">
     <label>Publish</label>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
 
   <task id="publish-article">
     <label>Publish Article</label>
     <task id="prepare" class="ch.unizh.unipublic.wyona.cms.ArticleTask"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
   
   <task id="publish-dossier">
     <label>Publish Dossier</label>
     <task id="insert" class="ch.unizh.unipublic.wyona.cms.InsertDossierTask"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
 
   <!-- different task names for scheduler
@@ -28,16 +28,16 @@
     <label>Publish Headlines</label>
     <parameter name="sources" value="/frontpage/headlines.xml"/>
     <parameter name="uris" value="/wyona-cms/unipublic/index.html"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
 
   <task id="publish-webperls">
     <label>Publish Webperls</label>
     <parameter name="sources" value="/frontpage/webperls.xml"/>
     <parameter name="uris" value="/wyona-cms/unipublic/frontpage/webperls.html"/>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher"/>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter"/>
+    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher"/>
+    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter"/>
   </task>
   
   -->
@@ -45,7 +45,7 @@
   <!-- send newsletter -->
   <task id="send-newsletter">
     <label>Dispatch Newsletter</label>
-    <task id="send" class="org.wyona.cms.mail.MailTask">
+    <task id="send" class="org.lenya.cms.mail.MailTask">
       <parameter name="server" value="mail.wyona.net"/>
       <parameter name="from" value="andreas.hartmann@wyona.org"/>
       <parameter name="uri" value="/authoring/newsletter/mail.xml"/>
@@ -55,7 +55,7 @@
   
   <!-- hello world task -->
     
-  <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">
+  <task id="hello-world" class="org.lenya.cms.task.HelloWorldTask">
     <label>Print Message</label>
   </task>
 

@@ -1,5 +1,5 @@
 /*
- * $Id: JobDataMapWrapper.java,v 1.3 2003/02/12 23:06:09 andreas Exp $
+ * $Id: JobDataMapWrapper.java,v 1.4 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.scheduler;
+package org.lenya.cms.scheduler;
 
 import org.apache.avalon.framework.parameters.Parameters;
 

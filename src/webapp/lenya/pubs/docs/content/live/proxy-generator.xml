@@ -74,7 +74,7 @@ Existing cookies are being forward. New cookies are not being forwarded.
 
 <map:components>
   <map:generators default="file">
-    <map:generator name="proxygen" src="org.wyona.cms.cocoon.generation.ProxyGenerator" logger="webapp.proxygen"/>
+    <map:generator name="proxygen" src="org.lenya.cms.cocoon.generation.ProxyGenerator" logger="webapp.proxygen"/>
   </map:generators>
 </map:components>
 

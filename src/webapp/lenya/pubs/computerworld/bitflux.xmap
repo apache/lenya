@@ -7,7 +7,7 @@
 		</map:generators>
 		<map:transformers default="xslt">
 			<map:transformer name="xslt" src="org.apache.cocoon.transformation.TraxTransformer"/>
-			<map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+			<map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
 				<publication type="computerworld"/>
 			</map:transformer>
 			<map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
@@ -23,7 +23,7 @@
 		</map:matchers>
 		<!-- =========================== Actions ================================ -->
 		<map:actions>
-			<map:action name="xopushandler" src="org.wyona.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.xopus-handler">
+			<map:action name="xopushandler" src="org.lenya.cms.cocoon.acting.BitfluxAction" logger="sitemap.action.xopus-handler">
 				<xml href="docs/publication/authoring"/>
 				<xsl href="stylesheets/publication"/>
 				<xsd href="docs/publication/doctypes/schemas"/>

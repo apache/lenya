@@ -1,5 +1,5 @@
 /*
- * $Id: MailTask.java,v 1.23 2003/02/20 13:40:41 gregor Exp $
+ * $Id: MailTask.java,v 1.24 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.mail;
+package org.lenya.cms.mail;
 
 import com.sun.mail.smtp.SMTPMessage;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -53,9 +53,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
-import org.wyona.cms.task.AbstractTask;
-import org.wyona.xml.DocumentHelper;
-import org.wyona.xml.NamespaceHelper;
+import org.lenya.cms.task.AbstractTask;
+import org.lenya.xml.DocumentHelper;
+import org.lenya.xml.NamespaceHelper;
 
 import java.util.Arrays;
 import java.util.Date;

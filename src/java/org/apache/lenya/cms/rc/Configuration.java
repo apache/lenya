@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.6 2003/02/27 17:35:56 gregor Exp $
+ * $Id: Configuration.java,v 1.7 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.rc;
+package org.lenya.cms.rc;
 
 import org.apache.log4j.Category;
 

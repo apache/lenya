@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.12 2003/02/20 13:40:40 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.13 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -75,7 +75,7 @@ import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
 
 /**
- * $Id: EditorMainAction.java,v 1.12 2003/02/20 13:40:40 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.13 2003/03/04 17:46:34 gregor Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22
@@ -134,7 +134,7 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
             getLogger().debug("======= URL:" + source.getSystemId());
 
             String editFile = (String) session.getAttribute(
-                    "org.wyona.cms.editor.HTMLForm.editFile");
+                    "org.lenya.cms.editor.HTMLForm.editFile");
             getLogger().debug("======= Saving to :" + editFile);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(source.getInputStream()));
@@ -145,8 +145,8 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
 
             while ((line = in.readLine()) != null) {
                 // we need this in order to let EditOnPro save the XHTML markup:
-                line = org.wyona.util.StringUtil.replace(line, "&lt;", "<");
-                line = org.wyona.util.StringUtil.replace(line, "&gt;", ">");
+                line = org.lenya.util.StringUtil.replace(line, "&lt;", "<");
+                line = org.lenya.util.StringUtil.replace(line, "&gt;", ">");
                 trans.append(line + "\n");
             }
 
@@ -172,7 +172,7 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
                 getLogger().debug("----- SAX-Exception (stacktrace): ", saxE.getException());
 
                 String tempFile = (String) session.getAttribute(
-                        "org.wyona.cms.editor.HTMLForm.tempFile");
+                        "org.lenya.cms.editor.HTMLForm.tempFile");
 
                 if (tempFile != null) {
                     in.close();
@@ -246,8 +246,8 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
                 in.close();
                 out.close();
 
-                session.setAttribute("org.wyona.cms.editor.HTMLForm.tempFile", tempFile);
-                session.setAttribute("org.wyona.cms.editor.HTMLForm.editFile", editFile);
+                session.setAttribute("org.lenya.cms.editor.HTMLForm.tempFile", tempFile);
+                session.setAttribute("org.lenya.cms.editor.HTMLForm.editFile", editFile);
 
                 HashMap actionMap = new HashMap();
                 actionMap.put("tempFile", tempFile);

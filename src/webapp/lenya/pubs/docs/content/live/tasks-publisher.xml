@@ -56,13 +56,13 @@ e. g. to use several publishers to publish into different directories:
 
 <tasks>
 
-  <task id="publish-test" class="org.wyona.cms.publishing.DefaultFilePublisher">
+  <task id="publish-test" class="org.lenya.cms.publishing.DefaultFilePublisher">
     <label>Publish</label>
     <parameter name="live-path" value="docs/publication/live-test"/>
     <parameter name="tree-live-path" value="docs/publication/live-test/tree.xml"/>
   </task>
   
-  <task id="publish-real" class="org.wyona.cms.publishing.DefaultFilePublisher">
+  <task id="publish-real" class="org.lenya.cms.publishing.DefaultFilePublisher">
     <label>Publish</label>
     <parameter name="live-path" value="docs/publication/live"/>
     <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>

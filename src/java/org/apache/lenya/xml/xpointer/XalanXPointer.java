@@ -1,5 +1,5 @@
 /*
- * $Id: XalanXPointer.java,v 1.4 2003/02/20 13:40:42 gregor Exp $
+ * $Id: XalanXPointer.java,v 1.5 2003/03/04 17:46:48 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,13 +41,13 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.xml.xpointer;
+package org.lenya.xml.xpointer;
 
 import org.apache.log4j.Category;
 
 import org.w3c.dom.*;
 
-import org.wyona.xml.*;
+import org.lenya.xml.*;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.10 2003/02/21 18:48:51 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.11 2003/03/04 17:47:42 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -20,12 +20,12 @@
     </map:matchers>
 
     <map:actions>
-      <map:action name="authorizer" src="org.wyona.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
+      <map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
         <authenticator type="oscom"/>
         <policies>oscom/policies/</policies>
         <public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
       </map:action>
-      <map:action name="authenticator" src="org.wyona.cms.cocoon.acting.IMLAuthenticatorAction" logger="sitemap.action.iml-authenticator">
+      <map:action name="authenticator" src="org.lenya.cms.cocoon.acting.IMLAuthenticatorAction" logger="sitemap.action.iml-authenticator">
         <type>oscom</type>
         <passwd>oscom/passwd/</passwd>
       </map:action>

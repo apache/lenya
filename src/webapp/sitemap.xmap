@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.39 2003/03/02 23:25:24 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.40 2003/03/04 17:47:48 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -25,7 +25,7 @@
       <map:transformer name="cinclude" logger="sitemap.transformer.cinclude" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
       <map:transformer name="writeDOMsession" logger="sitemap.transformer.writeDOMsession" src="org.apache.cocoon.transformation.WriteDOMSessionTransformer"/>
       <map:transformer name="readDOMsession" logger="sitemap.transformer.readDOMsession" src="org.apache.cocoon.transformation.ReadDOMSessionTransformer"/>
-      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
+      <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer">
         <publication type=""/>
       </map:transformer>
     </map:transformers>

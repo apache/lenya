@@ -19,7 +19,7 @@
 
 <!--
 <xsp:structure>
-  <xsp:include>org.wyona.cms.ac.Identity</xsp:include>
+  <xsp:include>org.lenya.cms.ac.Identity</xsp:include>
   <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
 </xsp:structure>
 
@@ -28,13 +28,13 @@
     String referer=request.getHeader("Referer");
     Session session=request.getSession(true);
     String status=request.getParameter("status");
-    //if(session.getAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri") == null){
+    //if(session.getAttribute("org.lenya.cms.cocoon.acting.PublisherAction.parent_uri") == null){
     if(status == null){
-      session.setAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri",referer);
+      session.setAttribute("org.lenya.cms.cocoon.acting.PublisherAction.parent_uri",referer);
       <xsp:content><referer><xsp:expr>referer</xsp:expr></referer></xsp:content>
       }
     else{
-      <xsp:content><referer><xsp:expr>session.getAttribute("org.wyona.cms.cocoon.acting.PublisherAction.parent_uri")</xsp:expr></referer></xsp:content>
+      <xsp:content><referer><xsp:expr>session.getAttribute("org.lenya.cms.cocoon.acting.PublisherAction.parent_uri")</xsp:expr></referer></xsp:content>
       }
     Identity id=null;
     String context=request.getContextPath();
@@ -43,7 +43,7 @@
     String prefix=request_uri.substring(0,request_uri.length()-sitemap_uri.length()-1);
     String context_prefix=context+"/"+prefix;
     if(session != null){
-      id=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
+      id=(Identity)session.getAttribute("org.lenya.cms.ac.Identity");
       if(id != null){
         <xsp:content><current_username><xsp:expr>id.getUsername()</xsp:expr></current_username></xsp:content>
         }

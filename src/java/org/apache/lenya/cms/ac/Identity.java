@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.3 2003/02/07 12:14:07 ah Exp $
+ * $Id: Identity.java,v 1.4 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.ac;
+package org.lenya.cms.ac;
 
 import org.apache.xpath.XPathAPI;
 
@@ -105,7 +105,7 @@ public class Identity {
      */
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Usage: org.wyona.cms.ac.Identity wyona.iml");
+            System.err.println("Usage: org.lenya.cms.ac.Identity wyona.iml");
 
             return;
         }

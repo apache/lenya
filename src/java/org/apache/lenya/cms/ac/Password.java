@@ -1,5 +1,5 @@
 /*
- * $Id: Password.java,v 1.4 2003/02/07 12:14:07 ah Exp $
+ * $Id: Password.java,v 1.5 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.ac;
+package org.lenya.cms.ac;
 
 import org.w3c.tools.crypt.Md5;
 

@@ -2,7 +2,7 @@
 
 # Root directories where publications are located
 
-pubs.root.dirs=src/webapp/wyona/cms/pubs:/home/lenya/src/lenya-pubs
+pubs.root.dirs=src/webapp/lenya/pubs:/home/lenya/src/lenya-pubs
 
 # Where the 'install' build target should put the webapp context
 # Either use an absolute path or a relative one based on the current directory

@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.12 2003/02/20 13:40:41 gregor Exp $
+ * $Id: TaskJob.java,v 1.13 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  *
  * Created on November 7, 2002, 3:58 PM
  */
-package org.wyona.cms.scheduler;
+package org.lenya.cms.scheduler;
 
 import org.apache.avalon.framework.parameters.Parameters;
 
@@ -57,10 +57,10 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import org.wyona.cms.publishing.PublishingEnvironment;
-import org.wyona.cms.task.AbstractTask;
-import org.wyona.cms.task.Task;
-import org.wyona.cms.task.TaskManager;
+import org.lenya.cms.publishing.PublishingEnvironment;
+import org.lenya.cms.task.AbstractTask;
+import org.lenya.cms.task.Task;
+import org.lenya.cms.task.TaskManager;
 
 import java.io.File;
 
@@ -69,8 +69,8 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.w3c.dom.Element;
-import org.wyona.cms.task.ExecutionException;
-import org.wyona.xml.NamespaceHelper;
+import org.lenya.cms.task.ExecutionException;
+import org.lenya.xml.NamespaceHelper;
 
 
 /**
@@ -98,7 +98,7 @@ public class TaskJob
         log.debug("Context path: " + contextPath);
 
         // the publicationID is fetched from the session
-        String publicationId = (String) request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+        String publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
 
         if ((publicationId == null) || publicationId.equals("")) {
             log.error("No publication ID provided! ", new IllegalStateException());

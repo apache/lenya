@@ -1,5 +1,5 @@
 /*
- * $Id: ExecutionException.java,v 1.2 2003/02/12 23:30:22 andreas Exp $
+ * $Id: ExecutionException.java,v 1.3 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.task;
+package org.lenya.cms.task;
 
 /**
  * An Exception that is thrown when an error occurs during a task execution.

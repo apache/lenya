@@ -42,7 +42,7 @@
  * =======================================================================
 </License>
  */
-package org.wyona.xml;
+package org.lenya.xml;
 
 import java.io.StringReader;
 import org.apache.log4j.Category;

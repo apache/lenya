@@ -65,7 +65,7 @@
 
 [...]
   <map:action logger="action.upload" name="file-upload"
-    src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+    src="org.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
     <images-dir href="resources/images" />
     <meta-dir href="docs/metaDir" />
     <insert-image-before value="false" />

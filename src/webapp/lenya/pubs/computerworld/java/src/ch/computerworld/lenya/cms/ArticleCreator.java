@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.8 2003/02/27 15:59:34 egli Exp $
+ * $Id: ArticleCreator.java,v 1.9 2003/03/04 17:46:49 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -47,8 +47,8 @@ import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 
-import org.wyona.cms.authoring.DefaultLeafCreator;
-import org.wyona.xml.DOMUtil;
+import org.lenya.cms.authoring.DefaultLeafCreator;
+import org.lenya.xml.DOMUtil;
 
 import java.util.Map;
 

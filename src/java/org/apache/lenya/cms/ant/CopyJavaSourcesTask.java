@@ -1,5 +1,5 @@
 /*
- * $Id: CopyJavaSourcesTask.java,v 1.2 2003/03/01 23:00:51 michi Exp $
+ * $Id: CopyJavaSourcesTask.java,v 1.3 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -38,7 +38,7 @@
  * THIRD PARTY CLAIMS AGAINST YOU.
  * </License>
  */
-package org.wyona.cms.ant;
+package org.lenya.cms.ant;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;

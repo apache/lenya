@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
-<!-- $Id: authoring-sitemap.xmap,v 1.25 2003/02/26 16:26:09 egli Exp $ -->
+<!-- $Id: authoring-sitemap.xmap,v 1.26 2003/03/04 17:46:49 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
   <map:components>
     <map:generators default="file">
       <map:generator name="file" src="org.apache.cocoon.generation.FileGenerator"/>
-      <map:generator name="servletproxy" src="org.wyona.cms.cocoon.generation.ProxyGenerator"/>
+      <map:generator name="servletproxy" src="org.lenya.cms.cocoon.generation.ProxyGenerator"/>
     </map:generators>
     <map:transformers default="xslt">
       <map:transformer name="xslt" src="org.apache.cocoon.transformation.TraxTransformer" pool-min="20" pool-max="30" pool-grow="5"/>
-      <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer" pool-min="20" pool-max="30" pool-grow="5">
+      <map:transformer name="xlink" src="org.lenya.cms.cocoon.transformation.IncludeTransformer" pool-min="20" pool-max="30" pool-grow="5">
 	<publication type="computerworld"/>
       </map:transformer>
       <map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer" pool-min="20" pool-max="30" pool-grow="5"/>
@@ -34,35 +34,35 @@
     <!-- =========================== Actions ================================ -->
     <map:actions>
       <map:action name="reserved-checkout"
-	src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction"
+	src="org.lenya.cms.cocoon.acting.ReservedCheckoutAction"
 	logger="sitemap.action.reserved-checkout">
 	<rcmlDirectory href="docs/publication/rcml"/>
 	<backupDirectory href="docs/publication/rcbak"/>
       </map:action>
       <map:action name="reserved-checkin"
-	src="org.wyona.cms.cocoon.acting.ReservedCheckinAction"
+	src="org.lenya.cms.cocoon.acting.ReservedCheckinAction"
 	logger="sitemap.action.reserved-checkin">
 	<rcmlDirectory href="docs/publication/rcml"/>
 	<backupDirectory href="docs/publication/rcbak"/>
       </map:action>
-      <map:action name="rollback" src="org.wyona.cms.cocoon.acting.RollbackAction">
+      <map:action name="rollback" src="org.lenya.cms.cocoon.acting.RollbackAction">
 	<rcmlDirectory href="docs/publication/rcml"/>
 	<backupDirectory href="docs/publication/rcbak"/>
       </map:action>
       <!-- tasks -->
-      <map:action name="task" src="org.wyona.cms.cocoon.acting.TaskAction"/>
+      <map:action name="task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
       <!-- request parameters -->
       <map:action name="request-parameters" src="org.apache.cocoon.acting.RequestParamAction"/>
       <map:action name="parent-child"
 	logger="sitemap.action.parent-child"
-	src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
+	src="org.lenya.cms.cocoon.acting.ParentChildCreatorAction">
 	<tree-authoring href="docs/publication/authoring/tree.xml"/>
 	<docs href="docs/publication/authoring"/>
 	<doctypes href="docs/publication/doctypes/"/>
       </map:action>
       <map:action logger="sitemap.action.upload"
 	name="file-upload"
-	src="org.wyona.cms.cocoon.acting.ArticleImageUploadCreatorAction">
+	src="org.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
 	<resources-root href="resources/publication/images/live"/>
 	<docs-root href="docs/publication/authoring"/>
 	<meta-root href="docs/publication/authoring/images_meta"/>

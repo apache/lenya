@@ -52,13 +52,13 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 <map:components>
  ...
  <map:actions>
-   <map:action name="authorizer" src="org.wyona.cms.cocoon.acting.PMLAuthorizerAction"
+   <map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction"
                                                logger="sitemap.action.pml-authorizer">
       <authenticator type="MY-PUB"/>
       <policies>MY-PUB/policies/</policies>
       <public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
    </map:action>
-   <map:action name="authenticator" src="org.wyona.cms.cocoon.acting.IMLAuthenticatorAction"
+   <map:action name="authenticator" src="org.lenya.cms.cocoon.acting.IMLAuthenticatorAction"
                                                   logger="sitemap.action.iml-authenticator">
       <type>MY-PUB</type>
       <passwd>MY-PUB/passwd/</passwd>
@@ -146,7 +146,7 @@ to do
 </p>
 <p>
 export PATH=/usr/local/jdk1.3.1/bin:$PATH <br/>
-java -classpath WYONACMS/build/wyona-cms/classes:WYONACMS/build/wyona-cms/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar org.wyona.util.TidyCommandLine
+java -classpath WYONACMS/build/wyona-cms/classes:WYONACMS/build/wyona-cms/webapp/WEB-INF/lib/jtidy-04aug2000r7-dev.jar org.lenya.util.TidyCommandLine
 </p>
 </section>
 </section>
@@ -155,7 +155,7 @@ java -classpath WYONACMS/build/wyona-cms/classes:WYONACMS/build/wyona-cms/webapp
 <p>
 </p>
 <p>
-Modify 'wyonaPath'in the java-class org.wyona.cms.cocoon.acting.EditorMainAction<br/>
+Modify 'wyonaPath'in the java-class org.lenya.cms.cocoon.acting.EditorMainAction<br/>
      for instance: String wyonaPath="wyona/cms/pubs/MY-PUB/docs/standard/t01/";<br/>
      and recompile.
 </p>

@@ -2,7 +2,7 @@
 
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:util="http://apache.org/xsp/util/2.0">
   <xsp:structure>
-    <xsp:include>org.wyona.cms.rc.RevisionController</xsp:include>
+    <xsp:include>org.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
   </xsp:structure>                                                                                                                          

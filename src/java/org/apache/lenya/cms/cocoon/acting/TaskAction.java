@@ -1,5 +1,5 @@
 /*
- * $Id: TaskAction.java,v 1.8 2003/02/17 11:58:11 egli Exp $
+ * $Id: TaskAction.java,v 1.9 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,7 +46,7 @@
  *
  * Created on November 6, 2002, 6:22 PM
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -57,8 +57,8 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
-import org.wyona.cms.publishing.PublishingEnvironment;
-import org.wyona.cms.task.*;
+import org.lenya.cms.publishing.PublishingEnvironment;
+import org.lenya.cms.task.*;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -209,10 +209,10 @@ public class TaskAction extends AbstractComplementaryConfigurableAction {
         // Return referer
         //------------------------------------------------------------
         String parent_uri = (String) session.getAttribute(
-                "org.wyona.cms.cocoon.acting.TaskAction.parent_uri");
+                "org.lenya.cms.cocoon.acting.TaskAction.parent_uri");
         HashMap actionMap = new HashMap();
         actionMap.put("parent_uri", parent_uri);
-        session.removeAttribute("org.wyona.cms.cocoon.acting.TaskAction.parent_uri");
+        session.removeAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri");
 
         return actionMap;
     }

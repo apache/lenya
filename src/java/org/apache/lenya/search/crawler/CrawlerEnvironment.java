@@ -1,5 +1,5 @@
 /*
- * $Id: CrawlerEnvironment.java,v 1.5 2003/02/07 12:14:23 ah Exp $
+ * $Id: CrawlerEnvironment.java,v 1.6 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.search.crawler;
+package org.lenya.search.crawler;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -94,7 +94,7 @@ public class CrawlerEnvironment implements Configurable {
     public static void main(String[] args) {
         if (args.length == 0) {
             System.err.println(
-                "Usage: org.wyona.search.crawler.CrawlerEnvironment crawler.xconf [-name <name>]");
+                "Usage: org.lenya.search.crawler.CrawlerEnvironment crawler.xconf [-name <name>]");
 
             return;
         }

@@ -3,13 +3,13 @@
 <scheduler>
 
   <jobs>
-    <job type="publish" class="org.wyona.cms.scheduler.PublishingJob">
+    <job type="publish" class="org.lenya.cms.scheduler.PublishingJob">
       <title>Publish</title>
       <parameters>
-        <publisher class="org.wyona.cms.publishing.DefaultFilePublisher"/>
+        <publisher class="org.lenya.cms.publishing.DefaultFilePublisher"/>
       </parameters>
     </job>
-    <job type="hello_world" class="org.wyona.cms.scheduler.HelloWorldJob">
+    <job type="hello_world" class="org.lenya.cms.scheduler.HelloWorldJob">
       <title>Print a String</title>
     </job>
   </jobs>

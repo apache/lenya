@@ -12,7 +12,7 @@ for a TaskAction execution.
        >
 
 <xsp:structure>
-  <xsp:include>org.wyona.cms.ac.Identity</xsp:include>
+  <xsp:include>org.lenya.cms.ac.Identity</xsp:include>
   <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
 </xsp:structure>
 
@@ -40,13 +40,13 @@ for a TaskAction execution.
     String referer=request.getHeader("Referer");
     Session session=request.getSession(true);
     String status=request.getParameter("status");
-    //if(session.getAttribute("org.wyona.cms.cocoon.acting.TaskAction.parent_uri") == null){
+    //if(session.getAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri") == null){
     if(status == null){
-      session.setAttribute("org.wyona.cms.cocoon.acting.TaskAction.parent_uri",referer);
+      session.setAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri",referer);
       <xsp:content><referer><xsp:expr>referer</xsp:expr></referer></xsp:content>
       }
     else{
-      <xsp:content><referer><xsp:expr>session.getAttribute("org.wyona.cms.cocoon.acting.TaskAction.parent_uri")</xsp:expr></referer></xsp:content>
+      <xsp:content><referer><xsp:expr>session.getAttribute("org.lenya.cms.cocoon.acting.TaskAction.parent_uri")</xsp:expr></referer></xsp:content>
       }
     Identity id=null;
     String context=request.getContextPath();
@@ -55,7 +55,7 @@ for a TaskAction execution.
     String prefix=request_uri.substring(0,request_uri.length()-sitemap_uri.length()-1);
     String context_prefix=context+"/"+prefix;
     if(session != null){
-      id=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
+      id=(Identity)session.getAttribute("org.lenya.cms.ac.Identity");
       if(id != null){
         <xsp:content><session:current_username><xsp:expr>id.getUsername()</xsp:expr></session:current_username></xsp:content>
         }
@@ -65,7 +65,7 @@ for a TaskAction execution.
       }
     <xsp:content><session:context><xsp:expr>request.getContextPath()</xsp:expr></session:context></xsp:content>
     <xsp:content><session:prefix><xsp:expr>prefix</xsp:expr></session:prefix></xsp:content>
-    <xsp:content><session:publication-id><xsp:expr>request.getSession().getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type")</xsp:expr></session:publication-id></xsp:content>
+    <xsp:content><session:publication-id><xsp:expr>request.getSession().getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type")</xsp:expr></session:publication-id></xsp:content>
   </xsp:logic>
 </session:session>
 

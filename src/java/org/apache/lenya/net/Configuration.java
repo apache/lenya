@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.5 2003/02/17 13:06:57 egli Exp $
+ * $Id: Configuration.java,v 1.6 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.net;
+package org.lenya.net;
 
 import org.apache.log4j.Category;
 
@@ -76,7 +76,7 @@ public class Configuration {
     /**
      * http://www.artima.com/java/answers/Mar2001/messages/164.html export
      * CLASSPATH=/home/wyona/src/xps/build/properties:... java
-     * -Doverride.wyona.configuration=org/wyona/altconf.properties org.wyona.net.Configuration
+     * -Doverride.wyona.configuration=org/wyona/altconf.properties org.lenya.net.Configuration
      *
      * @param args DOCUMENT ME!
      */
@@ -136,10 +136,10 @@ public class Configuration {
     public void getProperties(Properties properties) {
         if (properties != null) {
             configurationPath = getProperty(properties,
-                    "org.wyona.net.ProxyManager.configurationPath");
-            smtpHost = getProperty(properties, "org.wyona.net.SMTP.host");
-            smtpPort = getProperty(properties, "org.wyona.net.SMTP.port");
-            smtpDomain = getProperty(properties, "org.wyona.net.SMTP.domain");
+                    "org.lenya.net.ProxyManager.configurationPath");
+            smtpHost = getProperty(properties, "org.lenya.net.SMTP.host");
+            smtpPort = getProperty(properties, "org.lenya.net.SMTP.port");
+            smtpDomain = getProperty(properties, "org.lenya.net.SMTP.domain");
         }
     }
 

@@ -7,7 +7,7 @@
 
   <xsp:structure>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-    <xsp:include>org.wyona.cms.ac.Identity</xsp:include>
+    <xsp:include>org.lenya.cms.ac.Identity</xsp:include>
   </xsp:structure>
 
 <page>
@@ -17,9 +17,9 @@
     <xsp:content><context><xsp:expr>request.getContextPath()</xsp:expr></context></xsp:content>
     Session session=request.getSession(false);
     if(session != null){
-      Identity id=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
-      String authenticator_id=(String)session.getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
-      //String authenticator_id=(String)session.getAttribute("org.wyona.cms.cocoon.acting.IMLAuthenticator.id");
+      Identity id=(Identity)session.getAttribute("org.lenya.cms.ac.Identity");
+      String authenticator_id=(String)session.getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
+      //String authenticator_id=(String)session.getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.id");
       if(id != null){
         <xsp:content><current_username><xsp:expr>id.getUsername()</xsp:expr></current_username></xsp:content>
         }

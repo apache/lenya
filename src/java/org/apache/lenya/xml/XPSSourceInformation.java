@@ -1,5 +1,5 @@
 /*
- * $Id: XPSSourceInformation.java,v 1.7 2003/02/17 13:21:36 egli Exp $
+ * $Id: XPSSourceInformation.java,v 1.8 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.xml;
+package org.lenya.xml;
 
 import org.apache.log4j.Category;
 

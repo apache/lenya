@@ -1,5 +1,5 @@
 /*
- * $Id: TestProxyGeneratorServlet.java,v 1.4 2003/02/10 14:58:22 egliwyona Exp $
+ * $Id: TestProxyGeneratorServlet.java,v 1.5 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.generation;
+package org.lenya.cms.cocoon.generation;
 
 import java.io.IOException;
 import java.io.PrintWriter;

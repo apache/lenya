@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: sitemap.xmap,v 1.2 2003/02/21 18:48:49 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.3 2003/03/04 17:47:01 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -13,12 +13,12 @@
 			<map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
 		</map:matchers>
 		<map:actions>
-			<map:action name="authorizer" src="org.wyona.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
+			<map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
 				<authenticator type="computerworld"/>
 				<policies>computerworld/policies/</policies>
 				<public>login-screen|do-login|switch-user|logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
 			</map:action>
-			<map:action name="authenticator" src="org.wyona.cms.cocoon.acting.IMLAuthenticatorAction" logger="sitemap.action.iml-authenticator">
+			<map:action name="authenticator" src="org.lenya.cms.cocoon.acting.IMLAuthenticatorAction" logger="sitemap.action.iml-authenticator">
 				<type>computerworld</type>
 				<passwd>computerworld/passwd/</passwd>
 			</map:action>

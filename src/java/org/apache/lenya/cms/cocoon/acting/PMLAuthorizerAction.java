@@ -1,5 +1,5 @@
 /*
- * $Id: PMLAuthorizerAction.java,v 1.12 2003/02/20 13:40:40 gregor Exp $
+ * $Id: PMLAuthorizerAction.java,v 1.13 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -54,8 +54,8 @@ import org.apache.xpath.XPathAPI;
 
 import org.w3c.dom.Document;
 
-import org.wyona.cms.ac.Identity;
-import org.wyona.cms.ac.Policy;
+import org.lenya.cms.ac.Identity;
+import org.lenya.cms.ac.Policy;
 
 import java.net.URL;
 
@@ -190,7 +190,7 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
 
         // If there are more than one authenticator enabled, then check corresponding type
         String authenticator_type = (String) session.getAttribute(
-                "org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+                "org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
 
         if (!this.authenticator_type.equals(authenticator_type)) {
             getLogger().warn(".authorize(): Bad authenticator: " + authenticator_type +
@@ -199,7 +199,7 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
             return false;
         }
 
-        Identity identity = (Identity) session.getAttribute("org.wyona.cms.ac.Identity");
+        Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
 
         if (identity != null) {
             if (policy.authorizeUser(action, identity.getUsername())) {

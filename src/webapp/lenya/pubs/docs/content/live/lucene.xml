@@ -45,20 +45,20 @@ org.apache.lucene.search.Hits hits=searcher.search(query_string,LuceneXMLIndexer
 
 <section><title>Crawling HTDOCS</title>
 <p>
-<code>java -cp build/wyona-cms/classes org.wyona.search.crawler.IterativeHTMLCrawler</code>
+<code>java -cp build/wyona-cms/classes org.lenya.search.crawler.IterativeHTMLCrawler</code>
 </p>
 </section>
 
 
 <section><title>Indexing HTML within the Filesystem</title>
 <p>
-<code>java -cp lucene-1.2-rc2.jar:classes org.wyona.lucene.IndexHTML -create -index lucene-index-oscom-matrix /usr/local/apache/htdocs_oscom</code>
+<code>java -cp lucene-1.2-rc2.jar:classes org.lenya.lucene.IndexHTML -create -index lucene-index-oscom-matrix /usr/local/apache/htdocs_oscom</code>
 </p>
 </section>
 
 <section><title>Indexing Files within the Filesystem</title>
 <p>
-<code>java -cp lucene-1.2-rc2.jar:classes org.wyona.lucene.IndexFiles /usr/local/apache/htdocs_oscom lucene-index-oscom-matrix</code>
+<code>java -cp lucene-1.2-rc2.jar:classes org.lenya.lucene.IndexFiles /usr/local/apache/htdocs_oscom lucene-index-oscom-matrix</code>
 </p>
 </section>
 

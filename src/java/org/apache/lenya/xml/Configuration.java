@@ -1,5 +1,5 @@
 /*
- * $Id: Configuration.java,v 1.5 2003/02/17 13:21:36 egli Exp $
+ * $Id: Configuration.java,v 1.6 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.xml;
+package org.lenya.xml;
 
 import org.apache.log4j.Category;
 
@@ -106,7 +106,7 @@ public class Configuration {
     /**
      * http://www.artima.com/java/answers/Mar2001/messages/164.html export
      * CLASSPATH=/home/wyona/src/xps/build/properties:... java
-     * -Doverride.xps.configuration=org/wyona/xps/altconf.properties org.wyona.xps.Configuration
+     * -Doverride.xps.configuration=org/wyona/xps/altconf.properties org.lenya.xps.Configuration
      *
      * @param args DOCUMENT ME!
      */
@@ -195,7 +195,7 @@ public class Configuration {
      */
     public void getProperties(Properties properties) {
         if (properties != null) {
-            cacheFolder = getProperty(properties, "org.wyona.xps.XLinkInterpreter.cacheFolder");
+            cacheFolder = getProperty(properties, "org.lenya.xps.XLinkInterpreter.cacheFolder");
             cacheHTTP = false;
             INCLUDE = getProperty(properties, "Include");
             JAVA_ZONE = getProperty(properties, "JavaZone");

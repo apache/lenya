@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionControllerAction.java,v 1.9 2003/02/20 13:40:40 gregor Exp $
+ * $Id: RevisionControllerAction.java,v 1.10 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -55,8 +55,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
-import org.wyona.cms.ac.Identity;
-import org.wyona.cms.rc.RevisionController;
+import org.lenya.cms.ac.Identity;
+import org.lenya.cms.rc.RevisionController;
 
 import java.util.Map;
 
@@ -140,7 +140,7 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
             return null;
         }
 
-        Identity identity = (Identity) session.getAttribute("org.wyona.cms.ac.Identity");
+        Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
         getLogger().debug(".act(): Identity: " + identity);
 
         filename = sitemapParentPath + parameters.getParameter("filename");

@@ -1,5 +1,5 @@
 /*
- * $Id: TidyCommandLine.java,v 1.3 2003/02/17 13:06:57 egli Exp $
+ * $Id: TidyCommandLine.java,v 1.4 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.util;
+package org.lenya.util;
 
 import org.w3c.tidy.Tidy;
 
@@ -58,7 +58,7 @@ import java.net.URL;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TidyCommandLine {
     /**

@@ -1,5 +1,5 @@
 /*
- * $Id: CMFProjectCreator.java,v 1.4 2003/02/27 15:59:34 egli Exp $
+ * $Id: CMFProjectCreator.java,v 1.5 2003/03/04 17:47:42 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -49,8 +49,8 @@ import org.apache.log4j.Category;
 
 import org.w3c.dom.Document;
 
-import org.wyona.cms.authoring.DefaultLeafCreator;
-import org.wyona.xml.DOMUtil;
+import org.lenya.cms.authoring.DefaultLeafCreator;
+import org.lenya.xml.DOMUtil;
 
 /**
  * DOCUMENT ME!
@@ -76,7 +76,7 @@ public class CMFProjectCreator extends DefaultLeafCreator {
 	
         log.debug("system_name = " +
 		  du.getElementValue(doc.getDocumentElement(), 
-				     new org.wyona.xml.XPath("system_name")));
+				     new org.lenya.xml.XPath("system_name")));
     }
 
 }

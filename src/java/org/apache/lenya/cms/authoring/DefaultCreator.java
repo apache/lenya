@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.11 2003/02/27 15:59:35 egli Exp $
+ * $Id: DefaultCreator.java,v 1.12 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.authoring;
+package org.lenya.cms.authoring;
 
 import org.w3c.dom.Document;
 
@@ -49,8 +49,8 @@ import org.apache.avalon.framework.configuration.Configuration;
 
 import org.apache.log4j.Category;
 
-import org.wyona.xml.DocumentHelper;
-import org.wyona.xml.DOMWriter;
+import org.lenya.xml.DocumentHelper;
+import org.lenya.xml.DOMWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;

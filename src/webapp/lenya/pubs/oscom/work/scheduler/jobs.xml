@@ -25,7 +25,7 @@
           <sch:parameter name="sources" value="/weekly-column-body.xml"/>
 -->
         </sch:task>
-        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="class" value="org.lenya.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
         <sch:parameter name="id" value="job_01037570742547"/>
 <!--
@@ -60,7 +60,7 @@
           <sch:parameter name="authoring-path" value="docs/publication/authoring"/>
           <sch:parameter name="uris" value="/wyona-cms/oscom/weekly-column.html"/>
         </sch:task>
-        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="class" value="org.lenya.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
         <sch:parameter name="id" value="job_01037570742549"/>
         <sch:parameter name="documentUri" value="weekly-column.html"/>
@@ -80,7 +80,7 @@
           <sch:parameter name="publication-id" value="oscom"/>
           <sch:parameter name="server-port" value="1313"/>
         </sch:task>
-        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="class" value="org.lenya.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
         <sch:parameter name="id" value="job_01037570742551"/>
         <sch:parameter name="documentUri" value="index.html"/>
@@ -101,7 +101,7 @@
           <sch:parameter name="server-port" value="48080"/>
           <sch:parameter name="uris" value="/wyona-cms/oscom/index.html,/wyona-cms/oscom/weekly-column.html"/>
         </sch:task>
-        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="class" value="org.lenya.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
         <sch:parameter name="id" value="job_01037570742550"/>
         <sch:parameter name="documentUri" value="index.html"/>
@@ -118,7 +118,7 @@
           <sch:parameter name="id" value="replicate"/>
           <sch:parameter name="publication-id" value="oscom"/>
         </sch:task>
-        <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
+        <sch:parameter name="class" value="org.lenya.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
         <sch:parameter name="id" value="job_01037570742553"/>
         <sch:trigger type="repeated">

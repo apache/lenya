@@ -2,8 +2,8 @@
 
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:util="http://apache.org/xsp/util/2.0">
   <xsp:structure>
-    <xsp:include>org.wyona.cms.rc.RevisionController</xsp:include>
-    <xsp:include>org.wyona.xml.DOMParserFactory</xsp:include>
+    <xsp:include>org.lenya.cms.rc.RevisionController</xsp:include>
+    <xsp:include>org.lenya.xml.DOMParserFactory</xsp:include>
   </xsp:structure>                                                                                                                          
 <rc:backup xmlns:rc="http://www.wyona.org/2002/rc">
   <xsp:logic>

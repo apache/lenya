@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleTask.java,v 1.12 2003/02/25 15:21:24 egli Exp $
+ * $Id: ArticleTask.java,v 1.13 2003/03/04 17:47:46 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,10 +57,10 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import org.wyona.cms.publishing.PublishingEnvironment;
-import org.wyona.cms.task.AbstractTask;
+import org.lenya.cms.publishing.PublishingEnvironment;
+import org.lenya.cms.task.AbstractTask;
 
-import org.wyona.util.DateUtil;
+import org.lenya.util.DateUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

@@ -26,7 +26,7 @@
       String publicationId = request.getParameter("publication-id");
       if (publicationId == null || "".equals(publicationId)) {
           publicationId = (String) request.getSession().getAttribute(
-              "org.wyona.cms.cocoon.acting.IMLAuthenticator.type");
+              "org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
           <xsp:content>  
             <sch:parameter name="publication-id">
               <xsp:attribute name="value"><xsp:expr>publicationId</xsp:expr></xsp:attribute>

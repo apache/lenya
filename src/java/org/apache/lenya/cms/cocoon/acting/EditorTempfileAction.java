@@ -1,5 +1,5 @@
 /*
- * $Id: EditorTempfileAction.java,v 1.8 2003/02/20 13:40:40 gregor Exp $
+ * $Id: EditorTempfileAction.java,v 1.9 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -113,7 +113,7 @@ public class EditorTempfileAction extends AbstractComplementaryConfigurableActio
         }
 
         // Get tempfile
-        String tempFile = (String) session.getAttribute("org.wyona.cms.editor.HTMLForm.tempFile");
+        String tempFile = (String) session.getAttribute("org.lenya.cms.editor.HTMLForm.tempFile");
 
         if (tempFile != null) {
             HashMap actionMap = new HashMap();

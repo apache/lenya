@@ -52,12 +52,12 @@ e. g. to use several publishers to publish into different directories:
 
 <tasks>
 
-  <task id="export-pending" class="org.wyona.cms.publishing.StaticHTMLExporter">
+  <task id="export-pending" class="org.lenya.cms.publishing.StaticHTMLExporter">
     <parameter name="export-path" value="resources/publication/export/pending"/>
     <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
   </task>
 
-  <task id="export-backup" class="org.wyona.cms.publishing.StaticHTMLExporter">
+  <task id="export-backup" class="org.lenya.cms.publishing.StaticHTMLExporter">
     <parameter name="export-path" value="resources/publication/backup"/>
     <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
   </task>

@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.6 2003/02/12 23:30:22 andreas Exp $
+ * $Id: DefaultFilePublisher.java,v 1.7 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,11 +41,11 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.publishing;
+package org.lenya.cms.publishing;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.log4j.Category;
-import org.wyona.cms.task.ExecutionException;
+import org.lenya.cms.task.ExecutionException;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,5 +1,5 @@
 /*
- * $Id: IndexHTML.java,v 1.9 2003/02/17 13:06:57 egli Exp $
+ * $Id: IndexHTML.java,v 1.10 2003/03/04 17:46:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.lucene;
+package org.lenya.lucene;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;

@@ -26,8 +26,8 @@ echo "=========================================================="
 echo "Target: crawl"
 echo "=========================================================="
 echo ""
-#$JAVA -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
-#$JAVA -cp $CLASSPATH org.wyona.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
+#$JAVA -cp $CLASSPATH org.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF
+#$JAVA -cp $CLASSPATH org.lenya.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 
 
 echo ""
@@ -35,7 +35,7 @@ echo "=========================================================="
 echo "Target: extract_text_from_pdf"
 echo "=========================================================="
 echo ""
-HTDOCS_DUMP_DIR=`$JAVA -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF -name htdocs-dump-dir`
+HTDOCS_DUMP_DIR=`$JAVA -cp $CLASSPATH org.lenya.search.crawler.CrawlerEnvironment $CRAWLER_CONF -name htdocs-dump-dir`
 ##find $HTDOCS_DUMP_DIR -name "*.pdf" -print -exec $XPDF -htmlmeta {} {}.txt \;
 find $HTDOCS_DUMP_DIR -name "*.pdf.txt" -print
 
@@ -53,8 +53,8 @@ echo "Target: index"
 echo "=========================================================="
 echo ""
 CLASSPATH=$CLASSPATH:$PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
-#$JAVA -cp $CLASSPATH org.wyona.lucene.IndexEnvironment $LUCENE_CONF
-$JAVA -cp $CLASSPATH org.wyona.lucene.IndexHTML $LUCENE_CONF
+#$JAVA -cp $CLASSPATH org.lenya.lucene.IndexEnvironment $LUCENE_CONF
+$JAVA -cp $CLASSPATH org.lenya.lucene.IndexHTML $LUCENE_CONF
 
 
 echo ""

@@ -1,5 +1,5 @@
 /*
- * $Id: DossierAction.java,v 1.6 2003/02/20 13:40:40 gregor Exp $
+ * $Id: DossierAction.java,v 1.7 2003/03/04 17:47:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -63,7 +63,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-import org.wyona.cms.publishing.PublishingEnvironment;
+import org.lenya.cms.publishing.PublishingEnvironment;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -327,10 +327,10 @@ public class DossierAction extends AbstractComplementaryConfigurableAction {
         // Return referer
         //------------------------------------------------------------
         String parent_uri = (String) session.getAttribute(
-                "org.wyona.cms.cocoon.acting.DossierAction.parent_uri");
+                "org.lenya.cms.cocoon.acting.DossierAction.parent_uri");
         HashMap actionMap = new HashMap();
         actionMap.put("parent_uri", parent_uri);
-        session.removeAttribute("org.wyona.cms.cocoon.acting.DossierAction.parent_uri");
+        session.removeAttribute("org.lenya.cms.cocoon.acting.DossierAction.parent_uri");
 
         return actionMap;
     }

@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionController.java,v 1.9 2003/02/20 13:40:41 gregor Exp $
+ * $Id: RevisionController.java,v 1.10 2003/03/04 17:46:35 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,11 +41,11 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.rc;
+package org.lenya.cms.rc;
 
 import org.apache.log4j.Category;
 
-import org.wyona.util.XPSFileOutputStream;
+import org.lenya.util.XPSFileOutputStream;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -46,18 +46,18 @@ A typical task configuration file looks like follows:
   <!-- publish page -->
   <task id="publish">
     <label>Publish</label>
-    <task id="publish" class="org.wyona.cms.publishing.DefaultFilePublisher">
+    <task id="publish" class="org.lenya.cms.publishing.DefaultFilePublisher">
       <parameter name="live-path" value="docs/publication/live"/>
       <parameter name="tree-live-path" value="docs/publication/live/tree.xml"/>
     </task>
-    <task id="export" class="org.wyona.cms.publishing.StaticHTMLExporter">
+    <task id="export" class="org.lenya.cms.publishing.StaticHTMLExporter">
       <parameter name="export-path" value="resources/publication/export/pending"/>
       <parameter name="substitute-regexp" value="s/\/wyona-cms\/your-publication//g"/>
     </task>
   </task>
 
   <!-- print message -->
-  <task id="hello-world" class="org.wyona.cms.task.HelloWorldTask">
+  <task id="hello-world" class="org.lenya.cms.task.HelloWorldTask">
     <label>Print Message</label>
   </task>
 
@@ -178,7 +178,7 @@ task ID is handled to the action by a <code>task</code> parameter:
   ...
   <map:actions>
     <map:action name="publisher"
-                src="org.wyona.cms.cocoon.acting.TaskAction">
+                src="org.lenya.cms.cocoon.acting.TaskAction">
       <task id="publish"/>
     </map:action>
   </map:actions>
@@ -209,7 +209,7 @@ You can also pass the task ID as a <code>task-id</code> parameter directly in th
 
 
 <map:actions>
-  <map:action name="task" src="org.wyona.cms.cocoon.acting.TaskAction"/>
+  <map:action name="task" src="org.lenya.cms.cocoon.acting.TaskAction"/>
 </map:actions>
 
 ...
@@ -235,7 +235,7 @@ See section <strong>Scheduler</strong>.
 <section><title>Developing Your Own Tasks</title>
 
 <p>
-Every task must implement the <code>org.wyona.cms.task.Task</code> interface.
+Every task must implement the <code>org.lenya.cms.task.Task</code> interface.
 </p>
 <p>
 The easiest way to develop your own task is to extend the <code>AbstractTask</code> class.

@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthorizerAction.java,v 1.7 2003/02/20 13:40:40 gregor Exp $
+ * $Id: AbstractAuthorizerAction.java,v 1.8 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -60,7 +60,7 @@ import org.apache.regexp.RECompiler;
 import org.apache.regexp.REProgram;
 import org.apache.regexp.RESyntaxException;
 
-import org.wyona.util.Stack;
+import org.lenya.util.Stack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +71,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.7 2003/02/20 13:40:40 gregor Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.8 2003/03/04 17:46:34 gregor Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
@@ -164,11 +164,11 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
         }
 
         // Set history
-        Stack history = (Stack) session.getAttribute("org.wyona.cms.cocoon.acting.History");
+        Stack history = (Stack) session.getAttribute("org.lenya.cms.cocoon.acting.History");
 
         if (history == null) {
             history = new Stack(10);
-            session.setAttribute("org.wyona.cms.cocoon.acting.History", history);
+            session.setAttribute("org.lenya.cms.cocoon.acting.History", history);
         }
 
         history.push(sitemap_uri);

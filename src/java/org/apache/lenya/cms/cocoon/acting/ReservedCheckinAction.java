@@ -1,5 +1,5 @@
 /*
- * $Id: ReservedCheckinAction.java,v 1.4 2003/02/20 13:40:40 gregor Exp $
+ * $Id: ReservedCheckinAction.java,v 1.5 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -51,7 +51,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 
-import org.wyona.cms.rc.FileReservedCheckInException;
+import org.lenya.cms.rc.FileReservedCheckInException;
 
 import java.util.HashMap;
 import java.util.Map;

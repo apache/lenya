@@ -1,5 +1,5 @@
 /*
- * $Id: EditorSaveAction.java,v 1.8 2003/02/20 13:40:40 gregor Exp $
+ * $Id: EditorSaveAction.java,v 1.9 2003/03/04 17:46:34 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -41,7 +41,7 @@
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
-package org.wyona.cms.cocoon.acting;
+package org.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
@@ -103,11 +103,11 @@ public class EditorSaveAction extends AbstractValidatorAction implements ThreadS
         }
 
         String tempfilename = (String) session.getAttribute(
-                "org.wyona.cms.cocoon.acting.EditorTempfile");
+                "org.lenya.cms.cocoon.acting.EditorTempfile");
         String editfilename = (String) session.getAttribute(
-                "org.wyona.cms.cocoon.acting.EditorEditfile");
+                "org.lenya.cms.cocoon.acting.EditorEditfile");
         String finalredirect = (String) session.getAttribute(
-                "org.wyona.cms.cocoon.acting.EditorFinalRedirect");
+                "org.lenya.cms.cocoon.acting.EditorFinalRedirect");
 
         //    String editfilename=request.getParameter("filename");
         getLogger().error("=======> editfilename   =" + editfilename);

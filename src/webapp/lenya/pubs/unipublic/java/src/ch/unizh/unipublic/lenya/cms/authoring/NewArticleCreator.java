@@ -1,5 +1,5 @@
 /*
- * $Id: NewArticleCreator.java,v 1.8 2003/02/26 10:09:36 egli Exp $
+ * $Id: NewArticleCreator.java,v 1.9 2003/03/04 17:47:47 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -43,7 +43,7 @@
  */
 package ch.unizh.unipublic.wyona.cms.authoring;
 
-import org.wyona.cms.authoring.DefaultBranchCreator;
+import org.lenya.cms.authoring.DefaultBranchCreator;
 
 /**
  * DOCUMENT ME!

@@ -8,14 +8,14 @@
 </doc>
 
 <doc type="Article">
-  <creator src="org.wyona.cms.pubs.forum.NewArticleCreator"/>
+  <creator src="org.lenya.cms.pubs.forum.NewArticleCreator"/>
   <children>
     <doc type="Comment"/>
   </children>
 </doc>
 
 <doc type="Comment">
-  <creator src="org.wyona.cms.authoring.DefaultCreator"/>
+  <creator src="org.lenya.cms.authoring.DefaultCreator"/>
   <children>
     <doc type="Comment"/>
   </children>
