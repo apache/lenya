@@ -23,8 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -387,6 +385,8 @@ public abstract class History implements WorkflowListener {
             destinationChannel = destinationStream.getChannel();
 
             destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+            sourceStream.close();
+            destinationStream.close();
             File directory = historyFile.getParentFile();
             boolean deleted = historyFile.delete();
             if (!deleted) {
