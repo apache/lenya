@@ -123,6 +123,7 @@ public class ArticleImageUploadCreatorAction
 	Source  inputSource = resolver.resolve("");
 	String  sitemapPath = inputSource.getSystemId();
 	sitemapPath = sitemapPath.substring(5); // Remove "file:" protocol
+	getLogger().debug("sitemapPath: " + sitemapPath);
 
 	String absoluteUploadDirName = sitemapPath + File.separator + uploadDirName;
 	String absoluteMetaDirName = sitemapPath + File.separator + metaDirName;
@@ -180,17 +181,25 @@ public class ArticleImageUploadCreatorAction
 	if (obj instanceof FilePart) {
 	    getLogger().debug("Uploading file: " +
 			      ((FilePart)obj).getFileName());
-	    
-	    // due to some requirement we want the file extension of
-	    // the original file and want to add it to the filename
-	    // that the user provided through the "identifier"
-	    // parameter.
-	    String originalFileName = ((FilePart)obj).getFileName();
-	    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
 
-	    String fileName = (String)dublinCoreParams.get("identifier") +
-		extension;
-	
+	    String identifier = (String)dublinCoreParams.get("identifier");
+	    String originalFileName = ((FilePart)obj).getFileName();
+	    String fileName = null;
+	    if (identifier.equals("")) {
+		// if no identifier is specified we use the
+		// originalFileName as the filename.
+		fileName = originalFileName;
+	    } else {
+		// due to some requirement we want the file extension
+		// of the original file and want to add it to the
+		// filename that the user provided through the
+		// "identifier" parameter. 
+		String extension =
+		    originalFileName.substring(originalFileName.lastIndexOf("."));
+		fileName = identifier + extension;
+	    }
+	    getLogger().debug("fileName: " + fileName);
+	    
 	    // grab the mime type and add it to the dublin core meta
 	    // data as "format" 
 	    //	    String mimeType = ((FilePart)obj).getMimeType();
