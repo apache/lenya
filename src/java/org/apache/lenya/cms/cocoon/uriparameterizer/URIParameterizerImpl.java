@@ -1,5 +1,5 @@
 /*
-$Id: URIParameterizerImpl.java,v 1.2 2004/02/20 08:51:00 andreas Exp $
+$Id: URIParameterizerImpl.java,v 1.3 2004/02/20 08:51:17 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,6 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.util.CacheMap;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 
 /**
  * Default mplementation of the {@link URIParameterizer}.
@@ -84,7 +83,7 @@ public class URIParameterizerImpl
      * Consumer to handle URIParameterizer events.
      *
      * @author $Author: andreas $
-     * @version $Revision: 1.2 $
+     * @version $Revision: 1.3 $
      */
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
         private boolean inParamElement = false;
