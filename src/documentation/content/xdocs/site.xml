@@ -52,6 +52,7 @@
     </installation>
 
     <concepts href="concepts/" label="Concepts"> 	 
+      <sitemaps14 href="lenya-sitemaps.html" label="Overview of Lenya Sitemaps" />
       <usecase-framework-index href="usecase-framework/index.html" label="Usecase Framework"/> 	 
       <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
     </concepts>
