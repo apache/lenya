@@ -23,6 +23,7 @@
         <changes href="changes.html" label="Changes"/>
         <charter href="charter.html" label="Charter"/>
         <history href="history.html" label="History"/>
+        <screenshots href="screenshots.html" label="Screenshots"/>
         <node-d href="roadmap.html" label="Roadmap"/>
         <node-i href="license.html" label="License"/>
         <resolution href="resolution.html" label="Resolution"/>
@@ -193,6 +194,7 @@
         <lenya href="http://lenya.apache.org"/>
         <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
         <cvs.asf href="http://svn.apache.org/"/>
+        <bxe href="http://bxe.oscom.org"/>
         <forrest.apache.org href="http://forrest.apache.org/">
             <forrest.build href="build.html"/>
             <forrest.install href="docs/your-project.html#installing"/>
