@@ -7,49 +7,49 @@
   </channel>
   <image>
     <title>freshmeat.net</title>
-    <url>http://freshmeat.net/img/button.gif</url>
+    <url>http://images.freshmeat.net/button.gif</url>
     <link>http://freshmeat.net/</link>
 </image>
 
   <item>
-    <title>Easy Forum 1.0.test</title>
-    <link>http://freshmeat.net/releases/80523/</link>
+    <title>avidemux 0.9pre30 </title>
+    <link>http://freshmeat.net/releases/109962/</link>
   </item>
   <item>
-    <title>BlackHole Spam/Virus Filter 0.9.60 (Stable)</title>
-    <link>http://freshmeat.net/releases/80522/</link>
+    <title>ermixer 0.8 (Development)</title>
+    <link>http://freshmeat.net/releases/109970/</link>
   </item>
   <item>
-    <title>Bugzero 1.101</title>
-    <link>http://freshmeat.net/releases/80521/</link>
+    <title>SANE 1.0.10-pre2 (Beta)</title>
+    <link>http://freshmeat.net/releases/109968/</link>
   </item>
   <item>
-    <title>SQL Query Generator 0.5 (Beta)</title>
-    <link>http://freshmeat.net/releases/80520/</link>
+    <title>SANE Frontends 1.0.10-pre2 (Beta)</title>
+    <link>http://freshmeat.net/releases/109969/</link>
   </item>
   <item>
-    <title>FormMail.php 1.5</title>
-    <link>http://freshmeat.net/releases/80519/</link>
+    <title>Last One 1.1 </title>
+    <link>http://freshmeat.net/releases/109966/</link>
   </item>
   <item>
-    <title>devolution 0.4 (Development)</title>
-    <link>http://freshmeat.net/releases/80518/</link>
+    <title>PhpDocumentor 1.2.0beta2 </title>
+    <link>http://freshmeat.net/releases/109960/</link>
   </item>
   <item>
-    <title>Config Manager 0.1.2</title>
-    <link>http://freshmeat.net/releases/80516/</link>
+    <title>Open Volume Library 0.1.2 </title>
+    <link>http://freshmeat.net/releases/109964/</link>
   </item>
   <item>
-    <title>aub 2.1.2</title>
-    <link>http://freshmeat.net/releases/80515/</link>
+    <title>mtftpd 0.0.3 </title>
+    <link>http://freshmeat.net/releases/109963/</link>
   </item>
   <item>
-    <title>Distributed Checksum Clearinghouse 1.0.53</title>
-    <link>http://freshmeat.net/releases/80514/</link>
+    <title>CvsKnit 0.9.5 </title>
+    <link>http://freshmeat.net/releases/109958/</link>
   </item>
   <item>
-    <title>tui-sh 1.0.2</title>
-    <link>http://freshmeat.net/releases/80512/</link>
+    <title>SNARLsnmp 1.2.0 </title>
+    <link>http://freshmeat.net/releases/109965/</link>
   </item>
   <textinput>
     <title>Search freshmeat.net</title>

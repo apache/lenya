@@ -1,40 +1,66 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns="http://purl.org/rss/1.0/">
 
 <channel rdf:about="http://blog.oscom.org/">
 <title>OSCOM Blog</title>
 <link>http://blog.oscom.org/</link>
-<description></description>
+<description/>
 <dc:language>en-us</dc:language>
-<dc:creator></dc:creator>
-<dc:date>2003-01-15T15:31:49+00:00</dc:date>
-<admin:generatorAgent rdf:resource="http://www.movabletype.org/?v=2.51" />
+<dc:creator/>
+<dc:date>2003-01-16T22:03:42+00:00</dc:date>
+<admin:generatorAgent rdf:resource="http://www.movabletype.org/?v=2.51"/>
 
 <items>
-<rdf:Seq><rdf:li rdf:resource="http://blog.oscom.org/archives/000006.html" />
-<rdf:li rdf:resource="http://blog.oscom.org/archives/000005.html" />
+<rdf:Seq><rdf:li rdf:resource="http://blog.oscom.org/archive/000010.html"/>
+<rdf:li rdf:resource="http://blog.oscom.org/archive/000009.html"/>
+<rdf:li rdf:resource="http://blog.oscom.org/archive/000008.html"/>
+<rdf:li rdf:resource="http://blog.oscom.org/archive/000006.html"/>
+<rdf:li rdf:resource="http://blog.oscom.org/archive/000005.html"/>
 </rdf:Seq>
 </items>
 
 </channel>
 
-<item rdf:about="http://blog.oscom.org/archives/000006.html">
+<item rdf:about="http://blog.oscom.org/archive/000010.html">
+<title>Augmenting face to face sessions</title>
+<link>http://blog.oscom.org/archive/000010.html</link>
+<description>OpenP2P.com: In-Room Chat as a Social Tool [Dec. 26, 2002] Clay Shirky writes: This fall, I hosted a two-day brainstorming...</description>
+<dc:subject>General</dc:subject>
+<dc:creator>gregor</dc:creator>
+<dc:date>2003-01-16T22:03:42+00:00</dc:date>
+</item>
+<item rdf:about="http://blog.oscom.org/archive/000009.html">
+<title>Visualizing the social network</title>
+<link>http://blog.oscom.org/archive/000009.html</link>
+<description>Apache Agora is a tool written by Stefano Mazzocchi to visualize the social network inherent in mailing lists. very timely....</description>
+<dc:subject>General</dc:subject>
+<dc:creator>gregor</dc:creator>
+<dc:date>2003-01-16T12:53:53+00:00</dc:date>
+</item>
+<item rdf:about="http://blog.oscom.org/archive/000008.html">
+<title>Viral meme meets FOAF</title>
+<link>http://blog.oscom.org/archive/000008.html</link>
+<description>we were recently talking about RDF killer apps. there is currently a meme virus going on that may just bring...</description>
+<dc:subject>General</dc:subject>
+<dc:creator>gregor</dc:creator>
+<dc:date>2003-01-16T10:53:03+00:00</dc:date>
+</item>
+<item rdf:about="http://blog.oscom.org/archive/000006.html">
 <title>Mapping the OSCOM blog space</title>
-<link>http://blog.oscom.org/archives/000006.html</link>
+<link>http://blog.oscom.org/archive/000006.html</link>
 <description>As Roger wrote earlier, OSCOM is looking for blogs from interested parties. Comment below if you know of one. Thanks....</description>
-<dc:subject></dc:subject>
+<dc:subject/>
 <dc:creator>gregor</dc:creator>
 <dc:date>2003-01-15T15:31:49+00:00</dc:date>
 </item>
-<item rdf:about="http://blog.oscom.org/archives/000005.html">
+<item rdf:about="http://blog.oscom.org/archive/000005.html">
 <title>Interop in the Bazaar</title>
-<link>http://blog.oscom.org/archives/000005.html</link>
+<link>http://blog.oscom.org/archive/000005.html</link>
 <description>Do open source projects want to inter-communicate and
 share?  This article asks this question in the context of OSCOM Interop,
 a new project to foster interoperability and sharing between open source
 content management systems.</description>
-<dc:subject></dc:subject>
+<dc:subject/>
 <dc:creator>gregor</dc:creator>
 <dc:date>2002-09-19T13:30:03+00:00</dc:date>
 </item>

@@ -1,16 +1,15 @@
-<?xml version="1.0"?>
-<!-- edited with XML Spy v3.5 NT (http://www.xmlspy.com) by Tony Byrne (IDEV) -->
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
 <rss version="0.91">
    <channel>
-      <title>Trends and Features from CMSWatch</title>
+      <title>CMSWatch Trends and Features</title>
       <link>http://www.cmswatch.com</link>
       <description>Independent analyis, trends, and evaluations of Web Content Management products and practices</description>
       <language>en-us</language>
       <webMaster>webmaster@cmswatch.com</webMaster>
       <managingEditor>editor@cmswatch.com (Tony Byrne)</managingEditor>
-      <pubDate>Mon, 05 Aug 2001 09:00:00 -0800</pubDate>
-      <lastBuildDate>Sun 24 Mar 2002 09:05:02 -0800</lastBuildDate>
+      <pubDate>Mon, 05 Aug 2001 12:00:00 -0500</pubDate>
+      <lastBuildDate>Sat, 18 Jan 2003 01:00:01 -0500</lastBuildDate>
       <image>
          <title>CMSWatch</title>
          <url>http://www.cmswatch.com/RSS/cmswatch_logo.gif</url>
@@ -20,76 +19,86 @@
          <description>CMSWatch logo</description>
       </image>
       <item>
-         <title>Everyone talks about workflow, but what is it, really?</title>
-         <description>This is the first in a series of articles excerpted from the forthcoming book, Content Management Bible by Bob Boiko, to be published by Hungry Minds later this year</description>
-         <link>http://www.cmswatch.com/Features/TopicWatch/FeaturedTopic/?feature_id=47</link>
+         <title>Tidying Up Your Site</title>
+         <description>You may have heard about several new content migration tools hitting the marketplace, driven in part by the growing adoption of XML-based content management packages.  We'd just li...</description>
+         <link>http://www.cmswatch.com/News/Article/?172</link>
       </item>
       <item>
-         <title>Can You Answer These Six Key Security Questions?</title>
-         <description>Let’s fire away at a series of questions that might just get your CMS sales manager blustering. </description>
-         <link>http://www.cmswatch.com/Features/TopicWatch/FeaturedTopic/?feature_id=47</link>
+         <title>Battle for the Windows-based CMS Mid-Market, Continued...</title>
+         <description>RedDot and Microsoft frequently go head-to-head in competitions for Windows-based web CMS packages in the mid-market price/feature range.  Microsoft has not -- as many analysts pre...</description>
+         <link>http://www.cmswatch.com/News/Article/?171</link>
       </item>
       <item>
-         <title>2nd Edition of CMS Report</title>
-         <description>This week we announce the updated, Spring 2002 edition of The CMS Report. The report updates the product surveys from last year, and adds several new vendors to the mix, including CommonSpot, eGrail, and Ingeniux. A special bonus appendix details the role of XML in WCM, and offers a checklist for reviewing the XML capabilities of any vendor. You can buy the report online from our secure store...</description>
-         <link>http://www.cmswatch.com/News/Article/?75</link>
+         <title>XML Editor Meets Hosted Document Management</title>
+         <description>What happens when you combine a novel, browser-based XML editor with a hosted document repository?  Well, we're not really sure, but it will be interesting to find out.  A start-up...</description>
+         <link>http://www.cmswatch.com/News/Article/?170</link>
       </item>
       <item>
-         <title>What Does Your CMS Call This Guy?</title>
-         <description>A content management system must manage the relationships of the information objects it contains.</description>
-         <link>http://www.cmswatch.com/Features/OpinionWatch/FeaturedOpinion/?feature_id=57</link>
+         <title>Atomz gets WYSIWYG for Macs</title>
+         <description>One shortcoming of CMS products in general (and hosted solutions in particular) is that they often provide WYSIWYG browser-based editing for only one platform.  Atomz just became o...</description>
+         <link>http://www.cmswatch.com/News/Article/?169</link>
       </item>
       <item>
-         <title>So You Want to Be in Movies</title>
-         <description>EAM vendors – or for that matter, WCM, or DM companies — who think that the Entertainment Media Asset Management (EMAM) business is another untapped vertical market may find otherwise. </description>
-         <link>http://www.cmswatch.com/Features/OpinionWatch/FeaturedOpinion/?feature_id=60</link>
+         <title>divine Streamlines</title>
+         <description>divine is slowly helping the world make better sense of the company's horizon-stretching product line.  Most recently, divine announced a reorganization into 3 product groups.  Thi...</description>
+         <link>http://www.cmswatch.com/News/Article/?168</link>
       </item>
       <item>
-         <title>Hide Your Boss’s Golf Clubs….and Other Techniques for Evaluating WCM Packages</title>
-         <description>Invite these three vendors to come in and produce a “proof-of-concept”, with each vendor installing their software on the hardware you intend it to run on.  This is the single most important step in the enterprise software selection process today.</description>
-         <link>http://www.cmswatch.com/Features/OpinionWatch/FeaturedOpinion/?feature_id=62</link>
+         <title>Day-UK Starts the New Year on the Wrong Foot</title>
+         <description>"Lets [sic] start the new year on the right foot," begins an e-mail message from Day's UK channel manager.  The three-sentence invitation to a partner meeting at an unnamed locatio...</description>
+         <link>http://www.cmswatch.com/News/Article/?167</link>
       </item>
       <item>
-         <title>The Challenges of Developing Multi-lingual Content Structures</title>
-         <description>Like similar projects, we're creating a highly complex, highly organized system. But we are faced with an additional difficulty: the elements need to be multi-lingual. </description>
-         <link>http://www.cmswatch.com/Features/TopicWatch/FeaturedTopic/?feature_id=52</link>
+         <title>Stellent Gets Serious in Europe</title>
+         <description>We think the creation of formal user groups is a critical threshold for CMS vendors.  So it is worth noting that -- at a time when many US-based players are retrenching in Europe -...</description>
+         <link>http://www.cmswatch.com/News/Article/?166</link>
       </item>
       <item>
-         <title>Publishing Without Wires: Ready for Primetime?</title>
-         <description>General consensus held that 2001 would become a year of great innovation and broader adaptation in the wireless arena, but progress has been relatively slow. </description>
-         <link>http://www.cmswatch.com/Features/TopicWatch/FeaturedTopic/?feature_id=56</link>
+         <title>The Ideal CMS -- 2002</title>
+         <description>What if you could graft the best features and attributes of individual Web content management packages into one single, ideal offering?  CMSWatch founder Tony Byrne takes a look at the vendor landscape circa 2002 and tries to assemble a "CMS Supergroup."  Warning: it's a large ensemble......</description>
+         <link>http://www.cmswatch.com/Features/ProductWatch/FeaturedProduct?feature_id=83</link>
       </item>
       <item>
-         <title>The Case for Personal Web Publishing</title>
-         <description>Dave Winer is CEO of UserLand Software, as well as the godfather of Weblogging and the SOAP protocol. </description>
-         <link>http://www.cmswatch.com/Features/PeopleWatch/FeaturedPeople/?feature_id=54</link>
+         <title>Updated CMSWatch Syndication Feed</title>
+         <description>After several requests, we have added "TrendWatch" blurbs (you are reading one now) to our RSS syndication feed and update the file nightly.  You are welcome to retrieve.  BTW, CMS...</description>
+         <link>http://www.cmswatch.com/News/Article/?165</link>
       </item>
       <item>
-         <title>The Case for Digital Rights Management</title>
-         <description>Bill Trippe is co-author of the new book, Digital Rights Management: Business and Technology, published by M&amp;T Books.</description>
-         <link>http://www.cmswatch.com/Features/PeopleWatch/FeaturedPeople/?feature_id=55</link>
+         <title>Enterprise Content Management at HBO</title>
+         <description>HBO's Carl Hixson says of ECM, "there's no shrink-wrapped solution out there"......</description>
+         <link>http://www.cmswatch.com/Features/PeopleWatch/FeaturedPeople?feature_id=82</link>
       </item>
       <item>
-         <title>What SGML Can Teach Us About XML &amp; the Web</title>
-         <description>SGML vet Betty Harvey advises XML-based publishers: don't suffer the same mistakes we experienced...</description>
-         <link>http://www.cmswatch.com/Features/PeopleWatch/FeaturedPeople/?feature_id=58</link>
+         <title>All I Want for Christmas is My Two Front Ends</title>
+         <description>For mixed PC/Mac authoring and editing environments, CMS tools still present a dilemma.  If you want to dispense with hand-coded HTML tagging in a browser, there are a wide variety...</description>
+         <link>http://www.cmswatch.com/News/Article/?164</link>
       </item>
       <item>
-         <title>The Value of Organized Knowledge</title>
-         <description>If you really want your content to be found, Jack Bryar argues, focus on building a taxonomy.</description>
-         <link>http://www.cmswatch.com/Features/TopicWatch/FeaturedTopic/?feature_id=59</link>
+         <title>Midgard in Action</title>
+         <description>Can open-source CMS packages scale?  If the newly recast theater portal, Playbill.com, is any indication, the answer is, "Yes, with effort." The new version of Playbill is powered ...</description>
+         <link>http://www.cmswatch.com/News/Article/?163</link>
       </item>
       <item>
-         <title>Zope Content Management Framework (Part 1)</title>
-         <description> In the first installment of this 2-part review, CMS veteran Adam Fields takes a look at the open-source Zope platform.</description>
-         <link>http://www.cmswatch.com/Features/ProductWatch/FeaturedProduct/?feature_id=61</link>
+         <title>Try Before You Buy</title>
+         <description>CMS packages are complicated.  It's difficult to select the right one through proposals and demos alone.  Given the choice, most buyers would like to try out a commercial package b...</description>
+         <link>http://www.cmswatch.com/News/Article/?162</link>
       </item>
       <item>
-         <title>Good Content is Difficult and Expensive to Create</title>
-         <description> Author Gerry McGovern argues that too many organizations look at content as a commodity -- a kind of byproduct of their normal business processes.</description>
-         <link>http://www.cmswatch.com/Features/OpinionWatch/FeaturedOpinion/?feature_id=63</link>
+         <title>XML Web Publishing</title>
+         <description>John Callahan surveys the Apache "Cocoon" framework and suggests that some very nice Web creatures could take wing......</description>
+         <link>http://www.cmswatch.com/Features/ProductWatch/FeaturedProduct?feature_id=81</link>
       </item>
-      <textinput>
+      <item>
+         <title>Microsoft Gets Textual with Office 11</title>
+         <description>Well, there's a lot to say about the new XML support in Office 11 (now an early beta) and the implications for CMS. With the exception of the nifty (and badly needed!) XSLT generat...</description>
+         <link>http://www.cmswatch.com/News/Article/?161</link>
+      </item>
+      <item>
+         <title>XMM: You Heard It Hear First</title>
+         <description>You already know about "CMM," the doughty Capability Maturity Model for Software from Carnegie Mellon that helps you measure, evaluate, and improve your software processes.  Now al...</description>
+         <link>http://www.cmswatch.com/News/Article/?160</link>
+      </item>
+     <textinput>
          <title>Search</title>
          <description>Search all of CMSWatch</description>
          <name>q</name>
