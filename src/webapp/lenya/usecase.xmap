@@ -148,7 +148,8 @@
         <!-- mount publication-specific usecase sitemap -->
         <map:match type="usecase" pattern="*">
         <map:act src="pubs/{../1}/usecase-{1}.xmap" type="resource-exists">
-          <map:mount check-reload="true" reload-method="synchron" src="pubs/{../../1}/usecase.xmap" uri-prefix="{../1}"/>
+          <map:mount check-reload="true" reload-method="synchron"
+              src="pubs/{../../1}/usecase.xmap" uri-prefix="{../../1}"/>
         </map:act>
         </map:match>
         
