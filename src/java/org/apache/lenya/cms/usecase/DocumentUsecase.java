@@ -40,7 +40,7 @@ public class DocumentUsecase extends AbstractUsecase {
 
     protected static final String DOCUMENT = "document";
     protected static final String TARGET_DOCUMENT = "private.targetDocument";
-    private String completeArea;
+    private String COMPLETE_AREA = "private.completeArea";
 
     /**
      * Ctor.
@@ -73,7 +73,7 @@ public class DocumentUsecase extends AbstractUsecase {
             }
 
             URLInformation info = new URLInformation(url);
-            this.completeArea = info.getCompleteArea();
+            setParameter(COMPLETE_AREA, info.getCompleteArea());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -119,8 +119,8 @@ public class DocumentUsecase extends AbstractUsecase {
     public String getTargetURL(boolean success) {
         Document document = getTargetDocument(success);
         String documentUrl = document.getCanonicalDocumentURL();
-        String url = "/" + document.getPublication().getId() + "/" + this.completeArea
-                + documentUrl;
+        String area = getParameterAsString(COMPLETE_AREA);
+        String url = "/" + document.getPublication().getId() + "/" + area + documentUrl;
         return url;
     }
 

@@ -298,10 +298,10 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         return value;
     }
 
-    private String targetUrl = null;
+    private String TARGET_URL = "private.targetUrl";
 
     protected void setTargetURL(String url) {
-        this.targetUrl = url;
+        setParameter(TARGET_URL, url);
     }
 
     /**
@@ -310,10 +310,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
-        String url;
-        if (this.targetUrl != null) {
-            url = this.targetUrl;
-        } else {
+        String url = getParameterAsString(TARGET_URL);
+        if (url == null) {
             url = getSourceURL();
         }
         return url;
