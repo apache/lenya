@@ -93,12 +93,14 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
      * the User classes and delegates the authentication to them.
      * An LDAPUser authenticates itself differently than a FileUser
      *
-     * @param username
-     * @param password
-     * @param request
+     * @param username the name of the user
+     * @param password the password
+     * @param request the original request
      * @param map is ignored
      *
      * @return true if authentication succeded
+     * 
+     * @throws Exception if an error occurs
      */
     public boolean authenticate(String username, String password, Request request, Map map)
         throws Exception {
@@ -149,8 +151,12 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
     
     /**
      * Returns a user for a username using the AccreditableManager of this action.
+     * 
      * @param username A string.
      * @return A user.
+     * 
+     * @throws AccessControlException if there was a problem creating the access controler.
+     * @throws ComponentException if the access control manager component cannot be found.
      */
     protected User getUser(String username) throws AccessControlException, ComponentException {
         User user;
