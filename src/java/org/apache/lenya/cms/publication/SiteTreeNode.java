@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.4 2003/07/04 14:07:39 egli Exp $
+$Id: SiteTreeNode.java,v 1.5 2003/07/08 09:24:32 egli Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ package org.apache.lenya.cms.publication;
  * delegates everything to the Node.
  *
  * @author $Author: egli $
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public interface SiteTreeNode {
 	
@@ -101,6 +101,20 @@ public interface SiteTreeNode {
 	 * @return a <code>Label</code>
 	 */
     Label getLabel(String xmlLanguage);
+    
+	/**
+	 * Add a label to this node iff the node does not have this label already.
+	 * 
+	 * @param label the label to be added.
+	 */
+	void addLabel(Label label);
+
+	/**
+	 * Remove a label from this node.
+	 * 
+	 * @param label the label to be removed.
+	 */
+	void removeLabel(Label label);
 
 	/**
 	 * Get the href of this node.
