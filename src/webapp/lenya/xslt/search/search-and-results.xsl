@@ -31,13 +31,17 @@
 <!--
       <td>URL: <xsl:value-of select="uri"/></td>
 -->
-      <td>URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:value-of select="uri"/></a></td>
+      <td>URL: <a><xsl:attribute name="href"><xsl:value-of select="normalize-space(uri)"/></xsl:attribute><xsl:value-of select="uri"/></a><xsl:apply-templates select="title"/></td>
     </xsl:when>
     <xsl:otherwise>
       <td>Neither PATH nor URL</td>
     </xsl:otherwise>
   </xsl:choose>
 </tr>
+</xsl:template>
+
+<xsl:template match="title">
+(Title: <xsl:value-of select="."/>)
 </xsl:template>
 
 <xsl:template match="@*|node()">
