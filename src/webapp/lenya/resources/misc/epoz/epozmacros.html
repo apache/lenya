@@ -7,14 +7,14 @@
       >
 <head>
   <title>Epoz Editor - Apache Lenya</title>
-    <link href="/epoz/common/epozstyles.css" rel="stylesheet" type="text/css" />
-    <link href="/epoz/common/epozcustom.css" rel="stylesheet" type="text/css" />
+    <link href="/lenya/epoz/common/epozstyles.css" rel="stylesheet" type="text/css" />
+    <link href="/lenya/epoz/common/epozcustom.css" rel="stylesheet" type="text/css" />
  
     <!-- IMPORTANT NOTE: The generator is closing all tags, which seem to be self-closing tags, e.g. <script src="..."></script>. Mozilla doesn't seem to like that, hence the whitespace -->
 
-    <script type="text/javascript" src="/epoz/common/dom2_events.js"> </script>
-    <script type="text/javascript" src="/epoz/common/sarissa.js"> </script>
-    <script type="text/javascript" src="/epoz/common/epozeditor.js"> </script>
+    <script type="text/javascript" src="/lenya/epoz/common/dom2_events.js"> </script>
+    <script type="text/javascript" src="/lenya/epoz/common/sarissa.js"> </script>
+    <script type="text/javascript" src="/lenya/epoz/common/epozeditor.js"> </script>
 
 </head>
 <body onload="epoz = initEpoz(document.getElementById('epoz-editor')); epozui = epoz.getTool('ui');">
@@ -357,7 +357,7 @@
   </script>
   <div class="epoz-editorframe" metal:define-slot="epoz_editorframe">
     <!-- FIXME: reloadsrc="1" doesn't seem to be modified by the XSLT -->
-    <iframe id="epoz-editor" frameborder="0" src="/epoz/common/tutorial.html"
+    <iframe id="epoz-editor" frameborder="0" src="/lenya/epoz/common/tutorial.html"
             reloadsrc="0" usecss="1"
 	    metal:define-macro="epoz_editorframe"
             tal:attributes="src nothing"
