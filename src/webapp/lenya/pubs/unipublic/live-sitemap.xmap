@@ -137,6 +137,13 @@
         <map:serialize type="xml"/>
       </map:match>
 
+<!--  Used to generate the ssi-include for the unipublic headline on the homepage
+      of the University of Zurich (www.unizh.ch)  -->
+      <map:match pattern="unizh-headline.txt">
+        <map:generate src="cocoon:/headlines.xml"/>
+        <map:transform src="stylesheets/publication/Page/Front/unizh-headline.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
 
 
 <!-- Dossiers -->
