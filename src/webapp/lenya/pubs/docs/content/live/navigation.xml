@@ -10,6 +10,7 @@
   <leaf name="Integrator" href="docs/index.html#integrator-guide"/>
   <leaf name="Developer" href="docs/index.html#developer-guide"/>
   <leaf name="Javadoc" href="docs/index.html#javadoc"/>
+  <leaf name="Concepts" href="docs/index.html#concepts"/>
 </branch>
 <leaf name="Mailing Lists" href="mailing-lists.html"/>
 <leaf name="Credits" href="acknowledgements.html"/>
