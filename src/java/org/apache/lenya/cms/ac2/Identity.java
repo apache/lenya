@@ -1,5 +1,5 @@
 /*
-$Id: Identity.java,v 1.6 2003/07/15 13:50:15 andreas Exp $
+$Id: Identity.java,v 1.7 2003/07/18 18:19:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -164,7 +164,9 @@ public class Identity implements Identifiable {
         Identifiable[] identifiables = getIdentifiables();
         int i = 0;
         while (user == null && i < identifiables.length) {
-            user = (User) identifiables[i];
+            if (identifiables[i] instanceof User) {
+                user = (User) identifiables[i];
+            }
             i++;
         }
         return user;
