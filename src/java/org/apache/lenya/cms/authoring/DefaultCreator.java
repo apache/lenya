@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreator.java,v 1.16 2003/04/24 13:52:37 gregor Exp $
+ * $Id: DefaultCreator.java,v 1.17 2003/05/07 16:41:48 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,10 +65,15 @@ import java.util.Map;
 public class DefaultCreator implements ParentChildCreatorInterface {
 	static Category log = Category.getInstance(DefaultCreator.class);
 
-    protected String resourceName;
-    protected String resourceMetaName;
-    protected String sampleResourceName;
-    protected String sampleMetaName;
+    protected final String RESOURCE_NAME = "resource-name";
+    protected final String RESOURCE_META_NAME = "resource-meta-name";
+    protected final String SAMPLE_NAME = "sample-name";
+    protected final String SAMPLE_META_NAME = "sample-meta-name";
+
+    protected String resourceName = null;
+    protected String resourceMetaName = null;
+    protected String sampleResourceName = null;
+    protected String sampleMetaName = null;
 
     /**
      * DOCUMENT ME!
@@ -80,10 +85,18 @@ public class DefaultCreator implements ParentChildCreatorInterface {
             return;
         }
 
-	resourceName = conf.getChild("resource-name").getValue("index.xml");
-	resourceMetaName = conf.getChild("resource-meta-name").getValue("index-meta.xml");
-	sampleResourceName = conf.getChild("sample-name").getValue("sampleindex.xml");
-	sampleMetaName = conf.getChild("sample-meta-name").getValue("samplemeta.xml");
+	if (conf.getChild(RESOURCE_NAME, false) != null) {
+	    resourceName = conf.getChild(RESOURCE_NAME).getValue("index.xml");
+	}
+	if (conf.getChild(RESOURCE_META_NAME, false) != null) {
+	    resourceMetaName  = conf.getChild(RESOURCE_META_NAME).getValue("index-meta.xml");
+	}
+	if (conf.getChild(SAMPLE_NAME, false) != null) {
+	    sampleResourceName  = conf.getChild(SAMPLE_NAME).getValue("sampleindex.xml");
+	}
+	if (conf.getChild(SAMPLE_META_NAME, false) != null) {
+	    sampleMetaName = conf.getChild(SAMPLE_META_NAME).getValue("samplemeta.xml");
+	}
     }
 
 	/**
