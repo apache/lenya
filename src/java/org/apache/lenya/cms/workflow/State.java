@@ -11,5 +11,5 @@ package org.apache.lenya.cms.workflow;
  * @author  andreas
  */
 public interface State {
- 
+
 }

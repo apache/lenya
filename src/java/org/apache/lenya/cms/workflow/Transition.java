@@ -11,7 +11,7 @@ package org.apache.lenya.cms.workflow;
  * @author  andreas
  */
 public interface Transition {
-    
+
     /**
      * Returns the event of this transition.
      */
@@ -21,10 +21,10 @@ public interface Transition {
      * Returns the actions of this transition.
      */
     Action[] getActions();
-    
+
     /**
      * Returns if the transition can fire in a certain situation.
      */
     boolean canFire(Situation situation);
-    
+
 }

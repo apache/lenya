@@ -11,18 +11,18 @@ package org.apache.lenya.cms.workflow;
  * @author  andreas
  */
 public interface Condition {
-    
+
     /**
      * Returns if the condition is complied in a certain situation.
      * @param situation The situation to check.
      * @return if the condition is complied.
      */
     boolean isComplied(Situation situation);
-    
+
     /**
      * Sets the expression for this condition.
      * @param expression The expression.
      */
     void setExpression(String expression);
-    
+
 }
