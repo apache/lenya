@@ -7,4 +7,6 @@
 -->
   <index-dir src="../../resources/publication/search/lucene/index-conferences"/>
   <htdocs-dump-dir src="../../resources/publication/search/lucene/htdocs_dump/www.oscom.org"/>
+
+  <indexer class="org.lenya.lucene.index.DefaultIndexer"/>
 </lucene>
