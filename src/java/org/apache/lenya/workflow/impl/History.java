@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: History.java,v 1.25 2004/08/16 13:26:34 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -23,8 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

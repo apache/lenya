@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMUtil.java,v 1.18 2004/07/16 15:01:08 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -23,7 +23,6 @@ import java.io.StringReader;
 import java.util.Vector;
 
 import org.apache.log4j.Category;
-import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

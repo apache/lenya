@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SMTP.java,v 1.12 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.net;
 
@@ -23,7 +23,6 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.Socket;
