@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: build.xml,v 1.62 2004/03/13 14:35:36 gregor Exp $ -->
+<!-- $Id: build.xml,v 1.63 2004/03/21 18:35:14 gregor Exp $ -->
 
 <!DOCTYPE project [
 <!-- ===========================================================================
@@ -24,7 +24,7 @@
                        |  Apache Lenya Build System |
                        * =========================== *
 
-       CVS $Id: build.xml,v 1.62 2004/03/13 14:35:36 gregor Exp $:
+       CVS $Id: build.xml,v 1.63 2004/03/21 18:35:14 gregor Exp $:
 
     History
     =======
@@ -38,19 +38,6 @@
 
 ============================================================================ -->
 
-  <!-- ==================  Apache Lenya targets  ======================== --> 
-  <!ENTITY properties          SYSTEM "./src/targets/properties-build.xml"> 
-  <!ENTITY init-targets        SYSTEM "./src/targets/init-build.xml"> 
-  <!ENTITY ide-targets         SYSTEM "./src/targets/ide-build.xml"> 
-  <!ENTITY compile-targets     SYSTEM "./src/targets/compile-build.xml"> 
-  <!ENTITY docs-targets        SYSTEM "./src/targets/docs-build.xml"> 
-  <!ENTITY webapp-targets      SYSTEM "./src/targets/webapp-build.xml"> 
-  <!ENTITY test-targets        SYSTEM "./src/targets/test-build.xml"> 
-  <!ENTITY dist-targets        SYSTEM "./src/targets/dist-build.xml">
-  <!ENTITY export-targets      SYSTEM "./src/targets/export-build.xml">
-  <!ENTITY publication-tests   SYSTEM "./src/targets/publication-test-build.xml">
-  <!-- =================================================================== -->
-
 ]>
 
 <project default="webapp" basedir="." name="lenya">
@@ -58,25 +45,26 @@
   <!-- ==================  Apache Lenya targets  ======================== -->
 
   <!-- =================================================================== -->
-  <!-- Global Properties       -->  &properties;
-  <!-- =================================================================== -->
-  <!-- Initialization targets  -->  &init-targets;
-  <!-- =================================================================== -->
-  <!-- IDE targets             -->  &ide-targets;
-  <!-- =================================================================== -->
-  <!-- Compile targets         -->  &compile-targets;
-  <!-- =================================================================== -->
-  <!-- Documentation targets   -->  &docs-targets;
-  <!-- =================================================================== -->  
-  <!-- Web application targets -->  &webapp-targets;
-  <!-- =================================================================== -->
-  <!-- Testcases targets       -->  &test-targets;
-  <!-- =================================================================== -->
-  <!-- Distribution targets    -->  &dist-targets;
-  <!-- =================================================================== -->
-  <!-- Export targets          -->  &export-targets;
-  <!-- =================================================================== -->
-  <!-- Publication tests       -->  &publication-tests;
+  <!-- Global properties  -->
+  <import file="src/targets/properties-build.xml" />
+  <!-- Initialization targets  -->
+  <import file="src/targets/init-build.xml" />
+  <!-- IDE targets             --> 
+  <import file="src/targets/ide-build.xml" />
+  <!-- Compile targets         --> 
+  <import file="src/targets/compile-build.xml" />
+  <!-- Documentation targets   --> 
+  <import file="src/targets/docs-build.xml" />
+  <!-- Web application targets -->
+  <import file="src/targets/webapp-build.xml" />
+  <!-- Testcases targets       -->
+  <import file="src/targets/test-build.xml" />
+  <!-- Distribution targets    -->
+  <import file="src/targets/dist-build.xml" />
+  <!-- Export targets          -->
+  <import file="src/targets/export-build.xml" />
+  <!-- Publication tests       -->
+  <import file="src/targets/publication-test-build.xml" />
   <!-- =================================================================== -->
 
 </project>
