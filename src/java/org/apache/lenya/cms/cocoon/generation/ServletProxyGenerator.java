@@ -8,10 +8,17 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
+
+import org.apache.log4j.Category;
+
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,6 +28,7 @@ import java.util.Map;
  * @author Michael Wechner
  */
 public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements Parameterizable {
+  static Category log=Category.getInstance(ServletProxyGenerator.class);
 
     /** The URI of the namespace of this generator. */
     private String URI="http://xml.apache.org/cocoon/requestgenerator/2.0";
@@ -51,13 +59,38 @@ public class ServletProxyGenerator extends org.apache.cocoon.generation.ServletG
     public void generate()
     throws SAXException {
         Request request = ObjectModelHelper.getRequest(objectModel);
+
+
+        // Forward InputStream to Servlet
+        try{
+        URL url=new URL("http://127.0.0.1:8080/wyona-cms/servlet/HelloWorld");
+        PostMethod postMethod=new PostMethod();
+        postMethod.setRequestBody("LeviVanya");
+        postMethod.setRequestHeader("Content-type","text/plain");
+        postMethod.setPath(url.getPath());
+        HttpClient httpClient=new HttpClient();
+        httpClient.startSession(url);
+        httpClient.executeMethod(postMethod);
+        byte[] response=postMethod.getResponseBody();
+        log.warn(new String(response));
+        httpClient.endSession();
+          }
+        catch(Exception e){
+          log.error(e);
+          }
+
+
+
+
+
+
         this.contentHandler.startDocument();
         this.contentHandler.startPrefixMapping("",URI);
         AttributesImpl attr=new AttributesImpl();
 
         this.attribute(attr,"target", request.getRequestURI());
         this.attribute(attr,"source", (this.source != null ? this.source : ""));
-        this.attribute(attr,"CHRISTIAN", (this.source != null ? this.source : ""));
+        this.attribute(attr,"LEVI", (this.source != null ? this.source : ""));
         this.start("request", attr);
         this.data("\n");
         this.data("\n");
