@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultCreatorAction.java,v 1.2 2003/05/14 10:18:20 egli Exp $
+ * $Id: DefaultCreatorAction.java,v 1.3 2003/05/20 18:24:58 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -76,6 +76,8 @@ import org.dom4j.io.SAXReader;
 
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.Label;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 
@@ -117,11 +119,10 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
-        org.apache.cocoon.environment.Source input_source = resolver.resolve("");
-        String sitemapParentPath = input_source.getSystemId();
-        sitemapParentPath = sitemapParentPath.substring(5); // Remove "file:" protocol
-
-        getLogger().debug(".act(): PARENT PATH OF SITEMAP: " + sitemapParentPath);
+	
+	Publication publication = PublicationFactory.getPublication(objectModel);
+	
+        getLogger().debug(".act(): PARENT PATH OF SITEMAP: " + publication.getDirectory());
 
         // Get request object
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -168,7 +169,8 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 
         // Get creator
         ParentChildCreatorInterface creator = null;
-        String absoluteDoctypesPath = sitemapParentPath + doctypesPath;
+        String absoluteDoctypesPath = publication.getDirectory() +
+	    File.separator + doctypesPath;
         Document doctypesDoc = new SAXReader().read("file:" + absoluteDoctypesPath +
                 "doctypes.xconf");
         Attribute creator_src = (Attribute)doctypesDoc.selectSingleNode("/doctypes/doc[@type='" +
@@ -207,11 +209,11 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 	creator.init(doctypeConf);
 	
 	// add a node to the tree
-        getLogger().debug("invoking DefaultSiteTree(" + sitemapParentPath
-			  + treeAuthoringPath + ")");
+        getLogger().debug("invoking DefaultSiteTree(" + publication.getDirectory() +
+			  File.separator + treeAuthoringPath + ")");
 	
-	DefaultSiteTree siteTree = new DefaultSiteTree(sitemapParentPath +
-						       treeAuthoringPath);
+	DefaultSiteTree siteTree = new DefaultSiteTree(new File(publication.getDirectory(),
+								treeAuthoringPath));
 	Label[] labels = new Label[1];
  	labels[0] = new Label(childname, null);
  	siteTree.addNode(parentid, creator.generateTreeId(childid, childType), labels);
@@ -263,7 +265,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
 	
 	try {
             creator.create(new File(absoluteDoctypesPath + "samples"),
-			   new File(sitemapParentPath + docsPath + parentid),
+			   new File(publication.getDirectory(), docsPath + parentid),
 			   childid, childType, childname, allParameters);
         } catch (Exception e) {
             getLogger().error(".act(): Creator threw exception: " + e);
