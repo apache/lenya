@@ -1,5 +1,5 @@
 /*
- * $Id: StaticHTMLExporter.java,v 1.14 2003/04/24 13:52:39 gregor Exp $
+ * $Id: StaticHTMLExporter.java,v 1.15 2003/05/30 20:59:11 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,7 +66,7 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:andreas.hartmann@lenya.com">Andreas Hartmann</a>
  */
 public class StaticHTMLExporter extends AbstractExporter {
-    static Category log = Category.getInstance(StaticHTMLExporter.class);
+    private static Category log = Category.getInstance(StaticHTMLExporter.class);
     public static final String PARAMETER_URIS = "uris";
 
     /**

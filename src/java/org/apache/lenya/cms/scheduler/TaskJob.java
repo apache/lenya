@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.19 2003/05/27 15:28:41 egli Exp $
+ * $Id: TaskJob.java,v 1.20 2003/05/30 21:01:47 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -81,7 +81,7 @@ public class TaskJob
         extends ServletJob {
     public static final String TASK_ID = "id";
     public static final String TASK_PREFIX = "task";
-    static Category log = Category.getInstance(TaskJob.class);
+    private static Category log = Category.getInstance(TaskJob.class);
 
     protected Parameters getParameters(String servletContextPath, HttpServletRequest request) {
         String taskId = request.getParameter(JobDataMapWrapper.getFullName(TASK_PREFIX, TASK_ID));

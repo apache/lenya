@@ -1,5 +1,5 @@
 /*
- * $Id: ResourcePublishingEnvironment.java,v 1.3 2003/04/24 13:52:39 gregor Exp $
+ * $Id: ResourcePublishingEnvironment.java,v 1.4 2003/05/30 20:59:11 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -54,7 +54,7 @@ import org.apache.log4j.Category;
  *
  */
 public class ResourcePublishingEnvironment extends PublishingEnvironment {
-    static Category log = Category.getInstance(ResourcePublishingEnvironment.class);
+    private static Category log = Category.getInstance(ResourcePublishingEnvironment.class);
 
     public static final String PARAMETER_RESOURCE_AUTHORING_PATH = "resources-authoring-path";
     public static final String PARAMETER_RESOURCE_LIVE_PATH = "resources-live-path";

@@ -1,5 +1,5 @@
 /*
- * $Id: ServletJobFactory.java,v 1.6 2003/04/24 13:52:59 gregor Exp $
+ * $Id: ServletJobFactory.java,v 1.7 2003/05/30 21:01:47 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -56,8 +56,12 @@ import org.apache.log4j.Category;
  *
  * @author ah
  */
-public class ServletJobFactory {
-    static Category log = Category.getInstance(ServletJobFactory.class);
+public final class ServletJobFactory {
+	
+	private ServletJobFactory() {
+	}
+	
+    private static Category log = Category.getInstance(ServletJobFactory.class);
 
     /**
      * DOCUMENT ME!

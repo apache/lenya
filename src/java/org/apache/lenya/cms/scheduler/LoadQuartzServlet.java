@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.24 2003/05/16 18:34:29 andreas Exp $
+ * $Id: LoadQuartzServlet.java,v 1.25 2003/05/30 21:01:48 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,10 +69,10 @@ import org.apache.lenya.xml.DocumentHelper;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.24 2003/05/16 18:34:29 andreas Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.25 2003/05/30 21:01:48 andreas Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
-    static Category log = Category.getInstance(LoadQuartzServlet.class);
+    private static Category log = Category.getInstance(LoadQuartzServlet.class);
     private static SchedulerWrapper scheduler = null;
     private ServletContext servletContext;
     private String servletContextPath;

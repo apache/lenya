@@ -1,5 +1,5 @@
 /*
- * $Id: TaskFactory.java,v 1.9 2003/04/24 13:52:59 gregor Exp $
+ * $Id: TaskFactory.java,v 1.10 2003/05/30 21:04:38 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -55,8 +55,12 @@ import org.apache.log4j.Category;
  * @author ah
  */
 public class TaskFactory {
+	
+	protected TaskFactory() {
+	}
+	
     private static TaskFactory factory;
-    static Category log = Category.getInstance(TaskFactory.class);
+    private static Category log = Category.getInstance(TaskFactory.class);
 
     /**
      * DOCUMENT ME!

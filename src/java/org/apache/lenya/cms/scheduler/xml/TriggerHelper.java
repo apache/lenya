@@ -1,5 +1,5 @@
 /*
- * $Id: TriggerHelper.java,v 1.11 2003/04/24 13:52:59 gregor Exp $
+ * $Id: TriggerHelper.java,v 1.12 2003/05/30 21:01:48 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -64,8 +64,12 @@ import org.apache.lenya.xml.NamespaceHelper;
  *
  * @author ah
  */
-public class TriggerHelper {
-    static Category log = Category.getInstance(TriggerHelper.class);
+public final class TriggerHelper {
+	
+	private TriggerHelper() {
+	}
+	
+    private static Category log = Category.getInstance(TriggerHelper.class);
     public static final String YEAR = "year";
     public static final String MONTH = "month";
     public static final String DAY = "day";

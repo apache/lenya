@@ -1,5 +1,5 @@
 /*
- * $Id: HelloWorldJob.java,v 1.7 2003/04/24 13:52:59 gregor Exp $
+ * $Id: HelloWorldJob.java,v 1.8 2003/05/30 21:01:47 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,7 +59,7 @@ import org.quartz.JobExecutionException;
  * @version 2002.10.8
  */
 public class HelloWorldJob implements Job {
-    static Category log = Category.getInstance(HelloWorldJob.class);
+    private static Category log = Category.getInstance(HelloWorldJob.class);
 
     /**
      * DOCUMENT ME!

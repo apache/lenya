@@ -1,5 +1,5 @@
 /*
- * $Id: SchedulerWrapper.java,v 1.13 2003/04/24 13:52:59 gregor Exp $
+ * $Id: SchedulerWrapper.java,v 1.14 2003/05/30 21:01:47 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -83,7 +83,7 @@ import org.apache.lenya.xml.NamespaceHelper;
  * @author ah
  */
 public class SchedulerWrapper {
-    static Category log = Category.getInstance(SchedulerWrapper.class);
+    private static Category log = Category.getInstance(SchedulerWrapper.class);
     public static final String JOB_PREFIX = "job";
     public static final String DOCUMENT_URI = "documentUri";
     public static final String JOB_ID = "id";

@@ -1,5 +1,5 @@
 /*
- * $Id: TaskManager.java,v 1.11 2003/05/28 14:53:37 andreas Exp $
+ * $Id: TaskManager.java,v 1.12 2003/05/30 21:04:38 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,10 +62,10 @@ import java.util.Map;
  * @author ah
  */
 public class TaskManager implements Configurable {
-    static Category log = Category.getInstance(TaskManager.class);
-    public static String TASK_ELEMENT = "task";
-    public static String TASK_ID_ATTRIBUTE = "id";
-    public static String CONFIGURATION_FILE = File.separator + "config" + File.separator + "tasks" + File.separator + "tasks.xconf";
+    private static Category log = Category.getInstance(TaskManager.class);
+    public static final String TASK_ELEMENT = "task";
+    public static final String TASK_ID_ATTRIBUTE = "id";
+    public static final String CONFIGURATION_FILE = File.separator + "config" + File.separator + "tasks" + File.separator + "tasks.xconf";
 
     // maps task-ids to tasks
     private Map tasks = new HashMap();

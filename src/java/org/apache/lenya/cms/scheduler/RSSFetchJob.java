@@ -1,5 +1,5 @@
 /*
- * $Id: RSSFetchJob.java,v 1.7 2003/04/24 13:52:59 gregor Exp $
+ * $Id: RSSFetchJob.java,v 1.8 2003/05/30 21:01:47 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -67,7 +67,7 @@ import org.quartz.simpl.*;
  * @author Michael Wechner
  */
 public class RSSFetchJob implements Job {
-    static Category log = Category.getInstance(RSSFetchJob.class);
+    private static Category log = Category.getInstance(RSSFetchJob.class);
 
     /**
      * DOCUMENT ME!

@@ -1,5 +1,5 @@
 /*
- * $Id: TaskSequence.java,v 1.9 2003/04/24 13:52:59 gregor Exp $
+ * $Id: TaskSequence.java,v 1.10 2003/05/30 21:04:38 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,7 +62,7 @@ import org.apache.log4j.Category;
 public class TaskSequence
         extends AbstractTask {
     
-    static Category log = Category.getInstance(TaskSequence.class);
+    private static Category log = Category.getInstance(TaskSequence.class);
 
     // keeps the task order
     private Task[] tasks;

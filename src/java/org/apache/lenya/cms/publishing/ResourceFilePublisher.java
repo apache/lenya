@@ -1,5 +1,5 @@
 /*
- * $Id: ResourceFilePublisher.java,v 1.2 2003/04/24 13:52:39 gregor Exp $
+ * $Id: ResourceFilePublisher.java,v 1.3 2003/05/30 20:59:11 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -73,7 +73,7 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:christian.egli@lenya.org">Christian Egli</a>
  */
 public class ResourceFilePublisher extends DefaultFilePublisher {
-    static Category log = Category.getInstance(ResourceFilePublisher.class);
+    private static Category log = Category.getInstance(ResourceFilePublisher.class);
 
     protected void publishResources(String publicationPath,
 				    String resourcesAuthoringPath,

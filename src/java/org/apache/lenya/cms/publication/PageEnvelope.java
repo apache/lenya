@@ -212,7 +212,7 @@ public class PageEnvelope {
     /**
      * The names of the page envelope parameters.
      */
-    public static String[] PARAMETER_NAMES =
+    public static final String[] PARAMETER_NAMES =
         {
             PageEnvelope.AREA,
             PageEnvelope.CONTEXT,

@@ -1,5 +1,5 @@
 /*
- * $Id: Task.java,v 1.10 2003/04/24 13:52:59 gregor Exp $
+ * $Id: Task.java,v 1.11 2003/05/30 21:04:38 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -59,31 +59,31 @@ public interface Task
      * The path of the servlet
      * context:<br/><code>/home/user_id/build/jakarta-tomcat/webapps/lenyacms</code>
      */
-    static final String PARAMETER_SERVLET_CONTEXT = "servlet-context";
+    String PARAMETER_SERVLET_CONTEXT = "servlet-context";
 
     /**
      * The server
      * URI:<br/><code><strong>http://www.yourhost.com</strong>:8080/lenya/publication/index.html</code>
      */
-    static final String PARAMETER_SERVER_URI = "server-uri";
+    String PARAMETER_SERVER_URI = "server-uri";
 
     /**
      * The server
      * port:<br/><code>http://www.yourhost.com:<strong>8080</strong>/lenya/publication/index.html</code>
      */
-    static final String PARAMETER_SERVER_PORT = "server-port";
+    String PARAMETER_SERVER_PORT = "server-port";
 
     /**
      * The part of the URI that precedes the publication
      * ID:<br/><code>http://www.yourhost.com:8080<strong>/lenya/</strong>publication/index.html</code>
      */
-    static final String PARAMETER_CONTEXT_PREFIX = "context-prefix";
+    String PARAMETER_CONTEXT_PREFIX = "context-prefix";
 
     /**
      * The publication
      * ID:<br/><code>http://www.yourhost.com:8080/lenya/<strong>publication</strong>/index.html</code>
      */
-    static final String PARAMETER_PUBLICATION_ID = "publication-id";
+    String PARAMETER_PUBLICATION_ID = "publication-id";
 
     /**
      * Execute the task. All parameters must have been set with parameterize().

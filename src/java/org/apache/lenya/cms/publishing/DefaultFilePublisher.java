@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultFilePublisher.java,v 1.16 2003/04/28 14:11:11 andreas Exp $
+ * $Id: DefaultFilePublisher.java,v 1.17 2003/05/30 20:59:11 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -73,7 +73,7 @@ import java.util.StringTokenizer;
  * @author <a href="mailto:michael.wechner@lenya.org">Michael Wechner</a>
  */
 public class DefaultFilePublisher extends AbstractFilePublisher {
-    static Category log = Category.getInstance(DefaultFilePublisher.class);
+    private static Category log = Category.getInstance(DefaultFilePublisher.class);
     public static final String PARAMETER_SOURCES = "sources";
 
     /**
