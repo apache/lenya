@@ -22,16 +22,16 @@ growth.
 
 In early 2000 Michael co-founded Wyona (www.wyona.com), which
 continued to develop Lenya on the basis of the interactive newspaper
-edition of Neue Zürcher Zeitung (www.nzz.ch).  The name Lenya is a
+edition of Neue Zï¿½rcher Zeitung (www.nzz.ch).  The name Lenya is a
 combination of the names of his two sons Levi and Vanya.
 
 * Andreas Hartmann
 * Christian Egli
 * Edith Chevrier
-* Felix Mäder
+* Felix MÃ¤der
 * Giacomo Pati
 * Gregor J. Rothfuss
-* Jürgen Bigalke
+* JÃ¼rgen Bigalke
 * Marc Liyanage
 
 
@@ -59,13 +59,13 @@ lot to integrate Bitflux Editor into Lenya.
 * Markus Vaterlaus
 * Marc von Wattenwyl
 * Margrit John
-* Martin Lüthi
+* Martin LÃ¼thi
 * Stephen England
 
 The Lenya logo has been designed by Stephen.
 
 * Thomas Werschlein
-* Urs Stöckli
+* Urs StÃ¶ckli
 * Martin Hitz
 
 
@@ -81,6 +81,11 @@ This product includes software developed by the DOM4J Project
 This product includes software developed by the XML:DB Initiative 
 (http://www.xmldb.org/).
 
+This product includes software developed by the Bitflux Editor Project
+(http://www.bitfluxeditor.org/).
+
+This product includes software developed by the Epoz Project
+(http://epoz.sf.net/).
 
 Portions are Copyright (c) 1998-2000 World Wide Web Consortium 
 (Massachusetts Institute of Technology, Institut National de Recherche en
