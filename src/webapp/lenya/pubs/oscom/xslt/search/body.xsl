@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: body.xsl,v 1.19 2004/03/13 12:42:20 gregor Exp $ -->
+<!-- $Id: body.xsl,v 1.20 2004/08/02 00:23:43 michi Exp $ -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
@@ -88,7 +88,7 @@ Limit your search to field:
       <xsl:attribute name="checked">checked</xsl:attribute>
     </xsl:if>
     </xsl:for-each>
-    Contents
+    Description
   </input>
   <input type="checkbox" name="matrix.fields.title">
     <xsl:for-each select="search/fields/field">
@@ -216,11 +216,27 @@ Limit your search to field:
       <td>
         <xsl:variable name="url"><xsl:value-of select="/oscom/search-and-results/search/publication-prefix"/><xsl:choose><xsl:when test="uri/@filename = 'index.html'"><xsl:value-of select="normalize-space(uri/@parent)"/>/</xsl:when><xsl:otherwise><xsl:value-of select="normalize-space(uri)"/></xsl:otherwise></xsl:choose></xsl:variable>
 
-        <a href="{$url}"><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
+        <xsl:choose>
+        <xsl:when test="/oscom/search-and-results/configuration/@checked-pid = 'matrix'">
+          <xsl:variable name="mhref"><xsl:value-of select="substring-before($url, '.xml')"/>.html</xsl:variable>
+          <a href="{$mhref}"><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <a href="{$url}"><xsl:apply-templates select="title"/></a><xsl:apply-templates select="no-title"/>
+        </xsl:otherwise>
+        </xsl:choose>
         <br />
         <font size="-1"><xsl:apply-templates select="excerpt"/><xsl:apply-templates select="no-excerpt"/></font>
         <br />
-        <font size="-1">URL: <a href="{$url}"><xsl:value-of select="$url"/></a></font>
+        <xsl:choose>
+        <xsl:when test="/oscom/search-and-results/configuration/@checked-pid = 'matrix'">
+          <xsl:variable name="mhref"><xsl:value-of select="substring-before($url, '.xml')"/>.html</xsl:variable>
+          <font size="-1">URL: <a href="{$mhref}"><xsl:value-of select="$mhref"/></a></font>
+        </xsl:when>
+        <xsl:otherwise>
+          <font size="-1">URL: <a href="{$url}"><xsl:value-of select="$url"/></a></font>
+        </xsl:otherwise>
+        </xsl:choose>
         <br />
         <br />
       </td>

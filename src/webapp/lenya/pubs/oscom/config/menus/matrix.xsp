@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: matrix.xsp,v 1.41 2004/07/31 05:35:53 michi Exp $ -->
+<!-- $Id: matrix.xsp,v 1.42 2004/08/02 00:23:43 michi Exp $ -->
 
 <xsp:page 
   language="java" 
@@ -56,7 +56,7 @@
 	-->
       </block>
       <block>
-        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=/matrix/<xsp:expr>projectid</xsp:expr>.xml&amp;uris=/lenya/oscom/matrix/<xsp:expr>projectid</xsp:expr>.html,/lenya/oscom/matrix/index.html&amp;files2index=/matrix/<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>Publish</item>
+        <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=/matrix/<xsp:expr>projectid</xsp:expr>.xml&amp;uris=/lenya/oscom/matrix/<xsp:expr>projectid</xsp:expr>.html,/lenya/oscom/matrix/index.html&amp;files2index=/<xsp:expr>projectid</xsp:expr>.xml</xsp:attribute>Publish</item>
       </block>
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>

@@ -15,12 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: oscom-layout-2.xsl,v 1.28 2004/05/12 16:16:39 michi Exp $ -->
+<!-- $Id: oscom-layout-2.xsl,v 1.29 2004/08/02 00:24:27 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:oscom="http://www.oscom.org/2002/oscom"
 >
+
+<xsl:include href="searchURL.xsl"/>
 
 <xsl:param name="relativePrefix" select="''"/>
 
@@ -37,12 +39,6 @@
 <xsl:variable name="imagesPrefix">go/oscom-proposals_files</xsl:variable>
 -->
 <xsl:variable name="imagesPrefix">oscom-proposals_files</xsl:variable>
-
-
-<!--
-<xsl:variable name="searchURL">/search/go</xsl:variable>
--->
-<xsl:variable name="searchURL">/lenya/oscom/search-live/lucene</xsl:variable>
 
 
 
