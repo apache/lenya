@@ -48,8 +48,13 @@ select="@href" />' }<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>
 <xsl:template match="menus">
        var menubarDef = [
       <xsl:for-each select="menu">{ name:'<xsl:value-of select="@name" />', icon:'<xsl:value-of select="@src" />', href:'<xsl:value-of 
-select="@href" />' }<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>
+select="@href" />', items:[<xsl:apply-templates select="item" /><xsl:if test="position()!=last()">,</xsl:if>] }
+<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>
 	];
+</xsl:template>
+
+<xsl:template match="item">
+      { name:'<xsl:value-of select="@name" />', href:'<xsl:value-of select="@href" />'}
 </xsl:template>
 
 </xsl:stylesheet>
