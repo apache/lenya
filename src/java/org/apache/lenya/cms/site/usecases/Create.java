@@ -16,9 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
@@ -28,7 +26,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -40,21 +37,15 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 
 /**
- * Usecase to create a resource.
+ * Abstract superclass for usecases to create a resource.
  * 
  * @version $Id: Create.java 123982 2005-01-03 15:01:19Z andreas $
  */
-public class Create extends DocumentUsecase {
+public abstract class Create extends DocumentUsecase {
 
     protected static final String LANGUAGE = "language";
-
     protected static final String LANGUAGES = "languages";
-
-    protected static final String PARENT_ID = "parentId";
-
     protected static final String DOCUMENT_ID = "documentId";
-
-    protected static final String DOCUMENT_TYPE = "doctype";
 
     /**
      * Ctor.
@@ -96,52 +87,34 @@ public class Create extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        Document parent = getSourceDocument();
-
-        String documentId = parent.getId() + "/" + getParameterAsString(DOCUMENT_ID);
-        String navigationTitle = getParameterAsString(DublinCore.ELEMENT_TITLE);
-        String documentTypeName = getParameterAsString(DOCUMENT_TYPE);
-        String language = getParameterAsString(LANGUAGE);
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Creating document");
-            getLogger().debug("    Parent document:   [" + parent.getId() + "]");
-            getLogger().debug("    Child document:    [" + documentId + "]");
-            getLogger().debug("    Language:          [" + language + "]");
-            getLogger().debug("    Document Type:     [" + documentTypeName + "]");
-            getLogger().debug("    Navigation Title:  [" + navigationTitle + "]");
-        }
-
-        Publication publication = parent.getPublication();
-        String area = parent.getArea();
-        Document document = parent.getIdentityMap().getFactory().get(area, documentId, language);
+        Document document = createDocument();
+        Publication publication = document.getPublication();
+        String documentTypeName = getDocumentTypeName();
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);
 
-        String parentId = parent.getId().substring(1);
-        String childId = document.getName();
-
-        File doctypesDirectory = new File(publication.getDirectory(),
-                DocumentTypeBuilder.DOCTYPE_DIRECTORY);
-
-        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
-                new File(publication.getContentDirectory(area), parentId),
-                childId,
-                ParentChildCreatorInterface.BRANCH_NODE,
-                navigationTitle,
-                language,
-                Collections.EMPTY_MAP);
-
         SiteManager manager = publication.getSiteManager(document.getIdentityMap());
         manager.add(document);
-        manager.setLabel(document, navigationTitle);
+        manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
 
         WorkflowFactory.initHistory(document, documentType.getWorkflowFileName(), getSituation());
 
         setMetaData(document);
         setTargetDocument(document);
     }
+
+    /**
+     * Creates a document.
+     * @return A document.
+     * @throws Exception if an error occurs.
+     */
+    protected abstract Document createDocument() throws Exception;
+
+    /**
+     * @return The type of the created document.
+     */
+    protected abstract String getDocumentTypeName();
 
     /**
      * Sets the meta data of the created document.
@@ -171,9 +144,6 @@ public class Create extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Document parent = getSourceDocument();
-        setParameter(PARENT_ID, parent.getId());
-
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession(false);
@@ -184,7 +154,5 @@ public class Create extends DocumentUsecase {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));
 
-        String[] languages = parent.getPublication().getLanguages();
-        setParameter(LANGUAGES, languages);
     }
 }
