@@ -5,7 +5,10 @@
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
 >
 
+<xsl:param name="contextPrefix" select="'/lenya'"/>
 <xsl:param name="edit" select="'No node selected yet'"/>
+
+<xsl:variable name="imagesPath"><xsl:value-of select="$contextPrefix"/>/lenya/images</xsl:variable>
 
 <xsl:include href="copy-mixed-content.xsl"/>
 
@@ -132,18 +135,15 @@
 </xsl:template>
 
 <xsl:template match="insert">
-<input type="image" src="/lenya/lenya/images/insert.gif" name="{@name}" value="LENYA"/>
+<input type="image" src="{$imagesPath}/insert.gif" name="{@name}" value="LENYA"/>
 </xsl:template>
 
 <xsl:template match="delete">
-<input type="image" src="/lenya/lenya/images/delete.gif" name="{@name}" value="true"/>
+<input type="image" src="{$imagesPath}/delete.gif" name="{@name}" value="true"/>
 </xsl:template>
 
 <xsl:template match="@select">
-<input type="image" src="/lenya/lenya/images/util/reddot.gif" name="edit" value="{.}"/>
-<!--
-<input type="image" src="/lenya/lenya/images/util/reddot.gif" name="edit" value="&lt;lenya:edit select=&quot;{.}&quot;/&gt;"/>
--->
+<input type="image" src="{$imagesPath}/util/reddot.gif" name="edit" value="{.}"/>
 </xsl:template>
 
 </xsl:stylesheet>  

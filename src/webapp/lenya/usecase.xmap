@@ -340,15 +340,13 @@
               </map:transform>
               <map:transform type="write-source"/>
               <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
-              <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
-<!--
-              <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
--->
               <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
                 <map:parameter name="form" value="{request-param:form}"/>
               </map:transform>
-              <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}"/>
+              <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
+                <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
+              </map:transform>
               <map:call resource="style-cms-page"/>
             </map:match>
           </map:match>
@@ -368,27 +366,16 @@
                 </map:transform>
                 <map:transform type="write-source"/>
                 <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
-
-                <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
-<!--
-                <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
--->
-
                 <map:transform src="pubs/{../1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                   <map:parameter name="docid" value="{page-envelope:document-path}"/>
                   <map:parameter name="form" value="{request-param:form}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:transform>
                 <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
+                  <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
                   <map:parameter name="edit" value="{request-param:edit}"/>
                 </map:transform>
                 <map:call resource="style-cms-page"/>
-<!--
-                <map:transform src="xslt/authoring/edit/form-layout.xsl">
-                  <map:parameter name="edit" value="{request-param:edit}"/>
-                </map:transform>
-                <map:serialize type="html" />
--->
               </map:act>
 
               <!-- Stop Editing: Save and Cancel -->
