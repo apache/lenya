@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseAuthorizer.java,v 1.4 2003/08/05 11:59:33 andreas Exp $
+$Id: UsecaseAuthorizer.java,v 1.5 2003/08/05 16:21:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,9 +62,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -75,10 +72,10 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
 import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.Authorizer;
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.PolicyManager;
+import org.apache.lenya.cms.ac2.PolicyAuthorizer;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -88,53 +85,86 @@ import org.w3c.dom.Element;
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class UsecaseAuthorizer
-    extends AbstractLogEnabled
-    implements Authorizer, Configurable, Serviceable {
+public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable {
 
+    public static final String TYPE = "usecase";
     public static final String USECASE_PARAMETER = "lenya.usecase";
+
+    // maps usecase IDs to Sets of role IDs
+    private Map usecaseToRoles = new HashMap();
+    private Role[] roles;
+
+    /**
+     * Initializes the authorizer.
+     * @param request The request.
+     * @throws AccessControlException when something went wrong.
+     */
+    public void setup(Request request) throws AccessControlException {
+        SourceResolver resolver = null;
+        Source source = null;
+
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            Publication publication = PublicationFactory.getPublication(resolver, request);
+            source =
+                resolver.resolveURI(
+                    "context:///"
+                        + Publication.PUBLICATION_PREFIX_URI
+                        + "/"
+                        + publication.getId()
+                        + CONFIGURATION_FILE);
+
+            Document document = DocumentHelper.readDocument(source.getInputStream());
+            assert document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
+
+            NamespaceHelper helper =
+                new NamespaceHelper(
+                    AccessController.NAMESPACE,
+                    AccessController.DEFAULT_PREFIX,
+                    document);
+
+            Element[] usecaseElements =
+                helper.getChildren(document.getDocumentElement(), USECASE_ELEMENT);
+            for (int i = 0; i < usecaseElements.length; i++) {
+                String usecaseId = usecaseElements[i].getAttribute(ID_ATTRIBUTE);
+                getLogger().debug("Found usecase [" + usecaseId + "]");
+                Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
+                Set roleIds = new HashSet();
+                for (int j = 0; j < roleElements.length; j++) {
+                    String roleId = roleElements[i].getAttribute(ID_ATTRIBUTE);
+                    roleIds.add(roleId);
+                    getLogger().debug("Adding role [" + roleId + "]");
+                }
+                usecaseToRoles.put(usecaseId, roleIds);
+            }
+
+        } catch (Exception e) {
+            throw new AccessControlException("Building usecase role configuration failed: ", e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                manager.release(resolver);
+            }
+        }
+
+        roles = PolicyAuthorizer.getRoles(request);
+    }
 
     /**
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.AccreditableManager, org.apache.lenya.cms.ac2.PolicyManager, org.apache.lenya.cms.ac2.Identity, org.apache.cocoon.environment.Request)
      */
-    public boolean authorize(
-        AccreditableManager accreditableManager,
-        PolicyManager policyManager,
-        Identity identity,
-        Request request)
-        throws AccessControlException {
+    public boolean authorize(Request request) throws AccessControlException {
+
+        setup(request);
 
         String usecase = request.getParameter(USECASE_PARAMETER);
         boolean authorized = true;
+        String url = ServletHelper.getWebappURI(request);
 
         if (usecase != null) {
-
-            getLogger().debug("Authorizing usecase [" + usecase + "]");
-
-            if (usecaseToRoles.containsKey(usecase)) {
-
-                getLogger().debug("Roles for usecase found.");
-
-                Set usecaseRoles = getRoleIDs(usecase);
-
-                String url = ServletHelper.getWebappURI(request);
-                Role[] roles = policyManager.getPolicy(accreditableManager, url).getRoles(identity);
-
-                int i = 0;
-                authorized = false;
-                while (!authorized && i < roles.length) {
-                    authorized = usecaseRoles.contains(roles[i].getId());
-                    getLogger().debug(
-                        "Authorization for role ["
-                            + roles[i].getId()
-                            + "] is ["
-                            + authorized
-                            + "]");
-                    i++;
-                }
-            } else {
-                getLogger().debug("No roles for usecase found. Granting access.");
-            }
+            authorized = authorizeUsecase(url, usecase);
         } else {
             getLogger().debug("No usecase to authorize. Granting access.");
         }
@@ -142,76 +172,42 @@ public class UsecaseAuthorizer
         return authorized;
     }
 
-    private String configurationPath;
+    /**
+     * Authorizes a usecase.
+     * @param url The webapp URL.
+     * @param usecase The usecase ID to authorize.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
+    public boolean authorizeUsecase(String url, String usecase) throws AccessControlException {
 
-    protected static final String FILE_ELEMENT = "config-file";
-    protected static final String SRC_ATTRIBUTE = "src";
+        getLogger().debug("Authorizing usecase [" + usecase + "]");
+        boolean authorized = true;
+        if (usecaseToRoles.containsKey(usecase)) {
+
+            getLogger().debug("Roles for usecase found.");
+
+            Set usecaseRoles = getRoleIDs(usecase);
+
+            int i = 0;
+            authorized = false;
+            while (!authorized && i < roles.length) {
+                authorized = usecaseRoles.contains(roles[i].getId());
+                getLogger().debug(
+                    "Authorization for role [" + roles[i].getId() + "] is [" + authorized + "]");
+                i++;
+            }
+        } else {
+            getLogger().debug("No roles for usecase found. Granting access.");
+        }
+        return authorized;
+    }
+
     protected static final String USECASES_ELEMENT = "usecases";
     protected static final String USECASE_ELEMENT = "usecase";
     protected static final String ROLE_ELEMENT = "role";
     protected static final String ID_ATTRIBUTE = "id";
-
-    // maps usecase IDs to Sets of role IDs
-    private Map usecaseToRoles = new HashMap();
-
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration config) throws ConfigurationException {
-
-        getLogger().debug("Configuring");
-        Configuration fileConfig = config.getChild(FILE_ELEMENT, false);
-
-        if (fileConfig == null) {
-            getLogger().debug("No configuration file provided.");
-        } else {
-            getLogger().debug("Configuration file provided.");
-            configurationPath = fileConfig.getAttribute(SRC_ATTRIBUTE);
-
-            SourceResolver resolver = null;
-            Source source = null;
-
-            try {
-                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-                resolver.resolveURI(configurationPath);
-
-                Document document = null;
-                    document = DocumentHelper.readDocument(source.getInputStream());
-                assert document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
-                
-                NamespaceHelper helper =
-                    new NamespaceHelper(
-                        AccessController.NAMESPACE,
-                        AccessController.DEFAULT_PREFIX,
-                        document);
-
-                Element[] usecaseElements =
-                    helper.getChildren(document.getDocumentElement(), USECASE_ELEMENT);
-                for (int i = 0; i < usecaseElements.length; i++) {
-                    String usecaseId = usecaseElements[i].getAttribute(ID_ATTRIBUTE);
-                    getLogger().debug("Found usecase [" + usecaseId + "]");
-                    Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
-                    Set roleIds = new HashSet();
-                    for (int j = 0; j < roleElements.length; j++) {
-                        String roleId = roleElements[i].getAttribute(ID_ATTRIBUTE);
-                        roleIds.add(roleId);
-                        getLogger().debug("Adding role [" + roleId + "]");
-                    }
-                    usecaseToRoles.put(usecaseId, roleIds);
-                }
-
-            } catch (Exception e) {
-                throw new ConfigurationException("Building usecase role configuration failed: ", e);
-            } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    manager.release(resolver);
-                }
-            }
-        }
-    }
+    protected static final String CONFIGURATION_FILE = "/config/ac/usecase-policies.xml";
 
     private ServiceManager manager;
 
