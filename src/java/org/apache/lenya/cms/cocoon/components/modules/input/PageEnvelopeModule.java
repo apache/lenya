@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.20 2003/08/12 13:32:25 egli Exp $
+$Id: PageEnvelopeModule.java,v 1.21 2003/08/14 16:34:58 egli Exp $
 <License>
 
  ============================================================================
@@ -140,12 +140,16 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocument().getDublinCore().getTitle();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {
                 value = envelope.getDocument().getDublinCore().getCreator();
+            } else if (name.equals(PageEnvelope.DOCUMENT_DC_PUBLISHER)) {
+                value = envelope.getDocument().getDublinCore().getPublisher();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_SUBJECT)) {
                 value = envelope.getDocument().getDublinCore().getSubject();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_DESCRIPTION)) {
                 value = envelope.getDocument().getDublinCore().getDescription();
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_RIGHTS)) {
                 value = envelope.getDocument().getDublinCore().getRights();
+            } else if (name.equals(PageEnvelope.DOCUMENT_DC_DATE_CREATED)) {
+                value = envelope.getDocument().getDublinCore().getDateCreated();
             } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
                 value = envelope.getDocument().getLastModified();
 			} else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
