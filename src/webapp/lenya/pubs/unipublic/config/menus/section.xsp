@@ -23,7 +23,7 @@
       <block>
         <item>Edit</item>
         <item>Publish</item>
-        <item>New Article</item>
+        <item>New&#160;Article</item>
 <!--
         <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
 -->

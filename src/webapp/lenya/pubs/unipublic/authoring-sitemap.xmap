@@ -23,32 +23,19 @@
 
   <map:pipelines>
 
-    <!-- Samples -->
-<!--
+    <!-- Bitflux -->
     <map:pipeline>
-      <map:match pattern="mirror/img_unipublic/*.gif">
-        <map:read src="resources/publication/images/live/img_unipublic/{1}.gif" mime-type="images/gif">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
+      <map:match pattern="stylesheets/article.xsl">
+        <map:generate src="stylesheets/publication/Page/Article/Authoring/bitflux.xsl"/>
+        <map:serialize type="xml"/>
       </map:match>
-
-      <map:match pattern="mirror/*.css">
-        <map:read src="resources/publication/styles/live/{1}.css" mime-type="text/css">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
+      <map:match pattern="schemas/article.js">
+        <map:read src="resources/publication/javascript/article.js" mime-type="text/js"/>
       </map:match>
-
-      <map:match pattern="mirror/**.html">
-        <map:read src="resources/publication/html/live/{1}.html" mime-type="text/html"/>
-      </map:match>
-      <map:match pattern="mirror/*/*/">
-        <map:redirect-to uri="2002/index.html" session="true"/>
-      </map:match>
-      <map:match pattern="mirror/**">
-        <map:read src="resources/publication/html/live/{1}/index.html" mime-type="text/html"/>
+      <map:match pattern="css/article.css">
+        <map:read src="resources/publication/styles/article.css" mime-type="text/css"/>
       </map:match>
     </map:pipeline>
--->
 
     <!-- Authoring -->
     <!-- Menus -->
@@ -120,8 +107,8 @@
 
       <map:match pattern="index.xml">
         <map:aggregate element="wyona">
-          <map:part src="cocoon:/menus/front.xml"/>
-          <map:part src="docs/publication/live/frontpage/index.xml" element="cmsbody"/>
+          <map:part src="cocoon:/menus/front.xml" label="Menu"/>
+          <map:part src="docs/publication/live/frontpage/index.xml" element="cmsbody" label="Content"/>
         </map:aggregate>
         <map:transform type="xlink">
           <map:parameter name="href" value="docs/publication/live/frontpage/index.xml"/>

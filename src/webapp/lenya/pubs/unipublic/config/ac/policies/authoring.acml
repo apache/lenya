@@ -7,11 +7,18 @@
 <policy>
  <object match="/">
   <subjects>
+    <world>
+      <actions>
+        <read/>
+      </actions>
+    </world>
+<!--
     <group id="editor">
       <actions>
         <read/>
       </actions>
     </group>
+-->
   </subjects>
  </object>
 </policy>
