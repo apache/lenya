@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowDocument.java,v 1.8 2004/05/21 12:27:04 andreas Exp $  */
+/* $Id: WorkflowDocument.java,v 1.9 2004/05/21 13:20:46 andreas Exp $  */
 
 package org.apache.lenya.cms.workflow;
 
@@ -46,7 +46,7 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
      * Returns the document of this WorkflowDocument object.
      * @return A document object.
      */
-    protected Document getDocument() {
+    public Document getDocument() {
         return document;
     }
 
