@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.17 2004/05/10 12:09:11 andreas Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.18 2004/05/10 12:42:38 andreas Exp $ -->
 
 <project name="webapp">
 
@@ -63,11 +63,13 @@
             addComments="true"/>
             
     <!-- Patch web.xml -->
+    <!--
     <echo>INFO: Patch web.xml</echo>
     <xpatch file="${build.webapp}/WEB-INF/web.xml"
             srcdir="${build.webapp}/lenya/pubs" 
             includes="*/config/web.xml"
-            addComments="true"/>
+            addComments="false"/>
+    -->
             
     <!-- Patch publication tests -->
     <echo>INFO: Patch publication tests</echo>
@@ -128,6 +130,13 @@
     
     <!-- now copy any additional libraries in ./lib -->
     <mkdir dir="${build.webapp}/WEB-INF/lib"/>
+
+    <echo>INFO: Copy publication libraries</echo>
+    <copy todir="${build.webapp}/WEB-INF/lib" flatten="yes">
+      <fileset dir="${build.webapp}/lenya/pubs">
+        <include name="*/java/lib/*.jar"/>
+      </fileset>
+    </copy>
 
     <echo>INFO: Copy libraries from ${lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
     <echo>INFO: exclude: servlet.jar</echo>
