@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu2xul.xsl,v 1.2 2004/09/01 23:27:30 michi Exp $ -->
+<!-- $Id: menu2xul.xsl,v 1.3 2004/09/02 21:57:21 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -188,7 +188,7 @@
   <xsl:template match="menu:block">
       <xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
       <xsl:if test="position() != last()">
-	      <xul:menuseparator/>
+        <xul:menuseparator/>
       </xsl:if>
   </xsl:template>
   	
