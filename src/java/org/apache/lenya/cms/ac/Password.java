@@ -12,6 +12,10 @@ public class Password{
  *
  */
   public static void main(String[] args){
+    if(args.length != 1){
+      System.out.println("Usage: plain-text-password");
+      return;
+      }
     try{
       System.out.println(Password.encrypt(args[0]));
       }
