@@ -89,10 +89,6 @@ public class WGet{
       File file=new File(directory_prefix+"/127.0.0.1"+url.getFile());
       //File file=new File(directory_prefix+"/127.0.0.1:8080"+url.getFile());
       command="/usr/bin/sed --expression="+prefixSubstitute+" "+file.getAbsolutePath();
-/*
-      //command="/usr/bin/sed --expression=s/\\/wyona-cms\\/unipublic//g "+file.getAbsolutePath();
-      //command="/usr/bin/sed --expression=s/\\/wyona-cms\\/oscom//g "+file.getAbsolutePath();
-*/
       byte[] wget_response_sed=runProcess(command);
       java.io.ByteArrayInputStream bain=new java.io.ByteArrayInputStream(wget_response_sed);
       FileOutputStream fout=new FileOutputStream(file.getAbsolutePath());
