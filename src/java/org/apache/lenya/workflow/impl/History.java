@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.18 2004/03/01 11:14:16 andreas Exp $
+$Id: History.java,v 1.19 2004/03/01 11:27:05 andreas Exp $
 <License>
 
  ============================================================================
@@ -91,7 +91,7 @@ import org.w3c.dom.Element;
  * </ul>
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: History.java,v 1.18 2004/03/01 11:14:16 andreas Exp $
+ * @version $Id: History.java,v 1.19 2004/03/01 11:27:05 andreas Exp $
  */
 public abstract class History implements WorkflowListener {
     public static final String WORKFLOW_ATTRIBUTE = "workflow";

@@ -1,5 +1,5 @@
 /*
-$Id: SynchronizedWorkflowInstancesImpl.java,v 1.3 2004/03/01 11:14:16 andreas Exp $
+$Id: SynchronizedWorkflowInstancesImpl.java,v 1.4 2004/03/01 11:27:05 andreas Exp $
 <License>
 
  ============================================================================

@@ -1,5 +1,5 @@
 /*
-$Id: EventImpl.java,v 1.7 2004/03/01 11:14:16 andreas Exp $
+$Id: EventImpl.java,v 1.8 2004/03/01 11:27:05 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,8 +59,10 @@ import org.apache.lenya.workflow.Event;
 
 
 /**
+ * Implementation of an event.
  *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: EventImpl.java,v 1.8 2004/03/01 11:27:05 andreas Exp $
  */
 public class EventImpl implements Event {
     

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowBuilder.java,v 1.13 2004/03/01 11:14:16 andreas Exp $
+$Id: WorkflowBuilder.java,v 1.14 2004/03/01 11:27:05 andreas Exp $
 <License>
 
  ============================================================================
@@ -75,8 +75,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
+ * Utility class to build a workflow schema from a file.
  *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: WorkflowBuilder.java,v 1.14 2004/03/01 11:27:05 andreas Exp $
  */
 public class WorkflowBuilder {
 

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowImpl.java,v 1.8 2004/03/01 11:14:16 andreas Exp $
+$Id: WorkflowImpl.java,v 1.9 2004/03/01 11:27:05 andreas Exp $
 <License>
 
  ============================================================================
@@ -67,8 +67,10 @@ import org.apache.lenya.workflow.WorkflowException;
 
 
 /**
+ * Implementation of a workflow schema.
  *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: WorkflowImpl.java,v 1.9 2004/03/01 11:27:05 andreas Exp $
  */
 public class WorkflowImpl implements Workflow {
     

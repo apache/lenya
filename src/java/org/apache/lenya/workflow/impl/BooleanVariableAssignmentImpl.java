@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariableAssignmentImpl.java,v 1.5 2004/03/01 11:14:16 andreas Exp $
+$Id: BooleanVariableAssignmentImpl.java,v 1.6 2004/03/01 11:27:05 andreas Exp $
 <License>
 
  ============================================================================
@@ -61,10 +61,10 @@ import org.apache.lenya.workflow.WorkflowInstance;
 
 
 /**
- * @author andreas
+ * Implementation of a boolean variable assignment.
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: BooleanVariableAssignmentImpl.java,v 1.6 2004/03/01 11:27:05 andreas Exp $
  */
 public class BooleanVariableAssignmentImpl implements BooleanVariableAssignment {
     
