@@ -1,5 +1,5 @@
 /*
-$Id: MoveDocumentTask.java,v 1.1 2003/08/25 20:45:26 edith Exp $
+$Id: MoveDocumentTask.java,v 1.2 2003/09/23 13:42:27 edith Exp $
 <License>
 
  ============================================================================
@@ -211,10 +211,10 @@ public class MoveDocumentTask
 	 **/
 	public void execute() throws BuildException {
 		try {
-			log("first-document-id " + this.getFirstdocumentid());
-			log("first-area " + this.getFirstarea());
-			log("sec-document-id " + this.getSecdocumentid());
-			log("sec-area " + this.getSecarea());
+			log("document id for the source" + this.getFirstdocumentid());
+			log("area for the source" + this.getFirstarea());
+			log("document id for the destination" + this.getSecdocumentid());
+			log("area for the destination" + this.getSecarea());
 
 			Publication publication= getPublication();
 			SiteTree tree = publication.getSiteTree(getFirstarea());
