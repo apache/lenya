@@ -63,7 +63,7 @@ Limit your search to field:
     <input type="submit" name="find" value="Search"/>
 </td></tr>
 <tr><td align="left">
-    <font size="-2"><a href="http://jakarta.apache.org/lucene/" class="navigationwhite">Powered by Apache Lucene</a></font>
+    <font size="-2"><a href="http://jakarta.apache.org/lucene/">Powered by Apache Lucene</a></font>
 </td></tr>
 </table>
 </td></tr>
