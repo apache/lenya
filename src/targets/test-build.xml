@@ -31,9 +31,9 @@
   <path id="classpath.default">
     <path refid="classpath"/>
     <pathelement location="${build.test}" />
-    <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
-    <fileset dir="${build.root}/lenya/webapp/WEB-INF/lib">
-      <include name="ant**.jar"/>
+    <pathelement path="${build.webapp}/WEB-INF/classes" />
+    <fileset dir="${build.webapp}/WEB-INF/lib">
+      <include name="**.jar"/>
     </fileset>
   </path>
       
@@ -45,7 +45,7 @@
   <!-- Prepares the test publication -->
   <target name="test.pub.prepare">
     
-    <property name="test.pub.dir" value="${tomcat.home.dir}/${tomcat.webapps.dir}/lenya/pubs/${test.pub.id}"/>
+    <property name="test.pub.dir" value="${build.webapp}/lenya/pubs/${test.pub.id}"/>
     
     <delete dir="${test.pub.dir}"/>
     <mkdir dir="${test.pub.dir}"/>
@@ -62,13 +62,13 @@
 
     <!-- Copy test files to build test dir -->
     <copy todir="${build.test}" filtering="on">
-      <fileset dir="${src.test}" excludes="**/*.java"/>
+      <fileset dir="${src.test.dir}" excludes="**/*.java"/>
     </copy>
 
-    <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/test" builddir="${src.test}" />
+    <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/test" builddir="${src.test.dir}" />
 
     <!-- Compile tests -->
-    <javac srcdir="${src.test}"
+    <javac srcdir="${src.test.dir}"
            destdir="${build.test}"
            debug="{debug}"
            optimize="{optimize}"
@@ -78,7 +78,7 @@
            source="1.4">
       <classpath refid="classpath"/>
       <classpath>
-        <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
+        <pathelement path="${build.webapp}/WEB-INF/classes" />
       </classpath>
     </javac>
   </target>
@@ -93,19 +93,20 @@
   			test.publisher,
   			test.accesscontrol,
         test.deactivate,
-        test.publications"
-  />
+        test.publications" />
+ 
 
   
   <!-- Identity Test -->
   <target name="test.identity">
     <java fork="yes" classname="org.apache.lenya.ac.impl.IdentityTest">
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
-      <arg value="oscom"/>
+      <arg value="${build.webapp}"/>
+      <arg value="default"/>
       <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
-        <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
+        <pathelement path="${build.webapp}/WEB-INF/classes" />
+        <pathelement path="${build.webapp}/WEB-INF/lib" />
       </classpath>
     </java>
   </target>
@@ -118,7 +119,7 @@
     	classname="org.apache.lenya.cms.task.AntTaskTest"
     	>
       <jvmarg value="-enableassertions"/>
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+      <arg value="${build.webapp}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -129,9 +130,9 @@
   <target name="test.workflow" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.workflow.WorkflowTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+      <arg value="${build.webapp}"/>
       <arg value="${test.pub.id}"/>
-      <arg value="simple"/> <!-- document type -->
+      <arg value="xhtml"/> <!-- document type -->
       <classpath refid="classpath.default"/>
     </java>
   </target>  
@@ -141,7 +142,7 @@
   <target name="test.creator" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.authoring.DocumentCreatorTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+      <arg value="${build.webapp}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -151,7 +152,7 @@
   <target name="test.publisher" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.task.PublisherTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+      <arg value="${build.webapp}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -161,7 +162,7 @@
   <target name="test.accesscontrol" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.ac.impl.AccessControllerTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+      <arg value="${build.webapp}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -171,7 +172,7 @@
   <target name="test.publication" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.publication.PublicationTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+      <arg value="${build.webapp}"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -181,7 +182,7 @@
   <target name="test.deactivate" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.task.DocumentDeactivateTaskTest">
       <jvmarg value="-enableassertions"/>
-      <arg value="${tomcat.home.dir}/${tomcat.webapps.dir}"/>
+      <arg value="C:\digitas\src\lenya-trunk\build\lenya\webapp"/>
       <arg value="${test.pub.id}"/>
       <classpath refid="classpath.default"/>
     </java>
@@ -198,7 +199,6 @@
         <pathelement location="${anteater.home}/resources"/>
         <fileset dir="${anteater.home}">
           <include name="lib/**/*.jar"/>
-          <include name="tomcat/**/*.jar"/>
         </fileset>
       </classpath>
       <jvmarg value="-Dant.home=${anteater.home}"/>
