@@ -4,11 +4,25 @@
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
 >
 
 <menu>
 
   <xsp-lenya:util/>
+
+  <url-info>
+    <context-prefix><xsp-request:get-context-path/></context-prefix>
+    <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
+    <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
+    <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
+<!--
+    <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
+    <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
+-->
+  </url-info>
 
   <live_uri>/editor-matrix/index.html</live_uri>
 
