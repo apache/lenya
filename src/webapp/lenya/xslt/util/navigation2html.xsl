@@ -5,11 +5,7 @@
 <xsl:output version="1.0" indent="yes"/>
 
 <xsl:template match="navigation">
-<html>
-<body>
   <xsl:apply-templates select="main-navigation"/>
-</body>
-</html>
 </xsl:template>
 
 <xsl:template match="main-navigation">
