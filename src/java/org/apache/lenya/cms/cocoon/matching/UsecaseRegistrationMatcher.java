@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ package org.apache.lenya.cms.cocoon.matching;
 import java.util.Collections;
 import java.util.Map;
 
+import org.apache.avalon.excalibur.pool.Poolable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
@@ -36,7 +37,7 @@ import org.apache.lenya.cms.usecase.UsecaseResolver;
 /**
  * Matches if the request calls a usecase which is registered for the Usecase Framework.
  */
-public class UsecaseRegistrationMatcher extends AbstractLogEnabled implements Matcher, Serviceable {
+public class UsecaseRegistrationMatcher extends AbstractLogEnabled implements Matcher, Serviceable, Poolable {
 
     /**
      * @see org.apache.cocoon.matching.Matcher#match(java.lang.String,
@@ -44,32 +45,39 @@ public class UsecaseRegistrationMatcher extends AbstractLogEnabled implements Ma
      */
     public Map match(String pattern, Map objectModel, Parameters parameters)
             throws PatternException {
+
         Request request = ObjectModelHelper.getRequest(objectModel);
         String usecaseName = request.getParameter("lenya.usecase");
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("match() called for request parameter lenya.usecase = [" + usecaseName + "]; note that pattern is not relevant for this matcher");
-        }
-
         Map result = null;
 
-        UsecaseResolver resolver = null;
-        try {
-            resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
-            if (resolver.isRegistered(usecaseName)) {
-                result = Collections.EMPTY_MAP;
-            }
+        if (usecaseName == null) {
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Usecase [" + usecaseName + "] exists: [" + !(result == null) + "]");
-            }
-        } catch (ServiceException e) {
-            throw new PatternException(e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
+               getLogger().debug("match() called, usecase parameter is empty - returning false");
             }
         }
-
+        else {
+            if (getLogger().isDebugEnabled()) {
+               getLogger().debug("match() called for request parameter lenya.usecase = [" + usecaseName + "]; note that pattern is not relevant for this matcher");
+            }
+            // Parameter for usecase is set, see if this is a registered component
+            UsecaseResolver resolver = null;
+            try {
+               resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
+               if (resolver.isRegistered(usecaseName)) {
+                   result = Collections.EMPTY_MAP;
+               }
+               if (getLogger().isDebugEnabled()) {
+                   getLogger().debug("Usecase [" + usecaseName + "] exists: [" + !(result == null) + "]");
+               }
+            } catch (ServiceException e) {
+               throw new PatternException(e);
+            } finally {
+               if (resolver != null) {
+                  this.manager.release(resolver);
+               }
+            }
+        }
         return result;
     }
 
