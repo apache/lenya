@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.29 2003/09/01 07:22:01 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.30 2003/09/08 14:22:16 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -90,7 +90,7 @@
 -->
 <!--
         <map:generate src="resources/misc/bxeng/entry.xhtml"/>
-        <map:serialize type="xhtml-bxeng"/>
+        <map:serialize type="xhtml-iso-8859-1"/>
 -->
         <map:aggregate element="bxeng">
           <map:part src="../../resources/misc/bxeng/index.xhtml"/>
@@ -100,7 +100,7 @@
         <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
           <map:parameter name="configfile" value="./config-bxeng.xml"/>
         </map:transform>
-        <map:serialize type="xhtml-bxeng"/>
+        <map:serialize type="xhtml-iso-8859-1"/>
       </map:match>
     </map:pipeline>
     <map:pipeline>
