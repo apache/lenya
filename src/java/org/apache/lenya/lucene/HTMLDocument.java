@@ -57,6 +57,7 @@ package org.wyona.lucene;
 import java.io.*;
 import org.apache.lucene.document.*;
 import org.wyona.lucene.html.HTMLParser;
+import org.wyona.lucene.html.HtmlDocument;
 
 /** A utility for making Lucene Documents for HTML documents. */
 
@@ -88,7 +89,7 @@ public class HTMLDocument {
   public static Document Document(File f,File htdocsDumpDir)
     throws IOException, InterruptedException  {
 
-    //System.out.println("HTMLDocument.Document(File,File): "+f);
+    System.out.println("HTMLDocument.Document(File,File): "+f);
 
     // make a new, empty document
     Document doc = new Document();
@@ -147,26 +148,48 @@ public class HTMLDocument {
     HTMLParser parser = new HTMLParser(f);
     HtmlDocument htmlDoc=new HtmlDocument(f);
 
-    // Add the tag-stripped contents as a Reader-valued Text field so it will
-    // get tokenized and indexed.
-    doc.add(Field.Text("contents",htmlDoc.getBody()));
-    //doc.add(Field.Text("contents", parser.getReader()));
 
-    //System.out.println(".getLuceneDocument(): contents field added");
 
     // Add the summary as an UnIndexed field, so that it is stored and returned
     // with hit documents for display.
+/*
     doc.add(Field.UnIndexed("summary", parser.getSummary()));
+    System.out.println("HTMLDocument.getLuceneDocument(): summary field added");
+*/
 
-    //System.out.println(".getLuceneDocument(): summary field added");
 
-    // Add the title as a separate Text field, so that it can be searched
-    // separately.
-    doc.add(Field.Text("title", htmlDoc.getTitle()));
-    //doc.add(Field.Text("title", parser.getTitle()));
 
-    //System.out.println(".getLuceneDocument(): title field added");
 
+    // Add the title as a separate Text field, so that it can be searched separately.
+    String title=htmlDoc.getTitle();
+    if(title != null){
+      doc.add(Field.Text("title",title));
+      }
+    else{
+      doc.add(Field.Text("title",""));
+      }
+/*
+    String title=parser.getTitle();
+    doc.add(Field.Text("title",title));
+*/
+    System.out.println("HTMLDocument.getLuceneDocument(): title field added: "+title);
+
+
+
+    // Add the tag-stripped contents as a Reader-valued Text field so it will
+    // get tokenized and indexed.
+    String body=htmlDoc.getBody();
+    String contents="";
+    if((body != null) && (title != null)){
+      contents=title+" "+body;
+      doc.add(Field.Text("contents",title+body));
+      }
+    doc.add(Field.Text("contents",contents));
+/*
+    String contents=parser.getReaser();
+    doc.add(Field.Text("contents",contents));
+*/
+    System.out.println("HTMLDocument.getLuceneDocument(): contents field added: "+contents);
     return doc;
   }
 /**
