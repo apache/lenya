@@ -184,8 +184,14 @@
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="*/*/*/index.html">
+<!--
         <map:generate src="cocoon:/{1}/{2}/{3}/index.xml"/>
-        <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
+-->
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/menus/front.xml"/>
+          <map:part src="cocoon:/{1}/{2}/{3}/index.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:transform src="stylesheets/publication/Page/Section/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 

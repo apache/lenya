@@ -15,10 +15,10 @@
             <tr>
               <xsl:choose>
                 <xsl:when test="@highlighted='true'">
-                  <td align="right"><a href="{$unipublic}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_light_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_light_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
                 </xsl:when>
                 <xsl:otherwise>
-                  <td align="right"><a href="{$unipublic}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
+                  <td align="right"><a href="{$unipublic}{$view}/{../../@name}/{@id}/"><img height="25" src="{$img-unipub}/nav_{@id}.gif" border="0" name="{@id}" alt="{$sectiontext}" width="115"/></a></td>
                 </xsl:otherwise>
               </xsl:choose>
             </tr>
