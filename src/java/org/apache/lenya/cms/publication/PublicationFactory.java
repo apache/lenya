@@ -20,8 +20,11 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
@@ -67,13 +70,11 @@ public final class PublicationFactory extends AbstractLogEnabled {
     private static Map keyToPublication = new HashMap();
 
     /**
-     * Creates a new publication. The publication ID is resolved from the
-     * request URI. The servlet context path is resolved from the context
-     * object.
+     * Creates a new publication. The publication ID is resolved from the request URI. The servlet
+     * context path is resolved from the context object.
      * @param objectModel The object model of the Cocoon component.
      * @return a <code>Publication</code>
-     * @throws PublicationException if there was a problem creating the
-     *             publication.
+     * @throws PublicationException if there was a problem creating the publication.
      */
     public Publication getPublication(Map objectModel) throws PublicationException {
 
@@ -84,14 +85,12 @@ public final class PublicationFactory extends AbstractLogEnabled {
     }
 
     /**
-     * Create a new publication with the given publication-id and servlet
-     * context path. These publications are cached and reused for similar
-     * requests.
+     * Create a new publication with the given publication-id and servlet context path. These
+     * publications are cached and reused for similar requests.
      * @param id the publication id
      * @param servletContextPath the servlet context path of the publication
      * @return a <code>Publication</code>
-     * @throws PublicationException if there was a problem creating the
-     *             publication.
+     * @throws PublicationException if there was a problem creating the publication.
      */
     public Publication getPublication(String id, String servletContextPath)
             throws PublicationException {
@@ -120,8 +119,8 @@ public final class PublicationFactory extends AbstractLogEnabled {
     }
 
     /**
-     * Generates a key to cache a publication. The cache key is constructed
-     * using the canonical servlet context path and the publication ID.
+     * Generates a key to cache a publication. The cache key is constructed using the canonical
+     * servlet context path and the publication ID.
      * @param publicationId The publication ID.
      * @param servletContextPath The servlet context path.
      * @return A cache key.
@@ -146,8 +145,7 @@ public final class PublicationFactory extends AbstractLogEnabled {
      * @param request A request.
      * @param context A context.
      * @return A publication.
-     * @throws PublicationException if there was a problem creating the
-     *             publication.
+     * @throws PublicationException if there was a problem creating the publication.
      */
     public Publication getPublication(Request request, Context context) throws PublicationException {
 
@@ -159,8 +157,7 @@ public final class PublicationFactory extends AbstractLogEnabled {
 
     /**
      * Creates a publication from a webapp URL and a servlet context directory.
-     * @param webappUrl The URL within the web application (without context
-     *            prefix)
+     * @param webappUrl The URL within the web application (without context prefix)
      * @param servletContext The Lenya servlet context directory
      * @return A publication
      * @throws PublicationException when something went wrong
@@ -179,8 +176,7 @@ public final class PublicationFactory extends AbstractLogEnabled {
      * Checks if a publication with a certain ID exists in a certain context.
      * @param id The publication ID.
      * @param servletContextPath The webapp context path.
-     * @return <code>true</code> if the publication exists, <code>false</code>
-     *         otherwise.
+     * @return <code>true</code> if the publication exists, <code>false</code> otherwise.
      */
     public static boolean existsPublication(String id, String servletContextPath) {
 
@@ -257,6 +253,53 @@ public final class PublicationFactory extends AbstractLogEnabled {
             }
         }
         return publication;
+    }
+
+    /**
+     * Returns a list of all available publications.
+     * @param manager The service manager to use for source resolving.
+     * @return An array of publications.
+     * @throws PublicationException if an error occurs.
+     */
+    public Publication[] getPublications(ServiceManager manager) throws PublicationException {
+        List publications = new ArrayList();
+
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI("context:///");
+            File servletContext = SourceUtil.getFile(source);
+            String servletContextPath = servletContext.getAbsolutePath();
+
+            File publicationsDirectory = new File(servletContext,
+                    PublicationImpl.PUBLICATION_PREFIX);
+            File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
+                public boolean accept(File file) {
+                    return file.isDirectory();
+                }
+            });
+
+            for (int i = 0; i < publicationDirectories.length; i++) {
+                String publicationId = publicationDirectories[i].getName();
+                if (existsPublication(publicationId, servletContextPath)) {
+                    Publication publication = getPublication(publicationId, servletContextPath);
+                    publications.add(publication);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                manager.release(resolver);
+            }
+        }
+
+        return (Publication[]) publications.toArray(new Publication[publications.size()]);
     }
 
 }
