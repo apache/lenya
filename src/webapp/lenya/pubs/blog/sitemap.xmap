@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.48 2004/02/05 14:01:21 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.49 2004/02/19 13:20:37 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -49,6 +49,9 @@
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/introspection.xml">
         <map:generate src="content/introspection.xml"/>
+        <map:transform src="xslt/entry/introspection.xsl">
+          <map:parameter name="editURL" value="http://127.0.0.1:8080/lenya/blog/authoring/entries/{2}/{3}/{4}/{5}/index.html"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
@@ -157,6 +160,12 @@
     <!-- /BX Editor: Entries -->
 
     <!-- Feeds -->
+    <map:pipeline>
+      <map:match pattern="*/feeds/*/introspection.xml">
+        <map:generate src="content/introspection.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
     <map:pipeline>
       <map:match pattern="*/feeds/*/index.xml">
         <map:act type="resource-exists">
