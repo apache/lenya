@@ -34,7 +34,7 @@
 					<br/>
 	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/article/head/dateline"><img src="/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a>
 	<br/><span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
-        	<span class="txt-m-black"> <xsl:value-of select="body" />
+        	<span class="txt-m-black"><xsl:apply-templates select="body"/>
           &#160;<a href="../impressum/" class="txt-m-red">(gis)</a></span></td>
 			</tr>
 

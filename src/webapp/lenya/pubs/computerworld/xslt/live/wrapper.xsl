@@ -5,7 +5,7 @@
     <xsl:apply-templates select="wyona/cmsbody/html"/>
  </xsl:template>
 
-<xsl:include href="ads.xsl"/>
+<xsl:include href="ads-inside.xsl"/> <!-- load inside banners, we are never on the front side -->
 <xsl:include href="navigation.xsl"/>
 <xsl:include href="small-preview.xsl"/>
 

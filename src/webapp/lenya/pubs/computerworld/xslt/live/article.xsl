@@ -30,7 +30,7 @@
 
 			<tr>
 				<td width="440" align="left" valign="top" colspan="2"><span class="txt-m-black-bold"><xsl:value-of select="head/abstract" /></span><br />
-        	<span class="txt-m-black"> <xsl:value-of select="body" />
+        	<span class="txt-m-black"> <xsl:apply-templates select="body"/>
           &#160;<a href="../impressum/" class="txt-m-red">(gis)</a></span></td>
 			</tr>
 

@@ -55,7 +55,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="stylesheets/article.xsl">
-<!--
+				<!--
 				<map:generate src="cocoon://index.html"/>
 -->
 				<map:generate src="docs/publication/authoring/index.html"/>
@@ -87,7 +87,7 @@
 				<map:read src="resources/publication/styles/authoring/small-preview-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
-		<!-- Frontpage: Headlines -->
+		<!-- Frontpage: Preview -->
 		<map:pipeline>
 			<map:match pattern="preview.xml">
 				<map:generate src="docs/publication/authoring/preview.xml"/>
@@ -106,6 +106,27 @@
 			</map:match>
 			<map:match pattern="css/preview.css">
 				<map:read src="resources/publication/styles/authoring/preview-bitflux.css" mime-type="text/css"/>
+			</map:match>
+		</map:pipeline>
+		<!-- Frontpage: Headlines -->
+		<map:pipeline>
+			<map:match pattern="headlines.xml">
+				<map:generate src="docs/publication/authoring/headlines.xml"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="stylesheets/headlines.xsl">
+				<!--
+				<map:generate src="http://127.0.0.1:7080/wyona-cms/computerworld/index.html?cocoon-view=content"/>
+				-->
+				<map:generate src="docs/publication/live/index.html"/>
+				<map:transform src="stylesheets/publication/Page/Authoring/headlines-bitflux.xsl"/>
+				<map:serialize type="xml"/>
+			</map:match>
+			<map:match pattern="schemas/headlines.xsd">
+				<map:read src="docs/publication/doctypes/schemas/headlines.xsd" mime-type="text/xml"/>
+			</map:match>
+			<map:match pattern="css/headlines.css">
+				<map:read src="resources/publication/styles/authoring/headlines-bitflux.css" mime-type="text/css"/>
 			</map:match>
 		</map:pipeline>
 		<!-- Generic -->

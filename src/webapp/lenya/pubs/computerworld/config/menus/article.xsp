@@ -49,14 +49,6 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html
-						</xsp:attribute>
-						About&#160;this&#160;Publication
-					</item>
-				</block>
-				<block>
-					<item>
-						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
 					<item>
 						<xsp:attribute name="href">

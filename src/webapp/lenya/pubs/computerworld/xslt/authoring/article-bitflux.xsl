@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                               xmlns:xslout="Can be anything, doesn't matter">
-<xsl:output type="xml"/>
+
 <xsl:namespace-alias stylesheet-prefix="xslout" result-prefix="xsl"/>
 
 
@@ -12,24 +12,62 @@
   </xsl:copy>
 </xsl:template>
 
-
-<!-- Replaces the html code of the editable section by the bitflux specific code -->
-<xsl:template match="*[@bxe-editable='headlines']">
-	<articles contentEditable="true">
-                <xslout:for-each select="article">
-  			<xslout:apply-templates/>
-                </xslout:for-each>
-	</articles>
-</xsl:template>
-
-<xsl:template match="article">
+<!--
 	<table border="0" cellpadding="2" cellspacing="0" bgcolor="#CCCCFF">
 		<span bxe-editable="article">
 		<snip>Here goes the xslt/xhtml code that displays this part of the page.</snip>
 		</span>
 	</table>
+-->
+
+
+<!-- Replaces the html code of the editable section by the bitflux specific code -->
+<xsl:template match="*[@bxe-editable='preview']">
+	<articles contentEditable="true">
+                <xslout:for-each select="article">
+<table border="0" cellpadding="0" cellspacing="0" width="440">
+			<tr><td width="440" height="3" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
+			<tr>
+				<td width="300" height="30" align="left" valign="middle"></td>
+				<td width="140" height="30" align="left" valign="middle">
+				</td>
+			</tr>
+
+			<tr><td width="440" height="3" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
+
+			<tr>
+				<td width="440" height="30" align="left" valign="middle" colspan="2">
+        	<span bxe-editable="title" /></td>
+			</tr>
+
+			<tr>
+				<td width="440" align="left" valign="top" colspan="2">
+					<br/>
+	<br/><span bxe-editable="abstract" /><br />
+        	<span bxe-editable="body" />
+        	          &#160;<a href="../impressum/" class="txt-m-red">(gis)</a></td>
+			</tr>
+
+			<tr><td width="440" height="10" valign="bottom" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
+
+			<tr>
+				<td width="300" height="20" valign="middle">
+        	<a href="#"><img border="0" src="/img/layout/arrow-red-top.gif" width="16" height="16" alt="^"/></a></td>
+				<td width="140" height="20" align="left" valign="middle">
+				</td>
+			</tr>
+
+			<tr><td width="440" height="3" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
+		</table>
+                </xslout:for-each>
+	</articles>
 </xsl:template>
 
+<!--
+<xslout:template match="article">
+		
+</xslout:template>
+-->
 
 <!-- Adds the stylesheet specific elements -->
 <xsl:template match="/">
@@ -54,50 +92,4 @@
 
 </xsl:stylesheet>
 
-
-
-<!--
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:output method="xml" encoding="iso-8859-1"/>
-  <xsl:template match="/">
-
-  </xsl:template>
-  <xsl:template match="body">
-
-
-
- 
-    <hl1 xmlns="http://www.w3.org/1999/xhtml" contentEditable="true">
-      <xsl:for-each select="body.head/hedline/hl1">
-        <xsl:apply-templates/>
-      </xsl:for-each>
-    </hl1>
-    <abstract contentEditable="true">
-      <xsl:for-each select="body.head/abstract">
-        <xsl:apply-templates/>
-      </xsl:for-each>
-    </abstract>
-    <byline class="art-author" contentEditable="true">
-      <xsl:for-each select="body.head/byline">
-        <xsl:apply-templates/>
-      </xsl:for-each>
-    </byline>
-    <article contentEditable="true">
-      <xsl:for-each select="body.content">
-        <xsl:apply-templates/>
-      </xsl:for-each>
-    </article>
-  </xsl:template>
-
-  <xsl:template match="*">
-    <xsl:copy>
-      <xsl:for-each select="@*">
-        <xsl:copy/>
-      </xsl:for-each>
-      <xsl:apply-templates select="node()"/>
-    </xsl:copy>
-  </xsl:template>
-</xsl:stylesheet>
--->
-
+		

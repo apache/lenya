@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.3 2003/01/17 19:09:13 gregorcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.4 2003/01/20 15:07:16 gregorcms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -49,6 +49,7 @@
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Live/main.xsl">
 					<map:parameter name="id" value="/index.html"/>
+					<map:parameter name="front" value="yes"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
@@ -64,6 +65,7 @@
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Live/article.xsl">
 					<map:parameter name="id" value="/news/"/>
+					<map:parameter name="front" value="no"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
@@ -105,7 +107,9 @@
 					<map:part src="docs/publication/live/small-preview.xml"/>
 					<map:part src="docs/publication/live/sitetree.xml"/>
 				</map:aggregate>
-				<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl"/>
+				<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl">
+					<map:parameter name="id" value="/{1}/index.html"/>
+				</map:transform>
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>

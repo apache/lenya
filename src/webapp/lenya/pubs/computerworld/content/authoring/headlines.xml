@@ -1,9 +1,4 @@
 <?xml version="1.0"?>
-
 <Articles>
-  <Article channel="magazin" section="gesundheit" year="2002" id="0508"/>
-  <Article channel="magazin" section="gesundheit" year="2002" id="0465"/>
-  <Article channel="magazin" section="geist" year="2002" id="0470"/>
-  <Article channel="magazin" section="umwelt" year="2002" id="0385"/>
-  <Article channel="magazin" section="recht" year="2002" id="0413"/>
+	<Article id="1"/>
 </Articles>

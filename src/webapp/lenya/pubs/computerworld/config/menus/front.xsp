@@ -23,7 +23,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/docid/index.html?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule&#160;Headlines</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?task.uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;task.sources=/headlines.xml&amp;documentType=Headlines</xsp:attribute>Schedule&#160;Headlines</item>
 				</block>
 				<block>
 					<!--
