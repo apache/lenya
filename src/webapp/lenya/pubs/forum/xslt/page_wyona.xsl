@@ -25,8 +25,8 @@
 <a href="http://www.beblogging.com/blog/docs">CocoBlog</a><br />
 <a href="http://www.squishdot.org">Squishdot</a><br />
 <a href="introduction.html">Introduction</a><br />
-<a href="">Submit&#160;Story</a><br />
-<a href="">Getting&#160;Started</a><br />
+<a href="submitStory.html">Submit&#160;Story</a><br />
+<a href="gettingStarted.html">Getting&#160;Started</a><br />
 <a href="customizing.html">Customizing</a><br />
 <a href="http://www.infoxchange.net.au/tutorials/discussion-forum/mail-chat.html">Difference</a><br />
 <a href="http://www.oscom.org">OSCOM</a><br />

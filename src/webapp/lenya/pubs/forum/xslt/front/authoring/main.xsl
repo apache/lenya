@@ -10,12 +10,12 @@
   <xsl:call-template name="page"/>
 </xsl:template>
 
-<xsl:include href="../../page.xsl"/>
+<xsl:include href="../../page_wyona.xsl"/>
 
 <xsl:template name="cmsbody">
   <xsl:apply-templates select="front"/>
 </xsl:template>
 
-<xsl:include href="../body.xsl"/>
+<xsl:include href="../body_wyona.xsl"/>
  
 </xsl:stylesheet>  
