@@ -1,5 +1,5 @@
 /*
-$Id: RCMLTest.java,v 1.1 2003/07/25 18:59:04 gregor Exp $
+$Id: RCMLTest.java,v 1.2 2003/07/31 11:56:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,17 +55,10 @@ $Id: RCMLTest.java,v 1.1 2003/07/25 18:59:04 gregor Exp $
 */
 package org.apache.lenya.cms.rc;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import junit.textui.TestRunner;
 
 import java.io.PrintWriter;
 import java.io.File;
-
-import org.apache.lenya.xml.DOMWriter;
-import org.apache.lenya.xml.DOMParserFactory;
 
 import java.util.Date;
 

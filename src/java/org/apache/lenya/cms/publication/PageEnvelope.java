@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.35 2003/07/30 15:03:24 gregor Exp $
+$Id: PageEnvelope.java,v 1.36 2003/07/31 11:56:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,10 +62,7 @@ import org.apache.lenya.cms.rc.RCEnvironment;
 
 import org.apache.log4j.Category;
 
-import java.io.File;
-
 import java.util.Map;
-import java.util.Date;
 
 /**
  * A page envelope carries a set of information that are needed

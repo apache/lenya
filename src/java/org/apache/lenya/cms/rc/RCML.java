@@ -1,5 +1,5 @@
 /*
-$Id: RCML.java,v 1.15 2003/07/25 18:59:04 gregor Exp $
+$Id: RCML.java,v 1.16 2003/07/31 11:56:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,9 +68,7 @@ import org.w3c.dom.Node;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import java.util.Date;
 import java.util.Vector;
 
 

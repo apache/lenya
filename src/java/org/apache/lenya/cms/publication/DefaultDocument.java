@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.19 2003/07/30 15:03:24 gregor Exp $
+$Id: DefaultDocument.java,v 1.20 2003/07/31 11:56:42 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,8 +57,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import org.apache.lenya.util.RegexFilter;
-
-import org.apache.lenya.xml.DocumentHelper;
 
 import org.w3c.dom.NodeList;
 
