@@ -15,7 +15,7 @@
         <task id="publish"/>
       </map:action>
     </map:actions>
-    <map:selectors default="browser"/>
+    <map:selectors default="browser">
     </map:selectors>
   </map:components>
 
