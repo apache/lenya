@@ -18,6 +18,10 @@
     xmlns="http://www.lenya.org/2003/sitetree"
     elementFormDefault="qualified"
     >
+    
+<xs:import
+    namespace="http://www.w3.org/XML/1998/namespace"
+    schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
   <xs:element name="site">
     <xs:complexType>
@@ -31,11 +35,24 @@
   <xs:element name="node">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="node"
-            minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="label" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="node" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
-      <xs:attribute name="href" type="xs:string"/>
-      <xs:attribute name="label" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string" use="required"/>
+      <xs:attribute name="href" type="xs:string" use="optional"/>
+      <xs:attribute name="suffix" type="xs:string" use="optional"/>
+      <xs:attribute name="link" type="xs:string" use="optional"/>
     </xs:complexType>
   </xs:element>
- </xs:schema>
+  
+  <xs:element name="label">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute ref="xml:lang"/>
+        </xs:extension>     
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>
