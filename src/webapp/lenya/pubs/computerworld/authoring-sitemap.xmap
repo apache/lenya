@@ -193,7 +193,7 @@
 				<map:serialize type="xml"/>
 			</map:match>
 			<map:match pattern="menus/static/**">
-				<map:generate type="serverpages" src="docs/publication/menus/front.xsp">
+				<map:generate type="serverpages" src="docs/publication/menus/static.xsp">
 					<map:parameter name="articleId" value="{1}"/>
 				</map:generate>
 				<map:serialize type="xml"/>

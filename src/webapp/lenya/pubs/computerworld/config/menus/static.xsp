@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
+	<menu>
+		<xsp-wyona:util/>
+		<live_uri>/index.html</live_uri>
+		<xsp:logic>
+   		 	String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
+    			String articleId=parameters.getParameter("articleId","null");
+  		</xsp:logic>
+		<menus>
+			<menu name="File" label="File">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+						</xsp:attribute>Authoring Home
+						</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/"+articleId+"&amp;task-id=publish</xsp:attribute>Publish&#160;this Page
+					</item>
+				</block>
+				<block>
+					<!--
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+-->
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+				</block>
+			</menu>
+			<menu name="Edit" label="Search">
+				<block>
+				</block>
+				<!--
+				<block>
+					<item href="/wyona-cms/lucene/create">Create&#160;Lucene&#160;Index</item>
+					<item href="/wyona-cms/lucene/search">Search&#160;with&#160;Lucene</item>
+				</block>
+-->
+			</menu>
+			<menu name="Tools" label="Help">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>
+						Articles&#160;Overview
+					</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication</xsp:attribute>
+						Scheduler&#160;Admin
+					</item>
+				</block>
+				<!--
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/revision/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr>
+						</xsp:attribute>Rollback</item>
+				</block>
+-->
+			</menu>
+			<menu name="Help" label="Debug">
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/introduction.html
+						</xsp:attribute>
+						About&#160;this&#160;Publication
+					</item>
+				</block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+				</block>
+				<block>
+					<item href="http://www.wyona.org">About&#160;Wyona</item>
+				</block>
+			</menu>
+		</menus>
+	</menu>
+</xsp:page>
