@@ -41,7 +41,24 @@ org.apache.lucene.search.Hits hits=searcher.search(query_string,LuceneXMLIndexer
 </section>
 </section>
 
-<section><title>Usage</title>
+<section>
+<title>Usage</title>
+<p>
+How to crawl and index ...
+</p>
+
+<section>
+<title>ANT</title>
+<p>
+<code>ant -f src/webapp/lenya/bin/crawl_and_index.xml -projecthelp</code>
+</p>
+<p>
+<code>ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=crawler.xconf crawl</code>
+</p>
+<p>
+<code>ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dlucene.xconf=lucene.xconf index</code>
+</p>
+</section>
 
 <section><title>Crawling HTDOCS</title>
 <p>
