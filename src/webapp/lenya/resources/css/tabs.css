@@ -73,6 +73,7 @@
    
 #lenya-info-treecanvas a { font-size: small; color: #333333; text-decoration: none; }
 #lenya-info-treecanvas .lenya-info-nolanguage { color: #AAAAAA; }
+#lenya-info-treecanvas .lenya-info-cut { color: #FFAAAA; font-style: italic; }
 #lenya-info-treecanvas a:hover { text-decoration: underline; }
 
 #lenya-info-content {
