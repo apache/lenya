@@ -1,5 +1,4 @@
 /*
-$Id: DefaultDocument.java,v 1.37 2003/12/11 16:55:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -63,6 +62,7 @@ import java.util.Date;
  * A typical CMS document.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: DefaultDocument.java,v 1.38 2004/01/26 10:21:38 michi Exp $
  */
 public class DefaultDocument implements Document {
     
@@ -139,13 +139,21 @@ public class DefaultDocument implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getNodeId()
+     * @see org.apache.lenya.cms.publication.Document#getName()
      */
-    public String getNodeId() {
+    public String getName() {
         String[] ids = id.split("/");
         String nodeId = ids[ids.length - 1];
 
         return nodeId;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getNodeId()
+     * @deprecated replaced by getName()
+     */
+    public String getNodeId() {
+        return getName();
     }
 
     /**

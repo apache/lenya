@@ -1,5 +1,4 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.32 2003/10/16 21:40:58 andreas Exp $
 <License>
 
  ============================================================================
@@ -81,7 +80,8 @@ import java.util.Map;
  * 
  * @see org.apache.lenya.cms.publication.PageEnvelope
  * 
- * @author  andreas
+ * @author  Andreas Hartmann
+ * @version $Id: PageEnvelopeModule.java,v 1.33 2004/01/26 10:21:38 michi Exp $
  */
 public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Serviceable {
 
@@ -136,9 +136,11 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                 value = envelope.getDocument();
             } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
                 value = envelope.getDocument().getId();
-            } else if (name.equals(PageEnvelope.DOCUMENT_NODE_ID)) {
+            } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
+                value = envelope.getDocument().getName();
+            } else if (name.equals(PageEnvelope.DOCUMENT_NODE_ID)) { // FIXME: Why is this here?
                 value = envelope.getDocument().getNodeId();
-            } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) {
+            } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) { // FIXME: Why is this here?
                 value = envelope.getDocument().getLabel();
             } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
                 value = envelope.getDocument().getDocumentURL();

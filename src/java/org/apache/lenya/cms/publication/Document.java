@@ -1,5 +1,4 @@
 /*
-$Id: Document.java,v 1.20 2003/09/12 10:01:15 egli Exp $
 <License>
 
  ============================================================================
@@ -62,6 +61,7 @@ import java.util.Date;
  * A CMS document.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: Document.java,v 1.21 2004/01/26 10:21:38 michi Exp $
  */
 public interface Document {
     
@@ -73,6 +73,12 @@ public interface Document {
      * @return the document-id of this document.
      */
     String getId();
+    
+    /**
+     * Returns the document name of this document.
+     * @return the document-name of this document.
+     */
+    String getName();
     
     /**
      * Instead of returning the full document-id for this

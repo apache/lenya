@@ -1,5 +1,4 @@
 /*
- * $Id: PageEnvelope.java,v 1.53 2003/12/10 10:51:08 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -55,6 +54,7 @@ import java.util.Map;
  * document.
  * 
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
+ * @version $Id: PageEnvelope.java,v 1.54 2004/01/26 10:21:38 michi Exp $ <License>
  */
 public class PageEnvelope {
     public static final String PUBLICATION_ID = "publication-id";
@@ -64,6 +64,7 @@ public class PageEnvelope {
     public static final String DEFAULT_LANGUAGE = "default-language";
     public static final String DOCUMENT = "document";
     public static final String DOCUMENT_ID = "document-id";
+    public static final String DOCUMENT_NAME = "document-name";
     public static final String DOCUMENT_TYPE = "document-type";
     public static final String DOCUMENT_NODE_ID = "document-node-id";
     public static final String DOCUMENT_LABEL = "document-label";
@@ -283,6 +284,7 @@ public class PageEnvelope {
             PageEnvelope.PUBLICATION,
             PageEnvelope.DOCUMENT,
             PageEnvelope.DOCUMENT_ID,
+            PageEnvelope.DOCUMENT_NAME,
             PageEnvelope.DOCUMENT_NODE_ID,
             PageEnvelope.DOCUMENT_LABEL,
             PageEnvelope.DOCUMENT_URL,
