@@ -45,7 +45,7 @@
 
     <map:pipeline>
       <!-- {area}/index.html -->
-      <map:match pattern="*/index.html">
+      <map:match pattern="*/index*.html">
         <map:generate type="serverpages" src="../../config/parameters/default.xsp">
           <map:parameter name="value" value="homepage"/>
         </map:generate>
