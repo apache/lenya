@@ -9,6 +9,9 @@
     <map:readers default="resource"/>
     <map:serializers default="xhtml"/>
     <map:matchers default="wildcard"/>
+    <map:actions>
+      <map:action name="save" logger="sitemap.action.save" src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
+    </map:actions>
 
     <map:selectors>
       <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
@@ -317,6 +320,57 @@
           </map:match>
           
         </map:match>
+
+
+
+      <!-- ************************************************************** -->
+      <!-- ********  HTML Form Editor *********************************** -->
+      <!-- ************************************************************** -->
+      <map:match pattern="edit" type="usecase">
+        <map:match pattern="open" type="step">
+          <map:match pattern="*/authoring/**.html">
+            <map:generate src="pubs/{1}/content/authoring/{2}.xml"/>
+            <map:transform src="xslt/authoring/edit/numberTags.xsl"/>
+            <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="pubs/{1}/work/editor/authoring/{2}.xml"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
+            <map:transform src="pubs/{1}/xslt/editor/{request-param:doctype}.xsl">
+              <map:parameter name="docid" value="{2}"/>
+            </map:transform>
+            <map:serialize type="html" />
+          </map:match>
+        </map:match>
+
+        <map:match pattern="close" type="step">
+          <map:match pattern="*/authoring/**/*.html">
+            <map:act type="save">
+              <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{2}/{3}.xml"/>
+              <!-- FIXME: Error Message -->
+              <map:redirect-to uri="/lenya/index.html" />
+            </map:act>
+
+            <map:generate src="pubs/{1}/work/editor/authoring/{2}/{3}.xml"/>
+            <map:transform src="xslt/authoring/edit/unnumberTags.xsl"/>
+            <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
+              <map:parameter name="source" value="pubs/{1}/content/authoring/{2}/{3}.xml"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:transform src="xslt/authoring/edit/redirect-to.xsl">
+              <map:parameter name="uri" value="{3}.html"/>
+            </map:transform>
+            <map:serialize type="html" />
+          </map:match>
+        </map:match>
+      </map:match>
+      <!-- ************************************************************** -->
+      <!-- ********  /HTML Form Editor *********************************** -->
+      <!-- ************************************************************** -->
+
+
+
+
 	
 	<map:match pattern="upload" type="usecase">
 
