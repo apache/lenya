@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: InitWorkflowHistoryTask.java,v 1.4 2003/07/09 11:59:08 egli Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id
 */
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
