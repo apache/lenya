@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCore.java,v 1.25 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id: DublinCore.java,v 1.26 2004/07/30 10:18:09 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -289,7 +289,8 @@ public interface DublinCore {
     /**
      * Returns the first value for a certain key.
      * @param key The key.
-     * @return A string.
+     * @return A string or <code>null</code> if no value is set for this key.
+     * @throws DocumentException if an error occurs.
      */
     String getFirstValue(String key) throws DocumentException;
 
@@ -336,7 +337,8 @@ public interface DublinCore {
 	/**
 	 * Replace the contents of the current dublin core by the 
 	 * contents of other.
-	 * @param other
+	 * @param other The other dublin core object.
+	 * @throws DocumentException if an error occurs.
 	 */
     void replaceBy(DublinCore other) throws DocumentException;
 
