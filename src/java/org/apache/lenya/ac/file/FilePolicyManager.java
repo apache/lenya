@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FilePolicyManager.java,v 1.9 2004/04/28 16:17:20 andreas Exp $  */
+/* $Id: FilePolicyManager.java,v 1.10 2004/08/16 15:59:51 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -246,16 +246,21 @@ public class FilePolicyManager
 
         try {
             file.getParentFile().mkdirs();
-            file.createNewFile();
-            DocumentHelper.writeDocument(document, file);
+            if (file.createNewFile()) {
+                DocumentHelper.writeDocument(document, file);
+            }
+            else {
+                throw new AccessControlException("File [" + file + "] could not be created.");
+            }
+        } catch (AccessControlException e) {
+            throw e;
         } catch (Exception e) {
             throw new AccessControlException("Path: [" + file.getAbsolutePath() + "]", e);
         }
     }
 
     /**
-     * @see org.apache.lenya.ac.PolicyManager#getPolicy(AccreditableManager, Publication,
-     *      java.lang.String)
+     * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager, java.lang.String)
      */
     public Policy getPolicy(AccreditableManager controller, String url)
         throws AccessControlException {

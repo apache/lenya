@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileIPRangeManager.java,v 1.4 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FileIPRangeManager.java,v 1.5 2004/08/16 15:59:51 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -45,7 +45,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
     protected static final String SUFFIX = ".ipml";
 
     /**
-     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
+     * @see org.apache.lenya.ac.file.FileItemManager#getSuffix()
      */
     protected String getSuffix() {
         return SUFFIX;

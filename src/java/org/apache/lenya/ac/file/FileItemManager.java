@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileItemManager.java,v 1.7 2004/04/28 13:56:18 andreas Exp $  */
+/* $Id: FileItemManager.java,v 1.8 2004/08/16 15:59:51 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -48,6 +48,7 @@ public abstract class FileItemManager {
     private static final Category log = Category.getInstance(FileItemManager.class);
 
     public static final String PATH = "config" + File.separator + "ac" + File.separator + "passwd";
+    
     private Map items = new HashMap();
     private File configurationDirectory;
     private DirectoryChangeNotifier notifier;
@@ -276,7 +277,7 @@ public abstract class FileItemManager {
 
     /**
      * Update an item.
-     * @param item The new version of the item.
+     * @param newItem The new version of the item.
      * @throws AccessControlException when the notification threw this exception.
      */
     public void update(Item newItem) throws AccessControlException {
@@ -355,6 +356,7 @@ public abstract class FileItemManager {
     /**
      * Notifies the listeners that an item was added.
      * @param item The item that was added.
+     * @throws AccessControlException if an error occurs.
      */
     protected void notifyAdded(Item item) throws AccessControlException {
         log.debug("Item was added: [" + item + "]");
@@ -368,6 +370,7 @@ public abstract class FileItemManager {
     /**
      * Notifies the listeners that an item was removed.
      * @param item The item that was removed.
+     * @throws AccessControlException if an error occurs.
      */
     protected void notifyRemoved(Item item) throws AccessControlException {
         log.debug("Item was removed: [" + item + "]");

@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: FileRoleManager.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
-
 package org.apache.lenya.ac.file;
 
 import java.io.File;
@@ -28,6 +26,10 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.RoleManager;
 
+/**
+ * File-based role manager implementation.
+ * @version $Id: FileRoleManager.java,v 1.4 2004/08/16 15:59:51 andreas Exp $
+ */
 public final class FileRoleManager extends FileItemManager implements RoleManager {
     protected static final String SUFFIX = ".rml";
     private static Map instances = new HashMap();
@@ -70,7 +72,7 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
+     * @see org.apache.lenya.ac.file.FileItemManager#getSuffix()
      */
     protected String getSuffix() {
         return SUFFIX;
@@ -93,7 +95,8 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
     /**
      * Add a role
      *
-     * @param role Role to add
+     * @param role The role to add.
+     * @throws AccessControlException if an error occurs.
      */
     public void add(Role role) throws AccessControlException {
         super.add(role);
@@ -102,7 +105,8 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
     /**
      * Remove a role
      *
-     * @param role Role to remove
+     * @param role The role to remove.
+     * @throws AccessControlException if an error occurs.
      */
     public void remove(Role role) throws AccessControlException {
         super.remove(role);

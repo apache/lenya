@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileIPRange.java,v 1.2 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FileIPRange.java,v 1.3 2004/08/16 15:59:51 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -83,7 +83,7 @@ public class FileIPRange extends AbstractIPRange {
 	}
 
 	/**
-	 * @see org.apache.lenya.cms.ac.IPRange#save()
+	 * @see org.apache.lenya.ac.impl.AbstractIPRange#save()
 	 */
 	public void save() throws AccessControlException {
 		DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
@@ -108,7 +108,7 @@ public class FileIPRange extends AbstractIPRange {
 	}
 
 	/**
-	 * @see org.apache.lenya.cms.ac.Item#configure(org.apache.avalon.framework.configuration.Configuration)
+	 * @see org.apache.lenya.ac.Item#configure(org.apache.avalon.framework.configuration.Configuration)
 	 */
 	public void configure(Configuration config) throws ConfigurationException {
 		new ItemConfiguration().configure(this, config);

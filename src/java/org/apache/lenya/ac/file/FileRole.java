@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: FileRole.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
-
 package org.apache.lenya.ac.file;
 
 import java.io.File;
@@ -30,8 +28,12 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.impl.AbstractRole;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
-
+/**
+ * File-based role implementation.
+ * @version $Id: FileRole.java,v 1.4 2004/08/16 15:59:51 andreas Exp $
+ */
 public class FileRole extends AbstractRole implements Item {
+    
     /**
     * Creates a new file role.
     * @param configurationDirectory The configuration directory.
@@ -100,7 +102,7 @@ public class FileRole extends AbstractRole implements Item {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
+     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
     public void setConfigurationDirectory(File file) {
         configurationDirectory = file;

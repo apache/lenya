@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileGroup.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FileGroup.java,v 1.4 2004/08/16 15:59:51 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -30,10 +30,13 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.impl.AbstractGroup;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
+/**
+ * File-based group implementation.
+ */
 public class FileGroup extends AbstractGroup implements Item {
     
     /**
-     * @see org.apache.lenya.cms.ac.Group#delete()
+     * @see org.apache.lenya.ac.Group#delete()
      */
     public void delete() throws AccessControlException {
         super.delete();
@@ -92,6 +95,9 @@ public class FileGroup extends AbstractGroup implements Item {
         }
     }
 
+    /**
+     * Group configuration element.
+     */
     public static final String GROUP = "group";
 
     /**
@@ -117,7 +123,7 @@ public class FileGroup extends AbstractGroup implements Item {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
+     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
     public void setConfigurationDirectory(File configurationDirectory) {
         assert (configurationDirectory != null) && configurationDirectory.isDirectory();

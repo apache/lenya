@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileGroupManager.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id: FileGroupManager.java,v 1.4 2004/08/16 15:59:51 andreas Exp $  */
 
 package org.apache.lenya.ac.file;
 
@@ -28,6 +28,9 @@ import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.GroupManager;
 import org.apache.lenya.ac.Item;
 
+/**
+ * File-based group manager.
+ */
 public final class FileGroupManager extends FileItemManager implements GroupManager {
 
     private static Map instances = new HashMap();
@@ -108,7 +111,7 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
     protected static final String SUFFIX = ".gml";
     
     /**
-     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
+     * @see org.apache.lenya.ac.file.FileItemManager#getSuffix()
      */
     protected String getSuffix() {
         return SUFFIX;

@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: FileUserManager.java,v 1.3 2004/03/03 12:56:32 gregor Exp $  */
-
 package org.apache.lenya.ac.file;
 
 import java.io.File;
@@ -29,7 +27,8 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 
 /**
- * Describe class <code>UserManager</code> here.
+ * File-based user manager implementation.
+ * @version $Id: FileUserManager.java,v 1.4 2004/08/16 15:59:51 andreas Exp $
  */
 public class FileUserManager extends FileItemManager implements UserManager {
     
@@ -83,19 +82,15 @@ public class FileUserManager extends FileItemManager implements UserManager {
     }
 
     /**
-     * Add the given user
-     *
-    * @param user User that is to be added
-    */
+     * @see org.apache.lenya.ac.UserManager#add(org.apache.lenya.ac.User)
+     */
     public void add(User user) throws AccessControlException {
         super.add(user);
     }
 
     /**
-     * Remove the given user
-     *
-    * @param user User that is to be removed
-    */
+     * @see org.apache.lenya.ac.UserManager#remove(org.apache.lenya.ac.User)
+     */
     public void remove(User user) throws AccessControlException {
         super.remove(user);
     }
@@ -114,7 +109,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
     protected static final String SUFFIX = ".iml";
 
     /**
-     * @see org.apache.lenya.cms.ac.ItemManager#getSuffix()
+     * @see org.apache.lenya.ac.file.FileItemManager#getSuffix()
      */
     protected String getSuffix() {
         return SUFFIX;

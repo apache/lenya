@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: FileUser.java,v 1.4 2004/04/28 12:48:43 andreas Exp $  */
-
 package org.apache.lenya.ac.file;
 
 import java.io.File;
@@ -32,6 +30,10 @@ import org.apache.lenya.ac.impl.AbstractUser;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 import org.apache.log4j.Category;
 
+/**
+ * File-based user implementation.
+ * @version $Id: FileUser.java,v 1.5 2004/08/16 15:59:51 andreas Exp $
+ */
 public class FileUser extends AbstractUser implements Item {
     private Category log = Category.getInstance(FileUser.class);
 
@@ -150,7 +152,7 @@ public class FileUser extends AbstractUser implements Item {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.User#save()
+     * @see org.apache.lenya.ac.User#save()
      */
     public void save() throws AccessControlException {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
@@ -164,7 +166,7 @@ public class FileUser extends AbstractUser implements Item {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.User#delete()
+     * @see org.apache.lenya.ac.User#delete()
      */
     public void delete() throws AccessControlException {
         super.delete();
@@ -192,7 +194,7 @@ public class FileUser extends AbstractUser implements Item {
     }
 
     /**
-     * @see org.apache.lenya.cms.ac.Item#setConfigurationDirectory(java.io.File)
+     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
      */
     public void setConfigurationDirectory(File configurationDirectory) {
         assert (configurationDirectory != null) && configurationDirectory.isDirectory();
