@@ -376,6 +376,7 @@
             <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
               <map:parameter name="user" value="{user}"/>
               <map:parameter name="filename" value="{filename}"/>
+              <map:parameter name="message" value="{message}"/>
               <map:parameter name="date" value="{date}"/>
             </map:generate>
             <map:serialize type="xml"/>

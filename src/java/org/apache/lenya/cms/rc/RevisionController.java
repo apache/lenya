@@ -105,6 +105,7 @@ public class RevisionController {
      *
      * @param rcmlDir DOCUMENT ME!
      * @param backupDirectory DOCUMENT ME!
+     * @param rootDirectory DOCUMENT ME!
      */
     public RevisionController(String rcmlDirectory, String backupDirectory, String rootDirectory) {
         this.rcmlDir = rcmlDirectory;

@@ -8,6 +8,7 @@
   </xsp:logic>
   <rc:generic-exception>
     <rc:filename><xsp:expr>filename</xsp:expr></rc:filename>
+    <rc:message><xsp:expr>parameters.getParameter("message","null")</xsp:expr></rc:message>
   </rc:generic-exception>
 </rc:exception>
 

@@ -111,14 +111,14 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             actionMap.put("filename", filename);
             actionMap.put("user", e.checkOutUsername);
             actionMap.put("date", e.checkOutDate);
-            getLogger().warn("Document " + filename + " already checked-out by " +
-                e.checkOutUsername + " since " + e.checkOutDate);
+            getLogger().warn("Document " + filename + " already checked-out by " + e.checkOutUsername + " since " + e.checkOutDate);
 
             return actionMap;
         } catch (Exception e) {
             actionMap.put("exception", "genericException");
             actionMap.put("filename", filename);
-            getLogger().warn(".act(): The document " + filename + " couldn't be checked out: " + e);
+            actionMap.put("message", "" + e);
+            getLogger().error(".act(): The document " + filename + " couldn't be checked out: ", e);
 
             return actionMap;
         }
