@@ -13,17 +13,17 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-  
+
   $Id$
-  
-  @translators 
+
+  @translators
 	Salvador Cobrero <salvador_cobrero_jimenez at dmr-consulting dot com>
 	David Pinelo <david dot pinelo at juntadeandalucia dot es>
 	Thorsten Scherler <thorsten at apache dot org>
-  
+
 -->
 
-<catalogue xml:lang="es">
+<catalogue xml:lang="es" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- common used words -->
   <message key="Save">Guardar</message>
@@ -33,7 +33,7 @@
   <message key="NOTE">NOTA</message>
   <message key="No referer">Sin referencia</message>
   <message key="Referer">Referencia</message>
-  <message key="EXCEPTION">EXCEPCIÓN</message>  
+  <message key="EXCEPTION">EXCEPCIÓN</message>
   <message key="User">Usuario</message>
   <message key="live">producción</message>
   <message key="not">no</message>
@@ -82,17 +82,21 @@
   <message key="Insert">Insertar</message>
   <message key="Insert File">Insertar&#160;archivo</message>
   <message key="upload-with-invalid-extension">Intentó&#160;cargar&#160;un&#160;archivo&#160;con&#160;una&#160;extensión&#160;no&#160;válida.&#160;Extensiones&#160;válidas&#160;son&#160;{0}</message>
+  <message key="upload-with-missing-title">Intentó&#160;cargar&#160;un&#160;archivo&#160;sin&#160;título.</message>
   <message key="filename-format-exception">El&#160;nombre&#160;del&#160;archivo&#160;que&#160;está&#160;intentando&#160;cargar&#160;no&#160;tiene&#160;extensión&#160;o&#160;contiene&#160;caracteres&#160;no&#160;permitidos.</message>
   <message key="Creation Date">Fecha&#160;de&#160;creación</message>
   <message key="File Size">Tamaño&#160;del&#160;fichero</message>
   <message key="Image">Imagen</message>
-  
+  <message key="Link">Enlace</message>
+  <message key="Caption">Subtítulo</message>
+  <message key="All rights reserved">Todos los derechos reservados.</message>
+
   <!-- submit screen -->
-  <message key="submit-for-approval">Enviar&#160;{0}&#160;para&#160;su&#160;aprobación</message>  
+  <message key="submit-for-approval">Enviar&#160;{0}&#160;para&#160;su&#160;aprobación</message>
   <message key="submit-for-approval?">¿Desea&#160;enviar&#160;{0}&#160;para&#160;su&#160;aprobación?</message>
 
-  <!-- publish screen -->     
-  <message key="Publish">Publicar</message>  
+  <!-- publish screen -->
+  <message key="Publish">Publicar</message>
   <message key="Source File(s)">Archivo(s)&#160;Fuente</message>
 
   <!-- login screen -->
@@ -111,17 +115,17 @@
   <!-- reject screen -->
   <message key="Reject">Rechazar</message>
   <message key="reject-doc?">¿Desea rechazar&#160;el&#160;documento&#160;{0}?</message>
-  
+
   <!-- cms menu -->
   <message key="New Document">Nuevo&#160;documento</message>
   <message key="New Language Version">Nueva&#160;versión&#160;de&#160;idioma</message>
   <message key="Remove Language Version">Eliminar&#160;versión&#160;de&#160;idioma</message>
-  <message key="File">Archivo</message>  
+  <message key="File">Archivo</message>
   <message key="Edit">Editar</message>
-  <message key="Workflow">Flujo de trabajo</message>
+  <message key="Workflow">Flujo&#160;de&#160;trabajo</message>
   <message key="Deactivate">Desactivar</message>
   <message key="Schedule">Horario</message>
-  <message key="Copy">Copiar</message>  
+  <message key="Copy">Copiar</message>
   <message key="Paste">Pegar</message>
   <message key="Cut">Cortar</message>
   <message key="Help">Ayuda</message>
@@ -134,41 +138,44 @@
   <message key="Logout">Salir</message>
   <message key="View Task Logs">Ver&#160;registro&#160;de&#160;tareas</message>
   <message key="Support">Soporte</message>
-  <message key="System Documentation">Documentación&#160;de&#160;sistema</message>
+  <message key="System Documentation">Documentación&#160;del&#160;sistema</message>
   <message key="User Documentation">Documentación&#160;de&#160;usuario</message>
   <message key="About Apache Lenya">Acerca&#160;de&#160;Apache&#160;Lenya</message>
   <message key="Apache Lenya Homepage">Sitio&#160;web&#160;de&#160;Apache&#160;Lenya</message>
-  <message key="Edit with Epoz">Editar con Epoz</message>
-  <message key="Edit with Kupu">Editar con Kupu</message>
-  <message key="Edit with BXE">Editar&#160;con&#160;BXE</message>
-  <message key="Edit with one Form">Editar&#160;con&#160;formulario&#160;Único</message>
-  <message key="Edit with Forms">Editar&#160;con&#160;formularios</message>
+  <message key="Edit with Kupu">
+    Editor&#160;<xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;(Kupu)
+  </message>
+  <message key="Edit with BXE">
+    Editor&#160;<xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;(BXE)
+  </message>
+  <message key="Edit with one Form">Editor&#160;de&#160;fuentes</message>
+  <message key="Edit with Forms">Editor&#160;de&#160;formularios</message>
   <message key="Edit Metadata">Editar&#160;Metadatos</message>
   <message key="Edit Navigation Title">Editar&#160;título&#160;de&#160;navegación</message>
   <message key="Rename URL">Renombrar&#160;URL</message>
-  
-  <!-- cms tabs -->	
-  <message key="Server Time">Hora&#160;del&#160;servidor</message>  
+
+  <!-- cms tabs -->
+  <message key="Server Time">Hora&#160;del&#160;servidor</message>
   <message key="Workflow State">Estado&#160;del&#160;flujo de trabajo</message>
 
   <!-- Administration tab -->
   <message key="Administration">Administración</message>
   <message key="really-delete?">¿Realmente desea borrar&#160;{0}?</message>
-  <message key="Do you really want to delete the trash ?">¿Seguro&#160;que&#160;desea&#160;vaciar&#160;la&#160;papelera?</message>
+  <message key="Do you really want to delete the trash ?">¿Realmente&#160;desea&#160;vaciar&#160;la&#160;papelera?</message>
   <message key="delete-object">¿Borrar&#160;{0}</message>
-  <message key="delete-object?">&#191;Realmente quiere borrar {0}?</message>
+  <message key="delete-object?">¿Realmente&#160;quiere&#160;borrar&#160;{0}?</message>
   <message key="Passwd">Contraseña</message>
   <message key="Switch User">Cambiar&#160;usuario</message>
   <message key="Delete Trash">Vaciar&#160;papelera</message>
   <message key="Cocoon and Server Status">Estado&#160;del&#160;Servidor&#160;y&#160;de&#160;Cocoon</message>
-  
+
     <!-- Group Administration -->
   <message key="Profile">Perfil</message>
   <message key="Members">Miembros</message>
   <message key="IP Ranges">Rangos&#160;de IP</message>
   <message key="Edit Profile">Editar&#160;Perfil</message>
   <message key="Edit Members">Editar&#160;Miembros</message>
-  <message key="Group Administration">Administración de grupos</message>
+  <message key="Group Administration">Administración&#160;de&#160;grupos</message>
   <message key="Add Group">Añadir&#160;Grupo</message>
   <message key="Group Data">Datos&#160;del&#160;Grupo</message>
 
@@ -176,7 +183,7 @@
   <message key="User Data">Datos&#160;del&#160;Usuario</message>
 
   <message key="CMS User ID">ID&#160;del&#160;Usuario&#160;de&#160;CMS</message>
-  <message key="LDAP ID">ID&#160;LDAP</message>
+  <message key="LDAP ID">ID&#160;de&#160;LDAP</message>
   <message key="Confirm password">Confirme&#160;contraseña</message>
   <message key="Add User">Añadir Usuario</message>
   <message key="User Administration">Administración del Usuario</message>
@@ -186,7 +193,7 @@
   <message key="Group Affiliation">Afiliación a un Grupo</message>
   <message key="Change Password">Cambiar Contraseña</message>
   <message key="Edit Group Affiliation">Editar Grupo de Afiliación</message>
-  
+
     <!-- IP Range Administration -->
   <message key="IP Range">Rango&#160;de IP</message>
   <message key="IP Range ID">ID&#160;del&#160;rango&#160;de IP</message>
@@ -195,7 +202,7 @@
   <message key="IP Range Administration">Administración&#160;del&#160;Rango&#160;IP</message>
   <message key="Add IP Range">Añadir&#160;rango&#160;de IP</message>
   <message key="IP Range Profile">Perfil&#160;del&#160;rango&#160;de IP</message>
- 
+
   <!-- Site tab (info screens) -->
   <message key="Available Languages">Idiomas Disponibles</message>
   <message key="This document is not available in this language.">Este documento no se encuentra disponible en este idioma.</message>
@@ -230,11 +237,11 @@
   <message key="Delete Document">Borrar Documento</message>
   <message key="delete-doc">Borrar Documento {0}</message>
   <message key="cannot-deactivate-unless-children-deactivated">No se puede desactivar este documento a menos que los documentos hijos siguientes sean desactivados</message>
-  <message key="delete-language-versions?">&#191;Quiere realmente borrar todas las versiones en diferentes lenguajes del documento {0}?</message>
+  <message key="delete-language-versions?">¿Quiere realmente borrar todas las versiones en diferentes lenguajes del documento {0}?</message>
       <!-- Archive document -->
   <message key="Archive Document">Archivar Documento</message>
   <message key="archive-doc">Archivar documento {0}</message>
-  <message key="archive-doc?">&#191;Quiere realmente archivar el documento {0}?</message>
+  <message key="archive-doc?">¿Quiere realmente archivar el documento {0}?</message>
       <!-- Rename document -->
   <message key="Rename Document">Renombrar Documento</message>
   <message key="rename-doc">Renombrar Documento {0}</message>
@@ -250,6 +257,12 @@
   <message key="Cut Document">Cortar Documento</message>
   <message key="cut-doc">Cortar documento {0}</message>
   <message key="cut-doc-to-clip?">¿Seguro que desea cortar el documento {0} y moverlo al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
+    <!--Change visibility in navigation -->
+  <message key="Change">Cambiar</message>
+  <message key="Change Document visiblity in navigation">Cambiar la visibilidad del documento en la navegación</message>
+  <message key="Visibility in navigation">Visibilidad en la navegación</message>
+  <message key="visible">visible</message>
+  <message key="hidden">oculto</message>
 
   <!-- Info Asset -->
   <message key="Insert Image">Insertar Imagen</message>
@@ -258,26 +271,26 @@
   <message key="Insert a new Image">Insertar una Imagen</message>
   <message key="Upload an Asset">Subir un objeto</message>
 
-  <!-- Info workflow  --> 
+  <!-- Info workflow  -->
   <message key="Value">Valor</message>
   <message key="Event">Evento</message>
   <message key="Variables">Variables</message>
   <message key="History">Historial</message>
-  <message key="State">Estado</message>   
-  <message key="IP Address">Dirección IP</message>   
+  <message key="State">Estado</message>
+  <message key="IP Address">Dirección IP</message>
   <message key="edit">editar</message>
   <message key="submit">enviar</message>
   <message key="reject">rechazar</message>
   <message key="publish">publicar</message>
 
-  <!-- Info asset  --> 
+  <!-- Info asset  -->
   <message key="New Asset">Nuevo Activo</message>
-  
-  <!-- Info RC  --> 
+
+  <!-- Info RC  -->
   <message key="Current Version">Versión Actual</message>
   <message key="Rollback to this revision">Deshacer hasta esta revisión</message>
 
-  <!-- Info AC  --> 
+  <!-- Info AC  -->
   <message key="SSL Encryption">Cifrado&#160;SSL</message>
   <message key="Access Object">Acceso&#160;al&#160;Objecto</message>
   <message key="visit">visitar</message>
@@ -286,17 +299,17 @@
   <message key="admin">admin</message>
   <message key="world">todos</message>
   <message key="the world">todos</message>
-  
-  <!-- Scheduler --> 
+
+  <!-- Scheduler -->
   <message key="New job">Nueva tarea</message>
   <message key="Active jobs">Tareas activas</message>
   <message key="Publish and Export">Publicar&#160;y&#160;Exportar</message>
   <message key="doc-has-links-to-unpublished">Este documento tiene enlace a los siguientes documentos sin publicar:</message>
 
   <!-- New Document -->
-  <message key="Please check the following possible causes of the exception">Por favor, compruebe las siguientes posibles causas de la excepción.</message>   
+  <message key="Please check the following possible causes of the exception">Por favor, compruebe las siguientes posibles causas de la excepción.</message>
   <message key="exception.cause.createdoc.whitespace-in-id">No se permiten espacios en blanco en el id</message>
-  <message key="exception.cause.createdoc.id-in-use">El id ya está siendo utilizado</message>   
+  <message key="exception.cause.createdoc.id-in-use">El id ya está siendo utilizado</message>
   <message key="failmessage.createdoc.invalidformat">Por favor, introduce un valor válido en el campo ID. A-Z, a-z, 0-9 o - son caracteres válidos.</message>
   <message key="failmessage.createdoc.required">Por favor, introduce todos los valores obligatorios (*).</message>
 
@@ -305,4 +318,18 @@
   <message key="Asset Library">Librer&#237;a de objetos</message>
   <message key="No assets available">No hay objetos disponibles</message>
   <message key="Insert Asset">Insertar Objeto</message>
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">Insertar Imagen</message>
+  <message key="lenya.imageupload.selectimage.label">Elejir Imagen</message>
+  <message key="lenya.imageupload.info.noimages">No hay imágenes disponibles.</message>
+  <message key="lenya.imageupload.links.hint">Los enlaces externos deben iniciar con 'http://', los enlaces internos deben iniciar con '/'</message>
+
+  <!-- Revision Controller -->
+  <message key="Reason">Razón</message>
+  <message key="Filename">Nombre de archivo</message>
+  <message key="lenya.rc.nocheckout">El recurso no se puede obtener</message>
+  <message key="lenya.rc.checkedoutalready">El recurso ya ha sido obtenido por otro usuario</message>
+  <message key="lenya.rc.nocheckin">El recurso no puede ser devuelto</message>
+  <message key="Generic Exception">Excepción Genérica</message>
+  <message key="Check the log files.">Ver bitácora.</message>
 </catalogue>
