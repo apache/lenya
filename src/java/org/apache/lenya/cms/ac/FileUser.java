@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.10 2003/06/06 17:20:06 egli Exp $
+ * $Id: FileUser.java,v 1.11 2003/06/10 14:40:51 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -106,6 +106,7 @@ public class FileUser extends User {
 
 	public FileUser(Publication publication, Configuration config)
 		throws ConfigurationException {
+		this.publication = publication;
 		id = config.getAttribute(ID_ATTRIBUTE);
 		setEmail(config.getChild(EMAIL).getValue());
 		setFullName(config.getChild(FULL_NAME).getValue());
@@ -201,9 +202,7 @@ public class FileUser extends User {
 	 */
 	public void delete() throws AccessControlException {
 		super.delete();
-
 		UserManager manager = UserManager.instance(publication);
-
 		manager.remove(this);
 		File xmlPath = manager.getPath();
 		File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
