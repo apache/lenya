@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lucene.xmap,v 1.16 2004/03/13 12:57:53 gregor Exp $ -->
+<!-- $Id: lucene.xmap,v 1.17 2004/03/18 16:06:18 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -39,7 +39,7 @@
   <map:pipelines>
 
     <map:pipeline>
-      <map:match pattern="*/search-*/lucene">
+      <map:match pattern="*/search-*/lucene.xml">
         <map:generate type="serverpages" src="content/search/search-and-results.xsp" label="xml">
           <map:parameter name="max-hits-per-page" value="3"/>
           <map:parameter name="max-pages" value="7"/>
@@ -53,6 +53,29 @@
         </map:generate>
         <map:transform src="xslt/search/sort.xsl"/>
         
+        <map:act type="resource-exists" src="pubs/{1}/lenya/xslt/search/search-and-results-body.xsl">
+          <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results-body.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="publicationid" value="{1}"/>
+          </map:transform>
+        </map:act>
+
+        <map:serialize type="xml"/>
+      </map:match>
+
+
+      <map:handle-errors type="500">
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+
+
+
+    <map:pipeline>
+      <map:match pattern="*/search-*/lucene*">
+        <map:generate src="cocoon:/{1}/search-{2}/lucene.xml{3}"/>
+        
         <map:act type="resource-exists" src="pubs/{1}/lenya/xslt/search/search-and-results.xsl">
           <map:transform src="pubs/{../1}/lenya/xslt/search/search-and-results.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
@@ -65,10 +88,14 @@
         </map:transform>
         <map:call resource="style-cms-page"/>
       </map:match>
+
+
       <map:handle-errors type="500">
         <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
+
+
    </map:pipelines>
 
 </map:sitemap>

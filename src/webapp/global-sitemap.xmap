@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.54 2004/03/18 15:47:13 gregor Exp $ -->
+<!-- $Id: global-sitemap.xmap,v 1.55 2004/03/18 16:06:18 michi Exp $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -586,7 +586,7 @@
 
     <!-- Search with Lucene -->
     <map:pipeline>
-      <map:match pattern="*/search-*/lucene">
+      <map:match pattern="*/search-*/lucene*">
         <map:mount uri-prefix="" src="lenya/{fallback:lucene.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
       <map:handle-errors>
