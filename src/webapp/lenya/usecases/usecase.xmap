@@ -53,7 +53,7 @@
         </map:transform>
         <map:transform src="cocoon://lenya-screen.xsl"/>
         <map:match pattern="view/menu/**">
-          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/info/default.xml"/>
+          <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}/default.xml"/>
         </map:match>
         <map:serialize type="html"/>
       </map:match>
