@@ -14,7 +14,6 @@
 >
 
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
@@ -26,86 +25,10 @@
     <xsp:include>org.apache.lenya.cms.ac2.xsp.PolicyHelper</xsp:include>
     <xsp:include>org.apache.lenya.cms.ac2.xsp.CredentialWrapper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-    <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
     <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
   </xsp:structure>
     
 <lenya-info:info>
-  <lenya-info:overview>
-        <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
-		<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></lenya-info:abstract>
-  		<lenya-info:status></lenya-info:status>
-        <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
-    <xsp:logic>
-      String[] documentlanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
-      StringBuffer str = new StringBuffer();
-      for (int i = 0; i &lt; documentlanguages.length; i++) {
-       str.append(documentlanguages[i] +" ");
-      }
-      
-    </xsp:logic>    		
-    	<lenya-info:languages><xsp:expr>str</xsp:expr></lenya-info:languages>	  
-   		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
-   		<lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
-  		<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
-  		<lenya-info:area></lenya-info:area>
-  </lenya-info:overview>  
-  <lenya-info:meta>  
-        <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
-        <dc:creator><input:get-attribute module="page-envelope" as="object" name="document-dc-creator"/></dc:creator>
-        <dc:subject><input:get-attribute module="page-envelope" as="object" name="document-dc-subject"/></dc:subject>
-        <dc:description><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></dc:description>
-        <dc:date></dc:date>
-        <dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
-        </lenya-info:meta>
-  <lenya-info:assets>
-		<lenya-info:asset/>
-  </lenya-info:assets>  
-  <lenya-info:workflow>
-    	<wf:version date="(?)" state="redaktion" user="michael"/>
-   		<wf:version date="(?)" event="publish" state="review" user="gregor"/>
-  </lenya-info:workflow>  
-  <rc:revisions>
-   <xsp:logic>
-    String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
-    Session session=request.getSession(true);
-    session.setAttribute("org.apache.lenya.cms.info.target",docId);
-    session.setAttribute("org.apache.lenya.cms.info.area", request.getParameter("lenya.area"));
-    Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
-
-      String rootDir=publication.getEnvironment().getPublicationPath();
-
-      String servletContextPath = publication.getServletContext().getCanonicalPath();
-      
-      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
-      String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-      rcmlDirectory=rootDir+rcmlDirectory;
-      String backupDirectory = rcEnvironment.getBackupDirectory();
-      backupDirectory=rootDir+backupDirectory;
-
-      RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
-
-      String filename= "content/authoring" +docId + "/index_" + (String)<input:get-attribute module="page-envelope" as="object" name="document-language"/> + ".xml";
-
-
-      org.w3c.dom.Document rcmlDoc=null;
-      try {
-        rcmlDoc=rc.getRCML(filename).getDOMDocumentClone();
-      } catch (Exception e) {
-        <rc:exception>rollback: Unable to get DOM doc for rcml file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
-      }                                                                                                                                    
-
-      org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
-      org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
-
-      for (int i = 0; i &lt; timeElements.getLength(); i++) {
-        org.w3c.dom.Element time = (org.w3c.dom.Element) timeElements.item(i);
-        time.setAttribute("humanreadable", new Date(new Long(time.getFirstChild().getNodeValue()).longValue()).toString());
-      }
-            
-    </xsp:logic>
-    	<xsp:expr>rootE</xsp:expr>
-   </rc:revisions>
    
     <xsp:logic>
       String[] types = { "user", "group", "iprange", "role" };

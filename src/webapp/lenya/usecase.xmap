@@ -7,7 +7,7 @@
     <map:generators default="file"/>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
-    <map:serializers default="html"/>
+    <map:serializers default="xhtml"/>
     <map:matchers default="wildcard"/>
 
     <map:selectors>
@@ -179,7 +179,7 @@
           <map:transform src="xslt/util/page2xhtml.xsl">
             <map:parameter name="context-prefix" value="{request:contextPath}"/>
           </map:transform>
-          <map:serialize type="html"/>
+          <map:serialize/>
         </map:match>
         
         <!-- usecase -->
@@ -191,7 +191,7 @@
               <map:parameter name="uri" value="{../../2}"/>
             </map:call>
             <map:transform src="xslt/scheduler/admin-publication.xsl"/>
-            <map:serialize type="html"/>
+            <map:serialize/>
           </map:match>
           <!-- step -->
         </map:match>
@@ -323,13 +323,13 @@
 	  <map:match pattern="showscreen" type="step">
 	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
 	    <map:transform src="xslt/authoring/upload-image.xsl"/>
-	    <map:serialize type="html"/>
+	    <map:serialize/>
 	  </map:match>
 
 	  <map:match type="step" pattern="showteaserscreen">
 	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
 	    <map:transform src="xslt/authoring/upload-teaserimage.xsl"/>
-	    <map:serialize type="html"/>
+	    <map:serialize/>
 	  </map:match>
 
 	  <map:match type="step" pattern="upload">
@@ -342,7 +342,7 @@
 	    input and we present the upload form again --> 
 	    <map:generate type="serverpages" src="content/authoring/upload-image.xsp"/>
 	    <map:transform src="xslt/authoring/upload-image.xsl"/>
-	    <map:serialize type="html"/>
+	    <map:serialize/>
 	  </map:match>
 	</map:match>
 	        <!--Rollback-->
@@ -351,7 +351,7 @@
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/rc/versions-screen.xsp" type="serverpages"/>
             <map:transform src="xslt/rc/rollback.xsl"/>
-            <map:serialize type="html"/>
+            <map:serialize/>
           </map:match>
           
           <map:match pattern="view" type="step">
@@ -379,7 +379,7 @@
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
               <map:transform src="xslt/rc/rco-exception.xsl"/>
-              <map:serialize type="html"/>
+              <map:serialize/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>
@@ -399,7 +399,7 @@
                 <map:parameter name="date" value="{date}"/>
               </map:generate>
               <map:transform src="xslt/rc/rco-exception.xsl"/>
-              <map:serialize type="html"/>
+              <map:serialize/>
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>
@@ -580,12 +580,14 @@
           
         </map:match>
 
-        <map:match pattern="info" type="usecase">
+        <map:match pattern="info-*" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:generate src="content/info/info.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/info.xsl"/>
-            <map:serialize type="html"/>
+            <map:generate src="content/info/{../1}.xsp" type="serverpages"/>
+            <map:transform src="xslt/info/info.xsl">
+            	<map:parameter name="tab" value="{../1}"/>
+            </map:transform>	
+            <map:serialize/>
           </map:match>
           
           <map:match pattern="update" type="step">

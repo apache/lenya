@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
+  xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:li="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+  xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:request="http://apache.org/xsp/request/2.0"
+>
+
+  <xsp:structure>
+    <xsp:include>java.io.IOException</xsp:include>
+    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
+  </xsp:structure>
+    
+<lenya-info:info>
+  <lenya-info:overview>
+        <dc:title><input:get-attribute module="page-envelope" as="object" name="document-dc-title"/></dc:title>
+		<lenya-info:abstract><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></lenya-info:abstract>
+  		<lenya-info:status></lenya-info:status>
+        <dc:language><input:get-attribute module="page-envelope" as="object" name="document-language"/></dc:language>
+    <xsp:logic>
+      String[] documentlanguages = (String[])<input:get-attribute module="page-envelope" as="object" name="document-languages"/>;
+      StringBuffer str = new StringBuffer();
+      for (int i = 0; i &lt; documentlanguages.length; i++) {
+       str.append(documentlanguages[i] +" ");
+      }
+      
+    </xsp:logic>    		
+    	<lenya-info:languages><xsp:expr>str</xsp:expr></lenya-info:languages>	  
+   		<lenya-info:lastmodifiedby></lenya-info:lastmodifiedby>
+   		<lenya-info:lastmodified><input:get-attribute module="page-envelope" as="object" name="document-lastmodified"/></lenya-info:lastmodified>
+  		<lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
+  		<lenya-info:area></lenya-info:area>
+  </lenya-info:overview>  
+</lenya-info:info>
+
+</xsp:page>

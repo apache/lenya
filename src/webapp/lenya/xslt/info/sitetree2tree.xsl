@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.17 2003/07/31 11:57:18 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.18 2003/08/11 13:30:38 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -29,7 +29,7 @@ USEICONS = 0
 WRAPTEXT = 1
 PERSERVESTATE = 0
 HIGHLIGHT = 1
-foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info&amp;lenya.step=showscreen")
+foldersTree = gFld("<b>Site</b>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/?lenya.usecase=info-overview&amp;lenya.step=showscreen")
 		<xsl:apply-templates select="s:site"/>
 
 //Set this string if Treeview and other configuration files may also be loaded in the same session
@@ -51,8 +51,8 @@ foldersTree.treeID = "t2"
     <xsl:param name="parentPath"/>
     <xsl:param name="lenyaarea"/>
 
-<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:value-of select="generate-id(..)"/>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:when>
-  <xsl:otherwise>insDoc(<xsl:value-of select="generate-id(..)"/>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:otherwise></xsl:choose>
+<xsl:choose><xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(<xsl:value-of select="generate-id(..)"/>, gFld("<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:when>
+  <xsl:otherwise>insDoc(<xsl:value-of select="generate-id(..)"/>, gLnk("R", "<xsl:call-template name="getLabels"/>", "<xsl:value-of select="$contextprefix"/>/<xsl:value-of select="$publicationid"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="@basic-url"/><xsl:value-of select="@suffix"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen&amp;lenya.area=<xsl:value-of select="$lenyaarea"/>"))</xsl:otherwise></xsl:choose>
 <xsl:apply-templates>
 <xsl:with-param name="parentPath"><xsl:value-of select="$parentPath"/>/<xsl:value-of select="@id"/></xsl:with-param>
 <xsl:with-param name="lenyaarea"><xsl:value-of select="$lenyaarea"/></xsl:with-param>
