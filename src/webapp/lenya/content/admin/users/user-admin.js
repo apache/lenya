@@ -387,37 +387,36 @@ function userDeleteUser() {
 	try {
 		var userManager = getAccreditableManager().getUserManager();
 		user = userManager.getUser(userId);
+		
+		var name = user.getName();
+		var ready = false;
+			
+		while (!ready) {
+			cocoon.sendPageAndWait("users/confirm-delete-common.xml", {
+				"id" : userId,
+				"name" : name,
+				"type" : "user"
+			});
+				
+			if (cocoon.request.get("submit")) {
+				try {
+					var userManager = getAccreditableManager().getUserManager();
+					userManager.remove(user);
+				}
+			   	finally {
+	   				release();
+			   	}
+				user['delete']();
+				ready = true;
+			}
+			else {
+				ready = true;
+			}
+		}
    	}
    	finally {
    		release();
    	}
-		
-	var name = user.getName();
-	var ready = false;
-		
-	while (!ready) {
-		cocoon.sendPageAndWait("users/confirm-delete-common.xml", {
-			"id" : userId,
-			"name" : name,
-			"type" : "user"
-		});
-			
-		if (cocoon.request.get("submit")) {
-			resolve();
-			try {
-				var userManager = getAccreditableManager().getUserManager();
-				userManager.remove(user);
-			}
-		   	finally {
-   				release();
-		   	}
-			user['delete']();
-			ready = true;
-		}
-		else {
-			ready = true;
-		}
-	}
 	
    	cocoon.sendPage("redirect.html", { "url" : redirectUri });
 }
