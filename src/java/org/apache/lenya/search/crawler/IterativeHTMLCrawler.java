@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IterativeHTMLCrawler.java,v 1.25 2004/03/05 21:36:30 michi Exp $  */
+/* $Id: IterativeHTMLCrawler.java,v 1.26 2004/03/05 23:22:26 michi Exp $  */
 
 package org.apache.lenya.search.crawler;
 
@@ -151,7 +151,7 @@ public class IterativeHTMLCrawler {
             URL currentURL = (URL) urlsToCrawl.elementAt(currentPosition);
             currentURLPath = currentURL.toString().substring(0, currentURL.toString().lastIndexOf("/"));
 
-            log.info("INFO: Current Array Size: " + urlsToCrawl.size() + ", Current Position: " + currentPosition + ", Current URL: " + currentURL.toString() + " (" + currentURLPath + ")");
+            log.info("INFO: Current Array Size: " + urlsToCrawl.size() + ", Current Position: " + currentPosition + ", Current URL: " + currentURL.toString());
 
 
             java.util.List urlsWithinPage = parsePage(currentURL.toString());
@@ -177,6 +177,11 @@ public class IterativeHTMLCrawler {
             currentPosition = currentPosition + 1;
         }
 
+        log.info("Stop crawling at: " + urlsToCrawl.elementAt(urlsToCrawl.size()-1));
+
+
+
+        // Write all crawled URLs into file
         try {
             File parent = new File(new File(url_list_file).getParent());
             if (!parent.isDirectory()) {
@@ -299,12 +304,12 @@ public class IterativeHTMLCrawler {
     }
 
     /**
-     * DOCUMENT ME!
+     * Parse PDF for links
      *
      * @param httpCon DOCUMENT ME!
      */
     public void handlePDF(HttpURLConnection httpCon) {
-        System.err.println(".handlePDF(): Not handled yet!");
+        log.debug(".handlePDF(): Not handled yet!");
     }
 
     /**
@@ -372,7 +377,7 @@ public class IterativeHTMLCrawler {
             }
 
             String dotsRemoved = url.substring(3 * back, url.length());
-            if (dotsRemoved.charAt(0) == '.') {
+            if (dotsRemoved.length() > 0 && dotsRemoved.charAt(0) == '.') {
                 log.error("Parsing failed: " + url + " (" + currentURLPath + ")");
                 url = null;
             } else {
