@@ -40,11 +40,9 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.util.HashMap;
-
 /**
  * @author andreas
- * @version $Id: DefaultDocumentBuilder.java,v 1.24 2003/10/31 17:44:07 andreas Exp $
+ * @version $Id: DefaultDocumentBuilder.java,v 1.25 2003/10/31 17:45:53 andreas Exp $
  *  
  */
 public class DefaultDocumentBuilder implements DocumentBuilder {
