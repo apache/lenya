@@ -1,17 +1,73 @@
 #!/bin/sh
 
 DIRNAME=`dirname $0`
-echo "dirname: $DIRNAME"
+echo "INFO: dirname = $DIRNAME"
 
-LENYA_PREFIX=/home/username/src/cocoon-lenya
-COCOON_PREFIX=/home/username/src/cocoon-2.1.2/build/webapp/WEB-INF/lib
-JAVA=/usr/local/j2sdk1.4.1_01/bin/java
+WEBAPP_DIR=/home/michi/src/cocoon-lenya/build/lenya/webapp
+LIB_DIR=$WEBAPP_DIR/WEB-INF/lib
+JAVA=/usr/lib/j2sdk1.4/bin/java
 PDFBOX=/home/username/src/PDFBox-0.5.5
 XPDF=/home/username/bin/xpdf-2.01-linux/pdftotext
 
-CLASSPATH=$LENYA_PREFIX/build/lenya/classes:$COCOON_PREFIX/avalon-framework-4.1.3.jar:$COCOON_PREFIX/excalibur-io-1.1.jar:$COCOON_PREFIX/xml-apis.jar:$COCOON_PREFIX/xercesImpl-2.1.0.jar:$COCOON_PREFIX/jtidy-04aug2000r7-dev.jar:$LENYA_PREFIX/lib/log4j-1.2.3.jar:$LENYA_PREFIX/lib/websphinx.jar:$LENYA_PREFIX/build/lenya/src
+CLASSPATH=$WEBAPP_DIR/WEB-INF/classes:$LIB_DIR/log4j-1.2.7.jar:$LIB_DIR/xercesImpl-2.5.0.jar:$LIB_DIR/xml-apis.jar:$LIB_DIR/excalibur-io-1.1.jar
 
-#echo $CLASSPATH
+echo "INFO: classpath = $CLASSPATH"
+
+
+case "$1" in
+    index)
+        echo ""
+        echo "=========================================================="
+        echo "Target: $1"
+        echo "=========================================================="
+        echo ""
+        CLASSPATH=$CLASSPATH:$LIB_DIR/lucene-1.3-dev1.jar
+        echo "INFO: classpath = $CLASSPATH"
+        LUCENE_CONF=src/webapp/lenya/pubs/oscom/config/search/lucene-cmfsMatrix.xconf
+        echo "INFO: lucene.xconf = $LUCENE_CONF"
+        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexConfiguration $LUCENE_CONF
+        $JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF true
+
+        ###$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
+	;;
+    crawl)
+        echo ""
+        echo "=========================================================="
+        echo "Target: $1"
+        echo "=========================================================="
+        echo ""
+	;;
+    *)
+        echo "Usage: $0 {crawl|index}"
+        exit 1
+        ;;
+esac
+
+exit 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 CRAWLER_CONF=$1
 LUCENE_CONF=$2
@@ -48,18 +104,6 @@ CLASSPATH=$CLASSPATH:$PDFBOX/classes
 
 ##http://www.adobe.com/products/acrobat/access_simple_form.html
 
-
-echo ""
-echo "=========================================================="
-echo "Target: index"
-echo "=========================================================="
-echo ""
-CLASSPATH=$CLASSPATH:$LENYA_PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
-echo $CLASSPATH
-echo $LUCENE_CONF
-$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexEnvironment $LUCENE_CONF
-#$JAVA -cp $CLASSPATH org.apache.lenya.lucene.IndexHTML $LUCENE_CONF
-$JAVA -cp $CLASSPATH org.apache.lenya.lucene.index.Index $LUCENE_CONF
 
 
 echo ""
