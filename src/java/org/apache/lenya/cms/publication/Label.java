@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publication;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class Label {
     private String label = null;
@@ -102,4 +102,36 @@ public class Label {
     public String getLanguage() {
         return language;
     }
+    
+    
+    /** (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getLabel() + " " + getLanguage();
+    }
+
+    /** (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj) {
+        boolean equals = false;
+
+        if (getClass().isInstance(obj)) {
+            Label otherLabel = (Label)obj;
+            equals =
+                getLabel().equals(otherLabel.getLabel())
+                    && getLanguage().equals(otherLabel.getLanguage());
+        }
+
+        return equals;
+    }
+
+    /** (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() {
+        return getLabel().hashCode() + getLanguage().hashCode();
+    }
+
 }
