@@ -2,11 +2,11 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:param name="files"/>
-	
-	<xsl:template match="wyona/cmsbody">
-		<xsl:apply-templates/>
-	</xsl:template>
-	
+
+<xsl:template match="/">
+    <xsl:apply-templates select="wyona/cmsbody/html"/>
+ </xsl:template>
+		
 	<xsl:include href="../today.xsl"/>
 	<xsl:include href="../navigation.xsl"/>
 	<xsl:include href="small-preview.xsl"/> 
