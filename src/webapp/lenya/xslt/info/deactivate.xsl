@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: deactivate.xsl,v 1.10 2003/09/19 13:10:58 andreas Exp $
+ $Id: deactivate.xsl,v 1.11 2003/09/30 09:10:58 egli Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -61,6 +61,9 @@
               <td><xsl:value-of select="$document-id"/></td>
             </tr>
             <tr>
+	      <xsl:apply-templates select="inconsistent-documents"/>
+            </tr>
+            <tr>
               <td/>
               <td>
                 <input type="submit" name="lenya.usecase" value="deactivate"/> &#160;
@@ -113,5 +116,15 @@
     <li><a href="{@href}"><xsl:value-of select="@id"/> [<xsl:value-of select="@language"/>]</a></li>
   </xsl:template>
   
+  <xsl:template match="inconsistent-documents">
+    <td class="lenya-entry-caption">
+      <span class="lenya-form-message-error">The following documents<br/> have links to this document:</span>
+    </td>
+    <td valign="top">
+      <xsl:for-each select="inconsistent-document">
+	<a target="_blank" href="{@href}"><xsl:value-of select="@id"/><xsl:value-of select="."/></a><br/>
+      </xsl:for-each>
+    </td>
+  </xsl:template>
   
 </xsl:stylesheet>

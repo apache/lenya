@@ -13,6 +13,12 @@
   <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.SiteTree</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.SiteTreeNode</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.DocumentIdToPathMapper</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.PathToDocumentIdMapper</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.DocumentBuilder</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
+  <xsp:include>org.apache.lenya.search.Grep</xsp:include>
+  <xsp:include>java.io.File</xsp:include>
 </xsp:structure>
 
 <page>
@@ -45,7 +51,28 @@
                 <xsp:attribute name="language"><xsp:expr>document.getLanguage()</xsp:expr></xsp:attribute>
               </live-child>
           }
+	  DocumentIdToPathMapper mapper = publication.getPathMapper();
+	  if (mapper instanceof PathToDocumentIdMapper) {
+	      PathToDocumentIdMapper fileMapper = (PathToDocumentIdMapper)mapper;
+	      DocumentBuilder docBuilder = DefaultDocumentBuilder.getInstance();
+	      String documentId = null;
+	      String prefix = <input:get-attribute module="page-envelope" as="string" name="context-prefix"/>;
+	      File[] inconsistentFiles = Grep.find(publication.getContentDirectory(Publication.LIVE_AREA), "href\\s*=\\s*\"" + document.getId().substring(1));
+	      if (inconsistentFiles.length &gt; 0) {
+
+                  </xsp:logic><inconsistent-documents><xsp:logic>
+
+                  for (int i = 0; i &lt; inconsistentFiles.length; i++) {
           
+		      documentId = fileMapper.getDocumentId(publication, Publication.LIVE_AREA, inconsistentFiles[i]);
+                      <inconsistent-document>
+			<xsp:attribute name="href"><xsp:expr>prefix + docBuilder.buildCanonicalUrl(publication, Publication.LIVE_AREA, documentId)</xsp:expr></xsp:attribute>
+                        <xsp:expr>documentId</xsp:expr>
+                      </inconsistent-document>
+                  }  
+                  </xsp:logic></inconsistent-documents><xsp:logic>
+	      }
+          }
       }
       catch (Exception e) {
           throw new ProcessingException(e);
