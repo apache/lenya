@@ -24,7 +24,7 @@
 
     <!-- Edit Article with Xopus2 -->
     <map:pipeline>
-      <map:match pattern="xopus/**.html">
+      <map:match pattern="xopus2/**.html">
         <map:aggregate element="lenya" label="lenyapage">
           <map:part src="cocoon:/menus/gregor.xml"/>
           <map:part src="content/authoring/{1}.xml" element="cmsbody"/>
