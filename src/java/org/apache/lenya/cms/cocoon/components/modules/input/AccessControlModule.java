@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.6 2003/08/07 14:03:23 andreas Exp $
+$Id: AccessControlModule.java,v 1.7 2003/08/12 15:17:52 andreas Exp $
 <License>
 
  ============================================================================
@@ -82,9 +82,7 @@ import org.apache.lenya.cms.ac2.Identity;
  * @author egli
  * 
  */
-public class AccessControlModule
-    extends AbstractInputModule
-    implements Serviceable {
+public class AccessControlModule extends AbstractInputModule implements Serviceable {
 
     public static final String USER_ID = "user-id";
     public static final String USER_NAME = "user-name";
@@ -112,10 +110,7 @@ public class AccessControlModule
      *
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
-    public Object getAttribute(
-        String name,
-        Configuration modeConf,
-        Map objectModel)
+    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
         throws ConfigurationException {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -123,8 +118,7 @@ public class AccessControlModule
         Object value = null;
 
         if (session != null) {
-            Identity identity =
-                (Identity) session.getAttribute(Identity.class.getName());
+            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             if (identity != null) {
 
                 if (name.equals(USER_ID)) {
@@ -158,17 +152,12 @@ public class AccessControlModule
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
-    public Object[] getAttributeValues(
-        String name,
-        Configuration modeConf,
-        Map objectModel)
+    public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
         throws ConfigurationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel)};
 
         return objects;
     }
-
-    protected static final String DEFAULT_RESOLVER = "composable";
 
     /**
      * Returns the item manager for a certain name.
@@ -186,11 +175,10 @@ public class AccessControlModule
         ItemManager itemManager = null;
 
         try {
-            selector =
-                (ServiceSelector) manager.lookup(
-                    AccessControllerResolver.ROLE + "Selector");
+            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
             resolver =
-                (AccessControllerResolver) selector.select(DEFAULT_RESOLVER);
+                (AccessControllerResolver) selector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
 
             String requestURI = request.getRequestURI();
             String context = request.getContextPath();
@@ -201,8 +189,7 @@ public class AccessControlModule
             accessController = resolver.resolveAccessController(url);
 
             AccreditableManager accreditableManager =
-                ((DefaultAccessController) accessController)
-                    .getAccreditableManager();
+                ((DefaultAccessController) accessController).getAccreditableManager();
 
             if (name.equals(USER_MANAGER)) {
                 itemManager = accreditableManager.getUserManager();
@@ -215,9 +202,7 @@ public class AccessControlModule
             }
 
         } catch (Exception e) {
-            throw new ConfigurationException(
-                "Obtaining item manager failed: ",
-                e);
+            throw new ConfigurationException("Obtaining item manager failed: ", e);
         } finally {
             if (selector != null) {
                 if (resolver != null) {

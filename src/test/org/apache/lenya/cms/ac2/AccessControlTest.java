@@ -94,8 +94,6 @@ public class AccessControlTest extends ExcaliburTest {
 
     protected static final String URL = "/test/authoring/index.html";
 
-    protected static final String DEFAULT_RESOLVER = "publication";
-
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
 
@@ -109,23 +107,22 @@ public class AccessControlTest extends ExcaliburTest {
         accessControllerResolverSelector =
             (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
         assertNotNull(accessControllerResolverSelector);
-            
-        accessControllerResolver = (AccessControllerResolver) accessControllerResolverSelector.select(DEFAULT_RESOLVER);
+
+        accessControllerResolver =
+            (AccessControllerResolver) accessControllerResolverSelector.select(
+                AccessControllerResolver.DEFAULT_RESOLVER);
 
         assertNotNull(accessControllerResolver);
         getLogger().info(
             "Using access controller resolver: [" + accessControllerResolver.getClass() + "]");
 
-        String contextUri =
-            "file://" + PublicationHelper.getPublication().getServletContext().getAbsolutePath();
         accessController =
             (DefaultAccessController)
                 (
                     (
                         PublicationAccessControllerResolver) accessControllerResolver)
                             .resolveAccessController(
-                URL,
-                contextUri);
+                URL);
 
         assertNotNull(accessController);
         getLogger().info("Resolved access controller: [" + accessController.getClass() + "]");
@@ -138,8 +135,11 @@ public class AccessControlTest extends ExcaliburTest {
             new File(
                 PublicationHelper.getPublication().getDirectory(),
                 "config/ac/passwd".replace('/', File.separatorChar));
-        ((FileAccreditableManager) accessController.getAccreditableManager())
-            .setConfigurationDirectory(accreditablesDirectory);
+        (
+            (FileAccreditableManager) accessController
+                .getAccreditableManager())
+                .setConfigurationDirectory(
+            accreditablesDirectory);
 
         String role = AccreditableManager.ROLE + "Selector";
 
@@ -182,7 +182,7 @@ public class AccessControlTest extends ExcaliburTest {
 
         return identity;
     }
-    
+
     /**
      * Returns the policy manager.
      * @return A policy manager.
@@ -190,7 +190,7 @@ public class AccessControlTest extends ExcaliburTest {
     protected FilePolicyManager getPolicyManager() {
         return (FilePolicyManager) getAccessController().getPolicyManager();
     }
-    
+
     /**
      * Returns the accreditable manager.
      * @return An accreditable manager.

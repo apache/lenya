@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.4 2003/08/07 13:19:01 andreas Exp $
+$Id: AccessControlAction.java,v 1.5 2003/08/12 15:17:52 andreas Exp $
 <License>
 
  ============================================================================
@@ -106,9 +106,12 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
         try {
             selector =
                 (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+                
+            getLogger().debug("Resolving AC resolver for type [" + AccessControllerResolver.DEFAULT_RESOLVER + "]");
             resolver =
                 (AccessControllerResolver) selector.select(
                     AccessControllerResolver.DEFAULT_RESOLVER);
+            getLogger().debug("Resolved AC resolver [" + resolver + "]");
 
             String webappUrl = ServletHelper.getWebappURI(request);
             accessController = resolver.resolveAccessController(webappUrl);
