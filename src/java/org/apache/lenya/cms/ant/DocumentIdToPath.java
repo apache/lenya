@@ -120,13 +120,17 @@ public class DocumentIdToPath extends PublicationTask {
 
 	  Publication publication= getPublication();
 	  DocumentIdToPathMapper pathMapper=publication.getPathMapper();
-      File file= pathMapper.getDirectory(publication, area, documentid);
-	  log("directory to String" + file.toString());
-	  log("directory abs path" + file.getAbsolutePath());
-       
+      String path = pathMapper.getPath(documentid, ""); 
+	  log("path " + path);
+
+	  int l = path.length();
+	  int index = path.lastIndexOf("/");
+	  String dir = path.substring(0, index);
+	  log("dir " + dir);
+	  
 	  Target target=getOwningTarget();
 	  Project project=target.getProject();
-	  project.setProperty(propertyname, file.getAbsolutePath());
+	  project.setProperty(propertyname, dir);
 	}
 
 	/** 
