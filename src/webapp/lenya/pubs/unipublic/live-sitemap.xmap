@@ -109,6 +109,44 @@
         <map:serialize type="xml"/>
       </map:match>
 
+
+<!-- Dossiers -->
+      <map:match pattern="dossiers/">
+        <map:redirect-to uri="2002/index.html"/>
+      </map:match>
+
+      <map:match pattern="dossiers/index.html">
+        <map:redirect-to uri="2002/index.html"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/content.xml">
+        <map:generate type="directory" src="docs/publication/live/dossiers/{1}"/>
+        <map:transform src="stylesheets/publication/Page/Dossiers/xinclude.xsl" />
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/live/dossiers/{1}/index.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/index.xml">
+        <map:generate src="cocoon:/dossiers/{1}/content.xml" />
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="dossiers/*/index.html">
+        <map:generate src="cocoon:/dossiers/{1}/index.xml" />
+        <map:transform src="stylesheets/publication/Page/Dossiers/Live/main.xsl" />
+        <map:serialize type="html"/>
+      </map:match>
+
+
+
+
+
       <!-- Dossier -->
       <map:match pattern="dossiers/*/*/content.xml">
         <map:generate src="docs/publication/authoring/dossiers/{1}/{2}/index.xml"/>
