@@ -17,7 +17,8 @@
       color:#ffffff;
     }
     
-    table.lenya-ant-log tr td, tr th {
+    table.lenya-ant-log tr td,
+    table.lenya-ant-log tr th {
       font-size: 80%;
     }
     .lenya-ant-error {
