@@ -26,7 +26,6 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Document;
 
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.xml.DocumentHelper;
@@ -34,8 +33,6 @@ import org.apache.lenya.xml.DocumentHelper;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Date;
 
@@ -83,13 +80,10 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
 
        // Replace id
         Element element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'id']");
-//        element.setNodeValue("tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
-
         DocumentHelper.setSimpleElementText(element, "tag:bob.blog," + year + ":" + month + ":" + day + ":" + childId);
         
         // Replace title 
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'title']");
-//        element.setNodeValue((String)parameters.get("title"));
         DocumentHelper.setSimpleElementText(element, (String)parameters.get("title"));
         element.setAttribute("rel","alternate");
         element.setAttribute("href","http://bob.blog");
@@ -97,7 +91,6 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
 
         // Replace Summary
         element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'summary']");
-//        element.setNodeValue("Summary");
         DocumentHelper.setSimpleElementText(element, "Summary");
 
 
