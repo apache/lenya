@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0"
+>
+
+<menu>
+
+  <xsp-wyona:util/>
+
+  <live_uri>/magazin/gesundheit/2002/0465/index.html</live_uri>
+
+  <menus>
+    <menu name="File">
+      <block>
+        <item>Edit</item>
+        <item>Publish</item>
+<!--
+        <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
+-->
+        <item href="index.xml">View&#160;XML</item>
+      </block>
+      <block>
+        <item>-----------</item>
+      </block>
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/wyona/cms/admin/users/passwd/<xsp:expr>(xsp_wyona_id == null ? "nobody" : xsp_wyona_id.getUsername())</xsp:expr>.html</xsp:attribute>Passwd</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/switch-user</xsp:attribute>Switch&#160;User</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+      </block>
+    </menu>
+    <menu name="Search">
+      <block>
+        <item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
+        <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
+      </block>
+    </menu>
+    <menu name="Help">
+      <block>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
+        <item href="http://www.wyona.org">About&#160;Wyona</item>
+      </block>
+    </menu>
+  </menus>
+
+</menu>
+
+</xsp:page>
