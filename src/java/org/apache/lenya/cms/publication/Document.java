@@ -52,15 +52,6 @@ public interface Document {
     String getName();
     
     /**
-     * Instead of returning the full document-id for this
-     * document it just returns the id of the particular 
-     * node, basically the basename of the document-id.
-     * 
-     * @return the node id, i.e. the basename of the document-id
-     */
-    String getNodeId();
-
-    /**
      * Returns the publication this document belongs to.
      * @return A publication object.
      */

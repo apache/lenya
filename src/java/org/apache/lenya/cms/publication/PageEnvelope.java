@@ -41,7 +41,6 @@ public class PageEnvelope {
     public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_NAME = "document-name";
     public static final String DOCUMENT_TYPE = "document-type";
-    public static final String DOCUMENT_NODE_ID = "document-node-id";
     public static final String DOCUMENT_LABEL = "document-label";
     public static final String DOCUMENT_URL = "document-url";
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
@@ -164,7 +163,7 @@ public class PageEnvelope {
     public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT,
             PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION,
             PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT,
-            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_NODE_ID,
+            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME,
             PageEnvelope.DOCUMENT_LABEL, PageEnvelope.DOCUMENT_URL,
             PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE, PageEnvelope.DOCUMENT_PATH,
             PageEnvelope.DOCUMENT_EXTENSION, PageEnvelope.DEFAULT_LANGUAGE,

@@ -74,8 +74,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 value = envelope.getDocument().getId();
             } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
                 value = envelope.getDocument().getName();
-            } else if (name.equals(PageEnvelope.DOCUMENT_NODE_ID)) { // FIXME: Why is this here?
-                value = envelope.getDocument().getNodeId();
             } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) { // FIXME: Why is this here?
                 value = envelope.getDocument().getLabel();
             } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {

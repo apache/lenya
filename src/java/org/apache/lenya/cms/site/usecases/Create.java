@@ -120,7 +120,7 @@ public class Create extends DocumentUsecase {
                 publication);
 
         String parentId = parent.getId().substring(1);
-        String childId = document.getNodeId();
+        String childId = document.getName();
 
         File doctypesDirectory = new File(publication.getDirectory(),
                 DocumentTypeBuilder.DOCTYPE_DIRECTORY);

@@ -109,14 +109,6 @@ public class DefaultDocument implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getNodeId()
-     * @deprecated replaced by getName()
-     */
-    public String getNodeId() {
-        return getName();
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
     public Publication getPublication() {

@@ -53,7 +53,7 @@
       <lenya-info:request-uri><request:get-uri/></lenya-info:request-uri>
       <lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
       <lenya-info:documentid><xsp:expr>documentId</xsp:expr></lenya-info:documentid>
-      <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-node-id"/></lenya-info:documentnodeid>
+      <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-name"/></lenya-info:documentnodeid>
       <lenya-info:date><input:get-attribute module="date" name="currentDate"/></lenya-info:date>
       <lenya-info:creator><input:get-attribute module="access-control" name="user-name"/></lenya-info:creator>
       <lenya-info:language><input:get-attribute module="page-envelope" name="document-language"/></lenya-info:language>
