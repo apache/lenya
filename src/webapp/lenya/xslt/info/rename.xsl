@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: rename.xsl,v 1.19 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id: rename.xsl,v 1.20 2004/04/29 14:54:21 gregor Exp $ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -59,7 +59,7 @@ function validRequired(formField,fieldLabel)
 {
 	var result = true;
 	
-	if (formField.value.match("[^a-zA-Z0-9_\\-]+"))
+	if (formField.value.match("[^a-zA-Z0-9\\-]+"))
 	{
 		alert('Please enter a valid value for the "' + fieldLabel +'" field.');
 		formField.focus();
