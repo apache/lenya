@@ -2,7 +2,29 @@
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp">
 	<!--logic tag that identifies embedded logic in the page-->
 	<today>
-		<xsp:logic>Date genText = new Date();</xsp:logic>
+		<xsp:structure>
+			<xsp:include>java.text.DateFormat</xsp:include>
+			<xsp:include>java.util.Locale</xsp:include>
+		</xsp:structure>
+		<xsp:logic>
+ 
+        // Get the current system date and time.
+        Date date = new Date();
+ 	String genText = new String();
+ 	
+        // Get a Swiss locale using a Locale constant.
+        Locale localeCH = new Locale("de", "DE"); 
+ 
+         // Get a date time formatter for display in Switzerland.
+        DateFormat fullDateFormatCH =
+            DateFormat.getDateTimeInstance(
+            DateFormat.FULL,
+            DateFormat.FULL,
+            localeCH);
+ 
+        genText = fullDateFormatCH.format(date);		
+		
+		</xsp:logic>
 		<xsp:expr>genText</xsp:expr>
 	</today>
 </xsp:page>

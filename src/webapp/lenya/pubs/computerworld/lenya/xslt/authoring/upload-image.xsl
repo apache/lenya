@@ -8,6 +8,7 @@
     <html>
       <head>
 	<title>Image Upload</title>
+		<link rel="stylesheet" type="text/css" href="/wyona-cms/wyona/default.css" />
       </head>
       <body>
 	<xsl:apply-templates/>

@@ -25,10 +25,10 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/headlines.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Headlines</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/headlines.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Headlines</item>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Preview</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Preview</item>
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/small-preview.xml&amp;task-id=publish</xsp:attribute>Publish&#160;Small Preview</item>

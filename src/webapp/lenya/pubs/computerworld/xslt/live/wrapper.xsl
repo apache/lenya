@@ -7,7 +7,7 @@
 
 <xsl:include href="../today.xsl"/>
 <xsl:include href="ads-inside.xsl"/> <!-- load inside banners, we are never on the front side -->
-<xsl:include href="navigation.xsl"/>
+<xsl:include href="../navigation.xsl"/>
 <xsl:include href="small-preview.xsl"/>
 
 <xsl:template match="span[@id = 'content']">
@@ -15,6 +15,10 @@
     <xsl:apply-templates select="/wyona/wrapper/html/body"/>
 </xsl:template>
 
+<!-- Replace Page title -->
+<xsl:template match="head/title">
+   <title><xsl:value-of select="/wyona/wrapper/html/head/title"/></title>
+</xsl:template>
 
 <xsl:template match="@*|*">
     <xsl:copy>
