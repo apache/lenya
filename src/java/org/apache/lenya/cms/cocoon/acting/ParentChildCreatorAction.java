@@ -42,6 +42,15 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
  *
  */
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
+    // Get Source
+    getLogger().error ("SOURCE: "+src);
+    if(src == null){
+      getLogger().error ("No source: e.g. src=\"docs/wyona/cms/tree.xml\"");
+      return null;
+      }
+    org.apache.cocoon.environment.Source inputSource=resolver.resolve(src);
+    getLogger().error("RESOLVED SOURCE: "+inputSource.getSystemId());
+
     // Get request object
     Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
     if(request == null){
@@ -66,12 +75,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
       return null;
       }
 
-    // Get Context
-    Context context=(Context)objectModel.get(Constants.CONTEXT_OBJECT);
-
     // Read tree
-    String treefilename=context.getRealPath("/wyona/cms/pubs/ethz-mat/docs/wyona/cms/tree.xml");
-    getLogger().error("CONTEXT: "+treefilename);
+    String treefilename=inputSource.getSystemId().substring(5); // 5: remove protocol "file:"
+    getLogger().error("Tree filename: "+treefilename);
     if(!new File(treefilename).exists()){
       return null;
       }
