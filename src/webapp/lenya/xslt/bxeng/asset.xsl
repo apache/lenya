@@ -39,8 +39,14 @@
   <script>
     var ext = '<xsl:value-of select="$extensions"/>';
 
+
     function insertAsset(src, size, title) {    
       <![CDATA[
+      <!--change < and & to entities-->
+	  title = title.replace(/&amp;/g, "&");          
+	  title = title.replace(/&/g, "&amp;");
+	  title = title.replace(/&lt;/g, "<");          
+	  title = title.replace(/</g, "&lt;");       
       window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'" size="'+size+'" type="">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
       ]]>
       window.close();
