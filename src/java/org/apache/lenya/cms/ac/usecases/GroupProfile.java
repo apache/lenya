@@ -39,6 +39,8 @@ public class GroupProfile extends AccessControlUsecase {
         
         this.group.setName(name);
         this.group.setDescription(description);
+
+	this.group.save();
     }
 
     /**
