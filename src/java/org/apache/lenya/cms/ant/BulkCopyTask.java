@@ -30,6 +30,17 @@ import org.apache.tools.ant.types.Path;
 
 /**
  * Copies all files matching filename or a all specififed filesets from each source directory.
+ * </br></br>
+ * Usage:
+ * &lt;bulkCopy 
+ *     sourcedirs="dirOne:dirTwo" 
+ *     todir="WEB-INF/lib" 
+ *     flatten="true">
+ *     &lt;fileset includes="java/lib/*"/&gt;
+ * &lt;/bulkCopy&gt;
+ * </br></br>
+ * The above sample copies <em>dirOne/java/lib/*</em> and <em>dirTwo/java/lib/*</em>
+ * to <em>WEB-INF/lib</em>.  
  */
 public class BulkCopyTask extends Copy {
     
