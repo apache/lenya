@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.12 2003/08/05 11:56:57 andreas Exp $
+$Id: PublicationFactory.java,v 1.13 2003/08/12 15:18:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,13 +60,13 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceUtil;
 
 import org.apache.lenya.util.ServletHelper;
 import org.apache.log4j.Category;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -229,7 +229,7 @@ public final class PublicationFactory {
         Source source = null;
         try {
             source = resolver.resolveURI("context:///");
-            File servletContext = new File(new URI(source.getURI()));
+            File servletContext = SourceUtil.getFile(source);
             publication = PublicationFactory.getPublication(webappUri, servletContext);
         } catch (Exception e) {
             throw new PublicationException(e);
