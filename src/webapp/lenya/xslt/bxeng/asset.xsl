@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: asset.xsl,v 1.2 2004/02/14 13:51:16 gregor Exp $
+ $Id: asset.xsl,v 1.3 2004/02/14 14:56:15 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -58,13 +58,14 @@ function check(fileinput) {
 </script>
 <div class="lenya-box">
       <div class="lenya-box-title">Add to Asset Library</div>
-	<form name="fileinput" action="{/usecase:asset/usecase:request-uri}" method="post" enctype="multipart/form-data" onsubmit="return check(fileinput)">
+	<form name="fileinput" action="" method="post" enctype="multipart/form-data" onsubmit="return check(fileinput)">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
 	  <input type="hidden" name="lenya.step" value="asset-upload"/>
 	  <input type="hidden" name="task-id" value="insert-asset"/>
 	  <input type="hidden" name="uploadtype" value="asset"/>
-	  <input type="hidden" name="properties.insert.asset.document-id" value="{/usecase:asset/usecase:document-id}"/>
-	  <input type="hidden" name="properties.insert.asset.language" value="{/usecase:asset/usecase:language}"/>
+      <input type="hidden" name="properties.asset.date" value="{/lenya-info:info/lenya-info:assets/lenya-info:date}"/>
+	  <input type="hidden" name="properties.insert.asset.document-id" value="{/lenya-info:info/lenya-info:assets/lenya-info:document-id}"/>
+	  <input type="hidden" name="properties.insert.asset.language" value="{/lenya-info:info/lenya-info:assets/lenya-info:language}"/>
 	  <table class="lenya-table-noborder">
 	    <xsl:if test="$error = 'true'">
 	      <tr>
@@ -85,7 +86,7 @@ function check(fileinput) {
 	      <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/></td>
+	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/lenya-info:info/lenya-info:assets/lenya-info:creator}"/></td>
 	    </tr>
 	    <tr>
 	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
@@ -95,7 +96,7 @@ function check(fileinput) {
 	      <td/>
 	      <td>
 		<input type="submit" value="Submit" />&#160;
-		<input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}';" value="Cancel"/>
+		<input type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
 	      </td>
 	    </tr>
 	  </table>

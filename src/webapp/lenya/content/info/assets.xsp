@@ -29,6 +29,9 @@
     <lenya-info:assets>
       <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
       <lenya-info:documentnodeid><input:get-attribute module="page-envelope" name="document-node-id"/></lenya-info:documentnodeid>
+      <lenya-info:date><input:get-attribute module="date" name="currentDate"/></lenya-info:date>
+      <lenya-info:creator><input:get-attribute module="access-control" name="user-name"/></lenya-info:creator>
+      <lenya-info:language><input:get-attribute module="page-envelope" name="document-language"/></lenya-info:language>
       <xsp:logic>
 	if (resources != null) {
 	  for(int i = 0; i &lt; resources.length; i++) {

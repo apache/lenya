@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: image.xsl,v 1.2 2004/02/14 14:31:03 gregor Exp $
+ $Id: image.xsl,v 1.3 2004/02/14 14:56:15 gregor Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
@@ -59,7 +59,7 @@
                 <div class="lenya-box">
                     <div class="lenya-box-title">Add to Asset Library</div>
                     <form name="fileinput" 
-                        action="{/usecase:asset/usecase:request-uri}" 
+                        action="" 
                         method="post" enctype="multipart/form-data" 
                         onsubmit="return check(fileinput)">
                         <input type="hidden" name="lenya.usecase" 
@@ -67,6 +67,7 @@
                         <input type="hidden" name="lenya.step" 
                             value="image-upload"/>
                         <input type="hidden" name="uploadtype" value="asset"/>
+                        <input type="hidden" name="properties.asset.date" value="{/lenya-info:info/lenya-info:assets/lenya-info:date}"/>
                         <table class="lenya-table-noborder">
                             <xsl:if test="$error = 'true'">
                                 <tr>
@@ -102,7 +103,7 @@
                                     <input class="lenya-form-element" 
                                         type="text" 
                                         name="properties.asset.creator" 
-                                        value="{/usecase:asset/usecase:creator}"/>
+                                        value="{/lenya-info:info/lenya-info:assets/lenya-info:creator}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -121,7 +122,7 @@
                                 <td/>
                                 <td> <input type="submit" 
                                     value="Submit"/>&#160; <input type="button" 
-                                    onClick="location.href='{/usecase:asset/usecase:request-uri}';" 
+                                    onClick="location.href='javascript:window.close();';" 
                                     value="Cancel"/> </td>
                             </tr>
                         </table>
