@@ -121,20 +121,44 @@
   </authorizers>
   
   <policy-managers>
-    <component-instance class="org.apache.lenya.cms.ac2.file.FilePolicyManager" logger="lenya.ac.policymanager" name="file"/>
+    <component-instance class="org.apache.lenya.cms.ac2.file.FilePolicyManager" logger="lenya.ac.policymanager" name="file">
+      <parameter name="directory" value="context:///lenya/config/ac/policies"/>
+    </component-instance>
+    <component-instance class="org.apache.lenya.cms.ac2.file.PublicationFilePolicyManager" logger="lenya.ac.policymanager" name="publication-file">
+      <parameter name="directory" value="context:///"/>
+    </component-instance>
     <component-instance class="org.apache.lenya.cms.ac2.sitemap.SitemapPolicyManager" logger="lenya.ac.policymanager" name="sitemap"/>
   </policy-managers>
   
   <component logger="lenya.ac.accesscontroller"
       class="org.apache.lenya.cms.ac2.DefaultAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/default">
-    <accreditable-manager type="file">
-      <parameter name="directory" value="context:///lenya/pubs/default/config/ac"/>
-    </accreditable-manager>
+      role="org.apache.lenya.cms.ac2.AccessController/global">
+    <accreditable-manager type="file"/>
     <policy-manager type="file"/>
+    <authorizer type="policy"/>
+  </component>
+  
+  <component logger="lenya.ac.accesscontroller"
+      class="org.apache.lenya.cms.ac2.DefaultAccessController"
+      role="org.apache.lenya.cms.ac2.AccessController/publication-file">
+    <accreditable-manager type="file"/>
+    <policy-manager type="publication-file"/>
     <authorizer type="policy"/>
     <authorizer type="workflow"/>
   </component>
+  
+  <component logger="lenya.ac.accesscontroller"
+      class="org.apache.lenya.cms.ac2.DefaultAccessController"
+      role="org.apache.lenya.cms.ac2.AccessController/sitemap">
+    <accreditable-manager type="file"/>
+    <policy-manager type="sitemap"/>
+    <authorizer type="policy"/>
+    <authorizer type="workflow"/>
+  </component>
+  
+  <component logger="lenya.ac.accesscontrollerresolver"
+      class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+      role="org.apache.lenya.cms.ac2.AccessControllerResolver"/>
 
   </xsl:copy>
 </xsl:template>
