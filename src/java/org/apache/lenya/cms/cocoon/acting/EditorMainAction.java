@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.8 2003/02/07 12:14:08 ah Exp $
+ * $Id: EditorMainAction.java,v 1.9 2003/02/13 19:17:35 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -91,10 +91,11 @@ import java.util.StringTokenizer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
- * $Id: EditorMainAction.java,v 1.8 2003/02/07 12:14:08 ah Exp $
+ * $Id: EditorMainAction.java,v 1.9 2003/02/13 19:17:35 andreas Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22
@@ -108,7 +109,7 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
         // Get request object
-        Request request = (Request) objectModel.get(Constants.REQUEST_OBJECT);
+        Request request = ObjectModelHelper.getRequest(objectModel);
 
         if (request == null) {
             getLogger().error("No request object");
@@ -126,7 +127,7 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
         }
 
         // Get request object
-        Context context = (Context) objectModel.get(Constants.CONTEXT_OBJECT);
+        Context context = ObjectModelHelper.getContext(objectModel);
 
         // the absolute path where Cocoon resides
         //     String xxx = context.getRealPath("/");

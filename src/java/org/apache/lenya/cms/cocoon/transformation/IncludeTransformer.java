@@ -1,5 +1,5 @@
 /*
- * $Id: IncludeTransformer.java,v 1.3 2003/02/10 14:59:42 egliwyona Exp $
+ * $Id: IncludeTransformer.java,v 1.4 2003/02/13 19:17:35 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,6 +48,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 
 import org.apache.cocoon.Constants;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.transformation.AbstractDOMTransformer;
 
@@ -105,7 +106,7 @@ public class IncludeTransformer extends AbstractDOMTransformer implements Config
                 getLogger().debug("No Parameter");
             }
 
-            Request request = (Request) this.objectModel.get(Constants.REQUEST_OBJECT);
+            Request request = ObjectModelHelper.getRequest(objectModel);
 
             String request_uri = request.getRequestURI();
             String sitemap_uri = request.getSitemapURI();

@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleImageUploadCreatorAction.java,v 1.25 2003/02/07 12:14:08 ah Exp $
+ * $Id: ArticleImageUploadCreatorAction.java,v 1.26 2003/02/13 19:17:35 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -71,6 +71,7 @@ import org.dom4j.io.XMLWriter;
 import java.io.*;
 
 import java.util.*;
+import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
@@ -161,8 +162,8 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
         Parameters parameters) throws Exception {
         HashMap results = new HashMap();
-        Request request = (Request) objectModel.get(Constants.REQUEST_OBJECT);
-        Context context = (Context) objectModel.get(Constants.CONTEXT_OBJECT);
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Context context = ObjectModelHelper.getContext(objectModel);
 
         // find the absolute path (so we know where to put images and
         // meta data)

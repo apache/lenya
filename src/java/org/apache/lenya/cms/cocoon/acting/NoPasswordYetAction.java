@@ -1,5 +1,5 @@
 /*
- * $Id: NoPasswordYetAction.java,v 1.2 2003/02/07 12:14:08 ah Exp $
+ * $Id: NoPasswordYetAction.java,v 1.3 2003/02/13 19:17:35 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,13 +58,14 @@ import java.io.File;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class NoPasswordYetAction extends AbstractAction {
     /**
@@ -91,7 +92,7 @@ public class NoPasswordYetAction extends AbstractAction {
         //
         String flagFileRelativePath = params.getParameter("flagfilerelativepath",
                 "new_installation_flag");
-        Context context = (Context) objectModel.get(Constants.CONTEXT_OBJECT);
+        Context context = ObjectModelHelper.getContext(objectModel);
         String flagFileAbsolutePath = context.getRealPath("/") + "/" + flagFileRelativePath;
         getLogger().error("DetectNewInstallationAction: flagFileAbsolutePath = " +
             flagFileAbsolutePath);

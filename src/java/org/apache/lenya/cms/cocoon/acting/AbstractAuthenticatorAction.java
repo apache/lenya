@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthenticatorAction.java,v 1.4 2003/02/07 12:14:08 ah Exp $
+ * $Id: AbstractAuthenticatorAction.java,v 1.5 2003/02/13 19:17:35 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -58,6 +58,7 @@ import org.apache.cocoon.util.Tokenizer;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
@@ -95,7 +96,7 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
         // Get request object
-        Request req = (Request) objectModel.get(Constants.REQUEST_OBJECT);
+        Request req = ObjectModelHelper.getRequest(objectModel);
 
         if (req == null) {
             getLogger().error("No request object");

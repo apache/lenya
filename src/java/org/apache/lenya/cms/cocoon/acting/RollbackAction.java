@@ -1,5 +1,5 @@
 /*
- * $Id: RollbackAction.java,v 1.3 2003/02/07 12:14:08 ah Exp $
+ * $Id: RollbackAction.java,v 1.4 2003/02/13 19:17:35 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -70,6 +70,7 @@ import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.cocoon.environment.ObjectModelHelper;
 
 
 /**
@@ -110,7 +111,7 @@ public class RollbackAction extends RevisionControllerAction implements Configur
         HashMap actionMap = new HashMap();
 
         // Get request object
-        Request request = (Request) objectModel.get(Constants.REQUEST_OBJECT);
+        Request request = ObjectModelHelper.getRequest(objectModel);
 
         if (request == null) {
             getLogger().error("No request object");
