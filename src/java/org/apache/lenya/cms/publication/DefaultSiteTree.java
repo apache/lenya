@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.29 2003/08/19 13:17:51 edith Exp $
+$Id: DefaultSiteTree.java,v 1.30 2003/08/27 16:58:34 egli Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -535,7 +535,6 @@ public class DefaultSiteTree implements SiteTree {
             return;
         } else {
             for (int i = 0; i < children.length; i++) {
-                SiteTreeNode node = children[i];
                 importSubtree(newParent, children[i], children[i].getId());
             }
         }

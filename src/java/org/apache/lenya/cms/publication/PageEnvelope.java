@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.44 2003/08/21 14:03:18 egli Exp $
+$Id: PageEnvelope.java,v 1.45 2003/08/27 16:57:51 egli Exp $
 <License>
 
  ============================================================================
@@ -60,8 +60,6 @@ import org.apache.cocoon.environment.Request;
 
 import org.apache.lenya.cms.rc.RCEnvironment;
 
-import org.apache.log4j.Category;
-
 import java.util.Map;
 
 /**
@@ -71,7 +69,6 @@ import java.util.Map;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class PageEnvelope {
-    private static Category log = Category.getInstance(PageEnvelope.class);
     public static final String PUBLICATION_ID = "publication-id";
     public static final String PUBLICATION = "publication";
     public static final String CONTEXT = "context-prefix";

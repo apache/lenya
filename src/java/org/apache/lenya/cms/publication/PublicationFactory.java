@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.17 2003/08/18 17:13:22 andreas Exp $
+$Id: PublicationFactory.java,v 1.18 2003/08/27 16:56:29 egli Exp $
 <License>
 
  ============================================================================
@@ -63,8 +63,6 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 
 import org.apache.lenya.util.ServletHelper;
-import org.apache.log4j.Category;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -82,7 +80,6 @@ public final class PublicationFactory {
     private PublicationFactory() {
     }
 
-    private static Category log = Category.getInstance(PublicationFactory.class);
     private static Map keyToPublication = new HashMap();
 
     /**

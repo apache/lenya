@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.26 2003/08/21 09:02:30 gregor Exp $
+$Id: Publication.java,v 1.27 2003/08/27 16:57:51 egli Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,6 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.log4j.Category;
 import org.xml.sax.SAXException;
 
 import java.io.File;
@@ -74,8 +73,6 @@ import java.util.HashMap;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class Publication {
-    private static Category log = Category.getInstance(Publication.class);
-
     public static final String AUTHORING_AREA = "authoring";
     public static final String LIVE_AREA = "live";
     public static final String INFO_AREA = "info";
