@@ -252,9 +252,9 @@ public class RevisionController {
             rcml.pruneEntries(this.backupDir);
             rcml.write();
 
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             log.error("File not found" +e.toString());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             log.error("IO error " +e.toString());
         } finally {
 	        if (in != null)
