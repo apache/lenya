@@ -47,10 +47,14 @@ import java.io.File;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.workflow.Event;
+import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.State;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowBuildException;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.impl.EventImpl;
+import org.apache.lenya.workflow.impl.StateImpl;
 import org.apache.lenya.workflow.impl.WorkflowBuilder;
+import org.apache.lenya.workflow.impl.WorkflowImpl;
 import org.apache.lenya.workflow.impl.WorkflowInstanceImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -64,7 +68,7 @@ import org.w3c.dom.Element;
  */
 public class WorkflowDocument extends WorkflowInstanceImpl {
 
-    protected WorkflowDocument(Document document) throws WorkflowBuildException {
+    protected WorkflowDocument(Document document) throws WorkflowException {
         assert document != null;
         this.document = document;
 
@@ -78,10 +82,12 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
             assert documentTypeName != null;
             type = new DocumentType(documentTypeName);
         } catch (Exception e) {
-            throw new WorkflowBuildException(e);
+            throw new WorkflowException(e);
         }
 
-        this.workflow = WorkflowFactoryImpl.buildWorkflow(document.getPublication(), type);
+        WorkflowImpl workflow
+            = (WorkflowImpl) WorkflowFactory.buildWorkflow(document.getPublication(), type);
+        setWorkflow(workflow);
 
         // initialize instance state from last version element
         NamespaceHelper helper =
@@ -94,7 +100,12 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
         if (versionElements.length > 0) {
             Element lastElement = versionElements[versionElements.length - 1]; 
             String stateId = lastElement.getAttribute(STATE_ATTRIBUTE);
-            State state = getState(stateId);
+            State state;
+            try {
+                state = getState(stateId);
+            } catch (WorkflowException e) {
+                throw new WorkflowException(e);
+            }
             setCurrentState(state);
         }
                 
@@ -108,7 +119,7 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
         
         String documentPath = document.getId().replace('/', File.separatorChar) + ".xml";
         
-        File workflowDirectory = new File(document.getPublication().getDirectory(), WorkflowFactoryImpl.WORKFLOW_DIRECTORY);
+        File workflowDirectory = new File(document.getPublication().getDirectory(), WorkflowFactory.WORKFLOW_DIRECTORY);
         File historyDirectory = new File(workflowDirectory, HISTORY_PATH);
         File historyFile = new File(historyDirectory, documentPath);
         return historyFile;
@@ -122,10 +133,50 @@ public class WorkflowDocument extends WorkflowInstanceImpl {
         return document;
     }
 
-    private Workflow workflow;
-
     public static final String DOCTYPE_ATTRIBUTE = "doctype";
     public static final String VERSION_ELEMENT = "version";
     public static final String STATE_ATTRIBUTE = "state";
+    public static final String USER_ATTRIBUTE = "user";
+    public static final String EVENT_ATTRIBUTE = "event";
 
+    /* (non-Javadoc)
+     * @see org.apache.lenya.workflow.WorkflowInstance#invoke(org.apache.lenya.workflow.Situation, org.apache.lenya.workflow.Event)
+     */
+    public void invoke(Situation situation, Event event)
+        throws WorkflowException {
+        super.invoke(situation, event);
+        
+        File file = getHistoryFile(getDocument());
+
+        try {
+            org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(file);
+            Element root = xmlDocument.getDocumentElement();
+
+            NamespaceHelper helper =
+                new NamespaceHelper(
+                    WorkflowBuilder.NAMESPACE,
+                    WorkflowBuilder.DEFAULT_PREFIX,
+                    xmlDocument);
+                    
+            CMSSituation cmsSituation = (CMSSituation) situation;
+                    
+            Element versionElement = helper.createElement(VERSION_ELEMENT);
+            versionElement.setAttribute(STATE_ATTRIBUTE, ((StateImpl) getCurrentState()).getId());
+            versionElement.setAttribute(USER_ATTRIBUTE, cmsSituation.getUser().getId());
+            versionElement.setAttribute(EVENT_ATTRIBUTE, ((EventImpl) event).getName());
+            
+            root.appendChild(versionElement);
+            DocumentHelper.writeDocument(xmlDocument, file);
+            
+        } catch (Exception e) {
+            throw new WorkflowException(e);
+        }
+    }
+    
+    public void invoke(Situation situation, String eventName) throws WorkflowException {
+        assert eventName != null;
+        Event event = ((WorkflowImpl) getWorkflow()).getEvent(eventName);
+        invoke (situation, event);
+    }
+    
 }
