@@ -29,7 +29,7 @@
         <node-23 label="Configure menus, creator, publisher, scheduler"/>
       </node-14>
     </node-6>
-    <node-24 label="Concepts and Best Practises">
+    <node-24 href="concepts/" label="Concepts and Best Practises">
       <node-25 label="Architecture">
         <node-26 label="Overview"/>
         <node-27 label="Apache Cocoon"/>
@@ -39,10 +39,10 @@
       </node-25>
       <node-31 label="Directory structure"/>
       <node-32 label="Different sitemaps and their function"/>
-      <node-33 label="Site tree"/>
+      <node-33 href="siteTree.html" label="Site tree"/>
       <node-34 label="Doctypes"/>
       <node-35 label="URI space"/>
-      <node-36 label="Page envelope"/>
+      <node-36 href="pageEnvelope.html" label="Page envelope"/>
       <node-37 label="XHTML templating"/>
       <node-38 label="Metadata"/>
       <node-39 href="tasks/" label="Tasks">
@@ -59,9 +59,9 @@
         <node-49 label="Developing Tasks"/>
       </node-39>
     </node-24>
-    <node-50 label="Components ">
-      <node-51 label="Access controlling">
-        <node-52 label="Overview"/>
+    <node-50 href="components/" label="Components ">
+      <node-51 href="access_controlling/" label="Access controlling">
+        <node-52 href="overview.html" label="Overview"/>
         <node-53 label="Users and roles (IML)"/>
         <node-54 label="Policies (PML)"/>
         <node-55 label="Authenticators and authorisers"/>
