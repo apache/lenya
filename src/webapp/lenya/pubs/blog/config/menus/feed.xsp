@@ -40,7 +40,7 @@
         <item uc:usecase="create" uc:step="showscreen" href="?doctype=entry">Add&#160;new&#160;Entry</item>
       </block>
       <block>
-        <item uc:usecase="edit" href="../../sidebar.html?lenya.step=open&amp;doctype=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
+        <item uc:usecase="edit" href="../../sidebar.html?lenya.step=open&amp;form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
       </block>
       <block>
         <item><xsp:attribute name="href">?lenya.usecase=logout</xsp:attribute>Logout</item>

@@ -55,19 +55,17 @@
       
       <menu label="Search" name="Edit">
 <xsp:logic>
-//if (docType.equals("simple")) {
+if (docType.equals("simple")) {
         <block>
-          <item uc:usecase="edit" uc:step="open" wf:event="edit" href="?doctype=simple">Edit&#160;with&#160;Forms</item>
+          <item uc:usecase="edit" uc:step="open" wf:event="edit" href="?form=simple">Edit&#160;with&#160;Forms</item>
           <item uc:usecase="bxe" uc:step="open" wf:event="edit" href="?">Edit&#160;with&#160;BXE</item>
         </block>
-//}
-<!--
+}
 else if (docType.equals("xhtml")) {
         <block>
-          <item href="?lenya.step=open&amp;doctype=xhtml" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
+          <item href="?lenya.step=open&amp;form=xhtml" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
         </block>
 }
--->
 </xsp:logic>
 <!--
         <block>

@@ -333,9 +333,9 @@
               <map:transform src="xslt/authoring/edit/removeSourceTags.xsl"/>
               <!-- FIXME: CDATA is also being modified by replace-predifined-entities.xsl, which actually shouldn't -->
               <map:transform src="xslt/authoring/edit/replace-predifined-entities.xsl"/>
-              <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
+              <map:transform src="pubs/{1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
-                <map:parameter name="doctype" value="{request-param:doctype}"/>
+                <map:parameter name="form" value="{request-param:form}"/>
               </map:transform>
               <map:serialize type="html" />
             </map:match>
@@ -360,9 +360,9 @@
                 <!-- FIXME: CDATA is also being modified by replace-predifined-entities.xsl, which actually shouldn't -->
                 <map:transform src="xslt/authoring/edit/replace-predifined-entities.xsl"/>
 
-                <map:transform src="pubs/{../1}/lenya/xslt/formeditor/{request-param:doctype}.xsl">
+                <map:transform src="pubs/{../1}/lenya/xslt/formeditor/{request-param:form}.xsl">
                   <map:parameter name="docid" value="{page-envelope:document-path}"/>
-                  <map:parameter name="doctype" value="{request-param:doctype}"/>
+                  <map:parameter name="form" value="{request-param:form}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:transform>
                 <map:serialize type="html" />

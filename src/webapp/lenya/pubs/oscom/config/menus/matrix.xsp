@@ -34,7 +34,7 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item uc:usecase="edit" href="?lenya.step=open&amp;doctype=cmfs">Edit&#160;with&#160;Forms</item>
+        <item uc:usecase="edit" href="?lenya.step=open&amp;form=cmfs">Edit&#160;with&#160;Forms</item>
 <!--
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/matrix/"+projectid+".html"</xsp:expr>?documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
 -->
