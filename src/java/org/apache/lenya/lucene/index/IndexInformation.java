@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexInformation.java,v 1.12 2004/04/22 17:02:30 michi Exp $  */
+/* $Id: IndexInformation.java,v 1.13 2004/07/10 23:17:24 andreas Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -23,12 +23,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.apache.log4j.Category;
 import org.apache.lucene.index.IndexReader;

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReTokenizeFile.java,v 1.18 2004/05/12 16:36:06 michi Exp $  */
+/* $Id: ReTokenizeFile.java,v 1.19 2004/07/10 23:17:24 andreas Exp $  */
 
 package org.apache.lenya.lucene;
 
@@ -25,8 +25,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.util.StringTokenizer;

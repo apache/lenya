@@ -15,17 +15,12 @@
  *
  */
 
-/* $Id: IterativeHTMLCrawler.java,v 1.27 2004/03/06 00:41:07 michi Exp $  */
+/* $Id: IterativeHTMLCrawler.java,v 1.28 2004/07/10 23:18:23 andreas Exp $  */
 
 package org.apache.lenya.search.crawler;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;

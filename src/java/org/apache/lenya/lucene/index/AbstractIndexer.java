@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.16 2004/04/24 20:59:15 gregor Exp $  */
+/* $Id: AbstractIndexer.java,v 1.17 2004/07/10 23:17:24 andreas Exp $  */
 
 package org.apache.lenya.lucene.index;
 
@@ -26,7 +26,6 @@ import java.util.Arrays;
 
 import org.apache.log4j.Category;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.de.GermanAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
