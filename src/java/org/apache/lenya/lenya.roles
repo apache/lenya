@@ -25,6 +25,7 @@
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
     <hint shorthand="policy" class="org.apache.lenya.cms.ac2.PolicyAuthorizer"/>
     <hint shorthand="workflow" class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer"/>
+    <hint shorthand="usecase" class="org.apache.lenya.cms.ac2.usecase.UsecaseAuthorizer"/>
   </role>
   
   <role name="org.apache.lenya.cms.ac2.PolicyManagerSelector"

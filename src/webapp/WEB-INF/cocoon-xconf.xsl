@@ -121,6 +121,7 @@
   <authorizers>
     <component-instance class="org.apache.lenya.cms.ac2.PolicyAuthorizer" logger="lenya.ac.authorizer.policy" name="policy"/>
     <component-instance class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer.workflow" name="workflow"/>
+    <component-instance class="org.apache.lenya.cms.ac2.usecase.UsecaseAuthorizer" logger="lenya.ac.authorizer.usecase" name="usecase"/>
   </authorizers>
   
   <policy-managers>
@@ -151,6 +152,7 @@
     <policy-manager type="publication-file"/>
     <authorizer type="policy"/>
     <authorizer type="workflow"/>
+    <authorizer type="usecase"/>
     <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
   </component>
   
@@ -161,6 +163,7 @@
     <policy-manager type="sitemap"/>
     <authorizer type="policy"/>
     <authorizer type="workflow"/>
+    <authorizer type="usecase"/>
     <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
   </component>
   
