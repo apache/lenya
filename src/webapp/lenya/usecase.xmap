@@ -132,7 +132,7 @@
       
       <!-- create the current job snapshot -->
       <map:match pattern="scheduler-servlet">
-        <map:generate src="{request:contextPath}/servlet/QuartzSchedulerServlet" type="servletproxy"/>
+          <map:generate src="{request:contextPath}/servlet/QuartzSchedulerServlet" type="servletproxy"/>
         <map:transform src="xslt/scheduler/sort.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
@@ -207,17 +207,15 @@
             <map:call resource="style-cms-page"/>
           </map:match>
           
-          <!-- add job: redirect to page -->
-          <map:match pattern="add" type="step">
-            <map:call resource="scheduler-page">
-              <map:parameter name="publication-id" value="{../../1}"/>
-              <map:parameter name="uri" value="{../../2}/{../../3}"/>
-            </map:call>
-            <map:transform src="xslt/util/redirect.xsl">
-              <map:parameter name="url" value="{request:requestURI}"/>
-            </map:transform>
-            <map:serialize/>
-          </map:match>
+          <!-- other steps: add job (redirect to page) -->
+					<map:call resource="scheduler-page">
+						<map:parameter name="publication-id" value="{../1}"/>
+						<map:parameter name="uri" value="{../2}/{../3}"/>
+					</map:call>
+					<map:transform src="xslt/util/redirect.xsl">
+						<map:parameter name="url" value="{request:requestURI}"/>
+					</map:transform>
+					<map:serialize/>
           
         </map:match>
         
@@ -299,11 +297,13 @@
         <map:match pattern="publish" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:call resource="cms-screen">
+            <map:call resource="cms-screen-xml">
               <map:parameter name="publication-id" value="{../../1}"/>
               <map:parameter name="serverpage" value="publishing/screen.xsp"/>
               <map:parameter name="stylesheet" value="publishing/publish-screen.xsl"/>
             </map:call>
+            <map:transform src="cocoon:/notification/{../../1}/publish.xsl"/>
+            <map:call resource="style-cms-page"/>
           </map:match>
           
           <map:match pattern="publish" type="step">
