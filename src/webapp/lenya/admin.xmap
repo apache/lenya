@@ -41,12 +41,12 @@
 
     <map:pipeline>
       <map:match pattern="**">
- 	    <map:aggregate element="lenya" label="aggregate">
-      <map:part src="cocoon:/menus/admin.xml"/>
-	      <map:part element="cmsbody" src="resources/html/index.html"/>
-	    </map:aggregate>
-	    <map:transform src="xslt/admin/root.xsl" label="content" />
-	    <map:serialize type="html"/>
+        <map:aggregate element="lenya" label="aggregate">
+          <map:part src="cocoon:/menus/admin.xml"/>
+          <map:part element="cmsbody" src="resources/html/index.html"/>
+	</map:aggregate>
+	<map:transform src="xslt/admin/root.xsl" label="content" />
+	<map:serialize type="html"/>
       </map:match>
     </map:pipeline>
     
