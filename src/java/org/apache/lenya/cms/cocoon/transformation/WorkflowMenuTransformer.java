@@ -133,7 +133,7 @@ public class WorkflowMenuTransformer
         Group group = new Group("test-group");
         group.addRole(new Role("editor"));
       
-        User user = new FileUser("testuser");
+        User user = new FileUser(publication, "testuser");
         user.addGroup(group);
         
         Document document = new DefaultDocument(publication, envelope.getDocumentId());
