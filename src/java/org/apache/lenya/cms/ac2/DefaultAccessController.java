@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.7 2003/07/24 18:36:37 andreas Exp $
+$Id: DefaultAccessController.java,v 1.8 2003/07/29 17:23:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,7 @@ $Id: DefaultAccessController.java,v 1.7 2003/07/24 18:36:37 andreas Exp $
 package org.apache.lenya.cms.ac2;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.avalon.framework.activity.Disposable;
@@ -71,6 +72,8 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.IPRange;
+import org.apache.lenya.cms.ac.Machine;
 
 /**
  * @author andreas
@@ -346,4 +349,42 @@ public class DefaultAccessController
         return identity.belongsTo(getAccreditableManager());
     }
 
+    /**
+     * @see org.apache.lenya.cms.ac2.AccessController#setupIdentity(org.apache.cocoon.environment.Request)
+     */
+    public void setupIdentity(Request request) throws AccessControlException {
+        Session session = request.getSession(true);
+        if (!hasValidIdentity(session)) {
+            Identity identity = new Identity();
+            String remoteAddress = request.getRemoteAddr();
+            
+            Machine machine = new Machine(remoteAddress);
+            for (Iterator i = accreditableManager.getIPRangeManager().getIPRanges(); i.hasNext(); ) {
+                IPRange range = (IPRange) i.next();
+                if (range.contains(machine)) {
+                    machine.addIPRange(range);
+                }
+            }
+
+            identity.addIdentifiable(machine);
+            session.setAttribute(Identity.class.getName(), identity);
+        }
+    }
+
+    /**
+     * Checks if the session contains an identity that is not null and belongs
+     * to the used access controller. 
+     * @param session The current session.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected boolean hasValidIdentity(Session session) throws AccessControlException {
+        boolean valid = true;
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        if (identity == null || !ownsIdenity(identity)) {
+            valid = false;
+        }
+        return valid;
+    }
+    
 }

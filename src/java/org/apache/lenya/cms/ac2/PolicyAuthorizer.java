@@ -1,5 +1,5 @@
 /*
-$Id: PolicyAuthorizer.java,v 1.11 2003/07/29 14:26:13 andreas Exp $
+$Id: PolicyAuthorizer.java,v 1.12 2003/07/29 17:23:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -132,14 +132,6 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         }
 
         String url = requestUri.substring(context.length());
-
-        Machine machine = identity.getMachine();
-        for (Iterator i = accreditableManager.getIPRangeManager().getIPRanges(); i.hasNext(); ) {
-            IPRange range = (IPRange) i.next();
-            if (range.contains(machine)) {
-                machine.addIPRange(range);
-            }
-        }
 
         Policy policy = policyManager.getPolicy(accreditableManager, url);
         Role[] roles = policy.getRoles(identity);

@@ -1,5 +1,5 @@
 /*
-$Id: AccessController.java,v 1.9 2003/07/17 16:24:19 andreas Exp $
+$Id: AccessController.java,v 1.10 2003/07/29 17:23:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -93,6 +93,13 @@ public interface AccessController extends Component {
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    boolean ownsIdenity(Identity identity) throws AccessControlException;
+    //boolean ownsIdenity(Identity identity) throws AccessControlException;
+    
+    /**
+     * Initializes the identity for this access controller.
+     * @param request The request that contains the identity information.
+     * @throws AccessControlException when something went wrong.
+     */
+    void setupIdentity(Request request) throws AccessControlException;
 
 }

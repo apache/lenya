@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.11 2003/07/29 14:27:41 andreas Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.12 2003/07/29 17:23:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,7 +64,6 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.util.Stack;
 
@@ -120,7 +119,7 @@ public class DelegatingAuthorizerAction extends AccessControlAction {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         
-        initializeIdentity(request);
+        getAccessController().setupIdentity(request);
         setHistory(request);
 
         boolean authorized = authorize(request);
@@ -161,36 +160,4 @@ public class DelegatingAuthorizerAction extends AccessControlAction {
 
     }
     
-    /**
-     * Checks if the session contains an identity that is not null and belongs
-     * to the used access controller. 
-     * @param session The current session.
-     * @return A boolean value.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected boolean hasValidIdentity(Session session) throws AccessControlException {
-        boolean valid = true;
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        if (identity == null || !getAccessController().ownsIdenity(identity)) {
-            valid = false;
-        }
-        return valid;
-    }
-    
-    /**
-     * Initializes the identity, adding the current machine.
-     * @param request The request.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected void initializeIdentity(Request request) throws AccessControlException {
-        Session session = request.getSession(true);
-        if (!hasValidIdentity(session)) {
-            Identity identity = new Identity();
-            String remoteAddress = request.getRemoteAddr();
-            Machine machine = new Machine(remoteAddress);
-            identity.addIdentifiable(machine);
-            session.setAttribute(Identity.class.getName(), identity);
-        }
-    }
-
 }
