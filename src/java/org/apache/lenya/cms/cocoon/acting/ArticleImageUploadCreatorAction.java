@@ -374,7 +374,25 @@ public class ArticleImageUploadCreatorAction
 	// find the node where the figure tag has to be inserted
 	Node node = document.selectSingleNode(imageXPath);
 	
+	if (node == null) {
+	    // Hmm, we can't find the specified imageXPath in the
+	    // requesting document. Something is fishy. Log and return
+	    getLogger().error("Could not find xpath:" + imageXPath +
+			      " in document: " + requestingDocumentPath);
+	    return;
+	}
 	Element parent = node.getParent();
+
+	if (parent == null) {
+	    // Hmm, the specified xpath doesn't seem to have a
+	    // parent. Where do we insert the media tag now? Instead
+	    // of making any assuptions we log and return without
+	    // adding the media tag.
+	    getLogger().error("The specified xpath:" + imageXPath +
+			      " doesn't have a parent. Don't know where" + 
+			      " to insert the media tag.");
+	    return;
+	}
 	List list = parent.content();
 	
 	// The request parameters insertBefore and insertAfter overwrite the configuration (insertImageBefore)
