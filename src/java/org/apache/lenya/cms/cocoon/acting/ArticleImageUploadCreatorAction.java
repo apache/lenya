@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ArticleImageUploadCreatorAction.java,v 1.35 2003/07/04 13:15:47 egli Exp $
 <License>
 
  ============================================================================
@@ -66,7 +66,6 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.servlet.multipart.MultipartHttpServletRequest;
 import org.apache.cocoon.servlet.multipart.Part;
 
 import org.apache.excalibur.source.Source;
@@ -104,27 +103,28 @@ import java.util.Properties;
  */
 public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
     implements ThreadSafe {
-    Properties default_properties = null;
+
+    private Properties default_properties = null;
 
     /**
      * The variable <code>recourcesRoot</code> is configured trough parameters to the action in the
      * sitemap. It defines the path to where images are uploaded.
      */
-    protected String recourcesRoot = null;
+    private String recourcesRoot = null;
 
     /**
      * The variable <code>metaRoot</code> is configured trough parameters to the action in the
      * sitemap. It defines where meta files which contain dublin core information for the uploaded
      * image are to be stored.
      */
-    protected String metaRoot = null;
+    private String metaRoot = null;
 
     /**
      * The variable <code>docsRoot</code> is configured trough parameters to the action in the
      * sitemap. It defines where the xml files are located. This is needed to find the path to the
      * original file that requested the upload where we need to insert a media tag.
      */
-    protected String docsRoot = null;
+    private String docsRoot = null;
 
     /**
      * The variable <code>insertImageBefore</code> is configured trough parameters to the action in
@@ -132,23 +132,24 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
      * The values for the variables <code>insertBefore</code> and <code>insertAfter</code> come
      * from an optional request parameter which overwrites the configured behaviour.
      */
-    protected boolean insertImageBefore = true;
-    protected boolean insertBefore = false;
-    protected boolean insertAfter = false;
-    final String UPLOADFILE_PARAM_NAME = "uploadFile";
-    final String IMAGEXPATH_PARAM_NAME = "xpath";
-    final String DOCUMENTID_PARAM_NAME = "documentid";
-    final String REFERER_PARAM_NAME = "referer";
-    final String INSERTBEFORE_PARAM_NAME = "insertBefore";
+    private boolean insertImageBefore = true;
+    private boolean insertBefore = false;
+    private boolean insertAfter = false;
+    
+    public static final String UPLOADFILE_PARAM_NAME = "uploadFile";
+    public static final String IMAGEXPATH_PARAM_NAME = "xpath";
+    public static final String DOCUMENTID_PARAM_NAME = "documentid";
+    public static final String REFERER_PARAM_NAME = "referer";
+    public static final String INSERTBEFORE_PARAM_NAME = "insertBefore";
 
     // optional parameters for meta data according to dublin core
-    final String[] DUBLIN_CORE_PARAMETERS = {
+    public static final String[] DUBLIN_CORE_PARAMETERS = {
         "title", "creator", "subject", "description", "publisher", "contributor", "date", "type",
         "format", "identifier", "source", "language", "relation", "coverage", "rights"
     };
 
     /**
-     * Describe <code>configure</code> method here.
+     * Configure the ArticleImageUploadCreatorAction
      *
      * @param conf a <code>Configuration</code> value
      *
@@ -169,7 +170,9 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
     }
 
     /**
-     * Describe <code>act</code> method here.
+     * Retrieve the file from the request and store it in the
+     * corresponding resources directory, create a meta file and
+     * insert an image tag in the requesting document.
      *
      * @param redirector a <code>Redirector</code> value
      * @param resolver a <code>SourceResolver</code> value
@@ -177,12 +180,18 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
      * @param source a <code>String</code> value
      * @param parameters a <code>Parameters</code> value
      *
-     * @return a <code>Map</code> value
+     * @return a <code>Map</code> containing the referer or null if
+     * the upload failed.
      *
      * @exception Exception if an error occurs
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
-        Parameters parameters) throws Exception {
+    public Map act(
+        Redirector redirector,
+        SourceResolver resolver,
+        Map objectModel,
+        String source,
+        Parameters parameters)
+        throws Exception {
         HashMap results = new HashMap();
         Request request = ObjectModelHelper.getRequest(objectModel);
         Context context = ObjectModelHelper.getContext(objectModel);
@@ -255,8 +264,9 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
         Iterator iter = dublinCoreParams.keySet().iterator();
 
         while (iter.hasNext()) {
-            String paramName = (String) iter.next();
-            getLogger().debug(paramName + ": " + dublinCoreParams.get(paramName));
+            String paramName = (String)iter.next();
+            getLogger().debug(
+                paramName + ": " + dublinCoreParams.get(paramName));
         }
 
         // if we can't find the uploadFile simply return, i.e. don't
@@ -268,93 +278,98 @@ public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
         }
 
         // upload the file to the uploadDir
-        if (!(request instanceof MultipartHttpServletRequest)) {
-            getLogger().error("Not a multipart request!");
+        Part part = (Part)request.get(UPLOADFILE_PARAM_NAME);
+        getLogger().debug("Uploading file: " + part.getFileName());
+
+        String identifier = (String)dublinCoreParams.get("identifier");
+        String originalFileName = part.getFileName();
+        String fileName = null;
+
+        if (identifier.equals("")) {
+            // if no identifier is specified we use the
+            // originalFileName as the filename.
+            fileName = originalFileName;
         } else {
-            Part part = (Part) request.get(UPLOADFILE_PARAM_NAME);
-            getLogger().debug("Uploading file: " + part.getFileName());
-
-            String identifier = (String) dublinCoreParams.get("identifier");
-            String originalFileName = part.getFileName();
-            String fileName = null;
-
-            if (identifier.equals("")) {
-                // if no identifier is specified we use the
-                // originalFileName as the filename.
-                fileName = originalFileName;
-            } else {
-                // due to some requirement we want the file extension
-                // of the original file and want to add it to the
-                // filename that the user provided through the
-                // "identifier" parameter. 
-                String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-                fileName = identifier + extension;
-            }
-
-            getLogger().debug("fileName: " + fileName);
-
-            // grab the mime type and add it to the dublin core meta
-            // data as "format"
-            // FIXME: put the proper mime type in here.
-            // 	    String mimeType = ((FilePart)obj).getMimeType();
-            String mimeType = "";
-
-            if (mimeType != null) {
-                dublinCoreParams.put("format", mimeType);
-            }
-
-            String imagePath = getImagePath(sitemapPath, recourcesRoot, documentId, fileName);
-
-            getLogger().debug("sitemapPath: " + sitemapPath);
-            getLogger().debug("imagePath: " + imagePath);
-
-            File dir = (new File(imagePath)).getParentFile();
-
-            if (!dir.exists()) {
-                getLogger().info(".act(): Create directories: " + dir);
-                dir.mkdirs();
-            }
-
-            File uploadedFile = new File(dir, part.getFileName());
-            uploadedFile.createNewFile();
-
-            FileOutputStream out = new FileOutputStream(uploadedFile);
-            InputStream in = part.getInputStream();
-            int read = in.read(buf);
-
-            while (read > 0) {
-                out.write(buf, 0, read);
-                read = in.read(buf);
-            }
-
-            /*
-                        if (obj instanceof FilePartFile) {
-                            ((FilePartFile) obj).getFile().renameTo(new File(imagePath));
-                        } else {
-                            FileOutputStream out = new FileOutputStream(imagePath);
-                            InputStream in = ((FilePart) obj).getInputStream();
-                            int read = in.read(buf);
-
-                            while (read > 0) {
-                                out.write(buf, 0, read);
-                                read = in.read(buf);
-                            }
-
-                            out.close();
-                        }
-            */
-
-            // create an extra file containing the meta description for
-            // the image.
-            String metaDataFilePath = getMetaDataPath(sitemapPath, metaRoot, documentId,
-                    fileName + ".meta");
-            createMetaData(metaDataFilePath, dublinCoreParams);
-
-            // insert <media> tags at the location sepecified by the
-            // cpath in the original document (the referer)
-            insertMediaTag(sitemapPath + docsRoot + File.separator + documentId, imageXPath,
-                fileName, dublinCoreParams);
+            // due to some requirement we want the file extension
+            // of the original file and want to add it to the
+            // filename that the user provided through the
+            // "identifier" parameter. 
+            String extension =
+                originalFileName.substring(originalFileName.lastIndexOf("."));
+            fileName = identifier + extension;
         }
+
+        getLogger().debug("fileName: " + fileName);
+
+        // grab the mime type and add it to the dublin core meta
+        // data as "format"
+        // FIXME: put the proper mime type in here.
+        // 	    String mimeType = ((FilePart)obj).getMimeType();
+        String mimeType = "";
+
+        if (mimeType != null) {
+            dublinCoreParams.put("format", mimeType);
+        }
+
+        String imagePath =
+            getImagePath(sitemapPath, recourcesRoot, documentId, fileName);
+
+        getLogger().debug("sitemapPath: " + sitemapPath);
+        getLogger().debug("imagePath: " + imagePath);
+
+        File dir = (new File(imagePath)).getParentFile();
+
+        if (!dir.exists()) {
+            getLogger().info(".act(): Create directories: " + dir);
+            dir.mkdirs();
+        }
+
+        File uploadedFile = new File(dir, part.getFileName());
+        uploadedFile.createNewFile();
+
+        FileOutputStream out = new FileOutputStream(uploadedFile);
+        InputStream in = part.getInputStream();
+        int read = in.read(buf);
+
+        while (read > 0) {
+            out.write(buf, 0, read);
+            read = in.read(buf);
+        }
+
+        /*
+                    if (obj instanceof FilePartFile) {
+                        ((FilePartFile) obj).getFile().renameTo(new File(imagePath));
+                    } else {
+                        FileOutputStream out = new FileOutputStream(imagePath);
+                        InputStream in = ((FilePart) obj).getInputStream();
+                        int read = in.read(buf);
+        
+                        while (read > 0) {
+                            out.write(buf, 0, read);
+                            read = in.read(buf);
+                        }
+        
+                        out.close();
+                    }
+        */
+
+        // create an extra file containing the meta description for
+        // the image.
+        String metaDataFilePath =
+            getMetaDataPath(
+                sitemapPath,
+                metaRoot,
+                documentId,
+                fileName + ".meta");
+        createMetaData(metaDataFilePath, dublinCoreParams);
+
+        // insert <media> tags at the location sepecified by the
+        // cpath in the original document (the referer)
+        insertMediaTag(
+            sitemapPath + docsRoot + File.separator + documentId,
+            imageXPath,
+            fileName,
+            dublinCoreParams);
 
         return Collections.unmodifiableMap(results);
     }
