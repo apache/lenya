@@ -13,7 +13,7 @@
 </xsl:template>
 
 <xsl:template match="parent-child">
-<h1>New Article</h1>
+<h1>New Document</h1>
 
 <xsl:apply-templates select="exception"/>
 
@@ -23,7 +23,7 @@
 <input type="hidden" name="parentid" value="{/parent-child/parentid}"/>
 <input type="hidden" name="childname" value="dummy"/>
 <input type="hidden" name="childtype" value="branch"/>
-<input type="hidden" name="doctype" value="Article"/>
+<input type="hidden" name="doctype" value="{/parent-child/doctype}"/>
 <table>
 <!--
   <tr>
