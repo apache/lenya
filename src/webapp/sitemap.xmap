@@ -407,13 +407,17 @@
         <meta-root href="content/authoring/"/>
         <insert-image-before value="false"/>
       </map:action>
+      
       <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
-    <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
+      
+      <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
+    
       <map:action name="default-create" src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction" logger="sitemap.action.default-create">
         <tree-authoring href="content/authoring/sitetree.xml"/>
         <docs href="content/authoring"/>
         <doctypes href="config/doctypes/"/>
       </map:action>
+      
       <map:action logger="sitemap.action.multipart" name="multipart" src="org.apache.lenya.cms.cocoon.acting.MultipartHttpServletRequestAction"/>
    </map:actions>
 
@@ -694,53 +698,7 @@
 
       <!-- Usecases -->
       <map:pipeline>
-      
-        <!-- Publish -->
-        <map:match type="usecase" pattern="publish">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-        
-        <!-- Scheduler -->
-        <map:match type="usecase" pattern="schedule">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-        
-        <!-- Rollback -->
-        <map:match type="usecase" pattern="rollback">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-
-        <!-- Reserved CheckIn -->
-        <map:match type="usecase" pattern="checkin">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-
-        <!-- Reserved CheckOut -->
-        <map:match type="usecase" pattern="checkout">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-
-        <!-- task log -->
-        <map:match type="usecase" pattern="view-logs">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-      
-        <!-- Create -->
-        <map:match type="usecase" pattern="create">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-      
-        <!-- User Admin -->
-        <map:match type="usecase" pattern="user-admin">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-        <map:match type="usecase" pattern="user-add">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-        <map:match type="usecase" pattern="user-modify">
-          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-        <map:match type="usecase" pattern="user-delete">
+        <map:match type="usecase" pattern="*">
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
         </map:match>
       </map:pipeline>
