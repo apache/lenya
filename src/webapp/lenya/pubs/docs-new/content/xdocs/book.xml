@@ -7,7 +7,7 @@
     <menu-item href="community/mailing-lists.html" label="Mailing Lists" />
     <menu-item href="project/acknowledgements.html" label="Credits" />
     <menu-item href="project/license.html" label="License" />
-    <menu-item href="community/live.sites.html" label="Live Sites" />
+    <menu-item href="community/live-sites.html" label="Live Sites" />
   </menu>
 
 </book>
