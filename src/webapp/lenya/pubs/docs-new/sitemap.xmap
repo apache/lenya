@@ -126,13 +126,6 @@
 
 <!-- Lenya pipelines -->
 
-    <!-- Xopus Interface -->
-    <map:pipeline>
-      <map:match pattern="xopus/**">
-        <map:mount uri-prefix="xopus" src="xopus.xmap"/>
-      </map:match>
-    </map:pipeline>
-
     <!-- Authoring Interface -->
     <map:pipeline>
       <map:match pattern="authoring/**">

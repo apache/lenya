@@ -20,7 +20,7 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item><xsp:attribute name="href">../../../../xopus2<xsp:expr>xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+        <item><xsp:attribute name="href">xopus<xsp:expr>xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
         <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
       </block>
       <separator>
@@ -54,14 +54,11 @@
 
     <menu name="Debug" label="Debug">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/"+projectid</xsp:expr>.html?cocoon-view=lenyapage</xsp:attribute>View&#160;Page&#160;XML</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Body&#160;XML</item>
       </block>
       <separator>
         <item>-----------------</item>
       </separator>
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/xopus/"+projectid</xsp:expr>.xml</xsp:attribute>View&#160;Xopus&#160;XSLT</item>
         <item>View&#160;Xopus&#160;XSLT</item>
         <item>View&#160;Xopus&#160;XSD</item>
       </block>

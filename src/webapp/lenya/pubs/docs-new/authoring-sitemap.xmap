@@ -22,10 +22,17 @@
 
   <map:pipelines>
 
+    <!-- Xopus Interface -->
+    <map:pipeline>
+      <map:match pattern="xopus/**">
+        <map:mount uri-prefix="xopus" src="xopus.xmap"/>
+      </map:match>
+    </map:pipeline>
 
     <map:pipeline>
       <map:match pattern="menus/**.xml">
-        <map:generate type="serverpages" src="../../content/menus/authoring.xsp"/>
+<!--        <map:generate type="serverpages" src="../../content/menus/authoring.xsp"/> -->
+        <map:generate type="serverpages" src="content/menus/generic.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
