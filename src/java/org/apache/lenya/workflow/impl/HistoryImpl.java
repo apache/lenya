@@ -284,37 +284,37 @@ public abstract class HistoryImpl implements History, WorkflowListener {
      */
     public void transitionFired(WorkflowInstance _instance, Situation situation, String event,
             State resultingState) throws WorkflowException {
-            try {
-                this.lastState = resultingState;
-                org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(getHistoryFile());
-                Element root = xmlDocument.getDocumentElement();
+        try {
+            this.lastState = resultingState;
+            org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(getHistoryFile());
+            Element root = xmlDocument.getDocumentElement();
 
-                NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
-                        Workflow.DEFAULT_PREFIX, xmlDocument);
+            NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
+                    Workflow.DEFAULT_PREFIX, xmlDocument);
 
-                Element versionElement = createVersionElement(helper, (StateImpl) _instance
-                        .getCurrentState(), situation, event);
+            Element versionElement = createVersionElement(helper, (StateImpl) _instance
+                    .getCurrentState(), situation, event);
 
-                root.appendChild(versionElement);
+            root.appendChild(versionElement);
 
-                saveVariables(helper);
+            saveVariables(helper);
 
-                DocumentHelper.writeDocument(xmlDocument, getHistoryFile());
-            } catch (final DOMException e) {
-                throw new WorkflowException(e);
-            } catch (final TransformerConfigurationException e) {
-                throw new WorkflowException(e);
-            } catch (final ParserConfigurationException e) {
-                throw new WorkflowException(e);
-            } catch (final SAXException e) {
-                throw new WorkflowException(e);
-            } catch (final IOException e) {
-                throw new WorkflowException(e);
-            } catch (final WorkflowException e) {
-                throw new WorkflowException(e);
-            } catch (final TransformerException e) {
-                throw new WorkflowException(e);
-            }
+            DocumentHelper.writeDocument(xmlDocument, getHistoryFile());
+        } catch (final DOMException e) {
+            throw new WorkflowException(e);
+        } catch (final TransformerConfigurationException e) {
+            throw new WorkflowException(e);
+        } catch (final ParserConfigurationException e) {
+            throw new WorkflowException(e);
+        } catch (final SAXException e) {
+            throw new WorkflowException(e);
+        } catch (final IOException e) {
+            throw new WorkflowException(e);
+        } catch (final WorkflowException e) {
+            throw new WorkflowException(e);
+        } catch (final TransformerException e) {
+            throw new WorkflowException(e);
+        }
     }
 
     /**
@@ -414,17 +414,27 @@ public abstract class HistoryImpl implements History, WorkflowListener {
      */
     protected void move(File newFile) throws WorkflowException {
 
-        copy(newFile);
+        try {
+            if (!newFile.getCanonicalPath().equals(getHistoryFile().getCanonicalPath())) {
+                copy(newFile);
 
-        File historyFile = getHistoryFile();
-        File directory = historyFile.getParentFile();
-        boolean deleted = historyFile.delete();
-        if (!deleted) {
-            throw new WorkflowException("The old history file could not be deleted!");
+                File historyFile = getHistoryFile();
+                File directory = historyFile.getParentFile();
+                boolean deleted = historyFile.delete();
+                if (!deleted) {
+                    throw new WorkflowException("The old history file could not be deleted!");
+                }
+                if (directory.exists() && directory.isDirectory()
+                        && directory.listFiles().length == 0) {
+                    directory.delete();
+                }
+            }
+        } catch (final IOException e) {
+            throw new WorkflowException(e);
+        } catch (final WorkflowException e) {
+            throw e;
         }
-        if (directory.exists() && directory.isDirectory() && directory.listFiles().length == 0) {
-            directory.delete();
-        }
+
     }
 
     /**
@@ -434,36 +444,44 @@ public abstract class HistoryImpl implements History, WorkflowListener {
      */
     protected void copy(File newFile) throws WorkflowException {
 
-        FileInputStream sourceStream = null;
-        FileOutputStream destinationStream = null;
-        FileChannel sourceChannel = null;
-        FileChannel destinationChannel = null;
         try {
-            newFile.getParentFile().mkdirs();
-            newFile.createNewFile();
-            File historyFile = getHistoryFile();
+            if (!newFile.getCanonicalPath().equals(getHistoryFile().getCanonicalPath())) {
+                FileInputStream sourceStream = null;
+                FileOutputStream destinationStream = null;
+                FileChannel sourceChannel = null;
+                FileChannel destinationChannel = null;
+                try {
 
-            sourceStream = new FileInputStream(historyFile);
-            sourceChannel = sourceStream.getChannel();
+                    newFile.getParentFile().mkdirs();
+                    newFile.createNewFile();
+                    File historyFile = getHistoryFile();
 
-            destinationStream = new FileOutputStream(newFile);
-            destinationChannel = destinationStream.getChannel();
+                    sourceStream = new FileInputStream(historyFile);
+                    sourceChannel = sourceStream.getChannel();
 
-            destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-            sourceStream.close();
-            destinationStream.close();
+                    destinationStream = new FileOutputStream(newFile);
+                    destinationChannel = destinationStream.getChannel();
+
+                    destinationChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                    sourceStream.close();
+                    destinationStream.close();
+                } finally {
+                    try {
+                        if (sourceStream != null)
+                            sourceStream.close();
+                        if (destinationStream != null)
+                            destinationStream.close();
+                    } catch (final IOException e) {
+                        throw new WorkflowException(e);
+                    }
+                }
+            }
         } catch (final IOException e) {
             throw new WorkflowException(e);
-        } finally {
-            try {
-                if (sourceStream != null)
-                    sourceStream.close();
-                if (destinationStream != null)
-                    destinationStream.close();
-            } catch (final IOException e) {
-                throw new WorkflowException(e);
-            }
+        } catch (final WorkflowException e) {
+            throw e;
         }
+
     }
 
     /**

@@ -35,10 +35,7 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
 import org.apache.lenya.cms.publication.util.UniqueDocumentId;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
  * Abstract DocumentManager implementation.
@@ -62,26 +59,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         siteManager.add(document);
 
-        DocumentTypeResolver doctypeResolver = null;
-        WorkflowResolver workflowResolver = null;
+        WorkflowManager wfManager = null;
         try {
-            doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-
-            DocumentType doctype = doctypeResolver.resolve(document);
-
-            if (doctype.hasWorkflow()) {
-                Situation situation = workflowResolver.getSituation();
-                workflowResolver.getWorkflowInstance(document).getHistory().initialize(situation);
-            }
-
-        } catch (ServiceException e) {
-            throw new PublicationException(e);
-        } catch (WorkflowException e) {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            wfManager.initializeHistory(document);
+        } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (doctypeResolver != null) {
-                this.manager.release(doctypeResolver);
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
     }
@@ -102,63 +88,18 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 destinationDocument);
 
         ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
-        WorkflowResolver workflowResolver = null;
+        WorkflowManager workflowManager = null;
         try {
             resourcesManager.copyResourcesTo(destinationDocument);
 
-            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            copyWorkflow(workflowResolver, sourceDocument, destinationDocument);
+            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            workflowManager.copyHistory(sourceDocument, destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (workflowResolver != null) {
-                this.manager.release(workflowResolver);
+            if (workflowManager != null) {
+                this.manager.release(workflowManager);
             }
-        }
-    }
-
-    /**
-     * Moves the workflow history of a document.
-     * @param resolver The workflow resolver.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws WorkflowException if an error occurs.
-     */
-    protected void moveWorkflow(WorkflowResolver resolver, Document sourceDocument,
-            Document destinationDocument) throws WorkflowException {
-        copyWorkflow(resolver, sourceDocument, destinationDocument);
-        deleteWorkflow(resolver, sourceDocument);
-    }
-
-    /**
-     * Deletes the workflow history of a document.
-     * @param resolver The workflow resolver.
-     * @param sourceDocument The source document.
-     * @throws WorkflowException if an error occurs.
-     */
-    protected void deleteWorkflow(WorkflowResolver resolver, Document sourceDocument)
-            throws WorkflowException {
-        if (resolver.hasWorkflow(sourceDocument)) {
-            WorkflowInstance sourceInstance = resolver.getWorkflowInstance(sourceDocument);
-            sourceInstance.getHistory().delete();
-        }
-    }
-
-    /**
-     * Copies the workflow history of a document.
-     * @param resolver The workflow resolver.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws WorkflowException if an error occurs.
-     */
-    protected void copyWorkflow(WorkflowResolver resolver, Document sourceDocument,
-            Document destinationDocument) throws WorkflowException {
-        if (resolver.hasWorkflow(sourceDocument)) {
-            WorkflowInstance sourceInstance = resolver.getWorkflowInstance(sourceDocument);
-
-            WorkflowInstance destinationInstance = resolver
-                    .getWorkflowInstance(destinationDocument);
-            destinationInstance.getHistory().replaceWith(sourceInstance.getHistory());
         }
     }
 
@@ -176,15 +117,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         ResourcesManager resourcesManager = document.getResourcesManager();
         resourcesManager.deleteResources();
 
-        WorkflowResolver workflowResolver = null;
+        WorkflowManager workflowManager = null;
         try {
-            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            deleteWorkflow(workflowResolver, document);
+            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            workflowManager.deleteHistory(document);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (workflowResolver != null) {
-                this.manager.release(workflowResolver);
+            if (workflowManager != null) {
+                this.manager.release(workflowManager);
             }
         }
     }
@@ -199,18 +140,18 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         deleteDocument(sourceDocument);
 
         ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
-        WorkflowResolver workflowResolver = null;
+        WorkflowManager workflowManager = null;
         try {
             resourcesManager.copyResourcesTo(destinationDocument);
             resourcesManager.deleteResources();
 
-            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            moveWorkflow(workflowResolver, sourceDocument, destinationDocument);
+            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            workflowManager.moveHistory(sourceDocument, destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (workflowResolver != null) {
-                this.manager.release(workflowResolver);
+            if (workflowManager != null) {
+                this.manager.release(workflowManager);
             }
         }
     }
