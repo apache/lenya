@@ -76,7 +76,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.33 2004/02/02 02:50:37 stefano Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.34 2004/02/06 16:47:36 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -321,9 +321,10 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     /**
      * xupdate:update
      * FIXME: updating attributes doesn't work this way
+     * FIXME: Updating the "parent" element doesn't work this way
      */
     private String update(Request request, String pname, String select, NodeList selectionNodeList) {
-        // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new and remove original
+        // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new, remove original and replace temporary tagID by original tagID
         Node nodeToCopy = selectionNodeList.item(0);
         String namespace = nodeToCopy.getNamespaceURI();
         log.debug(".update(): Update Node (namespace): " + namespace);
