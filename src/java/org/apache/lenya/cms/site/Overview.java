@@ -16,12 +16,7 @@
  */
 package org.apache.lenya.cms.site;
 
-import java.util.Map;
-import org.apache.cocoon.servlet.multipart.Part;
-
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.site.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -48,8 +43,8 @@ public class Overview extends SiteUsecase {
         dc = getSourceDocument().getDublinCore();
         try {
 	        setParameter("languages", getSourceDocument().getLanguages());
-	        setParameter("title", dc.getFirstValue("title"));
-	        setParameter("description", dc.getFirstValue("description"));
+	        setParameter("title", dc.getFirstValue(DublinCore.ELEMENT_TITLE));
+	        setParameter("description", dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
 	        setParameter("lastmodified", "");
 	        setParameter("resourcetype", "");
 	        setParameter("live", "");
