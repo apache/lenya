@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.43 2003/08/21 12:18:45 andreas Exp $
+$Id: PageEnvelope.java,v 1.44 2003/08/21 14:03:18 egli Exp $
 <License>
 
  ============================================================================
@@ -83,6 +83,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_URL_WITHOUT_LANGUAGE = "document-url-without-language";
     public static final String DOCUMENT_FILE = "document-file";
     public static final String DOCUMENT_PATH = "document-path";
+    public static final String DOCUMENT_EXTENSION = "document-extension";
     public static final String DOCUMENT_LANGUAGE = "document-language";
 	public static final String DOCUMENT_LANGUAGES = "document-languages";
     public static final String DOCUMENT_LANGUAGES_CSV = "document-languages-csv";
@@ -273,6 +274,7 @@ public class PageEnvelope {
                 PageEnvelope.DOCUMENT_URL,
                 PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
                 PageEnvelope.DOCUMENT_PATH,
+                PageEnvelope.DOCUMENT_EXTENSION,
                 PageEnvelope.DEFAULT_LANGUAGE,
                 PageEnvelope.DOCUMENT_LANGUAGE,
                 PageEnvelope.DOCUMENT_LANGUAGES,

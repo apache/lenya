@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.23 2003/08/21 12:18:45 andreas Exp $
+$Id: PageEnvelopeModule.java,v 1.24 2003/08/21 14:03:19 egli Exp $
 <License>
 
  ============================================================================
@@ -132,6 +132,8 @@ public class PageEnvelopeModule extends AbstractInputModule {
                 value = envelope.getDocumentPath();
             } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
                 value = envelope.getDocument().getFile();
+            } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
+                value = envelope.getDocument().getExtension();
 			} else if (name.equals(PageEnvelope.DEFAULT_LANGUAGE)) {
 				value = envelope.getPublication().getDefaultLanguage();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
