@@ -144,7 +144,15 @@ public class ArticleImageUploadCreatorAction
 	    getLogger().debug("Uploading file: " +
 			      ((FilePart)obj).getFileName());
 	    
-	    String fileName = (String)dublinCoreParams.get("identifier");
+	    // due to some requirement we want the file extension of
+	    // the original file and want to add it to the filename
+	    // that the user provided through the "identifier"
+	    // parameter.
+	    String originalFileName = ((FilePart)obj).getFileName();
+	    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+
+	    String fileName = (String)dublinCoreParams.get("identifier") +
+		extension;
 	
 	    // grab the mime type and add it to the dublin core meta
 	    // data as "format" 
@@ -160,9 +168,6 @@ public class ArticleImageUploadCreatorAction
 	    getLogger().debug("fileName: " + fileName);
 	    getLogger().debug("absoluteUploadDirName: " + absoluteUploadDirName);
 	    getLogger().debug("sitemapPath: " + sitemapPath);
-	    System.out.println("==fileName:" + fileName);
-	    System.out.println("==absoluteUploadDirName:" + absoluteUploadDirName);
-	    System.out.println("==sitemapPath:" + sitemapPath);
 	    
 	    File dir = new File(absoluteUploadDirName);
 	    if (!dir.exists())
@@ -253,7 +258,6 @@ public class ArticleImageUploadCreatorAction
 	// read the document
 	SAXReader reader = new SAXReader();
 	
-	p("insertMediaTag>>" + requestingDocumentName);
 	Document document = reader.read(requestingDocumentName);
 	getLogger().debug("insertMediaTag:" + requestingDocumentName);
 
@@ -286,10 +290,5 @@ public class ArticleImageUploadCreatorAction
 	document.write(out);
 	out.close();
     }
-
-    private void p(String s) {
-	System.out.println("--" + s);
-    }
-	
 }
 
