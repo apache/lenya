@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.9 2003/07/14 16:50:39 gregor Exp $
+$Id: DefaultDocument.java,v 1.10 2003/07/14 16:59:32 michi Exp $
 <License>
 
  ============================================================================
@@ -218,30 +218,38 @@ public class DefaultDocument implements Document {
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
 	public String getDCTitle() {
-/*		infofile = getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(),
-		getLanguage());
-		
-		domdocument = DocumentHelper.readDocument(infofile);
+/*
+            infofile = getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(), getLanguage());
+            domdocument = DocumentHelper.readDocument(infofile);
 */
+            return null;
 	}
 
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getDCCreator() { }
+	public String getDCCreator() { 
+            return null;
+        }
 
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getDCSubject() { }
+	public String getDCSubject() { 
+            return null;
+        }
 
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getDCDescription() { }
+	public String getDCDescription() { 
+            return null;
+        }
 	
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getDCRights() { }
+	public String getDCRights() { 
+            return null;
+        }
 }
