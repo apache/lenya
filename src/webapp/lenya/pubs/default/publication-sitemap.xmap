@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.62 2003/11/26 16:10:36 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.63 2003/12/10 18:02:21 edith Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -57,7 +57,7 @@
     <!-- BX Editor: RNG Schema, CSS -->
     <map:pipeline type="noncaching">
       
-      <map:match pattern="*/*.rng">
+      <map:match pattern="*/**.rng">
         <map:generate src="config/doctypes/schemas/{2}.rng"/>
         <map:serialize type="xml"/>
       </map:match>
