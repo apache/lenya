@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.25 2003/08/07 15:50:27 egli Exp $
+$Id: DefaultSiteTree.java,v 1.26 2003/08/08 08:16:32 edith Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -105,7 +105,7 @@ public class DefaultSiteTree implements SiteTree {
      */
     protected DefaultSiteTree(File pubDir, String area)
         throws SiteTreeException {
-        this(new File(pubDir, area + File.separator + SITE_TREE_FILENAME));
+        this(new File(pubDir, "content"+ File.separator + area + File.separator + SITE_TREE_FILENAME));
     }
 
     /**
