@@ -55,9 +55,6 @@ public class RevisionController
           String identityD=args[2];
           String destination=args[3];
           RevisionController rc=new RevisionController();
-            System.err.println("rcmlDirectory "+rc.rcmlDirectory);
-            System.err.println("rootDir "+rc.rootDir);
-            System.err.println("backupDir "+rc.backupDir);
           File in=null;
           try
             {
@@ -176,7 +173,6 @@ public class RevisionController
             {
             throw new FileNotFoundException(file.getAbsolutePath());
             }
-          System.err.println("Instance de RCML avec: " + rcmlDirectory +" et "+rootDir + source);
           RCML rcml = new RCML(rcmlDirectory, rootDir + source);
 
 //          CheckOutEntry coe = rcml.getLatestCheckOutEntry();
@@ -272,7 +268,11 @@ public class RevisionController
 		File originalFile=new File(rootDir+destination);
 		long time=new Date().getTime();
 		if(backup && originalFile.isFile()) {
-			File backupFile=new File(backupDir+"/"+time+".bak");
+			File backupFile=new File(backupDir+"/"+destination+".bak."+time);
+			File parent = new File(backupFile.getParent());
+			if (!parent.isDirectory()){
+                                parent.mkdirs();
+			}
 			System.err.println("Backup: copy "+originalFile.getAbsolutePath()+" "+backupFile.getAbsolutePath());
 			InputStream in=new FileInputStream(originalFile.getAbsolutePath());
 			//OutputStream out=new FileOutputStream(backupFile.getAbsolutePath());
@@ -343,13 +343,14 @@ public class RevisionController
 	}
 	*/
 
+/*
 	public String getBackupFilename(long time) {
 	
-		File backup = new File(backupDir + "/" + time + ".bak");
+        	File backupFile=new File(backupDir+"/"+destination+".bak."+time);
 		return backup.getAbsolutePath();
 
 	}
-
+*/
 /**
  * Rolls back to the given point in time
  *
@@ -360,7 +361,7 @@ public class RevisionController
 
 		// Make sure the old version exists
 		//
-		File backup = new File(backupDir + "/" + time + ".bak");
+        	File backup=new File(backupDir+"/"+destination+".bak."+time);
 		File current = new File(rootDir + destination);
 		
 		if(!backup.isFile()) {
@@ -406,7 +407,7 @@ public class RevisionController
      public void undoCheckIn(long time,String destination)
           throws Exception
           {
-          File backup=new File(backupDir+"/"+time+".bak");
+       	  File backup=new File(backupDir+"/"+destination+".bak."+time);
           File current=new File(rootDir+destination);
 
           RCML rcml = new RCML(rcmlDirectory, current.getAbsolutePath());
