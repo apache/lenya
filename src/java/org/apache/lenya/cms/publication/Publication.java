@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.15 2003/07/15 15:41:22 egli Exp $
+$Id: Publication.java,v 1.16 2003/07/17 08:06:53 egli Exp $
 <License>
 
  ============================================================================
@@ -165,6 +165,9 @@ public class Publication {
                 "Could not parse config file: " + configFile.getAbsolutePath(),
                 e);
         } catch (IOException e) {
+        	// FIXME: this code is commented out for backwards
+        	// compatibility. As soon as all publications have a 
+        	// publication.xconf the code can be uncommented.
 //            throw new PublicationException(
 //                "Could not find config file: " + configFile.getAbsolutePath(),
 //                e);
