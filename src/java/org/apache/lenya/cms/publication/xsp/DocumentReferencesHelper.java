@@ -1,5 +1,5 @@
 /*
-$Id: DocumentReferencesHelper.java,v 1.3 2003/10/02 12:34:53 egli Exp $
+$Id: DocumentReferencesHelper.java,v 1.4 2003/10/17 09:44:06 egli Exp $
 <License>
 
  ============================================================================
@@ -63,8 +63,9 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
@@ -81,14 +82,13 @@ import org.apache.lenya.search.Grep;
  * Helper class for finding references to the current document.
  * 
  * @author Christian Egli
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DocumentReferencesHelper {
 
     private PageEnvelope pageEnvelope = null;
-
-    private static Pattern internalLinkPattern =
-        Pattern.compile("href=\"(/[-a-zA-Z0-9_/]+)");
+    private String serverName = null;
+    private int serverPort = 80;
 
     /**
      * Create a new DocumentReferencesHelper
@@ -105,24 +105,62 @@ public class DocumentReferencesHelper {
         } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        this.serverName = request.getServerName();
+        this.serverPort = request.getServerPort();
     }
 
     /**
-     * Construct a search string for the search of references. 
-     * This is done using the document-id, stripping the first '/'
-     * and adding 'href=' to the front of it.
-     * 
-     * @param documentId the document-id for which we're searching
-     * documents that reference to it.
+     * Construct a search string for the search of references, i.e.
+     * links from other documents to the current document. This
+     * is done using the assumption that internal links look as if
+     * they were copied directly from the browser,
+     * e.g. http://localhost:8080/lenya/unicom/authoring/doctypes/2columns.html
      * 
      * @return the search string
      */
-    protected String getSearchString(String documentId) {
-        return "href\\s*=\\s*\"" + documentId.substring(1);
+    protected String getReferencesSearchString() {
+        return "href\\s*=\\s*"
+            + "\"http://"
+            + this.serverName
+            + ":"
+            + this.serverPort
+            + pageEnvelope.getContext()
+            + "/"
+            + pageEnvelope.getPublication().getId()
+            + "/"
+            + pageEnvelope.getDocument().getArea()
+            + pageEnvelope.getDocument().getId();
     }
 
     /**
-     * Find a list of document-id which have references to the current
+     * Construct a search string for the search of internal references, 
+     * i.e from the current document to others. This is done using 
+     * the assumption that internal links look as if they were copied 
+     * directly from the browser, e.g. 
+     * http://localhost:8080/lenya/unicom/authoring/doctypes/2columns.html
+     * 
+     * @return the search string
+     */
+    protected Pattern getInternalLinkPattern() {
+    	// FIXME: The following method is not very robust and certainly 
+    	// will fail if the mapping between URL and document-id changes
+        return Pattern.compile(
+            "href\\s*=\\s*"
+                + "\"http://"
+                + this.serverName
+                + ":"
+                + this.serverPort
+                + pageEnvelope.getContext()
+                + "/"
+                + pageEnvelope.getPublication().getId()
+                + "/"
+                + pageEnvelope.getDocument().getArea()
+                + "(/[-a-zA-Z0-9_/]+?)(_[a-z][a-z])?\\.html");
+    }
+
+    /**
+     * Find a list of document-ids which have references to the current
      * document.
      * 
      * @return an <code>array</code> of document-ids if there are references, 
@@ -133,7 +171,6 @@ public class DocumentReferencesHelper {
     public String[] getReferences(String area) throws ProcessingException {
 
         ArrayList documentIds = new ArrayList();
-        Document document = pageEnvelope.getDocument();
         Publication publication = pageEnvelope.getPublication();
         DocumentIdToPathMapper mapper = publication.getPathMapper();
         if (mapper instanceof PathToDocumentIdMapper) {
@@ -144,7 +181,7 @@ public class DocumentReferencesHelper {
                 inconsistentFiles =
                     Grep.find(
                         publication.getContentDirectory(area),
-                        getSearchString(document.getId()));
+                        getReferencesSearchString());
                 for (int i = 0; i < inconsistentFiles.length; i++) {
 
                     documentId =
@@ -193,6 +230,7 @@ public class DocumentReferencesHelper {
     public String[] getInternalReferences() throws ProcessingException {
         ArrayList unpublishedReferences = new ArrayList();
         SiteTree sitetree;
+        Pattern internalLinkPattern = getInternalLinkPattern();
         try {
             sitetree =
                 pageEnvelope.getPublication().getSiteTree(
