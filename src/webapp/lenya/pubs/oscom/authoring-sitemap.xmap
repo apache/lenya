@@ -16,6 +16,7 @@
         <live href="docs/publication/live/"/>
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
+        <replication-queue href="resources/cms/replication-queue"/>
       </map:action>
     </map:actions>
     <map:selectors default="browser">
