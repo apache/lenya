@@ -22,7 +22,6 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XLink;
 import org.apache.log4j.Category;
 import org.w3c.dom.Element;
@@ -32,7 +31,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection. In the collection are xlink inserted.
  * @author <a href="mailto:edith@apache.org">Edith Chevrier </a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
- * @version $Id: XlinkCollection.java,v 1.6 2004/07/10 23:00:21 andreas Exp $
+ * @version $Id: XlinkCollection.java,v 1.7 2004/07/10 23:13:35 andreas Exp $
  */
 public class XlinkCollection extends CollectionImpl {
 

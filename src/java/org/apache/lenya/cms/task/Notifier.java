@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Notifier.java,v 1.7 2004/06/28 08:30:41 andreas Exp $  */
+/* $Id: Notifier.java,v 1.8 2004/07/10 23:15:54 andreas Exp $  */
 
 package org.apache.lenya.cms.task;
 
@@ -24,7 +24,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.log4j.Category;
 
