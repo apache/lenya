@@ -3,6 +3,14 @@
   ==============================================================
 
 
+  Contents
+  --------
+
+  -Prerequisite
+  -Installation
+  -Notes
+
+
   Prerequisite
   ------------
 
@@ -62,14 +70,15 @@
              export ANT_HOME=/home/wyona/build/jakarta-ant-1.4.1
              export PATH=/home/wyona/build/jakarta-ant-1.4.1/bin:$PATH
              ant
-             ls build/webapp
+             ls build/wyona-cms/webapp
 
 
   6) Install Wyona for Development
 
-     [unix]  cd /home/wyona/build/jakarta-tomcat-4.0/webapps
-             ln -s /home/wyona/src/wyona-cms-2.0-src/build/webapp cocoon
-             #ln -s /home/wyona/src/wyona-cms-2.0-src/build/webapp wyona-cms
+     [unix]  cp build.properties.sample build.properties
+             vi build.properties (Set install.dir)
+             ant install
+             "ls install.dir"
              vi /home/wyona/build/jakarta-tomcat-4.0/conf/server.xml
              To allow class reloading, insert the following line:
              <Context path="/cocoon" docBase="cocoon" debug="0" reloadable="true" crossContext="true"/>
@@ -96,3 +105,25 @@
              tail -f build/webapp/WEB-INF/logs/*
              lynx http://localhost:8080/cocoon/
              #lynx http://localhost:8080/wyona-cms/
+
+
+  Notes 
+  -----
+
+  1) Overwrite
+
+     Wyona is overwriting some Cocoon files:
+     -sitemap.xmap
+      The original Cocoon Sitemap is mounted from the Wyona Sitemap
+     -cocoon.xconf
+      In order to simplify development we use "synchron"
+     -logkit.xconf
+      We replaced DEBUG by ERROR
+
+
+  2) Used Default Ports
+
+     8080: Tomcat: server.xml
+     8008: Tomcat(Catalina)-Apache: server.xml
+     8005: Shutdown: server.xml
+     9002: HypersonicSQL DB (http://www.hsqldb.org): cocoon.xconf
