@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultAccessController.java,v 1.4 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id: DefaultAccessController.java,v 1.5 2004/04/28 12:52:35 andreas Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -424,10 +424,12 @@ public class DefaultAccessController
     /**
      * @see org.apache.lenya.cms.ac.ItemManagerListener#itemAdded(org.apache.lenya.cms.ac.Item)
      */
-    public void itemAdded(Item item) {
+    public void itemAdded(Item item) throws AccessControlException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Item was added: [" + item + "]");
+            getLogger().debug("Notifying policy manager");
         }
+        getPolicyManager().accreditableAdded(getAccreditableManager(), (Accreditable) item);
     }
 
     /**

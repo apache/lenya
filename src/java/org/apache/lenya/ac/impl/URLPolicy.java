@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLPolicy.java,v 1.5 2004/03/08 16:48:20 gregor Exp $  */
+/* $Id: URLPolicy.java,v 1.6 2004/04/28 12:52:35 andreas Exp $  */
 
 package org.apache.lenya.ac.impl;
 
@@ -35,102 +35,147 @@ import org.apache.lenya.ac.Role;
  */
 public class URLPolicy implements Policy {
 
-	/**
-	 * Returns the resulting policy for a certain URL.
-	 * @param controller The acccess controller.
-	 * @param url The URL.
-	 * @param manager The policy manager.
-	 */
-	public URLPolicy(
-		AccreditableManager controller,
-		String url,
-		InheritingPolicyManager manager) {
-		assert url != null;
-		this.url = url;
+    /**
+     * Returns the resulting policy for a certain URL.
+     * @param controller The acccess controller.
+     * @param url The URL.
+     * @param manager The policy manager.
+     */
+    public URLPolicy(AccreditableManager controller, String url, InheritingPolicyManager manager) {
+        assert url != null;
+        this.url = url;
 
-		assert manager != null;
-		policyManager = manager;
+        assert manager != null;
+        policyManager = manager;
 
-		assert controller != null;
-		this.accreditableManager = controller;
-	}
+        assert controller != null;
+        this.accreditableManager = controller;
+    }
 
-	private String url;
-	private InheritingPolicyManager policyManager;
-	private AccreditableManager accreditableManager;
+    private String url;
+    private InheritingPolicyManager policyManager;
+    private AccreditableManager accreditableManager;
     private Policy[] policies = null;
-    
+
     /**
      * Obtains the policies from the policy manager.
      * This method is expensive and therefore only called when needed.
      * @throws AccessControlException when something went wrong.
      */
-    protected void obtainPolicies() throws AccessControlException  {
+    protected void obtainPolicies() throws AccessControlException {
         if (policies == null) {
             policies = getPolicyManager().getPolicies(getAccreditableManager(), getUrl());
         }
     }
 
-	/**
-	 * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
-	 */
-	public Role[] getRoles(Identity identity) throws AccessControlException {
+    protected static final String[] VISITOR_ROLES = { "visitor", "visit" };
+    protected static final String[] ADMINISTRATOR_ROLES = { "administrator", "admin", "organize" };
+    protected static final String[] AUTHOR_ROLES = { "author" };
+
+    /**
+     * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
+     */
+    public Role[] getRoles(Identity identity) throws AccessControlException {
         obtainPolicies();
         Set roles = new HashSet();
-        
+
         // no policies defined: return "visit" or "visitor" role
         if (isEmpty()) {
-            Role visitorRole = getAccreditableManager().getRoleManager().getRole("visit");
-            if (visitorRole == null) {
-                visitorRole = getAccreditableManager().getRoleManager().getRole("visitor");
-            }
+            Role visitorRole = getVisitorRole(getAccreditableManager());
             if (visitorRole != null) {
                 roles.add(visitorRole);
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < policies.length; i++) {
                 addRoles(policies[i], identity, roles);
             }
         }
-		return (AbstractRole[]) roles.toArray(new AbstractRole[roles.size()]);
-	}
+        return (AbstractRole[]) roles.toArray(new AbstractRole[roles.size()]);
+    }
 
-	/**
-	 * Adds the roles of an identity of a policy to a role set.
-	 * @param policy The policy.
-	 * @param identity The identity.
-	 * @param roles The role set.
-	 * @throws AccessControlException when something went wrong.
-	 */
-	protected void addRoles(Policy policy, Identity identity, Set roles)
-		throws AccessControlException {
-		roles.addAll(Arrays.asList(policy.getRoles(identity)));
-	}
+    /**
+     * Returns the visitor role.
+     * @return A role.
+     * @throws AccessControlException when something went wrong.
+     */
+    public static Role getVisitorRole(AccreditableManager manager) throws AccessControlException {
+        Role visitorRole = null;
+        for (int i = 0; i < VISITOR_ROLES.length; i++) {
+            Role role = manager.getRoleManager().getRole(VISITOR_ROLES[i]);
+            if (role != null) {
+                visitorRole = role;
+            }
+        }
+        return visitorRole;
+    }
 
-	/**
-	 * Returns the URL of this policy.
-	 * @return The URL of this policy.
-	 */
-	public String getUrl() {
-		return url;
-	}
+    /**
+     * Returns the administrator role.
+     * @return A role.
+     * @throws AccessControlException when something went wrong.
+     */
+    public static Role getAdministratorRole(AccreditableManager manager) throws AccessControlException {
+        Role administratorRole = null;
+        for (int i = 0; i < ADMINISTRATOR_ROLES.length; i++) {
+            Role role = manager.getRoleManager().getRole(ADMINISTRATOR_ROLES[i]);
+            if (role != null) {
+                administratorRole = role;
+            }
+        }
+        return administratorRole;
+    }
 
-	/**
-	 * Returns the policy builder.
-	 * @return A policy builder.
-	 */
-	public InheritingPolicyManager getPolicyManager() {
-		return policyManager;
-	}
+    /**
+     * Returns the author role.
+     * @return A role.
+     * @throws AccessControlException when something went wrong.
+     */
+    public static Role getAuthorRole(AccreditableManager manager) throws AccessControlException {
+        Role administratorRole = null;
+        for (int i = 0; i < AUTHOR_ROLES.length; i++) {
+            Role role = manager.getRoleManager().getRole(AUTHOR_ROLES[i]);
+            if (role != null) {
+                administratorRole = role;
+            }
+        }
+        return administratorRole;
+    }
 
-	/**
-	 * Returns the access controller.
-	 * @return An access controller.
-	 */
-	public AccreditableManager getAccreditableManager() {
-		return accreditableManager;
-	}
+    /**
+     * Adds the roles of an identity of a policy to a role set.
+     * @param policy The policy.
+     * @param identity The identity.
+     * @param roles The role set.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected void addRoles(Policy policy, Identity identity, Set roles)
+        throws AccessControlException {
+        roles.addAll(Arrays.asList(policy.getRoles(identity)));
+    }
+
+    /**
+     * Returns the URL of this policy.
+     * @return The URL of this policy.
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Returns the policy builder.
+     * @return A policy builder.
+     */
+    public InheritingPolicyManager getPolicyManager() {
+        return policyManager;
+    }
+
+    /**
+     * Returns the access controller.
+     * @return An access controller.
+     */
+    public AccreditableManager getAccreditableManager() {
+        return accreditableManager;
+    }
 
     /**
      * The URL policy requires SSL protection if one of its
@@ -139,15 +184,15 @@ public class URLPolicy implements Policy {
      */
     public boolean isSSLProtected() throws AccessControlException {
         obtainPolicies();
-        
+
         boolean ssl = false;
-        
+
         int i = 0;
         while (!ssl && i < policies.length) {
             ssl = ssl || policies[i].isSSLProtected();
             i++;
         }
-        
+
         return ssl;
     }
 
@@ -156,14 +201,14 @@ public class URLPolicy implements Policy {
      */
     public boolean isEmpty() throws AccessControlException {
         boolean empty = true;
-        
+
         int i = 0;
         while (empty && i < policies.length) {
             empty = empty && policies[i].isEmpty();
             i++;
         }
-        
+
         return empty;
     }
-    
+
 }
