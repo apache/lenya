@@ -183,7 +183,6 @@ public class FilePublicationTest extends TestCase {
         Label destinationLabel = destinationNode.getLabel(destinationLanguage);
         assertNotNull(destinationLabel);
         
-        SiteTree sourceTree = publication.getSiteTree(sourceArea);
         SiteTreeNode sourceNode = destinationTree.getNode(sourceDocumentId);
         Label sourceLabel = sourceNode.getLabel(sourceLanguage);
         

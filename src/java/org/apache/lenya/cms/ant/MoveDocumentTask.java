@@ -1,5 +1,5 @@
 /*
- * $Id: MoveDocumentTask.java,v 1.3 2003/10/21 09:51:55 andreas Exp $ <License>
+ * $Id: MoveDocumentTask.java,v 1.4 2004/01/08 09:35:34 egli Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -43,7 +43,6 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
@@ -142,7 +141,6 @@ public class MoveDocumentTask extends PublicationTask implements SiteTreeNodeVis
 	public void visitSiteTreeNode(SiteTreeNode node) {
 		Publication publication = getPublication();
 
-		DocumentIdToPathMapper pathMapper = publication.getPathMapper();
 		Label[] labels = node.getLabels();
 		for (int i = 0; i < labels.length; i++) {
 			String language = labels[i].getLanguage();

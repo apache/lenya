@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerTest.java,v 1.2 2003/07/31 11:56:42 andreas Exp $
+$Id: RevisionControllerTest.java,v 1.3 2004/01/08 09:37:30 egli Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,6 @@ import junit.framework.TestCase;
 
 import java.io.FileNotFoundException;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -80,70 +79,68 @@ public class RevisionControllerTest extends TestCase {
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
- //       TestRunner.run(getSuite());
+        //       TestRunner.run(getSuite());
 
-				if (args.length != 4) {
-					System.out.println("Usage: " + new RevisionController().getClass().getName() +
-						" username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
+        if (args.length != 4) {
+            System.out.println(
+                "Usage: "
+                    + new RevisionController().getClass().getName()
+                    + " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
 
-					return;
-				}
-
-				String identityS = args[0];
-				String source = args[1];
-				String identityD = args[2];
-				String destination = args[3];
-				RevisionController rc = new RevisionController();
-				File in = null;
-
-				try {
-					in = rc.reservedCheckOut(source, identityS);
-				} catch (FileNotFoundException e) // No such source file
-				 {
-					System.out.println(e.toString());
-				} catch (FileReservedCheckOutException e) // Source has been checked out already
-				 {
-					System.out.println(e.toString());
-				//	System.out.println(error(e.source + "is already check out by " + e.checkOutUsername + " since " +						e.checkOutDate));
-					return;
-
-				} catch (IOException e) { // Cannot create rcml file
-					System.out.println(e.toString());
-					return;
-
-				} catch (Exception e) {
-					System.out.println(e.toString());
-					return;
-				}
-
-				try {
-					rc.reservedCheckIn(destination, identityD, true);
-				} catch (FileReservedCheckInException e) {
-					System.out.println(e.toString());
-				} catch (Exception e) {
-					System.out.println(e.toString());
-				}
-			}
-
-
- /*   protected static final Class[] classes = {
-    };
-
-    /**
-     * Creates a test suite.
-     * @return a test suite.
-     */
-/*    public static Test getSuite() {
-        TestSuite suite = new TestSuite();
-
-        for (int i = 0; i < classes.length; i++) {
-            suite.addTestSuite(classes[i]);
+            return;
         }
 
-        return suite;
+        String identityS = args[0];
+        String source = args[1];
+        String identityD = args[2];
+        String destination = args[3];
+        RevisionController rc = new RevisionController();
+        try {
+            rc.reservedCheckOut(source, identityS);
+        } catch (FileNotFoundException e) // No such source file
+            {
+            System.out.println(e.toString());
+        } catch (FileReservedCheckOutException e) // Source has been checked out already
+            {
+            System.out.println(e.toString());
+            //	System.out.println(error(e.source + "is already check out by " + e.checkOutUsername + " since " +						e.checkOutDate));
+            return;
+
+        } catch (IOException e) { // Cannot create rcml file
+            System.out.println(e.toString());
+            return;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return;
+        }
+
+        try {
+            rc.reservedCheckIn(destination, identityD, true);
+        } catch (FileReservedCheckInException e) {
+            System.out.println(e.toString());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
-*/
+
+    /*   protected static final Class[] classes = {
+       };
+    
+       /**
+        * Creates a test suite.
+        * @return a test suite.
+        */
+    /*    public static Test getSuite() {
+            TestSuite suite = new TestSuite();
+    
+            for (int i = 0; i < classes.length; i++) {
+                suite.addTestSuite(classes[i]);
+            }
+    
+            return suite;
+        }
+    */
     /** @see junit.framework.TestCase#setUp() */
-    protected void setUp() throws Exception {
-    }
+    protected void setUp() throws Exception {}
 }
