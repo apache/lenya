@@ -11,26 +11,14 @@
 >
  
 <menu>
- 
-  <xsp-lenya:util/>
- 
+  
   <url-info>
     <context-prefix><xsp-request:get-context-path/></context-prefix>
     <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
-<!--
-   
-<servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
-    <publication><input:get-attribute module="page-envelope" as="object"
-name="publication"/></publication>
--->
   </url-info>
- 
-<!--
-  <live_uri>/index.html</live_uri>
--->
  
   <tabs>
     <tab label="info" show="false"/>
@@ -57,7 +45,7 @@ name="publication"/></publication>
  
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
+        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
         <item href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Wiki&#160;Documentation</item>
       </block>
       <block>

@@ -12,23 +12,13 @@
 
 <menu>
 
-  <xsp-lenya:util/>
-
   <url-info>
     <context-prefix><xsp-request:get-context-path/></context-prefix>
     <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
-<!--
-    <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
-    <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
--->
   </url-info>
-
-<!--
-  <live_uri>/index.html</live_uri>
--->
 
   <xsp:logic>
     String source = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
@@ -47,18 +37,7 @@
         <item uc:usecase="edit" href="?lenya.step=open&amp;form=entry">Edit&#160;with&#160;Forms</item>
         <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
         <item uc:usecase="1formedit" href="?lenya.step=open">Edit&#160;with&#160;one&#160;Form</item>
-<!--
-        <item>Edit&#160;with&#160;Midas</item>
--->
-<!--
-        <item>Edit&#160;with&#160;Epoz</item>
--->
       </block>
-<!--
-      <block>
-        <item uc:usecase="rollback" href="?lenya.step=showscreen">Revisions</item>
-      </block>
--->
       <block>
         <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute>Publish</item>
       </block>
@@ -77,7 +56,7 @@
 
     <menu name="Help" label="Help">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
+        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
         <item href="http://wiki.cocoondev.org/Wiki.jsp?page=Lenya">Wiki&#160;Documentation</item>
       </block>
       <block>
@@ -90,9 +69,6 @@
       <block>
         <item href="index.xml">Feed</item>
         <item href="lenya-page-body.xml">Body</item>
-<!--
-        <item href="?cocoon-view=pagexml">Page</item>
--->
       </block>
       <block>
         <item href="http://www.feedvalidator.org">Feed Validator</item>
@@ -100,7 +76,6 @@
       <block>
         <item href="index-bxeng.html">HTML&#160;for&#160;BXE</item>
         <item href="config-bxeng.xml">Config&#160;for&#160;BXE</item>
-        <item href="/lenya/blog/webdav/entries/2003/07/28/1/index.xml">XML&#160;for&#160;BXE</item>
         <item href="entry-bxeng.xsl">XSLT&#160;for&#160;BXE</item>
         <item href="entry-bxeng.css">CSS&#160;for&#160;BXE</item>
         <item href="entry-relaxng-bxeng.xml">RelaxNG&#160;for&#160;BXE</item>
