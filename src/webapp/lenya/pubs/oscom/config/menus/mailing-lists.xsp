@@ -10,6 +10,8 @@
 
   <xsp-wyona:util/>
 
+  <live_uri>/mailing-lists.html</live_uri>
+
   <menus>
     <menu name="File">
       <block>

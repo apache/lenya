@@ -10,6 +10,8 @@
 
   <xsp-wyona:util/>
 
+  <live_uri>/index.html</live_uri>
+
   <menus>
     <menu name="File">
       <block>
