@@ -40,7 +40,10 @@
 <D:prop>
 <lp1:resourcetype><D:collection/></lp1:resourcetype>
 <lp1:creationdate>2003-07-21T13:03:09Z</lp1:creationdate>
+<!--
 <lp1:getlastmodified><xsl:value-of select="@date"/>  (<xsl:value-of select="@lastModified"/>)</lp1:getlastmodified>
+-->
+<lp1:getlastmodified>Wed, 27 Aug 2003 12:50:23 GMT</lp1:getlastmodified>
 <lp1:getetag>"945fd7-4f-5c287d40"</lp1:getetag>
 <D:supportedlock>
 <D:lockentry>
@@ -70,19 +73,14 @@
 </xsl:if>
 <D:propstat>
 <D:prop>
-<!--
-<D:size><xsl:value-of select="@size"/>D</D:size>
--->
-<!--
-<D:space-used-bytes><xsl:value-of select="@size"/></D:space-used-bytes>
--->
 <lp1:resourcetype/>
 <lp1:creationdate>2003-07-21T13:03:09Z</lp1:creationdate>
-<lp1:getlastmodified><xsl:value-of select="@date"/> (<xsl:value-of select="@lastModified"/>)</lp1:getlastmodified>
-<lp1:getetag>"945fd7-4f-5c287d40"</lp1:getetag>
+<lp1:getcontentlength><xsl:value-of select="@size"/></lp1:getcontentlength>
 <!--
-<lp1:size><xsl:value-of select="@size"/>lp1</lp1:size>
+<lp1:getlastmodified><xsl:value-of select="@date"/> (<xsl:value-of select="@lastModified"/>)</lp1:getlastmodified>
 -->
+<lp1:getlastmodified>Wed, 27 Aug 2003 08:25:20 GMT</lp1:getlastmodified>
+<lp1:getetag>"945fd7-4f-5c287d40"</lp1:getetag>
 <D:supportedlock>
 <D:lockentry>
 <D:lockscope><D:exclusive/></D:lockscope>
