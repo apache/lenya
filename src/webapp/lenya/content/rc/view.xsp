@@ -40,7 +40,7 @@
       String rootDir=publication.getEnvironment().getPublicationPath();
       String servletContextPath = publication.getServletContext().getCanonicalPath();
 
-      String contextPath = "content";
+      String contextPath = Publication.CONTENT_PATH;
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
       String documentPath = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       String filename = "/" + contextPath + "/" + area + "/" + documentPath;    
