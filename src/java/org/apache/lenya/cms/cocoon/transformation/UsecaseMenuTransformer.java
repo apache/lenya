@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.3 2003/08/20 18:52:44 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.4 2003/08/22 16:37:24 andreas Exp $
 <License>
 
  ============================================================================
@@ -111,24 +111,11 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
                 try {
                     if (!authorizer.authorizeUsecase(webappUrl, usecase, roles, publication)) {
+                        getLogger().debug("Usecase not authorized");
                         int hrefIndex = attributes.getIndex("href");
                         if (hrefIndex > -1) {
                             attributes = new AttributesImpl(attr);
                             ((AttributesImpl) attributes).removeAttribute(hrefIndex);
-                        }
-                    }
-
-                    // create href attribute if it does not exist
-                    else {
-                        int hrefIndex = attributes.getIndex("href");
-                        if (hrefIndex == -1) {
-                            attributes = new AttributesImpl(attr);
-                            ((AttributesImpl) attributes).addAttribute(
-                                "",
-                                "href",
-                                "href",
-                                "CDATA",
-                                "?");
                         }
                     }
                 } catch (AccessControlException e) {
