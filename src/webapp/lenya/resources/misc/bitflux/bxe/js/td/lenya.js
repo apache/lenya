@@ -11,7 +11,7 @@
 // | Author: Christian Stocker <chregu@bitflux.ch>                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: lenya.js,v 1.7 2003/03/06 20:47:09 gregor Exp $
+// $Id: lenya.js,v 1.8 2003/04/15 16:30:58 edith Exp $
 /**
  * @file
  * Implements the lenya TransportDriver (only save for now)
@@ -61,7 +61,11 @@ function BXE_TransportDriver_lenya(parent)
 	   this.p.onload = this._responseXML;
 	   this.p.options = options;
 	   var LenyaRequest = BX_xml.doc.createElement("request");
-	   LenyaRequest.setAttribute("type","checkin");
+           if (options == 1) {
+             LenyaRequest.setAttribute("type","checkin");
+           } else {
+             LenyaRequest.setAttribute("type","save");
+           } 
 	   var dataEle = BX_xml.doc.createElement("data");
 	   dataEle.setAttribute("type","xml");
 	   dataEle.appendChild(BX_getResultXML().firstChild);
