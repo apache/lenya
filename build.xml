@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.23 2002/05/30 21:44:45 michicms Exp $
+   @version CVS $Id: build.xml,v 1.24 2002/06/21 23:39:22 michicms Exp $
 
 -->
 
@@ -171,7 +171,7 @@
     <property name="build.compiler" value="classic"/>
     <property name="target.vm"      value="1.2"/>
 
-    <property name="packages"      value="org.wyona.*"/>
+    <property name="packages"      value="org.wyona.*,org.w3c.*,ch.ethz.*"/>
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
     <property name="today"         value="${TODAY}"/>
