@@ -34,7 +34,7 @@
 
 <xsl:template match="tree:site">
 
-  <nav:site>
+  <nav:site url="{$url}">
     <xsl:copy-of select="@*"/> 
     <xsl:apply-templates/>
   </nav:site>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: root.xsl,v 1.28 2003/09/05 14:42:38 andreas Exp $
+ $Id: root.xsl,v 1.29 2003/09/09 11:34:40 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -148,7 +148,7 @@ function findIDbyLink(srclink)
         <xsl:text>overview</xsl:text>
   	</xsl:otherwise>
   </xsl:choose>
-  <xsl:text>&amp;lenya.step=showscreen&amp;lenya.area=authoring</xsl:text>
+  <xsl:text>&amp;lenya.step=showscreen</xsl:text>
 </xsl:template>
 
 

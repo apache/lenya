@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.39 2003/09/05 08:10:36 andreas Exp $
+ $Id: info.xsl,v 1.40 2003/09/09 11:34:40 andreas Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -44,6 +44,7 @@
 				</xsl:if>
 				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-authoring</xsl:with-param></xsl:call-template>AC&#160;Auth</a></td>
 				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">ac-live</xsl:with-param></xsl:call-template>AC&#160;Live</a></td>
+				<td><a><xsl:call-template name="activate"><xsl:with-param name="currenttab">scheduler</xsl:with-param></xsl:call-template>Scheduler</a></td>
 			</xsl:if>
 		</tr>
 	</table>
@@ -71,7 +72,7 @@
 <xsl:template name="activate">
 <xsl:param name="currenttab"/>
 <xsl:variable name="urlhead">?lenya.usecase=info-</xsl:variable> 
-<xsl:variable name="urltail">&amp;lenya.step=showscreen&amp;lenya.area=authoring</xsl:variable> 
+<xsl:variable name="urltail">&amp;lenya.step=showscreen</xsl:variable> 
 <xsl:attribute name="href"><xsl:value-of select="$urlhead"/><xsl:value-of select="$currenttab"/><xsl:value-of select="$urltail"/></xsl:attribute>
 <xsl:attribute name="class">lenya-tablink<xsl:if test="$currenttab = $tab">-active</xsl:if></xsl:attribute>
 </xsl:template>
@@ -402,6 +403,10 @@
   		</xsl:if>
   	</td>
   </tr>
+</xsl:template>
+
+<xsl:template match="lenya-info:scheduler">
+	<xsl:copy-of select="node()"/>
 </xsl:template>
 
 </xsl:stylesheet> 

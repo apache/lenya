@@ -83,14 +83,6 @@
       </map:match>
     </map:pipeline>
 
-    <!-- Sitetree Javascript array      -->
-    <map:pipeline>
-      <map:match pattern="*/*/info-sitetree/tabs.js">
-        <map:read src="resources/javascript/tabs.js"/>
-        <map:serialize type="text"/>
-      </map:match>
-    </map:pipeline>
-
     <map:pipeline internal-only="true">
     	
     	<!-- areas (default language) -->
@@ -142,6 +134,7 @@
     <!-- tabs -->
     <map:pipeline internal-only="true">        
       
+      <!-- meta -->
       <map:match pattern="tabs/meta">
       	
       	<!-- update -->
@@ -157,6 +150,7 @@
 				
       </map:match>
       
+      <!-- access control -->
       <map:match pattern="tabs/ac-*">
 				<map:generate src="content/info/access-control.xsp" type="serverpages">
 					<map:parameter name="area" value="{1}"/>
@@ -164,6 +158,7 @@
 				<map:serialize type="xml"/>
       </map:match>
 
+			<!-- workflow -->
       <map:match pattern="tabs/workflow">
       	<!-- check if history path exists -->
         <map:select type="parameter">
@@ -175,6 +170,35 @@
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
+      </map:match>
+      
+      <!-- scheduler -->
+      <map:match pattern="tabs/scheduler">
+      	
+      	<map:select type="parameter">
+      		<map:parameter name="parameter-selector-test" value="{page-envelope:document-id}"/>
+      		
+      		<!-- areas -->
+      		<map:when test="/">
+						<map:generate src="cocoon://scheduler/publication/{page-envelope:publication-id}"/>
+      		</map:when>
+      		
+      		<!-- documents -->
+      		<map:otherwise>
+						<map:generate src="cocoon://scheduler/document/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
+      		</map:otherwise>
+      		
+      	</map:select>
+      	
+				<map:transform src="xslt/info/scheduler.xsl">
+					<map:parameter name="publication-id" value="{page-envelope:publication-id}"/>
+					<map:parameter name="area" value="{page-envelope:area}"/>
+					<map:parameter name="document-url" value="{page-envelope:document-url}"/>
+					<map:parameter name="document-id" value="{page-envelope:document-id}"/>
+					<map:parameter name="context-prefix" value="{request:contextPath}"/>
+				</map:transform>
+				<map:serialize type="xml"/>
+				
       </map:match>
       
       <map:match pattern="tabs/*">

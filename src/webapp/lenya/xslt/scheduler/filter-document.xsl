@@ -7,15 +7,9 @@
     
 <!-- remove other jobs -->
 <xsl:template match="sch:job[@url != $document-url]"/>
-
     
-<!-- only jobs for this document -->  
-<!--
-<xsl:template match="sch:job[($document-url != '') and (@url != $document-url)]"/>
--->
-  
 <!-- Identity transformation -->
-<xsl:template match="@*|*">
+<xsl:template match="@*|node()">
   <xsl:copy>
     <xsl:apply-templates select="@*|node()"/>
   </xsl:copy>
