@@ -38,12 +38,12 @@
       <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
       <task-id>archiveDocument</task-id>
       <xsp:logic>
-        
+        Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
         DocumentHelper documentHelper = new DocumentHelper(objectModel);
         String parentUrl = documentHelper.getCompleteParentUrl();
         <parent-url><xsp:expr>parentUrl</xsp:expr></parent-url>
         
-	DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
+	DocumentReferencesHelper helper = new DocumentReferencesHelper(document.getIdentityMap(), objectModel);
 	Document[] references = helper.getReferences(Publication.LIVE_AREA);
 	if (references.length &gt; 0) {
           </xsp:logic><inconsistent-documents><xsp:logic>

@@ -78,7 +78,7 @@
                   }
               }
           }    
-        DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
+        DocumentReferencesHelper helper = new DocumentReferencesHelper(document.getIdentityMap(), objectModel);
         Document[] references = helper.getReferences(Publication.LIVE_AREA);
         if (references.length &gt; 0) {
               </xsp:logic><inconsistent-documents><xsp:logic>
