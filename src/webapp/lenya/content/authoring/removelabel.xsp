@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.SiteTreeException</xsp:include>
+  </xsp:structure>
+  
+  <usecase:removelabel>
+    
+    <xsp:logic>
+      String documentId = <input:get-attribute module="page-envelope" name="document-id" as="string"/>;
+      String language = <input:get-attribute module="page-envelope" name="document-language" as="string"/>;
+      Publication pub = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      String label = "";
+      try {
+        label = pub.getSiteTree(Publication.AUTHORING_AREA).getNode(documentId).getLabel(language).getLabel();
+      } catch (SiteTreeException e) {}
+    </xsp:logic>
+  
+    <usecase:document-id><xsp:expr>documentId</xsp:expr></usecase:document-id>
+    <usecase:language><xsp:expr>language</xsp:expr></usecase:language>
+    <usecase:label><xsp:expr>label</xsp:expr></usecase:label>
+    
+    <!-- FIXME: this should be defined in the workflow schema -->
+    <usecase:task-id>removelabel</usecase:task-id>
+    
+  </usecase:removelabel>
+  
+</xsp:page>
