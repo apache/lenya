@@ -1,5 +1,5 @@
 /*
-$Id: Policy.java,v 1.4 2003/08/07 10:23:27 andreas Exp $
+$Id: Policy.java,v 1.5 2003/10/02 15:30:45 andreas Exp $
 <License>
 
  ============================================================================
@@ -80,4 +80,12 @@ public interface Policy {
      * @throws AccessControlException when something went wrong.
      */
     boolean isSSLProtected() throws AccessControlException;
+    
+    /**
+     * Returns if the policy is empty. A policy is empty if it does
+     * not contain any credentials.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
+    boolean isEmpty() throws AccessControlException;
 }

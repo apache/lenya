@@ -1,5 +1,5 @@
 /*
-$Id: DefaultPolicy.java,v 1.5 2003/08/07 10:23:27 andreas Exp $
+$Id: DefaultPolicy.java,v 1.6 2003/10/02 15:30:30 andreas Exp $
 <License>
 
  ============================================================================
@@ -186,6 +186,13 @@ public class DefaultPolicy implements Policy {
      */
     public void setSSL(boolean ssl) {
         this.isSSL = ssl;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.ac2.Policy#isEmpty()
+     */
+    public boolean isEmpty() throws AccessControlException {
+        return getCredentials().length == 0;
     }
     
 }
