@@ -1,5 +1,5 @@
 /*
- * $Id: SearchFiles.java,v 1.6 2003/03/06 20:45:52 gregor Exp $
+ * $Id: SearchFiles.java,v 1.7 2003/03/22 21:49:52 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -66,7 +66,7 @@ class SearchFiles {
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println(
-                "Usage: swx.eservices.lucene.SearchFiles \"directory_where_index_is_located\"");
+                "Usage: org.lenya.lucene.SearchFiles \"directory_where_index_is_located\"");
 
             return;
         }

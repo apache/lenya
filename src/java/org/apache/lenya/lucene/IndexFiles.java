@@ -1,5 +1,5 @@
 /*
- * $Id: IndexFiles.java,v 1.5 2003/03/06 20:45:52 gregor Exp $
+ * $Id: IndexFiles.java,v 1.6 2003/03/22 21:49:52 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -61,7 +61,7 @@ class IndexFiles {
     public static void main(String[] args) {
         if (args.length != 2) {
             System.err.println(
-                "Usage: swx.eservices.lucene.IndexFiles \"directory_to_be_indexed\" \"directory_where_index_is_located\"");
+                "Usage: org.lenya.lucene.IndexFiles \"directory_to_be_indexed\" \"directory_where_index_is_located\"");
 
             return;
         }
