@@ -1,0 +1,19 @@
+# $Revision: 1.1 $ $Date: 2003/04/02 12:35:52 $
+# Jeff Turner <jefft@apache.org>
+
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+include "any.rnx"
+
+start =             forrest-config
+forrest-config =    element forrest-config {
+                      defaults,
+                      any
+                    }
+
+defaults =          element defaults {
+                      element * {
+                        attribute type {text}?,
+                        element * { any }*
+                      }*
+                    }

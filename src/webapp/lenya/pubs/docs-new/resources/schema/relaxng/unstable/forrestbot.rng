@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <include href="any.rng"/>
+
+  <start>
+    <ref name="forrest-config"/>
+  </start>
+
+
+  <define name="forrest-config">
+    <element name="forrest-config">
+      <ref name="defaults"/>
+    </element>
+  </define>
+
+
+  <define name="defaults">
+    <element name="defaults">
+      <zeroOrMore>
+        <element>
+          <anyName/>
+          <optional>
+            <attribute name="type"/>
+          </optional>
+          <zeroOrMore>
+            <element>
+              <anyName/>
+              <ref name="ANY"/>
+            </element>
+          </zeroOrMore>
+        </element>
+      </zeroOrMore>
+      <!--
+      <ref name="ANY"/>
+      -->
+    </element>
+  </define>
+
+</grammar>

@@ -1,0 +1,59 @@
+<!-- ===================================================================
+     
+     Apache Cocoon Documentation Tab DTD (Version 1.0)
+
+PURPOSE:
+This DTD defines the */tab.xml documentation configuration files.  Tabs are
+visual indicators that a certain subsection of the URI space is being browsed.
+
+TYPICAL INVOCATION:
+
+  <!DOCTYPE tab PUBLIC
+       "-//APACHE//DTD Cocoon Documentation Tab Vx.yz//EN"
+       "tab-cocoon-vxyz.dtd">
+
+  where 
+  
+    x := major version
+    y := minor version
+    z := status identifier (optional)
+      
+NOTES:
+  
+AUTHORS:
+  Bert Van Kets <bert@vankets.com>
+  Jeff Turner <jefft@apache.org>
+  
+FIXME:
+  - find the proper DTD for top.xml
+
+CHANGE HISTORY:
+  20021102 Revised to allow either @dir or @href (JT)
+  20020506 Initial version. (BVK)
+    
+COPYRIGHT:
+  Copyright (c) 2002 The Apache Software Foundation.
+  
+  Permission to copy in any form is granted provided this notice is 
+  included in all copies. Permission to redistribute is granted 
+  provided this file is distributed untouched in all its parts and 
+  included files.
+  
+==================================================================== -->
+<!ELEMENT tabs (tab)*>
+<!ELEMENT tab EMPTY>
+<!ATTLIST tabs
+  software CDATA #REQUIRED
+  title CDATA #REQUIRED
+  copyright CDATA #REQUIRED
+  xmlns:xlink CDATA #IMPLIED
+>
+<!ATTLIST tab
+  label CDATA #REQUIRED
+  dir CDATA #IMPLIED
+  href CDATA #IMPLIED
+  type (visible | hidden) "visible"
+>
+<!-- =============================================================== -->
+<!-- End of DTD -->
+<!-- =============================================================== -->

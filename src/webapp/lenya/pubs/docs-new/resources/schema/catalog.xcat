@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<!-- OASIS XML Catalog for Forrest -->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+<!-- Document Type Definitions (current) -->
+<public publicId="-//APACHE//DTD Documentation V1.1//EN"
+        uri="dtd/document-v11.dtd"/>
+<public publicId="-//APACHE//DTD Specification V1.1//EN"
+        uri="dtd/specification-v11.dtd"/>
+<public publicId="-//APACHE//DTD FAQ V1.1//EN"
+        uri="dtd/faq-v11.dtd"/>
+<public publicId="-//APACHE//DTD Changes V1.1//EN"
+        uri="dtd/changes-v11.dtd"/>
+<public publicId="-//APACHE//DTD Todo V1.1//EN"
+        uri="dtd/todo-v11.dtd"/>
+<public publicId="-//APACHE//DTD Cocoon Documentation Book V1.0//EN"
+        uri="dtd/book-cocoon-v10.dtd"/>
+<public publicId="-//APACHE//DTD Cocoon Documentation Tab V1.0//EN"
+        uri="dtd/tab-cocoon-v10.dtd"/>
+<public publicId="-//APACHE//DTD How-to V1.0//EN"
+        uri="dtd/howto-v10.dtd"/>
+<public publicId="-//APACHE//DTD Gump Descriptor V1.0//EN"
+        uri="dtd/xgump-draft.dtd"/>
+<public publicId="-//APACHE//DTD JavaDoc V1.0//EN"
+        uri="dtd/javadoc-v04draft.dtd"/>
+<public publicId="-//APACHE//DTD Contributors V1.0//EN"
+        uri="dtd/contributors-v10.dtd"/>
+<public publicId="-//Outerthought//DTD Libre Configuration V0.1//EN"
+        uri="dtd/libre-v01.dtd"/>
+
+<!-- Old DTDs -->
+<public publicId="-//APACHE//DTD Documentation V1.0//EN"
+        uri="dtd/v10/document-v10.dtd"/>
+<public publicId="-//APACHE//DTD FAQ V1.0//EN"
+        uri="dtd/v10/faq-v10.dtd"/>
+<public publicId="-//APACHE//DTD Changes V1.0//EN"
+        uri="dtd/v10/changes-v10.dtd"/>
+<public publicId="-//APACHE//DTD Todo V1.0//EN"
+        uri="dtd/v10/todo-v10.dtd"/>
+
+<!-- Reusable modules -->
+<public publicId="-//APACHE//ENTITIES Documentation V1.1//EN"
+        uri="dtd/document-v11.mod"/>
+<public publicId="-//APACHE//ENTITIES FAQ V1.1//EN"
+        uri="dtd/faq-v11.mod"/>
+<public publicId="-//APACHE//ENTITIES Todo V1.1//EN"
+        uri="dtd/todo-v11.mod"/>
+<public publicId="-//APACHE//ENTITIES Common Elements V1.0//EN"
+        uri="dtd/common-elems-v10.mod"/>
+<public publicId="-//APACHE//ENTITIES Common Character Entity Sets V1.0//EN"
+        uri="dtd/common-charents-v10.mod"/>
+
+<!-- ISO public identifiers for sets of character entities -->
+<public publicId="ISO 8879-1986//ENTITIES Added Latin 1//EN//XML"
+        uri="entity/ISOlat1.pen"/>
+<public publicId="ISO 9573-15:1993//ENTITIES Greek Letters//EN//XML"
+        uri="entity/ISOgrk1.pen"/>
+<public publicId="ISO 8879:1986//ENTITIES Publishing//EN//XML"
+        uri="entity/ISOpub.pen"/>
+<public publicId="ISO 8879:1986//ENTITIES General Technical//EN//XML"
+        uri="entity/ISOtech.pen"/>
+<public publicId="ISO 8879:1986//ENTITIES Numeric and Special Graphic//EN//XML"
+        uri="entity/ISOnum.pen"/>
+<public publicId="ISO 8879:1986//ENTITIES Diacritical Marks//EN//XML"
+        uri="entity/ISOdia.pen"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
+        uri="entity/ISOlat1.pen"/>
+
+<!-- ...................................................................... -->
+<!-- XML Catalog data for DocBook XML V4.2 ................................ -->
+<!-- File docbook/4.2/catalog.xml ..................................................... -->
+
+<!-- Please direct all questions, bug reports, or suggestions for
+     changes to the docbook@lists.oasis-open.org mailing list. For more
+     information, see http://www.oasis-open.org/.
+  -->
+
+<!-- This is the catalog data file for DocBook V4.2. It is provided as
+     a convenience in building your own catalog files. You need not use
+     the filenames listed here, and need not use the filename method of
+     identifying storage objects at all.  See the documentation for
+     detailed information on the files associated with the DocBook DTD.
+     See XML Catalogs at http://www.oasis-open.org/committees/entity/ for
+     detailed information on supplying and using catalog data.
+  -->
+
+<!-- ...................................................................... -->
+<!-- DocBook driver file .................................................. -->
+
+<public publicId="-//OASIS//DTD DocBook XML V4.2//EN"
+        uri="docbook/4.2/docbookx.dtd"/>
+
+<!-- ...................................................................... -->
+<!-- DocBook modules ...................................................... -->
+
+<public publicId="-//OASIS//DTD DocBook CALS Table Model V4.2//EN"
+        uri="docbook/4.2/calstblx.dtd"/>
+<public publicId="-//OASIS//DTD XML Exchange Table Model 19990315//EN"
+        uri="docbook/4.2/soextblx.dtd"/>
+<public publicId="-//OASIS//ELEMENTS DocBook Information Pool V4.2//EN"
+        uri="docbook/4.2/dbpoolx.mod"/>
+<public publicId="-//OASIS//ELEMENTS DocBook Document Hierarchy V4.2//EN"
+        uri="docbook/4.2/dbhierx.mod"/>
+<public publicId="-//OASIS//ENTITIES DocBook Additional General Entities V4.2//EN"
+        uri="docbook/4.2/dbgenent.mod"/>
+<public publicId="-//OASIS//ENTITIES DocBook Notations V4.2//EN"
+        uri="docbook/4.2/dbnotnx.mod"/>
+<public publicId="-//OASIS//ENTITIES DocBook Character Entities V4.2//EN"
+        uri="docbook/4.2/dbcentx.mod"/>
+
+<!-- ...................................................................... -->
+<!-- ISO entity sets ...................................................... -->
+
+<public publicId="ISO 8879:1986//ENTITIES Diacritical Marks//EN//XML"
+        uri="docbook/4.2/ent/iso-dia.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Numeric and Special Graphic//EN//XML"
+        uri="docbook/4.2/ent/iso-num.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Publishing//EN//XML"
+        uri="docbook/4.2/ent/iso-pub.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES General Technical//EN//XML"
+        uri="docbook/4.2/ent/iso-tech.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
+        uri="docbook/4.2/ent/iso-lat1.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Latin 2//EN//XML"
+        uri="docbook/4.2/ent/iso-lat2.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Greek Letters//EN//XML"
+        uri="docbook/4.2/ent/iso-grk1.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Monotoniko Greek//EN//XML"
+        uri="docbook/4.2/ent/iso-grk2.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Greek Symbols//EN//XML"
+        uri="docbook/4.2/ent/iso-grk3.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Alternative Greek Symbols//EN//XML"
+        uri="docbook/4.2/ent/iso-grk4.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Math Symbols: Arrow Relations//EN//XML"
+        uri="docbook/4.2/ent/iso-amsa.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Math Symbols: Binary Operators//EN//XML"
+        uri="docbook/4.2/ent/iso-amsb.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Math Symbols: Delimiters//EN//XML"
+        uri="docbook/4.2/ent/iso-amsc.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Math Symbols: Negated Relations//EN//XML"
+        uri="docbook/4.2/ent/iso-amsn.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Math Symbols: Ordinary//EN//XML"
+        uri="docbook/4.2/ent/iso-amso.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Added Math Symbols: Relations//EN//XML"
+        uri="docbook/4.2/ent/iso-amsr.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Box and Line Drawing//EN//XML"
+        uri="docbook/4.2/ent/iso-box.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Russian Cyrillic//EN//XML"
+        uri="docbook/4.2/ent/iso-cyr1.ent"/>
+<public publicId="ISO 8879:1986//ENTITIES Non-Russian Cyrillic//EN//XML"
+        uri="docbook/4.2/ent/iso-cyr2.ent"/>
+
+<!-- End of catalog data for DocBook XML V4.2 ............................. -->
+<!-- ...................................................................... -->
+
+
+<!-- ...................................................................... -->
+<!-- Simplified Docbook 1.0 DocBook file .................................. -->
+
+<public publicId="-//OASIS//DTD Simplified DocBook XML V1.0//EN"
+        uri="sdocbook/1.0/sdocbook.dtd"/>
+<public publicId="-//OASIS//DTD Simplified DocBook RefEntry XML V1.0//EN"
+        uri="sdocbook/1.0/sdocbookref.dtd"/>
+
+</catalog>

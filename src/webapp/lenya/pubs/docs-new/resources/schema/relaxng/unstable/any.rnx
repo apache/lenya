@@ -1,0 +1,18 @@
+# A RELAX NG schema that matches any XML. Useful for prototyping, where you
+# don't (yet) care what an element contains. Include it in another RNG schema
+# with this line:
+# 
+# <include href="any.rng"/>  (.rng syntax)
+# or: 
+# include "any.rnx"          (.rnx syntax)
+# 
+# Taken from an email to XML-DEV by John Cowan, Subject "Re: [xml-dev] Quick
+# RelaxNG question"
+# 
+# $Revision: 1.1 $ $Date: 2003/04/02 12:35:52 $
+# Jeff Turner <jefft@apache.org>
+
+# start = element * { any }
+
+any = attribute * { text }* |
+      element * { any }*
