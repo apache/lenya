@@ -190,7 +190,7 @@
                   <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
                 </map:when>
               </map:select>
-    	      <map:serialize type="xhtml"/>
+    	      <map:serialize type="html"/>
             </map:otherwise>
           </map:select>
             </map:otherwise>
