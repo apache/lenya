@@ -1,5 +1,5 @@
 /*
- * $Id: CMFProjectCreator.java,v 1.7 2003/03/06 20:47:04 gregor Exp $
+ * $Id: CMFProjectCreator.java,v 1.8 2003/04/02 15:13:31 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,10 +60,6 @@ import org.lenya.xml.DOMUtil;
  */
 public class CMFProjectCreator extends DefaultLeafCreator {
     static Category log = Category.getInstance(CMFProjectCreator.class);
-
-    public CMFProjectCreator() {
-	sampleResourceName = "CMFProject.xml";
-    }
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,

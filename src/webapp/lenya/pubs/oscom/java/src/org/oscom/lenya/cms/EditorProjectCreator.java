@@ -1,5 +1,5 @@
 /*
- * $Id: EditorProjectCreator.java,v 1.10 2003/03/06 20:47:04 gregor Exp $
+ * $Id: EditorProjectCreator.java,v 1.11 2003/04/02 15:13:31 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -60,10 +60,6 @@ import org.lenya.xml.DOMUtil;
  */
 public class EditorProjectCreator extends DefaultLeafCreator {
     static Category log = Category.getInstance(EditorProjectCreator.class);
-
-    public EditorProjectCreator() {
-	sampleResourceName = "EditorProject.xml";
-    }
 
     protected void transformXML (Document doc,
 				 String childId, short childType, String childName,
