@@ -61,7 +61,7 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 import org.apache.tools.ant.XmlLogger;
 import org.lenya.cms.publishing.PublishingEnvironment;
-//import org.lenya.util.NamespaceMap;
+import org.lenya.util.NamespaceMap;
 
 
 /**
@@ -179,10 +179,10 @@ public class AntTask
 
             Map parametersMap = Parameters.toProperties(getParameters());
 
-            //NamespaceMap antMap = new NamespaceMap(parametersMap, ANT_PREFIX);
-            arguments = null; //antMap.getMap();
-            //NamespaceMap propertiesMap = new NamespaceMap(parametersMap, PROPERTIES_PREFIX);
-            properties = null; //propertiesMap.getMap();
+            NamespaceMap antMap = new NamespaceMap(parametersMap, ANT_PREFIX);
+            arguments = antMap.getMap();
+            NamespaceMap propertiesMap = new NamespaceMap(parametersMap, PROPERTIES_PREFIX);
+            properties = propertiesMap.getMap();
         }
         catch (ParameterException e) {
             throw new ExecutionException(e);
