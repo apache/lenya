@@ -25,9 +25,7 @@
 
     <map:pipeline>
       <map:match pattern="menus/**.xml">
-        <map:generate type="serverpages" src="content/menus/generic.xsp">
-          <map:parameter name="pageid" value="{1}"/>
-        </map:generate>
+        <map:generate type="serverpages" src="../../content/menus/authoring.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
@@ -36,15 +34,18 @@
       <map:match pattern="**.html">
         <map:act type="request">
           <map:parameter name="parameters" value="true"/>
+
           <map:aggregate element="lenya" label="lenyapage">
-            <map:part src="cocoon:/menus/{1}.xml"/>
-            <map:part src="http://127.0.0.1:{serverPort}/{context}/docs/{../1}.html?cocoon-view=xhtml4lenya" element="cmsbody"/>
+            <map:part src="cocoon:/menus/sdfdsafs.xml" element="menu"/>
+            <map:part src="http://127.0.0.1:{serverPort}{context}/docs-new/{../1}.html?cocoon-view=xhtml4lenya" element="cmsbody"/>
 <!--
             <map:part src="cocoon://{../1}.html?cocoon-view=xhtml4lenya" element="cmsbody"/>
 -->
           </map:aggregate>
+<!--
           <map:transform src="xslt/document/authoring/main.xsl"/>
-          <map:serialize type="html"/>
+-->
+          <map:serialize type="xml"/>
         </map:act>
       </map:match>
     </map:pipeline>
