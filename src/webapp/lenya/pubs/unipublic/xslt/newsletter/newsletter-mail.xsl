@@ -87,7 +87,7 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text>&#10;Mehr unter:&#10;</xsl:text>
-    <xsl:value-of select="concat($server-uri, '/', @href)"/>
+    <xsl:value-of select="concat($server-uri, '/', @href, '/index.html')"/>
     <xsl:text>&#10;</xsl:text>
     <xsl:text>&#10;</xsl:text>
     <xsl:text>&#10;</xsl:text>

@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
-<xsl:variable name="server-uri" select="'http://www.unipublic.uniz.ch'"/>
+<xsl:variable name="server-uri" select="'http://www.unipublic.unizh.ch'"/>
                 
 <xsl:template match="articles">
   <xsl:apply-templates/>
@@ -44,7 +44,7 @@
     <br />
     Mehr unter:
     <br />
-    <xsl:value-of select="concat($server-uri, '/', @href)"/>
+    <xsl:value-of select="concat($server-uri, '/', @href,'/index.html')"/>
     <br />
     <br />
     <br clear="all" />
