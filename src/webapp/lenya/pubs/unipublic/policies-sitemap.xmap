@@ -5,13 +5,82 @@
  <map:components>
    <map:generators default="file"/>
    <map:serializers default="xml"/>
-   <map:matchers default="wildcard"/>
+   <map:matchers default="wildcard">
+      <map:matcher name="usecase"     logger="sitemap.matcher.usecase"
+                src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
+        <parameter-name>usecase</parameter-name>
+      </map:matcher>
+   </map:matchers>
  </map:components>
 
  <map:pipelines>
+
+   <map:pipeline>
+     <map:match type="usecase" pattern="uploadimage">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/xopus2/**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/bitflux/**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/revision/**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/revision/**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/scheduler/**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/select**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/wyona/**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
+   <map:pipeline>
+     <map:match pattern="authoring/newsletter/**">
+       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:serialize type="xml"/>
+     </map:match>
+   </map:pipeline>
+
    <map:pipeline>
      <map:match pattern="authoring/**">
-       <map:generate src="docs/publication/access-control/policies/authoring.acml"/>
+       <map:generate src="docs/publication/access-control/policies/guest.acml"/>
        <map:serialize type="xml"/>
      </map:match>
    </map:pipeline>

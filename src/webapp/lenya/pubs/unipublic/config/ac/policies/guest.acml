@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<ac>
+<request>
+  <action name="read"/>
+</request>
+<policy>
+ <object match="/">
+  <subjects>
+<!--
+    <world>
+      <actions>
+        <read/>
+      </actions>
+    </world>
+-->
+    <machine ip="127.0.0.1">
+      <actions>
+        <read/>
+      </actions>
+    </machine>
+    <machine ip="127.0.0.1">
+      <actions>
+        <read/>
+      </actions>
+    </machine>
+    <group id="guest">
+      <actions>
+        <read/>
+      </actions>
+    </group>
+    <group id="editor">
+      <actions>
+        <read/>
+      </actions>
+    </group>
+  </subjects>
+ </object>
+</policy>
+</ac>
