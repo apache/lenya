@@ -1,5 +1,6 @@
 /*
-* Copyright 2002-2004 The Apache Software Foundation
+* Copyright 2002-2004 The Apache Software Foundation or its licensors,
+* as applicable.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -510,3 +511,10 @@ li p {
     height: 16px;
     width: 16px;
 }
+
+p.instruction {
+  display: list-item;
+  list-style-image: url('../images/instruction_arrow.png');
+  list-style-position: outside;
+  margin-left: 2em;
+} 

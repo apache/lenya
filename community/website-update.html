@@ -3,8 +3,9 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-version" content="0.7-dev">
 <meta name="Forrest-skin-name" content="pelt">
+<meta-data></meta-data>
 <title>Updating the Lenya Website</title>
 <link type="text/css" href="../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../skin/screen.css" rel="stylesheet">
@@ -153,7 +154,6 @@
     |start content
     +-->
 <div id="content">
-<div id="skinconf-txtlink"></div>
 <div title="Portable Document Format" class="pdflink">
 <a class="dida" href="website-update.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
@@ -162,6 +162,12 @@
 <div id="minitoc-area">
 <ul class="minitoc">
 <li>
+<a href="#Prerequisites">Prerequisites</a>
+</li>
+<li>
+<a href="#Understanding+the+Apache+infrastructure">Understanding the Apache infrastructure</a>
+</li>
+<li>
 <a href="#Generating+changes.html">Generating changes.html</a>
 </li>
 <li>
@@ -169,68 +175,128 @@
 </li>
 </ul>
 </div>
+		
+<a name="N10012"></a><a name="Prerequisites"></a>
+<h2 class="underlined_10">Prerequisites</h2>
+<div class="section">
+<p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
+<ul>
+			
+<li>You have <a href="http://forrest.apache.org">Apache Forrest</a> installed on your machine. This means you have your environment set up
+			in a way that you can call <span class="codefrag">forrest run</span> in any directory.</li>
+			
+<li>You are an active Lenya committer with write access to SVN.</li>
+		
+</ul>
+<p>If you are not a committer but you would like to contribute to the documentation, you're most welcome as well. If case you
+		just want to make little additions or corrections to the Lenya documentation or the Lenya website, please follow this
+		instructions, but instead of committing please make an <span class="codefrag">svn diff</span> and post it on the developer's mailing list. 
+		A committer will happily pick your patch up and apply it.</p>
+</div>
 
-<a name="N10012"></a><a name="Generating+changes.html"></a>
+		
+<a name="N10032"></a><a name="Understanding+the+Apache+infrastructure"></a>
+<h2 class="underlined_10">Understanding the Apache infrastructure</h2>
+<div class="section">
+<p>The Website at <span class="codefrag">http://lenya.apache.org/</span> is a static site, which is served directly from the directory
+		<span class="codefrag">/site</span> in the Apache Lenya SVN repository by a plain Apache httpd server. No Cocoon or even Lenya is 
+		involved in this very situation.</p>
+<p>But the content of <span class="codefrag">/site</span> is never touched directly by any human editor. Instead, it is generated
+		through Forrest from the input files in the <span class="codefrag">/docu</span> directory of the Lenya SVN repository. A cron job 
+		updates the static files in <span class="codefrag">/site</span> every 12 hours to reflect any changes that got checked into to 
+		<span class="codefrag">/docu</span>.</p>
+<p>The typical roundtrip process to update the website therefore is:</p>
+<ul>
+		
+<li>Checkout <span class="codefrag">https://svn.apache.org/repos/asf/lenya/docu</span> into a working directory.</li>
+		
+<li>Run <span class="codefrag">forrest</span> locally on your machine. You can browse your checked-out copy of the website at
+		<span class="codefrag">http://localhost:8888/</span>.</li>
+		
+<li>Edit the content using your favourite editor. Refer to the Forrest Documentation if necessary.</li>
+		
+<li>Hit the Reload button in your browser and test your changes locally on your machine until they work the way you 
+		intended.</li>
+		
+<li>Check in your changes (if you are a committer) or prepare a patch (if you aren't)</li>
+		
+<li>Wait until your changes show up at <span class="codefrag">http://lenya.apache.org/</span>. This will take a maximum of 12 hours.</li>
+		
+</ul>
+<p>See below for more detailed instructions and some more hints.</p>
+</div>
+
+		
+<a name="N10078"></a><a name="Generating+changes.html"></a>
 <h2 class="underlined_10">Generating changes.html</h2>
 <div class="section">
 <p>changes.html can be directly generated from the SVN commit logs with the following procedure:</p>
 <ul>
-  
+				
 <li>install <a href="http://saxon.sf.net">Saxon 8</a> (the svn2changes stylesheet requires a XSLT 2.0 processor)</li>
-  
+				
 <li>run <span class="codefrag">svn log -v --xml http://svn.apache.org/repos/asf/lenya &gt; log.xml</span> in the root of the docu branch. This might take a while as the log file is several MB in size.</li>
-  
+				
 <li>run <span class="codefrag">java -jar saxon8.jar -o status.xml log.xml tools/svn2changes.xsl</span>
+				
 </li>
-  
+				
 <li>run <span class="codefrag">forest</span> (You may have to increase <span class="codefrag">forrest.maxmemory</span> in forrest.properties to get around out of memory exceptions.) Forrest will take a LONG TIME to generate changes.html.</li>
-
+			
 </ul>
 <p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
 </div>
-
-<a name="N1003C"></a><a name="Updating+the+Lenya+website"></a>
+		
+<a name="N100A4"></a><a name="Updating+the+Lenya+website"></a>
 <h2 class="underlined_10">Updating the Lenya website</h2>
 <div class="section">
 <ul>
-  
+				
 <li>
+					
 <span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</span> -&gt;This is our documentation and website source tree</li>
-  
+				
+				
 <li>
-<span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/site/ lenya.apache.org</span> -&gt;This is our deployed website tree (it is the svn-root for our website)</li>
-  
-<li>
+					
 <a href="http://forrest.apache.org/docs/your-project.html#installing">Install Forrest 0.6</a> (Note that you need to use 0.6, other version do not work)</li>
-  
+				
 <li>
+					
 <span class="codefrag">go to the root of lenya/docu</span>
+				
 </li>
-  
+				
 <li>
+					
 <span class="codefrag">forrest</span> (Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
     can be ignored. If the site looks ok to you, and there were no validation errors, go for it.)</li>
-  
-<li>Create and copy the Javadoc (<span class="codefrag">build javadocs</span>, Copy from <span class="codefrag">build/webapp/site/apidocs</span> to <span class="codefrag">lenya/site/apidocs/1.2</span>)</li>
-  
+				
+<li>Create and copy the Javadoc for both branches (<span class="codefrag">build javadocs</span>, Copy from <span class="codefrag">build/webapp/site/apidocs</span> to <span class="codefrag">lenya/site/apidocs/1.2</span> and
+    <span class="codefrag">lenya/site/apidocs/1.4</span>)</li>
+				
 <li>Add, remove, commit to <span class="codefrag">lenya/site</span>
+				
 </li>
-
+			
 </ul>
 <p>There is a cron job on minotaur which will do 'svn update'
 every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then ...</p>
 <ul>
-  
+				
 <li>Login to <span class="codefrag">minotaur.apache.org</span>
+				
 </li>
-  
+				
 <li>
+					
 <span class="codefrag">minotaur@apache.org &gt; /x1/home/thorsten/bin/lenya-update.sh</span>
+				
 </li>
-
+			
 </ul>
 </div>
-  
+	
 </div>
 <!--+
     |end content
