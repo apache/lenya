@@ -12,7 +12,7 @@
 	  <tr>
 	    <td valign="top" bgcolor="{head/color}">
 	      <a href="{@href}/index.html"> 
-	        <img src="{@href}/{head/image/@href}" alt="{head/title}" width="80" height="60" border="0"/>
+	        <img src="{@href}/{head/media/media-reference/@source}" alt="{head/title}" width="80" height="60" border="0"/>
 	      </a>
 	    </td>
           </tr>
@@ -22,7 +22,15 @@
                 <a href="{@href}/index.html"><xsl:value-of select="head/title" /></a>
               </span>
               <br/>
-              <xsl:value-of select="head/teasertext" />
+                <!-- The teasertext is taken if there is one, otherwise take the abstract  -->
+                <xsl:choose>
+                  <xsl:when test="head/teasertext!=''">
+                    <xsl:value-of select="head/teasertext" />
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="head/abstract" />
+                  </xsl:otherwise>
+                </xsl:choose>
             </td>
 	  </tr>
 	</table>

@@ -13,9 +13,10 @@
   <td width="5" bgcolor="white" valign="top">&#160;</td>
 
   <td valign="top" bgcolor="white" width="393" class="art-text" id_xopus="body" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
+  <xsl:if test="$authoring">
     <div class="art-pretitle">
     <p>&#160;</p>
-    <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
+    <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.head/hedline">
       <xsl:choose>
         <xsl:when test="body/body.head/media">
           <xsl:apply-templates select="body/body.head/media[1]/media-reference" mode="image"/>
@@ -27,8 +28,9 @@
     </a>
     <p>&#160;</p>
     </div>
+  </xsl:if>
     <div class="art-date"><xsl:apply-templates select="../../../../NewsManagement/PublishDate" mode="article"/></div>
-    <div class="art-pretitle"><xsl:apply-templates select="head/hedline/dossier"/></div>
+    <div class="art-pretitle"><xsl:apply-templates select="body/body.head/spitzmarke"/></div>
     <div class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></div>
     <div class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </div>
     <div class="art-author"><xsl:apply-templates select="body/body.head/byline"/></div>

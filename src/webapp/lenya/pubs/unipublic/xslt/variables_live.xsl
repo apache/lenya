@@ -2,4 +2,5 @@
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up"
 >
 <xsl:variable name="view"></xsl:variable>
+<xsl:variable name="context_prefix"></xsl:variable>
 </xsl:stylesheet>

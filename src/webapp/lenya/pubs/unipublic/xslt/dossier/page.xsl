@@ -3,6 +3,9 @@
 
 <xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
+<xsl:param name="documentid"/>
+<xsl:param name="authoring"/>
+
 <xsl:template match="dossier">
   <html>
     <head>
@@ -38,7 +41,7 @@
              <td valign="top" width="388" bgcolor="white" class="tsr-text">
                <p class="art-lead">
                <br/>
-                <xsl:value-of select="lead" />
+                <xsl:value-of select="head/abstract" />
                </p>
 
 	       <xsl:apply-templates select="articles" />
@@ -75,8 +78,19 @@
                     </td>
                   </tr>
                   <tr>
-                    <td align="left" width="90">
-                      <img height="60" alt="" src="{head/image/@href}" width="80" border="0"/>
+                    <td align="left" width="90" class="rel-text">
+		      <xsl:if test="$authoring">
+    		        <a href="index.html?usecase=uploadimage&amp;step=showteaserscreen&amp;documentid={$documentid}&amp;xpath=/dossiers/head/title">
+      		        <xsl:choose>
+        		  <xsl:when test="head/media/media-reference">
+                            <img height="60" alt="" src="{head/media/media-reference/@source}" width="80" border="0"/>
+        		  </xsl:when>
+        		  <xsl:otherwise>
+         		  <img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Upload Teaser Image" border="0"/> Upload Teaser Image
+        		  </xsl:otherwise>
+      		        </xsl:choose>
+    			</a>
+  		      </xsl:if>
                     </td>
                     <td class="dos-title1" valign="top" width="308">Dossier:<br/>
                     <xsl:value-of select="head/title" />
