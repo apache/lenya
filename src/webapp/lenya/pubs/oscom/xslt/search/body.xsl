@@ -4,6 +4,8 @@
 
 <xsl:import href="../../../../xslt/search/search-and-results.xsl"/>
 
+<xsl:param name="contextprefix"/>
+
 <xsl:template name="html-title">
 Search
 </xsl:template>

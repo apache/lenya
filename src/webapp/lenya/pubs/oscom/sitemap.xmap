@@ -74,6 +74,7 @@
         <map:generate src="cocoon:/{1}/matrix/overview.xml"/>
         <map:transform src="xslt/overview/{1}/main.xsl">
           <map:parameter name="relativePrefix" value="../"/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/matrix/overview.xml"/>
         <map:serialize type="html"/>
@@ -102,6 +103,7 @@
         <map:generate src="cocoon:/{1}/matrix/{2}.xml"/>
         <map:transform src="xslt/matrix/{1}/main.xsl">
           <map:parameter name="relativePrefix" value="../"/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/matrix/{2}.xml"/>
         <map:serialize type="html"/>
@@ -178,7 +180,9 @@
         <map:aggregate element="lenya">
           <map:part src="cocoon:/{1}/{2}-envelope.xml" element="cmsbody"/>
         </map:aggregate>
-        <map:transform src="xslt/generic/{1}/main.xsl"/>
+        <map:transform src="xslt/generic/{1}/main.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/xhtml/{2}.xml"/>
         <map:serialize type="html"/>
       </map:match>
