@@ -9,6 +9,7 @@
         <xs:element ref="description" minOccurs="0"/>
         <xs:element ref="main_url"/>
         <xs:element ref="license"/>
+        <xs:element ref="programming-language" minOccurs="0"/>
         <xs:element ref="related-info" minOccurs="0"/>
         <xs:element ref="features" minOccurs="0"/>
       </xs:sequence>
@@ -27,6 +28,7 @@
   <xs:element name="name" type="xs:string"/>
   <xs:element name="email" type="xs:string"/>
   <xs:element name="system_name" type="xs:string"/>
+  <xs:element name="programming-language" type="xs:string"/>
   <xs:element name="main_url" type="xs:anyURI"/>
   <xs:element name="license">
     <xs:complexType>

@@ -39,8 +39,9 @@ No such type: <xsl:value-of select="@type"/>
  <xsl:apply-templates select="editor"/>
  <xsl:apply-templates select="description"/>
  <ul>
-   <li>Home: <a href="{main_url}" target="_blank"><xsl:apply-templates select="main_url"/></a></li>
+   <li><b>Home:</b><xsl:text> </xsl:text><a href="{main_url}" target="_blank"><xsl:apply-templates select="main_url"/></a></li>
    <li><xsl:apply-templates select="license"/></li>
+   <xsl:apply-templates select="programming-language"/>
  </ul>
  <xsl:apply-templates select="related-info" />
  <xsl:apply-templates select="features" />
@@ -48,7 +49,11 @@ No such type: <xsl:value-of select="@type"/>
 </xsl:template>
 
 <xsl:template match="license">
- License: <a href="{license_url}" target="_blank"><xsl:apply-templates select="license_name"/></a>
+<b>License:</b><xsl:text> </xsl:text><a href="{license_url}" target="_blank"><xsl:apply-templates select="license_name"/></a>
+</xsl:template>
+
+<xsl:template match="programming-language">
+ <li><b>Programming Language:</b><xsl:text> </xsl:text><xsl:value-of select="."/></li>
 </xsl:template>
 
 <xsl:template match="description">

@@ -30,6 +30,7 @@ Framework
  <ul>
    <li>Home: <xsl:apply-templates select="main_url"/></li>
    <li><xsl:apply-templates select="license"/></li>
+   <xsl:apply-templates select="programming-language"/>
  </ul>
  <xsl:apply-templates select="related-info"/>
  <xsl:apply-templates select="features"/>
@@ -38,7 +39,12 @@ Framework
 </xsl:template>
 
 <xsl:template match="license">
- License: <xsl:apply-templates select="license_name"/> (<xsl:apply-templates select="license_url"/>)
+License Name: <xsl:apply-templates select="license_name"/>
+<br />License URI: <xsl:apply-templates select="license_url"/>
+</xsl:template>
+
+<xsl:template match="programming-language">
+<li>Programming Language: <xsl:value-of select="."/></li>
 </xsl:template>
 
 <xsl:template match="description">

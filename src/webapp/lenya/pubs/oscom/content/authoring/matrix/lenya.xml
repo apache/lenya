@@ -18,6 +18,7 @@ shipped together with Lenya.
     <license_name>Apache Software License</license_name>
     <license_url>http://www.wyona.org/license.html</license_url>
   </license>
+  <programming-language>Java</programming-language>
   <related-info>
     <info-item>
       <title>OSDIR.com</title>
