@@ -250,7 +250,11 @@
           <map:part src="cocoon:/menus/{1}/{2}/{3}/section.xml"/>
           <map:part src="cocoon:/{1}/{2}/{3}/index.xml" element="cmsbody"/>
         </map:aggregate>
-        <map:transform src="stylesheets/publication/Page/Section/Authoring/main.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Section/Authoring/main.xsl">
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+        </map:transform>
         <map:serialize type="html"/>
       </map:match>
 
@@ -322,7 +326,12 @@
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
           </map:when>
           <map:otherwise>
+<!--
             <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+-->
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl">
+              <map:parameter name="section" value="{2}"/>
+            </map:transform>
           </map:otherwise>
         </map:select>
         <map:serialize type="html"/>

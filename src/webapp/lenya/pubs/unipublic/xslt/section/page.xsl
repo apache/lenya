@@ -5,9 +5,14 @@
 
 <xsl:variable name="sectiontext"><xsl:apply-templates select="/up:Page/Content/MainColumn/section" mode="section-name"/></xsl:variable>
 
+<xsl:param name="channel"/>
+<xsl:param name="section"/>
+<xsl:param name="year"/>                                                                                                                    
+
 <!--
 <xsl:template match="up:Page">
 -->
+
 <xsl:template match="Page">
   <xsl:apply-templates select="Content"/>
 </xsl:template>
@@ -62,7 +67,7 @@
 <tr>
 <td width="5" valign="top" bgcolor="white">&#160;</td>
 <td width="295" bgcolor="white"><font size="1" face="Geneva,Helvetica,Arial,Swiss,Nu Sans Regular"><br />
- <b>2002</b> | 2001 | 2000 | 1999</font></td>
+ <b><a href="../{$year}/"><xsl:value-of select="$year"/></a></b> | <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2001/">2001</a> | <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/2000/">2000</a> | <a href="http://www.unipublic.unizh.ch/{$channel}/{$section}/1999/">1999</a></font></td>
 </tr>
 
 <xsl:apply-templates select="MainColumn/section/articles" mode="articles"/>

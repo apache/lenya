@@ -162,7 +162,11 @@
       </map:match>
       <map:match pattern="*/*/*/index.html">
         <map:generate src="cocoon:/{1}/{2}/{3}/index.xml"/>
-        <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Section/Live/main.xsl">
+          <map:parameter name="channel" value="{1}"/>
+          <map:parameter name="section" value="{2}"/>
+          <map:parameter name="year" value="{3}"/>
+        </map:transform>                                                                                                                    
         <map:serialize type="html"/>
       </map:match>
 
@@ -197,7 +201,9 @@
         <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
 -->
         <map:generate src="cocoon:/{1}/{2}/{3}/{4}/article.xml"/>
-        <map:transform src="stylesheets/publication/Page/Article/Live/main.xsl"/>
+        <map:transform src="stylesheets/publication/Page/Article/Live/main.xsl">
+          <map:parameter name="section" value="{2}"/>
+        </map:transform>                                                                                                                
         <map:serialize type="html"/>
       </map:match>
 
