@@ -425,7 +425,7 @@
               <map:transform src="xslt/authoring/edit/oneform.xsl">
                 <map:parameter name="docid" value="{page-envelope:document-path}"/>
               </map:transform>
-              <map:serialize type="htmlnoi" />
+              <map:call resource="style-cms-page"/>
             </map:match>
           </map:match>
 

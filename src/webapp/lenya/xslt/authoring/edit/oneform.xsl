@@ -2,40 +2,21 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
 >
 
 <xsl:output indent="no"/>
 
 <xsl:param name="docid"/>
-<xsl:param name="cols" select="'80'"/>
-<xsl:param name="rows" select="'30'"/>
 
 <xsl:template match="/">
-<html>
-<body>
-<p>
-Edit Document <b><xsl:value-of select="$docid"/></b>
-<br/>Cols = <xsl:value-of select="$cols"/>
-<br/>Rows = <xsl:value-of select="$rows"/>
-</p>
-
-<form method="post" action="?lenya.usecase=1formedit&amp;lenya.step=close">
-<table border="1">
-<tr>
-  <td align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
-</tr>
-<tr><td>
-<textarea name="content" cols="{$cols}" rows="{$rows}">
-<xsl:apply-templates mode="mixed"/>
-</textarea>
-</td></tr>
-<tr>
-  <td align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
-</tr>
-</table>
-</form>
-
-<a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>:
+<page:page>
+<page:title>Edit Document</page:title>
+<page:body>
+  
+<div class="lenya-box">
+  <div class="lenya-box-title"><a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a></div>
+  <div class="lenya-box-body">
 <ul>
 <li>&amp;lt; instead of &lt; (left angle bracket <b>must</b> be escaped)</li>
 <li>&amp;amp; instead of &amp; (ampersand <b>must</b> be escaped)</li>
@@ -43,11 +24,32 @@ Edit Document <b><xsl:value-of select="$docid"/></b>
 <li>&amp;apos; instead of ' (single-quote)</li>
 <li>&amp;quot; instead of " (double-quote)</li>
 </ul>
-</body>
-</html>
+</div>
+</div>
+
+<div class="lenya-box">
+  <div class="lenya-box-body">
+
+<form method="post" action="?lenya.usecase=1formedit&amp;lenya.step=close">
+<table border="0">
+<tr>
+  <td align="right"><input type="submit" value="Save" name="save"/><input type="submit" value="Cancel" name="cancel"/></td>
+</tr>
+<tr><td>
+<textarea name="content" cols="80" rows="80">
+<xsl:apply-templates mode="mixed"/>
+</textarea>
+</td></tr>
+<tr>
+  <td align="right"><input type="submit" value="Save" name="save"/><input type="submit" value="Cancel" name="cancel"/></td>
+</tr>
+</table>
+</form>
+</div>
+</div>
+</page:body>
+</page:page>
 </xsl:template>
-
-
 
 <!-- Copy mixed content -->
 
