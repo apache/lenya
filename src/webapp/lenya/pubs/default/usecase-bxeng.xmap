@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase-bxeng.xmap,v 1.14 2004/04/29 08:14:56 gregor Exp $ -->
+<!-- $Id: usecase-bxeng.xmap,v 1.15 2004/04/29 09:58:31 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -213,7 +213,6 @@
   -->
             <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
             <map:parameter name="contextmenufile" value="../../resources/misc/bxeng/contextmenu.xml"/>
-            <map:parameter name="callbackscript" value="{request:contextPath}/lenya/javascript/bxe-callbacks.js"/>
           </map:transform>
           <map:transform type="cinclude"/>
           <map:serialize type="xml"/>
