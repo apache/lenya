@@ -79,7 +79,7 @@ import org.apache.lenya.xml.XPath;
 
 /**
  * @author Michael Wechner
- * @version $Id: HTMLFormSaveAction.java,v 1.31 2004/01/07 15:20:47 egli Exp $
+ * @version $Id: HTMLFormSaveAction.java,v 1.32 2004/01/14 16:31:53 michi Exp $
  *
  * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are moving the namespaces to the elements which use them! One hack might be to parse the tree for namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  *
@@ -323,6 +323,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
  
     /**
      * xupdate:update
+     * FIXME: updating attributes doesn't work this way
      */
     private String update(Request request, String pname, String select, NodeList selectionNodeList) {
         // FIXME: Lexus seems to have trouble with mixed content. As Workaround we insert-after new and remove original
