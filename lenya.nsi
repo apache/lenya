@@ -25,6 +25,7 @@
 ;Configuration
 
   ;General
+  Var product_name
   Name "Apache Lenya 1.4-dev"
   OutFile "apache-lenya-1.4-dev-bin.exe"
   
@@ -33,7 +34,7 @@
   SetDatablockOptimize on
 
   ;Folder selection page
-  InstallDir "C:\apache-lenya"
+  InstallDir "C:\apache-lenya-1.4-dev"
   
 ;--------------------------------
 ;Interface Settings
@@ -59,19 +60,15 @@
 ;--------------------------------
 ;Installer Sections
 
-Section "Apache Lenya" SecDummy
+Section "Apache Lenya 1.4-dev" SecDummy
 
   Call findJavaPath
-  
+  StrCpy $product_name "Apache Lenya 1.4-dev"
   SetOutPath $INSTDIR
   
   SetOutPath $INSTDIR\build\lenya\webapp
   File build\lenya\webapp\global-sitemap.xmap
-  File build\lenya\webapp\not-found.xml
   File build\lenya\webapp\sitemap.xmap
-  File build\lenya\webapp\welcome.xml
-  File build\lenya\webapp\welcome.xslt
-  File /r build\lenya\webapp\legal
   File /r build\lenya\webapp\lenya
   File /r build\lenya\webapp\resources
   File /r build\lenya\webapp\stylesheets
@@ -87,50 +84,47 @@ Section "Apache Lenya" SecDummy
   File /r tools
   File /r legal
 
-  CreateDirectory "$SMPROGRAMS\$Name"
-  CreateShortCut "$SMPROGRAMS\$Name\Apache Lenya Home Page.lnk" \
+  CreateDirectory "$SMPROGRAMS\$product_name"
+  CreateShortCut "$SMPROGRAMS\$product_name\Apache Lenya Home Page.lnk" \
                  "http://lenya.apache.org/"
 
-  CreateShortCut "$SMPROGRAMS\$Name\Welcome.lnk" \
+  CreateShortCut "$SMPROGRAMS\$product_name\Welcome to $product_name.lnk" \
                  "http://127.0.0.1:8888"
 
-  CreateShortCut "$SMPROGRAMS\$Name\Lenya Documentation.lnk" \
-                 "http://127.0.0.1:8888/docs-new/docs/index.html"
-
-  CreateShortCut "$SMPROGRAMS\$Name\Uninstall $Name.lnk" \
+  CreateShortCut "$SMPROGRAMS\$product_name\Uninstall $product_name.lnk" \
                  "$INSTDIR\Uninstall.exe"
 
-  CreateShortCut "$SMPROGRAMS\$Name\Start Lenya.lnk" \
+  CreateShortCut "$SMPROGRAMS\$product_name\Start $product_name.lnk" \
                  "$INSTDIR\lenya.bat" \
                  'servlet' \
                  "$INSTDIR\lenya.bat" 1 SW_SHOWNORMAL
 
   ClearErrors
 
-  ExecWait '"$INSTDIR\lenya.bat"'
-  
+  ;Start Apache Lenya, wait 12 seconds to give it time to start, then launch start page
+  ExecShell "open" '"$INSTDIR\lenya.bat"' 0 SW_SHOWMINIMIZED
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-
+  Sleep 12000
+  ExecShell "open" '"http://127.0.0.1:8888"' 0 SW_SHOWNORMAL
+  Quit
 SectionEnd
 
 ;--------------------------------
 ;Descriptions
 
-  LangString DESC_SecDummy ${LANG_ENGLISH} "Installs the Apache Lenya Content Management System."
+  LangString DESC_SecDummy ${LANG_ENGLISH} "Installs the Apache Lenya 1.4-dev Content Management System."
 
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} $(DESC_SecDummy)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} $(DESC_SecDummy)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
  
 ;--------------------------------
 ;Uninstaller Section
 
 Section "Uninstall"
-
-  RMDir /r "$SMPROGRAMS\$Name"
+  RMDir /r "$SMPROGRAMS\Apache Lenya 1.4-dev"
   RMDir /r "$INSTDIR"
-
 SectionEnd
 
 ; =====================
