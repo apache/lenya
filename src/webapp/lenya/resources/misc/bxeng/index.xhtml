@@ -3,10 +3,6 @@
 <head>
 
 <!-- Namespaces are doctype specific and will be added during aggregation -->
-<!--
-<meta name="bxeNS" content="echo=http://example.com/newformat#" />
-<meta name="bxeNS" content="ent=http://www.purl.org/NET/ENT/1.0/" />
--->
 
 <link rel="stylesheet" href="/bxeng/css/editor.css" type="text/css" />
 
@@ -18,9 +14,6 @@
 </head>
 
 <body onload="bxe_start('CONFIG_FILE')">
-<!--
-<body onload="bxe_start('./config-bxeng.xml')">
--->
 <!-- everything in the following div element will be replaced -->
 <div id="bxe_area">
 <noscript>
@@ -30,7 +23,7 @@ You need JavaScript enabled. Otherwise nothing at all works here
 </div>
 
 <!-- another way to do it without having to use xslt
-  <div id="foobar" bxe_xpath="/unizh:content-document/xhtml:body"></div>
+  <div id="foobar" bxe_xpath="/xhtml:body"></div>
 -->
 </body>
 </html>
