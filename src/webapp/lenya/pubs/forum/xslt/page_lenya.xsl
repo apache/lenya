@@ -4,10 +4,10 @@
  
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
-<!--
 <xsl:variable name="contextPrefix">/lenya/forum</xsl:variable>
--->
+<!--
 <xsl:variable name="contextPrefix"><xsl:value-of select="/lenya/menu/context_prefix/."/></xsl:variable>
+-->
 <xsl:variable name="image_path"><xsl:value-of select="$contextPrefix"/>/images</xsl:variable>
 
 <xsl:template name="page">
