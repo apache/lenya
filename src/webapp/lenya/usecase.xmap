@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.239 2004/08/18 20:09:27 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.240 2004/08/18 20:45:23 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -126,7 +126,7 @@
 
     <map:pipeline>
       <map:match pattern="kupu-stream">
-        <map:generate type="kupustream"/>
+        <map:generate type="stream"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.135 2004/08/13 09:27:43 andreas Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.136 2004/08/18 20:45:23 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -34,7 +34,6 @@
     <map:generator name="file-nolabel" label="content,data" logger="sitemap.generator.file-nolabel" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.generation.FileGenerator"/>
     <map:generator name="html" label="content,data" src="org.apache.cocoon.generation.HTMLGenerator"/>
     <map:generator name="imagedirectory" label="content,data" logger="sitemap.generator.imagedirectory" src="org.apache.cocoon.generation.ImageDirectoryGenerator"/>
-    <map:generator name="kupustream" label="content,data" logger="sitemap.generator.kupustream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.lenya.cms.cocoon.generation.StreamGenerator"/>
     <map:generator name="notifying" src="org.apache.cocoon.sitemap.NotifyingGenerator"/>
     <map:generator name="proxy" label="content" logger="sitemap.generator.proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
     <map:generator name="request" label="data" logger="sitemap.generator.request" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.generation.RequestGenerator"/>
