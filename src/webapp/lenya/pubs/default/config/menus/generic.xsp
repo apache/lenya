@@ -8,22 +8,11 @@
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
 >
 
   <menu>
 
-  <xsp-lenya:util/>
-
-  <url-info>
-    <context-prefix><xsp-request:get-context-path/></context-prefix>
-    <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
-    <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
-    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
-    <document-url><input:get-attribute module="page-envelope" as="string" name="document-url"/></document-url>
-  </url-info>
-    
-    <live_uri>/live<input:get-attribute module="page-envelope" as="string" name="document-url"/></live_uri>
-    
     <xsp:logic>
       String bitflux_prefix = <xsp-request:get-context-path/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/bitflux";
       String domain_prefix_bitflux = "" + <xsp-request:get-context-path/>;
