@@ -6,8 +6,8 @@
   <update-index type="incremental"/>
 -->
 
-  <index-dir src="../resources/search/lucene/index/index"/>
-  <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump"/>
+  <index-dir src="../../work/search/lucene/index/index"/>
+  <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump"/>
 
   <indexer class="org.apache.lenya.lucene.index.DefaultIndexer"/>
 </lucene>

@@ -6,7 +6,7 @@
   <base-url href="http://www.oscom.org/index.html"/>
   <scope-url href="http://www.oscom.org/"/>
 
-  <uri-list src="../resources/search/lucene/uris.txt"/>
-  <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump/www.oscom.org"/>
+  <uri-list src="../../work/search/lucene/uris.txt"/>
+  <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump/www.oscom.org"/>
 
 </crawler>

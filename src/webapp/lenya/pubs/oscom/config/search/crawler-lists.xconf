@@ -10,6 +10,6 @@
   <base-url href="http://lists.oscom.org/pipermail/participants/"/>
   <scope-url href="http://lists.oscom.org/pipermail/participants/"/>
 
-  <uri-list src="../resources/search/lucene/uris-lists.txt"/>
-  <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump/lists.oscom.org"/>
+  <uri-list src="../../work/search/lucene/uris-lists.txt"/>
+  <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump/lists.oscom.org"/>
 </crawler>

@@ -5,8 +5,8 @@
 <!--
   <update-index type="incremental"/>
 -->
-  <index-dir src="../resources/search/lucene/index/index-lists"/>
-  <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump/lists.oscom.org"/>
+  <index-dir src="../../work/search/lucene/index/index-lists"/>
+  <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump/lists.oscom.org"/>
 
   <indexer class="org.apache.lenya.lucene.index.DefaultIndexer"/>
 </lucene>
