@@ -14,7 +14,8 @@
     <xsp:logic>
       String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
       String domain_prefix_bitflux=""+xsp_lenya_context_prefix;
-      String xmlSource = xsp_lenya_pub_url.replaceFirst("\\.html", ".xml");
+      String replacementString = File.separator + "index.xml";
+      String xmlSource = xsp_lenya_pub_url.replaceFirst("\\.html", replacementString);
       if (xmlSource.startsWith("/")) {
         xmlSource = xmlSource.substring(1);
       } 
