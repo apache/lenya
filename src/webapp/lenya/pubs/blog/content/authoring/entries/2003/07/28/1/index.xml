@@ -10,9 +10,9 @@
     <echo:link>http://127.0.0.1:8080/lenya/blog/</echo:link>
     <echo:id>2003/07/28/1</echo:id>
 
-    <echo:created>2003-07-28T12:29:29</echo:created>
+    <echo:created>2003-07-28T12:29:29+01:00</echo:created>
     <echo:issued>2003-07-28T18:29:29</echo:issued>
-    <echo:modified>2003-10-24T00:45:56</echo:modified>
+    <echo:modified>2003-10-24T00:45:56+01:00</echo:modified>
 
     <echo:content type="text/xhtml">
       <p>Record temperature for July 28, 1993: Record high <b>33.0</b></p>
