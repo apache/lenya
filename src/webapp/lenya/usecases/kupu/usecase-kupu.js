@@ -1,5 +1,3 @@
-/*cocoon.load("context:/flow/lenya.js");*/
-
 importClass(Packages.java.util.ArrayList);
 
 importClass(Packages.org.apache.cocoon.components.ContextHelper);
