@@ -1,5 +1,5 @@
 /*
-$Id: SchedulerStore.java,v 1.2 2004/01/09 11:14:40 andreas Exp $
+$Id: SchedulerStore.java,v 1.3 2004/02/21 14:52:07 andreas Exp $
 <License>
 
  ============================================================================
@@ -78,7 +78,7 @@ import org.w3c.dom.Element;
  * Store for scheduler jobs.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: SchedulerStore.java,v 1.2 2004/01/09 11:14:40 andreas Exp $
+ * @version CVS $Id: SchedulerStore.java,v 1.3 2004/02/21 14:52:07 andreas Exp $
  */
 public class SchedulerStore {
 
@@ -235,7 +235,6 @@ public class SchedulerStore {
             } catch (Exception e) {
                 throw new SchedulerException(e);
             }
-            Element schedulerElement = document.getDocumentElement();
             NamespaceHelper helper = SchedulerStore.getNamespaceHelper(document);
 
             for (int i = 0; i < jobElements.length; i++) {

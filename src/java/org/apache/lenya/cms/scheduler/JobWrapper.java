@@ -1,5 +1,5 @@
 /*
-$Id: JobWrapper.java,v 1.1 2004/01/07 18:37:23 andreas Exp $
+$Id: JobWrapper.java,v 1.2 2004/02/21 14:51:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,13 +62,12 @@ import org.quartz.Trigger;
  * Wrapper for job information.
  *
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: JobWrapper.java,v 1.1 2004/01/07 18:37:23 andreas Exp $
+ * @version CVS $Id: JobWrapper.java,v 1.2 2004/02/21 14:51:14 andreas Exp $
  */
 public class JobWrapper {
     
     private JobDetail jobDetail;
     private Trigger trigger;
-    private String jobName;
     
     /**
      * Ctor.
