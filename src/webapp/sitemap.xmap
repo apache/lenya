@@ -18,6 +18,15 @@
 
   <map:transformers default="xslt">
 
+    <map:transformer name="i18n" src="org.apache.cocoon.transformation.I18nTransformer">
+      <catalogues default="cmsui">
+        <catalogue id="cmsui" name="cmsui" location="lenya/resources/i18n"/>           
+       </catalogues>
+       <untranslated-text>untranslated</untranslated-text>
+         <!-- cache-at-startup should be true in non development/debug mode -->
+       <cache-at-startup>false</cache-at-startup>
+    </map:transformer>
+      
     <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
       <publication type=""/>
     </map:transformer>
@@ -200,6 +209,9 @@
   <map:resources>
 
     <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
       <map:transform src="lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
