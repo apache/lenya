@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PageEnvelope.java,v 1.27 2003/07/08 14:22:09 egli Exp $
 <License>
 
  ============================================================================
@@ -82,6 +82,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_ID = "document-id";
     public static final String DOCUMENT_URL = "document-url";
     public static final String DOCUMENT_PATH = "document-path";
+    public static final String DOCUMENT_LANGUAGE = "document-language";
     private String context;
 
     /**
@@ -223,7 +224,7 @@ public class PageEnvelope {
     public static final String[] PARAMETER_NAMES = {
         PageEnvelope.AREA, PageEnvelope.CONTEXT, PageEnvelope.PUBLICATION_ID,
         PageEnvelope.PUBLICATION, PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_URL,
-        PageEnvelope.DOCUMENT_PATH
+        PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_LANGUAGE
     };
 
     /**

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PageEnvelopeModule.java,v 1.10 2003/07/08 14:22:09 egli Exp $
 <License>
 
  ============================================================================
@@ -120,6 +120,8 @@ public class PageEnvelopeModule extends AbstractInputModule {
             value = envelope.getDocumentURL();
         } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
             value = envelope.getDocumentPath();
+        } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
+            value = envelope.getDocument().getLanguage();
         }
 
         return value;
