@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 
+<!-- CVS: $Id: sitemap.xmap,v 1.4 2002/01/15 22:34:55 giacomo Exp $ -->
+
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
 <!-- =========================== Components ================================ -->
@@ -61,7 +63,9 @@
                    pool-max="32" pool-min="16" pool-grow="4"/>
 
    <map:serializer name="html"   mime-type="text/html"        logger="sitemap.serializer.html"
-                   src="org.apache.cocoon.serialization.HTMLSerializer"/>
+                   src="org.apache.cocoon.serialization.HTMLSerializer">
+      <encoding>ISO-8859-1</encoding>
+   </map:serializer>
 
   </map:serializers>
 
@@ -95,7 +99,8 @@
 
 <!--
   <map:actions>
-   <map:action name="authorizer" src="org.wyona.cms.cocoon.acting.PMLAuthorizerAction">
+   <map:action name="authorizer" logger="sitemap.action.authorizer"
+               src="org.wyona.cms.cocoon.acting.PMLAuthorizerAction">
      <authenticator id="global"/>
      <policies>policies/</policies>
      <public href="login-screen"/>
@@ -103,7 +108,8 @@
      <public href="switch-user"/>
      <public href="logout"/>
    </map:action>
-   <map:action name="authenticator" src="org.wyona.cms.cocoon.acting.IMLAuthenticatorAction">
+   <map:action name="authenticator" logger="sitemap.action.authenticator"
+               src="org.wyona.cms.cocoon.acting.IMLAuthenticatorAction">
      <id>global</id>
      <passwd>passwd/</passwd>
    </map:action>
@@ -152,6 +158,11 @@
      <map:match pattern="**">
        <map:mount uri-prefix="" src="sitemap.xmap.COCOON-WITHOUT-SVG-FOP" check-reload="true" reload-method="synchron"/>
       </map:match>
+
+   <map:handle-errors>
+    <map:transform src="context://stylesheets/system/error2html.xsl"/>
+    <map:serialize status-code="500"/>
+   </map:handle-errors>
    </map:pipeline>
  </map:pipelines>
 </map:sitemap>

@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.8 2002/01/15 16:07:19 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.9 2002/01/15 22:34:55 giacomo Exp $
 
 -->
 
@@ -180,7 +180,10 @@
   <!-- ============================================================ -->
   <target name="prepare-cocoon" depends="init">
     <copy todir="${build.webapp}" filtering="off">
-      <fileset dir="${src.cocoon.dir}"/>
+      <fileset dir="${src.cocoon.dir}">
+        <exclude name="sitemap.xmap"/>
+        <exclude name="cocoon.xconf"/>
+      </fileset>
     </copy>
   </target>
 
@@ -234,7 +237,7 @@
   <target name="javadocs_done" if="javadocs.notrequired">
     <echo message="-------------------------------------------------------------"/>
     <echo message="Not rebuilding Javadocs, as they are up-to-date:"/>
-    <echo message="  ${build.javadocs}/packages.html is more recent than"/>
+    <echo message="  ${dist.bin.javadocs}/packages.html is more recent than"/>
     <echo message="  ${build.src}/**/*.java"/>
     <echo message="-------------------------------------------------------------"/>
   </target>
@@ -284,13 +287,6 @@
     <copy todir="${build.webapp}">
       <fileset dir="${src.webapp.dir}">
         <include name="**/*"/>
-      </fileset>
-    </copy>
-
-    <copy todir="${build.webapp}" overwrite="yes">
-      <fileset dir="${src.webapp.dir}">
-        <include name="sitemap.xmap*"/>
-        <include name="cocoon.xconf"/>
       </fileset>
     </copy>
 
