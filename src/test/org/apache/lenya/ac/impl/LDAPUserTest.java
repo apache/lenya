@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: LDAPUserTest.java,v 1.3 2004/03/04 15:40:19 egli Exp $  */
-
 package org.apache.lenya.ac.impl;
 
 import java.io.File;
@@ -24,6 +22,8 @@ import java.io.File;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserType;
+import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FileGroup;
 import org.apache.lenya.ac.file.FileRole;
 import org.apache.lenya.ac.file.FileUserManager;
@@ -33,6 +33,11 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 
+/**
+ * LDAP user test.
+ * 
+ * @version $Id:$
+ */
 public class LDAPUserTest extends AccessControlTest {
     /**
      * Constructor for LDAPUserTest.
@@ -52,14 +57,14 @@ public class LDAPUserTest extends AccessControlTest {
     }
 
     /**
-     * @see TestCase#setUp()
+     * @see junit.framework.TestCase#setUp()
      */
     protected void setUp() throws Exception {
         super.setUp();
     }
 
     /**
-     * @see TestCase#tearDown()
+     * @see junit.framework.TestCase#tearDown()
      */
     public void tearDown() throws Exception {
         super.tearDown();
@@ -140,7 +145,8 @@ public class LDAPUserTest extends AccessControlTest {
      */
     final public LDAPUser loadUser(String userName)
         throws AccessControlException {
-        FileUserManager manager = FileUserManager.instance(getAccreditablesDirectory());
+        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
+        FileUserManager manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes);
 
         return (LDAPUser)manager.getUser(userName);
     }
