@@ -72,13 +72,13 @@
 
   <echo>Publish tree</echo>
   <echo>Copy node for ${publish.documentid}</echo>
+  <echo>for language ${publish.language}</echo>
   <echo>from tree ${pub.dir}/${authoring.dir}/${sitetree}</echo>
   <echo>and insert it in tree ${pub.dir}/${live.dir}/${sitetree}</echo>
 
   <publishtree 
       documentid= "${publish.documentid}"
-      absolutetreeauthoringpath= "${pub.dir}/${authoring.dir}/${sitetree}"
-      absolutetreelivepath = "${pub.dir}/${live.dir}/${sitetree}" 
+      language="${publish.language}"
       />
 -->
 
