@@ -6,12 +6,7 @@
 		</tasks>
 	</doc>
 	<doc type="Article">
-		<creator src="org.wyona.cms.authoring.DefaultCreator">
-			<!-- <prefix>d-</prefix> -->
-			<index>/index</index>
-			<sample>Article.xml</sample>
-			<!-- <sampleMeta>Meta.xml</sampleMeta> -->
-		</creator>
+		<creator src="ch.computerworld.wyona.cms.ArticleCreator"/>
 		<tasks>
 			<task id="publish-article"/>
 		</tasks>
