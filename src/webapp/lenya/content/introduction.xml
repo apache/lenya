@@ -20,7 +20,7 @@ components is <a href="http://cocoon.apache.org">Cocoon</a> from the
 </p>
 		
 <p>
-Lenya supports inline WYSIWYG editing. Your site editors do
+Lenya supports inline WYSIWYG editors. Your site editors do
 not have to learn XML. This is possible thanks to the support
 of XML, XSLT and XML Schema on the client side.
 An adminstration interface allows advanced users to
