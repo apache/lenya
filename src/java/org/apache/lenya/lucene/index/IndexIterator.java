@@ -80,7 +80,7 @@ import java.util.Map;
 
 /**
  * @author Andreas Hartmann
- * @version $Id: IndexIterator.java,v 1.5 2003/11/26 00:31:12 michi Exp $
+ * @version $Id: IndexIterator.java,v 1.6 2003/12/09 21:32:49 stefano Exp $
  */
 public class IndexIterator {
     /** Creates a new instance of IndexItertor */
@@ -229,9 +229,9 @@ public class IndexIterator {
             enum = reader.terms(new Term("uid", ""));
         } catch (IOException e) {
             getLogger().log("Term enumeration failed: ", e);
-        } finally {
-            return enum;
         }
+            
+        return enum;
     }
 
     /**
