@@ -662,16 +662,23 @@
     </map:pipeline>
     <!-- /Search with Lucene -->
 
+    <!-- Editor Xopus -->
     <map:pipeline>
-      <!-- Editor Xopus -->
       <map:match pattern="xopus/**">
         <map:mount uri-prefix="xopus" src="lenya/xopus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-
     </map:pipeline>
 
+    <!-- Editor BXE -->
     <map:pipeline>
-    
+      <map:match pattern="bxeng/**">
+        <map:read src="lenya/resources/bxeng/{1}"/>
+      </map:match>
+    </map:pipeline>
+
+
+
+    <map:pipeline>
       <!-- Lenya GUI -->
       <map:match pattern="lenya/**">
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
