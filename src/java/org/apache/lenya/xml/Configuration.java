@@ -1,5 +1,5 @@
 /*
-$Id: Configuration.java,v 1.13 2003/07/23 13:21:29 gregor Exp $
+$Id: Configuration.java,v 1.14 2003/10/14 12:27:46 michi Exp $
 <License>
 
  ============================================================================
@@ -195,7 +195,7 @@ public class Configuration {
         try {
             properties.load(Configuration.class.getResourceAsStream("xpsconf.properties"));
         } catch (Exception e) {
-            log.error(e);
+            log.error(".load(): " + e);
         }
 
         return properties;
@@ -262,7 +262,7 @@ public class Configuration {
 
             return value;
         } else {
-            log.error("No such property: " + key);
+            log.warn(".getProperty(): No such property: " + key);
         }
 
         return null;
