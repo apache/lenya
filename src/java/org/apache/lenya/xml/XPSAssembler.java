@@ -1,5 +1,5 @@
 /*
- * $Id: XPSAssembler.java,v 1.3 2003/02/07 12:14:25 ah Exp $
+ * $Id: XPSAssembler.java,v 1.4 2003/02/07 16:55:06 michicms Exp $
  * <License>
  * The Apache Software License
  *
@@ -425,7 +425,7 @@ public class XPSAssembler implements XPSInclude {
                     }
                 }
             } catch (Exception e) {
-                log.error(".include(): " + e);
+                log.error(".include() 34543: " + e);
             }
         }
 
