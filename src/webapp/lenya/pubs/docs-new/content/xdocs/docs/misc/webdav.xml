@@ -14,7 +14,7 @@
 <body> 
 
 <section>
-<title>Apache module</title>
+<title>Apache 1</title>
 <p>
 Download the Apache Web Server and WebDAV module source code from the Apache website, e.g. <code>apache_1.3.24.tar.gz</code> and <code>mod_dav-1.0.3-1.3.6.tar.gz</code>.
 Configure and compile mod_dav:
@@ -52,6 +52,50 @@ To see the files open "Konqueror" and type <code>webdav://127.0.0.1:8080</code>.
 
 <p>
 More info on <code>mod_dav</code> can be found at <link href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</link>.
+</p>
+</section>
+
+<section>
+<title>Apache 2</title>
+<p>
+Download the Apache Web Server source code from the Apache website, e.g. <code>httpd-2.0.46.tar.gz</code>.
+The mod_dav module is inlcuded with the Apache 2 distribution.
+Configure and compile Apache:
+<source>
+<![CDATA[
+./configure --prefix=/home/michiii/build/apache2 --with-dav --enable-dav
+make 
+make install
+/home/michiii/build/apache2/bin/httpd -l | grep dav
+]]>
+</source>
+</p>
+
+<p>
+You need to reconfigure Apache:
+<source>
+<![CDATA[
+DAVLockDB /home/michi/build/apache2/logs/mod_dav_log
+DavLockDB /usr/local/apache2/var/DavLock
+<Directory "/home/michiii/build/apache2/htdocs">
+Dav On
+
+<!--
+AuthType Basic
+AuthName DAV
+AuthUserFile user.passwd
+
+<LimitExcept GET OPTIONS>
+require user admin
+</LimitExcept>
+-->
+</Directory>
+]]>
+</source>
+</p>
+
+<p>
+More info on <code>mod_dav</code> can be found at <link href="http://apacheworld.org/ty24/site.chapter13.html">http://apacheworld.org/ty24/site.chapter13.html</link> and <link href="http://httpd.apache.org/docs-2.0/mod/mod_dav.html">http://httpd.apache.org/docs-2.0/mod/mod_dav.html</link>.
 </p>
 </section>
 
