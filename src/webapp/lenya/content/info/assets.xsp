@@ -74,7 +74,7 @@
 				title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
 				format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format").item(0).getChildNodes().item(0).getNodeValue();
       } catch(Exception e) { continue; } 
-      java.lang.System.out.println("####" + format);
+
 	  <xsp:content>
 	    <lenya-info:asset>   
 	      <dc:source><xsp:expr>resources[i].getName()</xsp:expr></dc:source>
