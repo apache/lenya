@@ -1,5 +1,5 @@
 /*
- * $Id: PMLAuthorizerAction.java,v 1.16 2003/03/27 16:53:42 michi Exp $
+ * $Id: PMLAuthorizerAction.java,v 1.17 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -72,7 +72,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @version 2.1.6
  */
 public class PMLAuthorizerAction extends AbstractAuthorizerAction implements ThreadSafe {
-    private String authenticator_type = null;
     private String domain = null;
     private String port = null;
     private String context = null;
@@ -87,13 +86,6 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
-
-        Configuration authenticatorConf = conf.getChild("authenticator");
-        authenticator_type = authenticatorConf.getAttribute("type");
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug(".configure(): authenticator type=" + authenticator_type);
-        }
 
         Configuration domainConf = conf.getChild("domain");
         domain = domainConf.getValue("127.0.0.1");
@@ -156,20 +148,17 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
         try {
             policyDoc = getPolicyDoc(request);
         } catch (Exception e) {
-            getLogger().error(".authorize(): No policy could be retrieved (" + e +
-                "). Access denied (return false).");
-
+            getLogger().error(".authorize(): No policy could be retrieved (" + e + "). Access denied (return false).");
             return false;
         }
 
         Policy policy = new Policy(policyDoc, getLogger());
 
         // Read action (read, write, publish, etc.)
-        String action = XPathAPI.selectSingleNode(policyDoc, "/ac/request/action/@name")
-                                .getNodeValue(); //"read";
+        String action = XPathAPI.selectSingleNode(policyDoc, "/ac/request/action/@name").getNodeValue(); //"read";
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("action: " + action);
+            getLogger().debug(".authorize(): action: " + action);
         }
 
         // Check permissions
@@ -184,24 +173,24 @@ public class PMLAuthorizerAction extends AbstractAuthorizerAction implements Thr
         Session session = request.getSession(true);
 
         if (session == null) {
-            getLogger().error("No session object");
+            getLogger().error(".authorize(): No session object");
 
             return false;
         }
 
-        // If there are more than one authenticator enabled, then check corresponding type
-        String authenticator_type = (String) session.getAttribute(
-                "org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
 
+        // Needs to be here after authorizeMachine() check, else every component (XPSAssembler) must be wrapped by a proxy!
+        String authenticator_type = (String) session.getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
         if (!this.authenticator_type.equals(authenticator_type)) {
             if (authenticator_type == null) {
-                getLogger().debug(".authorize(): No authenticator yet");
+                getLogger().warn(".authorize(): No authenticator yet");
             } else {
                 getLogger().warn(".authorize(): Authenticators do not match: " + authenticator_type + " (Authorizer's authenticator: " + this.authenticator_type + ")");
             }
-
+            getLogger().warn(".authorize(): Permission denied");
             return false;
         }
+
 
         Identity identity = (Identity) session.getAttribute("org.lenya.cms.ac.Identity");
 

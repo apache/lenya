@@ -1,5 +1,5 @@
 /*
- * $Id: IMLAuthenticatorAction.java,v 1.10 2003/03/06 20:45:41 gregor Exp $
+ * $Id: IMLAuthenticatorAction.java,v 1.11 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -160,14 +160,13 @@ public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticato
                     return false;
                 }
 
-                Identity identity = new Identity(username, idoc);
+                Identity identity = new Identity(idoc);
 
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("IDENTITY: " + identity);
                 }
 
                 session.setAttribute("org.lenya.cms.ac.Identity", identity);
-                session.setAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type", type);
 
                 return true;
             }
@@ -176,6 +175,9 @@ public class IMLAuthenticatorAction extends AbstractUsernamePasswordAuthenticato
         return false;
     }
 
+    /**
+     *
+     */
     private Document getIdentityDoc(String username, int port, String context)
         throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.7 2003/04/20 01:02:33 michi Exp $
+ * $Id: Identity.java,v 1.8 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -48,6 +48,7 @@
  */
 package org.lenya.cms.ac;
 
+import org.apache.log4j.Category;
 import org.apache.xpath.XPathAPI;
 
 import org.w3c.dom.Document;
@@ -61,9 +62,11 @@ import java.util.Vector;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version 1.12.22
+ * @version 2003.4.20
  */
 public class Identity {
+    static Category log = Category.getInstance(Identity.class);
+
     private static String ROOT = "identity";
     private String username = null;
     private Vector groupnames = null;
@@ -71,27 +74,18 @@ public class Identity {
     /**
      * Creates a new Identity object.
      *
-     * @param username DOCUMENT ME!
-     */
-    public Identity(String username) {
-        this.username = username;
-        groupnames = new Vector();
-    }
-
-    /**
-     * Creates a new Identity object.
-     *
-     * @param username DOCUMENT ME!
      * @param doc DOCUMENT ME!
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Identity(String username, Document doc) throws Exception {
-        this(username);
+    public Identity(Document doc) throws Exception {
+        Node usernameNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/@id");
+        username = usernameNode.getNodeValue(); //"lenya"; //username;
+        log.debug("username: " + username);
 
-        NodeList groupNodes = XPathAPI.selectNodeList(doc,
-                "/" + ROOT + "/groups/group");
+        NodeList groupNodes = XPathAPI.selectNodeList(doc, "/" + ROOT + "/groups/group");
 
+        groupnames = new Vector();
         for (int i = 0; i < groupNodes.getLength(); i++) {
             Node groupNode = groupNodes.item(i);
             addGroupname(groupNode.getFirstChild().getNodeValue());
@@ -114,7 +108,7 @@ public class Identity {
             javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
             javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(new java.io.FileInputStream(args[0]));
-            Identity id = new Identity("dummy", doc);
+            Identity id = new Identity(doc);
             System.out.println(id);
             System.out.println(id.getPassword(doc));
         } catch (Exception e) {
@@ -141,8 +135,7 @@ public class Identity {
      * @throws Exception DOCUMENT ME!
      */
     public static String getPassword(Document doc) throws Exception {
-        Node passwordNode = XPathAPI.selectSingleNode(doc,
-                "/" + ROOT + "/password");
+        Node passwordNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/password");
 
         return passwordNode.getFirstChild().getNodeValue();
     }

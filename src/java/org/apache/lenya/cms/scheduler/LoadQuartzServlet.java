@@ -1,5 +1,5 @@
 /*
- * $Id: LoadQuartzServlet.java,v 1.21 2003/03/06 20:45:42 gregor Exp $
+ * $Id: LoadQuartzServlet.java,v 1.22 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,7 +69,7 @@ import org.lenya.xml.DocumentHelper;
  * A simple servlet that starts an instance of a Quartz scheduler.
  *
  * @author <a href="mailto:christian.egli@lenya.com">Christian Egli</a>
- * @version CVS $Id: LoadQuartzServlet.java,v 1.21 2003/03/06 20:45:42 gregor Exp $
+ * @version CVS $Id: LoadQuartzServlet.java,v 1.22 2003/04/20 22:16:03 michi Exp $
  */
 public class LoadQuartzServlet extends HttpServlet {
     static Category log = Category.getInstance(LoadQuartzServlet.class);
@@ -236,7 +236,7 @@ public class LoadQuartzServlet extends HttpServlet {
         log.debug("-------------------- End Session Attributes --------------------");
 
         // the publicationID is fetched from the session
-        String publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
+        String publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
         // String publicationId = request.getParameter("publication");
 
         if ((publicationId == null) || publicationId.equals("")) {

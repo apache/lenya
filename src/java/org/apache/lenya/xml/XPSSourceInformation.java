@@ -1,5 +1,5 @@
 /*
- * $Id: XPSSourceInformation.java,v 1.11 2003/04/17 14:11:49 michi Exp $
+ * $Id: XPSSourceInformation.java,v 1.12 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -107,10 +107,10 @@ public class XPSSourceInformation {
             if (urlString.indexOf("/") == 0) {
                 url = new URL("file:" + urlString);
             } else if (urlString.indexOf("cocoon:") == 0) {
-                log.warn("Protocol 7789: COCOON (" + urlString + ") -- will be transformed into http");
 
                 if (cocoon != null) {
                     url = new URL(cocoon + "/" + urlString.substring(7)); // remove "cocoon:" protocol
+                    log.warn("Protocol 7789: COCOON (" + urlString + ") -- will be transformed into http: " + url);
                 } else {
                     log.error("No cocoon base set!");
                 }

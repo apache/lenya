@@ -1,5 +1,5 @@
 /*
- * $Id: TaskJob.java,v 1.15 2003/03/06 20:45:42 gregor Exp $
+ * $Id: TaskJob.java,v 1.16 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -98,7 +98,7 @@ public class TaskJob
         log.debug("Context path: " + contextPath);
 
         // the publicationID is fetched from the session
-        String publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
+        String publicationId = (String) request.getSession().getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
 
         if ((publicationId == null) || publicationId.equals("")) {
             log.error("No publication ID provided! ", new IllegalStateException());

@@ -79,7 +79,7 @@ LOGIN
 </xsl:template>
 
 <xsl:template match="authenticator">
-  <br />Last Authenticator: <xsl:value-of select="@id"/>
+  <br />Last Authenticator: <xsl:value-of select="name"/> (<xsl:value-of select="@type"/>)
 </xsl:template>
 
 <xsl:template match="no_username_yet">

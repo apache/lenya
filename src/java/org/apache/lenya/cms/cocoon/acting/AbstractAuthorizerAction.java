@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthorizerAction.java,v 1.10 2003/03/06 20:45:41 gregor Exp $
+ * $Id: AbstractAuthorizerAction.java,v 1.11 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -71,12 +71,14 @@ import org.apache.cocoon.environment.ObjectModelHelper;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.10 2003/03/06 20:45:41 gregor Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.11 2003/04/20 22:16:03 michi Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
     REProgram[] public_matchers;
     boolean logRequests = false;
+   
+    String authenticator_type = null;
 
     /**
      * DOCUMENT ME!
@@ -87,6 +89,12 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
+
+        Configuration authenticatorConf = conf.getChild("authenticator");
+        authenticator_type = authenticatorConf.getAttribute("type");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug(".configure(): authenticator type=" + authenticator_type);
+        }
 
         Configuration[] publics = conf.getChildren("public");
         public_matchers = new REProgram[publics.length];
@@ -154,6 +162,9 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
             return null;
         }
 
+
+
+
         // Get uri
         String request_uri = req.getRequestURI();
         String sitemap_uri = req.getSitemapURI();
@@ -194,8 +205,24 @@ public abstract class AbstractAuthorizerAction extends AbstractComplementaryConf
             session.setAttribute("protected_destination", request_uri);
         }
 
-        HashMap actionMap = new HashMap();
 
+// FIXME: Can't be here. Please see comment within PMLAuthorizerAction
+/*
+        String authenticator_type = (String) session.getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
+        if (!this.authenticator_type.equals(authenticator_type)) {
+            if (authenticator_type == null) {
+                getLogger().debug(".act(): No authenticator yet");
+            } else {
+                getLogger().warn(".act(): Authenticators do not match: " + authenticator_type + " (Authorizer's authenticator: " + this.authenticator_type + ")");
+            }
+
+            return null;
+        }
+*/
+
+
+
+        HashMap actionMap = new HashMap();
         if (authorize(req, actionMap)) {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Permission granted dues to authorisation: " + request_uri);

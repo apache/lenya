@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthenticatorAction.java,v 1.9 2003/03/06 20:45:41 gregor Exp $
+ * $Id: AbstractAuthenticatorAction.java,v 1.10 2003/04/20 22:16:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,8 +65,10 @@ import org.apache.cocoon.environment.ObjectModelHelper;
  * @author Michael Wechner
  * @version 2001.12.10
  */
-public abstract class AbstractAuthenticatorAction extends AbstractComplementaryConfigurableAction
-    implements Configurable {
+public abstract class AbstractAuthenticatorAction extends AbstractComplementaryConfigurableAction implements Configurable {
+    protected String authenticatorId = null;
+    protected String authenticatorName = null;
+
     /**
      * DOCUMENT ME!
      *
@@ -76,6 +78,11 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
      */
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
+
+        Configuration typeConf = conf.getChild("type");
+        authenticatorId = typeConf.getValue(null);
+        // FIXME: add to sitemap: /map:sitemap/map:components/map:actions/map:action/name
+        authenticatorName = typeConf.getValue(null);
     }
 
     /**
@@ -91,8 +98,7 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
      *
      * @throws Exception DOCUMENT ME!
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
-        Parameters parameters) throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src, Parameters parameters) throws Exception {
         // Get request object
         Request req = ObjectModelHelper.getRequest(objectModel);
 
@@ -113,6 +119,9 @@ public abstract class AbstractAuthenticatorAction extends AbstractComplementaryC
 
         if (authenticate(req, new HashMap())) {
             getLogger().info(".act(): Authentication succeeded");
+
+            session.setAttribute("org.lenya.cms.cocoon.acting.Authenticator.id", authenticatorId);
+            session.setAttribute("org.lenya.cms.cocoon.acting.Authenticator.name", authenticatorName);
 
             HashMap actionMap = new HashMap();
             actionMap.put("protected_destination", session.getAttribute("protected_destination"));

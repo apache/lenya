@@ -64,7 +64,7 @@ for a TaskAction execution.
       }
     <xsp:content><session:context><xsp:expr>request.getContextPath()</xsp:expr></session:context></xsp:content>
     <xsp:content><session:prefix><xsp:expr>prefix</xsp:expr></session:prefix></xsp:content>
-    <xsp:content><session:publication-id><xsp:expr>request.getSession().getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type")</xsp:expr></session:publication-id></xsp:content>
+    <xsp:content><session:publication-id><xsp:expr>request.getSession().getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id")</xsp:expr></session:publication-id></xsp:content>
   </xsp:logic>
 </session:session>
 

@@ -20,13 +20,20 @@
 
   <xsp:logic>
       Session session=request.getSession(false);
-      String authenticator_id=(String)session.getAttribute("org.lenya.cms.cocoon.acting.IMLAuthenticator.type");
-      if(authenticator_id != null){
-        <xsp:content><authenticator><xsp:attribute name="id"><xsp:expr>authenticator_id</xsp:expr></xsp:attribute></authenticator></xsp:content>
+      String authenticatorId=(String)session.getAttribute("org.lenya.cms.cocoon.acting.Authenticator.id");
+      String authenticatorName=(String)session.getAttribute("org.lenya.cms.cocoon.acting.Authenticator.name");
+
+      if(authenticatorId != null){
+          <authenticator><xsp:attribute name="type"><xsp:expr>authenticatorId</xsp:expr></xsp:attribute>
+            <name><xsp:expr>authenticatorName</xsp:expr></name>
+          </authenticator>
       }
       else{
-        <xsp:content><no_authenticator_id_yet/></xsp:content>
+          <no_authenticator_id_yet/>
       }
+
+
+
       String protected_destination=(String)session.getAttribute("protected_destination");
       if(protected_destination != null){
         <xsp:content><protected_destination><xsp:expr>protected_destination</xsp:expr></protected_destination></xsp:content>
