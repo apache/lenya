@@ -3,17 +3,17 @@ package org.wyona.cms.authoring;
 import java.io.File;
 
 /**
- * @author Michael Wechner
- * @created 2002.2.26
- * @created 2002.2.26
+ * @author <a href="mailto:michael.wechner@wyona.com">Michael Wechner</a>
  */
 public abstract class AbstractParentChildCreator{
 public static short LEAF_NODE=0;
 public static short BRANCH_NODE=1;
+
 /**
  * @return  LEAF_NODE or BRANCH_NODE
  */
   public abstract short getChildType(short childType) throws Exception;
+
 /**
  *
  */

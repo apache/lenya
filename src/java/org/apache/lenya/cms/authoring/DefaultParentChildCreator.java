@@ -6,8 +6,6 @@ import org.apache.log4j.Category;
 
 /**
  * @author Michael Wechner
- * @created 2002.2.26
- * @created 2002.2.26
  */
 public class DefaultParentChildCreator extends AbstractParentChildCreator{
   static Category log=Category.getInstance(DefaultParentChildCreator.class);
