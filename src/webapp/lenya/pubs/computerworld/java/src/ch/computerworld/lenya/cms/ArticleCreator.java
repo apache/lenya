@@ -1,5 +1,5 @@
 /*
- * $Id: ArticleCreator.java,v 1.6 2003/02/26 13:07:52 egli Exp $
+ * $Id: ArticleCreator.java,v 1.7 2003/02/26 16:24:53 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -72,7 +72,6 @@ public class ArticleCreator extends DefaultLeafCreator {
 
         DOMUtil du = new DOMUtil();
         du.setElementValue(doc, "/article/head/title", childId);
-        du.setElementValue(doc, "/system/system_name", childName);
     }
 
 }
