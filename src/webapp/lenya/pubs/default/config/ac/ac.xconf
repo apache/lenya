@@ -25,7 +25,7 @@
     <user-manager>
        <user-type class="org.apache.lenya.ac.file.FileUser" create-use-case="userAddUser">Local User</user-type>
        <!-- uncomment the following line if you want LDAP support -->
-       <!-- <user-type class="org.apache.lenya.ac.file.LDAPUser" create-use-case="userAddUserLdap">LDAP User</user-type> -->
+       <!-- <user-type class="org.apache.lenya.ac.ldap.LDAPUser" create-use-case="userAddUserLdap">LDAP User</user-type> -->
     </user-manager>
   </accreditable-manager>
   
