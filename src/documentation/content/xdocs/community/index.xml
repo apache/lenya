@@ -28,7 +28,8 @@
   <body>
 	<p>
 		Here you will find information on how to interact with and become a member 
-		of the Apache Lenya community.
+		of the Apache Lenya community. Please read as well <link href="ext:forrest.contrib">Contributing to Apache Forrest</link> 
+    from the forrest community because it contains some more information about the process.
 	</p>
 
   <section>
@@ -40,8 +41,12 @@
 
   <section>
 	<title>Contribute code</title>
+  <note>Please use our <link href="site:issue.add">Bug tracker</link> to submit patches instead of sending them to the mailing list. 
+    All our committer started in creating an account here. ;-)<br/>
+    
+    </note>
 	<p>
-		You can contribute code as e.g. an "Enhancement Patch". 
+		You can contribute code as patch via our <link href="site:issue.add">Bug tracker</link>. 
 		For this, you file a bug entry in Bugzilla, using the links provided below. 
 		The bug entries in Bugzilla should provide a description of what the patch does, 
 		and how to apply it. Any further discussion should occur on the Lenya Developer list (see <link href="site:ml">mailing lists</link>)
@@ -49,7 +54,10 @@
 	<section>
 		<title>Preparing a Patch</title>
 			<ul>
-				<li>For general procedures please see the Cocoon documentation <link href="site:cocoon.howto.patch">How to Prepare a Patch</link> and <link href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</link>. Note that the actual command to create the patch is <code>svn diff</code> (instead of <code>cvs diff -u</code> as suggested in said documents).</li>
+				<li>For general procedures please see the Cocoon documentation <link href="site:cocoon.howto.patch">How to Prepare a Patch</link> and 
+          <link href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</link>. 
+          Note that the actual command to create the patch is <code>svn diff</code> (instead of <code>cvs diff -u</code> as 
+          suggested in said documents).</li>
 				<li>Make sure you follow the <link href="site:coding">coding guidelines</link>.</li>
 				<li>Test your patch by applying it to a fresh checkout of Lenya. In Eclipse for instance, this is done by choosing "apply patch" in the team perspective.</li>
 				<li>Follow this link to enter your patch in Bugzilla: <link href="site:issue.add">add a new patch</link>.</li>

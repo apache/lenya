@@ -29,39 +29,21 @@
 		<p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
 		<ul>
 			<li>You have <link href="http://forrest.apache.org">Apache Forrest</link> installed on your machine. This means you have your environment set up
-			in a way that you can call <code>forrest run</code> in any directory.</li>
+			in a way that you can call <code>forrest</code> in any directory.</li>
 			<li>You are an active Lenya committer with write access to SVN.</li>
 		</ul>
-		<p>If you are not a committer but you would like to contribute to the documentation, you're most welcome as well. If case you
-		just want to make little additions or corrections to the Lenya documentation or the Lenya website, please follow this
-		instructions, but instead of committing please make an <code>svn diff</code> and post it on the developer's mailing list. 
-		A committer will happily pick your patch up and apply it.</p>
-		
-		</section>
-
-		<section>
-		<title>Understanding the Apache infrastructure</title>
-		<p>The Website at <code>http://lenya.apache.org/</code> is a static site, which is served directly from the directory
-		<code>/site</code> in the Apache Lenya SVN repository by a plain Apache httpd server. No Cocoon or even Lenya is 
-		involved in this very situation.</p>
-		<p>But the content of <code>/site</code> is never touched directly by any human editor. Instead, it is generated
-		through Forrest from the input files in the <code>/docu</code> directory of the Lenya SVN repository. A cron job 
-		updates the static files in <code>/site</code> every 12 hours to reflect any changes that got checked into to 
-		<code>/docu</code>.</p>
-		<p>The typical roundtrip process to update the website therefore is:</p>
-		<ul>
-		<li>Checkout <code>https://svn.apache.org/repos/asf/lenya/docu</code> into a working directory.</li>
-		<li>Run <code>forrest</code> locally on your machine. You can browse your checked-out copy of the website at
-		<code>http://localhost:8888/</code>.</li>
-		<li>Edit the content using your favourite editor. Refer to the Forrest Documentation if necessary.</li>
-		<li>Hit the Reload button in your browser and test your changes locally on your machine until they work the way you 
-		intended.</li>
-		<li>Check in your changes (if you are a committer) or prepare a patch (if you aren't)</li>
-		<li>Wait until your changes show up at <code>http://lenya.apache.org/</code>. This will take a maximum of 12 hours.</li>
-		</ul>
-		<p>See below for more detailed instructions and some more hints.</p>
-		</section>
-
+		<p>If you are not a committer but like to contribute to the documentation, you're most welcome as well. If you
+		 want to make additions or corrections to the lenya documentation/website, please keep on reading.</p>
+     <p> Instead of committing please make an <code>svn diff</code> of <code>lenya.docu</code> (see above) and contribute the patch via our <link href="site:issue.add">bug tracker</link>. 
+    Let us know about it on the developer's mailing list. A committer will happily pick your patch up from the bug tracker and apply it.</p>
+    <section>
+		<title>First time checkout</title>
+    <p>You will have to do this only the first time when doing the website.</p>
+    <ul>
+      <li><code>svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</code> <br/><br/><code>lenya.docu</code>->This is our documentation and website source tree. Here you will edit the site.</li>
+      <li><code>svn co https://svn.apache.org/repos/asf/lenya/site/ lenya.apache.org</code> <br/><br/><code>lenya.apache.org</code>->This is our website live tree. Here you will have to copy the build of lenya.docu.</li>
+    </ul>
+    </section>
 		<section>
 			<title>Generating changes.html</title>
 			<p>changes.html can be directly generated from the SVN commit logs with the following procedure:</p>
@@ -73,28 +55,51 @@
 				<li>run <code>forest</code> (You may have to increase <code>forrest.maxmemory</code> in forrest.properties to get around out of memory exceptions.) Forrest will take a LONG TIME to generate changes.html.</li>
 			</ul>
 			<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
+
 		</section>
+		</section>
+
 		<section>
-			<title>Updating the Lenya website</title>
-			<ul>
-				<li>
-					<code>svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</code> ->This is our documentation and website source tree</li>
-				
-				<li>
-					<link href="ext:forrest.install">Install Forrest 0.6</link> (Note that you need to use 0.6, other version do not work)</li>
-				<li>
-					<code>go to the root of lenya/docu</code>
-				</li>
-				<li>
-					<code>forrest</code> (Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
+		<title>Understanding the Apache infrastructure</title>
+		<p>The Website at <code>http://lenya.apache.org/</code> is a static site, which is served from the checkout dir <code>lenya.apache.org</code> on the server based on
+		<code>http://svn.apache.org/repos/asf/lenya/site/</code> by an Apache httpd server.</p>
+		<p>The content of <code>lenya.apache.org</code> has to be generated by forrest based on the <code>lenya.docu</code>. 
+      This has to be done on your local machine because forrest is <strong>not</strong> installed on the server. </p>
+    <p>Copy the deloyed files to your <code>lenya.apache.org</code>. 
+      Commit the changes in <code>lenya.apache.org</code>. A cron job updates the static files in <code>lenya.apache.org</code> 
+      of the server every 24 hours via a simple <code>svn up</code>.
+		</p>
+   	</section>
+		<section>
+			<title>Roundtrip website update</title>
+    
+		<p>The typical roundtrip process to update the website has the following steps.</p>
+    <p>1) edit the documentation src -> lenya.docu</p>
+		<ul>
+		<li><code>cd $lenya.docu; svn up</code> - change to your local checkout of the docu and update it.</li>
+    <li>Follow "Generating changes.html"!</li>
+		<li>Run <code>forrest run</code> locally on your machine. You can now browse the website at
+		<code>http://localhost:8888/</code>.</li>
+		<li>Edit the content using your favourite editor. Refer to the forrest documentation if necessary.
+      Hit the Reload button in your browser and test your changes locally on your machine until they work the way you 
+		intended.</li>
+    </ul>
+    <p>2) deploy and commit your changes to the documentation src -> lenya.docu</p>
+    <ul>
+      <li>Run <code>forrest</code> -> This will create the site in <code>lenya.docu/build/site</code><br/>(Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
     can be ignored. If the site looks ok to you, and there were no validation errors, go for it.)</li>
-				<li>Create and copy the Javadoc for both branches (<code>build javadocs</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code> and
+		<li>Check in your changes (if you are a committer) <code>svn ci -m "my changes message"</code> or prepare a patch (if you aren't) <code>svn diff > patch.txt</code> of <code>lenya.docu</code></li>
+    </ul>
+    <p>3) copy deployed changes from the documentation src to the website checkout-> lenya.apache.org</p>
+    <ul>
+    <li><code>cd $lenya.apache.org; svn up</code> - change to your local checkout of the website and update it.</li>
+    <li><code>cp -r $lenya.docu/build/site/* .</code> - copy the deployed site from step 2.</li>
+    <li>Create and copy the Javadoc for both branches (<code>build javadocs</code>, Copy from <code>build/webapp/site/apidocs</code> to <code>lenya/site/apidocs/1.2</code> and
     <code>lenya/site/apidocs/1.4</code>)</li>
-				<li>Add, remove, commit to <code>lenya/site</code>
-				</li>
-			</ul>
-			<p>There is a cron job on minotaur which will do 'svn update'
-every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then ...</p>
+		<li>Commit your changes to lenya.apache.org <code>svn ci -m "my changes message"</code>.</li>
+		</ul>
+		<p>There is a cron job on minotaur which will do 'svn update' in the server <code>lenya.apache.org</code> dir
+every 24 hours (see ~thorsten/thorsten.ct). If you want to do it manually then ...</p>
 			<ul>
 				<li>Login to <code>minotaur.apache.org</code>
 				</li>
@@ -103,5 +108,7 @@ every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then
 				</li>
 			</ul>
 		</section>
+
+		
 	</body>
 </document>
