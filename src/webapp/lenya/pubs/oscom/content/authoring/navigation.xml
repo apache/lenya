@@ -20,7 +20,10 @@
 </branch>
 <leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
 <leaf name="CVS" href="http://cvs.oscom.org"/>
-<leaf name="Board" href="board.html"/>
+<branch name="Foundation">
+  <leaf name="Board" href="board.html"/>
+  <leaf name="Bylaws" href="http://www.balzer.ch/oscom/bylaws.html"/>
+</branch>
 <leaf name="News"/>
 <!--
 <leaf name="News" href="news.html"/>

@@ -44,6 +44,14 @@
     </map:selectors>
   </map:components>
 
+  <!-- =========================== Views ================================ -->
+
+  <map:views>
+    <map:view name="xml" from-label="xml">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
@@ -197,8 +205,8 @@
   <map:pipeline>
     <!-- Overview (sorted by frameworks and cms) -->
     <map:match pattern="authoring/editor-matrix/index.xml">
-      <map:generate type="directory" src="docs/publication/authoring/matrix/"/>
-      <map:transform src="stylesheets/publication/Page/Matrix/xinclude.xsl"/>
+      <map:generate type="directory" src="docs/publication/authoring/editor-matrix/" label="xml"/>
+      <map:transform src="stylesheets/publication/Page/Matrix/xinclude_editor.xsl"/>
 <!--
       <map:transform type="xinclude"/>
 -->
@@ -247,7 +255,19 @@
         </map:aggregate>
         <map:serialize type="xml"/>
       </map:match>
+  </map:pipeline>
 
+   <map:pipeline>
+      <map:match pattern="authoring/editor-overview.xml">
+        <map:aggregate element="wyona">
+          <map:part src="cocoon:/authoring/menus/overview.xml"/>
+          <map:part src="cocoon:/authoring/editor-matrix/index.xml" element="cmsbody"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+  </map:pipeline>
+
+  <map:pipeline>
       <!-- XML -->
       <map:match pattern="authoring/**.xml">
         <map:aggregate element="wyona">
@@ -345,6 +365,17 @@
         <map:serialize type="html"/>
       </map:match>
       <!-- /CM/F Overview -->
+
+      <!-- Editor Overview -->
+      <map:match pattern="authoring/editor-matrix/">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+      <map:match pattern="authoring/editor-matrix/index.html">
+        <map:generate src="cocoon:/authoring/editor-overview.xml"/>
+        <map:transform src="stylesheets/publication/Page/Overview/Authoring/main_editor.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <!-- Editor Overview -->
 
       <!-- Board -->
       <map:match pattern="authoring/board.html">

@@ -6,23 +6,25 @@
 
 <xsl:template name="body">
 <font face="verdana">
-<h3>Content Management Frameworks/Systems Overview</h3>
+<h3>TTW WYSIWYG Editors Overview</h3>
 
 <font size="-1">
 <p>
-The data of the CMF/S projects listed below are NOT maintained
-by OSCOM itself, but rather by people from each project.
-Please contact them directly in case the data might be outdated.
+To be listed below the editor must be TTW ("through the web" - it works within a browser) and WYSIWYG ("what you see is what you get" - you don't see HTML). Some editors allow you to toggle between "view" and "source" modes - this is a bonus but not a prerequisite for this list.
 </p>
 
 <p>
-If you want your CMS/F project being added to the list below, please send an email to
-<a href="mailto:michael.wechner@oscom.org">Michael Wechner</a>.
+If you want your Editor project being added to the list below, please send an email to
+<a href="mailto:paul.browning@bristol.ac.uk">Paul Browning</a>.
 For all other inquiries please use OSCOM's <a href="../mailing-lists.html">mailing lists</a>.
+</p>
+
+<p>
+The "Remarks" are based on supporting Web pages - I haven't (yet) installed and used all of these editors so I can't vouch for this information.
 </p>
 </font>
 
- <h4>Content Management Frameworks</h4>
+ <h4>TTW WYSIWYG Editors</h4>
   <table cellspacing="0" cellpadding="0" width="450">
   <tr>
     <td bgcolor="#000000">&#160;</td>
@@ -32,12 +34,13 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
     <td bgcolor="#000000">&#160;</td>
     <td bgcolor="#000000"><font size="-2" color="#ffffff"><b>license</b></font></td>
   </tr>
-  <xsl:apply-templates select="system[@type='framework']">
+  <xsl:apply-templates select="system[@type='editor']">
     <xsl:sort select="system_name" data-type="text" order="ascending"/>
   </xsl:apply-templates>
   </table>
 
 
+<!--
  <h4>Content Management Systems</h4>
   <table cellspacing="0" cellpadding="0" width="450">
   <tr>
@@ -52,6 +55,9 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
     <xsl:sort select="system_name" data-type="text" order="ascending"/>
   </xsl:apply-templates>
   </table>
+-->
+
+
  </font>
 </xsl:template>
 
@@ -92,19 +98,8 @@ For all other inquiries please use OSCOM's <a href="../mailing-lists.html">maili
     <td>&#160;</td>
 <td>
 <font face="verdana" size="-2">
-<a target="_blank" href="http://www.cms-list.org">cms-list</a>
+<a target="_blank" href="http://www.bris.ac.uk/is/projects/cms/ttw/ttw.html">Other TTW WYSIWYG Editors</a>
 <br/><br/>
-<a target="_blank" href="http://www.cmsinfo.org">cmsinfo.org</a>
-<br/><br/>
-<a target="_blank" href="http://www.cmswatch.com/ContentManagement/Products/">CMS Watch</a>
-<br/><br/>
-<a target="_blank" href="http://www.contentmanager.eu.com/links/a4.htm">contentmanagement.eu.com</a>
-<br/><br/>
-<a target="_blank" href="http://www.contentmanager.de/itguide/produktvergleich_cms_opensource.html">contentmanager.de</a>
-<br/><br/>
-<a target="_blank" href="http://www.content-wire.com">Content-Wire</a>
-<br/><br/>
-<a target="_blank" href="http://www.clueful.com.au/cgi-bin/cmsdirectory/browse/Products%3aFree%20systems">Clueful Consulting</a>
 </font>
 </td>
   </tr>
