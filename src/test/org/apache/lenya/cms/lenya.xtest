@@ -102,9 +102,10 @@
   </logkit>
   
   <context>
-    <entry name="foo" value="bar"/>
+    <entry name="container.rootDir" value="/d:/development/build/tomcat-4.1.27/webapps/lenya/"/>
+    <entry name="context-root" value="/d:/development/build/tomcat-4.1.27/webapps/lenya/"/>
   </context>
-  
+
   <roles>
   
     <role name="org.apache.excalibur.source.SourceFactorySelector"

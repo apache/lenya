@@ -6,12 +6,18 @@ function getAccreditableManager() {
 var accreditableManager;
 var selector;
 var resolver;
+var requestUrl;
+var contextPath;
 
 function resolve() {
-    selector = cocoon.getComponent("org.apache.lenya.cms.ac2.AccessControllerResolverSelector");
-	resolver = selector.select(Packages.org.apache.lenya.cms.ac2.AccessControllerResolver.DEFAULT_RESOLVER);
-	var requestUrl = cocoon.parameters["requestUri"];
-	var contextPath = cocoon.parameters["contextPath"];
+    selector = cocoon.getComponent("org.apache.lenya.ac.AccessControllerResolverSelector");
+	resolver = selector.select(Packages.org.apache.lenya.ac.AccessControllerResolver.DEFAULT_RESOLVER);
+	if (!requestUrl) {
+		requestUrl = cocoon.parameters["requestUri"];
+	}
+	if (!contextPath) {
+		contextPath = cocoon.parameters["contextPath"];
+	}
 	var webappUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(contextPath, requestUrl);
 	var accessController = resolver.resolveAccessController(webappUrl);
 	accreditableManager = accessController.getAccreditableManager();

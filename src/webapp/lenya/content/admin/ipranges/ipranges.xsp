@@ -9,11 +9,9 @@
   >
 
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.ac.IPRangeManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.IPRange</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
-    <xsp:include>java.io.File</xsp:include>
-    <xsp:include>java.util.Iterator</xsp:include>
+    <xsp:include>org.apache.lenya.ac.IPRangeManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.IPRange</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
   </xsp:structure>
 
   <page>
@@ -21,8 +19,9 @@
       <xsp:logic>
         IPRangeManager manager = (IPRangeManager)
             <input:get-attribute module="access-control" name="iprange-manager" as="object"/>;
-        for (Iterator ranges = manager.getIPRanges(); ranges.hasNext();) {
-            IPRange range = (IPRange) ranges.next();
+        IPRange[] ranges = manager.getIPRanges();
+        for (int rangeIndex = 0; rangeIndex &lt; ranges.length; rangeIndex++) {
+            IPRange range = ranges[rangeIndex];
       </xsp:logic>
         
       <iprange>

@@ -60,14 +60,14 @@ import junit.framework.TestSuite;
 
 import junit.textui.TestRunner;
 
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.file.FileItemManager;
+import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.PublicationHelper;
-import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.ItemManager;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac2.AccessControlTest;
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentType;
@@ -138,19 +138,20 @@ public class WorkflowTest extends AccessControlTest {
         String url = "/" + publication.getId() + URL;
         Document document = publication.getDocumentBuilder().buildDocument(publication, url);
 
-        File configDir = new File(publication.getDirectory(), ItemManager.PATH);
+        File configDir = new File(publication.getDirectory(), FileItemManager.PATH);
         assertTrue(configDir.exists());
 
         Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
 
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
         String workflowId = type.getWorkflowFileName();
-        
+
         WorkflowFactory factory = WorkflowFactory.newInstance();
 
-        String[] emptyRoles = {};
+        String[] emptyRoles = {
+        };
         Situation situation = factory.buildSituation(emptyRoles, "test", "127.0.0.1");
-        
+
         WorkflowFactory.initHistory(document, workflowId, situation);
 
         for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {

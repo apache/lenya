@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<identity id="roger" class="org.apache.lenya.cms.ac.FileUser">
+<identity id="roger" class="org.apache.lenya.ac.file.FileUser">
   <name>Roger</name>
   <description></description>
   <email>roger@lenya.org</email>

@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlSitetreeTransformer.java,v 1.1 2003/10/13 18:24:02 andreas Exp $
+$Id: AccessControlSitetreeTransformer.java,v 1.2 2003/11/13 16:09:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,17 +66,17 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.ac2.AccessControllerResolver;
-import org.apache.lenya.cms.ac2.AccreditableManager;
-import org.apache.lenya.cms.ac2.Authorizer;
-import org.apache.lenya.cms.ac2.DefaultAccessController;
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.PolicyAuthorizer;
-import org.apache.lenya.cms.ac2.PolicyManager;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Authorizer;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.impl.DefaultAccessController;
+import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNodeImpl;
 import org.apache.lenya.util.ServletHelper;
@@ -91,7 +91,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * with a <code>protected="true"</code> attribute.
  * 
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.1 2003/10/13 18:24:02 andreas Exp $
+ * @version CVS $Id: AccessControlSitetreeTransformer.java,v 1.2 2003/11/13 16:09:53 andreas Exp $
  */
 public class AccessControlSitetreeTransformer
     extends AbstractSAXTransformer

@@ -18,7 +18,7 @@
   <xsp:logic>
     Session session = request.getSession(false);
     if(session != null){
-      session.removeAttribute("org.apache.lenya.cms.ac2.Identity");
+      session.removeAttribute("org.apache.lenya.ac.Identity");
       Vector history = (Vector) session.getAttribute("org.apache.lenya.cms.cocoon.acting.History");
       if (history != null) {
         for (int i = 0; i &lt; history.size(); i++) {

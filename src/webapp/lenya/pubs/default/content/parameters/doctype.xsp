@@ -10,13 +10,6 @@ Returns the value of the parameter "value" as URI parameter.
        xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
        >
        
-<xsp:structure>
-  <xsp:include>java.io.File</xsp:include>
-  <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-  <xsp:include>org.apache.lenya.cms.ac.*</xsp:include>
-  <xsp:include>org.apache.lenya.cms.publication.*</xsp:include>
-</xsp:structure>
-
 <parameter xmlns="http://apache.org/cocoon/lenya/uri-parameters/1.0">article</parameter>
        
 </xsp:page>

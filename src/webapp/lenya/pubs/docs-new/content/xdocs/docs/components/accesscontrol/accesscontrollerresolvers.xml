@@ -32,15 +32,15 @@
 		selector to obtain its child <em>AccessControllerResolver</em>s.
 		</p>
 	
-	<source><![CDATA[<role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
+	<source><![CDATA[<role name="org.apache.lenya.ac.AccessControllerResolverSelector"
     shorthand="access-controller-resolvers"
     default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
   <hint shorthand="configurable"
-      class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"/>
+      class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"/>
   <hint shorthand="publication"
-      class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
+      class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"/>
   <hint shorthand="composable"
-      class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/>
+      class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"/>
 </role>]]></source>
 	
 </section>
@@ -50,16 +50,16 @@
 	
 	<source><![CDATA[<access-controller-resolvers>
   <component-instance logger="lenya.ac.accesscontrollerresolver.publication"
-    class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+    class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"
     name="publication">
   </component-instance>
   <component-instance logger="lenya.ac.accesscontrollerresolver.global"
-    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"
     name="global">
     <access-controller type="global"/>
   </component-instance>
   <component-instance logger="lenya.ac.accesscontrollerresolver.composable"
-    class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
     name="composable">
     <resolver type="publication"/>
     <resolver type="global"/>
@@ -114,7 +114,7 @@
 	<p>The <em>ConfigurableAccessControllerResolver</em> can be configured with an
 		<em>AccessController</em> directly inside <code>cocoon.xconf</code>:</p>
 	<source><![CDATA[<component-instance logger="lenya.ac.accesscontrollerresolver"
-    class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"
     name="global">
   <access-controller type="global"/>
 </component-instance>]]> </source>
@@ -128,7 +128,7 @@
 		<em>ComposableAccessControllerResolver</em> returns <code>null</code>.</p>
 		
 	<source><![CDATA[<component-instance logger="lenya.ac.accesscontrollerresolver"
-    class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+    class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
     name="composable">
   <resolver type="publication"/>
   <resolver type="global"/>

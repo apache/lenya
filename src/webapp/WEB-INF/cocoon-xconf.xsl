@@ -134,51 +134,51 @@
 
   <accreditable-managers>
     <component-instance logger="lenya.ac.accreditablemanager"
-        class="org.apache.lenya.cms.ac2.file.FileAccreditableManager" name="file"/>
+        class="org.apache.lenya.ac.file.FileAccreditableManager" name="file"/>
   </accreditable-managers>
 
   <authorizers>
     <component-instance name="policy"
-        class="org.apache.lenya.cms.ac2.PolicyAuthorizer"
+        class="org.apache.lenya.ac.impl.PolicyAuthorizer"
         logger="lenya.ac.authorizer.policy"/>
     <component-instance name="workflow"
-        class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer"
+        class="org.apache.lenya.cms.ac.workflow.WorkflowAuthorizer"
         logger="lenya.ac.authorizer.workflow"/>
     <component-instance name="usecase"
-        class="org.apache.lenya.cms.ac2.usecase.UsecaseAuthorizer"
+        class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer"
         logger="lenya.ac.authorizer.usecase"/>
   </authorizers>
   
   <policy-managers>
     <component-instance name="document"
-        class="org.apache.lenya.cms.ac2.DocumentPolicyManagerWrapper"
+        class="org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper"
         logger="lenya.ac.policymanager.document"/>
     <component-instance name="file"
-        class="org.apache.lenya.cms.ac2.file.FilePolicyManager"
+        class="org.apache.lenya.ac.file.FilePolicyManager"
         logger="lenya.ac.policymanager.file"/>
     <component-instance name="sitemap"
-        class="org.apache.lenya.cms.ac2.sitemap.SitemapPolicyManager"
+        class="org.apache.lenya.cms.ac.SitemapPolicyManager"
         logger="lenya.ac.policymanager.sitemap"/>
   </policy-managers>
   
   <component logger="lenya.ac.accesscontroller.bypassable"
-      class="org.apache.lenya.cms.ac2.BypassableAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/bypassable">
+      class="org.apache.lenya.ac.impl.BypassableAccessController"
+      role="org.apache.lenya.ac.AccessController/bypassable">
     <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif</public>
   </component>
 
   <access-controller-resolvers>
     <component-instance name="publication"
-        class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+        class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"
         logger="lenya.ac.accesscontrollerresolver.publication">
     </component-instance>
     <component-instance name="global"
-        class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"
+        class="org.apache.lenya.ac.impl.ConfigurableAccessControllerResolver"
         logger="lenya.ac.accesscontrollerresolver.global">
       <access-controller type="global"/>
     </component-instance>
     <component-instance name="composable"
-        class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+        class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
         logger="lenya.ac.accesscontrollerresolver.composable">
       <resolver type="publication"/>
 <!--      <resolver type="global"/>-->
@@ -186,12 +186,12 @@
   </access-controller-resolvers>
   
   <component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.cms.ac2.UserAuthenticator"
-      role="org.apache.lenya.cms.ac2.Authenticator"/>
+      class="org.apache.lenya.ac.impl.UserAuthenticator"
+      role="org.apache.lenya.ac.Authenticator"/>
       
   <component logger="lenya.ac.cache"
-     	class="org.apache.lenya.cms.ac2.cache.SourceCacheImpl"
-     	role="org.apache.lenya.cms.ac2.cache.SourceCache"/>
+     	class="org.apache.lenya.ac.cache.SourceCacheImpl"
+     	role="org.apache.lenya.ac.cache.SourceCache"/>
      	
   <component logger="lenya.uriparameterizer"
       class="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerImpl"

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.9 2003/10/26 17:29:55 andreas Exp $
+$Id: DefaultTaskWrapper.java,v 1.10 2003/11/13 16:11:20 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,8 +66,8 @@ import java.util.Properties;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;

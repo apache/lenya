@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<identity id="tom" class="org.apache.lenya.cms.ac.FileUser">
+<identity id="tom" class="org.apache.lenya.ac.file.FileUser">
 <email>info@lenya.org</email>
 <password type="md5">8e07dafd13495561db9063ebe4db4b27</password>
 <comment>Tom Weiss</comment>

@@ -1,5 +1,5 @@
 /*
-$Id: CocoonTaskWrapper.java,v 1.6 2003/10/27 09:52:50 andreas Exp $
+$Id: CocoonTaskWrapper.java,v 1.7 2003/11/13 16:09:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,10 +62,10 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.PolicyAuthorizer;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;

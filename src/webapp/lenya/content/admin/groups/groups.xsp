@@ -9,9 +9,8 @@
   >
 
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.GroupManager</xsp:include>
-    <xsp:include>java.util.Iterator</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.GroupManager</xsp:include>
   </xsp:structure>
 
   <page>
@@ -19,8 +18,9 @@
       <xsp:logic>
         GroupManager groupManager = (GroupManager)
             <input:get-attribute module="access-control" name="group-manager" as="object"/>;
-        for (Iterator groups = groupManager.getGroups(); groups.hasNext();) {
-            Group group = (Group) groups.next();
+        Group[] groups = groupManager.getGroups();
+        for (int i = 0; i &lt; groups.length; i++) {
+            Group group = groups[i];
       </xsp:logic>
         
       <group>

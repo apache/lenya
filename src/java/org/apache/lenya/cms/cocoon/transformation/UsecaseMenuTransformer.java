@@ -1,5 +1,5 @@
 /*
-$Id: UsecaseMenuTransformer.java,v 1.6 2003/10/31 15:17:17 andreas Exp $
+$Id: UsecaseMenuTransformer.java,v 1.7 2003/11/13 16:09:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -66,14 +66,14 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.ac2.AccessControllerResolver;
-import org.apache.lenya.cms.ac2.Authorizer;
-import org.apache.lenya.cms.ac2.DefaultAccessController;
-import org.apache.lenya.cms.ac2.PolicyAuthorizer;
-import org.apache.lenya.cms.ac2.usecase.UsecaseAuthorizer;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.Authorizer;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.impl.DefaultAccessController;
+import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.util.ServletHelper;

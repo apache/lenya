@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<group class="org.apache.lenya.cms.ac.FileGroup" id="administrator"/>
+<group class="org.apache.lenya.ac.file.FileGroup" id="administrator"/>

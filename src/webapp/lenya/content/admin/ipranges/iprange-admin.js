@@ -60,7 +60,7 @@ function iprange_change_profile(iprangeId, newRange) {
 	    var ipRangeManager = getAccreditableManager().getIPRangeManager();
 	    var range;
 	    if (newRange == true) {
-	        range = new Packages.org.apache.lenya.cms.ac.FileIPRange();
+	        range = new Packages.org.apache.lenya.ac.file.FileIPRange();
 	    }
 	    else {
 	        range = ipRangeManager.getIPRange(iprangeId);
@@ -151,12 +151,12 @@ function iprange_change_profile(iprangeId, newRange) {
 		                    message = "This IP range already exists.";
 		                    ok = false;
 		                }
-						else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(iprangeId)) {
+						else if (!Packages.org.apache.lenya.ac.impl.AbstractItem.isValidId(iprangeId)) {
 		                	message = "This is not a valid IP range ID. [" + iprangeId + "]";
 		                	ok = false;
 		                }
 		                else {
-		                    range = new Packages.org.apache.lenya.cms.ac.FileIPRange(
+		                    range = new Packages.org.apache.lenya.ac.file.FileIPRange(
 		                        ipRangeManager.getConfigurationDirectory(), iprangeId);
 		                    ipRangeManager.add(range);
 		                }
@@ -245,12 +245,11 @@ function iprange_change_groups(iprangeId) {
     var rangeGroupArray = range.getGroups();
     var rangeGroups = new java.util.ArrayList(java.util.Arrays.asList(rangeGroupArray));
     
-    var iterator = getAccreditableManager().getGroupManager().getGroups();
+    var groupArray = getAccreditableManager().getGroupManager().getGroups();
     var groups = new java.util.ArrayList();
-    while (iterator.hasNext()) {
-    	var group = iterator.next();
-    	if (!rangeGroups.contains(group)) {
-    		groups.add(group);
+    for (var i = 0; i < groupArray.length; i++) {
+    	if (!rangeGroups.contains(groupArray[i])) {
+    		groups.add(groupArray[i]);
     	}
     }
     

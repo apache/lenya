@@ -55,6 +55,7 @@
 package org.apache.lenya.net;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.apache.log4j.Category;
 
@@ -62,10 +63,17 @@ import org.apache.log4j.Category;
  * A utility class for InetAddress. Also see http://jodies.de/ipcalc
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.7 2003/10/28 11:14:56 michi Exp $
+ * @version $Id: InetAddressUtil.java,v 1.8 2003/11/13 16:11:58 andreas Exp $
  */
 public class InetAddressUtil {
+    
     private static final Category log = Category.getInstance(InetAddressUtil.class);
+
+    /**
+     * Ctor.
+     */    
+    private InetAddressUtil() {
+    }
 	
     /**
      * Checks if a subnet contains a specific IP address.
@@ -168,4 +176,28 @@ public class InetAddressUtil {
         log.error(".checkNetmask(): Illegal Netmask: " + netmask);
         return -1;
     }
+
+    /**
+     * Converts a string to an IP addres.
+     * @param string The IP address, represented by a string.
+     * @return An InetAddress object.
+     * @throws AccessControlException when something went wrong.
+     */
+    public static InetAddress getAddress(String string) throws UnknownHostException {
+        String[] strings = string.split("\\.");
+
+        InetAddress address;
+        byte[] numbers = new byte[strings.length];
+        for (int i = 0; i < strings.length; i++) {
+            int number = Integer.parseInt(strings[i]);
+            if (number > 127) {
+                number = number - 256;
+            }
+            numbers[i] = (byte) number;
+        }
+
+        address = InetAddress.getByAddress(numbers);
+        return address;
+    }
+
 }

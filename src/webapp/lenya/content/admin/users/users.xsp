@@ -9,9 +9,9 @@
   >
 
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.Iterator</xsp:include>
   </xsp:structure>
@@ -21,8 +21,9 @@
       <xsp:logic>
         UserManager userManager = (UserManager)
             <input:get-attribute module="access-control" name="user-manager" as="object"/>;
-        for (Iterator users = userManager.getUsers(); users.hasNext();) {
-            User user = (User) users.next();
+        User[] users = userManager.getUsers();
+        for (int userIndex = 0; userIndex &lt; users.length; userIndex++) {
+            User user = users[userIndex];
       </xsp:logic>
         
       <user>

@@ -14,47 +14,46 @@
 
 <role-list>
 
-  <role name="org.apache.lenya.cms.ac2.AccreditableManagerSelector"
+  <role name="org.apache.lenya.ac.AccreditableManagerSelector"
         shorthand="accreditable-managers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-    <hint shorthand="file" class="org.apache.lenya.cms.ac2.file.FileAccreditableManager"/>
+    <hint shorthand="file" class="org.apache.lenya.ac.file.FileAccreditableManager"/>
   </role>
     
-  <role name="org.apache.lenya.cms.ac2.AuthorizerSelector"
+  <role name="org.apache.lenya.ac.AuthorizerSelector"
         shorthand="authorizers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-    <hint shorthand="policy" class="org.apache.lenya.cms.ac2.PolicyAuthorizer"/>
-    <hint shorthand="workflow" class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer"/>
-    <hint shorthand="usecase" class="org.apache.lenya.cms.ac2.usecase.UsecaseAuthorizer"/>
+    <hint shorthand="policy" class="org.apache.lenya.ac.impl.PolicyAuthorizer"/>
+    <hint shorthand="workflow" class="org.apache.lenya.cms.ac.workflow.WorkflowAuthorizer"/>
+    <hint shorthand="usecase" class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer"/>
   </role>
   
-  <role name="org.apache.lenya.cms.ac2.PolicyManagerSelector"
+  <role name="org.apache.lenya.ac.PolicyManagerSelector"
         shorthand="policy-managers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-    <hint shorthand="file" class="org.apache.cms.ac2.file.FilePolicyManager"/>
-    <hint shorthand="publication-file" class="org.apache.cms.ac2.file.PublicationFilePolicyManager"/>
-    <hint shorthand="sitemap" class="org.apache.cms.ac2.sitemap.SitemapPolicyManager"/>
+    <hint shorthand="file" class="org.apache.lenya.ac.file.FilePolicyManager"/>
+    <hint shorthand="sitemap" class="org.apache.lenya.cms.ac.sitemap.SitemapPolicyManager"/>
   </role>
   
-  <role name="org.apache.lenya.cms.ac2.AccessController"
+  <role name="org.apache.lenya.ac.AccessController"
         shorthand="access-controller"
         default-class="org.apache.lenya.cms.ac2.BypassableAccessController"/>
         
-  <role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
+  <role name="org.apache.lenya.ac.AccessControllerResolverSelector"
         shorthand="access-controller-resolvers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-    <hint shorthand="composable" class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/>
-    <hint shorthand="configurable" class="org.apache.lenya.cms.ac2.ConfigurableAccessControllerResolver"/>
-    <hint shorthand="publication" class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
+    <hint shorthand="composable" class="org.apache.lenya.ac.ComposableAccessControllerResolver"/>
+    <hint shorthand="configurable" class="org.apache.lenya.ac.ConfigurableAccessControllerResolver"/>
+    <hint shorthand="publication" class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"/>
   </role>
   
-  <role name="org.apache.lenya.cms.ac2.Authenticator"
+  <role name="org.apache.lenya.ac.Authenticator"
         shorthand="authenticator"
-        default-class="org.apache.lenya.cms.ac2.UserAuthenticator"/>
+        default-class="org.apache.lenya.ac.impl.UserAuthenticator"/>
         
-  <role name="org.apache.lenya.cms.ac2.cache.SourceCache"
+  <role name="org.apache.lenya.ac.cache.SourceCache"
   		shorthand="sourcecache"
-  		default-class="org.apache.lenya.cms.ac2.cache.SourceCacheImpl"/>
+  		default-class="org.apache.lenya.ac.cache.SourceCacheImpl"/>
   		
   <role name="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer"
         shorthand="uriparameterizer"

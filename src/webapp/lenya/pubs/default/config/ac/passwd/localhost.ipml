@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ip-range class="org.apache.lenya.cms.ac.FileIPRange" id="localhost">
+<ip-range class="org.apache.lenya.ac.file.FileIPRange" id="localhost">
   <name>Localhost</name>
   <network-address>127.0.0.1</network-address>
   <subnet-mask>255.255.255.0</subnet-mask>

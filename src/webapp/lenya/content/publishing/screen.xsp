@@ -10,8 +10,8 @@
        >
        
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.ac.UserManager</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>

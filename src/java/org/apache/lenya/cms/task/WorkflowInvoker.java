@@ -1,5 +1,5 @@
 /*
- * $Id: WorkflowInvoker.java,v 1.8 2003/10/27 09:52:50 andreas Exp $ <License>
+ * $Id: WorkflowInvoker.java,v 1.9 2003/11/13 16:11:20 andreas Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -44,10 +44,10 @@ package org.apache.lenya.cms.task;
 
 import java.util.Map;
 
-import org.apache.lenya.cms.ac.Machine;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Machine;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;

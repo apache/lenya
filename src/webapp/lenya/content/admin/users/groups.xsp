@@ -7,7 +7,7 @@
   >
   
   <xsp:structure>
-    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
   </xsp:structure>
   
   <page>

@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlModule.java,v 1.9 2003/10/16 21:46:07 andreas Exp $
+$Id: AccessControlModule.java,v 1.10 2003/11/13 16:09:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,14 +70,14 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.lenya.cms.ac.ItemManager;
-import org.apache.lenya.cms.ac.Machine;
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.ac2.AccessControllerResolver;
-import org.apache.lenya.cms.ac2.AccreditableManager;
-import org.apache.lenya.cms.ac2.DefaultAccessController;
-import org.apache.lenya.cms.ac2.Identity;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.ItemManager;
+import org.apache.lenya.ac.Machine;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.impl.DefaultAccessController;
 
 /**
  * 

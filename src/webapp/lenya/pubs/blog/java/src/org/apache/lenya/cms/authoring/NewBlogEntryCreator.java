@@ -48,8 +48,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 
 import org.w3c.dom.Document;
 
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.authoring.DefaultBranchCreator;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.util.DateUtil;
 
@@ -61,7 +60,7 @@ import java.util.Map;
 
 /**
  * @author Michael Wechner
- * @version $Id: NewBlogEntryCreator.java,v 1.2 2003/08/11 22:19:25 michi Exp $
+ * @version $Id: NewBlogEntryCreator.java,v 1.3 2003/11/13 16:17:53 andreas Exp $
  */
 public class NewBlogEntryCreator extends DefaultBranchCreator {
     private static Category log = Category.getInstance(NewBlogEntryCreator.class);
@@ -108,7 +107,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         du.setElementValue(doc, "/echo:entry/echo:title", (String)parameters.get("title"));
 
         // Replace author
-        Identity identity = (Identity)parameters.get("org.apache.lenya.cms.ac2.Identity");
+        Identity identity = (Identity)parameters.get("org.apache.lenya.ac.Identity");
         du.setElementValue(doc, "/echo:entry/echo:author/echo:name", identity.getUser().getId());
 
         // Replace date created (and issued and modified, FIXME: issued should be set during first time publishing, modified should be set during re-publishing)

@@ -66,19 +66,18 @@ function group_change_members(groupId) {
 	    
 	    for (var i = 0; i < memberArray.length; i++) {
 	    	var member = memberArray[i];
-	    	if (member instanceof Packages.org.apache.lenya.cms.ac.User) {
+	    	if (member instanceof Packages.org.apache.lenya.ac.User) {
 	    		groupUsers.add(member);
 	    	}
-	    	if (member instanceof Packages.org.apache.lenya.cms.ac.Machine) {
+	    	if (member instanceof Packages.org.apache.lenya.ac.Machine) {
 	    		groupMachines.add(machine);
 	    	}
 	    }
 	    
-	    var userIterator = userManager.getUsers();
-	    while (userIterator.hasNext()) {
-	    	var user = userIterator.next();
-	    	if (!groupUsers.contains(user)) {
-	    		otherUsers.add(user);
+	    var users = userManager.getUsers();
+	    for (var i = 0; i < users.length; i++) {
+	    	if (!groupUsers.contains(users[i])) {
+	    		otherUsers.add(users[i]);
 	    	}
 	    }
 	    
@@ -169,12 +168,12 @@ function group_add_group() {
 			if (existingGroup != null) {
 				message = "This group already exists.";
 			}
-			else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(groupId)) {
+			else if (!Packages.org.apache.lenya.ac.impl.AbstractItem.isValidId(groupId)) {
 	          	message = "This is not a valid group ID.";
 			}
 			else {
 				var configDir = groupManager.getConfigurationDirectory();
-				var group = new Packages.org.apache.lenya.cms.ac.FileGroup(configDir, groupId);
+				var group = new Packages.org.apache.lenya.ac.file.FileGroup(configDir, groupId);
 				group.setName(name);
 				group.setDescription(description);
 				group.save();

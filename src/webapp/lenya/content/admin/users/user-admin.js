@@ -8,7 +8,7 @@ function user_change_profile(userId) {
 
 	try {
 	    var user = getAccreditableManager().getUserManager().getUser(userId);
-		var fullName = user.getFullName();
+		var fullName = user.getName();
 		var email = user.getEmail();
 		var description = user.getDescription();
 			
@@ -37,7 +37,7 @@ function user_change_profile(userId) {
 		    
 		    if (cocoon.request.get("submit")) {
 			    fullName = cocoon.request.get("fullname");
-		       	user.setFullName(fullName);
+		       	user.setName(fullName);
 			    email = cocoon.request.get("email");
 		       	user.setEmail(email);
 		       	description = cocoon.request.get("description");
@@ -138,14 +138,8 @@ function user_change_groups(userId) {
 	    var userGroupArray = user.getGroups();
 	    var userGroups = new java.util.ArrayList(java.util.Arrays.asList(userGroupArray));
 	    
-	    var iterator = getAccreditableManager().getGroupManager().getGroups();
-	    var groups = new java.util.ArrayList();
-	    while (iterator.hasNext()) {
-	    	var group = iterator.next();
-	    	if (!userGroups.contains(group)) {
-	    		groups.add(group);
-	    	}
-	    }
+	    var groupArray = getAccreditableManager().getGroupManager().getGroups();
+	    var groups = new java.util.ArrayList(java.util.Arrays.asList(groupArray));
 	    
 	    while (true) {
 		    cocoon.sendPageAndWait("users/" + userId + "/groups.xml", {
@@ -215,7 +209,7 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
 		messages.add("This user already exists.");
 	}
 			
-	if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(userId)) {
+	if (!Packages.org.apache.lenya.ac.impl.AbstractItem.isValidId(userId)) {
 		messages.add("This is not a valid user ID.");
 	}
 			
@@ -226,7 +220,7 @@ function validate(userManager, ldap, userId, email, password, confirmPassword, m
 	if (ldap) {
 	/*
 	    configDir = new Packages.java.io.File(configDir);
-	    var ldapUser = new Packages.org.apache.lenya.cms.ac.LDAPUser(configDir);
+	    var ldapUser = new Packages.org.apache.lenya.ac.ldap.LDAPUser(configDir);
 	    if (!ldapUser.existsUser(ldapId)) {
 	    	messages.add("This LDAP user ID does not exist.");
 	    }
@@ -310,10 +304,10 @@ function add_user(ldap) {
 			if (messages.isEmpty()) {
 				var user;
 				if (ldap) {
-					user = new Packages.org.apache.lenya.cms.ac.LDAPUser(configDir, userId, email, ldapId);
+					user = new Packages.org.apache.lenya.ac.ldap.LDAPUser(configDir, userId, email, ldapId);
 				}
 				else {
-					user = new Packages.org.apache.lenya.cms.ac.FileUser(configDir, userId, fullName, email, "");
+					user = new Packages.org.apache.lenya.ac.file.FileUser(configDir, userId, fullName, email, "");
 					user.setName(fullName);
 					user.setPassword(password);
 				}
@@ -337,35 +331,45 @@ function add_user(ldap) {
 function user_delete_user() {
 
 	resolve();
+	
+	var userId = cocoon.request.get("user-id");
+	var user;
+	
 	try {
-	
 		var userManager = getAccreditableManager().getUserManager();
-		var userId = cocoon.request.get("user-id");
-		var user = userManager.getUser(userId);
-		var name = user.getName();
-		var showPage = true;
-		
-		while (showPage) {
-			cocoon.sendPageAndWait("users/confirm-delete-common.xml", {
-				"id" : userId,
-				"name" : name,
-				"type" : user
-			});
-			
-			if (cocoon.request.get("cancel")) {
-				break;
-			}
-			
-			if (cocoon.request.get("submit")) {
-				userManager.remove(user);
-				user['delete']();
-				showPage = false;
-			}
-		}
-	
-	   	cocoon.sendPage("redirect.html", { "url" : "../users.html" });
+		user = userManager.getUser(userId);
    	}
    	finally {
    		release();
    	}
+		
+	var name = user.getName();
+	var showPage = true;
+		
+	while (showPage) {
+		cocoon.sendPageAndWait("users/confirm-delete-common.xml", {
+			"id" : userId,
+			"name" : name,
+			"type" : user
+		});
+			
+		if (cocoon.request.get("cancel")) {
+			break;
+		}
+			
+		if (cocoon.request.get("submit")) {
+			resolve();
+			try {
+				var userManager = getAccreditableManager().getUserManager();
+				userManager.remove(user);
+			}
+		   	finally {
+   				release();
+		   	}
+			user['delete']();
+			showPage = false;
+		}
+	}
+	
+   	cocoon.sendPage("redirect.html", { "url" : "../users.html" });
 }

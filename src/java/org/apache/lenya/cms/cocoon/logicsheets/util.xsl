@@ -19,7 +19,7 @@
       <xsp:structure>
         <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
         <xsp:include>org.apache.excalibur.source.Source</xsp:include>
-        <xsp:include>org.apache.lenya.cms.ac.Identity</xsp:include>
+        <xsp:include>org.apache.lenya.ac.Identity</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PublicationFactory</xsp:include>
         <xsp:include>org.apache.lenya.cms.publication.PageEnvelope</xsp:include>
@@ -84,8 +84,7 @@
 
     Session xsp_lenya_session = request.getSession(true);
     if (xsp_lenya_session != null) {
-      org.apache.lenya.cms.ac2.Identity xsp_lenya_id
-          = (org.apache.lenya.cms.ac2.Identity)xsp_lenya_session.getAttribute(org.apache.lenya.cms.ac2.Identity.class.getName());
+      Identity xsp_lenya_id = (Identity) xsp_lenya_session.getAttribute(Identity.class.getName());
       if (xsp_lenya_id != null &amp;&amp; xsp_lenya_id.getUser() != null) {
         <xsp:content><current_username><xsp:expr>xsp_lenya_id.getUser().getId()</xsp:expr></current_username></xsp:content>
       } else {

@@ -11,9 +11,9 @@
   
   <xsp:structure>
     <xsp:include>org.apache.avalon.framework.parameters.ParameterException</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.IPRangeManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.IPRange</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.IPRangeManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.IPRange</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.Arrays</xsp:include>
     <xsp:include>java.util.Iterator</xsp:include>

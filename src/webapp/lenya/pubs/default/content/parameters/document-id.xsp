@@ -11,9 +11,6 @@ Returns the value of the parameter "value" as URI parameter.
        >
        
 <xsp:structure>
-  <xsp:include>java.io.File</xsp:include>
-  <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-  <xsp:include>org.apache.lenya.cms.ac.*</xsp:include>
   <xsp:include>org.apache.lenya.cms.publication.*</xsp:include>
 </xsp:structure>
 

@@ -18,9 +18,9 @@ function passwd() {
       var sitemapPath = resolver.resolve("").getSystemId().substring(5);
       var session = cocoon.request.getSession(false);
       var authenticatorId = session.getAttribute("org.apache.lenya.cms.cocoon.acting.Authenticator.id");
-      var identityFromSession = session.getAttribute("org.apache.lenya.cms.ac.Identity");
+      var identityFromSession = session.getAttribute("org.apache.lenya.ac.Identity");
       var filename = sitemapPath + "pubs/" + authenticatorId + "/config/ac/passwd/" + identityFromSession.getUsername() + ".iml";
-      var identity = new Packages.org.apache.lenya.cms.ac.Identity(filename);
+      var identity = new Packages.org.apache.lenya.ac.Identity(filename);
       if (identity.changePassword(oldpassword, newpassword, confirmednewpassword)) {
           identity.writeDocument(filename);
           break;

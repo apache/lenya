@@ -16,14 +16,14 @@
   <xsp:structure>
     <xsp:include>java.io.IOException</xsp:include>
     <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.ItemManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Role</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.RoleManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac2.Accreditable</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac2.Credential</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac2.xsp.PolicyHelper</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac2.xsp.CredentialWrapper</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Item</xsp:include>
+    <xsp:include>org.apache.lenya.ac.ItemManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Role</xsp:include>
+    <xsp:include>org.apache.lenya.ac.RoleManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Accreditable</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Credential</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.cocoon.PolicyHelper</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.cocoon.CredentialWrapper</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
   </xsp:structure>

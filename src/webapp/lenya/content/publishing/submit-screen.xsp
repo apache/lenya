@@ -9,8 +9,8 @@
        >
 
 <xsp:structure>
-	<xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
-  <xsp:include>org.apache.lenya.cms.ac2.xsp.PolicyHelper</xsp:include>
+	<xsp:include>org.apache.lenya.ac.User</xsp:include>
+  <xsp:include>org.apache.lenya.cms.ac.cocoon.PolicyHelper</xsp:include>
 </xsp:structure>
 
 <usecase:submit>

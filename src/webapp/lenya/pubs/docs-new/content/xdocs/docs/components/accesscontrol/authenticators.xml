@@ -24,9 +24,9 @@
 
 <section>
 	<title>Declaring the Roles in lenya.roles</title>
-	<source><![CDATA[<role name="org.apache.lenya.cms.ac2.Authenticator"
+	<source><![CDATA[<role name="org.apache.lenya.ac.Authenticator"
     shorthand="authenticator"
-    default-class="org.apache.lenya.cms.ac2.UserAuthenticator"/>]]></source>
+    default-class="org.apache.lenya.ac.impl.UserAuthenticator"/>]]></source>
 </section>
 
 	<section>
@@ -40,8 +40,8 @@
 		as follows:</p>
 		
 	<source><![CDATA[<component logger="lenya.ac.authenticator"
-    class="org.apache.lenya.cms.ac2.UserAuthenticator"
-    role="org.apache.lenya.cms.ac2.Authenticator"/>]]></source>
+    class="org.apache.lenya.ac.impl.UserAuthenticator"
+    role="org.apache.lenya.ac.Authenticator"/>]]></source>
     
     <p>
       When a valid username/password combination is entered, the previous

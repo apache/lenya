@@ -11,12 +11,12 @@
   
   <xsp:structure>
     <xsp:include>org.apache.avalon.framework.parameters.ParameterException</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Groupable</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.GroupManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Machine</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Groupable</xsp:include>
+    <xsp:include>org.apache.lenya.ac.GroupManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Item</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Machine</xsp:include>
+    <xsp:include>org.apache.lenya.ac.User</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.*</xsp:include>
   </xsp:structure>

@@ -11,10 +11,10 @@
   
   <xsp:structure>
     <xsp:include>org.apache.avalon.framework.parameters.ParameterException</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.UserManager</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.LDAPUser</xsp:include>
-    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.UserManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.ac.ldap.LDAPUser</xsp:include>
     <xsp:include>java.io.File</xsp:include>
     <xsp:include>java.util.Arrays</xsp:include>
     <xsp:include>java.util.Iterator</xsp:include>

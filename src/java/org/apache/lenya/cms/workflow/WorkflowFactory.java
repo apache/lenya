@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowFactory.java,v 1.25 2003/10/10 16:42:12 andreas Exp $
+$Id: WorkflowFactory.java,v 1.26 2003/11/13 16:11:40 andreas Exp $
 <License>
 
  ============================================================================
@@ -59,12 +59,12 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 
-import org.apache.lenya.cms.ac.AccessControlException;
-import org.apache.lenya.cms.ac.Machine;
-import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.PolicyAuthorizer;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Machine;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.LanguageVersions;
@@ -165,18 +165,6 @@ public class WorkflowFactory {
         Workflow workflow = WorkflowBuilder.buildWorkflow(workflowFile);
 
         return workflow;
-    }
-
-    /**
-     * Creates a new workflow situation.
-     * @param roles The roles of the situation.
-     * @return A situation.
-     * @throws WorkflowException when something went wrong.
-     * @deprecated Use another buildSituation() method, because this method does add
-     * the identity to the situation.
-     */
-    public Situation buildSituation(Role[] roles) throws WorkflowException {
-        return null;
     }
 
     /**
