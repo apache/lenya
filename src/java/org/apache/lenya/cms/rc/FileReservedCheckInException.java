@@ -58,10 +58,10 @@ import java.util.Date;
 
 
 /**
- * DOCUMENT ME!
+ * Reserved check-in exception
  *
  * @author Michael Wechner
- * @version $Id: FileReservedCheckInException.java,v 1.11 2003/12/15 16:22:34 michi Exp $
+ * @version $Id: FileReservedCheckInException.java,v 1.12 2004/01/15 06:48:01 michi Exp $
  */
 public class FileReservedCheckInException extends Exception {
     private String source = null;
@@ -135,4 +135,12 @@ public class FileReservedCheckInException extends Exception {
         return username;
     }
 
+    /**
+     * Get source
+     * 
+     * @return source
+     */
+    public String getSource() {
+        return source;
+    }
 }
