@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- $Id: deactivate.xsl,v 1.17 2004/02/23 15:01:41 roku Exp $
+ $Id: deactivate.xsl,v 1.18 2004/02/23 20:44:18 roku Exp $
  -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -48,7 +48,12 @@
   <xsl:template match="info[not(message)]">
     <form method="get">
       <div class="lenya-box">
-        <div class="lenya-box-title"><i18n:text>Deactivate Document</i18n:text></div>
+        <div class="lenya-box-title">
+          <i18n:translate>
+            <i18n:text key="deactivate-doc"/>
+            <i18n:param><q><xsl:value-of select="document-id"/></q></i18n:param>
+          </i18n:translate>                
+        </div>
         <div class="lenya-box-body">
           
           <input type="hidden" name="lenya.step" value="deactivate"/>
@@ -58,16 +63,21 @@
           
           <table class="lenya-table-noborder">
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>Document</i18n:text>:</td>
-              <td><xsl:value-of select="$document-id"/> [<xsl:value-of select="$language"/>]</td>
-            </tr>
+              <td/>
+              <td>
+                <i18n:translate>
+                  <i18n:text key="deactivate-doc?"/>
+                  <i18n:param><q><xsl:value-of select="document-id"/>&#160;[<xsl:value-of select="$language"/>]</q></i18n:param>
+                </i18n:translate><br/><br/>
+              </td>
+            </tr>          
             <tr>
 	      <xsl:apply-templates select="inconsistent-documents"/>
             </tr>
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" value="Deactivate"/> &#160;
+                <input i18n:attr="value" type="submit" value="Yes"/> &#160;
                 <input i18n:attr="value" onClick="location.href='{$request-uri}';" type="button" value="Cancel"/>
               </td>
             </tr>

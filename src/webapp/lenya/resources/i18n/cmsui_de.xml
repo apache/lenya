@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.37 2004/02/23 20:17:36 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.38 2004/02/23 20:44:18 roku Exp $ 
    
 -->
 
@@ -199,6 +199,8 @@
 
   <message key="docs-have-links-to-doc">Folgende Dokumente verweisen auf dieses Dokument</message>
   <message key="Deactivate Document">Dokument deaktivieren</message>
+  <message key="deactivate-doc">Dokument {0} deaktivieren</message>
+  <message key="deactivate-doc?">Wollen Sie das Dokument {0} wirklich deaktivieren?</message>
   <message key="Delete Document">Dokument l&#246;schen</message>
   <message key="cannot-deactivate-unless-children-deactivated">Dieses Dokument kann erst deaktiviert werden, wenn alle untergeordneten Dokumente deaktiviert worden sind.</message>
   <message key="delete-language-versions?">Wollen Sie wirklich alle Sprachversionen dieses Dokuments l&#246;schen?</message>
