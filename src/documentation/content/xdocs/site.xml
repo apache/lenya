@@ -39,7 +39,9 @@
               <install href="source_version.html" label="Installation Instructions"/>
           </installation>
           <concepts href="concepts/" label="Concepts">
-            <usecase-framework href="usecase-framework/" label="Usecase Framework"/>
+            <usecase-framework href="usecase-framework/" label="Usecase Framework">
+              <usecase-framework-index href="index.html" label="Usecase Framework"/>
+            </usecase-framework>
           </concepts>
           <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
       </docu1.4>
