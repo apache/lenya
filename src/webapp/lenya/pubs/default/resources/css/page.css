@@ -6,69 +6,128 @@
         Purpose of the stylesheet follows.
 */
 
+/* page */
+
+#page {
+    padding: 0px;
+    margin: 0px;
+}
+
 /* tabs */
 
 #tabs {
-    font-family: Verdana, Arial, Sans-serif;
-    font-size: 80%;
-    border-bottom: solid 5px #AAAAFF;
-    margin-bottom: 10px;
+    border-bottom: solid 5px #DDBBBB;
+    color: Maroon;
 }
 
 #tabs a {
     text-decoration: none;
+    color: Maroon;
 }
 
-.tab { padding-left: .5em; padding-right: .5em; background-color: #CCCCFF; }
-.tab-selected { padding-left: .5em; padding-right: .5em; background-color: #AAAAFF; font-weight: bold; }
+#tabs table {
+    font-family: Verdana, Arial, Sans-serif;
+    font-size: 80%;
+}
+
+#tabs td {
+    vertical-align: bottom;
+}
+
+#tabs div {
+    white-space: nowrap;
+}
+
+.tab {
+    padding: .2em .5em;
+    background-color: #FFEEEE;
+    border: solid 1px #BB9999;
+}
+
+.tab-selected {
+    padding: .2em .5em;
+    background-color: #FFCCCC;
+    border: solid 1px #BB9999;
+    border-bottom: solid 1px #DDBBBB;
+}
+
+.tab-separator {
+    border-bottom: solid 1px #BB9999;
+}
+
+.tab-pre-separator {
+    width: 25px;
+    border-bottom: solid 1px #BB9999;
+}
+
+td.tab-post-separator {
+    width: 100%;
+}
 
 /* menu */
 
 #menu {
-/*
-    float: left;
-    width: 20%;
-*/
     font-family: Verdana, Arial, Sans-serif;
-    background-color: #EEEEEE;
+    background-color: #DDBBBB;
+    border: solid 1px #BB9999;
+    border-left: none;
+    border-top: none;
+    color: Maroon;
+    padding: 0px 0px 5px 25px;
 }
 
 #menu a {
     text-decoration: none;
+    color: Maroon;
 }
 
 #menu a:hover {
     text-decoration: underline;
 }
 
-.menublock-1 { padding: .5em; color: #909090 }
-.menublock-selected-1 { padding: .5em; color: Navy; }
-.menublock-1 a { color: #909090; }
+.menublock-1, .menublock-selected-1 {
+    padding: 0px;
+    border-top: solid 1px #DDBBBB;
+    background: #FFCCCC;
+}
+
+.menublock-1 a { }
 .menublock-1 a:visited { }
 
 .menublock-1 .menublock-2 { display: none; }
 
-.menublock-selected-1 .menuitem-1 { }
-.menublock-selected-1 .menuitem-1 { border-bottom: dotted 1px Navy; }
-.menublock-1          .menuitem-1 { border-bottom: dotted 1px #909090; }
+.menublock-selected-1 .menuitem-1 { background-color: #FFEEEE; }
+.menublock-1          .menuitem-1 { }
 
-.menuitem-1 { font-weight: bold; padding-top: 2px; padding-bottom: 2px; font-size: 80%; }
-.menuitem-2 { padding-left: 20px; padding-top: 2px; padding-bottom: 2px; font-size: 70%; }
-.menuitem-2 a { color: #9090C0; }
-.menuitem-3 { padding-left: 30px; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; font-size: 60%; }
+.menuitem-1 { padding: 5px 5px 5px 5px; font-size: 80%; }
+.menuitem-2 { padding: 2px 5px 2px 25px; font-size: 80%; }
+.menuitem-selected-2 { padding: 2px 5px 2px 25px; font-size: 80%; color: black; }
+.menuitem-2 a { }
 
-.menuitem-selected-1 { border-bottom: dotted 1px Navy; font-weight: bold; padding-top: 2px; padding-bottom: 2px; font-size: 80%; }
-.menuitem-selected-2 { padding-left: 20px; margin-top: 2px; margin-bottom: 2px; font-size: 70%; }
-.menuitem-selected-3 { padding-left: 30px; font-size: 60%; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; }
+.menuitem-selected-1 {
+    background-color: #FFEEEE;
+    padding: 5px 5px 5px 5px;
+    font-size: 80%;
+}
+
+
+.menuitem-3 { padding: 2px 5px 2px 25px; font-size: 60%; }
+.menuitem-selected-3 { padding: 2px 5px 2px 25px; font-size: 60%; }
 
 /* breadcrumb */
 
 #breadcrumb {
-    background-color: #E0E0E0;
-    padding: .3em;
-    margin-left: 10px;
+    padding: 3px 0px 3px 30px;
+    background-color: #FFEEEE;
+    border-top: solid 1px #BB9999;
+    border-bottom: solid 1px #BB9999;
     font-family: Verdana, Arial, Sans-serif;
     font-size: 80%;
+}
+
+#breadcrumb a {
+    text-decoration: none;
+    color: Maroon;
 }
 
 /* body */
@@ -115,9 +174,19 @@ td.simple {
 img.simple {
 }
 
-.project-logo {
-    padding: 10px;
-    text-align: center;
+#publication-title {
+    font-family: verdana, arial, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    vertical-align: bottom;
+    padding-left: 25px;
+    padding-bottom: 15px;
+    color: Maroon;
+}
+
+#project-logo {
+    padding: 10px 20px 0px 0px;
+    text-align: right;
 }
 
 .media {
@@ -134,4 +203,16 @@ img.simple {
 
 .abstract {
     font-weight: bold;
+}
+
+h1 {
+    font-size: 120%;
+    color: Maroon;
+}
+
+h2 {
+    font-size: 100%;
+    color: Maroon;
+    border-bottom: solid 1px #BB9999;
+    margin-top: 30px;
 }

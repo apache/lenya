@@ -25,13 +25,17 @@
       <link rel="stylesheet" href="{$root}/css/page.css" mime-type="text/css"/>
     </head>	
     <body>
-      <div class="project-logo">
-        <img src="{$root}/images/project-logo.png"/>
-      </div>
-      <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>
-      <table border="0" cellpadding="0" cellspacing="0">
+      <div id="page">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td valign="top">
+          <td id="publication-title">Welcome to the Default Publication!</td>
+          <td id="project-logo"><img src="{$root}/images/project-logo.png"/></td>
+        </tr>
+      </table>
+      <xsl:apply-templates select="xhtml:div[@id = 'tabs']"/>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td valign="top" width="230px">
             <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
           </td>
           <td valign="top">
@@ -42,6 +46,7 @@
           </td>
         </tr>
       </table>
+      </div>
     </body>
   </html>
 </xsl:template>
