@@ -29,7 +29,7 @@
     <usecase:label><xsp:expr>label</xsp:expr></usecase:label>
     
     <!-- FIXME: this should be defined in the workflow schema -->
-    <usecase:task-id>removelabel</usecase:task-id>
+    <usecase:task-id>remove-language</usecase:task-id>
     
   </usecase:removelabel>
   
