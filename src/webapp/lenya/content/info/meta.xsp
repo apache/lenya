@@ -26,7 +26,8 @@
         <dc:creator><input:get-attribute module="page-envelope" as="object" name="document-dc-creator"/></dc:creator>
         <dc:subject><input:get-attribute module="page-envelope" as="object" name="document-dc-subject"/></dc:subject>
         <dc:description><input:get-attribute module="page-envelope" as="object" name="document-dc-description"/></dc:description>
-        <dc:date></dc:date>
+        <dc:date><input:get-attribute module="page-envelope" as="object" name="document-dc-date-created"/></dc:date>
+        <dc:publisher><input:get-attribute module="page-envelope" as="object" name="document-dc-publisher"/></dc:publisher>
         <dc:rights><input:get-attribute module="page-envelope" as="object" name="document-dc-rights"/></dc:rights>
   </lenya-info:meta>
 </lenya-info:info>
