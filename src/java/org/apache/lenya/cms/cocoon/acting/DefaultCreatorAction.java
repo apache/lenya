@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreatorAction.java,v 1.9 2003/07/30 15:30:06 egli Exp $
+$Id: DefaultCreatorAction.java,v 1.10 2003/09/04 12:36:37 egli Exp $
 <License>
 
  ============================================================================
@@ -92,11 +92,10 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
-    private String treeAuthoringPath = null;
     private String docsPath = null;
     private String doctypesPath = null;
 
@@ -110,10 +109,8 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
 
-        treeAuthoringPath = conf.getChild("tree-authoring").getAttribute("href");
         docsPath = conf.getChild("docs").getAttribute("href");
         doctypesPath = conf.getChild("doctypes").getAttribute("href");
-        getLogger().debug("CONFIGURATION:\nAUTHORING PATH OF TREE=" + treeAuthoringPath);
     }
 
     /**
@@ -132,8 +129,6 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
         Publication publication = PublicationFactory.getPublication(objectModel);
-
-        getLogger().debug(".act(): PARENT PATH OF SITEMAP: " + publication.getDirectory());
 
         // Get request object
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -221,11 +216,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         creator.init(doctypeConf);
 
         // add a node to the tree
-        getLogger().debug("invoking DefaultSiteTree(" + publication.getDirectory() +
-            File.separator + treeAuthoringPath + ")");
-
-        DefaultSiteTree siteTree = new DefaultSiteTree(new File(publication.getDirectory(),
-                    treeAuthoringPath));
+        DefaultSiteTree siteTree = publication.getSiteTree(Publication.AUTHORING_AREA);
         Label[] labels = new Label[1];
         labels[0] = new Label(childname, null);
         siteTree.addNode(parentid, creator.generateTreeId(childid, childType), labels);
