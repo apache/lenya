@@ -7,10 +7,11 @@
  * for the specific language governing permissions and limitations under the License.
  */
 
-/* $Id: UploadHelper.java,v 1.3 2004/04/14 14:14:14 andreas Exp $ */
+/* $Id: UploadHelper.java,v 1.4 2004/04/14 17:41:32 andreas Exp $ */
 
 package org.apache.lenya.cms.authoring;
 
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.log4j.Category;
 
@@ -20,32 +21,50 @@ import java.io.InputStream;
 import java.io.IOException;
 
 /**
- *
+ * Helper class for uploading files.
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann </a>
+ * @author <a href="mailto:michi@apache.org">Michael Wechner </a>
+ * @version $Id: UploadHelper.java,v 1.4 2004/04/14 17:41:32 andreas Exp $
  */
 public class UploadHelper {
-    Category log = Category.getInstance(UploadHelper.class);
 
-    private String baseDir;
+    private static final Category log = Category.getInstance(UploadHelper.class);
+
+    private File directory;
 
     /**
-     *
+     * Ctor.
+     * @param directory The directory to save the files to.
      */
-    public UploadHelper(String baseDir) {
-        this.baseDir = baseDir;
+    public UploadHelper(File directory) {
+        this.directory = directory;
+    }
+
+    /**
+     * Ctor.
+     * @param directoryPath The path of the directory to save the files to.
+     */
+    public UploadHelper(String directoryPath) {
+        this.directory = new File(directoryPath);
     }
 
     /**
      * Save uploaded file
-     * @param part
+     * @param part The part of the multipart request.
+     * @return <code>true</code> if the upload succeeded, <code>false</code> otherwise.
      */
     public boolean save(Part part) {
 
-        File file = new File(baseDir + File.separator + part.getFileName());
-        log.debug(file.getAbsolutePath());
-        File parent = new File(file.getParent());
-        if (!parent.isDirectory()) {
-            parent.mkdirs();
-            log.info("Directory has been created: " + parent);
+        File file = new File(directory, part.getFileName());
+        if (log.isDebugEnabled()) {
+            log.debug("Uploading file: [" + file.getAbsolutePath() + "]");
+        }
+
+        if (!directory.isDirectory()) {
+            directory.mkdirs();
+            if (log.isInfoEnabled()) {
+                log.info("Directory has been created: [" + directory + "]");
+            }
         }
 
         try {
@@ -67,4 +86,26 @@ public class UploadHelper {
         }
         return true;
     }
+
+    /**
+     * Saves the a file the request for a certain request parameter name.
+     * @param requestParameter The name of the &lt;input type="file"/&gt; request parameter value.
+     * @return The saved file or <code>null</code> if the upload was not successful.
+     * @throws Exception when something went wrong.
+     */
+    public File save(Request request, String requestParameter)
+            throws Exception {
+
+        Part part = (Part) request.get(requestParameter);
+
+        File file = null;
+        
+        boolean success = save(part);
+        if (success) {
+            file = new File(directory, part.getFileName());
+        }
+
+        return file;
+    }
+
 }
