@@ -59,10 +59,10 @@ import java.net.InetAddress;
 import org.apache.log4j.Category;
 
 /**
- * A utility class for InetAddress
+ * A utility class for InetAddress. Also see http://jodies.de/ipcalc
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.6 2003/10/28 11:11:21 michi Exp $
+ * @version $Id: InetAddressUtil.java,v 1.7 2003/10/28 11:14:56 michi Exp $
  */
 public class InetAddressUtil {
     private static final Category log = Category.getInstance(InetAddressUtil.class);
