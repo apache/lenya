@@ -3,7 +3,7 @@
 DIRNAME=`dirname $0`
 echo "dirname: $DIRNAME"
 
-PREFIX=/home/michiii/src/wyonacms
+PREFIX=/home/michi/src/wyonacms
 JAVA=/usr/local/jdk1.3.1/bin/java
 PDFBOX=/home/michiii/src/PDFBox-0.5.5
 XPDF=/home/michiii/bin/xpdf-2.01-linux/pdftotext
@@ -26,8 +26,8 @@ echo "=========================================================="
 echo "Target: crawl"
 echo "=========================================================="
 echo ""
-##$JAVA -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
-##$JAVA -cp $CLASSPATH org.wyona.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
+$JAVA -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
+$JAVA -cp $CLASSPATH org.wyona.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 
 
 echo ""
@@ -53,7 +53,7 @@ echo "Target: index"
 echo "=========================================================="
 echo ""
 CLASSPATH=$CLASSPATH:$PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
-##$JAVA -cp $CLASSPATH org.wyona.lucene.IndexEnvironment $LUCENE_CONF
+$JAVA -cp $CLASSPATH org.wyona.lucene.IndexEnvironment $LUCENE_CONF
 $JAVA -cp $CLASSPATH org.wyona.lucene.IndexHTML $LUCENE_CONF
 
 
