@@ -180,5 +180,8 @@ public class UserManagerTest extends AccessControlTest {
 
         User otherUser = manager.getUser(userName);
         assertEquals(user, otherUser);
+        assertEquals(user.getDescription(), otherUser.getDescription());
+        assertEquals(user.getEmail(), otherUser.getEmail());
+        assertEquals(user.getEncryptedPassword(), otherUser.getEncryptedPassword());
     }
 }
