@@ -44,6 +44,9 @@
     <div class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></div>
     <div class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </div>
     <div class="art-author"><xsl:apply-templates select="body/body.head/byline"/></div>
+    <xsl:if test="$authoring">
+      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[1]/*[1]&amp;insertBefore=true"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+    </xsl:if>
     <xsl:apply-templates select="body/body.content/block"/>
     <div class="art-author"><xsl:apply-templates select="body/body.end/tagline"/></div>
   </td>

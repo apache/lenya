@@ -58,15 +58,20 @@ public class ArticleImageUploadCreatorAction
     /**
      * The variable <code>insertImageBefore</code> is configured trough
      * parameters to the action in the sitemap. It defines whether the
-     * media tag is to be inserted before or after the xpath.
+     * media tag is to be inserted before or after the xpath. The values
+     * for the variables <code>insertBefore</code> and <code>insertAfter</code> 
+     * come from an optional request parameter which overwrites the configured behaviour.
      *
      */
     protected boolean insertImageBefore = true;
+    protected boolean insertBefore = false;
+    protected boolean insertAfter  = false;
 
     final String UPLOADFILE_PARAM_NAME = "uploadFile";
     final String IMAGEXPATH_PARAM_NAME = "xpath";
     final String DOCUMENTID_PARAM_NAME = "documentid";
     final String REFERER_PARAM_NAME    = "referer";
+    final String INSERTBEFORE_PARAM_NAME = "insertBefore";
 
     // optional parameters for meta data according to dublin core
     final String[] DUBLIN_CORE_PARAMETERS
@@ -143,10 +148,28 @@ public class ArticleImageUploadCreatorAction
 	String imageXPath = request.getParameter(IMAGEXPATH_PARAM_NAME);
 	String requestingDocumentPath = request.getParameter(DOCUMENTID_PARAM_NAME);
 	String uploadFile = request.getParameter(UPLOADFILE_PARAM_NAME);
+	String insert = request.getParameter(INSERTBEFORE_PARAM_NAME);
 
 	getLogger().debug("imageXPath: " + imageXPath);
 	getLogger().debug("requestingDocumentPath: " + requestingDocumentPath);
 	getLogger().debug("uploadFile: " + uploadFile);
+	getLogger().debug("insert: " + insert);
+
+	// request parameters to indicate if the image should be inserted before or after the given xpath, overwrites the sitemap configuration
+	insertBefore = false;
+	insertAfter  = false;
+	if (insert != null) {
+	  if (insert.equals("true") || insert.equals("1")) { 
+	    insertBefore = true; 
+	    }
+	  if (insert.equals("false") || insert.equals("0")) { 
+	    insertAfter = true;
+	    }
+	}
+
+	getLogger().debug("insertImageBefore: " + insertImageBefore);
+	getLogger().debug("insertBefore: " + insertBefore);
+	getLogger().debug("insertAfter: " + insertAfter);
 
 	// optional parameters for the meta file which contains dublin
 	// core information.
@@ -340,7 +363,8 @@ public class ArticleImageUploadCreatorAction
 	Element parent = node.getParent();
 	List list = parent.content();
 	
-	if (insertImageBefore) {
+	// The request parameters insertBefore and insertAfter overwrite the configuration (insertImageBefore)
+	if (insertBefore || (insertImageBefore && !insertAfter)) {
 	    // insert the tag before the imageXPath
 	    list.add(parent.indexOf(node), mediaTag);
 	} else {
