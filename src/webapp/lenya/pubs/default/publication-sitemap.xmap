@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.30 2003/05/14 17:01:37 edith Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.31 2003/05/15 09:49:26 egli Exp $ -->
 
-<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-
+  <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
   <map:components>
     <map:generators default="file" />
     <map:matchers default="wildcard"/>
     <map:actions />
-<!--
-  <map:selectors>
-  <map:selector name="exception" logger="sitemap.selector.exception" src="org.apache.cocoon.selection.ExceptionSelector">
-    <exception name="execution" class="org.apache.lenya.cms.task.ExecutionException" />
-    <exception name="publishing" class="org.apache.lenya.cms.publishing.PublishingException"/>
-    <exception name="sitetree" class="org.apache.lenya.cms.publication.SiteTreeException"/>
-  </map:selector>
-  </map:selectors>
+    <map:selectors>
+      <map:selector name="exception" logger="sitemap.selector.exception"
+	src="org.apache.cocoon.selection.ExceptionSelector">
+	<exception name="execution" class="org.apache.lenya.cms.task.ExecutionException" />
+	<exception name="publishing" class="org.apache.lenya.cms.publishing.PublishingException"/>
+	<exception name="sitetree" class="org.apache.lenya.cms.publication.SiteTreeException"/>
+      </map:selector>
+    </map:selectors>
   </map:components>
--->
+
   <map:views>
     <map:view name="aggregation" from-label="aggregation">
       <map:serialize type="xml"/>
