@@ -23,7 +23,7 @@
     <title>URI Scheme</title>
     <version major="0" minor="2">Version 0.2</version>
     <authors>
-      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+      <person name="Lenya community" email="dev@lenya.apache.org"/>
     </authors> 
     <abstract>Proposal for a standardization of URIs which are used
       for CMS functionality. </abstract> 

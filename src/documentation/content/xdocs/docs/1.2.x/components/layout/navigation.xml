@@ -27,7 +27,7 @@
     <title>The Navigation Framework</title>
     <version major="0" minor="1">Initial version</version>
     <authors>
-      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+      <person name="Lenya community" email="dev@lenya.apache.org"/>
     </authors> 
     <notice></notice> 
     <abstract>Proposal for a standard navigation framework.</abstract> 

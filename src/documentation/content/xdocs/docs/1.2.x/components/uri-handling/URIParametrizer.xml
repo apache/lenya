@@ -23,7 +23,7 @@
     <title>URI Parametrizer</title>
     <version major="0" minor="1">Initial version</version>
     <authors>
-      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+      <person name="Lenya community" email="dev@lenya.apache.org"/>
     </authors> 
     <notice></notice> 
     <abstract>Desciption of the URI Parametrizer which is a key

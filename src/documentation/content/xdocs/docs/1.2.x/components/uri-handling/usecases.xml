@@ -23,7 +23,7 @@
     <title>Usecases</title>
     <version major="0" minor="2">Version 0.2</version>
     <authors>
-      <person name="Lenya community" email="lenya-dev@cocoon.apache.org"/>
+      <person name="Lenya community" email="dev@lenya.apache.org"/>
     </authors> 
     <abstract>Description of the usecase concept and the existing usecases.</abstract> 
   </header> 
