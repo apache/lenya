@@ -122,8 +122,13 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
         String language = "";
         String url = urlWithoutSuffix;
-        if (url.length() >= 3 && url.substring(url.length() -6).indexOf("_") != -1) {
-            language = url.substring(url.lastIndexOf("_") +1);
+        
+        int languageSeparatorIndex = url.lastIndexOf("_");
+        if (languageSeparatorIndex > -1) {
+            String suffix = url.substring(languageSeparatorIndex + 1);
+            if (suffix.length() <= 5) {
+                language = suffix;
+            }
         }
         return language;
     }
