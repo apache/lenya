@@ -15,108 +15,120 @@
  *
  */
 
-/* $Id: OneFormEditorSaveAction.java,v 1.2 2004/05/15 17:11:03 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.acting.AbstractConfigurableAction;
+import org.apache.cocoon.components.source.SourceUtil;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
+import org.apache.excalibur.source.Source;
 import org.apache.lenya.xml.RelaxNG;
-import org.apache.log4j.Category;
+import org.xml.sax.InputSource;
 
 /**
- *
+ *  
  */
-public class OneFormEditorSaveAction
-    extends AbstractConfigurableAction
-    implements ThreadSafe {
-    Category log = Category.getInstance(OneFormEditorSaveAction.class);
+public class OneFormEditorSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
     /**
-     * Save data to temporary file
-     *
-     * @param redirector a <code>Redirector</code> value
-     * @param resolver a <code>SourceResolver</code> value
-     * @param objectModel a <code>Map</code> value
-     * @param source a <code>String</code> value
-     * @param parameters a <code>Parameters</code> value
-     *
-     * @return a <code>Map</code> value
-     *
-     * @exception Exception if an error occurs
+     * Save data to temporary file.
+     * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
-    public Map act(
-        Redirector redirector,
-        SourceResolver resolver,
-        Map objectModel,
-        String source,
-        Parameters parameters)
-        throws Exception {
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
+            Parameters parameters) throws Exception {
 
-        HttpRequest request = (HttpRequest)ObjectModelHelper.getRequest(objectModel);
+        HttpRequest request = (HttpRequest) ObjectModelHelper.getRequest(objectModel);
 
         // Get namespaces
         String namespaces = removeRedundantNamespaces(request.getParameter("namespaces"));
-        log.debug(namespaces);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug(namespaces);
+        }
 
         // Aggregate content
         String encoding = request.getCharacterEncoding();
-        String content =
-            "<?xml version=\"1.0\" encoding=\""
-                + encoding
-                + "\"?>\n"
+        String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
                 + addNamespaces(namespaces, request.getParameter("content"));
 
         // Save file temporarily
-        File sitemap = new File(new URL(resolver.resolveURI("").getURI()).getFile());
-        File file =
-            new File(
-                sitemap.getAbsolutePath()
-                    + File.separator
-                    + parameters.getParameter("file"));
 
-        File parentFile = new File(file.getParent());
-        if (!parentFile.exists()) {
-            parentFile.mkdirs();
-        }
-		FileOutputStream fileoutstream = new FileOutputStream(file);
-        Writer writer = new OutputStreamWriter(fileoutstream, encoding);
-        writer.write(content, 0, content.length());
-        writer.close();
+        String xmlUri = parameters.getParameter("file");
 
-        // Validate
-        File schema =
-            new File(
-                sitemap.getAbsolutePath()
-                    + File.separator
-                    + parameters.getParameter("schema"));
-        if (schema.isFile()) {
-            String message = RelaxNG.validate(schema, file);
+        String schemaUri = parameters.getParameter("schema");
+        Source schemaSource = null;
+        Source xmlSource = null;
+        try {
+
+            xmlSource = resolver.resolveURI(xmlUri);
+            saveXMLFile(encoding, content, xmlSource);
+
+            schemaSource = resolver.resolveURI(schemaUri);
+            if (!schemaSource.exists()) {
+                throw new IllegalArgumentException("The schema [" + schemaSource.getURI()
+                        + "] does not exist.");
+            }
+
+            InputSource schemaInputSource = SourceUtil.getInputSource(schemaSource);
+            InputSource xmlInputSource = SourceUtil.getInputSource(xmlSource);
+
+            String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
             if (message != null) {
-                log.error("RELAX NG Validation failed: " + message);
+                getLogger().error("RELAX NG Validation failed: " + message);
                 HashMap hmap = new HashMap();
                 hmap.put("message", "RELAX NG Validation failed: " + message);
                 return hmap;
             }
-        } else {
-            log.warn(
-                "Will not be validated. No such schema: " + schema.getAbsolutePath());
+
+        } finally {
+            if (schemaSource != null) {
+                resolver.release(schemaSource);
+            }
+            if (xmlSource != null) {
+                resolver.release(xmlSource);
+            }
         }
 
         return null;
+    }
+
+    /**
+     * @param encoding
+     * @param content
+     * @param xmlSource
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException
+     * @throws IOException
+     */
+    private void saveXMLFile(String encoding, String content, Source xmlSource)
+            throws FileNotFoundException, UnsupportedEncodingException, IOException {
+        File xmlFile = org.apache.excalibur.source.SourceUtil.getFile(xmlSource);
+        File parentFile = new File(xmlFile.getParent());
+        if (!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+
+        FileOutputStream fileoutstream = new FileOutputStream(xmlFile);
+        Writer writer = new OutputStreamWriter(fileoutstream, encoding);
+        writer.write(content, 0, content.length());
+        writer.close();
     }
 
     /**
@@ -130,7 +142,9 @@ public class OneFormEditorSaveAction
             if (ns.indexOf(namespace[i]) < 0) {
                 ns = ns + " " + namespace[i];
             } else {
-                log.debug("Redundant namespace: " + namespace[i]);
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Redundant namespace: " + namespace[i]);
+                }
             }
         }
         return ns;
