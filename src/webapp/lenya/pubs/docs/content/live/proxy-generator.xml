@@ -55,13 +55,13 @@ More information can be found within the
    </section>
    </section>
 
-   <section><title>Wyona ProxyGenerator</title>
+   <section><title>Lenya ProxyGenerator</title>
 <p>
 Before we were aware of Ivelin's WebServiceProxyGenerator we started to write our own. 
 As soon as we realized that Ivelin's ProxyGenerator already existed within Cocoon, we tried
 to use his Generator.
 Unfortunately we are experiencing some problems with regard to session handling with Ivelin's WebServiceProxyGenerator.
-The Wyona ProxyGenerator seems to be fine, at least for the purpose we need it.
+The Lenya ProxyGenerator seems to be fine, at least for the purpose we need it.
 The goal is to  locate the origin of the problems and hopefully merge our stuff with Ivelin's work.
 </p>
 

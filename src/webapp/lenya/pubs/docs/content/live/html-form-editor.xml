@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Wyona's HTML Form Editor</title>
+    <title>Lenya's HTML Form Editor</title>
     <version/>
     <type/>
     <authors>
@@ -12,9 +12,9 @@
     </authors>
   </header>
 <body>
-<section><title>Wyona's HTML Form Editor</title>
+<section><title>Lenya's HTML Form Editor</title>
 
-    <p>The Wyona HTML Form Editor allows to edit the content of XML files
+    <p>The Lenya HTML Form Editor allows to edit the content of XML files
     within the Web browser. It's only assumption is, that the browser
     understands HTML forms and &lt;input&gt; and &lt;textarea&gt;
     tags. Therefore it should be usable under any browser.</p> 

@@ -52,7 +52,7 @@
 
   <map:pipelines>
 
-    <!-- Wyona RSS -->
+    <!-- Lenya RSS -->
     <map:pipeline>
       <map:match pattern="news.rss">
         <map:act type="request">
@@ -65,7 +65,7 @@
         <map:serialize type="xml"/>
       </map:handle-errors>
     </map:pipeline>
-    <!-- /Wyona RSS -->
+    <!-- /Lenya RSS -->
 
     <map:pipeline>
       <map:match pattern="http/slashdot.rdf">
@@ -174,13 +174,13 @@
         </map:read>
       </map:match>
 
-<!-- General Wyona -->
+<!-- General Lenya -->
       <map:match pattern="images/lenya/**.gif">
         <map:read src="../../resources/images/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
-<!-- /General Wyona -->
+<!-- /General Lenya -->
 
       <map:match pattern="images/**.gif">
         <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">

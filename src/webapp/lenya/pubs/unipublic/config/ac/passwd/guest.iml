@@ -2,7 +2,7 @@
 
 <identity id="lenya">
 <password type="md5">084e0343a0486ff05530df6c705c8bb4</password>
-<comment>Wyona</comment>
+<comment>Lenya</comment>
 <!--<expire year="2002" month="12" day="31"/>-->
 <groups>
   <group>guest</group>

@@ -571,7 +571,7 @@
    </map:pipeline>
 
 
-   <!-- Wyona CMS -->
+   <!-- Lenya CMS -->
    <map:pipeline>
      <map:match pattern="authoring/lenya/publishAllCMSProjectsScreen*">
        <map:aggregate element="publish-all" label="xml">

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.20 2003/03/04 23:06:56 gregor Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.21 2003/03/06 20:45:53 gregor Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -172,13 +172,13 @@
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- graphics -->
-			<!-- General Wyona -->
+			<!-- General Lenya -->
 			<map:match pattern="images/lenya/**.gif">
 				<map:read src="../../resources/images/{1}.gif" mime-type="images/gif">
 					<map:parameter name="expires" value="2000000000"/>
 				</map:read>
 			</map:match>
-			<!-- /General Wyona -->
+			<!-- /General Lenya -->
 			<map:match pattern="css/**.css">
 				<map:read mime-type="text/css" src="resources/css/live/{1}.css"/>
 			</map:match>

@@ -3,13 +3,13 @@
 	<branch relURI="" doctype="ToC" menuName="Table of Contents">
 		<!-- Basic Concepts -->
 		<!--
-    <branch relURI="bas-guide" doctype="Guide" menuName="Wyona Basics">
-      <branch relURI="" doctype="XDoc" menuName="Wyona Concepts">
-        <leaf relURI="bas-roles.html" doctype="XDoc" menuName="Roles of the Wyona CMS"/>
+    <branch relURI="bas-guide" doctype="Guide" menuName="Lenya Basics">
+      <branch relURI="" doctype="XDoc" menuName="Lenya Concepts">
+        <leaf relURI="bas-roles.html" doctype="XDoc" menuName="Roles of the Lenya CMS"/>
         <leaf relURI="bas-config.html" doctype="XDoc" menuName="Configuration and Customization"/>
         <leaf relURI="bas-edit.html" doctype="XDoc" menuName="Making Content editable"/>
       </branch>
-      <branch relURI="" doctype="XDoc" menuName="Wyona Implementation">
+      <branch relURI="" doctype="XDoc" menuName="Lenya Implementation">
         <leaf relURI="bas-dir.html" doctype="XDoc" menuName="Directory Structure"/>
       </branch>
     </branch>
@@ -36,7 +36,7 @@
 					<leaf relURI="" doctype="Empty" menuName="Multimedia (Image, Audio, Video)"/>
 				</branch>
 				<branch relURI="edit" doctype="Empty" menuName="Editing Content">
-					<branch relURI="usr-edit-html.html" doctype="XDoc" menuName="Wyona's HTML Form Editor"/>
+					<branch relURI="usr-edit-html.html" doctype="XDoc" menuName="Lenya's HTML Form Editor"/>
 					<branch relURI="usr-edit-xopus.html" doctype="XDoc" menuName="Q42's Xopus (IE5.5 or later)"/>
 					<!--
           <branch relURI="usr-edit-bitflux.html" doctype="XDoc" menuName="Bitflux Editor"/>
@@ -131,7 +131,7 @@
 	  <leaf relURI="file-upload.html" doctype="XDoc" menuName="File Upload"/>
 	</branch>
 	<branch relURI="edit" doctype="Empty" menuName="Editing Content">
-	  <leaf relURI="html-form-editor.html" doctype="XDoc" menuName="Wyona's HTML Form Editor"/>
+	  <leaf relURI="html-form-editor.html" doctype="XDoc" menuName="Lenya's HTML Form Editor"/>
 	  <leaf relURI="xopus2.html" doctype="XDoc" menuName="Xopus 2"/>
 	  <branch relURI="xopus.html" doctype="XDoc" menuName="Q42's Xopus (IE5.5 or later)">
 	    <leaf relURI="xopus.html#general" doctype="XDoc" menuName="General Information"/>
@@ -139,7 +139,7 @@
 	    <leaf relURI="xopus.html#navigation_bar" doctype="XDoc" menuName="Navigation Bar and Edit/Open Button"/>
 	    <leaf relURI="xopus.html#confRequestURL" doctype="XDoc" menuName="Configuration of requested URL by the client Xopus"/>
 	    <leaf relURI="xopus.html#locationXopus" doctype="XDoc" menuName="Location of Xopus"/>
-	    <leaf relURI="xopus.html#setupCms" doctype="XDoc" menuName="Setting up the Wyona CMS for Xopus"/>
+	    <leaf relURI="xopus.html#setupCms" doctype="XDoc" menuName="Setting up the Lenya CMS for Xopus"/>
 	    <leaf relURI="xopus.html#hookers" doctype="XDoc" menuName="Hooking Xopus to an existing page"/>
 	    <leaf absURI="sample.html" doctype="XDoc" menuName="Test Xopus"/>
 	  </branch>
@@ -214,7 +214,7 @@
       </branch>
     </branch>
     <branch relURI="javadoc" doctype="Guide" menuName="Javadoc">
-      <leaf relURI="index.html" doctype="HTML" menuName="Wyona Overview"/>
+      <leaf relURI="index.html" doctype="HTML" menuName="Lenya Overview"/>
       <leaf URL="http://xml.apache.org/cocoon/apidocs/index.html" doctype="HTML" menuName="Cocoon Overview"/>
       <leaf URL="http://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/http/package-summary.html" doctype="HTML" menuName="Servlet API"/>
       <leaf URL="http://www.dom4j.org/javadoc/index.html" doctype="HTML" menuName="dom4j"/>

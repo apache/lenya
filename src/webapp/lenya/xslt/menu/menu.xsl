@@ -8,7 +8,7 @@
 <html>
 
 <head>
-<title>Wyona</title>
+<title>Lenya</title>
 <script type="text/javascript" src="/lenya/lenya/menu/menu.js">
 </script>
 

@@ -5,7 +5,7 @@
 <xsl:template match="/">
 <html>
 <body>
-  <h1>Wyona - Content Management System</h1>
+  <h1>Lenya - Content Management System</h1>
   
   <xsl:apply-templates select="/lenya/publications"/>
   <xsl:apply-templates select="/lenya/xhtml/body"/>

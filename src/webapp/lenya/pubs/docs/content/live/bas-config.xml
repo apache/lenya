@@ -3,7 +3,7 @@
 
 <document> 
   <header> 
-    <title>Wyona Concepts</title>
+    <title>Lenya Concepts</title>
     <version/> 
     <type/> 
     <authors>
@@ -17,7 +17,7 @@
 
 <p>
   All configuration files have their own living spaces both in the generic 
-  Wyona-CMS directory and the specific publication directory. All configuration
+  Lenya-CMS directory and the specific publication directory. All configuration
   information that is not supplied explicitly in the publication directory is
   inherited from the CMS directory, where default behaviour is defined.
 </p>

@@ -61,7 +61,7 @@
 							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Dev Guide</item>
 				</block>
 				<block>
-					<item href="http://www.lenya.org">About Wyona</item>
+					<item href="http://www.lenya.org">About Lenya</item>
 				</block>
 			</menu>
 		</menus>

@@ -17,7 +17,7 @@
 <!--
    <title><xsl:call-template name="htmltitle"/></title>
 -->
-   <title>Wyona - Open Source Content Management - Documentation - <xsl:apply-templates select="document/title"/></title>
+   <title>Lenya - Open Source Content Management - Documentation - <xsl:apply-templates select="document/title"/></title>
   </head>
   <body bgcolor="#ffffff">
    <table width="760" cellpadding="0" cellspacing="0" border="0">

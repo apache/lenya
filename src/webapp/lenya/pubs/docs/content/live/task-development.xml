@@ -15,7 +15,7 @@
 
 <section><title>The Task Concept</title> 
 <p>
-In Wyona CMS, a <strong>task</strong> is used to implement a process
+In Lenya CMS, a <strong>task</strong> is used to implement a process
 which can be invoked by the user. Tasks are triggered
 from the sitemap using a <link href=""><code>TaskAction</code></link>
 or scheduled using a <link href=""><code>TaskJob</code></link>.
@@ -246,7 +246,7 @@ method.
 <p>
 You may wonder why we pass the <code>contextPath</code> as a method parameter
 since we already pass it as a task parameter. This ensures that the task is always
-able to access the Wyona CMS directory, even if it is not created by a <code>TaskAction</code>
+able to access the Lenya CMS directory, even if it is not created by a <code>TaskAction</code>
 or a <code>TaskJob</code>. Furthermore, if you enter a task in the <code>jobs.xml</code>
 file manually, you won't have to provide a hard-coded <code>servlet-context</code> parameter.
 </p>

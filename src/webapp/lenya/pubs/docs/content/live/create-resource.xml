@@ -21,7 +21,7 @@ The goal is to develop a generic API for resource creation.
 </p>
     </section>
     <section><title>Use Cases</title>
-      <section><title>Create Article (New Wyona Times)</title>
+      <section><title>Create Article (New Lenya Times)</title>
         <ol>
           <li>Go to the section page (e.g. International Section)</li>
           <li>Click in the File Menu on "New Article"</li>
@@ -55,7 +55,7 @@ image with fields such as "Creation Date", User", "Filename", "Mime-Type", etc.<
           <li>The user will be redirected to the refered article</li>
         </ol>
       </section>
-      <section><title>Submit Story (Wyona News and Comments)</title>
+      <section><title>Submit Story (Lenya News and Comments)</title>
         <ol>
           <li>Click on "Submit Story" in the main navigation on the left hand side. You
 will be redirected to a form.</li>

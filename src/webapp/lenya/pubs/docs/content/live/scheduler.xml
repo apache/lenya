@@ -37,7 +37,7 @@
 	<p>
 	  If you want to see all scheduled tasks for a specific
 	  publication, then you have to click on the tab
-	  "Administrator" to the enter the Wyona Administrator.  There
+	  "Administrator" to the enter the Lenya Administrator.  There
 	  you can click on "Scheduler" to see all currently scheduled
 	  tasks.
      </p>
@@ -135,7 +135,7 @@
 	  The following things need to be done:	</p>
 	  <ul>
 	    <li><code>PublishJob</code> needs to be integrated with
-	    the Wyona publishing framework.</li>
+	    the Lenya publishing framework.</li>
 	    <li>The document id has to be passed to the servlet when
 	    calling it from any document.</li>
 	    <li>Move everything from scratchpad into proper

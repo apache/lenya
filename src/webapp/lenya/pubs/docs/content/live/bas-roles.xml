@@ -3,7 +3,7 @@
 
 <document> 
   <header> 
-    <title>Wyona Concepts</title>
+    <title>Lenya Concepts</title>
     <version/> 
     <type/> 
     <authors>
@@ -14,10 +14,10 @@
   <body>
 
 
-    <section><title>Roles of the Wyona Users</title> 
+    <section><title>Roles of the Lenya Users</title> 
 
 <p>
-  All users of the Wyona-CMS have roles assigned to their usernames. These roles 
+  All users of the Lenya-CMS have roles assigned to their usernames. These roles 
   are the basis of the authorization scheme used throughout the application. The roles
   and their respective authorizations are totally customizable through an
   administration panel.
@@ -39,7 +39,7 @@
     <li>Maintaining users and their profiles (e.g. assigned roles)</li>
     <li>Maintaining the site/publication description</li>
     <li>Maintaining page descriptions</li>
-    <li>Configuring the Wyona-CMS:</li>
+    <li>Configuring the Lenya-CMS:</li>
     <ul>
       <li>Assigning editors to edit tasks</li>
       <li>...</li>
@@ -47,7 +47,7 @@
   </ul>
 <p>
   For most/all of these tasks, specific configuration pages are provided
-  whithin the Wyona-CMS's <em>Administration Block</em> to shield the 
+  whithin the Lenya-CMS's <em>Administration Block</em> to shield the 
   administrator from the internals of xml/xsl technologies and the
   Cocoon environment.
 </p>
@@ -59,7 +59,7 @@
   Authors are the users responsible for content creation and management, they use
   the specific editors to maintain the content in a controlled and consistant way.
   Typically, authors are never confronted with design choices and/or xml/xsl documents, 
-  they only work whithin the Wyona-CMS environment, i.e. a www-browser. The content
+  they only work whithin the Lenya-CMS environment, i.e. a www-browser. The content
   is first placed in a staging context, waiting for a <link href="#roles_publisher">
   publisher</link> to publish it so that it can be viewed by external viewers of
   the publication.

@@ -15,7 +15,7 @@
   
   <task id="hello-world" class="org.lenya.cms.task.HelloWorldTask">
     <label>Print Message into Log</label>
-    <parameter name="text" value="Hello Wyona News and Comments"/>
+    <parameter name="text" value="Hello Lenya News and Comments"/>
   </task>
 
 </tasks>

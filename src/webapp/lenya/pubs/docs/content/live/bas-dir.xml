@@ -3,7 +3,7 @@
 
 <document> 
   <header> 
-    <title>Wyona Concepts</title>
+    <title>Lenya Concepts</title>
     <version/> 
     <type/> 
     <authors>
@@ -17,12 +17,12 @@
     <section><title>Directory Structure</title> 
 
 <p>
-  The directory structure of the Wyona-CMS has to facilitate the needs of specific
+  The directory structure of the Lenya-CMS has to facilitate the needs of specific
   user groups at different stages:
 </p>
   <ol>
-    <li>Developpers of the Wyona-CMS</li>
-    <li>Users of the Wyona-CMS, including</li>
+    <li>Developpers of the Lenya-CMS</li>
+    <li>Users of the Lenya-CMS, including</li>
     <ol>
       <li>Administrators</li>
       <li>Authors</li>
@@ -33,7 +33,7 @@
 <p>
   A temptative directory tree is provided here as a basis for further discussion:</p>
   <ul>
-    <li><strong>cms</strong> (the generic CMS framework, i.e. Wyona-CMS)</li>
+    <li><strong>cms</strong> (the generic CMS framework, i.e. Lenya-CMS)</li>
     <ul>
       <li><strong>src</strong></li>
       <ul>

@@ -93,7 +93,7 @@
 							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
 				</block>
 				<block>
-					<item href="http://www.lenya.org">About&#160;Wyona</item>
+					<item href="http://www.lenya.org">About&#160;Lenya</item>
 				</block>
 			</menu>
 		</menus>

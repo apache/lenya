@@ -35,7 +35,7 @@
     <td>project id:</td><td><input type="text" name="childid"/> (e.g. lenya)</td>
   </tr>
   <tr>
-    <td>project name:</td><td><input type="text" name="childname"/> (e.g. Wyona)</td>
+    <td>project name:</td><td><input type="text" name="childname"/> (e.g. Lenya)</td>
   </tr>
 <!--
   <tr>

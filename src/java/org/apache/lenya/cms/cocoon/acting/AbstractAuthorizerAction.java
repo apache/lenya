@@ -1,5 +1,5 @@
 /*
- * $Id: AbstractAuthorizerAction.java,v 1.9 2003/03/04 19:44:43 gregor Exp $
+ * $Id: AbstractAuthorizerAction.java,v 1.10 2003/03/06 20:45:41 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -37,7 +37,7 @@
  * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
  * THIRD PARTY CLAIMS AGAINST YOU.
  *
- * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * Lenya includes software developed by the Apache Software Foundation, W3C,
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
@@ -71,7 +71,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.9 2003/03/04 19:44:43 gregor Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.10 2003/03/06 20:45:41 gregor Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {

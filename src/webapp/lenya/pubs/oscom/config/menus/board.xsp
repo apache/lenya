@@ -39,7 +39,7 @@
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#userguide</xsp:attribute>User's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#adminguide</xsp:attribute>Administrator's&#160;Guide</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#devguide</xsp:attribute>Developer's&#160;Guide</item>
-        <item href="http://www.lenya.org">About&#160;Wyona</item>
+        <item href="http://www.lenya.org">About&#160;Lenya</item>
       </block>
     </menu>
   </menus>

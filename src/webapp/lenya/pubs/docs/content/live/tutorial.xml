@@ -14,8 +14,8 @@
 <section><title>Introduction</title>
 <p>
 At the moment there seem to be two possibilities to
-use Wyona. You can either copy a sample publication from
-the Wyona distribution which has a similar information
+use Lenya. You can either copy a sample publication from
+the Lenya distribution which has a similar information
 architecture as the one you have in mind for yourself, or
 you might have an existing Cocoon based publication, which
 you want to make content manageable, which means documents respectively

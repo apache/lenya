@@ -15,7 +15,7 @@
 
 <xsl:template match="tree">
   <html>
-  <head><title>Wyona CMS Documentation</title></head>
+  <head><title>Lenya CMS Documentation</title></head>
   <body>
   <font face="verdana">
   <xsl:apply-templates select="branch" mode="trunk"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.44 2003/03/06 13:10:57 andreas Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.45 2003/03/06 20:47:10 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -80,7 +80,7 @@
   <map:pipelines>
 
 
-    <!-- Welcome to Wyona -->
+    <!-- Welcome to Lenya -->
     <map:pipeline>
       <map:match pattern="publications.xml">
         <map:generate type="directory" src="lenya/pubs"/>
@@ -157,7 +157,7 @@
 
 
     <map:pipeline>
-      <!-- Wyona GUI -->
+      <!-- Lenya GUI -->
       <map:match pattern="lenya/**">
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>

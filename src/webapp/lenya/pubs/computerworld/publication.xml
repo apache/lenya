@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.6 2003/03/04 21:44:16 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.7 2003/03/06 20:45:53 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Computerworld</lenya:name>
@@ -29,7 +29,7 @@ Change to the following line:
 Performance improvements
 ------------------------
 - build/jakarta-tomcat-4.0.6/conf/server.xml
-  - In Wyona Context, set 'reloadable' to 'false'
+  - In Lenya Context, set 'reloadable' to 'false'
   - Turn off Tomcat logging because Apache keeps an access log (to be done)
 
 - src/lenyacms/src/webapp/sitemap.xmap

@@ -45,13 +45,13 @@
 
     <map:pipeline>
 
-<!-- General Wyona -->
+<!-- General Lenya -->
       <map:match pattern="images/lenya/**.gif">
         <map:read src="../../resources/images/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>
       </map:match>
-<!-- /General Wyona -->
+<!-- /General Lenya -->
 
       <map:match pattern="index.xml">
         <map:generate type="directory-nolabel" src="content/live/articles/">

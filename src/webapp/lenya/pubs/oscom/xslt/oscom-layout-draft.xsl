@@ -291,7 +291,7 @@ border="0" /></td>
 -->
  </td>
 <td align="right" valign="top" class="footer">
-<!-- Admin interface link --><a href="http://oscom.lenya.org/lenya/oscom/matrix/index.html" class="breadcrumb">Wyona</a><!-- /Admin interface link --></td>
+<!-- Admin interface link --><a href="http://oscom.lenya.org/lenya/oscom/matrix/index.html" class="breadcrumb">Lenya</a><!-- /Admin interface link --></td>
 </tr>
 </tbody>
 </table>

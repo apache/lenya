@@ -1,5 +1,5 @@
 /*
- * $Id: Publication.java,v 1.4 2003/03/04 19:44:56 gregor Exp $
+ * $Id: Publication.java,v 1.5 2003/03/06 20:45:52 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -37,7 +37,7 @@
  * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
  * THIRD PARTY CLAIMS AGAINST YOU.
  *
- * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * Lenya includes software developed by the Apache Software Foundation, W3C,
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
@@ -48,7 +48,7 @@ package org.lenya.lucene;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Publication {
     public String id = null;

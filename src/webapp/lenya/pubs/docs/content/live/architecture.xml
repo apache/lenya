@@ -14,7 +14,7 @@
     <section><title>The Big Picture</title>
 <section><title>Overview</title>
 <p>
-The roles of each component (Cocoon, Slide, Wyona) are described below the overview.
+The roles of each component (Cocoon, Slide, Lenya) are described below the overview.
 </p>
 
 <p>
@@ -77,16 +77,16 @@ More information can be found at the Slide <link href="http://jakarta.apache.org
 </p>
 </section>
 
-<section><title>What is the role of Wyona</title>
+<section><title>What is the role of Lenya</title>
 <p>
-Wyona had it's own "Pipeline and XInclude Processor" when it was started in autumn 1999.
+Lenya had it's own "Pipeline and XInclude Processor" when it was started in autumn 1999.
 In the meantime Cocoon and Slide have emerged and developed into powerful frameworks.
-Wyona started to integrate Cocoon's pipeline processor at the end of 2001.
-In order to base Wyona on a generic Content Management API we are currently discussing
+Lenya started to integrate Cocoon's pipeline processor at the end of 2001.
+In order to base Lenya on a generic Content Management API we are currently discussing
 how to integrate Slide.
 Beside the features of Cocoon and Slide,
 there are still many features needed to provide a usable Content Management System.
-Wyona is providing the following additional features:
+Lenya is providing the following additional features:
 </p>
 <ol>
 <li>Authoring/Staging user interfaces for authors and editors</li>
@@ -100,7 +100,7 @@ Wyona is providing the following additional features:
 <li>Dependency Manager</li>
 <li>Notifier/Dispatcher/Subscriber pattern (Event Monitoring, JMS!)</li>
 <li>Publisher/Replicator</li>
-<li>Access Controlling (Wyona and Cocoon and Slide have each it's own Access Controller!)</li>
+<li>Access Controlling (Lenya and Cocoon and Slide have each it's own Access Controller!)</li>
 <li>etc.</li>
 </ol>
 </section>

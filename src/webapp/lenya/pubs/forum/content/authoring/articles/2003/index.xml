@@ -14,11 +14,11 @@
   <category/>
 </meta>
 <head>
-  <title>Beta version of Wyona's ProxyGenerator ready</title>
+  <title>Beta version of Lenya's ProxyGenerator ready</title>
 </head>
 <body>
 <p>
-The ProxyGenerator is very similar to Ivelin Ivanov's WebServiceProxyGenerator, which is shipped with Cocoon 2.1-dev. The main difference is that Ivelin's Generator is using the HttpMultiClient and Wyona's Generator is using the HttpClient.
+The ProxyGenerator is very similar to Ivelin Ivanov's WebServiceProxyGenerator, which is shipped with Cocoon 2.1-dev. The main difference is that Ivelin's Generator is using the HttpMultiClient and Lenya's Generator is using the HttpClient.
 </p>
 </body>
 <comments/>

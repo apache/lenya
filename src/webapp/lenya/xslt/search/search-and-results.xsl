@@ -10,7 +10,7 @@
   <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
 </head>
 <body>
-<h1>Wyona CMS Search Interface -- powered by Lucene</h1>
+<h1>Lenya CMS Search Interface -- powered by Lucene</h1>
   <form>
 <table bgcolor="#dddddd">
 <!--

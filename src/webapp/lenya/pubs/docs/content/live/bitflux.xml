@@ -19,7 +19,7 @@ The project is hosted at <link href="http://www.bitfluxeditor.org">http://www.bi
 </p>
 		</section>
 		<section><title>Download via CVS</title>
-			<p>Bitflux Editor is included in the Wyona cvs. So you don't need to download it separately. If you want to be sure to use the latest version, you can get it from the Bitflux cvs:</p>
+			<p>Bitflux Editor is included in the Lenya cvs. So you don't need to download it separately. If you want to be sure to use the latest version, you can get it from the Bitflux cvs:</p>
 			<source><![CDATA[
 cvs -d :pserver:anonymous@bitflux.ch:/var/lib/cvs/editor login
 Return
@@ -60,7 +60,7 @@ The parameters can be configured within the file inc/config.xml
 	  ]]></source>
 				<p>
 Beware that the MIME-TYPE for the schema file (xsd) is set properly by the server to text/xml.
-Wyona does that for you already, but in case you serve it via Apache you have to update Apache's config.
+Lenya does that for you already, but in case you serve it via Apache you have to update Apache's config.
 </p>
 			</section>
 			<section><title>Posting Data to Server</title>

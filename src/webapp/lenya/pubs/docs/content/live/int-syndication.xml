@@ -86,9 +86,9 @@ for engineer to anticipate too much and XML Namespace is a frequent host of over
 ]]></source>
 </section>
 
-<section><title>RSS within Wyona</title>
+<section><title>RSS within Lenya</title>
 <p>
-The publication "Wyona News and Comments" (pubs/forum) is providing/producing RSS, which is
+The publication "Lenya News and Comments" (pubs/forum) is providing/producing RSS, which is
 consumed by the publication OSCOM (pubs/oscom) and the publication lenya.org (pubs/lenya.org).
 </p>
 </section>

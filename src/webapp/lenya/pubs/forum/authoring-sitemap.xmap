@@ -63,7 +63,7 @@
 
   <map:pipelines>
 
-   <!-- Wyona CMS -->
+   <!-- Lenya CMS -->
     <map:pipeline>
      <!-- Publisher -->
       <map:match pattern="lenya/publishScreen*">
@@ -96,7 +96,7 @@
       </map:match>
      <!-- /ParentChild Content Creator: New Article -->
     </map:pipeline>
-   <!-- /Wyona CMS -->
+   <!-- /Lenya CMS -->
 
     <map:pipeline>
       <map:match pattern="menus/front.xml">

@@ -1,5 +1,5 @@
 /*
- * $Id: XmlUtil.java,v 1.8 2003/03/04 19:44:56 gregor Exp $
+ * $Id: XmlUtil.java,v 1.9 2003/03/06 20:45:52 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -37,7 +37,7 @@
  * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
  * THIRD PARTY CLAIMS AGAINST YOU.
  *
- * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * Lenya includes software developed by the Apache Software Foundation, W3C,
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
@@ -58,7 +58,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 
 /**
- * XmlUtil.java $Id: XmlUtil.java,v 1.8 2003/03/04 19:44:56 gregor Exp $ Created: Thu Jan 24 18:27:05
+ * XmlUtil.java $Id: XmlUtil.java,v 1.9 2003/03/06 20:45:52 gregor Exp $ Created: Thu Jan 24 18:27:05
  * 2002 Utility Class for checking XML content for well-formedness
  *
  * @author <a href="mailto:memo@otego.com">Memo Birgi</a>

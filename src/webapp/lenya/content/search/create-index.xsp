@@ -113,7 +113,7 @@
             <td>Publication ID</td>
             <td>
               <input type="radio" name="publication-id" value="oscom"><xsp:attribute name="checked"/></input>OSCOM
-              <input type="radio" name="publication-id" value="forum"/>Wyona News
+              <input type="radio" name="publication-id" value="forum"/>Lenya News
               <input type="radio" name="publication-id" value="unipublic"/>unipublic
             </td>
           </tr>

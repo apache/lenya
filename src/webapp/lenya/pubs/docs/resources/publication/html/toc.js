@@ -4,17 +4,17 @@
    
   tocTab[1]=
 	new Array("1",
-	"Wyona Basics",
+	"Lenya Basics",
 	"/lenya/docs/xdocs/bas-guide.html");
       
   tocTab[2]=
 	new Array("1.1",
-	"Wyona Concepts",
+	"Lenya Concepts",
 	"/lenya/docs/xdocs/");
       
   tocTab[3]=
   new Array("1.1.1",
-    "Roles of the Wyona CMS",
+    "Roles of the Lenya CMS",
     "/lenya/docs/xdocs/bas-roles.html");
   
   tocTab[4]=
@@ -29,7 +29,7 @@
   
   tocTab[6]=
 	new Array("1.2",
-	"Wyona Implementation",
+	"Lenya Implementation",
 	"/lenya/docs/xdocs/");
       
   tocTab[7]=
@@ -124,7 +124,7 @@
       
   tocTab[25]=
 	new Array("2.3.3.1",
-	"Wyona's HTML Form Editor",
+	"Lenya's HTML Form Editor",
 	"/lenya/docs/xdocs/usr-edit-html.html");
       
   tocTab[26]=
@@ -449,7 +449,7 @@
       
   tocTab[90]=
   new Array("5.4.3.1",
-    "Wyona's HTML Form Editor (xdoc)",
+    "Lenya's HTML Form Editor (xdoc)",
     "/lenya/docs/xdocs/html-form-editor.html");
   
   tocTab[91]=
@@ -484,7 +484,7 @@
   
   tocTab[97]=
   new Array("5.4.3.2.6",
-    "Setting up the Wyona CMS for Xopus",
+    "Setting up the Lenya CMS for Xopus",
     "/lenya/docs/xdocs/xopus.html#setupCms");
   
   tocTab[98]=
@@ -659,7 +659,7 @@
       
   tocTab[132]=
   new Array("6.1",
-    "Wyona Overview",
+    "Lenya Overview",
     "/lenya/docs/xdocs/index.html");
   
   tocTab[133]=

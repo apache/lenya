@@ -1,5 +1,5 @@
 /*
- * $Id: IterativeHTMLCrawler.java,v 1.11 2003/03/04 19:44:56 gregor Exp $
+ * $Id: IterativeHTMLCrawler.java,v 1.12 2003/03/06 20:45:52 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -37,7 +37,7 @@
  * BEEN ADVISED OF THE POSSIBILITY OF THEIR OCCURRENCE. lenya WILL NOT BE LIABLE FOR ANY
  * THIRD PARTY CLAIMS AGAINST YOU.
  *
- * Wyona includes software developed by the Apache Software Foundation, W3C,
+ * Lenya includes software developed by the Apache Software Foundation, W3C,
  * DOM4J Project, BitfluxEditor and Xopus.
  * </License>
  */
@@ -65,7 +65,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class IterativeHTMLCrawler {
     java.util.Vector urlsToCrawl;
@@ -236,7 +236,7 @@ public class IterativeHTMLCrawler {
             String currentURLPath = urlString.substring(0, urlString.lastIndexOf("/"));
             HttpURLConnection httpCon = (HttpURLConnection) currentURL.openConnection();
 
-            httpCon.setRequestProperty("User-Agent", "Wyona Lucene Crawler");
+            httpCon.setRequestProperty("User-Agent", "Lenya Lucene Crawler");
 
             httpCon.connect();
 

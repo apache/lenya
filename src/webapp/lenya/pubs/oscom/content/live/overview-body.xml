@@ -3,7 +3,7 @@
 ======================================================================
 OSCOM CMS List
 
-$Id: overview-body.xml,v 1.7 2003/03/04 19:48:14 gregor Exp $
+$Id: overview-body.xml,v 1.8 2003/03/06 20:47:04 gregor Exp $
 ======================================================================
 -->
 <oscom topic="system overviews">
@@ -265,7 +265,7 @@ license.</license_description>
 
 <system type="cms">
   <id>15</id>
-  <system_name>Wyona</system_name>
+  <system_name>Lenya</system_name>
   <main_url>http://www.lenya.org</main_url>
   <license>
     <license_name>Apache Software License</license_name>
