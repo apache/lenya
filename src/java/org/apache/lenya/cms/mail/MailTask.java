@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.lang.LinkageError;
 import java.util.Arrays;
 import java.util.Date;
@@ -23,6 +24,10 @@ import javax.mail.internet.MimeMessage;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
@@ -209,7 +214,7 @@ public class MailTask
                                 Text text = (Text) firstChild;
                                 String key = element.getLocalName();
                                 if (Arrays.asList(keys).contains(key)) {
-                                    taskParameters.setParameter(key, text.getData());
+                                    taskParameters.setParameter(key, getValue(text));
                                 }
                             }
                         }
@@ -280,6 +285,24 @@ public class MailTask
         }
     }
         
+    protected String getValue(Text text) {
+        try {
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer transformer = tFactory.newTransformer();
+
+            DOMSource source = new DOMSource(text);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(source, result);
+            return writer.toString();
+        }
+        catch(Exception e) {
+            log.error("Failed: ", e);
+            return null;
+        }
+    }
+    
+    
     /**
      * Figure out which ClassLoader to use.  For JDK 1.2 and later use the
      * context ClassLoader if possible.  Note: we defer linking the class
