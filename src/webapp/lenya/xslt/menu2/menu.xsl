@@ -6,13 +6,13 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="/lenya/lenya/menu2/menu.css" />
-    <script language="JavaScript" src="/lenya/lenya/menu2/menu.js"></script>
     <script language="JavaScript">
 
-   <xsl:apply-templates select="tabs" />
-   <xsl:apply-templates select="menus" />
-
+<xsl:apply-templates select="tabs" /> 
+   <xsl:apply-templates select="menus" /> 
+ alert("heloo"+tabDef);
 </script>
+    <script language="JavaScript" src="/lenya/lenya/menu2/menu.js"></script> 
   </head>
   <body class="authoring">
     <table border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
@@ -41,23 +41,16 @@
 </xsl:template>
 
 <xsl:template match="tabs">
-       var tabDef = [
-      <xsl:for-each select="tab">{ name:'<xsl:value-of select="@name" />', icon:'<xsl:value-of select="@src" />', href:'<xsl:value-of 
-select="@href" />' }<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>
-	];
-</xsl:template>
+var tabDef = [<xsl:for-each select="tab">{ name:'<xsl:value-of select="@name" />', icon:'<xsl:value-of select="@src" />', href:'<xsl:value-of 
+select="@href" />' }<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];</xsl:template>
 
 <xsl:template match="menus">
-       var menubarDef = [
-      <xsl:for-each select="menu">{ name:'<xsl:value-of select="@name" />', icon:'<xsl:value-of select="@src" />', href:'<xsl:value-of 
-select="@href" />', items:[<xsl:apply-templates select="item" /><xsl:if test="position()!=last()">,</xsl:if>] }
-<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>
-	];
-</xsl:template>
+       var menubarDef = [<xsl:for-each select="menu">
+{ name:'<xsl:value-of select="@name" />', icon:'<xsl:value-of select="@src" />', items:[<xsl:for-each select="item"><xsl:call-template name="dreck" /><xsl:if 
+test="position()!=last()">,</xsl:if></xsl:for-each>] }<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];</xsl:template>
 
-<xsl:template match="item">
-      { name:'<xsl:value-of select="@name" />', href:'<xsl:value-of select="@href" />'}
-</xsl:template>
+<xsl:template name="dreck">
+{ name:"<xsl:apply-templates />", href:"<xsl:value-of select="@href" />"}</xsl:template>
 
 </xsl:stylesheet>
 

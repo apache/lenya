@@ -33,10 +33,7 @@
 <!--          </submenu>	  
 	</block>
 	<block> -->
-	  <item>
-	    <xsp:attribute name="href">
-	      <xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/"+"&amp;doctype=XDoc"</xsp:expr>
-	    </xsp:attribute>New Document</item>
+	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/ParentChildScreenNewArticle?parentid=/"+"&amp;doctype=XDoc"</xsp:expr></xsp:attribute>New Document</item>
 <!--	</block>
 	<block> -->
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
