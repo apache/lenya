@@ -1,5 +1,5 @@
 /*
- * $Id: FlowHelper.java,v 1.1 2003/12/12 16:00:07 andreas Exp $ <License>
+ * $Id: FlowHelper.java,v 1.2 2004/01/16 14:51:03 michi Exp $ <License>
  * 
  * ============================================================================ The Apache Software
  * License, Version 1.1
@@ -113,6 +113,15 @@ public class FlowHelper {
     public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
         PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
         return factory.getPageEnvelope(cocoon.getObjectModel());
+    }
+
+    /**
+     * Returns the request URI of the current request.
+     * @param cocoon The FOM_Cocoon object.
+     * @return A string.
+     */
+    public String getRequestURI(FOM_Cocoon cocoon) {
+        return cocoon.getRequest().getRequestURI();
     }
 
 }
