@@ -16,7 +16,7 @@ footer, searchbar, css etc.  As input, it takes XML of the form:
   </div>
 </site>
 
-$Id: site2xhtml.xsl,v 1.3 2003/05/07 13:04:12 andreas Exp $
+$Id: site2xhtml.xsl,v 1.4 2003/05/07 13:29:21 andreas Exp $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -46,7 +46,7 @@ $Id: site2xhtml.xsl,v 1.3 2003/05/07 13:04:12 andreas Exp $
           <tr>
 
             <xsl:comment>================= start Group Logo ==================</xsl:comment>
-            <td bgcolor="{$header-color}">
+            <td bgcolor="{$header-color}" valign="bottom">
               <xsl:if test="$config/group-url">
                 <div class="headerlogo">
                 <xsl:call-template name="renderlogo">
@@ -58,6 +58,9 @@ $Id: site2xhtml.xsl,v 1.3 2003/05/07 13:04:12 andreas Exp $
                 </div>
                 <span class="textheader"><xsl:value-of select="$config/group-name"/></span>
               </xsl:if>
+              <xsl:comment>================= start Tabs ==================</xsl:comment>
+              <xsl:apply-templates select="div[@class='tab']"/>
+              <xsl:comment>================= end Tabs ==================</xsl:comment>
             </td>
             <xsl:comment>================= end Group Logo ==================</xsl:comment>
             
@@ -74,64 +77,6 @@ $Id: site2xhtml.xsl,v 1.3 2003/05/07 13:04:12 andreas Exp $
             </td>
             <xsl:comment>================= end Project Logo ==================</xsl:comment>
 
-            <!--
-            <xsl:comment>================= start Search ==================</xsl:comment>
-            <td class="search" align="right" bgcolor="{$header-color}" rowspan="2" valign="top">
-              <xsl:if test="not($config/disable-search) or
-                $config/disable-search='false' and $config/searchsite-domain and
-                $config/searchsite-name">
-                <form method="get" action="http://www.google.com/search" target="_blank">
-                  <table bgcolor="{$menu-border}" cellpadding="0" cellspacing="0" border="0" summary="search">
-                    <tr>
-                      <td colspan="3" bgcolor="#a5b6c6"><img src="{$spacer}" alt="" width="1" height="10" /></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3"><img src="{$spacer}" alt="" width="1" height="8" /></td>
-                    </tr>
-                    <tr>
-                      <td><img src="{$spacer}" alt="" width="1" height="1" /></td>
-                      <td nowrap="nowrap">
-                        <input type="hidden" name="sitesearch" value="{$config/searchsite-domain}"/>
-                        <input type="text" id="query" name="q" size="15"/>
-                        <img src="{$spacer}" alt="" width="5" height="1" />
-                        <input type="submit" value="Search" name="Search"/>
-                        <br />
-                          the <xsl:value-of select="$config/searchsite-name"/> site
-                          <!- setting search options off for the moment ->
-                          <!-
-                          <input type="radio" name="web" value="web"/>web site&#160;&#160;<input type="radio" name="mail" value="mail"/>mail lists
-                          ->
-                      </td>
-                      <td><img src="{$spacer}" alt="" width="1" height="1" /></td>
-                    </tr>
-
-                    <tr>
-                      <td colspan="3"><img src="{$spacer}" alt="" width="1" height="7" /></td>
-                    </tr>
-
-                    <tr>
-                      <td class="bottom-left-thick"></td>
-                      <td bgcolor="#a5b6c6"><img src="{$spacer}" alt="" width="1" height="1" /></td>
-                      <td class="bottom-right-thick"></td>
-                    </tr>
-                  </table>
-                </form>
-              </xsl:if>
-            </td>
-            <xsl:comment>================= end Search ==================</xsl:comment>
-
-            <td align="right" bgcolor="{$header-color}"><img src="{$spacer}" alt="" width="10" height="10" />
-              <span class="textheader"><xsl:value-of select="$config/project-name"/></span>
-            </td>
-            -->
-          </tr>
-          <tr>
-            <td colspan="2" bgcolor="{$header-color}" valign="bottom">
-              <xsl:comment>================= start Tabs ==================</xsl:comment>
-              <xsl:apply-templates select="div[@class='tab']"/>
-              <xsl:comment>================= end Tabs ==================</xsl:comment>
-            </td>
-            <td bgcolor="{$header-color}"><img src="{$spacer}" height="1" width="1" alt="" /></td>
           </tr>
         </table>
         <xsl:comment>================= end Banner ==================</xsl:comment>
