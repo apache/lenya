@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: move-down.xsl,v 1.5 2003/06/14 18:53:37 gregor Exp $
+ $Id: move-down.xsl,v 1.6 2003/09/05 14:42:59 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -32,12 +32,11 @@
       <div class="lenya-box-title">Move Document Down</div>
       <div class="lenya-box-body">
     <form method="post">
-      <xsl:attribute name="action"></xsl:attribute>
       <p>
 	Do you really want to move down <xsl:value-of select="document-id"/>?
       </p>
-      <input type="submit" class="lenya-form-element" value="Move"/>
-      <input type="submit" class="lenya-form-element" value="Cancel"/>
+      <input type="submit" value="Move"/>
+      <input type="submit" value="Cancel"/>
     </form>
       </div>
     </div>

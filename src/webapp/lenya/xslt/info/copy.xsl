@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: copy.xsl,v 1.10 2003/08/19 13:21:34 edith Exp $
+ $Id: copy.xsl,v 1.11 2003/09/05 14:42:59 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -38,17 +38,31 @@
       <div class="lenya-box-body">
         <form method="get">
         <xsl:attribute name="action"></xsl:attribute>
-        <p>
           <input type="hidden" name="documentid" value="{$document-id}"/>
           <input type="hidden" name="area" value="{$area}"/>
           <input type="hidden" name="action" value="{$action}"/>
           <input type="hidden" name="lenya.usecase" value="copy"/>
           <input type="hidden" name="lenya.step" value="copy"/>
-          Do you really want to copy <xsl:value-of select="document-id"/>? 
-          It will be placed on the clipboard, ready to be pasted at the location of your choosing.
-        </p>
-        <input type="submit" class="lenya-form-element" value="Copy"/>
-        <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          
+          <table class="lenya-table-noborder">
+          	<tr>
+          		<td class="lenya-entry-caption">Document:</td>
+          		<td><xsl:value-of select="document-id"/></td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td><br/>The document will be placed on the clipboard, ready<br/> to be pasted at the location of your choosing.</td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td>
+          			<br/>
+        <input type="submit" value="Copy"/>&#160;
+        <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          		</td>
+          	</tr>
+          </table>
+          
     </form>
       </div>
     </div>

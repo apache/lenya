@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: rename.xsl,v 1.9 2003/07/28 16:44:52 edith Exp $
+ $Id: rename.xsl,v 1.10 2003/09/05 14:42:59 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -39,18 +39,27 @@
       <div class="lenya-box-body">
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
-          <p>
           <input type="hidden" name="task-id" value="{$task-id}"/>
           <xsl:call-template name="task-parameters">
             <xsl:with-param name="prefix" select="''"/>
           </xsl:call-template>
           <input type="hidden" name="lenya.usecase" value="rename"/>
           <input type="hidden" name="lenya.step" value="rename"/>
-	      Rename <xsl:value-of select="last-id"/> to 
-          </p>
-          <input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value=""/>
-          <input type="submit" class="lenya-form-element" value="Rename"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          
+          <table class="lenya-table-noborder">
+          	<tr>
+          		<td class="lenya-entry-caption">New Document ID:</td>
+          		<td><input type="text" class="lenya-form-element" name="properties.node.secdocumentid" value="{last-id}"/></td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td>
+          			<br/>
+                <input type="submit" value="Rename"/>&#160;
+                <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          		</td>
+          	</tr>
+          </table>
         </form>
       </div>
     </div>

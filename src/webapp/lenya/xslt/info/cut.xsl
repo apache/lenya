@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: cut.xsl,v 1.10 2003/07/28 16:44:52 edith Exp $
+ $Id: cut.xsl,v 1.11 2003/09/05 14:42:59 andreas Exp $
  -->
 
- <xsl:stylesheet version="1.0"
-   xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-   xmlns:session="http://www.apache.org/xsp/session/2.0"
-   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-   >
+<xsl:stylesheet version="1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  >
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
@@ -38,17 +37,29 @@
       <div class="lenya-box-body">
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
-          <p>
-            <input type="hidden" name="documentid" value="{$document-id}"/>
-            <input type="hidden" name="area" value="{$area}"/>
-            <input type="hidden" name="action" value="{$action}"/>
-            <input type="hidden" name="lenya.usecase" value="cut"/>
-            <input type="hidden" name="lenya.step" value="cut"/>
-   	        Do you really want to cut <xsl:value-of select="document-id"/>? It will be placed on the
-	        clipboard, ready to be pasted at the location of your choosing.
-          </p>
-          <input type="submit" class="lenya-form-element" value="Cut"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+					<input type="hidden" name="documentid" value="{$document-id}"/>
+					<input type="hidden" name="area" value="{$area}"/>
+					<input type="hidden" name="action" value="{$action}"/>
+					<input type="hidden" name="lenya.usecase" value="cut"/>
+					<input type="hidden" name="lenya.step" value="cut"/>
+          <table class="lenya-table-noborder">
+          	<tr>
+          		<td class="lenya-entry-caption">Document:</td>
+          		<td><xsl:value-of select="document-id"/></td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td><br/>The document will be placed on the clipboard, ready<br/> to be pasted at the location of your choosing.</td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td>
+          			<br/>
+        <input type="submit" value="Cut"/>&#160;
+        <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          		</td>
+          	</tr>
+          </table>
         </form>
       </div>
     </div>

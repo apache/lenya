@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: paste.xsl,v 1.11 2003/07/29 17:57:49 edith Exp $
+ $Id: paste.xsl,v 1.12 2003/09/05 14:42:59 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -47,11 +47,20 @@
           <xsl:call-template name="task-parameters">
             <xsl:with-param name="prefix" select="''"/>
           </xsl:call-template>
-          <p>
-	      Do you really want to paste <xsl:value-of select="first-document-id"/> from the clipboard?
-          </p>
-          <input type="submit" class="lenya-form-element" value="Paste"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          <table class="lenya-table-noborder">
+          	<tr>
+          		<td class="lenya-entry-caption">Document on clipboard:</td>
+          		<td><xsl:value-of select="first-document-id"/></td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td>
+          			<br/>
+								<input type="submit" value="Paste"/>&#160;
+								<input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          		</td>
+          	</tr>
+          </table>
         </form>
       </div>
     </div>

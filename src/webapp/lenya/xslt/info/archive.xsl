@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: archive.xsl,v 1.8 2003/09/01 12:51:57 edith Exp $
+ $Id: archive.xsl,v 1.9 2003/09/05 14:42:59 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -12,13 +12,14 @@
    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
    >
   
+<xsl:param name="lenya.event"/>
+
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
-  <xsl:variable name="lenya.event"><xsl:value-of select="/page/info/wf:event"/></xsl:variable>
 
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -39,30 +40,38 @@
       <div class="lenya-box-title">Archive Document</div>
       <div class="lenya-box-body">
         <form method="get">
-          <xsl:attribute name="action"></xsl:attribute>
+        	
           <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
           <input type="hidden" name="lenya.usecase" value="archive"/>
           <input type="hidden" name="lenya.step" value="archive"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
-          <xsl:call-template name="task-parameters">
-            <xsl:with-param name="prefix" select="''"/>
-          </xsl:call-template>
-          <p>
- 	      Do you really want to archive <xsl:value-of select="document-id"/>?
-          </p>
-          <input type="submit" class="lenya-form-element" value="Archive"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          
+					<input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
+					<input type="hidden" name="properties.firstarea" value="{$area}"/>
+					<input type="hidden" name="properties.secarea" value="archive"/>
+					
+          <table class="lenya-table-noborder">
+          	<tr>
+          		<td/>
+          		<td>Do you really want to archive this document?<br/><br/></td>
+          	</tr>
+          	<tr>
+          		<td class="lenya-entry-caption">Document:</td>
+          		<td><xsl:value-of select="document-id"/></td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td>
+          			<br/>
+                <input type="submit" value="Archive"/>&#160;
+                <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          		</td>
+          	</tr>
+          </table>
         </form>
       </div>
     </div>
   </xsl:template>
   
-  <xsl:template name="task-parameters">
-    <xsl:param name="prefix" select="'task.'"/>
-    <input type="hidden" name="{$prefix}properties.node.firstdocumentid" value="{$document-id}"/>
-    <input type="hidden" name="{$prefix}properties.firstarea" value="{$area}"/>
-    <input type="hidden" name="{$prefix}properties.secarea" value="archive"/>
-  </xsl:template>
-
 </xsl:stylesheet>
   

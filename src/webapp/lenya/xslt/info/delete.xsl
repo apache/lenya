@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: delete.xsl,v 1.8 2003/08/19 13:22:25 edith Exp $
+ $Id: delete.xsl,v 1.9 2003/09/05 14:42:59 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -10,6 +10,8 @@
    xmlns:session="http://www.apache.org/xsp/session/2.0"
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
+   
+<xsl:param name="lenya.event"/>
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
@@ -38,27 +40,37 @@
       <div class="lenya-box-body">
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
+          
           <input type="hidden" name="lenya.usecase" value="delete"/>
           <input type="hidden" name="lenya.step" value="delete"/>
+          <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
-          <xsl:call-template name="task-parameters">
-            <xsl:with-param name="prefix" select="''"/>
-          </xsl:call-template>
-	      <p>
-			Do you really want to delete <xsl:value-of select="document-id"/>?
-	      </p>
-          <input type="submit" class="lenya-form-element" value="Delete"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          
+          <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
+          <input type="hidden" name="properties.firstarea" value="{$area}"/>
+          <input type="hidden" name="properties.secarea" value="trash"/>
+          
+          <table class="lenya-table-noborder">
+          	<tr>
+          		<td/>
+          		<td>Do you really want to delete all language versions of this document?<br/><br/></td>
+          	</tr>
+          	<tr>
+          		<td class="lenya-entry-caption">Document:</td>
+          		<td><xsl:value-of select="document-id"/></td>
+          	</tr>
+          	<tr>
+          		<td/>
+          		<td>
+          			<br/>
+                <input type="submit" value="Delete"/>&#160;
+                <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          		</td>
+          	</tr>
+          </table>
         </form>
       </div>
     </div>
   </xsl:template>
-
-<xsl:template name="task-parameters">
-  <xsl:param name="prefix" select="'task.'"/>
-  <input type="hidden" name="{$prefix}properties.node.firstdocumentid" value="{$document-id}"/>
-  <input type="hidden" name="{$prefix}properties.firstarea" value="{$area}"/>
-  <input type="hidden" name="{$prefix}properties.secarea" value="trash"/>
-</xsl:template>
 
 </xsl:stylesheet>

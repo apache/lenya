@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: restore.xsl,v 1.1 2003/08/20 16:53:29 edith Exp $
+ $Id: restore.xsl,v 1.2 2003/09/05 14:42:59 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -56,8 +56,8 @@
           <p>
  	      Do you really want to restore <xsl:value-of select="document-id"/>?
           </p>
-          <input type="submit" class="lenya-form-element" value="Restore"/>
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          <input type="submit" value="Restore"/>&#160;
+          <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
         </form>
     	</xsl:otherwise>
 	  </xsl:choose>	
