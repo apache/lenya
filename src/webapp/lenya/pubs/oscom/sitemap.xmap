@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.19 2003/03/20 00:21:31 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.20 2003/03/20 17:49:17 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -70,26 +70,26 @@
 
           <map:parameter name="pub0-id" value="all"/>
           <map:parameter name="pub0-name" value="All OSCOM"/>
-          <map:parameter name="pub0-index-dir" value="resources/search/lucene/index"/>
+          <map:parameter name="pub0-index-dir" value="resources/search/lucene/index/index"/>
           <map:parameter name="pub0-excerpt-dir" value="resources/search/lucene/htdocs_dump"/>
           <map:parameter name="pub0-prefix" value="http:/"/>
 
           <map:parameter name="pub1-id" value="cambridge"/>
           <map:parameter name="pub1-name" value="Conference at Cambridge"/>
-          <map:parameter name="pub1-index-dir" value="resources/search/lucene/index-cambridge"/>
-          <map:parameter name="pub1-excerpt-dir" value="/home/michiii/oscom_htdocs_dump/www.oscom.org/Conferences/Cambridge"/>
+          <map:parameter name="pub1-index-dir" value="resources/search/lucene/index/index-cambridge"/>
+          <map:parameter name="pub1-excerpt-dir" value="resources/search/lucene/htdocs_dump/www.oscom.org/Conferences/Cambridge"/>
           <map:parameter name="pub1-prefix" value="http://www.oscom.org/Conferences/Cambridge"/>
 
           <map:parameter name="pub2-id" value="blog"/>
           <map:parameter name="pub2-name" value="Blog"/>
-          <map:parameter name="pub2-index-dir" value="resources/search/lucene/index-blog"/>
+          <map:parameter name="pub2-index-dir" value="resources/search/lucene/index/index-blog"/>
           <map:parameter name="pub2-excerpt-dir" value="resources/search/lucene/htdocs_dump/blog.oscom.org"/>
           <map:parameter name="pub2-prefix" value="http://blog.oscom.org"/>
 
 
           <map:parameter name="pub3-id" value="lists"/>
           <map:parameter name="pub3-name" value="Mailing Lists"/>
-          <map:parameter name="pub3-index-dir" value="resources/search/lucene/index-lists"/>
+          <map:parameter name="pub3-index-dir" value="resources/search/lucene/index/index-lists"/>
           <map:parameter name="pub3-excerpt-dir" value="resources/search/lucene/htdocs_dump/lists.oscom.org"/>
           <map:parameter name="pub3-prefix" value="http://lists.oscom.org"/>
 
