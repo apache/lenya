@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.8 2003/12/04 18:07:14 andreas Exp $
+$Id: AbstractPublication.java,v 1.9 2003/12/05 14:34:56 andreas Exp $
 <License>
 
  ============================================================================
@@ -579,5 +579,14 @@ public abstract class AbstractPublication implements Publication {
      * @throws PublicationException when something went wrong.
      */
     protected abstract void deleteDocumentSource(Document document) throws PublicationException;
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#moveDocument(org.apache.lenya.cms.publication.Document, org.apache.lenya.cms.publication.Document)
+     */
+    public void moveDocument(Document sourceDocument, Document destinationDocument)
+        throws PublicationException {
+        copyDocument(sourceDocument, destinationDocument);
+        deleteDocument(sourceDocument);
+    }
 
 }

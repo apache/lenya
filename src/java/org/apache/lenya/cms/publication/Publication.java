@@ -169,6 +169,15 @@ public interface Publication {
      * @throws PublicationException when something went wrong.
      */
     void deleteDocument(Document document) throws PublicationException;
+    
+    /**
+     * Moves a document from one location to another.
+     * @param sourceDocument The source document.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException if a document which the
+     * destination document depends on does not exist.
+     */
+    void moveDocument(Document sourceDocument, Document destinationDocument) throws PublicationException;
 
     /**
      * Creates a version of the document object in another area.
