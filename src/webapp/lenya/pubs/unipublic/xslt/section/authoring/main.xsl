@@ -3,18 +3,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <xsl:include href="../../../../../xslt/menu/root.xsl"/>
-<!--
-<xsl:include href="../../../../../../../xslt/root.xsl"/>
--->
 
 <xsl:template match="cmsbody">
   <xsl:apply-templates/>
 </xsl:template>
-
-<!--
-<xsl:include href="../../root.xsl"/>
--->
-
 
 <xsl:include href="../page.xsl"/>
 <xsl:include href="../../head.xsl"/>
