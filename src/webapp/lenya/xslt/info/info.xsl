@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.1 2003/06/05 11:36:36 gregor Exp $
+ $Id: info.xsl,v 1.2 2003/06/07 14:14:53 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -10,16 +10,17 @@
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
     xmlns:dc="http://dc.org/2003/"
-    xmlns="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="nav"
     >
+ <xsl:import href="../util/page-util.xsl"/>
     
 <xsl:template match="lenya-info:info">    
     <html>
 <head>
 	<title></title>
-	<script language="javascript" type="text/javascript" src="tabs.js"></script>
-	<link rel="StyleSheet" href="default.css" type="text/css" />
+	<script language="javascript" type="text/javascript" src="javascript/tabs.js"></script>
+    <xsl:call-template name="include-css">
+      <xsl:with-param name="context-prefix" select="publish/context"/>
+    </xsl:call-template>
 </head>
 <body onload="Tab(1)">
 	<!-- 
@@ -72,7 +73,7 @@
 </body>
 </html>
 </xsl:template>
-
+<!--
 <xsl:template match="lenya-info:overview">
    <tr><td>Title:</td><td><xsl:valueof select="dc:title"/></td></tr>
    <tr><td>Abstract:</td><td><xsl:valueof select="lenya-info:abstract"/></td></tr>
@@ -106,5 +107,5 @@
 <xsl:template match="wf">
 <tr><td>Editing</td><td>Felix Maeder</td><td>2003-04-01 18:01</td></tr>
 </xsl:template>
-
+-->
 </xsl:stylesheet> 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0"?>
 
 <xsp:page 
   language="java" 
@@ -10,7 +10,7 @@
   xmlns:dc="http://dc.org/2003/"
 >
 
-<lenya-:info>
+<lenya-info:info>
 
   <lenya-info:overview>
         <dc:title></dc:title>

@@ -21,11 +21,60 @@
       </map:match>
     </map:pipeline>
     
+    <!-- Tabs -->
+    <map:pipeline>
+      <map:match pattern="tabs/info">
+	    <map:generate type="serverpages" src="content/info/info.xsp"/>
+	    <map:transform src="xslt/info/info.xsl" label="content" />
+	    <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="info.xml">
+	    <map:generate type="serverpages" src="content/info/info.xsp"/>
+	    <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- Sitetree Javascript array -->
+    <map:pipeline>
+      <map:match pattern="output.js">
+	    <map:generate src="pubs/lenya-unicms/content/authoring/sitetree.xml"/>
+	    <map:transform src="xslt/info/sitetree2tree.xsl" label="content" />
+	    <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
+    
+        <!-- Sitetree Javascript array      -->
+    <map:pipeline>
+      <map:match pattern="tree.js">
+	    <map:read src="resources/javascript/tree.js"/>
+	    <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
+
+        <!-- Sitetree Javascript array      -->
+    <map:pipeline>
+      <map:match pattern="ua.js">
+	    <map:read src="resources/javascript/ua.js"/>
+	    <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
+
+        <!-- Sitetree Javascript array      -->
+    <map:pipeline>
+      <map:match pattern="tabs.js">
+	    <map:read src="resources/javascript/tabs.js"/>
+	    <map:serialize type="text"/>
+      </map:match>
+    </map:pipeline>
+
+    
     <map:pipeline>
       <map:match pattern="**">
 	    <map:aggregate element="lenya" label="aggregate">
-	      <map:part src="cocoon:/menus/info.xml"/>
-	      <map:part element="cmsbody" src="content/authoring/sitetree.xml"/>
+	  <!--    <map:part src="cocoon:/menus/info.xml"/> -->
 	      <map:part type="serverpages" src="content/info/info.xsp"/>
 	    </map:aggregate>
 	    <map:transform src="xslt/info/root.xsl" label="content" />
