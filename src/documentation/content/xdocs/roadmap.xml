@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: roadmap.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
@@ -319,7 +319,6 @@ used for bug fixes, e.g. 1.0.2.
 </ul>
 
 </section></section>
-<p>$Id: roadmap.xml 55543 2004-10-26 00:14:59Z gregor $</p>
   </body>
 </document>
 
