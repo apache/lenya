@@ -4,11 +4,32 @@
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+    xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+    xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
 >
+
+<xsp:structure>
+  <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.PublicationFactory</xsp:include>
+</xsp:structure>
 
 <menu>
 
   <xsp-lenya:util/>
+
+   <xsp:logic>
+    Publication publication = PublicationFactory.getPublication(objectModel);
+  </xsp:logic>
+
+  <url-info>
+    <context-prefix><xsp-request:get-context-path/></context-prefix>
+    <publication-id><input:get-attribute module="page-envelope" as="string" name="publication-id"/></publication-id>
+    <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
+    <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/>.html</document-id>
+    <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
+    <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
+  </url-info>
 
   <live_uri>/matrix/index.html</live_uri>
 
