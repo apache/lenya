@@ -28,46 +28,25 @@
 		   <th>Checked in by</th>
 		</tr>
 		
-		<xsl:for-each select="CheckIn">
-			
-			<xsl:choose>
-				
-				<xsl:when test="position()=1">
-					<tr bgcolor="#bbbbbb">
-						<td>Current version</td>
-						<td>&#160;</td>
-						<xsl:apply-templates select="Time"/>
-						<xsl:apply-templates select="Identity"/>
-					</tr>
-				</xsl:when>
-
-				<!-- Note, important: The timestamp we're inserting into the anchor
-				     in each row is actually the one from the *previous* version, thus the
-					 position()-1 calculation. This is because in order to roll back
-					 to a given version, we need to reactivate the backup file which was
-					 written *before* that version was checked in.
-				 --> 
-
-				<xsl:when test="position()>1">
-					<xsl:variable name="timeIndex" select="position() - 1"/>
-					<tr bgcolor="#bbbbbb">
-						<td>
-							<xsl:element name="a">
-							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?lenya.usecase=<xsl:value-of select="$usecase"/>&amp;lenya.step=rollback&amp;documentid=<xsl:value-of select="$documentId"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
-
-						</td>
-						<td>
-							<xsl:element name="a">
-							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?lenya.usecase=<xsl:value-of select="$usecase"/>&amp;lenya.step=view&amp;documentid=<xsl:value-of select="$documentId"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
-
-						</td>
-						<xsl:apply-templates select="Time"/>
-						<xsl:apply-templates select="Identity"/>
-					</tr>
-				</xsl:when>
-			</xsl:choose>
-		
-		</xsl:for-each>
+      <xsl:for-each select="CheckIn">
+        
+        <xsl:choose>
+          
+          <xsl:when test="position()=1">
+            <tr>
+              <td>Current version</td>
+              <td>&#160;</td>
+              <xsl:apply-templates select="Time"/>
+              <xsl:apply-templates select="Identity"/>
+            </tr>
+          </xsl:when>
+          
+          <xsl:when test="position()>1">
+              <xsl:apply-templates select="Backup"/>
+          </xsl:when>
+        </xsl:choose>
+        
+      </xsl:for-each>
 		
 	</table>
 	</body>
@@ -80,6 +59,23 @@
 
 <xsl:template match="Identity">
 	<td><xsl:apply-templates/></td>
+</xsl:template>
+
+<xsl:template match="Backup">
+            <tr>
+              <td>
+                <xsl:element name="a">
+                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute>Rollback to this version</xsl:element>
+                
+              </td>
+              <td>
+                <xsl:element name="a">
+                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;rollbackTime=<xsl:value-of select="../Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+                
+              </td>
+              <xsl:apply-templates select="../Time"/>
+              <xsl:apply-templates select="../Identity"/>
+            </tr>
 </xsl:template>
 
 </xsl:stylesheet>

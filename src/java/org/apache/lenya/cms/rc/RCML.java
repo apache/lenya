@@ -77,7 +77,7 @@ import java.util.Vector;
  * @author Michael Wechner
  * @author Marc Liyanage
  * @author Edith Chevrier
- * @version $Id: RCML.java,v 1.19 2003/12/15 16:22:34 michi Exp $
+ * @version $Id: RCML.java,v 1.20 2003/12/18 17:01:18 edith Exp $
  */
 public class RCML {
     private static Category log = Category.getInstance(RCML.class);
@@ -129,11 +129,11 @@ public class RCML {
 
             initDocument();
 
-            // Create a "fake" checkin entry so it looks like the
-            // system checked the document in. We use the filesystem
-            // modification date as checkin time.
-            //
-            checkOutIn(RCML.ci, RevisionController.systemUsername, lastModified);
+			// Create a "fake" checkin entry so it looks like the
+			// system checked the document in. We use the filesystem
+			// modification date as checkin time.
+			//
+            checkOutIn(RCML.ci, RevisionController.systemUsername, lastModified, false);
 
             File parent = new File(rcmlFile.getParent());
             parent.mkdirs();
@@ -150,7 +150,7 @@ public class RCML {
      */
     public void initDocument() {
         DOMParserFactory dpf = new DOMParserFactory();
-        document = dpf.getDocument();
+        document = dpf.getDocument(); 
 
         Element root = dpf.newElementNode(document, "XPSRevisionControl");
         document.appendChild(root);
@@ -193,7 +193,7 @@ public class RCML {
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
-    public void checkOutIn(short type, String identity, long time)
+    public void checkOutIn(short type, String identity, long time, boolean backup)
         throws IOException, Exception {
         DOMParserFactory dpf = new DOMParserFactory();
 
@@ -218,10 +218,14 @@ public class RCML {
         checkOutElement.appendChild(identityElement);
         checkOutElement.appendChild(timeElement);
 
+		if (backup) {
+			Element backupElement = dpf.newElementNode(document, "Backup");
+			checkOutElement.appendChild(backupElement);
+		}
+
         Element root = document.getDocumentElement();
-        root.insertBefore(dpf.newTextNode(document, "\n"), root.getFirstChild());
+		root.insertBefore(dpf.newTextNode(document, "\n"), root.getFirstChild());
         root.insertBefore(checkOutElement, root.getFirstChild());
-        root.insertBefore(dpf.newTextNode(document, "\n"), root.getFirstChild());
 
         setDirty();
 

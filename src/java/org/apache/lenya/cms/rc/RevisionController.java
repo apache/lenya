@@ -70,7 +70,7 @@ import org.apache.log4j.Category;
  * Controller for the reserved check-in, check-out, the backup versions and the rollback 
  *
  * @author Michael Wechner
- * @version $Id: RevisionController.java,v 1.24 2003/12/15 16:22:34 michi Exp $
+ * @version $Id: RevisionController.java,v 1.25 2003/12/18 17:01:18 edith Exp $
  */
 public class RevisionController {
     private static Category log = Category.getInstance(RevisionController.class);
@@ -145,12 +145,6 @@ public class RevisionController {
      * @throws Exception if an error occurs
      */
     public RCML getRCML(String source) throws FileNotFoundException, IOException, Exception {
-/*    
-        File file = new File(rootDir + source);
-        if (!file.isFile()) {
-            throw new FileNotFoundException(file.getAbsolutePath());
-        }
-*/
         return new RCML(rcmlDir, source, rootDir);
     }
 
@@ -181,15 +175,17 @@ public class RevisionController {
         // The same user is allowed to check out repeatedly without
         // having to check back in first.
         //
-        log.debug("entry: " + entry);
-        log.debug("entry.type:" + entry.getType());
-        log.debug("entry.identity" + entry.getIdentity());
+		if (entry != null) {
+		  log.debug("entry: " + entry);
+          log.debug("entry.type:" + entry.getType());
+          log.debug("entry.identity" + entry.getIdentity());
+		}  
 
         if ((entry != null) && (entry.getType() != RCML.ci) && !entry.getIdentity().equals(identity)) {
             throw new FileReservedCheckOutException(rootDir + source, rcml);
         }
 
-        rcml.checkOutIn(RCML.co, identity, new Date().getTime());
+        rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false);
 
         return file;
     }
@@ -287,7 +283,7 @@ public class RevisionController {
             out.close();
         }
 
-        rcml.checkOutIn(RCML.ci, identity, time);
+        rcml.checkOutIn(RCML.ci, identity, time, backup);
         rcml.pruneEntries(backupDir);
         rcml.write();
 
@@ -348,12 +344,6 @@ public class RevisionController {
         //
         reservedCheckOut(destination, identity);
 
-        // Try to check back in, this might cause
-        // a backup of the current version to be created if
-        // desired by the user.
-        //
-        long newtime = reservedCheckIn(destination, identity, backupFlag);
-
         // Now roll back to the old state
         //
         FileInputStream in = new FileInputStream(backup.getAbsolutePath());
@@ -367,6 +357,13 @@ public class RevisionController {
         }
 
         out.close();
+
+		// Try to check back in, this might cause
+		// a backup of the current version to be created if
+		// desired by the user.
+		//
+		long newtime = reservedCheckIn(destination, identity, backupFlag);
+
 
         return newtime;
     }
