@@ -3,7 +3,7 @@
 
 <document>
   <header>
-    <title>Apache Lenya: Mailing Lists</title>
+    <title>Mailing Lists</title>
     <version/>
     <type/>
     <authors>
@@ -11,22 +11,21 @@
     </authors>
   </header>
   <body>
-<section><title>Mailing Lists</title>
-<p>
-Please go to our Mailman mailings list info <link href="http://lenya.org/cgi-bin/mailman/listinfo">page</link>.
+<section><title>Subscribe/Unsubscribe</title>
+<p class="para">
+<b>User List:</b> <a href="mailto:lenya-user-subscribe@cocoon.apache.org">Subscribe</a>, <a href="mailto:lenya-user-unsubscribe@cocoon.apache.org">Unsubscribe</a>
+<br />
+<b>Developer List:</b> <a href="mailto:lenya-dev-subscribe@cocoon.apache.org">Subscribe</a>, <a href="mailto:lenya-dev-unsubscribe@cocoon.apache.org">Unsubscribe</a>
 </p>
+</section>
 
-<p>
-You can also view our mailing lists archive at <link href="http://gmane.org/">Gmane</link>
+<section><title>Gmane</title>
+<p class="para">
+You can also read our mailing lists at <a href="http://gmane.org/">Gmane</a>
 <ol>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.user">lenyacms-users</link></li>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.devel">lenyacms-dev</link></li>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.cvs">lenyacms-cvs-commit</link></li>
+  <li><a href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.user">gmane.comp.cms.lenya.user</a></li>
+  <li><a href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.devel">gmane.comp.cms.lenya.user</a></li>
 </ol>
-</p>
-
-<p>
-Send questions or comments to <link href="mailto:mailman-owner@lenya.org">mailman-owner@lenya.org</link>.
 </p>
 </section>
   </body>
