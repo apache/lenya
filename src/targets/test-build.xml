@@ -28,6 +28,10 @@
     </javac>
 
     <!-- Run tests -->
+    
+    <!--
+    Identity Test
+    -->
     <java fork="yes" classname="junit.textui.TestRunner">
       <arg value="org.apache.lenya.cms.ac.IdentityTestCase"/>
       <classpath refid="classpath"/>
@@ -36,13 +40,24 @@
         <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
       </classpath>
     </java>
+    
+    <!--
+    AntTask Test
+    Warning: This test needs the Ant library.
+    -->
+    <java fork="yes" classname="junit.textui.TestRunner">
+      <arg value="org.apache.lenya.cms.task.AntTaskTest"/>
+      <classpath refid="classpath"/>
+      <classpath>
+        <pathelement location="${build.test}" />
+        <pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" />
+        <fileset dir="${build.root}/lenya/webapp/WEB-INF/lib">
+          <include name="ant**.jar"/>
+        </fileset>
+      </classpath>
+    </java>
+    
   </target>
-
-
-
-
-
-
 
   <!-- Anteater tests  -->
   <target name="anteater.tests">

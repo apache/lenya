@@ -95,8 +95,13 @@ public class AntTask
      * @param arguments A map mapping the command-line arguments to their values.
      * @param properties A map mapping the project properties to their values.
      */
-    public void executeAntTarget(File publicationDirectory, File buildFile, String target, Map arguments,
-        Map properties) throws ExecutionException {
+    public void executeAntTarget(
+            File publicationDirectory,
+            File buildFile,
+            String target,
+            Map arguments,
+            Map properties,
+            File logFile) throws ExecutionException {
             
         Project project = new Project();
         project.setCoreLoader(getClass().getClassLoader());
@@ -104,21 +109,10 @@ public class AntTask
         Throwable error = null;
         
         try {
-            File logFile = getLogFile(publicationDirectory);
             project.setUserProperty("XmlLogger.file", logFile.getAbsolutePath());
             XmlLogger logger = new XmlLogger();
             project.addBuildListener(logger);
             project.fireBuildStarted();
-            /*
-            try {
-                File logFile = new File(buildFile.getParentFile(), "ant-log.xml");
-                logFile.createNewFile();
-                logger.setOutputPrintStream(new PrintStream(new FileOutputStream(logFile)));
-            }
-            catch (Exception e) {
-                throw new ExecutionException("Could not create log file: " + e);
-            }
-             */
             
             project.init();
             project.setBaseDir(publicationDirectory);
@@ -151,7 +145,7 @@ public class AntTask
     /**
      * Returns the filename of the logfile to write.
      */
-    protected File getLogFile(File publicationDirectory) {
+    protected File getDefaultLogFile(File publicationDirectory) {
         Calendar now = new GregorianCalendar();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
         return new File(publicationDirectory, LOG_PATH + format.format(now.getTime()) + ".xml");
@@ -164,6 +158,7 @@ public class AntTask
     public static final String PROPERTIES_PREFIX = "properties";
     public static final String DEFAULT_BUILDFILE = "config/tasks/targets.xml";
     public static final String LOG_PATH = "logs/tasks/".replace('/', File.separatorChar);
+    public static final String PARAMETER_LOGFILE = "logfile";
 
     /**
      * Execute the task. All parameters must have been set with parameterize().
@@ -179,18 +174,27 @@ public class AntTask
         String target;
         Map arguments;
         Map properties;
+        File logFile;
         
         try {
+
+            String buildFileName
+                = getParameters().getParameter("buildfile", DEFAULT_BUILDFILE)
+                .replace('/', File.separatorChar);
+
             String publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
-
-            String relativeBuildFilePath = getParameters().getParameter("buildfile", DEFAULT_BUILDFILE);
-            relativeBuildFilePath = relativeBuildFilePath.replace('/', File.separatorChar);
-
-            PublishingEnvironment environment
-                = new PublishingEnvironment(servletContextPath, publicationId);
-            publicationDirectory = environment.getPublicationDirectory();
-            buildFile = new File(publicationDirectory, relativeBuildFilePath);
-
+            
+            if (publicationId.equals("")) {
+                publicationDirectory = new File(".");
+                buildFile = new File(buildFileName);
+            }
+            else {
+                PublishingEnvironment environment
+                    = new PublishingEnvironment(servletContextPath, publicationId);
+                publicationDirectory = environment.getPublicationDirectory();
+                buildFile = new File(publicationDirectory, buildFileName);
+            }
+            
             target = getParameters().getParameter(TARGET, null);
 
             Map parametersMap = Parameters.toProperties(getParameters());
@@ -199,12 +203,18 @@ public class AntTask
             arguments = antMap.getMap();
             NamespaceMap propertiesMap = new NamespaceMap(parametersMap, PROPERTIES_PREFIX);
             properties = propertiesMap.getMap();
+
+            // set logfile
+            String logFilename = getParameters().getParameter(
+                PARAMETER_LOGFILE, getDefaultLogFile(publicationDirectory).getAbsolutePath());
+            logFile = new File(logFilename);
+            
         }
         catch (ParameterException e) {
             throw new ExecutionException(e);
         }
         
-        executeAntTarget(publicationDirectory, buildFile, target, arguments, properties);
+        executeAntTarget(publicationDirectory, buildFile, target, arguments, properties, logFile);
         
     }
 }
