@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.30 2003/08/25 15:41:55 andreas Exp $
+$Id: TaskJob.java,v 1.31 2003/08/28 10:15:14 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,10 +60,16 @@ $Id: TaskJob.java,v 1.30 2003/08/25 15:41:55 andreas Exp $
  */
 package org.apache.lenya.cms.scheduler;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
+import org.apache.lenya.cms.task.TaskParameters;
+import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
 
 import org.apache.log4j.Category;
@@ -79,7 +85,7 @@ import org.w3c.dom.Element;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * A TaskJob is a Job that executes a Task. The task ID is obtained from the <code>task.id</code>
+ * A TaskJob is a Job that executes a Task. The task ID is obtained from the <code>task-id</code>
  * request parameter.
  *
  * @author <a href="mailto:ah@apache.org">Andreas Hartmann</a>
@@ -98,7 +104,27 @@ public class TaskJob extends ServletJob {
      */
     protected Parameters getParameters(String servletContextPath, HttpServletRequest request)
         throws SchedulerException {
-        DefaultTaskWrapper wrapper = new DefaultTaskWrapper(request.getParameterMap());
+        
+        Map parameterMap = request.getParameterMap();
+        Map wrapperMap = new HashMap();
+        for (Iterator i = parameterMap.keySet().iterator(); i.hasNext(); ) {
+            String key = (String) i.next();
+            Object value;
+            String[] values = (String[]) parameterMap.get(key);
+            if (values.length == 1) {
+                value = values[0];
+            }
+            else {
+                value = values;
+            }
+            wrapperMap.put(key, value);
+        }
+        
+        NamespaceMap taskParameters = new NamespaceMap(TaskParameters.PREFIX);
+        taskParameters.putAll(wrapperMap);
+        wrapperMap.putAll(taskParameters.getPrefixedMap());
+        
+        DefaultTaskWrapper wrapper = new DefaultTaskWrapper(wrapperMap);
         return wrapper.getParameters();
     }
 
@@ -130,6 +156,7 @@ public class TaskJob extends ServletJob {
      * @throws JobExecutionException if there is an exception while executing the job.
      */
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        log.debug("Executing job");
         JobDetail jobDetail = context.getJobDetail();
         DefaultTaskWrapper wrapper = new DefaultTaskWrapper(jobDetail.getJobDataMap());
         try {
@@ -200,6 +227,9 @@ public class TaskJob extends ServletJob {
      * @return DOCUMENT ME!
      */
     public Element save(NamespaceHelper helper, JobDetail jobDetail) {
+        
+        log.debug("Saving job");
+        
         Element jobElement = helper.createElement("job");
         JobDataMap map = jobDetail.getJobDataMap();
         
