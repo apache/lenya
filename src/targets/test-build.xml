@@ -63,6 +63,7 @@
   			test.creator,
   			test.publisher,
   			test.accesscontrol,
+			test.deactivate,
   			test.publication"
   />
 
@@ -162,3 +163,15 @@
     </exec>
     -->
   </target>
+
+  <!-- Deactivate Document Test -->
+  <target name="test.deactivate" depends="test.pub.prepare">
+    <java fork="yes" classname="org.apache.lenya.cms.task.DocumentDeactivateTaskTest">
+      <jvmarg value="-enableassertions"/>
+      <arg value="${install.dir}"/>
+      <arg value="${test.pub.id}"/>
+      <classpath refid="classpath.default"/>
+    </java>
+  </target>  
+
+  
