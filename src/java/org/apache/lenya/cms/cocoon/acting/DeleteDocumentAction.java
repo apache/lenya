@@ -1,5 +1,5 @@
 /*
-$Id: DeleteDocumentAction.java,v 1.14 2003/08/28 13:43:04 egli Exp $
+$Id: DeleteDocumentAction.java,v 1.15 2003/08/28 13:45:58 egli Exp $
 <License>
 
  ============================================================================
@@ -76,6 +76,9 @@ import java.util.Map;
  *
  * @author Michael Wechner
  * @version 2002.02.27
+ * @deprecated this class doesn't seem to do anything and has been superceded 
+ * by an ant task which deactivates documents.
+ * 
  */
 public class DeleteDocumentAction extends AbstractComplementaryConfigurableAction
     implements Configurable {
