@@ -1,5 +1,5 @@
 /*
-$Id: Label.java,v 1.5 2003/07/23 13:21:11 gregor Exp $
+$Id: Label.java,v 1.6 2003/09/12 17:34:01 egli Exp $
 <License>
 
  ============================================================================
@@ -56,19 +56,19 @@ $Id: Label.java,v 1.5 2003/07/23 13:21:11 gregor Exp $
 package org.apache.lenya.cms.publication;
 
 /**
- * DOCUMENT ME!
+ * The Label class encapsulates a string label and a associated language.
  *
- * @author $author$
- * @version $Revision: 1.5 $
+ * @author Christian Egli
+ * @version $Revision: 1.6 $
  */
 public class Label {
     private String label = null;
     private String language = null;
 
     /**
-     * Creates a new Label object.
+     * Creates a new Label object with no language.
      *
-     * @param label DOCUMENT ME!
+     * @param label the actual label
      */
     public Label(String label) {
         this(label, null);
@@ -77,8 +77,8 @@ public class Label {
     /**
      * Creates a new Label object.
      *
-     * @param label DOCUMENT ME!
-     * @param language DOCUMENT ME!
+     * @param label the actual label
+     * @param language the language
      */
     public Label(String label, String language) {
         this.label = label;
@@ -86,19 +86,28 @@ public class Label {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get the actual label of the Label object
      *
-     * @return DOCUMENT ME!
+     * @return the actual label as a String
      */
     public String getLabel() {
         return label;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Set the actual label of the label object.
+     * 
+     * @param label
      */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+    /**
+     * Get the language of this Label object 
+     *
+     * @return the language
+     */
+
     public String getLanguage() {
         return language;
     }
