@@ -75,7 +75,7 @@ import java.util.List;
  * Similar to the UNIX wget
  *
  * @author Michael Wechner
- * @version $Id: WGet.java,v 1.28 2004/01/14 08:33:37 michi Exp $
+ * @version $Id: WGet.java,v 1.29 2004/01/18 12:23:13 michi Exp $
  */
 public class WGet {
     static Category log = Category.getInstance(WGet.class);
@@ -248,39 +248,18 @@ public class WGet {
     }
 
     /**
-     * DOCUMENT ME!
+     * Substitute prefix, e.g. "/lenya/blog/live/" by "/"
      *
-     * @param filename DOCUMENT ME!
-     * @param prefixSubstitute DOCUMENT ME!
-     * @param substituteReplacement DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param filename Filename
+     * @param prefixSubstitute Prefix which shall be replaced
+     * @param substituteReplacement Prefix which is going to replace the original
      *
      * @throws IOException DOCUMENT ME!
      */
-    public byte[] substitutePrefix(String filename, String prefixSubstitute,
-        String substituteReplacement) throws IOException {
-        try {
-            File file = new File(filename);
-            // FIXME: sed should be replaced by some Java component
-            String command = "/usr/bin/sed --expression=s/" + escapeSlashes(prefixSubstitute) +
-                "/" + escapeSlashes(substituteReplacement) + "/g " + file.getAbsolutePath();
+    public void substitutePrefix(String filename, String prefixSubstitute, String substituteReplacement) throws IOException {
+        log.debug("Replace " + prefixSubstitute + " by " + substituteReplacement);
 
-            byte[] wget_response_sed = runProcess(command);
-
-            java.io.ByteArrayInputStream bain = new java.io.ByteArrayInputStream(wget_response_sed);
-            FileOutputStream fout = new FileOutputStream(file.getAbsolutePath());
-            int bytes_read = 0;
-            byte[] buffer = new byte[1024];
-
-            while ((bytes_read = bain.read(buffer)) != -1) {
-                fout.write(buffer, 0, bytes_read);
-            }
-        } catch (Exception e) {
-            log.error(".substitutePrefix(): ", e);
-        }
-
-        return null;
+	org.apache.lenya.util.SED.replaceAll(new File(filename), escapeSlashes(prefixSubstitute), escapeSlashes(substituteReplacement));
     }
 
     /**
@@ -339,29 +318,9 @@ public class WGet {
         return file.getAbsolutePath().replaceAll(prefixSubstitute, substituteReplacement);
     }
 
-    /*
-    //FIXME: This is an unfinished attempt at using an internal grep
-    //like method to rewrite the URI when statically exporting the
-    //publication. At the moment we simply use sed (which of course
-    //doesn't work on some platforms)
-    public String grep(String pattern, String string) {
-        try {
-            RE regexp = new RE(pattern);
-            if (regexp.match(string)) {
-                log.debug("Pattern matched");
-                for (int i=0; i<regexp.getParenCount(); i++) {
-                    log.debug("Parenthesis: " + regexp.getParen(i));
-                }
-            } else{
-                log.debug("Pattern did not match");
-            }
-            return "";
-        } catch (RESyntaxException e) {
-            log.error(e);
-            return null;
-        }
-    }
-    */
+    /**
+     *
+     */
     public byte[] runProcess(String command) throws Exception {
         Process process = Runtime.getRuntime().exec(command);
 
