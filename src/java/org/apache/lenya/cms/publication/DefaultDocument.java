@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.33 2003/11/27 14:01:49 andreas Exp $
+$Id: DefaultDocument.java,v 1.34 2003/12/02 14:35:10 andreas Exp $
 <License>
 
  ============================================================================
@@ -376,6 +376,13 @@ public class DefaultDocument implements Document {
                 + getLanguage();
 
         return key.hashCode();
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getPublication().getId() + ":" + getArea() + ":" + getId() + ":" + getLanguage();
     }
 
 }
