@@ -2,6 +2,7 @@
 
 <xsp:page 
   language="java" 
+  xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
   xmlns:xsp="http://apache.org/xsp"
   xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
@@ -35,6 +36,10 @@
     String uri = source + ".html";
     source = source + ".xml";
   </xsp:logic>
+
+  <tabs>
+    <tab label="info" show="false"/>
+  </tabs>
 
   <menus>
     <menu name="File" label="File">
@@ -77,7 +82,9 @@
       <block>
         <item href="index.xml">Feed</item>
         <item href="lenya-page-body.xml">Body</item>
+<!--
         <item href="?cocoon-view=pagexml">Page</item>
+-->
       </block>
       <block>
         <item href="index-bxeng.html">HTML&#160;for&#160;BXE</item>

@@ -1,16 +1,10 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.36 2003/10/13 16:15:48 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.37 2003/10/22 19:10:31 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components/>
-
-  <map:views>
-    <map:view name="pagexml" from-label="pagexml">
-      <map:serialize type="xml"/>
-    </map:view>
-  </map:views>
 
   <map:resources/>
 
@@ -76,13 +70,11 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/index.html">
-        <map:aggregate element="lenya" label="pagexml">
-          <map:part src="cocoon:/{1}/menubar/entry.xml"/>
-          <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
-        </map:aggregate>
+        <map:generate src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
         <map:transform src="xslt/entry/main-{1}.xsl">
           <map:parameter name="relative2root" value="../../../../.."/>
         </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml"/>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">
@@ -158,13 +150,11 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/feeds/*/index.html">
-        <map:aggregate element="lenya">
-          <map:part src="cocoon:/{1}/menubar/feed.xml"/>
-          <map:part src="cocoon:/{1}/feeds/{2}/lenya-page-body.xml"/>
-        </map:aggregate>
+        <map:generate src="cocoon:/{1}/feeds/{2}/lenya-page-body.xml"/>
         <map:transform src="xslt/feed/main-{1}.xsl">
           <map:parameter name="relative2root" value="../.."/>
         </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">
@@ -177,9 +167,6 @@
 
     <!-- Archives -->
     <map:pipeline>
-<!--
-    <map:pipeline type="noncaching">
--->
       <map:match pattern="*/*/*/index.xml">
         <map:generate type="directory" src="content/{1}/entries/{2}/{3}/">
           <map:parameter name="depth" value="2"/>
@@ -201,13 +188,11 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/*/*/">
-        <map:aggregate element="lenya">
-          <map:part src="cocoon:/{1}/menubar/archive.xml"/>
-          <map:part src="cocoon:/{1}/{2}/{3}/lenya-page-body.xml"/>
-        </map:aggregate>
+        <map:generate src="cocoon:/{1}/{2}/{3}/lenya-page-body.xml"/>
         <map:transform src="xslt/feed/main-{1}.xsl">
           <map:parameter name="relative2root" value="../.."/>
         </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/archive.xml"/>
         <map:serialize type="html"/>
       </map:match>
       <map:handle-errors type="500">
@@ -215,28 +200,5 @@
       </map:handle-errors>
     </map:pipeline>
 
-    <!-- Menubars -->
-    <map:pipeline>
-      <map:match pattern="authoring/menubar/entry.xml">
-        <map:generate type="serverpages" src="config/menus/entry.xsp"/>
-        <map:transform type="workflowmenu"/>
-        <map:transform type="usecasemenu"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menubar/feed.xml">
-        <map:generate type="serverpages" src="config/menus/feed.xsp"/>
-        <map:transform type="usecasemenu"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menubar/archive.xml">
-        <map:generate type="serverpages" src="config/menus/archive.xsp"/>
-        <map:transform type="usecasemenu"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="live/menubar/*.xml">
-        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
   </map:pipelines>
 </map:sitemap>
