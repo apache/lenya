@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentCreator.java,v 1.7 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -42,6 +42,7 @@ public class DocumentCreator {
      * @param childTypeString DOCUMENT ME!
      * @param documentTypeName DOCUMENT ME!
      * @param language the language of the document to be created.
+     * @param visibleInNav boolean determines wether the node.
      *
      * @throws CreatorException DOCUMENT ME!
      */
@@ -54,7 +55,8 @@ public class DocumentCreator {
         String childName,
         String childTypeString,
         String documentTypeName,
-        String language)
+        String language,
+		boolean visibleInNav)
         throws CreatorException {
         short childType;
 
@@ -104,7 +106,8 @@ public class DocumentCreator {
             siteTree.addNode(
                 parentId,
                 creator.generateTreeId(childId, childType),
-                labels);
+                labels,
+				visibleInNav);
         } catch (Exception e) {
             throw new CreatorException(e);
         }

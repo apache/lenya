@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentCreatorTask.java,v 1.8 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -34,6 +34,7 @@ public class DocumentCreatorTask extends PublicationTask {
     private String area;
     private String authoringPath;
     private String language;
+    private boolean visibleInNav;
 
     /**
      *  (non-Javadoc)
@@ -52,7 +53,8 @@ public class DocumentCreatorTask extends PublicationTask {
                 getChildName(),
                 getChildType(),
                 documentType,
-                getLanguage());
+                getLanguage(),
+            	getVisibleInNav());
         } catch (CreatorException e) {
             throw new BuildException(e);
         }
@@ -219,5 +221,24 @@ public class DocumentCreatorTask extends PublicationTask {
     public void setArea(String area) {
         this.area = area;
     }
+    
+    /**
+     * Set the visiblity of a node
+     * 
+     * @param boolean visibleInNav
+     */
+    public void setVisibleInNav(boolean visible) {
+        visibleInNav =  visible;
+    }
+    
+    /**
+     * Get the visiblity of a node
+     * 
+     * @param boolean visibleinnav
+     */   
+    public boolean getVisibleInNav() {
+;        return visibleInNav;
+    }
+
 
 }

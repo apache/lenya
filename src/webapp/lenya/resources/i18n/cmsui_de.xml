@@ -142,6 +142,7 @@
   <message key="Edit Metadata">Metadata bearbeiten</message>
   <message key="Edit Navigation Title">Navigationstitel bearbeiten</message>
   <message key="Rename URL">URL&#160;umbenennen</message>
+  <message key="Change node visiblity">Sichtbarkeit in Navigation ändern</message>
 
   <!-- cms tabs -->
   <message key="Server Time">Serverzeit</message>  
@@ -250,6 +251,12 @@
   <message key="Cut Document">Dokument ausschneiden</message>
   <message key="cut-doc">Ausschneiden von Dokument {0}</message>
   <message key="cut-doc-to-clip?">Wollen Sie das Dokument {0} ausschneiden und in die Zwischenablage verschieben? Sie können das Dokument später an gewünschter Stelle einfügen.</message>
+     <!--Change visibility in navigation -->
+  <message key="Change">Ändern</message>
+  <message key="Change Document visiblity in navigation">Sichtbarkeit in Navigation ändern</message>
+  <message key="Visibility in navigation">Sichtbarkeit in der Navigation</message>
+  <message key="visible">sichtbar</message>
+  <message key="hidden">versteckt</message>
 
   <!-- Info Asset -->
   <message key="Insert Image">Bild einfügen</message>

@@ -15,7 +15,7 @@
  *
  */
 
-/* @version $Id: DefaultSiteTree.java,v 1.46 2004/08/16 12:23:52 andreas Exp $ */
+/* @version $Id$ */
 
 package org.apache.lenya.cms.publication;
 
@@ -206,6 +206,7 @@ public class DefaultSiteTree implements SiteTree {
             node.getAbsoluteParentId(),
             node.getId(),
             node.getLabels(),
+            node.visibleInNav(),
             node.getHref(),
             node.getSuffix(),
             node.hasLink(),
@@ -214,8 +215,8 @@ public class DefaultSiteTree implements SiteTree {
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[])
      */
-    public void addNode(String parentid, String id, Label[] labels) throws SiteTreeException {
-        addNode(parentid, id, labels, null, null, false);
+    public void addNode(String parentid, String id, Label[] labels, boolean visibleInNav ) throws SiteTreeException {
+        addNode(parentid, id, labels, visibleInNav, null, null, false);
     }
 
     /** (non-Javadoc)
@@ -231,6 +232,7 @@ public class DefaultSiteTree implements SiteTree {
     public void addNode(
         String documentid,
         Label[] labels,
+        boolean visibleInNav,
         String href,
         String suffix,
         boolean link,
@@ -245,7 +247,7 @@ public class DefaultSiteTree implements SiteTree {
         }
 
         String id = st.nextToken();
-        this.addNode(parentid, id, labels, href, suffix, link, refDocumentId);
+        this.addNode(parentid, id, labels, visibleInNav, href, suffix, link, refDocumentId);
     }
 
     /** (non-Javadoc)
@@ -254,11 +256,12 @@ public class DefaultSiteTree implements SiteTree {
     public void addNode(
         String documentid,
         Label[] labels,
+        boolean visibleInNav,
         String href,
         String suffix,
         boolean link)
         throws SiteTreeException {
-        this.addNode(documentid, labels, href, suffix, link, null);
+        this.addNode(documentid, labels, visibleInNav, href, suffix, link, null);
     }
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
@@ -267,11 +270,12 @@ public class DefaultSiteTree implements SiteTree {
         String parentid,
         String id,
         Label[] labels,
+        boolean visibleInNav,
         String href,
         String suffix,
         boolean link)
         throws SiteTreeException {
-        this.addNode(parentid, id, labels, href, suffix, link, null);
+        this.addNode(parentid, id, labels, visibleInNav, href, suffix, link, null);
     }
 
     /** (non-Javadoc)
@@ -281,6 +285,7 @@ public class DefaultSiteTree implements SiteTree {
         String parentid,
         String id,
         Label[] labels,
+        boolean visibleInNav,
         String href,
         String suffix,
         boolean link,
@@ -309,6 +314,12 @@ public class DefaultSiteTree implements SiteTree {
         NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
         Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
         child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
+        
+        if (visibleInNav) {
+            child.setAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "true");
+        } else {
+            child.setAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "false");
+        }
 
         if ((href != null) && (href.length() > 0)) {
             child.setAttribute(SiteTreeNodeImpl.HREF_ATTRIBUTE_NAME, href);
@@ -525,6 +536,7 @@ public class DefaultSiteTree implements SiteTree {
             parentId,
             id,
             subtreeRoot.getLabels(),
+            true,
             subtreeRoot.getHref(),
             subtreeRoot.getSuffix(),
             subtreeRoot.hasLink(),

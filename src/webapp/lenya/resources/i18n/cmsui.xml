@@ -249,6 +249,12 @@
   <message key="Cut Document">Cut Document</message>
   <message key="cut-doc">Cut document {0}</message>
   <message key="cut-doc-to-clip?">Do you want to cut the document {0} and move it to the clipboard? You can paste the document later at the location of your choosing.</message>
+    <!--Change visibility in navigation -->
+  <message key="Change">Change</message>
+  <message key="Change Document visiblity in navigation">Change document visibility in navigation</message>
+  <message key="Visibility in navigation">Visibility in navigation</message>
+  <message key="visible">visible</message>
+  <message key="hidden">hidden</message>
 
   <!-- Info Asset -->
   <message key="Insert Image">Insert Image</message>

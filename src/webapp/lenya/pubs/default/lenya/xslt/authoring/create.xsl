@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: create.xsl,v 1.15 2004/03/14 16:42:15 roku Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -113,6 +113,10 @@ function validateForm(theForm)
             </tr>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Navigation Title</i18n:text>*: </td><td><input class="lenya-form-element" type="text" name="properties.create.child-name"/></td>
+            </tr>
+            <tr>
+              <td class="lenya-form-caption">Document visible in navigation:</td><td><select class="lenya-form-element" name="properties.create.visible"><option selected="true">yes</option><option>no</option></select>
+              </td>
             </tr>
 	    <xsl:apply-templates select="allowedLanguages"/>
             <tr>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsl,v 1.67 2004/08/22 22:50:41 roku Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -108,6 +108,7 @@
    <!-- <tr><td>Last edited by:</td><td><xsl:value-of select="lenya-info:lastmodifiedby"/></td></tr> -->
    <tr><td class="lenya-entry-caption"><i18n:text>Last modified</i18n:text>:</td><td><xsl:value-of select="lenya-info:lastmodified"/></td></tr>
    <tr><td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
+   <tr><td class="lenya-entry-caption"><i18n:text>Visibility in navigation</i18n:text>:</td><td><i18n:text><xsl:value-of select="lenya-info:visibleinnav"/></i18n:text></td></tr>
    </table>
   </xsl:when>
   <xsl:when test="$languageexists = 'false'">

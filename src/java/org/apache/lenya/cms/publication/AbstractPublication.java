@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractPublication.java,v 1.21 2004/07/22 13:44:16 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -438,7 +438,8 @@ public abstract class AbstractPublication implements Publication {
                             }
                         }
                     }
-
+                    
+           
                     Label label = sourceNode.getLabel(sourceDocument.getLanguage());
                     if (label == null) {
                         // the node that we're trying to publish
@@ -454,10 +455,10 @@ public abstract class AbstractPublication implements Publication {
 
                             if (siblingDocId == null) {
                                 destinationTree.addNode(destinationDocument.getId(), labels,
-                                        sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
+                                		sourceNode.visibleInNav(), sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
                                                 .hasLink());
                             } else {
-                                destinationTree.addNode(destinationDocument.getId(), labels,
+                                destinationTree.addNode(destinationDocument.getId(), labels, sourceNode.visibleInNav(),
                                         sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
                                                 .hasLink(), siblingDocId);
                             }
@@ -467,6 +468,12 @@ public abstract class AbstractPublication implements Publication {
                             // tree simply insert the label in the
                             // live tree
                             destinationTree.setLabel(destinationDocument.getId(), label);
+                            //and synchronize visibilityinnav attribute with the one in the source area 
+                            String visibility ="true";
+                            if (!sourceNode.visibleInNav()) visibility = "false";
+                            destinationNode.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME,
+                                    visibility);
+
                         }
                     }
                 }

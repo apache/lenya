@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SiteTreeNodeImplTest.java,v 1.4 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -51,13 +51,14 @@ public class SiteTreeNodeImplTest extends TestCase {
         DefaultSiteTree siteTree = new DefaultSiteTree("testTree");
         Label label = new Label("Foo", "en");
         Label[] fooLabels = { label };
-        siteTree.addNode("/foo", fooLabels, null, null, false);
+        siteTree.addNode("/foo", fooLabels, true, null, null, false);
         label = new Label("Bar", "en");
         Label label_de = new Label("Stab", "de");
         Label[] barLabels = { label, label_de };
         siteTree.addNode(
             "/foo/bar",
             barLabels,
+			true, 
             "http://exact.biz",
             "suffix",
             true);

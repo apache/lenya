@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: menu.xsl,v 1.15 2004/03/13 12:42:05 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -31,6 +31,7 @@
   </div>
 </xsl:template>
 
+<xsl:template match="nav:node[@visibleinnav = 'false']"/>
 
 <xsl:template match="nav:node">
   <xsl:choose>

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-/* $Id: DefaultCreatorAction.java,v 1.12 2004/03/02 16:41:43 michi Exp $  */
+/* $Id$  */
 
 
 package org.apache.lenya.cms.cocoon.acting;
@@ -115,9 +115,15 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         //String childtype = request.getParameter("childtype");
         String childtype = request.getParameter("properties.create.child-type");
         log.debug("properties.create.childtype = " + childtype);
+        
+        //String visibleInNav = request.getParameter("visible");
+        String visible = request.getParameter("properties.create.visible");
 
-
-
+        boolean visibleInNav = true;
+        if (visible.equals("no")){
+        	visibleInNav = false;
+        }
+        
         short childType;
         if (childtype.equals("branch")) {
             childType = ParentChildCreatorInterface.BRANCH_NODE;
@@ -199,7 +205,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         DefaultSiteTree siteTree = publication.getSiteTree(Publication.AUTHORING_AREA);
         Label[] labels = new Label[1];
         labels[0] = new Label(childname, language);
-        siteTree.addNode(parentid, creator.generateTreeId(childid, childType), labels);
+        siteTree.addNode(parentid, creator.generateTreeId(childid, childType), labels, visibleInNav);
 
         // Transaction should actually be finished here!
         // Create actual document

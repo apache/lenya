@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SiteTree.java,v 1.21 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -30,7 +30,7 @@ public interface SiteTree {
      * 
      * @throws SiteTreeException if the addition failed
      */
-    void addNode(String parentid, String id, Label[] labels)
+    void addNode(String parentid, String id, Label[] labels, boolean visibleInNav)
         throws SiteTreeException;
 
     /**
@@ -39,6 +39,7 @@ public interface SiteTree {
      * @param parentid the node where the new node is to be inserted
      * @param id the node id
      * @param labels the labels 
+     * @param visibleInNav the visibility of a node in the navigation
      * @param href the href of the new node
      * @param suffix the suffix of the new node
      * @param link the link 
@@ -49,6 +50,7 @@ public interface SiteTree {
         String parentid,
         String id,
         Label[] labels,
+		boolean visibleInNav, 
         String href,
         String suffix,
         boolean link)
@@ -59,7 +61,8 @@ public interface SiteTree {
      *
      * @param parentid the node where the new node is to be inserted
      * @param id the node id
-     * @param labels the labels 
+     * @param labels the labels
+     * @param visibleInNav the visibility of a node in the navigation 
      * @param href the href of the new node
      * @param suffix the suffix of the new node
      * @param link the link 
@@ -71,6 +74,7 @@ public interface SiteTree {
         String parentid,
         String id,
         Label[] labels,
+		boolean visibleInNav,
         String href,
         String suffix,
         boolean link,
@@ -93,6 +97,7 @@ public interface SiteTree {
     void addNode(
         String documentid,
         Label[] labels,
+		boolean visibleInNav, 
         String href,
         String suffix,
         boolean link)
@@ -115,6 +120,7 @@ public interface SiteTree {
     void addNode(
         String documentid,
         Label[] labels,
+		boolean visibleInNav,
         String href,
         String suffix,
         boolean link,

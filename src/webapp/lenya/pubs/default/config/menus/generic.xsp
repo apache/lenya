@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: generic.xsp,v 1.73 2004/05/14 15:10:11 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
     language="java" 
@@ -127,7 +127,6 @@
           <item wf:event="edit" uc:usecase="bxeng" uc:step="open" href="?"><i18n:text>Edit with BXE</i18n:text></item>
           <item wf:event="edit" uc:usecase="edit" uc:step="open"><xsp:attribute name="href"><xsp:expr>"?form=" + docType</xsp:expr></xsp:attribute><i18n:text>Edit with Forms</i18n:text></item>
           <item wf:event="edit" uc:usecase="1formedit" uc:step="open" href="?"><i18n:text>Edit with one Form</i18n:text></item>
-          <!--<item wf:event="edit" uc:usecase="uploaddocument" uc:step="showscreen" href="?"><i18n:text>Upload Document</i18n:text></item>-->
         </block>
         <block info="false">
           <item wf:event="edit" uc:usecase="info-meta" uc:step="showscreen"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/info-<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute><i18n:text>Edit Metadata</i18n:text></item>
@@ -193,6 +192,12 @@
           }
           else {
             <item>Edit Navigation Title</item>
+          }
+          if (isDocument) {
+            <item uc:usecase="change-visibility" uc:step="showscreen" href="?"><i18n:text>Change node visibility</i18n:text></item>
+          }
+          else {
+            <item>Change node visibility</item>
           }
         </xsp:logic>
       </block>

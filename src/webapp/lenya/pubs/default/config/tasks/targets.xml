@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: targets.xml,v 1.29 2004/08/11 18:52:17 gregor Exp $ -->
+<!-- $Id$ -->
 
 <project name="Ant Test Project" default="test" basedir=".">
 
@@ -122,6 +122,7 @@
     <property name="create.columns" value=""/>
     <property name="create.userid" value=""/>
     <property name="create.ipaddress" value=""/>
+    <property name="create.visible" value=""/>
     
     <taskdef name="create" classname="org.apache.lenya.cms.ant.DocumentCreatorTask"/>
     <create
@@ -133,6 +134,7 @@
       childtype="${create.child-type}"
       documenttype="${create.doctype}"
       language="${create.language}"
+      visibleinnav="${create.visible}"
       />
     
     <!-- Init the workflow history -->
@@ -635,6 +637,19 @@
       labelName="${rename.label.label-name}"
       language="${rename.label.language}"
       area="${rename.label.area}"
+      />
+  </target>
+
+  <taskdef name="changeVisibility" classname="org.apache.lenya.cms.ant.ChangeVisibilityTask"/>
+  
+  <target name = "change-visibility">
+    <property name="change.visibility.document-id" value=""/>
+    <property name="change.visibility.area" value=""/>
+    
+    <echo>Change Visibility</echo>
+    <changeVisibility
+      documentid="${change.visibility.document-id}"
+      area="${change.visibility.area}"
       />
   </target>
 

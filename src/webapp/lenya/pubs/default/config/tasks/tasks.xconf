@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: tasks.xconf,v 1.13 2004/05/27 12:23:23 gregor Exp $ -->
+<!-- $Id$ -->
 
 <tasks>
     
@@ -60,6 +60,11 @@
   <task id="rename-label" class="org.apache.lenya.cms.task.AntTask">
     <label>Edit Navigation Title</label>
     <parameter name="target" value="rename-label"/>
+  </task>
+
+  <task id="change-visibility" class="org.apache.lenya.cms.task.AntTask">
+    <label>Change Node Visibility</label>
+    <parameter name="target" value="change-visibility"/>
   </task>
 
   <task id="save-meta-data" class="org.apache.lenya.cms.task.AntTask">

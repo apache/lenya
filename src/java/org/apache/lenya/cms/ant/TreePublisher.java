@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TreePublisher.java,v 1.14 2004/08/16 12:06:45 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -136,9 +136,9 @@ public class TreePublisher extends PublicationTask {
                         // add the specified label to it.
                         Label[] labels = { label };
                         try {
-                            liveTree.addNode(documentId, labels, authoringNode.getHref(),
-                                    authoringNode.getSuffix(), authoringNode.hasLink(),
-                                    siblingDocId);
+                            liveTree.addNode(documentId, labels, authoringNode.visibleInNav(), 
+                            		authoringNode.getHref(),authoringNode.getSuffix(), 
+									authoringNode.hasLink(),siblingDocId);
                         } catch (SiteTreeException e1) {
                             throw new ParentNodeNotFoundException("Couldn't add document: "
                                     + documentId + " to live tree.", e1);

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2nav.xsl,v 1.23 2004/06/01 14:29:22 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -81,6 +81,7 @@ Apply nodes recursively
   <nav:node>
   
     <xsl:copy-of select="@id"/>
+    <xsl:copy-of select="@visibleinnav"/>
     <xsl:copy-of select="@protected"/>
   
     <!-- basic url - for all nodes -->

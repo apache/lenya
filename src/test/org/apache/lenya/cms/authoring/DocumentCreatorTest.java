@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentCreatorTest.java,v 1.8 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -78,7 +78,7 @@ public class DocumentCreatorTest extends TestCase {
         File authoringDirectory = new File(publication.getDirectory(), AUTHORING_DIR);
 
         creator.create(publication, authoringDirectory, AREA, PARENT_ID, CHILD_ID, CHILD_NAME,
-            CHILD_TYPE, DOCUMENT_TYPE, DOCUMENT_LANGUAGE);
+            CHILD_TYPE, DOCUMENT_TYPE, DOCUMENT_LANGUAGE, VISIBLEINNAV);
 
         File documentFile = new File(authoringDirectory, CREATED_FILE);
         assertTrue(documentFile.exists());
@@ -100,6 +100,7 @@ public class DocumentCreatorTest extends TestCase {
     protected static final String CREATED_FILE = "tutorial/test-document/index_en.xml";
     protected static final String DOCUMENT_LANGUAGE = "en";
     protected static final String AREA = "authoring";
+    protected static final boolean VISIBLEINNAV =true;
 
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {

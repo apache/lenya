@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SiteTreeNodeImpl.java,v 1.27 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -38,6 +38,7 @@ import org.w3c.dom.NodeList;
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
     public static final String ID_ATTRIBUTE_NAME = "id";
+    public static final String VISIBLEINNAV_ATTRIBUTE_NAME="visibleinnav";
     public static final String HREF_ATTRIBUTE_NAME = "href";
     public static final String SUFFIX_ATTRIBUTE_NAME = "suffix";
     public static final String LINK_ATTRIBUTE_NAME = "link";
@@ -107,6 +108,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
     public String getAbsoluteId() {
         String absoluteId = "";
         Node currentNode = node;
+        
         NamedNodeMap attributes = null;
         Node idAttribute = null;
 
@@ -228,7 +230,20 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             }
         }
     }
+ 
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#hasLink()
+     */
+    public boolean visibleInNav() {
+        Node attribute = node.getAttributes().getNamedItem(VISIBLEINNAV_ATTRIBUTE_NAME);
 
+        if (attribute != null) {
+            return attribute.getNodeValue().equals("true");
+        } else {
+        	return true;
+        }
+    }
+ 
     /**
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getHref()
      */
@@ -241,7 +256,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             return null;
         }
     }
-
+   
     /**
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getSuffix()
      */
@@ -387,6 +402,14 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
         addLabel(label);
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTreeNode#setLabel(org.apache.lenya.cms.publication.Label)
+     */
+    public void setNodeAttribute (String attributeName, String attributeValue) {
+        Element element = (Element) node;
+        element.setAttribute(attributeName, attributeValue);
+    }
+    
     /**
      * @see org.apache.lenya.cms.publication.SiteTreeNode#getChildren(java.lang.String)
      */
