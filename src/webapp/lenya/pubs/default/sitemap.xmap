@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.4 2003/04/11 11:20:07 andreas Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.5 2003/04/16 13:27:17 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -11,7 +11,7 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions>
-<!-- FIXME: Factor out to root sitemap -->
+      <!-- FIXME: Factor out to root sitemap -->
       <map:action name="authorizer" src="org.lenya.cms.cocoon.acting.PMLAuthorizerAction" logger="sitemap.action.pml-authorizer">
         <authenticator type="default"/>
         <policies>default/policies/</policies>
@@ -27,7 +27,7 @@
   <map:views/>
 
   <map:resources>
-<!-- FIXME: Factor out to root sitemap -->
+    <!-- FIXME: Factor out to root sitemap -->
     <map:resource name="login">
       <map:generate type="serverpages" src="../../content/ac/login.xsp"/>
       <map:transform src="../../xslt/ac/login.xsl">
@@ -40,40 +40,35 @@
 
 
   <map:pipelines>
-  
+
     <map:pipeline>
-    
-          <map:match pattern="**">
-            <map:mount uri-prefix="" src="publication-sitemap.xmap"/>
-          </map:match>
-    
-    
-<!-- FIXME: Factor out to root sitemap -->
-          <map:match pattern="passwd/*.iml">
-            <map:generate src="config/ac/passwd/{1}.iml"/>
-            <map:serialize type="xml"/>
-          </map:match>
-<!-- FIXME: Factor out to root sitemap -->
-          <map:match pattern="policies/**">
-            <map:mount uri-prefix="policies" src="policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-          </map:match>
-          
+
+      <!-- FIXME: Factor out to root sitemap -->
+      <map:match pattern="passwd/*.iml">
+	<map:generate src="config/ac/passwd/{1}.iml"/>
+	<map:serialize type="xml"/>
+      </map:match>
+      <!-- FIXME: Factor out to root sitemap -->
+      <map:match pattern="policies/**">
+	<map:mount uri-prefix="policies" src="policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+
       <map:match pattern="**">
         <map:act type="authorizer">
           <map:match pattern="login-screen">
             <map:call resource="login"/>
           </map:match>
-          
+
           <map:match pattern="do-login">
- <!-- FIXME: Factor out to root sitemap -->
-           <map:act type="authenticator">
+	    <!-- FIXME: Factor out to root sitemap -->
+	    <map:act type="authenticator">
               <map:redirect-to uri="{protected_destination}" session="true"/>
             </map:act>
             <map:redirect-to uri="login-screen?status=failed" session="true"/>
           </map:match>
 
           <map:match pattern="logout">
-<!-- FIXME: Factor out to root sitemap -->
+	    <!-- FIXME: Factor out to root sitemap -->
             <map:generate type="serverpages" src="../../content/ac/logout.xsp"/>
             <map:transform src="../../xslt/ac/logout.xsl">
               <map:parameter name="publication_name" value="Default Publication"/>
