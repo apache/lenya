@@ -74,7 +74,10 @@ public class DossierAction
         publicationPath = publicationPath.substring(0, lastSlashIndex + 1);
 
         String publicationPrefix = PublishingEnvironment.PUBLICATION_PREFIX;
-        String contextPath = publicationPath.replaceAll(publicationPrefix, "");
+        
+//        String contextPath = publicationPath.replaceFirst(publicationPrefix, "");
+        String contextPath = publicationPath.substring(
+            0, publicationPath.length() - publicationPrefix.length());
         
         Request request = ObjectModelHelper.getRequest(objectModel);
 
@@ -307,7 +310,9 @@ public class DossierAction
         try {
             SAXReader reader = new SAXReader();
             Document document = reader.read(new File(path));
-            String backupPath = path.replaceAll(".xml", "_backup.xml");
+//            String backupPath = path.replaceAll(".xml", "_backup.xml");
+            String backupPath = path.substring(0, path.length() - 4);
+            backupPath += "_backup.xml";
             writeDocument(backupPath, document);
         }
         catch(Exception e) {

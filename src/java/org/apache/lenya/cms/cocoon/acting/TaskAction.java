@@ -78,7 +78,9 @@ public class TaskAction
         log.info("######### " + publicationPath);
         
         String publicationPrefix = PublishingEnvironment.PUBLICATION_PREFIX;
-        String contextPath = publicationPath.replaceAll(publicationPrefix, "");
+//        String contextPath = publicationPath.replaceAll(publicationPrefix, "");
+        String contextPath = publicationPath.substring(
+            0, publicationPath.length() - publicationPrefix.length());
 
         log.info("######### " + contextPath);
         
