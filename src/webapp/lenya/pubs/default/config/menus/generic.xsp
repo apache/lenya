@@ -240,7 +240,6 @@
 
         <block>
           <item uc:usecase="view-logs" uc:step="overview" href="?">View Task Logs</item>
-          <item uc:usecase="schedule" uc:step="showscreen" href="?">Scheduler</item>
 	</block>
       </menu>
     </menus>
