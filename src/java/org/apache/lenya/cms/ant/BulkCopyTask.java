@@ -45,7 +45,6 @@ import org.apache.tools.ant.types.Path;
 public class BulkCopyTask extends Copy {
     
     private Path sourceDirs;
-    private String libDir;
     
     /** 
      * @see org.apache.tools.ant.taskdefs.Copy#execute()

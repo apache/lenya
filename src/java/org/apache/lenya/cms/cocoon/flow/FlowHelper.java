@@ -205,7 +205,6 @@ public class FlowHelper {
      */
     public RevisionController getRevisionController(FOM_Cocoon cocoon) 
     throws PageEnvelopeException, IOException {        
-        final RevisionController rc = null;
         final Publication publication = getPageEnvelope(cocoon).getPublication();
         final String publicationPath = publication.getDirectory().getCanonicalPath();
         final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
