@@ -15,14 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: epoz.xml,v 1.2 2004/03/13 12:48:14 gregor Exp $ -->
+<!-- $Id: kupu.xml,v 1.1 2004/04/26 09:44:02 gregor Exp $ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
 
 <document> 
 
 <header> 
-    <title>Epoz</title>
+    <title>Kupu</title>
     <version>0.1</version> 
     <type>Documentation</type> 
     <authors>
@@ -33,12 +33,8 @@
 
 <section>
 <title>Download</title>
-<p>Download Epoz with Subversion:</p>
-<source>
-<![CDATA[
-svn co http://codespeak.net/svn/epoz/trunk/epoz
-]]>
-</source>
+<p>Information about Kupu development is available at the <link href="http://kupu.oscom.org/devel/">Kupu site</link>.</p>
+
 </section>
 </body>
 </document>
