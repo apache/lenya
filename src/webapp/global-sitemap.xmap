@@ -693,6 +693,8 @@
           <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
           <map:parameter name="userid" value="{access-control:user-id}"/>
           <map:parameter name="servertime" value="{date:currentDate}"/>
+          <map:parameter name="workflowstate" value="{workflow:state}"/>
+          <map:parameter name="islive" value="{workflow:variable.is_live}"/>
         </map:transform>
         
         <map:transform src="lenya/xslt/menu/menu2xslt.xsl">

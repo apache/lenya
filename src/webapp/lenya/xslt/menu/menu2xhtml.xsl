@@ -14,6 +14,8 @@
 <xsl:param name="documenturl"/>
 <xsl:param name="userid"/>
 <xsl:param name="servertime"/>
+<xsl:param name="workflowstate"/>
+<xsl:param name="islive"/>
 
 <xsl:variable name="image-prefix"><xsl:value-of select="$contextprefix"/>/lenya/menu/images</xsl:variable>
  
@@ -76,7 +78,11 @@
         
         <td valign="bottom" align="right" colspan="2" background="{$image-prefix}/grau-bg2.gif">
         	<div style="margin-right: 10px; color: #FFFFFF; font-size: 7pt; font-family: verdana, arial, sans-serif">
-            <xsl:apply-templates select="workflow"/>&#160;&#160;User Id: <b><xsl:value-of select="$userid"/></b>&#160;&#160;|&#160;&#160;Server Time: <b><xsl:value-of select="$servertime"/></b>
+        	  
+        	  <xsl:if test="$workflowstate != ''">
+        	    <xsl:call-template name="workflow"/>
+        	  </xsl:if>
+            &#160;User Id: <b><xsl:value-of select="$userid"/></b>&#160;&#160;|&#160;&#160;Server Time: <b><xsl:value-of select="$servertime"/></b>
           </div>
           
         <div style="margin-top: 5px;"><img border="0" src="{$image-prefix}/lenya_oben_2.gif" /></div>
@@ -129,10 +135,10 @@
   </xsl:template>
   
   
-  <xsl:template match="menu:workflow">
-    Workflow State: <b><xsl:value-of select="normalize-space(@state)"/></b>
+  <xsl:template name="workflow">
+    Workflow State: <b><xsl:value-of select="$workflowstate"/></b>
     <xsl:text>&#160;&#160;|&#160;&#160;</xsl:text>
-    <xsl:if test="normalize-space(@is-live) = 'false'">not&#160;</xsl:if>
+    <xsl:if test="$islive = 'false'">not&#160;</xsl:if>
     <xsl:text>live&#160;&#160;|</xsl:text>
   </xsl:template>
   
