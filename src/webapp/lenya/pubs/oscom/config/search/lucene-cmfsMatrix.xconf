@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lucene-cmfsMatrix.xconf,v 1.4 2004/03/13 12:42:11 gregor Exp $ -->
+<!-- $Id: lucene-cmfsMatrix.xconf,v 1.5 2004/05/16 21:50:08 michi Exp $ -->
 
 <lucene>
   <update-index type="new"/>
@@ -24,7 +24,7 @@
 -->
 
   <index-dir src="../../work/search/lucene/index/index-cmfsMatrix"/>
-  <htdocs-dump-dir src="../../content/authoring/matrix"/>
+  <htdocs-dump-dir src="../../content/live/matrix"/>
 
   <indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer">
     <configuration src="cmfs-luceneDoc.xconf"/>
