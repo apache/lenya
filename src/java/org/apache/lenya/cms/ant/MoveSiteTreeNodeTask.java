@@ -1,5 +1,5 @@
 /*
-$Id: MoveSiteTreeNodeTask.java,v 1.3 2003/08/29 12:54:47 andreas Exp $
+$Id: MoveSiteTreeNodeTask.java,v 1.1 2003/09/05 14:40:06 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,74 +53,81 @@ $Id: MoveSiteTreeNodeTask.java,v 1.3 2003/08/29 12:54:47 andreas Exp $
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
-package org.apache.lenya.cms.task;
+package org.apache.lenya.cms.ant;
 
-import java.io.File;
-
-import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.lenya.cms.publication.DefaultSiteTree;
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.log4j.Category;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.tools.ant.BuildException;
 
 /**
  * Task to move a node amongst the siblings
  * @author edith
  */
-public class MoveSiteTreeNodeTask extends AbstractTask {
-	private static Category log = Category.getInstance(MoveSiteTreeNodeTask.class);
+public class MoveSiteTreeNodeTask extends PublicationTask {
 
-	public static final String PUBLICATION_DIRECTORY = "pub.dir";
-	public static final String PUBLICATION_ID = "pub.id";
-	public static final String SERVLET_CONTEXT_PATH = "servlet.context";
-	public static final String TREE_PATH= "treePath";
-	public static final String DOCUMENT_ID= "org.apache.lenya.cms.info.documentid";
-	public static final String DIRECTION = "org.apache.lenya.cms.info.direction";
+    public static final String UP = "up";
+    public static final String DOWN = "down";
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
-	 **/
-	public void execute(String servletContextPath) throws ExecutionException {
-	File publicationDirectory;
-	String publicationId;
-	String documentid = null;
-	String direction = null;
-    String treePath;
-    String absolutetreepath = null;
+    /**
+     * Returns the document ID.
+     * @return A string.
+     */
+    protected String getDocumentId() {
+        return documentId;
+    }
 
-	try {
-		documentid=getParameters().getParameter(DOCUMENT_ID, null);
-		direction=getParameters().getParameter(DIRECTION, null);
-		publicationId = getParameters().getParameter(PARAMETER_PUBLICATION_ID);
-		treePath = getParameters().getParameter(TREE_PATH);
-		log.debug("documentid: " + documentid);
-		log.debug("treePath : " + treePath);
-		log.debug("move : " + direction);
-		log.debug("publicationId: " + publicationId);
-	} catch (ParameterException e) {
-		throw new ExecutionException(e);
-	}
+    /**
+     * Sets the document ID.
+     * @param documentId A string.
+     */
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
 
-	PublishingEnvironment environment = new PublishingEnvironment(servletContextPath,
-				publicationId);
-	publicationDirectory = environment.getPublicationDirectory();
-	File absolutetree= new File(publicationDirectory,treePath);
-       absolutetreepath = absolutetree.getAbsolutePath();
-	log.debug("absolutetreepath: " + absolutetreepath);
+    /**
+     * Returns the direction.
+     * @return A string.
+     */
+    protected String getDirection() {
+        return direction;
+    }
 
-	DefaultSiteTree tree = null;
-	try {
-		tree = new DefaultSiteTree(absolutetreepath);
-        if (direction.equals("up")) {
-			tree.moveUp(documentid);
-        } else if (direction.equals("down")) {
-			tree.moveDown(documentid);
-        } else {
-			throw new ExecutionException("The direction in which the node should" +				"be moved isn¨t specified");
+    /**
+     * Sets the direction.
+     * @param direction A string.
+     */
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    /**
+     * @see org.apache.tools.ant.Task#execute()
+     */
+    public void execute() throws BuildException {
+        
+        log("Moving sitetree node:");
+        log("    Document ID: [" + getDocumentId() + "]");
+        log("    Direction:   [" + getDirection() + "]");
+
+        try {
+            DefaultSiteTree tree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
+            if (getDirection().equals(UP)) {
+                tree.moveUp(getDocumentId());
+            } else if (getDirection().equals(DOWN)) {
+                tree.moveDown(getDocumentId());
+            } else {
+                throw new BuildException(
+                    "The direction in which the node should be moved isn't specified.");
+            }
+            tree.save();
+        } catch (BuildException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new BuildException(e);
         }
-		tree.save();
-	} catch (Exception e) {
- 	    throw new ExecutionException(e);
-	}
-}
+    }
+    
+    private String direction;
+    private String documentId;
 
 }
