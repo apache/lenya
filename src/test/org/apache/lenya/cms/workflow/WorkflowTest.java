@@ -126,6 +126,7 @@ public class WorkflowTest extends TestCase {
         assertNull(exception);
         
         setInstance(instance);
+        setPublication(publication);
 
     }
 
@@ -146,7 +147,7 @@ public class WorkflowTest extends TestCase {
             
             System.out.println("Current state: " + getInstance().getCurrentState());
             
-            User user = new FileUser("test-user");
+            User user = new FileUser(getPublication(), "test-user");
             Role role = new Role(situations[situationIndex].getRole());
             System.out.println("Role: " + role);
         
@@ -229,6 +230,7 @@ public class WorkflowTest extends TestCase {
     }
     
     private static WorkflowInstance instance;
+    private static Publication publication;
     
 
     /* (non-Javadoc)
@@ -253,5 +255,19 @@ public class WorkflowTest extends TestCase {
     public static void setInstance(WorkflowInstance instance) {
         WorkflowTest.instance = instance;
     }
+
+	/**
+	 * @return
+	 */
+	public static Publication getPublication() {
+		return publication;
+	}
+
+	/**
+	 * @param publication
+	 */
+	public static void setPublication(Publication publication) {
+		WorkflowTest.publication = publication;
+	}
 
 }
