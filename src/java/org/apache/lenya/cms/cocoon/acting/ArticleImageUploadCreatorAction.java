@@ -477,12 +477,12 @@ public class ArticleImageUploadCreatorAction
      * @return a <code>String</code> value
      */
     protected String getResourcePath(String sitemapPath,
-				   String recourcesRoot,
-				   String documentId,
-				   String fileName) {
+				     String recourcesRoot,
+				     String documentId,
+				     String fileName) {
 	
 	String path = sitemapPath + File.separator;
-	path = recourcesRoot + File.separator ;
+	path += recourcesRoot + File.separator ;
 
 	String requestingDocumentPath =
 	    (new File(documentId)).getParent();
