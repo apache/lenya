@@ -28,7 +28,7 @@
 
 <xsl:template match="nav:node">
   <xsl:choose>
-    <xsl:when test="starts-with($url, @basic-url)">
+    <xsl:when test="descendant-or-self::nav:node[@current = 'true']">
       <div class="menublock-selected-{count(ancestor-or-self::nav:node)}">
         <xsl:call-template name="item"/>
         <xsl:apply-templates select="nav:node"/>
@@ -46,7 +46,7 @@
 
 <xsl:template name="item">
   <xsl:choose>
-    <xsl:when test="substring(@href, (string-length(@href) - string-length($url)) + 1) = $url">
+    <xsl:when test="@current = 'true'">
       <xsl:call-template name="item-selected"/>
     </xsl:when>
     <xsl:otherwise>

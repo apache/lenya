@@ -29,7 +29,7 @@
 
 <xsl:template match="nav:node">
   
-  <xsl:if test="starts-with($url, @basic-url)">
+  <xsl:if test="descendant-or-self::nav:node[@current = 'true']">
     <xsl:call-template name="separator"/>
     <xsl:call-template name="step"/>
     <xsl:apply-templates select="nav:node"/>
@@ -40,7 +40,7 @@
 
 <xsl:template name="step">
   <xsl:choose>
-    <xsl:when test="substring(@href, (string-length(@href) - string-length($url)) + 1) = $url">
+    <xsl:when test="@current = 'true'">
       <xsl:apply-templates select="nav:label"/>
     </xsl:when>
     <xsl:otherwise>

@@ -30,7 +30,7 @@
       </xsl:if>
       
       <xsl:choose>
-        <xsl:when test="starts-with($url, @basic-url)">
+        <xsl:when test="descendant-or-self::nav:node[@current = 'true']">
           <xsl:call-template name="tab-selected"/>
         </xsl:when>
         <xsl:otherwise>

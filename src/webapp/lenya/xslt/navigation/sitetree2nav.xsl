@@ -67,40 +67,59 @@ Apply nodes recursively
       </xsl:choose>
     </xsl:variable>  
     
+    <xsl:variable name="language-suffix">
+      <xsl:text>_<xsl:value-of select="$chosenlanguage"/></xsl:text>
+    </xsl:variable>
+    
+    <xsl:variable name="canonical-language-suffix">
+      <xsl:choose>
+        <xsl:when test="not($defaultlanguage = $chosenlanguage)">
+          <xsl:value-of select="$language-suffix"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- no suffix for default language -->
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
     <!-- suffix - only when @href is not present -->
-  
+    
     <xsl:variable name="suffix">
       <xsl:if test="not(@href)">
-         <xsl:choose>
-<!--            <xsl:when test="not($defaultlanguage = $chosenlanguage) and tree:label[lang($chosenlanguage)]">-->
-            <xsl:when test="not($defaultlanguage = $chosenlanguage)">
-      	       <xsl:text>_<xsl:value-of select="$chosenlanguage"/></xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-            	<!-- no suffix for default language -->
-      	       <!--<xsl:text>_<xsl:value-of select="$defaultlanguage"/></xsl:text>-->
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:text>.</xsl:text>
-          <xsl:choose>
-            <xsl:when test="@suffix">
-              <xsl:text><xsl:value-of select="@suffix"/></xsl:text>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:text>html</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
+        <xsl:text>.</xsl:text>
+        <xsl:choose>
+          <xsl:when test="@suffix">
+            <xsl:text><xsl:value-of select="@suffix"/></xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>html</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:if>
     </xsl:variable>
     
     <xsl:attribute name="suffix"><xsl:value-of select="$suffix"/></xsl:attribute>
     <xsl:attribute name="basic-url"><xsl:value-of select="$previous-url"/><xsl:value-of select="@id"/></xsl:attribute>
-    <xsl:attribute name="href">
+    
+    <xsl:variable name="canonical-url">
       <xsl:text/>
-      <xsl:value-of select="$path-to-context"/><xsl:text/>
       <xsl:value-of select="$basic-url"/><xsl:text/>
+      <xsl:value-of select="$canonical-language-suffix"/><xsl:text/>
       <xsl:value-of select="$suffix"/><xsl:text/>
-    </xsl:attribute>
+    </xsl:variable>
+    
+    <xsl:variable name="non-canonical-url">
+      <xsl:text/>
+      <xsl:value-of select="$basic-url"/><xsl:text/>
+      <xsl:value-of select="$language-suffix"/><xsl:text/>
+      <xsl:value-of select="$suffix"/><xsl:text/>
+    </xsl:variable>
+    
+    <xsl:if test="$url = $canonical-url or $url = $non-canonical-url">
+      <xsl:attribute name="current">true</xsl:attribute>
+    </xsl:if>
+    
+    <xsl:attribute name="href"><xsl:value-of select="concat($path-to-context, $canonical-url)"/></xsl:attribute>
     
     <xsl:apply-templates>
       <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
