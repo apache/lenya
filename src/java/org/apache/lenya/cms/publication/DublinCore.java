@@ -58,10 +58,10 @@ package org.apache.lenya.cms.publication;
 /**
  * @author Christian Egli
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCore.java,v 1.21 2004/02/02 17:33:16 andreas Exp $
+ * @version $Id: DublinCore.java,v 1.22 2004/02/12 17:56:06 andreas Exp $
  */
 public interface DublinCore {
-    
+
     String ELEMENT_TITLE = "title";
     String ELEMENT_CREATOR = "creator";
     String ELEMENT_SUBJECT = "subject";
@@ -235,7 +235,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     String getDateIssued() throws DocumentException;
-    
+
     /**
      * Set the date of issue
      * 
@@ -244,7 +244,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     void setDateIssued(String dateIssued) throws DocumentException;
-    
+
     /**
      * Get the date of creation
      * 
@@ -253,7 +253,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     String getDateCreated() throws DocumentException;
-    
+
     /**
      * Set the date of creation
      * 
@@ -262,7 +262,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     void setDateCreated(String dateCreated) throws DocumentException;
-    
+
     /**
      * Get the rights
      * 
@@ -271,7 +271,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     String getRights() throws DocumentException;
-    
+
     /**
      * Set the DC Rights
      * 
@@ -280,7 +280,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     void setRights(String rights) throws DocumentException;
-    
+
     /**
      * Get isReferencedBy
      * 
@@ -289,7 +289,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     String getIsReferencedBy() throws DocumentException;
-    
+
     /**
      * Set isReferencedBy
      * 
@@ -298,7 +298,7 @@ public interface DublinCore {
      * @throws DocumentException if an error occurs
      */
     void setIsReferencedBy(String isReferencedBy) throws DocumentException;
-    
+
     /**
      * Returns the values for a certain key.
      * @param key The key.
@@ -306,14 +306,14 @@ public interface DublinCore {
      * @throws DocumentException when something went wrong.
      */
     String[] getValues(String key) throws DocumentException;
-    
+
     /**
      * Returns the first value for a certain key.
      * @param key The key.
      * @return A string.
      */
     String getFirstValue(String key) throws DocumentException;
-        
+
     /**
      * Adds a value for a certain key.
      * @param key The key.
@@ -321,7 +321,7 @@ public interface DublinCore {
      * @throws DocumentException when something went wrong.
      */
     void addValue(String key, String value) throws DocumentException;
-    
+
     /**
      * Removes a specific value for a certain key.
      * @param key The key.
@@ -329,12 +329,12 @@ public interface DublinCore {
      * @throws DocumentException when something went wrong.
      */
     void removeValue(String key, String value) throws DocumentException;
-    
+
     /**
      * Removes all values for a certain key.
      * @param key The key.
      * @throws DocumentException when something went wrong.
      */
     void removeAllValues(String key) throws DocumentException;
-    
+
 }

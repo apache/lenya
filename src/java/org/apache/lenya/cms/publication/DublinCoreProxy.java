@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publication;
  * only read from file when it is actually requested.
  *
  * @author <a href="mailto:egli@apache.org">Christian Egli</a>
- * @version $Id: DublinCoreProxy.java,v 1.5 2004/02/02 17:33:16 andreas Exp $
+ * @version $Id: DublinCoreProxy.java,v 1.6 2004/02/12 17:56:06 andreas Exp $
  */
 public class DublinCoreProxy implements DublinCore {
 
@@ -81,7 +81,7 @@ public class DublinCoreProxy implements DublinCore {
      * @return a real dublin core object
      * @throws DocumentException when an error occurs.
      */
-    protected DublinCore instance() throws DocumentException {
+    public DublinCore instance() throws DocumentException {
         if (dcCore == null) {
             dcCore = new DublinCoreImpl(this.cmsDocument);
         }

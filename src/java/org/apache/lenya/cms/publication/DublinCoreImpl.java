@@ -77,7 +77,7 @@ import org.xml.sax.SAXException;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCoreImpl.java,v 1.7 2004/02/02 18:02:13 andreas Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.8 2004/02/12 17:56:06 andreas Exp $
  */
 public class DublinCoreImpl implements DublinCore {
     private Document cmsdocument;
@@ -168,38 +168,59 @@ public class DublinCoreImpl implements DublinCore {
                 cmsdocument.getArea(),
                 cmsdocument.getId(),
                 cmsdocument.getLanguage());
+        loadValues();
+    }
 
-        org.w3c.dom.Document doc = null;
-        try {
-            doc = DocumentHelper.readDocument(infofile);
-        } catch (ParserConfigurationException e) {
-            throw new DocumentException(e);
-        } catch (SAXException e) {
-            throw new DocumentException(e);
-        } catch (IOException e) {
-            throw new DocumentException(e);
-        }
+    /**
+     * Refreshes the dublin core values.
+     * Loads the dublin core values from the XML file.
+     */
+    public void refresh() throws DocumentException {
+        loadValues();
+    }
 
-        // FIXME: what if "lenya:meta" element doesn't exist yet? Currently a NullPointerException will be thrown!
-        Element metaElement = getMetaElement(doc);
+    /**
+     * Loads the dublin core values from the XML file.
+     * @throws DocumentException when something went wrong.
+     */
+    protected void loadValues() throws DocumentException {
 
-        String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
-        String[] prefixes = { DC_PREFIX, DCTERMS_PREFIX };
-        String[][] arrays = { ELEMENTS, TERMS };
-        Map[] maps = { elements, terms };
+        if (infofile.exists()) {
+            org.w3c.dom.Document doc = null;
+            try {
+                doc = DocumentHelper.readDocument(infofile);
+            } catch (ParserConfigurationException e) {
+                throw new DocumentException(e);
+            } catch (SAXException e) {
+                throw new DocumentException(e);
+            } catch (IOException e) {
+                throw new DocumentException(e);
+            }
 
-        for (int type = 0; type < 2; type++) {
-            NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
-            String[] elementNames = arrays[type];
-            for (int i = 0; i < elementNames.length; i++) {
-                Element[] children = helper.getChildren(metaElement, elementNames[i]);
-                String[] values = new String[children.length];
-                for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
-                    values[valueIndex] = DocumentHelper.getSimpleElementText(children[valueIndex]);
+            // FIXME: what if "lenya:meta" element doesn't exist yet?
+            // Currently the element is inserted.
+            Element metaElement = getMetaElement(doc);
+
+            String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
+            String[] prefixes = { DC_PREFIX, DCTERMS_PREFIX };
+            String[][] arrays = { ELEMENTS, TERMS };
+            Map[] maps = { elements, terms };
+
+            for (int type = 0; type < 2; type++) {
+                NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
+                String[] elementNames = arrays[type];
+                for (int i = 0; i < elementNames.length; i++) {
+                    Element[] children = helper.getChildren(metaElement, elementNames[i]);
+                    String[] values = new String[children.length];
+                    for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
+                        values[valueIndex] =
+                            DocumentHelper.getSimpleElementText(children[valueIndex]);
+                    }
+                    maps[type].put(elementNames[i], values);
                 }
-                maps[type].put(elementNames[i], values);
             }
         }
+
     }
 
     /**
@@ -260,11 +281,22 @@ public class DublinCoreImpl implements DublinCore {
      * @param doc The XML document.
      * @return A DOM element.
      */
-    protected Element getMetaElement(org.w3c.dom.Document doc) {
+    protected Element getMetaElement(org.w3c.dom.Document doc) throws DocumentException {
         NamespaceHelper namespaceHelper =
             new NamespaceHelper(PageEnvelope.NAMESPACE, PageEnvelope.DEFAULT_PREFIX, doc);
         Element documentElement = doc.getDocumentElement();
         Element metaElement = namespaceHelper.getFirstChild(documentElement, META);
+
+        if (metaElement == null) {
+            metaElement = namespaceHelper.createElement(META);
+            Element[] children = namespaceHelper.getChildren(documentElement);
+            if (children.length == 0) {
+                documentElement.appendChild(metaElement);
+            } else {
+                documentElement.insertBefore(metaElement, children[0]);
+            }
+        }
+
         return metaElement;
     }
 
