@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
-  <xsl:output method="html" encoding="iso-8859-1"/>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:output method="xml" encoding="iso-8859-1"/>
   <xsl:template match="/">
     <head>
-      <meta name="generator" content="HTML Tidy for Linux/x86 (vers 1st March 2002), see www.w3.org"/>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
       <title>Authoring</title>
       <style type="text/css">
@@ -104,7 +103,8 @@
                       </tr>
                       <tr valign="top">
                         <td bgcolor="#CCCC99" valign="middle" width="180">
-                          <xsl:apply-templates select="/newsml/newsitem/relatedcontent"/>
+
+                          <xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/related-content"/>
                         </td>
                       </tr>
                       <tr valign="top">
@@ -122,8 +122,8 @@
 
             <p> </p>
           </td>
-            <td xsd_xopus="article.xsd" xsl_xopus="Page/Article/Authoring/xopus.xsl" xml_xopus="magazin/gesundheit/articles/2002/0508/forum.xml" id_xopus="body" class="art-text" width="388" bgcolor="white" valign="top">
-              <xsl:apply-templates select="/newsml/newsitem/newscomponent/contentitem/datacontent/nitf/body"/>
+            <td class="art-text" width="388" bgcolor="white" valign="top">
+              <xsl:apply-templates select="/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body"/>
 
             </td>
           </tr>
@@ -149,12 +149,12 @@
       </center>
     </body>
   </xsl:template>
-  <xsl:template match="relatedcontent">
-    <RelatedContent contentEditable="true">
+  <xsl:template match="related-content">
+    <related-content contentEditable="true">
       <xsl:for-each select=".">
         <xsl:apply-templates/>
       </xsl:for-each>
-    </RelatedContent>
+    </related-content>
   </xsl:template>
   <xsl:template match="body">
 
