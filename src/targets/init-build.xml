@@ -32,6 +32,8 @@
     <property name="snapshot.src.dir" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}"/>
 
     <available file="${tools.jar}" property="tools.jar.present"/>
+    
+    
   </target>
 
   <target name="build-custom-tasks" depends="init">
@@ -51,6 +53,7 @@
 
     <taskdef name="copyJavaSources" classpath="build/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
     <taskdef name="copyPubs"        classpath="build/tools/anttasks" classname="org.apache.lenya.cms.ant.CopyTask"/>
+    <taskdef name="xpatch" classname="XConfToolTask" classpath="${tools.tasks.dest}"/>
   </target>
 
  <!-- ============================================================ -->

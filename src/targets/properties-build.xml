@@ -106,6 +106,8 @@
 
   <property name="tools.jar" value="${java.home}/../lib/tools.jar"/>
   
+  <property name="tools.tasks.dest" value="tools/anttasks"/>
+  
   <!-- HSQLDB server port -->
   <property name="hsqldb-server.port" value="9002"/>
   

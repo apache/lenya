@@ -29,6 +29,13 @@
     <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}">
     </copyPubs>
 
+    <!-- Patch cocoon.xconf -->
+    <echo>INFO: Patch cocoon.xconf</echo>
+    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
+            srcdir="${build.webapp}/lenya/pubs" 
+            includes="*/config/cocoon.xconf"
+            addComments="true"/>
+            
     <!-- create directory classes within webapp -->
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
 
