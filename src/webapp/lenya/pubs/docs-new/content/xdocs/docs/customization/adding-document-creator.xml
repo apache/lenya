@@ -51,7 +51,10 @@ The pipelines of the usecases are located within <code>usecase.xmap</code>:
       </map:match>
 
       <map:match type="lenya-step" pattern="execute">
-        ...
+        <map:act type="parent-child">
+          <map:redirect-to uri="{parent_uri}" session="true"/>
+        </map:act>
+        <map:redirect-to uri="index.html?lenya.usecase=create&amp;lenya.step=showscreen&amp;status=failed" session="true"/>
       </map:match>
     </map:match>
   </map:match>
@@ -62,6 +65,60 @@ The pipelines of the usecases are located within <code>usecase.xmap</code>:
 
 </section>
 
+
+<section>
+<title>Create <code>doctypes.xconf</code></title>
+
+<p>
+The file <code>doctypes.xconf</code> is supposed to be located within the directory <code>config/doctypes</code>.
+
+<source>
+<![CDATA[
+<doctypes>
+  <doc type="nitf">
+    <creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator">
+      <sample-name>nitf.xml</sample-name>
+    </creator>
+  </doc>
+
+  <doc type="xhtml">
+    <creator src="org.apache.lenya.cms.authoring.DefaultLeafCreator">
+      <sample-name>xhtml.xml</sample-name>
+    </creator>
+  </doc>
+</doctypes>
+]]>
+</source>
+</p>
+
+</section>
+
+<section>
+<title>Create a sample document</title>
+
+<p>
+The sample documents are located within the directory <code>config/doctypes/samples</code>.
+
+<source>
+<![CDATA[
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<nitf>
+  <head>
+    <docdata>
+      <doc-id regsrc="nitf_export.pl" id-string="0"/>
+      <date.issue norm="20030314T041021Z"/>
+      <doc.copyright holder="New OSCOM Times"/>
+    </docdata>
+    <pubdata position.section="finance" position.sequence="1"/>
+  </head>
+  <body.head>
+    <hedline>
+      <hl1>Local OSCOM Sprint @ Zurich, Switzerland</hl1>
+]]>
+</source>
+</p>
+
+</section>
 
 </body>
 </document>
