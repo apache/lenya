@@ -61,4 +61,22 @@
     <echo message="*****************************************************************"/>
   </target>
 
+  <target name="successfully-built-message-wls" if="servlet.engine.wls">
+    <echo message="*****************************************************************"/>
+    <echo message="*"/>
+    <echo message="* You have successfully built ${Name} ${version} based on"/>
+    <echo message="*"/>
+    <echo message="*      Cocoon (${cocoon.src.dir})"/>
+    <echo message="*"/>
+    <echo message="* Start using ${Name} with WLS by typing"/>
+    <echo message="*      Linux/UNIX: ${wls.domain.dir}/startWebLogic.sh"/>
+    <echo message="*"/>
+    <echo message="* and browse to "/>
+    <echo message="*      http://127.0.0.1:8080/lenya/"/>
+    <echo message="*"/>
+    <echo message="* Thanks for using ${Name}"/>
+    <echo message="*"/>
+    <echo message="*****************************************************************"/>
+  </target>
+
 </project>

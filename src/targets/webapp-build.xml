@@ -154,6 +154,12 @@
       </fileset>
     </copy>
 
+    <condition property="servlet.engine.wls">
+      <equals arg1="${web.app.server}" arg2="WLS"/>
+    </condition>
+    <antcall target="install-wls"/>
+    <antcall target="successfully-built-message-wls"/>
+
     <condition property="servlet.engine.tomcat">
       <equals arg1="${web.app.server}" arg2="Tomcat"/>
     </condition>
@@ -215,6 +221,32 @@
     <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
   </target>
 
+
+  <!-- ============================================================ -->
+  <!-- Install webapp into WLS                                      -->
+  <!-- ============================================================ -->
+  <target name="install-wls" description="Install the webapp into WLS servlet engine context" if="servlet.engine.wls">
+    <echo>INFO: Copy webapp to WLS</echo>
+
+    <echo>INFO: Copy From build.webapp=${build.webapp} To wls.webapps.dir=${wls.webapps.dir}</echo>
+    <copy todir="${wls.webapps.dir}" filtering="off">
+      <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
+    </copy>
+
+    <echo>INFO: The following libraries need to be treated as endorsed: jakarta-bcel-20040329.jar rhino1.5r4-continuations-20040629T1232.jar xercesImpl-2.6.2.jar jakarta-regexp-1.3.jar xalan-2.6.1-dev-20041008T0304.jar xml-apis.jar</echo>
+<!--
+    <echo>INFO: Copy endorsed libraries</echo>
+    <copy todir="${tomcat.endorsed.dir}">
+      <fileset dir="${build.webapp}/WEB-INF/lib/">
+        <include name="xercesImpl-*.jar"/>
+        <include name="xalan-*.jar"/>
+        <include name="jakarta-regexp-*.jar"/>
+        <include name="jakarta-bcel-*.jar"/>
+      </fileset>
+    </copy>
+    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
+-->
+  </target>
 
 
 
