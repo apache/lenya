@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"      
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -11,7 +12,7 @@
   
   <xsl:import href="../util/page-util.xsl"/>
 
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
 
   <xsl:param name="action" select="'publish'"/>
   <xsl:param name="lenya.event"/>
@@ -28,14 +29,14 @@
 
   <xsl:template match="/usecase:publish[usecase:message]">
     <page:page>
-      <page:title>Publish</page:title>
+      <page:title><i18n:text>Publish</i18n:text></page:title>
       <page:body>
           <div class="lenya-box">
-            <div class="lenya-box-title">Publish</div>
+            <div class="lenya-box-title"><i18n:text>Publish</i18n:text></div>
             <div class="lenya-box-body">
               <table class="lenya-table-noborder">
                 <tr>
-                  <td class="lenya-entry-caption" valign="top">Source&#160;File(s):</td>
+                  <td class="lenya-entry-caption" valign="top"><i18n:text>Source File(s)</i18n:text>:</td>
                   <td valign="top">
                     <xsl:call-template name="print-list-simple">
                       <xsl:with-param name="list-string" select="$sources"/>
@@ -83,7 +84,7 @@
   <xsl:template match="/usecase:publish[not(usecase:message)]">
 
     <page:page>
-      <page:title>Publish</page:title>
+      <page:title><i18n:text>Publish</i18n:text></page:title>
       <page:body>
         
         <table class="lenya-table-noborder">
@@ -109,11 +110,11 @@
           <input type="hidden" name="uris" value="{$uris}"/> <!-- Regular Task -->
           
           <div class="lenya-box">
-            <div class="lenya-box-title">Publish</div>
+            <div class="lenya-box-title"><i18n:text>Publish</i18n:text></div>
             <div class="lenya-box-body">
               <table class="lenya-table-noborder">
                 <tr>
-                  <td class="lenya-entry-caption" valign="top">Source&#160;File(s):</td>
+                  <td class="lenya-entry-caption" valign="top"><i18n:text>Source File(s)</i18n:text>:</td>
                   <td valign="top">
                     <xsl:call-template name="print-list-simple">
                       <xsl:with-param name="list-string" select="$sources"/>
@@ -134,9 +135,9 @@
                 <tr>
                   <td/>
                   <td>
-                    <input type="submit" name="lenya.usecase" value="publish"/>
+                    <input i18n:attr="value" type="submit" name="lenya.usecase" value="Publish"/>
                     <xsl:text> </xsl:text>
-                    <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+                    <input i18n:attr="value" type="button" onClick="location.href='{$referer}';" value="Cancel"/>
                   </td>
                 </tr>
               </table>
@@ -177,7 +178,7 @@
         -->
         
         <div style="text-align: right">
-        <form action="{$referer}"><input type="submit" value="Back to Page"/></form>
+        <form action="{$referer}"><input i18n:attr="value" type="submit" value="Back to Page"/></form>
         </div>
         </td>
         </tr>
