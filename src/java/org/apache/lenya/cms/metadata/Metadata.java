@@ -16,8 +16,6 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.site.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -40,7 +38,7 @@ public class Metadata extends SiteUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doInitialize()
      */
-    protected void doInitialize() throws Exception {
+    protected void doInitialize() {
         super.doInitialize();
 
         try {
