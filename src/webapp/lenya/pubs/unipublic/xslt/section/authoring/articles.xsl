@@ -8,13 +8,14 @@
         <p>
           <a href="{@href}/"><span class="tsr-title"><xsl:apply-templates select="body.head/hedline/hl1"/></span></a><br />
           <xsl:apply-templates select="body.head/abstract"/> <!-- (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>) -->
-          <xsl:if test="body.head/dateline/story.date/@norm!=''">
-            (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
-          </xsl:if>
-          <xsl:if test="body.head/dateline/story.date/@norm=''">
-            <br/><font size="-2" color="#ff0000">Noch nie publiziert</font>
-          </xsl:if>
-
+	  <xsl:choose>
+            <xsl:when test="body.head/dateline/story.date/@norm!=''">
+              (<xsl:apply-templates select="body.head/dateline/story.date/@norm"/>)
+            </xsl:when>
+            <xsl:otherwise>
+              <br/><font size="-2" color="#ff0000">Noch nie publiziert</font>
+            </xsl:otherwise>
+	  </xsl:choose>
         </p>
       </xsl:for-each>
 </xsl:template>
