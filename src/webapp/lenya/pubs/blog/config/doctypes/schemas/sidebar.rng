@@ -5,7 +5,7 @@
       <oneOrMore>
         <element name="block">
           <element name="title">
-            <data type="NCName"/>
+            <text/>
           </element>
           <element name="content">
             <oneOrMore>

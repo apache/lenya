@@ -8,7 +8,7 @@
  <xsl:apply-templates select="block"/>
 
   <node name="Add Block">
-    <action><insert name="&lt;xupdate:insert-after select=&quot;/sidebar/block&quot;&gt;&lt;xupdate:element name=&quot;block&quot;&gt;&lt;title&gt;New title&lt;/title&gt;&lt;content&gt;New content&lt;/content&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/></action>
+    <action><insert name="&lt;xupdate:append select=&quot;/sidebar&quot;&gt;&lt;xupdate:element name=&quot;block&quot;&gt;&lt;title&gt;New title&lt;/title&gt;&lt;content&gt;New content&lt;/content&gt;&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/></action>
   </node>
 </xsl:template>
 
