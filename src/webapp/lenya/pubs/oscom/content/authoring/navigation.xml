@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<oscom_navigation xmlns:oscom="http://www.oscom.org/2002/oscom">
+<leaf name="Home" href="index.html"/>
+<!--
+<branch name="Conferences">
+  <leaf name="Zurich" href="http://www.oscom.org/conferences/zurich2002/"/>
+  <branch name="Berkeley" href="conferences/sanfrancisco2002/index.html"/>
+  <leaf name="Tokyo"/>
+</branch>
+-->
+<leaf name="CMF/S&#160;Overview" href="matrix/index.html"/>
+<!--
+<leaf name="Editor&#160;Overview" href="editor-matrix/index.html"/>
+<leaf name="Search&#160;Engine&#160;Overview" href="http://www.searchtools.com/tools/tools.html"/>
+-->
+
+
+<!--
+<leaf name="Glossary" href="glossary.html"/>
+<branch name="Interop" href="interop.html">
+  <leaf name="Blog" href="http://alpha.oscom.org/postnuke/"/>
+  <leaf name="Wiki" href="http://alpha.oscom.org/postnuke/modules.php?op=modload&amp;name=phpWiki&amp;file=index"/>
+  <leaf name="Another Wiki" href="http://alpha.oscom.org/phpwiki/"/>
+</branch>
+<leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
+<leaf name="CVS" href="http://cvs.oscom.org"/>
+<branch name="Foundation">
+  <leaf name="Board" href="board.html"/>
+  <leaf name="Bylaws" href="http://www.balzer.ch/oscom/bylaws.html"/>
+</branch>
+<leaf name="News"/>
+-->
+<!--
+<leaf name="News" href="news.html"/>
+-->
+<!--
+<leaf name="Tom's&#160;Weekly&#160;Column" href="weekly-column.html"/>
+-->
+</oscom_navigation>
