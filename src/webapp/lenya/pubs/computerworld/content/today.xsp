@@ -22,8 +22,9 @@
             DateFormat.SHORT, // time
             localeCH);
  
-        genText = fullDateFormatCH.format(date);		
-		
+        genText = fullDateFormatCH.format(date);
+        genText = genText.substring(0, (genText.length() - 6));		
+        		
 		</xsp:logic>
 		<xsp:expr>genText</xsp:expr>
 	</today>
