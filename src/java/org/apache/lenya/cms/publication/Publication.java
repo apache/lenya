@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.25 2003/08/18 17:12:55 andreas Exp $
+$Id: Publication.java,v 1.26 2003/08/21 09:02:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -80,6 +80,8 @@ public class Publication {
     public static final String LIVE_AREA = "live";
     public static final String INFO_AREA = "info";
     public static final String ADMIN_AREA = "admin";
+	public static final String ARCHIVE_AREA = "archive";
+	public static final String TRASH_AREA = "trash";
 
     public static final String PATH_MAPPER = "path-mapper";
     public static final String LANGUAGES = "languages";
@@ -95,7 +97,7 @@ public class Publication {
     public static final String CONTENT_PATH = "content";
 
     private static final String[] areas =
-        { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA };
+        { AUTHORING_AREA, LIVE_AREA, INFO_AREA, ADMIN_AREA, ARCHIVE_AREA, TRASH_AREA };
 
     protected static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
 
