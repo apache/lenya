@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.31 2003/09/09 15:06:52 egli Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.32 2003/09/09 20:18:50 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -211,6 +211,7 @@
     <map:pipeline>
       <map:match pattern="authoring/menubar/entry.xml">
         <map:generate type="serverpages" src="config/menus/entry.xsp"/>
+        <map:transform type="workflowmenu"/>
         <map:transform type="usecasemenu"/>
         <map:serialize type="xml"/>
       </map:match>
