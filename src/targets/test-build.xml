@@ -61,7 +61,8 @@
   			test.workflow,
   			test.anttask,
   			test.creator,
-  			test.publisher"
+  			test.publisher,
+  			test.accesscontrol"
   />
 
   
@@ -118,6 +119,16 @@
   <!-- Publisher Test -->
   <target name="test.publisher" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.task.PublisherTest">
+      <jvmarg value="-enableassertions"/>
+      <arg value="${install.dir}"/>
+      <arg value="${test.pub.id}"/>
+      <classpath refid="classpath.default"/>
+    </java>
+  </target>  
+
+  <!-- Access Control Test -->
+  <target name="test.accesscontrol" depends="test.pub.prepare">
+    <java fork="yes" classname="org.apache.lenya.cms.ac.AccessControlTest">
       <jvmarg value="-enableassertions"/>
       <arg value="${install.dir}"/>
       <arg value="${test.pub.id}"/>
