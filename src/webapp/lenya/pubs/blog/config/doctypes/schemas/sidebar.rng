@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="sidebar">
+      <oneOrMore>
+        <element name="block">
+          <element name="title">
+            <data type="NCName"/>
+          </element>
+          <element name="content">
+            <oneOrMore>
+              <choice>
+                <text/>
+                <element name="a">
+                  <attribute name="href">
+                    <data type="anyURI"/>
+                  </attribute>
+                  <text/>
+                </element>
+                <element name="br">
+                  <empty/>
+                </element>
+              </choice>
+            </oneOrMore>
+          </element>
+        </element>
+      </oneOrMore>
+    </element>
+  </start>
+</grammar>
