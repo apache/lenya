@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TreePublisher.java,v 1.13 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id: TreePublisher.java,v 1.14 2004/08/16 12:06:45 andreas Exp $  */
 
 package org.apache.lenya.cms.ant;
 
@@ -29,20 +29,21 @@ import org.apache.lenya.cms.publishing.PublishingException;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to publish the tree, adding a node for the new published
- * document in the live tree
+ * Ant task to publish the tree, adding a node for the new published document in the live tree
  */
 public class TreePublisher extends PublicationTask {
     private String documentid;
     private String language;
+
     /**
      * Creates a new instance of TreePublisher
      */
-    public TreePublisher() {}
+    public TreePublisher() {
+    }
 
     /**
      * Returns the document id
-     *
+     * 
      * @return DOCUMENT ME!
      */
     protected String getDocumentid() {
@@ -51,7 +52,7 @@ public class TreePublisher extends PublicationTask {
 
     /**
      * Sets the document id
-     *
+     * 
      * @param documentid DOCUMENT ME!
      */
     public void setDocumentid(String documentid) {
@@ -61,8 +62,7 @@ public class TreePublisher extends PublicationTask {
     /**
      * Get the language of the document to be published
      * 
-     * @return a <code>String</code> containing the ISO string for
-     * this language, e.g. "de", "en"
+     * @return a <code>String</code> containing the ISO string for this language, e.g. "de", "en"
      */
     public String getLanguage() {
         return language;
@@ -79,99 +79,78 @@ public class TreePublisher extends PublicationTask {
 
     /**
      * adds a node for the published document in the live tree
-     *
+     * 
      * @param documentId The id of the published document
-     * @param language the language for which this document is to be published. 
-     * 	Can be null if all languages are to be published.
-     *
+     * @param language the language for which this document is to be published. Can be null if all
+     *            languages are to be published.
+     * 
      * @throws PublishingException if the publication failed.
      */
-    public void publish(String documentId, String language)
-        throws PublishingException {
+    public void publish(String documentId, String language) throws PublishingException {
         SiteTree authoringTree = null;
         SiteTree liveTree = null;
 
         try {
-            authoringTree =
-                getPublication().getSiteTree(Publication.AUTHORING_AREA);
+            authoringTree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
             liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
 
             SiteTreeNode authoringNode = authoringTree.getNode(documentId);
-			SiteTreeNode[] siblings = authoringNode.getNextSiblings();
+            SiteTreeNode[] siblings = authoringNode.getNextSiblings();
             String parentId = authoringNode.getAbsoluteParentId();
-			SiteTreeNode sibling = null;
-			String siblingDocId = null;
-			for (int i = 0; i < siblings.length; i++){
-				String docId=parentId+"/"+siblings[i].getId();
-				sibling =liveTree.getNode(docId);
-				if (sibling != null) {
-					siblingDocId = docId;
-                	break;  
-				}
-			}
-
-            if (authoringNode != null) {
-                if (language == null) {
-                    // no language was specified. Simply publish the
-                    // node including all languages.
-                    try {
-                        liveTree.addNode(authoringNode,siblingDocId);
-                    } catch (SiteTreeException e1) {
-                        throw new ParentNodeNotFoundException(
-                            "Couldn't add document: "
-                                + documentId
-                                + " to live tree.",
-                            e1);
-                    }
-                } else {
-                    // a language was specified. Let's see if this
-                    // node even has an entry for the specified
-                    // language.
-                    Label label = authoringNode.getLabel(language);
-                    if (label != null) {
-                        // check if this node has already been
-                        // published
-                        SiteTreeNode liveNode = liveTree.getNode(documentId);
-                        if (liveNode != null) {
-                            // if the node already exists in the live
-                            // tree simply insert the label in the
-                            // live tree
-                            liveTree.setLabel(documentId, label);
-                        } else {
-                            // if the node doesn't exist, add it and
-                            // add the specified label to it.
-                            Label[] labels = { label };
-                            try {
-                                liveTree.addNode(
-                                    documentId,
-                                    labels,
-                                    authoringNode.getHref(),
-                                    authoringNode.getSuffix(),
-                                    authoringNode.hasLink(),
-								    siblingDocId);
-                            } catch (SiteTreeException e1) {
-                                throw new ParentNodeNotFoundException(
-                                    "Couldn't add document: "
-                                        + documentId
-                                        + " to live tree.",
-                                    e1);
-                            }
-                        }
-                    } else {
-                        // the node that we're trying to publish
-                        // doesn't have this language
-                        throw new PublishingException(
-                            "The node "
-                                + documentId
-                                + " doesn't contain a label for language "
-                                + language);
-                    }
+            SiteTreeNode sibling = null;
+            String siblingDocId = null;
+            for (int i = 0; i < siblings.length; i++) {
+                String docId = parentId + "/" + siblings[i].getId();
+                sibling = liveTree.getNode(docId);
+                if (sibling != null) {
+                    siblingDocId = docId;
+                    break;
                 }
-            } else {
-                throw new PublishingException(
-                    "No node found for the document " + documentId);
             }
 
+            if (language == null) {
+                // no language was specified. Simply publish the
+                // node including all languages.
+                try {
+                    liveTree.addNode(authoringNode, siblingDocId);
+                } catch (SiteTreeException e1) {
+                    throw new ParentNodeNotFoundException("Couldn't add document: " + documentId
+                            + " to live tree.", e1);
+                }
+            } else {
+                // a language was specified. Let's see if this
+                // node even has an entry for the specified
+                // language.
+                Label label = authoringNode.getLabel(language);
+                if (label != null) {
+                    // check if this node has already been
+                    // published
+                    SiteTreeNode liveNode = liveTree.getNode(documentId);
+                    if (liveNode != null) {
+                        // if the node already exists in the live
+                        // tree simply insert the label in the
+                        // live tree
+                        liveTree.setLabel(documentId, label);
+                    } else {
+                        // if the node doesn't exist, add it and
+                        // add the specified label to it.
+                        Label[] labels = { label };
+                        try {
+                            liveTree.addNode(documentId, labels, authoringNode.getHref(),
+                                    authoringNode.getSuffix(), authoringNode.hasLink(),
+                                    siblingDocId);
+                        } catch (SiteTreeException e1) {
+                            throw new ParentNodeNotFoundException("Couldn't add document: "
+                                    + documentId + " to live tree.", e1);
+                        }
+                    }
+                } else {
+                    // the node that we're trying to publish
+                    // doesn't have this language
+                    throw new PublishingException("The node " + documentId
+                            + " doesn't contain a label for language " + language);
+                }
+            }
             liveTree.save();
         } catch (PublishingException e) {
             throw e;
@@ -182,7 +161,7 @@ public class TreePublisher extends PublicationTask {
 
     /**
      * Executes the task
-     *
+     * 
      * @throws BuildException DOCUMENT ME!
      */
     public void execute() throws BuildException {
@@ -190,9 +169,7 @@ public class TreePublisher extends PublicationTask {
             log("document id: " + getDocumentid());
             log("language: " + getLanguage());
 
-            publish(
-                getDocumentid(),
-                getLanguage());
+            publish(getDocumentid(), getLanguage());
         } catch (Exception e) {
             throw new BuildException(e);
         }
