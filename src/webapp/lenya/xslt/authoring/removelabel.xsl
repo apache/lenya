@@ -28,9 +28,7 @@
 	      <xsl:with-param name="prefix" select="''"/>
 	    </xsl:call-template>
 	    
-	    <div class="menu">Do you really want to remove the following label<xsl:text/></div>
-	    
-	    <xsl:value-of select="label"/>
+	    <div class="menu">Do you really want to remove the label '<xsl:value-of select="$label"/>' (Language: <xsl:value-of select="$language"/>) from document '<xsl:value-of select="$document-id"/>'?</div>
 	    
 	    <input type="submit" value="YES, remove label"/>
             &#160;&#160;&#160;<input type="button" onClick="location.href='{referer}';" value="Cancel"/>
@@ -43,9 +41,9 @@
   
   <xsl:template name="task-parameters">
     <xsl:param name="prefix" select="'task.'"/>
-    <input type="hidden" name="{$prefix}properties.removelabel.sources" value="{$sources}"/>
-    <input type="hidden" name="{$prefix}properties.removelabel.documentid" value="{$document-id}"/>
-    <input type="hidden" name="{$prefix}properties.removelabel.language" value="{$language}"/>
+    <input type="hidden" name="{$prefix}properties.remove.label.document-id" value="{$document-id}"/>
+    <input type="hidden" name="{$prefix}properties.remove.label.label-name" value="{$label}"/>
+    <input type="hidden" name="{$prefix}properties.remove.label.language" value="{$language}"/>
   </xsl:template>
   
 </xsl:stylesheet>  
