@@ -213,17 +213,11 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testGetEmail() throws AccessControlException {
-        String userName = "alice";
+        String userID = "alice";
         String email = "alice@wonderland.org";
-        FileUser user = createAndSaveUser(userName, "Alice Wonderland", email, "secret");
+        FileUser user = createAndSaveUser(userID, "Alice Wonderland", email, "secret");
         assertTrue(user.getEmail().equals(email));
-
-        try {
-            user = loadUser(userName);
-        } catch (AccessControlException e) {
-            e.printStackTrace();
-        }
-
+        user = loadUser(userID);
         assertTrue(user.getEmail().equals(email));
     }
 
@@ -237,7 +231,7 @@ public class FileUserTest extends AccessControlTest {
         String userName = "Alice Wonderland";
         FileUser user = createAndSaveUser(userID, userName, "alice@wonderland.org", "secret");
         assertTrue(user.getName().equals(userName));
-        user = loadUser(userName);
+        user = loadUser(userID);
         assertTrue(user.getName().equals(userName));
     }
 
