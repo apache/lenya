@@ -16,10 +16,31 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions>
+      <map:action name="reserved-checkout" src="org.wyona.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout">
+        <rcmlDirectory href="docs/publication/rcml"/>
+        <backupDirectory href="docs/publication/rcbak"/>
+      </map:action>
+      <map:action name="reserved-checkin" src="org.wyona.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin">
+        <rcmlDirectory href="docs/publication/rcml"/>
+        <backupDirectory href="docs/publication/rcbak"/>
+      </map:action>
+<!--
       <map:action name="revision-controller" src="org.wyona.cms.cocoon.acting.RevisionControllerAction" logger="sitemap.action.revision-controller">
         <rcmlDirectory href="docs/publication/rcml"/>
         <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
+-->
+      <map:action name="publisher" src="org.wyona.cms.cocoon.acting.PublisherAction">
+        <authoring href="docs/publication/authoring/"/>
+        <live href="docs/publication/live/"/>
+        <tree-authoring href="docs/publication/authoring/tree.xml"/>
+        <tree-live href="docs/publication/live/tree.xml"/>
+      </map:action>                                                                                                                         
+      <map:action name="parent-child" src="org.wyona.cms.cocoon.acting.ParentChildCreatorAction">
+        <tree-authoring href="docs/publication/authoring/tree.xml"/>
+        <docs href="docs/publication/authoring"/>
+        <doctypes href="docs/publication/doctypes/"/>
+      </map:action>                                                                                                                         
     </map:actions>
     <map:selectors default="browser">
       <map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
@@ -63,6 +84,22 @@
         <map:read src="resources/publication/styles/article.css" mime-type="text/css"/>
       </map:match>
     </map:pipeline>
+
+    <!-- Publisher  -->
+    <map:pipeline>
+      <map:match pattern="wyona/publishScreen*">
+        <map:generate type="serverpages" src="../../docs/cms/publish-screen.xsp"/>
+        <map:transform src="../../stylesheets/cms/Page/Publish/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+      <map:match pattern="wyona/publish*">
+        <map:act type="publisher">
+          <map:redirect-to uri="{parent_uri}" session="true"/>
+        </map:act>
+        <map:redirect-to uri="publishScreen?status=failed" session="true"/>
+      </map:match>                                                                                                                          
+    </map:pipeline>
+    <!-- /Publisher  -->
 
     <!-- Authoring -->
     <!-- Menus -->
@@ -199,8 +236,8 @@
       </map:match>
 
       <!-- Article -->
-      <map:match pattern="rc/*/*/*/*/index.xml">
-        <map:act type="revision-controller">
+      <map:match pattern="rco/*/*/*/*/index.xml">
+        <map:act type="reserved-checkout">
             <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
 <!--
           <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
@@ -218,6 +255,24 @@
         <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
+
+      <map:match pattern="rci/*/*/*/*/index.xml">
+        <map:act type="reserved-checkin">
+          <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+<!--
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkin-exception.xsp">
+-->
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
+            <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="checkType" value="{checkType}"/>
+            <map:parameter name="date" value="{date}"/>
+          </map:generate>
+          <map:serialize type="xml"/>
+        </map:act>
+        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>                                                                                                                          
 
       <map:match pattern="*/*/*/*/index.xml">
         <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>

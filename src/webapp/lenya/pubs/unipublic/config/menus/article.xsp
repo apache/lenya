@@ -30,13 +30,14 @@
         <item>Edit</item>
 -->
         <item><xsp:attribute name="href"><xsp:expr>"http://wyona.bitflux.ch/wysiwyg/?url-xml="+domain_prefix+"/magazin/gesundheit/2002/0465/index.xml&amp;url-xslt="+domain_prefix+"/stylesheets/article.xsl&amp;url-xsd="+domain_prefix+"/schemas/article.js&amp;url-css="+domain_prefix+"/css/article.css"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Bitflux</item>
-        <item>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.html&amp;docids=<xsp:expr>"/"+channel+"/"+section+"/articles/"+year+"/"+articleId</xsp:expr>/index.xml</xsp:attribute>Publish</item>            
         <item>Schedule</item>
 <!--
         <item href="wyona/publishScreen?docid=/index.html&amp;docids=/index.xml">Publish</item>
 -->
         <item href="index.xml">View&#160;XML</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rc/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkout&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rco/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkout&#160;XML</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/rci/"+channel+"/"+section+"/"+year+"/"+articleId+"/index.xml"</xsp:expr></xsp:attribute>Checkin&#160;XML</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/stylesheets/article.xsl</xsp:attribute>View&#160;Bitflux&#160;XSLT</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/schemas/article.js</xsp:attribute>View&#160;Bitflux&#160;XSD/JS</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/css/article.css</xsp:attribute>View&#160;Bitflux&#160;CSS</item>
