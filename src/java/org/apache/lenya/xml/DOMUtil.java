@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMUtil.java,v 1.13 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id: DOMUtil.java,v 1.14 2004/03/05 11:01:21 michi Exp $  */
 
 package org.apache.lenya.xml;
 
@@ -156,8 +156,27 @@ public class DOMUtil {
     }
 
     /**
-       *
-       */
+     * Check if elements exists
+     */
+    public boolean elementExists(Element element, XPath xpath)
+        throws Exception {
+        log.debug(xpath);
+
+        if (xpath.parts.length > 0) {
+            NodeList nl = element.getElementsByTagName(xpath.parts[0]);
+
+            if (nl.getLength() == 0) {
+                return false;
+            } else if (nl.getLength() == 1) {
+                return true;
+            }
+        }
+    return false;
+    }
+
+    /**
+     * Get element via XPath
+     */
     public Element getElement(Element element, XPath xpath)
         throws Exception {
         log.debug(xpath);
