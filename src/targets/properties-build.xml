@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: properties-build.xml,v 1.18 2004/05/04 13:50:30 michi Exp $ -->
+<!-- $Id: properties-build.xml,v 1.19 2004/05/11 10:06:59 michi Exp $ -->
 
 <project name="properties">
 
@@ -42,7 +42,7 @@
 
   
   <!-- The root of the cocoon source tree -->
-  <property name="cocoon.dir" value="../cocoon-2.1"/>
+  <property name="cocoon.src.dir" value="../cocoon"/>
 
   <!-- The libraries we use and which are not already included in the cocoon package -->
   <property name="lib.dir" value="lib"/>

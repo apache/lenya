@@ -15,14 +15,14 @@
 # Properties controlling the build process
 
 #------------------------------------------------------------------------------------
-# The original, unmodified and expanded cocoon webapp directory
-
-cocoon.webapp.dir=../cocoon-2.1/build/webapp
-
-#------------------------------------------------------------------------------------
 # The root of the Cocoon source tree
 
-cocoon.dir=../cocoon-2.1
+cocoon.src.dir=../cocoon-2.1
+
+#------------------------------------------------------------------------------------
+# The original, unmodified and expanded cocoon webapp directory
+
+cocoon.webapp.dir=${cocoon.src.dir}/build/webapp
 
 #------------------------------------------------------------------------------------
 # Root directories where publications are located

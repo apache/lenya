@@ -35,7 +35,7 @@
 
     <path id="libs">
       <!-- Cocoon libs -->
-      <fileset dir="${cocoon.dir}/${lib.dir}">
+      <fileset dir="${cocoon.src.dir}/${lib.dir}">
         <include name="core/*.jar"/>
         <!-- Currently, we have no JVM dependent libraries       
           <include name="core/jvm${target.vm}/*.jar"/>
@@ -45,11 +45,11 @@
         <include name="endorsed/*.jar"/>
       </fileset>
       <!-- Cocoon blocks lib -->
-      <fileset dir="${cocoon.dir}/src/blocks">
+      <fileset dir="${cocoon.src.dir}/src/blocks">
         <include name="**/*.jar"/>
       </fileset>
       <!-- Cocoon tools libs -->
-      <fileset dir="${cocoon.dir}/tools/lib">
+      <fileset dir="${cocoon.src.dir}/tools/lib">
         <include name="*.jar"/>
         <exclude name="xalan*.jar"/>
         <exclude name="xml-api*.jar"/>
