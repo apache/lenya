@@ -51,6 +51,12 @@
         </map:otherwise>
       </map:select>
     </map:resource>
+    
+    <map:resource name="i18n">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>
+    </map:resource>
   </map:resources>
 
   <map:pipelines>
@@ -62,6 +68,7 @@
       <!-- {publication-id}/{area}/sitetree.xml -->
       <map:match pattern="*/*/sitetree.xml">
         <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+        <map:call resource="i18n"/>
         <map:transform type="access-control-sitetree">
           <map:parameter name="publication-id" value="{1}"/>
           <map:parameter name="area" value="{2}"/>
@@ -282,9 +289,7 @@
           
           <map:transform src="cocoon://lenya-page/{../1}/info/default.xml"/>
         
-          <map:transform type="i18n">      
-            <map:parameter name="locale" value="{request:locale}"/>
-          </map:transform>
+        <map:call resource="i18n"/>
         
           <map:serialize type="html-iso-8859-1"/>
           
