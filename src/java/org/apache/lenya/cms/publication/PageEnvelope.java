@@ -20,6 +20,14 @@ import org.xml.sax.SAXException;
  */
 public class PageEnvelope {
     
+    public static final String PUBLICATION_ID = "publication-id";
+    public static final String CONTEXT = "context";
+    public static final String STAGE = "stage";
+    
+    private Publication publication;
+    private String context;
+    private String stage;
+
     /** Creates a new instance of PageEnvelope */
     public PageEnvelope(SourceResolver resolver, Request request)
             throws ProcessingException, SAXException, IOException {
@@ -30,12 +38,14 @@ public class PageEnvelope {
         String path = publicationUri.substring(0, publicationUri.indexOf("/lenya/pubs/" + publicationId));
         path = path.replaceAll("file:/", "");
         path = path.replace('/', File.separatorChar);
-        
+
+	// FIXME: figure out the stage properly
+        stage = "authoring";
+
         publication = new Publication(publicationId, path);
         context = request.getContextPath();
     }
     
-    private Publication publication;
     
     /**
      * Returns the publication of this PageEnvelope.
@@ -44,13 +54,12 @@ public class PageEnvelope {
         return publication;
     }
     
-    private String context;
-    
     public String getContext() {
         return context;
     }
     
-    public static final String PUBLICATION_ID = "publication-id";
-    public static final String CONTEXT = "context";
+    public String getStage() {
+        return stage;
+    }
     
 }
