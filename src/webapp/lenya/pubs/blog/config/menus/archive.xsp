@@ -42,30 +42,30 @@
   </tabs>
 
   <menus>
-    <menu name="File" label="File">
+    <menu i18n:attr="name" name="File">
       <block>
-        <item><xsp:attribute name="href">?lenya.usecase=ac.logout</xsp:attribute>Logout</item>
+        <item uc:usecase="ac.logout"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
 
-    <menu name="Search" label="Search">
+    <menu i18n:attr="name" name="Search">
     </menu>
 
-    <menu name="Help" label="Help">
+    <menu i18n:attr="name" name="Help">
       <block>
-	  <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>Documentation</i18n:text></item>
-	  <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
+        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+        <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
-	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
+        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute>Apache&#160;Lenya&#160;Start&#160;Page</item>
+        <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
       </block>
     </menu>
 
-    <menu name="Debug" label="Debug">
+    <menu i18n:attr="name" name="Debug">
       <block>
-        <item href="index.xml">Feed</item>
-        <item href="lenya-page-body.xml">Body</item>
+        <item href="index.xml"><i18n:text>Feed</i18n:text></item>
+        <item href="lenya-page-body.xml"><i18n:text>Body</i18n:text></item>
       </block>
     </menu>
   </menus>
