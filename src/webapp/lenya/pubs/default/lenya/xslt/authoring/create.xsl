@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: create.xsl,v 1.11 2004/03/13 10:00:24 roku Exp $ -->
+<!-- $Id: create.xsl,v 1.12 2004/03/13 11:54:20 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -36,7 +36,7 @@ function validRequired(formField,fieldLabel)
 	
 	if (formField.value == "")
 	{
-		alert('Please enter a value for the "' + fieldLabel +'" field.');
+		alert('<i18n:text key="failmessage.createdoc.required"/>');
 		formField.focus();
 		result = false;
 	}
@@ -50,7 +50,7 @@ function validContent(formField,fieldLabel)
 	
 	if (formField.value.match("[^a-zA-Z0-9\\-]+"))
 	{
-		alert('Please enter a valid value for the "' + fieldLabel +'" field. A-Z, a-z, 0-9 or -');
+		alert('<i18n:text key="failmessage.createdoc.invalidformat"/>');
 		formField.focus();
 		result = false;
 	}
@@ -150,16 +150,13 @@ function validateForm(theForm)
   
   <xsl:template match="exception">
     <font color="red"><i18n:text>EXCEPTION</i18n:text></font><br />
-    Go <a href="{../referer}">back</a> to page.<br />
-    <p>
-      Exception handling isn't very good at the moment. 
-      For further details please take a look at the log-files
-      of Cocoon. In most cases it's one of the two possible exceptions:
+    <a href="{../referer}"><i18n:text>Back</i18n:text></a><br />
+    <p><i18n:text>Please check the following possible causes of the exception</i18n:text>
       <ol>
-        <li>The id is not allowed to have whitespaces</li>
-        <li>The id is already in use</li>
+	<li><i18n:text key="exception.cause.createdoc.whitespace-in-id"/></li>
+	<li><i18n:text key="exception.cause.createdoc.id-in-use"/></li>
       </ol>
-      Exception handling will be improved in the near future.
+      <i18n:text>Exception handling will be improved in the near future</i18n:text>
     </p>
   </xsl:template>
   

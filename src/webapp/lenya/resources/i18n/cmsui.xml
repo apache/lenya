@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.45 2004/03/13 09:06:03 roku Exp $
+   $Id: cmsui.xml,v 1.46 2004/03/13 11:54:20 roku Exp $
    
 -->
 
@@ -253,7 +253,10 @@
   <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
 
    <!-- New Document -->
-   <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>
-   <message key="Parent ID">Parent ID</message>
+   <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>   
+   <message key="exception.cause.createdoc.whitespace-in-id">The id is not allowed to have whitespaces</message>
+   <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>   
+   <message key="failmessage.createdoc.invalidformat">Please enter a valid value in the ID field. A-Z, a-z, 0-9 or - are vaild characters.</message>
+   <message key="failmessage.createdoc.required">Please input all required (*)  values.</message>
  
 </catalogue>

@@ -17,7 +17,7 @@
    limitations under the License.
   
  
-   $Id: cmsui_de.xml,v 1.48 2004/03/13 09:06:03 roku Exp $ 
+   $Id: cmsui_de.xml,v 1.49 2004/03/13 11:54:20 roku Exp $ 
    
 -->
 
@@ -256,6 +256,10 @@
    <!-- New Document -->
    <message key="Please check the following possible causes of the exception">Bitte &#252;berpr&#252;fen Sie folgende Ursachen f&#252;r die Ausnahme.</message>
    <message key="Parent ID">&#220;bergerodnete ID</message>
+   <message key="exception.cause.createdoc.whitespace-in-id">Die ID darf keine Leerzeichen enthalten.</message>
+   <message key="exception.cause.createdoc.id-in-use">Die ID ist schon vergeben.</message>   
+   <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen g&#252;ltigen Wert f&#252;r "ID" ein. G&#252;ltige Zeichen sind A-Z, a-z, 0-9 oder -</message>
+   <message key="failmessage.createdoc.required">Bitte f&#252;llen Sie alle Pflichfelder (*) aus..</message>
 
 </catalogue>
 
