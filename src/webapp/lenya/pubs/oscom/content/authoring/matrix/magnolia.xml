@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system type="cms">
+  <id>magnolia</id>
+  <editor>
+    <name>Pascal Mangold</name>
+    <email>pascal.mangold@obinary.com</email>
+  </editor>
+  <system_name>Magnolia</system_name>
+  <description>Magnolia is the free, open source, J2EE deployable content management system (CMS) developed by obinary. Magnolia is written in Java and uses the upcoming standard API for Java-based content repositories (JCR) to access its content. It has an easy to use web-browser interface, a clear API and a useful custom tag library for easy templating in JSP and Servlets.
+  </description>
+  <main_url>http://www.obinary.com/en/magnolia.html</main_url>
+  <license>
+    <license_name>LGPL</license_name>
+    <license_url>http://www.gnu.org/licenses/licenses.html#LGPL</license_url>
+  </license>
+<programming-language>Java</programming-language>
+</system>
