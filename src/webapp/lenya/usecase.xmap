@@ -273,6 +273,26 @@
 
         </map:match>
         
+        <!-- create-language -->
+        <map:match pattern="create-language" type="usecase">
+
+          <map:match pattern="showscreen" type="step">
+            <map:call resource="cms-screen">
+              <map:parameter name="publication-id" value="{../../1}"/>
+              <map:parameter name="serverpage" value="authoring/create-language.xsp"/>
+              <map:parameter name="stylesheet" value="authoring/create-language.xsl"/>
+            </map:call>
+          </map:match>
+          
+          <map:match pattern="create" type="step">
+            <map:act type="task">
+              <map:parameter name="task-id" value="create-language"/>
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+
+        </map:match>
+        
         
         <!-- create -->      
         <map:match pattern="create" type="usecase">
