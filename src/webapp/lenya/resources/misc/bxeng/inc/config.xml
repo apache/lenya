@@ -1,34 +1,48 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.2 2003/08/15 23:02:06 michi Exp $ -->
+<!-- $Id: config.xml,v 1.3 2003/08/18 09:48:26 michi Exp $ -->
 <config>
     <files>
         <input>
             <!-- The XML-document with the actual data -->
-            <file name="BX_xmlfile" isParam="true">xml</file>
+<!--
+            <file name="BX_xmlfile">test.xml</file>
+-->
+            <file name="BX_xmlfile">index-bxeng.xml</file>
             <!-- The XSL-document which transforms the xml to the output format -->
-            <file name="BX_xslfile" isParam="true">xslt</file>
+            <file name="BX_xslfile">entry-bxeng.xsl</file>
+            <!-- The RelaxNG (XML Schema) -->
+            <file name="BX_validationfile">relaxng.xml</file>
         </input>
         
         <!-- You can't provide a different "method" than http.get for the following files -->
         <css>
-            <!-- Document specific css
-                This is the one, which you should adjust.
-             -->
+            <!-- Document specific css, which you should adjust.  -->
              <file>css/site.css</file>
           
         </css>
         
         <scripts>
         <!-- These are the to be included js files 
-            the important .js files are included by bxeLoader.js, but you should
-            not have to worry about them. 
-            You can also add your own js-files here.
-            -->
-           <file>js/bxehtmltb.js</file>
-           <file>js/jsdav.js</file>
-           <file>td/webdav.js</file>
-           <file>mozile/mozilekb.js</file>
-
+        the important .js files are included by bxeLoader.js, but you should
+        not have to worry about them. 
+        You can also add your own js-files here.
+        -->
+            <file>js/bxehtmltb.js</file>
+            <file>js/jsdav.js</file>
+             <file>js/table.js</file>
+            <file>td/webdav.js</file>
+            <file>mozile/mozilekb.js</file>
+            
+            
+            <file>relaxng/AttributeVDOM.js</file>
+            <file>relaxng/NodeVDOM.js</file>
+            <file>relaxng/DocumentVDOM.js</file>
+            <file>relaxng/ElementVDOM.js</file>
+            <file>relaxng/DocumentVAL.js</file>
+            <file>relaxng/NodeVAL.js</file>
+            <file>relaxng/ElementVAL.js</file>
+            <file>relaxng/RelaxNG.js</file>
+        
         </scripts>
         
         

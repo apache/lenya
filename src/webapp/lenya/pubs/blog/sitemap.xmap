@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.5 2003/08/18 08:55:49 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.6 2003/08/18 09:48:26 michi Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -53,17 +53,30 @@
     <!-- Entries BX Editor -->
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.html">
-        <map:read src="../../resources/misc/bxeng/index.html"/>
+        <map:read src="../../resources/misc/bxeng/index.html" mime-type="text/html"/>
 <!-- FIXME: Ctrl + i (Info): Render mode: Standards compliance mode
         <map:generate src="../../resources/misc/bxeng/index.html"/>
         <map:serialize type="html"/>
 -->
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/config-bxeng.xml">
+        <map:generate src="../../resources/misc/bxeng/inc/config.xml"/>
+<!--
+        <map:transform src="">
+          <map:parameter name="xml" value=""/>
+        </map:transform>
+-->
+        <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/index-bxeng.xml">
         <map:generate src="content/{1}/entries/2003/07/28/1/test.xml"/>
 <!--
         <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/test.xml"/>
 -->
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/entry-bxeng.xsl">
+        <map:generate src="content/{1}/entries/2003/07/28/1/test.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:handle-errors type="500">
