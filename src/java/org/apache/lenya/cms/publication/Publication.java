@@ -1,5 +1,5 @@
 /*
-$Id: Publication.java,v 1.32 2003/10/26 17:28:58 andreas Exp $
+$Id: Publication.java,v 1.33 2003/10/31 18:16:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -79,15 +79,15 @@ public class Publication {
     public static final String ARCHIVE_AREA = "archive";
     public static final String TRASH_AREA = "trash";
 
-    public static final String PATH_MAPPER = "path-mapper";
+    public static final String ELEMENT_PATH_MAPPER = "path-mapper";
+    public static final String ELEMENT_DOCUMENT_BUILDER = "document-builder";
     public static final String LANGUAGES = "languages";
     public static final String LANGUAGE = "language";
     public static final String DEFAULT_LANGUAGE_ATTR = "default";
 
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
 
-    public static final String PUBLICATION_PREFIX =
-        "lenya" + File.separator + "pubs";
+    public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
     public static final String PUBLICATION_PREFIX_URI = "lenya/pubs";
     public static final String CONFIGURATION_PATH = "config";
     public static final String CONTENT_PATH = "content";
@@ -96,7 +96,8 @@ public class Publication {
     private static final String[] areas =
         { AUTHORING_AREA, LIVE_AREA, ADMIN_AREA, ARCHIVE_AREA, TRASH_AREA };
 
-    protected static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator + "publication.xconf";
+    protected static final String CONFIGURATION_FILE =
+        CONFIGURATION_PATH + File.separator + "publication.xconf";
 
     private String id;
     private PublishingEnvironment environment;
@@ -115,8 +116,7 @@ public class Publication {
      * 
      * @throws PublicationException if there was a problem reading the config file
      */
-    protected Publication(String id, String servletContextPath)
-        throws PublicationException {
+    protected Publication(String id, String servletContextPath) throws PublicationException {
         assert id != null;
         this.id = id;
 
@@ -129,63 +129,57 @@ public class Publication {
         // FIXME: remove PublishingEnvironment from publication
         environment = new PublishingEnvironment(servletContextPath, id);
 
-        File configFile =
-            new File(getDirectory(), CONFIGURATION_FILE);
+        File configFile = new File(getDirectory(), CONFIGURATION_FILE);
         DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
 
         Configuration config;
-        String pathMapperClassName = "";
+
+        String pathMapperClassName = null;
+        String documentBuilderClassName = null;
 
         try {
             config = builder.buildFromFile(configFile);
-            pathMapperClassName = config.getChild(PATH_MAPPER).getValue();
 
-            Class pathMapperClass = Class.forName(pathMapperClassName);
-            mapper = (DocumentIdToPathMapper)pathMapperClass.newInstance();
+            try {
+                pathMapperClassName = config.getChild(ELEMENT_PATH_MAPPER).getValue();
+                Class pathMapperClass = Class.forName(pathMapperClassName);
+                this.mapper = (DocumentIdToPathMapper) pathMapperClass.newInstance();
+            } catch (ClassNotFoundException e) {
+                throw new PublicationException(
+                    "Cannot instantiate documentToPathMapper: [" + pathMapperClassName + "]",
+                    e);
+            }
 
-            Configuration[] languages =
-                config.getChild(LANGUAGES).getChildren();
+            try {
+                documentBuilderClassName = config.getChild(ELEMENT_DOCUMENT_BUILDER).getValue();
+                Class documentBuilderClass = Class.forName(documentBuilderClassName);
+                this.documentBuilder = (DocumentBuilder) documentBuilderClass.newInstance();
+            } catch (ClassNotFoundException e) {
+                throw new PublicationException(
+                    "Cannot instantiate document builder: [" + pathMapperClassName + "]",
+                    e);
+            }
+            
+            Configuration[] languages = config.getChild(LANGUAGES).getChildren();
             for (int i = 0; i < languages.length; i++) {
                 Configuration languageConfig = languages[i];
                 String language = languageConfig.getValue();
                 this.languages.add(language);
-                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null)
-                    != null) {
+                if (languageConfig.getAttribute(DEFAULT_LANGUAGE_ATTR, null) != null) {
                     defaultLanguage = language;
                 }
             }
-			breadcrumbprefix =
-				config.getChild(BREADCRUMB_PREFIX).getValue("");
 
-
-        } catch (ConfigurationException e) {
+        } catch (PublicationException e) {
+            throw e;
+        } catch (Exception e) {
             throw new PublicationException(
                 "Problem with config file: " + configFile.getAbsolutePath(),
                 e);
-        } catch (SAXException e) {
-            throw new PublicationException(
-                "Could not parse config file: " + configFile.getAbsolutePath(),
-                e);
-        } catch (IOException e) {
-            throw new PublicationException(
-                "Could not find config file: " + configFile.getAbsolutePath(),
-                e);
-        } catch (ClassNotFoundException e) {
-            throw new PublicationException(
-                "Cannot instantiate documentToPathMapper: "
-                    + pathMapperClassName,
-                e);
-        } catch (InstantiationException e) {
-            throw new PublicationException(
-                "Cannot instantiate documentToPathMapper: "
-                    + pathMapperClassName,
-                e);
-        } catch (IllegalAccessException e) {
-            throw new PublicationException(
-                "Cannot instantiate documentToPathMapper: "
-                    + pathMapperClassName,
-                e);
         }
+
+        breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
+
     }
 
     /**
@@ -219,9 +213,7 @@ public class Publication {
      * @return A <code>File</code> object.
      */
     public File getDirectory() {
-        return new File(
-            getServletContext(),
-            PUBLICATION_PREFIX + File.separator + getId());
+        return new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
     }
 
     /**
@@ -287,17 +279,17 @@ public class Publication {
      * @return an <code>Array</code> of languages
      */
     public String[] getLanguages() {
-        return (String[])languages.toArray(new String[languages.size()]);
+        return (String[]) languages.toArray(new String[languages.size()]);
     }
 
-	/**
-	 * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger site
-	 * 
-	 * @return the breadcrumb prefix
-	 */
-	public String getBreadcrumbPrefix() {
-		return breadcrumbprefix;
-	}
+    /**
+     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger site
+     * 
+     * @return the breadcrumb prefix
+     */
+    public String getBreadcrumbPrefix() {
+        return breadcrumbprefix;
+    }
 
     /**
      * Get the sitetree for a specific area of this publication. 
@@ -311,22 +303,24 @@ public class Publication {
     public DefaultSiteTree getSiteTree(String area) throws SiteTreeException {
 
         DefaultSiteTree sitetree = null;
-		
+
         if (siteTrees.containsKey(area)) {
-            sitetree = (DefaultSiteTree)siteTrees.get(area);
+            sitetree = (DefaultSiteTree) siteTrees.get(area);
         } else {
             sitetree = new DefaultSiteTree(getDirectory(), area);
             siteTrees.put(area, sitetree);
         }
         return sitetree;
     }
-    
+
+    private DocumentBuilder documentBuilder;
+
     /**
      * Returns the document builder of this instance.
      * @return A document builder.
      */
     public DocumentBuilder getDocumentBuilder() {
-    	return DefaultDocumentBuilder.getInstance();
+        return documentBuilder;
     }
-    
+
 }
