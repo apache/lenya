@@ -6,6 +6,6 @@
   <base-url href="http://www.oscom.org/Conferences/Cambridge/"/>
   <scope-url href="http://www.oscom.org/Conferences/Cambridge/"/>
 
-  <uri-list src="../resources/search/lucene/uris.txt"/>
-  <htdocs-dump-dir src="/home/michiii/oscom_htdocs_dump/www.oscom.org"/>
+  <uri-list src="../resources/search/lucene/uris-cambridge.txt"/>
+  <htdocs-dump-dir src="../resources/search/lucene/htdocs_dump/www.oscom.org"/>
 </crawler>
