@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<NewsML>
+  <NewsItem>
+    <Identification>
+      <NewsIdentifier>
+        <RevisionId PreviousRevision="1" Update="N">2</RevisionId>
+      </NewsIdentifier>
+    </Identification>
+    <NewsComponent EquivalentsList="no">
+      <ContentItem>
+        <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+          <nitf>
+            <head>
+              <hedline>
+                <hl1>Teaser Titel</hl1>
+                <dossier>Dossier</dossier>
+                <abstract>Teaser Lead</abstract>
+              </hedline>
+            </head>
+            <body>
+              <body.head>
+                <dateline>
+                  <story.date norm="10.10.2002" millis="1036882800000"/>
+                </dateline>
+                <hedline>
+                  <hl1>Die 3D-Struktur der Eiweisse</hl1>
+                </hedline>
+                <byline>Autor</byline>
+                <abstract>Chemienobelpreisträger Kurt Wüthrich arbeitet im Nationalen Forschungsschwerpunkt «Strukturbiologie» seit längerem mit dem Zürcher Universitätsprofessor Markus Grütter zusammen. Worum geht es bei der Strukturbiologie, fragte unipublic des Nobelpreisträgers Kollegen, und welchen Einfluss hat der Nobelpreis auf die Forschergemeinschaft in der Schweiz?</abstract>
+              </body.head>
+              <body.content>
+                <block>
+                  <p>Paragraph</p>
+                </block>
+                <block>
+                  <hl2>Zwischen-/Blocktitel</hl2>
+                  <p>Paragraph</p>
+                  <p>Paragraph</p>
+                </block>
+              </body.content>
+              <body.end>
+                <tagline>Tagline</tagline>
+              </body.end>
+            </body>
+          </nitf>
+        </DataContent>
+      </ContentItem>
+    </NewsComponent>
+    <NewsComponent EquivalentsList="no">
+      <ContentItem>
+        <DataContent>
+          <related-content>
+            <block>
+              <title>Artikel</title>
+              <item>Nobelpreis in Chemie an Zürcher Prionenforscher </item>
+            </block>
+            <block>
+              <title>Links</title>
+              <item>Der Nobelpreis</item>
+              <item>Pressemitteilung</item>
+              <item>Nationales Kompetenzzentrum Strukturbiologie</item>
+            </block>
+          </related-content>
+        </DataContent>
+      </ContentItem>
+    </NewsComponent>
+    <NewsManagement>
+      <RevisionDate year="2002" month="10" day="10"/>
+      <PublishDate year="2002" month="10" day="10" hour="00" minute="50" millis="1036882800000"/>
+    </NewsManagement>
+  </NewsItem>
+</NewsML>
