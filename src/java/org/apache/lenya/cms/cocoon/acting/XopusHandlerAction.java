@@ -1,5 +1,5 @@
 /*
- * $Id: XopusHandlerAction.java,v 1.24 2003/04/03 15:05:05 michi Exp $
+ * $Id: XopusHandlerAction.java,v 1.25 2003/04/11 11:06:44 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -223,6 +223,7 @@ public class XopusHandlerAction extends ConfigurableComposerAction {
 
         if(!permFile.exists()) {
             getLogger().error(".act(): No such file: " + permFile.getAbsolutePath());
+            getLogger().error(".act(): No such file: " + sitemapPath + "::" + relRootDirs.get(fileType) + "::" + reqFile);
             return null;
         }
 
