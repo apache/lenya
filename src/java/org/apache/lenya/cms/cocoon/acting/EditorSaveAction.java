@@ -36,19 +36,26 @@ public class EditorSaveAction extends AbstractValidatorAction implements ThreadS
  */
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
     // Get request object
-    Request req=(Request)objectModel.get(Constants.REQUEST_OBJECT);
-
-    if(req == null){
+    Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
+    if(request == null){
       getLogger().error ("No request object");
       return null;
     }
+    //     String editfilename = (String)request.getParameter("filename");
+    //     String tempfilename = (String)request.getParameter("tempfilename");
+    Session session=request.getSession(true);
+    if(session == null){
+      getLogger().error ("No session object");
+      return null;
+    }
+    String tempfilename = (String)session.getAttribute("org.wyona.cms.cocoon.acting.EditorTempfile");
+    String editfilename = (String)session.getAttribute("org.wyona.cms.cocoon.acting.EditorEditfile");
+    String finalredirect= (String)session.getAttribute("org.wyona.cms.cocoon.acting.EditorFinalRedirect");
 
-    String editfilename = (String)req.getParameter("filename");
-    String tempfilename = (String)req.getParameter("tempfilename");
-
-    //    String editfilename=req.getParameter("filename");
+    //    String editfilename=request.getParameter("filename");
     getLogger().error("=======> editfilename   ="+editfilename);
     getLogger().error("=======> tempfilename   ="+tempfilename);
+    getLogger().error("=======> finalRedirect   ="+finalredirect);
 
     if (editfilename != null) {
       try {
@@ -66,6 +73,7 @@ public class EditorSaveAction extends AbstractValidatorAction implements ThreadS
         while((bytes_read = is.read(bytes_buffer)) >= 0){                       
           os.write(bytes_buffer, 0, bytes_read);                           
         }                                                                       
+        getLogger().error("------------------------------------------ Writing file  "+editfilename);
         HashMap sitemapParams = new HashMap();
         sitemapParams.put("tempfilename", tempfilename);
         return sitemapParams;

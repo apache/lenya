@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.10 2002/01/17 15:02:37 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.11 2002/01/18 03:10:29 tinuwyonacms Exp $
 
 -->
 
@@ -304,7 +304,9 @@
   in the server.xml configuration is set to true so changes in the classes
   are reflected immediately.
   -->
-  <target name="webapp" depends="compile,javadocs" 
+<!--   <target name="webapp" depends="compile,javadocs"  -->
+<!--           description="Builds the webapp directory ready to be linked into a servlet engines context directory"> -->
+  <target name="webapp" depends="compile" 
           description="Builds the webapp directory ready to be linked into a servlet engines context directory">
 
     <!--

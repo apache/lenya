@@ -41,7 +41,7 @@ public class EditorInitAction extends AbstractValidatorAction implements ThreadS
    */
   public Map act(Redirector redirector,SourceResolver resolver,Map objectModel,String src,Parameters parameters) throws Exception {
     HashMap sitemapParams = new HashMap();
-    Request req=(Request)objectModel.get(Constants.REQUEST_OBJECT);
+    Request request=(Request)objectModel.get(Constants.REQUEST_OBJECT);
     //     Context context=(Context)objectModel.get(Constants.CONTEXT_OBJECT);
     
     getLogger().error("=======> action="+parameters.getParameter("action","niet"));
@@ -59,11 +59,11 @@ public class EditorInitAction extends AbstractValidatorAction implements ThreadS
       getLogger().error("=======> tempfile ="+tempfilename);
 
 
-      if(req == null){
+      if(request == null){
         getLogger().error ("No request object");
         return null;
       }
-      String editfilename=req.getParameter("filename");
+      String editfilename=request.getParameter("filename");
 
       getLogger().error("=======> filename="+editfilename);
 
@@ -75,6 +75,7 @@ public class EditorInitAction extends AbstractValidatorAction implements ThreadS
             getLogger().error("=======> new editfilename   ="+editfilename);
           }
           context.setAttribute("editor.filename",editfilename);
+
           // good old Java has no file copy method, so we do it the hard way
           InputStream is = new FileInputStream(editfilename);                      
           OutputStream os = new FileOutputStream(tempfilename);
@@ -85,8 +86,28 @@ public class EditorInitAction extends AbstractValidatorAction implements ThreadS
             os.write(bytes_buffer, 0, bytes_read);                           
           }                                                                       
 
+          String finalredirect = request.getContextPath();
           sitemapParams.put("filename", editfilename);
           sitemapParams.put("tempfilename", tempfilename);
+          sitemapParams.put("finalredirect", finalredirect);
+          getLogger().error("formedit =====> filename: "+editfilename);
+          getLogger().error("formedit =====> tempfilename: "+tempfilename);
+
+          Session session=request.getSession(true);
+          if(session == null){
+            getLogger().error("no session available");
+            return null;
+          }
+          session.setAttribute("org.wyona.cms.cocoon.acting.EditorTempfile",tempfilename);
+          session.setAttribute("org.wyona.cms.cocoon.acting.EditorEditfile",editfilename);
+          //           String finalredirect = request.getRequestURI()
+          session.setAttribute("org.wyona.cms.cocoon.acting.EditorFinalRedirect",finalredirect);
+
+          getLogger().error("==============session tempfile =====> : "+
+                            session.getAttribute("org.wyona.cms.cocoon.acting.EditorTempfile"));
+          getLogger().error("============== final rediret =====> : "+
+                            session.getAttribute("org.wyona.cms.cocoon.acting.EditorFinalRedirect"));
+
           return sitemapParams;
         } catch (Exception e) {
           getLogger().error("filename not existing "+editfilename+" "+e);
@@ -94,10 +115,16 @@ public class EditorInitAction extends AbstractValidatorAction implements ThreadS
         }
       } 
     } else if ("do".equals(parameters.getParameter("action",null))) {
-      getLogger().error("doedit =====> filename: "+req.getParameter("filename"));
-      getLogger().error("doedit =====> tempfilename: "+req.getParameter("tempfilename"));
-      sitemapParams.put("filename", req.getParameter("filename"));
-      sitemapParams.put("tempfilename", req.getParameter("tempfilename"));
+      Session session=request.getSession(true);
+      if(session == null){
+        getLogger().error("no session available");
+        return null;
+      }
+      // get the parameters from the session and provide them to the sitemap
+      sitemapParams.put("filename", session.getAttribute("org.wyona.cms.cocoon.acting.EditorEditfile"));
+      sitemapParams.put("tempfilename", session.getAttribute("org.wyona.cms.cocoon.acting.EditorTempfile"));
+      //       sitemapParams.put("filename", request.getParameter("filename"));
+      //       sitemapParams.put("tempfilename", request.getParameter("tempfilename"));
       return sitemapParams;
     }
     // if none of these targets was requested, say "error"
