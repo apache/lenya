@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.242 2004/08/19 20:52:22 roku Exp $ -->
+<!-- $Id: usecase.xmap,v 1.243 2004/08/19 23:21:09 roku Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -341,20 +341,20 @@
                   src="{fallback:resources/kupu/apache-lenya/kupu/kupumacros.html}"/>
                 <map:transform src="{fallback:resources/kupu/apache-lenya/lenya/kupumacros.xsl}">
                   <map:parameter name="contentfile" 
-                    value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=content"/>
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=content"/>
                   <map:parameter name="context-prefix" value="{request:contextPath}"/>
                   <!-- Only used to display the document path of the edited doc  -->
                   <map:parameter name="document-path" value="{page-envelope:document-path}"/>
                   <map:parameter name="save-destination" 
-                    value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=save"/>
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=save"/>
                   <map:parameter name="exit-destination" 
-                    value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=exit"/>
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=exit"/>
                   <map:parameter name="reload-after-save" value="1"/>
                   <map:parameter name="use-css" value="1"/>
                   <map:parameter name="imagedrawer-xsl-uri" 
-                    value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=imagedrawerxsl"/>
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=imagedrawerxsl"/>
                   <map:parameter name="imagedrawer-libraries-uri" 
-                    value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;lenya.step=imagedrawerlibraries"/>
+                    value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=imagedrawerlibraries"/>
                 </map:transform>
                 <map:serialize type="html"/>
               </map:act>
@@ -379,7 +379,7 @@
           <map:match pattern="imagedrawerxsl" type="step">
             <map:generate src="{fallback:resources/kupu/apache-lenya/kupu/imagedrawer/imagedrawer.xsl}" 
               type="jx">
-              <map:parameter name="stylesheetUrl" value="{page-envelope:context-prefix}/kupu/common/kupudrawers/librarydrawer.xsl"/>
+              <map:parameter name="root" value="{page-envelope:context-prefix}/kupu/common/kupudrawers/"/>
             </map:generate>  
             <map:serialize type="xml"/>
           </map:match>
