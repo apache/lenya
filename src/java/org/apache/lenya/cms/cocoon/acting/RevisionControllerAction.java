@@ -1,5 +1,5 @@
 /*
- * $Id: RevisionControllerAction.java,v 1.14 2003/04/24 13:52:38 gregor Exp $
+ * $Id: RevisionControllerAction.java,v 1.15 2003/04/30 16:44:24 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -122,7 +122,7 @@ public class RevisionControllerAction extends AbstractAction {
         Identity identity = (Identity) session.getAttribute("org.apache.lenya.cms.ac.Identity");
         getLogger().debug(".act(): Identity: " + identity);
 
-        filename = parameters.getParameter("filename");
+        filename = request.getParameter("filename");
         username = null;
 
         if (identity != null) {

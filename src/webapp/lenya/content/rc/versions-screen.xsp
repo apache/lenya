@@ -21,14 +21,13 @@
 
     <xsp:logic>
 
-      String docId = parameters.getParameter("docid","null");
-      String docUri = parameters.getParameter("documentUri","null");
-      <xsp:content><documentId><xsp:expr>docId</xsp:expr></documentId></xsp:content>
-      <xsp:content><documentUri><xsp:expr>docUri</xsp:expr></documentUri></xsp:content>
+      String docId = request.getParameter("documentid");
+      String filename=xspUtilPublication.getEnvironment().getAuthoringPath() + "/" +docId;
 
-      String filename=parameters.getParameter("filename","null");
+      <xsp:content><filename><xsp:expr>filename</xsp:expr></filename></xsp:content>
+      <xsp:content><usecase><xsp:expr>request.getParameter("usecase")</xsp:expr></usecase></xsp:content>
+
       String rootDir=xspUtilPublicationPath;
-
       RCEnvironment rcEnvironment = new RCEnvironment(xspUtilServletContextPath);
       String rcmlDirectory = rcEnvironment.getRCMLDirectory();
       rcmlDirectory=rootDir+rcmlDirectory;

@@ -4,10 +4,9 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:rc="http://www.lenya.org/2002/rc">
 
-<xsl:variable name="prefix"><xsl:value-of select="/rc:revisions/prefix/."/></xsl:variable>
-<xsl:variable name="contextPrefix"><xsl:value-of select="/rc:revisions/context_prefix/."/></xsl:variable>
-<xsl:variable name="documentId"><xsl:value-of select="/rc:revisions/documentId/."/></xsl:variable>
-<xsl:variable name="documentUri"><xsl:value-of select="/rc:revisions/documentUri/."/></xsl:variable>
+<xsl:variable name="usecase"><xsl:value-of select="/rc:revisions/usecase/."/></xsl:variable>
+<xsl:variable name="requestUri"><xsl:value-of select="/rc:revisions/request_uri/."/></xsl:variable>
+<xsl:variable name="filename"><xsl:value-of select="/rc:revisions/filename/."/></xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates select="rc:revisions/XPSRevisionControl"/>
@@ -19,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
 </head>	
 <body>
-        <a href="{$prefix}/{$documentUri}">Back to page</a> 	
+        <a href="{$requestUri}">Back to page</a> 	
 	<h2>Rollback to an earlier version</h2>
 	<table border="0" cellpadding="2" cellspacing="1">
 		<tr bgcolor="#aaaaaa">
@@ -54,17 +53,13 @@
 					<tr bgcolor="#bbbbbb">
 						<td>
 							<xsl:element name="a">
-<!--
-							<xsl:attribute name="href">rollback.xml?action=rollback&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/>&amp;rollback=<xsl:value-of select="../@id"/>&amp;repository=<xsl:value-of select="../@repository"/></xsl:attribute>Rollback to this version</xsl:element>
--->
-							<xsl:attribute name="href"><xsl:value-of select="$contextPrefix"/>/authoring/rollback/<xsl:value-of select="$documentId"/>?action=rollback&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
+							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?usecase=<xsl:value-of select="$usecase"/>&amp;step=rollback&amp;filename=<xsl:value-of select="$filename"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
+
 						</td>
 						<td>
 							<xsl:element name="a">
-<!--
-							<xsl:attribute name="href">rollback.xml?action=view&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/>&amp;rollback=<xsl:value-of select="../@id"/>&amp;repository=<xsl:value-of select="../@repository"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
--->
-							<xsl:attribute name="href"><xsl:value-of select="$contextPrefix"/>/authoring/view/<xsl:value-of select="$documentId"/>?action=view&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+							<xsl:attribute name="href"><xsl:value-of select="$requestUri"/>?usecase=<xsl:value-of select="$usecase"/>&amp;step=view&amp;filename=<xsl:value-of select="$filename"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+
 						</td>
 						<xsl:apply-templates select="Time"/>
 						<xsl:apply-templates select="Identity"/>

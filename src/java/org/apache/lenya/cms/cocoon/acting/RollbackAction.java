@@ -1,5 +1,5 @@
 /*
- * $Id: RollbackAction.java,v 1.11 2003/04/24 13:52:38 gregor Exp $
+ * $Id: RollbackAction.java,v 1.12 2003/04/30 16:44:24 edith Exp $
  * <License>
  * The Apache Software License
  *
@@ -94,12 +94,14 @@ public class RollbackAction extends RevisionControllerAction {
         }
 
         // Get parameters                                                                                                                       
-        String action = request.getParameter("action");
+//        String action = request.getParameter("action");
         String rollbackTime = request.getParameter("rollbackTime");
 
+/* FIXME
         if (action != null) {
             if (action.equals("rollback")) {
-                // Do the rollback to an earlier version
+*/  
+              // Do the rollback to an earlier version
                 long newtime = 0;
 
                 try {
@@ -122,9 +124,9 @@ public class RollbackAction extends RevisionControllerAction {
 
                 getLogger().debug("redirect to " + location);
                 actionMap.put("location", location);
-
                 return actionMap;
 
+/*
             } else {
                 getLogger().error("The action is no defined");
 
@@ -135,5 +137,6 @@ public class RollbackAction extends RevisionControllerAction {
 
             return null;
         }
+*/
     }
 }

@@ -19,8 +19,8 @@
   <menus>
     <menu name="File" label="File">
       <block>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/matrix/"+projectid+".html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/revision/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/xopus2/matrix/"+projectid+".html"</xsp:expr>?filename=content/authoring/matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/matrix/"+projectid+".html"</xsp:expr>?usecase=rollback&amp;step=showscreen&amp;documentid=matrix/<xsp:expr>projectid+".xml"</xsp:expr></xsp:attribute>Rollback</item>
         <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix+"/authoring/lenya/publishScreen?uris=/lenya/oscom/matrix/"+projectid+".html,/lenya/oscom/matrix/index.html&amp;sources=/matrix/"+projectid+".xml"</xsp:expr></xsp:attribute>Publish</item>
       </block>
       <separator>

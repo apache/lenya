@@ -20,7 +20,7 @@
 
     <xsp:logic>
 
-      String filename=parameters.getParameter("filename","null");                 
+      String filename=request.getParameter("filename");                 
       String rollbackTime=request.getParameter("rollbackTime");
       String rootDir=xspUtilPublicationPath;
 
