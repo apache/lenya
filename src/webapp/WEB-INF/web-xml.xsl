@@ -38,6 +38,8 @@
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
     
+    <xsl:comment>Patched by Lenya build process</xsl:comment>
+
     <xsl:comment>Scheduler</xsl:comment>
     <servlet>
       <servlet-name>QuartzSchedulerServlet</servlet-name>
@@ -54,6 +56,8 @@
   <xsl:template match="/web-app/servlet-mapping[position() = count(/web-app/servlet-mapping)]">
     <xsl:copy-of select="."/>
     
+    <xsl:comment>Patched by Lenya build process</xsl:comment>
+
     <xsl:comment>Scheduler</xsl:comment>
     <servlet-mapping>
       <servlet-name>QuartzSchedulerServlet</servlet-name>
@@ -63,6 +67,8 @@
   </xsl:template>
 
   <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'enable-uploads']">
+    <xsl:comment>Patched by Lenya build process</xsl:comment>
+
     <init-param>
       <param-name>enable-uploads</param-name>
       <param-value><xsl:value-of select="$enableUploads"/></param-value>
@@ -70,13 +76,21 @@
   </xsl:template>
   
   <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'overwrite-uploads']">
+    <xsl:comment>Patched by Lenya build process</xsl:comment>
+
     <init-param>
       <param-name>overwrite-uploads</param-name>
       <param-value>allow</param-value>
     </init-param>
   </xsl:template>
 
-  <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'form-encoding']">
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = last()]">
+    <xsl:copy-of select="."/>
+  <!-- Does not work if form-encoding is commented within Cocoon's web.xml -->
+  <!-- <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'form-encoding']"> -->
+
+    <xsl:comment>Patched by Lenya build process</xsl:comment>
+
     <init-param>
       <param-name>form-encoding</param-name>
       <param-value>UTF-8</param-value>
@@ -85,6 +99,9 @@
   
   <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = last()-1]">
     <xsl:copy-of select="."/>
+
+    <xsl:comment>Patched by Lenya build process</xsl:comment>
+
     <init-param>
       <param-name>logger-class</param-name>
       <param-value>org.apache.avalon.excalibur.logger.Log4JLoggerManager</param-value>
