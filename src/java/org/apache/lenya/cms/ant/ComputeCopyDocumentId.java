@@ -1,5 +1,5 @@
 /*
-$Id: ComputeCopyDocumentId.java,v 1.4 2003/07/23 13:21:23 gregor Exp $
+$Id: ComputeCopyDocumentId.java,v 1.5 2003/07/25 16:39:56 edith Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id: ComputeCopyDocumentId.java,v 1.4 2003/07/23 13:21:23 gregor Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import java.io.File;
 import java.util.StringTokenizer;
 
 
@@ -91,7 +90,7 @@ public class ComputeCopyDocumentId extends ComputeNewDocumentId {
 			st.nextToken();
 		}
 
-		secdocumentid = secdocumentid + File.separator  + st.nextToken();
+		secdocumentid = secdocumentid + "/"  + st.nextToken();
 		return secdocumentid;
 	}
 

@@ -1,5 +1,5 @@
 /*
-$Id: ComputeRenameDocumentId.java,v 1.2 2003/07/23 13:21:23 gregor Exp $
+$Id: ComputeRenameDocumentId.java,v 1.3 2003/07/25 16:39:56 edith Exp $
 <License>
 
  ============================================================================
@@ -55,7 +55,6 @@ $Id: ComputeRenameDocumentId.java,v 1.2 2003/07/23 13:21:23 gregor Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import java.io.File;
 import java.util.StringTokenizer;
 
 /**
@@ -87,12 +86,9 @@ public class ComputeRenameDocumentId extends ComputeNewDocumentId {
 		StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
 		int l = st.countTokens();
 		for (int i = 0; i < l-1; i++) {
-			documentid = documentid + File.separator + st.nextToken();
+			documentid = documentid + "/" + st.nextToken();
 		}
-		secdocumentid = documentid + File.separator + secdocumentid;
-		if (secdocumentid.startsWith(File.separator)) {
-			secdocumentid.substring(1); 
-		}
+		secdocumentid = documentid + "/" + secdocumentid;
 		return secdocumentid;
 	}
 
