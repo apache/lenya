@@ -62,7 +62,7 @@
 	src="ch.unizh.unipublic.wyona.cms.ArticleImageUploadCreatorAction">
         <images-dir href="resources/publication/images/authoring" />
         <meta-dir href="docs/publication/authoring" />
-	<insert-image-before value="true" />
+	<insert-image-before value="false" />
       </map:action>
     </map:actions>
 
