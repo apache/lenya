@@ -1,5 +1,5 @@
 /*
-$Id: RevisionControllerAction.java,v 1.22 2003/07/23 14:43:34 michi Exp $
+$Id: RevisionControllerAction.java,v 1.23 2003/08/08 09:09:44 egli Exp $
 <License>
 
  ============================================================================
@@ -153,8 +153,15 @@ public class RevisionControllerAction extends AbstractAction {
         getLogger().debug(".act(): Identity: " + identityTwo);
 
         String docId = request.getParameter("documentid");
-		String authoringPath = File.separator+"content" + File.separator + Publication.AUTHORING_AREA;
-        filename = authoringPath + File.separator+docId.replace('/', File.separatorChar);
+        String authoringPath =
+            File.separator
+                + Publication.CONTENT_PATH
+                + File.separator
+                + Publication.AUTHORING_AREA;
+        filename =
+            authoringPath
+                + File.separator
+                + docId.replace('/', File.separatorChar);
         getLogger().debug(".act(): publicationAuthPath + docId : " + authoringPath + " : " + docId);
         username = null;
 

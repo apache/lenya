@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentIdToPathMapper.java,v 1.10 2003/08/07 07:14:55 egli Exp $
+$Id: DefaultDocumentIdToPathMapper.java,v 1.11 2003/08/08 09:09:07 egli Exp $
 <License>
 
  ============================================================================
@@ -89,7 +89,11 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper {
         File file =
             new File(
                 publication.getDirectory(),
-                "content" + File.separator + area + File.separator + documentId);
+                Publication.CONTENT_PATH
+                    + File.separator
+                    + area
+                    + File.separator
+                    + documentId);
 
         return file;
     }
