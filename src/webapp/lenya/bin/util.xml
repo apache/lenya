@@ -79,7 +79,7 @@
     <xslt
         basedir="/home/username/upper_case"
         destdir="/home/username/lower_case"
-        style="${lenya.dir}/src/webapp/lenya/xslt/misc/upper2lower_case.xsl"
+        style="${lenya.dir}/src/webapp/lenya/xslt/util/upper2lower_case.xsl"
         includes="**/*.xsl"
         extension=".xsl"
         />
