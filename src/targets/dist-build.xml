@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.14 2004/06/11 13:26:36 roku Exp $ -->
+<!-- $Id: dist-build.xml,v 1.15 2004/06/11 13:59:06 roku Exp $ -->
 
 <project name="dist">
 
@@ -37,6 +37,7 @@
       <fileset dir="${basedir}">
         <include name="INSTALL-BIN.txt"/>
         <include name="README.txt"/>
+        <include name="LICENSE.txt"/>
         <include name="lenya.sh"/>
         <include name="lenya.bat"/>
         <include name="legal/**"/>
