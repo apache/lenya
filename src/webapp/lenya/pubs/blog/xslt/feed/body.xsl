@@ -20,7 +20,7 @@
   <xsl:apply-templates select="echo:content"/>
 
   <p class="issued">
-  <b>Posted by <a href="{author/homepage}"><xsl:value-of select="author/name"/></a> at <xsl:value-of select="issued"/></b>&#160;|&#160;<a href="../../entries/{id}/index.html">Permalink</a>
+  <b>Posted <xsl:apply-templates select="author"/> at <xsl:value-of select="issued"/></b>&#160;|&#160;<a href="../../entries/{id}/index.html">Permalink</a>
   </p>
 </xsl:template>
 
@@ -40,6 +40,18 @@
 <p>
   <xsl:copy-of select="node()"/>
 </p>
+</xsl:template>
+
+<xsl:template match="author">
+by
+<xsl:choose>
+<xsl:when test="homepage">
+<a href="{homepage}"><xsl:value-of select="name"/></a>
+</xsl:when>
+<xsl:otherwise>
+<xsl:value-of select="name"/>
+</xsl:otherwise>
+</xsl:choose>
 </xsl:template>
  
 </xsl:stylesheet>  
