@@ -22,7 +22,7 @@
 <document> 
 
 <header> 
-    <title>Downloading and Installing Lenya</title>
+    <title>Downloading and Installing Apache Lenya 1.2.x</title>
     <version>0.1</version> 
     <type>Documentation</type> 
 </header> 
@@ -30,7 +30,7 @@
 
 <ul>
   <li>
-    Download Lenya
+    Download Apache Lenya 1.2.x
     <ul>
       <li><link href="ext:releases">Releases</link></li>
       <li><link href="ext:nightly.builds">Nightly Snapshots</link></li>
@@ -38,7 +38,7 @@
     </ul>
   </li>
   <li>
-    Install Lenya
+    Install Apache Lenya 1.2.x
     <ul>
       <li><link href="source_version.html">Source Version</link></li>
     </ul>

@@ -32,7 +32,7 @@
 
 
   <tab label="Project" dir="" id="project" indexfile="index.html"/>
-  <tab label="Installation" dir="installation" id="installation" indexfile="index.html"/>
-  <tab label="Documentation" dir="docs" id="docs" indexfile="index.html"/>
+  <tab label="Version 1.4" dir="1_4" id="1_4" indexfile="index.html"/>
+  <tab label="Version 1.2" dir="1_2_x" id="1_2" indexfile="index.html"/>
   <tab label="Community" dir="community" id="community" indexfile="index.html"/>
 </tabs>

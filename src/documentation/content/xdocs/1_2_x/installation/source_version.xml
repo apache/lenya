@@ -21,7 +21,7 @@
 
 <document>
   <header>
-    <title>Installation of the Source Version</title>
+    <title>Installation of the 1.2 Source Version</title>
     <type>Documentation</type>
     <authors>
       <person name="Lenya community" email="dev@lenya.apache.org"/>
@@ -33,7 +33,7 @@
   		<title>Introduction</title>
   	
   		<p>
-  			This document explains how to install Lenya from source.
+  			This document explains how to install Lenya 1.2.x from source.
   			There are different ways to install and run Lenya:
   			<br/>
   			Choose between

@@ -51,6 +51,7 @@
             <xsl:variable name="version">
                 <xsl:choose>
                     <xsl:when test="contains(paths/path[1], 'BRANCH_1_2_X')">1.2</xsl:when>
+                    <xsl:when test="contains(paths/path[1], 'lenya/trunk') and contains(date, '2005')">1.4</xsl:when>
                     <xsl:when test="contains(paths/path[1], 'lenya/trunk') and contains(date, '2004')">1.4</xsl:when>
                     <xsl:when test="contains(date, '2003')">1.0</xsl:when>
                     <xsl:when test="contains(date, '2002')">0.8</xsl:when>

@@ -27,15 +27,16 @@ $Revision: 1.12 $
 <!-- Pipelines -->
  <map:pipelines>
   <map:pipeline>
-<!--Aggregation out of a couple of sites-->
-    <map:match pattern="docu.xml">
+    <!-- Pipeline to aggregate the documentation for a branch.
+      eg. documentation-1.2.xml -->
+    <map:match pattern="documentation-*-*.xml">
       <map:generate src="cocoon://abs-linkmap"/>
       <map:transform type="xpath">
-        <map:parameter name="include" value="//*[@wholesite='true']"/>
+        <map:parameter name="include" value="//*[@target='{1}.{2}']"/>
       </map:transform>
       <map:transform src="{forrest:stylesheets}/site2book.xsl" />
       <map:transform src="{forrest:stylesheets}/aggregates/book2cinclude.xsl">
- 	  <map:parameter name="title" value="{conf:project-name}: Whole documentation"/>
+     	  <map:parameter name="title" value="{conf:project-name}: Whole documentation"/>
       </map:transform>
       <map:transform type="cinclude"/>
       <map:transform src="{forrest:stylesheets}/aggregates/doc2doc-uniqueids.xsl"/>

@@ -1,7 +1,1506 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <status>
    <changes>
+      <release version="2005-02">
+         <action dev="roku" type="add" context="">[] 
+            Tagging 1.2.2
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154530&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="" context="">[] 
+            Preparing re-tagging
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154529&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+             <link href="http://svn.apache.org/viewcvs.cgi?rev=154524&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            Fixed asset conversion whitespace problem <link href="http://svn.apache.org/viewcvs.cgi?rev=154523&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Fixed asset conversion whitespace problem <link href="http://svn.apache.org/viewcvs.cgi?rev=154522&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            Fixed objct conversion. See bug #33661 <link href="http://svn.apache.org/viewcvs.cgi?rev=154520&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+             <link href="http://svn.apache.org/viewcvs.cgi?rev=154519&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Fixed broken link <link href="http://svn.apache.org/viewcvs.cgi?rev=154518&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Moving to latest kupu 1.2. fix; Fixed img @src, since we use Lenya asset stuff
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154516&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Fixed object2xhtml conversion; Object with a leading / in @data ar used as-is.
+This is needed if a page references assets from another page. <link href="http://svn.apache.org/viewcvs.cgi?rev=154515&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="add" context="">[] 
+            Tagging 1.2.2 based on BRANCHES/BRANCH_1_2_X
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154498&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Grumml, corrected kupu revision
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154496&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Corrected svn:externals url for kupu
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154495&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Corrected revision numbers
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154494&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Prepare 1.2.2 tag; revert after the release
+See #33658 <link href="http://svn.apache.org/viewcvs.cgi?rev=154492&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Incremented version number to 1.2.2 <link href="http://svn.apache.org/viewcvs.cgi?rev=154491&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Prepare 1.2.2 tag; revert after the release <link href="http://svn.apache.org/viewcvs.cgi?rev=154490&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Set -r for svn:externals for the 1.2.2 release; do not forget to revert
+after the release
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=154489&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            Added note from where to download xsltproc.
+Unfortuately, it is not fotting to the build process to include a build kupu in the src dist.
+So, for 1.2.2, kupu still needs to be build, which requires xsltproc to be installed <link href="http://svn.apache.org/viewcvs.cgi?rev=154488&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Enhanced xsltproc download note <link href="http://svn.apache.org/viewcvs.cgi?rev=154487&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Added note from where to download xsltproc.
+Unfortuately, it is not fotting to the build process to include a build kupu in the src dist.
+So, for 1.2.2, kupu still needs to be build, which requires xsltproc to be installed <link href="http://svn.apache.org/viewcvs.cgi?rev=154486&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Rewrote menu javascript code to avoid crashes on Linux. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33643 <link href="http://svn.apache.org/viewcvs.cgi?rev=154348&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            failure message of loading BXE improved <link href="http://svn.apache.org/viewcvs.cgi?rev=154261&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed compilation errors for the unit tests <link href="http://svn.apache.org/viewcvs.cgi?rev=154229&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Made Link insertion into BXE work with XMLHTTP sitetree. <link href="http://svn.apache.org/viewcvs.cgi?rev=154228&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            thanks to Linczak, Jonathan W. the root is not doubled anymore when creating a document <link href="http://svn.apache.org/viewcvs.cgi?rev=154188&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added initial version of LinkRewriter <link href="http://svn.apache.org/viewcvs.cgi?rev=154172&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Added version attribute to generated stylesheets <link href="http://svn.apache.org/viewcvs.cgi?rev=154166&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.2">[1.2] 
+            link rewriting: take care of context prefix, don't try to rewrite external links <link href="http://svn.apache.org/viewcvs.cgi?rev=154163&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.2">[1.2] 
+            link rewriting: use document builder to match rewritable URLs <link href="http://svn.apache.org/viewcvs.cgi?rev=154052&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.2">[1.2] 
+            added link-attribute configuration <link href="http://svn.apache.org/viewcvs.cgi?rev=154051&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.2">[1.2] 
+            added link-attribute configuration <link href="http://svn.apache.org/viewcvs.cgi?rev=154050&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            Thanks to Gregor Imboden and Andreas Hartmann the editing re Workflow triggering is again backwards compatible for documents without a workflow <link href="http://svn.apache.org/viewcvs.cgi?rev=154019&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed link rewriting to make sure that links to sub URLs are rewritten. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29861 Thanks to Thomas Comiotto for the patch. <link href="http://svn.apache.org/viewcvs.cgi?rev=153898&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added XMLUnit for the XML tests <link href="http://svn.apache.org/viewcvs.cgi?rev=153895&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Updated tests to use ContainerTestCase and related Cocoon helper classes <link href="http://svn.apache.org/viewcvs.cgi?rev=153893&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Declared flowscript variables excplictly. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=33577 <link href="http://svn.apache.org/viewcvs.cgi?rev=153889&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Declared flowscript variables excplictly. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=33577 <link href="http://svn.apache.org/viewcvs.cgi?rev=153888&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added XSD schema for workflow <link href="http://svn.apache.org/viewcvs.cgi?rev=153818&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Added XSD schema for workflow <link href="http://svn.apache.org/viewcvs.cgi?rev=153817&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added missing href attribute to menu item <link href="http://svn.apache.org/viewcvs.cgi?rev=153772&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            applying workflowmenu and usecasemenu transformations is not necessary here <link href="http://svn.apache.org/viewcvs.cgi?rev=153770&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            check if current URL represents document before accessing document <link href="http://svn.apache.org/viewcvs.cgi?rev=153768&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            check if current URL represents document before accessing document <link href="http://svn.apache.org/viewcvs.cgi?rev=153767&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            check if current URL represents document before resolving according values <link href="http://svn.apache.org/viewcvs.cgi?rev=153766&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            get area from URL instead of document, add DOCUMENT_TYPE to parameter list <link href="http://svn.apache.org/viewcvs.cgi?rev=153765&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            check if URL represents document before resolving workflow <link href="http://svn.apache.org/viewcvs.cgi?rev=153764&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            don't apply WF transformation for non-document URLs <link href="http://svn.apache.org/viewcvs.cgi?rev=153763&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            isDocument = false for admin area <link href="http://svn.apache.org/viewcvs.cgi?rev=153761&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Useability fix: Only display tab as link, if tab if not the current nav:node <link href="http://svn.apache.org/viewcvs.cgi?rev=153668&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Changed test defaults to use existing publications and doctypes <link href="http://svn.apache.org/viewcvs.cgi?rev=153665&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            Merged from 1.2.x:
+Useability fix: Only display tab as link, if tab if not the current nav:node <link href="http://svn.apache.org/viewcvs.cgi?rev=153664&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added a ConsoleLogger() to make test cases run again <link href="http://svn.apache.org/viewcvs.cgi?rev=153660&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed DocumentCreator test <link href="http://svn.apache.org/viewcvs.cgi?rev=153656&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed DocumentCreator test <link href="http://svn.apache.org/viewcvs.cgi?rev=153655&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Renamed libraries to have their version in the name <link href="http://svn.apache.org/viewcvs.cgi?rev=153652&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.2">[1.2] 
+            Renamed libraries to have their version in the name <link href="http://svn.apache.org/viewcvs.cgi?rev=153650&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Switched to BXE 1.1 and Kupu 1.2 <link href="http://svn.apache.org/viewcvs.cgi?rev=153646&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Switched to BXE 1.1 and Kupu 1.2 <link href="http://svn.apache.org/viewcvs.cgi?rev=153645&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Switched to BXE 1.1 and Kupu 1.2 <link href="http://svn.apache.org/viewcvs.cgi?rev=153642&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Moved to a more recent version of xmldb-xupdate <link href="http://svn.apache.org/viewcvs.cgi?rev=153641&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Started to use the (much more recent) Quartz from the Cocoon cron block in lieu of the library we shipped before. Our version did not implement methods that some of our code was expecting. Also fixed the scheduler XSP to get past compilation errors. <link href="http://svn.apache.org/viewcvs.cgi?rev=153640&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Changed string concatenation to use a StringBuffer <link href="http://svn.apache.org/viewcvs.cgi?rev=153562&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed Eclipse warnings <link href="http://svn.apache.org/viewcvs.cgi?rev=153561&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed resource leaks with not properly closing Streams <link href="http://svn.apache.org/viewcvs.cgi?rev=153560&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Made exceptions final <link href="http://svn.apache.org/viewcvs.cgi?rev=153559&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Made exceptions final <link href="http://svn.apache.org/viewcvs.cgi?rev=153558&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed resource leaks with not properly closing Streams <link href="http://svn.apache.org/viewcvs.cgi?rev=153557&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed unneeded Log4J <link href="http://svn.apache.org/viewcvs.cgi?rev=153556&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed Eclipse warnings <link href="http://svn.apache.org/viewcvs.cgi?rev=153555&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Replaced deprecated tokenStream(Reader) with tokenStream(String, Reader) <link href="http://svn.apache.org/viewcvs.cgi?rev=153553&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Cleaned up Eclipse warnings <link href="http://svn.apache.org/viewcvs.cgi?rev=153548&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Made insert link popup work again by switching to XHTML serialization. <link href="http://svn.apache.org/viewcvs.cgi?rev=153545&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added the workflow menu transformer to the blog publication <link href="http://svn.apache.org/viewcvs.cgi?rev=153534&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added a single-step workflow definition to the blog publication <link href="http://svn.apache.org/viewcvs.cgi?rev=153533&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added a single-step workflow definition to the blog publication <link href="http://svn.apache.org/viewcvs.cgi?rev=153532&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="Docs">[Docs] 
+            enable proxy notes for Apache 2 added <link href="http://svn.apache.org/viewcvs.cgi?rev=153529&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Changed enum variables to improve compatibility with JDK 1.5 <link href="http://svn.apache.org/viewcvs.cgi?rev=153520&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Changed enum variables to improve compatibility with JDK 1.5 <link href="http://svn.apache.org/viewcvs.cgi?rev=153519&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            check if current URL represents a document before calling setDocument() <link href="http://svn.apache.org/viewcvs.cgi?rev=153188&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Made images and asset titles visible in the forms editor. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29139 <link href="http://svn.apache.org/viewcvs.cgi?rev=153165&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Made images and asset titles visible in the forms editor. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29139 <link href="http://svn.apache.org/viewcvs.cgi?rev=153164&amp;view=rev">Diff</link>
+         </action>
+         <action dev="edith" type="update" context="1.2">[1.2] 
+            set the date of publication, the publisher and the date of modification when a document is published <link href="http://svn.apache.org/viewcvs.cgi?rev=153091&amp;view=rev">Diff</link>
+         </action>
+         <action dev="edith" type="update" context="1.2">[1.2] 
+            introduce method for the checkIn/Out of document; needed when the publication of a document to set the date, publisher, ... <link href="http://svn.apache.org/viewcvs.cgi?rev=153090&amp;view=rev">Diff</link>
+         </action>
+         <action dev="edith" type="update" context="1.2">[1.2] 
+            set the date of publication, the publisher and the date of modification when a document is published: user-name and user-email parameters needed; check if the document can be checkout <link href="http://svn.apache.org/viewcvs.cgi?rev=153089&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            thanks to Josias Thoeny XMLHTTP has been implemented for the sitetree of the default publication <link href="http://svn.apache.org/viewcvs.cgi?rev=153044&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed problem where IndexInformation.index was never written, and cleaned the source up a bit. <link href="http://svn.apache.org/viewcvs.cgi?rev=152969&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Made anonymous classes final inner classes <link href="http://svn.apache.org/viewcvs.cgi?rev=152937&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added svn properties <link href="http://svn.apache.org/viewcvs.cgi?rev=152916&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Cleaned up source code to deal with Eclipse warnings and Findbug reports. This adds javadocs to all public methods, fixes some resource leaks (Findbugs term: OS), replaces string concatenation with StringBuffer (SBSC), avoids catch (Exception e) (REC), avoids hiding of internal variables by parameter names, makes variable access explicit, and uses entrySet instead of keySet (WMI). <link href="http://svn.apache.org/viewcvs.cgi?rev=152682&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Use XML serializer for XHTML until Xalan doctype problems are resolved. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33431 <link href="http://svn.apache.org/viewcvs.cgi?rev=151792&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Updated install instructions with patch from Hubertus Groepper. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33392 <link href="http://svn.apache.org/viewcvs.cgi?rev=151787&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Added a note about web.app.server <link href="http://svn.apache.org/viewcvs.cgi?rev=151782&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            fixed wrong author email address <link href="http://svn.apache.org/viewcvs.cgi?rev=151775&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="Docs">[Docs] 
+            reset into clean integrated <link href="http://svn.apache.org/viewcvs.cgi?rev=151439&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            reset target integrated into clean target <link href="http://svn.apache.org/viewcvs.cgi?rev=151437&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="Docs">[Docs] 
+            install target removed from source build instruction <link href="http://svn.apache.org/viewcvs.cgi?rev=151434&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="add" context="1.2">[1.2] 
+            notes added about building and patching Cocoon <link href="http://svn.apache.org/viewcvs.cgi?rev=151347&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            versions updated <link href="http://svn.apache.org/viewcvs.cgi?rev=151346&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            install target removed from build instruction <link href="http://svn.apache.org/viewcvs.cgi?rev=151333&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="add" context="1.2">[1.2] 
+            thanks to Josias Thoeny the DOMStreamer is working also for default namespaces with attributes in the root element <link href="http://svn.apache.org/viewcvs.cgi?rev=151332&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed label attribute from menu (no longer needed) <link href="http://svn.apache.org/viewcvs.cgi?rev=151322&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Re-enabled view task log usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=151320&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.2">[1.2] 
+            Added empty tasks log directory to make view-logs usecase work <link href="http://svn.apache.org/viewcvs.cgi?rev=151319&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.2">[1.2] 
+            Added empty tasks log directory to make view-logs usecase work <link href="http://svn.apache.org/viewcvs.cgi?rev=151318&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Updated the blog menus to use uc attributes and I18n. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=27832 <link href="http://svn.apache.org/viewcvs.cgi?rev=151316&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Updated the blog menus to use uc attributes and I18n. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=27832 <link href="http://svn.apache.org/viewcvs.cgi?rev=151315&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed dead code <link href="http://svn.apache.org/viewcvs.cgi?rev=151309&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fix dubious code to use a locale for toUpperCase / toLowerCase methods <link href="http://svn.apache.org/viewcvs.cgi?rev=151307&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Added a note on proxy configuration to publication.xconf <link href="http://svn.apache.org/viewcvs.cgi?rev=151211&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added a note on proxy configuration to publication.xconf <link href="http://svn.apache.org/viewcvs.cgi?rev=151210&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Changed seperate to separate throughout. <link href="http://svn.apache.org/viewcvs.cgi?rev=151208&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            thanks to Josias softlinks for the content and resources directory should be possible <link href="http://svn.apache.org/viewcvs.cgi?rev=151165&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            caching of default publication back ported <link href="http://svn.apache.org/viewcvs.cgi?rev=151073&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Enabled roundtripping of images between BXE and Kupu. Note that this change requires at least Kupu revision 8795 to work. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29164 <link href="http://svn.apache.org/viewcvs.cgi?rev=149482&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Enabled roundtripping of images between BXE and Kupu. Note that this change requires at least Kupu revision 8795 to work. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=29164 <link href="http://svn.apache.org/viewcvs.cgi?rev=149481&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed empty directories <link href="http://svn.apache.org/viewcvs.cgi?rev=149460&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed xlink tranformer definition <link href="http://svn.apache.org/viewcvs.cgi?rev=149459&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Updated proxying instructions with notes about Jetty <link href="http://svn.apache.org/viewcvs.cgi?rev=149445&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            If the current sitree node does not exist in the displayed document's language
+Continue with next node. This is a quick fix for bug #32808.
+Next step would be to offer all links to the available languages.
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=149444&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            If the current sitree node does not exist in the displayed document's language
+Continue with next node. This is a quick fix for bug #32808.
+Next step would be to offer all links to the available languages.
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=149443&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            form encoding fixed <link href="http://svn.apache.org/viewcvs.cgi?rev=149393&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Replaced ASL 1.1 with ASL 2.0 and set svn properties <link href="http://svn.apache.org/viewcvs.cgi?rev=149371&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Improved sample documents in the default publication with metadata. <link href="http://svn.apache.org/viewcvs.cgi?rev=149362&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Improved sample documents in the default publication with metadata. <link href="http://svn.apache.org/viewcvs.cgi?rev=149361&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+             <link href="http://svn.apache.org/viewcvs.cgi?rev=149325&amp;view=rev">Diff</link>
+         </action>
+      </release>
+      <release version="2005-01">
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+             <link href="http://svn.apache.org/viewcvs.cgi?rev=149289&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+             <link href="http://svn.apache.org/viewcvs.cgi?rev=149288&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added recursive publishing <link href="http://svn.apache.org/viewcvs.cgi?rev=149252&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added recursive publishing <link href="http://svn.apache.org/viewcvs.cgi?rev=149251&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            lazy loading for workflow history <link href="http://svn.apache.org/viewcvs.cgi?rev=149236&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added some publication utility classes <link href="http://svn.apache.org/viewcvs.cgi?rev=149234&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            switch to AbstractLogEnabled <link href="http://svn.apache.org/viewcvs.cgi?rev=149233&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            add publish usecase handler for default pub <link href="http://svn.apache.org/viewcvs.cgi?rev=149232&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed site area image preview to work for all URLs <link href="http://svn.apache.org/viewcvs.cgi?rev=149216&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed site area image preview to work for all URLs <link href="http://svn.apache.org/viewcvs.cgi?rev=149215&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Replaced the Lenya menu with a standards-based implementation by Jon Linczak. New features:
+* It is now possible to have more (or less) than 4 menus
+* The area tabs are now internationalized
+* The new menu displays properly with serialization set to XHTML
+* The menu javascript code is now far more robust (and simpler)
+* Area tabs now have a hover effect
+* Accessibility is improved (by doing away with tables for the menu, and using lists)
+This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33024 <link href="http://svn.apache.org/viewcvs.cgi?rev=149185&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Improved title generation for authoring, admin and site areas <link href="http://svn.apache.org/viewcvs.cgi?rev=149176&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Improved title generation for authoring, admin and site areas <link href="http://svn.apache.org/viewcvs.cgi?rev=149175&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Changed remaining instances of lenya.usecase=logout to lenya.usecase=ac.logout <link href="http://svn.apache.org/viewcvs.cgi?rev=149166&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Updated WorkflowDocumentSet to use the new WorkflowFactory interface <link href="http://svn.apache.org/viewcvs.cgi?rev=149152&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            build properties version added in order to check if local build properties is in sync <link href="http://svn.apache.org/viewcvs.cgi?rev=148869&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="add" context="1.2">[1.2] 
+            add README re patching libraries shipped with Cocoon <link href="http://svn.apache.org/viewcvs.cgi?rev=148866&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            log4j conf added in order to patch Cocoon's log4j conf <link href="http://svn.apache.org/viewcvs.cgi?rev=148865&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Set default logger to log4j and made log4 log file path relative to webapp. <link href="http://svn.apache.org/viewcvs.cgi?rev=128440&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.2">[1.2] 
+            Removed empty directories <link href="http://svn.apache.org/viewcvs.cgi?rev=128439&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Changed revision controller view to no longer access a static member of Publication. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33225 <link href="http://svn.apache.org/viewcvs.cgi?rev=128438&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Improved wording of build message <link href="http://svn.apache.org/viewcvs.cgi?rev=128437&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            switch to AbstractLogEnabled <link href="http://svn.apache.org/viewcvs.cgi?rev=126622&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            introduced workflow resolver <link href="http://svn.apache.org/viewcvs.cgi?rev=126614&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            introduced workflow resolver <link href="http://svn.apache.org/viewcvs.cgi?rev=126613&amp;view=rev">Diff</link>
+         </action>
+         <action dev="egli" type="update" context="1.2">[1.2] 
+            Enhanced the message on succesful build <link href="http://svn.apache.org/viewcvs.cgi?rev=126608&amp;view=rev">Diff</link>
+         </action>
+         <action dev="egli" type="update" context="1.2">[1.2] 
+            Refactor the link detection so that the linkrewriter can be subclassed more easily <link href="http://svn.apache.org/viewcvs.cgi?rev=126597&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed empty directories <link href="http://svn.apache.org/viewcvs.cgi?rev=126579&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed empty directory <link href="http://svn.apache.org/viewcvs.cgi?rev=126577&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed xml:output. Cocoon serializers take care of this. <link href="http://svn.apache.org/viewcvs.cgi?rev=126576&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Removed xml:output. Cocoon serializers take care of this. <link href="http://svn.apache.org/viewcvs.cgi?rev=126575&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed order of XSL import statements to avoid xslt exceptions <link href="http://svn.apache.org/viewcvs.cgi?rev=126571&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Changed revision controller view to no longer access a static member of Publication. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33225 <link href="http://svn.apache.org/viewcvs.cgi?rev=126562&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Added a note about misleading Forrest error messages during web site build <link href="http://svn.apache.org/viewcvs.cgi?rev=126554&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Set XML serializer back to UTF-8. <link href="http://svn.apache.org/viewcvs.cgi?rev=126548&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            Javadoc of Server Side Include class updated <link href="http://svn.apache.org/viewcvs.cgi?rev=126545&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Re-added Xlink and XPath classes that slipped into the XPS removal. <link href="http://svn.apache.org/viewcvs.cgi?rev=126516&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            switch to AbstractLogEnabled <link href="http://svn.apache.org/viewcvs.cgi?rev=126515&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed XPSAssembler and various XML helper classes. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=33030 , http://issues.apache.org/bugzilla/show_bug.cgi?id=25956 , http://issues.apache.org/bugzilla/show_bug.cgi?id=19552 and http://issues.apache.org/bugzilla/show_bug.cgi?id=19583 <link href="http://svn.apache.org/viewcvs.cgi?rev=126514&amp;view=rev">Diff</link>
+         </action>
+         <action dev="egli" type="update" context="1.2">[1.2] 
+            Added getter/setter methods for ignoreAElement <link href="http://svn.apache.org/viewcvs.cgi?rev=126494&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="add" context="1.2">[1.2] 
+            profiler added for performance analysis but commented because of slowing down the system <link href="http://svn.apache.org/viewcvs.cgi?rev=126490&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Added clarification about forrest version used for building the site. <link href="http://svn.apache.org/viewcvs.cgi?rev=126423&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            usecase framework for publishing <link href="http://svn.apache.org/viewcvs.cgi?rev=126405&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            FlowHelper is now Avalon component <link href="http://svn.apache.org/viewcvs.cgi?rev=126404&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            usecase framework for publishing <link href="http://svn.apache.org/viewcvs.cgi?rev=126403&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            usecase framework for publishing <link href="http://svn.apache.org/viewcvs.cgi?rev=126402&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            switch to AbstractLogEnabled <link href="http://svn.apache.org/viewcvs.cgi?rev=126401&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            switch to AbstractLogEnabled <link href="http://svn.apache.org/viewcvs.cgi?rev=126400&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            usecase framework for submit and reject <link href="http://svn.apache.org/viewcvs.cgi?rev=126369&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            usecase framework for submit and reject <link href="http://svn.apache.org/viewcvs.cgi?rev=126368&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            usecase framework for submit and reject <link href="http://svn.apache.org/viewcvs.cgi?rev=126367&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            usecase framework for reject usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=126366&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            usecase framework for submit usecase in default publication <link href="http://svn.apache.org/viewcvs.cgi?rev=126364&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            usecase framework for submit usecase in default publication <link href="http://svn.apache.org/viewcvs.cgi?rev=126363&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            usecase framework for submit usecase in default publication <link href="http://svn.apache.org/viewcvs.cgi?rev=126361&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added InvokeWorkflow usecase handler <link href="http://svn.apache.org/viewcvs.cgi?rev=126360&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added document to initial parameters <link href="http://svn.apache.org/viewcvs.cgi?rev=126359&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            refactoring: extracted method getExecutableEvent() <link href="http://svn.apache.org/viewcvs.cgi?rev=126358&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed code that tried to delete a file that was still referenced in an open file stream. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=31986  <link href="http://svn.apache.org/viewcvs.cgi?rev=126321&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed code that tried to delete a file that was still referenced in an open file stream. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=31986  <link href="http://svn.apache.org/viewcvs.cgi?rev=126320&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            make sure that local properties are in sync with pre-set build properties <link href="http://svn.apache.org/viewcvs.cgi?rev=125967&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            differentiate between Tomcat and Jetty during the install <link href="http://svn.apache.org/viewcvs.cgi?rev=125918&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            version fixed <link href="http://svn.apache.org/viewcvs.cgi?rev=125917&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="add" context="1.2">[1.2] 
+            build messages added <link href="http://svn.apache.org/viewcvs.cgi?rev=125916&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            allow patching of Lucene <link href="http://svn.apache.org/viewcvs.cgi?rev=125911&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            note about lucene and Cocoon 2.1.5.1 added <link href="http://svn.apache.org/viewcvs.cgi?rev=125903&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added stubs for search usecase. Lucene search was not handled as a usecase before, so this will involve some porting work. <link href="http://svn.apache.org/viewcvs.cgi?rev=125896&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added stubs for search usecase. Lucene search was not handled as a usecase before, so this will involve some porting work. <link href="http://svn.apache.org/viewcvs.cgi?rev=125895&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.2">[1.2] 
+            Removed unused license files. <link href="http://svn.apache.org/viewcvs.cgi?rev=125882&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed unused license files. <link href="http://svn.apache.org/viewcvs.cgi?rev=125881&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed wrong pipeline call that broke IP range group administration. <link href="http://svn.apache.org/viewcvs.cgi?rev=125879&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed wrong pipeline call that broke IP range group administration. <link href="http://svn.apache.org/viewcvs.cgi?rev=125878&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Removed Lucene and log4j from Lenya (we now get them from Cocoon). Moved neko libraries to /lib, upgraded nekodtd to 0.1.11 and removed src/webapp/WEB-INF/lib <link href="http://svn.apache.org/viewcvs.cgi?rev=125854&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed Lucene and log4j from Lenya (we now get them from Cocoon). Moved neko libraries to /lib, upgraded nekodtd to 0.1.11 and removed src/webapp/WEB-INF/lib <link href="http://svn.apache.org/viewcvs.cgi?rev=125853&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            note about building Lenya offline added <link href="http://svn.apache.org/viewcvs.cgi?rev=125813&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            add i18n messages for changeLabel usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=125783&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            usecase framework used to change navigation title <link href="http://svn.apache.org/viewcvs.cgi?rev=125782&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            usecase framework used to change navigation title <link href="http://svn.apache.org/viewcvs.cgi?rev=125781&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            moved deleteLanguage JX to core <link href="http://svn.apache.org/viewcvs.cgi?rev=125780&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            moved deleteLanguage JX to core <link href="http://svn.apache.org/viewcvs.cgi?rev=125779&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            using usecase framework for deleteLanguage usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=125775&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            using usecase framework for deleteLanguage usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=125774&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            using usecase framework for deleteLanguage usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=125770&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            using usecase framework for deleteLanguage usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=125769&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            renamed package site.usecase to site.usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=125766&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed lenya.bat to no longer display the ASL comments during launch <link href="http://svn.apache.org/viewcvs.cgi?rev=125718&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed lenya.bat to no longer display the ASL comments during launch <link href="http://svn.apache.org/viewcvs.cgi?rev=125717&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Made log4j the log system used by Lenya, and start using log4j.xconf for configuration. This obviates the need for absolute paths in the log4j configuration. <link href="http://svn.apache.org/viewcvs.cgi?rev=125705&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            log4j enabled because it also works now with Jetty <link href="http://svn.apache.org/viewcvs.cgi?rev=125679&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            log4j enabled because it now also works with Jetty <link href="http://svn.apache.org/viewcvs.cgi?rev=125678&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            Jetty path added <link href="http://svn.apache.org/viewcvs.cgi?rev=125677&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            copyright year updated <link href="http://svn.apache.org/viewcvs.cgi?rev=125601&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            copyright year updated <link href="http://svn.apache.org/viewcvs.cgi?rev=125600&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            note about deployment re the various servlet containers added <link href="http://svn.apache.org/viewcvs.cgi?rev=125595&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Added missing create blog entry JX screen. <link href="http://svn.apache.org/viewcvs.cgi?rev=125569&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added missing create blog entry JX screen. <link href="http://svn.apache.org/viewcvs.cgi?rev=125568&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            applied patch from Jann Forrer re context prefix and asset upload <link href="http://svn.apache.org/viewcvs.cgi?rev=125561&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            patch from Jann Forrer applied <link href="http://svn.apache.org/viewcvs.cgi?rev=125558&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            german translation of default publication welcome page started <link href="http://svn.apache.org/viewcvs.cgi?rev=125556&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            log4j path configurable <link href="http://svn.apache.org/viewcvs.cgi?rev=125555&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Fixed typo in a translation key as reported by Arjen. <link href="http://svn.apache.org/viewcvs.cgi?rev=125536&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed typo in a translation key as reported by Arjen. <link href="http://svn.apache.org/viewcvs.cgi?rev=125535&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.2">[1.2] 
+            Added dutch translation for Lenya UI contributed by Arjen. <link href="http://svn.apache.org/viewcvs.cgi?rev=125533&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added dutch translation for Lenya UI contributed by Arjen. <link href="http://svn.apache.org/viewcvs.cgi?rev=125531&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.2">[1.2] 
+            Added japanese translation for Lenya UI contributed by Tetsuya Kitahata. <link href="http://svn.apache.org/viewcvs.cgi?rev=125527&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added japanese translation for Lenya UI contributed by Tetsuya Kitahata. <link href="http://svn.apache.org/viewcvs.cgi?rev=125526&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            copyright to 2005 changed <link href="http://svn.apache.org/viewcvs.cgi?rev=125430&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            log4j path configurable <link href="http://svn.apache.org/viewcvs.cgi?rev=125429&amp;view=rev">Diff</link>
+         </action>
+         <action dev="jwkaltz" type="update" context="Docs">[Docs] 
+            updated the link to our live site
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=125177&amp;view=rev">Diff</link>
+         </action>
+         <action dev="jwkaltz" type="update" context="1.4">[1.4] 
+            commented out superfluous sanity check, to avoid problems with MS Active
+Directory
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=125172&amp;view=rev">Diff</link>
+         </action>
+         <action dev="jwkaltz" type="update" context="1.2">[1.2] 
+            commented out superfluous sanity check, to avoid problems with MS Active
+Directory
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=125171&amp;view=rev">Diff</link>
+         </action>
+         <action dev="edith" type="update" context="1.2">[1.2] 
+            Fixed undeclared variables in flowscript <link href="http://svn.apache.org/viewcvs.cgi?rev=124972&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed references to dom4j <link href="http://svn.apache.org/viewcvs.cgi?rev=124887&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Finished the new blog entry usecase. This allowed to remove dom4j and the ParentChildCreatorAction as well as create.xsp and create.xsl, which are now no longer used. <link href="http://svn.apache.org/viewcvs.cgi?rev=124886&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added stub for create blog entry usecase. <link href="http://svn.apache.org/viewcvs.cgi?rev=124828&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added stub for create blog entry usecase. <link href="http://svn.apache.org/viewcvs.cgi?rev=124827&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed unused DelegatingAuthenticatorAction. Login is now handled by the login usecase. <link href="http://svn.apache.org/viewcvs.cgi?rev=124814&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            removed obsolete document creation helpers <link href="http://svn.apache.org/viewcvs.cgi?rev=124792&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed create tasks <link href="http://svn.apache.org/viewcvs.cgi?rev=124791&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            adding sitetree label instead of new node when node already exists <link href="http://svn.apache.org/viewcvs.cgi?rev=124790&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            refactored exception handling in URIParameterizer <link href="http://svn.apache.org/viewcvs.cgi?rev=124789&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            refactored Create usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=124788&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            using create usecases from usecase FW, show create-language item only when not all language versions exist <link href="http://svn.apache.org/viewcvs.cgi?rev=124787&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added createLanguage usecase to usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124786&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added createLanguage usecase to usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124785&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added CreateDocument usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=124784&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added DocumentTypeResolver <link href="http://svn.apache.org/viewcvs.cgi?rev=124783&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added DocumentTypeResolver <link href="http://svn.apache.org/viewcvs.cgi?rev=124782&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Backported patch to show resource type in the overview tab <link href="http://svn.apache.org/viewcvs.cgi?rev=124771&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Changed invocation of ResourcesManager to DefaultResourcesManager <link href="http://svn.apache.org/viewcvs.cgi?rev=124767&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed upload.js flow script (the upload usecase is now handled by the usecase framework) <link href="http://svn.apache.org/viewcvs.cgi?rev=124766&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Renamed testGetFullName to testGetName to reflect interface changes <link href="http://svn.apache.org/viewcvs.cgi?rev=124765&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Replaced references to oscom publication with default publication <link href="http://svn.apache.org/viewcvs.cgi?rev=124764&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed deprecated getAbsoluteParentId() from SiteTreeNode interface <link href="http://svn.apache.org/viewcvs.cgi?rev=124763&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed deprecated getParentId() from SiteTreeNode interface <link href="http://svn.apache.org/viewcvs.cgi?rev=124761&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Replaced ocurrences of deprecated node-id with node-name <link href="http://svn.apache.org/viewcvs.cgi?rev=124759&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Changed ocurrences of DocumentURL to use CanonicalDocumentURL <link href="http://svn.apache.org/viewcvs.cgi?rev=124757&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Set missing SVN properties <link href="http://svn.apache.org/viewcvs.cgi?rev=124751&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed deprecated methods from AbstractUser <link href="http://svn.apache.org/viewcvs.cgi?rev=124750&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added ASL 2.0 license and set SVN properties for some new Java files that did not have them <link href="http://svn.apache.org/viewcvs.cgi?rev=124749&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added ASL 2.0 license and set SVN properties for some new Java files that did not have them <link href="http://svn.apache.org/viewcvs.cgi?rev=124746&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed validate action. Usecases that need to validate use the Relax NG helper directly. <link href="http://svn.apache.org/viewcvs.cgi?rev=124744&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed default-create action which has been superceded by the create usecase. <link href="http://svn.apache.org/viewcvs.cgi?rev=124743&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Completed migration from a.o.l.util.FileUtil to excalibur FileUtil <link href="http://svn.apache.org/viewcvs.cgi?rev=124738&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed deprecated SMTP class, which has been replaced by the notification task. <link href="http://svn.apache.org/viewcvs.cgi?rev=124736&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed known issues from 1.4 readme. <link href="http://svn.apache.org/viewcvs.cgi?rev=124682&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed occurrence of cocoon-lenya <link href="http://svn.apache.org/viewcvs.cgi?rev=124671&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed unused import <link href="http://svn.apache.org/viewcvs.cgi?rev=124538&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed StringIndexException for language prefixes like de_CH <link href="http://svn.apache.org/viewcvs.cgi?rev=124536&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed some parameter names in Create JX template <link href="http://svn.apache.org/viewcvs.cgi?rev=124534&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            implemented Create usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=124533&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            changing DOM when label has changed, not only Label object <link href="http://svn.apache.org/viewcvs.cgi?rev=124527&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            info about Tomcat added <link href="http://svn.apache.org/viewcvs.cgi?rev=124497&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            Germand translation started <link href="http://svn.apache.org/viewcvs.cgi?rev=124496&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            versions updated <link href="http://svn.apache.org/viewcvs.cgi?rev=124495&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            publication polymorphism for usecase handler classes <link href="http://svn.apache.org/viewcvs.cgi?rev=124492&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            prefixes added and default namespace removed because of problems with Sourcewriting Transformer <link href="http://svn.apache.org/viewcvs.cgi?rev=124488&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            transforming non-namespace elements to XHTML <link href="http://svn.apache.org/viewcvs.cgi?rev=124412&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            first steps for create usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=124411&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            first steps for create usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=124410&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            avoid NPE when fetching source document <link href="http://svn.apache.org/viewcvs.cgi?rev=124409&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            start to implement default pub usecases using usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124408&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            allow fallback for JX templates <link href="http://svn.apache.org/viewcvs.cgi?rev=124407&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            allow string for name, not only NCName <link href="http://svn.apache.org/viewcvs.cgi?rev=124404&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            setting link attributes instead of title <link href="http://svn.apache.org/viewcvs.cgi?rev=124403&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            replaced {fallback} by fallback://, fixed serializer for SourceWritingTransformer <link href="http://svn.apache.org/viewcvs.cgi?rev=124402&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            formatting <link href="http://svn.apache.org/viewcvs.cgi?rev=124401&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed order of XSLT statements <link href="http://svn.apache.org/viewcvs.cgi?rev=124400&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed order of XSLT statements <link href="http://svn.apache.org/viewcvs.cgi?rev=124398&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            replaced element.setNodeValue() by DocumentHelper.setSimpleElementText() <link href="http://svn.apache.org/viewcvs.cgi?rev=124388&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            replaced element.setNodeValue() by DocumentHelper.setSimpleElementText() <link href="http://svn.apache.org/viewcvs.cgi?rev=124387&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed xpath to replace author <link href="http://svn.apache.org/viewcvs.cgi?rev=124383&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            add stylesheet version attribute <link href="http://svn.apache.org/viewcvs.cgi?rev=124380&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            add stylesheet version attribute <link href="http://svn.apache.org/viewcvs.cgi?rev=124379&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            don't swallow exceptions <link href="http://svn.apache.org/viewcvs.cgi?rev=124378&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            XUL menus enabled <link href="http://svn.apache.org/viewcvs.cgi?rev=124292&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            XUL menus fixed <link href="http://svn.apache.org/viewcvs.cgi?rev=124291&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            not ready yet, but needed to compile Lenya <link href="http://svn.apache.org/viewcvs.cgi?rev=124188&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.4">[1.4] 
+            comment about meta stylesheet added <link href="http://svn.apache.org/viewcvs.cgi?rev=124152&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            group admin using usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124123&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            group admin using usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124122&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            group admin using usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124121&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            group admin using usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124120&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            add save() method <link href="http://svn.apache.org/viewcvs.cgi?rev=124119&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            refactoring (remove duplicate code) <link href="http://svn.apache.org/viewcvs.cgi?rev=124118&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            group admin using usecase framework <link href="http://svn.apache.org/viewcvs.cgi?rev=124117&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            add resources tag <link href="http://svn.apache.org/viewcvs.cgi?rev=124015&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            refactor usecase packages <link href="http://svn.apache.org/viewcvs.cgi?rev=124014&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            refactor usecase packages <link href="http://svn.apache.org/viewcvs.cgi?rev=124013&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added XML file extension <link href="http://svn.apache.org/viewcvs.cgi?rev=124012&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            refactor usecase packages <link href="http://svn.apache.org/viewcvs.cgi?rev=124011&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            refactor usecase packages <link href="http://svn.apache.org/viewcvs.cgi?rev=124010&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            refactor usecase packages <link href="http://svn.apache.org/viewcvs.cgi?rev=124009&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            refactor usecase packages <link href="http://svn.apache.org/viewcvs.cgi?rev=124008&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            refactor usecase packages <link href="http://svn.apache.org/viewcvs.cgi?rev=124007&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed obsolete declarations and pipelines <link href="http://svn.apache.org/viewcvs.cgi?rev=124005&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            using usecase framework for logout <link href="http://svn.apache.org/viewcvs.cgi?rev=124004&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added logout functionality <link href="http://svn.apache.org/viewcvs.cgi?rev=124002&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            init session before use <link href="http://svn.apache.org/viewcvs.cgi?rev=124001&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            removed obsolete logout files <link href="http://svn.apache.org/viewcvs.cgi?rev=124000&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            removed obsolete logout files <link href="http://svn.apache.org/viewcvs.cgi?rev=123999&amp;view=rev">Diff</link>
+         </action>
+         <action dev="egli" type="update" context="1.2">[1.2] 
+            Fixed a typo in the translation key.
+
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=123993&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            removed obsolete login files <link href="http://svn.apache.org/viewcvs.cgi?rev=123991&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            removed obsolete login files <link href="http://svn.apache.org/viewcvs.cgi?rev=123990&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            user-groups usecase added <link href="http://svn.apache.org/viewcvs.cgi?rev=123989&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            using usecase framework for login usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123988&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed TODO comment (looks fine to me) <link href="http://svn.apache.org/viewcvs.cgi?rev=123987&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed submit button name <link href="http://svn.apache.org/viewcvs.cgi?rev=123986&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            don't obtain workflow situation <link href="http://svn.apache.org/viewcvs.cgi?rev=123985&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed exception clause from doInitialize() <link href="http://svn.apache.org/viewcvs.cgi?rev=123984&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed exception clause from doInitialize() <link href="http://svn.apache.org/viewcvs.cgi?rev=123982&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed exception clause from doInitialize() <link href="http://svn.apache.org/viewcvs.cgi?rev=123981&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed some style issues <link href="http://svn.apache.org/viewcvs.cgi?rev=123980&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed exception clause from doInitialize() <link href="http://svn.apache.org/viewcvs.cgi?rev=123979&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added WorkflowUsecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123978&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added matcher to match registered usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123971&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added matcher to match registered usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123970&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added matcher to match registered usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123968&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added method to check if a usecase is registered <link href="http://svn.apache.org/viewcvs.cgi?rev=123967&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            moved triggerWorkflow() one level up as it can apply to multiple documents <link href="http://svn.apache.org/viewcvs.cgi?rev=123963&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added methods to trigger workflow <link href="http://svn.apache.org/viewcvs.cgi?rev=123962&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added javadocs <link href="http://svn.apache.org/viewcvs.cgi?rev=123961&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            output single languages instead of array object <link href="http://svn.apache.org/viewcvs.cgi?rev=123960&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            don't use interface constructor <link href="http://svn.apache.org/viewcvs.cgi?rev=123959&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed unused imports, replace strings with pre-defined fields <link href="http://svn.apache.org/viewcvs.cgi?rev=123957&amp;view=rev">Diff</link>
+         </action>
+         <action dev="michi" type="update" context="1.2">[1.2] 
+            view task log usecase doesn't seem to work or link might be wrong <link href="http://svn.apache.org/viewcvs.cgi?rev=123953&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123936&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123935&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123934&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123933&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123932&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123930&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123929&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123928&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest documentation changes and removed eol-style <link href="http://svn.apache.org/viewcvs.cgi?rev=123927&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest documentation changes <link href="http://svn.apache.org/viewcvs.cgi?rev=123925&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="Site">[Site] 
+            Updated site with latest documentation changes <link href="http://svn.apache.org/viewcvs.cgi?rev=123924&amp;view=rev">Diff</link>
+         </action>
+      </release>
       <release version="2004-12">
+         <action dev="roku" type="update" context="Site">[Site] 
+            Update for release 1.2.1 <link href="http://svn.apache.org/viewcvs.cgi?rev=123731&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="Docs">[Docs] 
+            - Added release 1.2.1
+- Improved download link text <link href="http://svn.apache.org/viewcvs.cgi?rev=123730&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="" context="1.2">[1.2] 
+            It is enough if the KEYS file is in the trunk. It is better to maintain.
+Maybe we should open a new directory called misc or so. 
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=123726&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="add" context="1.2">[1.2] 
+            Added my gpg key. We also should sign our releases <link href="http://svn.apache.org/viewcvs.cgi?rev=123725&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Made checksum file extension lower case. <link href="http://svn.apache.org/viewcvs.cgi?rev=123684&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            Made checksum file extension lower case. <link href="http://svn.apache.org/viewcvs.cgi?rev=123683&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            Added kupu target <link href="http://svn.apache.org/viewcvs.cgi?rev=123682&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="add" context="1.4">[1.4] 
+            Added my gpg key. We also should sign our releases <link href="http://svn.apache.org/viewcvs.cgi?rev=123680&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added stub class for tab.ac* usecases. <link href="http://svn.apache.org/viewcvs.cgi?rev=123669&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="add" context="">[] 
+            Tagging the Apache Lenya 1.2.1 release <link href="http://svn.apache.org/viewcvs.cgi?rev=123667&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="" context="">[] 
+            removing: used wrong kupu and bxe revs
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=123666&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Uups, used the wrong revision <link href="http://svn.apache.org/viewcvs.cgi?rev=123665&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Uups, used the wrong revision <link href="http://svn.apache.org/viewcvs.cgi?rev=123664&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="add" context="">[] 
+            Tagging the Apache Lenya 1.2.1 release <link href="http://svn.apache.org/viewcvs.cgi?rev=123663&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Preparing 1.2.1 tag <link href="http://svn.apache.org/viewcvs.cgi?rev=123662&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Switched to Cocoon 2.1.5.1, since this will be the shipped version in 1.2.1 <link href="http://svn.apache.org/viewcvs.cgi?rev=123661&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Including special revisions of kupu and bxe. <link href="http://svn.apache.org/viewcvs.cgi?rev=123660&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Refactored tab.meta initialization code  <link href="http://svn.apache.org/viewcvs.cgi?rev=123659&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added tab.overview usecase, extended SiteUsecase to provide more values <link href="http://svn.apache.org/viewcvs.cgi?rev=123658&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Changed ResourcesManager invocation to go via Document.getResourcesManager() <link href="http://svn.apache.org/viewcvs.cgi?rev=123644&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed UploadHelper (replaced by ResourcesManager) <link href="http://svn.apache.org/viewcvs.cgi?rev=123642&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Refactored site-area usecases that are displayed in a tab to have the naming convention tab.* 
+Added seperate view pipeline for those usecases, plus arbitration code in usecases.js <link href="http://svn.apache.org/viewcvs.cgi?rev=123638&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Refactored site-area usecases that are displayed in a tab to have the naming convention tab.* 
+Added seperate view pipeline for those usecases, plus arbitration code in usecases.js <link href="http://svn.apache.org/viewcvs.cgi?rev=123637&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Refactored ResourcesManager, added addResource method.
+Based ResourcesManager on DublinCore. 
+Added getResourcesManager() to Document interface.
+Added Assets usecase.
+Improved the assets JX view.
+Changed all callers of ResourceManager to use getResourcesManager() <link href="http://svn.apache.org/viewcvs.cgi?rev=123528&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed duplicate ResourceNotFound exception selector (it is already defined by Cocoon) <link href="http://svn.apache.org/viewcvs.cgi?rev=123520&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Made license header consistent <link href="http://svn.apache.org/viewcvs.cgi?rev=123498&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed empty component definitions from all sitemaps <link href="http://svn.apache.org/viewcvs.cgi?rev=123497&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Upgraded Cocoon version to 2.1.6 in publication screens <link href="http://svn.apache.org/viewcvs.cgi?rev=123493&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Moved exception selectors to the root sitemap <link href="http://svn.apache.org/viewcvs.cgi?rev=123492&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed OSCOM publication, which will continue to be available from http://oscom.org. <link href="http://svn.apache.org/viewcvs.cgi?rev=123490&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.2">[1.2] 
+            Removed OSCOM publication, which will continue to be available from http://oscom.org. <link href="http://svn.apache.org/viewcvs.cgi?rev=123489&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added stub usecases for login, create and move. Added well-known usecase names. <link href="http://svn.apache.org/viewcvs.cgi?rev=123429&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+             <link href="http://svn.apache.org/viewcvs.cgi?rev=123426&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed unnecessary definitions from usecase.xmap <link href="http://svn.apache.org/viewcvs.cgi?rev=123423&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Improved layout of site area JX views <link href="http://svn.apache.org/viewcvs.cgi?rev=123421&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Refactored IterativeHTMLCrawler to implement Configurable <link href="http://svn.apache.org/viewcvs.cgi?rev=123417&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="1.4">[1.4] 
+            Removed SSI class which has been deprecated since 1.0 <link href="http://svn.apache.org/viewcvs.cgi?rev=123416&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Migrated pipelines to the Cocoon XincludeTransformer <link href="http://svn.apache.org/viewcvs.cgi?rev=123414&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Refactored RevisionController to no longer rely on the deprecated XPSOutputStream <link href="http://svn.apache.org/viewcvs.cgi?rev=123413&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Refactored RCML to no longer rely on the deprecated XPointerFactory <link href="http://svn.apache.org/viewcvs.cgi?rev=123412&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Refactored NewBlogEntryCreator to no longer rely on the deprecated DOMUtil <link href="http://svn.apache.org/viewcvs.cgi?rev=123411&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed broken revisions tab (it was using a no longer existing method call) <link href="http://svn.apache.org/viewcvs.cgi?rev=123401&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Renamed two usecases to make the naming consistent <link href="http://svn.apache.org/viewcvs.cgi?rev=123364&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Deprecated DelegatingAuthenticatorAction in favour of Login usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123363&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added (currently inactive) Login usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123362&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added (currently inactive) Login usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123361&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Exposed the Context in the AbstractlUsecase with a getter method <link href="http://svn.apache.org/viewcvs.cgi?rev=123359&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Exposed the AccessController in the AccessControlUsecase with a getter method <link href="http://svn.apache.org/viewcvs.cgi?rev=123358&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Set eol-style and keywords <link href="http://svn.apache.org/viewcvs.cgi?rev=123356&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Remove keywords from binary files <link href="http://svn.apache.org/viewcvs.cgi?rev=123355&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Set svn:keywords and svn:eol-style consistently <link href="http://svn.apache.org/viewcvs.cgi?rev=123348&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added metadata and generic site usecase (as a superclass for all site-area usecases) <link href="http://svn.apache.org/viewcvs.cgi?rev=123346&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed duplicate menu entries <link href="http://svn.apache.org/viewcvs.cgi?rev=123340&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added license and file:// prefix to image preview javascript code <link href="http://svn.apache.org/viewcvs.cgi?rev=123339&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added image preview to asset usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123338&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added comments and license to usecases.js <link href="http://svn.apache.org/viewcvs.cgi?rev=123337&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added first draft of JX templates for site usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123335&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="1.4">[1.4] 
+            Added first draft of JX templates for site usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123334&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Added deprecation note to WriteDCParametersTask <link href="http://svn.apache.org/viewcvs.cgi?rev=123316&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Improved javadocs for DocumentUsecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123315&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            Merged from 1.2.x <link href="http://svn.apache.org/viewcvs.cgi?rev=123222&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Line break test <link href="http://svn.apache.org/viewcvs.cgi?rev=123221&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.4">[1.4] 
+            [merged from 1.2.x] Applied patch sent by Hubertus Groepper. Fixes inaccessible links of bread crumbs. 
+See bug http://issues.apache.org/bugzilla/show_bug.cgi?id=32610 <link href="http://svn.apache.org/viewcvs.cgi?rev=123220&amp;view=rev">Diff</link>
+         </action>
+         <action dev="roku" type="update" context="1.2">[1.2] 
+            Applied patch sent by Hubertus Groepper. Fixes inaccessible links of bread crumbs. 
+See bug http://issues.apache.org/bugzilla/show_bug.cgi?id=32610 <link href="http://svn.apache.org/viewcvs.cgi?rev=123217&amp;view=rev">Diff</link>
+         </action>
+         <action dev="edith" type="update" context="1.4">[1.4] 
+            Fix the uri, because the publicationId has no '/' at the beginning <link href="http://svn.apache.org/viewcvs.cgi?rev=123213&amp;view=rev">Diff</link>
+         </action>
+         <action dev="edith" type="update" context="1.2">[1.2] 
+            set the xlink namespace even if the document already exist, because the namespace areelse removed <link href="http://svn.apache.org/viewcvs.cgi?rev=123205&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Fixed typo to make SVN version tags work. <link href="http://svn.apache.org/viewcvs.cgi?rev=123203&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Defined source resolver in lenya.xtest and removed Tomcat path dependencies <link href="http://svn.apache.org/viewcvs.cgi?rev=123195&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed Tomcat-specific context prefix from AntTaskTest <link href="http://svn.apache.org/viewcvs.cgi?rev=123194&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Removed dependencies on Tomcat for the test build, fixed some ant properties related to the test build. <link href="http://svn.apache.org/viewcvs.cgi?rev=123193&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            removed old admin XSP and XSLT <link href="http://svn.apache.org/viewcvs.cgi?rev=123128&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            removed old admin XSP and XSLT <link href="http://svn.apache.org/viewcvs.cgi?rev=123127&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            user groups as JX template usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123126&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            user groups as JX template usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123125&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            user groups as JX template usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123124&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            user groups as JX template usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123123&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            user groups as JX template usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123122&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            user groups as JX template usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=123121&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed some code style issues, parameters as objects allowed <link href="http://svn.apache.org/viewcvs.cgi?rev=123120&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            fixed some code style issues <link href="http://svn.apache.org/viewcvs.cgi?rev=123101&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added some password usecase messages <link href="http://svn.apache.org/viewcvs.cgi?rev=123099&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added some password usecase messages <link href="http://svn.apache.org/viewcvs.cgi?rev=123098&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            changePassword usecase added <link href="http://svn.apache.org/viewcvs.cgi?rev=123097&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            changePassword migrated to JX template <link href="http://svn.apache.org/viewcvs.cgi?rev=123096&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            changePassword migrated to JX template <link href="http://svn.apache.org/viewcvs.cgi?rev=123095&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            re-organized admin usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123087&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            re-organized admin usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123086&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            re-organized admin usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123085&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            re-organized admin usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123084&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="" context="1.4">[1.4] 
+            re-organized admin usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123083&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            using heading style instead of paragraph <link href="http://svn.apache.org/viewcvs.cgi?rev=123076&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed unused declarations <link href="http://svn.apache.org/viewcvs.cgi?rev=123075&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            updated usecase names <link href="http://svn.apache.org/viewcvs.cgi?rev=123074&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            using attribute value templates to reduce XSLT verbosity <link href="http://svn.apache.org/viewcvs.cgi?rev=123073&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            added admin area usecase declarations <link href="http://svn.apache.org/viewcvs.cgi?rev=123072&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removed deprecated stuff from lenya.roles <link href="http://svn.apache.org/viewcvs.cgi?rev=123071&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            convert initialize() to template method <link href="http://svn.apache.org/viewcvs.cgi?rev=123070&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            calling usecase.xmap for certain admin area usecases <link href="http://svn.apache.org/viewcvs.cgi?rev=123069&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            removing unused component declarations <link href="http://svn.apache.org/viewcvs.cgi?rev=123068&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            initial checkin of java-based access control usecasees <link href="http://svn.apache.org/viewcvs.cgi?rev=123066&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            initial checkin of java-based access control usecasees <link href="http://svn.apache.org/viewcvs.cgi?rev=123065&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="add" context="1.4">[1.4] 
+            added TopicMapSiteManager outline <link href="http://svn.apache.org/viewcvs.cgi?rev=123060&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            use NULL to generate NPEs instead of FileNotFoundException <link href="http://svn.apache.org/viewcvs.cgi?rev=123059&amp;view=rev">Diff</link>
+         </action>
+         <action dev="andreas" type="update" context="1.4">[1.4] 
+            made tests compile again <link href="http://svn.apache.org/viewcvs.cgi?rev=123058&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="Docs">[Docs] 
+            Moved resource-types to make them a proper folder in the documentation. <link href="http://svn.apache.org/viewcvs.cgi?rev=122872&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="" context="Docs">[Docs] 
+            Moved resource-types to make them a proper folder in the documentation. <link href="http://svn.apache.org/viewcvs.cgi?rev=122871&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.4">[1.4] 
+            Converted tabs to spaces. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=32739 Thanks to Josias Thoeny. <link href="http://svn.apache.org/viewcvs.cgi?rev=122869&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="1.2">[1.2] 
+            Converted tabs to spaces. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=32739 Thanks to Josias Thoeny. <link href="http://svn.apache.org/viewcvs.cgi?rev=122866&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated Xopus documentation. <link href="http://svn.apache.org/viewcvs.cgi?rev=122817&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated editors documentation. <link href="http://svn.apache.org/viewcvs.cgi?rev=122816&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Updated Xopus documentation with pointers from Nele Vogel. <link href="http://svn.apache.org/viewcvs.cgi?rev=122815&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="add" context="Site">[Site] 
+            Added missing icon <link href="http://svn.apache.org/viewcvs.cgi?rev=122812&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest changes. <link href="http://svn.apache.org/viewcvs.cgi?rev=122811&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Site">[Site] 
+            Updated site with latest changes. <link href="http://svn.apache.org/viewcvs.cgi?rev=122808&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Increased default memory allocation for forrest to avoid out of memory exceptions. <link href="http://svn.apache.org/viewcvs.cgi?rev=122803&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Updated status.xml from SVN logs. <link href="http://svn.apache.org/viewcvs.cgi?rev=122802&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Added instructions to create changes.html from SVN logs. <link href="http://svn.apache.org/viewcvs.cgi?rev=122801&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Improved svn2changes stylesheet to show the version and link to a diff of the change. <link href="http://svn.apache.org/viewcvs.cgi?rev=122799&amp;view=rev">Diff</link>
+         </action>
+         <action dev="gregor" type="update" context="Docs">[Docs] 
+            Fixed install document validation errors. <link href="http://svn.apache.org/viewcvs.cgi?rev=122794&amp;view=rev">Diff</link>
+         </action>
          <action dev="gregor" type="update" context="1.2">[1.2] 
             Readded dependency on Lucene block as the Lenya search XSP relies on it. <link href="http://svn.apache.org/viewcvs.cgi?rev=122793&amp;view=rev">Diff</link>
          </action>
@@ -18846,7 +20345,6 @@ need to replicate nodes.
          </action>
          <action dev="michi" type="update" context="1.0">[1.0] 
             IRC docu added
-
  <link href="http://svn.apache.org/viewcvs.cgi?rev=39511&amp;view=rev">Diff</link>
          </action>
          <action dev="michi" type="update" context="1.0">[1.0] 

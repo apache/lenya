@@ -28,18 +28,27 @@
         <resolution href="resolution.html" label="Resolution"/>
         <node-i href="related-projects.html" label="Related Projects"/>
     </project-information>
-    <installation href="installation/" label="Installation" tab="installation">
-        <download href="index.html" label="Download"/>
-        <cvs href="subversion.html" label="Subversion Access"/>
-        <install href="source_version.html" label="Installation Instructions"/>
-    </installation>
-    <documentation href="docs/" label="Documentation" tab="docs">
+      <docu1.4 href="1_4/" label="Version 1.4" target="1.4">
+<!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
+          <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
+-->          <installation href="installation/" label="Installation">
+              <download href="index.html" label="Download"/>
+              <cvs href="subversion.html" label="Subversion Access"/>
+              <install href="source_version.html" label="Installation Instructions"/>
+          </installation>
+          <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
+      </docu1.4>
+  <!--    <documentation href="docs/" label="Documentation" tab="docs">
         <index_doc href="index.html" label="Documentation" wholesite="true"/>
-        <whole_docu href="../docu.pdf" label="pdf docu 1.2.x (whole)" />
-        <whole_docu href="../docu.html" label="html docu 1.2.x (whole)" />
-        <docu1.2.x href="1_2_x/" label="1.2.x">
-
-            <components href="components/" label="Components" wholesite="true">
+-->        <docu1.2.x href="1_2_x/" label="Version 1.2" target="1.2">
+<!--          <whole_docu href="../documentation-1-2.pdf" label="1.2 PDF docs (all in one)" />
+          <whole_docu href="../documentation-1-2.html" label="1.2 HTML docs (all in one)" />
+-->          <installation12 href="installation/" label="Installation">
+              <download href="index.html" label="Download"/>
+              <cvs href="subversion.html" label="Subversion Access"/>
+              <install href="source_version.html" label="Installation Instructions"/>
+          </installation12>
+            <components href="components/" label="Components">
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">
                     <ac-terms href="terms.html" label="Basic Terms"/>
                     <accesscontrollers href="accesscontrollers.html" label="Access&#160;Controllers"/>
@@ -50,7 +59,7 @@
                     <accr-mng href="accreditablemanagers.html" label="Accreditable&#160;Managers"/>
                     <ssl href="ssl.html" label="SSL Encryption"/>
                 </accesscontrol>
-                <authoring href="authoring/" labe="Authoring">
+                <authoring href="authoring/" label="Authoring">
                     <namespaces href="adding-document-creator.html" label="Adding a new document creator"/>
                     <namespaces href="image-upload.html" label="Image Upload"/>
                     <openoffice href="openoffice.html" label="OpenOffice"/>
@@ -151,11 +160,7 @@
             </misc>
             <javadoc1.2 href="../../apidocs/1.2/index.html" label="1.2 API (Javadoc)"/>
         </docu1.2.x>
-        <docu1.4 href="1_4/index.html" label="1.4">
-            <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
-        </docu1.4>
-    </documentation>
-    <community href="community/" label="Community" tab="community">
+        <community href="community/" label="Community" tab="community">
         <index_com href="index.html" label="Contributing"/>
         <node-h href="acknowledgements.html" label="Credits"/>
         <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>

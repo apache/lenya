@@ -46,8 +46,7 @@
 The Lenya roadmap is determined by the Lenya positioning diagram. It specifies the priorities
 and orientation, and shows areas for futher development. The 1.0 release marks the point
 where Lenya is donated to the Apache foundation. Subsequent releases are under the Apache
-umbrella. Items in bold type mark completed items. This roadmap was created in Spring 2003 and may be out
-    of date.<br /><br />
+umbrella. Items in bold type mark completed items. <br /><br />
 <img src="images/live/cms-positioning.png" alt=""/><br /><br />
 
 The positioning diagram defines 8 areas, with a relative weight of 1-7. The current Lenya code base is
@@ -150,7 +149,7 @@ used for bug fixes, e.g. 1.0.2.
 
 <ul>
 <li><strong>Update from JDK 1.3.1 to 1.4</strong></li>
-<li>Replace DOM4J</li>
+<li><strong>Replace DOM4J</strong></li>
 </ul>
 
 </section>
@@ -193,17 +192,17 @@ used for bug fixes, e.g. 1.0.2.
 <ul>
 <li><strong>Improve and standardize templating (XHTML)</strong></li>
 <li>Allow for documentation annotation (like php.net)</li>
-<li>Write a publication HOWTO</li>
-<li>Maintain a FAQ</li>
+<li><strong>Write a publication HOWTO</strong></li>
+<li><strong>Maintain a FAQ</strong></li>
 <li><strong>Elminate redundancies between authoring and live areas</strong></li>
-<li>Write Lenya Tutorials</li>
+<li><strong>Write Lenya Tutorials</strong></li>
 </ul>
 
 </section>
 <section><title>Product Maturity</title>
 
 <ul>
-<li>Complete JavaDoc</li>
+<li><strong>omplete JavaDoc</strong></li>
 <li><strong>Unify CMS URIs</strong></li>
 <li><strong>Standardize sitemaps</strong></li>
 <li><strong>Work out upgrade schedule for dependent components (Cocoon etc)</strong></li>
@@ -221,14 +220,14 @@ used for bug fixes, e.g. 1.0.2.
 <section><title>Off The Shelf Components</title>
 
 <ul>
-<li>Migrate Lenya xinclude processor to Cocoon (or vice versa)</li>
+<li><strong>Migrate Lenya xinclude processor to Cocoon (or vice versa)</strong></li>
 </ul>
 
 </section>
 <section><title>Feature Set</title>
 
 <ul>
-<li>Integrate Slide</li>
+<li>Integrate Repository</li>
 <li><strong>Implement workflow engine</strong></li>
 <li><strong>Implement generic sitetree navigation framework</strong></li>
 <li><strong>Integrate HTML Form Editor</strong></li>
@@ -248,7 +247,7 @@ used for bug fixes, e.g. 1.0.2.
 <ul>
 <li>Improve Lenya menu to float across the page</li>
 <li>Improve CMS screens with help tooltips</li>
-<li>Improve Bitflux / Xopus integration</li>
+<li><strong>Improve Bitflux / Xopus integration</strong></li>
 </ul>
 
 </section></section>
@@ -273,18 +272,18 @@ used for bug fixes, e.g. 1.0.2.
 <section><title>Product Maturity</title>
 
 <ul>
-<li>Rewrite Resource Creation Framework</li>
-<li>Rewrite Publishing / Replication Framework</li>
+<li><strong>Rewrite Resource Creation Framework</strong></li>
+<li><strong>Rewrite Publishing / Replication Framework</strong></li>
 <li>Complete Unit test coverage</li>
-<li>Complete JavaDoc</li>
+<li><strong>Complete JavaDoc</strong></li>
 </ul>
 
 </section>
 <section><title>Industrial Strength</title>
 
 <ul>
-<li>Improve reverse proxying</li>
-<li>Research advanced caching strategies</li>
+<li><strong>Improve reverse proxying</strong></li>
+<li><strong>Research advanced caching strategies</strong></li>
 <li>Implement transaction management</li>
 </ul>
 
