@@ -74,6 +74,8 @@ function editDocument() {
     } finally {
         if(resolver != null)
             cocoon.releaseComponent(resolver);
+        if(flowHelper != null)
+            cocoon.releaseComponent(flowHelper);
     }
 }
 
