@@ -4,8 +4,7 @@
     Document   : page-util.xsl.xsl
     Created on : November 18, 2002, 10:47 AM
     Author     : ah
-    Description:
-        Purpose of transformation follows.
+    Description: Purpose of transformation follows.
 -->
 
 <xsl:stylesheet version="1.0"
