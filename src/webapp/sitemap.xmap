@@ -525,7 +525,7 @@
    
     <map:resource name="style-cms-page">
       <map:transform src="lenya/xslt/util/page2xhtml.xsl">
-        <map:parameter name="context-prefix" value="{request:contextPath}"/>
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:serialize/>
     </map:resource>
