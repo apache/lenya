@@ -1,5 +1,5 @@
 /*
-$Id: Notifier.java,v 1.4 2003/09/02 13:16:38 andreas Exp $
+$Id: Notifier.java,v 1.5 2003/09/09 14:36:53 andreas Exp $
 <License>
 
  ============================================================================
@@ -75,7 +75,6 @@ public class Notifier extends ParameterWrapper {
 
     public static final String PREFIX = "notification";
     public static final String TARGET = "notification";
-
     public static final String PARAMETER_TO = "tolist";
 
     private TaskManager taskManager;
@@ -110,7 +109,7 @@ public class Notifier extends ParameterWrapper {
             Parameters params = new Parameters();
 
             params.setParameter(AntTask.TARGET, TARGET);
-
+            
             String[] keys =
                 {
                     Task.PARAMETER_PUBLICATION_ID,
