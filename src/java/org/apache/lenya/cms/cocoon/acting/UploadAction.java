@@ -128,19 +128,20 @@ public class UploadAction extends AbstractConfigurableAction {
             getLogger().warn("The filename [" + fileName + "] is not valid for an asset.");
             return null;
         }
+        // convert spaces in the file name to underscores
+        fileName = fileName.replace(' ', '_');
         String mimeType = part.getMimeType();
         int fileSize = part.getSize();
 
         results.put(UPLOADASSET_RETURN_MIMETYPE, mimeType);
         results.put(UPLOADASSET_RETURN_FILESIZE, new Integer(fileSize));
 
-        // FIXME: write fileSize into dc meta data
         dublinCoreParams.put("format", mimeType);
         dublinCoreParams.put("extent", Integer.toString(fileSize));
 
         if (uploadType.equals("asset")) {
             ResourcesManager resourcesMgr = new ResourcesManager(document);
-            assetFile = new File(resourcesMgr.getPath(), part.getFileName());
+            assetFile = new File(resourcesMgr.getPath(), fileName);
 
             if (!resourcesMgr.getPath().exists()) {
                 resourcesMgr.getPath().mkdirs();
@@ -154,7 +155,7 @@ public class UploadAction extends AbstractConfigurableAction {
         }
         // must be a content upload then
         else {
-            assetFile = new File(document.getFile().getParent(), part.getFileName());
+            assetFile = new File(document.getFile().getParent(), fileName);
             getLogger().debug("assetFile: " + assetFile);
         }
 
