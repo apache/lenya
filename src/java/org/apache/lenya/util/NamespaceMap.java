@@ -1,5 +1,5 @@
 /*
-$Id: NamespaceMap.java,v 1.7 2003/08/28 10:16:43 andreas Exp $
+$Id: NamespaceMap.java,v 1.8 2004/02/17 09:39:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,8 +64,11 @@ import java.util.Set;
 /**
  * An object of this class provides an easy way to access
  * Strings in a Map that are prefixed like "prefix.foo".
+ * The actual map wrapped by this object can contain more
+ * key-value-pairs, but you can access only the prefixed keys
+ * through the mapper.
  *
- * @author <a href="mailto:ah@wyona.org">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class NamespaceMap {
     public static final String SEPARATOR = ".";
@@ -73,19 +76,17 @@ public class NamespaceMap {
     private String prefix;
 
     /**
-     * Creates a new JobDataMapWrapper object.
-     *
-     * @param prefix DOCUMENT ME!
+     * Creates a new NamespaceMap object.
+     * @param prefix The prefix.
      */
     public NamespaceMap(String prefix) {
         this(new HashMap(), prefix);
     }
 
     /**
-     * Creates a new instance of JobDataMapWrapper
-     *
-     * @param map DOCUMENT ME!
-     * @param prefix DOCUMENT ME!
+     * Creates a new NamespaceMap.
+     * @param map A map containing the prefixed key-value-pairs.
+     * @param prefix The prefix.
      */
     public NamespaceMap(Map map, String prefix) {
         this.map = map;
@@ -93,9 +94,8 @@ public class NamespaceMap {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the prefix.
+     * @return A string.
      */
     public String getPrefix() {
         return prefix;
@@ -103,7 +103,6 @@ public class NamespaceMap {
 
     /**
      * Returns the namespace prefix.
-     *
      * @return The namespace prefix.
      */
     protected Map getMapObject() {
@@ -111,8 +110,7 @@ public class NamespaceMap {
     }
 
     /**
-     * Returns a Map that contains only the prefixed objects.
-     *
+     * Returns a map that contains only the un-prefixed key-value-pairs.
      * @return The map.
      */
     public Map getMap() {
@@ -137,7 +135,6 @@ public class NamespaceMap {
 
     /**
      * Puts a value for prefixed key into the map.
-     *
      * @param key The key without prefix.
      * @param value The value.
      */
@@ -147,9 +144,7 @@ public class NamespaceMap {
 
     /**
      * Returns the value for a prefixed key.
-     *
      * @param key The key without prefix.
-     *
      * @return The value.
      */
     public Object get(String key) {
@@ -157,31 +152,27 @@ public class NamespaceMap {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param prefix DOCUMENT ME!
-     * @param key DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the full (prefixed) key for a short (un-prefixed) key.
+     * @param prefix The prefix.
+     * @param key The un-prefixed key.
+     * @return A string (prefix + {@link #SEPARATOR} + key).
      */
     public static String getFullName(String prefix, String key) {
         return prefix + SEPARATOR + key;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param prefix DOCUMENT ME!
-     * @param key DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the short (un-prefixed) key for a full (prefixed) key.
+     * @param prefix The prefix.
+     * @param key The full (prefixed) key.
+     * @return A string.
      */
     public static String getShortName(String prefix, String key) {
         return key.substring(prefix.length() + SEPARATOR.length());
     }
     
     /**
-     * Puts all key-value-pairs of map into this map.
+     * Puts all prefixed key-value-pairs of map into this map.
      * @param map A map.
      */
     public void putAll(Map map) {
