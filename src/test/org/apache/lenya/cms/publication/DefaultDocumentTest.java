@@ -99,8 +99,9 @@ public class DefaultDocumentTest extends TestCase {
     }
 
     protected static final DocumentTestSet[] testSets = {
-        new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "", "html"),
-        new DocumentTestSet("/index_en.htm", "/index", Publication.AUTHORING_AREA, "en", "htm")
+        new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
+        new DocumentTestSet("/index_en.htm", "/index", Publication.AUTHORING_AREA, "en", "htm"),
+        new DocumentTestSet("/index_de.html", "/index", Publication.AUTHORING_AREA, "de", "html")
     };
 
     /**
@@ -151,6 +152,7 @@ public class DefaultDocumentTest extends TestCase {
         throws DocumentBuildException {
         DefaultDocument document = new DefaultDocument(PublicationHelper.getPublication(),
                 testSet.getId(), testSet.getArea());
+        document.setDocumentURL(testSet.getUrl());
         document.setLanguage(testSet.getLanguage());
         document.setExtension(testSet.getExtension());
 
