@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<oscom:navigation xmlns:oscom="http://www.oscom.org/2002/oscom">
+<leaf name="Home" href="index.html"/>
+<branch name="Conferences">
+  <leaf name="Zurich" href="http://www.oscom.org/conferences/zurich2002/"/>
+  <branch name="San Francisco" href="conferences/sanfrancisco2002/index.html">
+<!--
+    <leaf name="Program"/>
+    <leaf name="Registration&#160;&#38;&#160;Fees"/>
+    <leaf name="Local&#160;Information"/>
+    <leaf name="CfP" href="conferences/sanfrancisco2002/cfp.html"/>
+    <leaf name="Contact/OC"/>
+-->
+  </branch>
+  <leaf name="Tokyo"/>
+</branch>
+<leaf name="CMF/S Overview"/>
+<leaf name="Editor Overview"/>
+<leaf name="Glossary"/>
+<leaf name="Mailing Lists" href="mailing-lists.html"/>
+<leaf name="Board" href="board.html"/>
+</oscom:navigation>
