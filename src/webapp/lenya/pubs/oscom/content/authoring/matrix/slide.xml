@@ -2,12 +2,14 @@
 
 <system type="framework">
   <id>slide</id>
-  <system_name>Slide</system_name>
+  <system_name>Apache Slide</system_name>
+  <description>
+Slide can be seen as a low-level content management framework with a Java API. Conceptually, it provides a hierarchical organization of binary content which can be stored into arbitrary, heterogenous, distributed data stores. In addition, Slide integrates security, locking, versioning, as well as many other services.
+ Slide also offers a WebDAV access module (implemented as a servlet). WebDAV is an IETF standard endorsed by companies like Microsoft, IBM, Novell, Adobe and many others. It makes Slide an ideal choice for web-based content management. All the data managed by Slide can be accessed through WebDAV, and enable remote administration and manipulation of the data managed by Slide using standard third party tools, along with the custom ones provided in the Slide distribution as additional tools.
+  </description>
   <main_url>http://jakarta.apache.org/slide/</main_url>
-  <faq_url><![CDATA[http://faq.globalvision.com.au/cgi-bin/fom]]></faq_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_description></license_description>
     <license_url>http://www.opensource.org/licenses/apachepl.html</license_url>
   </license>
 </system>

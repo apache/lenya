@@ -4,7 +4,6 @@
   <id>webdav</id>
   <system_name>WebDAV</system_name>
   <main_url>http://www.webdav.org/</main_url>
-  <faq_url><![CDATA[http://www.webdav.org/other/faq.html]]></faq_url>
   <license>
     <license_name>IETF Proposed Standard</license_name>
   </license>

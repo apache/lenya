@@ -4,10 +4,8 @@
   <id>zope</id>
   <system_name>Zope</system_name>
   <main_url>http://www.zope.org/</main_url>
-  <faq_url><![CDATA[http://zdp.zope.org/projects/zfaq]]></faq_url>
   <license>
     <license_name>Zope Public License (ZPL)</license_name>
-    <license_description></license_description>
     <license_url>http://www.zope.org/Resources/ZPL</license_url>
   </license>
 </system>
