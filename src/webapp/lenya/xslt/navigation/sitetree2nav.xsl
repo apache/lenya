@@ -71,6 +71,7 @@ Apply nodes recursively
   <nav:node>
   
     <xsl:copy-of select="@id"/>
+    <xsl:copy-of select="@protected"/>
   
     <!-- basic url - for all nodes -->
   

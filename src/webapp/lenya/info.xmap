@@ -39,6 +39,10 @@
       <!-- {publication-id}/{area}/sitetree.xml -->
       <map:match pattern="*/*/sitetree.xml">
         <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+        <map:transform type="access-control-sitetree">
+          <map:parameter name="publication-id" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+        </map:transform>
         <map:transform src="xslt/info/sitetree2areatree.xsl">
           <map:parameter name="area" value="{2}"/>
         </map:transform>
@@ -56,7 +60,7 @@
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         </map:transform>
-        <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
+        <map:transform src="{fallback:xslt/info/sitetree2tree.xsl}" label="content">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>

@@ -1,4 +1,4 @@
-// $Id: tree.js,v 1.11 2003/09/19 12:19:21 andreas Exp $
+// $Id: tree.js,v 1.12 2003/10/13 18:24:31 andreas Exp $
 //**************************************************************** 
 // TreeView by Marcelino Martins http://www.treeview.net
 //**************************************************************** 
@@ -157,7 +157,10 @@ function drawFolder(insertAtObj)
   if (USETEXTLINKS) 
   { 
     docW = docW + this.linkHTML(true) 
-    docW = docW + this.desc + "</a>"
+    docW = docW + this.desc;
+    if (this.hreference) {
+      docW = docW + "</a>"
+    }
   } 
   else 
     docW = docW + this.desc
@@ -285,8 +288,9 @@ function linkFolderHTML(isTextLink)
 
     docW = docW + ">"
   } 
-  else 
-    docW = docW + "<a>" 
+  else {
+//    docW = docW + "<a>" 
+  }
 
   return docW;
 } 
@@ -410,8 +414,9 @@ function drawItem(insertAtObj)
   docW = docW + this.blockStartHTML("item")
 
   docW = docW + "<tr>" + leftSide + "<td valign=top>"
-  if (USEICONS)
+  if (USEICONS && this.link != "undefined") {
       docW = docW + "<a " + fullLink  + " id=\"itemIconLink"+this.id+"\">" + "<img id='itemIcon"+this.id+"' " + "src='"+this.iconSrc+"' border=0>" + "</a>"
+  }
   else
 	  if (this.prependHTML == "")
         docW = docW + "<img src=" + ICONPATH + "ftv2blank.gif height=2 width=3>"
@@ -421,7 +426,7 @@ function drawItem(insertAtObj)
   else
     docW = docW + "</td>"+this.prependHTML+"<td valign=middle nowrap width=100%>"
 
-  if (USETEXTLINKS) 
+  if (USETEXTLINKS && this.link != "undefined") 
     docW = docW + "<a " + fullLink + " id=\"itemTextLink"+this.id+"\">" + this.desc + "</a>"
   else 
     docW = docW + this.desc

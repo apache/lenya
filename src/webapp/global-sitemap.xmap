@@ -151,6 +151,7 @@
     
     <map:transformer logger="lenya.sitemap.transformer.workflowmenu" name="workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/>
     <map:transformer logger="lenya.sitemap.transformer.usecasemenu" name="usecasemenu" src="org.apache.lenya.cms.cocoon.transformation.UsecaseMenuTransformer"/>
+    <map:transformer logger="lenya.sitemap.transformer.accesscontrolsitetree" name="access-control-sitetree" src="org.apache.lenya.cms.cocoon.transformation.AccessControlSitetreeTransformer"/>
 
     <map:transformer logger="lenya.sitemap.transformer.index" name="index" src="org.apache.lenya.cms.cocoon.transformation.DocumentIndexTransformer">
     </map:transformer>

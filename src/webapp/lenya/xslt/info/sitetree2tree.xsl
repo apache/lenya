@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.33 2003/10/13 10:01:37 andreas Exp $
+        $Id: sitetree2tree.xsl,v 1.34 2003/10/13 18:24:31 andreas Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
@@ -45,10 +45,24 @@ foldersTree.treeID = "t2"
   	<xsl:if test="not($chosenlanguage = $defaultlanguage)">_<xsl:value-of select="$chosenlanguage"/></xsl:if>
   </xsl:variable>
   
-  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', @area, '/', $suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
+  <xsl:variable name="link">
+    <xsl:if test="not(@protected = 'true')">
+      <xsl:text>, "</xsl:text>
+      <xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', @area, '/', $suffix)"/>
+      <xsl:text>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:text>
+      <xsl:text>"</xsl:text>
+    </xsl:if>
+  </xsl:variable>
+  
+  <xsl:variable name="protected-pre"><xsl:if test="@protected = 'true'">&lt;span class=\"lenya-info-protected\"&gt;</xsl:if></xsl:variable>
+  <xsl:variable name="protected-post"><xsl:if test="@protected = 'true'">&lt;/span&gt;</xsl:if></xsl:variable>
+  
+  <xsl:variable name="pre" select="$protected-pre"/>
+  <xsl:variable name="post" select="$protected-post"/>
+  
   <xsl:choose>
-  	<xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$link"/>"))</xsl:when>
-    <xsl:otherwise>insDoc(foldersTree, gLnk("S", "&#160;<xsl:value-of select="@label"/>&#160;", "<xsl:value-of select="$link"/>"))</xsl:otherwise>
+  	<xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("&#160;<xsl:value-of select="$pre"/><xsl:value-of select="@label"/><xsl:value-of select="$post"/>&#160;" <xsl:value-of select="$link"/>))</xsl:when>
+    <xsl:otherwise>insDoc(foldersTree, gLnk("S", "&#160;<xsl:value-of select="$pre"/><xsl:value-of select="@label"/><xsl:value-of select="$post"/>&#160;" <xsl:value-of select="$link"/>))</xsl:otherwise>
   </xsl:choose>
   <xsl:apply-templates>
     <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
@@ -58,29 +72,43 @@ foldersTree.treeID = "t2"
 <xsl:template match="s:node">
   <xsl:param name="parentPath"/>
   <xsl:variable name="tree-area" select="ancestor::s:site/@area"/>
-  <xsl:variable name="link"><xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', $tree-area, '/', @basic-url, @language-suffix, @suffix)"/>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:variable>
+  <xsl:variable name="link">
+    <xsl:if test="not(@protected = 'true')">
+      <xsl:text>, "</xsl:text>
+      <xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', $tree-area, '/', @basic-url, @language-suffix, @suffix)"/>
+      <xsl:text>?lenya.usecase=info-overview&amp;lenya.step=showscreen</xsl:text>
+      <xsl:text>"</xsl:text>
+    </xsl:if>
+  </xsl:variable>
   <xsl:variable name="exists-language" select="s:label[lang($chosenlanguage)]"/>
+  
+  <xsl:variable name="protected-pre"><xsl:if test="@protected = 'true'">&lt;span class=\"lenya-info-protected\"&gt;</xsl:if></xsl:variable>
+  <xsl:variable name="protected-post"><xsl:if test="@protected = 'true'">&lt;/span&gt;</xsl:if></xsl:variable>
+  
   <xsl:variable name="no-language-pre"><xsl:if test="not($exists-language)">&lt;span class=\"lenya-info-nolanguage\"&gt;</xsl:if></xsl:variable>
   <xsl:variable name="no-language-post"><xsl:if test="not($exists-language)">&lt;/span&gt;</xsl:if></xsl:variable>
   
   <xsl:variable name="cut-pre"><xsl:if test="$cutdocumentid = concat('/', @basic-url)">&lt;span class='lenya-info-cut'&gt;[</xsl:if></xsl:variable>
   <xsl:variable name="cut-post"><xsl:if test="$cutdocumentid = concat('/', @basic-url)">]&lt;/span&gt;</xsl:if></xsl:variable>
+  
+  <xsl:variable name="pre" select="concat($no-language-pre, $protected-pre, $cut-pre)"/>
+  <xsl:variable name="post" select="concat($cut-post, $protected-post, $no-language-post)"/>
 
   <xsl:choose>
   	<xsl:when test="descendant::s:node">
   		<xsl:value-of select="generate-id(.)"/>
   		= insFld(
   			   <xsl:value-of select="generate-id(..)"/>,
-           gFld("&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabel"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
-           "<xsl:value-of select="$link"/>")
+           gFld("&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$pre"/><xsl:call-template name="getLabel"/><xsl:value-of select="$post"/>&lt;/span&gt;"
+           <xsl:value-of select="$link"/>)
       );
     </xsl:when>
     <xsl:otherwise>
     	insDoc(<xsl:value-of select="generate-id(..)"/>,
     	       gLnk(
     	           "S",
-    	           "&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$cut-pre"/><xsl:value-of select="$no-language-pre"/><xsl:call-template name="getLabel"/><xsl:value-of select="$no-language-post"/><xsl:value-of select="$cut-post"/>&lt;/span&gt;",
-    	           "<xsl:value-of select="$link"/>")
+    	           "&lt;span style=\"padding: 0px 5px;\"&gt;<xsl:value-of select="$pre"/><xsl:call-template name="getLabel"/>&lt;/span&gt;"
+    	           <xsl:value-of select="$link"/>)
       );
       </xsl:otherwise>
   </xsl:choose>
