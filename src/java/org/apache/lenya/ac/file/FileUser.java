@@ -18,6 +18,7 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
+import java.io.Serializable;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -28,14 +29,14 @@ import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.impl.AbstractUser;
 import org.apache.lenya.ac.impl.ItemConfiguration;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * File-based user implementation.
- * @version $Id: FileUser.java,v 1.5 2004/08/16 15:59:51 andreas Exp $
+ * @version $Id$
  */
-public class FileUser extends AbstractUser implements Item {
-    private Category log = Category.getInstance(FileUser.class);
+public class FileUser extends AbstractUser implements Item, Serializable {
+	private static final Logger log = Logger.getLogger(FileUser.class);
 
     public static final String ID = "identity";
     public static final String EMAIL = "email";
