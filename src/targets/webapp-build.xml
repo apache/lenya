@@ -133,13 +133,6 @@
     <!-- now copy any additional libraries in ./lib -->
     <mkdir dir="${build.webapp}/WEB-INF/lib"/>
 
-    <echo>INFO: Copy publication libraries</echo>
-    <copy todir="${build.webapp}/WEB-INF/lib" flatten="yes">
-      <fileset dir="${build.webapp}/lenya/pubs">
-        <include name="*/java/lib/*.jar"/>
-      </fileset>
-    </copy>
-
     <echo>INFO: Copy libraries from ${lib.dir} and ${tools.lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
