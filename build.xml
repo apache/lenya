@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.42 2003/03/07 15:30:36 michi Exp $
+   @version CVS $Id: build.xml,v 1.43 2003/03/10 14:07:55 michi Exp $
 
 -->
 
@@ -605,6 +605,7 @@
   <!-- ============================================================ -->
   <target name="clean" depends="init" description="Cleans the build directories">
     <delete dir="${build.dir}"/>
+    <delete dir="${build.root}/tools"/>
   </target>
 
   <target name="distclean" depends="clean" description="Cleans everything to the original state">
