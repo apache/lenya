@@ -22,6 +22,7 @@ import org.apache.log4j.Category;
 
 import org.apache.lenya.cms.rc.RCEnvironment;
 /**
+ * Describe class <code>PageEnvelope</code> here.
  *
  * @author  nobby
  */
@@ -42,7 +43,15 @@ public class PageEnvelope {
     private String area;
     private String documentId;
 
-    /** Creates a new instance of PageEnvelope */
+    /**
+     * Creates a new instance of PageEnvelope
+     * @param resolver a <code>SourceResolver</code> value
+     * @param request a <code>Request</code> value
+     * @exception PageEnvelopeException if an error occurs
+     * @exception ProcessingException if an error occurs
+     * @exception SAXException if an error occurs
+     * @exception IOException if an error occurs
+     */
     public PageEnvelope(SourceResolver resolver, Request request)
             throws PageEnvelopeException, ProcessingException, SAXException, IOException {
         Source inputSource = resolver.resolveURI("");
@@ -73,11 +82,34 @@ public class PageEnvelope {
 	directories = requestURI.split("/");
         area = directories[AREA_POS];
 
+	documentId = computeDocumentId(requestURI);
+        publication = new Publication(publicationId, path);
+        rcEnvironment = new RCEnvironment(path);
+        context = request.getContextPath();
+    }
+
+    /**
+     * <code>computeDocumentId</code> contains some heuristicts derive
+     * a document-id from a given requestURI. The basic assumption is
+     * that an URL consists of
+     * http:/<context-prefix>/<publication-id>/<area>/<document-id>.*. So
+     * to figure out the document-id we simply need to trim the parts
+     * before and including "area" and after and including '.'
+     *
+     * Also if the requestURI contains a "foo/index" we assume that
+     * the document-id is foo, i.e. we also trin "index"
+     *
+     * @param requestURI a <code>String</code> value
+     * @return a <code>String</code> value
+     */
+    protected String computeDocumentId(String requestURI) {
 	// the computation of the document id is based on the
 	// assumption that and URI matches of the following pattern:
 	// http:/<context-prefix>/<publication-id>/<area>/<document-id>.*
 	// where document-id can be foo/bar/baz
-	documentId = "";
+
+        String directories[] = requestURI.split("/");
+	String documentId = "";
 	List documentIds = Arrays.asList(directories).subList(DOCUMENT_ID_POS, directories.length);
 	// remove the suffix from the last element
 	log.debug("documentIds: " + documentIds);
@@ -89,19 +121,25 @@ public class PageEnvelope {
 	    documentIds.set(documentIds.size()-1, lastPartOfDocumentId.substring(0, startOfSuffix));
 	    log.debug("w/oSuffix: " + lastPartOfDocumentId.substring(0, startOfSuffix));
 	}
+
+	// Another part of the heuristics is that if the last part of
+	// the document-id is "index" it is to be removed.
+	lastPartOfDocumentId = (String)documentIds.get(documentIds.size()-1);
+	int startOfIndex = lastPartOfDocumentId.indexOf("index");
+	if (startOfIndex >= 0) {
+	    documentIds.set(documentIds.size()-1, lastPartOfDocumentId.substring(0, startOfIndex));
+	}
+
 	log.debug("documentIds: " + documentIds);
 	for (Iterator i = documentIds.iterator(); i.hasNext();) {
 	    documentId += "/" + i.next();
 	}
-
-        publication = new Publication(publicationId, path);
-        rcEnvironment = new RCEnvironment(path);
-        context = request.getContextPath();
+	return documentId;
     }
-    
     
     /**
      * Returns the publication of this PageEnvelope.
+     * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
         return publication;
@@ -109,6 +147,7 @@ public class PageEnvelope {
     
     /**
      * Returns the rcEnvironment.
+     * @return a <code>RCEnvironment</code> value
      */
     public RCEnvironment getRCEnvironment() {
         return rcEnvironment;
@@ -116,6 +155,7 @@ public class PageEnvelope {
 
     /**
      * Returns the context.
+     * @return a <code>String</code> value
      */
     public String getContext() {
         return context;
@@ -123,6 +163,7 @@ public class PageEnvelope {
     
     /**
      * Returns the area (authoring/live).
+     * @return a <code>String</code> value
      */
     public String getArea() {
         return area;
@@ -130,6 +171,7 @@ public class PageEnvelope {
     
     /**
      * Returns the document-id.
+     * @return a <code>String</code> value
      */
     public String getDocumentId() {
         return documentId;
