@@ -46,7 +46,8 @@ function publication_image_library() {
     var imageInfos = new ArrayList();
     
     for(var i=0; i<allDocs.length; i++) {
-        
+        if(allDocs[i].getId().equals(pageEnvelope.getDocument().getId()))
+            continue;
         var resourcesMgr = new ResourcesManager(allDocs[i]);
         var imageResources = resourcesMgr.getImageResources();
         
@@ -60,7 +61,7 @@ function publication_image_library() {
                     "title" : title,
                     "length" : imageResources[j].length(),
                     "iconUrl" : cocoon.parameters["iconUrl"]
-                });
+            });
         }
     }
     cocoon.sendPage(cocoon.parameters["template"], {"imageInfos" : imageInfos});
