@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.19 2003/09/04 17:04:01 andreas Exp $
+$Id: Document.java,v 1.20 2003/09/12 10:01:15 egli Exp $
 <License>
 
  ============================================================================
@@ -144,6 +144,16 @@ public interface Document {
      * @throws DocumentException if an error occurs
 	 */
 	String[] getLanguages() throws DocumentException;
+
+	/**
+	 * Get the navigation label associated with this document 
+	 * for the language.
+	 * 
+	 * @return the label String
+	 * 
+	 * @throws DocumentException if an error occurs
+	 */
+	String getLabel() throws DocumentException;
 
 	/**
 	 * Returns the date of the last modification of this document.
