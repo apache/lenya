@@ -60,6 +60,7 @@
       <lenya-info:documentid><input:get-attribute module="page-envelope" as="object" name="document-id"/></lenya-info:documentid>
       <lenya-info:area></lenya-info:area>
       <lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
+      <lenya-info:is-live><input:get-attribute module="workflow" as="string" name="variable.is_live"/></lenya-info:is-live>
     </lenya-info:overview>  
   </lenya-info:info>
   
