@@ -282,6 +282,9 @@
              class="org.apache.lenya.cms.usecase.scheduling.UsecaseCronJob"
              logger="cron.usecase"/>
              
+  <!-- move scheduler to the end, datasources have to be available -->
+  <xsl:apply-templates select="component[@role = 'org.apache.cocoon.components.cron.JobScheduler']" mode="scheduler"/>
+             
   </xsl:copy>
 
 </xsl:template>
@@ -289,6 +292,16 @@
 <!-- increase the free memory to prevent out of memory errors -->
 <xsl:template match="store-janitor/parameter[@name = 'freememory']">
   <parameter name="freememory" value="10000000"/>
+</xsl:template>
+
+
+<xsl:template match="component[@role = 'org.apache.cocoon.components.cron.JobScheduler']"/>
+
+
+<xsl:template match="component[@role = 'org.apache.cocoon.components.cron.JobScheduler']" mode="scheduler">
+  <xsl:copy>
+    <xsl:apply-templates select="@*|node()"/>
+  </xsl:copy>
 </xsl:template>
 
 
