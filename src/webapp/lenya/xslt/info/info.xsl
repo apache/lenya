@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.5 2003/07/03 13:29:59 gregor Exp $
+ $Id: info.xsl,v 1.6 2003/07/23 14:34:59 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -9,7 +9,7 @@
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
-    xmlns:dc="http://dc.org/2003/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
     >
  <xsl:import href="../util/page-util.xsl"/>
     

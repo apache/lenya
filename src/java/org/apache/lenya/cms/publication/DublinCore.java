@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.3 2003/07/23 13:21:11 gregor Exp $
+$Id: DublinCore.java,v 1.4 2003/07/23 14:35:01 gregor Exp $
 <License>
 
  ============================================================================
@@ -96,7 +96,7 @@ public class DublinCore {
 		} catch (Exception e) {
 			throw new PublicationException(e);
 		}
-		domelement = DocumentHelper.getFirstChild(domelement, "", "name");
+		domelement = DocumentHelper.getFirstChild(domelement, "http://apache.org/cocoon/lenya/page-envelope/1.0", "name");
 		return null;
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: approval-submit.xsl,v 1.1 2003/06/05 14:12:21 gregor Exp $
+ $Id: approval-submit.xsl,v 1.2 2003/07/23 14:34:59 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -9,7 +9,7 @@
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
-    xmlns:dc="http://dc.org/2003/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="nav"
     >

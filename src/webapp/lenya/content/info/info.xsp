@@ -7,7 +7,7 @@
   xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
-  xmlns:dc="http://dc.org/2003/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
 >
 
