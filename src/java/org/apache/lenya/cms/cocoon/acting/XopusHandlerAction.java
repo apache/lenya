@@ -1,5 +1,5 @@
 /*
-$Id: XopusHandlerAction.java,v 1.37 2004/02/20 08:44:48 andreas Exp $
+$Id: XopusHandlerAction.java,v 1.38 2004/02/21 13:44:43 gregor Exp $
 <License>
 
  ============================================================================
@@ -282,7 +282,7 @@ public class XopusHandlerAction extends ConfigurableServiceableAction {
                 // Create a new document, where the actual content starts at the root element, which is the inner part of requestDoc
                 Document contentDocument = dpf.getDocument();
                 contentDocument.appendChild(
-                    (Element) dpf.cloneNode(contentDocument, contentNode, true));
+                    dpf.cloneNode(contentDocument, contentNode, true));
                 new DOMWriter(new FileOutputStream(tempFile)).printWithoutFormatting(
                     contentDocument);
             } catch (Exception e) {

@@ -1,5 +1,5 @@
 /*
-$Id: Entities.java,v 1.9 2004/02/02 02:50:38 stefano Exp $
+$Id: Entities.java,v 1.10 2004/02/21 13:44:43 gregor Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,7 @@ import java.util.Hashtable;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class Entities {
     static final Hashtable decoder = new Hashtable(300);
@@ -364,7 +364,7 @@ public class Entities {
 
         for (int i = 0; i < length; i++) {
             char c = s.charAt(i);
-            int j = (int) c;
+            int j = c;
 
             if ((j < 0x100) && (encoder[j] != null)) {
                 buffer.append(encoder[j]); // have a named encoding

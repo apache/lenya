@@ -1,5 +1,5 @@
 /*
-$Id: IterativeHTMLCrawler.java,v 1.18 2004/02/02 02:50:38 stefano Exp $
+$Id: IterativeHTMLCrawler.java,v 1.19 2004/02/21 13:44:43 gregor Exp $
 <License>
 
  ============================================================================
@@ -74,7 +74,7 @@ import websphinx.RobotExclusion;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class IterativeHTMLCrawler {
     java.util.Vector urlsToCrawl;
@@ -190,7 +190,7 @@ public class IterativeHTMLCrawler {
                         url_list_file));
 
             for (int i = 0; i < urlsToCrawl.size(); i++) {
-                out.println("" + (URL) urlsToCrawl.elementAt(i));
+                out.println("" + urlsToCrawl.elementAt(i));
             }
 
             out.close();

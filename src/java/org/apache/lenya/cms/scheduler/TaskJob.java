@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.36 2004/02/02 02:42:35 stefano Exp $
+$Id: TaskJob.java,v 1.37 2004/02/21 13:44:43 gregor Exp $
 <License>
 
  ============================================================================
@@ -105,7 +105,7 @@ public class TaskJob extends ServletJob {
         while (parameters.hasMoreElements()) {
             String key = (String) parameters.nextElement();
             Object value;
-            String[] values = (String[]) request.getParameterValues(key);
+            String[] values = request.getParameterValues(key);
             if (values.length == 1) {
                 value = values[0];
             }

@@ -77,7 +77,7 @@ import org.xml.sax.SAXException;
  *
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
- * @version $Id: DublinCoreImpl.java,v 1.11 2004/02/20 16:32:33 andreas Exp $
+ * @version $Id: DublinCoreImpl.java,v 1.12 2004/02/21 13:44:43 gregor Exp $
  */
 public class DublinCoreImpl {
     private Document cmsdocument;
@@ -297,7 +297,7 @@ public class DublinCoreImpl {
      */
     public String getFirstValue(String key) throws DocumentException {
         String value = null;
-        String[] values = (String[]) getElementOrTerm(key);
+        String[] values = getElementOrTerm(key);
         if (values.length > 0) {
             value = values[0];
         }
