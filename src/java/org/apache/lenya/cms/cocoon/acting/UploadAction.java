@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: UploadAction.java,v 1.9 2004/08/25 09:13:36 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -167,10 +167,12 @@ public class UploadAction extends AbstractConfigurableAction {
      * @throws Exception if an error occurs.
      */
     protected void saveAsset(File assetFile, Part part) throws Exception {
-        boolean created = assetFile.createNewFile();
-        if (!created) {
-            throw new RuntimeException("The file [" + assetFile + "] could not be created.");
-        }
+        if (!assetFile.exists()) {
+            boolean created = assetFile.createNewFile();
+            if (!created) {
+                throw new RuntimeException("The file [" + assetFile + "] could not be created.");
+            }
+	}
 
         byte[] buf = new byte[4096];
         FileOutputStream out = new FileOutputStream(assetFile);
