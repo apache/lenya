@@ -38,6 +38,8 @@ import org.apache.avalon.excalibur.io.FileUtil;
 
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 
 
 /**
@@ -93,7 +95,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     }
 
     private Document document = null;
-    private DublinCoreImpl dc = null;
+    
+    protected static final String NAMESPACE_META = "http://lenya.apache.org/meta/1.0";
 
     /**
      * Create a new instance of Resources.
@@ -148,9 +151,10 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             saveResource(resourceFile, part);
         } catch (final DocumentException e) {
             getLogger().error("Document exception " +e.toString());
-            throw new IOException(e.toString());
+            throw new RuntimeException(e);
         } catch (final IOException e) {
             getLogger().error("IO Error " +e.toString());
+            throw e;
         }
     }
 
@@ -209,21 +213,27 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
         assert (metaDataFile.getParentFile().exists());
 		try {
+            
+            if (!metaDataFile.exists()) {
+                metaDataFile.createNewFile();
+                NamespaceHelper helper = new NamespaceHelper(NAMESPACE_META, "", "meta");
+                DocumentHelper.writeDocument(helper.getDocument(), metaDataFile);
+            }
             String		key;
             String		value;
             Map.Entry	entry;
-            this.dc = new DublinCoreImpl(metaDataFile);
+            DublinCoreImpl dc = new DublinCoreImpl(metaDataFile);
             Iterator iter = metadata.entrySet().iterator();
 
             while (iter.hasNext()) {
             	entry 	= (Map.Entry)iter.next();
             	key 	= (String)entry.getKey();
             	value 	= (String)entry.getValue();
-                this.dc.setValue(key, value);
+                dc.setValue(key, value);
             }
-            this.dc.save();
-        } catch (final DocumentException e) {
-            getLogger().error("Saving of [" + metaDataFile + "]�failed.");
+            dc.save();
+        } catch (final Exception e) {
+            getLogger().error("Saving of [" + metaDataFile + "] �failed.");
             throw new DocumentException(e);
         }
     }
