@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultDocument.java,v 1.41 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: DefaultDocument.java,v 1.42 2004/05/21 12:26:34 andreas Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -253,7 +253,9 @@ public class DefaultDocument implements Document {
      * @param area A string.
      */
     protected void setArea(String area) {
-        assert AbstractPublication.isValidArea(area);
+        if (!AbstractPublication.isValidArea(area)) {
+            throw new IllegalArgumentException("The area [" + area + "] is not valid!");
+        }
         this.area = area;
     }
 
