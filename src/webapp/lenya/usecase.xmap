@@ -97,6 +97,15 @@
   <!-- =========================== Pipelines ================================ -->
   <!-- FIXME: Reorder the pipelines in here neatly. Maybe alphabetically? -->
   <map:pipelines>
+
+    <!-- Configuration -->
+    <map:component-configurations>
+      <global-variables>
+        <content-prefix>/home/username/data</content-prefix>
+      </global-variables>
+    </map:component-configurations>
+
+  
     
     <!-- =================================================================== -->
     <!-- Notification Pipelines -->
@@ -420,6 +429,10 @@
           <map:match pattern="open" type="step">
             <map:match pattern="*/authoring/**.html">
               <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+	      <!-- FIXME: path should be configured within publication -->
+	      <!--
+              <map:generate src="{global:content-prefix}/authoring/{page-envelope:document-path}"/>
+	      -->
               <!-- FIXME: CDATA is also being modified by replace-predefined-entities.xsl, which actually shouldn't -->
               <map:transform src="xslt/authoring/edit/replace-predefined-entities.xsl"/>
               <map:transform src="xslt/authoring/edit/oneform.xsl">
@@ -438,6 +451,10 @@
               <!-- Save: Overwrite original file (FIXME: Cancel should not overwrite original file) -->
               <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                 <map:parameter name="source" value="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+                <!-- FIXME: path should be configured within publication -->
+		<!--
+                <map:parameter name="source" value="{global:content-prefix}/authoring/{page-envelope:document-path}"/>
+		-->
               </map:transform>
               <map:transform type="write-source"/>
               <map:transform src="xslt/authoring/edit/redirect-to.xsl">
