@@ -13,12 +13,10 @@ import org.apache.lenya.cms.workflow.Engine;
  *
  * @author  andreas
  */
-public class EngineImpl
-    extends AbstractLogEnabled
-    implements Engine {
-    
+public class EngineImpl extends AbstractLogEnabled implements Engine {
+
     /** Creates a new instance of EngineImpl */
     public EngineImpl() {
     }
-   
+
 }
