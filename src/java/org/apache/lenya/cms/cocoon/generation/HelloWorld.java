@@ -27,24 +27,24 @@ static Category log=Category.getInstance(HelloWorld.class);
 /**
  *
  */
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response)
+    public void doGet(HttpServletRequest request,HttpServletResponse response)
 	throws IOException, ServletException {
         log.warn("GET");
 
 	response.setContentType("text/xml");
 	PrintWriter writer = response.getWriter();
-	
-	writer.println("<hello>world</hello>");
+	writer.println("<hello>GET</hello>");
   	
     }
 /**
  *
  */
-    public void doPost(HttpServletRequest req,
-		       HttpServletResponse resp)
+    public void doPost(HttpServletRequest request,HttpServletResponse response)
 	throws ServletException, IOException {
         log.warn("POST");
-	doGet(req, resp);
+
+	response.setContentType("text/xml");
+	PrintWriter writer = response.getWriter();
+	writer.println("<hello>POST</hello>");
     }
 }
