@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+ 
+<xsl:output method="html" version="1.0" indent="yes" encoding="ISO-8859-1"/>
+
+<xsl:template match="front">
+  <xsl:apply-templates select="articles"/>
+</xsl:template>
+
+<xsl:template match="articles">
+  <xsl:if test="not(article)">
+    No articles published yet!
+  </xsl:if>
+  <table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <xsl:for-each select="article">
+        <xsl:apply-templates select="article"/>
+        <tr>
+          <td>
+            &#160;
+          </td>
+        </tr>
+    </xsl:for-each>
+  </table>
+</xsl:template>
+
+<xsl:template match="article">
+  <tr>
+    <td bgcolor="#000000">
+      <img src="images/roundedge.gif" height="16" width="13" align="top"/><font face="arial,helvetica" size="4" color="#ffffff"><b><xsl:apply-templates select="head/title"/></b></font>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <xsl:apply-templates select="body"/>
+      (<a href="articles/{../@href}/index.html">Read More...</a> | 0 comments)
+    </td>
+  </tr>
+</xsl:template>
+
+<xsl:template match="body">
+  <xsl:apply-templates select="../meta/editor"/>
+  <xsl:apply-templates select="p"/>
+</xsl:template>
+
+<xsl:template match="p">
+  <xsl:apply-templates/>
+  <p />
+</xsl:template>
+
+<xsl:template match="quotation">
+<i>"<xsl:apply-templates/>"</i>
+</xsl:template>
+
+<xsl:template match="editor">
+<b>Posted by <a href=""><xsl:value-of select="."/></a><xsl:apply-templates select="../date"/></b><br />
+</xsl:template>
+
+<xsl:template match="date">
+on <xsl:value-of select="day/@name"/>&#160;<xsl:value-of select="month/@name"/>&#160;<xsl:value-of select="day"/>, @<xsl:value-of select="hour"/>:<xsl:value-of select="minute"/>
+</xsl:template>
+ 
+</xsl:stylesheet>  
