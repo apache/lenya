@@ -36,7 +36,7 @@ function aboWindow() {
 </style>
 
 </head>	
-<body text="#333333" link="#333399" alink="#993300" vlink="#666666" bgcolor="#F5F5F5" background="{$img-unipub}/bg.gif">
+<body text="#333333" link="#333399" alink="#993300" vlink="#666666" bgcolor="#FFFFFF" background="{$img-unipub}/bg.gif">
 
 <center>
 
@@ -166,92 +166,9 @@ function aboWindow() {
 
 <xsl:apply-templates select="/Page/Content/LastColumn/Services"/>
 
-<!--
-<table border="0" cellpadding="0" cellspacing="0" width="126">
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_agenda.gif" border="0" alt="agenda"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_mediadesk.gif" border="0" name="media" alt="mediadesk"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_neuepro.gif" border="0" alt="neue produkte"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_unimus.gif" border="0" alt="uni-museen"/></td>
-</tr>
-
-<tr>
-<td><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-
-<tr>
-<td><img height="25" width="115" src="{$img-unipub}/s_weiter.gif" border="0" alt="weiterbildung"/></td>
-</tr>
-
-<tr>
-<td><br />
- <img height="18" width="126" src="{$img-unipub}/newslett.gif" border="0" alt="newsletter abo"/></td>
-</tr>
-
-<tr>
-<td><br />
- <a href="../webperlen/"><img height="40" width="83" src="{$img-unipub}/t_webperlen.gif" alt="webperlen" border="0"/>
-</a></td>
-</tr>
-</table>
--->
-
 <!-- Webperlen-->
 
 <xsl:apply-templates select="/Page/Content/LastColumn/Webperls"/>
-
-<!--
-<table border="0" cellpadding="0" cellspacing="0" width="135">
-<tr>
-<td bgcolor="#CCCCFF" width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-<td bgcolor="#CCCCFF" width="125" class="webperlen"><font color="#333333">HANDVERLESENE PERLEN AUS DEM WEB DER UNI</font> 
-
-<p><img height="1" width="125" src="{$img-unipub}/white.gif"/></p>
-
-<p><font color="#333333"><b><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/></b></font> Die Matrikel der<br />
- Universit&#228;t Z&#252;rich<br />
- 1833 bis 1912 (-1914)</p>
-
-<p><img height="1" width="125" src="{$img-unipub}/white.gif"/></p>
-
-<p><font color="#333333"><b><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/></b></font> Die BSE-Homepage:
-Fachwissen zum Thema BSE - mit Video!</p>
-
-<p><img height="1" width="125" src="{$img-unipub}/white.gif"/></p>
-
-<p><font color="#333333"><b><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/></b></font> Johann Caspar Lavater:
-Ausgew&#228;hlte Werke in historisch-kritischer Ausgabe</p>
-
-<p><img height="1" width="125" src="{$img-unipub}/white.gif"/></p>
-
-<p><font color="#333333"><b><img height="7" width="7" src="{$img-unipub}/t_perle.gif"/> <img height="7" width="7" src="{$img-unipub}/t_perle.gif"/> <img height="7" width="7" src="{$img-unipub}/t_perle.gif"/></b></font> weitere Perlen ...</p>
-
-</td>
-<td bgcolor="#CCCCFF" width="5"><img height="1" width="1" src="{$img-unipub}/1.gif"/></td>
-</tr>
-</table>
--->
 
 </td>
 </tr>
@@ -274,10 +191,5 @@ directive]</td>
 </html>
 
 </xsl:template>
-<!--
-<xsl:template match="LastColumn">
-  <xsl:apply-templates select="Webperls"/>
-  <xsl:apply-templates select="Services"/>
-</xsl:template>
--->
+
 </xsl:stylesheet>

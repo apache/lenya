@@ -1,4 +1,5 @@
-body         { font-size: 12px; font-family: Verdana, Arial, Helvetica; background-color: #f5f5f5 }
+/*body         { font-size: 12px; font-family: Verdana, Arial, Helvetica; background-color: #f5f5f5 }*/
+body         { font-size: 12px; font-family: Verdana, Arial, Helvetica; background-color: #ffffff }
 .art-text   { font-size: 12px; font-family: Verdana, Helvetica, Arial, Swiss, SunSans-Regular }
 .art-pretitle { font-size: 12px; font-family: Verdana, Helvetica, Arial, Swiss, SunSans-Regular }
 .tsr-title   { font-weight: bold; font-size: 11px; font-family: Geneva, Verdana, Helvetica, Arial, Swiss, "Nu Sans Regular"; text-transform: uppercase }
