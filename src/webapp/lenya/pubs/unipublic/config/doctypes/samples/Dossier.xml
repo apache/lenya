@@ -10,8 +10,7 @@
 </head>
 
 
-<articles>
-</articles>
+<articles foo="Some attribute needed for Bitflux"/>
 
 <related-content>
   <block>
