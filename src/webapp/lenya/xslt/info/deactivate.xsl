@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: deactivate.xsl,v 1.7 2003/08/28 10:19:33 andreas Exp $
+ $Id: deactivate.xsl,v 1.8 2003/09/08 20:48:58 andreas Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -11,6 +11,8 @@
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
    >
+   
+  <xsl:param name="lenya.event"/>
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
@@ -40,6 +42,7 @@
 		<div class="lenya-box-body">
 			<input type="hidden" name="lenya.usecase" value="deactivate"/>
 			<input type="hidden" name="lenya.step" value="deactivate"/>
+			<input type="hidden" name="lenya.event" value="{$lenya.event}"/>
 			<input type="hidden" name="task-id" value="{$task-id}"/>
 			<xsl:call-template name="task-parameters">
 				<xsl:with-param name="prefix" select="''"/>
