@@ -91,6 +91,20 @@
       </map:handle-errors>
     </map:pipeline>
 
+    <map:pipeline>
+      <map:match pattern="http/oscom.rdf">
+        <map:generate src="http://blog.oscom.org/index.rdf"/>
+<!--
+        <map:transform src="stylesheets/publication/RDF/removeNetscape.xsl"/>
+-->
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
     <!-- CMS Info -->
     <map:pipeline>
       <map:match pattern="http/cmsinfo.rdf">

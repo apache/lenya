@@ -41,3 +41,4 @@ downloadRSS slashdot.rdf
 downloadRSS fm.rdf
 downloadRSS cmsinfo.rdf
 downloadRSS cmswatch.xml
+downloadRSS oscom.rdf
