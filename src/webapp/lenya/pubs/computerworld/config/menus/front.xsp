@@ -2,7 +2,7 @@
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
 	<menu>
 		<xsp-wyona:util/>
-		<live_uri>http://212.98.53.238/index.html</live_uri>
+		<live_uri>/index.html</live_uri>
 		<xsp:logic>
    		 	String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     			String articleId=parameters.getParameter("articleId","null");

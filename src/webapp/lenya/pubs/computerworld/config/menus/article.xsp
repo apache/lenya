@@ -5,9 +5,7 @@
 		<xsp:logic>
     String articleId=parameters.getParameter("articleId","null");
   </xsp:logic>
-		<live_uri>
-			<xsp:expr>"/news/"+articleId+".html"</xsp:expr>
-		</live_uri>
+		<live_uri><xsp:expr>"/news/"+articleId+".html"</xsp:expr></live_uri>
 		<xsp:logic>
     String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
@@ -36,7 +34,7 @@
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/news/"+articleId+".xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/article.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/article.xsd&amp;url-css="+bitflux_prefix+"/css/article.css&amp;url-post="+bitflux_prefix+"/save/news/"+articleId+".xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/news/"+articleId+".xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/article.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/article.xsd&amp;url-css="+bitflux_prefix+"/css/article.css&amp;url-post="+bitflux_prefix+"/save/news/"+articleId+".xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/news/"+articleId+".html"</xsp:expr>
 						</xsp:attribute>Edit&#160;Article
                                         </item>
 				</block>
