@@ -1,5 +1,4 @@
 /*
-$Id: DOMUtil.java,v 1.10 2003/07/23 13:21:29 gregor Exp $
 <License>
 
  ============================================================================
@@ -69,11 +68,11 @@ import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
+ * This class is a utility class for miscellaneous DOM functions, similar to org.apache.cocoon.xml.dom.DOMUtil
+ * FIXME: Merge classes or extend functionality
  *
  * @author Michael Wechner
- * @version 1.7.24
- * @deprecated use DocumentHelper instead
+ * @version $Id: DOMUtil.java,v 1.11 2003/08/13 09:46:00 michi Exp $
  */
 public class DOMUtil {
     static Category log = Category.getInstance(DOMUtil.class);
