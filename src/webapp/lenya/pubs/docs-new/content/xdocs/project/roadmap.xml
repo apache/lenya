@@ -267,6 +267,7 @@ used for bug fixes, e.g. 1.0.2.
 <ul>
 <li>Improve reverse proxying</li>
 <li>Research advanced caching strategies</li>
+<li>Implement transaction management</li>
 </ul>
 
 </section>
@@ -301,7 +302,7 @@ used for bug fixes, e.g. 1.0.2.
 </ul>
 
 </section></section>
-<p>$Id: roadmap.xml,v 1.3 2003/05/09 15:19:52 andreas Exp $</p>
+<p>$Id: roadmap.xml,v 1.4 2003/05/14 14:17:31 andreas Exp $</p>
   </body>
 </document>
 
