@@ -264,19 +264,6 @@
         </map:call>
       </map:match>
 
-      <!-- lenya: special homepage -->
-      <map:match pattern="menu-index.xml">
-        <map:generate src="cocoon:/project/book.xml"/>
-        <map:transform type="linkrewriter" src="cocoon:/linkmap">
-          <map:parameter name="schemes" value="site ext"/>
-        </map:transform>
-        <map:call resource="skinit">
-          <map:parameter name="type" value="book2menu"/>
-          <map:parameter name="path" value="/index.xml"/>
-        </map:call>
-      </map:match>
-      <!-- /lenya -->
-
       <map:match pattern="**menu-*.xml">
         <map:generate src="cocoon:/{1}book.xml"/>
         <map:transform type="linkrewriter" src="cocoon:/{1}linkmap">
