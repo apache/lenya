@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<system type="cms">
+  <id>cocoblog</id>
+  <system_name>CocoBlog</system_name>
+  <main_url>http://www.beblogging.com/blog/docs</main_url>
+  <license>
+    <license_name>Apache Software License, 1.1</license_name>
+  </license>
+</system>
