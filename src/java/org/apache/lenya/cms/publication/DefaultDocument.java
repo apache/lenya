@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.34 2003/12/02 14:35:10 andreas Exp $
+$Id: DefaultDocument.java,v 1.35 2003/12/04 16:06:10 andreas Exp $
 <License>
 
  ============================================================================
@@ -316,16 +316,19 @@ public class DefaultDocument implements Document {
 
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.Document#exists()
+     * FIXME: Don't use getFile().exists() as basis for Document.exists()
      */
     public boolean exists() throws DocumentException {
-        SiteTree sitetree;
+        boolean exists;
         try {
-            sitetree = getPublication().getSiteTree(getArea());
+            SiteTree sitetree = getPublication().getSiteTree(getArea());
             SiteTreeNode node = sitetree.getNode(getId());
-            return (node != null) && (node.getLabel(getLanguage()) != null);
+            exists = (node != null) && (node.getLabel(getLanguage()) != null);
         } catch (SiteTreeException e) {
             throw new DocumentException(e);
         }
+        exists = exists || getFile().exists();
+        return exists;
     }
 
     /** (non-Javadoc)
