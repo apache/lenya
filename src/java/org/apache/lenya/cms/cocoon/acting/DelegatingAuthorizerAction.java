@@ -57,6 +57,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.ac2.Authorizer;
 import org.apache.lenya.cms.ac2.Identity;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 
 /**
  * @author andreas
@@ -153,7 +154,7 @@ public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
         Parameters parameters)
         throws Exception {
         
-        envelope = new PageEnvelope(objectModel);
+        envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         return super.act(redirector, resolver, objectModel, src, parameters);
     }
     
