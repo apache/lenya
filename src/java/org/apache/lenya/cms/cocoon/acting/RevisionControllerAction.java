@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.wyona.cms.ac.Identity;
 import org.wyona.cms.rc.RevisionController;
+import org.wyona.cms.rc.FileReservedCheckOutException;
 
 /**
  * @author Michael Wechner
@@ -69,21 +70,56 @@ public class RevisionControllerAction extends AbstractComplementaryConfigurableA
       return null;
       }
 
+/*
     String sitemap_uri=request.getSitemapURI();
     String request_uri=request.getRequestURI();
-    Identity identity=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
     getLogger().debug(sitemap_uri);
     getLogger().debug(request_uri);
+*/
+    Identity identity=(Identity)session.getAttribute("org.wyona.cms.ac.Identity");
     getLogger().debug(""+identity);
 
+    HashMap actionMap=new HashMap(); 
+    String filename = sitemapParentPath+parameters.getParameter("filename");
+    String username= null;
+    if(identity != null) {
+      username=identity.getUsername();
+      }
+    else {
+      getLogger().warn("No identity yet");
+    }                                                                                                                           
+
+//check out
+    try{
+      rc.reservedCheckOut(filename, username);
+     }
+    catch(FileReservedCheckOutException e){
+      actionMap.put("exception","fileReservedCheckOutException");
+      actionMap.put("filename",filename);
+      actionMap.put("user",e.checkOutUsername);
+      actionMap.put("date",e.checkOutDate);
+      getLogger().warn("Document "+filename+" already checked-out by "+e.checkOutUsername+" since "+e.checkOutDate);
+      return actionMap;
+      }  
+    catch(Exception e){
+      actionMap.put("exception","exception");
+      actionMap.put("filename",filename);
+      getLogger().warn("The document "+filename+" couldn't be checked out");
+      return actionMap; 
+      }
+    return null;                                                                                                                 
+
+/*
     if(true){
       HashMap actionMap=new HashMap();
-      actionMap.put("user","levi");
+      actionMap.put("user",username);
+      actionMap.put("filename",filename);
       getLogger().warn("Document already checked-out");
       return actionMap;
       }
     else{
       return null;
       }
+*/
     }
   }

@@ -199,11 +199,17 @@
       <!-- Article -->
       <map:match pattern="rc/*/*/*/*/index.xml">
         <map:act type="revision-controller">
+            <map:parameter name="filename" value="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
 <!--
           <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
 -->
+<!--
           <map:generate type="serverpages" src="../../docs/cms/revision-control/file-reserved-checkout-exception.xsp">
+-->
+          <map:generate type="serverpages" src="../../docs/cms/revision-control/{exception}.xsp">
             <map:parameter name="user" value="{user}"/>
+            <map:parameter name="filename" value="{filename}"/>
+            <map:parameter name="date" value="{date}"/> 
           </map:generate>
           <map:serialize type="xml"/>
         </map:act>
