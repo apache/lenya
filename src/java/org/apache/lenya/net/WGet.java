@@ -14,13 +14,6 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-/*
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-*/
-
 import org.apache.log4j.Category;
 /*
 import org.apache.regexp.RE;
@@ -98,7 +91,8 @@ public class WGet{
       sresponse=getResource(url);
       //log.debug(".downloadUsingHttpClient(): Response from remote server: "+new String(sresponse));
 
-      File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
+      File file=new File(createFileName(url));
+      //File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
       saveToFile(file.getAbsolutePath(),sresponse);
 
       substitutePrefix(file.getAbsolutePath(),prefixSubstitute);
@@ -131,7 +125,8 @@ public class WGet{
           URL child_url=new URL(org.wyona.util.URLUtil.complete(url.toString(),link));
           //log.debug(".downloadUsingHttpClient(): Child URL: "+child_url);
           byte[] child_sresponse=getResource(child_url);
-          saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
+          saveToFile(createFileName(child_url),child_sresponse);
+          //saveToFile(directory_prefix+File.separator+child_url.getHost()+":"+child_url.getPort()+child_url.getFile(),child_sresponse);
           }
         catch(Exception e){
           log.error(".downloadUsingHttpClient(): "+e);
@@ -263,6 +258,14 @@ public class WGet{
     FileOutputStream out=new FileOutputStream(file.getAbsolutePath());
     out.write(bytes);
     out.close();
+    }
+/**
+ *
+ */
+  public String createFileName(URL url){
+    File file=new File(directory_prefix+File.separator+url.getFile());
+    //File file=new File(directory_prefix+File.separator+url.getHost()+":"+url.getPort()+url.getFile());
+    return file.getAbsolutePath();
     }
 /**
  *

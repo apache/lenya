@@ -29,9 +29,10 @@ echo "Target: extract_text_from_pdf"
 
 echo ""
 echo "Target: index"
-PUBLICATION_ID=unipublic
+PUBLICATION_ID=oscom
+##PUBLICATION_ID=unipublic
 LUCENE_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/$PUBLICATION_ID/resources/publication/search/lucene
-HTDOCS_DUMP_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/$PUBLICATION_ID/resources/publication/export/pending/127.0.0.1:48080
+HTDOCS_DUMP_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/$PUBLICATION_ID/resources/publication/export/pending
 ##HTDOCS_DUMP_DIR=$LUCENE_DIR/htdocs_dump
 INDEX_DIR=$LUCENE_DIR/index
 CLASSPATH=$CLASSPATH:$PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar

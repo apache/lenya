@@ -26,13 +26,13 @@ import org.wyona.cms.task.Task;
  *
  * @author  <a href="mailto:andreas.hartmann@wyona.com">Andreas Hartmann</a>
  */
-public class StaticHTMLExporter
-    extends AbstractExporter {
-
+public class StaticHTMLExporter extends AbstractExporter {
     static Category log = Category.getInstance(StaticHTMLExporter.class);
 
     public static final String PARAMETER_URIS = "uris";
-    
+/**
+ *
+ */
     public void export(
         URL serverURI,
         int serverPort,
@@ -46,14 +46,14 @@ public class StaticHTMLExporter
             String exportDirectory = publicationPath + exportPath;
 
             org.wyona.net.WGet wget=new org.wyona.net.WGet();
-            log.info(".exportStaticHTML(): Export directory: " + exportDirectory);
+            log.info(".export(): Export directory: " + exportDirectory);
             wget.setDirectoryPrefix(exportDirectory);
 
             String fullServerURI = serverURI + ":" + serverPort;
 
             for (int i = 0; i < uris.length; i++) {
                 URL uri = new URL(fullServerURI + uris[i]);
-                log.info(".exportStaticHTML(): Export static HTML: " + uri);
+                log.info(".export(): Export static HTML: " + uri);
                 byte[] response = wget.download(uri, substituteExpression);
                 //wget.saveToFile(url.getFile(),response);
             }
