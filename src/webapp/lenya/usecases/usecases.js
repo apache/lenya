@@ -115,6 +115,10 @@ function executeUsecase() {
 	}
 	
 	var url = request.getContextPath() + usecase.getTargetURL(success) + getTargetQueryString(usecaseName);
+
+        /* done with usecase component, tell usecaseResolver to release it */
+        usecaseResolver.release(usecase);
+
 	cocoon.redirectTo(url);
 	
 }
