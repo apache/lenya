@@ -46,6 +46,7 @@
       <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;form=entry">Edit&#160;with&#160;Forms</item>
         <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
+        <item uc:usecase="1formedit" href="?lenya.step=open">Edit&#160;with&#160;one&#160;Form</item>
 <!--
         <item>Edit&#160;with&#160;Midas</item>
 -->
