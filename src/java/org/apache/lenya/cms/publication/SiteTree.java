@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTree.java,v 1.5 2003/05/27 15:31:29 egli Exp $
+ * $Id: SiteTree.java,v 1.6 2003/05/28 12:56:24 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -45,17 +45,53 @@ package org.apache.lenya.cms.publication;
 
 public interface SiteTree {
 
-    void addNode(String parentid, String id, Label[] labels)
+    /**
+     * Add a node.
+	 * @param parentid e.g. "/tutorial"
+	 * @param id e.g. "concepts"
+	 * @param labels
+	 * @throws SiteTreeException
+	 */
+	void addNode(String parentid, String id, Label[] labels)
 	throws SiteTreeException;
     
-    void addNode(String parentid, String id, Label[] labels,
+    /**
+     * Add a node.
+	 * @param parentid
+	 * @param id
+	 * @param labels
+	 * @param href
+	 * @param suffix
+	 * @param link
+	 * @throws SiteTreeException
+	 */
+	void addNode(String parentid, String id, Label[] labels,
 		 String href, String suffix, boolean link)
 	throws SiteTreeException;
     
-    void addNode(SiteTreeNode node)
+    /**
+     * Add a node. This method is typically used when publishing,
+     * i.e. when copying a node from the authoring tree to the live
+     * tree. The existing node already has a parent node (in the
+     * authoring tree). The node that is added will be a copy of
+     * the original node and will be inserted at the same parentid
+     * as the original node.
+	 * @param node
+	 * @throws SiteTreeException
+	 */
+	void addNode(SiteTreeNode node)
 	throws SiteTreeException;
     
-    void deleteNode(String id);
+    /**
+     * Delete the node with the given document-id
+	 * @param id
+	 */
+	void deleteNode(String id);
     
-    SiteTreeNode getNode(String documentId);
+    /**
+     * Return the Node for a given document-id
+	 * @param documentId
+	 * @return
+	 */
+	SiteTreeNode getNode(String documentId);
 }
