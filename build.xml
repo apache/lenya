@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.46 2003/03/18 15:27:28 gregor Exp $
+   @version CVS $Id: build.xml,v 1.47 2003/03/20 19:56:32 michi Exp $
 
 -->
 
@@ -414,9 +414,14 @@
       </fileset>
     </copy>
 
-    <!--
-    Copy publications
-    -->
+    <!-- Copy Documentation -->
+    <echo>INFO: Copy Documentation from ${src.webapp.dir}/lenya/pubs/docs to ${build.webapp}/lenya/pubs/docs</echo>
+    <copy todir="${build.webapp}/lenya/pubs/docs">
+      <fileset dir="${src.webapp.dir}/lenya/pubs/docs">
+      </fileset>
+    </copy>
+
+    <!-- Copy publications -->
     <echo>INFO: Copy publications from ${src.webapp.dir}/lenya/pubs to ${build.webapp}/lenya/pubs</echo>
     <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}">
     </copyPubs>
