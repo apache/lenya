@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.3 2003/08/12 15:15:54 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.4 2003/08/12 15:52:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -169,12 +169,14 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
         String path;
 
         try {
-            document = DefaultDocumentBuilder.getInstance().buildDocument(publication, webappUrl);
+            if (DefaultDocumentBuilder.getInstance().isDocument(publication, webappUrl)) {
+                document = DefaultDocumentBuilder.getInstance().buildDocument(publication, webappUrl);
+            }
         } catch (DocumentBuildException e) {
             throw new AccessControlException(e);
         }
 
-        if (document.getFile().exists()) {
+        if (document != null && document.getFile().exists()) {
             path = "/" + document.getArea() + document.getId();
             getLogger().debug("Document exists, using document ID [" + path + "]");
         } else {
