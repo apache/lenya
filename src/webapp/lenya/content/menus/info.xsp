@@ -15,7 +15,7 @@
 <menu>
   
   <xsp:logic>
-    Publication publication = PublicationFactory.getPublication(objectModel);
+    Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
   </xsp:logic>
   
   <url-info>
@@ -24,7 +24,7 @@
     <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>
     <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
     <servlet-context-path><xsp:expr>publication.getServletContext().getCanonicalPath()</xsp:expr></servlet-context-path>
-    <publication><input:get-attribute module="page-envelope" as="object" name="publication"/></publication>
+    <publication><xsp:expr>publication</xsp:expr></publication>
   </url-info>
 
   <xsp:logic>
