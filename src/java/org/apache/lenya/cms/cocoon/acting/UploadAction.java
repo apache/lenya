@@ -166,9 +166,11 @@ public class UploadAction extends AbstractConfigurableAction {
      * @throws Exception if an error occurs.
      */
     protected void saveAsset(File assetFile, Part part) throws Exception {
-        boolean created = assetFile.createNewFile();
-        if (!created) {
-            throw new RuntimeException("The file [" + assetFile + "] could not be created.");
+        if (!assetFile.exists()) {
+            boolean created = assetFile.createNewFile();
+            if (!created) {
+                throw new RuntimeException("The file [" + assetFile + "] could not be created.");
+            }
         }
 
         byte[] buf = new byte[4096];
