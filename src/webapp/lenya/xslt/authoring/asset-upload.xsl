@@ -62,7 +62,7 @@ Override this template to add scripts etc.
   <div class="lenya-box">
     <div class="lenya-box-title"><i18n:text key="lenya.assetupload.subtitle"/></div>
     <div class="lenya-box-body">
-      <form name="fileinput" action="" method="post" enctype="multipart/form-data" onsubmit="return check(fileinput)">
+      <form name="fileinput" action="" method="post" enctype="multipart/form-data" onsubmit="return check_upload(fileinput, ext)">
         <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
         <input type="hidden" name="lenya.step" value="asset-upload"/>
         <input type="hidden" name="task-id" value="insert-asset"/>

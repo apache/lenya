@@ -66,6 +66,7 @@
           <map:generate src="../../content/{serverpage}" type="serverpages"/>
           <map:transform src="../../xslt/{stylesheet}">
             <map:parameter name="use-request-parameters" value="true"/>
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>      
     </map:resource>
     

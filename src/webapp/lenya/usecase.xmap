@@ -258,6 +258,7 @@
             <map:generate type="serverpages" src="{fallback:content/authoring/create.xsp}"/>
             <map:transform src="{fallback:xslt/authoring/create.xsl}">
               <map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>
@@ -273,6 +274,7 @@
               <map:generate type="serverpages" src="{fallback:content/authoring/create.xsp}"/>
               <map:transform src="{fallback:xslt/authoring/create.xsl}">
                 <map:parameter name="use-request-parameters" value="true"/>
+                <map:parameter name="contextprefix" value="{request:contextPath}"/>
               </map:transform>
               <map:call resource="style-cms-page"/>
             </map:act>
@@ -289,6 +291,7 @@
             <map:generate type="serverpages" src="{fallback:content/authoring/create-language.xsp}"/>
             <map:transform src="{fallback:xslt/authoring/create-language.xsl}">
               <map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
             </map:transform>
             <map:call resource="style-cms-page"/>
           </map:match>

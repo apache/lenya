@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.xmap,v 1.14 2004/04/29 09:21:00 andreas Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -48,22 +48,23 @@
 
 
     <map:pipeline>
-
-      <!-- lenya/{file} -->
-      <!--
-      <map:match pattern="**">
-        <map:act type="resource-exists">
-          <map:parameter name="url" value="lenya/resources/{1}"/>
-          <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
-        </map:act>
-      </map:match>
-      -->
-
       <!-- Lenya Core -->
 
       <!-- matches lenya/**.js -->
       <map:match pattern="**.js">
-        <map:read src="resources/{1}.js" mime-type="application/x-javascript" />
+        <map:select type="resource-exists">
+          <map:when test="resources/{1}.xml">
+            <map:generate src="resources/{1}.xml"/>
+            <map:transform type="i18n">      
+              <map:parameter name="locale" value="{request:locale}"/>
+            </map:transform>    
+            <map:transform src="resources/javascript/javascript.xsl"/>
+            <map:serialize type="text" mime-type="application/x-javascript"/>
+          </map:when>
+          <map:otherwise>
+            <map:read src="resources/{1}.js" mime-type="application/x-javascript" />
+          </map:otherwise>
+        </map:select>
       </map:match>
 
       <!-- matches lenya/**.jpg -->

@@ -29,6 +29,7 @@
   exclude-result-prefixes="lenya-info wf rc dc lenya-info"
   >
   
+  <xsl:param name="contextprefix"/>
   <xsl:param name="lenya.usecase" select="'asset'"/>
   <xsl:param name="lenya.step"/>
   <xsl:param name="insert"/>
@@ -85,43 +86,11 @@
         </xsl:otherwise>
       </xsl:choose>
       <div class="lenya-box-body">
-<script>
-function validContent(formField,fieldLabel)
-{
-        var result = true;
-        
-        if (formField.value.match("[ ]*"))
-        {
-                alert('Filenames cannot contain spaces.');
-                formField.focus();
-                result = false;
-        }
-        
-        return result;
-}
-
-function check(fileinput) {
-  var i = 0;
-  var ext = '<xsl:value-of select="$extensions"/>';
-  var delimiter = ' ';
-  var thefile = fileinput["properties.asset.data"].value;
-  var _tempArray = new Array();
-  _tempArray = ext.split(delimiter);
-  for(i in _tempArray)
-  {
-    if(thefile.indexOf('.' + _tempArray[i]) != -1)
-    {
-     // file has one of the accepted extensions.
-     // now check for spaces in the filename
-     return true;
-     }
-  }
-   // file does not have one of the accepted extensions.
-   alert("<i18n:translate><i18n:text key="upload-with-invalid-extension"/><i18n:param>:\n\n<xsl:value-of select="$extensions"/></i18n:param></i18n:translate>");
-   return false;
-}
-</script>  
-        <form name="fileinput" action="{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}" method="post" enctype="multipart/form-data" onsubmit="return check(fileinput)">
+    <script type="text/javascript" src="{$contextprefix}/lenya/javascript/validation.js">&#160;</script>
+    <script>
+      var ext = '<xsl:value-of select="$extensions"/>';
+    </script>  
+        <form name="fileinput" action="{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}" method="post" enctype="multipart/form-data" onsubmit="return check_upload(fileinput, ext)">
           <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
           <input type="hidden" name="lenya.event" value="edit"/>
           <xsl:choose>
