@@ -1,5 +1,5 @@
 /*
-$Id: DocumentBuilder.java,v 1.5 2003/08/20 15:05:11 edith Exp $
+$Id: DocumentBuilder.java,v 1.6 2003/08/21 10:29:14 egli Exp $
 <License>
 
  ============================================================================
@@ -61,12 +61,12 @@ package org.apache.lenya.cms.publication;
  *
  * @author andreas
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public interface DocumentBuilder {
+
     /**
      * Builds a document.
+     * 
      * @param publication The publication the document belongs to.
      * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
      * @return A document.
@@ -76,7 +76,8 @@ public interface DocumentBuilder {
         throws DocumentBuildException;
     
     /**
-     * Checks if a URL corresponds to a CMS docuemnt.
+     * Checks if an URL corresponds to a CMS document.
+     * 
      * @param publication The publication the document belongs to.
      * @param url The URL of the form /{publication-id}/...
      * @return A boolean value.
@@ -86,7 +87,9 @@ public interface DocumentBuilder {
         throws DocumentBuildException;
         
 	/**
-	 * builds a url corresponding to a cms document from the publication, the area, the document id, the language
+	 * Builds an URL corresponding to a cms document from the publication, 
+     * the area, the document id and the language
+     * 
 	 * @param publication The publication the document belongs to.
 	 * @param area The area the document belongs to.
 	 * @param documentid The document id of the document.
@@ -96,7 +99,9 @@ public interface DocumentBuilder {
 	String buildCanonicalUrl(Publication publication, String area, String documentid, String language);
         
 	/**
-	 * builds a url corresponding to a cms document from the publication, the area, the document id
+	 * Builds an URL corresponding to a cms document from the publication, 
+     * the area and the document id
+     * 
 	 * @param publication The publication the document belongs to.
 	 * @param area The area the document belongs to.
 	 * @param documentid The document id of the document.
