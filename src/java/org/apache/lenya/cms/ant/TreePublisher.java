@@ -1,5 +1,5 @@
 /*
-$Id: TreePublisher.java,v 1.6 2003/07/09 12:59:59 egli Exp $
+$Id: TreePublisher.java,v 1.7 2003/08/11 12:30:59 egli Exp $
 <License>
 
  ============================================================================
@@ -57,6 +57,7 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.Label;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publishing.PublishingException;
 
@@ -115,64 +116,24 @@ public class TreePublisher extends PublicationTask {
     }
 
     /**
-     * Returns the absolute authoring path for the tree
-     *
-     * @return DOCUMENT ME!
-     */
-    protected String getAbsolutetreeauthoringpath() {
-        return absolutetreeauthoringpath;
-    }
-
-    /**
-     * Sets the absolute authoring path for the tree
-     *
-     * @param absolutetreeauthoringpath DOCUMENT ME!
-     */
-    public void setAbsolutetreeauthoringpath(String absolutetreeauthoringpath) {
-        this.absolutetreeauthoringpath = absolutetreeauthoringpath;
-    }
-
-    /**
-     * Returns the absolute live path for the tree
-     *
-     * @return DOCUMENT ME!
-     */
-    protected String getAbsolutetreelivepath() {
-        return absolutetreelivepath;
-    }
-
-    /**
-     * Sets the absolute live path for the tree
-     *
-     * @param absolutetreelivepath DOCUMENT ME!
-     */
-    public void setAbsolutetreelivepath(String absolutetreelivepath) {
-        this.absolutetreelivepath = absolutetreelivepath;
-    }
-
-    /**
      * adds a node for the published document in the live tree
      *
      * @param documentId The id of the published document
      * @param language the language for which this document is to be published. 
      * 	Can be null if all languages are to be published.
-     * @param absoluteTreeAuthoringPath The path for the tree in authoring
-     * @param absoluteTreeLivePath The path for the tree in live
      *
      * @throws PublishingException if the publication failed.
      */
     public void publish(
         String documentId,
-        String language,
-        String absoluteTreeAuthoringPath,
-        String absoluteTreeLivePath)
+        String language)
         throws PublishingException {
         DefaultSiteTree authoringTree = null;
         DefaultSiteTree liveTree = null;
 
         try {
-            authoringTree = new DefaultSiteTree(absoluteTreeAuthoringPath);
-            liveTree = new DefaultSiteTree(absoluteTreeLivePath);
+            authoringTree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
+            liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
 
             SiteTreeNode authoringNode = authoringTree.getNode(documentId);
 
@@ -226,8 +187,7 @@ public class TreePublisher extends PublicationTask {
             throw e;
         } catch (Exception e) {
             throw new PublishingException(
-                "Couldn't publish the tree :" + absoluteTreeLivePath,
-                e);
+                "Couldn't publish the tree :", e);
         }
     }
 
@@ -240,16 +200,10 @@ public class TreePublisher extends PublicationTask {
         try {
             log("document id: " + getDocumentid());
             log("language: " + getLanguage());
-            log(
-                "Absolute Tree Authoring Path: "
-                    + getAbsolutetreeauthoringpath());
-            log("Absolute Tree Live Path: " + getAbsolutetreelivepath());
 
             publish(
                 getDocumentid(),
-                getLanguage(),
-                getAbsolutetreeauthoringpath(),
-                getAbsolutetreelivepath());
+                getLanguage());
         } catch (Exception e) {
             throw new BuildException(e);
         }
