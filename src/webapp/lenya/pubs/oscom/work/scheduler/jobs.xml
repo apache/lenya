@@ -16,7 +16,7 @@
           <sch:parameter name="publication-id" value="oscom"/>
           <sch:parameter name="tree-authoring-path" value="docs/publication/authoring/tree.xml"/>
           <sch:parameter name="server-port" value="1313"/>
-          <sch:parameter name="context-path" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
+          <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
           <sch:parameter name="authoring-path" value="docs/publication/authoring"/>
           <sch:parameter name="uris" value="/wyona-cms/oscom/weekly-column.html"/>
         </sch:task>
