@@ -58,9 +58,49 @@ src/webapp/lenya/pubs/$PUB_ID/lenya/xslt/search/search-and-results.xsl
 
 <section>
 <title>Crawling a website</title>
+<p>
+Crawl a website by running
+</p>
 <source>
 <![CDATA[
-ant -f src/webapp/lenya/bin/crawl_and_index.xml -Dcrawler.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf crawl
+ant -f src/webapp/lenya/bin/crawl_and_index.xml crawl -Dcrawler.xconf=/home/username/src/cocoon-lenya/src/webapp/lenya/pubs/default/config/search/crawler-live.xconf
+]]>
+</source>
+<p>
+whereas the crawler.xconf has the following elements
+</p>
+<source>
+<![CDATA[
+<crawler>
+  <user-agent>lenya</user-agent>
+
+  <base-url href="http://cocoon.apache.org/lenya/index.html"/>
+  <scope-url href="http://cocoon.apache.org/lenya/"/>
+
+  <uri-list src="work/search/lucene/uris.txt"/>
+  <htdocs-dump-dir src="work/search/lucene/htdocs_dump/cocoon.apache.org"/>
+
+  <!-- <robots src="robots.txt" domain="cocoon.apache.org"/> -->
+</crawler>
+]]>
+</source>
+<p>
+where the element robots is optional.
+</p>
+<p>
+In case you don't have access to the server and want to disallow certain  URLs from being crawled, then
+you can also define a "robots.txt" on the crawler side, e.g.
+</p>
+<source>
+<![CDATA[
+# cocoon.apache.org
+
+User-agent: *
+Disallow: /there_seems_to_be_a_bug_within_websphinx_Robot_Exclusion.html
+#Disallow:
+
+User-agent: lenya
+Disallow: /do/not/crawl/this/page.html
 ]]>
 </source>
 </section>
