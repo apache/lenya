@@ -27,7 +27,7 @@ browseDirectory(){
   for FILE_OR_DIR in $FILES_AND_DIRS; do
     ##echo "DEBUG: File or Dir: $FILE_OR_DIR"
     if [ -d $CURRENT_DIRECTORY/$FILE_OR_DIR ]; then
-      echo "INFO: Directory: $CURRENT_DIRECTORY/$FILE_OR_DIR"
+      echo "INFO: .browseDirectory(): Directory: $CURRENT_DIRECTORY/$FILE_OR_DIR"
 
       createDirectory $SOURCE_DIR $DEST_DIR $CURRENT_DIRECTORY/$FILE_OR_DIR
 
@@ -35,7 +35,7 @@ browseDirectory(){
       CURRENT_DIRECTORY=`dirname $CURRENT_DIRECTORY`
     else
       if [ -f $CURRENT_DIRECTORY/$FILE_OR_DIR ]; then
-        echo "INFO: File: $CURRENT_DIRECTORY/$FILE_OR_DIR"
+        echo "INFO: .browseDirectory(): File: $CURRENT_DIRECTORY/$FILE_OR_DIR"
 
         copyFile $SOURCE_DIR $DEST_DIR $CURRENT_DIRECTORY/$FILE_OR_DIR
       else
@@ -48,23 +48,45 @@ browseDirectory(){
 createDirectory(){
   SOURCE_DIR=$1
   DEST_DIR=$2
-  DIRECTORY=$3
+  LDIRECTORY=$3
 
-  echo "INFO: Create Directory: $DIRECTORY"
+  echo "INFO: .createDirectory(): $LDIRECTORY"
+  #echo "INFO: .createDirectory(): $SOURCE_DIR"
+  #echo "INFO: .createDirectory(): $DEST_DIR"
 
-  echo $SOURCE_DIR
-  echo $DEST_DIR
+  LPARENT=`dirname $LDIRECTORY`
+  NAME=`basename $LDIRECTORY`
+  RELATIVE_DIR=`echo $LDIRECTORY | sed -e "s%$SOURCE_DIR%%g"`
+  echo "DEBUG: .copyFile(): Relative Directory: $RELATIVE_DIR"
+  DPARENT=`dirname $DEST_DIR$RELATIVE_DIR`
+
+
+  echo "INFO: .createDirectory(): lcd $LPARENT"
+  echo "INFO: .createDirectory(): cd $DPARENT"
+  echo "INFO: .createDirectory(): mkdir $NAME"
+  echo ""
   }
 
 copyFile(){
   SOURCE_DIR=$1
   DEST_DIR=$2
-  FILE=$3
+  LFILE=$3
 
-  echo "INFO: Copy file: $FILE"
+  echo "INFO: .copyFile(): $LFILE"
+  #echo "INFO: .copyFile(): $SOURCE_DIR"
+  #echo "INFO: .copyFile(): $DEST_DIR"
 
-  echo $SOURCE_DIR
-  echo $DEST_DIR
+  RELATIVE_FILE=`echo $LFILE | sed -e "s%$SOURCE_DIR%%g"`
+  echo "DEBUG: .copyFile(): Relative File: $RELATIVE_FILE"
+  DFILE=$DEST_DIR$RELATIVE_FILE
+  LPARENT=`dirname $LFILE`
+  DPARENT=`dirname $DFILE`
+  NAME=`basename $LFILE`
+
+  echo "INFO: .copyFile(): lcd $LPARENT"
+  echo "INFO: .copyFile(): cd $DPARENT"
+  echo "INFO: .copyFile(): put $NAME"
+  echo ""
   }
 
 
