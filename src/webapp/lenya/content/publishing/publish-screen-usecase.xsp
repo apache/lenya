@@ -12,8 +12,8 @@
   <usecase:publish>
     
     <usecase:document-id><input:get-attribute module="page-envelope" name="document-id" as="string"/></usecase:document-id>
-    <usecase:uris><xsp-request:get-uri/></usecase:uris>
-    <usecase:sources><input:get-attribute module="page-envelope" name="document-path" as="string"/></usecase:sources>
+    <usecase:uris><xsp-request:get-parameter name="uris"/></usecase:uris>
+    <usecase:sources><xsp-request:get-parameter name="sources"/></usecase:sources>
     <usecase:publication-id><input:get-attribute module="page-envelope" name="publication-id" as="string"/></usecase:publication-id>
     <usecase:context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></usecase:context-prefix>
     <usecase:area><input:get-attribute module="page-envelope" name="area" as="string"/></usecase:area>
