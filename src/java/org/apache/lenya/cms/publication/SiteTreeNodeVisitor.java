@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeVisitor.java,v 1.1 2003/08/08 08:21:22 edith Exp $
+$Id: SiteTreeNodeVisitor.java,v 1.2 2003/08/14 10:45:34 egli Exp $
 <License>
 
  ============================================================================
@@ -67,7 +67,9 @@ public interface SiteTreeNodeVisitor {
 	/**
 	 * Operation performed on a SiteTreeNode
 	 * @param node The SiteTreeNode.
+     * 
+     * @throws DocumentException if an error occurs
 	 */
-	void visitSiteTreeNode(SiteTreeNode node);
+	void visitSiteTreeNode(SiteTreeNode node) throws DocumentException;
 
 }

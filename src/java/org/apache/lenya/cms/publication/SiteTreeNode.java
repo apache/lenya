@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNode.java,v 1.7 2003/08/08 08:19:58 edith Exp $
+$Id: SiteTreeNode.java,v 1.8 2003/08/14 10:45:34 egli Exp $
 <License>
 
  ============================================================================
@@ -60,8 +60,8 @@ package org.apache.lenya.cms.publication;
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  *
- * @author $Author: edith $
- * @version $Revision: 1.7 $
+ * @author $Author: egli $
+ * @version $Revision: 1.8 $
  */
 public interface SiteTreeNode {
 	
@@ -148,13 +148,17 @@ public interface SiteTreeNode {
 	 * the operation that shall be perfoemed on this node
 	 * (Visitor pattern)
 	 * @param visitor The visitor.
+     * 
+     * @throws DocumentException if an error occurs
 	 */
-	void accept (SiteTreeNodeVisitor visitor);
+	void accept (SiteTreeNodeVisitor visitor) throws DocumentException;
 	
 	/**
 	 * Traverse the node ant its children and call the
 	 * accept method.
 	 * @param visitor The visitor.
+     * 
+     * @throws DocumentException if an error occurs
 	 */
-	void acceptSubtree (SiteTreeNodeVisitor visitor);
+	void acceptSubtree (SiteTreeNodeVisitor visitor) throws DocumentException;
 }

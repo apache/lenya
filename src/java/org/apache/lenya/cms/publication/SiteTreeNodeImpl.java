@@ -1,5 +1,5 @@
 /*
-$Id: SiteTreeNodeImpl.java,v 1.12 2003/08/08 08:19:58 edith Exp $
+$Id: SiteTreeNodeImpl.java,v 1.13 2003/08/14 10:45:34 egli Exp $
 <License>
 
  ============================================================================
@@ -73,8 +73,8 @@ import java.util.List;
  * 
  * @see org.apache.lenya.cms.publication.SiteTreeNode
  *
- * @author $Author: edith $
- * @version $Revision: 1.12 $
+ * @author $Author: egli $
+ * @version $Revision: 1.13 $
  */
 public class SiteTreeNodeImpl implements SiteTreeNode {
     private static Category log = Category.getInstance(SiteTreeNodeImpl.class);
@@ -347,7 +347,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 	 * (non-Javadoc)
 	 * @see org.apache.lenya.cms.publication.SiteTreeNode#accept(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
 	 */
-	public void accept (SiteTreeNodeVisitor visitor) {
+	public void accept (SiteTreeNodeVisitor visitor) throws DocumentException {
 		visitor.visitSiteTreeNode(this);
 	}
 	
@@ -355,7 +355,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 	 * (non-Javadoc)
 	 * @see org.apache.lenya.cms.publication.SiteTreeNode#acceptSubtree(org.apache.lenya.cms.publication.SiteTreeNodeVisitor)
 	 */
-	public void acceptSubtree (SiteTreeNodeVisitor visitor) {
+	public void acceptSubtree (SiteTreeNodeVisitor visitor) throws DocumentException {
 		this.accept(visitor);
         SiteTreeNode[] children = this.getChildren();
 		if (children == null) {

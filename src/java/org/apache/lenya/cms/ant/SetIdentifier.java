@@ -1,5 +1,5 @@
 /*
-$Id: SetIdentifier.java,v 1.1 2003/08/08 09:48:55 edith Exp $
+$Id: SetIdentifier.java,v 1.2 2003/08/14 10:45:34 egli Exp $
 <License>
 
  ============================================================================
@@ -58,6 +58,7 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DublinCore;
 import org.apache.lenya.cms.publication.Label;
@@ -114,41 +115,41 @@ public class SetIdentifier
 		documentid = string;
 	}
 
-	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
-	 */
-	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentIdToPathMapper pathMapper = publication.getPathMapper();
-		Label[] labels = node.getLabels();
-		for (int i = 0; i < labels.length; i++) {
-			String language = labels[i].getLanguage();
-			String parentid = node.getAbsoluteParentId();
-			String documentid = parentid + "/" + node.getId();
-			String url =
-				"/"
-					+ publication.getId()
-					+ "/"
-					+ area
-					+ documentid
-					+ "_"
-					+ language
-					+ ".html";
-			log("url : "+url); 
+    /** (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+     */
+    public void visitSiteTreeNode(SiteTreeNode node) throws DocumentException {
+        Publication publication = getPublication();
+        DocumentIdToPathMapper pathMapper = publication.getPathMapper();
+        Label[] labels = node.getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            String language = labels[i].getLanguage();
+            String parentid = node.getAbsoluteParentId();
+            String documentid = parentid + "/" + node.getId();
+            String url =
+                "/"
+                    + publication.getId()
+                    + "/"
+                    + area
+                    + documentid
+                    + "_"
+                    + language
+                    + ".html";
+            log("url : " + url);
             Document document = null;
-			try {
-				document =
-					DefaultDocumentBuilder.getInstance().buildDocument(
-						publication,
-						url);
-			} catch (DocumentBuildException e) {
-				e.printStackTrace();
-			}
+            try {
+                document =
+                    DefaultDocumentBuilder.getInstance().buildDocument(
+                        publication,
+                        url);
+            } catch (DocumentBuildException e) {
+                e.printStackTrace();
+            }
             DublinCore dublincore = document.getDublinCore();
             dublincore.setIdentifier(documentid);
-		}
-
-	}
+            dublincore.save();
+        }
+    }
 
 	/** 
 	 * @see org.apache.tools.ant.Task#execute()

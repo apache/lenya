@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.12 2003/08/12 10:04:28 egli Exp $
+$Id: DublinCore.java,v 1.13 2003/08/14 10:45:34 egli Exp $
 <License>
 
  ============================================================================
@@ -55,14 +55,19 @@ $Id: DublinCore.java,v 1.12 2003/08/12 10:04:28 egli Exp $
 */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PublicationException;
-
 import org.apache.lenya.xml.DocumentHelper;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * A publication.
@@ -70,149 +75,307 @@ import org.w3c.dom.NodeList;
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  */
 public class DublinCore {
-	private Document cmsdocument;
-	private File infofile;
-	private NodeList nodelist;
-	private String string;
+    private Document cmsdocument;
+    private File infofile;
+    private Date timestamp = new Date(0);
 
-    private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
+    private HashMap map = new HashMap();
 
-	/** 
-	 * Creates a new instance of Dublin Core
+    private static final String DC_NAMESPACE =
+        "http://purl.org/dc/elements/1.1/";
+    
+    private static final String CREATOR = "creator";
+    private static final String TITLE = "title";
+    private static final String DESCRIPTION = "description";
+    private static final String IDENTIFIER = "identifier";
+    private static final String SUBJECT = "subject";
+    private static final String PUBLISHER = "publisher";
+    private static final String DATEISSUED = "dateissued";
+    private static final String DATEPUBLISHED = "datepublished";
+    private static final String RIGHTS = "rights";
+
+    private static final String[] fields =
+        {
+            CREATOR,
+            TITLE,
+            DESCRIPTION,
+            IDENTIFIER,
+            SUBJECT,
+            PUBLISHER,
+            DATEISSUED,
+            DATEPUBLISHED,
+            RIGHTS };
+
+    /** 
+     * Creates a new instance of Dublin Core
      * 
-     * @param mydocument the document for which the Dublin Core instance is created.
-	 * 
-	 */
-	protected DublinCore(Document mydocument) {
-		this.cmsdocument = mydocument;
-		this.infofile =
-			cmsdocument.getPublication().getPathMapper().getFile(
-				cmsdocument.getPublication(),
-				Publication.AUTHORING_AREA,
-				cmsdocument.getId(),
-				cmsdocument.getLanguage());
-	}
+     * @param aDocument the document for which the Dublin Core instance is created.
+     */
+    protected DublinCore(Document aDocument) {
+        this.cmsdocument = aDocument;
+        this.infofile =
+            cmsdocument.getPublication().getPathMapper().getFile(
+                cmsdocument.getPublication(),
+                Publication.AUTHORING_AREA,
+                cmsdocument.getId(),
+                cmsdocument.getLanguage());
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getTitle() throws PublicationException {
-		return getDCNode("title");
-	}
+    /**
+     * Check if the persistent dublin core data has been changed since the last access
+     * If yes reload the data. 
+     * 
+     * @throws DocumentException if the persistent data could not be loaded.
+     */
+    private void checkValidity() throws DocumentException {
+        Date modificationDate = new Date(infofile.lastModified());
+        if (modificationDate.after(timestamp)) {
+            timestamp = modificationDate;
 
-	/**
-	 * Set the DC title
-	 * 
-	 * @param title the title
-	 */
-	public void setTitle(String title) {
-		setDCNode("title", title);
-	}
+            org.w3c.dom.Document doc = null;
+            try {
+                doc = DocumentHelper.readDocument(infofile);
+            } catch (ParserConfigurationException e) {
+                throw new DocumentException(e);
+            } catch (SAXException e) {
+                throw new DocumentException(e);
+            } catch (IOException e) {
+                throw new DocumentException(e);
+            }
+            NodeList nodelist = null;
+            String value = null;
+            
+            for (int i = 0; i < fields.length; i++) {
+                    nodelist = doc.getElementsByTagNameNS(DC_NAMESPACE, fields[i]);
+                    value = nodelist.item(0).getFirstChild().getNodeValue();
+                    map.put(fields[i], value);
+            }
+        }
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getCreator() throws PublicationException {
-		return getDCNode("creator");
-	}
+    /**
+     * Save the meta data.
+     *
+     * @throws DocumentException if the meta data could not be made persistent.
+     */
+    public void save() throws DocumentException {
+        org.w3c.dom.Document doc = null;
+        try {
+            doc = DocumentHelper.readDocument(infofile);
+        } catch (ParserConfigurationException e) {
+            throw new DocumentException(e);
+        } catch (SAXException e) {
+            throw new DocumentException(e);
+        } catch (IOException e) {
+            throw new DocumentException(e);
+        }
+        NodeList nodelist = null;
+        String value = null;
 
-	/**
-	 * Set the DC creator
-	 * 
-	 * @param creator the Creator
-	 */
-	public void setCreator(String creator) {
-		setDCNode("creator", creator);
-	}
+        for (int i = 0; i < fields.length; i++) {
+            nodelist = doc.getElementsByTagNameNS(DC_NAMESPACE, fields[i]);
+            nodelist.item(0).getFirstChild().setNodeValue(
+                (String)map.get(fields[i]));
+        }
+        try {
+            DocumentHelper.writeDocument(doc, infofile);
+        } catch (TransformerConfigurationException e) {
+            throw new DocumentException(e);
+        } catch (TransformerException e) {
+            throw new DocumentException(e);
+        } catch (IOException e) {
+            throw new DocumentException(e);
+        }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getSubject() throws PublicationException {
-		return getDCNode("subject");
-	}
+    }
+    
+    /**
+     * Get the creator
+     * 
+     * @return the creator
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getCreator() throws DocumentException {
+        checkValidity();
+        return (String)map.get(CREATOR);
+    }
 
-	private String getDCNode(String node) {
-		try {
-			nodelist =
-                DocumentHelper.readDocument(infofile).getElementsByTagNameNS(DC_NAMESPACE, node);
-			try {
-				string = nodelist.item(0).getFirstChild().getNodeValue();
-			} catch (Exception e) {
-				string = "";
-			}
-		} catch (Exception e) {
-			string = e.toString();
-		}
+    /**
+     * Set the DC creator
+     * 
+     * @param creator the Creator
+     */
+    public void setCreator(String creator) {
+        map.put(CREATOR, creator);
+    }
 
-		return string;
-	}
+    /**
+     * Get the title
+     * 
+     * @return the title
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getTitle() throws DocumentException {
+        checkValidity();
+        return (String)map.get(TITLE);
+    }
 
-	private void setDCNode(String node, String text) {
-		org.w3c.dom.Document document;
-		try {
-			document = DocumentHelper.readDocument(infofile);
-			nodelist = document.getElementsByTagNameNS(DC_NAMESPACE, node);
-			nodelist.item(0).getFirstChild().setNodeValue(text);
-			DocumentHelper.writeDocument(document, infofile);
-		} catch (Exception e) {
-			string = e.toString();
-		}
-	}
+    /**
+     * Set the DC title
+     * 
+     * @param title the title
+     */
+    public void setTitle(String title) {
+        map.put(TITLE, title);
+    }
 
-	/**
-	 * Set the DC Subject
-	 * 
-	 * @param subject the subject
-	 */
-	public void setSubject(String subject) {
-		setDCNode("subject", subject);
-	}
+    /**
+     * Get the description
+     * 
+     * @return the description
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getDescription() throws DocumentException {
+        checkValidity();
+        return (String)map.get(DESCRIPTION);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getDescription() throws PublicationException {
-		return getDCNode("description");
-	}
+    /**
+     * Set the DC Description
+     * 
+     * @param description the description
+     */
+    public void setDescription(String description) {
+        map.put(DESCRIPTION, description);
+    }
 
-	/**
-	 * Set the DC Description
-	 * 
-	 * @param description the description
-	 */
-	public void setDescription(String description) {
-		setDCNode("description", description);
-	}
+    /**
+     * Get the identifier
+     * 
+     * @return the identifier
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getIdentifier() throws DocumentException {
+        checkValidity();
+        return (String)map.get(IDENTIFIER);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getRights() throws PublicationException {
-		return getDCNode("rights");
-	}
+    /**
+     * Set the DC Identifier
+     * 
+     * @param identifier the identifier
+     */
+    public void setIdentifier(String identifier) {
+        map.put(IDENTIFIER, identifier);
+    }
 
-	/**
-	 * Set the DC Rights
-	 * 
-	 * @param rights the rights
-	 */
-	public void setRights(String rights) {
-		setDCNode("rights", rights);
-	}
+    /**
+     * Get the subject.
+     * 
+     * @return the subject
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getSubject() throws DocumentException {
+        checkValidity();
+        return (String)map.get(SUBJECT);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getIdentifier() throws PublicationException {
-		return getDCNode("identifier");
-	}
-	/**
-	 * Set the DC Identifier
-	 * 
-	 * @param identifier The identifier
-	 */
-	public void setIdentifier(String identifier) {
-		setDCNode("identifier", identifier);
-	}
+    /**
+     * Set the DC Subject
+     * 
+     * @param subject the subject
+     */
+    public void setSubject(String subject) {
+        map.put(SUBJECT, subject);
+    }
+
+    /**
+     * Get the publisher
+     * 
+     * @return the publisher
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getPublisher() throws DocumentException {
+        checkValidity();
+        return (String)map.get(PUBLISHER);
+    }
+
+    /**
+     * Set the publisher
+     * 
+     * @param publisher the publisher
+     */
+    public void setPublisher(String publisher) {
+        map.put(PUBLISHER, publisher);
+    }
+
+    /**
+     * Get the date of issue
+     * 
+     * @return the date of issue
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getDateIssued() throws DocumentException {
+        checkValidity();
+        return (String)map.get(DATEISSUED);
+    }
+
+    /**
+     * Set the date of issue
+     * 
+     * @param dateIssued the date of issue
+     */
+    public void setDateIssued(String dateIssued) {
+        map.put(DATEISSUED, dateIssued);
+    }
+
+    /**
+     * Get the date of publication.
+     * 
+     * @return the date of publication
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getDatePublished() throws DocumentException {
+        checkValidity();
+        return (String)map.get(DATEPUBLISHED);
+    }
+
+    /**
+     * Set the publication date
+     * 
+     * @param datePublished the date of publication
+     */
+    public void setDatePublished(String datePublished) {
+        map.put(DATEPUBLISHED, datePublished);
+    }
+
+    /**
+     * Get the rights
+     * 
+     * @return the rights
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    public String getRights() throws DocumentException {
+        checkValidity();
+        return (String)map.get(RIGHTS);
+    }
+
+    /**
+     * Set the DC Rights
+     * 
+     * @param rights the rights
+     */
+    public void setRights(String rights) {
+        map.put(RIGHTS, rights);
+    }
+
 }
