@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocumentBuilder.java,v 1.9 2003/08/05 14:53:27 andreas Exp $
+$Id: DefaultDocumentBuilder.java,v 1.10 2003/08/12 16:27:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -158,14 +158,21 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
      * @see org.apache.lenya.cms.publication.DocumentBuilder#isDocument(org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
     public boolean isDocument(Publication publication, String url) throws DocumentBuildException {
-        boolean isDocument = true;
+        boolean isDocument = false;
         
         String publicationURI = url.substring(("/" + publication.getId()).length());
-        String area = publicationURI.split("/")[1];
-        String documentUrl = publicationURI.substring(("/" + area).length());
-        
-        if (!documentUrl.startsWith("/")) {
-            isDocument = false;
+        if (publicationURI.startsWith("/")) {
+            publicationURI = publicationURI.substring(1);
+            
+            int slashIndex = publicationURI.indexOf("/");
+            if (slashIndex > -1) {
+                String area = publicationURI.substring(0, slashIndex);
+                
+                String documentUri = publicationURI.substring(slashIndex);
+                if (documentUri.startsWith("/")) {
+                    isDocument = true;
+                }
+            }
         }
 
         return isDocument;
