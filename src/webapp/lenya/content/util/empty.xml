@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is a simple xml file that can bes used in pipelines where all the -->
+<!-- work is done in the xsl and they just need a dummy xml to start the -->
+<!-- pipeline. -->
+
+  <empty></empty>

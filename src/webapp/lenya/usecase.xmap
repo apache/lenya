@@ -789,7 +789,30 @@
           </map:match>
           
         </map:match>
-        
+
+        <!-- Rename a Label -->
+        <map:match pattern="rename-label" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/util/empty.xml"/>
+            <map:transform src="xslt/info/rename-label.xsl">
+              <map:parameter name="request-uri" value="{request:requestURI}"/>
+              <map:parameter name="area" value="{../../2}"/>
+              <map:parameter name="label" value="{page-envelope:document-label}"/>
+              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+              <map:parameter name="task-id" value="'rename-label'"/>
+            </map:transform>
+            <map:call resource="style-cms-page"/>
+          </map:match>
+          
+          <map:match pattern="rename-label" type="step">
+            <map:act type="task">
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+          
+        </map:match>
+
         <map:match pattern="transition" type="usecase">
           <map:act type="task">
             <map:parameter name="publication-id" value="{../1}"/>
