@@ -16,7 +16,6 @@
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables_authoring.xsl"/>
 <xsl:include href="../../variables.xsl"/>
-<xsl:include href="../variables.xsl"/>
 <!--
 <xsl:include href="../../navigation.xsl"/>
 -->

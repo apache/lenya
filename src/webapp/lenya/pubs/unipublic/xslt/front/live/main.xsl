@@ -9,7 +9,6 @@
 <xsl:include href="../../HTMLhead.xsl"/>
 <xsl:include href="../../variables_live.xsl"/>
 <xsl:include href="../../variables.xsl"/>
-<xsl:include href="../variables.xsl"/>
 <!--
 <xsl:include href="../../navigation.xsl"/>
 -->

@@ -23,7 +23,6 @@
 <xsl:include href="../../navigation.xsl"/>
 <xsl:include href="../../variables_authoring.xsl"/>
 <xsl:include href="../../variables.xsl"/>
-<xsl:include href="../variables.xsl"/>
 <xsl:include href="articles.xsl"/>
 
 </xsl:stylesheet>
