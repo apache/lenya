@@ -66,7 +66,6 @@ import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.apache.lenya.cms.rc.RevisionController;
 
 import java.io.File;
 
@@ -75,118 +74,93 @@ import java.util.StringTokenizer;
 
 /**
  * Class for testing the task to copy a document.
- * Extend the AntTask class.
  * @author edith
  */
 public class DocumentCopyTaskTest extends AntTaskTest {
-    private long time = 0;
 
-    /**
-    * Creates a new DocumentCopyTaskTest object.
-     * @param test
-     */
-    public DocumentCopyTaskTest(String test) {
-        super(test);
-    }
+	/**
+     * Creates a new DocumentCopyTaskTest object.
+	 * @param test
+	 */
+	public DocumentCopyTaskTest(String test) {
+		super(test);
+	}
 
-    /**
-     * Creates a test suite.
-     * @return Test
-     **/
-    public static Test getSuite() {
-        return new TestSuite(DocumentCopyTaskTest.class);
-    }
+	/** 
+	 * Creates a test suite.
+	 * @return Test 
+	 **/
+	public static Test getSuite() {
+		return new TestSuite(DocumentCopyTaskTest.class);
+	}
 
-    /**
-     * The main program for the DocumentCopyTaskTest class
-     *
-     * @param args The command line arguments
-     */
-    public static void main(String[] args) {
-        AntTaskTest.initialize(args);
-        TestRunner.run(getSuite());
-    }
+	/**
+	 * The main program for the DocumentCopyTaskTest class
+	 *
+	 * @param args The command line arguments
+	 */
+	public static void main(String[] args) {
+		AntTaskTest.initialize(args);
+		TestRunner.run(getSuite());
+	}
 
-    public static final String FIRST_DOCUMENT_ID = "/tutorial";
-    public static final String SEC_DOCUMENT_ID = "/features";
-    public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
-    public static final String TREE_FILE = "sitetree.xml";
-    public static final String AUTHORING_RESOURCE = "resources/authoring";
-    public static final String RCML_DIR = "content/rcml";
-    public static final String RCBAK_DIR = "content/rcbak";
+	public static final String FIRST_DOCUMENT_ID = "/tutorial";
+	public static final String SEC_DOCUMENT_ID = "/features";
+	public static final String AUTHORING_PATH = "content/authoring".replace('/', File.separatorChar);
+	public static final String TREE_FILE = "sitetree.xml";
+	public static final String AUTHORING_RESOURCE = "resources/authoring";
+	public static final String RCML_DIR = "content/rcml";
+	public static final String RCBAK_DIR = "content/rcbak";
+	
+	/**
+	 * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
+	 **/
+	protected Parameters getTaskParameters() {
+		Parameters parameters = super.getTaskParameters();
+		parameters.setParameter("properties.node.firstdocumentid", FIRST_DOCUMENT_ID);
+		parameters.setParameter("properties.node.secdocumentid", SEC_DOCUMENT_ID);
+		return parameters;
+	}
+    
+	/**
+	 * Returns the target test.
+	 * @return target.
+	 */
+	protected String getTarget() {
+		return "copyDocument";
+	}
 
-    /**
-     * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
-     **/
-    protected Parameters getTaskParameters() {
-        Parameters parameters = super.getTaskParameters();
-        parameters.setParameter("properties.node.firstdocumentid", FIRST_DOCUMENT_ID);
-        parameters.setParameter("properties.node.secdocumentid", SEC_DOCUMENT_ID);
+	/**
+	 * prepare the test
+	 */
+	protected void prepareTest() throws Exception {
+		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+        String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
+		File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
 
-        return parameters;
-    }
+		// TODO generate the resources  
+	}
 
-    /**
-     * Returns the target test.
-     * @return target.
-     */
-    protected String getTarget() {
-        return "copyDocument";
-    }
-
-    /**
-     * prepare the test
-     */
-    protected void prepareTest() throws Exception {
-        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath() + File.separator;
+	/**
+	 * evaluate the test
+	 */
+	protected void evaluateTest() throws Exception {
+		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+		String publicationPath = publicationDirectory.getAbsolutePath(); 
         File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
+        
+		StringTokenizer st = new StringTokenizer(FIRST_DOCUMENT_ID , "/", true);
+		int l = st.countTokens();
+		for (int i=1; i<l; i++) {
+		  st.nextToken();
+		}
+		String secdocumentid = SEC_DOCUMENT_ID+"/"+st.nextToken();      
 
-        // TODO generate the resources  
-        // generate the rcml and rcbak files
-        File rcmlDirectory = new File(publicationPath, RCML_DIR);
-        File rcbakDirectory = new File(publicationPath, RCBAK_DIR);
-        RevisionController rc = new RevisionController(rcmlDirectory.getAbsolutePath(),
-                rcbakDirectory.getAbsolutePath(), publicationPath);
-        String filename = AUTHORING_PATH + FIRST_DOCUMENT_ID + File.separator + "index.xml";
-        rc.reservedCheckOut(filename, "lenya");
-        time = rc.reservedCheckIn(filename, "lenya", true);
-    }
+		String filepath = secdocumentid + File.separator + "index.xml";  
 
-    /**
-     * evaluate the test
-     */
-    protected void evaluateTest() throws Exception {
-        File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath();
-        File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
-
-        StringTokenizer st = new StringTokenizer(FIRST_DOCUMENT_ID, "/", true);
-        int l = st.countTokens();
-
-        for (int i = 1; i < l; i++) {
-            st.nextToken();
-        }
-
-        String secdocumentid = SEC_DOCUMENT_ID + "/" + st.nextToken();
-
-        String filepath = secdocumentid + File.separator + "index.xml";
-
-        File documentFile = new File(authoringDirectory, filepath);
+		File documentFile = new File(authoringDirectory, filepath);
         assertTrue(documentFile.exists());
-        System.out.println("Document was copied: " + documentFile.getAbsolutePath());
-
-        File rcmlDirectory = new File(publicationPath, RCML_DIR);
-        String rcmlFilePath = filepath + ".rcml";
-        File rcmlFile = new File(rcmlDirectory, AUTHORING_PATH + rcmlFilePath);
-        assertTrue(rcmlFile.exists());
-        System.out.println("rcml file was copied: " + rcmlFile.getAbsolutePath());
-
-        File rcbakDirectory = new File(publicationPath, RCBAK_DIR);
-        String rcbakFilePath = filepath + ".bak." + time;
-        File rcbakFile = new File(rcbakDirectory, AUTHORING_PATH + rcbakFilePath);
-        assertTrue(rcbakFile.exists());
-        System.out.println("Backup was copied: " + rcbakFile.getAbsolutePath());
+		System.out.println("Document was copied: " + documentFile.getAbsolutePath());
 
         //TODO evaluation of meta, workflow
         File sitetreeFile = new File(authoringDirectory, TREE_FILE);
