@@ -14,8 +14,15 @@ package org.apache.lenya.cms.publication;
 public interface Document {
     
     /**
-     * Returns the document type this document belongs to.
+     * Returns the document ID of this document.
+     * @return A URI object.
      */
-    DocumentType getType();
+    String getId();
+
+    /**
+     * Returns the publication this document belongs to.
+     * @return A publication object.
+     */    
+    Publication getPublication();
     
 }

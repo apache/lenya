@@ -51,18 +51,29 @@ package org.apache.lenya.cms.publication;
 public class DefaultDocument implements Document {
 
     /** Creates a new instance of DefaultDocument */
-    public DefaultDocument(DocumentType type) {
-        assert type != null;
-        this.type = type;
+    public DefaultDocument(Publication publication, String id) {
+        assert id != null;
+        this.id = id;
+        
+        assert publication != null;
+        this.publication = publication;
+    }
+    
+    private String id;
+    private Publication publication;
+
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.Document#getFile()
+     */
+    public String getId() {
+        return id;
     }
 
-    private DocumentType type;
-
-    /** Returns the document type this document belongs to.
-     *
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
-    public DocumentType getType() {
-        return type;
+    public Publication getPublication() {
+        return publication;
     }
 
 }
