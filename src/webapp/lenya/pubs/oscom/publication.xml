@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.13 2003/10/31 16:44:09 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.14 2003/11/06 09:51:04 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:name>OSCOM</lenya:name>
-<lenya:version>1.0</lenya:version>
+<lenya:version>1.2-dev</lenya:version>
 <lenya:description>OSCOM is an international, not-for-profit organization dedicated to Open Source
 Content Management.
 This publication implements the CMS matrix used at <a href="http://www.oscom.org/matrix/">oscom.org</a></lenya:description>

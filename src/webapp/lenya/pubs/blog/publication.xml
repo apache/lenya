@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.10 2003/10/31 16:44:09 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.11 2003/11/06 09:51:04 michi Exp $ -->
 
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
+<lenya:version>1.2-dev</lenya:version>
 <lenya:name>Lenya's Weblog</lenya:name>
 <lenya:description>
 This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo/Atom"</a> specification for syndicating, archiving and

@@ -46,6 +46,7 @@
 
 <xsl:template match="lenya:description">
 <h2><xsl:value-of select="../lenya:name"/></h2>
+(Based on Lenya <b><xsl:value-of select="../lenya:version"/></b>)
 <p>
 <h3>About</h3>
   <xsl:copy-of select="."/>
