@@ -212,6 +212,11 @@
               <xs:choice minOccurs="0" maxOccurs="0"/>
               <xs:attribute name="norm" type="xs:string"/>
               <xs:attribute name="millis" type="xs:string"/>
+              <xs:attribute name="year" type="xs:string"/>
+              <xs:attribute name="month" type="xs:string"/>
+              <xs:attribute name="day" type="xs:string"/>
+              <xs:attribute name="hour" type="xs:string"/>
+              <xs:attribute name="minute" type="xs:string"/>
             </xs:complexType>
           </xs:element>
         </xs:choice></xs:sequence>
