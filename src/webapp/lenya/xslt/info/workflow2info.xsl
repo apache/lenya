@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: workflow2info.xsl,v 1.7 2004/04/03 17:50:50 roku Exp $ -->
+<!-- $Id: workflow2info.xsl,v 1.8 2004/04/29 15:25:07 andreas Exp $ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -45,7 +45,7 @@
 					<th><i18n:text>IP Address</i18n:text></th>
 				</tr>
 				<xsl:apply-templates select="wf:version">
-				    <xsl:sort select="@date" order="descending"/>
+				    <xsl:sort select="@date" order="ascending"/>
 				</xsl:apply-templates>
 			</table>
 		</lenya-info:workflow>
