@@ -27,7 +27,7 @@
       <map:match pattern="xopus2/**.html">
         <map:aggregate element="lenya" label="lenyapage">
           <map:part src="cocoon:/menus/gregor.xml"/>
-          <map:part src="content/authoring/{1}.xml" element="cmsbody"/>
+          <map:part src="content/xdocs/{1}.xml" element="cmsbody"/>
         </map:aggregate>
         <map:transform src="xslt/xopus2-article.xsl">
           <map:parameter name="articleid" value="{1}"/>
