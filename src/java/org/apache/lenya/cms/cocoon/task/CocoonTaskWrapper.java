@@ -1,5 +1,5 @@
 /*
-$Id: CocoonTaskWrapper.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
+$Id: CocoonTaskWrapper.java,v 1.3 2003/08/28 10:10:22 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,6 +55,7 @@ $Id: CocoonTaskWrapper.java,v 1.2 2003/08/25 15:40:55 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.task;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -93,6 +94,8 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
      * @throws ExecutionException when something went wrong.
      */
     public CocoonTaskWrapper(Map objectModel, Parameters parameters) throws ExecutionException {
+        
+        log.debug("Creating CocoonTaskWrapper");
 
         Publication publication;
         try {
@@ -113,7 +116,7 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
         String webappUrl = ServletHelper.getWebappURI(request);
         initialize(taskId, publication, webappUrl, taskParameters);
 
-        String eventName = (String) request.getParameter(WorkflowInvoker.EVENT_REQUEST_PARAMETER);
+        String eventName = request.getParameter(WorkflowInvoker.EVENT_REQUEST_PARAMETER);
         if (eventName != null) {
             Identity identity = Identity.getIdentity(request.getSession(false));
             Role[] roles;
@@ -133,13 +136,30 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
      */
     protected void setNotifying(Request request) {
 
-        log.debug("Initializing Notification");
+        log.debug("Trying to initialize notification ...");
 
         Map requestParameters = ServletHelper.getParameterMap(request);
+
+        log.debug("    Request parameters:");
+        for (Iterator i = requestParameters.keySet().iterator(); i.hasNext(); ) {
+            Object key = i.next();
+            log.debug("        [" + key + "] = [" + requestParameters.get(key) + "]");
+        }
+
         NamespaceMap notificationMap =
             new NamespaceMap(requestParameters, Notifier.NOTIFICATION_PREFIX);
 
-        if (!notificationMap.getMap().isEmpty()) {
+        log.debug("    Notification parameters:");
+        for (Iterator i = notificationMap.getMap().keySet().iterator(); i.hasNext(); ) {
+            Object key = i.next();
+            log.debug("        [" + key + "] = [" + notificationMap.getMap().get(key) + "]");
+        }
+
+        if (notificationMap.getMap().isEmpty()) {
+            log.debug("    No notification parameters found.");
+        }
+        else {
+            log.debug("    Initializing notification");
 
             String toKey =
                 NamespaceMap.getFullName(Notifier.NOTIFICATION_PREFIX, Notifier.PARAMETER_TO);
@@ -151,10 +171,11 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
             }
 
             for (int i = 0; i < toValues.length; i++) {
-                if (i > 0) {
+                if (i > 0 && !"".equals(toString)) {
                     toString += ",";
                 }
-                toString += toValues[i];
+                log.debug("    Adding notification address [" + toValues[i].trim() + "]");
+                toString += toValues[i].trim();
             }
 
             notificationMap.put(Notifier.PARAMETER_TO, toString);
