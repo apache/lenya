@@ -9,13 +9,7 @@
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    
-    <map:actions>
-      <map:action name="user-admin-add" src="org.apache.lenya.cms.cocoon.acting.UserAdminAddAction"/>
-      <map:action name="user-admin-modify" src="org.apache.lenya.cms.cocoon.acting.UserAdminModifyAction"/>
-      <map:action name="user-admin-delete" src="org.apache.lenya.cms.cocoon.acting.UserAdminDeleteAction"/>
-    </map:actions>
-    
+
     <map:selectors>
       <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
         <exception class="org.apache.lenya.cms.task.ExecutionException" name="execution"/>
@@ -328,8 +322,7 @@
 	    <map:serialize type="html"/>
 	  </map:match>
 	</map:match>
-	
-        <!--Rollback-->
+	        <!--Rollback-->
         <map:match pattern="rollback" type="usecase">
           
           <map:match pattern="showscreen" type="step">
@@ -613,45 +606,6 @@
               <map:parameter name="task-id" value="{request-param:task-id}"/>
               <map:redirect-to session="true" uri="{request:requestURI}"/>
             </map:act>
-          </map:match>
-          
-        </map:match>
-        
-        
-        <!-- ============================================================ -->
-        <!-- UserAdmin -->
-        <!-- ============================================================ -->
-          
-        <map:match pattern="user-add" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/ac/user-add.xsp" type="serverpages"/>
-            <map:transform src="xslt/ac/user-add.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="add" type="step">
-            <map:act type="user-admin-add">
-              <map:redirect-to uri="{request:requestURI}"/>
-            </map:act>
-            <map:redirect-to uri="{request:requestURI}?lenya.usecase=user-add&amp;lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
-          </map:match>
-          
-        </map:match>
-        
-        <map:match pattern="user-delete" type="usecase">
-          
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/ac/user-modify.xsp" type="serverpages"/>
-            <map:transform src="xslt/ac/user-delete.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
-          <map:match pattern="delete" type="step">
-            <map:act type="user-admin-delete">
-              <map:redirect-to uri="{request:requestURI}"/>
-            </map:act>
-            <map:redirect-to uri="{request:requestURI}?lenya.usecase=user-delete&amp;lenya.step=showscreen&amp;user-id={request-param:user-id}"/>
           </map:match>
           
         </map:match>
