@@ -1,0 +1,8 @@
+The mission of the Lenya project is:
+
+to provide commercial-quality, high-performance, well-tested,
+standards-based XML editing environments that are developed in an open and collaborative fashion.
+
+to add user-oriented functionality on top of the cocoon framework and other apache projects.
+
+to advance the state of the art of content management and structured text editing. 
