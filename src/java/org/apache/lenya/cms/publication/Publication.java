@@ -198,11 +198,10 @@ public interface Publication {
 
     /**
      * Returns a site manager of this publication for a certain document identity map. 
-     * @param map The document identity map.
      * @return A site manager.
      * @throws SiteException if an error occurs 
      */
-    SiteManager getSiteManager(DocumentIdentityMap map) throws SiteException;
+    SiteManager getSiteManager() throws SiteException;
 
     /**
      * Returns the document builder of this instance.

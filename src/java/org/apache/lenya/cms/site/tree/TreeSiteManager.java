@@ -18,13 +18,12 @@
 package org.apache.lenya.cms.site.tree;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
@@ -37,31 +36,27 @@ import org.apache.lenya.cms.site.SiteException;
  */
 public class TreeSiteManager extends AbstractSiteManager {
 
-    private Map siteTrees = new HashMap();
-
     /**
      * Ctor.
      */
     public TreeSiteManager() {
-	    // do nothing
+        // do nothing
     }
 
     /**
-     * Returns the sitetree for a specific area of this publication. Sitetrees are created on demand
-     * and are cached.
+     * Returns the sitetree for a specific area of this publication. Sitetrees
+     * are created on demand and are cached.
+     * @param map The document identity map.
      * @param area The area.
      * @return A site tree.
      * @throws SiteException if an error occurs.
      */
-    public SiteTree getTree(String area) throws SiteException {
-        DefaultSiteTree sitetree = null;
-
-        if (this.siteTrees.containsKey(area)) {
-            sitetree = (DefaultSiteTree) this.siteTrees.get(area);
-        } else {
-            sitetree = new DefaultSiteTree(getIdentityMap().getPublication().getDirectory(), area);
+    public SiteTree getTree(DocumentIdentityMap map, String area) throws SiteException {
+        DefaultSiteTree sitetree = (DefaultSiteTree) map.getSiteStructure(map.getPublication(), area);
+        if (sitetree == null) {
+            sitetree = new DefaultSiteTree(map.getPublication().getDirectory(), area);
             ContainerUtil.enableLogging(sitetree, getLogger());
-            this.siteTrees.put(area, sitetree);
+            map.putSiteStructure(map.getPublication(), area, sitetree);
         }
         return sitetree;
     }
@@ -76,7 +71,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         List ancestors = new ArrayList();
         Document parent;
         try {
-            parent = getIdentityMap().getFactory().getParent(resource);
+            parent = resource.getIdentityMap().getFactory().getParent(resource);
         } catch (DocumentBuildException e) {
             throw new SiteException(e);
         }
@@ -113,7 +108,7 @@ public class TreeSiteManager extends AbstractSiteManager {
             getLogger().debug("Obtaining requiring resources of [" + resource + "]");
         }
 
-        SiteTree tree = getTree(resource.getArea());
+        SiteTree tree = getTree(resource.getIdentityMap(), resource.getArea());
 
         SiteTreeNode node = tree.getNode(resource.getId());
         List preOrder = node.preOrder();
@@ -126,7 +121,7 @@ public class TreeSiteManager extends AbstractSiteManager {
         try {
             for (int i = 0; i < resources.length; i++) {
                 SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                resources[i] = getIdentityMap().getFactory().get(resource.getArea(),
+                resources[i] = resource.getIdentityMap().getFactory().get(resource.getArea(),
                         descendant.getAbsoluteId());
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("    Descendant: [" + resources[i] + "]");
@@ -147,7 +142,8 @@ public class TreeSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document resource) throws SiteException {
-        SiteTreeNode node = getTree(resource.getArea()).getNode(resource.getId());
+        SiteTree tree = getTree(resource.getIdentityMap(), resource.getArea());
+        SiteTreeNode node = tree.getNode(resource.getId());
         return node != null && node.getLabel(resource.getLanguage()) != null;
     }
 
@@ -155,7 +151,8 @@ public class TreeSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#containsInAnyLanguage(org.apache.lenya.cms.publication.Document)
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {
-        SiteTreeNode node = getTree(resource.getArea()).getNode(resource.getId());
+        SiteTree tree = getTree(resource.getIdentityMap(), resource.getArea());
+        SiteTreeNode node = tree.getNode(resource.getId());
         return node != null;
     }
 
@@ -164,8 +161,9 @@ public class TreeSiteManager extends AbstractSiteManager {
      *      org.apache.lenya.cms.publication.Document)
      */
     public void copy(Document sourceDocument, Document destinationDocument) throws SiteException {
-        SiteTree sourceTree = getTree(sourceDocument.getArea());
-        SiteTree destinationTree = getTree(destinationDocument.getArea());
+        SiteTree sourceTree = getTree(sourceDocument.getIdentityMap(), sourceDocument.getArea());
+        SiteTree destinationTree = getTree(destinationDocument.getIdentityMap(),
+                destinationDocument.getArea());
 
         SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
         if (sourceNode == null) {
@@ -206,11 +204,17 @@ public class TreeSiteManager extends AbstractSiteManager {
             Label[] labels = { label };
 
             if (siblingDocId == null) {
-                destinationTree.addNode(destinationDocument.getId(), labels, sourceNode
-                        .getHref(), sourceNode.getSuffix(), sourceNode.hasLink());
+                destinationTree.addNode(destinationDocument.getId(),
+                        labels,
+                        sourceNode.getHref(),
+                        sourceNode.getSuffix(),
+                        sourceNode.hasLink());
             } else {
-                destinationTree.addNode(destinationDocument.getId(), labels, sourceNode
-                        .getHref(), sourceNode.getSuffix(), sourceNode.hasLink(),
+                destinationTree.addNode(destinationDocument.getId(),
+                        labels,
+                        sourceNode.getHref(),
+                        sourceNode.getSuffix(),
+                        sourceNode.hasLink(),
                         siblingDocId);
             }
 
@@ -221,8 +225,6 @@ public class TreeSiteManager extends AbstractSiteManager {
             destinationTree.setLabel(destinationDocument.getId(), label);
         }
 
-
-
         destinationTree.save();
     }
 
@@ -230,7 +232,7 @@ public class TreeSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#delete(org.apache.lenya.cms.publication.Document)
      */
     public void delete(Document document) throws SiteException {
-        SiteTree tree = getTree(document.getArea());
+        SiteTree tree = getTree(document.getIdentityMap(), document.getArea());
 
         SiteTreeNode node = tree.getNode(document.getId());
 
@@ -274,8 +276,8 @@ public class TreeSiteManager extends AbstractSiteManager {
     public void setLabel(Document document, String label) throws SiteException {
         Label labelObject = getLabelObject(document);
         labelObject.setLabel(label);
-        
-        SiteTree tree = getTree(document.getArea());
+
+        SiteTree tree = getTree(document.getIdentityMap(), document.getArea());
         tree.setLabel(document.getId(), labelObject);
         tree.save();
     }
@@ -288,7 +290,7 @@ public class TreeSiteManager extends AbstractSiteManager {
      */
     protected Label getLabelObject(Document document) throws SiteException {
         Label label = null;
-        SiteTree siteTree = getTree(document.getArea());
+        SiteTree siteTree = getTree(document.getIdentityMap(), document.getArea());
         if (siteTree != null) {
             SiteTreeNode node = siteTree.getNode(document.getId());
             if (node == null) {
@@ -305,16 +307,17 @@ public class TreeSiteManager extends AbstractSiteManager {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getDocuments(java.lang.String)
+     * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      java.lang.String)
      */
-    public Document[] getDocuments(String area) throws SiteException {
+    public Document[] getDocuments(DocumentIdentityMap map, String area) throws SiteException {
         try {
-            List allNodes = getTree(area).getNode("/").preOrder();
+            List allNodes = getTree(map, area).getNode("/").preOrder();
             Document[] documents = new Document[allNodes.size() - 1];
 
             for (int i = 1; i < allNodes.size(); i++) {
                 SiteTreeNode node = (SiteTreeNode) allNodes.get(i);
-                documents[i - 1] = getIdentityMap().getFactory().get(area, node.getAbsoluteId());
+                documents[i - 1] = map.getFactory().get(area, node.getAbsoluteId());
             }
             return documents;
         } catch (DocumentBuildException e) {
@@ -330,16 +333,15 @@ public class TreeSiteManager extends AbstractSiteManager {
         if (contains(document)) {
             throw new SiteException("The document [" + document + "] is already contained!");
         }
-        SiteTree tree = getTree(document.getArea());
+        SiteTree tree = getTree(document.getIdentityMap(), document.getArea());
         Label label = new Label("", document.getLanguage());
-        
+
         SiteTreeNode node = tree.getNode(document.getId());
         if (node == null) {
             Label[] labels = { label };
             tree.addNode(document.getId(), labels, null, null, false);
             tree.save();
-        }
-        else {
+        } else {
             tree.addLabel(document.getId(), label);
         }
 

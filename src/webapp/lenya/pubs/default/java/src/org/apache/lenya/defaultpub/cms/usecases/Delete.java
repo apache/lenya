@@ -17,7 +17,6 @@
 package org.apache.lenya.defaultpub.cms.usecases;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
@@ -82,8 +81,7 @@ public class Delete extends org.apache.lenya.cms.site.usecases.Delete {
      */
     protected DocumentSet getSubset() throws SiteException {
         Document document = getSourceDocument();
-        DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
-        SiteManager manager = document.getPublication().getSiteManager(identityMap);
+        SiteManager manager = document.getPublication().getSiteManager();
         DocumentSet set = new DocumentSet(manager.getRequiringResources(document));
         set.add(document);
         return set;

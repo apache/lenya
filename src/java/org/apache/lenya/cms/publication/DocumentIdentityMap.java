@@ -34,6 +34,8 @@ public class DocumentIdentityMap {
     private Publication publication;
     private Map key2document = new HashMap();
     private DocumentFactory factory;
+    
+    private Map key2siteStructure = new HashMap();
 
     /**
      * Ctor.
@@ -60,6 +62,32 @@ public class DocumentIdentityMap {
      */
     public Publication getPublication() {
         return this.publication;
+    }
+    
+    /**
+     * Returns a site structure object.
+     * @param publication The publication.
+     * @param area The area.
+     * @return The site structure object.
+     */
+    public Object getSiteStructure(Publication publication, String area) {
+        String key = getSiteStructureKey(publication, area);
+        return this.key2siteStructure.get(key);
+    }
+    
+    /**
+     * Adds a site structure object.
+     * @param publication The publication.
+     * @param area The area.
+     * @param siteStructure The site structure to add.
+     */
+    public void putSiteStructure(Publication publication, String area, Object siteStructure) {
+        String key = getSiteStructureKey(publication, area);
+        this.key2siteStructure.put(key, siteStructure);
+    }
+    
+    protected String getSiteStructureKey(Publication publication, String area) {
+        return publication.getId() + ":" + area;
     }
     
     /**

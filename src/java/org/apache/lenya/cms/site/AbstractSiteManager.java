@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.site;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
 
 /**
  * Abstract base class for site managers.
@@ -26,29 +25,11 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
  * @version $Id$
  */
 public abstract class AbstractSiteManager extends AbstractLogEnabled implements SiteManager {
-    
-    private DocumentIdentityMap map;
-    
+
     /**
      * Ctor.
      */
     public AbstractSiteManager() {
-	    // do nothing
-    }
-    
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#setIdentityMap(org.apache.lenya.cms.publication.DocumentIdentityMap)
-     */
-    public void setIdentityMap(DocumentIdentityMap _map) {
-        this.map = _map;
-    }
-
-    /**
-     * Returns the identity map.
-     * @return A resource identity map.
-     */
-    public DocumentIdentityMap getIdentityMap() {
-        return this.map;
     }
 
 }

@@ -187,7 +187,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public String getLabel() throws DocumentException {
         String labelString = "";
         try {
-            SiteManager siteManager = getPublication().getSiteManager(getIdentityMap());
+            SiteManager siteManager = getPublication().getSiteManager();
             if (siteManager != null) {
                 labelString = siteManager.getLabel(this);
             }
@@ -260,7 +260,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public boolean exists() throws DocumentException {
         boolean exists;
         try {
-            SiteManager manager = getPublication().getSiteManager(getIdentityMap());
+            SiteManager manager = getPublication().getSiteManager();
             if (manager != null) {
                 exists = manager.contains(this);
             } else {
@@ -278,7 +278,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public boolean existsInAnyLanguage() throws DocumentException {
         boolean exists;
         try {
-            SiteManager manager = getPublication().getSiteManager(getIdentityMap());
+            SiteManager manager = getPublication().getSiteManager();
             if (manager != null) {
                 exists = manager.containsInAnyLanguage(this);
             } else {

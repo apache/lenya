@@ -38,6 +38,11 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
  * @version $Id$
  */
 public interface SiteManager {
+    
+    /**
+     * The Avalon role.
+     */
+    String ROLE = SiteManager.ROLE;
 
     /**
      * Checks if a resource requires another one.
@@ -121,16 +126,11 @@ public interface SiteManager {
 
     /**
      * Returns all documents in a certain area.
+     * @param identityMap The identityMap to use.
      * @param area The area.
      * @return An array of documents.
      * @throws SiteException if an error occurs.
      */
-    Document[] getDocuments(String area) throws SiteException;
-    
-    /**
-     * Sets the identity map.
-     * @param map A resource identity map.
-     */
-    void setIdentityMap(DocumentIdentityMap map);
+    Document[] getDocuments(DocumentIdentityMap identityMap, String area) throws SiteException;
     
 }

@@ -67,26 +67,26 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
         try {
             PageEnvelope envelope = getEnvelope(objectModel);
             Publication publication = envelope.getPublication();
-            DocumentIdentityMap map = envelope.getIdentityMap();
-            TreeSiteManager _manager = (TreeSiteManager) publication.getSiteManager(map);
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            TreeSiteManager _manager = (TreeSiteManager) publication.getSiteManager();
 
             if (name.equals(AUTHORING_NODE)) {
-                SiteTree authoringTree = _manager.getTree(Publication.AUTHORING_AREA);
+                SiteTree authoringTree = _manager.getTree(map, Publication.AUTHORING_AREA);
                 value = authoringTree.getNode(envelope.getDocument().getId());
             }
 
             if (name.equals(LIVE_NODE)) {
-                SiteTree liveTree = _manager.getTree(Publication.LIVE_AREA);
+                SiteTree liveTree = _manager.getTree(map, Publication.LIVE_AREA);
                 value = liveTree.getNode(envelope.getDocument().getId());
             }
             
             if (name.equals(TRASH_NODE)) {
-                SiteTree trashTree = _manager.getTree(Publication.TRASH_AREA);
+                SiteTree trashTree = _manager.getTree(map, Publication.TRASH_AREA);
                 value = trashTree.getNode(envelope.getDocument().getId());
             }
             
             if (name.equals(ARCHIVE_NODE)) {
-                SiteTree archiveTree = _manager.getTree(Publication.ARCHIVE_AREA);
+                SiteTree archiveTree = _manager.getTree(map, Publication.ARCHIVE_AREA);
                 value = archiveTree.getNode(envelope.getDocument().getId());
             }
         } catch (Exception e) {

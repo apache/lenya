@@ -50,12 +50,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * This transformer lists the children of a document if the tag <namespaceURI:children>is present in
- * this document. The list of the children is in the form :<namespaceURI:children><child
- * href="....html> <ci:include src="..." element="included"/> </child> ... </namespaceURI:children>
- * Multiple language : if a child doesn't exist in the parent language, then the version in the
- * default language will be considered. If it doesn't exist too, any other existent language will be
- * considered.
+ * This transformer lists the children of a document if the tag
+ * <namespaceURI:children>is present in this document. The list of the children
+ * is in the form :<namespaceURI:children><child href="....html> <ci:include
+ * src="..." element="included"/> </child> ... </namespaceURI:children> Multiple
+ * language : if a child doesn't exist in the parent language, then the version
+ * in the default language will be considered. If it doesn't exist too, any
+ * other existent language will be considered.
  */
 public class DocumentIndexTransformer extends AbstractSAXTransformer implements Parameterizable {
 
@@ -96,12 +97,13 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters _parameters)
             throws ProcessingException, SAXException, IOException {
 
-    	try {
+        try {
             super.setup(_resolver, _objectModel, src, _parameters);
 
             parameterize(_parameters);
@@ -118,9 +120,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             setArea(this.document.getArea());
             setBuilder(this.document.getPublication().getDocumentBuilder());
 
-            TreeSiteManager _manager = (TreeSiteManager) this.publication
-                    .getSiteManager(this.identityMap);
-            setSiteTree(_manager.getTree(this.area));
+            TreeSiteManager _manager = (TreeSiteManager) this.publication.getSiteManager();
+            setSiteTree(_manager.getTree(this.identityMap, this.area));
         } catch (final ProcessingException e) {
             throw new ProcessingException(e);
         } catch (final ParameterException e) {
@@ -137,12 +138,11 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             throw new ProcessingException(e);
         }
 
-
     }
 
     /**
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
-     *      java.lang.String, org.xml.sax.Attributes)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
+     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String localName, String raw, Attributes attr)
             throws SAXException {
@@ -170,7 +170,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                 for (int i = 0; i < children.length; i++) {
                     String childId = documentId + "/" + children[i].getId();
 
-                    //get child document with the same language than the parent document
+                    //get child document with the same language than the parent
+                    // document
                     Document doc;
                     try {
                         doc = this.identityMap.getFactory().get(this.area, childId, language);
@@ -180,13 +181,13 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     String url = doc.getCanonicalWebappURL();
 
                     if (!doc.exists()) {
-                        //get first the child document in the default language and then in any
+                        //get first the child document in the default language
+                        // and then in any
                         // other
                         // existent language
-                        getLogger().debug(
-                                "There is no child document [" + doc
-                                        + "] in the same language as the parent document ["
-                                        + language + "]");
+                        getLogger().debug("There is no child document [" + doc
+                                + "] in the same language as the parent document [" + language
+                                + "]");
 
                         //available language
                         String[] availableLanguages = null;
@@ -199,8 +200,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         List languages = new ArrayList();
                         for (int l = 0; l < availableLanguages.length; l++) {
                             if (availableLanguages[l].equals(language)) {
-                                getLogger().debug(
-                                        "Do nothing because language was already tested: ["
+                                getLogger()
+                                        .debug("Do nothing because language was already tested: ["
                                                 + availableLanguages[l] + "]");
                             } else if (availableLanguages[l].equals(defaultLanguage)) {
                                 languages.add(0, availableLanguages[l]);
@@ -213,7 +214,9 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         while (!doc.exists() && j < languages.size()) {
                             String newlanguage = (String) languages.get(j);
                             try {
-                                doc = this.identityMap.getFactory().get(this.area, childId, newlanguage);
+                                doc = this.identityMap.getFactory().get(this.area,
+                                        childId,
+                                        newlanguage);
                             } catch (final DocumentBuildException e) {
                                 throw new SAXException(e);
                             }
@@ -242,8 +245,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         super.endElement(NAMESPACE, "child", PREFIX + "child");
                     } else {
                         //do nothing for this child
-                        getLogger().warn(
-                                "There are no existing file for the child with id " + childId);
+                        getLogger().warn("There are no existing file for the child with id "
+                                + childId);
                     }
 
                 }

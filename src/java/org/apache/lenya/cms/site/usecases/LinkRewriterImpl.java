@@ -76,8 +76,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         SiteManager siteManager;
         Document[] documents; 
         try {
-            siteManager = publication.getSiteManager(identityMap);
-            documents = siteManager.getDocuments(area);
+            siteManager = publication.getSiteManager();
+            documents = siteManager.getDocuments(identityMap, area);
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }

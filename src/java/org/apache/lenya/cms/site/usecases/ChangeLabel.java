@@ -56,8 +56,7 @@ public class ChangeLabel extends DocumentUsecase {
         try {
             if (document != null && document.exists()) {
                 setParameter(DOCUMENT_ID, document.getId());
-                SiteManager _manager = document.getPublication().getSiteManager(document
-                        .getIdentityMap());
+                SiteManager _manager = document.getPublication().getSiteManager();
                 setParameter(LABEL, _manager.getLabel(document));
             }
         } catch (Exception e) {
@@ -72,7 +71,7 @@ public class ChangeLabel extends DocumentUsecase {
         super.doExecute();
 
         Document document = getSourceDocument();
-        SiteManager _manager = document.getPublication().getSiteManager(document.getIdentityMap());
+        SiteManager _manager = document.getPublication().getSiteManager();
 
         String label = getParameterAsString(LABEL);
         _manager.setLabel(document, label);

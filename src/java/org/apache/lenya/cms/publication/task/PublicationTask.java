@@ -312,11 +312,11 @@ public abstract class PublicationTask extends AbstractTask {
     protected SiteTree getSiteTree(String area) {
         SiteTree tree;
         try {
-            SiteManager manager = getPublication().getSiteManager(getIdentityMap());
+            SiteManager manager = getPublication().getSiteManager();
             if (!(manager instanceof TreeSiteManager)) {
                 throw new RuntimeException("Only supported for site trees.");
             }
-            tree = ((TreeSiteManager) manager).getTree(area);
+            tree = ((TreeSiteManager) manager).getTree(getIdentityMap(), area);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {

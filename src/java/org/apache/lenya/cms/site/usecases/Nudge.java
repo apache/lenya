@@ -26,11 +26,11 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
  * Nudge a document one position up or down.
- *
+ * 
  * @version $Id:$
  */
 public class Nudge extends DocumentUsecase {
-    
+
     protected static final String DIRECTION = "direction";
     protected static final String UP = "up";
     protected static final String DOWN = "down";
@@ -41,71 +41,69 @@ public class Nudge extends DocumentUsecase {
     public boolean isInteractive() {
         return false;
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+
         if (!getErrorMessages().isEmpty()) {
             return;
         }
-        
+
         DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
         Publication publication = identityMap.getPublication();
-        SiteManager manager = publication.getSiteManager(identityMap);
+        SiteManager manager = publication.getSiteManager();
         if (manager instanceof TreeSiteManager) {
-            
+
             TreeSiteManager treeManager = (TreeSiteManager) manager;
-            SiteTree tree = treeManager.getTree(getSourceDocument().getArea());
+            SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
+                    getSourceDocument().getArea());
             SiteTreeNode node = tree.getNode(getSourceDocument().getId());
             SiteTreeNode[] siblings = null;
-            
+
             String direction = getParameterAsString(DIRECTION);
             if (direction.equals(UP)) {
                 siblings = node.getPrecedingSiblings();
-            }
-            else if (direction.equals(DOWN)) {
+            } else if (direction.equals(DOWN)) {
                 siblings = node.getNextSiblings();
-            }
-            else {
+            } else {
                 addErrorMessage("The direction [" + direction + "] is not supported!");
             }
-            
+
             if (siblings != null && siblings.length == 0) {
                 addErrorMessage("Cannot move the node in this direction.");
             }
-        }
-        else {
+        } else {
             addErrorMessage("This operation can only be invoked on site trees.");
         }
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        
+
         DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
         Publication publication = identityMap.getPublication();
-        SiteManager manager = publication.getSiteManager(identityMap);
+        SiteManager manager = publication.getSiteManager();
         if (manager instanceof TreeSiteManager) {
-            
+
             TreeSiteManager treeManager = (TreeSiteManager) manager;
-            SiteTree tree = treeManager.getTree(getSourceDocument().getArea());
-            
+            SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
+                    getSourceDocument().getArea());
+
             String direction = getParameterAsString(DIRECTION);
             if (direction.equals(UP)) {
                 tree.moveUp(getSourceDocument().getId());
-            }
-            else if (direction.equals(DOWN)) {
+            } else if (direction.equals(DOWN)) {
                 tree.moveDown(getSourceDocument().getId());
             }
             tree.save();
         }
 
     }
-    
+
 }

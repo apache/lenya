@@ -118,4 +118,8 @@
   	    shorthand="document-manager"
   	    default-class="org.apache.lenya.cms.publication.DocumentManagerImpl"/>
         
+  <role name="org.apache.lenya.cms.site.SiteManager"
+  	    shorthand="document-manager"
+  	    default-class="org.apache.lenya.cms.site.tree.TreeSiteManager"/>
+        
 </role-list>

@@ -111,19 +111,12 @@ public class TopicMapSiteManager implements SiteManager {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getDocuments(java.lang.String)
+     * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      java.lang.String)
      */
-    public Document[] getDocuments(String area) throws SiteException {
+    public Document[] getDocuments(DocumentIdentityMap map, String area) throws SiteException {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#setIdentityMap(org.apache.lenya.cms.publication.DocumentIdentityMap)
-     */
-    public void setIdentityMap(DocumentIdentityMap map) {
-        // TODO Auto-generated method stub
-
     }
 
 }

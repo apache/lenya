@@ -136,8 +136,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         try {
 
             OrderedDocumentSet set = new OrderedDocumentSet();
-            SiteManager manager = document.getPublication().getSiteManager(document
-                    .getIdentityMap());
+            SiteManager manager = document.getPublication().getSiteManager();
             Document[] descendants = manager.getRequiringResources(document);
 
             set = new OrderedDocumentSet(descendants);

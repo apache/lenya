@@ -19,7 +19,6 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.UniqueDocumentId;
 import org.apache.lenya.cms.site.SiteManager;
@@ -48,7 +47,7 @@ public class Delete extends DocumentUsecase {
 
         Document document = getSourceDocument();
         DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
-        SiteManager manager = document.getPublication().getSiteManager(identityMap);
+        SiteManager manager = document.getPublication().getSiteManager();
         DocumentSet set = new DocumentSet(manager.getRequiringResources(document));
         set.add(document);
         Document[] documents = set.getDocuments();

@@ -352,9 +352,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private Class siteManagerClass;
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#getSiteManager(org.apache.lenya.cms.publication.DocumentIdentityMap)
+     * @see org.apache.lenya.cms.publication.Publication#getSiteManager()
      */
-    public SiteManager getSiteManager(DocumentIdentityMap map) throws SiteException {
+    public SiteManager getSiteManager() throws SiteException {
         SiteManager manager;
         try {
             manager = (SiteManager) this.siteManagerClass.newInstance();
@@ -362,7 +362,6 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         } catch (Exception e) {
             throw new SiteException(e);
         }
-        manager.setIdentityMap(map);
         return manager;
     }
 }

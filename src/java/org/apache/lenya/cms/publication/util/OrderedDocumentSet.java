@@ -76,7 +76,7 @@ public class OrderedDocumentSet extends DocumentSet {
 
         Publication publication = document.getPublication();
         try {
-            SiteManager manager = publication.getSiteManager(document.getIdentityMap());
+            SiteManager manager = publication.getSiteManager();
 
             if (manager == null) {
                 throw new RuntimeException("The site manager must not be null!");
@@ -123,7 +123,7 @@ public class OrderedDocumentSet extends DocumentSet {
         boolean isAntisymmetric = true;
         for (int i = 0; i < resources.length; i++) {
             Publication publication = resources[i].getPublication();
-            SiteManager manager = publication.getSiteManager(resources[i].getIdentityMap());
+            SiteManager manager = publication.getSiteManager();
             for (int j = i + 1; j < resources.length; j++) {
                 if (manager.requires(resources[i], resources[j])
                         && manager.requires(resources[j], resources[i])
@@ -145,7 +145,7 @@ public class OrderedDocumentSet extends DocumentSet {
         boolean isTransitive = true;
         for (int i = 0; i < resources.length; i++) {
             Publication publication = resources[i].getPublication();
-            SiteManager manager = publication.getSiteManager(resources[i].getIdentityMap());
+            SiteManager manager = publication.getSiteManager();
             for (int j = i + 1; j < resources.length; j++) {
                 for (int k = j + 1; k < resources.length; k++) {
                     if (manager.requires(resources[i], resources[j])
@@ -169,7 +169,7 @@ public class OrderedDocumentSet extends DocumentSet {
         boolean isIrreflexive = true;
         for (int i = 0; i < resources.length; i++) {
             Publication publication = resources[i].getPublication();
-            SiteManager manager = publication.getSiteManager(resources[i].getIdentityMap());
+            SiteManager manager = publication.getSiteManager();
             if (manager.requires(resources[i], resources[i])) {
                 isIrreflexive = false;
             }

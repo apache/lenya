@@ -43,14 +43,13 @@ public class UniqueDocumentId {
     public String computeUniqueDocumentId(Publication publication, String area, String documentid) {
         try {
             
-            DocumentIdentityMap map = new DocumentIdentityMap(publication);
-            SiteManager manager = publication.getSiteManager(map);
+            SiteManager manager = publication.getSiteManager();
             
             if (!(manager instanceof TreeSiteManager)) {
                 throw new RuntimeException("Only supported for site trees!");
             }
-            
-            SiteTree tree = ((TreeSiteManager) manager).getTree(area);
+            DocumentIdentityMap map = new DocumentIdentityMap(publication);
+            SiteTree tree = ((TreeSiteManager) manager).getTree(map, area);
             SiteTreeNode node = tree.getNode(documentid);
             String suffix = null;
             int version = 0;

@@ -85,7 +85,7 @@ public abstract class Create extends AbstractUsecase {
         Publication publication = document.getPublication();
         getDocumentManager().addDocument(document);
 
-        SiteManager _manager = publication.getSiteManager(document.getIdentityMap());
+        SiteManager _manager = publication.getSiteManager();
         _manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
 
         setMetaData(document);

@@ -51,7 +51,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void addDocument(Document document) throws PublicationException {
 
         Publication publication = document.getPublication();
-        SiteManager siteManager = publication.getSiteManager(document.getIdentityMap());
+        SiteManager siteManager = publication.getSiteManager();
         if (siteManager.contains(document)) {
             throw new PublicationException("The document [" + document
                     + "] is already contained in this publication!");
@@ -84,8 +84,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         Publication publication = sourceDocument.getPublication();
         copyDocumentSource(sourceDocument, destinationDocument);
-        publication.getSiteManager(sourceDocument.getIdentityMap()).copy(sourceDocument,
-                destinationDocument);
+        publication.getSiteManager().copy(sourceDocument, destinationDocument);
 
         ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
         WorkflowManager workflowManager = null;
@@ -111,7 +110,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throw new PublicationException("Document [" + document + "] does not exist!");
         }
         Publication publication = document.getPublication();
-        publication.getSiteManager(document.getIdentityMap()).delete(document);
+        publication.getSiteManager().delete(document);
         deleteDocumentSource(document);
 
         ResourcesManager resourcesManager = document.getResourcesManager();
@@ -276,7 +275,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyAll(Document source, Document target) throws PublicationException {
         DocumentIdentityMap identityMap = source.getIdentityMap();
-        SiteManager manager = identityMap.getPublication().getSiteManager(identityMap);
+        SiteManager manager = identityMap.getPublication().getSiteManager();
         Document[] descendantsArray = manager.getRequiringResources(source);
         OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
         descendants.add(source);
@@ -443,7 +442,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void deleteAll(Document document) throws PublicationException {
         DocumentIdentityMap identityMap = document.getIdentityMap();
-        SiteManager manager = identityMap.getPublication().getSiteManager(identityMap);
+        SiteManager manager = identityMap.getPublication().getSiteManager();
         Document[] descendantsArray = manager.getRequiringResources(document);
         OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
         descendants.add(document);
