@@ -42,7 +42,6 @@
         <td background="{$image-prefix}/grau-bg2.gif">
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">admin</xsl:with-param>
-            <xsl:with-param name="tab-documenturl">/index.html</xsl:with-param>
           </xsl:call-template>
           
           <xsl:variable name="info-area">
@@ -117,10 +116,12 @@
     
     <xsl:variable name="tab-documenturl">
       <xsl:choose>
-        <xsl:when test="$documentarea = 'admin'">/index.html</xsl:when>
+        <!-- index.html for link from/to admin area -->
+        <xsl:when test="$tab-area = 'admin' or $documentarea = 'admin'">/index.html</xsl:when>
         <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    
     <a id="{$tab-area-prefix}-tab"
        href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}"
        target="{$target}">
@@ -150,17 +151,21 @@
     </div>
   </xsl:template>
   
+  <xsl:template match="menu:menu[not(*)]" mode="nav">
+    <div id="nav{@label}" class="click" style="float:left; width: 100px; border-right: 1px solid #999999;">
+      &#160;&#160;<span class="lenya-menubar-menu-disabled"><xsl:value-of select="@name"/></span>
+    </div>
+  </xsl:template>
+  
   
   <xsl:template match="menu:menu" mode="menu">
-  	
     <div id="menu{@label}" class="menuOutline">
-    	
       <div class="menuBg">
       	<xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@authoring = 'false') and not(starts-with($completearea, 'info'))]"/>
       </div>
-      
     </div>
   </xsl:template>
+  
   
   <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block">

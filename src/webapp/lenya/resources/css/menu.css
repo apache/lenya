@@ -45,6 +45,10 @@ table.menu img {border:0px}
 	overflow: hidden;
 }
 
+.lenya-menubar-menu-disabled {
+    color: #AAAAAA;
+}
+
 #menuFile {left:14px;}
 #menuSearch {left:114px;}
 #menuHelp {left:214px;}
