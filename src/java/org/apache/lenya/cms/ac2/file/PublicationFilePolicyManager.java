@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFilePolicyManager.java,v 1.6 2003/08/13 18:39:54 andreas Exp $
+$Id: PublicationFilePolicyManager.java,v 1.7 2003/08/13 18:43:41 andreas Exp $
 <License>
 
  ============================================================================
@@ -111,16 +111,6 @@ public class PublicationFilePolicyManager extends FilePolicyManager {
 
         getLogger().debug("Computing policy URI [" + policyUri + "]");
         return policyUri;
-
-        /*
-        Publication publication = getPublication(url);
-        url = url.substring(("/" + publication.getId()).length());
-        
-        String path = url.replace('/', File.separatorChar) + File.separator + policyFilename;
-        File policyDirectory = new File(publication.getDirectory(), POLICIES_PATH);
-        File policyFile = new File(policyDirectory, path);
-        return policyFile.toURI().toString();
-        */
     }
 
     /**
