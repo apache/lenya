@@ -71,10 +71,10 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
     }
 
     /**
-     * @see org.apache.lenya.cms.workflow.WorkflowManager#invokeOnAll(org.apache.lenya.cms.publication.util.DocumentSet,
+     * @see org.apache.lenya.cms.workflow.WorkflowManager#invoke(org.apache.lenya.cms.publication.util.DocumentSet,
      *      java.lang.String, boolean)
      */
-    public void invokeOnAll(DocumentSet documentSet, String event, boolean force)
+    public void invoke(DocumentSet documentSet, String event, boolean force)
             throws WorkflowException {
         WorkflowResolver resolver = null;
         try {
@@ -117,10 +117,10 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
     }
 
     /**
-     * @see org.apache.lenya.cms.workflow.WorkflowManager#canInvokeOnAll(org.apache.lenya.cms.publication.util.DocumentSet,
+     * @see org.apache.lenya.cms.workflow.WorkflowManager#canInvoke(org.apache.lenya.cms.publication.util.DocumentSet,
      *      java.lang.String)
      */
-    public boolean canInvokeOnAll(DocumentSet documents, String event) {
+    public boolean canInvoke(DocumentSet documents, String event) {
         WorkflowResolver resolver = null;
         boolean canInvoke = true;
         try {
