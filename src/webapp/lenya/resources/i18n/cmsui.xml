@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml,v 1.47 2004/03/13 14:32:30 gregor Exp $ -->
+<!-- $Id: cmsui.xml,v 1.48 2004/03/24 12:08:07 roku Exp $ -->
 
 <catalogue xml:lang="en">
 
@@ -239,14 +239,14 @@
    <message key="Event">Event</message>
    <message key="Variables">Variables</message>
    <message key="History">History</message>
-  <message key="State">State</message>   
-  <message key="IP Address">IP Address</message>   
+   <message key="State">State</message>   
+   <message key="IP Address">IP Address</message>   
   
-  <!-- Scheduler --> 
-  <message key="New job">New&#160;job</message>
-  <message key="Active jobs">Active&#160;jobs</message>
-  <message key="Publish and Export">Publish and&#160;Export</message>
-  <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
+   <!-- Scheduler --> 
+   <message key="New job">New&#160;job</message>
+   <message key="Active jobs">Active&#160;jobs</message>
+   <message key="Publish and Export">Publish and&#160;Export</message>
+   <message key="doc-has-links-to-unpublished">This document has links to the following unpublished documents:</message>
 
    <!-- New Document -->
    <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>   
@@ -254,5 +254,13 @@
    <message key="exception.cause.createdoc.id-in-use">The id is already in use</message>   
    <message key="failmessage.createdoc.invalidformat">Please enter a valid value in the ID field. A-Z, a-z, 0-9 or - are vaild characters.</message>
    <message key="failmessage.createdoc.required">Please input all required (*)  values.</message>
+ 
+    <!-- Asset dialog -->
+    <message key="Insert Image">Insert Image</message>
+    <message key="Insert Asset">Insert Asset</message>
+    <message key="Asset Upload">Asset Upload</message>
+    <message key="Insert a new Image">Insert a new Image</message>
+    <message key="Upload an Asset">Upload an Asset</message>
+
  
 </catalogue>

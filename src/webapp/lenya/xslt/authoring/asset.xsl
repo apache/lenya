@@ -15,10 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.37 2004/03/13 12:53:30 gregor Exp $ -->
+<!-- $Id: asset.xsl,v 1.38 2004/03/24 12:08:07 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
@@ -49,15 +50,15 @@
 	<xsl:when test="$insert = 'true'">
 	  <xsl:choose>
 	    <xsl:when test="$insertimage = 'true'">
-	      <page:title>Insert Image</page:title>
+	      <page:title><i18n:text>Insert Image</i18n:text></page:title>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <page:title>Insert Asset</page:title>
+	      <page:title><i18n:text>Insert Asset</i18n:text></page:title>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:when>
 	<xsl:otherwise>
-	  <page:title>Asset Upload</page:title>
+	  <page:title><i18n:text>Asset Upload</i18n:text></page:title>
 	</xsl:otherwise>
       </xsl:choose>
       <page:body>
@@ -73,15 +74,15 @@
 	<xsl:when test="$insert = 'true'">
 	  <xsl:choose>
 	    <xsl:when test="$insertimage = 'true'">
-	      <div class="lenya-box-title">Insert a new Image</div>
+	      <div class="lenya-box-title"><i18n:text>Insert a new Image</i18n:text></div>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <div class="lenya-box-title">Insert a new Asset</div>
+	      <div class="lenya-box-title"><i18n:text>Insert a new Asset</i18n:text></div>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:when>
 	<xsl:otherwise>
-	  <div class="lenya-box-title">Upload an Asset</div>
+	  <div class="lenya-box-title"><i18n:text>Upload an Asset</i18n:text></div>
 	</xsl:otherwise>
       </xsl:choose>
       <div class="lenya-box-body">
@@ -161,38 +162,39 @@ function check(fileinput) {
 	      </tr>
 	    </xsl:if>
 	    <tr>
-	      <td class="lenya-form-caption">Select 
+	      <td class="lenya-form-caption" style="vertical-align: top;"><i18n:text>Select</i18n:text>&#160;
 	      <xsl:choose>
-	        <xsl:when test="$insertimage = 'true'">Image</xsl:when>
-	        <xsl:otherwise>File</xsl:otherwise>
-	      </xsl:choose>
-	      :</td><td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
+	        <xsl:when test="$insertimage = 'true'"><i18n:text>Image</i18n:text></xsl:when>
+	        <xsl:otherwise><i18n:text>File</i18n:text></xsl:otherwise>
+	      </xsl:choose>:
+	      </td>
+	      <td><input class="lenya-form-element" type="file" name="properties.asset.data"/><br/>(No whitespace, no special characters)</td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <tr>
-	      <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
+	      <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Creator:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/></td>
+	      <td class="lenya-form-caption"><i18n:text>Creator</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.creator" value="{/usecase:asset/usecase:creator}"/></td>
 	    </tr>
 	    <tr>
-	      <td class="lenya-form-caption">Rights:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
+	      <td class="lenya-form-caption"><i18n:text>Rights</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.rights" value="All rights reserved."/></td>
 	    </tr>
 	    <tr><td>&#160;</td></tr>
 	    <xsl:if test="$insertimage = 'true'">
               <tr>
-                <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value=""/></td>
+                <td class="lenya-form-caption"><i18n:text>Caption</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value=""/></td>
               </tr>
 	      <tr>
-		<td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
+		<td class="lenya-form-caption"><i18n:text>Link</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
 	      </tr>
 	    </xsl:if>
 	    <tr><td>&#160;</td></tr>
 	    <tr>
 	      <td/>
 	      <td>
-		<input type="submit" value="Submit"/>&#160;
-		<input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
+		<input i18n:attr="value" type="submit" value="Submit"/>&#160;
+		<input i18n:attr="value" type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
 	      </td>
 	    </tr>
 	  </table>
@@ -205,10 +207,10 @@ function check(fileinput) {
 	<div class="lenya-box">
 	  <xsl:choose>
 	    <xsl:when test="$insertimage = 'true'">
-	      <div class="lenya-box-title">Insert an existing Image</div>
+	      <div class="lenya-box-title"><i18n:text>Insert an existing Image</i18n:text></div>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <div class="lenya-box-title">Insert an existing Asset</div>
+	      <div class="lenya-box-title"><i18n:text>Insert an existing Asset</i18n:text></div>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	  <div class="lenya-box-body">
@@ -228,8 +230,8 @@ function check(fileinput) {
 	      <table class="lenya-table-noborder">
 		<tr>
 		  <td class="lenya-form-caption">
-		  <xsl:choose><xsl:when test="$insertimage = 'true'">Image:</xsl:when>
-	    <xsl:otherwise>File:</xsl:otherwise></xsl:choose></td>
+		  <xsl:choose><xsl:when test="$insertimage = 'true'"><i18n:text>Image</i18n:text>:</xsl:when>
+	    <xsl:otherwise><i18n:text>File</i18n:text>:</xsl:otherwise></xsl:choose></td>
 		  <td class="lenya-form-caption">
 		    <select name="properties.asset.data" class="lenya-form-element">
 		      <xsl:apply-templates select="usecase:assets/usecase:asset"/>
@@ -238,22 +240,22 @@ function check(fileinput) {
 		</tr>
 		<tr><td>&#160;</td></tr>
 		<tr>
-		  <td class="lenya-form-caption">Title:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title" value=""/></td>
+		  <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.asset.title" value=""/></td>
 		</tr>
 		<xsl:if test="$insertimage = 'true'">
           <tr>
-            <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
+            <td class="lenya-form-caption"><i18n:text>Caption</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value="Default Caption"/></td>
           </tr>
 		  <tr>
-		    <td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
+		    <td class="lenya-form-caption"><i18n:text>Link</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
 		  </tr>
 		</xsl:if>
 		<tr><td>&#160;</td></tr>
 		<tr>
 		  <td/>
 		  <td>
-		    <input type="submit" value="Submit"/>&#160;
-		    <input type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
+		    <input i18n:attr="value" type="submit" value="Submit"/>&#160;
+		    <input i18n:attr="value" type="button" onClick="location.href='{/usecase:asset/usecase:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
 		  </td>
 		</tr>
 	      </table>

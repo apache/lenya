@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.50 2004/03/13 14:32:30 gregor Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.51 2004/03/24 12:08:07 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -240,22 +240,30 @@
    <message key="Event">Ereignis</message>
    <message key="Variables">Variablen</message>
    <message key="History">Verlauf</message>
-  <message key="State">Status</message>
-  <message key="IP Address">IP Adresse</message>   
+   <message key="State">Status</message>
+   <message key="IP Address">IP Adresse</message>   
 
-  <!-- Scheduler --> 
-  <message key="New job">Neuer&#160;Job</message>
-  <message key="Active jobs">Aktive Aufgaben</message>
-  <message key="Publish and Export">Ver&#246;ffentlichen und&#160;exportieren</message>
-  <message key="doc-has-links-to-unpublished">Dieses Dokument hat Referenzen auf folgende unver&#246;ffentlichte Dokumente:</message>
+   <!-- Scheduler --> 
+   <message key="New job">Neuer&#160;Job</message>
+   <message key="Active jobs">Aktive Aufgaben</message>
+   <message key="Publish and Export">Ver&#246;ffentlichen und&#160;exportieren</message>
+   <message key="doc-has-links-to-unpublished">Dieses Dokument hat Referenzen auf folgende unver&#246;ffentlichte Dokumente:</message>
 
-   <!-- New Document -->
-   <message key="Please check the following possible causes of the exception">Bitte &#252;berpr&#252;fen Sie folgende Ursachen f&#252;r die Ausnahme.</message>
-   <message key="Parent ID">&#220;bergerodnete ID</message>
-   <message key="exception.cause.createdoc.whitespace-in-id">Die ID darf keine Leerzeichen enthalten.</message>
-   <message key="exception.cause.createdoc.id-in-use">Die ID ist schon vergeben.</message>   
-   <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen g&#252;ltigen Wert f&#252;r "ID" ein. G&#252;ltige Zeichen sind A-Z, a-z, 0-9 oder -</message>
-   <message key="failmessage.createdoc.required">Bitte f&#252;llen Sie alle Pflichfelder (*) aus..</message>
+    <!-- New Document -->
+    <message key="Please check the following possible causes of the exception">Bitte &#252;berpr&#252;fen Sie folgende Ursachen f&#252;r die Ausnahme.</message>
+    <message key="Parent ID">&#220;bergerodnete ID</message>
+    <message key="exception.cause.createdoc.whitespace-in-id">Die ID darf keine Leerzeichen enthalten.</message>
+    <message key="exception.cause.createdoc.id-in-use">Die ID ist schon vergeben.</message>   
+    <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen g&#252;ltigen Wert f&#252;r "ID" ein. G&#252;ltige Zeichen sind A-Z, a-z, 0-9 oder -</message>
+    <message key="failmessage.createdoc.required">Bitte f&#252;llen Sie alle Pflichfelder (*) aus..</message>
+
+    <!-- Asset dialog -->
+    <message key="Insert Image">Bild einf&#252;gen</message>
+    <message key="Insert Asset">Anlage einf&#252;gen</message>
+    <message key="Asset Upload">Analge hochladen</message>
+    <message key="Insert a new Image">Neues bild einf&#252;gen</message>
+    <message key="Upload an Asset">Anlage hochladen</message>
+   
 
 </catalogue>
 
