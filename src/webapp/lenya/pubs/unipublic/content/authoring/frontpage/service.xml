@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Services>
+  <Service href="http://www.agenda.unizh.ch" id="agenda">Agenda</Service>
+  <Service href="http://www.mediadesk.unizh.ch" id="mediadesk">Mediadesk</Service>
+  <Service href="service/produkte" id="neue-produkte">Neue Produkte</Service>
+  <Service href="sevice/museen" id="uni-museen">Uni-Museen</Service>
+  <Service href="service/weiterbildung" id="weiterbildung">Weiterbildung</Service>
+  <Newsletter href="javascript:aboWindow();" id="newsletter">Newsletter</Newsletter>
+</Services>

@@ -21,7 +21,29 @@
         <backupDirectory href="docs/publication/rcbak"/>
       </map:action>
     </map:actions>
-    <map:selectors/>
+    <map:selectors default="browser">
+      <map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
+      <!--
+           # NOTE: The appearance indicates the search order. This is very important since
+           #       some words may be found in more than one browser description. (MSIE is
+           #       presented as "Mozilla/4.0 (Compatible; MSIE 4.01; ...")
+      -->
+        <browser name="explorer" useragent="MSIE"/>
+        <browser name="pocketexplorer" useragent="MSPIE"/>
+        <browser name="handweb" useragent="HandHTTP"/>
+        <browser name="avantgo" useragent="AvantGo"/>
+        <browser name="imode" useragent="DoCoMo"/>
+        <browser name="opera" useragent="Opera"/>
+        <browser name="lynx" useragent="Lynx"/>
+        <browser name="java" useragent="Java"/>
+        <browser name="wap" useragent="Nokia"/>
+        <browser name="wap" useragent="UP"/>
+        <browser name="wap" useragent="Wapalizer"/>
+        <browser name="mozilla5" useragent="Mozilla/5"/>
+        <browser name="mozilla5" useragent="Netscape6/"/>
+        <browser name="netscape" useragent="Mozilla"/>
+      </map:selector>
+    </map:selectors>
   </map:components>
 
   <!-- =========================== Pipelines ================================ -->
@@ -106,72 +128,55 @@
       </map:match>
 
       <map:match pattern="headlines.xml">
-        <map:generate src="docs/publication/live/frontpage/headlines.xml"/>
+        <map:generate src="docs/publication/authoring/frontpage/headlines.xml"/>
         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
-        <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/authoring/frontpage/headlines.xml"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="index.xml">
         <map:aggregate element="wyona">
           <map:part src="cocoon:/menus/front.xml" label="Menu"/>
-          <map:part src="docs/publication/live/frontpage/index.xml" element="cmsbody" label="Content"/>
+          <map:part src="docs/publication/authoring/frontpage/index.xml" element="cmsbody" label="Content"/>
         </map:aggregate>
         <map:transform type="xlink">
-          <map:parameter name="href" value="docs/publication/live/frontpage/index.xml"/>
+          <map:parameter name="href" value="docs/publication/authoring/frontpage/index.xml"/>
         </map:transform>
-<!--
-        <map:transform type="xinclude"/>
--->
         <map:serialize type="xml"/>
       </map:match>
 
       <!-- Section -->
       <map:match pattern="*/*/*/navigation.xml">
-        <map:generate src="docs/publication/live/navigation.xml"/>
+        <map:generate src="docs/publication/authoring/navigation.xml"/>
         <map:transform src="stylesheets/publication/Page/Section/navigationLogic.xsl"> 
           <map:parameter name="section" value="{2}"/>
         </map:transform>
         <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="*/*/*/articles.xml">
-<!--
-        <map:generate src="docs/publication/live/{1}/{2}/sections/articles{3}.xml"/>
--->
-        <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
+        <map:generate type="directory" src="docs/publication/authoring/{1}/{2}/articles/{3}"/>
         <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
         </map:transform>
-        <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/authoring/{1}/{2}/sections/{3}/index.xml"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="*/*/*/index.xml">
-<!--
-        <map:generate src="docs/publication/live/{1}/{2}/sections/index{3}.xml"/>
--->
-        <map:generate type="serverpages" src="docs/publication/live/section.xsp">
+        <map:generate type="serverpages" src="docs/publication/authoring/section.xsp">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
         </map:generate>
         <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
         <map:serialize type="xml"/>
       </map:match>
 
@@ -185,9 +190,6 @@
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="*/*/*/index.html">
-<!--
-        <map:generate src="cocoon:/{1}/{2}/{3}/index.xml"/>
--->
         <map:aggregate element="wyona">
           <map:part src="cocoon:/menus/{1}/{2}/{3}/section.xml"/>
           <map:part src="cocoon:/{1}/{2}/{3}/index.xml" element="cmsbody"/>
@@ -199,7 +201,7 @@
       <!-- Article -->
       <map:match pattern="rc/*/*/*/*/index.xml">
         <map:act type="revision-controller">
-            <map:parameter name="filename" value="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+            <map:parameter name="filename" value="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
 <!--
           <map:generate src="../../docs/cms/revision-control/file-reserved-checkout-exception.xml">
 -->
@@ -213,41 +215,23 @@
           </map:generate>
           <map:serialize type="xml"/>
         </map:act>
-        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
-<!--
-      <map:match pattern="rc/**">
-        <map:act type="revision-controller">
-          <map:match pattern="*/*/*/*/index.xml">
-            <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
-            <map:serialize type="xml"/>
-          </map:match>
-        </map:act>
-        <map:generate src="docs/publication/live/index.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
 
       <map:match pattern="*/*/*/*/index.xml">
-        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
+        <map:generate src="docs/publication/authoring/{1}/{2}/articles/{3}/{4}/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="*/*/*/*/article.xml">
-<!--
-        <map:generate src="docs/publication/live/{1}/{2}/articles/{3}/{4}/index.xml"/>
--->
-        <map:generate type="serverpages" src="docs/publication/live/article.xsp">
+        <map:generate type="serverpages" src="docs/publication/authoring/article.xsp">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
           <map:parameter name="id" value="{4}"/>
         </map:generate>
         <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
         <map:serialize type="xml"/>
       </map:match>
 
@@ -255,20 +239,24 @@
         <map:redirect-to uri="index.html" session="true"/>
       </map:match>
       <map:match pattern="*/*/*/*/index.html">
-<!--
-        <map:generate src="cocoon:/{1}/{2}/{3}/{4}/article.xml"/>
--->
         <map:aggregate element="wyona">
           <map:part src="cocoon:/menus/{1}/{2}/{3}/{4}/article.xml"/>
           <map:part src="cocoon:/{1}/{2}/{3}/{4}/article.xml" element="cmsbody"/>
         </map:aggregate>
-        <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+        <map:select>
+          <map:when test="explorer">
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main_xopus.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="stylesheets/publication/Page/Article/Authoring/main.xsl"/>
+          </map:otherwise>
+        </map:select>
         <map:serialize type="html"/>
       </map:match>
 
       <!-- XML -->
       <map:match pattern="**.xml">
-        <map:generate src="docs/publication/live/{1}.xml"/>
+        <map:generate src="docs/publication/authoring/{1}.xml"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

@@ -56,6 +56,7 @@
          <MediaType FormalName="Text"/>
          <MimeType FormalName="text/vnd.IPTC.NITF"/>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+           <nitf>
             <head>
               <hedline>
                 <hl1>Im Traum spricht er am meisten mit mir </hl1>
@@ -220,8 +221,9 @@
                <body.end>
                  <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
                </body.end>
-             </body>
-             </DataContent>
+              </body>
+            </nitf>
+           </DataContent>
           </ContentItem>
        </NewsComponent>
        <!--Start related content -->

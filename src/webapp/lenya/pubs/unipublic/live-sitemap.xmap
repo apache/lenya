@@ -92,10 +92,9 @@
       <map:match pattern="headlines.xml">
         <map:generate src="docs/publication/live/frontpage/headlines.xml"/>
         <map:transform src="stylesheets/publication/Page/Front/xinclude.xsl"/>
-        <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/live/frontpage/headlines.xml"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -124,19 +123,15 @@
       </map:match>
 
       <map:match pattern="*/*/*/articles.xml">
-<!--
-        <map:generate src="docs/publication/live/{1}/{2}/sections/articles{3}.xml"/>
--->
         <map:generate type="directory" src="docs/publication/live/{1}/{2}/articles/{3}"/>
         <map:transform src="stylesheets/publication/Page/Section/xinclude.xsl">
           <map:parameter name="channel" value="{1}"/>
           <map:parameter name="section" value="{2}"/>
           <map:parameter name="year" value="{3}"/>
         </map:transform>
-        <map:transform type="xlink"/>
-<!--
-        <map:transform type="xinclude"/>
--->
+        <map:transform type="xlink">
+          <map:parameter name="href" value="docs/publication/live/{1}/{2}/sections/{3}/index.xml"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 

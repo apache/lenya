@@ -17,7 +17,10 @@
   <articles xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/2002/XLink">
     <xsl:for-each select="dir:directory">
       <article href="{@name}">
-      <head xlink:show="embed" xlink:href="cocoon:{$channel}/{$section}/{$year}/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
+      <head xlink:show="embed" xlink:href="../../articles/{$year}/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)"/>
+<!--
+      <head xlink:show="embed" xlink:href="cocoon:{$channel}/{$section}/{$year}/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/nitf/body/body.head)"/>
+-->
 <!--
       <xi:include xml:base="cocoon:" href="{$channel}/{$section}/{$year}/{@name}/index.xml#xpointer(/NewsML/NewsItem/NewsComponent/ContentItem/DataContent/body/body.head)"/>
 -->

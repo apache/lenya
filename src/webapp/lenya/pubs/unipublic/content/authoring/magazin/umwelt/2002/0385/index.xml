@@ -17,9 +17,9 @@
       <NewsIdentifier>
         <ProviderId>unipublic.unizh.ch</ProviderId>
         <DateId>20020325</DateId>
-        <NewsItemId>0413</NewsItemId>
+        <NewsItemId>al-article7RAUR</NewsItemId>
         <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
-        <PublicIdentifier>urn:newsml:unipublic.unzh.ch:20020325:0413:1N</PublicIdentifier>
+        <PublicIdentifier>urn:newsml:unipublicunizh.ch:20020325:unipublic.unizh.ch:1N</PublicIdentifier>
       </NewsIdentifier>
     </Identification>
     <NewsManagement>
@@ -30,17 +30,18 @@
       <TopicSet>
         <Topic>
           <TopicType FormalName="magazin">
-            <FormalName>recht</FormalName>
-            <Description>Recht &#38; Wirtschaft</Description>
+            <FormalName>umwelt</FormalName>
+            <Description>Umwelt &#38; Technik</Description>
           </TopicType>
         </Topic>
       </TopicSet>
       <Role FormalName="TEXT"/>
       <NewsLines>
-        <HeadLine>Der Homo oeconomicus - neu definiert </HeadLine>
+        <HeadLine>Im Traum spricht er am meisten mit mir
+        </HeadLine>
         <ByLine>Von Adrian Ritter
         </ByLine>
-        <DateLine year="2002" month="04" day="06"/>
+        <DateLine year="2002" month="04" day="08"/>
         <CreditLine>
           <Origin Href="http://nzz.wyona.com/newml/creditline.xml"/>
         </CreditLine>
@@ -56,7 +57,7 @@
       </RightsMetadata>
       <DescriptiveMetadata xmlns:up="http://www.unipublic.unizh.ch/2002/up">
         <up:Channel>magazin</up:Channel>
-        <up:Section>recht</up:Section>
+        <up:Section>umwelt</up:Section>
         <Language FormalName="de"/>
         <SubjectCode>
           <Subject FormalName="International"/>
@@ -85,10 +86,10 @@
                 <dateline>
                 </dateline>
                 <hedline>
-                  <hl1>Der Homo oeconomicus - neu definiert</hl1>
+                  <hl1>Spaziergang in die Vergangenheit</hl1>
                 </hedline>
-                <byline>unicom</byline>
-                <abstract>In den Wirtschaftswissenschaften findet zurzeit eine Revolution statt: Der Homo oeconomicus
+                <byline>Von Patrick Kistler</byline>
+                <abstract>Der Botanische Garten ist sicher einer der sch&#246;nsten Orte in Z&#252;rich. Aber auch mit seiner Geschichte hat dieser in seiner Anlage ganz besondere Park einiges zu bieten. Am vergangenen Samstag trafen - 25 Jahre nach der Er&#246;ffnung des Gartens im Z&#252;rcher Quartier Riesbach - die Architekten von damals zusammen zu einer Veranstaltung &#252;ber Konzept und Anlage des Parks.
                 </abstract>
                 <media media-type="image">
                   <media-reference source="bild-headline.jpg" alternate-text="" copyright=""/>

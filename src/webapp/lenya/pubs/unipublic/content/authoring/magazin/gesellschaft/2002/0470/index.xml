@@ -26,8 +26,8 @@
       <TopicSet>
         <Topic>
           <TopicType FormalName="magazin">
-            <FormalName>gesundheit</FormalName>
-            <Description>Gesundheit</Description>
+            <FormalName>geist</FormalName>
+            <Description>Geist &#38; Gesellschaft</Description>
           </TopicType>
         </Topic>
       </TopicSet>
@@ -35,7 +35,7 @@
       <NewsLines>
         <HeadLine>Im Traum spricht er am meisten mit mir</HeadLine>
         <ByLine>Von Adrian Ritter</ByLine>
-        <DateLine year="2002" month="04" day="03"/>
+         <DateLine year="2002" month="04" day="07"/>
         <CreditLine>Universit&#228;t Z&#252;rich </CreditLine>
         <CopyrightLine>&#169;Universit&#228;t Z&#252;rich</CopyrightLine>
       </NewsLines>
@@ -58,10 +58,10 @@
          <MediaType FormalName="Text"/>
          <MimeType FormalName="text/vnd.IPTC.NITF"/>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
-           <nitf>
+          <nitf>
             <head>
               <hedline>
-                <hl1>Im Traum spricht er am meisten mit mir </hl1>
+                <hl1>Blabla</hl1>
 		<dossier>Brain Fair 2002</dossier>
 		<abstract> Parkinson-Patienten leiden an ihrer Krankheit und manchmal an den Reaktionen ihrer Umwelt.
                              Auch f&#252;r die Partnerin oder den Partner einer erkrankten Person kann dies zur Belastung
@@ -76,15 +76,14 @@
                   <story.date norm="03.04.2002"/>
                 </dateline>
                 <hedline>
-                  <hl1>Leben mit t&#246;dlichem &#171;PIP3&#187;</hl1>
+                  <hl1>&#171;Die Geschichte ist nie zu Ende geschrieben&#187;</hl1>
                 </hedline>
-                <byline>unicom</byline>
+                <byline>Von Christian Sch&#252;rer</byline>
                 <abstract>
-Die ungehemmte Zellteilung, kurz Krebs, wird normalerweise durch mehrere Sicherungen in einer Zelle unterdrueckt. Eine der wichtigsten Sicherungen ist das Tumorsuppressorgen PTEN. Ein Defekt dieses Gens kann krebsfoerdernd sein. Die Forschungsgruppe von Professor Ernst Hafen vom Zoologischen Institut der Universitaet Zuerich untersuchte die Folgen dieses Defektes bei der Drosophila-Fliege genauer. Dabei wurde die Moeglichkeit einer medikamentoesen Behandlung entdeckt. Die Erkenntnisse der Forschungsgruppe wurden gestern, 28. Februar, in ScienceExpress, der Online Version des Wissenschaftsmagazins Science publiziert.
- 
+Jean-Fran&#231;ois Bergier nahm am Dienstag in einem Vortrag Stellung zur Arbeit der Unabh&#228;ngigen Expertenkommission &#171;Schweiz - Zweiter Weltkrieg&#187;. Er erz&#228;hlte in der Aula der Universit&#228;t von der R&#252;ckkehr des Verdr&#228;ngten und fragte, wer die Schweiz im Zweiten Weltkrieg denn eigentlich regiert habe. 
                 </abstract>
                 <media media-type="image">
-                  <media-reference source="bild-headline.gif" alternate-text="Zellteilung" copyright=""/>
+                  <media-reference source="bild-headline.jpg" alternate-text="" copyright=""/>
                 </media>
               </body.head>
               <body.content>
@@ -112,7 +111,7 @@ Die ungehemmte Zellteilung, kurz Krebs, wird normalerweise durch mehrere Sicheru
                </body.end>
              </body>
             </nitf>
-           </DataContent>
+             </DataContent>
           </ContentItem>
        </NewsComponent>
 

@@ -58,6 +58,7 @@
          <MediaType FormalName="Text"/>
          <MimeType FormalName="text/vnd.IPTC.NITF"/>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+           <nitf>
             <head>
               <hedline>
                 <hl1>Blabla</hl1>
@@ -109,7 +110,8 @@ Jean-Fran&#231;ois Bergier nahm am Dienstag in einem Vortrag Stellung zur Arbeit
                  <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
                </body.end>
              </body>
-             </DataContent>
+            </nitf>
+           </DataContent>
           </ContentItem>
        </NewsComponent>
 

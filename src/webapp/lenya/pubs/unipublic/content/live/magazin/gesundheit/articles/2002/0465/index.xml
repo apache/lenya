@@ -58,6 +58,7 @@
          <MediaType FormalName="Text"/>
          <MimeType FormalName="text/vnd.IPTC.NITF"/>
          <DataContent xmlns:nitf="http://www.iptc.org/xmlnitf" xmlns:up="http://www.unipublic.unizh.ch/2002/up">
+           <nitf>
             <head>
               <hedline>
                 <hl1>Im Traum spricht er am meisten mit mir </hl1>
@@ -79,7 +80,7 @@
                 </hedline>
                 <byline>unicom</byline>
                 <abstract>
-Die ungehemmte Zellteilung, kurz Krebs, wird normalerweise durch mehrere Sicherungen in einer Zelle unterdrueckt. Eine der wichtigsten Sicherungen ist das Tumorsuppressorgen PTEN. Ein Defekt dieses Gens kann krebsfoerdernd sein. Die Forschungsgruppe von Professor Ernst Hafen vom Zoologischen Institut der Universitaet Zuerich untersuchte die Folgen dieses Defektes bei der Drosophila-Fliege genauer. Dabei wurde die Moeglichkeit einer medikamentoesen Behandlung entdeckt. Die Erkenntnisse der Forschungsgruppe wurden gestern, 28. Februar, in ScienceExpress, der Online-Version des Wissenschaftsmagazins Science publiziert.
+Die ungehemmte Zellteilung, kurz Krebs, wird normalerweise durch mehrere Sicherungen in einer Zelle unterdrueckt. Eine der wichtigsten Sicherungen ist das Tumorsuppressorgen PTEN. Ein Defekt dieses Gens kann krebsfoerdernd sein. Die Forschungsgruppe von Professor Ernst Hafen vom Zoologischen Institut der Universitaet Zuerich untersuchte die Folgen dieses Defektes bei der Drosophila-Fliege genauer. Dabei wurde die Moeglichkeit einer medikamentoesen Behandlung entdeckt. Die Erkenntnisse der Forschungsgruppe wurden gestern, 28. Februar, in ScienceExpress, der Online Version des Wissenschaftsmagazins Science publiziert.
  
                 </abstract>
                 <media media-type="image">
@@ -110,7 +111,8 @@ Die ungehemmte Zellteilung, kurz Krebs, wird normalerweise durch mehrere Sicheru
                  <tagline>Adrian Ritter ist freischaffender Journalist in Z&#252;rich.</tagline>
                </body.end>
              </body>
-             </DataContent>
+            </nitf>
+           </DataContent>
           </ContentItem>
        </NewsComponent>
 

@@ -39,7 +39,8 @@
                 <xsl:apply-templates select="NewsItem" mode="RelatedContents"/>
 
               </td>
-              <xsl:apply-templates select="NewsItem/NewsComponent" mode="article"/>
+              <xsl:apply-templates select="NewsItem/NewsComponent/ContentItem/DataContent/nitf"/>
+              <!--<xsl:apply-templates select="NewsItem/NewsComponent" mode="article"/>-->
            </tr>
 
            <xsl:apply-templates select="NewsItem/NewsComponent/NewsLines" mode="Article_copyright"/>

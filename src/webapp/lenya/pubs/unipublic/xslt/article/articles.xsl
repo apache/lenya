@@ -2,18 +2,30 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:up="http://www.unipublic.unizh.ch/2002/up">
 
-<xsl:template match="NewsComponent" mode="article">
+<xsl:template match="nitf">
+<!--<xsl:template match="NewsComponent" mode="article">-->
   <td width="10" bgcolor="white" valign="top">&#160;
     <p>&#160;</p>
   </td>
-  <td valign="top" bgcolor="white" width="388" class="art-text">
+<!--
+  <td valign="top" bgcolor="white" width="388" class="art-text" id_xopus="body" xml_xopus="article.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
     <p class="art-date"><xsl:apply-templates select="NewsLines/DateLine" mode="article"/></p>
-    <p class="art-pretitle"><xsl:apply-templates select="ContentItem/DataContent/head/hedline/dossier"/></p>
-    <p class="art-title1"><xsl:apply-templates select="ContentItem/DataContent/body/body.head/hedline/hl1"/></p>
-    <p class="art-lead"><xsl:apply-templates select="ContentItem/DataContent/body/body.head/abstract"/> </p>
-    <p class="art-author"><xsl:apply-templates select="ContentItem/DataContent/body/body.head/byline"/></p>
-    <xsl:apply-templates select="ContentItem/DataContent/body/body.content/block"/>
-    <p class="art-author"><xsl:apply-templates select="ContentItem/DataContent/body/body.end/tagline"/></p>
+    <p class="art-pretitle"><xsl:apply-templates select="ContentItem/DataContent/nitf/head/hedline/dossier"/></p>
+    <p class="art-title1"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/hedline/hl1"/></p>
+    <p class="art-lead"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/abstract"/> </p>
+    <p class="art-author"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.head/byline"/></p>
+    <xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.content/block"/>
+    <p class="art-author"><xsl:apply-templates select="ContentItem/DataContent/nitf/body/body.end/tagline"/></p>
+  </td>
+-->
+  <td valign="top" bgcolor="white" width="388" class="art-text" id_xopus="body" xml_xopus="article.xml" xsl_xopus="Page/Article/Authoring/xopus.xsl" xsd_xopus="article.xsd">
+    <p class="art-date"><xsl:apply-templates select="../../../NewsLines/DateLine" mode="article"/></p>
+    <p class="art-pretitle"><xsl:apply-templates select="head/hedline/dossier"/></p>
+    <p class="art-title1"><xsl:apply-templates select="body/body.head/hedline/hl1"/></p>
+    <p class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </p>
+    <p class="art-author"><xsl:apply-templates select="body/body.head/byline"/></p>
+    <xsl:apply-templates select="body/body.content/block"/>
+    <p class="art-author"><xsl:apply-templates select="body/body.end/tagline"/></p>
   </td>
 </xsl:template>
 
