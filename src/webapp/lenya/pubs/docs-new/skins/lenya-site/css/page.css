@@ -195,7 +195,7 @@ submit { font-size : 100%  }
 button { font-size : 100%  }
 textarea { font-size : 100% }
 
-.tab { font-family: Arial, Helvetica, Sans-serif; float: left; }
+.tab { font-family: Arial, Helvetica, Sans-serif; white-space: nowrap; }
 .tab-selected { font-size: 100%; font-weight: bold; background-color: #E5E4D9; border-top: solid 1px #B1B1B1; padding: 3px 5px; }
 .tab-not-selected { font-size: 85%; background-color: #F5F4E9; border-top: solid 1px #B1B1B1; padding: 3px 5px 0px 5px; }
 .tab-not-selected-shadow { border-bottom: solid 2px #E5E4D9; }
