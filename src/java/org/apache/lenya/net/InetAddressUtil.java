@@ -62,52 +62,71 @@ import org.apache.log4j.Category;
  * A utility class for InetAddress
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.2 2003/10/20 17:03:04 andreas Exp $
+ * @version $Id: InetAddressUtil.java,v 1.3 2003/10/27 15:20:06 andreas Exp $
  */
 public class InetAddressUtil {
 	
 	private static final Category log = Category.getInstance(InetAddressUtil.class);
 	
     /**
-     *
+     * Checks if a subnet contains a specific IP address.
+     * @param network The network address.
+     * @param netmask The subnet mask.
+     * @param ip The IP address to check.
+     * @return A boolean value.
      */
     public static boolean contains(InetAddress network, InetAddress netmask, InetAddress ip) {
     	
-        short classPart = 3;
-        int networkC = getClassPart(network, classPart);
-        int netmaskC = getClassPart(netmask, classPart);
-        int ipC = getClassPart(ip, classPart);
+		log.debug("=======================================");
+		log.debug("Checking IP address");
+		
+    	boolean contained = true;
+    	
+    	short part = 0;
+    	while (contained && part < 3) {
+    		
+			int networkC = getClassPart(network, part);
+			int netmaskC = getClassPart(netmask, part);
+			int ipC = getClassPart(ip, part);
+			
+			int firstHostAddress = networkC + 1;
+			int broadcastAddress = networkC + (256 - netmaskC - 1);
+			int lastHostAddress = broadcastAddress - 1;
+			
+    		contained = contained && firstHostAddress <= ipC && ipC <= lastHostAddress;
+    		
+//			if (log.isDebugEnabled()) {
+				log.debug("---------------------------------------");
+				log.debug("Checking part           [" + part + "]");
+				log.debug("    Network:            [" + network.getHostAddress() + "]");
+				log.debug("    Netmask:            [" + netmask.getHostAddress() + "]");
+				log.debug("    Address:            [" + ip.getHostAddress() + "]");
+				log.debug("    Network class part: [" + networkC + "]");
+				log.debug("    Netmask class part: [" + netmaskC + "]");
+				log.debug("    Address class part: [" + ipC + "]");
+				log.debug("    First host address: [" + firstHostAddress + "]");
+				log.debug("    Last host address:  [" + lastHostAddress + "]");
+				log.debug("    Contained:          [" + contained + "]");
+//			}
 
-        int firstHostAddress = networkC +1;
-        int broadcastAddress = networkC + (256 - netmaskC -1);
-        int lastHostAddress = broadcastAddress -1;
-
-        boolean contained = firstHostAddress <= ipC && ipC <= lastHostAddress;
-
-//		if (log.isDebugEnabled()) {
-			log.debug("---------------------------------------");
-			log.debug("Checking IP address");
-			log.debug("    Network:            [" + network.getHostAddress() + "]");
-			log.debug("    Netmask:            [" + netmask.getHostAddress() + "]");
-			log.debug("    Address:            [" + ip.getHostAddress() + "]");
-			log.debug("    Network class part: [" + networkC + "]");
-			log.debug("    Netmask class part: [" + netmaskC + "]");
-			log.debug("    Address class part: [" + ipC + "]");
-			log.debug("    First host address: [" + firstHostAddress + "]");
-			log.debug("    Last host address:  [" + lastHostAddress + "]");
-			log.debug("    Contained:          [" + contained + "]");
-//		}
-
+    	}
+    	
+		log.debug("---------------------------------------");
+		log.debug("Contained:              [" + contained + "]");
+		log.debug("=======================================");
+		
         return contained;
     }
 
     /**
-     *
+     * Returns the n-th part of an InetAddress.
+     * @param ip The address.
+     * @param partNumber The number of the part.
+     * @return An integer value.
      */
-    public static int getClassPart(InetAddress ip, short cl) {
-        String s = ip.getHostAddress();
-
-        // FIXME: use cl instead of lastIndexOf
-        return new Integer(s.substring(s.lastIndexOf(".") + 1)).intValue();
+    public static int getClassPart(InetAddress ip, short partNumber) {
+        String[] parts = ip.getHostAddress().split(".");
+        String part = parts[partNumber];
+        return new Integer(part).intValue();
     }
 }
