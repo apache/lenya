@@ -583,6 +583,56 @@
         <!-- ************************************************************** -->
         <!-- ********  /HTML Form Editor ********************************** -->
         <!-- ************************************************************** -->
+
+
+
+        
+        <!-- ************************************************************** -->
+        <!-- ** Xopus                                                    ** -->
+        <!-- **                                                          ** -->
+        <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
+        <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+        <!-- **       is configured within config/publication.xconf      ** -->
+        <!-- ************************************************************** -->
+        <map:match pattern="xopus" type="usecase">
+          <map:match pattern="open" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:act type="resource-exists" src="../../ROOT/Xopus195.226.6.70/xopus/xopus.js"> <!-- Check for Xopus -->
+	        <map:generate src="resources/misc/xopus/index.html"/>
+                <map:transform src="xslt/authoring/edit/xopus-xhtml.xsl">
+                  <map:parameter name="xml" value="/lenya/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xml"/>
+                  <map:parameter name="xsd" value="/lenya/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xsd&amp;doctype={request-param:doctype}"/>
+                  <map:parameter name="xslt" value="/lenya/{../1}/authoring/{../2}.html?lenya.usecase=xopus&amp;lenya.step=xslt&amp;doctype={request-param:doctype}"/>
+                </map:transform>
+                <!-- NOTE: IE or Xopus doesn't appreciate the DTD which is being inserted by Cocoon -->
+	        <map:serialize type="html-no-dtd"/>
+              </map:act>
+              <map:generate src="resources/misc/xopus/download.xhtml"/>
+              <map:serialize type="html"/>
+            </map:match>
+          </map:match>
+          <map:match pattern="xml" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+              <map:serialize type="xml"/>
+            </map:match>
+          </map:match>
+          <map:match pattern="xsd" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:generate src="pubs/{1}/config/doctypes/schemas/{request-param:doctype}.xsd"/>
+              <map:serialize type="xml"/>
+            </map:match>
+          </map:match>
+          <map:match pattern="xslt" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:generate src="pubs/{1}/lenya/xslt/xopus/{request-param:doctype}.xsl"/>
+              <map:serialize type="xml"/>
+            </map:match>
+          </map:match>
+        </map:match>
+        <!-- ************************************************************** -->
+        <!-- ********  /Xopus Editor ************************************** -->
+        <!-- ************************************************************** -->
         
 
         <!-- This is the generic asset upload matcher -->
