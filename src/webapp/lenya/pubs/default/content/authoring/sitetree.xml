@@ -21,22 +21,24 @@
   
   <node id="tutorial">
     <label>Tutorial</label>
-    <node id="concepts">
-      <label>Concepts</label>
-    </node>
-    <node id="features">
-      <label>Features</label>
-    </node>
+  </node>
+
+  <node id="concepts">
+    <label>Concepts</label>
   </node>
   
-  <node id="default">
-    <label>Default Publication</label>
+  <node id="features">
+    <label>Features</label>
+  </node>
+
+  <node id="doctypes">
+    <label>Document Type Examples</label>
     <node id="simple-document">
       <label>Simple Doctype</label>
     </node>
-  </node>
+     <node id="xhtml-document">
+      <label>XHTML Doctype</label>
+    </node>
+ </node>
   
-  <node id="simple-document">
-    <label>Simple Doctype Example</label>
-  </node>
 </site>

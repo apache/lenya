@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>The XHTML Document Doctype</title>
+  </head>
+  <body>
+    <h1>The XHTML Document Doctype</h1>
+
+    <p>The XHTML Document Doctype is simply a XHTML document that
+    conforms to the <a href="http://www.w3.org/TR/xhtml1/">XHTML 1.0
+    definition</a> of the <a href="http://www.w3.org/">World Wide Web
+    Consortium (W3C)</a>.</p>  
+
+  </body>
+</html>
