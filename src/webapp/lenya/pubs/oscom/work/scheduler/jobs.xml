@@ -11,23 +11,28 @@
 
 
 <!-- Say Hello -->
-<!--
       <sch:job>
         <sch:task>
-          <sch:parameter name="sources" value="/weekly-column-body.xml"/>
           <sch:parameter name="id" value="hello-world"/>
-          <sch:parameter name="server-uri" value="http://127.0.0.1"/>
           <sch:parameter name="publication-id" value="oscom"/>
-          <sch:parameter name="tree-authoring-path" value="docs/publication/authoring/tree.xml"/>
+
+<!--
+          <sch:parameter name="server-uri" value="http://127.0.0.1"/>
           <sch:parameter name="server-port" value="1313"/>
           <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
           <sch:parameter name="authoring-path" value="docs/publication/authoring"/>
+          <sch:parameter name="tree-authoring-path" value="docs/publication/authoring/tree.xml"/>
           <sch:parameter name="uris" value="/wyona-cms/oscom/weekly-column.html"/>
+          <sch:parameter name="sources" value="/weekly-column-body.xml"/>
+-->
         </sch:task>
         <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
         <sch:parameter name="id" value="job_01037570742547"/>
-        <sch:parameter name="documentUri" value="weekly-column.html"/>
+<!--
+        <sch:parameter name="documentUri" value="dummy.html"/>
+-->
+<!--
         <sch:trigger type="once">
           <sch:parameter name="year" value="2002"/>
           <sch:parameter name="month" value="12"/>
@@ -35,11 +40,11 @@
           <sch:parameter name="hour" value="23"/>
           <sch:parameter name="minute" value="10"/>
         </sch:trigger>
+-->
         <sch:trigger type="repeated">
           <sch:parameter name="expression" value="30 * * * * ?"/>
         </sch:trigger>
       </sch:job>
--->
 <!-- Trigger repeated: Seconds, Minutes, Hours, Day of Month, Months, Day of Week -->
 
 
@@ -53,7 +58,6 @@
           <sch:parameter name="publication-id" value="oscom"/>
           <sch:parameter name="tree-authoring-path" value="docs/publication/authoring/tree.xml"/>
           <sch:parameter name="server-port" value="1313"/>
-          <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
           <sch:parameter name="authoring-path" value="docs/publication/authoring"/>
           <sch:parameter name="uris" value="/wyona-cms/oscom/weekly-column.html"/>
         </sch:task>
@@ -76,7 +80,6 @@
           <sch:parameter name="server-uri" value="http://www.wyona.org"/>
           <sch:parameter name="publication-id" value="oscom"/>
           <sch:parameter name="server-port" value="1313"/>
-          <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
         </sch:task>
         <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
         <sch:parameter name="group" value="oscom"/>
@@ -97,7 +100,6 @@
           <sch:parameter name="server-uri" value="http://127.0.0.1"/>
           <sch:parameter name="publication-id" value="oscom"/>
           <sch:parameter name="server-port" value="48080"/>
-          <sch:parameter name="servlet-context" value="/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/"/>
           <sch:parameter name="uris" value="/wyona-cms/oscom/index.html,/wyona-cms/oscom/weekly-column.html"/>
         </sch:task>
         <sch:parameter name="class" value="org.wyona.cms.scheduler.TaskJob"/>
