@@ -6,7 +6,9 @@
 
 package org.apache.lenya.cms.workflow.impl;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.apache.lenya.cms.workflow.State;
 import org.apache.lenya.cms.workflow.Transition;
@@ -21,6 +23,7 @@ public class WorkflowImpl implements Workflow {
     /** Creates a new instance of WorkflowImpl */
     public WorkflowImpl(State initialState) {
         this.initialState = initialState;
+        addState(initialState);
     }
 
     private State initialState;
@@ -34,6 +37,11 @@ public class WorkflowImpl implements Workflow {
     }
 
     private Set transitions = new HashSet();
+    private Map states = new HashMap();
+    
+    private void addState(State state) {
+        states.put(((StateImpl) state).getId(), state);
+    }
 
     /**
      * Adds a transition.
@@ -41,6 +49,8 @@ public class WorkflowImpl implements Workflow {
     protected void addTransition(TransitionImpl transition) {
         assert transition != null;
         transitions.add(transition);
+        addState(transition.getSource());
+        addState(transition.getDestination());
     }
 
     protected TransitionImpl[] getTransitions() {
@@ -81,16 +91,15 @@ public class WorkflowImpl implements Workflow {
      * @return <code>true</code> if the state is contained, <code>false</code> otherwise.
      */
     protected boolean containsState(State state) {
-        Transition transitions[] = getTransitions();
-        boolean result = false;
-        for (int i = 0; i < transitions.length; i++) {
-            TransitionImpl transition = (TransitionImpl) transitions[i];
-            if (transition.getSource().equals(state)
-                || transition.getDestination().equals(state)) {
-                result = true;
-            }
-        }
-        return result;
+        return states.containsValue(state);
     }
-
+    
+    protected State[] getStates() {
+        return (State[]) states.values().toArray(new State[states.size()]);
+    }
+    
+    protected State getState(String name) {
+        return (State) states.get(name); 
+    }
+    
 }
