@@ -1,5 +1,5 @@
 ;NSIS Lenya Installer script
-; $Id: lenya.nsi,v 1.3 2003/11/08 05:32:02 gregor Exp $
+; $Id: lenya.nsi,v 1.4 2003/11/09 23:28:45 gregor Exp $
 
 ;--------------------------------
 ;Include Modern UI
@@ -24,7 +24,7 @@
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_LICENSE "README.txt"
+  !insertmacro MUI_PAGE_LICENSE "build\lenya\webapp\legal\LICENSE.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
