@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site xmlns="http://apache.org/forrest/linkmap/1.0" href="" label="Lenya">
-  <node-1 label="Table of Contents">
+
+  <home href="index.html">Home</home>
+
+  <project-information href="project/" label="Project Information">
     <node-a href="http://demo.wyona.org" label="Demo" />
-    <node-b href="docs/installation/index.html" label="Download" />
     <node-d href="roadmap.html" label="Roadmap" />
     <node-e href="mailing-lists.html" label="Mailing Lists" />
     <node-f href="http://cvs.wyona.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
@@ -10,13 +12,14 @@
     <node-h href="acknowledgements.html" label="Credits" />
     <node-i href="license.html" label="License" />
     <node-i href="related-projects.html" label="Related Projects" />
-    <node-c href="docs/" label="Documentation">
-    <node-2 href="installation/" label="Installation">
-      <install-overview href="index.html" label="Overview"/>
-      <prerequisites href="prerequisites.html" label="Prerequisites"/>
-      <node-5 href="source_version.html" label="Source Version"/>
-      <cvs href="cvs.html" label="CVS Version"/>
-    </node-2>
+  </project-information>
+  <installation href="installation/" label="Installation">
+    <install-overview href="index.html" label="Overview"/>
+    <prerequisites href="prerequisites.html" label="Prerequisites"/>
+    <node-5 href="source_version.html" label="Source Version"/>
+    <cvs href="cvs.html" label="CVS Version"/>
+  </installation>
+  <node-c href="docs/" label="Documentation">
     <node-24 href="concepts/" label="Concepts and Best Practises">
       <node-33 href="siteTree.html" label="Site tree"/>
       <node-36 href="pageEnvelope.html" label="Page envelope"/>
@@ -40,6 +43,6 @@
     <node-94 href="proposals/" label="Proposals / Requests for Comment (RFC)">
       <siteTree href="siteTree.html" label="Site tree"/>
     </node-94>
-   </node-c>
-  </node-1>
+  </node-c>
+
 </site>
