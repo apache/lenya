@@ -5,7 +5,9 @@
 		<xsp:logic>
     String articleId=parameters.getParameter("articleId","null");
   </xsp:logic>
-		<live_uri><xsp:expr>"/news/"+articleId+".html"</xsp:expr></live_uri>
+		<live_uri>
+			<xsp:expr>"/news/"+articleId+".html"</xsp:expr>
+		</live_uri>
 		<xsp:logic>
     String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     String domain_prefix_bitflux=""+xsp_wyona_context_prefix;
@@ -17,35 +19,57 @@
 		<menus>
 			<menu name="File" label="File">
 				<block>
-					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-article</xsp:attribute>Publish</item>
-					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?documentUri=news/<xsp:expr>articleId</xsp:expr>.html&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;task.<xsp:expr>sourcesParameter</xsp:expr>&amp;documentType=Article</xsp:attribute>Schedule&#160;Article</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?<xsp:expr>sourcesParameter</xsp:expr>&amp;<xsp:expr>urisParameter</xsp:expr>&amp;task-id=publish-article</xsp:attribute>Publish</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-document?documentUri=news/<xsp:expr>articleId</xsp:expr>.html&amp;task.<xsp:expr>urisParameter</xsp:expr>&amp;task.<xsp:expr>sourcesParameter</xsp:expr>&amp;documentType=Article</xsp:attribute>Schedule Article</item>
 				</block>
 				<block>
-					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
 				</block>
 			</menu>
 			<menu name="Edit" label="Search">
 				<block>
-					<item><xsp:attribute name="href"><xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/news/"+articleId+".xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/article.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/article.xsd&amp;url-css="+bitflux_prefix+"/css/article.css&amp;url-post="+bitflux_prefix+"/save/news/"+articleId+".xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/news/"+articleId+".html"</xsp:expr></xsp:attribute>Edit&#160;Article</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>"/wyona-cms/bitfluxeditor/index.html?url-xml="+bitflux_prefix+"/news/"+articleId+".xml&amp;url-xslt="+bitflux_prefix+"/stylesheets/article.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/article.xsd&amp;url-css="+bitflux_prefix+"/css/article.css&amp;url-post="+bitflux_prefix+"/save/news/"+articleId+".xml&amp;url-back="+xsp_wyona_context_prefix+"/authoring/news/"+articleId+".html"</xsp:expr>
+						</xsp:attribute>Edit Article</item>
 				</block>
 			</menu>
 			<menu name="Tools" label="Help">
 				<block>
-					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr></xsp:attribute>Authoring&#160;Home</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
+						</xsp:attribute>Authoring Home</item>
 				</block>
-                                <block>
-                                        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>Articles&#160;Overview</item>
-                                        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication</xsp:attribute>Scheduler&#160;Admin</item>
-                                </block>
+				<block>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>Article Overview</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication</xsp:attribute>Scheduler Admin</item>
+				</block>
 			</menu>
 			<menu name="Help" label="Debug">
 				<block>
-					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User's&#160;Guide</item>
-					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Administrator's&#160;Guide</item>
-					<item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#user-guide</xsp:attribute>User Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#administrator-guide</xsp:attribute>Admin Guide</item>
+					<item>
+						<xsp:attribute name="href">
+							<xsp:expr>xsp_wyona_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Dev Guide</item>
 				</block>
 				<block>
-					<item href="http://www.wyona.org">About&#160;Wyona</item>
+					<item href="http://www.wyona.org">About Wyona</item>
 				</block>
 			</menu>
 		</menus>

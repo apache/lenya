@@ -2,50 +2,34 @@
 <xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-wyona="http://www.wyona.org/xsp/wyona/1.0">
 	<menu>
 		<xsp-wyona:util/>
+		<live_uri>/index.html</live_uri>
 		<xsp:logic>
    		 	String bitflux_prefix=""+xsp_wyona_context_prefix+"/bitflux";
     			String articleId=parameters.getParameter("articleId","null");
   		</xsp:logic>
-		<live_uri>
-			<xsp:expr>"/"+articleId</xsp:expr>
-		</live_uri>
 		<menus>
 			<menu name="File" label="File">
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?sources=/"+articleId+"&amp;task-id=publish</xsp:attribute>Publish this Page
-					</item>
+							<xsp:expr>xsp_wyona_context_prefix+"/authoring/wyona/ParentChildScreenNewArticle?parentid=/news/"+"&amp;doctype=Article"</xsp:expr>
+						</xsp:attribute>New Article</item>
 				</block>
-				<block>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
-				</block>
+
 			</menu>
 			<menu name="Edit" label="Search">
-				<block>
-				</block>
 			</menu>
 			<menu name="Tools" label="Help">
 				<block>
 					<item>
 						<xsp:attribute name="href">
 							<xsp:expr>xsp_wyona_context_prefix+"/authoring/index.html"</xsp:expr>
-						</xsp:attribute>Authoring Home
-						</item>
+						</xsp:attribute>Authoring Home</item>
 				</block>
 				<block>
 					<item>
 						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>
-						Article Overview
-					</item>
-					<item>
-						<xsp:attribute name="href">
-							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/scheduler/admin-publication</xsp:attribute>
-						Scheduler Admin
-					</item>
+							<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/overview.html</xsp:attribute>Article Overview</item>
 				</block>
 			</menu>
 			<menu name="Help" label="Debug">

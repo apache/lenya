@@ -184,6 +184,10 @@
 				<map:generate type="serverpages" src="docs/publication/menus/front.xsp"/>
 				<map:serialize type="xml"/>
 			</map:match>
+			<map:match pattern="menus/overview.xml">
+				<map:generate type="serverpages" src="docs/publication/menus/overview.xsp"/>
+				<map:serialize type="xml"/>
+			</map:match>
 			<map:match pattern="menus/news/*.xml">
 				<map:generate type="serverpages" src="docs/publication/menus/article.xsp">
 					<map:parameter name="articleId" value="{1}"/>
@@ -276,7 +280,7 @@
 			<!-- ALL articles overview -->
 			<map:match pattern="overview.html">
 				<map:aggregate element="wyona" label="gregor">
-					<map:part src="cocoon:/menus/front.xml"/>
+					<map:part src="cocoon:/menus/overview.xml"/>
 					<map:part element="cmsbody" src="cocoon:/all-headlines"/>
 				</map:aggregate>
 				<map:transform src="stylesheets/publication/Page/Authoring/overview.xsl"/>
@@ -471,6 +475,22 @@
 				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
+				<!-- Error handling -->
+		
+			<map:handle-errors>
+				<map:aggregate element="wyona" label="gregor">
+					<map:part element="cmsbody" src="docs/publication/authoring/wrapper.html"/>
+					<map:part src="docs/publication/authoring/error.html" element="wrapper"/>
+					<map:part src="docs/publication/authoring/small-preview.xml"/>
+					<map:part src="docs/publication/authoring/sitetree.xml"/>
+					<map:part src="cocoon:/today"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Authoring/wrapper.xsl">
+					<map:parameter name="id" value="/error.html"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/Authoring/images.xsl" label="content"/>
+				<map:serialize type="html"/>
+</map:handle-errors>
 		</map:pipeline>
 	</map:pipelines>
 </map:sitemap>

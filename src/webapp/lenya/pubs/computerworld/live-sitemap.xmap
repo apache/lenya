@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- CVS: $Id: live-sitemap.xmap,v 1.11 2003/01/31 10:24:47 felixcms Exp $ -->
+<!-- CVS: $Id: live-sitemap.xmap,v 1.12 2003/02/03 14:05:47 gregorcms Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 	<!-- =========================== Components ================================ -->
 	<map:components>
@@ -71,7 +71,7 @@
 					<map:parameter name="id" value="/news/"/>
 					<map:parameter name="front" value="no"/>
 				</map:transform>
-				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> 
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- Include only articles specified in headlines.xml -->
@@ -98,7 +98,7 @@
 					<map:parameter name="documentid" value="news/{1}.xml"/>
 				</map:transform>
 				<map:transform src="stylesheets/publication/Page/today.xsl"/>
-				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/> 
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
 			<!-- ALL it-kalender overview -->
@@ -177,6 +177,23 @@
 				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 				<map:serialize type="html"/>
 			</map:match>
+			
+				<!-- Error handling -->
+		
+			<map:handle-errors>
+				<map:aggregate element="wyona" label="gregor">
+					<map:part element="cmsbody" src="docs/publication/live/wrapper.html"/>
+					<map:part src="docs/publication/live/error.html" element="wrapper"/>
+					<map:part src="docs/publication/live/small-preview.xml"/>
+					<map:part src="docs/publication/live/sitetree.xml"/>
+					<map:part src="cocoon:/today"/>
+				</map:aggregate>
+				<map:transform src="stylesheets/publication/Page/Live/wrapper.xsl">
+					<map:parameter name="id" value="/error.html"/>
+				</map:transform>
+				<map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
+				<map:serialize type="html"/>
+</map:handle-errors>
 		</map:pipeline>
 	</map:pipelines>
 </map:sitemap>
