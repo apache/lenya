@@ -53,7 +53,6 @@ import org.apache.tools.ant.Task;
  */
 public class SetAreaProperties extends Task {
 	private String area;
-	private String resourcedirpropertyname;
 	private String dirpropertyname;
     /**
      * Creates a new instance of SetAreaProperties
@@ -89,35 +88,17 @@ public class SetAreaProperties extends Task {
         this.dirpropertyname = dirpropertyname;
     }
 
-    /**
-     * @return String The name of the property for the resource directory.
-     */
-    public String getResourcedirpropertyname() {
-        return resourcedirpropertyname;
-    }
-
-    /**
-     * @param resourcedirpropertyname The name of the property for the resource directory.
-     */
-    public void setResourcedirpropertyname(String resourcedirpropertyname) {
-        this.resourcedirpropertyname = resourcedirpropertyname;
-    }
-
 	/**
 	 * Sets the properties dependent of the area for the project
 	 * @param area The area.
 	 * @param dirpropertyname The name of the property for the content directory.
-	 * @param resourcedirpropertyname The name of the property for the resource directory.
 	 */
-	protected void setNewProperties(String area, String dirpropertyname, String resourcedirpropertyname) {
+	protected void setNewProperties(String area, String dirpropertyname) {
 		Target target = getOwningTarget();
 		Project project = target.getProject();
 
 		String dirproperty = project.getProperty(area+".dir");
 		project.setProperty(dirpropertyname, dirproperty);
-
-		String resourcedirproperty = project.getProperty(area+".resource.dir");
-		project.setProperty(resourcedirpropertyname, resourcedirproperty);
 	}
 
 	/** 
@@ -126,9 +107,8 @@ public class SetAreaProperties extends Task {
 	public void execute() throws BuildException {
 		try {
 			log("area " + this.getArea());
-			log("dirpropertyname " + this.getDirpropertyname());
-			log("resourcedirpropertyname " +this.getResourcedirpropertyname());
-			setNewProperties(this.getArea(), this.getDirpropertyname(), this.getResourcedirpropertyname());
+			log("name of the property for the directory " + this.getDirpropertyname());
+			setNewProperties(this.getArea(), this.getDirpropertyname());
 		} catch (Exception e) {
 			throw new BuildException(e);
 		}
