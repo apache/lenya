@@ -142,14 +142,17 @@ public class WorkflowTest extends AccessControlTest {
         File configDir = new File(publication.getDirectory(), ItemManager.PATH);
         assertTrue(configDir.exists());
 
-        File configurationDirectory = new File(publication.getDirectory(), "config/ac");
         Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
 
         DocumentType type = DocumentTypeBuilder.buildDocumentType(documentTypeName, publication);
         String workflowId = type.getWorkflowFileName();
-        WorkflowFactory.initHistory(document, workflowId);
-
+        
         WorkflowFactory factory = WorkflowFactory.newInstance();
+
+        String[] emptyRoles = {};
+        Situation situation = factory.buildSituation(emptyRoles, "test", "127.0.0.1");
+        
+        WorkflowFactory.initHistory(document, workflowId, situation);
 
         for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
             WorkflowInstance instance = null;
@@ -173,10 +176,10 @@ public class WorkflowTest extends AccessControlTest {
 
             System.out.println();
 
-            Situation situation = null;
+            situation = null;
 
             try {
-                situation = factory.buildSituation(roles);
+                situation = factory.buildSituation(roles, identity);
             } catch (WorkflowException e1) {
                 e1.printStackTrace(System.err);
             }
