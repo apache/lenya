@@ -1,0 +1,35 @@
+  <!-- ============================================================ -->
+  <!-- Produce the webapp                                           -->
+  <!-- ============================================================ -->
+
+  <!-- 
+  This target exports a specified Forrest-based publication as static HTML.
+  -->
+  <target name="export-forrest" depends="webapp" description="Builds the webapp directory ready to be linked into a servlet engines context directory">
+  
+    <property name="publication" value="docs-new"/>
+    <property name="publication.dir" value="${build.webapp}/lenya/pubs/${publication}"/>
+    <property name="export.dir" value="${build.dir}/export/${publication}"/>
+    <property environment="env" />
+    <property name="forrest.home" value="${env.FORREST_HOME}" />  
+    
+    <!-- Copy publication to new directory -->
+    <echo>INFO: Copy publication from ${publication.dir} to ${export.dir}</echo>
+    
+    <copy todir="${export.dir}">
+      <fileset dir="${publication.dir}">
+        <exclude name="skins/cocooncenter/**"/>
+        <exclude name="*.xmap"/>
+      </fileset>
+    </copy>
+
+    <move file="${publication.dir}/forrest-sitemap.xmap" tofile="${export.dir}/sitemap.xmap"/>
+    <move file="${publication.dir}/raw.xmap" tofile="${export.dir}/raw.xmap"/>
+    <!--    
+    <move file="${export.dir}/forrest-sitemap.xmap" tofile="${export.dir}/sitemap.xmap"/>
+    <move file="${export.dir}/sitemap.xmap" tofile="${export.dir}/sitemap.xmap.bak"/>
+    -->
+    
+    <ant antfile="${forrest.home}/forrest.antproxy.xml" dir="${export.dir}"/>
+
+  </target>
