@@ -163,15 +163,20 @@
 <ul class="minitoc">
 <li>
 <a href="#Prerequisites">Prerequisites</a>
+<ul class="minitoc">
+<li>
+<a href="#First+time+checkout">First time checkout</a>
+</li>
+<li>
+<a href="#Generating+changes.html">Generating changes.html</a>
+</li>
+</ul>
 </li>
 <li>
 <a href="#Understanding+the+Apache+infrastructure">Understanding the Apache infrastructure</a>
 </li>
 <li>
-<a href="#Generating+changes.html">Generating changes.html</a>
-</li>
-<li>
-<a href="#Updating+the+Lenya+website">Updating the Lenya website</a>
+<a href="#Roundtrip+website+update">Roundtrip website update</a>
 </li>
 </ul>
 </div>
@@ -183,53 +188,35 @@
 <ul>
 			
 <li>You have <a href="http://forrest.apache.org">Apache Forrest</a> installed on your machine. This means you have your environment set up
-			in a way that you can call <span class="codefrag">forrest run</span> in any directory.</li>
+			in a way that you can call <span class="codefrag">forrest</span> in any directory.</li>
 			
 <li>You are an active Lenya committer with write access to SVN.</li>
 		
 </ul>
-<p>If you are not a committer but you would like to contribute to the documentation, you're most welcome as well. If case you
-		just want to make little additions or corrections to the Lenya documentation or the Lenya website, please follow this
-		instructions, but instead of committing please make an <span class="codefrag">svn diff</span> and post it on the developer's mailing list. 
-		A committer will happily pick your patch up and apply it.</p>
-</div>
-
-		
-<a name="N10032"></a><a name="Understanding+the+Apache+infrastructure"></a>
-<h2 class="underlined_10">Understanding the Apache infrastructure</h2>
-<div class="section">
-<p>The Website at <span class="codefrag">http://lenya.apache.org/</span> is a static site, which is served directly from the directory
-		<span class="codefrag">/site</span> in the Apache Lenya SVN repository by a plain Apache httpd server. No Cocoon or even Lenya is 
-		involved in this very situation.</p>
-<p>But the content of <span class="codefrag">/site</span> is never touched directly by any human editor. Instead, it is generated
-		through Forrest from the input files in the <span class="codefrag">/docu</span> directory of the Lenya SVN repository. A cron job 
-		updates the static files in <span class="codefrag">/site</span> every 12 hours to reflect any changes that got checked into to 
-		<span class="codefrag">/docu</span>.</p>
-<p>The typical roundtrip process to update the website therefore is:</p>
+<p>If you are not a committer but like to contribute to the documentation, you're most welcome as well. If you
+		 want to make additions or corrections to the lenya documentation/website, please keep on reading.</p>
+<p> Instead of committing please make an <span class="codefrag">svn diff</span> of <span class="codefrag">lenya.docu</span> (see above) and contribute the patch via our <a href="http://issues.apache.org/bugzilla/enter_bug.cgi?reporter=&product=Lenya&version=Current+CVS&component=core&rep_platform=Other&op_sys=other&priority=Other&bug_severity=Enhancement&bug_status=NEW&assigned_to=&cc=&bug_file_loc=&short_desc=%5BPatch%5D&comment=&maketemplate=Remember+values+as+bookmarkable+template&form_name=enter_bug">bug tracker</a>. 
+    Let us know about it on the developer's mailing list. A committer will happily pick your patch up from the bug tracker and apply it.</p>
+<a name="N1003B"></a><a name="First+time+checkout"></a>
+<h3 class="underlined_5">First time checkout</h3>
+<p>You will have to do this only the first time when doing the website.</p>
 <ul>
-		
-<li>Checkout <span class="codefrag">https://svn.apache.org/repos/asf/lenya/docu</span> into a working directory.</li>
-		
-<li>Run <span class="codefrag">forrest</span> locally on your machine. You can browse your checked-out copy of the website at
-		<span class="codefrag">http://localhost:8888/</span>.</li>
-		
-<li>Edit the content using your favourite editor. Refer to the Forrest Documentation if necessary.</li>
-		
-<li>Hit the Reload button in your browser and test your changes locally on your machine until they work the way you 
-		intended.</li>
-		
-<li>Check in your changes (if you are a committer) or prepare a patch (if you aren't)</li>
-		
-<li>Wait until your changes show up at <span class="codefrag">http://lenya.apache.org/</span>. This will take a maximum of 12 hours.</li>
-		
+      
+<li>
+<span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</span> 
+<br>
+<br>
+<span class="codefrag">lenya.docu</span>-&gt;This is our documentation and website source tree. Here you will edit the site.</li>
+      
+<li>
+<span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/site/ lenya.apache.org</span> 
+<br>
+<br>
+<span class="codefrag">lenya.apache.org</span>-&gt;This is our website live tree. Here you will have to copy the build of lenya.docu.</li>
+    
 </ul>
-<p>See below for more detailed instructions and some more hints.</p>
-</div>
-
-		
-<a name="N10078"></a><a name="Generating+changes.html"></a>
-<h2 class="underlined_10">Generating changes.html</h2>
-<div class="section">
+<a name="N1005C"></a><a name="Generating+changes.html"></a>
+<h3 class="underlined_5">Generating changes.html</h3>
 <p>changes.html can be directly generated from the SVN commit logs with the following procedure:</p>
 <ul>
 				
@@ -246,42 +233,69 @@
 </ul>
 <p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
 </div>
+
 		
-<a name="N100A4"></a><a name="Updating+the+Lenya+website"></a>
-<h2 class="underlined_10">Updating the Lenya website</h2>
+<a name="N10089"></a><a name="Understanding+the+Apache+infrastructure"></a>
+<h2 class="underlined_10">Understanding the Apache infrastructure</h2>
 <div class="section">
+<p>The Website at <span class="codefrag">http://lenya.apache.org/</span> is a static site, which is served from the checkout dir <span class="codefrag">lenya.apache.org</span> on the server based on
+		<span class="codefrag">http://svn.apache.org/repos/asf/lenya/site/</span> by an Apache httpd server.</p>
+<p>The content of <span class="codefrag">lenya.apache.org</span> has to be generated by forrest based on the <span class="codefrag">lenya.docu</span>. 
+      This has to be done on your local machine because forrest is <strong>not</strong> installed on the server. </p>
+<p>Copy the deloyed files to your <span class="codefrag">lenya.apache.org</span>. 
+      Commit the changes in <span class="codefrag">lenya.apache.org</span>. A cron job updates the static files in <span class="codefrag">lenya.apache.org</span> 
+      of the server every 24 hours via a simple <span class="codefrag">svn up</span>.
+		</p>
+</div>
+		
+<a name="N100B7"></a><a name="Roundtrip+website+update"></a>
+<h2 class="underlined_10">Roundtrip website update</h2>
+<div class="section">
+<p>The typical roundtrip process to update the website has the following steps.</p>
+<p>1) edit the documentation src -&gt; lenya.docu</p>
 <ul>
-				
+		
 <li>
-					
-<span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/docu/ lenya.docu</span> -&gt;This is our documentation and website source tree</li>
-				
-				
-<li>
-					
-<a href="http://forrest.apache.org/docs/your-project.html#installing">Install Forrest 0.6</a> (Note that you need to use 0.6, other version do not work)</li>
-				
-<li>
-					
-<span class="codefrag">go to the root of lenya/docu</span>
-				
-</li>
-				
-<li>
-					
-<span class="codefrag">forrest</span> (Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
+<span class="codefrag">cd $lenya.docu; svn up</span> - change to your local checkout of the docu and update it.</li>
+    
+<li>Follow "Generating changes.html"!</li>
+		
+<li>Run <span class="codefrag">forrest run</span> locally on your machine. You can now browse the website at
+		<span class="codefrag">http://localhost:8888/</span>.</li>
+		
+<li>Edit the content using your favourite editor. Refer to the forrest documentation if necessary.
+      Hit the Reload button in your browser and test your changes locally on your machine until they work the way you 
+		intended.</li>
+    
+</ul>
+<p>2) deploy and commit your changes to the documentation src -&gt; lenya.docu</p>
+<ul>
+      
+<li>Run <span class="codefrag">forrest</span> -&gt; This will create the site in <span class="codefrag">lenya.docu/build/site</span>
+<br>(Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
     can be ignored. If the site looks ok to you, and there were no validation errors, go for it.)</li>
-				
+		
+<li>Check in your changes (if you are a committer) <span class="codefrag">svn ci -m "my changes message"</span> or prepare a patch (if you aren't) <span class="codefrag">svn diff &gt; patch.txt</span> of <span class="codefrag">lenya.docu</span>
+</li>
+    
+</ul>
+<p>3) copy deployed changes from the documentation src to the website checkout-&gt; lenya.apache.org</p>
+<ul>
+    
+<li>
+<span class="codefrag">cd $lenya.apache.org; svn up</span> - change to your local checkout of the website and update it.</li>
+    
+<li>
+<span class="codefrag">cp -r $lenya.docu/build/site/* .</span> - copy the deployed site from step 2.</li>
+    
 <li>Create and copy the Javadoc for both branches (<span class="codefrag">build javadocs</span>, Copy from <span class="codefrag">build/webapp/site/apidocs</span> to <span class="codefrag">lenya/site/apidocs/1.2</span> and
     <span class="codefrag">lenya/site/apidocs/1.4</span>)</li>
-				
-<li>Add, remove, commit to <span class="codefrag">lenya/site</span>
-				
-</li>
-			
+		
+<li>Commit your changes to lenya.apache.org <span class="codefrag">svn ci -m "my changes message"</span>.</li>
+		
 </ul>
-<p>There is a cron job on minotaur which will do 'svn update'
-every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then ...</p>
+<p>There is a cron job on minotaur which will do 'svn update' in the server <span class="codefrag">lenya.apache.org</span> dir
+every 24 hours (see ~thorsten/thorsten.ct). If you want to do it manually then ...</p>
 <ul>
 				
 <li>Login to <span class="codefrag">minotaur.apache.org</span>
@@ -296,6 +310,8 @@ every 12 hours (see ~thorsten/bin/mycrontab). If you want to do it manually then
 			
 </ul>
 </div>
+
+		
 	
 </div>
 <!--+
