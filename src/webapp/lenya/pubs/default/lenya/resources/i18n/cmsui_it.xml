@@ -16,8 +16,8 @@
    limitations under the License.
 
    
-   $Id: cmsui_it.xml,v 1.1 2004/04/25 12:20:22 roku Exp $
-   @translators Giampaolo Trapo  <trapo at trapo dot it>
+   $Id: cmsui_it.xml,v 1.2 2004/05/01 19:40:00 roku Exp $
+   @translators Giampaolo Trapasso  <trapo at trapo dot it>
 -->
 <catalogue xml:lang="it">
 	<message key="default.createdoc.idtaken">L'ID scelto è già utilizzato. Scegliere un altro ID.</message>
