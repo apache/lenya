@@ -111,7 +111,6 @@
       <leaf relURI="architecture.html" doctype="XDoc" menuName="Architecture"/>
       <leaf relURI="codingGuidelines.html" doctype="XDoc" menuName="Coding Guidelines"/>
       <leaf URL="http://xml.apache.org/cocoon" doctype="HTML" menuName="Pipeline Processor: Cocoon"/>
-      <leaf relURI="access-controller_deprecated.html" doctype="XDoc" menuName="Authorization and Authentication (deprecated)"/>
       <branch relURI="access-controller.html" doctype="XDoc" menuName="Authorization and Authentication">
 	<leaf relURI="" doctype="Empty" menuName="Abstract Authenticator"/>
 	<leaf relURI="" doctype="Empty" menuName="Abstract Authorizer"/>
