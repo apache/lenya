@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowMenuTransformer.java,v 1.17 2003/08/05 11:58:56 andreas Exp $
+$Id: WorkflowMenuTransformer.java,v 1.18 2003/08/20 18:52:44 andreas Exp $
 <License>
 
  ============================================================================
@@ -78,7 +78,6 @@ import java.io.IOException;
 
 import java.util.Map;
 
-
 /**
  * This transformer disables menu items (by removing the href attribute)
  * which are not allowed with respect to the current workflow state.
@@ -112,7 +111,14 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                         attributes.removeAttribute(hrefIndex);
                     }
                 } else {
-                    if (hrefIndex > -1) {
+                    if (hrefIndex == -1) {
+                        ((AttributesImpl) attributes).addAttribute(
+                            "",
+                            "href",
+                            "href",
+                            "CDATA",
+                            "?lenya.event=" + event);
+                    } else {
                         String href = attributes.getValue("href");
                         attributes.setValue(hrefIndex, href + "&lenya.event=" + event);
                     }
@@ -133,7 +139,10 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                 prefix = raw.substring(0, raw.indexOf(":")) + ":";
             }
 
-            super.startElement(uri, "workflow-state", prefix + "workflow-state",
+            super.startElement(
+                uri,
+                "workflow-state",
+                prefix + "workflow-state",
                 new AttributesImpl());
 
             char[] characters = instance.getCurrentState().toString().toCharArray();
@@ -178,11 +187,11 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
     private boolean hasWorkflow;
     private WorkflowInstance instance;
 
-	/**
-	 * Get the workflow instance.
-	 * 
-	 * @return a <code>WorkflowInstance</code>
-	 */
+    /**
+     * Get the workflow instance.
+     * 
+     * @return a <code>WorkflowInstance</code>
+     */
     protected WorkflowInstance getInstance() {
         return instance;
     }
