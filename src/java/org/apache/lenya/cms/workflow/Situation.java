@@ -6,16 +6,11 @@
 
 package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.cms.ac.User;
-import org.apache.lenya.cms.publication.Document;
-
 /**
- *
+ * A situation contains all information that is needed to decide which
+ * workflow transitions can fire at a certain moment.
  * @author  andreas
  */
 public interface Situation {
-    
-    Document getDocument();
-    User getUser();
-    
+
 }
