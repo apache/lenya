@@ -6,42 +6,28 @@
   xmlns:ent="http://www.purl.org/NET/ENT/1.0/"
 >
 
-<xsl:param name="docid"/>
+<xsl:import href="../../../../xslt/authoring/edit/form.xsl"/>
 
-<xsl:template match="/">
-<html>
-<body>
-<p>
-Edit Document <b><xsl:value-of select="$docid"/></b>
-</p>
-<form method="post" action="?lenya.usecase=edit&amp;lenya.step=close">
-<table border="1">
+<xsl:template match="echo:entry">
 <tr>
-  <td>&#160;</td><td>Title</td><td><input type="text" name="element./echo:entry/echo:title[{/echo:entry/echo:title/@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="/echo:entry/echo:title" /></xsl:attribute></input></td>
+  <td>&#160;</td><td>Title</td><td><input type="text" name="element./echo:entry/echo:title[{echo:title/@tagID}]" size="40"><xsl:attribute name="value"><xsl:value-of select="echo:title" /></xsl:attribute></input></td>
 </tr>
 
-<xsl:if test="not(/echo:entry/echo:subtitle)">
+<xsl:if test="not(echo:subtitle)">
 <tr>
   <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert-after" value="sibling./echo:entry/echo:title[]element./echo:entry/echo:subtitle"/></td><td colspan="2">Subtitle</td>
 </tr>
 </xsl:if>
 
-<xsl:if test="not(/echo:entry/echo:summary)">
+<xsl:if test="not(echo:summary)">
 <tr>
 <td><input type="image" src="/lenya/lenya/images/insert.gif" name="insert" value="sibling./echo:entry/echo:title[]element./echo:entry/echo:summary"/></td><td colspan="2">Summary</td>
 </tr>
 </xsl:if>
 
-<xsl:apply-templates select="/echo:entry/echo:subtitle"/>
-<xsl:apply-templates select="/echo:entry/echo:summary"/>
-<xsl:apply-templates select="/echo:entry/echo:content"/>
-<tr>
-  <td colspan="3" align="right"><input type="submit" value="SAVE" name="save"/><input type="submit" value="CANCEL" name="cancel"/></td>
-</tr>
-</table>
-</form>
-</body>
-</html>
+<xsl:apply-templates select="echo:subtitle"/>
+<xsl:apply-templates select="echo:summary"/>
+<xsl:apply-templates select="echo:content"/>
 </xsl:template>
 
 <xsl:template match="echo:subtitle">
