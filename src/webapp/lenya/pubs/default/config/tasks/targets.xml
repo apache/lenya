@@ -273,13 +273,13 @@
 <target name = "deactivateDocument" depends="livedocumentpath">
   <echo>deactivateDocument</echo> 
   <echo> Delete node of document ${node.firstdocumentid} from </echo>
-  <echo> the tree ${pub.dir}/${live.dir}/${sitetree}</echo>
+  <echo> the area ${live.area}</echo>
 
   <taskdef name="deletenode" classname="org.apache.lenya.cms.ant.DeleteNodeTask"/>
 
   <deletenode
     documentid="${node.firstdocumentid}"
-    absolutetreepath="${pub.dir}/${live.dir}/${sitetree}"
+    area="${live.area}"
   />
 
   <echo> Delete document with id ${node.firstdocumentid} from live</echo> 
