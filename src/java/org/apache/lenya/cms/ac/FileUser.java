@@ -1,5 +1,5 @@
 /*
- * $Id: FileUser.java,v 1.1 2003/05/28 14:45:18 egli Exp $
+ * $Id: FileUser.java,v 1.2 2003/05/30 20:33:10 andreas Exp $
  * <License>
  * The Apache Software License
  *
@@ -75,9 +75,9 @@ public class FileUser extends User {
 	public static final String CLASS_ATTRIBUTE = "class";
 	public static final String NAMESPACE_URI = "";
 
-	protected Document document;
-	protected File xmlfile;
-	protected DefaultConfiguration config;
+	private Document document;
+	private File xmlfile;
+	private DefaultConfiguration config;
 
 	/**
 	 * @param id
