@@ -52,7 +52,7 @@
     <menu i18n:attr="name" name="File" label="File">
       <block>
         <item uc:usecase="edit" uc:step="open" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
-        <item href="index-bxe.html">Edit&#160;with&#160;BXE</item>
+        <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
         <item uc:usecase="1formedit" uc:step="open">Edit&#160;with&#160;one&#160;Form</item>
       </block>
       <block>
