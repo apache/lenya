@@ -121,16 +121,16 @@
 		    </select>
 		  </td>
 		</tr>
+		<tr><td>&#160;</td></tr>
+		<tr>
+		  <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption"/></td>
+		</tr>
 		<xsl:if test="$insertimage = 'true'">
-		  <tr><td>&#160;</td></tr>
-		  <tr>
-		    <td class="lenya-form-caption">Caption:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption"/></td>
-		  </tr>
 		  <tr>
 		    <td class="lenya-form-caption">Link:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/></td>
 		  </tr>
-		  <tr><td>&#160;</td></tr>
 		</xsl:if>
+		<tr><td>&#160;</td></tr>
 		<tr>
 		  <td/>
 		  <td>
