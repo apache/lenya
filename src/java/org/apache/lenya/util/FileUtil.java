@@ -29,7 +29,7 @@ import java.util.StringTokenizer;
 import org.apache.log4j.Category;
 
 /**
- * @version $Id: FileUtil.java,v 1.20 2004/07/30 14:48:29 roku Exp $
+ * @version $Id$
  */
 public final class FileUtil {
     private static Category log = Category.getInstance(FileUtil.class);
@@ -92,7 +92,7 @@ public final class FileUtil {
 
         if (!parent.exists()) {
             parent.mkdirs();
-            log.warn("Directory has been created: " + parent.getAbsolutePath());
+            log.debug("Directory has been created: " + parent.getAbsolutePath());
         }
 
         OutputStream destination = new FileOutputStream(destination_name);
