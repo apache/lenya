@@ -1,18 +1,15 @@
 <?xml version="1.0" ?>
-<!-- $Id: config.xml,v 1.7 2003/08/29 15:44:50 felix Exp $ -->
+<!-- $Id: config.xml,v 1.8 2003/08/29 16:05:47 michi Exp $ -->
 <config>
     <files>
         <input>
             <!-- The XML-document with the actual data -->
-<!--
-            <file name="BX_xmlfile">test.xml</file>
--->
             <file name="BX_xmlfile">index-bxeng.xml</file>
-            <!-- The XSL-document which transforms the xml to the output format -->
-            <file name="BX_xslfile">entry-bxeng.xsl</file>
-            <!-- The xhtml with the appropriate div tag (e.g. <div bxe_xpath="/xhtml:html/lenya:meta/dc:title" />)
+           <!-- The xhtml with the appropriate div tag (e.g. <div bxe_xpath="/xhtml:html/lenya:meta/dc:title" />)
                  An xhtml file can be used instead of an xsl to provide the page layout of the non-editable part -->
             <file name="BX_xhtmlfile">testxhtml.xml</file>
+            <!-- The XSL-document which transforms the xml to the output format -->
+            <file name="BX_xslfile">entry-bxeng.xsl</file>
             <!-- The RelaxNG (XML Schema) -->
             <file name="BX_validationfile">relaxng.xml</file>
         </input>
