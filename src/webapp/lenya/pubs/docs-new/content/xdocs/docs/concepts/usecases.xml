@@ -367,15 +367,33 @@
       </tr>
       <tr>
         <td></td>
+        <td>user-add</td>
+        <td>showscreen</td>
+        <td>Show a form for adding users</td>
+      </tr>
+      <tr>
+        <td></td>
         <td></td>
         <td>add</td>
         <td>Add a user</td>
       </tr>
       <tr>
         <td></td>
+        <td>user-modify</td>
+        <td>showscreen</td>
+        <td>Show a form for modifying users</td>
+      </tr>
+      <tr>
+        <td></td>
         <td></td>
         <td>modify</td>
         <td>Modify a user</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>user-delete</td>
+        <td>showscreen</td>
+        <td>Confirm the deletion of a user</td>
       </tr>
       <tr>
         <td></td>
