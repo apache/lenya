@@ -60,14 +60,6 @@
       </map:act>
     </map:resource>
     
-    <map:resource name="style-publish">
-      <map:transform src="xslt/publishing/screen.xsl">
-        <map:parameter name="use-request-parameters" value="true"/>
-        <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-      </map:transform>
-      <map:call resource="style-cms-page"/>
-    </map:resource>
-    
     <map:resource name="cms-screen">
       
       <!-- use publication-specific schema if available -->
@@ -95,14 +87,6 @@
       
       <map:call resource="style-cms-page"/>
       <map:serialize/>
-    </map:resource>
-    
-    <map:resource name="usecase-create">
-      <map:call resource="cms-screen">
-        <map:parameter name="publication-id" value="{publication-id}"/>
-        <map:parameter name="serverpage" value="authoring/create.xsp"/>
-        <map:parameter name="stylesheet" value="authoring/create.xsl"/>
-      </map:call>
     </map:resource>
     
   </map:resources>
@@ -229,20 +213,17 @@
           
         </map:match>
         <!-- usecase -->
-
-
+        
         
         <!-- Publish -->
         <map:match pattern="publish" type="usecase">
-          
+        	
           <map:match pattern="showscreen" type="step">
-            <map:act src="pubs/{../../1}/lenya/content/publishing/publish-screen.xsp" type="resource-exists">
-              <map:generate label="xsp"
-                src="pubs/{../../../1}/lenya/content/publishing/publish-screen.xsp" type="serverpages"/>
-              <map:call resource="style-publish"/>
-            </map:act>
-            <map:generate label="xsp" src="content/publishing/publish-screen-usecase.xsp" type="serverpages"/>
-            <map:call resource="style-publish"/>
+          	<map:call resource="cms-screen">
+          		<map:parameter name="publication-id" value="{../../1}"/>
+          		<map:parameter name="serverpage" value="publishing/screen.xsp"/>
+          		<map:parameter name="stylesheet" value="publishing/screen.xsl"/>
+          	</map:call>
           </map:match>
           
           <map:match pattern="publish" type="step">
@@ -254,6 +235,7 @@
           </map:match>
           
         </map:match>
+        <!-- /Publish -->
         
 
         <!-- create-workflow -->
@@ -305,9 +287,11 @@
         <map:match pattern="create" type="usecase">
           
           <map:match pattern="showscreen" type="step">
-            <map:call resource="usecase-create">
-              <map:parameter name="publication-id" value="{../../1}"/>
-            </map:call>
+						<map:call resource="cms-screen">
+							<map:parameter name="publication-id" value="{../../1}"/>
+							<map:parameter name="serverpage" value="authoring/create.xsp"/>
+							<map:parameter name="stylesheet" value="authoring/create.xsl"/>
+						</map:call>
           </map:match>
           
           <map:match pattern="create" type="step">
@@ -318,9 +302,11 @@
             </map:act>
             <!-- otherwise the action could not validate some of the -->
             <!-- input and we present the upload form again -->
-            <map:call resource="usecase-create">
-              <map:parameter name="publication-id" value="{../../1}"/>
-            </map:call>
+						<map:call resource="cms-screen">
+							<map:parameter name="publication-id" value="{../../1}"/>
+							<map:parameter name="serverpage" value="authoring/create.xsp"/>
+							<map:parameter name="stylesheet" value="authoring/create.xsl"/>
+						</map:call>
           </map:match>
           
         </map:match>
