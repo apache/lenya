@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.5 2003/04/11 16:23:00 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.6 2003/04/11 17:03:05 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -22,10 +22,7 @@
       <map:action name="page-envelope" logger="sitemap.action.page-envelope" src="org.lenya.cms.cocoon.acting.PageEnvelopeAction"/>
       <map:action name="uriparametrizer"
 	src="org.lenya.cms.cocoon.acting.URIParametrizerAction"
-	logger="sitemap.action.uriparametrizer">
-	<parameter name="doctype" src="cocoon:/"/>
-	<parameter name="path" src="cocoon:/"/>
-      </map:action>
+	logger="sitemap.action.uriparametrizer"/>
     </map:actions>
   </map:components>
 
@@ -112,14 +109,18 @@
       </map:match>
     </map:pipeline>
     
-    <map:match pattern="test">
+    <map:pipeline>
+    <map:match pattern="**.html">
       <map:act type="page-envelope">
-	<map:act type="uriparametrizer" src="cocoon://uri-parameter/{publication-id}/sourceType">
+	<map:act type="uriparametrizer">
+          <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
+          <map:parameter name="path" value="cocoon://uri-parameter/{publication-id}/path"/>
 	  <map:generate src="cocoon:/{doctype}/{path}"/>
 	</map:act>
       </map:act>
-      <map:serialize type="xhtml">
+      <map:serialize type="xhtml"/>
     </map:match>
+    </map:pipeline>
 
     <!-- Redirect to introduction -->
 <!-- FIXME: Factor out to root sitemap -->

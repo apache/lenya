@@ -8,8 +8,13 @@
         Purpose of the document follows.
 -->
 
-<site xmlns="http://www.lenya.org/2003/sitetree">
-
+<site
+    xmlns="http://www.lenya.org/2003/sitetree"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation=
+        "http://www.lenya.org/2003/sitetree
+        ../../../../resources/entities/sitetree.xsd">
+    
   <node href="index.html" label="Home"/>
   
   <node href="demo/" label="Demo">

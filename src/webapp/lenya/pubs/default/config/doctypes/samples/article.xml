@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : article.xml
+    Created on : 9. April 2003, 11:26
+    Author     : andreas
+    Description:
+        Purpose of the document follows.
+-->
+
+<doctype xmlns="http://www.lenya.org/2003/doctype">
+
+  <workflow src="workflow.xml"/>
+
+</doctype>
