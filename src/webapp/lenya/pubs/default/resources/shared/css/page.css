@@ -142,20 +142,18 @@ td.tab-post-separator {
 input.searchfield {
     font-size: 80%;
     background-color: #ffffff;
-    border: 1px solid #663300;
+    border: 1px solid #BB9999;
 }
 
 input.searchsubmit {
     font-size: 80%;
     color: Maroon;
     background-color: #FFEEEE;
-    border: 1px solid #663300;
+    border: 1px solid #BB9999;
 }
 
 input.searchsubmit:hover {
-    color: #ffffff;
-    background-color: #BB9999;
-    border: 1px solid #ffffff;
+    background-color: #DDBBBB;
 }
 
 /*
