@@ -66,17 +66,21 @@
            But this would be to heavy for 1.2.1, so I do this hack here, sorry :) /roku
       -->
       File metaFile;
-      String title;
+      String title = "";
+      String format = "";
       org.w3c.dom.Document metaDoc;
       try {
         metaDoc = DocumentHelper.readDocument(resourceMgr.getMetaFile(resources[i]));
 				title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
+				format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format").item(0).getChildNodes().item(0).getNodeValue();
       } catch(Exception e) { continue; } 
+
 	  <xsp:content>
 	    <lenya-info:asset>   
 	      <dc:source><xsp:expr>resources[i].getName()</xsp:expr></dc:source>
         <dc:title><xsp:expr>title</xsp:expr></dc:title>
 	      <dc:date><xsp:expr>SimpleDateFormat.getDateInstance().format(new Date(resources[i].lastModified()))</xsp:expr></dc:date>
+        <dc:format><xsp:expr>format</xsp:expr></dc:format>
 	      <dc:extent><xsp:expr>resources[i].length()/1024</xsp:expr></dc:extent>
 	    </lenya-info:asset>
 	  </xsp:content>

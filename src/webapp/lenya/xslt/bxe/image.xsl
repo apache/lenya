@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: image.xsl,v 1.10 2004/05/23 20:34:29 roku Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
@@ -163,7 +163,7 @@
                                     <xsl:for-each select="lenya-info:asset">
                                         <xsl:choose>
                                             <xsl:when 
-                                                test="contains(dc:title, 'jpg') or contains(dc:title, 'gif')">
+                                                test="dc:format = 'image/jpeg' or dc:format = 'image/gif'">
                                                 <tr>
                                                     <td 
                                                         colspan="2">
