@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmfs.xsl,v 1.13 2004/05/08 00:16:55 michi Exp $ -->
+<!-- $Id: cmfs.xsl,v 1.14 2004/05/08 09:02:45 michi Exp $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -172,23 +172,34 @@
 
 <xsl:template match="features">
 <node name="Features">
+  <action>
+    <delete value="true" name="&lt;xupdate:remove select=&quot;/system/features&quot;/&gt;"/>
+  </action>
 </node>
 <xsl:apply-templates select="feature"/>
+<node name="Feature">
+  <action><insert name="&lt;xupdate:append select=&quot;/system/features&quot;&gt;&lt;xupdate:element name=&quot;feature&quot;&gt;&lt;title&gt;New Title&lt;/title&gt;&lt;description&gt;New Description&lt;/description&gt;&lt;/xupdate:element&gt;&lt;/xupdate:append&gt;"/></action>
+</node>
 </xsl:template>
 
 <xsl:template match="feature">
 <node name="Feature">
-  <action><delete value="true" name="&lt;xupdate:remove select=&quot;/system/features/feature[@tagID='{@tagID}']&quot;/&gt;"/></action>
+  <action><insert name="&lt;xupdate:insert-before select=&quot;/system/features/feature[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;feature&quot;&gt;&lt;title&gt;New Title&lt;/title&gt;&lt;description&gt;New Description&lt;/description&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-before&gt;"/></action>
+</node>
+
+<node name="Feature">
+  <action>
+    <delete value="true" name="&lt;xupdate:remove select=&quot;/system/features/feature[@tagID='{@tagID}']&quot;/&gt;"/>
+  </action>
 </node>
 <node name="Feature Title" select="/system/features/feature/title[@tagID='{title/@tagID}']">
   <content><input type="text" name="&lt;xupdate:update select=&quot;/system/features/feature/title[@tagID='{title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="title" /></xsl:attribute></input></content>
 </node>
+
 <node name="Feature Description" select="/system/features/feature/description[@tagID='{description/@tagID}']">
   <content><textarea name="&lt;xupdate:update select=&quot;/system/features/feature/description[@tagID='{description/@tagID}']&quot;&gt;" cols="40" rows="3"><xsl:value-of select="description" /></textarea></content>
 </node>
-<node name="Feature">
-  <action><insert name="&lt;xupdate:insert-after select=&quot;/system/features/feature[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;feature&quot;&gt;&lt;title&gt;New Title&lt;/title&gt;&lt;description&gt;New Description&lt;/description&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/></action>
-</node>
+
 </xsl:template>
  
 </xsl:stylesheet>  
