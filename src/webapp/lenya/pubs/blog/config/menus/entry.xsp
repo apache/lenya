@@ -43,7 +43,9 @@
 <!--
         <item href="/bxeng/bxeng.html?xml=/lenya/blog/authoring/entries/2003/07/28/1/index-bxeng.xml&amp;xslt=examples/uni/test.xsl">Edit&#160;with&#160;BXENG</item>
 -->
+<!--
         <item>Edit&#160;with&#160;Midas</item>
+-->
       </block>
       <block>
         <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr></xsp:attribute>Publish</item>
@@ -73,7 +75,9 @@
     <menu name="Debug" label="Debug">
       <block>
         <item href="index.xml">XML</item>
+<!--
         <item href="index-bxeng.xml">XML&#160;for&#160;BXENG</item>
+-->
       </block>
     </menu>
   </menus>
