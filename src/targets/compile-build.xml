@@ -24,17 +24,19 @@
   </description>
 
   <!-- The main compilation target -->
+  <!-- Compile the core Lenya classes plus the assembled publication classes -->
   <target name="compile" depends="prepare-src"
           description="Compile the sources">
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
-    <javac srcdir="${build.src}"
-           destdir="${build.webapp}/WEB-INF/classes"
+    <javac destdir="${build.webapp}/WEB-INF/classes"
            debug="${debug}"
            optimize="${optimize}"
            deprecation="${deprecation}"
            target="${target.vm}"
            nowarn="${nowarn}"
            source="1.4">
+      <src path="${java.dir}"/>
+      <src path="${build.src}"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -43,14 +45,15 @@
   <target name="deprecation" depends="prepare-src"
           description="Compile the sources with deprecation messages">
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
-    <javac srcdir="${build.src}"
-           destdir="${build.webapp}/WEB-INF/classes"
+    <javac destdir="${build.webapp}/WEB-INF/classes"
            debug="${debug}"
            optimize="${optimize}"
            deprecation="on"
            target="${target.vm}"
            nowarn="off"
            source="1.4">
+      <src path="${java.dir}"/>
+      <src path="${build.src}"/>
       <classpath refid="classpath"/>
     </javac>
   </target>

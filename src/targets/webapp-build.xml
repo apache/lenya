@@ -41,13 +41,11 @@
       <fileset dir="${src.webapp.dir}">
         <exclude name="lenya/pubs/**"/>
         <exclude name="WEB-INF/*-xconf.xsl"/>
-        <exclude name="WEB-INF/*-xml.xsl"/>
       </fileset>
     </copy>
 
     <!-- Copy publications -->
-    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn">
-    </copyPubs>
+    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn"/>
 
     <!-- Patch cocoon.xconf -->
     <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
@@ -92,12 +90,18 @@
       <fileset dir="${build.src}">
         <include name="**/*.xsl"/>
       </fileset>
+      <fileset dir="${java.dir}">
+        <include name="**/*.roles"/>
+      </fileset>
     </copy>
 
     <!-- now copy our properties -->
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.properties"/>
+      </fileset>
+      <fileset dir="${java.dir}">
+        <include name="**/*.roles"/>
       </fileset>
     </copy>
 
@@ -106,11 +110,17 @@
       <fileset dir="${build.src}">
         <include name="**/*.xml"/>
       </fileset>
+      <fileset dir="${java.dir}">
+        <include name="**/*.roles"/>
+      </fileset>
     </copy>
 
     <!-- now copy our roles -->
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
+        <include name="**/*.roles"/>
+      </fileset>
+      <fileset dir="${java.dir}">
         <include name="**/*.roles"/>
       </fileset>
     </copy>

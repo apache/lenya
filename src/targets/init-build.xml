@@ -100,14 +100,8 @@
     <mkdir dir="${build.webapp}"/>
   </target>
 
-  <!-- Prepare the source code -->
+  <!-- Copy publication source code and libraries to ${build.src} -->
   <target name="prepare-src" depends="prepare">
-  	<!-- Copy java source files from ${java.dir} to ${build.src} -->
-    <copy todir="${build.src}" filtering="on">
-      <fileset dir="${java.dir}">
-        <exclude name="log4j-properties.xsl"/>
-      </fileset>
-    </copy>
     
     <!-- FIXME: Use bulkCopy task in the future; needs regexp mapper which is part of ant optional package. -->
     <!-- Copy java source files from ${pubs.root.dirs} to ${build.src} -->
