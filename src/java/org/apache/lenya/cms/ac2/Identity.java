@@ -1,5 +1,5 @@
 /*
-$Id: Identity.java,v 1.8 2003/07/29 14:25:37 andreas Exp $
+$Id: Identity.java,v 1.9 2003/08/07 14:53:43 andreas Exp $
 <License>
 
  ============================================================================
@@ -188,6 +188,14 @@ public class Identity implements Identifiable {
             i++;
         }
         return machine;
+     }
+     
+     /**
+      * Checks if this identity contains a certain identifiable.
+      * @param identifiable The identifiable to look for.
+      */
+     public boolean contains(Identifiable identifiable) {
+         return identifiables.contains(identifiable);
      }
 
 }
