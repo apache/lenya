@@ -38,8 +38,10 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.excalibur.source.Source;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  *  
@@ -80,6 +82,16 @@ public class OneFormEditorSaveAction extends AbstractConfigurableAction implemen
             xmlSource = resolver.resolveURI(xmlUri);
             saveXMLFile(encoding, content, xmlSource);
 
+            try {
+                DocumentHelper.readDocument(xmlSource.getInputStream());
+            }
+            catch (SAXException e) {
+                getLogger().error("Wellformedness check failed: " + e.getMessage());
+                Map hmap = new HashMap();
+                hmap.put("message", "Document is not well-formed: " + e.getMessage());
+                return hmap;
+            }
+            
             schemaSource = resolver.resolveURI(schemaUri);
             if (!schemaSource.exists()) {
                 throw new IllegalArgumentException("The schema [" + schemaSource.getURI()
