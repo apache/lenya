@@ -162,7 +162,9 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Available Languages</i18n:text>:</td>
               <td>
-                <jx:out value="${usecase.getParameter('languages')}"/>
+                <jx:forEach var="language" items="${usecase.getParameter('languages')}">
+                  <jx:out value="${language}"/>
+                </jx:forEach>
               </td>
             </tr>
             <tr>
