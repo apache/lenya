@@ -1,5 +1,5 @@
 /*
-$Id: Document.java,v 1.17 2003/08/29 12:27:15 egli Exp $
+$Id: Document.java,v 1.18 2003/09/03 12:10:08 egli Exp $
 <License>
 
  ============================================================================
@@ -70,9 +70,18 @@ public interface Document {
     
     /**
      * Returns the document ID of this document.
-     * @return A URI object.
+     * @return the document-id of this document.
      */
     String getId();
+    
+    /**
+     * Instead of returning the full document-id for this
+     * document it just returns the id of the particular 
+     * node, basically the basename of the document-id.
+     * 
+     * @return the node id, i.e. the basename of the document-id
+     */
+    String getNodeId();
 
     /**
      * Returns the publication this document belongs to.
