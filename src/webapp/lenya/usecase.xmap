@@ -8,9 +8,7 @@
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
     <map:serializers default="xhtml">
-      <map:serializer logger="sitemap.serializer.htmlnoi" mime-type="text/html" 
-	name="htmlnoi" pool-grow="4" pool-max="32" pool-min="4"
-	src="org.apache.cocoon.serialization.HTMLSerializer"> 
+      <map:serializer logger="sitemap.serializer.htmlnoi" mime-type="text/html" name="htmlnoi" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer"> 
 	<indent>no</indent>
 	<doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
 	<doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
@@ -335,6 +333,44 @@
 
         </map:match>
         
+        <!-- ************************************************************** -->
+        <!-- ** Epoz                                                     ** -->
+        <!-- **                                                          ** -->
+        <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
+        <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+        <!-- **       is configured within config/publication.xconf      ** -->
+        <!-- ************************************************************** -->
+        <map:match pattern="epoz" type="usecase">
+          <map:match pattern="open" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:act type="resource-exists" src="../../ROOT/epoz/common/epozeditor.js"> <!-- Check for Epoz -->
+	        <map:generate src="resources/misc/epoz/epozmacros.html"/>
+                <map:transform src="xslt/authoring/edit/epozmacros-xhtml.xsl">
+                  <map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=content"/>
+                </map:transform>
+	        <map:serialize type="html"/>
+              </map:act>
+              <map:generate src="resources/misc/epoz/download.xhtml"/>
+              <map:serialize type="html"/>
+            </map:match>
+          </map:match>
+
+          <map:match pattern="content" type="step">
+            <map:match pattern="*/authoring/**.html">
+	      <map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+	      <map:serialize type="html"/>
+	      <!--
+	      <map:serialize type="xhtml-iso-8859-1"/>
+	      -->
+            </map:match>
+          </map:match>
+        </map:match>
+        <!-- ************************************************************** -->
+        <!-- ********  /Epoz Editor *************************************** -->
+        <!-- ************************************************************** -->
+
+
+
         
         <!-- ************************************************************** -->
         <!-- ** HTML Form Editor                                         ** -->
