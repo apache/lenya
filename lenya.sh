@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 # Lenya Unix Shell Script
 #
-# $Id: lenya.sh,v 1.1 2003/11/07 22:20:37 gregor Exp $
+# $Id: lenya.sh,v 1.2 2003/11/08 14:06:40 michi Exp $
 # -----------------------------------------------------------------------------
 
 # Configuration variables
@@ -70,7 +70,7 @@ if [ "$LENYA_HOME" = "" ] ; then
 fi
 
 if [ "$LENYA_WEBAPP_HOME" = "" ] ; then
-  STANDALONE_WEBAPP=build/lenya/webapp
+  STANDALONE_WEBAPP=../webapp
   if [ -d $STANDALONE_WEBAPP ] ; then
     # for standalone-webapp setup
     LENYA_WEBAPP_HOME=$STANDALONE_WEBAPP
