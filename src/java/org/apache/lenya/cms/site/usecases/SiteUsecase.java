@@ -68,12 +68,4 @@ public class SiteUsecase extends DocumentUsecase {
         setParameter(LANGUAGEEXISTS, "true");
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
-     */
-    public void setParameter(String name, Object value) {
-        super.setParameter(name, value);
-    }
-
-    
 }
