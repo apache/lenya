@@ -1,5 +1,4 @@
 /*
-$Id: IndexIterator.java,v 1.4 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -80,8 +79,8 @@ import java.util.Map;
 
 
 /**
- *
- * @author  hrt
+ * @author Andreas Hartmann
+ * @version $Id: IndexIterator.java,v 1.5 2003/11/26 00:31:12 michi Exp $
  */
 public class IndexIterator {
     /** Creates a new instance of IndexItertor */
@@ -104,6 +103,9 @@ public class IndexIterator {
 
     private FileFilter filter;
 
+    /**
+     * @return FileFilter
+     */
     protected FileFilter getFilter() {
         return filter;
     }

@@ -78,7 +78,7 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: ConfigurableIndexer.java,v 1.10 2003/11/14 00:01:22 michi Exp $
+ * @version $Id: ConfigurableIndexer.java,v 1.11 2003/11/26 00:31:12 michi Exp $
  */
 public class ConfigurableIndexer extends AbstractIndexer {
     Category log = Category.getInstance(ConfigurableIndexer.class);
@@ -129,29 +129,52 @@ public class ConfigurableIndexer extends AbstractIndexer {
     /**
      * Returns the filter used to receive the indexable files.
      */
-    public FileFilter getFilter() {
-        String[] indexableExtensions = { "xml" };
+    public FileFilter getFilter(Element indexer, String configFileName) {
+        String[] indexableExtensions = new String[1];
+	indexableExtensions[0] = getExtensions(indexer);
+        //String[] indexableExtensions = { "xml" };
         return new AbstractIndexer.DefaultIndexFilter(indexableExtensions);
     }
 
     /**
      *
      */
-   private String getLuceneDocConfigFileName(Element indexer) {
-       String luceneDocConfigFileName = null;
+    private String getLuceneDocConfigFileName(Element indexer) {
+        String luceneDocConfigFileName = null;
 
-       org.w3c.dom.NodeList nl = indexer.getChildNodes();
-       for (int i = 0; i < nl.getLength(); i++) {
-           org.w3c.dom.Node node = nl.item(i);
-           if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("configuration")) {
-               log.debug(".getLuceneDocConfigFileName(): Node configuration exists!");
-               luceneDocConfigFileName = ((Element)node).getAttribute("src");
-           }
-       }
-       if (luceneDocConfigFileName == null) {
-           log.error(".getLuceneDocConfigFileName(): ERROR: Lucene Document Configuration is not specified (indexer/configuration/@src)");
-       }
-       log.debug(".getLuceneDocConfigFileName(): Lucene Document Configuration: " + luceneDocConfigFileName);
-       return luceneDocConfigFileName;
-   }
+        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            org.w3c.dom.Node node = nl.item(i);
+            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("configuration")) {
+                log.debug(".getLuceneDocConfigFileName(): Node configuration exists!");
+                luceneDocConfigFileName = ((Element)node).getAttribute("src");
+            }
+        }
+        if (luceneDocConfigFileName == null) {
+            log.error(".getLuceneDocConfigFileName(): ERROR: Lucene Document Configuration is not specified (indexer/configuration/@src)");
+        }
+        log.debug(".getLuceneDocConfigFileName(): Lucene Document Configuration: " + luceneDocConfigFileName);
+        return luceneDocConfigFileName;
+    }
+
+    /**
+     *
+     */
+    private String getExtensions(Element indexer) {
+        String extensions = null;
+
+        org.w3c.dom.NodeList nl = indexer.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            org.w3c.dom.Node node = nl.item(i);
+            if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE && node.getNodeName().equals("extensions")) {
+                log.debug("Node extensions exists!");
+                extensions = ((Element)node).getAttribute("src");
+            }
+        }
+        if (extensions == null) {
+            log.error("Extensions have not been specified (indexer/extensions/@src)");
+        }
+        log.debug("Extensions: " + extensions);
+        return extensions;
+    }
 }

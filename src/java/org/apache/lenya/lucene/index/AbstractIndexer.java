@@ -78,11 +78,13 @@ import java.util.Arrays;
  *
  * @author Andreas Hartmann
  * @author Michael Wechner
- * @version $Id: AbstractIndexer.java,v 1.8 2003/11/13 22:55:17 michi Exp $
+ * @version $Id: AbstractIndexer.java,v 1.9 2003/11/26 00:31:12 michi Exp $
  */
 public abstract class AbstractIndexer implements Indexer {
     private CommandLineLogger logger = new CommandLineLogger(getClass());
     private DocumentCreator documentCreator;
+    private Element indexer;
+    private String configFileName;
 
     /** Creates a new instance of AbstractIndexer */
     public AbstractIndexer() {
@@ -104,6 +106,8 @@ public abstract class AbstractIndexer implements Indexer {
      */
     public void configure(Element indexer, String configFileName) throws Exception {
         documentCreator = createDocumentCreator(indexer, configFileName);
+        this.indexer = indexer;
+        this.configFileName = configFileName;
     }
 
     /**
@@ -153,7 +157,7 @@ public abstract class AbstractIndexer implements Indexer {
             IndexWriter writer = new IndexWriter(index, new StandardAnalyzer(), create);
             writer.maxFieldLength = 1000000;
 
-            IndexInformation info = new IndexInformation(index, dumpDirectory, getFilter(), create);
+            IndexInformation info = new IndexInformation(index, dumpDirectory, getFilter(indexer, configFileName), create);
 
             IndexHandler handler;
 
@@ -163,7 +167,7 @@ public abstract class AbstractIndexer implements Indexer {
                 handler = new UpdateIndexHandler(dumpDirectory, info, writer);
             }
 
-            IndexIterator iterator = new IndexIterator(index, getFilter());
+            IndexIterator iterator = new IndexIterator(index, getFilter(indexer, configFileName));
             iterator.addHandler(handler);
             iterator.iterate(dumpDirectory);
 
@@ -181,16 +185,16 @@ public abstract class AbstractIndexer implements Indexer {
         throws Exception {
         getLogger().debug("Deleting stale documents");
 
-        IndexIterator iterator = new IndexIterator(index, getFilter());
+        IndexIterator iterator = new IndexIterator(index, getFilter(indexer, configFileName));
         iterator.addHandler(new DeleteHandler());
         iterator.iterate(dumpDirectory);
         getLogger().debug("Deleting stale documents finished");
     }
 
     /**
-     * Returns the filter used to receive the indexable files.
+     * Returns the filter used to receive the indexable files. Might be overwritten by inherited class.
      */
-    public FileFilter getFilter() {
+    public FileFilter getFilter(Element indexer, String configFileName) {
         String[] indexableExtensions = { "html", "htm", "txt" };
         return new AbstractIndexer.DefaultIndexFilter(indexableExtensions);
     }
@@ -268,7 +272,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.8 $
+     * @version $Revision: 1.9 $
      */
     public class IndexHandler extends AbstractIndexIteratorHandler {
         /**
@@ -321,7 +325,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.8 $
+     * @version $Revision: 1.9 $
      */
     public class CreateIndexHandler extends IndexHandler {
         /**
@@ -347,7 +351,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.8 $
+     * @version $Revision: 1.9 $
      */
     public class UpdateIndexHandler extends IndexHandler {
         /**
