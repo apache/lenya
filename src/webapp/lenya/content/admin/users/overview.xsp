@@ -39,10 +39,8 @@
         AccessController controller = new FileAccessController(configDir);
 
         UserManager userManager = null;  
-        GroupManager groupManager = null;
         try {
             userManager = controller.getUserManager();
-            groupManager = controller.getGroupManager();
         } catch (Exception e) {
             throw new ProcessingException("Exception when instantiating a UserManager or GroupManager", e);
 				}
@@ -61,7 +59,7 @@
             Group groups[] = user.getGroups();
             for (int i = 0; i &lt; groups.length; i++) {
                 <xsp:content>
-                  <group><xsp:expr>groups[i].getName()</xsp:expr></group>
+                  <group><xsp:attribute name="id"><xsp:expr>groups[i].getId()</xsp:expr></xsp:attribute><xsp:expr>groups[i].getName()</xsp:expr></group>
                 </xsp:content>
             }
         </xsp:logic>

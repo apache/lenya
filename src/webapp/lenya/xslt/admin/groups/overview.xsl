@@ -17,16 +17,16 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>User Overview: <xsl:value-of select="user/id"/></page:title>
+      <page:title>Group Overview: <xsl:value-of select="group/id"/></page:title>
       <page:body>
         <xsl:apply-templates select="message"/>
-        <xsl:apply-templates select="user"/>
+        <xsl:apply-templates select="group"/>
       </page:body>
     </page:page>
   </xsl:template>
   
   
-  <xsl:template match="user">
+  <xsl:template match="group">
     
     <table class="lenya-noborder">
       
@@ -40,16 +40,12 @@
           <table class="lenya-table-noborder">
             
             <tr>
-              <td class="lenya-entry-caption">User&#160;ID:</td>
+              <td class="lenya-entry-caption">Group&#160;ID:</td>
               <td><xsl:value-of select="id"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Full&#160;Name:</td>
-              <td><xsl:value-of select="fullname"/></td>
-            </tr>
-            <tr>
-              <td class="lenya-entry-caption">E-Mail:</td>
-              <td><xsl:value-of select="email"/></td>
+              <td class="lenya-entry-caption">Name:</td>
+              <td><xsl:value-of select="name"/></td>
             </tr>
             <tr>
               <td valign="top" class="lenya-entry-caption">Description:</td>
@@ -68,48 +64,28 @@
     </div>
     
     <div class="lenya-box">
-      <div class="lenya-box-title">Password</div>
+      <div class="lenya-box-title">Members</div>
       <div class="lenya-box-body">
         
           <table class="lenya-table-noborder">
             
             <tr>
-              <td class="lenya-entry-caption">User:</td>
+              <td class="lenya-entry-caption" valign="top">Users:</td>
               <td>
-				        <form method="GET" action="lenya.usecase.change_password_user">
-				          <input type="submit" value="Change Password"/>
-				        </form>
-				      </td>
-				    </tr>
-            <tr>
-              <td class="lenya-entry-caption">Admin:</td>
-              <td>
-				        <form method="GET" action="lenya.usecase.change_password_admin">
-				          <input type="submit" value="Change Password"/>
-				        </form>
+                <xsl:apply-templates select="users"/>
               </td>
             </tr>
-          </table>
-      </div>
-    </div>
-    
-    <div class="lenya-box">
-      <div class="lenya-box-title">Group Affiliation</div>
-      <div class="lenya-box-body">
-        
-          <table class="lenya-table-noborder">
-            
             <tr>
-              <td class="lenya-entry-caption" valign="top">Groups:</td>
+              <td class="lenya-entry-caption" valign="top">Machines:</td>
               <td>
-                <xsl:apply-templates select="groups"/>
+                <xsl:apply-templates select="machines"/>
               </td>
             </tr>
             <tr>
               <td/>
               <td>
-				        <form method="GET" action="lenya.usecase.change_groups">
-				          <input type="submit" value="Edit Group Affiliation"/>
+				        <form method="GET" action="lenya.usecase.change_members">
+				          <input type="submit" value="Edit Members"/>
 				        </form>
               </td>
             </tr>
@@ -124,16 +100,16 @@
   </xsl:template>
   
   
-  <xsl:template match="groups">
-      <xsl:apply-templates select="group">
+  <xsl:template match="users|machines">
+      <xsl:apply-templates select="member">
         <xsl:sort/>
       </xsl:apply-templates>
   </xsl:template>
   
   
-  <xsl:template match="group">
+  <xsl:template match="member">
     <xsl:if test="position() &gt; 1"><br/></xsl:if>
-    <a href="../../groups/{@id}/index.html"><xsl:value-of select="."/></a>
+    <a href="../../{local-name(..)}/{@id}/index.html"><xsl:value-of select="."/></a>
   </xsl:template>
   
   

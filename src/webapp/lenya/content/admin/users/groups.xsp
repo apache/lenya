@@ -6,6 +6,10 @@
   xmlns:jpath="http://apache.org/xsp/jpath/1.0"
   >
   
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+  </xsp:structure>
+  
   <page>
     <continuation><jpath:continuation/></continuation>
     <user><id><jpath:value-of select="user-id"/></id></user>
@@ -18,7 +22,8 @@
     <user-groups>
       <xsp:logic>
         for (java.util.Iterator i = userGroups.iterator(); i.hasNext(); ) {
-            <group><xsp:expr>"" + i.next()</xsp:expr></group>
+            Group group = (Group) i.next();
+            <group><xsp:attribute name="id"><xsp:expr>group.getId()</xsp:expr></xsp:attribute><xsp:expr>group.getName()</xsp:expr></group>
         }
       </xsp:logic>
     </user-groups>
@@ -26,7 +31,8 @@
     <groups>
       <xsp:logic>
         for (java.util.Iterator i = groups.iterator(); i.hasNext(); ) {
-            <group><xsp:expr>"" + i.next()</xsp:expr></group>
+            Group group = (Group) i.next();
+            <group><xsp:attribute name="id"><xsp:expr>group.getId()</xsp:expr></xsp:attribute><xsp:expr>group.getName()</xsp:expr></group>
         }
       </xsp:logic>
     </groups>

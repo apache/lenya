@@ -17,7 +17,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>User Overview: <xsl:value-of select="user/id"/></page:title>
+      <page:title>Group Members: <xsl:value-of select="group/id"/></page:title>
       <page:body>
     <table class="lenya-noborder">
     <tr>
@@ -32,24 +32,24 @@
           
                 <table class="lenya-table-noborder-nopadding">
                   <tr>
-                    <td><strong>User groups</strong></td>
+                    <td><strong>Group users</strong></td>
                     <td/>
-                    <td><strong>All groups</strong></td>
+                    <td><strong>All users</strong></td>
                   </tr>
                   <tr>
                     <td valign="middle">
-                      <select name="user_group" size="15" class="lenya-form-element-narrow">
-                        <xsl:apply-templates select="user-groups"/>
+                      <select name="group_user" size="15" class="lenya-form-element-narrow">
+                        <xsl:apply-templates select="list[@type='group-users']"/>
                       </select>
                     </td>
                     <td valign="middle">
-                      <input name="add_group" type="submit" value="&lt;"/>
+                      <input name="add_user" type="submit" value="&lt;"/>
                       <br/>
-                      <input name="remove_group" type="submit" value="&gt;"/>
+                      <input name="remove_user" type="submit" value="&gt;"/>
                     </td>
                     <td valign="middle">
-                      <select name="group" size="15" class="lenya-form-element-narrow">
-                        <xsl:apply-templates select="groups"/>
+                      <select name="user" size="15" class="lenya-form-element-narrow">
+                        <xsl:apply-templates select="list[@type='users']"/>
                       </select>
                     </td>
                   </tr>
@@ -71,12 +71,12 @@
   </xsl:template>
   
   
-  <xsl:template match="groups">
-    <xsl:apply-templates select="group"/>
+  <xsl:template match="list">
+    <xsl:apply-templates select="member"/>
   </xsl:template>
   
   
-  <xsl:template match="group">
+  <xsl:template match="member">
     <option value="{@id}">
       <xsl:value-of select="."/>
     </option>

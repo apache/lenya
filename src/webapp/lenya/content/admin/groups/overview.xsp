@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:xsp-request="http://apache.org/xsp/request/2.0"
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+  
+  <xsp:structure>
+    <xsp:include>org.apache.avalon.framework.parameters.ParameterException</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Groupable</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.GroupManager</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Machine</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.AccessController</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac2.file.FileAccessController</xsp:include>
+    <xsp:include>java.io.File</xsp:include>
+    <xsp:include>java.util.*</xsp:include>
+  </xsp:structure>
+
+  <page>
+    <xsp:logic>
+      
+      String groupId;
+      try {
+          groupId = parameters.getParameter("group-id");
+      }
+      catch (ParameterException e) {
+          throw new ProcessingException(e);
+      }
+      Publication pub = 
+        (Publication)<input:get-attribute module="page-envelope" name="publication"/>;
+
+        File configDir = new File(pub.getDirectory(), "config" + File.separator + "ac");
+        AccessController controller = new FileAccessController(configDir);
+
+        GroupManager groupManager = null;
+        try {
+            groupManager = controller.getGroupManager();
+        } catch (Exception e) {
+            throw new ProcessingException("Exception when instantiating a UserManager or GroupManager", e);
+				}
+				
+        Group group = groupManager.getGroup(groupId);
+        
+        if (group != null) {
+        
+        Set users = new HashSet();
+        Set machines = new HashSet();
+        Groupable members[] = group.getMembers();
+        for (int i = 0; i &lt; members.length; i++) {
+            if (members[i] instanceof User) {
+                users.add(members[i]);
+            }
+            if (members[i] instanceof Machine) {
+                machines.add(members[i]);
+            }
+        }
+        
+        
+    </xsp:logic>
+    <group>
+      <id><xsp:expr>group.getId()</xsp:expr></id>
+      <name><xsp:expr>group.getName()</xsp:expr></name>
+      <description><xsp:expr>group.getDescription()</xsp:expr></description>
+      <users>
+        <xsp:logic>
+            for (Iterator i = users.iterator(); i.hasNext();) {
+                Item member = (Item) i.next();
+                String id = member.getId();
+                String name = member.getName();
+                <xsp:content>
+                  <member><xsp:attribute name="id"><xsp:expr>id</xsp:expr></xsp:attribute><xsp:expr>name</xsp:expr></member>
+                </xsp:content>
+            }
+        </xsp:logic>
+      </users>
+      <machines>
+        <xsp:logic>
+            for (Iterator i = machines.iterator(); i.hasNext();) {
+                Item member = (Item) i.next();
+                String id = member.getId();
+                String name = member.getName();
+                <xsp:content>
+                  <member><xsp:attribute name="id"><xsp:expr>id</xsp:expr></xsp:attribute><xsp:expr>name</xsp:expr></member>
+                </xsp:content>
+            }
+        </xsp:logic>
+      </machines>
+    </group>
+    
+    <xsp:logic>
+        }
+        else {
+            <message type="error">The group <strong><xsp:expr>groupId</xsp:expr></strong> does not exist!</message>
+        }
+    </xsp:logic>
+    
+  </page>
+  
+</xsp:page>

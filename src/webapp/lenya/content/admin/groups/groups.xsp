@@ -38,7 +38,8 @@
       </xsp:logic>
         
       <group>
-        <id><xsp:expr>group.getName()</xsp:expr></id>
+        <id><xsp:expr>group.getId()</xsp:expr></id>
+        <name><xsp:expr>group.getName()</xsp:expr></name>
         <!--
         <members>
           <xsp:logic>

@@ -1,20 +1,4 @@
 
-function getAccessController() {
-    var publication = Packages.org.apache.lenya.cms.publication.PublicationFactory
-                          .getPublication(cocoon.request, cocoon.context);
-    var configDir = new java.io.File(publication.getDirectory(),
-                       "config" + java.io.File.separator + "ac");
-    var accessController = new Packages.org.apache.lenya.cms.ac2.file.FileAccessController(configDir);
-    return accessController;
-}
-
-//
-// The user admin main screen.
-//
-function userAdmin() {
-    sendPage("users.flow");
-}
-
 //
 // Modify a user.
 //
@@ -138,18 +122,18 @@ function user_change_groups(userId) {
 	    	"user-groups" : userGroups
 	    });
 	    
-		var groupName = cocoon.request.get("group");
-		if (cocoon.request.get("add_group") && groupName != "") {
-			var group = accessController.getGroupManager().getGroup(groupName);
+		var groupId = cocoon.request.get("group");
+		if (cocoon.request.get("add_group") && groupId != "") {
+			var group = accessController.getGroupManager().getGroup(groupId);
 			if (!userGroups.contains(group)) {
 				userGroups.add(group);
 				groups.remove(group);
 			}
 		}
 	    
-		var userGroupName = cocoon.request.get("user_group");
-		if (cocoon.request.get("remove_group") && userGroupName != "") {
-			var group = accessController.getGroupManager().getGroup(userGroupName);
+		var userGroupId = cocoon.request.get("user_group");
+		if (cocoon.request.get("remove_group") && userGroupId != "") {
+			var group = accessController.getGroupManager().getGroup(userGroupId);
 			if (userGroups.contains(group)) {
 				userGroups.remove(group);
 				groups.add(group);

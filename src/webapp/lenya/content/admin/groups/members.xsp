@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+  
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.ac.Group</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Item</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+    <xsp:include>org.apache.lenya.cms.ac.Machine</xsp:include>
+  </xsp:structure>
+  
+  <page>
+    <continuation><jpath:continuation/></continuation>
+    <group><id><jpath:value-of select="user-id"/></id></group>
+    
+    <xsp:logic>
+      java.util.List users = (java.util.List) <jpath:value-of select="users"/>;
+      java.util.List machines = (java.util.List) <jpath:value-of select="machines"/>;
+      java.util.List groupUsers = (java.util.List) <jpath:value-of select="group-users"/>;
+      java.util.List groupMachines = (java.util.List) <jpath:value-of select="group-machines"/>;
+      java.util.List[] lists = {
+          users, machines, groupUsers, groupMachines
+      };
+      String[] types = { "users", "machines", "group-users", "group-machines" };
+      
+      for (int i = 0; i &lt; lists.length; i++) {
+        <list>
+          <xsp:attribute name="type"><xsp:expr>types[i]</xsp:expr></xsp:attribute>
+          <xsp:logic>
+          for (java.util.Iterator members = lists[i].iterator(); members.hasNext(); ) {
+              Item item = (Item) members.next();
+              <member><xsp:attribute name="id"><xsp:expr>item.getId()</xsp:expr></xsp:attribute><xsp:expr>item.getName()</xsp:expr></member>
+          }
+          </xsp:logic>
+        </list>
+      }
+      
+    </xsp:logic>
+  </page>
+  
+</xsp:page>

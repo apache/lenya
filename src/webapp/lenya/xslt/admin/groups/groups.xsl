@@ -29,6 +29,7 @@
     <table cellspacing="0" class="lenya-table">
       <tr>
         <th>Group ID</th>
+        <th>Name</th>
         <th></th>
       </tr>
       <xsl:apply-templates select="group">
@@ -42,6 +43,9 @@
     <tr>
       <td style="vertical-align: middle">
         <a href="groups/{id}/index.html"><xsl:value-of select="id"/></a>
+      </td>
+      <td style="vertical-align: middle">
+        <xsl:value-of select="name"/>
       </td>
       <td style="vertical-align: middle">
         <form method="GET" action="index">
