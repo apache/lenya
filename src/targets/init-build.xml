@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: init-build.xml,v 1.28 2004/04/23 20:42:13 michi Exp $ -->
+<!-- $Id: init-build.xml,v 1.29 2004/05/04 13:50:30 michi Exp $ -->
 
 <project name="init">
 
@@ -49,8 +49,8 @@
     <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
 
     <property name="today"         value="${TODAY}"/>
-    <property name="snapshot.bin.dir" value="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}"/>
-    <property name="snapshot.src.dir" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}"/>
+    <property name="snapshot.bin.dir" value="${dist.root}/incubating-${fullname}-bin-${SNAPSHOT_STAMP}"/>
+    <property name="snapshot.src.dir" value="${dist.root}/incubating-${fullname}-src-${SNAPSHOT_STAMP}"/>
 
     
   </target>
@@ -97,14 +97,6 @@
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
-<!-- FIXME: 2.1.2 does not include jing-20030619.jar -->
-<!--
-    <copy todir="${build.webapp}/WEB-INF/lib">
-      <fileset dir="../cocoon-2.1/tools/lib">
-        <include name="jing-20030619.jar"/>
-      </fileset>
-    </copy>
--->
 
     <!-- copy forrest and default libraries -->
     <!-- FIXME: shouldn't be publication specific -->

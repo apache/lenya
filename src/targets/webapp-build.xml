@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml,v 1.15 2004/03/21 18:35:15 gregor Exp $ -->
+<!-- $Id: webapp-build.xml,v 1.16 2004/05/04 13:50:30 michi Exp $ -->
 
 <project name="webapp">
 
@@ -155,8 +155,10 @@
 
   <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
     <!-- Empty server cache - this directory is set in the "build.properties" file -->
+    <echo>INFO: Delete ${tomcat.home.dir}/${tomcat.cache.dir}</echo>
     <delete dir="${tomcat.home.dir}/${tomcat.cache.dir}"/>
     <mkdir dir="${tomcat.home.dir}/${tomcat.webapps.dir}" />
+    <echo>INFO: Delete ${tomcat.home.dir}/${tomcat.webapps.dir}</echo>
     <delete includeEmptyDirs="true">
       <fileset dir="${tomcat.home.dir}/${tomcat.webapps.dir}" excludes="${target.reset.excludes}" />
     </delete>

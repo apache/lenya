@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: properties-build.xml,v 1.17 2004/04/23 20:42:13 michi Exp $ -->
+<!-- $Id: properties-build.xml,v 1.18 2004/05/04 13:50:30 michi Exp $ -->
 
 <project name="properties">
 
@@ -36,8 +36,9 @@
   <property file="build.properties"/>
 
   <!-- Project version and name -->
-  <property name="version" value="1.2"/>
+  <property name="version" value="1.2dev"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
+  <property name="distname" value="incubating-${ant.project.name}-${version}"/>
 
   
   <!-- The root of the cocoon source tree -->
@@ -71,10 +72,10 @@
 
 
   <!-- All packaging for distribution takes place in dist.root -->
-  <property name="dist.root" value="./dist"/>
+  <property name="dist.root" value="dist"/>
 
   <!-- The toplevel directory for the final end-user distribution -->
-  <property name="dist.bin.dir" value="${dist.root}/${fullname}"/>
+  <property name="dist.bin.dir" value="${dist.root}/${distname}-bin"/>
 
   <!-- The javadoc destination directory -->
   <property name="dist.bin.javadocs" value="${build.webapp}/lenya/pubs/docs-new/resources/html/apidocs"/>
@@ -82,11 +83,8 @@
   <!-- The filename of the final end-user war package -->
   <property name="dist.bin.warfile" value="${dist.bin.dir}/${ant.project.name}.war"/>
 
-  <!-- The filename of the final end-user tar file -->
-  <property name="dist.bin.dir" value="${dist.root}/${fullname}-bin"/>
-  
   <!-- The toplevel directory for the final developer source distribution -->
-  <property name="dist.src.dir" value="${dist.root}/${fullname}-src"/>
+  <property name="dist.src.dir" value="${dist.root}/${distname}-src"/>
 
   <!-- The original, unmodified and expanded cocoon.war file upon which we base our package -->
   <property name="cocoon.webapp.dir" value="../cocoon/build/webapp"/>

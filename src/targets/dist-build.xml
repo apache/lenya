@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: dist-build.xml,v 1.7 2004/04/05 10:09:37 michi Exp $ -->
+<!-- $Id: dist-build.xml,v 1.8 2004/05/04 13:50:30 michi Exp $ -->
 
 <project name="dist">
 
@@ -29,20 +29,31 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="prepare-dist" depends="distclean,war">
+  <target name="prepare-dist-bin" depends="clean,war">
 
-    <copy todir="${dist.root}/${fullname}">
+    <copy todir="${dist.root}/${distname}-bin">
       <fileset dir="${basedir}">
-        <include name="INSTALL*"/>
+        <include name="INSTALL-BIN.txt"/>
         <include name="README.txt"/>
       </fileset>
     </copy>
 
+    <!-- Copy endorsed libraries -->
+    <copy todir="${dist.root}/${distname}-bin/endorsed">
+      <fileset dir="${build.webapp}/WEB-INF/lib/endorsed"/>
+    </copy>
+    <copy todir="${dist.root}/${distname}-bin/endorsed">
+      <fileset dir="${build.webapp}/WEB-INF/lib/">
+        <include name="xercesImpl-*.jar"/>
+      </fileset>
+    </copy>
+    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${dist.root}/${distname}-bin/endorsed"/>
+
   </target>
 
-  <target name="dist-bin" depends="prepare-dist" description="Build a regular binary distribution tar ball">
+  <target name="dist-bin" depends="prepare-dist-bin" description="Build a regular binary distribution tar ball">
 
-    <tar tarfile="${dist.bin.dir}.tar" basedir="${dist.root}" includes="${fullname}/**"/>
+    <tar tarfile="${dist.bin.dir}.tar" basedir="${dist.root}" includes="${distname}-bin/**"/>
 
     <gzip zipfile="${dist.bin.dir}.tar.gz" src="${dist.bin.dir}.tar"/>
     <delete file="${dist.bin.dir}.tar"/>
@@ -55,18 +66,18 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="snapshot-bin" depends="prepare-dist" description="Build a snapshot binary distribution tar ball (the same as 'dist' except for the filename)">
+  <target name="snapshot-bin" depends="prepare-dist-bin" description="Build a snapshot binary distribution tar ball (the same as 'dist' except for the filename)">
 
     <copy todir="${snapshot.bin.dir}">
-      <fileset dir="${dist.root}/${fullname}"/>
+      <fileset dir="${dist.root}/${distname}-bin"/>
     </copy>
 
-    <tar tarfile="${snapshot.bin.dir}.tar" basedir="${dist.root}" includes="${fullname}-bin-${SNAPSHOT_STAMP}/**"/>
+    <tar tarfile="${snapshot.bin.dir}.tar" basedir="${dist.root}" includes="${distname}-bin-${SNAPSHOT_STAMP}/**"/>
 
     <gzip zipfile="${snapshot.bin.dir}.tar.gz" src="${snapshot.bin.dir}.tar"/>
     <delete file="${snapshot.bin.dir}.tar"/>
 
-    <zip zipfile="${snapshot.bin.dir}.zip" basedir="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}"/>
+    <zip zipfile="${snapshot.bin.dir}.zip" basedir="${dist.root}/${distname}-bin-${SNAPSHOT_STAMP}"/>
 
   </target>
 
@@ -76,7 +87,7 @@
   The dist-src target prepares the source distribution tarball for
   developers. It also depends on the clean target to remove all build stuff.
   -->
-  <target name="prepare-dist-src" depends="distclean">
+  <target name="prepare-dist-src" depends="clean">
 
     <mkdir dir="${dist.src.dir}"/>
 
@@ -93,7 +104,7 @@
 
   <target name="dist-src" depends="prepare-dist-src" description="Builds a regular tar ball containing the sources for developers">
 
-    <tar tarfile="${dist.src.dir}.tar" basedir="${dist.root}" includes="${fullname}-src/**"/>
+    <tar tarfile="${dist.src.dir}.tar" basedir="${dist.root}" includes="${distname}-src/**"/>
 
     <gzip zipfile="${dist.src.dir}.tar.gz" src="${dist.src.dir}.tar"/>
     <delete file="${dist.src.dir}.tar"/>
@@ -113,16 +124,11 @@
       <fileset dir="${dist.src.dir}"/>
     </copy>
 
-    <tar tarfile="${snapshot.src.dir}.tar" basedir="${dist.root}" includes="${fullname}-src-${SNAPSHOT_STAMP}/**"/>
+    <tar tarfile="${snapshot.src.dir}.tar" basedir="${dist.root}" includes="${distname}-src-${SNAPSHOT_STAMP}/**"/>
 
     <gzip zipfile="${snapshot.src.dir}.tar.gz" src="${snapshot.src.dir}.tar"/>
     <delete file="${snapshot.src.dir}.tar"/>
 
-  </target>
-
-  <target name="distclean" depends="clean" description="Cleans everything to the original state">
-    <delete dir="${build.root}"/>
-    <delete dir="${dist.root}"/>
   </target>
 
 
