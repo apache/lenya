@@ -158,13 +158,13 @@
       </fileset>
     </copy>
 
-    <echo>INFO: Copy libraries from ${lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
-    <echo>INFO: exclude: servlet.jar</echo>
+    <echo>INFO: Copy libraries from ${lib.dir} and ${tools.lib.dir} to ${build.webapp}/WEB-INF/lib</echo>
     <copy todir="${build.webapp}/WEB-INF/lib">
       <fileset dir="${lib.dir}">
         <include name="**/*"/>
-        <!-- servlet.jar is used to build Lenya, but for deployment the servlet.jar from the servlet engine will be taken -->
-        <exclude name="servlet.jar"/>
+      </fileset>
+      <fileset dir="${tools.lib.dir}">
+        <include name="**/*"/>
       </fileset>
     </copy>
 
@@ -191,7 +191,7 @@
   <!-- ============================================================ -->
 
   <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
-    <!-- Empty server cache - this directory is set in the "build.properties" file -->
+    <!-- Empty server cache - this directory is set in the "local.build.properties" file -->
     <echo>INFO: Delete Tomcat Cache Dir: ${tomcat.cache.dir}</echo>
     <delete dir="${tomcat.cache.dir}"/>
     <mkdir dir="${tomcat.webapps.dir}" />

@@ -87,7 +87,7 @@
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/web.xml</echo>
-    <echo>INFO: exclude: WEB-INF/lib/lucene**.jar (NOTE: Have you checked the lucene block within "local.block.properties")</echo>
+    <echo>INFO: exclude: WEB-INF/lib/lucene**.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
@@ -148,7 +148,7 @@
     </xslt>
 
     <!-- patch lucene -->
-    <echo message="INFO: Patch Lucene"/>
+    <echo message="INFO: Use our own Lucene"/>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${src.webapp.dir}">
         <include name="WEB-INF/lib/lucene**.jar"/>
