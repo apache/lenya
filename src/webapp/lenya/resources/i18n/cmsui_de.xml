@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui_de.xml,v 1.63 2004/04/17 18:01:40 roku Exp $ -->
+<!-- $Id: cmsui_de.xml,v 1.64 2004/05/23 19:10:16 roku Exp $ -->
 
 <catalogue xml:lang="de">
 
@@ -80,7 +80,7 @@
   <message key="Creation Date">Erstelldatum</message>
   <message key="File Size">Dateigrösse</message>
   <message key="Image">Bild</message>
-
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} einreichen</message>
   <message key="submit-for-approval?">Möchten Sie {0} zur Durchsicht einreichen?</message>  
@@ -296,10 +296,14 @@
     <message key="failmessage.createdoc.required">Bitte füllen Sie alle Pflichfelder (*) aus..</message>
 
   <!-- Asset Upload/Insert Dialog -->
-  <message key="Add to Asset Library">Zur Bibliothek hinzufügen</message>
+  <message key="lenya.assetupload.subtitle">Zur Bibliothek hinzufügen</message>
   <message key="Asset Library">Objektbibliothek</message>
   <message key="No assets available">Keine Objekte verfügbar</message>
-  <message key="Insert Asset">Objekt einfügen</message>
+  <message key="lenya.assetupload.title">Objekt einfügen</message>
+
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">Bild einfügen</message>
+  <message key="lenya.imageupload.selectimage.label">Bild auswählen</message>
 
 </catalogue>
 

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.11 2004/04/21 09:36:14 gregor Exp $ -->
+<!-- $Id: asset.xsl,v 1.12 2004/05/23 19:10:16 roku Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -39,7 +39,7 @@
 
   <xsl:template match="lenya-info:assets">
     <page:page>
-      <page:title><i18n:text>Insert Asset</i18n:text></page:title>
+      <page:title><i18n:text key="lenya.assetupload.title"/></page:title>
       <page:body>
 <script>
 function insertAsset(src, size) {
@@ -72,7 +72,7 @@ function check(fileinput) {
 }
 </script>
 <div class="lenya-box">
-      <div class="lenya-box-title"><i18n:text>Add to Asset Library</i18n:text></div>
+      <div class="lenya-box-title"><i18n:text key="lenya.assetupload.subtitle"/></div>
 	<form name="fileinput" action="" method="post" enctype="multipart/form-data" onsubmit="return check(fileinput)">
 	  <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
 	  <input type="hidden" name="lenya.step" value="asset-upload"/>
@@ -106,7 +106,7 @@ function check(fileinput) {
 	    <tr>
 	      <td/>
 	      <td>
-		<input i18n:attr="value" type="submit" value="Submit" />&#160;
+		<input i18n:attr="value" type="submit" value="Add" />&#160;
 		<input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
 	      </td>
 	    </tr>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: image.xsl,v 1.8 2004/04/15 11:33:28 gregor Exp $ -->
+<!-- $Id: image.xsl,v 1.9 2004/05/23 19:10:16 roku Exp $ -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0" 
@@ -36,7 +36,9 @@
 
     <xsl:template match="lenya-info:assets">
         <page:page>
-            <page:title>Insert Image</page:title>
+            <page:title>
+              <i18n:text key="lenya.imageupload.title"/>
+            </page:title>
             <page:body >
                 <script> 
                    window.onload = insertCaption
@@ -76,7 +78,7 @@
                   } 
                 </script>
                 <div class="lenya-box">
-                    <div class="lenya-box-title">Add to Asset Library</div>
+                    <div class="lenya-box-title"><i18n:text key="lenya.assetupload.subtitle"/></div>
                     <form name="fileinput" 
                         action="" 
                         method="post" enctype="multipart/form-data" 
@@ -101,15 +103,13 @@
                                 </tr>
                             </xsl:if>
                             <tr>
-                                <td class="lenya-form-caption">Select 
-                                    Image:</td>
+                                <td class="lenya-form-caption"><i18n:text key="lenya.imageupload.selectimage.label"/>:</td>
                                 <td><input class="lenya-form-element" 
                                     type="file" name="properties.asset.data" 
-                                    id="data"/><br/>(No whitespace, no special 
-                                    characters)</td>
+                                    id="data"/><br/>(<i18n:text>No whitespace, no special characters</i18n:text>)</td>
                             </tr>
                             <tr>
-                                <td class="lenya-form-caption">Title:</td>
+                                <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
                                 <td>
                                     <input class="lenya-form-element" 
                                         type="text" 
@@ -117,7 +117,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="lenya-form-caption">Creator:</td>
+                                <td class="lenya-form-caption"><i18n:text>Creator</i18n:text>:</td>
                                 <td>
                                     <input class="lenya-form-element" 
                                         type="text" 
@@ -126,7 +126,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="lenya-form-caption">Rights:</td>
+                                <td class="lenya-form-caption"><i18n:text>Rights</i18n:text>:</td>
                                 <td>
                                     <input class="lenya-form-element" 
                                         type="text" 
@@ -140,7 +140,9 @@
                             <tr>
                                 <td/>
                                 <td> <input type="submit" 
-                                    value="Submit"/>&#160; <input type="button" 
+                                    i18n:attr="value"
+                                    value="Add"/>&#160; <input type="button" 
+                                    i18n:attr="value"
                                     onClick="location.href='javascript:window.close();';" 
                                     value="Cancel"/> </td>
                             </tr>
@@ -148,7 +150,7 @@
                     </form>
                 </div>
                 <div class="lenya-box">
-                    <div class="lenya-box-title">Asset Library</div>
+                    <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
                     <form id="image">
                         <table class="lenya-table-noborder">
                             <xsl:choose>
@@ -211,7 +213,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="lenya-form-caption"> 
-                                                    Title:</td>
+                                                    <i18n:text>Title</i18n:text>:</td>
                                                 <td colspan="4" 
                                                     class="lenya-form-caption">
                                                     <input 
@@ -222,7 +224,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="lenya-form-caption"> 
-                                                    Caption:</td>
+                                                    <i18n:text>Caption</i18n:text>:</td>
                                                 <td colspan="4" 
                                                     class="lenya-form-caption">
                                                     <input 
@@ -234,7 +236,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="lenya-form-caption"> 
-                                                    Link:</td>
+                                                    <i18n:text>Link</i18n:text>:</td>
                                                 <td colspan="4" 
                                                     class="lenya-form-caption"> 
                                                     <input 
