@@ -68,7 +68,7 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
             }
             
             if (name.equals(TRASH_NODE)) {
-                SiteTree authoringTree = publication.getSiteTree(Publication.TRASH_AREA);
+                SiteTree authoringTree = manager.getTree(Publication.TRASH_AREA);
                 value = authoringTree.getNode(envelope.getDocument().getId());
             }
         } catch (Exception e) {
