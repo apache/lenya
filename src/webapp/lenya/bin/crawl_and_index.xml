@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: crawl_and_index.xml,v 1.34 2004/04/14 09:32:25 michi Exp $ -->
+<!-- $Id: crawl_and_index.xml,v 1.35 2004/04/22 14:19:04 michi Exp $ -->
 
 <project default="main" basedir=".">
 
@@ -55,6 +55,11 @@
     <pathelement path="${web-inf.dir}/lib/xml-commons-resolver-1.1.jar"/>
   </path>
 
+<!--
+  <property environment="env"/>
+  <property name="javaexe" value="${env.JAVA_HOME}/bin/java"/>
+-->
+
   <chmod file="${webapp.dir}/lenya/bin/crawl_and_index.sh" perm="755"/>
 </target>
 
@@ -81,37 +86,21 @@
 </target>
 
 
-
-
-
-
 <target name="index" description="Index hypertext documents. Usage: -Dlucene.xconf=/foo/bar/lucene.xconf" depends="init">
   <echo>INFO: Index hypertext documents</echo>
 
-  <exec executable="${webapp.dir}/lenya/bin/crawl_and_index.sh">
-    <arg value="index"/>
-    <arg value="${lucene.xconf}"/>
-  </exec>
-
-<!-- FIXME: Linkage problem -->
-<!--
+  <echo>INFO: Show configuration</echo>
   <java classname="org.apache.lenya.lucene.IndexConfiguration">
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
 
+  <echo>INFO: Create index ...</echo>
   <java classname="org.apache.lenya.lucene.index.Index">
     <arg value="${lucene.xconf}"/>
     <classpath refid="class.path"/>
   </java>
--->
-
-<!--
-  <java classname="org.apache.lenya.lucene.IndexHTML">
-    <arg value="${lucene.xconf}"/>
-    <classpath refid="class.path"/>
-  </java>
--->
+  <echo>INFO: Index has been created</echo>
 </target>
 
 
@@ -129,6 +118,7 @@
     <arg value="${search.term}"/>
   </exec>
 
+<!-- NOTE: problem with modifiers "public static" -->
 <!--
   <java classname="org.apache.lenya.lucene.SearchFiles">
     <arg value="${index.dir}"/>
