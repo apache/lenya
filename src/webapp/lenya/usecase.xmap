@@ -83,10 +83,14 @@
       
       <map:select type="resource-exists">
         <map:when test="lenya/pubs/{publication-id}/lenya/xslt/{stylesheet}">
-          <map:transform src="pubs/{publication-id}/lenya/xslt/{stylesheet}"/>
+          <map:transform src="pubs/{publication-id}/lenya/xslt/{stylesheet}">
+            <map:parameter name="use-request-parameters" value="true"/>
+          </map:transform>
         </map:when>
         <map:otherwise>
-          <map:transform src="xslt/{stylesheet}"/>
+          <map:transform src="xslt/{stylesheet}">
+            <map:parameter name="use-request-parameters" value="true"/>
+          </map:transform>
         </map:otherwise>
       </map:select>
       
