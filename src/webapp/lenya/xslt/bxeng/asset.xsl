@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: asset.xsl,v 1.10 2004/04/15 11:33:28 gregor Exp $ -->
+<!-- $Id: asset.xsl,v 1.11 2004/04/21 09:36:14 gregor Exp $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,7 +27,6 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
-    disable-output-escaping="yes"
     exclude-result-prefixes="lenya-info wf rc dc usecase page i18n"
     >
 
