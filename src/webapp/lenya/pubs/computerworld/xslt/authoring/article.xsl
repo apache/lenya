@@ -34,7 +34,8 @@
     </td></tr></table>
     <br/>
 		<table border="0" cellpadding="0" cellspacing="0" width="440">
-			<tr><td width="440" height="3" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
+<tr><td width="440" height="5" colspan="2"><img src="/img/layout/trans1x1.gif" width="1" height="5" /></td></tr>
+<tr><td width="440" height="3" colspan="2"><img src="/img/layout/linecontent440x3.gif" width="440" height="3"/></td></tr>
 			<tr>
 				<td width="300" height="30" align="left" valign="middle">
         	<span class="txt-s-black"><xsl:value-of select="head/dateline/story.date/@norm" /></span></td>
