@@ -20,13 +20,13 @@
         <text/>
       </element>
       <element name="echo:created">
-        <data type="NMTOKEN"/>
+        <text/>
       </element>
       <element name="echo:issued">
-        <data type="NMTOKEN"/>
+        <text/>
       </element>
       <element name="echo:modified">
-        <data type="NMTOKEN"/>
+        <text/>
       </element>
       <element name="echo:content">
         <attribute name="type"/>
