@@ -68,7 +68,7 @@ be used to configure the chosen Forrest skin.
   <!-- mandatory project logo
        skin: forrest-site renders it at the top -->
   <project-name>Lenya</project-name>
-  <project-url>http://www.wyona.org</project-url>
+  <project-url>http://www.lenya.org</project-url>
   <project-logo>images/apache-lenya-light.png</project-logo>
   <!--
   <project-logo>images/apache-lenya-outline.png</project-logo>
