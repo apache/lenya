@@ -12,7 +12,7 @@
     <map:selectors/>
   </map:components>
 
-  <map:flow language="JavaScript">
+  <map:flow language="javascript">
     <map:script src="content/ac/passwd.js"/>
     <map:script src="content/admin/common/access-control.js"/>
     <map:script src="content/admin/users/user-admin.js"/>
@@ -163,7 +163,10 @@
       <!-- usecase page (type = user|group) -->
       <!-- pattern: {type}s/lenya.usecase.{usecase} -->
       <map:match pattern="*s/lenya.usecase.*">
-        <map:call function="{1}_{2}"/>
+        <map:call function="{1}_{2}">
+          <map:parameter name="requestUri" value="{request:requestURI}"/>
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:call>
       </map:match>
       
       <!-- usecase page (type = user|group) -->
@@ -171,6 +174,8 @@
       <map:match pattern="*s/*/lenya.usecase.*">
         <map:call function="{1}_{3}">
           <map:parameter name="{1}Id" value="{2}"/>
+          <map:parameter name="requestUri" value="{request:requestURI}"/>
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:call>
       </map:match>
       
