@@ -145,14 +145,12 @@ One needs to configure <code>Domain.xml</code>
 
 <section>
 <title>Monitoring the WebDAV exchange</title>
-<p>
 <source>
 <![CDATA[
 cd /home/michiii/build/axis-1_1RC2
 java -cp lib/axis.jar org.apache.axis.utils.tcpmon
 ]]>
 </source>
-</p>
 </section>
 
 </body>
