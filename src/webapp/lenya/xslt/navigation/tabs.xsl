@@ -10,33 +10,25 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:tree="http://www.lenya.org/2003/sitetree"
+    xmlns:nav="http://www.lenya.org/2003/navigation"
     xmlns="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="tree"
+    exclude-result-prefixes="nav"
     >
 
-<xsl:import href="util.xsl"/>
-    
-<xsl:param name="path"/>
+<xsl:param name="url"/>
 
-<xsl:template match="tree:site">
+<xsl:template match="nav:site">
 
-  <xsl:variable name="first-step">
-    <xsl:call-template name="first-step">
-      <xsl:with-param name="path" select="$path"/>
-    </xsl:call-template>
-  </xsl:variable>
-  
   <div id="tabs">
 
     <xsl:call-template name="pre-separator"/>
-    <xsl:for-each select="tree:node">
+    <xsl:for-each select="nav:node">
       <xsl:if test="position() &gt; 1">
         <xsl:call-template name="separator"/>
       </xsl:if>
       
       <xsl:choose>
-        <xsl:when test="@id = $first-step">
+        <xsl:when test="starts-with($url, @basic-url)">
           <xsl:call-template name="tab-selected"/>
         </xsl:when>
         <xsl:otherwise>
@@ -61,11 +53,11 @@
 
 
 <xsl:template name="label">
-  <a><xsl:call-template name="node2href"/><xsl:apply-templates select="tree:label"/></a>
+  <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
 </xsl:template>
 
 
-<xsl:template match="tree:label">
+<xsl:template match="nav:label">
   <xsl:apply-templates select="node()"/>
 </xsl:template>
 

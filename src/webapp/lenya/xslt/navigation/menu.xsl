@@ -10,69 +10,50 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:tree="http://www.lenya.org/2003/sitetree"
+    xmlns:nav="http://www.lenya.org/2003/navigation"
     xmlns="http://www.w3.org/1999/xhtml"
-    exclude-result-prefixes="tree"
+    exclude-result-prefixes="nav"
     >
     
-<xsl:import href="util.xsl"/>
+<xsl:param name="url"/>
 
-<xsl:param name="path"/>
-
-
-<xsl:template match="tree:site">
+<xsl:template match="nav:site">
   <div id="menu">
-    <xsl:apply-templates select="tree:node">
-      <xsl:with-param name="relative-path" select="''"/>
-    </xsl:apply-templates>
+    <xsl:apply-templates select="nav:node"/>
   </div>
 </xsl:template>
 
 
-<xsl:template match="tree:node">
-  <xsl:param name="relative-path"/>
-  
-  <xsl:variable name="href">
-    <xsl:value-of select="concat($relative-path, @id)"/>
-  </xsl:variable>
-  
+<xsl:template match="nav:node">
   <xsl:choose>
-    <xsl:when test="$path = $href">
-      <xsl:call-template name="item-selected">
-        <xsl:with-param name="href" select="$href"/>
-      </xsl:call-template>
+    <xsl:when test="starts-with($url, @basic-url)">
+      <xsl:call-template name="item-selected"/>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:call-template name="item">
-        <xsl:with-param name="href" select="$href"/>
-      </xsl:call-template>
+      <xsl:call-template name="item"/>
     </xsl:otherwise>
   </xsl:choose>
   
-  <xsl:apply-templates select="tree:node">
-    <xsl:with-param name="relative-path" select="concat($relative-path, @id, '/')"/>
-  </xsl:apply-templates>
+  <xsl:apply-templates select="nav:node"/>
   
 </xsl:template>
 
 
 <xsl:template name="item">
-  <xsl:param name="href"/>
-  <div class="menuitem-{count(ancestor-or-self::tree:node)}">
-    <a href="{$path-to-context}{$href}"><xsl:apply-templates select="tree:label"/></a>
+  <div class="menuitem-{count(ancestor-or-self::nav:node)}">
+    <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
   </div>
 </xsl:template>
     
     
 <xsl:template name="item-selected">
-  <xsl:param name="href"/>
-  <div class="menuitem-selected-{count(ancestor-or-self::tree:node)}">
-    <xsl:apply-templates select="tree:label"/>
+  <div class="menuitem-selected-{count(ancestor-or-self::nav:node)}">
+    <xsl:apply-templates select="nav:label"/>
   </div>
 </xsl:template>
 
 
-<xsl:template match="tree:label">
+<xsl:template match="nav:label">
   <xsl:apply-templates select="node()"/>
 </xsl:template>
     
