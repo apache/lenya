@@ -36,6 +36,8 @@ cache.dir=/usr/local/tomcat/work/Standalone/localhost/lenya
 #target.install.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**
 #target.reset.excludes=**/oscom/**/authoring/**,**/oscom/**/live/**
 
+
 #------------------------------------------------------------------------------------
 # HSQL-DB server port
+
 #hsqldb-server.port=9002
