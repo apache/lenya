@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminDeleteAction.java,v 1.3 2003/06/06 17:59:23 egli Exp $
+ * $Id: UserAdminDeleteAction.java,v 1.4 2003/06/10 13:59:25 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -85,7 +85,8 @@ public class UserAdminDeleteAction
 		throws Exception {
 
 		Request request = ObjectModelHelper.getRequest(objectModel);
-		Publication publication = PublicationFactory.getPublication(objectModel);
+		Publication publication =
+			PublicationFactory.getPublication(objectModel);
 
 		Map emptyMap = Collections.EMPTY_MAP;
 
@@ -99,7 +100,12 @@ public class UserAdminDeleteAction
 			return null;
 		}
 		User user = manager.getUser(userId);
-
+		
+		if (user == null) {
+			getLogger().warn("Trying to delete non-existing user: " + userId);
+			return null;	
+		}
+		
 		try {
 			user.delete();
 		} catch (AccessControlException e) {
