@@ -129,5 +129,69 @@ Editing with Xopus is implemented as a usecase. One can add a menu item as follo
     (which admittedly is a bit clunky as it predates many Lenya concepts).
     </p>
 </section>
+<section>
+<title>Things to watch out for</title>
+<section>
+    <title>Check your Internet Explorer cache settings</title>
+<p>Make sure that the page is loaded from scratch everytime you visit it, because
+otherwise you'll always see a cached version. This cached version will be
+saved if you click on 'save' in Xopus.</p>
+</section>
+<section>
+    <title>Check your local.build.properties</title>
+<p>Your variable settings could look like this:</p>
+<source>
+<![CDATA[
+  xopus.context=Xopus-2.1.72   root directory for all Xopus files
+  xopus.path=../../ROOT        relative path from usecase.xmap to Xopus root
+                               directory
+]]>
+</source>
+</section>
+    <section>
+    <title>Check your schema files</title>
+<p>I had troubles with schemas including other schema files. You have to insert a
+separate pipeline for this kind of architecture. Unfortunately I couldn't
+figure out if I had to put this matcher in
+'$PUBLICATION/publication-sitemap.xmap' or elsewhere. I ended up using one and
+only one schema file for a specific doctype.</p>
+</section>
+<section>
+    <title>Check your CSS files</title>
+<p>You have to provide a stylesheet for Xopus in
+'$PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl'. If you use a *.css file to
+control layout and style of the XML file displayed by Xopus, you'll have to
+insert a pipeline matcher in '$PUBLICATION/publication-sitemap.xmap':</p>
+<source>
+<![CDATA[
+  <map:pipeline>
+    <map:match pattern="**/xopus.css">
+      <map:read src="resources/shared/css/xopus.css" mime-type="text/css"/>
+    </map:match>
+  </map:pipeline>
+]]>
+</source>
+</section>
+<section>
+<title>Missing preparexinclude.xsl</title>
+<p>If Xopus complains that it cannot find <code>$XOPUS/xopusPlugins/preparexinclude.xsl</code>, then add the following at that location:</p>
+<source>
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+                       xmlns:x="http://www.w3.org/2001/XInclude"
+                       xmlns:xlink="http://www.w3.org/1999/xlink"
+                       xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                       >
+
+  <xsl:template match="@*|node()">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+</xsl:stylesheet>]]>
+</source>
+</section>
+</section>
 </body>
 </document>
