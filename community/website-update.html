@@ -118,7 +118,7 @@
 <a title="" href="../community/acknowledgements.html">Credits</a>
 </div>
 <div class="menuitem">
-<a title="" href="http://svn.apache.org/viewcvs.cgi/incubator/lenya/#dirlist">SVN Web</a>
+<a title="" href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">SVN Web</a>
 </div>
 <div class="menuitem">
 <a title="" href="http://nagoya.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=%27Importance%27">Bug Tracker</a>
@@ -165,23 +165,27 @@
 <div class="section">
 <ul>
   
-<li>Checkout <span class="codefrag">https://svn.apache.org/repos/asf/lenya/site/</span>
-</li>
+<li>
+<span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/docu/</span> -&gt;This is our documentation and website source tree</li>
+  
+<li>
+<span class="codefrag">svn co https://svn.apache.org/repos/asf/lenya/site/</span> -&gt;This is our deployed website tree (it is the svn-root for our website)</li>
   
 <li>
 <a href="http://forrest.apache.org/build.html">Build Forrest</a>
 </li>
   
 <li>
-<span class="codefrag">go to the root of lenya/site</span>
+<span class="codefrag">go to the root of lenya/docu</span>
 </li>
   
 <li>
 <span class="codefrag">forrest</span>
 </li>
-<!--  <li>Create and copy the Javadoc (<code>ant javadocs</code>, <code>ant install</code>, Copy from <code>$T/lenya/pubs/docs-new/resources/html/apidocs</code> to <code>lenya-site</code>)</li>
--->  
-<li>Add, remove, commit to <span class="codefrag">lenya-site</span>
+  
+<li>Create and copy the Javadoc (<span class="codefrag">ant javadocs</span>, <span class="codefrag">ant install</span>, Copy from <span class="codefrag">$T/lenya/pubs/docs-new/resources/html/apidocs</span> to <span class="codefrag">lenya/site/apidocs</span>)</li>
+  
+<li>Add, remove, commit to <span class="codefrag">lenya/site</span>
 </li>
 
 </ul>
