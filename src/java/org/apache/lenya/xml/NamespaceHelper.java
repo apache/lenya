@@ -1,5 +1,5 @@
 /*
- * $Id: NamespaceHelper.java,v 1.8 2003/03/06 20:45:53 gregor Exp $
+ * $Id: NamespaceHelper.java,v 1.9 2003/03/21 15:45:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -177,7 +177,7 @@ public class NamespaceHelper {
      * @param text The text for the text node inside the element.
      * @return A new element containing a text node.
      */
-    protected Element createElement(String localName, String text) {
+    public Element createElement(String localName, String text) {
         Element element = createElement(localName);
         Text textNode = getDocument().createTextNode(text);
         element.appendChild(textNode);

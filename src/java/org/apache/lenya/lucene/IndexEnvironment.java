@@ -1,5 +1,5 @@
 /*
- * $Id: IndexEnvironment.java,v 1.7 2003/03/06 20:45:42 gregor Exp $
+ * $Id: IndexEnvironment.java,v 1.8 2003/03/21 15:45:03 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -57,6 +57,7 @@ import java.io.File;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
+ * @author Andreas Hartmann
  */
 public class IndexEnvironment implements Configurable {
     static Category log = Category.getInstance(IndexEnvironment.class);
@@ -64,6 +65,7 @@ public class IndexEnvironment implements Configurable {
     private String update_index_type;
     private String index_dir;
     private String htdocs_dump_dir;
+    private Class indexerClass;
 
     /**
      * Creates a new IndexEnvironment object.
@@ -109,6 +111,8 @@ public class IndexEnvironment implements Configurable {
         parameter = ie.getHTDocsDumpDir();
         System.out.println(parameter);
         System.out.println(ie.resolvePath(parameter));
+
+        System.out.println(ie.getIndexerClass());
     }
 
     /**
@@ -119,10 +123,18 @@ public class IndexEnvironment implements Configurable {
      * @throws ConfigurationException DOCUMENT ME!
      */
     public void configure(Configuration configuration)
-        throws ConfigurationException {
+            throws ConfigurationException {
         update_index_type = configuration.getChild("update-index").getAttribute("type");
         index_dir = configuration.getChild("index-dir").getAttribute("src");
         htdocs_dump_dir = configuration.getChild("htdocs-dump-dir").getAttribute("src");
+        String indexerClassName = configuration.getChild("indexer").getAttribute("class");
+        try {
+            indexerClass = Class.forName(indexerClassName);
+        }
+        catch (ClassNotFoundException e) {
+            throw new ConfigurationException("Cannot find indexer class: ", e);
+        }
+
     }
 
     /**
@@ -171,5 +183,14 @@ public class IndexEnvironment implements Configurable {
         }
 
         return org.apache.avalon.excalibur.io.FileUtil.catPath(configurationFilePath, path);
+    }
+
+    /**
+     * Returns the indexer class to be used
+     *
+     * @return DOCUMENT ME!
+     */
+    public Class getIndexerClass() {
+        return indexerClass;
     }
 }
