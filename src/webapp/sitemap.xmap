@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap,v 1.128 2004/04/29 15:33:49 gregor Exp $ -->
+<!-- $Id: sitemap.xmap,v 1.129 2004/06/29 16:11:48 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -23,17 +23,47 @@
 
  <map:components>
    
+  <!-- ========================================================================== -->
+  <!-- Generators -->
+  <!-- ========================================================================== -->
+
   <map:generators default="file">
+    <map:generator name="directory" label="content,data" logger="sitemap.generator.directory" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.generation.DirectoryGenerator"/>
+    <map:generator name="extractor" label="data" logger="sitemap.generator.extractor" src="org.apache.cocoon.generation.FragmentExtractorGenerator"/>
     <map:generator name="file" label="content,data" logger="sitemap.generator.file" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.generation.FileGenerator"/>
     <map:generator name="file-nolabel" label="content,data" logger="sitemap.generator.file-nolabel" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.generation.FileGenerator"/>
-    <map:generator name="serverpages" label="content,data" logger="sitemap.generator.serverpages" pool-grow="2" pool-max="32" pool-min="4" src="org.apache.cocoon.generation.ServerPagesGenerator"/>
-    <map:generator name="proxy" label="content" logger="sitemap.generator.proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
+    <map:generator name="html" label="content,data" src="org.apache.cocoon.generation.HTMLGenerator"/>
+    <map:generator name="imagedirectory" label="content,data" logger="sitemap.generator.imagedirectory" src="org.apache.cocoon.generation.ImageDirectoryGenerator"/>
+    <map:generator name="kupustream" label="content,data" logger="sitemap.generator.kupustream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.lenya.cms.cocoon.generation.StreamGenerator"/>
     <map:generator name="notifying" src="org.apache.cocoon.sitemap.NotifyingGenerator"/>
+    <map:generator name="proxy" label="content" logger="sitemap.generator.proxy" src="org.apache.cocoon.generation.HttpProxyGenerator"/>
+    <map:generator name="request" label="data" logger="sitemap.generator.request" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.generation.RequestGenerator"/>
+    <map:generator name="serverpages" label="content,data" logger="sitemap.generator.serverpages" pool-grow="2" pool-max="32" pool-min="4" src="org.apache.cocoon.generation.ServerPagesGenerator"/>
     <map:generator name="servletproxy" src="org.apache.lenya.cms.cocoon.generation.ProxyGenerator"/>
+    <map:generator name="status" label="data" logger="sitemap.generator.status" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.generation.StatusGenerator"/>
+    <map:generator name="stream" label="content,data" logger="sitemap.generator.stream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.cocoon.generation.StreamGenerator"/>
+    <map:generator name="xpathdirectory" label="content" logger="sitemap.generator.xpathdirectory" src="org.apache.cocoon.generation.XPathDirectoryGenerator"/>
   </map:generators>
 
+  <!-- ========================================================================== -->
+  <!-- Transformers -->
+  <!-- ========================================================================== -->
+
   <map:transformers default="xslt">
-    <map:transformer name="xinclude" logger="sitemap.transformer.xinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
+
+    <map:transformer name="access-control-sitetree" logger="lenya.sitemap.transformer.accesscontrolsitetree" src="org.apache.lenya.cms.cocoon.transformation.AccessControlSitetreeTransformer"/>
+    <map:transformer name="cinclude" logger="sitemap.transformer.cinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
+
+    <map:transformer name="deli" logger="sitemap.transformer.deli" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.DeliTransformer">
+      <use-request-parameters>false</use-request-parameters>
+      <use-session-parameters>false</use-session-parameters>
+      <use-cookie-parameters>false</use-cookie-parameters>
+      <xslt-processor-role>xalan</xslt-processor-role>
+    </map:transformer>
+
+    <map:transformer name="encodeURL" logger="sitemap.transformer.encodeURL" src="org.apache.cocoon.transformation.EncodeURLTransformer"/>
+    <map:transformer name="extractor" logger="sitemap.transformer.extractor" src="org.apache.cocoon.transformation.FragmentExtractorTransformer"/>
+
     <map:transformer name="i18n" logger="sitemap.transformer.i18n" src="org.apache.cocoon.transformation.I18nTransformer">
       <catalogues default="cmsui">
          <catalogue id="cmsui" name="cmsui" location="cocoon://i18n-catalogue/"/>
@@ -41,6 +71,36 @@
        <untranslated-text>untranslated</untranslated-text>
        <cache-at-startup>true</cache-at-startup>
     </map:transformer>
+
+    <map:transformer name="index" logger="lenya.sitemap.transformer.index" src="org.apache.lenya.cms.cocoon.transformation.DocumentIndexTransformer"/>
+    <map:transformer name="lexer" logger="sitemap.transformer.lexer" src="org.apache.cocoon.transformation.LexicalTransformer"/>
+    <map:transformer name="ldap" src="org.apache.cocoon.transformation.LDAPTransformer"/>
+    <map:transformer name="link-rewrite" logger="lenya.sitemap.transformer.link-rewrite" src="org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer"/>
+    <map:transformer name="log" logger="sitemap.transformer.log" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.LogTransformer"/>
+    <map:transformer name="jpath" logger="sitemap.transformer.jpath" src="org.apache.cocoon.transformation.JPathTransformer"/>
+    <map:transformer name="filter" logger="sitemap.transformer.filter" src="org.apache.cocoon.transformation.FilterTransformer"/>
+    <map:transformer name="parser" logger="sitemap.transformer.lexer" src="org.apache.cocoon.transformation.ParserTransformer"/>
+    <map:transformer name="pattern" logger="sitemap.transformer.lexer" src="org.apache.cocoon.transformation.PatternTransformer"/>
+    <map:transformer name="readDOMsession" logger="sitemap.transformer.readDOMsession" src="org.apache.cocoon.transformation.ReadDOMSessionTransformer"/>
+    <map:transformer name="session" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.webapps.session.transformation.SessionTransformer"/>
+    <map:transformer name="session-post" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.webapps.session.transformation.SessionPostTransformer"/>
+    <map:transformer name="session-pre" pool-grow="4" pool-max="32" pool-min="8" src="org.apache.cocoon.webapps.session.transformation.SessionPreTransformer"/>
+    <map:transformer name="sql" logger="sitemap.transformer.sql" src="org.apache.cocoon.transformation.SQLTransformer"/>
+    <map:transformer name="usecasemenu" logger="lenya.sitemap.transformer.usecasemenu" src="org.apache.lenya.cms.cocoon.transformation.UsecaseMenuTransformer"/>
+    <map:transformer name="workflowmenu" logger="lenya.sitemap.transformer.workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/>
+    <map:transformer name="writeDOMsession" logger="sitemap.transformer.writeDOMsession" src="org.apache.cocoon.transformation.WriteDOMSessionTransformer"/>
+    <map:transformer name="write-source" logger="sitemap.transformer.write-source" src="org.apache.cocoon.transformation.SourceWritingTransformer"/>
+    
+    <!-- NOTE: This used to be the default XSLT processor. The default now is XSLTC -->
+    <map:transformer name="xalan" logger="sitemap.transformer.xalan" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
+      <use-request-parameters>false</use-request-parameters>
+      <use-session-parameters>false</use-session-parameters>
+      <use-cookie-parameters>false</use-cookie-parameters>
+      <transformer-factory>org.apache.xalan.processor.TransformerFactoryImpl</transformer-factory>
+    </map:transformer>
+
+    <map:transformer name="xinclude" logger="sitemap.transformer.xinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
+    
     <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
       <publication type=""/>
     </map:transformer>
@@ -61,61 +121,161 @@
       <transformer-factory>org.apache.xalan.processor.TransformerFactoryImpl</transformer-factory>
     </map:transformer>
   </map:transformers>
+  
+  <!-- ========================================================================== -->
+  <!-- Serializers -->
+  <!-- ========================================================================== -->
 
   <map:serializers default="html">
-    <map:serializer name="links" logger="sitemap.serializer.links" src="org.apache.cocoon.serialization.LinkSerializer"/>
-    <map:serializer name="xml" logger="sitemap.serializer.xml" mime-type="text/xml" src="org.apache.cocoon.serialization.XMLSerializer"/>
-    <map:serializer name="html" logger="sitemap.serializer.html" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
-      <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
-      <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
-      <buffer-size>1024</buffer-size>
+
+    <map:serializer name="html" logger="sitemap.serializer.html" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.components.serializers.HTMLSerializer">
       <encoding>UTF-8</encoding>
     </map:serializer>
+    
     <map:serializer name="html-no-dtd" logger="sitemap.serializer.html-no-dtd" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
       <buffer-size>1024</buffer-size>
     </map:serializer>
+    
     <map:serializer name="html-iso-8859-1" logger="sitemap.serializer.html-iso-8859-1" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
       <buffer-size>1024</buffer-size>
       <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
       <encoding>ISO-8859-1</encoding>
     </map:serializer>
-    <map:serializer name="xhtml" logger="sitemap.serializer.xhtml" mime-type="text/html" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
-      <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
-      <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
+    
+    <map:serializer name="htmlnoi" logger="sitemap.serializer.htmlnoi" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer"> 
+      <indent>no</indent>
+      <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
+      <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
       <encoding>UTF-8</encoding>
     </map:serializer>
+    
+    <map:serializer name="xhtml" logger="sitemap.serializer.xhtml" mime-type="text/html" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.components.serializers.XHTMLSerializer">
+      <encoding>UTF-8</encoding>
+    </map:serializer>
+    
     <map:serializer name="xhtml-iso-8859-1" logger="sitemap.serializer.xhtml-iso-8859-1" mime-type="text/html" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
       <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
       <encoding>ISO-8859-1</encoding>
     </map:serializer>
+    
+    <map:serializer name="xml" logger="sitemap.serializer.xml" mime-type="text/xml" src="org.apache.cocoon.components.serializers.XMLSerializer">
+      <encoding>UTF-8</encoding>
+    </map:serializer>
+    
+    <map:serializer name="links" logger="sitemap.serializer.links" src="org.apache.cocoon.serialization.LinkSerializer"/>
+    
+    <map:serializer name="wml" logger="sitemap.serializer.wml" mime-type="text/vnd.wap.wml" src="org.apache.cocoon.serialization.XMLSerializer">
+     <doctype-public>-//WAPFORUM//DTD WML 1.1//EN</doctype-public>
+     <doctype-system>http://www.wapforum.org/DTD/wml_1.1.xml</doctype-system>
+     <encoding>ASCII</encoding>
+     <omit-xml-declaration>yes</omit-xml-declaration>
+    </map:serializer>
+    
+    <map:serializer name="svgxml" logger="sitemap.serializer.svgxml" mime-type="image/svg-xml" src="org.apache.cocoon.serialization.XMLSerializer">
+     <doctype-public>-//W3C//DTD SVG 20000303 Stylable//EN</doctype-public>
+     <doctype-system>http://www.w3.org/TR/2000/03/WD-SVG-20000303/</doctype-system>
+    </map:serializer>
+    
     <map:serializer name="text" logger="sitemap.serializer.text" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer"/>
+    
     <map:serializer name="text-iso-8859-1" logger="sitemap.serializer.text-iso-8859-1" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
       <encoding>ISO-8859-1</encoding>
     </map:serializer>
-     <map:serializer name="text-utf-8" logger="sitemap.serializer.text-iso-8859-1" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
-      <encoding>UTF-8</encoding>
+    
+    <map:serializer name="fo2pdf" logger="sitemap.serializer.fo2pdf" mime-type="application/pdf" src="org.apache.cocoon.serialization.FOPSerializer"/>
+    <map:serializer name="fo2ps" logger="sitemap.serializer.fo2ps" mime-type="application/postscript" src="org.apache.cocoon.serialization.FOPSerializer"/>
+    <map:serializer name="fo2pcl" logger="sitemap.serializer.fo2pcl" mime-type="vnd.hp-PCL" src="org.apache.cocoon.serialization.FOPSerializer"/>
+    <map:serializer name="svgxml" logger="sitemap.serializer.svgxml" mime-type="image/svg-xml" src="org.apache.cocoon.serialization.XMLSerializer">
+      <doctype-public>-//W3C//DTD SVG 20000303 Stylable//EN</doctype-public>
+      <doctype-system>http://www.w3.org/TR/2000/03/WD-SVG-20000303/</doctype-system>
     </map:serializer>
+    <map:serializer name="svg2jpeg" logger="sitemap.serializer.svg2png" mime-type="image/jpeg" src="org.apache.cocoon.serialization.SVGSerializer">
+      <parameter name="quality" type="float" value="0.9"/>
+    </map:serializer>
+    <map:serializer name="svg2png" logger="sitemap.serializer.svg2png" mime-type="image/png" src="org.apache.cocoon.serialization.SVGSerializer"/>
+
   </map:serializers>
+
+  <!-- ========================================================================== -->
+  <!-- Readers -->
+  <!-- ========================================================================== -->
 
   <map:readers default="resource">
     <map:reader name="resource" logger="sitemap.reader.resource" pool-max="32" src="org.apache.cocoon.reading.ResourceReader"/>
   </map:readers>
 
+  <!-- ========================================================================== -->
+  <!-- Matchers -->
+  <!-- ========================================================================== -->
+
   <map:matchers default="wildcard">
     <map:matcher name="wildcard" logger="sitemap.matcher.wildcard" src="org.apache.cocoon.matching.WildcardURIMatcher"/>
     <map:matcher name="regexp" logger="sitemap.matcher.regexp" src="org.apache.cocoon.matching.RegexpURIMatcher"/>
     <map:matcher name="request-parameter" logger="sitemap.matcher.request-parameter" src="org.apache.cocoon.matching.RequestParameterMatcher"/>
+    <map:matcher name="referer-match" logger="sitemap.matcher.referer-match" src="org.apache.cocoon.matching.WildcardHeaderMatcher">
+      <header-name>referer</header-name>
+    </map:matcher>
     <map:matcher name="usecase" logger="sitemap.matcher.usecase" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
       <parameter-name>lenya.usecase</parameter-name>
     </map:matcher>
     <map:matcher name="step" logger="sitemap.matcher.step" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
       <parameter-name>lenya.step</parameter-name>
     </map:matcher>
+    <map:matcher name="cookie" logger="sitemap.matcher.cookie" src="org.apache.cocoon.matching.CookieMatcher"/>
+    <map:matcher name="header" logger="sitemap.matcher.header" src="org.apache.cocoon.matching.HeaderMatcher"/>
+    <map:matcher name="parameter" logger="sitemap.matcher.parameter" src="org.apache.cocoon.matching.ParameterMatcher"/>
+    <map:matcher name="sessionstate" logger="sitemap.matcher.sessionstate" src="org.apache.cocoon.matching.WildcardSessionAttributeMatcher">
+      <attribute-name>org.apache.cocoon.SessionState</attribute-name>
+    </map:matcher>
   </map:matchers>
 
+  <!-- ========================================================================== -->
+  <!-- Selectors -->
+  <!-- ========================================================================== -->
+
   <map:selectors default="browser">
+
+   <map:selector name="browser" logger="sitemap.selector.browser" src="org.apache.cocoon.selection.BrowserSelector">
+    <!--+
+        | NOTE: The appearance indicates the search order. This is very important since
+        |       some words may be found in more than one browser description. (MSIE is
+        |       presented as "Mozilla/4.0 (Compatible; MSIE 4.01; ...")
+        +-->
+    <browser name="explorer" useragent="MSIE"/>
+    <browser name="pocketexplorer" useragent="MSPIE"/>
+    <browser name="handweb" useragent="HandHTTP"/>
+    <browser name="avantgo" useragent="AvantGo"/>
+    <browser name="imode" useragent="DoCoMo"/>
+    <browser name="opera" useragent="Opera"/>
+    <browser name="lynx" useragent="Lynx"/>
+    <browser name="java" useragent="Java"/>
+    <browser name="wap" useragent="Nokia"/>
+    <browser name="wap" useragent="UP"/>
+    <browser name="wap" useragent="Wapalizer"/>
+    <browser name="mozilla5" useragent="Mozilla/5"/>
+    <browser name="mozilla5" useragent="Netscape6/"/>
+    <browser name="netscape" useragent="Mozilla"/>
+   </map:selector>
+   <map:selector name="exception" logger="sitemap.selector.exception" src="org.apache.cocoon.selection.ExceptionSelector">
+     <exception name="sax" class="org.xml.sax.SAXException" unroll="true"/>
+     <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>
+     <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/> 
+     <exception name="invalid-continuation" class="org.apache.cocoon.components.flow.InvalidContinuationException"/>
+     <exception class="org.apache.cocoon.ProcessingException" unroll="true"/>
+     <!-- The statement below tells the selector to unroll as much exceptions as possible -->
+     <exception class="java.lang.Throwable" unroll="true"/>
+    </map:selector>
+   <map:selector name="header" logger="sitemap.selector.header" src="org.apache.cocoon.selection.HeaderSelector">
+    <!-- <header-name>myparam</header-name> -->
+   </map:selector>
+   <map:selector name="host" logger="sitemap.selector.host" src="org.apache.cocoon.selection.HostSelector"/>
+   <map:selector name="parameter" logger="sitemap.selector.parameter" src="org.apache.cocoon.selection.ParameterSelector"/>
+   <map:selector name="request-attribute" logger="sitemap.selector.request-attribute" src="org.apache.cocoon.selection.RequestAttributeSelector">
+    <!-- <attribute-name>myparam</attribute-name> -->
+   </map:selector>
+   <map:selector name="request-method" logger="sitemap.selector.request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
    <map:selector name="request-parameter" logger="sitemap.selector.request-parameter" src="org.apache.cocoon.selection.RequestParameterSelector">
     <!-- Define now which request parameter to use; or do it later,
          when using this selector, via "parameter-name" parameter.
@@ -123,53 +283,68 @@
     -->
    </map:selector>
    <map:selector name="resource-exists" logger="sitemap.selector.resource-exists" src="org.apache.cocoon.selection.ResourceExistsSelector"/>
-   <map:selector name="exception" logger="sitemap.selector.exception" src="org.apache.cocoon.selection.ExceptionSelector">
-      <exception name="sax" class="org.xml.sax.SAXException" unroll="true"/>
-      <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>
-      <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/> 
-      <exception name="invalid-continuation" class="org.apache.cocoon.components.flow.InvalidContinuationException"/>
-      <exception  class="org.apache.cocoon.ProcessingException" unroll="true"/>
-      <!-- The statement below tells the selector to unroll as much exceptions as possible -->
-      <exception class="java.lang.Throwable" unroll="true"/>
-    </map:selector>
-</map:selectors>
+   <map:selector name="session-attribute" logger="sitemap.selector.session-attribute" src="org.apache.cocoon.selection.SessionAttributeSelector">
+    <!-- <attribute-name>myparam</attribute-name> -->
+   </map:selector>
+  </map:selectors>
+
+  <!-- ========================================================================== -->
+  <!-- Actions -->
+  <!-- ========================================================================== -->
 
   <map:actions>
-   <map:action name="request" logger="sitemap.action.request" src="org.apache.cocoon.acting.RequestParamAction"/>
-   <map:action name="resource-exists" logger="sitemap.action.resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
-   <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
-        <tree-authoring href="content/authoring/tree.xml"/>
-        <docs href="content/authoring"/>
-        <doctypes href="config/doctypes/"/>
-   </map:action>
-   <map:action name="xopushandler" logger="sitemap.action.xopus" src="org.apache.lenya.cms.cocoon.acting.XopusHandlerAction">
-      <xml href="content/authoring/"/>
-      <xsl href="xslt"/>
-      <xsd href="config/doctypes/schemas"/>
-        <temp href="temp"/>
-        <rcmlDirectory href="content/rcml"/>
-        <backupDirectory href="content/rcbak"/>
-   </map:action>
-   <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>
-   <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
-   <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
-   <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction">
-        <resources-root href="resources/images/live"/>
-        <docs-root href="content/authoring"/>
-        <meta-root href="content/authoring/"/>
-   </map:action>
-   <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
-   <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
-   <!-- TODO: is also defined within global-sitemap.xmap. Is this necessary? -->
-   <map:action name="default-create" src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction" logger="sitemap.action.default-create">
-        <tree-authoring href="content/authoring/sitetree.xml"/>
-        <docs href="content/authoring"/>
-        <doctypes href="config/doctypes/"/>
-   </map:action>
-   <map:action name="resource-exists-enhanced" logger="sitemap.action.resource-exists-enhanced" src="org.apache.lenya.cms.cocoon.acting.ResourceExistsAction"/>
-   <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction" logger="lenya.sitemap.action.authorizer"/>
    <map:action name="authenticator" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthenticatorAction" logger="lenya.sitemap.action.authenticator"/>
- </map:actions>
+   <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction" logger="lenya.sitemap.action.authorizer"/>
+   <map:action name="clear-cache" logger="sitemap.action.clear-cache" src="org.apache.cocoon.acting.ClearCacheAction"/>
+   <map:action name="clear-persistent-store" logger="sitemap.action.clear-persistent-store" src="org.apache.cocoon.acting.ClearPersistentStoreAction"/>
+   <map:action name="default-create" src="org.apache.lenya.cms.cocoon.acting.DefaultCreatorAction" logger="sitemap.action.default-create">
+     <tree-authoring href="content/authoring/sitetree.xml"/>
+     <docs href="content/authoring"/>
+     <doctypes href="config/doctypes/"/>
+   </map:action>
+   <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
+   <map:action name="form-validator" logger="sitemap.action.form-validator" src="org.apache.cocoon.acting.FormValidatorAction"/>
+   <map:action name="language-exists" logger="lenya.sitemap.action.language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
+   <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
+   <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
+     <tree-authoring href="content/authoring/tree.xml"/>
+     <docs href="content/authoring"/>
+     <doctypes href="config/doctypes/"/>
+   </map:action>
+   <map:action name="request" logger="sitemap.action.request" src="org.apache.cocoon.acting.RequestParamAction"/>
+   <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" src="org.apache.cocoon.acting.RequestParameterExistsAction" />
+   <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
+   <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>
+   <map:action name="reserved-checkout-test" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutTestAction" logger="sitemap.action.reserved-checkout-test"/>
+   <map:action name="resource-exists" logger="sitemap.action.resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
+   <map:action name="resource-exists-enhanced" logger="sitemap.action.resource-exists-enhanced" src="org.apache.lenya.cms.cocoon.acting.ResourceExistsAction"/>
+   <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
+   <map:action name="save" logger="sitemap.action.save" src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
+   <map:action name="session" src="org.apache.cocoon.webapps.session.acting.SessionAction"/>
+   <map:action name="session-form" src="org.apache.cocoon.webapps.session.acting.SessionFormAction"/>
+   <map:action name="session-isvalid" logger="sitemap.action.session-isvalid" src="org.apache.cocoon.acting.SessionIsValidAction"/>
+   <map:action name="session-propagator" logger="sitemap.action.session-propagator" src="org.apache.cocoon.acting.SessionPropagatorAction"/>
+   <map:action name="session-state" logger="sitemap.action.session-state" src="org.apache.cocoon.acting.SessionStateAction"/>
+   <map:action name="set-header" logger="sitemap.action.set-header" src="org.apache.cocoon.acting.HttpHeaderAction"/>
+   <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
+   <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction">
+     <resources-root href="resources/images/live"/>
+     <docs-root href="content/authoring"/>
+     <meta-root href="content/authoring/"/>
+      <insert-image-before value="false"/>
+   </map:action>
+   <map:action name="uriparametrizer" src="org.apache.lenya.cms.cocoon.acting.URIParametrizerAction" logger="sitemap.action.uriparametrizer"/>
+   <map:action name="validate" logger="sitemap.action.validateAction" src="org.apache.lenya.cms.cocoon.acting.ValidateAction" />
+   <map:action name="workflow" logger="sitemap.action.workflow" src="org.apache.lenya.cms.cocoon.acting.WorkflowInvokerAction"/>
+   <map:action name="xopushandler" logger="sitemap.action.xopus" src="org.apache.lenya.cms.cocoon.acting.XopusHandlerAction">
+     <xml href="content/authoring/"/>
+     <xsl href="xslt"/>
+     <xsd href="config/doctypes/schemas"/>
+     <temp href="temp"/>
+     <rcmlDirectory href="content/rcml"/>
+     <backupDirectory href="content/rcbak"/>
+   </map:action>
+  </map:actions>
 
    <map:pipes default="caching">
      <map:pipe name="caching" src="org.apache.cocoon.components.pipeline.impl.CachingProcessingPipeline"/>
@@ -180,7 +355,7 @@
      <!-- The following two can be used for profiling:-->
      <map:pipe name="profile-caching" src="org.apache.cocoon.components.profiler.ProfilingCachingProcessingPipeline"/>
      <map:pipe name="profile-noncaching" src="org.apache.cocoon.components.profiler.ProfilingNonCachingProcessingPipeline"/>
-</map:pipes>
+   </map:pipes>
 
  </map:components>
 

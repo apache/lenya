@@ -15,58 +15,32 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.215 2004/06/29 09:36:10 michi Exp $ -->
+<!-- $Id: usecase.xmap,v 1.216 2004/06/29 16:12:45 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <!-- =========================== Components ================================ -->
   <map:components>
     
-    <map:generators default="file">
-      <map:generator label="content,data" logger="sitemap.generator.kupustream" name="kupustream" pool-grow="2" pool-max="16" pool-min="1" src="org.apache.lenya.cms.cocoon.generation.StreamGenerator"/>
-    </map:generators>
+    <map:generators default="file"/>
     <map:transformers default="xslt"/>
     <map:readers default="resource"/>
-    <map:serializers default="xhtml">
-      <map:serializer logger="sitemap.serializer.htmlnoi" mime-type="text/html" name="htmlnoi" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer"> 
-	<indent>no</indent>
-	<doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
-	<doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
-	<encoding>UTF-8</encoding>
-      </map:serializer>
-    </map:serializers>
+    <map:serializers default="xhtml"/>
     <map:matchers default="wildcard"/>
-    <map:actions>
-      <map:action name="validate" logger="sitemap.action.validateAction" 
-	src="org.apache.lenya.cms.cocoon.acting.ValidateAction" />
-      <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" 
-	src="org.apache.cocoon.acting.RequestParameterExistsAction" />
-      <map:action name="save" logger="sitemap.action.save" 
-	src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
-      <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" 
-	src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
-      <map:action name="upload" logger="sitemap.action.upload" 
-	src="org.apache.lenya.cms.cocoon.acting.UploadAction" />
-      <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" 
-	src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
-    </map:actions>
-
+    <map:actions/>
 
     <map:selectors>
-      <map:selector logger="sitemap.selector.exception" name="exception" 
-	src="org.apache.cocoon.selection.ExceptionSelector">
+      <map:selector logger="sitemap.selector.exception" name="exception" src="org.apache.cocoon.selection.ExceptionSelector">
         <exception class="org.apache.lenya.cms.task.ExecutionException" name="execution" unroll="true"/>
         <exception class="org.apache.tools.ant.BuildException" name="build" unroll="true"/>
         <exception class="org.xml.sax.SAXParseException" name="sax-parsing"/>
         <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
         <exception class="org.apache.cocoon.ResourceNotFoundException" name="resourcenotfound"/>
         <exception class="org.apache.cocoon.ProcessingException" name="processing" unroll="true"/>
-        <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException"
-          name="parent-node-not-found"/>
+        <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException" name="parent-node-not-found"/>
         <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
         <!--         <exception class="org.apache.lenya.cms.publication.SiteTreeException" name="sitetree"/> -->
       </map:selector>
-      <map:selector name="request-method" logger="sitemap.selector.request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
     </map:selectors>
     
   </map:components>
@@ -94,6 +68,18 @@
       <map:transform src="xslt/util/strip_namespaces.xsl"/>
       <!-- NOTE: iso-8859-1 is necessary for the form editors, else special characters won't be handled correctly -->
       <map:serialize type="xhtml-iso-8859-1"/>
+    </map:resource>
+    
+    <map:resource name="style-cms-page-utf-8">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="xslt/util/strip_namespaces.xsl"/>
+      <!-- NOTE: iso-8859-1 is necessary for the form editors, else special characters won't be handled correctly -->
+      <map:serialize type="xhtml"/>
     </map:resource>
     
     <map:resource name="cms-screen-xml">
@@ -211,7 +197,7 @@
             </map:call>
             <map:transform src="cocoon:/notification/{../../1}/schedule.xsl"/>
             <map:transform src="cocoon://scheduler/{../../1}/{page-envelope:area}/{../../3}.xsl"/>
-            <map:call resource="style-cms-page"/>
+            <map:call resource="style-cms-page-utf-8"/>
           </map:match>
           
           <!-- other steps: add job (redirect to page) -->

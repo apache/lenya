@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xmap,v 1.58 2004/05/19 15:37:39 andreas Exp $ -->
+<!-- $Id: info.xmap,v 1.59 2004/06/29 16:11:49 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -106,7 +106,7 @@
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
         </map:transform>
-        <map:serialize type="text-iso-8859-1"/>
+        <map:serialize type="text"/>
       </map:match>
     </map:pipeline>
     
@@ -299,7 +299,7 @@
         
           <map:call resource="i18n"/>
           <map:transform src="xslt/util/strip_namespaces.xsl"/>        
-          <map:serialize type="html-iso-8859-1"/>
+          <map:serialize type="html"/>
           
           <!--
           <map:match pattern="update" type="step">
