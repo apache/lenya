@@ -21,7 +21,7 @@
     <menu name="File" label="File">
       <block>
         <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/xopus2/articles/<xsp:expr>article_id</xsp:expr>/index.html</xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?docid=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/articles/<xsp:expr>article_id</xsp:expr>/index.html,<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;docids=/articles/<xsp:expr>article_id</xsp:expr>/index.xml</xsp:attribute>Publish</item>
+        <item><xsp:attribute name="href"><xsp:expr>xsp_wyona_context_prefix</xsp:expr>/authoring/wyona/publishScreen?uris=<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/articles/<xsp:expr>article_id</xsp:expr>/index.html,<xsp:expr>xsp_wyona_context_prefix</xsp:expr>/index.html&amp;sources=/articles/<xsp:expr>article_id</xsp:expr>/index.xml</xsp:attribute>Publish</item>
 <!--
         <item href="article.xml">View&#160;XML</item>
 -->
