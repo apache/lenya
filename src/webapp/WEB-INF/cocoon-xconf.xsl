@@ -2,7 +2,7 @@
 
 <!--
     Document   : cocoon-xconf.xsl
-    Created on : 6. März 2003, 11:39
+    Created on : 6. M??rz 2003, 11:39
     Author     : andreas
     Description:
         Purpose of transformation follows.
@@ -40,7 +40,7 @@
 </xsl:template>
 
 <xsl:template match="input-modules">
-    
+     
   <xsl:copy>
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
@@ -92,10 +92,13 @@
         
     <component-instance logger="core.modules.input.sitetree" name="fallback"
         class="org.apache.lenya.cms.cocoon.components.modules.input.FallbackModule"/>
-        
+                
+    <component-instance name="date-i18n" logger="core.modules.input" class="org.apache.cocoon.components.modules.input.DateInputModule">
+      <format>yyyy-M-dd HH:mm:ss Z</format>
+    </component-instance>       
+
   </xsl:copy>
 </xsl:template>
-
 
 <xsl:template match="cocoon">
   <xsl:copy>
