@@ -73,7 +73,7 @@ import java.util.*;
  * @version 0.4.16
  */
 public class XalanXPointer implements XPointer {
-    static Category log = Category.getInstance(XalanXPointer.class);
+    private static Category log = Category.getInstance(XalanXPointer.class);
 
     /**
      * DOCUMENT ME!

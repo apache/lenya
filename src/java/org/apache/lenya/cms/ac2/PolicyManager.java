@@ -1,5 +1,5 @@
 /*
-$Id: PolicyManager.java,v 1.5 2003/07/11 13:24:37 andreas Exp $
+$Id: PolicyManager.java,v 1.6 2003/07/14 14:35:34 egli Exp $
 <License>
 
  ============================================================================
@@ -68,7 +68,7 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public interface PolicyManager extends Component {
     
-    public static final String ROLE = PolicyManager.class.getName();
+   	String ROLE = PolicyManager.class.getName();
     
     /**
      * Builds the URL policy for a URL in a certain publication.

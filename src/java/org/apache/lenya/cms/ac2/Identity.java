@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Identity.java,v 1.5 2003/07/14 14:35:34 egli Exp $
 <License>
 
  ============================================================================
@@ -75,7 +75,6 @@ public class Identity implements Identifiable {
     
     /**
      * Ctor.
-     * @param manager The accreditable manager this identity belongs to.
      */
     public Identity() {
     }
@@ -134,6 +133,8 @@ public class Identity implements Identifiable {
      * Checks if this identity belongs to a certain accreditable manager.
      * @param manager The accreditable manager to check for.
      * @return A boolean value.
+     * 
+     * @throws AccessControlException if an error occurs
      */
     public boolean belongsTo(AccreditableManager manager) throws AccessControlException {
         

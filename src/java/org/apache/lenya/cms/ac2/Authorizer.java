@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Authorizer.java,v 1.7 2003/07/14 14:35:34 egli Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,7 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public interface Authorizer extends Component {
     
-    public static final String ROLE = Authorizer.class.getName();
+    String ROLE = Authorizer.class.getName();
 
     /**
      * Authorizes an identity at a URL.

@@ -1,5 +1,5 @@
 /*
-$Id: AccessController.java,v 1.6 2003/07/11 13:24:37 andreas Exp $
+$Id: AccessController.java,v 1.7 2003/07/14 14:35:34 egli Exp $
 <License>
 
  ============================================================================
@@ -68,12 +68,14 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public interface AccessController extends Component {
     
-    public static final String ROLE = AccessController.class.getName();
+    String ROLE = AccessController.class.getName();
     
     /**
      * Authenticates a request.
      * @param request A request.
      * @return A boolean value.
+     * 
+     * @throws AccessControlException if an error occurs
      */
     boolean authenticate(Request request) throws AccessControlException;
     
@@ -82,6 +84,8 @@ public interface AccessController extends Component {
      * @param publication A publication.
      * @param request A request.
      * @return A boolean value.
+     * 
+     * @throws AccessControlException if an error occurs
      */
     boolean authorize(Publication publication, Request request) throws AccessControlException;
 
