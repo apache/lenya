@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReservedCheckinAction.java,v 1.15 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id: ReservedCheckinAction.java,v 1.16 2004/05/23 12:52:43 gregor Exp $  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -66,8 +66,9 @@ public class ReservedCheckinAction extends RevisionControllerAction {
 
             return actionMap;
         } catch (Exception e) {
-            actionMap.put("exception", "exception");
+            actionMap.put("exception", "genericException");
             actionMap.put("filename", getFilename());
+            actionMap.put("message", e.getMessage());
             getLogger().warn("The document " + getFilename() + " couldn't be checked in");
 
             return actionMap;

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.210 2004/05/22 19:43:41 gregor Exp $ -->
+<!-- $Id: usecase.xmap,v 1.211 2004/05/23 12:52:44 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -397,6 +397,7 @@
                     <map:parameter name="user" value="{user}"/>
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="date" value="{date}"/>
+                    <map:parameter name="message" value="{message}"/>
                   </map:generate>
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
@@ -446,6 +447,7 @@
                     <map:parameter name="user" value="{user}"/>
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="date" value="{date}"/>
+                    <map:parameter name="message" value="{message}"/>
                   </map:generate>
                   <map:transform src="../../xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
@@ -464,6 +466,7 @@
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="checkType" value="{checkType}"/>
                     <map:parameter name="date" value="{date}"/>
+                    <map:parameter name="message" value="{message}"/>
                   </map:generate>
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
                   <map:serialize/>
@@ -509,6 +512,7 @@
                   <map:parameter name="user" value="{user}"/>
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="date" value="{date}"/>
+                  <map:parameter name="message" value="{message}"/>
                 </map:generate>
 		<map:transform src="xslt/rc/rco-exception.xsl"/>
 		<map:call resource="style-cms-page"/>
@@ -587,6 +591,7 @@
                   <map:parameter name="user" value="{user}"/>
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="date" value="{date}"/>
+                  <map:parameter name="message" value="{message}"/>
                 </map:generate>
                 <map:transform src="xslt/rc/rco-exception.xsl"/>
                 <map:call resource="style-cms-page"/>
@@ -672,6 +677,7 @@
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="checkType" value="{checkType}"/>
                   <map:parameter name="date" value="{date}"/>
+                  <map:parameter name="message" value="{message}"/>
                 </map:generate>
                 <map:transform src="xslt/rc/rco-exception.xsl"/>
                 <map:serialize/>
@@ -709,6 +715,7 @@
                     <map:parameter name="user" value="{user}"/>
                     <map:parameter name="filename" value="{filename}"/>
                     <map:parameter name="date" value="{date}"/>
+                    <map:parameter name="message" value="{message}"/>
                   </map:generate>
                   <map:transform src="xslt/rc/rco-exception.xsl"/>
                   <map:transform src="xslt/util/page2xhtml.xsl">
@@ -746,6 +753,7 @@
                 	    <map:parameter name="user" value="{user}"/>
                     	<map:parameter name="filename" value="{filename}"/>
         	            <map:parameter name="date" value="{date}"/>
+                        <map:parameter name="message" value="{message}"/>
             	      </map:generate>
                 	  <map:transform src="../../xslt/rc/rco-exception.xsl"/>
         	          <map:call resource="style-cms-page"/>
