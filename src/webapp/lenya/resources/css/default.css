@@ -3,6 +3,7 @@
 @import url(tables.css);
 @import url(tabs.css);
 @import url(boxes.css);
+@import url(navigation.css);
 
 body {
     margin: 0px;
