@@ -21,13 +21,13 @@ package org.apache.lenya.cms.rc;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
-import org.apache.lenya.util.XPSFileOutputStream;
 import org.apache.log4j.Category;
 
 /**
@@ -239,7 +239,7 @@ public class RevisionController {
 
             InputStream in = new FileInputStream(originalFile.getAbsolutePath());
 
-            OutputStream out = new XPSFileOutputStream(backupFile.getAbsolutePath());
+            OutputStream out = new FileOutputStream(backupFile.getAbsolutePath());
             byte[] buffer = new byte[512];
             int length;
 
@@ -332,7 +332,7 @@ public class RevisionController {
         //
         FileInputStream in = new FileInputStream(backup.getAbsolutePath());
 
-        XPSFileOutputStream out = new XPSFileOutputStream(current.getAbsolutePath());
+        FileOutputStream out = new FileOutputStream(current.getAbsolutePath());
         byte[] buffer = new byte[512];
         int length;
 
@@ -376,7 +376,7 @@ public class RevisionController {
 
         FileInputStream in = new FileInputStream(backup.getAbsolutePath());
 
-        XPSFileOutputStream out = new XPSFileOutputStream(current.getAbsolutePath());
+        FileOutputStream out = new FileOutputStream(current.getAbsolutePath());
         byte[] buffer = new byte[512];
         int length;
 
