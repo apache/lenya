@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractPublication.java,v 1.15 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: AbstractPublication.java,v 1.16 2004/03/16 11:12:16 gregor Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -45,6 +45,7 @@ public abstract class AbstractPublication implements Publication {
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
+    private String sslprefix = null;
     private HashMap siteTrees = new HashMap();
     private boolean hasSitetree = true;
 
@@ -134,6 +135,9 @@ public abstract class AbstractPublication implements Publication {
         }
 
         breadcrumbprefix = config.getChild(BREADCRUMB_PREFIX).getValue("");
+
+        sslprefix = config.getChild(SSL_PREFIX).getValue("");
+        log.debug("ssl prefix from config: " + sslprefix);
 
     }
 
@@ -244,6 +248,19 @@ public abstract class AbstractPublication implements Publication {
      */
     public String getBreadcrumbPrefix() {
         return breadcrumbprefix;
+    }
+
+    /**
+     * Get the SSL prefix. If you want to serve SSL-protected pages through a special site, use this
+     * prefix. This can come in handy if you have multiple sites that need SSL protection and you want
+     * to share one SSL certificate. 
+     * 
+     * @return the SSL prefix
+     */
+    public String getSSLPrefix() {
+        log.debug("ssl prefix passed to caller: " + sslprefix);
+
+        return sslprefix;
     }
 
     /**

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publication.xconf,v 1.6 2004/03/13 12:31:31 gregor Exp $ -->
+<!-- $Id: publication.xconf,v 1.7 2004/03/16 11:12:16 gregor Exp $ -->
 
 <publication>
   <languages>
@@ -25,4 +25,5 @@
   <path-mapper>org.apache.lenya.cms.publication.SingleLanguageIdentityMapper</path-mapper>
   <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
   <breadcrumb-prefix/>
+  <ssl-prefix/>
 </publication>

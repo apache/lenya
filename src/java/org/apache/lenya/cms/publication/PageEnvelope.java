@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PageEnvelope.java,v 1.58 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: PageEnvelope.java,v 1.59 2004/03/16 11:12:16 gregor Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -76,6 +76,8 @@ public class PageEnvelope {
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
 
     public static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+
+    public static final String SSL_PREFIX = "ssl-prefix";
 
     public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
     public static final String DEFAULT_PREFIX = "lenya";
@@ -295,7 +297,8 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_DC_DESCRIPTION,
             PageEnvelope.DOCUMENT_DC_RIGHTS,
             PageEnvelope.DOCUMENT_LASTMODIFIED,
-            PageEnvelope.BREADCRUMB_PREFIX };
+            PageEnvelope.BREADCRUMB_PREFIX,
+            PageEnvelope.SSL_PREFIX };
 
     /**
      * @param string

@@ -15,27 +15,45 @@
  *
  */
 
-/* $Id: SimpleLinkRewritingTransformer.java,v 1.6 2004/03/12 10:56:54 egli Exp $  */
+/* $Id: SimpleLinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor Exp $  */
 
 package org.apache.lenya.cms.cocoon.transformation;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.transformation.AbstractTransformer;
+import org.apache.cocoon.transformation.AbstractSAXTransformer;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Authorizer;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.impl.DefaultAccessController;
+import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
+import org.apache.log4j.Category;
+
 
 /**
  * This is a simple transformer which rewrites &lt;a
@@ -50,7 +68,10 @@ import org.xml.sax.helpers.AttributesImpl;
  * LinkRewrittingTransformer that Forrest uses if we employ the same
  * scheme for internal links.
  */
-public class SimpleLinkRewritingTransformer extends AbstractTransformer {
+public class SimpleLinkRewritingTransformer extends AbstractSAXTransformer
+implements Disposable {
+
+    Category log = Category.getInstance(SimpleLinkRewritingTransformer.class);
 
     private String baseURI;
     private PageEnvelope envelope = null;
@@ -58,12 +79,25 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
     public static final String INTERNAL_LINK_PREFIX = "site:";
     private boolean ignoreAElement = false;
 
+    private ServiceSelector serviceSelector;
+    private PolicyManager policyManager;
+    private AccessControllerResolver acResolver;
+    private AccreditableManager accreditableManager;
+    private Identity identity;
+    private String urlPrefix;
+    private String sslPrefix;
+
+    /**
+     * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     */
     public void setup(
         SourceResolver resolver,
         Map objectModel,
         String source,
         Parameters parameters)
-        throws ProcessingException {
+        throws ProcessingException, SAXException, IOException {
+
+        super.setup(resolver, objectModel, source, parameters);
 
         try {
             envelope =
@@ -74,12 +108,66 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
 
         String mountPoint =
             envelope.getContext() + "/" + envelope.getPublication().getId();
+        
+        sslPrefix = envelope.getPublication().getSSLPrefix();
 
         StringBuffer uribuf = new StringBuffer();
 
         uribuf.append(mountPoint);
 
         baseURI = uribuf.toString();
+
+        serviceSelector = null;
+        acResolver = null;
+        policyManager = null;
+
+        identity = Identity.getIdentity(request.getSession(false));
+
+        try {
+            String publicationId = envelope.getPublication().getId();
+            String area = envelope.getDocument().getArea();
+
+                getLogger().debug("Setting up transformer");
+                getLogger().debug("    Identity:       [" + identity + "]");
+                getLogger().debug("    Publication ID: [" + publicationId + "]");
+                getLogger().debug("    Area:           [" + area + "]");
+
+            urlPrefix = "/" + publicationId + "/" + area;
+
+            Request request = ObjectModelHelper.getRequest(objectModel);
+
+            serviceSelector =
+                (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+
+            acResolver =
+                (AccessControllerResolver) serviceSelector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
+
+                getLogger().debug("    Resolved AC resolver [" + acResolver + "]");
+
+            String webappUrl = ServletHelper.getWebappURI(request);
+            AccessController accessController = acResolver.resolveAccessController(webappUrl);
+
+            if (accessController instanceof DefaultAccessController) {
+                DefaultAccessController defaultAccessController =
+                    (DefaultAccessController) accessController;
+
+                accreditableManager = defaultAccessController.getAccreditableManager();
+
+                Authorizer[] authorizers = defaultAccessController.getAuthorizers();
+                for (int i = 0; i < authorizers.length; i++) {
+                    if (authorizers[i] instanceof PolicyAuthorizer) {
+                        PolicyAuthorizer policyAuthorizer = (PolicyAuthorizer) authorizers[i];
+                        policyManager = policyAuthorizer.getPolicyManager();
+                    }
+                }
+            }
+
+                getLogger().debug("    Using policy manager [" + policyManager + "]");
+
+        } catch (Exception e) {
+            throw new ProcessingException(e);
+        }
     }
 
     public void startElement(
@@ -122,11 +210,52 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
                         String documentId = matcher.group(1);
                         if (areaIsLive()
                             && !documentIsLive(documentId, languageExtension)) {
-                            ignoreAElement = true;
+                            // check for SSL here:
+                            //if ssl, add prefix, if not, ignore A
+                            try {
+                                String url = urlPrefix + documentId;
+                                Policy policy = policyManager.getPolicy(accreditableManager, url);
+                                if (policy.isSSLProtected()) {
+                                        log.debug(" live is SSL protected");
+                                 // add prefix   
+                                    newAttrs.setValue(
+                                            i,
+                                            sslPrefix + documentId);
+                                } else {
+                                        log.debug(" live is NOT SSL protected");
+                                    ignoreAElement = true;
+                                }
+                            }
+                            catch (AccessControlException e) {
+                              throw new SAXException(e);
+                            }
+
                         } else {
-                            newAttrs.setValue(
-                                i,
-                                getNewHrefValue(languageExtension, documentId));
+                            // check for SSL here, too
+                            // if ssl, add prefix to newhrefvalue, if not, take just newhrefvalue
+                            try {
+                                String url = urlPrefix + documentId;
+                                String finalurl;
+                                Policy policy = policyManager.getPolicy(accreditableManager, url);
+                                if (policy.isSSLProtected()) {
+                                 // add prefix   
+                                        log.debug(" authoring is SSL protected");
+                                        log.debug(" ssl prefix: " + sslPrefix);
+                                        finalurl = sslPrefix + documentId + languageExtension + ".html";
+                                        log.debug(" finalurl: " + finalurl);                                        
+                                    newAttrs.setValue(
+                                            i, finalurl
+                                            );
+                                } else {
+                                        log.debug(" authoring is NOT SSL protected");
+                                    newAttrs.setValue(
+                                            i,
+                                            getNewHrefValue(languageExtension, documentId));
+                                }
+                            }
+                            catch (AccessControlException e) {
+                              throw new SAXException(e);
+                            }
                         }
                     }
                 }
@@ -206,6 +335,21 @@ public class SimpleLinkRewritingTransformer extends AbstractTransformer {
             + documentId
             + languageExtension
             + ".html";
+    }
+
+    /**
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
+     */
+    public void dispose() {
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Disposing transformer");
+        }
+        if (serviceSelector != null) {
+            if (acResolver != null) {
+                serviceSelector.release(acResolver);
+            }
+            manager.release(serviceSelector);
+        }
     }
 
     public void recycle() {

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Publication.java,v 1.45 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id: Publication.java,v 1.46 2004/03/16 11:12:16 gregor Exp $  */
 
 package org.apache.lenya.cms.publication;
 
@@ -42,6 +42,7 @@ public interface Publication {
     String LANGUAGE = "language";
     String DEFAULT_LANGUAGE_ATTR = "default";
     String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+    String SSL_PREFIX = "ssl-prefix";
     String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
     String PUBLICATION_PREFIX_URI = "lenya/pubs";
     String CONFIGURATION_PATH = "config";
@@ -125,6 +126,15 @@ public interface Publication {
      * @return the breadcrumb prefix
      */
     String getBreadcrumbPrefix();
+
+    /**
+     * Get the SSL prefix. If you want to serve SSL-protected pages through a special site, use this
+     * prefix. This can come in handy if you have multiple sites that need SSL protection and you want
+     * to share one SSL certificate.
+     * 
+     * @return the SSL prefix
+     */
+    String getSSLPrefix();
 
     /**
      * Get the sitetree for a specific area of this publication. 
