@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.12 2003/04/25 10:36:10 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.13 2003/05/02 18:10:56 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -81,15 +81,15 @@
                <map:mount uri-prefix="xopus" src="xopus.xmap"/>
            </map:match>
            
-      <!-- Bitflux Interface -->
-      <map:match pattern="bitflux/**">
-	         <map:mount uri-prefix="bitflux" src="bitflux.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
+          <!-- Bitflux Interface -->
+          <map:match pattern="bitflux/**">
+                     <map:mount uri-prefix="bitflux" src="bitflux.xmap" check-reload="true" reload-method="synchron"/>
+          </map:match>
 
-    <!-- Authoring Interface -->
-      <map:match pattern="authoring/**">
-        <map:mount uri-prefix="authoring" src="authoring-sitemap.xmap"/>
-      </map:match>
+          <!-- Authoring Interface -->
+          <map:match pattern="authoring/**">
+            <map:mount uri-prefix="authoring" src="authoring-sitemap.xmap"/>
+          </map:match>
 
           <map:match pattern="**">
             <map:mount uri-prefix="" src="forrest-sitemap.xmap"/>
