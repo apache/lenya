@@ -32,7 +32,9 @@ This&#160;Publication
 <br />
 <a href="../index.html">Other&#160;Publications</a>
 <br />
-<a href="../docs/index.html">Documentation</a>
+<a href="../docs-new/index.html">New&#160;Documentation</a>
+<br />
+<a href="../docs/index.html">Deprecated&#160;Documentation</a>
 </td>
 
 <td>&#160;</td>
