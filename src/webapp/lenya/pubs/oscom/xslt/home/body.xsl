@@ -64,6 +64,10 @@
   <xsl:apply-templates select="rdf:RDF" mode="cmsinfo"/>
 </xsl:template>
 
+<xsl:template match="wyonasite">
+  <xsl:apply-templates select="rdf:RDF" mode="cmsinfo"/>
+</xsl:template>
+
 <xsl:template match="rdf:RDF">
 <!--<xsl:template match="rdf:RDF|rss">-->
  <table cellpadding="0" cellspacing="0" border="0" width="150">
@@ -156,6 +160,46 @@
   <tr>
     <td bgcolor="{$tablecolor}">&#160;</td>
     <td bgcolor="{$tablecolor}">
+      <p>
+        <font face="verdana" color="white">
+        <xsl:value-of select="../@name"/>&#160;<a href="{purl:channel/purl:link}" target="_blank">&#187;</a>
+        </font>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>&#160;</td>
+    <td>
+  <font face="verdana" size="-2">
+  <xsl:variable name="n">5</xsl:variable>
+  <!--  rdf:RDF -->
+  <xsl:for-each select="purl:item[position() &lt;= $n]">
+    <p>
+    <a href="{purl:link}" target="_blank"><xsl:value-of select="purl:title"/></a>
+    </p>
+  </xsl:for-each>
+  </font>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">&#160;</td>
+  </tr>
+ </table>
+
+<!--
+  <p>
+  <i><xsl:apply-templates/></i>
+  <RDF><xsl:copy-of select="*"/></RDF>
+  </p>
+-->
+</xsl:template>
+
+<xsl:template match="rdf:RDF" mode="wyona" xmlns:purl="http://purl.org/rss/1.0/">
+ <table cellpadding="0" cellspacing="0" border="0" width="150">
+  <tr>
+    <td bgcolor="{$tablecolor}">&#160;</td>
+    <td bgcolor="{$tablecolor}">
+HALLO LEVI
       <p>
         <font face="verdana" color="white">
         <xsl:value-of select="../@name"/>&#160;<a href="{purl:channel/purl:link}" target="_blank">&#187;</a>

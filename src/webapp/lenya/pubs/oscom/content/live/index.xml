@@ -7,67 +7,18 @@
 <xi:include href="home.xml#xpointer(/home/about)"/>
 <xi:include href="home.xml#xpointer(/home/features)"/>
 
-<!--
-<about>
-<p>
-OSCOM is an international, not-for-profit organization
-dedicated to Open Source Content Management.
-</p>
-<p>
-The goal is to bring together as many great brains as possible
-to build a network and grow the community of open source 
-content management.
-</p>
-<p>
-We want to show the world that there are already great and easy-to-use
-open source content management solutions out there.
-</p>
-</about>
-
-<features>
-
-<feature>
-<title>Second Open Source Content Management Conference</title>
-<p>
-Due to the great success of the first conference
-we are organizing another conference at Berkeley, California 
-from Wednesday, 25 September to Friday, 27 September 2002.
-For more details please see <a href="conferences/sanfrancisco2002/program.html">program</a>.
-Looking forward to seeing you.
-</p>
-</feature>
-
-<feature>
-<title>First Open Source Content Management Conference</title>
-<p>
-The conference was a great success.
-More than a hundred people were attending.
-The conference was organized by <a href="http://www.wyona.org">wyona.org</a> at the
-Swiss Federal Institute of Technology (<a href="http://www.ethz.ch">ETH</a>), Z&#252;rich, Switzerland.
-The presentations can be downloaded from <a href="http://www.oscom.org/conferences/zurich2002/agenda.html">here</a>.
-Peace and respects to everyone who helped to organize and attended the conference.
-</p>
-</feature>
-
-</features>
--->
-
 <news xmlns:xi="http://www.w3.org/2001/XInclude">
-<!--
-  <site name="OSCOM">
-    <xi:include href="rss-rdf/oscom.rdf"/>
-  </site>
--->
+  <wyonasite name="OSCOM">
+    <xi:include href="/news.rss" xml:base="cocoon:"/>
+  </wyonasite>
   <site name="Freshmeat">
     <xi:include href="rss-rdf/fm.rdf"/>
-    <!--<xi:include href="fm.rdf"/>-->
   </site>
   <cmsinfosite name="CMSInfo">
     <xi:include href="rss-rdf/cmsinfo.rdf"/>
   </cmsinfosite>
   <site name="CMSWatch">
     <xi:include href="rss-rdf/cmswatch.xml"/>
-    <!--<xi:include xml:base="http://www.cmswatch.com" href="/RSS/cmswatch.xml"/>-->
   </site>
 </news>
 

@@ -10,14 +10,13 @@
       <map:transformer name="xlink" src="org.wyona.cms.cocoon.transformation.IncludeTransformer">
         <publication type="oscom"/>
       </map:transformer>
-<!--
-      <map:transformer name="xinclude" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
--->
     </map:transformers>
     <map:readers default="resource"/>
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
-    <map:actions/>
+    <map:actions>
+      <map:action name="request" src="org.wyona.cms.cocoon.acting.RequestParamAction"/>
+    </map:actions>
     <map:selectors/>
   </map:components>
 
@@ -33,6 +32,21 @@
   <!-- =========================== Pipelines ================================ -->
 
   <map:pipelines>
+
+    <!-- Wyona RSS -->
+    <map:pipeline>
+      <map:match pattern="news.rss">
+        <map:act type="request">
+          <map:parameter name="parameters" value="true"/>
+          <map:generate src="http://127.0.0.1:{serverPort}/{context}/forum/authoring/index.rss"/>
+          <map:serialize type="xml"/>
+        </map:act>
+      </map:match>
+      <map:handle-errors>
+        <map:serialize type="xml"/>
+      </map:handle-errors>
+    </map:pipeline>
+    <!-- /Wyona RSS -->
 
     <map:pipeline>
       <map:match pattern="http/slashdot.rdf">
