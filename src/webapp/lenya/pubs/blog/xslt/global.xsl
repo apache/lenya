@@ -85,10 +85,10 @@ Copyright &#169; Apache Software Foundation
 
 <xsl:template match="block">
 <div class="sidebar-title"><xsl:value-of select="title"/></div>
-<xsl:apply-templates select="content"/>
+<xsl:apply-templates select="content" mode="sidebar"/>
 </xsl:template>
 
-<xsl:template match="content">
+<xsl:template match="content" mode="sidebar">
 <div class="sidebar-content">
 <!-- FIXME: Don't copy "content" tag, only children -->
 <xsl:copy-of select="."/>

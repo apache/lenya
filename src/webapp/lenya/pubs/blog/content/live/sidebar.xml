@@ -28,7 +28,18 @@ August 2003
 <title>Links</title>
 <content>
 <a href="http://cocoon.apache.org/lenya/">Lenya</a>
-<a href="http://cocoon.apache.org">Cocoon</a>
+<br /><a href="http://cocoon.apache.org">Cocoon</a>
 </content>
 </block>
+
+<!--
+<block>
+<title>Archives&#160;by&#160;Category</title>
+<content>
+General
+<br />Cocoon
+<br />OSCOM
+</content>
+</block>
+-->
 </sidebar>
