@@ -58,8 +58,27 @@
                 </ul>
               </td>
             </tr>
+            <tr>
+              <td>
+                <input i18n:attr="value" name="submit" type="submit" value="Logout" />
+                &#160;
+                <input i18n:attr="value" name="cancel" type="submit" value="Cancel" />
+              </td>
+            </tr>
           </table>
         </form>
+      </div>
+    </div>
+    <div class="lenya-box">
+      <div class="lenya-box-title">
+        <i18n:text>Your History</i18n:text>
+      </div>
+      <div class="lenya-box-body">
+        <ul>
+          <jx:forEach var="url" items="${usecase.getParameter('history')}">
+            <li><jx:out value="${url}"/></li>
+          </jx:forEach>
+        </ul>
       </div>
     </div>
   </page:body>

@@ -122,7 +122,7 @@
 	  </xsp:logic>
 	</block>
 	<block>
-	  <item uc:usecase="logout" href="?"><i18n:text>Logout</i18n:text></item>
+	  <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
 	</block>
       </menu>
       
