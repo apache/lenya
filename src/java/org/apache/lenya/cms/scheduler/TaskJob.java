@@ -132,8 +132,8 @@ public class TaskJob
                     "\n Executing task '" + taskId + "'" + 
                     "\n-----------------------------------");
         
-        String contextPath = map.get("context-path");
-        String publicationId = map.get("publication-id");
+        String contextPath = map.get(Task.PARAMETER_SERVLET_CONTEXT);
+        String publicationId = map.get(Task.PARAMETER_PUBLICATION_ID);
         String publicationPath = PublishingEnvironment.getPublicationPath(
                 contextPath, publicationId);
         TaskManager manager = new TaskManager(publicationPath);
