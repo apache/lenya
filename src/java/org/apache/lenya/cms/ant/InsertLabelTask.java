@@ -1,5 +1,5 @@
 /*
-$Id: InsertLabelTask.java,v 1.1 2003/08/07 17:06:56 egli Exp $
+$Id: InsertLabelTask.java,v 1.2 2003/08/08 14:19:47 egli Exp $
 <License>
 
  ============================================================================
@@ -59,17 +59,16 @@ import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 /**
  * Ant task to insert a label into an existing node in a tree.
  * 
  * @author egli
  */
-public class InsertLabelTask extends Task {
-    private String absolutetreepath;
+public class InsertLabelTask extends PublicationTask {
     private String documentid;
     private String labelName;
+    private String area;
     private String language;
 
     /**
@@ -80,21 +79,21 @@ public class InsertLabelTask extends Task {
     }
 
     /**
-     * Get the absolute path to the site tree.
+     * Get the area of the site tree.
      * 
-     * @return absolutetreepath The absolute path of the tree.
+     * @return  the area of the tree.
      */
-    protected String getAbsolutetreepath() {
-        return absolutetreepath;
+    protected String getArea() {
+        return area;
     }
 
     /**
-     * Set the value of the absolute path of the tree.
+     * Set the value of the area of the tree.
      * 
-     * @param string The absolute path of the tree.
+     * @param area the area of the tree.
      */
-    public void setAbsolutetreepath(String string) {
-        absolutetreepath = string;
+    public void setAbsolutetreepath(String area) {
+        this.area = area;
     }
 
     /**
@@ -157,7 +156,7 @@ public class InsertLabelTask extends Task {
      * @param documentid the document-id of the document.
      * @param labelName the name of the label that is to be inserted.
      * @param language the language of the label that is to be inserted.
-     * @param absolutetreepath The absolute path of the tree
+     * @param area determines in which sitetree the label is to be inserted
      * 
      * @throws SiteTreeException if an error occurs
      */
@@ -165,13 +164,13 @@ public class InsertLabelTask extends Task {
         String documentid,
         String labelName,
         String language,
-        String absolutetreepath)
+        String area)
         throws SiteTreeException {
 
         DefaultSiteTree tree = null;
         Label label = null;
         try {
-            tree = new DefaultSiteTree(absolutetreepath);
+            tree = getPublication().getSiteTree(area);
             label = new Label(labelName, language);
             tree.addLabel(documentid, label);
             tree.save();
@@ -180,11 +179,12 @@ public class InsertLabelTask extends Task {
                 "Cannot insert label "
                     + label
                     + " into tree "
-                    + absolutetreepath,
+                    + area,
                 e);
         }
 
     }
+
     /** (non-Javadoc)
      * @see org.apache.tools.ant.Task#execute()
      */
@@ -193,12 +193,12 @@ public class InsertLabelTask extends Task {
             log("document-id corresponding to the node: " + getDocumentid());
             log("label name: " + getLabelName());
             log("language: " + getLanguage());
-            log("Absolute Tree Path: " + getAbsolutetreepath());
+            log("area: " + getArea());
             insertLabel(
                 getDocumentid(),
                 getLabelName(),
                 getLanguage(),
-                getAbsolutetreepath());
+                getArea());
         } catch (Exception e) {
             throw new BuildException(e);
         }
