@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<xsl:import href="../../../../../../xslt/search/search-and-results.xsl"/>
+<xsl:import href="../../../../xslt/search/search-and-results.xsl"/>
 
 <xsl:template name="body">
 <xsl:apply-templates select="/oscom/search-and-results"/>
