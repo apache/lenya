@@ -159,7 +159,7 @@ $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
     Replace <code>$TOMCAT_HOME</code> by your tomcat installation directory.
     </p>
     <ul>
-      <li><code>src.cocoon.dir=$COCOON_HOME/build/webapp</code></li>
+      <li><code>cocoon.webapp.dir=$COCOON_HOME/build/webapp</code></li>
       <li><code>pubs.root.dirs=src/webapp/lenya/pubs</code></li>
       <li><code>install.dir=$TOMCAT_HOME/webapps/lenya</code></li>
       <li><code>cache.dir=$TOMCAT_HOME/work/Standalone/localhost/lenya</code></li>

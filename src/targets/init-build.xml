@@ -89,7 +89,7 @@
     <echo>INFO: exclude: WEB-INF/lib/lucene**.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
-      <fileset dir="${src.cocoon.dir}">
+      <fileset dir="${cocoon.webapp.dir}">
         <exclude name="sitemap.xmap"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
         <exclude name="WEB-INF/logkit.xconf"/>
@@ -109,7 +109,7 @@
     <!-- patch cocoon.xconf -->
     <echo>INFO: patching cocoon.xconf with XSLT stylesheet</echo>
     <xslt
-        in="${src.cocoon.dir}/WEB-INF/cocoon.xconf"
+        in="${cocoon.webapp.dir}/WEB-INF/cocoon.xconf"
         out="${build.webapp}/WEB-INF/cocoon.xconf"
         style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
         >
@@ -121,7 +121,7 @@
     <!-- patch logkit.xconf -->
     <echo>INFO: patching logkit.xconf with XSLT stylesheet</echo>
     <xslt
-        in="${src.cocoon.dir}/WEB-INF/logkit.xconf"
+        in="${cocoon.webapp.dir}/WEB-INF/logkit.xconf"
         out="${build.webapp}/WEB-INF/logkit.xconf"
         style="${src.webapp.dir}/WEB-INF/logkit-xconf.xsl"
         >
@@ -131,7 +131,7 @@
     <!-- patch web.xml -->
     <echo>INFO: patching web.xml with XSLT stylesheet</echo>
     <xslt
-        in="${src.cocoon.dir}/WEB-INF/web.xml"
+        in="${cocoon.webapp.dir}/WEB-INF/web.xml"
         out="${build.webapp}/WEB-INF/web.xml"
         style="${src.webapp.dir}/WEB-INF/web-xml.xsl"
         force="false"
