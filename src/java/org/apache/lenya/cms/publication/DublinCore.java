@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.10 2003/08/08 09:50:09 edith Exp $
+$Id: DublinCore.java,v 1.11 2003/08/11 16:04:39 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,150 +70,147 @@ import org.w3c.dom.NodeList;
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  */
 public class DublinCore {
-	private Document cmsdocument;
-	private File infofile;
-	private NodeList nodelist;
-	private String string;
+    private Document cmsdocument;
+    private File infofile;
+    private NodeList nodelist;
+    private String string;
 
-	private static final String DC_NAMESPACE =
-		"http://purl.org/dc/elements/1.1/";
+    private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
 
-	/** 
-	 * Creates a new instance of Dublin Core
-	 * 
-	 */
-	protected DublinCore(Document mydocument) {
-		this.cmsdocument = mydocument;
-		this.infofile =
-			cmsdocument.getPublication().getPathMapper().getFile(
-				cmsdocument.getPublication(),
-				cmsdocument.getPublication().AUTHORING_AREA,
-				cmsdocument.getId(),
-				cmsdocument.getLanguage());
-	}
+    /** 
+     * Creates a new instance of Dublin Core
+     * 
+     */
+    protected DublinCore(Document mydocument) {
+        this.cmsdocument = mydocument;
+        this.infofile =
+            cmsdocument.getPublication().getPathMapper().getFile(
+                cmsdocument.getPublication(),
+                cmsdocument.getPublication().AUTHORING_AREA,
+                cmsdocument.getId(),
+                cmsdocument.getLanguage());
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getTitle() throws PublicationException {
-		return getDCNode("title");
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+     */
+    public String getTitle() throws PublicationException {
+        return getDCNode("title");
+    }
 
-	/**
-	 * Set the DC title
-	 * 
-	 * @param title the title
-	 */
-	public void setTitle(String title) {
-		setDCNode("title", title);
-	}
+    /**
+     * Set the DC title
+     * 
+     * @param title the title
+     */
+    public void setTitle(String title) {
+        setDCNode("title", title);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getCreator() throws PublicationException {
-		return getDCNode("creator");
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+     */
+    public String getCreator() throws PublicationException {
+        return getDCNode("creator");
+    }
 
-	/**
-	 * Set the DC creator
-	 * 
-	 * @param creator the Creator
-	 */
-	public void setCreator(String creator) {
-		setDCNode("creator", creator);
-	}
+    /**
+     * Set the DC creator
+     * 
+     * @param creator the Creator
+     */
+    public void setCreator(String creator) {
+        setDCNode("creator", creator);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getSubject() throws PublicationException {
-		return getDCNode("subject");
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+     */
+    public String getSubject() throws PublicationException {
+        return getDCNode("subject");
+    }
 
-	private String getDCNode(String node) {
-		try {
-			nodelist =
-				DocumentHelper.readDocument(infofile).getElementsByTagNameNS(
-					DC_NAMESPACE,
-					node);
-			try {
-				string = nodelist.item(0).getFirstChild().getNodeValue();
-			} catch (Exception e) {
-				string = "";
-			}
-		} catch (Exception e) {
-			string = e.toString();
-		}
+    private String getDCNode(String node) {
+        try {
+            nodelist =
+                DocumentHelper.readDocument(infofile).getElementsByTagNameNS(DC_NAMESPACE, node);
+            try {
+                string = nodelist.item(0).getFirstChild().getNodeValue();
+            } catch (Exception e) {
+                string = "";
+            }
+        } catch (Exception e) {
+            string = e.toString();
+        }
 
-		return string;
-	}
+        return string;
+    }
 
-	private void setDCNode(String node, String text) {
-		org.w3c.dom.Document document;
-		try {
-			document = DocumentHelper.readDocument(infofile);
-			nodelist = document.getElementsByTagNameNS(DC_NAMESPACE, node);
-			nodelist.item(0).getFirstChild().setNodeValue(text);
-			DocumentHelper.writeDocument(document, infofile);
-		} catch (Exception e) {
-			string = e.toString();
-		}
-	}
+    private void setDCNode(String node, String text) {
+        org.w3c.dom.Document document;
+        try {
+            document = DocumentHelper.readDocument(infofile);
+            nodelist = document.getElementsByTagNameNS(DC_NAMESPACE, node);
+            nodelist.item(0).getFirstChild().setNodeValue(text);
+            DocumentHelper.writeDocument(document, infofile);
+        } catch (Exception e) {
+            string = e.toString();
+        }
+    }
 
-	/**
-	 * Set the DC Subject
-	 * 
-	 * @param subject the subject
-	 */
-	public void setSubject(String subject) {
-		setDCNode("subject", subject);
-	}
+    /**
+     * Set the DC Subject
+     * 
+     * @param subject the subject
+     */
+    public void setSubject(String subject) {
+        setDCNode("subject", subject);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getDescription() throws PublicationException {
-		return getDCNode("description");
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+     */
+    public String getDescription() throws PublicationException {
+        return getDCNode("description");
+    }
 
-	/**
-	 * Set the DC Description
-	 * 
-	 * @param description the description
-	 */
-	public void setDescription(String description) {
-		setDCNode("description", description);
-	}
+    /**
+     * Set the DC Description
+     * 
+     * @param description the description
+     */
+    public void setDescription(String description) {
+        setDCNode("description", description);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getRights() throws PublicationException {
-		return getDCNode("rights");
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+     */
+    public String getRights() throws PublicationException {
+        return getDCNode("rights");
+    }
 
-	/**
-	 * Set the DC Rights
-	 * 
-	 * @param rights the rights
-	 */
-	public void setRights(String rights) {
-		setDCNode("rights", rights);
-	}
+    /**
+     * Set the DC Rights
+     * 
+     * @param rights the rights
+     */
+    public void setRights(String rights) {
+        setDCNode("rights", rights);
+    }
 
-	/**
-	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
-	 */
-	public String getIdentifier() throws PublicationException {
-		return getDCNode("identifier");
-	}
-	/**
-	 * Set the DC Identifier
-	 * 
-	 * @param identifier The identifier
-	 */
-	public void setIdentifier(String identifier) {
-		setDCNode("identifier", identifier);
-	}
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getDCTitle()
+     */
+    public String getIdentifier() throws PublicationException {
+        return getDCNode("identifier");
+    }
+    /**
+     * Set the DC Identifier
+     * 
+     * @param identifier The identifier
+     */
+    public void setIdentifier(String identifier) {
+        setDCNode("identifier", identifier);
+    }
 }
