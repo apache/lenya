@@ -15,12 +15,13 @@
  *
  */
 
-/* $Id: RCML.java,v 1.25 2004/03/01 16:18:22 gregor Exp $  */
+/* $Id: RCML.java,v 1.26 2004/07/16 15:43:59 edith Exp $  */
 
 package org.apache.lenya.cms.rc;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -34,6 +35,7 @@ import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Handle with the RCML file
@@ -393,5 +395,50 @@ public class RCML {
         root.removeChild((Node) firstCheckIn.elementAt(0));
         root.removeChild(root.getFirstChild()); // remove EOL (end of line)
         setDirty();
+    }
+
+    /**
+     * get the time's value of the backups
+     *
+     * @return String[] the times
+     *
+     * @throws Exception if an error occurs
+     */
+    public String[] getBackupsTime() throws Exception {
+        XPointerFactory xpf = new XPointerFactory();
+
+        Vector entries =
+            xpf.select(
+                document.getDocumentElement(),
+                "xpointer(/XPSRevisionControl/CheckIn)");
+        ArrayList times = new ArrayList();
+
+        for (int i = 0; i < entries.size(); i++) {
+            Element elem = (Element) entries.get(i);
+            String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
+            NodeList backupNodes = elem.getElementsByTagName(ELEMENT_BACKUP);
+            if (backupNodes != null && backupNodes.getLength()>0) {
+                times.add(time);
+            }
+        }
+        return (String[]) times.toArray(new String[times.size()]);
+
+    }
+
+    /**
+     * delete the rcml file and the directory if this one is empty
+     *
+     * @return boolean true, if the file was deleted
+     */
+    public boolean delete() {
+        File rcmlFile = this.rcmlFile;
+        File directory = rcmlFile.getParentFile();
+        boolean deleted = rcmlFile.delete();
+        if (directory.exists()
+            && directory.isDirectory()
+            && directory.listFiles().length == 0) {
+            directory.delete();
+        }
+        return deleted;
     }
 }

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RevisionController.java,v 1.27 2004/03/01 16:18:22 gregor Exp $  */
+/* $Id: RevisionController.java,v 1.28 2004/07/16 15:43:59 edith Exp $  */
 
 package org.apache.lenya.cms.rc;
 
@@ -302,6 +302,20 @@ public class RevisionController {
     }
 
     /**
+     * Get the file of a backup version  
+     *
+     * @param time The time of the backup 
+     * @param filename The path of the file from the {publication}
+     *
+     * @return File The file of the backup version
+     */
+    public File getBackupFile(long time, String filename) {
+        File backup = new File(backupDir, filename + ".bak." + time);
+
+        return backup;
+    }
+
+    /**
      * Rolls back to the given point in time.  
      *
      * @param destination File which will be rolled back
@@ -401,4 +415,51 @@ public class RevisionController {
         out.close();
     }
 
+    /**
+     * delete the revisions
+	 * @param filename of the document
+	 * @throws RevisionControlException when somthing went wrong
+	 */
+	public void deleteRevisions(String filename) throws RevisionControlException{
+        try {
+			RCML rcml = this.getRCML(filename);
+            String[] times = rcml.getBackupsTime();
+            for (int i=0; i < times.length; i++) {
+                long time = new Long(times[i]).longValue();
+                File backup = this.getBackupFile(time, filename);
+                File parentDirectory = null; 
+                parentDirectory = backup.getParentFile(); 
+                boolean deleted = backup.delete();
+                if (!deleted) {
+                    throw new RevisionControlException("The backup file, "+backup.getCanonicalPath()+" could not be deleted!");
+                }
+                if (parentDirectory != null 
+                    && parentDirectory.exists()
+                    && parentDirectory.isDirectory()
+                    && parentDirectory.listFiles().length == 0) {
+                        parentDirectory.delete();
+                }
+            }
+		} catch (Exception e) {
+            throw new RevisionControlException(e);
+		}
+    }
+    
+    /**
+     * delete the rcml file
+	 * @param filename of the document
+	 * @throws RevisionControlException if something went wrong
+	 */
+	public void deleteRCML(String filename) throws RevisionControlException{
+        try {
+            RCML rcml = this.getRCML(filename);
+            boolean deleted = rcml.delete();
+            if (!deleted) {
+                throw new RevisionControlException("The rcml file could not be deleted!");
+            }
+        } catch (Exception e) {
+            throw new RevisionControlException(e);
+        }
+    }
+    
 }
