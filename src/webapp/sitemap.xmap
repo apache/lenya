@@ -22,7 +22,7 @@
 <!-- =========================== Components ================================ -->
 
  <map:components>
-   
+
   <!-- ========================================================================== -->
   <!-- Generators -->
   <!-- ========================================================================== -->
@@ -90,30 +90,40 @@
     <map:transformer name="workflowmenu" logger="lenya.sitemap.transformer.workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/>
     <map:transformer name="writeDOMsession" logger="sitemap.transformer.writeDOMsession" src="org.apache.cocoon.transformation.WriteDOMSessionTransformer"/>
     <map:transformer name="write-source" logger="sitemap.transformer.write-source" src="org.apache.cocoon.transformation.SourceWritingTransformer"/>
-    
+
     <map:transformer name="xinclude" logger="sitemap.transformer.xinclude" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.cocoon.transformation.XIncludeTransformer"/>
-    
+
     <map:transformer name="xlink" src="org.apache.lenya.cms.cocoon.transformation.IncludeTransformer">
       <publication type=""/>
     </map:transformer>
 
-    <!-- NOTE: XSLTC is now the default processor. If you use Xalan extensions, use the "xalan" transformer. -->
-    <map:transformer name="xslt" logger="sitemap.transformer.xslt" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
+    <!-- NOTE: This is the default XSLT processor. -->
+    <map:transformer logger="sitemap.transformer.xslt" name="xslt" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
       <use-request-parameters>false</use-request-parameters>
       <use-session-parameters>false</use-session-parameters>
       <use-cookie-parameters>false</use-cookie-parameters>
-      <transformer-factory>org.apache.xalan.xsltc.trax.TransformerFactoryImpl</transformer-factory>
+      <xslt-processor-role>xalan</xslt-processor-role>
+      <check-includes>true</check-includes>
     </map:transformer>
 
-    <!-- NOTE: This used to be the default XSLT processor. The default now is XSLTC -->
-    <map:transformer name="xalan" logger="sitemap.transformer.xalan" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
+    <!-- NOTE: This is the same as the default processor but with a different name (for compatibility) -->
+    <map:transformer logger="sitemap.transformer.xalan" name="xalan" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
       <use-request-parameters>false</use-request-parameters>
       <use-session-parameters>false</use-session-parameters>
       <use-cookie-parameters>false</use-cookie-parameters>
-      <transformer-factory>org.apache.xalan.processor.TransformerFactoryImpl</transformer-factory>
+      <xslt-processor-role>xalan</xslt-processor-role>
+      <check-includes>true</check-includes>
     </map:transformer>
-  </map:transformers>
-  
+
+    <!-- NOTE: You can also try XSLTC as the default processor. If you use Xalan extensions, use the "xalan" transformer. -->
+    <map:transformer logger="sitemap.transformer.xsltc" name="xsltc" pool-grow="2" pool-max="32" pool-min="8" src="org.apache.cocoon.transformation.TraxTransformer">
+      <use-request-parameters>false</use-request-parameters>
+      <use-session-parameters>false</use-session-parameters>
+      <use-cookie-parameters>false</use-cookie-parameters>
+      <xslt-processor-role>xsltc</xslt-processor-role>
+      <check-includes>true</check-includes>
+    </map:transformer>
+
   <!-- ========================================================================== -->
   <!-- Serializers -->
   <!-- ========================================================================== -->
@@ -132,25 +142,25 @@
       <encoding>UTF-8</encoding>
     </map:serializer>
 -->
-    
+
     <map:serializer name="html-no-dtd" logger="sitemap.serializer.html-no-dtd" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
       <buffer-size>1024</buffer-size>
     </map:serializer>
-    
+
     <map:serializer name="html-iso-8859-1" logger="sitemap.serializer.html-iso-8859-1" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
       <buffer-size>1024</buffer-size>
       <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
       <encoding>ISO-8859-1</encoding>
     </map:serializer>
-    
-    <map:serializer name="htmlnoi" logger="sitemap.serializer.htmlnoi" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer"> 
+
+    <map:serializer name="htmlnoi" logger="sitemap.serializer.htmlnoi" mime-type="text/html" pool-grow="4" pool-max="32" pool-min="4" src="org.apache.cocoon.serialization.HTMLSerializer">
       <indent>no</indent>
       <doctype-public>-//W3C//DTD HTML 4.01 Transitional//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/html4/loose.dtd</doctype-system>
       <encoding>UTF-8</encoding>
     </map:serializer>
-    
+
     <map:serializer name="xhtml" logger="sitemap.serializer.xhtml" mime-type="text/html" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
       <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
@@ -162,49 +172,49 @@
       <encoding>UTF-8</encoding>
     </map:serializer>
 -->
-    
+
     <map:serializer name="xhtml-iso-8859-1" logger="sitemap.serializer.xhtml-iso-8859-1" mime-type="text/html" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
       <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
       <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
       <encoding>ISO-8859-1</encoding>
     </map:serializer>
-    
+
     <map:serializer name="xml" logger="sitemap.serializer.xml" mime-type="text/xml" src="org.apache.cocoon.serialization.XMLSerializer"/>
-    
+
     <!-- Why can't we use UTF-8 in the above serializer ?? -->
     <map:serializer name="xml-utf-8" logger="sitemap.serializer.xml-utf-8" mime-type="text/xml" pool-grow="2" pool-max="64" pool-min="2" src="org.apache.cocoon.serialization.XMLSerializer">
       <encoding>UTF-8</encoding>
     </map:serializer>
-    
+
 <!-- This serializer (Cocoon-2.1.5) has an issue with namespaces -->
 <!--
     <map:serializer name="xml" logger="sitemap.serializer.xml" mime-type="text/xml" src="org.apache.cocoon.components.serializers.XMLSerializer">
       <encoding>UTF-8</encoding>
     </map:serializer>
 -->
-    
+
     <map:serializer name="links" logger="sitemap.serializer.links" src="org.apache.cocoon.serialization.LinkSerializer"/>
-    
+
     <map:serializer name="wml" logger="sitemap.serializer.wml" mime-type="text/vnd.wap.wml" src="org.apache.cocoon.serialization.XMLSerializer">
      <doctype-public>-//WAPFORUM//DTD WML 1.1//EN</doctype-public>
      <doctype-system>http://www.wapforum.org/DTD/wml_1.1.xml</doctype-system>
      <encoding>ASCII</encoding>
      <omit-xml-declaration>yes</omit-xml-declaration>
     </map:serializer>
-    
+
     <map:serializer name="svgxml" logger="sitemap.serializer.svgxml" mime-type="image/svg-xml" src="org.apache.cocoon.serialization.XMLSerializer">
      <doctype-public>-//W3C//DTD SVG 20000303 Stylable//EN</doctype-public>
      <doctype-system>http://www.w3.org/TR/2000/03/WD-SVG-20000303/</doctype-system>
     </map:serializer>
-    
+
     <map:serializer name="text" logger="sitemap.serializer.text" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
       <encoding>UTF-8</encoding>
     </map:serializer>
-    
+
     <map:serializer name="text-iso-8859-1" logger="sitemap.serializer.text-iso-8859-1" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
       <encoding>ISO-8859-1</encoding>
     </map:serializer>
-    
+
     <map:serializer name="fo2pdf" logger="sitemap.serializer.fo2pdf" mime-type="application/pdf" src="org.apache.cocoon.serialization.FOPSerializer"/>
     <map:serializer name="fo2ps" logger="sitemap.serializer.fo2ps" mime-type="application/postscript" src="org.apache.cocoon.serialization.FOPSerializer"/>
     <map:serializer name="fo2pcl" logger="sitemap.serializer.fo2pcl" mime-type="vnd.hp-PCL" src="org.apache.cocoon.serialization.FOPSerializer"/>
@@ -282,7 +292,7 @@
    <map:selector name="exception" logger="sitemap.selector.exception" src="org.apache.cocoon.selection.ExceptionSelector">
      <exception name="sax" class="org.xml.sax.SAXException" unroll="true"/>
      <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>
-     <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/> 
+     <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/>
      <exception name="invalid-continuation" class="org.apache.cocoon.components.flow.InvalidContinuationException"/>
      <exception class="org.apache.cocoon.ProcessingException" unroll="true"/>
      <!-- The statement below tells the selector to unroll as much exceptions as possible -->
@@ -300,7 +310,7 @@
    <map:selector name="request-parameter" logger="sitemap.selector.request-parameter" src="org.apache.cocoon.selection.RequestParameterSelector">
     <!-- Define now which request parameter to use; or do it later,
          when using this selector, via "parameter-name" parameter.
-    <parameter-name>myparam</parameter-name> 
+    <parameter-name>myparam</parameter-name>
     -->
    </map:selector>
    <map:selector name="resource-exists" logger="sitemap.selector.resource-exists" src="org.apache.cocoon.selection.ResourceExistsSelector"/>
@@ -419,14 +429,14 @@
   <map:resources>
 
     <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
+      <map:transform type="i18n">
         <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
+      </map:transform>
       <map:transform src="cocoon://lenya-screen.xsl"/>
       <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
       <map:serialize/>
     </map:resource>
-  
+
  </map:resources>
 
 <!-- =========================== Pipelines ================================= -->
@@ -440,8 +450,8 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline>  
-        
+    <map:pipeline>
+
       <!-- Lenya GUI screen -->
       <map:match pattern="lenya-screen.xsl">
         <map:generate src="{fallback:xslt/util/page2xhtml.xsl}"/>
@@ -450,9 +460,9 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
-          
+
       <map:match type="usecase" pattern="login">
-        
+
         <map:match type="step" pattern="showscreen">
           <map:generate type="serverpages" src="{fallback:content/ac/login.xsp}"/>
           <map:transform src="{fallback:xslt/ac/login.xsl}">
@@ -460,16 +470,16 @@
           </map:transform>
           <map:call resource="style-cms-page"/>
         </map:match>
-        
+
         <map:match type="step" pattern="login">
           <map:act type="authenticator">
             <map:redirect-to uri="{request:requestURI}" session="true"/>
           </map:act>
           <map:redirect-to uri="{request:requestURI}?lenya.usecase=login&amp;lenya.step=showscreen&amp;status=failed" session="true"/>
         </map:match>
-        
+
       </map:match>
-      
+
       <map:match type="usecase" pattern="logout">
         <map:generate type="serverpages" src="{fallback:content/ac/logout.xsp}"/>
         <map:transform src="{fallback:xslt/ac/logout.xsl}">
@@ -478,7 +488,7 @@
         </map:transform>
           <map:call resource="style-cms-page"/>
       </map:match>
-      
+
     <!-- favicon -->
     <map:match pattern="favicon.ico">
       <map:read mime-type="image/x-icon" src="lenya/resources/images/lenya.ico"/>
@@ -498,7 +508,7 @@
     <map:match pattern="scripts/*.js">
       <map:read mime-type="text/javascript" src="resources/scripts/{1}.js"/>
     </map:match>
-    
+
       <map:handle-errors>
         <map:generate type="notifying"/>
         <map:transform src="stylesheets/system/error2html.xslt">
@@ -523,7 +533,7 @@
       </map:handle-errors>
 
     </map:pipeline>
-      
+
     <map:pipeline>
       <map:match pattern="**">
         <map:act type="authorizer">
