@@ -1,8 +1,18 @@
 /*
- * Created on 20.09.2004
+ * Copyright  1999-2004 The Apache Software Foundation
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
 package org.apache.lenya.cms.usecase;
 
@@ -14,6 +24,9 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 
 /**
+ * Abstract operation implementation.
+ * 
+ * @version $Id:$
  */
 public class AbstractOperation extends AbstractLogEnabled implements Operation, Serviceable,
         Initializable, Disposable {
