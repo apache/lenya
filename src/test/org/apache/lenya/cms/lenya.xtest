@@ -132,42 +132,41 @@
           shorthand="source-resolver"
           default-class="org.apache.excalibur.source.impl.SourceResolverImpl"/>
   
-    <role name="org.apache.lenya.cms.ac2.AccreditableManagerSelector"
+    <role name="org.apache.lenya.ac.AccreditableManagerSelector"
           shorthand="accreditable-managers"
           default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-      <hint shorthand="file" class="org.apache.lenya.cms.ac2.file.FileAccreditableManager"/>
+      <hint shorthand="file" class="org.apache.lenya.ac.file.FileAccreditableManager"/>
     </role>
     
-  <role name="org.apache.lenya.cms.ac2.AuthorizerSelector"
+  <role name="org.apache.lenya.ac.AuthorizerSelector"
         shorthand="authorizers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-    <hint shorthand="policy" class="org.apache.lenya.cms.ac2.PolicyAuthorizer"/>
-    <hint shorthand="workflow" class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer"/>
+    <hint shorthand="policy" class="org.apache.lenya.ac.impl.PolicyAuthorizer"/>
+    <hint shorthand="workflow" class="org.apache.lenya.cms.ac.workflow.WorkflowAuthorizer"/>
   </role>
   
-  <role name="org.apache.lenya.cms.ac2.PolicyManagerSelector"
+  <role name="org.apache.lenya.ac.PolicyManagerSelector"
         shorthand="policy-managers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-    <hint shorthand="file" class="org.apache.cms.ac2.file.FilePolicyManager"/>
-    <hint shorthand="publication-file" class="org.apache.cms.ac2.file.PublicationFilePolicyManager"/>
-    <hint shorthand="sitemap" class="org.apache.cms.ac2.sitemap.SitemapPolicyManager"/>
+    <hint shorthand="file" class="org.apache.ac.file.FilePolicyManager"/>
+    <hint shorthand="sitemap" class="org.apache.cms.ac.SitemapPolicyManager"/>
   </role>
   
-  <role name="org.apache.lenya.cms.ac2.AccessControllerResolverSelector"
+  <role name="org.apache.lenya.ac.AccessControllerResolverSelector"
         shorthand="access-controller-resolvers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
-    <hint shorthand="composable" class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"/>
-    <hint shorthand="publication" class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
+    <hint shorthand="composable" class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"/>
+    <hint shorthand="publication" class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"/>
   </role>
   
-  <role name="org.apache.lenya.cms.ac2.Authenticator"
+  <role name="org.apache.lenya.ac.Authenticator"
         shorthand="authenticator"
-        default-class="org.apache.lenya.cms.ac2.UserAuthenticator"/>
+        default-class="org.apache.lenya.ac.impl.UserAuthenticator"/>
 
 <!--
-  <role name="org.apache.lenya.cms.ac2.cache.PolicyCache"
+  <role name="org.apache.lenya.ac.cache.PolicyCache"
         shorthand="sourcecache"
-        default-class="org.apache.lenya.cms.ac2.cache.PolicyCacheImpl"/>
+        default-class="org.apache.lenya.ac.cache.PolicyCacheImpl"/>
 -->
   </roles>
 
@@ -180,50 +179,50 @@
   
     <accreditable-managers>
       <component-instance logger="lenya.ac.accreditablemanager"
-          class="org.apache.lenya.cms.ac2.file.FileAccreditableManager" name="file">
+          class="org.apache.lenya.ac.file.FileAccreditableManager" name="file">
         <parameter name="directory" value="file:///d:/development/build/tomcat-4.1.24/webapps/lenya/lenya/pubs/test/config/ac/passwd"/>
       </component-instance>
     </accreditable-managers>
     
   <authorizers>
-    <component-instance class="org.apache.lenya.cms.ac2.PolicyAuthorizer" logger="lenya.ac.authorizer" name="policy"/>
-    <component-instance class="org.apache.lenya.cms.ac2.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer" name="workflow"/>
+    <component-instance class="org.apache.lenya.ac.impl.PolicyAuthorizer" logger="lenya.ac.authorizer" name="policy"/>
+    <component-instance class="org.apache.lenya.cms.ac.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer" name="workflow"/>
   </authorizers>
   
   <policy-managers>
-    <component-instance class="org.apache.lenya.cms.ac2.file.FilePolicyManager" logger="lenya.ac.policymanager.file" name="file"/>
-    <component-instance class="org.apache.lenya.cms.ac2.sitemap.SitemapPolicyManager" logger="lenya.ac.policymanager.sitemap" name="sitemap"/>
-    <component-instance class="org.apache.lenya.cms.ac2.DocumentPolicyManagerWrapper" logger="lenya.ac.policymanager.document" name="document"/>
+    <component-instance class="org.apache.lenya.ac.file.FilePolicyManager" logger="lenya.ac.policymanager.file" name="file"/>
+    <component-instance class="org.apache.lenya.cms.ac.SitemapPolicyManager" logger="lenya.ac.policymanager.sitemap" name="sitemap"/>
+    <component-instance class="org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper" logger="lenya.ac.policymanager.document" name="document"/>
   </policy-managers>
   
   <component logger="lenya.ac.accesscontroller"
-      class="org.apache.lenya.cms.ac2.BypassableAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/bypassable"/>
+      class="org.apache.lenya.ac.impl.BypassableAccessController"
+      role="org.apache.lenya.ac.AccessController/bypassable"/>
   
   <component logger="lenya.ac.accesscontroller"
-      class="org.apache.lenya.cms.ac2.DefaultAccessController"
-      role="org.apache.lenya.cms.ac2.AccessController/default"/>
+      class="org.apache.lenya.ac.impl.DefaultAccessController"
+      role="org.apache.lenya.ac.AccessController/default"/>
   
   <access-controller-resolvers>
     <component-instance logger="lenya.ac.accesscontrollerresolver"
-        class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"
+        class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"
         name="publication">
     </component-instance>
     <component-instance logger="lenya.ac.accesscontrollerresolver"
-        class="org.apache.lenya.cms.ac2.ComposableAccessControllerResolver"
+        class="org.apache.lenya.ac.impl.ComposableAccessControllerResolver"
         name="composable">
       <resolver type="publication"/>
     </component-instance>
   </access-controller-resolvers>
   
   <component logger="lenya.ac.authenticator"
-      class="org.apache.lenya.cms.ac2.UserAuthenticator"
-      role="org.apache.lenya.cms.ac2.Authenticator"/>
+      class="org.apache.lenya.ac.impl.UserAuthenticator"
+      role="org.apache.lenya.cms.ac.Authenticator"/>
     
     <!--
   <component logger="lenya.ac.cache"
-  	  class="org.apache.lenya.cms.ac2.cache.PolicyCacheImpl"
-  	  role="org.apache.lenya.cms.ac2.cache.PolicyCache"/>
+  	  class="org.apache.lenya.ac.cache.PolicyCacheImpl"
+  	  role="org.apache.lenya.ac.cache.PolicyCache"/>
   	  -->
 
   </components>
