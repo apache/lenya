@@ -88,7 +88,7 @@ public class ArticleTask
         StringTokenizer st=new StringTokenizer(docId,"/");
         String channel=st.nextToken();
         String section=st.nextToken();
-        String articles=st.nextToken();
+//        String articles=st.nextToken();
         String year=st.nextToken();
         String dir=st.nextToken();
 
