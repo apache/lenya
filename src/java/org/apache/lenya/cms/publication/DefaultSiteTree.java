@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.32 2003/09/04 15:21:20 andreas Exp $
+$Id: DefaultSiteTree.java,v 1.33 2003/09/17 18:55:29 edith Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -221,6 +221,19 @@ public class DefaultSiteTree implements SiteTree {
         return null;
     }
 
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#addNode(org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String)
+	 */
+	public void addNode(SiteTreeNode node, String refDocumentId)  throws SiteTreeException {
+		this.addNode(
+			node.getAbsoluteParentId(),
+			node.getId(),
+			node.getLabels(),
+			node.getHref(),
+			node.getSuffix(),
+			node.hasLink(),
+		    refDocumentId);
+	}
     /** (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[])
      */
@@ -233,24 +246,19 @@ public class DefaultSiteTree implements SiteTree {
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(org.apache.lenya.cms.publication.SiteTreeNode)
      */
     public void addNode(SiteTreeNode node) throws SiteTreeException {
-        this.addNode(
-            node.getAbsoluteParentId(),
-            node.getId(),
-            node.getLabels(),
-            node.getHref(),
-            node.getSuffix(),
-            node.hasLink());
+        this.addNode(node, null);
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
-     */
-    public void addNode(
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean, java.lang.String)
+	 */
+	public void addNode(
         String documentid,
         Label[] labels,
         String href,
         String suffix,
-        boolean link)
+        boolean link,
+ 	    String refDocumentId)
         throws SiteTreeException {
         String parentid = "";
         StringTokenizer st = new StringTokenizer(documentid, "/");
@@ -261,79 +269,113 @@ public class DefaultSiteTree implements SiteTree {
         }
 
         String id = st.nextToken();
-        this.addNode(parentid, id, labels, href, suffix, link);
+        this.addNode(parentid, id, labels, href, suffix, link, refDocumentId);
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
-     */
-    public void addNode(
-        String parentid,
-        String id,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link)
-        throws SiteTreeException {
-        Node parentNode = getNodeInternal(parentid);
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
+	 */
+	public void addNode(
+		String documentid,
+		Label[] labels,
+		String href,
+		String suffix,
+		boolean link)
+		throws SiteTreeException {
+		this.addNode(documentid, labels, href, suffix, link, null);
+	}
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
+	 */
+	public void addNode(
+		String parentid,
+		String id,
+		Label[] labels,
+		String href,
+		String suffix,
+		boolean link)
+		throws SiteTreeException {
+			this.addNode(parentid, id, labels, href, suffix, link, null);
+	}
 
-        if (parentNode == null) {
-            throw new SiteTreeException("Parentid: " + parentid + " in " + area + " tree not found");
-        }
+	/** (non-Javadoc)
+	 * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean)
+	 */
+	public void addNode(
+		String parentid,
+		String id,
+		Label[] labels,
+		String href,
+		String suffix,
+		boolean link,
+		String refDocumentId)
+		throws SiteTreeException {
 
-        log.debug("PARENT ELEMENT: " + parentNode);
+			Node parentNode = getNodeInternal(parentid);
 
-        // Check if child already exists
-        Node childNode = getNodeInternal(parentid + "/" + id);
+			if (parentNode == null) {
+				throw new SiteTreeException("Parentid: " + parentid + " in " + area + " tree not found");
+			}
 
-        if (childNode != null) {
-            log.info(
-                "This node: "
-                    + parentid
-                    + "/"
-                    + id
-                    + " has already been inserted");
+			log.debug("PARENT ELEMENT: " + parentNode);
 
-            return;
-        }
+			// Check if child already exists
+			Node childNode = getNodeInternal(parentid + "/" + id);
 
-        // Add node
-        NamespaceHelper helper =
-            new NamespaceHelper(NAMESPACE_URI, "", document);
-        Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
-        child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
+			if (childNode != null) {
+				log.info(
+					"This node: "
+						+ parentid
+						+ "/"
+						+ id
+						+ " has already been inserted");
 
-        if ((href != null) && (href.length() > 0)) {
-            child.setAttribute(SiteTreeNodeImpl.HREF_ATTRIBUTE_NAME, href);
-        }
+				return;
+			}
 
-        if ((suffix != null) && (suffix.length() > 0)) {
-            child.setAttribute(SiteTreeNodeImpl.SUFFIX_ATTRIBUTE_NAME, suffix);
-        }
+			// Create node
+			NamespaceHelper helper =
+				new NamespaceHelper(NAMESPACE_URI, "", document);
+			Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
+			child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
 
-        if (link) {
-            child.setAttribute(SiteTreeNodeImpl.LINK_ATTRIBUTE_NAME, "true");
-        }
+			if ((href != null) && (href.length() > 0)) {
+				child.setAttribute(SiteTreeNodeImpl.HREF_ATTRIBUTE_NAME, href);
+			}
 
-        for (int i = 0; i < labels.length; i++) {
-            String labelName = labels[i].getLabel();
-            Element label =
-                helper.createElement(SiteTreeNodeImpl.LABEL_NAME, labelName);
-            String labelLanguage = labels[i].getLanguage();
+			if ((suffix != null) && (suffix.length() > 0)) {
+				child.setAttribute(SiteTreeNodeImpl.SUFFIX_ATTRIBUTE_NAME, suffix);
+			}
 
-            if ((labelLanguage != null) && (labelLanguage.length() > 0)) {
-                label.setAttribute(
-                    SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME,
-                    labelLanguage);
+			if (link) {
+				child.setAttribute(SiteTreeNodeImpl.LINK_ATTRIBUTE_NAME, "true");
+			}
+
+			for (int i = 0; i < labels.length; i++) {
+				String labelName = labels[i].getLabel();
+				Element label =
+					helper.createElement(SiteTreeNodeImpl.LABEL_NAME, labelName);
+				String labelLanguage = labels[i].getLanguage();
+
+				if ((labelLanguage != null) && (labelLanguage.length() > 0)) {
+					label.setAttribute(
+						SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME,
+						labelLanguage);
+				}
+
+				child.appendChild(label);
+			}
+
+            // Add Node 
+            if (refDocumentId != null){
+	 			Node nextSibling = getNodeInternal(refDocumentId);
+				parentNode.insertBefore(child, nextSibling);
+            } else {
+				parentNode.appendChild(child);
             }
+			log.debug("Tree has been modified: " + document.getDocumentElement());
 
-            child.appendChild(label);
-        }
-
-        parentNode.appendChild(child);
-        log.debug("Tree has been modified: " + document.getDocumentElement());
-    }
-
+		}
     /**
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.SiteTree#addLabel(java.lang.String, org.apache.lenya.cms.publication.Label)
@@ -555,4 +597,6 @@ public class DefaultSiteTree implements SiteTree {
 				"The saving of document [" + document.getLocalName() + "] failed");
 		}
     }
+
+
 }

@@ -1,5 +1,5 @@
 /*
-$Id: SiteTree.java,v 1.16 2003/08/19 13:17:51 edith Exp $
+$Id: SiteTree.java,v 1.17 2003/09/17 18:55:29 edith Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,7 @@ package org.apache.lenya.cms.publication;
  * DOCUMENT ME!
  *
  * @author $Author: edith $
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public interface SiteTree {
 	
@@ -89,6 +89,21 @@ public interface SiteTree {
     void addNode(String parentid, String id, Label[] labels, String href, String suffix,
         boolean link) throws SiteTreeException;
 
+	/**
+     * Insert a node before a given node 
+     *
+     * @param parentid the node where the new node is to be inserted
+     * @param id the node id
+     * @param labels the labels 
+     * @param href the href of the new node
+     * @param suffix the suffix of the new node
+     * @param link the link 
+	 * @param refDocumentId document-id of the node, before which the new node will be inserted.
+	 * 
+	 * @throws SiteTreeException if the addition failed
+     */
+	void addNode(String parentid, String id, Label[] labels, String href, String suffix,
+		boolean link, String refDocumentId) throws SiteTreeException;
     /**
      * Add a node.
      * Compute the parent id and the id of the node from the document-id
@@ -105,6 +120,23 @@ public interface SiteTree {
     void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
         throws SiteTreeException;
 
+	/**
+    /**
+     * Insert a node before a given node 
+     * Compute the parent id and the id of the node from the document-id
+     *
+     * @param documentid the document-id of the new node. 
+     *  From this the parent-id and the id are computed
+     * @param labels the labels
+     * @param href the href
+     * @param suffix the suffix
+     * @param link the link
+	 * @param refDocumentId document-id of the node, before which the new node will be inserted.
+	 * 
+     * @throws SiteTreeException if the addition failed
+	 */
+	void addNode(String documentid, Label[] labels, String href, String suffix, 
+		boolean link, String refDocumentId) throws SiteTreeException;
     /**
      * Add a node. This method is typically used when publishing,
      * i.e. when copying a node from the authoring tree to the live
@@ -119,6 +151,20 @@ public interface SiteTree {
      */
     void addNode(SiteTreeNode node) throws SiteTreeException;
     
+    /**
+     * Add a node. This method is typically used when publishing,
+     * i.e. when copying a node from the authoring tree to the live
+     * tree. The existing node already has a parent node (in the
+     * authoring tree). The node that is added will be a copy of
+     * the original node and will be inserted at the same parentid
+     * as the original node.
+     *
+     * @param node the <code>SiteTreeNode</code> that is to be added
+	 * @param refDocumentId document-id of the node, before which the new node will be inserted.
+	 * 
+     * @throws SiteTreeException if the addition failed
+	 */
+	void addNode(SiteTreeNode node, String refDocumentId)  throws SiteTreeException;
 	/**
 	 * Add a label to an existing node
 	 * 
