@@ -21,11 +21,11 @@
   </member>
   <member>
     <name>Paul Everitt</name>
-    <email>paul@zope.com</email>
+    <email forward="paul@eurozope.org">paul.everitt@oscom.org</email>
   </member>
   <member>
     <name>Roger Fischer</name>
-    <email>roger.fischer@bitfluxeditor.org</email>
+    <email forward="roger.fischer@bitflux.ch">roger.fischer@oscom.org</email>
   </member>
 </board>
 
