@@ -16,9 +16,6 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
@@ -38,8 +35,6 @@ import org.apache.lenya.transaction.TransactionableFactory;
  */
 public class DocumentIdentityMap extends IdentityMapImpl {
 
-    private Map key2siteStructure = new HashMap();
-
     /**
      * Ctor.
      * @param manager The service manager.
@@ -51,52 +46,16 @@ public class DocumentIdentityMap extends IdentityMapImpl {
     }
 
     /**
-     * @see org.apache.lenya.transaction.IdentityMap#getFactory()
+     * @see org.apache.lenya.transaction.IdentityMap#getFactory(java.lang.String)
      */
-    public TransactionableFactory getFactory() {
-        TransactionableFactory factory = super.getFactory();
-        if (factory == null) {
+    public TransactionableFactory getFactory(String type) {
+        TransactionableFactory factory = super.getFactory(type);
+        if (factory == null && type.equals(Document.TRANSACTIONABLE_TYPE)) {
             factory = new DocumentFactory(this.manager);
             ContainerUtil.enableLogging(factory, getLogger());
-            setFactory(factory);
+            setFactory(type, factory);
         }
         return factory;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.IdentityMap#setFactory(org.apache.lenya.transaction.TransactionableFactory)
-     */
-    public void setFactory(TransactionableFactory factory) {
-        if (!(factory instanceof DocumentFactory)) {
-            throw new RuntimeException("Only document factories are supported.");
-        }
-        super.setFactory(factory);
-    }
-
-    /**
-     * Returns a site structure object.
-     * @param publication The publication.
-     * @param area The area.
-     * @return The site structure object.
-     */
-    public Object getSiteStructure(Publication publication, String area) {
-        String key = getSiteStructureKey(publication, area);
-        return this.key2siteStructure.get(key);
-    }
-
-    /**
-     * Adds a site structure object.
-     * @param publication The publication.
-     * @param area The area.
-     * @param siteStructure The site structure to add.
-     */
-    public void putSiteStructure(Publication publication, String area, Object siteStructure) {
-        String key = getSiteStructureKey(publication, area);
-        this.key2siteStructure.put(key, siteStructure);
-    }
-
-    protected String getSiteStructureKey(Publication publication, String area) {
-        return publication.getId() + ":" + area;
     }
 
     /**
@@ -110,8 +69,11 @@ public class DocumentIdentityMap extends IdentityMapImpl {
      */
     public Document get(Publication publication, String area, String documentId, String language)
             throws DocumentBuildException {
-        DocumentFactory factory = (DocumentFactory) getFactory();
-        return (Document) get(factory.getKey(publication, area, documentId, language));
+        DocumentFactory factory = (DocumentFactory) getFactory(Document.TRANSACTIONABLE_TYPE);
+        return (Document) get(Document.TRANSACTIONABLE_TYPE, factory.getKey(publication,
+                area,
+                documentId,
+                language));
     }
 
     /**
@@ -122,9 +84,9 @@ public class DocumentIdentityMap extends IdentityMapImpl {
      */
     public Document getFromURL(String webappUrl) throws DocumentBuildException {
 
-        DocumentFactory factory = (DocumentFactory) getFactory();
-        Object key = factory.getKey(this, webappUrl);
-        return (Document) get(key);
+        DocumentFactory factory = (DocumentFactory) getFactory(Document.TRANSACTIONABLE_TYPE);
+        String key = factory.getKey(this, webappUrl);
+        return (Document) get(Document.TRANSACTIONABLE_TYPE, key);
     }
 
     protected ServiceManager manager;

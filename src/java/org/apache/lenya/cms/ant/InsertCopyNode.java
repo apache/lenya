@@ -24,6 +24,7 @@ import java.util.StringTokenizer;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * Ant task that copies a node of a tree and inserts it in tree
@@ -51,7 +52,7 @@ public class InsertCopyNode extends TwoNodesTask {
         SiteTree firsttree = getSiteTree(firstarea);
         SiteTree sectree = getSiteTree(secarea);
 
-		StringBuffer buf = new StringBuffer();
+        StringBuffer buf = new StringBuffer();
         StringTokenizer st = new StringTokenizer(secdocumentid, "/");
         int length = st.countTokens();
 
@@ -74,11 +75,15 @@ public class InsertCopyNode extends TwoNodesTask {
         } else {
             throw new SiteException("Node " + node + " couldn't be found");
         }
-        if (firstarea.equals(secarea)) {
-            firsttree.save();
-        } else {
-            firsttree.save();
-            sectree.save();
+        try {
+            if (firstarea.equals(secarea)) {
+                firsttree.save();
+            } else {
+                firsttree.save();
+                sectree.save();
+            }
+        } catch (TransactionException e) {
+            throw new SiteException(e);
         }
     }
 }

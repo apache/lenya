@@ -28,38 +28,44 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
  */
 public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
 
-    private Map key2transactionable = new HashMap();
+    private Map maps = new HashMap();
 
     /**
-     * @see org.apache.lenya.transaction.IdentityMap#get(java.lang.Object)
+     * @see org.apache.lenya.transaction.IdentityMap#get(java.lang.String, java.lang.String)
      */
-    public Transactionable get(Object key) {
-        Transactionable transactionable = (Transactionable) key2transactionable.get(key);
+    public Transactionable get(String type, String key) {
+        Map map = (Map) this.maps.get(type);
+        if (map == null) {
+            map = new HashMap();
+            this.maps.put(type, map);
+        }
+        Transactionable transactionable = (Transactionable) map.get(key);
         if (transactionable == null) {
             try {
-                transactionable = this.factory.build(this, key);
+                transactionable = getFactory(type).build(this, key);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            key2transactionable.put(key, transactionable);
+            map.put(key, transactionable);
         }
         return transactionable;
     }
 
-    private TransactionableFactory factory;
+    private Map factories = new HashMap();
 
     /**
-     * @see org.apache.lenya.transaction.IdentityMap#setFactory(org.apache.lenya.transaction.TransactionableFactory)
+     * @see org.apache.lenya.transaction.IdentityMap#setFactory(java.lang.String,
+     *      org.apache.lenya.transaction.TransactionableFactory)
      */
-    public void setFactory(TransactionableFactory factory) {
-        this.factory = factory;
+    public void setFactory(String type, TransactionableFactory factory) {
+        this.factories.put(type, factory);
     }
 
     /**
-     * @see org.apache.lenya.transaction.IdentityMap#getFactory()
+     * @see org.apache.lenya.transaction.IdentityMap#getFactory(java.lang.String)
      */
-    public TransactionableFactory getFactory() {
-        return this.factory;
+    public TransactionableFactory getFactory(String type) {
+        return (TransactionableFactory) this.factories.get(type);
     }
 
 }

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.lenya.cms.publication.Document;
@@ -34,11 +35,13 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeFactory;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
+import org.apache.lenya.transaction.TransactionableFactory;
 import org.apache.lenya.workflow.Situation;
 import org.apache.log4j.Logger;
 
@@ -136,8 +139,7 @@ public abstract class PublicationTask extends AbstractTask {
      */
     public static final String PARAMETER_ROLE_IDS = "role-ids";
     /**
-     * <code>ROLE_SEPARATOR_REGEXP</code> The role separator regular
-     * expression
+     * <code>ROLE_SEPARATOR_REGEXP</code> The role separator regular expression
      */
     public static final String ROLE_SEPARATOR_REGEXP = ",";
 
@@ -159,8 +161,7 @@ public abstract class PublicationTask extends AbstractTask {
             return wfManager.canInvoke(document, getEventName());
         } catch (Exception e) {
             throw new ExecutionException(e);
-        }
-        finally {
+        } finally {
             if (wfManager != null) {
                 getServiceManager().release(wfManager);
             }
@@ -179,8 +180,7 @@ public abstract class PublicationTask extends AbstractTask {
             return wfResolver.getSituation();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             if (wfResolver != null) {
                 getServiceManager().release(wfResolver);
             }
@@ -204,8 +204,7 @@ public abstract class PublicationTask extends AbstractTask {
             wfManager.invoke(document, getEventName());
         } catch (Exception e) {
             throw new ExecutionException(e);
-        }
-        finally {
+        } finally {
             if (wfManager != null) {
                 getServiceManager().release(wfManager);
             }
@@ -240,7 +239,18 @@ public abstract class PublicationTask extends AbstractTask {
      */
     protected SiteTree getSiteTree1(String area) {
         try {
-            return (SiteTree) getIdentityMap().getSiteStructure(getPublication(), area);
+
+            TransactionableFactory factory = getIdentityMap()
+                    .getFactory(SiteTree.TRANSACTIONABLE_TYPE);
+            if (factory == null) {
+                factory = new SiteTreeFactory(getServiceManager());
+                ContainerUtil.enableLogging(factory, new ConsoleLogger());
+                getIdentityMap().setFactory(SiteTree.TRANSACTIONABLE_TYPE, factory);
+            }
+            
+            String key = getPublication().getId() + ":" + area;
+
+            return (SiteTree) getIdentityMap().get(SiteTree.TRANSACTIONABLE_TYPE, key);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }

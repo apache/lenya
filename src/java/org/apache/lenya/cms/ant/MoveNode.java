@@ -24,6 +24,7 @@ import java.util.StringTokenizer;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * Ant task that moves a node in a tree.
@@ -45,9 +46,10 @@ public class MoveNode extends TwoNodesTask {
      * @param firstarea The area of the document corresponding to the source node.
      * @param secarea The area of the document corresponding to the destination node.
      * @throws SiteException if there are problems with creating or saving the site tree.
+     * @throws TransactionException
      */
     public void manipulateTree(String firstdocumentid, String secdocumentid, String firstarea,
-            String secarea) throws SiteException {
+            String secarea) throws SiteException, TransactionException {
 
         SiteTree firsttree = getSiteTree(firstarea);
         SiteTree sectree = getSiteTree(secarea);

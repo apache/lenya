@@ -19,77 +19,67 @@ package org.apache.lenya.cms.site.tree;
 
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * A sitetree.
  * 
  * @version $Id$
  */
-public interface SiteTree {
+public interface SiteTree extends Transactionable {
+
+    /**
+     * The type of sitetree transactionable objects.
+     */
+    String TRANSACTIONABLE_TYPE = "site";
 
     /**
      * Add a node.
-     *
+     * 
      * @param parentid where the node is to be added
      * @param id e.g. "concepts"
      * @param labels the labels of the node that is to be added
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(String parentid, String id, Label[] labels)
-        throws SiteException;
+    void addNode(String parentid, String id, Label[] labels) throws SiteException;
 
     /**
      * Add a node.
-     *
+     * 
      * @param parentid the node where the new node is to be inserted
      * @param id the node id
-     * @param labels the labels 
+     * @param labels the labels
      * @param href the href of the new node
      * @param suffix the suffix of the new node
-     * @param link the link 
+     * @param link the link
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(
-        String parentid,
-        String id,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link)
-        throws SiteException;
+    void addNode(String parentid, String id, Label[] labels, String href, String suffix,
+            boolean link) throws SiteException;
 
     /**
-     * Insert a node before a given node 
-     *
+     * Insert a node before a given node
+     * 
      * @param parentid the node where the new node is to be inserted
      * @param id the node id
-     * @param labels the labels 
+     * @param labels the labels
      * @param href the href of the new node
      * @param suffix the suffix of the new node
-     * @param link the link 
+     * @param link the link
      * @param refDocumentId document-id of the node, before which the new node will be inserted.
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(
-        String parentid,
-        String id,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link,
-        String refDocumentId)
-        throws SiteException;
+    void addNode(String parentid, String id, Label[] labels, String href, String suffix,
+            boolean link, String refDocumentId) throws SiteException;
 
     /**
-     * Add a node.
-     * Compute the parent id and the id of the node from the document-id
-     *
-     * @param documentid the document-id of the new node. 
-     *  From this the parent-id and the id are computed
+     * Add a node. Compute the parent id and the id of the node from the document-id
+     * 
+     * @param documentid the document-id of the new node. From this the parent-id and the id are
+     *            computed
      * @param labels the labels
      * @param href the href
      * @param suffix the suffix
@@ -97,20 +87,15 @@ public interface SiteTree {
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(
-        String documentid,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link)
-        throws SiteException;
+    void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
+            throws SiteException;
 
     /**
-     * Insert a node before a given node 
-     * Compute the parent id and the id of the node from the document-id
-     *
-     * @param documentid the document-id of the new node. 
-     *  From this the parent-id and the id are computed
+     * Insert a node before a given node Compute the parent id and the id of the node from the
+     * document-id
+     * 
+     * @param documentid the document-id of the new node. From this the parent-id and the id are
+     *            computed
      * @param labels the labels
      * @param href the href
      * @param suffix the suffix
@@ -119,23 +104,15 @@ public interface SiteTree {
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(
-        String documentid,
-        Label[] labels,
-        String href,
-        String suffix,
-        boolean link,
-        String refDocumentId)
-        throws SiteException;
+    void addNode(String documentid, Label[] labels, String href, String suffix, boolean link,
+            String refDocumentId) throws SiteException;
 
     /**
-     * Add a node. This method is typically used when publishing,
-     * i.e. when copying a node from the authoring tree to the live
-     * tree. The existing node already has a parent node (in the
-     * authoring tree). The node that is added will be a copy of
-     * the original node and will be inserted at the same parentid
-     * as the original node.
-     *
+     * Add a node. This method is typically used when publishing, i.e. when copying a node from the
+     * authoring tree to the live tree. The existing node already has a parent node (in the
+     * authoring tree). The node that is added will be a copy of the original node and will be
+     * inserted at the same parentid as the original node.
+     * 
      * @param node the <code>SiteTreeNode</code> that is to be added
      * 
      * @throws SiteException if the addition failed
@@ -143,20 +120,17 @@ public interface SiteTree {
     void addNode(SiteTreeNode node) throws SiteException;
 
     /**
-     * Add a node. This method is typically used when publishing,
-     * i.e. when copying a node from the authoring tree to the live
-     * tree. The existing node already has a parent node (in the
-     * authoring tree). The node that is added will be a copy of
-     * the original node and will be inserted at the same parentid
-     * as the original node.
-     *
+     * Add a node. This method is typically used when publishing, i.e. when copying a node from the
+     * authoring tree to the live tree. The existing node already has a parent node (in the
+     * authoring tree). The node that is added will be a copy of the original node and will be
+     * inserted at the same parentid as the original node.
+     * 
      * @param node the <code>SiteTreeNode</code> that is to be added
      * @param refDocumentId document-id of the node, before which the new node will be inserted.
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(SiteTreeNode node, String refDocumentId)
-        throws SiteException;
+    void addNode(SiteTreeNode node, String refDocumentId) throws SiteException;
 
     /**
      * Add a label to an existing node
@@ -167,8 +141,8 @@ public interface SiteTree {
     void addLabel(String documentId, Label label);
 
     /**
-     * Sets a label of an existing node. If the label does not exist, it is added.
-     * Otherwise, the existing label is replaced.
+     * Sets a label of an existing node. If the label does not exist, it is added. Otherwise, the
+     * existing label is replaced.
      * 
      * @param documentId the document-id to which the label is to be added.
      * @param label the label to add
@@ -184,9 +158,8 @@ public interface SiteTree {
     void removeLabel(String documentId, Label label);
 
     /**
-     * Removes the node corresponding to the given document-id
-     * from the tree, and returns it.
-     *
+     * Removes the node corresponding to the given document-id from the tree, and returns it.
+     * 
      * @param documentId the document-id of the node that is to be removed
      * 
      * @return the removed node
@@ -195,11 +168,11 @@ public interface SiteTree {
 
     /**
      * Return the Node for a given document-id.
-     *
+     * 
      * @param documentId the document-id of the node that is requested
      * 
-     * @return a <code>SiteTreeNode</code> if there is a node for the given
-     * document-id, null otherwise.
+     * @return a <code>SiteTreeNode</code> if there is a node for the given document-id, null
+     *         otherwise.
      */
     SiteTreeNode getNode(String documentId);
 
@@ -208,7 +181,7 @@ public interface SiteTree {
      * @return the top nodes in the sitetree, or empty array if there are none
      */
     SiteTreeNode[] getTopNodes();
-    
+
     /**
      * Move up the node amongst its siblings.
      * 
@@ -218,7 +191,7 @@ public interface SiteTree {
     void moveUp(String documentid) throws SiteException;
 
     /**
-     * Move down the node amongst its siblings. 
+     * Move down the node amongst its siblings.
      * @param documentid The document id of the node.
      * @throws SiteException if the moving failed.
      */
@@ -229,22 +202,12 @@ public interface SiteTree {
      * @param subtreeRoot The root of the subtree to import.
      * @param newParent The node where the subtree shall be inserted.
      * @param newid The new id of the inserted subtreeRoot node (to not overwrite
-     * @param refDocumentId The document-id corresponding to the reference node, before which 
-     * the subtree should be inserted. If null, the subtree is inserted at the end. 
-     * in case there is already a node with the same id in the tree).
+     * @param refDocumentId The document-id corresponding to the reference node, before which the
+     *            subtree should be inserted. If null, the subtree is inserted at the end. in case
+     *            there is already a node with the same id in the tree).
      * @throws SiteException when an error occurs.
      */
-    void importSubtree(
-        SiteTreeNode subtreeRoot,
-        SiteTreeNode newParent,
-        String newid,
-        String refDocumentId)
-        throws SiteException;
+    void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid,
+            String refDocumentId) throws SiteException;
 
-    /**
-     * Save the SiteTree.
-     *
-     * @throws SiteException if the saving failed
-     */
-    void save() throws SiteException;
 }

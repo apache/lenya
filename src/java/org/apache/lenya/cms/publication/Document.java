@@ -43,6 +43,11 @@ public interface Document extends Workflowable, Transactionable {
     String DEFAULT_PREFIX = "lenya";
     
     /**
+     * The transactionable type for document objects.
+     */
+    String TRANSACTIONABLE_TYPE = "document";
+    
+    /**
      * Returns the document ID of this document.
      * @return the document-id of this document.
      */

@@ -30,12 +30,6 @@ public interface TransactionableFactory {
      * @return A transactionable.
      * @throws Exception if an error occurs.
      */
-    Transactionable build(IdentityMap map, Object key) throws Exception;
-    
-    /**
-     * @param transactionable The transactionable.
-     * @return The key to use in an identity map.
-     */
-    Object getKey(Transactionable transactionable);
+    Transactionable build(IdentityMap map, String key) throws Exception;
     
 }

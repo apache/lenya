@@ -24,20 +24,23 @@ package org.apache.lenya.transaction;
 public interface IdentityMap {
     
     /**
+     * @param type The type of the transactionable.
      * @param key The key for the transactionable.
      * @return A transcationable.
      */
-    Transactionable get(Object key);
+    Transactionable get(String type, String key);
     
     /**
      * Sets the factory.
+     * @param type The transactionable type to use the factory for.
      * @param factory The factory to use.
      */
-    void setFactory(TransactionableFactory factory);
+    void setFactory(String type, TransactionableFactory factory);
     
     /**
+     * @param type The type to return the factory for.
      * @return The factory.
      */
-    TransactionableFactory getFactory();
+    TransactionableFactory getFactory(String type);
 
 }

@@ -20,6 +20,7 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.transaction.TransactionException;
 import org.apache.tools.ant.BuildException;
 
 
@@ -108,10 +109,11 @@ public abstract class TwoNodesTask extends PublicationTask {
      * @param _secarea : area of the tree of the 2nd node
      * 
      * @throws SiteException if an error occurs
+     * @throws TransactionException
      */
     public abstract void manipulateTree(String _firstdocumentid, String _secdocumentid,
         String _firstarea, String _secarea)
-        throws SiteException;
+        throws SiteException, TransactionException;
 
     /** 
      * @see org.apache.tools.ant.Task#execute()

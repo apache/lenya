@@ -542,4 +542,11 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return false;
     }
 
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#getTransactionableType()
+     */
+    public String getTransactionableType() {
+        return Document.TRANSACTIONABLE_TYPE;
+    }
+
 }

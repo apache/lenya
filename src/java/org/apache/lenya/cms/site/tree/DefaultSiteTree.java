@@ -31,6 +31,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -80,8 +81,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * Create a DefaultSiteTree from a filename.
      * @param treefilename file name of the tree
      * @throws SiteException if an error occurs
-     * @deprecated use the DefaultSiteTree(File pubDir, String area) constructor
-     *             instead.
+     * @deprecated use the DefaultSiteTree(File pubDir, String area) constructor instead.
      */
     protected DefaultSiteTree(String treefilename) throws SiteException {
         this(new File(treefilename));
@@ -118,8 +118,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     private long lastModified = 0;
 
     /**
-     * Checks if the tree file has been modified externally and reloads the site
-     * tree.
+     * Checks if the tree file has been modified externally and reloads the site tree.
      */
     protected synchronized void checkModified() {
         if (this.area.equals(Publication.LIVE_AREA) && this.treefile.isFile()
@@ -156,8 +155,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * Find a node in a subtree. The search is started at the given node. The
-     * list of ids contains the document-id split by "/".
+     * Find a node in a subtree. The search is started at the given node. The list of ids contains
+     * the document-id split by "/".
      * @param node where to start the search
      * @param ids list of node ids
      * @return the node that matches the path given in the list of ids
@@ -198,10 +197,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
-     *      java.lang.String, org.apache.lenya.cms.site.Label[])
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
+     *      org.apache.lenya.cms.site.Label[])
      */
-    public synchronized void addNode(String parentid, String id, Label[] labels) throws SiteException {
+    public synchronized void addNode(String parentid, String id, Label[] labels)
+            throws SiteException {
         addNode(parentid, id, labels, null, null, false);
     }
 
@@ -214,12 +214,12 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
-     *      org.apache.lenya.cms.site.Label[], java.lang.String,
-     *      java.lang.String, boolean, java.lang.String)
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean,
+     *      java.lang.String)
      */
     public synchronized void addNode(String documentid, Label[] labels, String href, String suffix,
             boolean link, String refDocumentId) throws SiteException {
-		StringBuffer buf = new StringBuffer();
+        StringBuffer buf = new StringBuffer();
         StringTokenizer st = new StringTokenizer(documentid, "/");
         int length = st.countTokens();
 
@@ -233,36 +233,35 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
-     *      org.apache.lenya.cms.site.Label[], java.lang.String,
-     *      java.lang.String, boolean)
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean)
      */
-    public synchronized void addNode(String documentid, Label[] labels, String href, String suffix, boolean link)
-            throws SiteException {
+    public synchronized void addNode(String documentid, Label[] labels, String href, String suffix,
+            boolean link) throws SiteException {
         this.addNode(documentid, labels, href, suffix, link, null);
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
-     *      java.lang.String, org.apache.lenya.cms.site.Label[],
-     *      java.lang.String, java.lang.String, boolean)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean)
      */
-    public synchronized void addNode(String parentid, String id, Label[] labels, String href, String suffix,
-            boolean link) throws SiteException {
+    public synchronized void addNode(String parentid, String id, Label[] labels, String href,
+            String suffix, boolean link) throws SiteException {
         this.addNode(parentid, id, labels, href, suffix, link, null);
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
-     *      java.lang.String, org.apache.lenya.cms.site.Label[],
-     *      java.lang.String, java.lang.String, boolean, java.lang.String)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
+     *      org.apache.lenya.cms.site.Label[], java.lang.String, java.lang.String, boolean,
+     *      java.lang.String)
      */
-    public synchronized void addNode(String parentid, String id, Label[] labels, String href, String suffix,
-            boolean link, String refDocumentId) throws SiteException {
+    public synchronized void addNode(String parentid, String id, Label[] labels, String href,
+            String suffix, boolean link, String refDocumentId) throws SiteException {
 
         Node parentNode = getNodeInternal(parentid);
 
         if (parentNode == null) {
-            throw new SiteException("Parentid: " + parentid + " in " + this.area + " tree not found");
+            throw new SiteException("Parentid: " + parentid + " in " + this.area
+                    + " tree not found");
         }
 
         getLogger().debug("PARENT ELEMENT: " + parentNode);
@@ -377,8 +376,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * 
      * @param documentId the document-id of the Node that we're trying to get
      * 
-     * @return the Node if there is a Node for the given document-id, null
-     *         otherwise
+     * @return the Node if there is a Node for the given document-id, null otherwise
      */
     private synchronized Node getNodeInternal(String documentId) {
         StringTokenizer st = new StringTokenizer(documentId, "/");
@@ -416,8 +414,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         List childElements = new ArrayList();
 
         NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
- 
-        Element[] elements = helper.getChildren(this.document.getDocumentElement(), SiteTreeNodeImpl.NODE_NAME);
+
+        Element[] elements = helper.getChildren(this.document.getDocumentElement(),
+                SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
@@ -426,7 +425,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
         return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
     }
-    
+
     /**
      * Move up the node amongst its siblings.
      * @param documentid The document id for the node.
@@ -495,11 +494,10 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#importSubtree(org.apache.lenya.cms.site.tree.SiteTreeNode,
-     *      org.apache.lenya.cms.site.tree.SiteTreeNode, java.lang.String,
-     *      java.lang.String)
+     *      org.apache.lenya.cms.site.tree.SiteTreeNode, java.lang.String, java.lang.String)
      */
-    public synchronized void importSubtree(SiteTreeNode newParent, SiteTreeNode subtreeRoot, String newid,
-            String refDocumentId) throws SiteException {
+    public synchronized void importSubtree(SiteTreeNode newParent, SiteTreeNode subtreeRoot,
+            String newid, String refDocumentId) throws SiteException {
         assert subtreeRoot != null;
         assert newParent != null;
         String parentId = newParent.getAbsoluteId();
@@ -524,15 +522,15 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#save()
      */
-    public synchronized void save() throws SiteException {
+    public synchronized void save() throws TransactionException {
         try {
             DocumentHelper.writeDocument(this.document, this.treefile);
         } catch (TransformerException e) {
-            throw new SiteException("The document [" + this.document.getLocalName()
+            throw new TransactionException("The document [" + this.document.getLocalName()
                     + "] could not be transformed");
         } catch (IOException e) {
-            throw new SiteException("The saving of document [" + this.document.getLocalName()
-                    + "] failed");
+            throw new TransactionException("The saving of document ["
+                    + this.document.getLocalName() + "] failed");
         }
     }
 
@@ -545,6 +543,61 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (node != null) {
             node.setLabel(label);
         }
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#checkin()
+     */
+    public void checkin() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#checkout()
+     */
+    public void checkout() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
+     */
+    public boolean isCheckedOut() throws TransactionException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#lock()
+     */
+    public void lock() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#unlock()
+     */
+    public void unlock() throws TransactionException {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#isLocked()
+     */
+    public boolean isLocked() throws TransactionException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#getTransactionableType()
+     */
+    public String getTransactionableType() {
+        return SiteTree.TRANSACTIONABLE_TYPE;
     }
 
 }

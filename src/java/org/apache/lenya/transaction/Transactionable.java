@@ -65,4 +65,9 @@ public interface Transactionable {
      */
     boolean isLocked() throws TransactionException;
     
+    /**
+     * @return The type of the transactionable.
+     */
+    String getTransactionableType();
+    
 }

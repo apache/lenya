@@ -51,7 +51,7 @@ public class DocumentFactory extends AbstractLogEnabled implements Transactionab
      * @param language The language.
      * @return A key.
      */
-    public Object getKey(Publication publication, String area, String documentId, String language) {
+    public String getKey(Publication publication, String area, String documentId, String language) {
         return publication.getId() + ":" + area + ":" + documentId + ":" + language;
     }
 
@@ -61,7 +61,7 @@ public class DocumentFactory extends AbstractLogEnabled implements Transactionab
      * @param webappUrl The web application URL.
      * @return A key.
      */
-    public Object getKey(DocumentIdentityMap map, String webappUrl) {
+    public String getKey(DocumentIdentityMap map, String webappUrl) {
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         SourceResolver resolver = null;
@@ -103,12 +103,11 @@ public class DocumentFactory extends AbstractLogEnabled implements Transactionab
 
     /**
      * @see org.apache.lenya.transaction.TransactionableFactory#build(org.apache.lenya.transaction.IdentityMap,
-     *      java.lang.Object)
+     *      java.lang.String)
      */
-    public Transactionable build(IdentityMap map, Object key) throws Exception {
+    public Transactionable build(IdentityMap map, String key) throws Exception {
 
-        String keyString = (String) key;
-        String[] snippets = keyString.split(":");
+        String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String area = snippets[1];
         String documentId = snippets[2];
@@ -147,15 +146,6 @@ public class DocumentFactory extends AbstractLogEnabled implements Transactionab
             }
         }
         return document;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.TransactionableFactory#getKey(org.apache.lenya.transaction.Transactionable)
-     */
-    public Object getKey(Transactionable transactionable) {
-        Document document = (Document) transactionable;
-        return getKey(document.getPublication(), document.getArea(), document.getId(), document
-                .getLanguage());
     }
 
 }

@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -29,13 +32,15 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.TransactionableFactory;
 
 /**
  * A tree-based site manager.
  * 
  * @version $Id$
  */
-public class TreeSiteManager extends AbstractSiteManager {
+public class TreeSiteManager extends AbstractSiteManager implements Serviceable {
 
     /**
      * Ctor.
@@ -45,8 +50,8 @@ public class TreeSiteManager extends AbstractSiteManager {
     }
 
     /**
-     * Returns the sitetree for a specific area of this publication. Sitetrees
-     * are created on demand and are cached.
+     * Returns the sitetree for a specific area of this publication. Sitetrees are created on demand
+     * and are cached.
      * @param map The document identity map.
      * @param publication The publication.
      * @param area The area.
@@ -55,12 +60,16 @@ public class TreeSiteManager extends AbstractSiteManager {
      */
     public SiteTree getTree(DocumentIdentityMap map, Publication publication, String area)
             throws SiteException {
-        DefaultSiteTree sitetree = (DefaultSiteTree) map.getSiteStructure(publication, area);
-        if (sitetree == null) {
-            sitetree = new DefaultSiteTree(publication.getDirectory(), area);
-            ContainerUtil.enableLogging(sitetree, getLogger());
-            map.putSiteStructure(publication, area, sitetree);
+
+        TransactionableFactory factory = map.getFactory(SiteTree.TRANSACTIONABLE_TYPE);
+        if (factory == null) {
+            factory = new SiteTreeFactory(this.manager);
+            ContainerUtil.enableLogging(factory, getLogger());
+            map.setFactory(SiteTree.TRANSACTIONABLE_TYPE, factory);
         }
+
+        String key = getKey(publication, area);
+        DefaultSiteTree sitetree = (DefaultSiteTree) map.get(SiteTree.TRANSACTIONABLE_TYPE, key);
         return sitetree;
     }
 
@@ -128,10 +137,9 @@ public class TreeSiteManager extends AbstractSiteManager {
         try {
             for (int i = 0; i < resources.length; i++) {
                 SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                resources[i] = resource.getIdentityMap()
-                        .get(resource.getPublication(),
-                                resource.getArea(),
-                                descendant.getAbsoluteId());
+                resources[i] = resource.getIdentityMap().get(resource.getPublication(),
+                        resource.getArea(),
+                        descendant.getAbsoluteId());
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("    Descendant: [" + resources[i] + "]");
                 }
@@ -233,7 +241,11 @@ public class TreeSiteManager extends AbstractSiteManager {
             destinationTree.setLabel(destinationDocument.getId(), label);
         }
 
-        destinationTree.save();
+        try {
+            destinationTree.save();
+        } catch (TransactionException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -267,7 +279,11 @@ public class TreeSiteManager extends AbstractSiteManager {
             tree.removeNode(document.getId());
         }
 
-        tree.save();
+        try {
+            tree.save();
+        } catch (TransactionException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -288,7 +304,11 @@ public class TreeSiteManager extends AbstractSiteManager {
 
         SiteTree tree = getTree(document);
         tree.setLabel(document.getId(), labelObject);
-        tree.save();
+        try {
+            tree.save();
+        } catch (TransactionException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -350,11 +370,33 @@ public class TreeSiteManager extends AbstractSiteManager {
         if (node == null) {
             Label[] labels = { label };
             tree.addNode(document.getId(), labels, null, null, false);
-            tree.save();
+            try {
+                tree.save();
+            } catch (TransactionException e) {
+                throw new SiteException(e);
+            }
         } else {
             tree.addLabel(document.getId(), label);
         }
 
+    }
+
+    /**
+     * @param publication The publication.
+     * @param area The area.
+     * @return The key to store sitetree objects in the identity map.
+     */
+    protected String getKey(Publication publication, String area) {
+        return publication.getId() + ":" + area;
+    }
+
+    protected ServiceManager manager;
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
 }
