@@ -1,0 +1,150 @@
+<html>
+<head><title>Unipublic: XML-Architecture</title>
+</head>
+<body>
+<h1>Unipublic: XML-Architecture</h1>
+<pre>
+live
+   |
+   +--frontpage
+   |    |
+   |    +--index.xml                       (dir:directory) 
+   |
+   +--magazin
+   |    |
+   |    +--geist
+   |    |    |
+   |    |    +--articles                   
+   |    |    |   |
+   |    |    |   +--2002                   
+   |    |    |        |
+   |    |    |        +--                  
+   |    |    |
+   |    |    +--sections                   
+   |    |    |   |
+   |    |    |   +--                       
+   |    |
+   |    +--gesundheit
+   |    |    |
+   |    |    +--articles                   
+   |    |    |   |
+   |    |    |   +--2002                   
+   |    |    |        |
+   |    |    |        +--0465              
+   |    |    |        |    |
+   |    |    |        |    +--index.xml    (article)
+   |    |    |        |
+   |    |    |        +--0508              
+   |    |    |        |    |
+   |    |    |        |    +--index.xml    (article)
+   |    |    |
+   |    |    +--sections                   
+   |    |    |   |
+   |    |    |   +--index2002.xml          
+   |    |
+   |    +--recht
+   |    |    |
+   |    |    +--articles                  
+   |    |    |   |
+   |    |    |   +--2002               
+   |    |    |        |
+   |    |    |        +--               
+   |    |    |
+   |    |    +--sections                  
+   |    |    |   |
+   |    |    |   +--               
+   |    |
+   |    +--umwelt
+   |    |    |
+   |    |    +--articles                  
+   |    |    |   |
+   |    |    |   +--2002               
+   |    |    |        |
+   |    |    |        +--               
+   |    |    |
+   |    |    +--sections                  
+   |    |    |   |
+   |    |    |   +--               
+   |         |
+   |
+   +--campus
+   |    |
+   |    +--berufungen
+   |    |    |
+   |    |    +--articles                  
+   |    |    |   |
+   |    |    |   +--2002               
+   |    |    |        |
+   |    |    |        +--               
+   |    |    |
+   |    |    +--sections                  
+   |    |    |   |
+   |    |    |   +--               
+   |    |
+   |    +--lorbeeren
+   |    |    |
+   |    |    +--articles                  
+   |    |    |   |
+   |    |    |   +--2002               
+   |    |    |        |
+   |    |    |        +--               
+   |    |    |
+   |    |    +--sections                  
+   |    |    |   |
+   |    |    |   +--               
+   |    |
+   |    |
+   |    +--portraits
+   |    |    |
+   |    |    +--articles                  
+   |    |    |   |
+   |    |    |   +--2002               
+   |    |    |        |
+   |    |    |        +--               
+   |    |    |
+   |    |    +--sections                  
+   |    |    |   |
+   |    |    |   +--               
+   |    |
+   |    +--publikationen
+   |    |    |
+   |    |    +--articles                  
+   |    |    |   |
+   |    |    |   +--2002               
+   |    |    |        |
+   |    |    |        +--             
+   |    |    |
+   |    |    +--sections                  
+   |    |    |   |
+   |    |    |   +--               
+   |    |
+   |    +--uni-news
+   |    |    |
+   |    |    +--articles                  
+   |    |    |   |
+   |    |    |   +--2002               
+   |    |    |        |
+   |    |    |        +--             
+   |    |    |
+   |    |    +--sections             
+   |    |    |   |
+   |    |    |   +--               
+
+</pre>
+<p>
+<b>Directories</b><br>
+<ul>
+<li><b>Page</b><br> Contains the general xslts, not necessarly needed in all subdirectories (e.g navigation not used in "Article")</li>
+<ul><li><b>Front, Section, Article</b><br> Contains the general xslts for the specific layout</li>
+<ul><li><b>Authoring, Live, Edit</b><br> Contains the specific xslts for this zone<br>
+Authoring: includes the menu<br>
+Live: the edited and published page<br>
+Edit: the xslts for the editor (eg. xopus)</li>
+</ul>
+</ul>
+</ul>
+</p>
+<p>&#160;
+</p>
+</body>
+</html>
