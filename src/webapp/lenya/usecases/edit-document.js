@@ -40,7 +40,7 @@ function editDocument() {
     try {
         var flowHelper = new FlowHelper();
         var resolver = cocoon.getComponent(SourceResolver.ROLE);
-        var dstUri = flowHelper.getDocumentHelper(cocoon).getSourceUri(flowHelper.getPageEnvelope(cocoon).getDocument());
+        var dstUri = flowHelper.getPageEnvelope(cocoon).getDocument().getSourceURI();
         
         SourceUtil.copy(resolver, cocoon.parameters["sourceUri"], dstUri, _getParameter("useBuffer", "false") == "true");
 
@@ -56,7 +56,7 @@ function editDocument() {
             cocoon.redirectTo(_getParameter("redirectUrl", "FIXME"));
         
     } catch (exception) {
-        cocoon.log.error("Can not edit doucment.", exception);
+        cocoon.log.error("Can not edit doucment.", exception.toString());
     } finally {
         if(resolver != null)
             cocoon.releaseComponent(resolver);
