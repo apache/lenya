@@ -3,6 +3,7 @@
 <xsp:page 
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
   xmlns:xsp-session="http://apache.org/xsp/session/2.0"
   create-session="true">
@@ -13,6 +14,7 @@
   <document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.target"/></document-id>
   <area><xsp-session:get-attribute name="org.apache.lenya.cms.info.area"/></area>
   <task-id>archiveDocument</task-id>
+  <wf:event><xsp-request:get-attribute name="wf:event"/></wf:event>
 </info>
 </page>
 </xsp:page>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: archive.xsl,v 1.7 2003/07/29 17:57:20 edith Exp $
+ $Id: archive.xsl,v 1.8 2003/09/01 12:51:57 edith Exp $
  -->
 
  <xsl:stylesheet version="1.0"
@@ -9,6 +9,7 @@
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    xmlns:session="http://www.apache.org/xsp/session/2.0"
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
    >
   
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
@@ -17,6 +18,7 @@
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
+  <xsl:variable name="lenya.event"><xsl:value-of select="/page/info/wf:event"/></xsl:variable>
 
   <xsl:template match="/">
     <xsl:apply-templates/>
@@ -38,6 +40,7 @@
       <div class="lenya-box-body">
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
+          <input type="hidden" name="lenya.event" value="{$lenya.event}"/>
           <input type="hidden" name="lenya.usecase" value="archive"/>
           <input type="hidden" name="lenya.step" value="archive"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>
