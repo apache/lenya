@@ -1,5 +1,5 @@
 /*
-$Id: TreePublisher.java,v 1.7 2003/08/11 12:30:59 egli Exp $
+$Id: TreePublisher.java,v 1.8 2003/08/18 09:20:50 egli Exp $
 <License>
 
  ============================================================================
@@ -58,7 +58,9 @@ package org.apache.lenya.cms.ant;
 import org.apache.lenya.cms.publication.DefaultSiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.SiteTreeException;
 import org.apache.lenya.cms.publication.SiteTreeNode;
+import org.apache.lenya.cms.publishing.ParentNodeNotFoundException;
 import org.apache.lenya.cms.publishing.PublishingException;
 
 import org.apache.tools.ant.BuildException;
@@ -124,15 +126,14 @@ public class TreePublisher extends PublicationTask {
      *
      * @throws PublishingException if the publication failed.
      */
-    public void publish(
-        String documentId,
-        String language)
+    public void publish(String documentId, String language)
         throws PublishingException {
         DefaultSiteTree authoringTree = null;
         DefaultSiteTree liveTree = null;
 
         try {
-            authoringTree = getPublication().getSiteTree(Publication.AUTHORING_AREA);
+            authoringTree =
+                getPublication().getSiteTree(Publication.AUTHORING_AREA);
             liveTree = getPublication().getSiteTree(Publication.LIVE_AREA);
 
             SiteTreeNode authoringNode = authoringTree.getNode(documentId);
@@ -141,7 +142,15 @@ public class TreePublisher extends PublicationTask {
                 if (language == null) {
                     // no language was specified. Simply publish the
                     // node including all languages.
-                    liveTree.addNode(authoringNode);
+                    try {
+                        liveTree.addNode(authoringNode);
+                    } catch (SiteTreeException e1) {
+                        throw new ParentNodeNotFoundException(
+                            "Couldn't add document: "
+                                + documentId
+                                + " to live tree.",
+                            e1);
+                    }
                 } else {
                     // a language was specified. Let's see if this
                     // node even has an entry for the specified
@@ -160,12 +169,20 @@ public class TreePublisher extends PublicationTask {
                             // if the node doesn't exist, add it and
                             // add the specified label to it.
                             Label[] labels = { label };
-                            liveTree.addNode(
-                                documentId,
-                                labels,
-                                authoringNode.getHref(),
-                                authoringNode.getSuffix(),
-                                authoringNode.hasLink());
+                            try {
+                                liveTree.addNode(
+                                    documentId,
+                                    labels,
+                                    authoringNode.getHref(),
+                                    authoringNode.getSuffix(),
+                                    authoringNode.hasLink());
+                            } catch (SiteTreeException e1) {
+                                throw new ParentNodeNotFoundException(
+                                    "Couldn't add document: "
+                                        + documentId
+                                        + " to live tree.",
+                                    e1);
+                            }
                         }
                     } else {
                         // the node that we're trying to publish
@@ -186,8 +203,7 @@ public class TreePublisher extends PublicationTask {
         } catch (PublishingException e) {
             throw e;
         } catch (Exception e) {
-            throw new PublishingException(
-                "Couldn't publish the tree :", e);
+            throw new PublishingException("Couldn't publish to live tree :", e);
         }
     }
 
