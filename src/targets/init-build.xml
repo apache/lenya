@@ -101,7 +101,6 @@
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/logkit.xconf</echo> 
     <echo>INFO: exclude: WEB-INF/web.xml</echo>
-    <echo>INFO: exclude: WEB-INF/lib/lucene**.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
@@ -112,7 +111,6 @@
         <exclude name="WEB-INF/cocoon.xconf"/>
         <exclude name="WEB-INF/logkit.xconf"/>
         <exclude name="WEB-INF/web.xml"/>
-        <exclude name="WEB-INF/lib/lucene**.jar"/>
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
@@ -159,14 +157,6 @@
     </xslt>
 
     <!-- patch sitemap.xmap -->
-
-    <!-- patch lucene -->
-    <echo message="INFO: Use our own Lucene"/>
-    <copy todir="${build.webapp}" filtering="off">
-      <fileset dir="${src.webapp.dir}">
-        <include name="WEB-INF/lib/lucene**.jar"/>
-      </fileset>
-    </copy>
 
     <!-- Copy Entities 
     <echo>INFO: Copy publication-specific entities to Cocoon catalog</echo>
