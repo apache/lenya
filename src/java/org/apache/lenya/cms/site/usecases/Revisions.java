@@ -23,7 +23,6 @@ import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
-import org.apache.lenya.cms.usecase.UsecaseException;
 
 import java.util.Vector;
 
@@ -33,8 +32,8 @@ import java.util.Vector;
  * @version $Id$
  */
 public class Revisions extends SiteUsecase {
-	
-	private RevisionController rc = null;
+
+    private RevisionController rc = null;
     private RCML rcml = null;
 
     /**
@@ -53,32 +52,17 @@ public class Revisions extends SiteUsecase {
             backupDirectory = publicationPath + File.separator + backupDirectory;
             this.rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
             final String filename = getSourceDocument().getFile().getCanonicalPath()
-            .substring(publication.getDirectory().getCanonicalPath().length());
+                    .substring(publication.getDirectory().getCanonicalPath().length());
             this.rcml = this.rc.getRCML(filename);
 
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
     }
-            
-     /**
-     * Validates the request parameters.
-     * @throws UsecaseException if an error occurs.
-     */
-    void validate() throws UsecaseException {
-
-   }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        validate();
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     * TODO filter out checkin entries
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters() TODO
+     *      filter out checkin entries
      */
     protected void initParameters() {
         super.initParameters();
@@ -93,8 +77,8 @@ public class Revisions extends SiteUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
-     * TODO add rollback and view revision functionality
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute() TODO add
+     *      rollback and view revision functionality
      */
     protected void doExecute() throws Exception {
         super.doExecute();
