@@ -47,7 +47,7 @@
     <map:pipeline>
       <!-- {area}/{uri} -->
       <map:match pattern="*/**.html">
-        <map:act type="sourcetype" src="fallback://content/{1}/{page-envelope:document-path}">
+        <map:act type="sourcetype" src="content/{1}/{page-envelope:document-path}">
           <map:generate type="serverpages" src="../../config/parameters/default.xsp">
             <map:parameter name="value" value="{sourcetype}"/>
           </map:generate>
@@ -59,7 +59,7 @@
     <map:pipeline>
       <!-- {area}/{uri} -->
       <map:match pattern="*/**.xml">
-        <map:act type="sourcetype" src="fallback://content/{1}/{2}.xml">
+        <map:act type="sourcetype" src="content/{1}/{2}.xml">
           <map:generate type="serverpages" src="../../config/parameters/default.xsp">
             <map:parameter name="value" value="{sourcetype}"/>
           </map:generate>
