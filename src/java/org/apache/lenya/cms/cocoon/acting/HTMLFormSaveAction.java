@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLFormSaveAction.java,v 1.50 2004/06/29 10:22:31 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -58,18 +58,16 @@ import org.xmldb.common.xml.queries.XUpdateQuery;
 import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 
 /**
- * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when
- * namespaces are not declared within the root element. Unfortunately the XSLTs
- * (during Cocoon transformation) are moving the namespaces to the elements
- * which use them! One hack might be to parse the tree for namespaces
- * (Node.getNamespaceURI), collect them and add them to the document root
- * element, before sending it through the org.apache.xpath.compiler.XPathParser
- * (called by XPathAPI)
+ * FIXME: org.apache.xpath.compiler.XPathParser seems to have problems when namespaces are not
+ * declared within the root element. Unfortunately the XSLTs (during Cocoon transformation) are
+ * moving the namespaces to the elements which use them! One hack might be to parse the tree for
+ * namespaces (Node.getNamespaceURI), collect them and add them to the document root element, before
+ * sending it through the org.apache.xpath.compiler.XPathParser (called by XPathAPI)
  * 
  * FIXME: There seems to be another problem with default namespaces
  * 
- * WARNING: Internet Explorer sends X and Y coordinates for image buttons. These
- * have to be treated differently. Mozilla does not send these coordinates.
+ * WARNING: Internet Explorer sends X and Y coordinates for image buttons. These have to be treated
+ * differently. Mozilla does not send these coordinates.
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
@@ -136,8 +134,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     Enumeration params = request.getParameterNames();
                     while (params.hasMoreElements()) {
                         String pname = (String) params.nextElement();
-                        getLogger().debug("Parameter: " + pname + " ("
-                                + request.getParameter(pname) + ")");
+                        getLogger().debug(
+                                "Parameter: " + pname + " (" + request.getParameter(pname) + ")");
 
                         // Extract the xpath to edit
                         if (editSelect == null && pname.indexOf("edit[") >= 0
@@ -158,8 +156,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             XObject result = xpath.execute(document);
                             NodeList selectionNodeList = result.nodeset();
                             if (selectionNodeList.getLength() == 0) {
-                                getLogger()
-                                        .debug(".act(): Node does not exist (might have been deleted during update): "
+                                getLogger().debug(
+                                        ".act(): Node does not exist (might have been deleted during update): "
                                                 + select);
                             } else {
                                 String xupdateModifications = null;
@@ -172,11 +170,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                     if (pname.indexOf("<![CDATA[") > 0) {
                                         xupdateModifications = updateCDATA(request, pname, true);
                                     } else {
-                                        xupdateModifications = update(request,
-                                                pname,
-                                                select,
-                                                selectionNodeList,
-                                                true);
+                                        xupdateModifications = update(request, pname, select,
+                                                selectionNodeList, true);
                                     }
                                 } else if (pname.indexOf("xupdate:update") > 0) {
                                     getLogger().debug("UPDATE Node: " + pname);
@@ -185,11 +180,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                     if (pname.indexOf("<![CDATA[") > 0) {
                                         xupdateModifications = updateCDATA(request, pname, false);
                                     } else {
-                                        xupdateModifications = update(request,
-                                                pname,
-                                                select,
-                                                selectionNodeList,
-                                                false);
+                                        xupdateModifications = update(request, pname, select,
+                                                selectionNodeList, false);
                                     }
                                 } else if (pname.indexOf("xupdate:append") > 0
                                         && pname.endsWith(">.x")) {
@@ -242,14 +234,16 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
 
                                 // now run the assembled xupdate query
                                 if (xupdateModifications != null) {
-                                    getLogger().info("Execute XUpdate Modifications: "
-                                            + xupdateModifications);
+                                    getLogger().info(
+                                            "Execute XUpdate Modifications: "
+                                                    + xupdateModifications);
                                     xq.setQString(xupdateModifications);
                                     xq.execute(document);
                                 } else {
                                     getLogger()
-                                            .debug("Parameter did not match any xupdate command: "
-                                                    + pname);
+                                            .debug(
+                                                    "Parameter did not match any xupdate command: "
+                                                            + pname);
                                 }
                             }
                         }
@@ -259,13 +253,11 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     /*
                      * java.io.StringWriter writer = new java.io.StringWriter();
                      * org.apache.xml.serialize.OutputFormat OutFormat = new
-                     * org.apache.xml.serialize.OutputFormat("xml", "UTF-8",
-                     * true); org.apache.xml.serialize.XMLSerializer serializer =
-                     * new org.apache.xml.serialize.XMLSerializer(writer,
-                     * OutFormat);
-                     * serializer.asDOMSerializer().serialize((Document)
-                     * document); log.error(".act(): XUpdate Result:
-                     * \n"+writer.toString());
+                     * org.apache.xml.serialize.OutputFormat("xml", "UTF-8", true);
+                     * org.apache.xml.serialize.XMLSerializer serializer = new
+                     * org.apache.xml.serialize.XMLSerializer(writer, OutFormat);
+                     * serializer.asDOMSerializer().serialize((Document) document);
+                     * log.error(".act(): XUpdate Result: \n"+writer.toString());
                      */
 
                     // validate against relax ng after the updates
@@ -284,8 +276,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         getLogger().warn("No such schema: " + schema.getAbsolutePath());
                     }
 
-                    Document renumberedDocument = renumberDocument(document,
-                            unnumberTagsXSL,
+                    Document renumberedDocument = renumberDocument(document, unnumberTagsXSL,
                             numberTagsXSL);
                     DocumentHelper.writeDocument(renumberedDocument, file);
 
@@ -340,8 +331,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
         if (attributes != null) {
             for (int i = 0; i < attributes.getLength(); i++) {
                 org.w3c.dom.Attr attribute = (org.w3c.dom.Attr) attributes.item(i);
-                getLogger().debug(".getAttributes(): " + attribute.getName() + " "
-                        + attribute.getValue());
+                getLogger().debug(
+                        ".getAttributes(): " + attribute.getName() + " " + attribute.getValue());
                 if (!attribute.getName().equals("tagID")) {
                     String namespace = attribute.getNamespaceURI();
                     getLogger().debug(".getAttributes(): Namespace: " + namespace);
@@ -398,8 +389,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     /**
      * xupdate:update
      * 
-     * @param parent If true then parent element is part of update and
-     *            attributes need to be updated resp. added or deleted
+     * @param parent If true then parent element is part of update and attributes need to be updated
+     *            resp. added or deleted
      */
     private String update(Request request, String pname, String select, NodeList selectionNodeList,
             boolean parent) {
@@ -414,10 +405,9 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
             return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
                     + xupdateUpdate + "</xupdate:modifications>";
             /*
-             * And deal with mixed content here.. NOTE: Lexus has trouble with
-             * mixed content. As Workaround we insert-after the new node, remove
-             * the original node and replace the temporary tagID by the original
-             * tagID.
+             * And deal with mixed content here.. NOTE: Lexus has trouble with mixed content. As
+             * Workaround we insert-after the new node, remove the original node and replace the
+             * temporary tagID by the original tagID.
              */
         } else {
             getLogger().debug("Update element: " + select);
@@ -453,8 +443,8 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
             String xupdateUpdateAttribute = "<xupdate:update select=\""
                     + new XPath(select).removePredicates(select) + "[@tagID='temp']/@tagID"
                     + " \">" + xa.tagID + "</xupdate:update>";
-            getLogger().debug(".update(): Update Node (update tagID attribute): "
-                    + xupdateUpdateAttribute);
+            getLogger().debug(
+                    ".update(): Update Node (update tagID attribute): " + xupdateUpdateAttribute);
 
             return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">"
                     + xupdateInsertAfter + xupdateRemove + xupdateUpdateAttribute
