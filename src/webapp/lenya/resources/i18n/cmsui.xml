@@ -17,7 +17,7 @@
    limitations under the License.
 
    
-   $Id: cmsui.xml,v 1.41 2004/03/03 09:46:51 roku Exp $
+   $Id: cmsui.xml,v 1.42 2004/03/03 14:07:09 roku Exp $
    
 -->
 
@@ -65,8 +65,8 @@
   <message key="Date">Date</message>
   <message key="Back">Back</message>
   <message key="Add">Add</message>
-  <message key="Create">Create</message>  
-  
+  <message key="Create">Create</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
@@ -246,5 +246,5 @@ c
    <!-- New Document -->
    <message key="Please check the following possible causes of the exception">Please check the following possible causes of the exception.</message>
    <message key="Parent ID">Parent ID</message>
-    
+ 
 </catalogue>
