@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUserTest.java,v 1.1 2003/06/19 14:13:28 egli Exp $
+ * $Id: LDAPUserTest.java,v 1.2 2003/06/24 14:37:35 felix Exp $
  * <License>
  * The Apache Software License
  *
@@ -139,9 +139,15 @@ public class LDAPUserTest extends TestCase {
         return (LDAPUser) manager.getUser(userName);
     }
 
-    final public void testGetFullName() {
-        //TODO Implement getFullName().
-    }
+//    final public void testGetFullName() throws AccessControlException {
+//		String userName = "felix";
+//		createAndSaveUser(userName, "felix@wyona.com", "m400032");
+//		LDAPUser user = null;
+//		user = loadUser(userName);
+//		assertNotNull(user);
+//		String fullName = user.getFullName();
+//		assertTrue(fullName.equals(" Felix Maeder - Wayona"));
+//    }
 
     final public void testSetFullName() {
         // the setFullName method is supposed to do nothing
