@@ -105,7 +105,7 @@ if [ -d $REPLICATION_DIR_1 ];then
   rm -r $TEMP_DIR
 else
   echo "FATAL: No such directory: $REPLICATION_DIR_1"
-  exit 0
+  #exit 0
 fi
 
 
@@ -154,7 +154,7 @@ if [ -d $REPLICATION_DIR_2 ];then
   rm -r $TEMP_DIR
 else
   echo "FATAL: No such directory: $REPLICATION_DIR_2"
-  exit 0
+  #exit 0
 fi
 
 
@@ -203,7 +203,7 @@ if [ -d $REPLICATION_DIR_3 ];then
   rm -r $TEMP_DIR
 else
   echo "FATAL: No such directory: $REPLICATION_DIR_3"
-  exit 0
+  #exit 0
 fi
 
 # Loop over all publications (END)
