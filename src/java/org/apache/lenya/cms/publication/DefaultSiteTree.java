@@ -1,5 +1,5 @@
 /*
- * $Id: DefaultSiteTree.java,v 1.2 2003/05/07 16:44:57 egli Exp $
+ * $Id: DefaultSiteTree.java,v 1.3 2003/05/12 12:57:19 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -142,7 +142,6 @@ public class DefaultSiteTree
         }
 	
 	log.debug("PARENT ELEMENT: " + parentNode);
-	System.out.println("Parent node " + parentNode);
 	
 //         // Check if child already exists
 //         String newChildXPath = xpath_string + "/" + "node";
@@ -181,7 +180,56 @@ public class DefaultSiteTree
 	log.debug("Tree has been modified: " + root);
     }
 
+    public void addNode(Node node) {
+        // Get parent element
+	String parentId = "FIXME:"; // node.getParentId();
+        StringTokenizer st = new StringTokenizer(parentId, "/");
+	ArrayList ids = new ArrayList();
+	while (st.hasMoreTokens()) {
+	    ids.add(st.nextToken());
+	}
+
+	Element root = document.getDocumentElement();
+	
+	Node parentNode = findNode(root, ids);
+
+        if (parentNode == null) {
+            log.error("No nodes: " + parentId + ". No child added");
+	    
+            return;
+        }
+	
+	log.debug("PARENT ELEMENT: " + parentNode);
+	
+//         // Check if child already exists
+//         String newChildXPath = xpath_string + "/" + "node";
+//         log.debug("CHECK: " + newChildXPath);
+	
+//         if (doc.selectSingleNode(newChildXPath + "[@id='" + id + "']") != null) {
+//             log.error("Exception: XPath exists: " + newChildXPath + "[@id='" + id + "']");
+//             log.error("No child added");
+	    
+//             return;
+//         }
+
+        // Add node
+	parentNode.appendChild(node.cloneNode(true));
+	log.debug("Tree has been modified: " + root);
+    }
+
     public void deleteNode(String id) {}
+
+    public Node getNode(String documentId) {
+        StringTokenizer st = new StringTokenizer(documentId, "/");
+	ArrayList ids = new ArrayList();
+	while (st.hasMoreTokens()) {
+	    ids.add(st.nextToken());
+	}
+
+	Element root = document.getDocumentElement();
+	
+	return findNode(root, ids);
+    }
 
     public void serialize()
 	throws IOException,
