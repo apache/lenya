@@ -87,7 +87,7 @@ that is only suited for your publication, put it in the
 <title>File Locations</title>
 
 <p>Default buildfile location:</p>
-<source>&lt;publication&gt;/config/tasks.xml</source>
+<source>&lt;publication&gt;/config/tasks/targets.xml</source>
 
 <p>Log files:</p>
 <source>&lt;publication&gt;/logs/tasks/*.xml</source>
