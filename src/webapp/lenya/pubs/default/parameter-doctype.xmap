@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: parameter-doctype.xmap,v 1.14 2004/08/11 12:58:39 michi Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -48,32 +48,32 @@
       <map:match pattern="*/index.html">
         <map:generate type="serverpages" src="../../config/parameters/default.xsp">
           <map:parameter name="value" value="homepage"/>
-	</map:generate>
-	<map:serialize type="xml"/>
+        </map:generate>
+        <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
 
     <map:pipeline>
       <!-- {area}/{uri} -->
       <map:match pattern="*/**.html">
-	<map:act type="sourcetype" src="content/{1}/{page-envelope:document-path}">
-	  <map:generate type="serverpages" src="../../config/parameters/default.xsp">
-	    <map:parameter name="value" value="{sourcetype}"/>
-	  </map:generate>
-	  <map:serialize type="xml"/>
-	</map:act>
+        <map:act type="sourcetype" src="{fallback:content/{1}/{page-envelope:document-path}}">
+          <map:generate type="serverpages" src="../../config/parameters/default.xsp">
+            <map:parameter name="value" value="{sourcetype}"/>
+          </map:generate>
+          <map:serialize type="xml"/>
+        </map:act>
       </map:match>
     </map:pipeline>
     
     <map:pipeline>
       <!-- {area}/{uri} -->
       <map:match pattern="*/**.xml">
-	<map:act type="sourcetype" src="content/{1}/{2}.xml">
-	  <map:generate type="serverpages" src="../../config/parameters/default.xsp">
-	    <map:parameter name="value" value="{sourcetype}"/>
-	  </map:generate>
-	  <map:serialize type="xml"/>
-	</map:act>
+        <map:act type="sourcetype" src="{fallback:content/{1}/{2}.xml}">
+          <map:generate type="serverpages" src="../../config/parameters/default.xsp">
+            <map:parameter name="value" value="{sourcetype}"/>
+          </map:generate>
+          <map:serialize type="xml"/>
+        </map:act>
       </map:match>
     </map:pipeline>
 

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: cocoon-xconf.xsl,v 1.47 2004/08/09 10:28:38 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -94,9 +94,12 @@
         class="org.apache.lenya.cms.cocoon.components.modules.input.SitetreeModule"/>
         
     <component-instance logger="core.modules.input.fallback" name="fallback"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationFallbackModule">
+        class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationTemplateFallbackModule">
       <directory src="context:///lenya"/>
     </component-instance>
+
+    <component-instance logger="core.modules.input.usecase-fallback" name="usecase-fallback"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.UsecaseFallbackModule"/>
 
 	<component-instance logger="core.modules.input.document-url" name="document-url"
         class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentURLModule"/>
@@ -191,7 +194,7 @@
       role="org.apache.lenya.ac.AccessController/bypassable">
     <public>.*switch-user|.*logout|.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
   </component>
-
+  
   <access-controller-resolvers>
     <component-instance name="publication"
         class="org.apache.lenya.cms.ac.PublicationAccessControllerResolver"
@@ -222,7 +225,12 @@
       class="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerImpl"
       role="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer"/>
       
+  <component logger="lenya.publication.templatemanager"
+      class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"
+      role="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"/>
+
   </xsl:copy>
+
 </xsl:template>
 
 <!-- increase the free memory to prevent out of memory errors -->

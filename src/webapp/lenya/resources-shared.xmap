@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: resources-shared.xmap,v 1.7 2004/04/29 09:21:00 andreas Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:components/>
@@ -45,6 +45,11 @@
           <!-- matches pub-id/area/**.jpg -->
           <map:match pattern="*/*/**.jpg">
             <map:read src="pubs/{1}/resources/shared/{3}.jpg" mime-type="image/jpeg" />
+          </map:match>
+
+          <!-- matches pub-id/area/**.JPG -->
+          <map:match pattern="*/*/**.JPG">
+            <map:read src="pubs/{1}/resources/shared/{3}.JPG" mime-type="image/jpeg" />
           </map:match>
 
           <!-- matches pub-id/area/**.gif -->

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xmap,v 1.59 2004/06/29 16:11:49 andreas Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -99,7 +99,7 @@
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         </map:transform>
-        <map:transform src="{fallback:xslt/info/sitetree2tree.xsl}" label="content">
+        <map:transform src="{fallback:lenya/xslt/info/sitetree2tree.xsl}" label="content">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
