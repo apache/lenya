@@ -1,5 +1,5 @@
 /*
- * $Id: LDAPUser.java,v 1.6 2003/06/25 08:56:32 egli Exp $
+ * $Id: LDAPUser.java,v 1.7 2003/06/25 09:16:53 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -101,19 +101,20 @@ public class LDAPUser extends FileUser {
      * @param id user id of LDAPUser
      * @param email of LDAPUser
      * @param ldapId of LDAPUser
+     * @throws ConfigurationException if the properties could not be read
      */
     public LDAPUser(
         Publication publication,
         String id,
         String email,
-        String ldapId) {
+        String ldapId)
+        throws ConfigurationException {
         super(publication, id, null, email, null);
         this.ldapId = ldapId;
         try {
             readProperties();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new ConfigurationException("Could not read properties", e);
         }
     }
 
@@ -131,8 +132,7 @@ public class LDAPUser extends FileUser {
         try {
             readProperties();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	throw new ConfigurationException("Could not read properties", e);
         }
     }
 
