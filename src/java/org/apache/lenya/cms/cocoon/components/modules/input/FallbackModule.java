@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FallbackModule.java,v 1.3 2004/08/09 10:28:11 andreas Exp $  */
+/* $Id: FallbackModule.java,v 1.4 2004/08/11 13:11:31 andreas Exp $  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -115,6 +115,18 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
             getLogger().debug("Resolving file for path [" + name + "]");
         }
 
+        String resolvedUri = resolveURI(name, objectModel);
+        return resolvedUri;
+    }
+
+    /**
+     * Resolves the URI for a certain path.
+     * @param path The path.
+     * @param objectModel The object model.
+     * @return A string.
+     * @throws ConfigurationException if an error occurs.
+     */
+    protected String resolveURI(String path, Map objectModel) throws ConfigurationException {
         String resolvedUri = null;
         String checkedUris = "\n";
 
@@ -124,8 +136,9 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
 
             String[] baseUris = getBaseURIs(objectModel);
             Source source = null;
-            for (int i = 0; i < baseUris.length; i++) {
-                String uri = baseUris[i] + "/" + name;
+            int i = 0;
+            while (resolvedUri == null && i < baseUris.length) {
+                String uri = baseUris[i] + "/" + path;
 
                 checkedUris += uri + "\n";
 
@@ -150,11 +163,11 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
                         resolver.release(source);
                     }
                 }
-
+                i++;
             }
 
         } catch (Exception e) {
-            throw new ConfigurationException("Resolving attribute [" + name + "] failed: ", e);
+            throw new ConfigurationException("Resolving attribute [" + path + "] failed: ", e);
         } finally {
             if (resolver != null) {
                 manager.release(resolver);
@@ -162,7 +175,7 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
         }
 
         if (resolvedUri == null) {
-            throw new ConfigurationException("Could not resolve file for path [" + name + "]."
+            throw new ConfigurationException("Could not resolve file for path [" + path + "]."
                     + "\nChecked URIs:" + checkedUris);
         }
         else {
@@ -170,7 +183,6 @@ public class FallbackModule extends AbstractPageEnvelopeModule implements Servic
                 getLogger().debug("Resolved URI: [" + resolvedUri + "]");
             }
         }
-
         return resolvedUri;
     }
 
