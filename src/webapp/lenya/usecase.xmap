@@ -392,11 +392,7 @@
         </map:match>
 
         <map:match pattern="close" type="step">
-          <map:match pattern="*/authoring/**/*.html">
-<!-- FIXME: files within the directory authoring should also be editable. Please see the redirect at the very end -->
-<!--
           <map:match pattern="*/authoring/**.html">
--->
             <map:act type="save">
               <map:parameter name="file" value="pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
 
@@ -429,11 +425,7 @@
             </map:transform>
             <map:transform type="write-source"/>
             <map:transform src="xslt/authoring/edit/redirect-to.xsl">
-              <map:parameter name="uri" value="{3}.html"/>
-<!-- FIXME: files within the directory authoring should also be editable. Please see the redirect at the very end -->
-<!--
-              <map:parameter name="uri" value="{2}.html"/>
--->
+              <map:parameter name="uri" value="{page-envelope:context-prefix}/{1}/authoring/{2}.html"/>
             </map:transform>
             <map:serialize type="html" />
           </map:match>
