@@ -161,13 +161,13 @@
 <ol>
   <li>Open Document
     <ol>
-      <li>stylesheets/wyona/cms/edit/htmlform/numberTags.xsl (Sitemap)</li>
-      <li>stylesheets/wyona/cms/edit/htmlform/makeEditML.xsl (Sitemap)</li>
-      <li>stylesheets/wyona/cms/edit/htmlform/performRequest.xsl (EditorAction and Sitemap)</li>
-      <li>stylesheets/wyona/cms/edit/htmlform/translateRequest.xsl (EditorAction and Sitemap)</li>
-      <li>stylesheets/wyona/cms/edit/editdescriptor/"RootElementName"-descriptor.xml (EditorAction and XSLT)</li>
-      <li>stylesheets/wyona/cms/Page/Edit/root.xsl (xsl:include)</li>
-      <li>stylesheets/wyona/cms/Page/Edit/body.xsl (xsl:include)</li>
+      <li>stylesheets/lenya/edit/htmlform/numberTags.xsl (Sitemap)</li>
+      <li>stylesheets/lenya/edit/htmlform/makeEditML.xsl (Sitemap)</li>
+      <li>stylesheets/lenya/edit/htmlform/performRequest.xsl (EditorAction and Sitemap)</li>
+      <li>stylesheets/lenya/edit/htmlform/translateRequest.xsl (EditorAction and Sitemap)</li>
+      <li>stylesheets/lenya/edit/editdescriptor/"RootElementName"-descriptor.xml (EditorAction and XSLT)</li>
+      <li>stylesheets/lenya/Page/Edit/root.xsl (xsl:include)</li>
+      <li>stylesheets/lenya/Page/Edit/body.xsl (xsl:include)</li>
       <li>stylesheets/publication/Page/"DoctypeName"/Edit/main.xsl (Sitemap)</li>
     </ol>
   </li>

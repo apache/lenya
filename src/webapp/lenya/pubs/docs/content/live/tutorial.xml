@@ -39,7 +39,7 @@ The following sample publications currently exist:</p>
 In following let <strong>ethz-mat</strong> be the source and <strong>MY-PUB</strong> the name of the new publication
 </p>
 <ol>
-<li>Copy: cp -r wyona/cms/pubs/ethz-mat wyona/cms/pubs/MY-PUB</li>
+<li>Copy: cp -r lenya/pubs/ethz-mat lenya/pubs/MY-PUB</li>
 <li>Rename the ethz/mat subdirectories for your purpose<br/>
      for instance: ethz-mat/docs/ethz/mat ==&gt; MY-PUB/docs/standard/t01 <br/>
      and: ethz-mat/stylesheets/ethz/mat ==&gt; MY-PUB/stylesheets/standard/t01
@@ -72,7 +72,7 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
     <map:transform src="../../stylesheets/cms/Page/ac/login.xsl">
       <map:parameter name="publication_name" value="MY-PUB"/>
       <map:parameter name="publication_id" value="MY-PUB"/>
-      <map:parameter name="wyona_path" value="wyona/cms/pubs/MY-PUB/docs/standard/t01/" />
+      <map:parameter name="wyona_path" value="lenya/pubs/MY-PUB/docs/standard/t01/" />
     </map:transform>
     <map:serialize type="html"/>
   </map:resource>
@@ -92,7 +92,7 @@ Just replace ethz-mat by MY-PUB and ethz/mat by standard/t01
 ]]></code>
 </li>
 <li>
-Set Name of Publication: wyona/cms/pubs/MY-PUB/stylesheets/wyona/cms/conf/conf.xsl
+Set Name of Publication: lenya/pubs/MY-PUB/stylesheets/lenya/conf/conf.xsl
 (e.g. 'MY Publication')
 <code><![CDATA[
 
@@ -107,11 +107,11 @@ Set Name of Publication: wyona/cms/pubs/MY-PUB/stylesheets/wyona/cms/conf/conf.x
 </li>
 <li>
 Moreover, replace ethz-mat by MY-PUB in following files:<br/>
-i)   webapp/wyona/cms/docs/cms/menus/live.xsp<br/>
-ii)  webapp/wyona/cms/pubs/MY-PUB/docs/cms/menus/live.xsp<br/>
-iii) webapp/wyona/cms/pubs/MY-PUB/stylesheets/standard/t01/Configuration/read.xsl<br/>
-iv)  webapp/wyona/cms/pubs/MY-PUB/stylesheets/Configuration/read.xsl<br/>
-v)   webapp/wyona/cms/pubs/MY-PUB/stylesheets/wyona/cms/edit/Page/root.xsl
+i)   webapp/lenya/docs/cms/menus/live.xsp<br/>
+ii)  webapp/lenya/pubs/MY-PUB/docs/cms/menus/live.xsp<br/>
+iii) webapp/lenya/pubs/MY-PUB/stylesheets/standard/t01/Configuration/read.xsl<br/>
+iv)  webapp/lenya/pubs/MY-PUB/stylesheets/Configuration/read.xsl<br/>
+v)   webapp/lenya/pubs/MY-PUB/stylesheets/lenya/edit/Page/root.xsl
 </li>
 </ol>
 </section>
@@ -124,7 +124,7 @@ File: webapp/sitemap.xmap
 <source><![CDATA[
 
 <map:match pattern="MY-PUB/**">
-   <map:mount uri-prefix="MY-PUB" src="wyona/cms/pubs/MY-PUB/sitemap.xmap"
+   <map:mount uri-prefix="MY-PUB" src="lenya/pubs/MY-PUB/sitemap.xmap"
                                  check-reload="true" reload-method="synchron"/>
 </map:match>
 
@@ -156,7 +156,7 @@ java -classpath WYONACMS/build/lenya/classes:WYONACMS/build/lenya/webapp/WEB-INF
 </p>
 <p>
 Modify 'wyonaPath'in the java-class org.lenya.cms.cocoon.acting.EditorMainAction<br/>
-     for instance: String wyonaPath="wyona/cms/pubs/MY-PUB/docs/standard/t01/";<br/>
+     for instance: String wyonaPath="lenya/pubs/MY-PUB/docs/standard/t01/";<br/>
      and recompile.
 </p>
 

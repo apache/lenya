@@ -51,8 +51,8 @@ NOTE: "authoring" and "live" are required parameters, "tree-authoring" and "tree
 
    <section><title>Required Files</title> 
 <ol>
-  <li>wyona/cms/docs/cms/publish-screen.xsp</li>
-  <li>wyona/cms/stylesheets/cms/Page/Publish/main.xsl</li>
+  <li>lenya/docs/cms/publish-screen.xsp</li>
+  <li>lenya/stylesheets/cms/Page/Publish/main.xsl</li>
 </ol>
    </section>
 

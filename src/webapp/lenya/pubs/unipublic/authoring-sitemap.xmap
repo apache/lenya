@@ -518,7 +518,7 @@
 				</map:act>
 				<map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 				<!--
-        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
+        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/lenya/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
 -->
 				<map:serialize type="xml"/>
 			</map:match>
@@ -536,7 +536,7 @@
 				</map:act>
 				<map:generate src="docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml"/>
 				<!--
-        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
+        <map:generate src="docs/publication/rcml/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/lenya/pubs/unipublic/docs/publication/authoring/{1}/{2}/{3}/{4}/index.xml.rcml"/>
 -->
 				<map:serialize type="xml"/>
 			</map:match>

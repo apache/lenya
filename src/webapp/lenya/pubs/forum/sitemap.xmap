@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.6 2003/03/04 17:47:05 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.7 2003/03/04 18:08:19 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -112,7 +112,7 @@
           </map:match>
           
           <map:match pattern="switch-user">
-            <map:generate type="serverpages" src="docs/wyona/cms/ac/switch-user.xsp"/>
+            <map:generate type="serverpages" src="docs/lenya/ac/switch-user.xsp"/>
             <map:serialize type="xml"/>
           </map:match>
           
@@ -131,7 +131,7 @@
           <!-- Identities requested by IMLAuthenticator -->
 <!--
           <map:match pattern="passwd/*.iml">
-            <map:generate src="docs/wyona/cms/ac/passwd/{1}.iml"/>
+            <map:generate src="docs/lenya/ac/passwd/{1}.iml"/>
             <map:serialize type="xml"/>
           </map:match>
 -->

@@ -8,9 +8,9 @@
 SCP=/usr/bin/scp
 
 CONTEXT=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya
-PUBLICATION_DIR=$CONTEXT/wyona/cms/pubs
+PUBLICATION_DIR=$CONTEXT/lenya/pubs
 
-SFTP_BATCH=$CONTEXT/wyona/cms/bin/copy-recursive.sh
+SFTP_BATCH=$CONTEXT/lenya/bin/copy-recursive.sh
 
 
 #

@@ -47,7 +47,7 @@
 		
            	]]></code>
        		</li> 
-       		<li>"Publish-Screen": generation of a publish-screen with a servepage, docs/wyona/cms/publish/publish-screen.xsp and the stylesheet stylesheets/wyona/cms/publish/main.xsl :
+       		<li>"Publish-Screen": generation of a publish-screen with a servepage, docs/lenya/publish/publish-screen.xsp and the stylesheet stylesheets/lenya/publish/main.xsl :
            	<code><![CDATA[
 		
      <map:match pattern="authoring/wyona/publishScreen*">

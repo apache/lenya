@@ -103,7 +103,7 @@
                             <img height="60" alt="" src="{head/media/media-reference/@source}" width="80" border="0"/>
         		  </xsl:when>
         		  <xsl:otherwise>
-         		  <img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Upload Teaser Image" border="0"/> Upload Teaser Image
+         		  <img src="{$context_prefix}/images/lenya/util/reddot.gif" alt="Upload Teaser Image" border="0"/> Upload Teaser Image
         		  </xsl:otherwise>
       		        </xsl:choose>
     			</a>

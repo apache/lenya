@@ -100,7 +100,7 @@ Copy the generic XSLT "../../stylesheets/cms/Page/parent-child.xsl" into the pub
    <section><title>Configuration</title> 
      <ol>
        <li> doctypes.xconf
-         The different doctypes are configured in a file doctypes.xconf: WYONA_CMS/src/webapp/wyona/cms/pubs/*publication*/docs/publication/doctypes/doctypes.xconf. Given are their children and their creator. 
+         The different doctypes are configured in a file doctypes.xconf: WYONA_CMS/src/webapp/lenya/pubs/*publication*/docs/publication/doctypes/doctypes.xconf. Given are their children and their creator. 
            <code><![CDATA[
 
 <?xml version="1.0"?>

@@ -1,5 +1,5 @@
 /*
- * $Id: EditorMainAction.java,v 1.13 2003/03/04 17:46:34 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.14 2003/03/04 18:08:09 gregor Exp $
  * <License>
  * The Apache Software License
  *
@@ -75,7 +75,7 @@ import java.util.Map;
 import org.apache.cocoon.environment.ObjectModelHelper;
 
 /**
- * $Id: EditorMainAction.java,v 1.13 2003/03/04 17:46:34 gregor Exp $
+ * $Id: EditorMainAction.java,v 1.14 2003/03/04 18:08:09 gregor Exp $
  *
  * @author Martin Lüthi
  * @version 2002.01.22
@@ -221,7 +221,7 @@ public class EditorMainAction extends AbstractComplementaryConfigurableAction
                 String formeditorPath = context.getRealPath("formeditor");
                 String tempFile = formeditorPath + request.getRequestURI();
 
-                String wyonaPath = "wyona/cms/pubs/ethz-mat/docs/ethz/mat/";
+                String wyonaPath = "lenya/pubs/ethz-mat/docs/ethz/mat/";
                 String editFile = context.getRealPath("/") + wyonaPath + request.getSitemapURI();
 
                 getLogger().debug("**** tempfile=" + tempFile);

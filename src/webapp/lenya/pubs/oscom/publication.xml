@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.2 2003/03/02 23:25:24 michi Exp $ -->
+<!-- $Id: publication.xml,v 1.3 2003/03/04 18:08:21 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>OSCOM</lenya:name>
@@ -19,30 +19,30 @@ This publication implements the CMS matrix used at <a href="http://www.oscom.org
 
 <h3>Deployment</h3>
 <ol>
-  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/tasks.xconf
+  <li>File: src/webapp/lenya/pubs/oscom/docs/publication/tasks.xconf
     <ol>
       <li><code>&lt;parameter name="command" value="PATH_TO_WGET_RSS_SCRIPT"/&gt;</code></li>
       <li><code>&lt;parameter name="command" value="PATH_TO_REPLICATE_SCRIPT"/&gt;</code></li>
     </ol>
   </li>
-  <li>File: src/webapp/wyona/cms/pubs/oscom/bin/wget-rss.sh
+  <li>File: src/webapp/lenya/pubs/oscom/bin/wget-rss.sh
     <ol>
       <li><code>PORT=TOMCAT_PORT</code></li>
     </ol>
   </li>
-  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/scheduler/jobs.xml
+  <li>File: src/webapp/lenya/pubs/oscom/docs/publication/scheduler/jobs.xml
     <ol>
       <li>Remove comments from "Download RSS" and "Export OSCOM" and "Replicate"</li>
       <li>Export the OSCOM Homepage: <code>&lt;parameter name="server-port" value="TOMCAT_PORT"/&gt;</code></li>
     </ol>
   </li>
-  <li>File: src/webapp/wyona/cms/bin/replicate.sh
+  <li>File: src/webapp/lenya/bin/replicate.sh
     <ol>
       <li><code>CONTEXT=PATH_CONTEXT_DIR</code></li>
       <li><code>RDOCS_2_1=PATH_TO_REMOTE_DOCS_DIR</code></li>
     </ol>
   </li>
-  <li>File: src/webapp/wyona/cms/pubs/oscom/docs/publication/live/navigation.xml
+  <li>File: src/webapp/lenya/pubs/oscom/docs/publication/live/navigation.xml
     <ol>
       <li>Remove temporary entries</li>
     </ol>

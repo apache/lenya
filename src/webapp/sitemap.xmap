@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.40 2003/03/04 17:47:48 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.41 2003/03/04 18:09:07 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <!-- =========================== Components ================================ -->
@@ -70,10 +70,10 @@
     <!-- Welcome to Wyona -->
     <map:pipeline>
       <map:match pattern="publications.xml">
-        <map:generate type="directory" src="wyona/cms/pubs"/>
-        <map:transform src="wyona/cms/stylesheets/cms/Page/util/xinclude.xsl"/>
+        <map:generate type="directory" src="lenya/pubs"/>
+        <map:transform src="lenya/stylesheets/cms/Page/util/xinclude.xsl"/>
         <map:transform type="xlink">
-          <map:parameter name="href" value="wyona/cms/pubs/dummy.xml"/>
+          <map:parameter name="href" value="lenya/pubs/dummy.xml"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
@@ -86,9 +86,9 @@
       <map:match pattern="index.html">
         <map:aggregate element="lenya" label="xml">
           <map:part src="cocoon:/publications.xml"/>
-          <map:part src="wyona/cms/docs/cms/introduction.xml"/>
+          <map:part src="lenya/docs/cms/introduction.xml"/>
         </map:aggregate>
-        <map:transform src="wyona/cms/stylesheets/cms/Page/util/welcome.xsl"/>
+        <map:transform src="lenya/stylesheets/cms/Page/util/welcome.xsl"/>
         <map:serialize type="html"/>
 <!--
         <map:read src="resources/html/index.html" mime-type="text/html"/>
@@ -100,23 +100,23 @@
     <!-- Search with Lucene -->
     <map:pipeline>
       <map:match pattern="lucene/**">
-        <map:mount uri-prefix="lucene" src="wyona/cms/lucene.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="lucene" src="lenya/lucene.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       <map:match pattern="*/search/lucene">
-        <map:generate type="serverpages" src="wyona/cms/docs/cms/search/search-and-results.xsp">
+        <map:generate type="serverpages" src="lenya/docs/cms/search/search-and-results.xsp">
           <map:parameter name="max-hits-per-page" value="3"/>
           <map:parameter name="max-pages" value="7"/>
           <map:parameter name="number-of-pubs" value="1"/>
           <map:parameter name="pub0-id" value="{1}"/>
           <map:parameter name="pub0-name" value="{1}"/>
-          <map:parameter name="pub0-index-dir" value="wyona/cms/pubs/{1}/resources/publication/search/lucene/index"/>
-          <map:parameter name="pub0-excerpt-dir" value="wyona/cms/pubs/{1}/resources/publication/search/lucene/htdocs_dump"/>
+          <map:parameter name="pub0-index-dir" value="lenya/pubs/{1}/resources/publication/search/lucene/index"/>
+          <map:parameter name="pub0-excerpt-dir" value="lenya/pubs/{1}/resources/publication/search/lucene/htdocs_dump"/>
           <map:parameter name="pub0-prefix" value=""/>
         </map:generate>
-        <map:transform src="wyona/cms/stylesheets/cms/Page/search/sort.xsl"/>
-        <map:transform src="wyona/cms/pubs/{1}/stylesheets/cms/search-and-results.xsl"/>
+        <map:transform src="lenya/stylesheets/cms/Page/search/sort.xsl"/>
+        <map:transform src="lenya/pubs/{1}/stylesheets/cms/search-and-results.xsl"/>
         <!--
-          <map:transform src="wyona/cms/stylesheets/cms/Page/Search/search-and-results.xsl"/>
+          <map:transform src="lenya/stylesheets/cms/Page/Search/search-and-results.xsl"/>
 -->
 
         <map:serialize type="html"/>
@@ -132,13 +132,13 @@
     <map:pipeline>
       <!-- Editor Xopus -->
       <map:match pattern="xopus/**">
-        <map:mount uri-prefix="xopus" src="wyona/cms/xopus.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="xopus" src="lenya/xopus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
 
       <!-- Editor Bitflux -->
       <map:match pattern="bitfluxeditor/**">
-        <map:mount uri-prefix="bitfluxeditor" src="wyona/cms/bitfluxeditor.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="bitfluxeditor" src="lenya/bitfluxeditor.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
 
@@ -146,18 +146,18 @@
     <map:pipeline>
       <!-- Wyona GUI -->
       <map:match pattern="wyona/**">
-        <map:mount uri-prefix="wyona" src="wyona/cms/wyona.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="wyona" src="lenya/wyona.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
 
       <!-- Publications -->
       <map:match pattern="*/introduction.html">
-        <map:generate src="wyona/cms/pubs/{1}/publication.xml" />
-        <map:transform src="wyona/cms/stylesheets/cms/Page/util/publication.xsl"/>
+        <map:generate src="lenya/pubs/{1}/publication.xml" />
+        <map:transform src="lenya/stylesheets/cms/Page/util/publication.xsl"/>
         <map:serialize type="html" />
       </map:match>
       <map:match pattern="*/**">
-        <map:mount uri-prefix="{1}" src="wyona/cms/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
 

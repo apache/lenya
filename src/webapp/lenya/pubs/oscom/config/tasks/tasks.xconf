@@ -37,12 +37,12 @@
   
   <task id="downloadRSS" class="org.lenya.cms.task.CommandLineTask">
     <label>Download RSS</label>
-    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/pubs/oscom/bin/wget-rss.sh"/>
+    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/lenya/pubs/oscom/bin/wget-rss.sh"/>
   </task>
 
   <task id="replicate" class="org.lenya.cms.task.CommandLineTask">
     <label>Replicate</label>
-    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/wyona/cms/bin/replicate.sh"/>
+    <parameter name="command" value="sh /home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/lenya/lenya/bin/replicate.sh"/>
   </task>
 
 </tasks>

@@ -24,20 +24,20 @@
 
 <ol>
   <li>Copy Approriate Sample Publication
-      <br>(for instance: <code>cp -r wyona/cms/pubs/ethz-mat wyona/cms/pubs/my-pub</code>)</li>
+      <br>(for instance: <code>cp -r lenya/pubs/ethz-mat lenya/pubs/my-pub</code>)</li>
   <li>Configure sitemap.xmap 
       <br>(for instance: replace ethz-mat by my-pub)</li>
   <li>Mount sitemap.xmap from the root sitemap.xmap which is located within the lenya directory
       <br>
       <code>
      &lt;map:match pattern="my-pub/**"&gt;<br>
-       &lt;map:mount uri-prefix="my-pub" src="wyona/cms/pubs/my-pub/sitemap.xmap" check-reload="true" reload-method="synchron"/&gt;<br>
+       &lt;map:mount uri-prefix="my-pub" src="lenya/pubs/my-pub/sitemap.xmap" check-reload="true" reload-method="synchron"/&gt;<br>
      &lt;/map:match&gt;
       </code>
   </li>
-  <li>Set Prefix for Stylesheets: wyona/cms/pubs/my-pub/stylesheets/Configuration/read.xsl
+  <li>Set Prefix for Stylesheets: lenya/pubs/my-pub/stylesheets/Configuration/read.xsl
       <br>(for instance: replace ethz-mat by my-pub)</li>
-  <li>Set Name of Publication: wyona/cms/pubs/my-pub/stylesheets/wyona/cms/conf/conf.xsl
+  <li>Set Name of Publication: lenya/pubs/my-pub/stylesheets/lenya/conf/conf.xsl
       <br>(for instance: replace "Materials Science" by "My Publication")</li>
   <li>Start modifying the XML, XSLT and the various sitemaps
     <ol>

@@ -18,7 +18,7 @@
        <ol>
        <li>Create a descriptor file:<br/>
            In the case of the publication "Materials Science" the
-           descriptor files are located at <code>stylesheets/wyona/cms/edit/editdescriptor/</code>
+           descriptor files are located at <code>stylesheets/lenya/edit/editdescriptor/</code>
         </li>
         <li>    
           Set the link within the menu:<br/>

@@ -175,7 +175,7 @@
       </map:match>
 
 <!-- General Wyona -->
-      <map:match pattern="images/wyona/cms/**.gif">
+      <map:match pattern="images/lenya/**.gif">
         <map:read src="../../resources/cms/images/{1}.gif" mime-type="images/gif">
           <map:parameter name="expires" value="2000000000"/>
         </map:read>

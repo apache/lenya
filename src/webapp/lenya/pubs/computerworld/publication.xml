@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.3 2003/03/04 17:58:26 gregor Exp $ -->
+<!-- $Id: publication.xml,v 1.4 2003/03/04 18:08:09 gregor Exp $ -->
 
 <lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
 <lenya:name>Computerworld</lenya:name>
@@ -17,11 +17,11 @@ Deployment for live server
 
 Changing of URIs to root
 ------------------------
-- src/wyonacms/src/webapp/wyona/cms/pubs/computerworld/live-sitemap.xmap
+- src/wyonacms/src/webapp/lenya/pubs/computerworld/live-sitemap.xmap
 Comment out all image transform stylesheets:
 <map:transform src="stylesheets/publication/Page/Live/images.xsl" label="content"/>
 
-- src/wyonacms/src/webapp/wyona/cms/pubs/computerworld/stylesheets/publication/Page/navigation.xsl 
+- src/wyonacms/src/webapp/lenya/pubs/computerworld/stylesheets/publication/Page/navigation.xsl 
 Change to the following line:
 <xsl:variable name="prefix"><xsl:if test="$authoring">/lenya/computerworld/authoring</xsl:if></xsl:variable>
 
@@ -33,9 +33,9 @@ Performance improvements
   - Turn off Tomcat logging because Apache keeps an access log (to be done)
 
 - src/wyonacms/src/webapp/sitemap.xmap
-Turn reloading of sub-sitemaps off: <map:mount uri-prefix="{1}" src="wyona/cms/pubs/{1}/sitemap.xmap" check-reload="false" reload-method="synchron"/>
+Turn reloading of sub-sitemaps off: <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="false" reload-method="synchron"/>
 
-- src/wyonacms/src/webapp/wyona/cms/pubs/computerworld/sitemap.xmap
+- src/wyonacms/src/webapp/lenya/pubs/computerworld/sitemap.xmap
   - Disable mounting of authoring-sitemap.xmap (live environment)
   - Turn reloading of sub-sitemaps off
 

@@ -8,7 +8,7 @@
 SCP=/usr/bin/scp
 
 CONTEXT=/home/wyona/build/jakarta-tomcat-4.0.6/webapps/lenya
-PUBLICATION_DIR=$CONTEXT/wyona/cms/pubs
+PUBLICATION_DIR=$CONTEXT/lenya/pubs
 
 
 #
@@ -36,11 +36,11 @@ REPLICATION_DIR_2=$PUBLICATION_DIR/computerworld/docs/publication/replication/pe
 
 # XML docs for Cocoon
 # copy to same location for now.
-RDOCS_2=/home/wyona/build/jakarta-tomcat-4.0.6/webapps/lenya/wyona/cms/pubs/computerworld/docs/publication/live
+RDOCS_2=/home/wyona/build/jakarta-tomcat-4.0.6/webapps/lenya/lenya/pubs/computerworld/docs/publication/live
 
 # pictures for Cocoon
 # copy to same location for now.
-RDOCS_3=/home/wyona/build/jakarta-tomcat-4.0.6/webapps/lenya/wyona/cms/pubs/computerworld/resources/publication/images/live
+RDOCS_3=/home/wyona/build/jakarta-tomcat-4.0.6/webapps/lenya/lenya/pubs/computerworld/resources/publication/images/live
 
 ###########################################
 #                MAIN                     #

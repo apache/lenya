@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.7 2003/03/04 17:47:42 gregor Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.8 2003/03/04 18:08:21 gregor Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -103,7 +103,7 @@
       </map:handle-errors>
 
 <!-- ==== write files for debugging ==== -->
-<!--        <map:transform src="stylesheets/wyona/cms/edit/htmlform/saveToFile.xsl"> -->
+<!--        <map:transform src="stylesheets/lenya/edit/htmlform/saveToFile.xsl"> -->
 <!--          <map:parameter name="filename" value="/home/tinu/debug/edit.xml"/> -->
 <!--        </map:transform> -->
 

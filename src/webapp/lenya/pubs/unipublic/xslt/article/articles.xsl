@@ -25,7 +25,7 @@
               <img src="{body/body.head/media[1]/media-reference/@source}" border="0" alt="Teaser Image" align="middle" /> Change Image
             </xsl:when>
             <xsl:otherwise>
-              <img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Upload Image" border="0"/> Upload Image
+              <img src="{$context_prefix}/images/lenya/util/reddot.gif" alt="Upload Image" border="0"/> Upload Image
             </xsl:otherwise>
           </xsl:choose>
          </a>
@@ -45,7 +45,7 @@
     <div class="art-lead"><xsl:apply-templates select="body/body.head/abstract"/> </div>
     <div class="art-author"><xsl:apply-templates select="body/body.head/byline"/></div>
     <xsl:if test="$authoring">
-      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[1]/*[1]&amp;insertBefore=true"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+      <a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[1]/*[1]&amp;insertBefore=true"><img src="{$context_prefix}/images/lenya/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
     </xsl:if>
     <xsl:apply-templates select="body/body.content/block"/>
     <div class="art-author"><xsl:apply-templates select="body/body.end/tagline"/></div>
@@ -69,7 +69,7 @@
     <xsl:apply-templates/>
     <xsl:if test="$authoring">
 	<br/>
-	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="{$context_prefix}/images/lenya/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
     </xsl:if>
   </p>
 </xsl:template>

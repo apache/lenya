@@ -212,7 +212,7 @@ title, byline {
 			</section>
 			<anchor id="five"/>
 			<section><title>5. Adding an entry to the menu</title>
-				<p>Now you only have to add an entry to the menu bar an you are done! This is done in the corresponding xsp file that generates the menu of the page: e.g. src/webapp/wyona/cms/pubs/unipublic/docs/publication/menus/front.xsp</p>
+				<p>Now you only have to add an entry to the menu bar an you are done! This is done in the corresponding xsp file that generates the menu of the page: e.g. src/webapp/lenya/pubs/unipublic/docs/publication/menus/front.xsp</p>
 				<source><![CDATA[
 <item>
         <xsp:attribute name="href">

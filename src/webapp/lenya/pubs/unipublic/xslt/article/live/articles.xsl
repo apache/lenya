@@ -22,7 +22,7 @@
           <xsl:apply-templates select="body/body.head/media[1]/media-reference" mode="image"/>
         </xsl:when>
         <xsl:otherwise>
-         <img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Upload Teaser Image" border="0"/> Upload Teaser Image
+         <img src="{$context_prefix}/images/lenya/util/reddot.gif" alt="Upload Teaser Image" border="0"/> Upload Teaser Image
         </xsl:otherwise>
       </xsl:choose>
     </a>
@@ -58,7 +58,7 @@
     <xsl:apply-templates/>
 <!--
 	<br/>
-	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="{$context_prefix}/images/wyona/cms/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+	<a href="index.html?usecase=uploadimage&amp;step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="{$context_prefix}/images/lenya/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
 -->
   </p>
 </xsl:template>
