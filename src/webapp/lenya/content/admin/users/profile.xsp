@@ -24,6 +24,8 @@
       
       <fullname><jpath:value-of select="fullname"/></fullname>
       <email><jpath:value-of select="email"/></email>
+      <password><jpath:value-of select="password"/></password>
+      <confirm-password><jpath:value-of select="confirm-password"/></confirm-password>
       <description><jpath:value-of select="description"/></description>
     </user>
   </page>

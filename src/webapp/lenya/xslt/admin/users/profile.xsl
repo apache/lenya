@@ -38,13 +38,13 @@
         <form method="GET" action="{/page/continuation}.continuation">
           <table class="lenya-table-noborder">
             
-            <xsl:apply-templates select="message"/>
+            <xsl:apply-templates select="message | id | ldapid | fullname | email | description"/>
             
-            <xsl:apply-templates select="id"/>
-            <xsl:apply-templates select="ldapid"/>
-            <xsl:apply-templates select="fullname"/>
-            <xsl:apply-templates select="email"/>
-            <xsl:apply-templates select="description"/>
+            <xsl:if test="@new = 'true'">
+              <tr><td colspan="2">&#160;</td></tr>
+              <xsl:apply-templates select="password | confirm-password"/>
+            </xsl:if>
+            
             <tr>
               <td/>
               <td>
@@ -120,6 +120,26 @@
 			<td class="lenya-entry-caption">Description</td>
 			<td>
 				<textarea class="lenya-form-element" name="description"><xsl:value-of select="normalize-space(.)"/>&#160;</textarea>
+			</td>
+		</tr>
+	</xsl:template>  
+	
+	
+	<xsl:template match="password">
+		<tr>
+			<td class="lenya-entry-caption">Password</td>
+			<td>
+				<input type="password" class="lenya-form-element" name="password" value="{normalize-space(.)}"/>
+			</td>
+		</tr>
+	</xsl:template>  
+	
+	
+	<xsl:template match="confirm-password">
+		<tr>
+			<td class="lenya-entry-caption">Confirm&#160;password</td>
+			<td>
+				<input type="password" class="lenya-form-element" name="confirm-password" value="{normalize-space(.)}"/>
 			</td>
 		</tr>
 	</xsl:template>  
