@@ -6,15 +6,11 @@
       <format property="SNAPSHOT_STAMP" pattern="yyyyMMddhhmmss"/>
     </tstamp>
     
-    <property name="fullname" value="Apache Lenya CMS"/>
     <property name="Name"     value="Apache Lenya"/>
-    <property name="name"     value="lenya:cms"/>
-    <property name="version"  value="1.2"/>
-    <property name="short.version" value="1.2"/>
     <property name="release"  value="1th"/>
     <property name="year"     value="1999-2004"/>
 
-    <echo message="------------------- ${fullname} ${version} [${year}] ----------------"/>
+    <echo message="------------------- ${Name} ${version} [${year}] ----------------"/>
     <echo>Building with ${ant.version} using build file ${ant.file}</echo>
 
     <property name="debug"          value="on"/>
