@@ -28,7 +28,8 @@
 
 <!-- navigation menu -->
 <xsl:template name="navigation-menu">
-  <div class="menu">
+  <div class="lenya-box">
+  	<div class="lenya-box-title">
     <xsl:variable name="menu-separator" select="'&#160;&#160;|&#160;&#160;'"/>
     <a class="menu-item" href="{$uri-prefix}/authoring/{$document-uri}">Back to page</a>
     <xsl:value-of select="$menu-separator"/>
@@ -40,6 +41,7 @@
     
     <xsl:value-of select="$menu-separator"/>
     <a class="menu-item" href="{$context-prefix}/scheduler-servlet?lenya.usecase=schedule-page&amp;lenya.step=showscreen">Servlet</a>
+    </div>
   </div>
 </xsl:template>
 
@@ -57,7 +59,7 @@
         <li><strong>Document:</strong>&#160;&#160;<xsl:value-of select="$document-uri"/></li>
       </ul>
     
-      <table class="scheduler-job" border="0" cellpadding="0" cellspacing="0">
+      <table class="lenya-table" border="0" cellpadding="0" cellspacing="0">
 
         <tr>
           <th><strong>Edit existing jobs</strong></th>
