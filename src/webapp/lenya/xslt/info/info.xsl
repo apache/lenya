@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- $Id: info.xsl,v 1.52 2004/02/11 14:00:26 gregor Exp $
+ $Id: info.xsl,v 1.53 2004/02/13 14:03:17 gregor Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -135,7 +135,7 @@
         <tr><td class="lenya-entry-caption">Title:</td><td><input type="text" id="dc:title" name="properties.save.meta.title" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:title"/></xsl:attribute></input></td></tr>
         <tr><td class="lenya-entry-caption">Creator:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
         <tr><td class="lenya-entry-caption">Subject:</td><td><input type="text" id="dc:subject" name="properties.save.meta.subject" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:subject"/></xsl:attribute></input></td></tr>
-        <tr><td class="lenya-entry-caption">Description:</td><td><input type="text" id="dc:description" name="properties.save.meta.description" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:description"/></xsl:attribute></input></td></tr>
+        <tr><td class="lenya-entry-caption">Description:</td><td><textarea id="dc:description" name="properties.save.meta.description" rows="3" class="lenya-form-element"><xsl:value-of select="dc:description"/></textarea></td></tr>
         <tr><td class="lenya-entry-caption">Publisher:</td><td><input type="text" id="dc:publisher" name="properties.save.meta.publisher" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:publisher"/></xsl:attribute></input></td></tr>
         <tr><td class="lenya-entry-caption">Date of creation:</td><td><xsl:value-of select="dc:date"/></td></tr>
         <tr><td class="lenya-entry-caption">Rights:</td><td><input type="text" id="dc:rights" name="properties.save.meta.rights" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:rights"/></xsl:attribute></input></td></tr>

@@ -31,3 +31,7 @@ td.lenya-entry-caption {
     color: navy;
 	background-color: transparent;
 }
+
+textarea {
+    font-size: small;
+}
