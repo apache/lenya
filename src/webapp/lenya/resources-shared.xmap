@@ -8,11 +8,18 @@
       
       <!-- Lenya Publications -->
       
-          <!-- matches pub-id/area/css/*.css -->
-          <map:match pattern="*/*/css/*.css">
-            <map:read src="pubs/{1}/resources/shared/css/{3}.css" mime-type="text/css" />
-          </map:match>
-
+      <!-- matches pub-id/area/css/*.css -->
+      <map:match pattern="*/*/css/*.css">
+        <map:act type="resource-exists" src="pubs/{1}/resources/shared/css/{3}.xml">
+          <map:generate src="pubs/{../1}/resources/shared/css/{../3}.xml"/>
+          <map:transform src="resources/css/css.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          </map:transform>
+          <map:serialize type="text" mime-type="text/css"/>
+        </map:act>
+        <map:read src="pubs/{1}/resources/shared/css/{3}.css" mime-type="text/css" />
+      </map:match>
+      
           <!-- matches pub-id/area/javascript/**.js -->
           <map:match pattern="*/*/javascript/**.js">
             <map:read src="pubs/{1}/resources/shared/javascript/{3}.js" mime-type="application/javascript" />
