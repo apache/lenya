@@ -95,7 +95,8 @@ public class CommandLineUtil {
 
         if (baout_e.toString().length() > 0) {
             log.error(".runProcess(): ###ErrorStream:START" + baout_e.toString() + "END:ErrorStream###");
-            throw new Exception(baout_e.toString());
+            // FIXME: Do not throw an Exception, because certain commands write into standard error although there is no error!
+            //throw new Exception(baout_e.toString());
         }
 
         return baout.toByteArray();
