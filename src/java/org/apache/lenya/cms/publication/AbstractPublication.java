@@ -334,6 +334,13 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
 
         copyDocumentSource(sourceDocument, destinationDocument);
         getSiteManager(sourceDocument.getIdentityMap()).copy(sourceDocument, destinationDocument);
+        
+        ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
+        try {
+            resourcesManager.copyResourcesTo(destinationDocument);
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        }
     }
 
     /**
@@ -354,6 +361,9 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
         }
         getSiteManager(document.getIdentityMap()).delete(document);
         deleteDocumentSource(document);
+        
+        ResourcesManager resourcesManager = document.getResourcesManager();
+        resourcesManager.deleteResources();
     }
 
     /**
@@ -371,6 +381,14 @@ public abstract class AbstractPublication extends AbstractLogEnabled implements 
             throws PublicationException {
         copyDocument(sourceDocument, destinationDocument);
         deleteDocument(sourceDocument);
+        
+        ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
+        try {
+            resourcesManager.copyResourcesTo(destinationDocument);
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        }
+        resourcesManager.deleteResources();
     }
 
     private Map areaSsl2proxy = new HashMap();

@@ -23,7 +23,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
@@ -35,7 +34,7 @@ import org.apache.lenya.workflow.WorkflowInstance;
 /**
  * Publish usecase handler.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Publish extends DocumentUsecase implements DocumentVisitor {
 
@@ -43,7 +42,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected static final String SUBTREE = "subtree";
 
     /**
-     * Checks if the workflow event "publish" is supported and the parent of the
+     * Checks if the workflow event is supported and the parent of the
      * document exists in the live area.
      * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
@@ -105,13 +104,6 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
         try {
             publication.copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
-
-            Document liveDocument = publication.getAreaVersion(authoringDocument,
-                    Publication.LIVE_AREA);
-
-            ResourcesManager resourcesManager = authoringDocument.getResourcesManager();
-            resourcesManager.copyResourcesTo(liveDocument);
-
             triggerWorkflow(getEvent(), authoringDocument);
             success = true;
         } catch (Exception e) {
