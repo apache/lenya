@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.14 2004/02/14 11:27:04 roku Exp $
+$Id: cmsui_de.xml,v 1.15 2004/02/14 14:39:39 roku Exp $
 @author <a href="mailto:roku@apache.org">Rolf Kulemann</a>
 <License>
 
@@ -65,7 +65,9 @@ $Id: cmsui_de.xml,v 1.14 2004/02/14 11:27:04 roku Exp $
   <message key="Referer">R&#252;ckverweis</message>
   <message key="EXCEPTION">AUSNAHME</message>  
   <message key="User">Benutzer</message>
-
+  <message key="live">ver&#246;ffentlicht</message>
+  <message key="not">nicht</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
   <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht freigeben?</message>  
