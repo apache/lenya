@@ -11,14 +11,6 @@
  <map:pipelines>
    <map:pipeline>
 
-
-<!-- Weekly Column -->
-     <map:match pattern="authoring/weekly-column*.acml">
-       <map:generate src="config/ac/policies/weekly-column.acml"/>
-       <map:serialize type="xml"/>
-     </map:match>
-<!-- /Weekly Column -->
-
 <!-- Navigation -->
      <map:match pattern="authoring/navigation.xml.acml">
        <map:generate src="config/ac/policies/navigation.acml"/>

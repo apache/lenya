@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: menus.xmap,v 1.2 2003/11/17 03:39:41 michi Exp $ -->
+<!-- CVS: $Id: menus.xmap,v 1.3 2003/12/04 16:24:43 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -10,18 +10,6 @@
 
     <map:pipeline>
     	
-<!--
-      <map:match pattern="live/**">
-        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
-      <map:match pattern="**">
-        <map:generate type="serverpages" src="config/menus/generic.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
-
       <map:match pattern="authoring/home.xml">
         <map:generate type="serverpages" src="config/menus/home.xsp"/>
         <map:serialize type="xml"/>
@@ -39,47 +27,6 @@
         <map:serialize type="xml"/>
       </map:match>
 
-<!--
-      <map:match pattern="authoring/menus/weekly-column-page.xml">
-        <map:generate type="serverpages" src="config/menus/weekly-column.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/matrix/*.xml">
-        <map:generate type="serverpages" src="config/menus/matrix.xsp">
-          <map:parameter name="projectid" value="{1}"/>
-        </map:generate>
-        <map:transform type="usecasemenu"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/editor-matrix/*.xml">
-        <map:generate type="serverpages" src="config/menus/editor-matrix.xsp">
-          <map:parameter name="projectid" value="{1}"/>
-        </map:generate>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/editor-overview.xml">
-        <map:generate type="serverpages" src="config/menus/editor-overview.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/board.xml">
-        <map:generate type="serverpages" src="config/menus/board.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/news.xml">
-        <map:generate type="serverpages" src="config/menus/news.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/mailing-lists.xml">
-        <map:generate type="serverpages" src="config/menus/mailing-lists.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
-<!--
-      <map:match pattern="authoring/menus/glossary.xml">
-        <map:generate type="serverpages" src="config/menus/mailing-lists.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
       <map:match pattern="authoring/menus/**.xml">
         <map:generate type="serverpages" src="config/menus/generic.xsp"/>
         <map:serialize type="xml"/>

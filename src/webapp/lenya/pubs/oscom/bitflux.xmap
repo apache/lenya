@@ -43,15 +43,8 @@
       <map:match pattern="save/home">
         <map:act type="xopushandler">
           <map:parameter name="save-filename" value="home.xml"/>
-
-<!--
-          <map:redirect-to uri="/lenya/unipublic/authoring/{1}/{2}/{3}/{4}/index.html"/>
--->
           <!-- the server will tell the editor that the file was saved successfully. The editor has to do the redirection. -->
           <map:generate src="content/authoring/home.xml"/> <!-- return some file which exists, doesn't matter which one. Else you will an not important error message -->
-<!--
-          <map:generate src="{reqFilePath}"/>
--->
           <map:transform src="../../xslt/xopus/response.xsl">
             <map:parameter name="reqId" value="{reqId}"/>
             <map:parameter name="reqType" value="{reqType}"/>

@@ -48,95 +48,6 @@
 
   <map:pipelines>
 
-    <!-- Lenya RSS -->
-    <map:pipeline>
-      <map:match pattern="news.rss">
-        <map:act type="request">
-          <map:parameter name="parameters" value="true"/>
-          <map:generate src="http://127.0.0.1:{serverPort}/{context}/forum/authoring/index.rss"/>
-          <map:serialize type="xml"/>
-        </map:act>
-      </map:match>
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
-    <!-- /Lenya RSS -->
-
-    <map:pipeline>
-      <map:match pattern="http/slashdot.rdf">
-        <map:generate src="http://www.slashdot.org/slashdot.rdf"/>
-        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
-
-    <map:pipeline>
-      <map:match pattern="http/fm.rdf">
-        <map:generate src="http://www.freshmeat.net/backend/fm.rdf"/>
-        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
-
-    <map:pipeline>
-      <map:match pattern="http/oscom.rdf">
-        <map:generate src="http://blog.oscom.org/index.rdf"/>
-<!--
-        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
--->
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
-
-    <!-- CMS Info -->
-    <map:pipeline>
-      <map:match pattern="http/cmsinfo.rdf">
-        <map:generate src="http://www.cmsinfo.org/backend.php3"/>
-        <map:transform src="xslt/RDF/removeNetscape.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
-    <!-- /CMS Info -->
-
-    <map:pipeline>
-      <map:match pattern="http/cmswatch.xml">
-        <map:generate src="http://www.cmswatch.com/RSS/cmswatch.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
-
-    <map:pipeline>
-      <map:match pattern="live/*.rdf">
-        <map:generate src="content/live/rss-rdf/{1}.rdf"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:handle-errors>
-        <map:serialize type="xml"/>
-      </map:handle-errors>
-    </map:pipeline>
-
     <map:pipeline>
       <!-- images gif -->
       <map:match pattern="live/images/**.gif">
@@ -226,42 +137,6 @@
       </map:match>
       <!-- /Homepage -->
 
-      <!-- Board -->
-      <map:match pattern="board.html">
-        <map:generate src="cocoon:/live/board.xml" label="content"/>
-        <map:transform src="xslt/Board/live/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-      <!-- /Board -->
-
-      <!-- Weekly Column -->
-      <map:match pattern="weekly-column.html">
-        <map:generate src="cocoon:/live/weekly-column-page.xml"/>
-        <map:transform src="xslt/WeeklyColumn/live/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- Mailing Lists -->
-      <map:match pattern="mailing-lists.html">
-        <map:generate src="cocoon:/live/mailing-lists.xml" label="content"/>
-        <map:transform src="xslt/Mailing-Lists/live/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-      <!-- Mailing Lists -->
-
-      <!-- Glossary -->
-      <map:match pattern="live/glossary.html">
-        <map:generate src="cocoon:/live/glossary.xml"/>
-        <map:transform src="xslt/Glossary/live/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-      <map:match pattern="glossary.html">
-        <map:generate src="cocoon:/live/glossary.xml"/>
-        <map:transform src="xslt/Glossary/live/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-   </map:pipeline>
-
    <!-- CMS/F Overview -->
    <map:pipeline>
       <map:match pattern="matrix/">
@@ -324,13 +199,6 @@
    </map:pipeline>
 
    <map:pipeline>
-      <!-- Generic (XHTML) -->
-      <map:match pattern="conferences/berkeley2002/**.html">
-        <map:generate src="cocoon:/live/conferences/sanfrancisco2002/{1}.xml"/>
-        <map:transform src="xslt/generic/live/main_berkeley.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
       <map:match pattern="live/**.html">
         <map:generate src="cocoon:/live/{1}.xml"/>
         <map:transform src="xslt/generic/live/main.xsl"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- CVS: $Id: xopus.xmap,v 1.14 2003/04/25 10:36:11 gregor Exp $ -->
+<!-- CVS: $Id: xopus.xmap,v 1.15 2003/12/04 16:24:43 gregor Exp $ -->
 
 <!--
     This subsitemap manages the functions related to the
@@ -44,20 +44,6 @@
       </map:match>
       <map:match pattern="home.xsd">
         <map:read src="config/doctypes/schemas/home.xsd" mime-type="text/xml"/>
-      </map:match>
-    </map:pipeline>
-
-    <map:pipeline>
-      <map:match pattern="weekly-column.xml">
-        <map:generate src="content/authoring/weekly-column-body.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="weekly-column.xsl">
-        <map:generate src="xslt/WeeklyColumn/authoring/xopus.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="weekly-column.xsd">
-        <map:read src="config/doctypes/schemas/weekly-column.xsd" mime-type="text/xml"/>
       </map:match>
     </map:pipeline>
 

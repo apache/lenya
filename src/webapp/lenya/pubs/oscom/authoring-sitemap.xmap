@@ -48,48 +48,8 @@
     <!-- /Rollback -->
 
     <map:pipeline>
-      <!-- images gif -->
-<!--
-      <map:match pattern="live/images/**.gif">
-        <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-      <map:match pattern="images/**.gif">
-        <map:read src="resources/images/live/{1}.gif" mime-type="images/gif">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
--->
-      <!-- images jpg -->
-<!--
-      <map:match pattern="live/images/**.jpg">
-        <map:read src="resources/images/live/{1}.jpg" mime-type="images/jpeg">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-      <map:match pattern="images/**.jpg">
-        <map:read src="resources/images/live/{1}.jpg" mime-type="images/jpeg">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-      <map:match pattern="live/images/**.jpeg">
-        <map:read src="resources/images/live/{1}.jpeg" mime-type="images/jpeg">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
-      <map:match pattern="images/**.jpeg">
-        <map:read src="resources/images/live/{1}.jpeg" mime-type="images/jpeg">
-          <map:parameter name="expires" value="2000000000"/>
-        </map:read>
-      </map:match>
--->
 
       <!-- Menus -->
-      <map:match pattern="authoring/menus/weekly-column-page.xml">
-        <map:generate type="serverpages" src="config/menus/weekly-column.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
       <map:match pattern="authoring/menus/matrix/*.xml">
         <map:generate type="serverpages" src="config/menus/matrix.xsp">
           <map:parameter name="projectid" value="{1}"/>
@@ -111,24 +71,6 @@
         <map:generate type="serverpages" src="config/menus/editor-overview.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
-      <map:match pattern="authoring/menus/board.xml">
-        <map:generate type="serverpages" src="config/menus/board.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/news.xml">
-        <map:generate type="serverpages" src="config/menus/news.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="authoring/menus/mailing-lists.xml">
-        <map:generate type="serverpages" src="config/menus/mailing-lists.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-<!--
-      <map:match pattern="authoring/menus/glossary.xml">
-        <map:generate type="serverpages" src="config/menus/mailing-lists.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
--->
       <map:match pattern="authoring/menus/**.xml">
         <map:generate type="serverpages" src="config/menus/generic.xsp"/>
         <map:serialize type="xml"/>
@@ -145,17 +87,7 @@
         <map:generate src="content/authoring/home.xml"/>
         <map:serialize type="xml"/>
       </map:match>
-
-      <!-- XML Weekly Column -->
-      <map:match pattern="authoring/weekly-column-body.xml">
-        <map:generate src="content/authoring/weekly-column-body.xml"/>
-        <map:serialize type="xml"/>
-      </map:match>
    </map:pipeline>
-
-
-
-
 
 <!-- Matrix -->
   <map:pipeline>
@@ -397,22 +329,6 @@
         <map:transform src="xslt/matrix/authoring/main_editor_xopus.xsl">
           <map:parameter name="projectid" value="{1}"/>
         </map:transform>
-        <map:serialize type="html"/>
-      </map:match>
-
-
-
-      <!-- Mailing Lists -->
-      <map:match pattern="authoring/mailing-lists.html">
-        <map:generate src="cocoon:/authoring/mailing-lists.xml"/>
-        <map:transform src="xslt/mailing-lists/authoring/main.xsl"/>
-        <map:serialize type="html"/>
-      </map:match>
-
-      <!-- Glossary -->
-      <map:match pattern="authoring/glossary.html">
-        <map:generate src="cocoon:/authoring/glossary.xml"/>
-        <map:transform src="xslt/Glossary/authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 
