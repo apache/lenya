@@ -7,7 +7,8 @@
   <branch name="San Francisco" href="conferences/sanfrancisco2002/index.html">
     <leaf name="Program" href="conferences/sanfrancisco2002/program.html"/>
     <leaf name="Registration&#160;&#38;&#160;Fees" href="conferences/sanfrancisco2002/registration_fees.html"/>
-    <leaf name="Local&#160;Information"/>
+    <leaf name="Location" href="conferences/sanfrancisco2002/location.html"/>
+    <leaf name="Local&#160;Information" href="conferences/sanfrancisco2002/localinfo.html"/>
     <leaf name="CfP" href="conferences/sanfrancisco2002/cfp.html"/>
     <leaf name="Speakers" href="conferences/sanfrancisco2002/speakers.html"/>
     <leaf name="Press&#160;Release" href="conferences/sanfrancisco2002/press-release.html"/>
