@@ -50,22 +50,18 @@ public class PageEnvelopeModule
             
         if (name.equals(PageEnvelope.AREA)) {
             value = envelope.getArea();
-        }
-        if (name.equals(PageEnvelope.CONTEXT)) {
+        } else if (name.equals(PageEnvelope.CONTEXT)) {
             value = envelope.getContext();
-        }
-        if (name.equals(PageEnvelope.PUBLICATION_ID)) {
+        } else if (name.equals(PageEnvelope.PUBLICATION_ID)) {
             value = envelope.getPublication().getId();
-        }
-        if (name.equals(PageEnvelope.PUBLICATION)) {
+        } else if (name.equals(PageEnvelope.PUBLICATION)) {
             value = envelope.getPublication();
-        }
-        if (name.equals(PageEnvelope.DOCUMENT_ID)) {
+        } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
             value = envelope.getDocumentId();
-        }
-        if (name.equals(PageEnvelope.DOCUMENT_URL)) {
+        } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
             value = envelope.getDocumentURL();
         }
+        
         return value;
     }
     
