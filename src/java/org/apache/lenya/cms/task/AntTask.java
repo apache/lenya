@@ -51,6 +51,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import java.util.Map;
@@ -101,7 +104,7 @@ public class AntTask
         Throwable error = null;
         
         try {
-            File logFile = new File(buildFile.getParentFile(), "ant-log.xml");
+            File logFile = getLogFile(publicationDirectory);
             project.setUserProperty("XmlLogger.file", logFile.getAbsolutePath());
             XmlLogger logger = new XmlLogger();
             project.addBuildListener(logger);
@@ -143,7 +146,15 @@ public class AntTask
         finally {
             project.fireBuildFinished(error);
         }
-        
+    }
+    
+    /**
+     * Returns the filename of the logfile to write.
+     */
+    protected File getLogFile(File publicationDirectory) {
+        Calendar now = new GregorianCalendar();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
+        return new File(publicationDirectory, LOG_PATH + format.format(now.getTime()) + ".xml");
     }
     
     public static final String PUBLICATION_DIRECTORY = "pub.dir";
@@ -152,6 +163,7 @@ public class AntTask
     public static final String ANT_PREFIX = "ant";
     public static final String PROPERTIES_PREFIX = "properties";
     public static final String DEFAULT_BUILDFILE = "config/tasks.xml";
+    public static final String LOG_PATH = "logs/tasks/".replace('/', File.separatorChar);
 
     /**
      * Execute the task. All parameters must have been set with parameterize().
