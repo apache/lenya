@@ -1,5 +1,5 @@
 /*
-$Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
+$Id: DeletePoliciesTask.java,v 1.1 2004/01/21 16:11:44 edith Exp $
 <License>
 
  ============================================================================
@@ -56,38 +56,95 @@ $Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Label;
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to delete the contents (xml files) of documents corresponding to a defined subtree
+ * Ant task to delete the policies of documents corresponding to a defined subtree
  * Visitor of the defined subtree (visitor pattern). The subtree is reverse visited.
  * @author edith
  */
-public class DeleteContentTask extends TwoDocumentsOperationTask {
+public class DeletePoliciesTask extends TwoDocumentsOperationTask {
+    private String policiesDir;
 
 	/**
 	 * 
 	 */
-	public DeleteContentTask() {
+	public DeletePoliciesTask() {
 		super();
 	}
 
+	/**
+	 * @return string The policies directory.
+	 */
+	public String getPoliciesDir() {
+		return policiesDir;
+	}
+	/**
+	 * @param string The policies directory
+	 */
+	public void setPoliciesDir(String string) {
+		policiesDir = string;
+	}
+
+	/** 
+	 * Get all files in a given directory, that are not directories.
+	 * If the given directory doesn't exist, return null.
+	 * @param directory The directory
+	 * @return List of files
+	 */
+	public File[] getFiles(File directory) {
+		FileFilter filter = new FileFilter() {
+
+			public boolean accept(File file) {
+				return file.isFile();
+			}
+		};
+		if (directory.exists() && directory.isDirectory()) {
+			return directory.listFiles(filter);
+		}
+		return null;
+	}
+
+	/**
+	 * Delte the policies file 
+	 * @param srcDir The directory of the policies files.
+	 */
+	public void deletePolicies(File srcDir) {
+		File[] authoringPolicies = this.getFiles(srcDir);
+		if (authoringPolicies == null) {
+            log("no policies file to delete");
+			return;
+		}
+        try {
+		for (int i = 0; i < authoringPolicies.length; i++) {
+            FileUtil.forceDelete(authoringPolicies[i]);
+
+		}
+        if (srcDir.exists() && srcDir.isDirectory() && srcDir.listFiles().length == 0) {  
+          FileUtil.forceDelete(srcDir);
+          log(
+              "delete directory "
+                  + srcDir.getAbsolutePath());
+        }
+        } catch (IOException e) {
+            throw new BuildException(e);
+        }
+
+	}
+
 	/** (non-Javadoc)
-	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
+	 * @see org.apache.lenya.cms.ant.DocumentOperationTask#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentBuilder builder = publication.getDocumentBuilder();
+		String srcArea = this.getFirstarea();
+		String destArea = this.getSecarea();
 
 		String parentid = node.getAbsoluteParentId();
 		String destDocumentid = parentid + "/" + node.getId();
@@ -96,41 +153,77 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 				getSecdocumentid(),
 				getFirstdocumentid());
 
-		Label[] labels = node.getLabels();
-		for (int i = 0; i < labels.length; i++) {
-			String language = labels[i].getLanguage();
-			String url =
-				builder.buildCanonicalUrl(
-					publication,
-					getFirstarea(),
-					srcDocumentid,
-					language);
-			Document doc;
-			try {
-				doc = builder.buildDocument(publication, url);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
-			}
-			File srcFile = doc.getFile();
-			if (!srcFile.exists()) {
-				log("There are no file " + srcFile.getAbsolutePath());
-				return;
-			}
-			File directory = srcFile.getParentFile();
-			try {
-				FileUtil.forceDelete(srcFile);
-				log("delete file " + srcFile.getAbsolutePath());
-				if (directory.exists()
-					&& directory.isDirectory()
-					&& directory.listFiles().length == 0) {
-					FileUtil.forceDelete(directory);
-					log("delete directory " + directory.getAbsolutePath());
-				}
-			} catch (IOException e) {
-				throw new BuildException(e);
-			}
-		}
+		try {
+			if (srcArea.equals(Publication.AUTHORING_AREA)) {
+				if (destArea.equals(Publication.AUTHORING_AREA)) {
+					File srcDir =
+						new File(
+							policiesDir,
+							this.getFirstarea()
+								+ File.separator
+								+ srcDocumentid);
+					log("delete :" + srcDir.getCanonicalPath());
+                    deletePolicies(srcDir);
+					File srcLiveDir =
+						new File(
+							policiesDir,
+							Publication.LIVE_AREA
+								+ File.separator
+								+ srcDocumentid);
+					log("delete :" + srcLiveDir.getCanonicalPath());
+                    deletePolicies(srcLiveDir);
 
+				} else if (
+					destArea.equals(Publication.ARCHIVE_AREA)
+						| destArea.equals(Publication.TRASH_AREA)) {
+					File srcDir =
+						new File(
+							policiesDir,
+							this.getFirstarea()
+								+ File.separator
+								+ srcDocumentid);
+					log("delete :" + srcDir.getCanonicalPath());
+                    deletePolicies(srcDir);
+
+					File srcLiveDir =
+						new File(
+							policiesDir,
+							Publication.LIVE_AREA
+								+ File.separator
+								+ srcDocumentid);
+					log("delete :" + srcLiveDir.getCanonicalPath());
+                    deletePolicies(srcLiveDir);
+				}
+			} else if (
+				srcArea.equals(Publication.ARCHIVE_AREA)
+					| srcArea.equals(Publication.TRASH_AREA)) {
+				if (destArea.equals(Publication.AUTHORING_AREA)) {
+					File srcDir =
+						new File(
+							policiesDir,
+							this.getFirstarea()
+								+ File.separator
+								+ this.getSecarea()
+								+ File.separator
+								+ srcDocumentid);
+					log("delete :" + srcDir.getCanonicalPath());
+                    deletePolicies(srcDir);
+
+					File srcLiveDir =
+						new File(
+							policiesDir,
+							this.getFirstarea()
+								+ File.separator
+								+ Publication.LIVE_AREA
+								+ File.separator
+								+ srcDocumentid);
+					log("delete :" + srcLiveDir.getCanonicalPath());
+                    deletePolicies(srcLiveDir);
+				}
+			}
+		} catch (IOException e) {
+			throw new BuildException(e);
+		}
 	}
 
 	/** 

@@ -1,5 +1,5 @@
 /*
-$Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
+$Id: DeleteResourcesTask.java,v 1.1 2004/01/21 16:11:44 edith Exp $
 <License>
 
  ============================================================================
@@ -55,34 +55,35 @@ $Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
 */
 package org.apache.lenya.cms.ant;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to delete the contents (xml files) of documents corresponding to a defined subtree
- * Visitor of the defined subtree (visitor pattern). The subtree is reverse visited.
+ * Ant task to delete the resources of documents corresponding to a defined subtree
+ * (Visitor pattern) Visitor of the subtree. The subtree is reverse visited.
+ * 
  * @author edith
+ *
  */
-public class DeleteContentTask extends TwoDocumentsOperationTask {
+public class DeleteResourcesTask extends TwoDocumentsOperationTask {
 
 	/**
 	 * 
 	 */
-	public DeleteContentTask() {
+	public DeleteResourcesTask() {
 		super();
 	}
 
-	/** (non-Javadoc)
+	/**
+	 * Delete the resources of the documents corresponding to this node
+	 *  
 	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
@@ -105,32 +106,16 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 					getFirstarea(),
 					srcDocumentid,
 					language);
-			Document doc;
+			Document srcDoc;
 			try {
-				doc = builder.buildDocument(publication, url);
+				srcDoc = builder.buildDocument(publication, url);
 			} catch (DocumentBuildException e) {
 				throw new BuildException(e);
 			}
-			File srcFile = doc.getFile();
-			if (!srcFile.exists()) {
-				log("There are no file " + srcFile.getAbsolutePath());
-				return;
-			}
-			File directory = srcFile.getParentFile();
-			try {
-				FileUtil.forceDelete(srcFile);
-				log("delete file " + srcFile.getAbsolutePath());
-				if (directory.exists()
-					&& directory.isDirectory()
-					&& directory.listFiles().length == 0) {
-					FileUtil.forceDelete(directory);
-					log("delete directory " + directory.getAbsolutePath());
-				}
-			} catch (IOException e) {
-				throw new BuildException(e);
-			}
-		}
 
+			ResourcesManager resourcesMgr = new ResourcesManager(srcDoc);
+			resourcesMgr.deleteResources();
+		}
 	}
 
 	/** 
@@ -151,4 +136,5 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 			throw new BuildException(e);
 		}
 	}
+
 }

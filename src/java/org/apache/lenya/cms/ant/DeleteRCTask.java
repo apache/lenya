@@ -1,5 +1,5 @@
 /*
-$Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
+$Id: DeleteRCTask.java,v 1.1 2004/01/21 16:11:44 edith Exp $
 <License>
 
  ============================================================================
@@ -48,7 +48,7 @@ $Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
  on  behalf of the Apache Software  Foundation and was  originally created by
  Michael Wechner <michi@apache.org>. For more information on the Apache Soft-
  ware Foundation, please see <http://www.apache.org/>.
-
+s
  Lenya includes software developed by the Apache Software Foundation, W3C,
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
@@ -56,12 +56,6 @@ $Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
-import java.io.IOException;
-
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -69,16 +63,19 @@ import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task to delete the contents (xml files) of documents corresponding to a defined subtree
- * Visitor of the defined subtree (visitor pattern). The subtree is reverse visited.
+ * Ant task to delete the rcml- and backup files of documents corresponding to a defined subtree
+ * (Visitor pattern) Visitor of the subtree. The subtree is reverse visited.
  * @author edith
  */
-public class DeleteContentTask extends TwoDocumentsOperationTask {
+public class DeleteRCTask extends TwoDocumentsOperationTask {
+	private String rcmldir = "";
+	private String rcbakdir = "";
+	private String srcareadir = "";
 
 	/**
 	 * 
 	 */
-	public DeleteContentTask() {
+	public DeleteRCTask() {
 		super();
 	}
 
@@ -86,49 +83,45 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
-		Publication publication = getPublication();
-		DocumentBuilder builder = publication.getDocumentBuilder();
+		try {
+			Publication publication = getPublication();
+			String publicationPath =
+				this.getPublicationDirectory().getCanonicalPath();
+			String rcmlDirectory =
+				new File(publicationPath, this.getRcmldir()).getCanonicalPath();
+			String rcbakDirectory =
+				new File(publicationPath, this.getRcbakdir())
+					.getCanonicalPath();
 
-		String parentid = node.getAbsoluteParentId();
-		String destDocumentid = parentid + "/" + node.getId();
-		String srcDocumentid =
-			destDocumentid.replaceFirst(
-				getSecdocumentid(),
-				getFirstdocumentid());
+			String parentid = node.getAbsoluteParentId();
+			String destDocumentid = parentid + "/" + node.getId();
+			String srcDocumentid =
+				destDocumentid.replaceFirst(
+					getSecdocumentid(),
+					getFirstdocumentid());
 
-		Label[] labels = node.getLabels();
-		for (int i = 0; i < labels.length; i++) {
-			String language = labels[i].getLanguage();
-			String url =
-				builder.buildCanonicalUrl(
-					publication,
-					getFirstarea(),
-					srcDocumentid,
-					language);
-			Document doc;
-			try {
-				doc = builder.buildDocument(publication, url);
-			} catch (DocumentBuildException e) {
-				throw new BuildException(e);
+			File srcRcmlDir =
+				new File(
+					rcmlDirectory,
+					this.getSrcareadir() + File.separator + srcDocumentid);
+
+			if (srcRcmlDir.exists()) {
+				FileUtil.forceDelete(srcRcmlDir);
+				log("delete rcml directory " + srcRcmlDir.getAbsolutePath());
 			}
-			File srcFile = doc.getFile();
-			if (!srcFile.exists()) {
-				log("There are no file " + srcFile.getAbsolutePath());
-				return;
+
+			File srcRcbakDir =
+				new File(
+					rcbakDirectory,
+					this.getSrcareadir() + File.separator + srcDocumentid);
+
+			if (srcRcbakDir.exists()) {
+				FileUtil.forceDelete(srcRcbakDir);
+				log("delete rcbak directory " + srcRcbakDir.getAbsolutePath());
 			}
-			File directory = srcFile.getParentFile();
-			try {
-				FileUtil.forceDelete(srcFile);
-				log("delete file " + srcFile.getAbsolutePath());
-				if (directory.exists()
-					&& directory.isDirectory()
-					&& directory.listFiles().length == 0) {
-					FileUtil.forceDelete(directory);
-					log("delete directory " + directory.getAbsolutePath());
-				}
-			} catch (IOException e) {
-				throw new BuildException(e);
-			}
+
+		} catch (Exception e) {
+			throw new BuildException(e);
 		}
 
 	}
@@ -139,16 +132,62 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 	public void execute() throws BuildException {
 		try {
 			log("document-id for the source :" + this.getFirstdocumentid());
-			log("area for the source :" + this.getFirstarea());
 			log("document-id for the destination :" + this.getSecdocumentid());
 			log("area for the destination :" + this.getSecarea());
+			log("rcml dir" + this.getRcmldir());
+			log("rcbak dir" + this.getRcbakdir());
+			log("src area dir" + this.getSrcareadir());
 
+			//visit the destination tree
 			Publication publication = getPublication();
 			SiteTree tree = publication.getSiteTree(this.getSecarea());
 			SiteTreeNode node = tree.getNode(this.getSecdocumentid());
 			node.acceptReverseSubtree(this);
+
 		} catch (Exception e) {
 			throw new BuildException(e);
 		}
 	}
+	/**
+	 * @return The backup directory.
+	 */
+	public String getRcbakdir() {
+		return rcbakdir;
+	}
+
+	/**
+	 * @return The rcml directory.
+	 */
+	public String getRcmldir() {
+		return rcmldir;
+	}
+
+	/**
+	 * @return The path of the area from the publication.
+	 */
+	public String getSrcareadir() {
+		return srcareadir;
+	}
+
+	/**
+	 * @param string The backup directory.
+	 */
+	public void setRcbakdir(String string) {
+		rcbakdir = string;
+	}
+
+	/**
+	 * @param string The rcml directory.
+	 */
+	public void setRcmldir(String string) {
+		rcmldir = string;
+	}
+
+	/**
+	 * @param string The path of the area from the publication.
+	 */
+	public void setSrcareadir(String string) {
+		srcareadir = string;
+	}
+
 }
