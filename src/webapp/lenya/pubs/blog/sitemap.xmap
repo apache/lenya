@@ -122,7 +122,7 @@
           <map:parameter name="relative2root" value="../../../../.."/>
         </map:transform>
         <map:select type="browser">
-          <map:when test="mozilla5">
+          <map:when test="mozilla5DISABLED">
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml?uiml=xul"/>
             <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
           </map:when>
@@ -263,7 +263,7 @@
         </map:transform>
 
         <map:select type="browser">
-          <map:when test="mozilla5">
+          <map:when test="mozilla5DISABLED">
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml?uiml=xul"/>
             <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
           </map:when>

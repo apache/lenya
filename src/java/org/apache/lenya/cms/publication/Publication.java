@@ -21,9 +21,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
-
 /**
  * A Lenya publication.
  */
@@ -154,27 +151,17 @@ public interface Publication {
     String getBreadcrumbPrefix();
 
     /**
-     * Returns a site manager of this publication for a certain document identity map. 
-     * @return A site manager.
-     * @throws SiteException if an error occurs 
+     * Returns the hint of the site manager service that is used by this publication.
+     * @return A hint to use for service selection.
      */
-    SiteManager getSiteManager() throws SiteException;
+    String getSiteManagerHint();
 
     /**
-     * Returns the document builder of this instance.
-     * @return A document builder.
+     * Returns the document builder class of this instance.
+     * @return A class.
      */
-    DocumentBuilder getDocumentBuilder();
+    String getDocumentBuilderHint();
     
-    /**
-     * Creates a version of the document object in another area.
-     * @param document The document to clone.
-     * @param area The destination area.
-     * @return A document.
-     * @throws PublicationException when an error occurs.
-     */
-    Document getAreaVersion(Document document, String area) throws PublicationException;
-
     /**
      * Returns the proxy which is used for a particular document. 
      * @param document The document.

@@ -28,15 +28,12 @@ import java.util.List;
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.parameters.ParameterException;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
@@ -81,7 +78,7 @@ public abstract class PublicationTask extends AbstractTask {
      */
     protected DocumentIdentityMap getIdentityMap() throws ExecutionException {
         if (this.map == null) {
-            this.map = new DocumentIdentityMap();
+            this.map = new DocumentIdentityMap(getServiceManager());
         }
         return this.map;
     }
@@ -236,20 +233,17 @@ public abstract class PublicationTask extends AbstractTask {
         return roles;
     }
 
-    protected SiteTree getSiteTree(String area) {
-        SiteTree tree;
+    /**
+     * @param area The area.
+     * @return A site tree.
+     * @deprecated Use generic site manager methods instead.
+     */
+    protected SiteTree getSiteTree1(String area) {
         try {
-            SiteManager manager = getPublication().getSiteManager();
-            if (!(manager instanceof TreeSiteManager)) {
-                throw new RuntimeException("Only supported for site trees.");
-            }
-            tree = ((TreeSiteManager) manager).getTree(getIdentityMap(), getPublication(), area);
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
+            return (SiteTree) getIdentityMap().getSiteStructure(getPublication(), area);
+        } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
-        return tree;
     }
 
 }

@@ -18,6 +18,8 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.Arrays;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -81,10 +83,27 @@ public class EmptyTrash extends AbstractUsecase {
     protected Document[] getTrashDocuments() throws PublicationException, SiteException {
         PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         Publication publication = factory.getPublication(this.manager, getSourceURL());
-        DocumentIdentityMap identityMap = new DocumentIdentityMap();
+        DocumentIdentityMap identityMap = new DocumentIdentityMap(this.manager);
+        Document[] documents;
         
-        SiteManager siteManager = publication.getSiteManager();
-        Document[] documents = siteManager.getDocuments(identityMap, publication, Publication.TRASH_AREA);
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication
+                    .getSiteManagerHint());
+            documents = siteManager.getDocuments(identityMap, publication, Publication.TRASH_AREA);
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+        
         return documents;
     }
 }

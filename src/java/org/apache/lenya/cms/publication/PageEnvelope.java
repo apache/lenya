@@ -276,7 +276,8 @@ public class PageEnvelope {
             DocumentFactory factory = getIdentityMap().getFactory();
             try {
                 if (factory.isDocument(getPublication(), this.webappUrl)) {
-                    this.document = getIdentityMap().getFromURL(getPublication(), this.webappUrl);
+                    this.document = getIdentityMap().getFactory().getFromURL(getPublication(),
+                            this.webappUrl);
                 }
             } catch (final DocumentBuildException e) {
                 throw new RuntimeException(e);

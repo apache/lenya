@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -48,19 +49,21 @@ public class CollectionImpl extends DefaultDocument implements Collection {
 
     /**
      * Ctor.
+     * @param manager The service manager.
      * @param map A document identity map.
      * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(DocumentIdentityMap map, Publication publication, String id, String area)
-            throws DocumentException {
-        super(map, publication, id, area);
+    public CollectionImpl(ServiceManager manager, DocumentIdentityMap map, Publication publication,
+            String id, String area) throws DocumentException {
+        super(manager, map, publication, id, area);
     }
 
     /**
      * Ctor.
+     * @param manager The service manager.
      * @param map A document identity map.
      * @param publication The publication.
      * @param id The document ID.
@@ -68,16 +71,15 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(DocumentIdentityMap map, Publication publication, String id, String area,
-            String language) throws DocumentException {
-        super(map, publication, id, area, language);
+    public CollectionImpl(ServiceManager manager, DocumentIdentityMap map, Publication publication,
+            String id, String area, String language) throws DocumentException {
+        super(manager, map, publication, id, area, language);
     }
 
     private List documentsList = new ArrayList();
 
     /**
-     * Returns the list that holds the documents. Use this method to invoke lazy
-     * loading.
+     * Returns the list that holds the documents. Use this method to invoke lazy loading.
      * @return A list.
      * @throws DocumentException when something went wrong.
      */

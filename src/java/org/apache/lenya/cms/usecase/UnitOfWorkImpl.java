@@ -17,6 +17,9 @@
 package org.apache.lenya.cms.usecase;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 
 /**
@@ -24,7 +27,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
  * 
  * @version $Id$
  */
-public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
+public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork, Serviceable {
 
     /**
      * Ctor.
@@ -41,10 +44,18 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      */
     public DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
-            this.identityMap = new DocumentIdentityMap();
+            this.identityMap = new DocumentIdentityMap(this.manager);
         }
         return this.identityMap;
     }
 
+    protected ServiceManager manager;
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
 
 }

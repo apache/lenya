@@ -19,13 +19,13 @@ package org.apache.lenya.cms.site.topicmap;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
 
 /**
  * Site manager to support topic maps.
  */
-public class TopicMapSiteManager implements SiteManager {
+public class TopicMapSiteManager extends AbstractSiteManager {
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.Document,

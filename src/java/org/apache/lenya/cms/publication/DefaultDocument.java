@@ -27,10 +27,11 @@ import java.util.List;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.History;
@@ -48,23 +49,26 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     private DublinCore dublincore;
     private DocumentIdentityMap identityMap;
     private ResourcesManager resourcesManager;
+    protected ServiceManager manager;
 
     /**
-     * Creates a new instance of DefaultDocument. The language of the document
-     * is the default language of the publication.
+     * Creates a new instance of DefaultDocument. The language of the document is the default
+     * language of the publication.
+     * @param manager The service manager.
      * @param map The identity map the document belongs to.
      * @param publication The publication.
      * @param _id The document ID (starting with a slash).
      * @param _area The area.
      */
-    protected DefaultDocument(DocumentIdentityMap map, Publication publication, String _id,
-            String _area) {
+    protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
+            Publication publication, String _id, String _area) {
         if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
         if (!_id.startsWith("/")) {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
+        this.manager = manager;
         this.id = _id;
         this.publication = publication;
 
@@ -78,21 +82,22 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     /**
      * Creates a new instance of DefaultDocument.
-     * 
+     * @param manager The service manager.
      * @param map The identity map the document belongs to.
      * @param publication The publication.
      * @param _id The document ID (starting with a slash).
      * @param _area The area.
      * @param _language the language
      */
-    protected DefaultDocument(DocumentIdentityMap map, Publication publication, String _id,
-            String _area, String _language) {
+    protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
+            Publication publication, String _id, String _area, String _language) {
         if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
         if (!_id.startsWith("/")) {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
+        this.manager = manager;
         this.id = _id;
         this.publication = publication;
 
@@ -200,13 +205,23 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public String getLabel() throws DocumentException {
         String labelString = "";
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
         try {
-            SiteManager siteManager = getPublication().getSiteManager();
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
             if (siteManager != null) {
                 labelString = siteManager.getLabel(this);
             }
-        } catch (SiteException e) {
+        } catch (Exception e) {
             throw new DocumentException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
         return labelString;
     }
@@ -273,15 +288,25 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public boolean exists() throws DocumentException {
         boolean exists;
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
         try {
-            SiteManager manager = getPublication().getSiteManager();
-            if (manager != null) {
-                exists = manager.contains(this);
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+            if (siteManager != null) {
+                exists = siteManager.contains(this);
             } else {
                 exists = getFile().exists();
             }
-        } catch (SiteException e) {
+        } catch (Exception e) {
             throw new DocumentException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
         return exists;
     }
@@ -290,15 +315,16 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
      */
     public boolean existsInAnyLanguage() throws DocumentException {
-        boolean exists;
+        boolean exists = false;
+
         try {
-            SiteManager manager = getPublication().getSiteManager();
-            if (manager != null) {
-                exists = manager.containsInAnyLanguage(this);
-            } else {
-                exists = getFile().exists();
+            String[] languages = getLanguages();
+            for (int i = 0; i < languages.length; i++) {
+                Document languageVersion = getIdentityMap().getFactory().getLanguageVersion(this,
+                        languages[i]);
+                exists = exists || languageVersion.exists();
             }
-        } catch (SiteException e) {
+        } catch (DocumentBuildException e) {
             throw new DocumentException(e);
         }
         return exists;
@@ -450,8 +476,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     /**
      * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
-     *      org.apache.lenya.workflow.Version,
-     *      org.apache.lenya.workflow.Situation)
+     *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
      */
     public void newVersion(Workflow workflow, Version version, Situation situation) {
         getHistory().newVersion(workflow, version, situation);

@@ -16,19 +16,26 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
+
 /**
  *  
  */
 public class DocumentFactory {
 
     private DocumentIdentityMap identityMap;
+    protected ServiceManager manager;
 
     /**
      * Ctor.
+     * @param manager The service manager.
      * @param _identityMap The identity map.
      */
-    protected DocumentFactory(DocumentIdentityMap _identityMap) {
+    protected DocumentFactory(ServiceManager manager, DocumentIdentityMap _identityMap) {
         this.identityMap = _identityMap;
+        this.manager = manager;
     }
 
     /**
@@ -49,7 +56,24 @@ public class DocumentFactory {
     public boolean isDocument(Publication publication, String webappUrl)
             throws DocumentBuildException {
         if (publication.exists()) {
-            return publication.getDocumentBuilder().isDocument(publication, webappUrl);
+            
+            ServiceSelector selector = null;
+            DocumentBuilder builder = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+                builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+                return builder.isDocument(publication, webappUrl);
+            } catch (ServiceException e) {
+                throw new DocumentBuildException(e);
+            }
+            finally {
+                if (selector != null) {
+                    if (builder != null) {
+                        selector.release(builder);
+                    }
+                    this.manager.release(selector);
+                }
+            }
         }
         else {
             return false;
@@ -80,7 +104,7 @@ public class DocumentFactory {
      */
     public Document get(Publication publication, String area, String documentId, String language)
             throws DocumentBuildException {
-        return getIdentityMap().get(publication, area, documentId, language);
+        return this.identityMap.get(publication, area, documentId, language);
     }
 
     /**
@@ -92,7 +116,7 @@ public class DocumentFactory {
      */
     public Document getFromURL(Publication publication, String webappUrl)
             throws DocumentBuildException {
-        return getIdentityMap().getFromURL(publication, webappUrl);
+        return this.identityMap.getFromURL(publication, webappUrl);
     }
 
     /**

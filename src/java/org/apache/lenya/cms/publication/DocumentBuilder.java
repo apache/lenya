@@ -19,46 +19,47 @@
 
 package org.apache.lenya.cms.publication;
 
-
 /**
  * A document builder builds a document from a URL.
  */
 public interface DocumentBuilder {
 
     /**
+     * The Avalon role.
+     */
+    String ROLE = DocumentBuilder.class.getName();
+
+    /**
      * Builds a document.
      * @param map The identity map the document belongs to.
      * @param publication The publication.
-     * @param url The URL of the form /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
+     * @param url The URL of the form
+     *            /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
     Document buildDocument(DocumentIdentityMap map, Publication publication, String url)
-        throws DocumentBuildException;
-    
+            throws DocumentBuildException;
+
     /**
      * Checks if an URL corresponds to a CMS document.
      * @param publication The publication the document belongs to.
      * @param url The URL of the form /{publication-id}/...
      * @return A boolean value.
      * @throws DocumentBuildException when something went wrong.
-     */    
-    boolean isDocument(Publication publication, String url)
-        throws DocumentBuildException;
-        
+     */
+    boolean isDocument(Publication publication, String url) throws DocumentBuildException;
+
     /**
-     * Builds an URL corresponding to a cms document from the publication, 
-     * the area, the document id and the language
+     * Builds an URL corresponding to a cms document from the publication, the area, the document id
+     * and the language
      * @param publication The publication the document belongs to.
      * @param area The area the document belongs to.
      * @param documentid The document id of the document.
      * @param language The language of the document.
      * @return a String The builded url
      */
-    String buildCanonicalUrl(
-        Publication publication,
-        String area,
-        String documentid,
-        String language);
+    String buildCanonicalUrl(Publication publication, String area, String documentid,
+            String language);
 
 }

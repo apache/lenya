@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -38,19 +39,21 @@ public class XlinkCollection extends CollectionImpl {
 
     /**
      * Ctor.
+     * @param manager The service manager.
      * @param map A document identity map.
      * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @throws DocumentException when something went wrong.
      */
-    public XlinkCollection(DocumentIdentityMap map, Publication publication, String id, String area)
-            throws DocumentException {
-        super(map, publication, id, area);
+    public XlinkCollection(ServiceManager manager, DocumentIdentityMap map,
+            Publication publication, String id, String area) throws DocumentException {
+        super(manager, map, publication, id, area);
     }
 
     /**
      * Ctor.
+     * @param manager The service manager.
      * @param map A document identity map.
      * @param publication The publication.
      * @param id The document ID.
@@ -58,9 +61,10 @@ public class XlinkCollection extends CollectionImpl {
      * @param language The language of the document.
      * @throws DocumentException when something went wrong.
      */
-    public XlinkCollection(DocumentIdentityMap map, Publication publication, String id,
-            String area, String language) throws DocumentException {
-        super(map, publication, id, area, language);
+    public XlinkCollection(ServiceManager manager, DocumentIdentityMap map,
+            Publication publication, String id, String area, String language)
+            throws DocumentException {
+        super(manager, map, publication, id, area, language);
     }
 
     /**

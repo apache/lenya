@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.AbstractAction;
+import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
@@ -40,7 +40,7 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
  * Action that checks the sitetree if there is a node with the current document-id and the current
  * language, i.e. if the current document has a version in the current language.
  */
-public class LanguageExistsAction extends AbstractAction {
+public class LanguageExistsAction extends ServiceableAction {
 
     /**
      * Check if the current document-id has a document for the currently requested language.
@@ -66,7 +66,7 @@ public class LanguageExistsAction extends AbstractAction {
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
 
-        DocumentIdentityMap map = new DocumentIdentityMap();
+        DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
         PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
                 objectModel);
 

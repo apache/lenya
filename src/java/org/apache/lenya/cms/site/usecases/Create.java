@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -85,20 +86,28 @@ public abstract class Create extends AbstractUsecase {
         super.doExecute();
 
         Document document = createDocument();
-        Publication publication = document.getPublication();
         DocumentManager documentManager = null;
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.add(document);
-        }
-        finally {
+
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
+            siteManager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
+        } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
-
-        SiteManager _manager = publication.getSiteManager();
-        _manager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
 
         setMetaData(document);
         setTargetURL(document.getCanonicalWebappURL());
@@ -161,8 +170,8 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @return The source document or <code>null</code> if the usecase was not
-     *         invoked on a document.
+     * @return The source document or <code>null</code> if the usecase was not invoked on a
+     *         document.
      */
     protected Document getSourceDocument() {
         Document document = null;

@@ -27,6 +27,7 @@ import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -40,7 +41,6 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
@@ -49,8 +49,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Rewrite the links in a publication. This is used after renaming / moving a
- * document.
+ * Rewrite the links in a publication. This is used after renaming / moving a document.
  * 
  * @version $Id:$
  */
@@ -73,13 +72,23 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         String area = originalTargetDocument.getArea();
         DocumentIdentityMap identityMap = originalTargetDocument.getIdentityMap();
 
-        SiteManager siteManager;
         Document[] documents;
+
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
         try {
-            siteManager = publication.getSiteManager();
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             documents = siteManager.getDocuments(identityMap, publication, area);
-        } catch (SiteException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
 
         DocumentFactory docFactory = identityMap.getFactory();
@@ -182,9 +191,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
     }
 
     /**
-     * Checks if targetDocument refers to originalTargetDocument, to one of its
-     * language versions, to one of its descendants, or to a language version of
-     * one of the descendants.
+     * Checks if targetDocument refers to originalTargetDocument, to one of its language versions,
+     * to one of its descendants, or to a language version of one of the descendants.
      * @param targetDocument The target document.
      * @param originalTargetDocument The original target document.
      * @return A boolean value.
@@ -208,13 +216,28 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         String targetId = targetDocument.getId();
         String childString = targetId.substring(originalId.length());
 
-        DocumentBuilder builder = targetDocument.getPublication().getDocumentBuilder();
-        String newTargetUrl = builder.buildCanonicalUrl(newTargetDocument.getPublication(),
-                newTargetDocument.getArea(),
-                newTargetDocument.getId() + childString,
-                targetDocument.getLanguage());
+        ServiceSelector selector = null;
+        DocumentBuilder builder = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(originalTargetDocument.getPublication()
+                    .getDocumentBuilderHint());
 
-        return newTargetUrl;
+            String newTargetUrl = builder.buildCanonicalUrl(newTargetDocument.getPublication(),
+                    newTargetDocument.getArea(),
+                    newTargetDocument.getId() + childString,
+                    targetDocument.getLanguage());
+            return newTargetUrl;
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                this.manager.release(selector);
+            }
+        }
     }
 
     private ServiceManager manager;

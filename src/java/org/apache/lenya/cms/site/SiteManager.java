@@ -20,6 +20,7 @@ package org.apache.lenya.cms.site;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
  * <p>
@@ -45,7 +46,7 @@ public interface SiteManager {
     /**
      * The Avalon role.
      */
-    String ROLE = SiteManager.ROLE;
+    String ROLE = SiteManager.class.getName();
 
     /**
      * Checks if a resource requires another one.
@@ -138,5 +139,12 @@ public interface SiteManager {
      */
     Document[] getDocuments(DocumentIdentityMap identityMap, Publication publication, String area)
             throws SiteException;
-
+    
+    /**
+     * Sorts a set of documents using the "requires" relation.
+     * @param set The set.
+     * @throws SiteException if an error occurs.
+     */
+    void sortAscending(DocumentSet set) throws SiteException;
+    
 }

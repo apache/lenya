@@ -19,19 +19,32 @@ package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.avalon.framework.thread.ThreadSafe;
 
 /**
  * Default document builder implementation.
  * 
  * @version $Id$
  */
-public class DefaultDocumentBuilder extends AbstractLogEnabled implements DocumentBuilder {
+public class DefaultDocumentBuilder extends AbstractLogEnabled implements DocumentBuilder,
+        Serviceable, ThreadSafe {
+
     /**
-     * Non-public constructor.
+     * Ctor.
      */
     public DefaultDocumentBuilder() {
-        // do nothing
     }
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) {
+        this.manager = manager;
+    }
+
+    protected ServiceManager manager;
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentBuilder#buildDocument(org.apache.lenya.cms.publication.DocumentIdentityMap,
@@ -88,7 +101,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      */
     protected DefaultDocument createDocument(DocumentIdentityMap map, Publication publication,
             String area, String documentId, String language) throws DocumentBuildException {
-        DefaultDocument document = new DefaultDocument(map, publication, documentId, area, language);
+        DefaultDocument document = new DefaultDocument(this.manager, map, publication, documentId,
+                area, language);
         return document;
     }
 

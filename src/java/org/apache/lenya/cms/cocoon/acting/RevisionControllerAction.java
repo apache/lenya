@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.AbstractAction;
+import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -44,7 +44,7 @@ import org.apache.lenya.cms.rc.RevisionController;
  * @version $Id: RevisionControllerAction.java 152682 2005-02-08 18:13:39Z
  *          gregor $
  */
-public class RevisionControllerAction extends AbstractAction {
+public class RevisionControllerAction extends ServiceableAction {
 
     private String rcmlDirectory = null;
     private String backupDirectory = null;
@@ -71,7 +71,7 @@ public class RevisionControllerAction extends AbstractAction {
         PageEnvelope envelope = null;
         PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         Publication publication = factory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap();
+        DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
         Document document = null;
 
         try {

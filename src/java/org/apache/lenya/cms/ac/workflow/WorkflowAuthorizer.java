@@ -66,8 +66,11 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
     }
 
     /**
-     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request,
-     *      java.lang.String)
+     * Authorizes a request.
+     * @param request The request.
+     * @param webappUrl The URL to authorize.
+     * @return A boolean value.
+     * @throws AccessControlException if an error occurs.
      */
     public boolean authorize(Request request, String webappUrl) throws AccessControlException {
         boolean authorized = true;
@@ -86,7 +89,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
                 Publication publication = pubFactory.getPublication(resolver, request);
-                DocumentIdentityMap map = new DocumentIdentityMap();
+                DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
                 if (map.getFactory().isDocument(publication, webappUrl)) {
 
                     Document document = map.getFactory().getFromURL(publication, webappUrl);

@@ -35,7 +35,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.cocoon.acting.AbstractConfigurableAction;
+import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
@@ -58,7 +58,7 @@ import org.w3c.dom.Element;
  * 
  * Also @see org.apache.lenya.cms.authoring.UploadHelper
  */
-public class UploadAction extends AbstractConfigurableAction {
+public class UploadAction extends ServiceableAction {
 
     private Document document;
     private PageEnvelope pageEnvelope;
@@ -114,7 +114,7 @@ public class UploadAction extends AbstractConfigurableAction {
 
         Map results = new HashMap();
         Request request = ObjectModelHelper.getRequest(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap();
+        DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
         this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         this.document = this.pageEnvelope.getDocument();
 

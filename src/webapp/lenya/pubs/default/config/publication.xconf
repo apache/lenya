@@ -23,8 +23,9 @@
     <language>de</language>
   </languages>
   <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
-  <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
+  <document-builder name="default"/>
   <breadcrumb-prefix/>
+  <site-manager name="tree"/>
   
   <!--
        For information about these settings, read 

@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -83,7 +84,7 @@ public abstract class PublicationTask extends LenyaTask {
      */
     protected DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
-            this.identityMap = new DocumentIdentityMap();
+            this.identityMap = new DocumentIdentityMap(getServiceManager());
         }
         return this.identityMap;
     }
@@ -120,16 +121,27 @@ public abstract class PublicationTask extends LenyaTask {
 
     protected SiteTree getSiteTree(String area) {
         SiteTree tree;
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
         try {
-            SiteManager manager = getPublication().getSiteManager();
-            if (!(manager instanceof TreeSiteManager)) {
+            selector = (ServiceSelector) getServiceManager().lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+            if (!(siteManager instanceof TreeSiteManager)) {
                 throw new RuntimeException("Only supported for site trees.");
             }
-            tree = ((TreeSiteManager) manager).getTree(getIdentityMap(), getPublication(), area);
+            tree = ((TreeSiteManager) siteManager).getTree(getIdentityMap(), getPublication(), area);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                getServiceManager().release(selector);
+            }
         }
         return tree;
     }

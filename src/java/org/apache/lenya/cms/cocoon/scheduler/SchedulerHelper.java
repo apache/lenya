@@ -73,7 +73,7 @@ public class SchedulerHelper {
 
             NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
 
-            DocumentIdentityMap identityMap = new DocumentIdentityMap();
+            DocumentIdentityMap identityMap = new DocumentIdentityMap(null);
             PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(identityMap,
                     this.objectModel);
 

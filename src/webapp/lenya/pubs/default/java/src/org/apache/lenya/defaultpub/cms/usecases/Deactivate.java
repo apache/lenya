@@ -17,13 +17,14 @@
 package org.apache.lenya.defaultpub.cms.usecases;
 
 import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowManager;
@@ -37,8 +38,8 @@ import org.apache.lenya.workflow.WorkflowException;
 public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
     /**
-     * Checks if the workflow event is supported and the parent of the document
-     * exists in the live area.
+     * Checks if the workflow event is supported and the parent of the document exists in the live
+     * area.
      * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -89,16 +90,15 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
      */
     protected void deactivate(Document authoringDocument) {
 
-        Publication publication = authoringDocument.getPublication();
         boolean success = false;
 
         WorkflowManager wfManager = null;
         DocumentManager documentManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            Document liveDocument = publication.getAreaVersion(authoringDocument,
-                    Publication.LIVE_AREA);
-            
+            Document liveDocument = authoringDocument.getIdentityMap().getFactory()
+                    .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
+
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.delete(liveDocument);
 
@@ -129,8 +129,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * Deactivates a document or the subtree below a document, based on the
-     * parameter SUBTREE.
+     * Deactivates a document or the subtree below a document, based on the parameter SUBTREE.
      * @param document The document.
      */
     protected void deactivateAll(Document document) {
@@ -140,17 +139,28 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Subtree deactivation: [" + isSubtreeEnabled() + "]");
         }
 
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
         try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
 
-            OrderedDocumentSet set = new OrderedDocumentSet();
-            SiteManager manager = document.getPublication().getSiteManager();
-            Document[] descendants = manager.getRequiringResources(document);
-
-            set = new OrderedDocumentSet(descendants);
+            Document[] descendants = siteManager.getRequiringResources(document);
+            DocumentSet set = new DocumentSet(descendants);
             set.add(document);
-            set.visitDescending(this);
+            siteManager.sortAscending(set);
+            set.reverse();
+            set.visit(this);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
 
         if (getLogger().isDebugEnabled()) {

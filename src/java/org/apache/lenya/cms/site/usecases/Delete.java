@@ -16,12 +16,12 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.publication.util.UniqueDocumentId;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
@@ -48,8 +48,24 @@ public class Delete extends DocumentUsecase {
 
         Document document = getSourceDocument();
         DocumentIdentityMap identityMap = getUnitOfWork().getIdentityMap();
-        SiteManager manager = document.getPublication().getSiteManager();
-        DocumentSet set = new DocumentSet(manager.getRequiringResources(document));
+
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        DocumentSet set;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
+            set = new DocumentSet(siteManager.getRequiringResources(document));
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+
         set.add(document);
         Document[] documents = set.getDocuments();
         for (int i = 0; i < documents.length; i++) {
@@ -70,17 +86,12 @@ public class Delete extends DocumentUsecase {
         Document source = getSourceDocument();
         DocumentIdentityMap identityMap = source.getIdentityMap();
 
-        String desiredId = "/" + source.getName();
-        UniqueDocumentId helper = new UniqueDocumentId();
-        String availableId = helper.computeUniqueDocumentId(source.getPublication(),
-                Publication.TRASH_AREA,
-                desiredId);
-        Document target = identityMap.getFactory().get(source.getPublication(),
-                Publication.TRASH_AREA,
-                availableId);
         DocumentManager documentManager = null;
+        Document target;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            target = identityMap.getFactory().getAreaVersion(source, Publication.TRASH_AREA);
+            target = documentManager.getAvailableDocument(target);
             documentManager.moveAll(source, target);
         } finally {
             if (documentManager != null) {

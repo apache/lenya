@@ -19,8 +19,8 @@
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.UniqueDocumentId;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
@@ -119,12 +119,20 @@ public class ComputeNewDocumentId extends PublicationTask {
      */
 	protected String computeUniqueId(String documentid, String _area) {
 
-		Publication publication = getPublication();
-
-		UniqueDocumentId uniqueDocumentId = new UniqueDocumentId();
-        String newdocumentid = uniqueDocumentId.computeUniqueDocumentId(publication, _area, documentid);
-		return newdocumentid;
-
+        DocumentManager docManager = null;
+        try {
+            docManager = (DocumentManager) getServiceManager().lookup(DocumentManager.ROLE);
+            Document document = getIdentityMap().getFactory().get(getPublication(), _area, documentid);
+            document = docManager.getAvailableDocument(document);
+            return document.getId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (docManager != null) {
+                getServiceManager().release(docManager);
+            }
+        }
     }
 
 	/**

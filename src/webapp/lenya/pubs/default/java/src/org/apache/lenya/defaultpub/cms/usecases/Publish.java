@@ -24,13 +24,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
@@ -95,18 +96,33 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             }
 
             Publication publication = document.getPublication();
+            DocumentFactory factory = document.getIdentityMap().getFactory();
 
-            Document liveDocument = publication.getAreaVersion(document, Publication.LIVE_AREA);
+            Document liveDocument = factory.getAreaVersion(document, Publication.LIVE_AREA);
 
             List missingDocuments = new ArrayList();
 
-            SiteManager manager = publication.getSiteManager();
-            Document[] requiredDocuments = manager.getRequiredResources(liveDocument);
-            for (int i = 0; i < requiredDocuments.length; i++) {
-                if (!manager.containsInAnyLanguage(requiredDocuments[i])) {
-                    Document authoringVersion = publication.getAreaVersion(requiredDocuments[i],
-                            Publication.AUTHORING_AREA);
-                    missingDocuments.add(authoringVersion);
+            ServiceSelector selector = null;
+            SiteManager siteManager = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+                siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+                Document[] requiredDocuments = siteManager.getRequiredResources(liveDocument);
+                for (int i = 0; i < requiredDocuments.length; i++) {
+                    if (!siteManager.containsInAnyLanguage(requiredDocuments[i])) {
+                        Document authoringVersion = factory.getAreaVersion(requiredDocuments[i],
+                                Publication.AUTHORING_AREA);
+                        missingDocuments.add(authoringVersion);
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (selector != null) {
+                    if (siteManager != null) {
+                        selector.release(siteManager);
+                    }
+                    this.manager.release(selector);
                 }
             }
 
@@ -197,17 +213,27 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Subtree publishing: [" + isSubtreeEnabled() + "]");
         }
 
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
         try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
 
-            OrderedDocumentSet set = new OrderedDocumentSet();
-            SiteManager manager = document.getPublication().getSiteManager();
-            Document[] descendants = manager.getRequiringResources(document);
-
-            set = new OrderedDocumentSet(descendants);
+            Document[] descendants = siteManager.getRequiringResources(document);
+            DocumentSet set = new DocumentSet(descendants);
             set.add(document);
-            set.visitAscending(this);
+            siteManager.sortAscending(set);
+            set.visit(this);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
 
         if (getLogger().isDebugEnabled()) {

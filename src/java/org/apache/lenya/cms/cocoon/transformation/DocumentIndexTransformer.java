@@ -27,6 +27,7 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
@@ -35,12 +36,10 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
@@ -101,6 +100,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters _parameters)
             throws ProcessingException, SAXException, IOException {
 
+        TreeSiteManager siteManager = null;
+        ServiceSelector selector = null;
         try {
             super.setup(_resolver, _objectModel, src, _parameters);
 
@@ -109,28 +110,20 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             PageEnvelope envelope = null;
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             this.publication = factory.getPublication(_objectModel);
-            this.identityMap = new DocumentIdentityMap();
+            this.identityMap = new DocumentIdentityMap(this.manager);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
                     _objectModel);
 
             setDocument(envelope.getDocument());
             setArea(this.document.getArea());
+            
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (TreeSiteManager) selector.select(this.publication.getSiteManagerHint());
 
-            TreeSiteManager _manager = (TreeSiteManager) this.publication.getSiteManager();
-            setSiteTree(_manager.getTree(this.identityMap, this.publication, this.area));
+            setSiteTree(siteManager.getTree(this.identityMap, this.publication, this.area));
         } catch (final ProcessingException e) {
-            throw new ProcessingException(e);
-        } catch (final ParameterException e) {
-            throw new ProcessingException(e);
-        } catch (final SiteException e) {
-            throw new ProcessingException(e);
-        } catch (final SAXException e) {
-            throw new ProcessingException(e);
-        } catch (final IOException e) {
-            throw new ProcessingException(e);
-        } catch (final PublicationException e) {
-            throw new ProcessingException(e);
-        } catch (final PageEnvelopeException e) {
+            throw e;
+        } catch (final Exception e) {
             throw new ProcessingException(e);
         }
 

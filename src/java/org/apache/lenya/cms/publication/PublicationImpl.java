@@ -28,11 +28,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
  * A publication.
@@ -69,8 +65,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private static final String ATTRIBUTE_ID = "id";
     private static final String ELEMENT_PATH_MAPPER = "path-mapper";
     private static final String ELEMENT_DOCUMENT_BUILDER = "document-builder";
-    private static final String ELEMENT_SITE_STRUCTURE = "site-structure";
-    private static final String ATTRIBUTE_TYPE = "type";
+    private static final String ELEMENT_SITE_MANAGER = "site-manager";
+    private static final String ATTRIBUTE_NAME = "name";
     private static final String ATTRIBUTE_SUPPORTS_TEMPLATING = "supports-templating";
     private static final String LANGUAGES = "languages";
     private static final String DEFAULT_LANGUAGE_ATTR = "default";
@@ -117,7 +113,6 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         Configuration config;
 
         String pathMapperClassName = null;
-        String documentBuilderClassName = null;
 
         try {
             config = builder.buildFromFile(configFile);
@@ -131,17 +126,11 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
                         + pathMapperClassName + "]", e);
             }
 
-            try {
-                Configuration documentBuilderConfiguration = config
-                        .getChild(ELEMENT_DOCUMENT_BUILDER, false);
-                if (documentBuilderConfiguration != null) {
-                    documentBuilderClassName = documentBuilderConfiguration.getValue();
-                    Class documentBuilderClass = Class.forName(documentBuilderClassName);
-                    this.documentBuilder = (DocumentBuilder) documentBuilderClass.newInstance();
-                }
-            } catch (final ClassNotFoundException e) {
-                throw new PublicationException("Cannot instantiate document builder: ["
-                        + pathMapperClassName + "]", e);
+            Configuration documentBuilderConfiguration = config.getChild(ELEMENT_DOCUMENT_BUILDER,
+                    false);
+            if (documentBuilderConfiguration != null) {
+                this.documentBuilderHint = documentBuilderConfiguration
+                        .getAttribute(ATTRIBUTE_NAME);
             }
 
             Configuration[] _languages = config.getChild(LANGUAGES).getChildren();
@@ -154,14 +143,10 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
                 }
             }
 
-            String _siteManagerClass = TreeSiteManager.class.getName();
-            Configuration siteStructureConfiguration = config.getChild(ELEMENT_SITE_STRUCTURE,
-                    false);
-            if (siteStructureConfiguration != null) {
-                _siteManagerClass = siteStructureConfiguration.getAttribute(ATTRIBUTE_TYPE);
+            Configuration siteManagerConfiguration = config.getChild(ELEMENT_SITE_MANAGER, false);
+            if (siteManagerConfiguration != null) {
+                this.siteManagerName = siteManagerConfiguration.getAttribute(ATTRIBUTE_NAME);
             }
-            Class klass = Class.forName(_siteManagerClass);
-            this.siteManagerClass = klass;
 
             Configuration[] proxyConfigs = config.getChildren(ELEMENT_PROXY);
             for (int i = 0; i < proxyConfigs.length; i++) {
@@ -315,36 +300,15 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return this.breadcrumbprefix;
     }
 
-    private DocumentBuilder documentBuilder;
+    private String documentBuilderHint;
 
     /**
      * Returns the document builder of this instance.
      * @return A document builder.
      */
-    public DocumentBuilder getDocumentBuilder() {
+    public String getDocumentBuilderHint() {
         loadConfiguration();
-        if (this.documentBuilder == null) {
-            throw new IllegalStateException(
-                    "The document builder was not defined in publication.xconf!");
-        }
-        ContainerUtil.enableLogging(this.documentBuilder, getLogger());
-        return this.documentBuilder;
-    }
-
-    /**
-     * Creates a version of the document object in another area.
-     * @param document The document to clone.
-     * @param area The destination area.
-     * @return A document.
-     * @throws PublicationException when an error occurs.
-     */
-    public Document getAreaVersion(Document document, String area) throws PublicationException {
-        DocumentBuilder builder = getDocumentBuilder();
-        String url = builder
-                .buildCanonicalUrl(this, area, document.getId(), document.getLanguage());
-        Document destinationDocument = builder.buildDocument(document.getIdentityMap(), document
-                .getPublication(), url);
-        return destinationDocument;
+        return this.documentBuilderHint;
     }
 
     /**
@@ -400,22 +364,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return proxy;
     }
 
-    private Class siteManagerClass;
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#getSiteManager()
-     */
-    public SiteManager getSiteManager() throws SiteException {
-        loadConfiguration();
-        SiteManager manager;
-        try {
-            manager = (SiteManager) this.siteManagerClass.newInstance();
-            ContainerUtil.enableLogging(manager, getLogger());
-        } catch (Exception e) {
-            throw new SiteException(e);
-        }
-        return manager;
-    }
+    private String siteManagerName;
 
     /**
      * @see org.apache.lenya.cms.publication.Publication#exists()
@@ -443,5 +392,13 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public boolean supportsTemplating() {
         loadConfiguration();
         return this.supportsTemplating;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getSiteManagerHint()
+     */
+    public String getSiteManagerHint() {
+        loadConfiguration();
+        return this.siteManagerName;
     }
 }

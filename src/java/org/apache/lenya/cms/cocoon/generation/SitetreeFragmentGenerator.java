@@ -23,17 +23,20 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.generation.AbstractGenerator;
+import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.site.SiteException;
@@ -42,14 +45,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * Generates a fragment of the navigation XML from the sitetree, corresponding
- * to a given node. The node is specified by the sitemap parameters
- * area/documentid. If the sitemap parameter initialTree is true, the top nodes
- * of the tree will be generated and the node given by the sitemap parameters
- * area/documentid will be unfolded. If initialTree is false, only the children
- * of the selected node will be generated.
+ * Generates a fragment of the navigation XML from the sitetree, corresponding to a given node. The
+ * node is specified by the sitemap parameters area/documentid. If the sitemap parameter initialTree
+ * is true, the top nodes of the tree will be generated and the node given by the sitemap parameters
+ * area/documentid will be unfolded. If initialTree is false, only the children of the selected node
+ * will be generated.
  */
-public class SitetreeFragmentGenerator extends AbstractGenerator {
+public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
     protected Publication publication;
     private DocumentIdentityMap identityMap;
@@ -61,8 +63,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     protected String area;
 
     /**
-     * Parameter which decides if the initial tree with the root nodes is
-     * generated
+     * Parameter which decides if the initial tree with the root nodes is generated
      */
     protected boolean initialTree;
 
@@ -70,8 +71,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     protected String[] areas = null;
 
     /**
-     * Convenience object, so we don't need to create an AttributesImpl for
-     * every element.
+     * Convenience object, so we don't need to create an AttributesImpl for every element.
      */
     protected AttributesImpl attributes;
 
@@ -106,8 +106,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters par)
             throws ProcessingException, SAXException, IOException {
@@ -150,7 +149,7 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
         }
 
         try {
-            this.identityMap = new DocumentIdentityMap();
+            this.identityMap = new DocumentIdentityMap(this.manager);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
                     _objectModel);
         } catch (final PageEnvelopeException e) {
@@ -205,15 +204,13 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     }
 
     /**
-     * Generates a fragment of the tree which contains the children of a given
-     * node.
+     * Generates a fragment of the tree which contains the children of a given node.
      * @throws SiteException
      * @throws SAXException
      * @throws ProcessingException
      */
     protected void generateFragment() throws SiteException, SAXException, ProcessingException {
 
-        SiteTree siteTree = null;
         if (!this.area.equals(Publication.AUTHORING_AREA)
                 && !this.area.equals(Publication.ARCHIVE_AREA)
                 && !this.area.equals(Publication.TRASH_AREA)
@@ -221,76 +218,106 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
                 && !this.area.equals(Publication.STAGING_AREA)) {
             throw new ProcessingException("Invalid area: " + this.area);
         }
-        siteTree = ((TreeSiteManager) this.publication.getSiteManager()).getTree(this.identityMap,
-                this.publication,
-                this.area);
 
-        SiteTreeNode node = siteTree.getNode(this.documentid);
-        if (this.getLogger().isDebugEnabled()) {
-            this.getLogger().debug("Node with documentid " + this.documentid + " found.");
-        }
-        if (node == null)
-            throw new SiteException("Node with documentid " + this.documentid + " not found.");
+        ServiceSelector selector = null;
+        TreeSiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (TreeSiteManager) selector.select(this.publication.getSiteManagerHint());
 
-        SiteTreeNode[] children = node.getChildren();
+            SiteTree siteTree = siteManager.getTree(this.identityMap, this.publication, this.area);
 
-        for (int i = 0; i < children.length; i++) {
-            startNode(NODE_NODE, children[i]);
-            addLabels(children[i]);
-            endNode(NODE_NODE);
+            SiteTreeNode node = siteTree.getNode(this.documentid);
+            if (this.getLogger().isDebugEnabled()) {
+                this.getLogger().debug("Node with documentid " + this.documentid + " found.");
+            }
+            if (node == null)
+                throw new SiteException("Node with documentid " + this.documentid + " not found.");
+
+            SiteTreeNode[] children = node.getChildren();
+
+            for (int i = 0; i < children.length; i++) {
+                startNode(NODE_NODE, children[i]);
+                addLabels(children[i]);
+                endNode(NODE_NODE);
+            }
+        } catch (ServiceException e) {
+            throw new ProcessingException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
     }
 
     /**
-     * Generates the top node of the given area and then calls a recursive
-     * method to traverse the tree, if the node given by area/documentid is in
-     * this area.
+     * Generates the top node of the given area and then calls a recursive method to traverse the
+     * tree, if the node given by area/documentid is in this area.
      * @param siteArea
      * @throws SiteException
      * @throws SAXException
+     * @throws ProcessingException
      */
-    protected void generateFragmentInitial(String siteArea) throws SiteException, SAXException {
+    protected void generateFragmentInitial(String siteArea) throws SiteException, SAXException,
+            ProcessingException {
 
-        SiteTree siteTree = ((TreeSiteManager) this.publication.getSiteManager())
-                .getTree(this.identityMap, this.publication, siteArea);
+        ServiceSelector selector = null;
+        TreeSiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (TreeSiteManager) selector.select(this.publication.getSiteManagerHint());
+            SiteTree siteTree = siteManager.getTree(this.identityMap, this.publication, siteArea);
 
-        String label = "";
-        String isFolder = "";
+            String label = "";
+            String isFolder = "";
 
-        // FIXME: don't hardcode area label
-        if (siteArea.equals(Publication.AUTHORING_AREA))
-            label = "Authoring";
-        if (siteArea.equals(Publication.ARCHIVE_AREA))
-            label = "Archive";
-        if (siteArea.equals(Publication.TRASH_AREA))
-            label = "Trash";
-        if (siteArea.equals(Publication.LIVE_AREA))
-            label = "Live";
-        if (siteArea.equals(Publication.STAGING_AREA))
-            label = "Staging";
+            // FIXME: don't hardcode area label
+            if (siteArea.equals(Publication.AUTHORING_AREA))
+                label = "Authoring";
+            if (siteArea.equals(Publication.ARCHIVE_AREA))
+                label = "Archive";
+            if (siteArea.equals(Publication.TRASH_AREA))
+                label = "Trash";
+            if (siteArea.equals(Publication.LIVE_AREA))
+                label = "Live";
+            if (siteArea.equals(Publication.STAGING_AREA))
+                label = "Staging";
 
-        if (siteTree.getTopNodes().length > 0)
-            isFolder = "true";
-        else
-            isFolder = "false";
+            if (siteTree.getTopNodes().length > 0)
+                isFolder = "true";
+            else
+                isFolder = "false";
 
-        this.attributes.clear();
-        this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", siteArea);
-        this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
-        this.attributes.addAttribute("", ATTR_LABEL, ATTR_LABEL, "CDATA", label);
+            this.attributes.clear();
+            this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", siteArea);
+            this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
+            this.attributes.addAttribute("", ATTR_LABEL, ATTR_LABEL, "CDATA", label);
 
-        startNode(NODE_SITE);
+            startNode(NODE_SITE);
 
-        if (this.area.equals(siteArea)) {
-            generateFragmentRecursive(siteTree.getTopNodes(), this.documentid);
+            if (this.area.equals(siteArea)) {
+                generateFragmentRecursive(siteTree.getTopNodes(), this.documentid);
+            }
+
+            endNode(NODE_SITE);
+        } catch (ServiceException e) {
+            throw new ProcessingException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
-
-        endNode(NODE_SITE);
     }
 
     /**
-     * Follows the documentid to find the way in the sitetree to the specified
-     * node and opens all folders on its way.
+     * Follows the documentid to find the way in the sitetree to the specified node and opens all
+     * folders on its way.
      * @param nodes
      * @param docid
      * @throws SiteException
@@ -344,8 +371,8 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     }
 
     /**
-     * Sets the attributes for a given node. Sets attributes id, href, folder,
-     * suffix, basic-url, language-suffix.
+     * Sets the attributes for a given node. Sets attributes id, href, folder, suffix, basic-url,
+     * language-suffix.
      * @param node
      * @throws SAXException if an error occurs while setting the attributes
      */
@@ -382,10 +409,9 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
     }
 
     /**
-     * Returns a value to indicate whether a node is a folder (contains
-     * subnodes). With the incremental sitetree loading, we sometimes load nodes
-     * which are folders, but we don't load their children. But we still have to
-     * know if it's a folder or not, i.e. if it can be opened.
+     * Returns a value to indicate whether a node is a folder (contains subnodes). With the
+     * incremental sitetree loading, we sometimes load nodes which are folders, but we don't load
+     * their children. But we still have to know if it's a folder or not, i.e. if it can be opened.
      * @param node
      * @return "true" or "false"
      */

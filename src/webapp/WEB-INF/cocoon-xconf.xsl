@@ -415,6 +415,16 @@
              class="org.apache.lenya.cms.usecase.scheduling.UsecaseCronJob"
              logger="cron.usecase"/>
              
+  <site-managers>
+    <component-instance name="tree" logger="lenya.site"
+                        class="org.apache.lenya.cms.site.tree.TreeSiteManager"/>
+  </site-managers>
+  
+  <document-builders>
+    <component-instance name="default" logger="lenya.publication"
+                        class="org.apache.lenya.cms.publication.DefaultDocumentBuilder"/>
+  </document-builders>
+             
   <!-- move scheduler to the end, datasources have to be available -->
   <xsl:apply-templates select="component[@role = 'org.apache.cocoon.components.cron.JobScheduler']" mode="scheduler"/>
              

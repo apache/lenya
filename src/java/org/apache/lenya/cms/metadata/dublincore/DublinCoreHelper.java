@@ -42,21 +42,20 @@ public final class DublinCoreHelper {
 
     /**
      * Get the value of the DCIdentifier corresponding to a document id.
-     * 
+     * @param map The identity map.
      * @param publication The publication the document(s) belongs to.
      * @param area The area the document(s) belongs to.
      * @param documentId The document id.
      * @return a String. The value of the DCIdentifier.
      * @throws DocumentException when something with the document went wrong.
      */
-    public static String getDCIdentifier(Publication publication, String area, String documentId)
-            throws DocumentException {
+    public static String getDCIdentifier(DocumentIdentityMap map, Publication publication,
+            String area, String documentId) throws DocumentException {
 
         String identifier = null;
         try {
             identifier = null;
 
-            DocumentIdentityMap map = new DocumentIdentityMap();
             Document baseDocument = map.getFactory().get(publication, area, documentId);
             String[] languages = baseDocument.getLanguages();
 

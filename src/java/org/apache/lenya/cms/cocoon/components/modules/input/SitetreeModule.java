@@ -23,9 +23,11 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
@@ -65,12 +67,17 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
             throws ConfigurationException {
 
         Object value = null;
+        ServiceSelector selector = null;
+        TreeSiteManager _manager = null;
 
         try {
             PageEnvelope envelope = getEnvelope(objectModel, name);
             Publication publication = envelope.getPublication();
-            DocumentIdentityMap map = new DocumentIdentityMap();
-            TreeSiteManager _manager = (TreeSiteManager) publication.getSiteManager();
+            
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            _manager = (TreeSiteManager) selector.select(publication.getSiteManagerHint());
+            
+            DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
 
             if (name.equals(AUTHORING_NODE)) {
                 SiteTree authoringTree = _manager.getTree(map,
@@ -95,6 +102,14 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
             }
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);
+        }
+        finally {
+            if (selector != null) {
+                if (_manager != null) {
+                    selector.release(_manager);
+                }
+                this.manager.release(selector);
+            }
         }
 
         return value;

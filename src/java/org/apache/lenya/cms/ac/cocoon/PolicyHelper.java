@@ -24,9 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.component.ComponentManager;
 import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
@@ -64,7 +64,7 @@ public class PolicyHelper {
     private ComponentSelector selector;
     private AccessControllerResolver resolver;
     private InheritingPolicyManager policyManager;
-    private ComponentManager manager;
+    private ServiceManager manager;
     private String url;
     private Logger logger;
 
@@ -83,7 +83,7 @@ public class PolicyHelper {
      * @param area The selected area.
      * @throws ProcessingException when something went wrong.
      */
-    public void setup(Map objectModel, ComponentManager _manager, String area)
+    public void setup(Map objectModel, ServiceManager _manager, String area)
             throws ProcessingException {
 
         this.manager = _manager;
@@ -185,7 +185,7 @@ public class PolicyHelper {
     private String computeUrl(Map objectModel, String area) throws ProcessingException {
         PageEnvelope envelope;
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap();
+            DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
         } catch (PageEnvelopeException e) {
             throw new ProcessingException(e);

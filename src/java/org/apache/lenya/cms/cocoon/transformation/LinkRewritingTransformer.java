@@ -98,7 +98,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         super.setup(_resolver, _objectModel, _source, _parameters);
 
         try {
-            this.identityMap = new DocumentIdentityMap();
+            this.identityMap = new DocumentIdentityMap(this.manager);
             PageEnvelope envelope = PageEnvelopeFactory.getInstance()
                     .getPageEnvelope(this.identityMap, _objectModel);
             this.currentDocument = envelope.getDocument();

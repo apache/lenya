@@ -192,7 +192,7 @@ public class WorkflowInvoker extends ParameterWrapper {
             log.debug("Workflow event: [" + eventName + "]");
             // check for workflow instance first (task can initialize the workflow history)
             try {
-                DocumentIdentityMap map = new DocumentIdentityMap();
+                DocumentIdentityMap map = new DocumentIdentityMap(this.manager);
                 this.document = map.getFactory().getFromURL(publication, webappUrl);
             } catch (DocumentBuildException e) {
                 throw new ExecutionException(e);

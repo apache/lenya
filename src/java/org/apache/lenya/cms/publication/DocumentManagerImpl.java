@@ -25,6 +25,7 @@ import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
@@ -32,9 +33,10 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.publication.util.OrderedDocumentSet;
-import org.apache.lenya.cms.publication.util.UniqueDocumentId;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.tree.SiteTree;
+import org.apache.lenya.cms.site.tree.SiteTreeNode;
+import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
@@ -51,19 +53,32 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void add(Document document) throws PublicationException {
 
         Publication publication = document.getPublication();
-        SiteManager siteManager = publication.getSiteManager();
-        if (siteManager.contains(document)) {
-            throw new PublicationException("The document [" + document
-                    + "] is already contained in this publication!");
-        }
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            if (siteManager.contains(document)) {
+                throw new PublicationException("The document [" + document
+                        + "] is already contained in this publication!");
+            }
 
-        siteManager.add(document);
+            siteManager.add(document);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
     }
 
     /**
-     * Template method to copy a document. Override
-     * {@link #copyDocumentSource(Document, Document)}to implement access to a
-     * custom repository.
+     * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
+     * to implement access to a custom repository.
      * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.Document)
      */
@@ -72,11 +87,16 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         Publication publication = sourceDocument.getPublication();
         copyDocumentSource(sourceDocument, destinationDocument);
-        publication.getSiteManager().copy(sourceDocument, destinationDocument);
 
         ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
         WorkflowManager workflowManager = null;
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
         try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            siteManager.copy(sourceDocument, destinationDocument);
+
             resourcesManager.copyResourcesTo(destinationDocument);
 
             workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
@@ -86,6 +106,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } finally {
             if (workflowManager != null) {
                 this.manager.release(workflowManager);
+            }
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
             }
         }
     }
@@ -101,20 +127,31 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         ResourcesManager resourcesManager = document.getResourcesManager();
         resourcesManager.deleteResources();
 
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
         WorkflowManager workflowManager = null;
         try {
             workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             workflowManager.deleteHistory(document);
+
+            Publication publication = document.getPublication();
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            siteManager.delete(document);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
             if (workflowManager != null) {
                 this.manager.release(workflowManager);
             }
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
-        
-        Publication publication = document.getPublication();
-        publication.getSiteManager().delete(document);
+
         deleteDocumentSource(document);
     }
 
@@ -141,7 +178,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 this.manager.release(workflowManager);
             }
         }
-        
+
         delete(sourceDocument);
     }
 
@@ -151,8 +188,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyToArea(Document sourceDocument, String destinationArea)
             throws PublicationException {
-        Publication publication = sourceDocument.getPublication();
-        Document destinationDocument = publication.getAreaVersion(sourceDocument, destinationArea);
+        DocumentFactory factory = sourceDocument.getIdentityMap().getFactory();
+        Document destinationDocument = factory.getAreaVersion(sourceDocument, destinationArea);
         copy(sourceDocument, destinationDocument);
     }
 
@@ -195,8 +232,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#canCreate(org.apache.lenya.cms.publication.DocumentIdentityMap,
-     *      java.lang.String, org.apache.lenya.cms.publication.Document,
-     *      java.lang.String, java.lang.String)
+     *      java.lang.String, org.apache.lenya.cms.publication.Document, java.lang.String,
+     *      java.lang.String)
      */
     public String[] canCreate(DocumentIdentityMap identityMap, String area, Document parent,
             String nodeId, String language) throws DocumentBuildException, DocumentException {
@@ -234,15 +271,78 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
      */
     public Document getAvailableDocument(Document document) throws DocumentBuildException {
-        UniqueDocumentId uniqueDocumentId = new UniqueDocumentId();
-        String availableDocumentId = uniqueDocumentId.computeUniqueDocumentId(document
-                .getPublication(), document.getArea(), document.getId());
+        String availableDocumentId = computeUniqueDocumentId(document);
         DocumentFactory factory = document.getIdentityMap().getFactory();
         Document availableDocument = factory.get(document.getPublication(),
                 document.getArea(),
                 availableDocumentId,
                 document.getLanguage());
         return availableDocument;
+    }
+
+    /**
+     * compute an unique document id
+     * @param document The document.
+     * @return the unique documentid
+     */
+    protected String computeUniqueDocumentId(Document document) {
+        String documentId = document.getId();
+        
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            Publication pub = document.getPublication();
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
+
+            if (!(siteManager instanceof TreeSiteManager)) {
+                throw new RuntimeException("Only supported for site trees!");
+            }
+            DocumentIdentityMap map = document.getIdentityMap();
+            SiteTree tree = ((TreeSiteManager) siteManager).getTree(map, pub, document.getArea());
+
+            SiteTreeNode node = tree.getNode(documentId);
+            String suffix = null;
+            int version = 0;
+            String idwithoutsuffix = null;
+
+            if (node != null) {
+                int n = documentId.lastIndexOf("/");
+                String lastToken = "";
+                String substring = documentId;
+                if ((n < documentId.length()) && (n > 0)) {
+                    lastToken = documentId.substring(n);
+                    substring = documentId.substring(0, n);
+                }
+
+                int l = lastToken.length();
+                int index = lastToken.lastIndexOf("-");
+                if (0 < index && index < l) {
+                    suffix = lastToken.substring(index + 1);
+                    idwithoutsuffix = substring + lastToken.substring(0, index);
+                    version = Integer.parseInt(suffix);
+                } else {
+                    idwithoutsuffix = substring + lastToken;
+                }
+
+                while (node != null) {
+                    version = version + 1;
+                    documentId = idwithoutsuffix + "-" + version;
+                    node = tree.getNode(documentId);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+
+        return documentId;
     }
 
     /**
@@ -269,13 +369,31 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      org.apache.lenya.cms.publication.Document)
      */
     public void copyAll(Document source, Document target) throws PublicationException {
-        SiteManager manager = source.getPublication().getSiteManager();
-        Document[] descendantsArray = manager.getRequiringResources(source);
-        OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
-        descendants.add(source);
 
-        DocumentVisitor visitor = new CopyVisitor(this, source, target);
-        descendants.visitAscending(visitor);
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(source.getPublication()
+                    .getSiteManagerHint());
+
+            Document[] descendantsArray = siteManager.getRequiringResources(source);
+            DocumentSet descendants = new DocumentSet(descendantsArray);
+            descendants.add(source);
+            siteManager.sortAscending(descendants);
+
+            DocumentVisitor visitor = new CopyVisitor(this, source, target);
+            descendants.visit(visitor);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
     }
 
     /**
@@ -357,8 +475,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * Abstract base class for document visitors which operate on a source and
-     * target document.
+     * Abstract base class for document visitors which operate on a source and target document.
      */
     public abstract class SourceTargetVisitor implements DocumentVisitor {
 
@@ -391,8 +508,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
 
         /**
-         * Returns the target corresponding to a source relatively to the root
-         * target document.
+         * Returns the target corresponding to a source relatively to the root target document.
          * @param source The source.
          * @return A document.
          * @throws DocumentBuildException if the target could not be built.
@@ -439,11 +555,28 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAll(org.apache.lenya.cms.publication.Document)
      */
     public void deleteAll(Document document) throws PublicationException {
-        SiteManager manager = document.getPublication().getSiteManager();
-        Document[] descendantsArray = manager.getRequiringResources(document);
-        OrderedDocumentSet descendants = new OrderedDocumentSet(descendantsArray);
-        descendants.add(document);
-        delete(descendants);
+
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
+
+            Document[] descendantsArray = siteManager.getRequiringResources(document);
+            DocumentSet descendants = new DocumentSet(descendantsArray);
+            descendants.add(document);
+            delete(descendants);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
     }
 
     /**
@@ -490,8 +623,34 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#delete(org.apache.lenya.cms.publication.util.DocumentSet)
      */
     public void delete(DocumentSet documents) throws PublicationException {
-        OrderedDocumentSet set = new OrderedDocumentSet(documents.getDocuments());
-        DocumentVisitor visitor = new DeleteVisitor(this);
-        set.visitDescending(visitor);
+
+        if (documents.isEmpty()) {
+            return;
+        }
+
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            Publication pub = documents.getDocuments()[0].getPublication();
+            siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
+
+            DocumentSet set = new DocumentSet(documents.getDocuments());
+            siteManager.sortAscending(set);
+            set.reverse();
+
+            DocumentVisitor visitor = new DeleteVisitor(this);
+            set.visit(visitor);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+
     }
 }

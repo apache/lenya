@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -45,30 +46,45 @@ public class Nudge extends DocumentUsecase {
         }
 
         Publication publication = getSourceDocument().getPublication();
-        SiteManager manager = publication.getSiteManager();
-        if (manager instanceof TreeSiteManager) {
 
-            TreeSiteManager treeManager = (TreeSiteManager) manager;
-            SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
-                    publication,
-                    getSourceDocument().getArea());
-            SiteTreeNode node = tree.getNode(getSourceDocument().getId());
-            SiteTreeNode[] siblings = null;
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            if (siteManager instanceof TreeSiteManager) {
 
-            String direction = getParameterAsString(DIRECTION);
-            if (direction.equals(UP)) {
-                siblings = node.getPrecedingSiblings();
-            } else if (direction.equals(DOWN)) {
-                siblings = node.getNextSiblings();
+                TreeSiteManager treeManager = (TreeSiteManager) siteManager;
+                SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
+                        publication,
+                        getSourceDocument().getArea());
+                SiteTreeNode node = tree.getNode(getSourceDocument().getId());
+                SiteTreeNode[] siblings = null;
+
+                String direction = getParameterAsString(DIRECTION);
+                if (direction.equals(UP)) {
+                    siblings = node.getPrecedingSiblings();
+                } else if (direction.equals(DOWN)) {
+                    siblings = node.getNextSiblings();
+                } else {
+                    addErrorMessage("The direction [" + direction + "] is not supported!");
+                }
+
+                if (siblings != null && siblings.length == 0) {
+                    addErrorMessage("Cannot move the node in this direction.");
+                }
             } else {
-                addErrorMessage("The direction [" + direction + "] is not supported!");
+                addErrorMessage("This operation can only be invoked on site trees.");
             }
-
-            if (siblings != null && siblings.length == 0) {
-                addErrorMessage("Cannot move the node in this direction.");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
             }
-        } else {
-            addErrorMessage("This operation can only be invoked on site trees.");
         }
     }
 
@@ -79,21 +95,35 @@ public class Nudge extends DocumentUsecase {
         super.doExecute();
 
         Publication publication = getSourceDocument().getPublication();
-        SiteManager manager = publication.getSiteManager();
-        if (manager instanceof TreeSiteManager) {
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            if (siteManager instanceof TreeSiteManager) {
 
-            TreeSiteManager treeManager = (TreeSiteManager) manager;
-            SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
-                    publication,
-                    getSourceDocument().getArea());
+                TreeSiteManager treeManager = (TreeSiteManager) siteManager;
+                SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
+                        publication,
+                        getSourceDocument().getArea());
 
-            String direction = getParameterAsString(DIRECTION);
-            if (direction.equals(UP)) {
-                tree.moveUp(getSourceDocument().getId());
-            } else if (direction.equals(DOWN)) {
-                tree.moveDown(getSourceDocument().getId());
+                String direction = getParameterAsString(DIRECTION);
+                if (direction.equals(UP)) {
+                    tree.moveUp(getSourceDocument().getId());
+                } else if (direction.equals(DOWN)) {
+                    tree.moveDown(getSourceDocument().getId());
+                }
+                tree.save();
             }
-            tree.save();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
 
     }

@@ -20,13 +20,14 @@
 package org.apache.lenya.cms.publication.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PublicationException;
 
 /**
- * A set of documents.
+ * An ordered set of documents without duplicates.
  */
 public class DocumentSet {
 
@@ -105,6 +106,20 @@ public class DocumentSet {
         assert resource != null;
         assert getList().contains(resource);
         getList().remove(resource);
+    }
+    
+    /**
+     * Removes all documents.
+     */
+    public void clear() {
+        getList().clear();
+    }
+    
+    /**
+     * Reverses the document order.
+     */
+    public void reverse() {
+        Collections.reverse(getList());
     }
 
 }

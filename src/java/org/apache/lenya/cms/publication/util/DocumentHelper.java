@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -51,10 +52,10 @@ public class DocumentHelper {
 
     /**
      * Ctor.
-     * 
+     * @param manager The service manager.
      * @param _objectModel The Cocoon object model.
      */
-    public DocumentHelper(Map _objectModel) {
+    public DocumentHelper(ServiceManager manager, Map _objectModel) {
         this.objectModel = _objectModel;
         try {
             PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
@@ -62,7 +63,7 @@ public class DocumentHelper {
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
-        this.identityMap = new DocumentIdentityMap();
+        this.identityMap = new DocumentIdentityMap(manager);
     }
 
     /**
