@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.31 2003/05/15 09:49:26 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.32 2003/05/16 09:23:36 egli Exp $ -->
 
   <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -38,13 +38,10 @@
           <map:serialize type="html"/>
         </map:match>
         <map:match type="step" pattern="publish">
-          <map:act type="request">
-            <map:parameter name="parameters" value="true"/>
-            <map:act type="task">
-              <map:parameter name="task-id" value="{task-id}"/>
-              <map:redirect-to uri="{parent_uri}" session="true"/>
-            </map:act>
-          </map:act>
+	  <map:act type="task">
+	    <map:parameter name="task-id" value="{request-param:task-id}"/>
+	    <map:redirect-to uri="{request:requestURI}" session="true"/>
+	  </map:act>
         </map:match>
       </map:match>
 <!--
@@ -158,26 +155,32 @@
     </map:pipeline>
 
     <map:pipeline>
-    <map:match pattern="**.html">
-      <map:act type="page-envelope">
-	<map:act type="uriparametrizer" src="{../1}.html">
-          <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
-          <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
-          <map:aggregate element="lenya" label="aggregation">
-            <map:part src="cocoon:/lenyamenubar/{../area}/article.xml"/>
-            <map:part src="cocoon:/lenyabody/{../publication-id}/{../area}/{doctype}/{document-id}"/>
-          </map:aggregate>
-
-          <map:transform src="xslt/page2xhtml.xsl">
-            <map:parameter name="root" value="{../context-prefix}/{../publication-id}"/>
-            <map:parameter name="document-id" value="{../area}/{doctype}/{document-id}"/>
-          </map:transform> 
-          <map:transform src="xslt/{doctype}-{../area}.xsl"/>
-          
+      <map:match pattern="**.html">
+	<map:act type="page-envelope">
+	  <map:act type="uriparametrizer" src="{../1}.html">
+	    <map:parameter name="doctype" value="cocoon://uri-parameter/{publication-id}/doctype"/>
+	    <map:parameter name="document-id" value="cocoon://uri-parameter/{publication-id}/document-id"/>
+	    <map:aggregate element="lenya" label="aggregation">
+	      <map:part src="cocoon:/lenyamenubar/{../area}/article.xml"/>
+	      <map:part src="cocoon:/lenyabody/{../publication-id}/{../area}/{doctype}/{document-id}"/>
+	    </map:aggregate>
+	    
+	    <map:transform src="xslt/page2xhtml.xsl">
+	      <map:parameter name="root" value="{../context-prefix}/{../publication-id}"/>
+	      <map:parameter name="document-id" value="{../area}/{doctype}/{document-id}"/>
+	    </map:transform> 
+	    <map:transform src="xslt/{doctype}-{../area}.xsl"/>
+	    
+	  </map:act>
 	</map:act>
-      </map:act>
-      <map:serialize type="html"/>
-    </map:match>
+	<map:serialize type="html"/>
+      </map:match>
+      
+      <map:handle-errors type="500">
+        <map:transform src="../../xslt/exception/not_published_yet.xsl"/>
+	<map:serialize/>
+      </map:handle-errors>
+      
     </map:pipeline>
 
 
