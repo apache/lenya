@@ -177,11 +177,12 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
                 
                 String sourceUri = ((DefaultDocument) source).getHistorySourceURI();
                 sourceHistory = sourceResolver.resolveURI(sourceUri);
-
-                String targetUri = ((DefaultDocument) target).getHistorySourceURI();
-                targetHistory = sourceResolver.resolveURI(targetUri);
                 
-                SourceUtil.copy(sourceHistory, (ModifiableSource) targetHistory, true);
+                if (sourceHistory.exists()) {
+                    String targetUri = ((DefaultDocument) target).getHistorySourceURI();
+                    targetHistory = sourceResolver.resolveURI(targetUri);
+                    SourceUtil.copy(sourceHistory, (ModifiableSource) targetHistory, true);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -190,6 +191,12 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
                 this.manager.release(resolver);
             }
             if (sourceResolver != null) {
+                if (sourceHistory != null) {
+                    sourceResolver.release(sourceHistory);
+                }
+                if (targetHistory != null) {
+                    sourceResolver.release(targetHistory);
+                }
                 this.manager.release(sourceResolver);
             }
         }
