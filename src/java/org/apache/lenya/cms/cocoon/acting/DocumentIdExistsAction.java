@@ -79,7 +79,8 @@ public class DocumentIdExistsAction extends AbstractAction {
 
         Publication publication = PublicationFactory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(publication);
-        Document document = map.get(documentId);
+        PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
+        Document document = map.get(envelope.getDocument().getArea(), documentId);
 
         if (!document.existsInAnyLanguage()) {
             return Collections.EMPTY_MAP;
