@@ -13,14 +13,12 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
+  
+  $Id: cmsui_es.xml,v 1.4 2004/04/16 11:34:01 roku Exp $
+  
+  @translators Salvador Cobrero <salvador_cobrero_jimenez at dmr-consulting dot com>
+  
 -->
-
-<!-- $Id: cmsui_es.xml,v 1.3 2004/04/16 11:31:30 roku Exp $ -->
-
-<!-- Translator: Salvador Cobrero -->
-<!-- email: salvador_cobrero_jimenez@dmr-consulting.com -->
-<!-- Organization: DMR Consulting -->
-<!-- Last Updated: 2004/04/13 --> 
 
 <catalogue xml:lang="es">
 
