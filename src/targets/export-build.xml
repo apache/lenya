@@ -60,6 +60,7 @@
   </classpath>
   
     <jvmarg value="-Djava.endorsed.dirs=${build.webapp}/WEB-INF/lib/endorsed${path.separator}${java.endorsed.dirs}"/>
+    <jvmarg value="-ea"/>
     
     <arg value="-c${build.webapp}"/>   <!-- input to the process -->
     <arg value="-d${build.export}"/>   <!-- output to be put -->
@@ -69,6 +70,7 @@
     <arg value="-b${build.export}/brokenlinks.txt"/>  <!-- output list of broken links -->
     <arg value="-k${build.webapp}/WEB-INF/logkit.xconf"/>  <!-- logkit configuration -->
     <arg value="${publication}/live/index.html"/>  <!-- starting page -->
+    <arg value="-efalse"/> <!-- don't confirm extensions -->
     <arg value="-V" />  <!-- be verbose -->
   </java>
   
