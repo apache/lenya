@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ResourceExistsAction.java,v 1.5 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -87,7 +87,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:balld@apache.org">Donald Ball</a>
  * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
- * @version CVS $Id: ResourceExistsAction.java,v 1.4 2003/06/30 11:46:29 andreas Exp $
+ * @version CVS $Id: ResourceExistsAction.java,v 1.5 2003/07/23 13:21:30 gregor Exp $
  */
 public class ResourceExistsAction extends ComposerAction implements ThreadSafe {
     /**

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PublishingException.java,v 1.10 2003/07/23 13:21:10 gregor Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publishing;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class PublishingException extends Exception {
     /**

@@ -128,7 +128,7 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</source>
 	<source><![CDATA[
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<parameter xmlns="http://www.lenya.org/2003/uri-parameters">article</parameter>
+<parameter xmlns="http://apache.org/cocoon/lenya/uri-parameters/1.0">article</parameter>
 ]]></source>
 
 	<p>This xml is consequently parsed by the action and returned

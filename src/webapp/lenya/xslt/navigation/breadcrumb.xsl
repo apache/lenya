@@ -10,7 +10,7 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:nav="http://www.lenya.org/2003/navigation"
+    xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="nav"
     >

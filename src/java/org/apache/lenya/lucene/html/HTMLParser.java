@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: HTMLParser.java,v 1.10 2003/07/23 13:21:17 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,7 @@ import java.io.*;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class HTMLParser implements HTMLParserConstants {
     public static int SUMMARY_LENGTH = 200;

@@ -1,5 +1,5 @@
 /*
-$Id: FileReservedCheckInException.java,v 1.9 2003/07/14 14:24:20 egli Exp $
+$Id: FileReservedCheckInException.java,v 1.10 2003/07/23 13:21:35 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ import java.util.Date;
 /**
  * DOCUMENT ME!
  *
- * @author Michael Wechner (http://www.lenya.com)
+ * @author Michael Wechner (http://cocoon.apache.org/lenya)
  * @version 0.7.5
  */
 public class FileReservedCheckInException extends Exception {

@@ -1,5 +1,5 @@
 /*
-$Id: ParentChildCreatorInterface.java,v 1.9 2003/07/04 14:25:50 egli Exp $
+$Id: ParentChildCreatorInterface.java,v 1.10 2003/07/23 13:21:20 gregor Exp $
 <License>
 
  ============================================================================
@@ -65,7 +65,7 @@ import java.util.Map;
 /**
  * DOCUMENT ME!
  *
- * @author <a href="mailto:christian.egli@lenya.org">Christian Egli</a>
+ * @author <a href="mailto:egli@apache.org">Christian Egli</a>
  */
 public interface ParentChildCreatorInterface {
     /**

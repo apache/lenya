@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ConfigurableIndexer.java,v 1.8 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -130,7 +130,7 @@ import javax.xml.transform.stream.StreamSource;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ConfigurableIndexer extends AbstractIndexer {
     /**

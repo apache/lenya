@@ -1,5 +1,5 @@
 /*
-$Id: ExecutionException.java,v 1.9 2003/07/09 13:44:51 egli Exp $
+$Id: ExecutionException.java,v 1.10 2003/07/23 13:21:45 gregor Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,7 @@ package org.apache.lenya.cms.task;
 /**
  * An Exception that is thrown when an error occurs during a task execution.
  *
- * @author <a href="mailto:ah@lenya.org">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class ExecutionException extends Exception {
     /** Creates a new instance of ExecutionException */

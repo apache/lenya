@@ -4,7 +4,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/2002/XLink"
-    xmlns:lenya="http://lenya.org/2003/publication"
+    xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
     >
 

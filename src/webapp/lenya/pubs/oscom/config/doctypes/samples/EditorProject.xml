@@ -2,14 +2,14 @@
 
 <system type="editor">
   <id/>
-  <editor email="editor@lenya.org">editor</editor>
+  <editor email="editor@apache.org">editor</editor>
   <system_name/>
   <description>
 Description
   </description>
-  <main_url>http://www.lenya.org</main_url>
+  <main_url>http://www.apache.org</main_url>
   <license>
-    <license_name>Lenya Software License</license_name>
-    <license_url>http://www.lenya.org/license.html</license_url>
+    <license_name>Apache Software License</license_name>
+    <license_url>http://www.apache.org/license.html</license_url>
   </license>
 </system>

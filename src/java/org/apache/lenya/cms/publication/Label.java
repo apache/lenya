@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Label.java,v 1.5 2003/07/23 13:21:11 gregor Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,7 @@ package org.apache.lenya.cms.publication;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Label {
     private String label = null;

@@ -8,15 +8,15 @@
  <organization>Apache</organization>
 </name>
 <url>
- <product>http://lenya.org</product> 
- <organization>http://lenya.org</organization>
+ <product>http://cocoon.apache.org/lenya</product> 
+ <organization>http://cocoon.apache.org/lenya</organization>
  <faq></faq>
- <documentation>http://lenya.org/docs/</documentation>
- <rss>http://lenya.org/news.xml</rss>
+ <documentation>http://cocoon.apache.org/lenya/docs/</documentation>
+ <rss>http://cocoon.apache.org/lenya/news.xml</rss>
 </url>
 <license>
   <name>Apache Software License</name>
-  <url>http://lenya.org/license.html</url>
+  <url>http://cocoon.apache.org/lenya/license.html</url>
 </license>
 
 <technology> 

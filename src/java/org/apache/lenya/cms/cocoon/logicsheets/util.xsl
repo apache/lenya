@@ -9,7 +9,7 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xsp="http://apache.org/xsp"
-  xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+  xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
 >
 
   <xsl:template match="xsp:page">

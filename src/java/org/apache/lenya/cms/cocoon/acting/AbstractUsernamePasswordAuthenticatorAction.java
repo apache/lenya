@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AbstractUsernamePasswordAuthenticatorAction.java,v 1.14 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================

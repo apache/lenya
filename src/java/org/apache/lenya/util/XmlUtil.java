@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: XmlUtil.java,v 1.12 2003/07/23 13:21:14 gregor Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 
 /**
- * XmlUtil.java $Id: XmlUtil.java,v 1.11 2003/06/30 11:52:19 andreas Exp $ Created: Thu Jan 24 18:27:05
+ * XmlUtil.java $Id: XmlUtil.java,v 1.12 2003/07/23 13:21:14 gregor Exp $ Created: Thu Jan 24 18:27:05
  * 2002 Utility Class for checking XML content for well-formedness
  *
  * @author <a href="mailto:memo@otego.com">Memo Birgi</a>
@@ -109,7 +109,7 @@ public class XmlUtil {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.11 $
+     * @version $Revision: 1.12 $
      */
     public class MyHandler extends DefaultHandler {
         // custom handler 

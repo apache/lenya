@@ -3,7 +3,7 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-    xmlns:usecase="http://lenya.org/usecase/1.0"
+    xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
     >
  
 <xsl:import href="../util/page-util.xsl"/>

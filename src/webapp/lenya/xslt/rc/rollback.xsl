@@ -2,7 +2,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:rc="http://www.lenya.org/2002/rc">
+  xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0">
 
 <xsl:variable name="usecase"><xsl:value-of select="/rc:revisions/usecase/."/></xsl:variable>
 <xsl:variable name="requestUri"><xsl:value-of select="/rc:revisions/request_uri/."/></xsl:variable>

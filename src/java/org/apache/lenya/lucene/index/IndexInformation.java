@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: IndexInformation.java,v 1.5 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -210,7 +210,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.4 $
+     * @version $Revision: 1.5 $
      */
     public class CreateHandler extends AbstractIndexIteratorHandler {
         /** Handles a file.
@@ -225,7 +225,7 @@ public class IndexInformation {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.4 $
+     * @version $Revision: 1.5 $
      */
     public class UpdateHandler extends AbstractIndexIteratorHandler {
         /** Handles a new document.

@@ -18,7 +18,7 @@
 <body>
 <p>
 We have started to use HSQLDB for certain publications, such as
-for instance the "Related Projects" page of the publication "lenya.org".
+for instance the "Related Projects" page of the publication "wyona.org".
 We also started to write some documentation on how to use HSQLDB and ESQL (please
 see the Integrator's Guide).
 </p>

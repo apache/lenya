@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Md5.java,v 1.5 2003/07/23 13:21:44 gregor Exp $
 <License>
 
  ============================================================================
@@ -54,7 +54,7 @@ $Id
 </License>
 */
 
-// $Id: Md5.java,v 1.4 2003/06/30 11:52:23 andreas Exp $
+// $Id: Md5.java,v 1.5 2003/07/23 13:21:44 gregor Exp $
 // (c) COPYRIGHT MIT and INRIA, 1996.
 // Please first read the full copyright statement in file COPYRIGHT.html
 package org.w3c.tools.crypt;
@@ -66,7 +66,7 @@ import java.io.*;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Md5 {
     private static final int BUFFER_SIZE = 1024;

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: RequestParamAction.java,v 1.9 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -112,7 +112,7 @@ import java.util.Map;
  *
  * @author <a href="mailto:Marcus.Crafter@osa.de">Marcus Crafter</a>
  * @author <a href="mailto:tcurdt@dff.st">Torsten Curdt</a>
- * @version CVS $Id: RequestParamAction.java,v 1.8 2003/06/30 11:46:29 andreas Exp $
+ * @version CVS $Id: RequestParamAction.java,v 1.9 2003/07/23 13:21:30 gregor Exp $
  */
 public class RequestParamAction extends org.apache.cocoon.acting.ComposerAction
     implements ThreadSafe {

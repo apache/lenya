@@ -1,5 +1,5 @@
 /*
-$Id: DublinCore.java,v 1.2 2003/07/15 12:19:17 egli Exp $
+$Id: DublinCore.java,v 1.3 2003/07/23 13:21:11 gregor Exp $
 <License>
 
  ============================================================================
@@ -55,9 +55,17 @@ $Id: DublinCore.java,v 1.2 2003/07/15 12:19:17 egli Exp $
 */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.PublicationException;
+
+import org.apache.lenya.xml.DocumentHelper;
 
 import java.io.File;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 /**
  * A publication.
@@ -65,25 +73,31 @@ import java.io.File;
  * @author <a href="mailto:gregor@apache.org">Gregor J. Rothfuss</a>
  */
 public class DublinCore {
-	private PublishingEnvironment environment;
+	private Document cmsdocument;
 	private File servletContext;
 
     /** 
      * Creates a new instance of Dublin Core
      * 
      */
-    protected DublinCore() {
+    protected DublinCore(Document mydocument) {
+    	this.cmsdocument = mydocument;
     }
 
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getTitle() {
-/*
-			infofile = getPublication().getPathMapper().getFile(getPublication(), getArea(), getId(), getLanguage());
-			domdocument = DocumentHelper.readDocument(infofile);
-*/
-			return null;
+	public String getTitle() throws PublicationException {
+		File infofile = cmsdocument.getPublication().getPathMapper().getFile(cmsdocument.getPublication(), cmsdocument.getArea(), cmsdocument.getId(), cmsdocument.getLanguage());
+		Element domelement;
+		
+		try {
+			domelement = DocumentHelper.readDocument(infofile).getDocumentElement();
+		} catch (Exception e) {
+			throw new PublicationException(e);
+		}
+		domelement = DocumentHelper.getFirstChild(domelement, "", "name");
+		return null;
 	}
 
 	/**
@@ -97,7 +111,7 @@ public class DublinCore {
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getCreator() { 
+	public String getCreator() throws PublicationException{ 
 			return null;
 		}
 
@@ -112,7 +126,7 @@ public class DublinCore {
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getSubject() { 
+	public String getSubject() throws PublicationException { 
 			return null;
 		}
 
@@ -127,7 +141,7 @@ public class DublinCore {
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getDescription() { 
+	public String getDescription() throws PublicationException { 
 			return null;
 		}
 	
@@ -142,7 +156,7 @@ public class DublinCore {
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getDCTitle()
 	 */
-	public String getRights() { 
+	public String getRights() throws PublicationException { 
 			return null;
 		}
 

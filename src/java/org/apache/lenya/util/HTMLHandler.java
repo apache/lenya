@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: HTMLHandler.java,v 1.9 2003/07/23 13:21:14 gregor Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,7 @@ import javax.swing.text.html.HTMLEditorKit.ParserCallback;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class HTMLHandler extends ParserCallback {
     Category log = Category.getInstance(HTMLHandler.class);

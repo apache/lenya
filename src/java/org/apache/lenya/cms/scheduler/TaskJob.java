@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TaskJob.java,v 1.26 2003/07/23 13:21:32 gregor Exp $
 <License>
 
  ============================================================================
@@ -88,7 +88,7 @@ import javax.servlet.http.HttpServletRequest;
  * A TaskJob is a Job that executes a Task. The task ID is obtained from the <code>task.id</code>
  * request parameter.
  *
- * @author <a href="mailto:ah@lenya.org">Andreas Hartmann</a>
+ * @author <a href="mailto:ah@apache.org">Andreas Hartmann</a>
  */
 public class TaskJob extends ServletJob {
     public static final String TASK_ID = "id";

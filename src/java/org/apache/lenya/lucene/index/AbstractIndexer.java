@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AbstractIndexer.java,v 1.7 2003/07/23 13:21:27 gregor Exp $
 <License>
 
  ============================================================================
@@ -253,7 +253,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.6 $
+     * @version $Revision: 1.7 $
      */
     public class IndexHandler extends AbstractIndexIteratorHandler {
         /**
@@ -306,7 +306,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.6 $
+     * @version $Revision: 1.7 $
      */
     public class CreateIndexHandler extends IndexHandler {
         /**
@@ -332,7 +332,7 @@ public abstract class AbstractIndexer implements Indexer {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.6 $
+     * @version $Revision: 1.7 $
      */
     public class UpdateIndexHandler extends IndexHandler {
         /**

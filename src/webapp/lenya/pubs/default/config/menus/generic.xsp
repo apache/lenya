@@ -4,7 +4,7 @@
     language="java" 
     xmlns:xsp="http://apache.org/xsp"
     xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-    xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+    xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
     xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
 >
@@ -22,7 +22,7 @@
     <live_uri>/live<input:get-attribute module="page-envelope" as="string" name="document-url"/></live_uri>
     
     <xsp:logic>
-      String bitflux_prefix = <xsp-request:get-context-path/> + "/bitflux";
+      String bitflux_prefix = <xsp-request:get-context-path/> + "/" + <input:get-attribute module="page-envelope" as="string" name="publication-id"/> + "/bitflux";
       String domain_prefix_bitflux = "" + <xsp-request:get-context-path/>;
       String replacementString = "/index.xml";
       String xmlSource = <input:get-attribute module="page-envelope" as="string" name="document-url"/>.replaceFirst(".html", replacementString);
@@ -68,7 +68,7 @@
       <menu name="Help" label="Debug">
 	<block>
 	  <item><xsp:attribute name="href"><xsp-request:get-context-path/>/docs-new/docs/index.html</xsp:attribute>Documentation</item>
-	  <item href="http://www.lenya.org">About&#160;Lenya</item>
+	  <item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
 	</block>
       </menu>
     </menus>

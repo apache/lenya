@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TidyCommandLine.java,v 1.9 2003/07/23 13:21:14 gregor Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,7 @@ import java.net.URL;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class TidyCommandLine {
     /**

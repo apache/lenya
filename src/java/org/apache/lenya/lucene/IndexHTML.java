@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: IndexHTML.java,v 1.17 2003/07/23 13:21:26 gregor Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,7 @@ import java.util.Date;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class IndexHTML {
     private boolean deleting = false; // true during deletion pass

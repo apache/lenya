@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AbstractDOMTransformer.java,v 1.4 2003/07/23 13:21:50 gregor Exp $
 <License>
 
  ============================================================================
@@ -89,7 +89,7 @@ import java.util.Map;
  * @author <a href="mailto:rossb@apache.org">Ross Burton</a>
  * @author <a href="mailto:brobertson@mta.ca">Bruce G. Robertson</a>
  * @author <a href="mailto:vgritsenko@apache.org">Vadim Gritsenko</a>
- * @version CVS $Id: AbstractDOMTransformer.java,v 1.3 2003/06/30 11:52:22 andreas Exp $
+ * @version CVS $Id: AbstractDOMTransformer.java,v 1.4 2003/07/23 13:21:50 gregor Exp $
  */
 public abstract class AbstractDOMTransformer extends AbstractTransformer implements Transformer,
     DOMBuilder.Listener, Composable, Disposable, Recyclable {

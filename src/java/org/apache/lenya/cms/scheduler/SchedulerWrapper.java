@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: SchedulerWrapper.java,v 1.16 2003/07/23 13:21:32 gregor Exp $
 <License>
 
  ============================================================================
@@ -508,7 +508,7 @@ public class SchedulerWrapper {
     }
 
     /** The namespace for the <code>jobs.xml</code> file. */
-    public static final String NAMESPACE = "http://www.lenya.org/2002/sch";
+    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/scheduler/1.0";
 
     /**
      * Returns a scheduler namespace helper for a document.

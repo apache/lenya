@@ -55,7 +55,7 @@
  </tr>
  <tr>
   <td colspan="3">
-  copyright &#169; 2002 lenya.org
+  copyright &#169; 2002 wyona.org
   </td>
  </tr>
 </table>

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: URLUtil.java,v 1.9 2003/07/23 13:21:13 gregor Exp $
 <License>
 
  ============================================================================
@@ -60,7 +60,7 @@ package org.apache.lenya.util;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class URLUtil {
     /**
@@ -69,9 +69,9 @@ public class URLUtil {
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
-        System.out.println(URLUtil.complete("http://www.lenya.org/download/index.html",
+        System.out.println(URLUtil.complete("http://www.apache.org/download/index.html",
                 "../images/lenya.jpeg"));
-        System.out.println(URLUtil.complete("http://www.lenya.org/download/index.html",
+        System.out.println(URLUtil.complete("http://www.apache.org/download/index.html",
                 "/images/lenya.jpeg"));
     }
 

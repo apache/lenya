@@ -1,5 +1,5 @@
 /*
-$Id: DocumentType.java,v 1.7 2003/07/04 14:07:39 egli Exp $
+$Id: DocumentType.java,v 1.8 2003/07/23 13:21:10 gregor Exp $
 <License>
 
  ============================================================================
@@ -64,7 +64,7 @@ import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
  * @author <a href="mailto:andreas.hartmann@wyona.org">Andreas Hartmann</a>
  */
 public class DocumentType {
-    public static final String NAMESPACE = "http://www.lenya.org/2003/doctype";
+    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/doctypes/1.0";
     public static final String DEFAULT_PREFIX = "dt";
 
     /** Creates a new instance of DocumentType

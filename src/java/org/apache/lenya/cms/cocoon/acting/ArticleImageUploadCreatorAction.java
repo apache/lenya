@@ -1,5 +1,5 @@
 /*
-$Id: ArticleImageUploadCreatorAction.java,v 1.36 2003/07/04 15:53:14 egli Exp $
+$Id: ArticleImageUploadCreatorAction.java,v 1.37 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -100,7 +100,7 @@ import java.util.Properties;
  * The class <code>ArticleImageUploadCreatorAction</code> implements an action that allows for
  * image upload.
  *
- * @author <a href="mailto:christian.egli@lenya.org">Christian Egli</a>
+ * @author <a href="mailto:egli@apache.org">Christian Egli</a>
  */
 public class ArticleImageUploadCreatorAction extends AbstractConfigurableAction
     implements ThreadSafe {

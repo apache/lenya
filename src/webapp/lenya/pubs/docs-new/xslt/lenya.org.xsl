@@ -26,9 +26,6 @@
      <img src="{$images}/lenya_org.gif"/>
      </td>
      <td align="right" valign="top">
-     <span class="revision">
-     <a href="mailto:contact@lenya.org">contact@lenya.org</a>
-     </span>
      </td>
     </tr>
     <tr>
@@ -53,7 +50,7 @@
    </table>
 <p>
 <font size="-2" face="verdana">
-copyright &#169; 2003 lenya.org
+copyright &#169; 2003 Apache Software Foundation
 </font>
 </p>
   </body>

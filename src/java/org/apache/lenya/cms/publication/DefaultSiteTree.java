@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DefaultSiteTree.java,v 1.23 2003/07/23 13:21:11 gregor Exp $
 <License>
 
  ============================================================================
@@ -84,11 +84,11 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
-    public static final String NAMESPACE_URI = "http://www.lenya.org/2003/sitetree";
+    public static final String NAMESPACE_URI = "http://apache.org/cocoon/lenya/sitetree/1.0";
     private Document document = null;
     private File treefile = null;
 
@@ -141,7 +141,7 @@ public class DefaultSiteTree implements SiteTree {
         Element root = document.getDocumentElement();
         root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         root.setAttribute("xsi:schemaLocation",
-            "http://www.lenya.org/2003/sitetree  ../../../../resources/entities/sitetree.xsd");
+            "http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd");
 
         return document;
     }

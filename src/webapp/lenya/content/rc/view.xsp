@@ -13,7 +13,7 @@
     <xsp:include>org.apache.lenya.xml.DOMParserFactory</xsp:include>
   </xsp:structure>                                                                                                                          
 
-  <rc:backup xmlns:rc="http://www.lenya.org/2002/rc">
+  <rc:backup xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0">
 
     <!-- Import Lenya Page Envelope -->
 

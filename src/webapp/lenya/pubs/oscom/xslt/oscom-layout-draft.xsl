@@ -280,15 +280,9 @@ border="0" /></td>
 <tr>
 <td class="footer" valign="top">&#169;2002-2003 OSCOM.
 <!-- @UPDATING_DATE@ --><br />
- <!-- <a href="http://alpha.oscom.org/" class="breadcrumb">@BREADCRUMB_PATH@</a> --> <!--
-<a href="http://alpha.oscom.org/" class="breadcrumb">Home</a>
- &gt; <a href="http://alpha.oscom.org/Conferences/" class="breadcrumb">Conferences</a>
- &gt; <a href="http://alpha.oscom.org/Conferences/Cambridge/" class="breadcrumb">Cambridge</a>
- &gt; <a href="http://alpha.oscom.org/Conferences/Cambridge/Proposals/" class="breadcrumb">Proposals</a>
--->
  </td>
 <td align="right" valign="top" class="footer">
-<!-- Admin interface link --><a href="http://oscom.lenya.org/lenya/oscom/matrix/index.html" class="breadcrumb">Lenya</a><!-- /Admin interface link --></td>
+</td>
 </tr>
 </tbody>
 </table>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--$Id: sitetree.xml,v 1.10 2003/07/10 10:29:22 gregor Exp $ -->
+<!--$Id: sitetree.xml,v 1.11 2003/07/23 13:21:43 gregor Exp $ -->
 
 <site
-    xmlns="http://www.lenya.org/2003/sitetree"
+    xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation=
-        "http://www.lenya.org/2003/sitetree
+        "http://apache.org/cocoon/lenya/sitetree/1.0
         ../../../../resources/entities/sitetree.xsd">
     
   <node id="index">

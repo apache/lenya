@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ResourceFilePublisher.java,v 1.6 2003/07/23 13:21:09 gregor Exp $
 <License>
 
  ============================================================================
@@ -86,7 +86,7 @@ import java.util.StringTokenizer;
  * <code><strong>resources-live-path</strong></code>: the live path
  * for resources<br/>
  *
- * @author <a href="mailto:christian.egli@lenya.org">Christian Egli</a>
+ * @author <a href="mailto:egli@apache.org">Christian Egli</a>
  * 
  * @deprecated use the publish ant task instead.
  */

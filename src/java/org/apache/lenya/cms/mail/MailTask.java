@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: MailTask.java,v 1.32 2003/07/23 13:21:52 gregor Exp $
 <License>
 
  ============================================================================
@@ -105,12 +105,12 @@ import javax.mail.internet.InternetAddress;
  * ><br/
  * > The document has the following form:<br/
  * ><br/
- * ><code> &lt;mail:mail xmlns:mail="http://www.lenya.org/2002/mail"&gt;<br/
+ * ><code> &lt;mail:mail xmlns:mail="http://apache.org/cocoon/lenya/mail/1.0"&gt;<br/
  * > &#160;&#160;&lt;mail:server&gt;mail.yourhost.com&lt;/mail:server&gt;<br/
  * > &#160;&#160;...<br/
  * > &lt;/mail:mail&gt;<br/></code>
  *
- * @author <a href="mailto:ah@lenya.org">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class MailTask extends AbstractTask {
     private static Category log = Category.getInstance(MailTask.class);
@@ -123,7 +123,7 @@ public class MailTask extends AbstractTask {
     public static final String ELEMENT_FROM = "from";
     public static final String ELEMENT_SERVER = "server";
     public static final String PARAMETER_URI = "uri";
-    public static final String NAMESPACE_URI = "http://www.lenya.org/2002/mail";
+    public static final String NAMESPACE_URI = "http://apache.org/cocoon/lenya/mail/1.0";
 
     /**
      * DOCUMENT ME!

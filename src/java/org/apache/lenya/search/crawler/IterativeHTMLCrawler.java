@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: IterativeHTMLCrawler.java,v 1.17 2003/07/23 13:21:37 gregor Exp $
 <License>
 
  ============================================================================
@@ -76,7 +76,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class IterativeHTMLCrawler {
     java.util.Vector urlsToCrawl;

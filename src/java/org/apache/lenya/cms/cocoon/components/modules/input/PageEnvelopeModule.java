@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.13 2003/07/23 12:13:33 andreas Exp $
+$Id: PageEnvelopeModule.java,v 1.14 2003/07/23 13:21:45 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,6 +61,8 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
+import org.apache.lenya.cms.publication.PublicationException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -102,7 +104,7 @@ public class PageEnvelopeModule extends AbstractInputModule {
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+        throws ConfigurationException, PageEnvelopeException, PublicationException {
         PageEnvelope envelope = getEnvelope(objectModel);
         Object value = null;
 
@@ -125,7 +127,7 @@ public class PageEnvelopeModule extends AbstractInputModule {
         } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
             value = envelope.getDocument().getLanguage();
 		} else if (name.equals(PageEnvelope.DOCUMENT_DC_TITLE)) {
-			value = envelope.getDocument().getDublinCore().getTitle();
+			  value = envelope.getDocument().getDublinCore().getTitle();
 		} else if (name.equals(PageEnvelope.DOCUMENT_DC_CREATOR)) {
 			value = envelope.getDocument().getDublinCore().getCreator();
         } else if (name.equals(PageEnvelope.DOCUMENT_DC_SUBJECT)) {
@@ -154,7 +156,7 @@ public class PageEnvelopeModule extends AbstractInputModule {
 	 * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
 	 */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+        throws ConfigurationException, PageEnvelopeException, PublicationException {
         Object[] objects = { getAttribute(name, modeConf, objectModel) };
 
         return objects;

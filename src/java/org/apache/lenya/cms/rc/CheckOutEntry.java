@@ -1,5 +1,5 @@
 /*
-$Id: CheckOutEntry.java,v 1.8 2003/07/14 14:24:20 egli Exp $
+$Id: CheckOutEntry.java,v 1.9 2003/07/23 13:21:35 gregor Exp $
 <License>
 
  ============================================================================
@@ -59,7 +59,7 @@ package org.apache.lenya.cms.rc;
 /**
  * DOCUMENT ME!
  *
- * @author Michael Wechner (http://www.lenya.com)
+ * @author Michael Wechner (http://cocoon.apache.org/lenya)
  * @version 0.7.19
  */
 public class CheckOutEntry extends RCMLEntry {

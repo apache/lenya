@@ -2,7 +2,7 @@
 
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-    xmlns:session="http://www.lenya.org/2002/session"
+    xmlns:session="http://apache.org/cocoon/session/1.0"
     >
  
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>

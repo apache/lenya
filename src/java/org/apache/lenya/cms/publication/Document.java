@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Document.java,v 1.10 2003/07/23 13:21:11 gregor Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,7 @@ $Id
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-
+import java.util.Date;
 
 /**
  * A CMS document.
@@ -105,9 +105,9 @@ public interface Document {
 
 	/**
 	 * Returns the date of the last modification of this document.
-	 * @return A string denoting the language.
+	 * @return A date denoting the date of the last modification.
 	 */
-	String getLastModified();
+	Date getLastModified();
 
     /**
      * Returns the area this document belongs to.

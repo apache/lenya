@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!-- $Id: publication.xml,v 1.10 2003/04/29 16:40:14 edith Exp $ -->
-<lenya:publication xmlns:lenya="http://lenya.org/2003/publication">
+<!-- $Id: publication.xml,v 1.11 2003/07/23 13:21:33 gregor Exp $ -->
+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 	<lenya:name>Unipublic</lenya:name>
 	<lenya:version>1.0</lenya:version>
 	<lenya:description>This publication implements a news-driven site for the University of Zurich</lenya:description>

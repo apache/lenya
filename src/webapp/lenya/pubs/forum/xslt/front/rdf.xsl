@@ -11,14 +11,14 @@
 <xsl:template match="articles">
   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://purl.org/rss/1.0/">
     <channel>
-      <title>Lenya</title>
-      <link>http://www.lenya.org</link>
+      <title>Example</title>
+      <link>http://www.example.com</link>
     </channel>
 
     <xsl:for-each select="article">
       <item>
         <title><xsl:apply-templates select="article/head/title"/></title>
-        <link>http://www.lenya.org</link>
+        <link>http://www.example.com</link>
         <xsl:apply-templates select="article/meta/date"/>
       </item>
     </xsl:for-each>

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: PublishingEnvironment.java,v 1.22 2003/07/23 13:21:09 gregor Exp $
 <License>
 
  ============================================================================
@@ -126,7 +126,7 @@ public class PublishingEnvironment implements Configurable {
             log.warn(
                 "Did not load publishing configuration from publication.xconf (file is missing). " +
                 "That means you can't access all PublishingEnvironment parameters and you should only " +
-                "use the AntTask. BTW, publication.xconf has been deprecated.");
+                "use the AntTask.");
         }
     }
 

@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelope.java,v 1.32 2003/07/23 12:13:33 andreas Exp $
+$Id: PageEnvelope.java,v 1.33 2003/07/23 13:21:11 gregor Exp $
 <License>
 
  ============================================================================
@@ -67,6 +67,7 @@ import sun.security.action.GetLongAction;
 import java.io.File;
 
 import java.util.Map;
+import java.util.Date;
 
 /**
  * A page envelope carries a set of information that are needed
@@ -88,8 +89,7 @@ public class PageEnvelope {
     public static final String DOCUMENT_DC_TITLE = "document-dc-title";
     public static final String DOCUMENT_DC_CREATOR = "document-dc-creator";
     public static final String DOCUMENT_DC_SUBJECT = "document-dc-subject";
-    public static final String DOCUMENT_DC_DESCRIPTION =
-        "document-dc-description";
+    public static final String DOCUMENT_DC_DESCRIPTION = "document-dc-description";
     public static final String DOCUMENT_DC_RIGHTS = "document-dc-rights";
     public static final String DOCUMENT_LASTMODIFIED = "document-lastmodified";
     private String context;
@@ -283,53 +283,73 @@ public class PageEnvelope {
             getDocument().getLanguage());
     }
 
-    /**
-     * Returns the DC title for a document
-     * @return a <code>String<code> value
-     */
-    public String getDocumentDCTitle() {
-        return getDocument().getDublinCore().getTitle();
-    }
+	/**
+	 * Returns the DC title for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCTitle()  throws PageEnvelopeException {
+		try {
+			return getDocument().getDublinCore().getTitle();
+		} catch (PublicationException e) {
+			throw new PageEnvelopeException(e);
+		}
+	}
 
-    /**
-     * Returns the DC subject for a document
-     * @return a <code>String<code> value
-     */
-    public String getDocumentDCSubject() {
-        return getDocument().getDublinCore().getSubject();
-    }
+	/**
+	 * Returns the DC subject for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCSubject()  throws PageEnvelopeException {
+		try {
+			return getDocument().getDublinCore().getSubject();
+		} catch (PublicationException e) {
+			throw new PageEnvelopeException(e);
+		}
+	}
 
-    /**
-     * Returns the DC creator for a document
-     * @return a <code>String<code> value
-     */
-    public String getDocumentDCCreator() {
-        return getDocument().getDublinCore().getCreator();
-    }
+	/**
+	 * Returns the DC creator for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCCreator()  throws PageEnvelopeException {
+		try {
+			return getDocument().getDublinCore().getCreator();
+		} catch (PublicationException e) {
+			throw new PageEnvelopeException(e);
+		}
+	}
 
-    /**
-     * Returns the DC description for a document
-     * @return a <code>String<code> value
-     */
-    public String getDocumentDCDescription() {
-        return getDocument().getDublinCore().getDescription();
-    }
+	/**
+	 * Returns the DC description for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCDescription()  throws PageEnvelopeException {
+		try {
+			return getDocument().getDublinCore().getDescription();
+		} catch (PublicationException e) {
+			throw new PageEnvelopeException(e);
+		}
+	}
 
-    /**
-     * Returns the DC rights for a document
-     * @return a <code>String<code> value
-     */
-    public String getDocumentDCRights() {
-        return getDocument().getDublinCore().getRights();
-    }
+	/**
+	 * Returns the DC rights for a document
+	 * @return a <code>String<code> value
+	 */
+	public String getDocumentDCRights()  throws PageEnvelopeException {
+		try {
+			return getDocument().getDublinCore().getRights();
+		} catch (PublicationException e) {
+			throw new PageEnvelopeException(e);
+		}
+	}
 
-    /**
-     * Returns the last modified date for a document
-     * @return a <code>String<code> value
-     */
-    public String getDocumentLastModified() {
-        return getDocument().getLastModified();
-    }
+	/**
+	 * Returns the last modified date for a document
+	 * @return a <code>String<code> value
+	 */
+	public Date getDocumentLastModified() {
+		return getDocument().getLastModified();
+	}
 
     /**
      * The names of the page envelope parameters.

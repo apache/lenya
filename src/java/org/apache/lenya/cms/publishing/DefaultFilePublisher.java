@@ -1,5 +1,5 @@
 /*
-$Id: DefaultFilePublisher.java,v 1.20 2003/07/07 09:34:10 egli Exp $
+$Id: DefaultFilePublisher.java,v 1.21 2003/07/23 13:21:09 gregor Exp $
 <License>
 
  ============================================================================
@@ -83,8 +83,8 @@ import java.util.StringTokenizer;
  * for replication<br/
  * ><code><strong>sources</strong></code>: a comma-separated list of files to publish<br/>
  *
- * @author <a href="mailto:andreas.hartmann@lenya.org">Andreas Hartmann</a>
- * @author <a href="mailto:michael.wechner@lenya.org">Michael Wechner</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @author <a href="mailto:michi@apache.org">Michael Wechner</a>
 
  *  * @deprecated use the publish ant task instead.
  */

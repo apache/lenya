@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: DefaultDocumentIdToPathMapper.java,v 1.8 2003/07/23 13:21:11 gregor Exp $
 <License>
 
  ============================================================================

@@ -3,8 +3,8 @@
 <xsp:page
        language="java"
        xmlns:xsp="http://apache.org/xsp"  
-       xmlns:sch="http://www.lenya.org/2002/sch"
-       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+       xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
+       xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0"
        >
   
 <sch:scheduler>

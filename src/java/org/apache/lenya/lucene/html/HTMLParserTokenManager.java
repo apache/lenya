@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: HTMLParserTokenManager.java,v 1.9 2003/07/23 13:21:17 gregor Exp $
 <License>
 
  ============================================================================
@@ -61,7 +61,7 @@ package org.apache.lenya.lucene.html;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class HTMLParserTokenManager implements HTMLParserConstants {
     static final long[] jjbitVec0 = { 0x0L, 0x0L, 0xffffffffffffffffL, 0xffffffffffffffffL };

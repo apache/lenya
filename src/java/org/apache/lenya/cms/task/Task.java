@@ -1,5 +1,5 @@
 /*
-$Id: Task.java,v 1.13 2003/07/09 13:44:51 egli Exp $
+$Id: Task.java,v 1.14 2003/07/23 13:21:45 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,7 @@ import org.apache.avalon.framework.parameters.Parameterizable;
  * > When a Task is executed from a TaskAction or initialized from a TaskJob, the default
  * parameters are provided. <strong>This is not a contract!</strong>
  *
- * @author <a href="mailto:ah@lenya.org">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public interface Task extends Parameterizable {
     /**

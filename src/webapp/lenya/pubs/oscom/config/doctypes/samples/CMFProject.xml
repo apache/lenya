@@ -4,15 +4,15 @@
   <id/>
   <editor>
     <name>Editor Name</name>
-    <email>editor@lenya.org</email>
+    <email>editor@apache.org</email>
   </editor>
   <system_name/>
   <description>
 CMF Description
   </description>
-  <main_url>http://www.lenya.org</main_url>
+  <main_url>http://www.apache.org</main_url>
   <license>
-    <license_name>Lenya Software License</license_name>
-    <license_url>http://www.lenya.org/license.html</license_url>
+    <license_name>Apache Software License</license_name>
+    <license_url>http://www.apache.org/license.html</license_url>
   </license>
 </system>

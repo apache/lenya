@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AbstractAuthorizerAction.java,v 1.14 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version $Id: AbstractAuthorizerAction.java,v 1.13 2003/06/30 11:46:27 andreas Exp $
+ * @version $Id: AbstractAuthorizerAction.java,v 1.14 2003/07/23 13:21:30 gregor Exp $
  */
 public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
     implements Configurable {

@@ -47,7 +47,7 @@
     <label>Dispatch Newsletter</label>
     <task id="send" class="org.apache.lenya.cms.mail.MailTask">
       <parameter name="server" value="wyona.com"/>
-      <parameter name="from" value="andreas.hartmann@lenya.org"/>
+      <parameter name="from" value="andreas@apache.org"/>
       <parameter name="uri" value="/authoring/newsletter/mail.xml"/>
     </task>
     <task id="clear" class="ch.unizh.unipublic.lenya.cms.ClearNewsletterTask"/>

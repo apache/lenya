@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: URIParametrizerAction.java,v 1.14 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class URIParametrizerAction extends ConfigurableComposerAction {
     private static Category log = Category.getInstance(URIParametrizerAction.class);
@@ -92,7 +92,7 @@ public class URIParametrizerAction extends ConfigurableComposerAction {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.13 $
+     * @version $Revision: 1.14 $
      */
     public class URIParametrizerConsumer extends AbstractXMLConsumer {
         private boolean inParamElement = false;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0">
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsp-lenya="http://apache.org/cocoon/lenya/xsp/1.0">
 	<menu>
 		<xsp-lenya:util/>
 		<xsp:logic>
@@ -93,7 +93,7 @@
 							<xsp:expr>xsp_lenya_context</xsp:expr>/docs/index.html#developer-guide</xsp:attribute>Developer's&#160;Guide</item>
 				</block>
 				<block>
-					<item href="http://www.lenya.org">About&#160;Lenya</item>
+					<item href="http://cocoon.apache.org/lenya/">About&#160;Lenya</item>
 				</block>
 			</menu>
 		</menus>

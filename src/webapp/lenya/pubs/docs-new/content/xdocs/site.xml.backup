@@ -5,8 +5,6 @@
     <node-b href="download/downloading_and_installing.html" label="Download" />
     <node-d href="roadmap.html" label="Roadmap" />
     <node-e href="mailing-lists.html" label="Mailing Lists" />
-    <node-f href="http://cvs.lenya.org/cgi-bin/cvsweb.cgi/" label="CVS Web" />
-    <node-g href="http://cvs.lenya.org/bugs/" label="Bug Tracker" />
     <node-h href="acknowledgements.html" label="Credits" />
     <node-i href="license.html" label="License" />
     <node-i href="related-projects.html" label="Related Projects" />

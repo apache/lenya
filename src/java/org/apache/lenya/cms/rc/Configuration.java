@@ -1,5 +1,5 @@
 /*
-$Id: Configuration.java,v 1.12 2003/07/14 14:24:20 egli Exp $
+$Id: Configuration.java,v 1.13 2003/07/23 13:21:35 gregor Exp $
 <License>
 
  ============================================================================
@@ -63,7 +63,7 @@ import java.util.Properties;
 /**
  * DOCUMENT ME!
  *
- * @author Michael Wechner (http://www.lenya.com)
+ * @author Michael Wechner (http://cocoon.apache.org/lenya)
  * @version 0.10.5
  */
 public class Configuration {

@@ -93,7 +93,7 @@ The URI steps are:
   </dd>
 </dl>
 <source><![CDATA[
-<site xmlns="http://www.lenya.org/2003/sitetree">
+<site xmlns="http://apache.org/cocoon/lenya/sitetree/1.0">
   <node href="demo/" label="Demo">
     <node href="oscom.html" label="OSCOM"/>
     ...
@@ -124,7 +124,7 @@ The URI steps are:
 (1)     <map:act type="page-envelope">
 
 (2)       <map:aggregate element="page" prefix="page"
-              ns="http://www.lenya.org/2003/page">
+              ns="http://apache.org/cocoon/lenya/cms-page/1.0">
               
 (3)         <map:part src="cocoon://navigation/
                 {publication-id}/breadcrumb/{../1}.html.xml"/>

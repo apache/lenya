@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: BooleanVariableAssignmentImpl.java,v 1.3 2003/07/23 13:21:08 gregor Exp $
 <License>
 
  ============================================================================

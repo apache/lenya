@@ -3,9 +3,9 @@
 <system type="cms">
   <id>lenya</id>
   <system_name>Lenya</system_name>
-  <main_url>http://www.lenya.org</main_url>
+  <main_url>http://cocoon.apache.org/lenya/</main_url>
   <license>
     <license_name>Apache Software License</license_name>
-    <license_url>http://www.lenya.org/license.html</license_url>
+    <license_url>cocoon.apache.org/lenya/license.html</license_url>
   </license>
 </system>

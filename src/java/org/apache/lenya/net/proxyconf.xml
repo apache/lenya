@@ -2,15 +2,15 @@
 
 <conf xmlns:xlink="http://www.w3.org/xlink">
 <!--
-	<Proxy host="proxy1.lenya.org" port="8080">
+	<Proxy host="proxy1.example.com" port="8080">
 		<include>.*</include>
-		<exclude>.*\.lenya\.org</exclude>
-		<include>www\.lenya\.org</include>
+		<exclude>.*\.example\.com</exclude>
+		<include>www\.example\.com</include>
 	</Proxy>
 
-	<Proxy host="proxy2.lenya.org" port="8888">
+	<Proxy host="proxy2.example.com" port="8888">
 		<include>.*</include>
-		<exclude>xps\.lenya\.org</exclude>
+		<exclude>xps\.example\.com</exclude>
 	</Proxy>
 -->
 </conf>

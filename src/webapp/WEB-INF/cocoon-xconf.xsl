@@ -23,7 +23,7 @@
     
     <builtin-logicsheet>
       <parameter name="prefix" value="xsp-lenya"/>
-      <parameter name="uri" value="http://www.lenya.org/xsp/lenya/1.0"/>
+      <parameter name="uri" value="http://apache.org/cocoon/lenya/xsp/1.0"/>
       <parameter name="href" value="resource://org/apache/lenya/cms/cocoon/logicsheets/util.xsl"/>
     </builtin-logicsheet>
     

@@ -14,7 +14,7 @@
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
   </xsp:structure>                                                                                                                          
 
-  <rc:revisions xmlns:rc="http://www.lenya.org/2002/rc">
+  <rc:revisions xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0">
 
     <!-- Import Lenya Page Envelope -->
     <xsp:logic>

@@ -9,10 +9,10 @@
 -->
 
 <site
-    xmlns="http://www.lenya.org/2003/sitetree"
+    xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation=
-        "http://www.lenya.org/2003/sitetree
+        "http://apache.org/cocoon/lenya/sitetree/1.0
         ../../resources/entities/sitetree.xsd">
     
   <node id="index">

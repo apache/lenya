@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <!--
-        $Id: sitetree2tree.xsl,v 1.11 2003/07/11 15:42:37 gregor Exp $
+        $Id: sitetree2tree.xsl,v 1.12 2003/07/23 13:21:24 gregor Exp $
         Converts a sitetree into a javascript array suitable for the tree widget.
 -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:s="http://www.lenya.org/2003/sitetree">
+    xmlns:s="http://apache.org/cocoon/lenya/sitetree/1.0">
 
 <xsl:output omit-xml-declaration="yes" encoding = "iso-8859-1" />    
 

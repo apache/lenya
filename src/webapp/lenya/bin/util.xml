@@ -53,7 +53,7 @@
 <target name="ssi" description="Server Side Include" depends="init">
   <echo>INFO: Server Side Include</echo>
 
-  <java classname="org.lenya.util.SSI">
+  <java classname="org.apache.lenya.util.SSI">
     <arg value="ssi.html"/>
 <!--
     <arg value="../../../../ssi.html"/>

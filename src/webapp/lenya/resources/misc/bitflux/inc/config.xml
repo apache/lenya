@@ -13,32 +13,17 @@
 	<files>
 		<input>
 			<file name="BX_xmlfile" method="http" isParam="true">url-xml</file>
-			<!--
-			<file name="BX_xmlfile" method="http">xml/article.xml</file>
--->
 			<file name="BX_xslfile" isParam="true">url-xslt</file>
-			<!--
-			<file name="BX_xslfile">xml/article.xsl</file>
--->
 			<file name="BX_schemafile" isParam="true">url-xsd</file>
-			<!--
-			<file name="BX_schemafile">./schema/editor.xsd</file>
--->
 		</input>
 		<css>
 			<!-- document specific css -->
 			<file isParam="true">url-css</file>
-			<!--
-			<file>./css/style.css</file>
--->
 			<!-- system wide css -->
 			<file>./bxe/css/editor.css</file>
 		</css>
 		<output>
 			<!-- looks like not implemented -->
-			<!--
-			<file name="BX_posturl" method="lenya" >http://cvs.lenya.org:8080/lenya/unipublic/xopus/XopusInterface</file>
--->
 			<file name="BX_posturl" method="lenya" isParam="true">url-post</file>
 		</output>
 		<scripts>

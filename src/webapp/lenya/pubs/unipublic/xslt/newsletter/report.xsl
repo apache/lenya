@@ -10,7 +10,7 @@
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:session="http://www.lenya.org/2002/session"
+    xmlns:session="http://apache.org/cocoon/session/1.0"
     >
 
 <xsl:param name="result"/>

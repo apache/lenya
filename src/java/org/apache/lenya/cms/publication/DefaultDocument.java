@@ -1,5 +1,5 @@
 /*
-$Id: DefaultDocument.java,v 1.13 2003/07/17 14:52:38 gregor Exp $
+$Id: DefaultDocument.java,v 1.14 2003/07/23 13:21:11 gregor Exp $
 <License>
 
  ============================================================================
@@ -57,6 +57,8 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+import java.util.Date;
+
 /**
  * A typical CMS document.
  *
@@ -79,6 +81,8 @@ public class DefaultDocument implements Document {
 
         assert (publication != null) && !"".equals(publication);
         this.publication = publication;
+        this.dublincore =  new DublinCore((Document)this);
+
     }
 
     /**
@@ -94,6 +98,7 @@ public class DefaultDocument implements Document {
 
         assert (publication != null) && !"".equals(publication);
         this.publication = publication;
+		this.dublincore =  new DublinCore((Document)this);
 
         setArea(area);
     }
@@ -119,8 +124,8 @@ public class DefaultDocument implements Document {
 	/**
 	 * @see org.apache.lenya.cms.publication.Document#getLastModified()
 	 */
-	public String getLastModified() {
-		return null;
+	public Date getLastModified() {
+		return new Date(getFile().lastModified());
 	}
 
 	/**

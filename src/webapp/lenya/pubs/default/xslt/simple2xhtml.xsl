@@ -11,8 +11,8 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:simple="http://www.lenya.org/2003/simple-document"
-    xmlns:lenya="http://lenya.org/2003/"
+    xmlns:simple="http://apache.org/cocoon/lenya/doctypes/simple-document/1.0"
+    xmlns:lenya=" http://apache.org/cocoon/lenya/page-envelope/1.0"
     exclude-result-prefixes="simple lenya"
     >
 

@@ -11,8 +11,8 @@
 <xsl:stylesheet
     version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:tree="http://www.lenya.org/2003/sitetree"
-    xmlns:nav="http://www.lenya.org/2003/navigation"
+    xmlns:tree="http://apache.org/cocoon/lenya/sitetree/1.0"
+    xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
     exclude-result-prefixes="tree"
     >
 

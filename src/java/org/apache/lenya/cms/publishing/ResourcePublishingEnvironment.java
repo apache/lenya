@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ResourcePublishingEnvironment.java,v 1.6 2003/07/23 13:21:09 gregor Exp $
 <License>
 
  ============================================================================

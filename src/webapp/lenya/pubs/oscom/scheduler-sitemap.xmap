@@ -52,7 +52,7 @@
     <!-- Schedule Document: View, Add, Edit, Delete Jobs -->
     <map:pipeline>
       <map:match pattern="docid/**">
-        <map:aggregate element="scheduler" prefix="sch" ns="http://www.lenya.org/2002/sch">
+        <map:aggregate element="scheduler" prefix="sch" ns="http://apache.org/cocoon/lenya/scheduler/1.0">
           <map:part src="cocoon:/document-types"/>
           <map:part src="cocoon:/tasks"/>
           <map:part src="cocoon:/scheduler-xsp"/>

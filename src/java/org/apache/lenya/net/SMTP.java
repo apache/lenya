@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: SMTP.java,v 1.10 2003/07/23 13:21:40 gregor Exp $
 <License>
 
  ============================================================================
@@ -145,7 +145,7 @@ public class SMTP {
             System.out.println("Subject: " + subject);
             System.out.println("Body: \n" + body);
 
-            String from = "contact@lenya.org";
+            String from = "board@apache.org";
             String cc = null;
             String bcc = null;
             mail.send(from, to, cc, bcc, subject, body);

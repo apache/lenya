@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TaskAction.java,v 1.22 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -87,7 +87,7 @@ import java.util.Map;
 /**
  * An action that executes a task.
  *
- * @author <a href="mailto:ah@lenya.org">Andreas Hartmann</a>
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public class TaskAction extends AbstractComplementaryConfigurableAction {
     private String taskId = null;

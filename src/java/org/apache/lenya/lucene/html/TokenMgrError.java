@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: TokenMgrError.java,v 1.8 2003/07/23 13:21:18 gregor Exp $
 <License>
 
  ============================================================================
@@ -60,7 +60,7 @@ package org.apache.lenya.lucene.html;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class TokenMgrError extends Error {
     /*

@@ -1,5 +1,5 @@
 /*
-$Id: RevisionController.java,v 1.18 2003/07/14 14:24:20 egli Exp $
+$Id: RevisionController.java,v 1.19 2003/07/23 13:21:35 gregor Exp $
 <License>
 
  ============================================================================
@@ -72,7 +72,7 @@ import java.util.Date;
 /**
  * DOCUMENT ME!
  *
- * @author Michael Wechner (http://www.lenya.com)
+ * @author Michael Wechner (http://cocoon.apache.org/lenya)
  * @version 1.5.1
  */
 public class RevisionController {

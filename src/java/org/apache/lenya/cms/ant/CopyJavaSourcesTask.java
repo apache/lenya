@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: CopyJavaSourcesTask.java,v 1.12 2003/07/23 13:21:23 gregor Exp $
 <License>
 
  ============================================================================
@@ -71,7 +71,7 @@ import java.util.StringTokenizer;
 
 
 /**
- * @author <a href="mailto:michael.wechner@lenya.org">Michael Wechner</a>
+ * @author <a href="mailto:michael.wechner@apache.org">Michael Wechner</a>
  */
 public class CopyJavaSourcesTask extends Task {
     private Path pubsRootDirs;

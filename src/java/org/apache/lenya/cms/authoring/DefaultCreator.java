@@ -1,5 +1,5 @@
 /*
-$Id: DefaultCreator.java,v 1.20 2003/07/04 14:25:51 egli Exp $
+$Id: DefaultCreator.java,v 1.21 2003/07/23 13:21:20 gregor Exp $
 <License>
 
  ============================================================================
@@ -71,7 +71,7 @@ import java.util.Map;
 /**
  * DOCUMENT ME!
  *
- * @author <a href="mailto:juergen.bigalke@lenya.org">Juergen Bigalke</a>
+ * @author <a href="mailto:bigalke@geophysik.uni-frankfurt.de">Juergen Bigalke</a>
  */
 public class DefaultCreator implements ParentChildCreatorInterface {
     private static Category log = Category.getInstance(DefaultCreator.class);

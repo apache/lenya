@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: Entities.java,v 1.8 2003/07/23 13:21:17 gregor Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,7 @@ import java.util.*;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class Entities {
     static final Hashtable decoder = new Hashtable(300);

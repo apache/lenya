@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: SwingHTMLHandler.java,v 1.7 2003/07/23 13:21:21 gregor Exp $
 <License>
 
  ============================================================================
@@ -399,7 +399,7 @@ public class SwingHTMLHandler extends ParserCallback {
      * DOCUMENT ME!
      *
      * @author $author$
-     * @version $Revision: 1.6 $
+     * @version $Revision: 1.7 $
      */
     public class TagStack {
         private List tags = new ArrayList();
@@ -472,7 +472,7 @@ public class SwingHTMLHandler extends ParserCallback {
          * DOCUMENT ME!
          *
          * @author $author$
-         * @version $Revision: 1.6 $
+         * @version $Revision: 1.7 $
          */
         public class UnderflowException extends Exception {
             /**

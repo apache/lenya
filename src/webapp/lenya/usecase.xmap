@@ -42,7 +42,7 @@
     </map:resource>
     
     <map:resource name="scheduler-page">
-      <map:aggregate element="scheduler" label="aggregation" ns="http://www.lenya.org/2002/sch" prefix="sch">
+      <map:aggregate element="scheduler" label="aggregation" ns="http://apache.org/cocoon/lenya/scheduler/1.0" prefix="sch">
         <map:part src="cocoon:/document-types/{publication-id}"/>
         <map:part src="cocoon:/tasks/{publication-id}"/>
         <map:part src="cocoon:/scheduler-xsp" strip-root="true"/>
@@ -538,8 +538,8 @@
           
           <map:match pattern="showscreen" type="step">
             <map:generate src="content/info/info.xsp" type="serverpages"/>
-            <map:transform src="xslt/info/info.xsl"/>
-            <map:serialize type="html"/>
+<!--            <map:transform src="xslt/info/info.xsl"/> -->
+            <map:serialize type="xml"/>
           </map:match>
           
           <map:match pattern="update" type="step">

@@ -4,18 +4,18 @@
 
 <!--
   History of publication changes
-  $Id: changes.xml,v 1.1 2003/03/31 18:22:47 felix Exp $
+  $Id: changes.xml,v 1.2 2003/07/23 13:21:10 gregor Exp $
 -->
 
 <changes title="History of Changes">
 
 <devs>
   <!-- in strict alphabetical order -->
-  <person name="Christian Egli" email="egli@lenya.org" id="CE"/>
-  <person name="Andreas Hartmann" email="ah@lenya.org" id="AH"/>
-  <person name="Felix Maeder" email="felix@lenya.org" id="FM"/>
-  <person name="Gregor J. Rothfuss" email="gregor@lenya.org" id="GJR"/>
-  <person name="Michael Wechner" email="michi@lenya.org" id="MW"/>
+  <person name="Christian Egli" email="egli@apache.org" id="CE"/>
+  <person name="Andreas Hartmann" email="andreas@apache.org" id="AH"/>
+  <person name="Felix Maeder" email="felix@apache.org" id="FM"/>
+  <person name="Gregor J. Rothfuss" email="gregor@apache.org" id="GJR"/>
+  <person name="Michael Wechner" email="michi@apache.org" id="MW"/>
 </devs>
 
  <release version="@version@" date="@date@">

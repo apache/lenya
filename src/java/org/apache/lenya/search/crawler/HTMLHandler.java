@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: HTMLHandler.java,v 1.9 2003/07/23 13:21:37 gregor Exp $
 <License>
 
  ============================================================================
@@ -76,7 +76,7 @@ import javax.swing.text.html.parser.ParserDelegator;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public final class HTMLHandler extends ParserCallback implements ContentHandler {
     private static final char space = ' ';

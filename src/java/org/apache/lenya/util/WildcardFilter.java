@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: WildcardFilter.java,v 1.10 2003/07/23 13:21:14 gregor Exp $
 <License>
 
  ============================================================================
@@ -62,7 +62,7 @@ import java.util.Vector;
 /**
  * DOCUMENT ME!
  *
- * @author Michael Wechner (http://www.lenya.com)
+ * @author Michael Wechner (http://cocoon.apache.org/lenya)
  * @version 0.12.17 WARNING: This class does not work properly!!! NOTE: matchNew() should be working properly!!!
  */
 public class WildcardFilter {

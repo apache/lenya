@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ContentHandler.java,v 1.8 2003/07/23 13:21:37 gregor Exp $
 <License>
 
  ============================================================================
@@ -64,7 +64,7 @@ import java.util.List;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public interface ContentHandler {
     /**

@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: EditorMainAction.java,v 1.22 2003/07/23 13:21:30 gregor Exp $
 <License>
 
  ============================================================================
@@ -87,7 +87,7 @@ import java.util.Map;
 
 
 /**
- * $Id: EditorMainAction.java,v 1.21 2003/06/30 11:46:29 andreas Exp $
+ * $Id: EditorMainAction.java,v 1.22 2003/07/23 13:21:30 gregor Exp $
  *
  * @author Martin L?thi
  * @version 2002.01.22

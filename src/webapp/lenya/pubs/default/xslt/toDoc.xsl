@@ -1,6 +1,6 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-                xmlns:rc="http://www.lenya.org/2002/rc" >
+                xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0" >
 
 <xsl:template match="rc:backup">
         <xsl:apply-templates/> 

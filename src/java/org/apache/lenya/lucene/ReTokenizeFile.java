@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ReTokenizeFile.java,v 1.15 2003/07/23 13:21:26 gregor Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,7 @@ import java.util.StringTokenizer;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class ReTokenizeFile {
     /**

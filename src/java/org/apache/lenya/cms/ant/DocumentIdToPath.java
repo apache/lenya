@@ -16,17 +16,17 @@
  *
  * 3. All advertising materials mentioning features or use of this software must
  *    display the following acknowledgment: "This product includes software developed
- *    by lenya (http://www.lenya.org)"
+ *    by lenya (http://cocoon.apache.org/lenya/)"
  *
  * 4. The name "lenya" must not be used to endorse or promote products derived from
  *    this software without prior written permission. For written permission, please
- *    contact contact@lenya.org
+ *    contact board@apache.org
  *
  * 5. Products derived from this software may not be called "lenya" nor may "lenya"
  *    appear in their names without prior written permission of lenya.
  *
  * 6. Redistributions of any form whatsoever must retain the following acknowledgment:
- *    "This product includes software developed by lenya (http://www.lenya.org)"
+ *    "This product includes software developed by lenya (http://cocoon.apache.org/lenya/)"
  *
  * THIS SOFTWARE IS PROVIDED BY lenya "AS IS" WITHOUT ANY WARRANTY EXPRESS OR IMPLIED,
  * INCLUDING THE WARRANTY OF NON-INFRINGEMENT AND THE IMPLIED WARRANTIES OF MERCHANTI-
