@@ -9,7 +9,7 @@
 </xsl:template>
 
 <xsl:template match="articles">
-  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
     <channel>
       <title>Wyona</title>
       <link>http://www.wyona.org</link>
@@ -19,9 +19,14 @@
       <item>
         <title><xsl:apply-templates select="article/head/title"/></title>
         <link>http://www.wyona.org</link>
+        <xsl:apply-templates select="article/meta/date"/>
       </item>
     </xsl:for-each>
   </rdf:RDF>
+</xsl:template>
+
+<xsl:template match="date" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <dc:date><xsl:value-of select="year"/>-<xsl:value-of select="month"/>-<xsl:value-of select="day"/>T<xsl:value-of select="hour"/>:<xsl:value-of select="minute"/></dc:date>
 </xsl:template>
  
 </xsl:stylesheet>  
