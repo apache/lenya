@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.223 2004/08/11 07:57:27 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.224 2004/08/11 08:02:59 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -243,11 +243,10 @@
         <!-- Submit -->
         <map:match pattern="submit" type="usecase">
           <map:match pattern="showscreen" type="step">
-            <map:call resource="cms-screen-xml">
-              <map:parameter name="publication-id" value="{../../1}"/>
-              <map:parameter name="serverpage" value="publishing/submit-screen.xsp"/>
-              <map:parameter name="stylesheet" value="publishing/submit-screen.xsl"/>
-            </map:call>
+            <map:generate type="serverpages" src="{fallback:content/publishing/submit-screen.xsp}"/>
+            <map:transform src="{fallback:xslt/publishing/submit-screen.xsl}">
+              <map:parameter name="use-request-parameters" value="true"/>
+            </map:transform>
             <map:transform src="cocoon:/notification/{../../1}/submit.xsl"/>
             <map:call resource="style-cms-page"/>
           </map:match>
