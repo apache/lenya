@@ -1,5 +1,5 @@
 /*
-$Id: UniqueDocumentId.java,v 1.6 2003/08/20 16:50:33 edith Exp $
+$Id: UniqueDocumentId.java,v 1.7 2003/08/25 17:43:46 edith Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,8 @@ public class UniqueDocumentId {
     private static Category log = Category.getInstance(UniqueDocumentId.class);
 
     /** compute an unique document id
-     * @param absolutetreepath The absolute path of the tree.
+     * @param publication The publication the document belongs to.
+	 * @param area The area the document belongs to.
      * @param documentid The documentid .
      * @return the unique documentid
      */
@@ -84,10 +85,10 @@ public class UniqueDocumentId {
 
             if (node != null) {
                 int l = documentid.length();
-                int index = documentid.lastIndexOf("_");
+                int index = documentid.lastIndexOf("-");
 
                 if ((index < l) & (index > 0)) {
-                    suffix = documentid.substring(index);
+                    suffix = documentid.substring(index+1);
                     idwithoutsuffix = documentid.substring(0, index);
                     version = Integer.parseInt(suffix);
                 } else {
@@ -97,7 +98,7 @@ public class UniqueDocumentId {
                 while (node != null) {
                     version = version + 1;
                     suffix = (new Integer(version)).toString();
-                    documentid = idwithoutsuffix + "_" + suffix;
+                    documentid = idwithoutsuffix + "-" + suffix;
                     log.debug("version: " + version);
                     node = tree.getNode(documentid);
                 }
