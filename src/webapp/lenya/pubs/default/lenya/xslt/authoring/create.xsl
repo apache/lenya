@@ -143,7 +143,7 @@ function validateForm(theForm)
   </xsl:template>
   
   <xsl:template match="allowedLanguage">
-    <option>
+    <option value="{.}">
       <xsl:value-of select="."/>
     </option>
   </xsl:template>
