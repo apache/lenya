@@ -14,11 +14,11 @@
     <xsp:logic>
       String bitflux_prefix=""+xsp_lenya_context_prefix+"/bitflux";
       String domain_prefix_bitflux=""+xsp_lenya_context_prefix;
-      String replacementString = File.separator + "index.xml";
-      String xmlSource = xsp_lenya_pub_url.replaceFirst("\\.html", replacementString);
-      if (xmlSource.startsWith("/")) {
+      String replacementString = "/index.xml";
+      String xmlSource = xsp_lenya_pub_url.replaceFirst(".html", replacementString);
+/*      if (xmlSource.startsWith("/")) {
         xmlSource = xmlSource.substring(1);
-      } 
+      } */
       String sourcesParameter = "sources=" + xmlSource;
       String urisParameter = "uris=" + xsp_lenya_pub_url;
     </xsp:logic>
@@ -31,10 +31,6 @@
     <menus>
       <menu name="File" label="File">
 <block>
-	  <item><xsp:attribute name="href">?lenya.usecase=midas&amp;lenya.step=open</xsp:attribute>Edit&#160;with&#160;Midas</item>
-	  <item>Edit&#160;with&#160;Mozile</item>
-	  <item><xsp:attribute name="href">xopus2<xsp:expr>xsp_lenya_pub_url</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus2</item>
-	  <item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/xdoc.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/xdoc.xsd&amp;url-css="+bitflux_prefix+"/css/xdoc.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
 	  <item><xsp:attribute name="href">?lenya.usecase=publish&amp;lenya.step=showscreen&amp;<xsp:expr>urisParameter</xsp:expr>&amp;<xsp:expr>sourcesParameter</xsp:expr>&amp;task-id=publish</xsp:attribute>Publish</item>
 	  <item><xsp:attribute name="href">?lenya.usecase=create&amp;lenya.step=showscreen&amp;doctype=simple</xsp:attribute>New Document</item>
 	  <item><xsp:attribute name="href"><xsp:expr>xsp_lenya_context_prefix</xsp:expr>/logout</xsp:attribute>Logout</item>
@@ -43,16 +39,17 @@
       
       <menu name="Edit" label="Search">
 <block>
-<item><xsp:attribute name="href">http://www.google.com</xsp:attribute>Google</item>
-	  <item href="http://dict.leo.org">Translate&#160;E2G&#160;or&#160;G2E</item>
+	  <item><xsp:attribute name="href">?lenya.usecase=midas&amp;lenya.step=open</xsp:attribute>Edit&#160;with&#160;Midas</item>
+	  <item><xsp:attribute name="href">xopus2<xsp:expr>xsp_lenya_pub_url</xsp:expr>?documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Edit&#160;with&#160;Xopus</item>
+	  <item><xsp:attribute name="href"><xsp:expr>"/lenya/bitflux/index.html?url-xml="+bitflux_prefix+xmlSource+"&amp;url-xslt="+bitflux_prefix+"/stylesheets/simple.xsl&amp;url-xsd="+bitflux_prefix+"/schemas/simple.xsd&amp;url-css="+bitflux_prefix+"/css/simple.css&amp;url-post="+bitflux_prefix+"/save"+xmlSource+"&amp;url-back="+xsp_lenya_context_prefix+"/authoring"+xsp_lenya_pub_url</xsp:expr></xsp:attribute>Edit with Bitflux</item>	  
 </block>
       </menu>
       
       <menu name="Tools" label="Help">
 <block>
 <item><xsp:attribute name="href">../xopus<xsp:expr>xsp_lenya_pub_url.replaceFirst("\\.html", ".xml")</xsp:expr></xsp:attribute>View&#160;XML</item>
-	  <item href="../xopus/xdoc.xsd">View&#160;Xopus&#160;XSD</item>
-	  <item href="../xopus/xdoc.xsl">View&#160;Xopus&#160;XSLT</item>
+	  <item href="../xopus/simple.xsd">View&#160;Xopus&#160;XSD</item>
+	  <item href="../xopus/simple.xsl">View&#160;Xopus&#160;XSLT</item>
           <item href="?lenya.usecase=view-logs&amp;lenya.step=overview">View Task Logs</item>
           <item href="?lenya.usecase=schedule&amp;lenya.step=showscreen">Scheduler</item>
 	  <item><xsp:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=showscreen&amp;documentid=<xsp:expr>xmlSource</xsp:expr></xsp:attribute>Rollback</item>
