@@ -19,18 +19,20 @@
 
 package org.apache.lenya.cms.metadata.dublincore;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.ProcessingException;
+import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -38,15 +40,13 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 /**
  * Access dublin core meta data in documents. This class uses the dublin core specification from
  * 2003-03-04.
  */
 public class DublinCoreImpl {
-    private Document cmsdocument;
-    private File infofile;
+    private String sourceUri;
 
     private Map elements = new HashMap();
     private Map terms = new HashMap();
@@ -87,28 +87,29 @@ public class DublinCoreImpl {
             DublinCore.TERM_EDUCATIONLEVEL, DublinCore.TERM_ACCESSRIGHTS,
             DublinCore.TERM_BIBLIOGRAPHICCITATION };
 
+    private ServiceManager manager;
+
     /**
      * Creates a new instance of Dublin Core
      * @param aDocument the document for which the Dublin Core instance is created.
+     * @param manager The service manager.
      * @throws DocumentException if an error occurs
      */
-    protected DublinCoreImpl(Document aDocument) throws DocumentException {
-        this.cmsdocument = aDocument;
-        this.infofile = this.cmsdocument.getPublication().getPathMapper().getFile(
-                this.cmsdocument.getPublication(), this.cmsdocument.getArea(), this.cmsdocument.getId(),
-                this.cmsdocument.getLanguage());
+    protected DublinCoreImpl(Document aDocument, ServiceManager manager) throws DocumentException {
+        this.manager = manager;
+        this.sourceUri = aDocument.getSourceURI();
         loadValues();
     }
 
     /**
-     * Creates a new instance of Dublin Core 
-     * @param file the File for which the Dublin Core instance is created.
-     * TODO This is a hack until resources are treated as documents, and .meta files
-     * can be accessed through the Document interface.
+     * Creates a new instance of Dublin Core
+     * @param sourceUri The source URI.
+     * @param manager The service manager.
      * @throws DocumentException if an error occurs
      */
-    public DublinCoreImpl(File file) throws DocumentException {
-        this.infofile = file;
+    public DublinCoreImpl(String sourceUri, ServiceManager manager) throws DocumentException {
+        this.sourceUri = sourceUri;
+        this.manager = manager;
         loadValues();
     }
 
@@ -118,16 +119,65 @@ public class DublinCoreImpl {
      */
     protected void loadValues() throws DocumentException {
 
-        if (this.infofile.exists()) {
-            org.w3c.dom.Document doc = null;
-            try {
-                doc = DocumentHelper.readDocument(this.infofile);
-            } catch (Exception e) {
-                throw new DocumentException("Parsing file [" + this.infofile + "] failed: ", e);
-            }
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(this.sourceUri);
+            if (source.exists()) {
+                org.w3c.dom.Document doc = DocumentHelper.readDocument(source.getInputStream());
 
-            // FIXME: what if "lenya:meta" element doesn't exist yet?
-            // Currently the element is inserted.
+                // FIXME: what if "lenya:meta" element doesn't exist yet?
+                // Currently the element is inserted.
+                Element metaElement = getMetaElement(doc);
+
+                String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
+                String[] prefixes = { DC_PREFIX, DCTERMS_PREFIX };
+                String[][] arrays = { ELEMENTS, TERMS };
+                Map[] maps = { this.elements, this.terms };
+
+                for (int type = 0; type < 2; type++) {
+                    NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type],
+                            doc);
+                    String[] elementNames = arrays[type];
+                    for (int i = 0; i < elementNames.length; i++) {
+                        Element[] children = helper.getChildren(metaElement, elementNames[i]);
+                        String[] values = new String[children.length];
+                        for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
+                            values[valueIndex] = DocumentHelper
+                                    .getSimpleElementText(children[valueIndex]);
+                        }
+                        maps[type].put(elementNames[i], values);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new DocumentException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * Save the meta data.
+     * @throws DocumentException if the meta data could not be made persistent.
+     */
+    public void save() throws DocumentException {
+
+        SourceResolver resolver = null;
+        ModifiableSource source = null;
+        try {
+
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = (ModifiableSource) resolver.resolveURI(this.sourceUri);
+
+            org.w3c.dom.Document doc = DocumentHelper.readDocument(source.getInputStream());
+
             Element metaElement = getMetaElement(doc);
 
             String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
@@ -140,66 +190,38 @@ public class DublinCoreImpl {
                 String[] elementNames = arrays[type];
                 for (int i = 0; i < elementNames.length; i++) {
                     Element[] children = helper.getChildren(metaElement, elementNames[i]);
-                    String[] values = new String[children.length];
                     for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
-                        values[valueIndex] = DocumentHelper
-                                .getSimpleElementText(children[valueIndex]);
+                        metaElement.removeChild(children[valueIndex]);
                     }
-                    maps[type].put(elementNames[i], values);
+                    String[] values = (String[]) maps[type].get(elementNames[i]);
+                    for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
+                        Element valueElement = helper.createElement(elementNames[i],
+                                values[valueIndex]);
+                        metaElement.appendChild(valueElement);
+                    }
                 }
             }
-        }
 
-    }
-
-    /**
-     * Save the meta data.
-     * @throws DocumentException if the meta data could not be made persistent.
-     */
-    public void save() throws DocumentException {
-        org.w3c.dom.Document doc = null;
-        try {
-            doc = DocumentHelper.readDocument(this.infofile);
-        } catch (final ParserConfigurationException e) {
-            throw new DocumentException(e);
-        } catch (final SAXException e) {
-            throw new DocumentException(e);
-        } catch (final IOException e) {
-            throw new DocumentException(e);
-        }
-
-        Element metaElement = getMetaElement(doc);
-
-        String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
-        String[] prefixes = { DC_PREFIX, DCTERMS_PREFIX };
-        String[][] arrays = { ELEMENTS, TERMS };
-        Map[] maps = { this.elements, this.terms };
-
-        for (int type = 0; type < 2; type++) {
-            NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
-            String[] elementNames = arrays[type];
-            for (int i = 0; i < elementNames.length; i++) {
-                Element[] children = helper.getChildren(metaElement, elementNames[i]);
-                for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
-                    metaElement.removeChild(children[valueIndex]);
-                }
-                String[] values = (String[]) maps[type].get(elementNames[i]);
-                for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
-                    Element valueElement = helper
-                            .createElement(elementNames[i], values[valueIndex]);
-                    metaElement.appendChild(valueElement);
+            OutputStream oStream = source.getOutputStream();
+            Writer writer = new OutputStreamWriter(oStream);
+            DocumentHelper.writeDocument(doc, writer);
+            if (oStream != null) {
+                oStream.flush();
+                try {
+                    oStream.close();
+                } catch (Throwable t) {
+                    throw new ProcessingException("Could not write document: ", t);
                 }
             }
-        }
-
-        try {
-            DocumentHelper.writeDocument(doc, this.infofile);
-        } catch (TransformerConfigurationException e) {
+        } catch (Exception e) {
             throw new DocumentException(e);
-        } catch (TransformerException e) {
-            throw new DocumentException(e);
-        } catch (IOException e) {
-            throw new DocumentException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
         }
 
     }

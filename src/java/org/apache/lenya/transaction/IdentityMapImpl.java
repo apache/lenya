@@ -17,7 +17,10 @@
 package org.apache.lenya.transaction;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 
@@ -43,6 +46,7 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
         if (transactionable == null) {
             try {
                 transactionable = getFactory(type).build(this, key);
+                transactionable.lock();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -82,6 +86,20 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
      */
     public void setUnitOfWork(UnitOfWork unit) {
         this.unitOfWork = unit;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.IdentityMap#getObjects()
+     */
+    public Transactionable[] getObjects() {
+        Set objects = new HashSet();
+        for (Iterator i = this.maps.values().iterator(); i.hasNext(); ) {
+            Map map = (Map) i.next();
+            for (Iterator j = map.values().iterator(); j.hasNext(); ) {
+                objects.add(j.next());
+            }
+        }
+        return (Transactionable[]) objects.toArray(new Transactionable[objects.size()]);
     }
 
 }

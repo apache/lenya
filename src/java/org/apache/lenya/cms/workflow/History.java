@@ -226,7 +226,6 @@ public abstract class History {
                 Element versionElement = versions[i].getVersionElement(helper);
                 documentElement.appendChild(versionElement);
             }
-System.out.println("Saving file [" + getHistoryFile().getAbsolutePath() + "]");
             DocumentHelper.writeDocument(helper.getDocument(), getHistoryFile());
         } catch (final Exception e) {
             throw new RuntimeException(e);

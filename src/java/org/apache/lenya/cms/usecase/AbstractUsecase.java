@@ -29,6 +29,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
@@ -201,11 +202,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
             clearInfoMessages();
             doExecute();
             dumpErrorMessages();
-            
+
             if (getErrorMessages().size() == 0) {
                 getUnitOfWork().commit();
             }
-            
+
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
@@ -405,19 +406,21 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         this.context = _context;
     }
 
-    private DocumentIdentityMap documentIdentityMap;
-    
     protected DocumentIdentityMap getDocumentIdentityMap() {
-        return this.documentIdentityMap;
+        try {
+            return (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
     }
-    
+
     /**
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public final void initialize() throws Exception {
         super.initialize();
-        this.documentIdentityMap = new DocumentIdentityMap(this.manager, getLogger());
-        getUnitOfWork().addIdentityMap(this.documentIdentityMap);
+        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+        getUnitOfWork().setIdentityMap(map);
         Request request = ContextHelper.getRequest(this.context);
         Session session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());

@@ -50,7 +50,7 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         getLogger().debug("Backup: " + backup);
 
         try {
-            getRc().reservedCheckIn(getFilename(), getUsername(), backup);
+            getRc().reservedCheckIn(getFilename(), getUsername(), backup, true);
         } catch (FileReservedCheckInException e) {
             actionMap.put("exception", "fileReservedCheckInException");
             actionMap.put("filename", getFilename());

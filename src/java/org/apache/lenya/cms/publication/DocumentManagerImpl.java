@@ -38,6 +38,7 @@ import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.transaction.UnitOfWork;
 
 /**
  * Abstract DocumentManager implementation.
@@ -138,7 +139,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             siteManager.delete(document);
-            document.delete();
+            
+            UnitOfWork unit = document.getIdentityMap().getUnitOfWork();
+            unit.registerRemoved(document);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -431,6 +434,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
             SourceUtil.copy(source, (ModifiableSource) destination, true);
             destinationDocument.getDublinCore().replaceBy(sourceDocument.getDublinCore());
+            destinationDocument.getIdentityMap().getUnitOfWork().registerDirty(destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {

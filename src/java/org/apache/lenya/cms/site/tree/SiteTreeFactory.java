@@ -58,7 +58,7 @@ public class SiteTreeFactory extends AbstractLogEnabled implements Transactionab
 
         SourceResolver resolver = null;
         Source source = null;
-        SiteTree tree;
+        DefaultSiteTree tree;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI("context://");
@@ -69,6 +69,7 @@ public class SiteTreeFactory extends AbstractLogEnabled implements Transactionab
                     .getAbsolutePath());
            
             tree = new DefaultSiteTree(publication.getDirectory(), area);
+            tree.setup(map, publication);
             ContainerUtil.enableLogging(tree, getLogger());
             
         } finally {

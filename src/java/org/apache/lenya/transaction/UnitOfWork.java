@@ -38,34 +38,36 @@ public interface UnitOfWork {
     String ROLE = UnitOfWork.class.getName();
 
     /**
-     * Returns the identity maps.
-     * @return An array of identity maps.
+     * Returns the identity map.
+     * @return An identity map.
      */
-    IdentityMap[] getIdentityMaps();
+    IdentityMap getIdentityMap();
     
     /**
-     * Adds an identity map.
-     * @param map The map to add.
+     * @param map The identity map to use.
      */
-    void addIdentityMap(IdentityMap map);
-
+    void setIdentityMap(IdentityMap map);
+    
     /**
      * Registers an object as new.
      * @param object The object.
+     * @throws TransactionException if an error occurs.
      */
-    void registerNew(Transactionable object);
+    void registerNew(Transactionable object) throws TransactionException;
     
     /**
      * Registers an object as modified.
      * @param object The object.
+     * @throws TransactionException if an error occurs.
      */
-    void registerDirty(Transactionable object);
+    void registerDirty(Transactionable object) throws TransactionException;
     
     /**
      * Registers an object as removed.
      * @param object The object.
+     * @throws TransactionException if an error occurs.
      */
-    void registerRemoved(Transactionable object);
+    void registerRemoved(Transactionable object) throws TransactionException;
     
     /**
      * Commits the transaction.
@@ -82,4 +84,10 @@ public interface UnitOfWork {
      * @param identity The identity.
      */
     void setIdentity(Identity identity);
+    
+    /**
+     * @param transactionable A transactionable.
+     * @return If the transactionable is registered as dirty.
+     */
+    boolean isDirty(Transactionable transactionable);
 }

@@ -14,27 +14,24 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
-
-package org.apache.lenya.cms.rc;
-
+package org.apache.lenya.transaction;
 
 /**
- * A checkin entry
+ * A lock on a transactionable.
+ *
+ * @version $Id:$
  */
-public class CheckInEntry extends RCMLEntry {
+public class Lock {
+
     /**
-     * Creates a new CheckInEntry object.
-     * @param identity The identity to use
-     * @param time The time
-     * @param version The version number.
+     * Ctor.
+     * @param version The version of the transactionable when it was locked.
      */
-    public CheckInEntry(String identity, long time, int version) {
-        super(identity, time);
-        setType(RCML.ci);
+    public Lock(int version) {
         this.version = version;
     }
+    
+    private int version;
     
     /**
      * @return The version number.
@@ -42,7 +39,5 @@ public class CheckInEntry extends RCMLEntry {
     public int getVersion() {
         return this.version;
     }
-
-    private int version = 0;
     
 }

@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceManager;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 
@@ -40,7 +41,6 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-
 
 /**
  * Manager for resources of a CMS document.
@@ -95,15 +95,17 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     }
 
     private Document document = null;
-    
+    private ServiceManager manager;
+
     protected static final String NAMESPACE_META = "http://lenya.apache.org/meta/1.0";
 
     /**
      * Create a new instance of Resources.
      * @param _document the document for which the resources are managed
      */
-    public DefaultResourcesManager(Document _document) {
+    public DefaultResourcesManager(Document _document, ServiceManager manager) {
         this.document = _document;
+        this.manager = manager;
     }
 
     /**
@@ -145,15 +147,15 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
             /*
              * } // must be a content upload then else { resourceFile = new
-             * File(document.getFile().getParent(), fileName);
-             * getLogger().debug("resourceFile: " + resourceFile); }
+             * File(document.getFile().getParent(), fileName); getLogger().debug("resourceFile: " +
+             * resourceFile); }
              */
             saveResource(resourceFile, part);
         } catch (final DocumentException e) {
-            getLogger().error("Document exception " +e.toString());
+            getLogger().error("Document exception " + e.toString());
             throw new RuntimeException(e);
         } catch (final IOException e) {
-            getLogger().error("IO Error " +e.toString());
+            getLogger().error("IO Error " + e.toString());
             throw e;
         }
     }
@@ -167,7 +169,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     protected void saveResource(File resourceFile, Part part) throws IOException {
         FileOutputStream out = null;
         InputStream in = null;
-        
+
         if (!resourceFile.exists()) {
             boolean created = resourceFile.createNewFile();
             if (!created) {
@@ -175,7 +177,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             }
         }
 
-	    try {
+        try {
             byte[] buf = new byte[4096];
             out = new FileOutputStream(resourceFile);
             in = part.getInputStream();
@@ -186,13 +188,13 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 read = in.read(buf);
             }
         } catch (final FileNotFoundException e) {
-            getLogger().error("file not found" +e.toString());
+            getLogger().error("file not found" + e.toString());
             throw new IOException(e.toString());
         } catch (IOException e) {
-            getLogger().error("IO error " +e.toString());
+            getLogger().error("IO error " + e.toString());
             throw new IOException(e.toString());
         } catch (Exception e) {
-            getLogger().error("Exception" +e.toString());
+            getLogger().error("Exception" + e.toString());
             throw new IOException(e.toString());
         } finally {
             if (in != null)
@@ -208,27 +210,27 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      * @param metadata a <code>Map</code> containing the dublin core values
      * @throws DocumentException if an error occurs
      */
-    protected void createMetaData(File metaDataFile, Map metadata)
-            throws DocumentException {
+    protected void createMetaData(File metaDataFile, Map metadata) throws DocumentException {
 
         assert (metaDataFile.getParentFile().exists());
-		try {
-            
+        try {
+
             if (!metaDataFile.exists()) {
                 metaDataFile.createNewFile();
                 NamespaceHelper helper = new NamespaceHelper(NAMESPACE_META, "", "meta");
                 DocumentHelper.writeDocument(helper.getDocument(), metaDataFile);
             }
-            String		key;
-            String		value;
-            Map.Entry	entry;
-            DublinCoreImpl dc = new DublinCoreImpl(metaDataFile);
+            String key;
+            String value;
+            Map.Entry entry;
+            String sourceUrl = "file:/" + metaDataFile.getAbsolutePath();
+            DublinCoreImpl dc = new DublinCoreImpl(sourceUrl, this.manager);
             Iterator iter = metadata.entrySet().iterator();
 
             while (iter.hasNext()) {
-            	entry 	= (Map.Entry)iter.next();
-            	key 	= (String)entry.getKey();
-            	value 	= (String)entry.getValue();
+                entry = (Map.Entry) iter.next();
+                key = (String) entry.getKey();
+                value = (String) entry.getValue();
                 dc.setValue(key, value);
             }
             dc.save();
@@ -303,8 +305,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Get the meta data for all resources for the associated document.
-     * @return all meta data files for the resources for the associated
-     *         document.
+     * @return all meta data files for the resources for the associated document.
      */
     public File[] getMetaFiles() {
         FileFilter filter = new MetaSuffixFileFilter();
@@ -314,8 +315,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     /**
      * Returns a meta file for a given resource.
      * @param resource A resource the meta file should be returned for.
-     * @return A file containing meta information about a resource. Returns null
-     *         if no meta file was found.
+     * @return A file containing meta information about a resource. Returns null if no meta file was
+     *         found.
      * @throws IllegalArgumentException If resource is a meta file itself.
      */
     public File getMetaFile(final File resource) throws IllegalArgumentException {

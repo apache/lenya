@@ -28,10 +28,17 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -64,6 +71,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     // the area is only retained to provide some more info when raising an
     // exception.
     private String area = "";
+    private IdentityMap identityMap;
+    private Publication publication;
+
+    protected void setup(IdentityMap map, Publication publication) {
+        this.identityMap = map;
+        this.publication = publication;
+    }
 
     /**
      * Create a DefaultSiteTree
@@ -549,48 +563,82 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.transaction.Transactionable#checkin()
      */
     public void checkin() throws TransactionException {
-        // TODO Auto-generated method stub
+        checkin(true);
+    }
 
+    protected void checkin(boolean backup) throws TransactionException {
+        try {
+            String userName = getUserID();
+            boolean newVersion = this.identityMap.getUnitOfWork().isDirty(this);
+            getRevisionController().reservedCheckIn(getRCPath(), userName, backup, newVersion);
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
+    }
+
+    /**
+     * @return The username of the unit of work's identity.
+     */
+    protected String getUserID() {
+        String userName = null;
+        UnitOfWork unit = this.identityMap.getUnitOfWork();
+        Identity identity = unit.getIdentity();
+        User user = identity.getUser();
+        if (user != null) {
+            userName = user.getId();
+        }
+        return userName;
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkout()
      */
     public void checkout() throws TransactionException {
-        // TODO Auto-generated method stub
-
+        try {
+            String userName = getUserID();
+            getRevisionController().reservedCheckOut(getRCPath(), userName);
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
+    }
+    
+    protected String getRCPath() {
+        return this.area + "/" + SITE_TREE_FILENAME;
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
      */
     public boolean isCheckedOut() throws TransactionException {
-        // TODO Auto-generated method stub
-        return false;
+        try {
+            String userName = getUserID();
+            return !getRevisionController().canCheckOut(getRCPath(), userName);
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
     }
+
+    private Lock lock;
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws TransactionException {
-        // TODO Auto-generated method stub
-
+        this.lock = new Lock(getVersion());
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#unlock()
      */
     public void unlock() throws TransactionException {
-        // TODO Auto-generated method stub
-
+        this.lock = null;
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isLocked()
      */
     public boolean isLocked() throws TransactionException {
-        // TODO Auto-generated method stub
-        return false;
+        return this.lock != null;
     }
 
     /**
@@ -612,4 +660,44 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public void create() throws TransactionException {
     }
 
+    private RevisionController revisionController;
+
+    protected RevisionController getRevisionController() throws TransactionException {
+        if (this.revisionController == null) {
+            try {
+                String publicationPath = this.publication.getDirectory().getCanonicalPath();
+                RCEnvironment rcEnvironment = RCEnvironment.getInstance(this.publication
+                        .getServletContext().getCanonicalPath());
+                String rcmlDirectory = publicationPath + File.separator
+                        + rcEnvironment.getRCMLDirectory();
+                String backupDirectory = publicationPath + File.separator
+                        + rcEnvironment.getBackupDirectory();
+
+                this.revisionController = new RevisionController(rcmlDirectory, backupDirectory,
+                        publicationPath);
+            } catch (IOException e) {
+                throw new TransactionException(e);
+            }
+        }
+        return this.revisionController;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#getLock()
+     */
+    public Lock getLock() {
+        return this.lock;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#getVersion()
+     */
+    public int getVersion() throws TransactionException {
+        try {
+            String fileName = this.treefile.getCanonicalPath();
+            return getRevisionController().getLatestVersion(fileName);
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
+    }
 }

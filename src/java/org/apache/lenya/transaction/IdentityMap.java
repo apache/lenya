@@ -54,5 +54,10 @@ public interface IdentityMap {
      * @param unit The unit of work to use.
      */
     void setUnitOfWork(UnitOfWork unit);
+    
+    /**
+     * @return All objects in this map.
+     */
+    Transactionable[] getObjects();
 
 }

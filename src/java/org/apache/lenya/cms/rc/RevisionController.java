@@ -29,18 +29,16 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
- * Controller for the reserved check-in, check-out, the backup versions and the rollback 
+ * Controller for the reserved check-in, check-out, the backup versions and the rollback
  */
 public class RevisionController {
     private static Logger log = Logger.getLogger(RevisionController.class);
 
     /**
-     * <code>systemUsername</code> The system user name. This is used for 
-     *  - creating dummy checkin events in a new RCML file
-     * when it is created on-the-fly
-     *  - system override on checkin, i.e. you can force
-     *  a checkin into the repository if you use this
-     *  username as identity parameter to reservedCheckIn()
+     * <code>systemUsername</code> The system user name. This is used for - creating dummy checkin
+     * events in a new RCML file when it is created on-the-fly - system override on checkin, i.e.
+     * you can force a checkin into the repository if you use this username as identity parameter to
+     * reservedCheckIn()
      */
     public static final String systemUsername = "System";
 
@@ -50,7 +48,7 @@ public class RevisionController {
 
     /**
      * Creates a new RevisionController object.
-     *
+     * 
      * @param rcmlDirectory The directory for the RCML files
      * @param backupDirectory The directory for the backup versions
      * @param rootDirectory The publication directory
@@ -66,7 +64,8 @@ public class RevisionController {
      * @return String The rcml directory, the backup directory, the publication directory
      */
     public String toString() {
-        return "rcmlDir=" + this.rcmlDir + " , rcbakDir=" + this.backupDir + " , rootDir=" + this.rootDir;
+        return "rcmlDir=" + this.rcmlDir + " , rcbakDir=" + this.backupDir + " , rootDir="
+                + this.rootDir;
     }
 
     /**
@@ -82,21 +81,35 @@ public class RevisionController {
     }
 
     /**
+     * Returns the latest version of a source.
+     * @param source The path of the file from the publication.
+     * @return A version number.
+     * @throws Exception if an error occurs.
+     */
+    public int getLatestVersion(String source) throws Exception {
+        RCML rcml = new RCML(this.rcmlDir, source, this.rootDir);
+        CheckInEntry entry = rcml.getLatestCheckInEntry();
+        int version = 0;
+        if (entry != null) {
+            version = entry.getVersion();
+        }
+        return version;
+    }
+
+    /**
      * Try to make a reserved check out of the file source for a user with identity
-     *
+     * 
      * @param source The filename of the file to check out
      * @param identity The identity of the user
      * @return File File to check out
      * @throws Exception if an error occurs
      */
     public File reservedCheckOut(String source, String identity) throws Exception {
-        
+
         File file = new File(this.rootDir + source);
         /*
-        if (!file.isFile()) {
-            throw new FileNotFoundException(file.getAbsolutePath());
-        }
-        */
+         * if (!file.isFile()) { throw new FileNotFoundException(file.getAbsolutePath()); }
+         */
 
         RCML rcml = new RCML(this.rcmlDir, source, this.rootDir);
 
@@ -111,13 +124,12 @@ public class RevisionController {
             log.debug("entry.identity" + entry.getIdentity());
         }
 
-        if ((entry != null)
-            && (entry.getType() != RCML.ci)
-            && !entry.getIdentity().equals(identity)) {
+        if ((entry != null) && (entry.getType() != RCML.ci)
+                && !entry.getIdentity().equals(identity)) {
             throw new FileReservedCheckOutException(this.rootDir + source, rcml);
         }
 
-        rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false);
+        rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false, false);
 
         return file;
     }
@@ -143,8 +155,8 @@ public class RevisionController {
             log.debug("entry.identity" + entry.getIdentity());
         }
 
-        boolean checkedOutByOther =
-            entry != null && entry.getType() != RCML.ci && !entry.getIdentity().equals(identity);
+        boolean checkedOutByOther = entry != null && entry.getType() != RCML.ci
+                && !entry.getIdentity().equals(identity);
 
         return !checkedOutByOther;
     }
@@ -152,19 +164,20 @@ public class RevisionController {
     /**
      * Try to make a reserved check in of the file destination for a user with identity. A backup
      * copy can be made.
-     *
+     * 
      * @param destination The file we want to check in
      * @param identity The identity of the user
      * @param backup if true, a backup will be created, else no backup will be made.
-     *
+     * @param newVersion If true, a new version will be created.
+     * 
      * @return long The time.
-     *
+     * 
      * @exception FileReservedCheckInException if the document couldn't be checked in (for instance
-     *            because it is already checked out by someone other ...)
+     *                because it is already checked out by someone other ...)
      * @exception Exception if other problems occur
      */
-    public long reservedCheckIn(String destination, String identity, boolean backup)
-        throws FileReservedCheckInException, Exception {
+    public long reservedCheckIn(String destination, String identity, boolean backup,
+            boolean newVersion) throws FileReservedCheckInException, Exception {
         FileInputStream in = null;
         FileOutputStream out = null;
 
@@ -187,23 +200,19 @@ public class RevisionController {
             if (!((coe == null) || identity.equals(RevisionController.systemUsername))) {
                 /*
                  * Possible cases and rules:
-                 *
+                 * 
                  * 1.) we were able to read the latest checkin and it is later than latest checkout
-                 *     (i.e. there is no open checkout to match this checkin, an unusual case)
-                 *     1.1.) identity of latest checkin is equal to current user
-                 *           -> checkin allowed, same user may check in repeatedly
-                 *     1.2.) identity of latest checkin is not equal to current user
-                 *           -> checkin rejected, may not overwrite the revision which
-                 *              another user checked in previously
-                 * 2.) there was no checkin or the latest checkout is later than latest checkin
-                 *     (i.e. there is an open checkout)
-                 *     2.1.) identity of latest checkout is equal to current user
-                 *           -> checkin allowed, user checked out and may check in again
-                 *              (the most common case)
-                 *     2.2.) identity of latest checkout is not equal to current user
-                 *           -> checkin rejected, may not check in while another
-                 *              user is working on this document
-                 *
+                 * (i.e. there is no open checkout to match this checkin, an unusual case) 1.1.)
+                 * identity of latest checkin is equal to current user -> checkin allowed, same user
+                 * may check in repeatedly 1.2.) identity of latest checkin is not equal to current
+                 * user -> checkin rejected, may not overwrite the revision which another user
+                 * checked in previously 2.) there was no checkin or the latest checkout is later
+                 * than latest checkin (i.e. there is an open checkout) 2.1.) identity of latest
+                 * checkout is equal to current user -> checkin allowed, user checked out and may
+                 * check in again (the most common case) 2.2.) identity of latest checkout is not
+                 * equal to current user -> checkin rejected, may not check in while another user is
+                 * working on this document
+                 *  
                  */
                 if ((cie != null) && (cie.getTime() > coe.getTime())) {
                     // We have case 1
@@ -223,7 +232,7 @@ public class RevisionController {
             }
 
             File originalFile = new File(this.rootDir, destination);
- 
+
             if (backup && originalFile.isFile()) {
                 File backupFile = new File(this.backupDir, destination + ".bak." + time);
                 File parent = new File(backupFile.getParent());
@@ -232,10 +241,7 @@ public class RevisionController {
                     parent.mkdirs();
                 }
 
-                log.debug(
-                    "Backup: copy "
-                        + originalFile.getAbsolutePath()
-                        + " to "
+                log.debug("Backup: copy " + originalFile.getAbsolutePath() + " to "
                         + backupFile.getAbsolutePath());
 
                 in = new FileInputStream(originalFile.getAbsolutePath());
@@ -248,26 +254,26 @@ public class RevisionController {
                 }
             }
 
-            rcml.checkOutIn(RCML.ci, identity, time, backup);
+            rcml.checkOutIn(RCML.ci, identity, time, backup, newVersion);
             rcml.pruneEntries(this.backupDir);
             rcml.write();
 
         } catch (final FileNotFoundException e) {
-            log.error("File not found" +e.toString());
+            log.error("File not found" + e.toString());
         } catch (final IOException e) {
-            log.error("IO error " +e.toString());
+            log.error("IO error " + e.toString());
         } finally {
-	        if (in != null)
-	            in.close();
-	        if (out != null)
-	            out.close();
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
         }
         return time;
     }
 
     /**
-     * Get the absolute path of a backup version  
-     * @param time The time of the backup 
+     * Get the absolute path of a backup version
+     * @param time The time of the backup
      * @param filename The path of the file from the {publication}
      * @return String The absolute path of the backup version
      */
@@ -277,8 +283,8 @@ public class RevisionController {
     }
 
     /**
-     * Get the file of a backup version  
-     * @param time The time of the backup 
+     * Get the file of a backup version
+     * @param time The time of the backup
      * @param filename The path of the file from the {publication}
      * @return File The file of the backup version
      */
@@ -288,7 +294,7 @@ public class RevisionController {
     }
 
     /**
-     * Rolls back to the given point in time.  
+     * Rolls back to the given point in time.
      * @param destination File which will be rolled back
      * @param identity The identity of the user
      * @param backupFlag If true, a backup of the current version will be made before the rollback
@@ -300,12 +306,9 @@ public class RevisionController {
      * @exception Exception if another problem occurs
      */
     public long rollback(String destination, String identity, boolean backupFlag, long time)
-        throws
-            FileReservedCheckInException,
-            FileReservedCheckOutException,
-            FileNotFoundException,
-            Exception {
-        
+            throws FileReservedCheckInException, FileReservedCheckOutException,
+            FileNotFoundException, Exception {
+
         FileInputStream in = null;
         FileOutputStream out = null;
 
@@ -335,22 +338,22 @@ public class RevisionController {
                 out.write(buffer, 0, length);
             }
         } catch (FileNotFoundException e) {
-            log.error("File not found " +e.toString());
+            log.error("File not found " + e.toString());
         } catch (IOException e) {
-            log.error("IO error " +e.toString());
+            log.error("IO error " + e.toString());
         } catch (Exception e) {
-            log.error("Exception " +e.toString());
+            log.error("Exception " + e.toString());
         } finally {
-	        if (in != null)
-	            in.close();
-	        if (out != null)
-	            out.close();
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
         }
 
         // Try to check back in, this might cause
         // a backup of the current version to be created if
         // desired by the user.
-        long newtime = reservedCheckIn(destination, identity, backupFlag);
+        long newtime = reservedCheckIn(destination, identity, backupFlag, false);
 
         return newtime;
     }
@@ -359,8 +362,8 @@ public class RevisionController {
      * Delete the check in and roll back the file to the backup at time
      * @param time The time point of the back version we want to retrieve
      * @param destination The File for which we want undo the check in
-     * @exception Exception FileNotFoundException if the back  version or the current version
-     *            couldn't be found
+     * @exception Exception FileNotFoundException if the back version or the current version
+     *                couldn't be found
      */
     public void undoCheckIn(long time, String destination) throws Exception {
         FileInputStream in = null;
@@ -392,55 +395,54 @@ public class RevisionController {
 
             rcml.deleteFirstCheckIn();
         } catch (FileNotFoundException e) {
-            log.error("File not found " +e.toString());
+            log.error("File not found " + e.toString());
         } catch (IOException e) {
-            log.error("IO error " +e.toString());
+            log.error("IO error " + e.toString());
         } catch (Exception e) {
-            log.error("Exception " +e.toString());
+            log.error("Exception " + e.toString());
         } finally {
-	        if (in != null)
-	            in.close();
-	        if (out != null)
-	            out.close();
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
         }
     }
 
     /**
      * delete the revisions
-	 * @param filename of the document
-	 * @throws RevisionControlException when somthing went wrong
-	 */
-	public void deleteRevisions(String filename) throws RevisionControlException{
+     * @param filename of the document
+     * @throws RevisionControlException when somthing went wrong
+     */
+    public void deleteRevisions(String filename) throws RevisionControlException {
         try {
-			RCML rcml = this.getRCML(filename);
+            RCML rcml = this.getRCML(filename);
             String[] times = rcml.getBackupsTime();
-            for (int i=0; i < times.length; i++) {
+            for (int i = 0; i < times.length; i++) {
                 long time = new Long(times[i]).longValue();
                 File backup = this.getBackupFile(time, filename);
-                File parentDirectory = null; 
-                parentDirectory = backup.getParentFile(); 
+                File parentDirectory = null;
+                parentDirectory = backup.getParentFile();
                 boolean deleted = backup.delete();
                 if (!deleted) {
-                    throw new RevisionControlException("The backup file, "+backup.getCanonicalPath()+" could not be deleted!");
+                    throw new RevisionControlException("The backup file, "
+                            + backup.getCanonicalPath() + " could not be deleted!");
                 }
-                if (parentDirectory != null 
-                    && parentDirectory.exists()
-                    && parentDirectory.isDirectory()
-                    && parentDirectory.listFiles().length == 0) {
-                        parentDirectory.delete();
+                if (parentDirectory != null && parentDirectory.exists()
+                        && parentDirectory.isDirectory() && parentDirectory.listFiles().length == 0) {
+                    parentDirectory.delete();
                 }
             }
-		} catch (Exception e) {
+        } catch (Exception e) {
             throw new RevisionControlException(e);
-		}
+        }
     }
-    
+
     /**
      * delete the rcml file
-	 * @param filename of the document
-	 * @throws RevisionControlException if something went wrong
-	 */
-	public void deleteRCML(String filename) throws RevisionControlException{
+     * @param filename of the document
+     * @throws RevisionControlException if something went wrong
+     */
+    public void deleteRCML(String filename) throws RevisionControlException {
         try {
             RCML rcml = this.getRCML(filename);
             boolean deleted = rcml.delete();
@@ -451,5 +453,5 @@ public class RevisionController {
             throw new RevisionControlException(e);
         }
     }
-    
+
 }

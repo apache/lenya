@@ -213,6 +213,25 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Subtree publishing: [" + isSubtreeEnabled() + "]");
         }
 
+        DocumentSet set = getInvolvedDocuments(document);
+        try {
+            set.visit(this);
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Publishing completed.");
+        }
+    }
+
+    /**
+     * @param document The document.
+     * @return A set containing the document itself and all requiring documents.
+     */
+    protected DocumentSet getInvolvedDocuments(Document document) {
+        DocumentSet set;
+
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {
@@ -221,10 +240,9 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                     .getSiteManagerHint());
 
             Document[] descendants = siteManager.getRequiringResources(document);
-            DocumentSet set = new DocumentSet(descendants);
+            set = new DocumentSet(descendants);
             set.add(document);
             siteManager.sortAscending(set);
-            set.visit(this);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -235,10 +253,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 this.manager.release(selector);
             }
         }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Publishing completed.");
-        }
+        return set;
     }
 
     /**

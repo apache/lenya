@@ -65,7 +65,7 @@ public class OperationModule extends AbstractInputModule implements Operation, S
                getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance, looking up role [" + UnitOfWork.ROLE + "]");
 
            this.unitOfWork = (UnitOfWork) this.manager.lookup(UnitOfWork.ROLE);
-           this.unitOfWork.addIdentityMap(getDocumentIdentityMap());
+           this.unitOfWork.setIdentityMap(getDocumentIdentityMap());
         }
 
         return this.unitOfWork;

@@ -94,7 +94,7 @@ public class InitRCTask extends TwoDocumentsOperationTask {
                         language);
                 String filename = destDoc.getFile().getCanonicalPath();
                 filename = filename.substring(publicationPath.length());
-                this.rc.reservedCheckIn(filename, getUserId(), true);
+                this.rc.reservedCheckIn(filename, getUserId(), true, true);
             }
         } catch (Exception e) {
             throw new BuildException(e);

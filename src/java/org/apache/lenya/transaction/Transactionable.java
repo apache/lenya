@@ -66,6 +66,11 @@ public interface Transactionable {
     void lock() throws TransactionException;
     
     /**
+     * @return The lock which is held by this object.
+     */
+    Lock getLock();
+    
+    /**
      * Unlocks this object.
      * @throws TransactionException if an error occurs.
      */
@@ -81,5 +86,11 @@ public interface Transactionable {
      * @return The type of the transactionable.
      */
     String getTransactionableType();
+    
+    /**
+     * @return The latest version.
+     * @throws TransactionException if an error occurs.
+     */
+    int getVersion() throws TransactionException;
     
 }

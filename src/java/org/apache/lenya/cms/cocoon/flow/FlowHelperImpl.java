@@ -198,7 +198,10 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
         final Publication publication = getPageEnvelope(cocoon).getPublication();
         final String filename = pageEnvelope.getDocument().getFile().getCanonicalPath()
                 .substring(publication.getDirectory().getCanonicalPath().length());
-        getRevisionController(cocoon).reservedCheckIn(filename, identity.getUser().getId(), backup);
+        getRevisionController(cocoon).reservedCheckIn(filename,
+                identity.getUser().getId(),
+                backup,
+                true);
     }
 
     private ServiceManager manager;

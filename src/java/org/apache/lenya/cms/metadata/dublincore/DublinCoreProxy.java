@@ -19,6 +19,7 @@
 
 package org.apache.lenya.cms.metadata.dublincore;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 
@@ -30,15 +31,17 @@ public class DublinCoreProxy implements DublinCore {
 
     private DublinCoreImpl dcCore;
     private Document cmsDocument;
-
+    private ServiceManager manager;
 
     /** 
      * Creates a new instance of Dublin Core
      * 
      * @param aDocument the document for which the Dublin Core instance is created.
+     * @param manager The service manager.
      */
-    public DublinCoreProxy(Document aDocument) {
+    public DublinCoreProxy(Document aDocument, ServiceManager manager) {
         this.cmsDocument = aDocument;
+        this.manager = manager;
     }
 
     /**
@@ -49,7 +52,7 @@ public class DublinCoreProxy implements DublinCore {
      */
     protected DublinCoreImpl instance() throws DocumentException {
         if (this.dcCore == null) {
-            this.dcCore = new DublinCoreImpl(this.cmsDocument);
+            this.dcCore = new DublinCoreImpl(this.cmsDocument, this.manager);
         }
         return this.dcCore;
     }

@@ -154,7 +154,7 @@ public class UploadAction extends ServiceableAction {
         dublinCoreParams.put("extent", Integer.toString(fileSize));
 
         if (uploadType.equals("asset")) {
-            ResourcesManager resourcesMgr = new DefaultResourcesManager(this.document);
+            ResourcesManager resourcesMgr = new DefaultResourcesManager(this.document, this.manager);
             assetFile = new File(resourcesMgr.getPath(), fileName);
 
             if (!resourcesMgr.getPath().exists()) {

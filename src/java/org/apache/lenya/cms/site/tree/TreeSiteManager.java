@@ -32,6 +32,7 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.TransactionableFactory;
 
 /**
@@ -60,15 +61,16 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public SiteTree getTree(DocumentIdentityMap map, Publication publication, String area)
             throws SiteException {
 
+        String key = getKey(publication, area);
+        DefaultSiteTree sitetree;
         TransactionableFactory factory = map.getFactory(SiteTree.TRANSACTIONABLE_TYPE);
         if (factory == null) {
             factory = new SiteTreeFactory(this.manager);
             ContainerUtil.enableLogging(factory, getLogger());
             map.setFactory(SiteTree.TRANSACTIONABLE_TYPE, factory);
         }
+        sitetree = (DefaultSiteTree) map.get(SiteTree.TRANSACTIONABLE_TYPE, key);
 
-        String key = getKey(publication, area);
-        DefaultSiteTree sitetree = (DefaultSiteTree) map.get(SiteTree.TRANSACTIONABLE_TYPE, key);
         return sitetree;
     }
 
@@ -240,7 +242,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             destinationTree.setLabel(destinationDocument.getId(), label);
         }
 
-        sourceDocument.getIdentityMap().getUnitOfWork().registerDirty(destinationTree);
+        try {
+            sourceDocument.getIdentityMap().getUnitOfWork().registerDirty(destinationTree);
+        } catch (TransactionException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -273,8 +279,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (node.getLabels().length == 0) {
             tree.removeNode(document.getId());
         }
-
-        document.getIdentityMap().getUnitOfWork().registerDirty(tree);
+        try {
+            document.getIdentityMap().getUnitOfWork().registerDirty(tree);
+        } catch (TransactionException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -295,7 +304,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         SiteTree tree = getTree(document);
         tree.setLabel(document.getId(), labelObject);
-        document.getIdentityMap().getUnitOfWork().registerDirty(tree);
+        try {
+            document.getIdentityMap().getUnitOfWork().registerDirty(tree);
+        } catch (TransactionException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -357,7 +370,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (node == null) {
             Label[] labels = { label };
             tree.addNode(document.getId(), labels, null, null, false);
-            document.getIdentityMap().getUnitOfWork().registerDirty(tree);
+            try {
+                document.getIdentityMap().getUnitOfWork().registerDirty(tree);
+            } catch (TransactionException e) {
+                throw new SiteException(e);
+            }
         } else {
             tree.addLabel(document.getId(), label);
         }

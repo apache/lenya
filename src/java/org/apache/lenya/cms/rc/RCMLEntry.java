@@ -61,7 +61,7 @@ public class RCMLEntry {
     public short getType() {
         return this.type;
     }
-
+    
     /**
      * Set the type.
      * @param s the type
