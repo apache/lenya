@@ -284,6 +284,23 @@
           <parameter name="href" value="resource://org/apache/cocoon/components/language/markup/xsp/java/session.xsl"/>
         </builtin-logicsheet>
 
+<!--
+Wyona
+-->
+        <builtin-logicsheet>
+          <parameter name="prefix" value="xsp-wyona"/>
+          <parameter name="uri" value="http://www.wyona.org/xsp/wyona/1.0"/>
+          <parameter name="href" value="resource://org/wyona/cms/cocoon/logicsheets/util.xsl"/>
+        </builtin-logicsheet>
+<!--
+Hello World
+-->
+        <builtin-logicsheet>
+          <parameter name="prefix" value="xsp-hello"/>
+          <parameter name="uri" value="http://www.wyona.org/xsp/hello/1.0"/>
+          <parameter name="href" value="resource://org/wyona/cms/cocoon/logicsheets/helloworld.xsl"/>
+        </builtin-logicsheet>
+
         <!-- The Cookie logicsheet (taglib) is an XSP logicsheet that wraps XML tags 
              around standard cookie operations -->
         <builtin-logicsheet>

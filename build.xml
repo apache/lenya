@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.21 2002/02/28 15:11:26 memo Exp $
+   @version CVS $Id: build.xml,v 1.22 2002/04/16 16:16:44 michicms Exp $
 
 -->
 
@@ -208,11 +208,14 @@
   <!-- Prepares the build webapp directory                          -->
   <!-- ============================================================ -->
   <target name="prepare-cocoon" depends="init,check-tools-lib,prepare-tools-lib">
+    <echo>INFO: exclude: sitemap.xmap</echo>
+    <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo>
+    <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${src.cocoon.dir}">
         <exclude name="sitemap.xmap"/>
-        <exclude name="cocoon.xconf"/>
-        <exclude name="**/logkit.xconf"/>
+        <exclude name="WEB-INF/cocoon.xconf"/>
+        <!--<exclude name="**/logkit.xconf"/>-->
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
@@ -267,7 +270,7 @@
   <!-- =================================================================== -->
   <target name="javadocs_done" if="javadocs.notrequired">
     <echo message="-------------------------------------------------------------"/>
-    <echo message="Not rebuilding Javadocs, as they are up-to-date:"/>
+    <echo message="  Not rebuilding Javadocs, as they are up-to-date:"/>
     <echo message="  ${dist.bin.javadocs}/packages.html is more recent than"/>
     <echo message="  ${build.src}/**/*.java"/>
     <echo message="-------------------------------------------------------------"/>
@@ -322,13 +325,25 @@
         <include name="**/*"/>
       </fileset>
     </copy>
+    <echo>INFO: src.webapp.dir=${src.webapp.dir}</echo>
+    <echo>INFO: build.src=${build.src}</echo>
+    <echo>INFO: build.webapp=${build.webapp}</echo>
+    <echo>INFO: build.dest=${build.dest}</echo>
 
-    <!-- now copy our compiled classes -->
+    <!-- create directory classes within webapp -->
     <mkdir dir="${build.webapp}/WEB-INF/classes"/>
 
+    <!-- now copy our compiled classes -->
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.dest}">
         <include name="**/*"/>
+      </fileset>
+    </copy>
+
+    <!-- now copy our logicsheets -->
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.xsl"/>
       </fileset>
     </copy>
     
@@ -468,6 +483,7 @@
     <copy todir="${install.dir}" filtering="off">
       <fileset dir="${build.webapp}"/>
     </copy>
+    <echo>INFO: install.dir=${install.dir}</echo>
   </target>
 
   <!-- ============================================================ -->
