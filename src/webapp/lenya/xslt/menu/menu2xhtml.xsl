@@ -22,7 +22,7 @@
 <xsl:template match="menu:menu">
     
 	<div id="lenya-menubar">
-
+	  
     <table width="100%" border="0" cellspacing="0" cellpadding="0" class="menu">
       <tr>
         <td background="{$image-prefix}/frame-bg_oben.gif" width="13" height="4">
@@ -119,7 +119,6 @@
         <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    
     <a id="{$tab-area-prefix}-tab" href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}">
       <xsl:choose>
         <xsl:when test="starts-with($completearea, $tab-area-prefix)">
