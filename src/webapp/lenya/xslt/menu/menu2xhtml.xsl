@@ -41,10 +41,14 @@
           <img src="{$image-prefix}/blau_anfang_oben.gif" />
         </td>
         <td background="{$image-prefix}/grau-bg2.gif" nowrap="nowrap">
+
+<!-- ADMIN TAB -->
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">admin</xsl:with-param>
           </xsl:call-template>
           
+
+<!-- INFO/SITE TAB -->
           <xsl:variable name="info-area">
           	<xsl:text>info-</xsl:text>
           	<xsl:choose>
@@ -53,15 +57,24 @@
           	</xsl:choose>
           </xsl:variable>
           
+<xsl:choose>
+<xsl:when test="menu:tabs/menu:tab[@label = 'info']/@show = 'false'">
+<!-- don't show info/site tab -->
+</xsl:when>
+<xsl:otherwise>
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area" select="$info-area"/>
             <xsl:with-param name="tab-area-prefix">info</xsl:with-param>
           </xsl:call-template>
+</xsl:otherwise>
+</xsl:choose>
           
+<!-- AUTHORING TAB -->
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">authoring</xsl:with-param>
           </xsl:call-template>
           
+<!-- LIVE TAB -->
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">live</xsl:with-param>
             <xsl:with-param name="target">_blank</xsl:with-param>
