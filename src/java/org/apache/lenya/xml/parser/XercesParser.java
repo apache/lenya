@@ -1,5 +1,5 @@
 /*
- * $Id: XercesParser.java,v 1.7 2003/03/06 20:45:53 gregor Exp $
+ * $Id: XercesParser.java,v 1.8 2003/03/10 15:35:55 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -44,6 +44,7 @@
 package org.lenya.xml.parser;
 
 import org.apache.xerces.dom.*;
+//import org.apache.xerces.impl.xs.dom.DOMParser;
 import org.apache.xerces.parsers.DOMParser;
 
 import org.w3c.dom.*;
@@ -169,6 +170,7 @@ public class XercesParser implements Parser {
      * @return DOCUMENT ME!
      */
     public Element newElementNode(Document document, String name) {
+        //return new ElementNSImpl((CoreDocumentImpl) document, name);
         return new ElementImpl((DocumentImpl) document, name);
     }
 
