@@ -57,4 +57,37 @@
   </a>
 </xsl:template>
 
+<!--  General Text Templates  -->
+
+<xsl:template match="bold">
+  <b><xsl:apply-templates/></b>
+</xsl:template>
+
+<xsl:template match="emphasize">
+  <i><xsl:apply-templates/></i>
+</xsl:template>
+
+<xsl:template match="subscript">
+  <sub><xsl:apply-templates/></sub>
+</xsl:template>
+
+<xsl:template match="superscript">
+  <sup><xsl:apply-templates/></sup>
+</xsl:template>
+
+<xsl:template match="itemizedlist">
+  <ul>
+    <xsl:apply-templates/>
+  </ul>
+</xsl:template>
+
+<xsl:template match="listitem">
+  <li><xsl:apply-templates/></li>
+</xsl:template>
+
+<xsl:template match="ulink">
+  <a href="{@url}"><xsl:apply-templates/></a>
+</xsl:template>
+
+
 </xsl:stylesheet>
