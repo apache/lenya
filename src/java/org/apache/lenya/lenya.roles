@@ -31,7 +31,12 @@
         shorthand="policy-managers"
         default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector">
     <hint shorthand="file" class="org.apache.cms.ac2.file.FilePolicyManager"/>
+    <hint shorthand="publication-file" class="org.apache.cms.ac2.file.PublicationFilePolicyManager"/>
     <hint shorthand="sitemap" class="org.apache.cms.ac2.sitemap.SitemapPolicyManager"/>
   </role>
+  
+  <role name="org.apache.lenya.cms.ac2.AccessControllerResolver"
+        shorthand="access-controller-resolver"
+        default-class="org.apache.lenya.cms.ac2.PublicationAccessControllerResolver"/>
 
 </role-list>

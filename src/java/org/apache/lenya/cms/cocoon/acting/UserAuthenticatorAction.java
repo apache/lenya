@@ -56,10 +56,9 @@ $Id
 package org.apache.lenya.cms.cocoon.acting;
 
 import org.apache.avalon.framework.component.ComponentException;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
@@ -70,6 +69,7 @@ import org.apache.lenya.cms.ac.Identity;
 import org.apache.lenya.cms.ac.ItemManager;
 import org.apache.lenya.cms.ac.User;
 import org.apache.lenya.cms.ac2.AccessController;
+import org.apache.lenya.cms.ac2.AccessControllerResolver;
 import org.apache.lenya.cms.ac2.DefaultAccessController;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -87,9 +87,8 @@ import java.util.Map;
  *
  */
 public class UserAuthenticatorAction extends IMLAuthenticatorAction {
-    private Publication publication;
 
-    /*
+    /**
      * This is an implementation of an authenticator which uses
      * the User classes and delegates the authentication to them.
      * An LDAPUser authenticates itself differently than a FileUser
@@ -103,6 +102,7 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
      */
     public boolean authenticate(String username, String password, Request request, Map map)
         throws Exception {
+        Publication publication = PublicationFactory.getPublication(objectModel);
         File configurationDirectory = new File(publication.getDirectory(), ItemManager.PATH);
         
         User user = getUser(username);
@@ -137,40 +137,15 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
-        publication = PublicationFactory.getPublication(objectModel);
+        this.objectModel = objectModel;
 
         return super.act(redirector, resolver, objectModel, src, parameters);
-    }
-
-    /**
-     * Returns the publication.
-     * @return The publication.
-     */
-    public Publication getPublication() {
-        return publication;
     }
 
     protected static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
     private String accessControllerId = null;
     
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-        Configuration accessControllerConfiguration = conf.getChild(ACCESS_CONTROLLER_ELEMENT);
-        if (accessControllerConfiguration != null) {
-            accessControllerId = accessControllerConfiguration.getValue();
-            getLogger().debug("Access controller ID: [" + accessControllerId + "]");
-        }
-        else {
-            getLogger().debug("No access controller ID provided, using default access controller.");
-        }
-    }
-
-    protected String getAccessControllerId() {
-        return accessControllerId;
-    }
+    private Map objectModel;
     
     /**
      * Returns a user for a username using the AccreditableManager of this action.
@@ -179,17 +154,26 @@ public class UserAuthenticatorAction extends IMLAuthenticatorAction {
      */
     protected User getUser(String username) throws AccessControlException, ComponentException {
         User user;
-        AccessController controller = null;
-        String id = getAccessControllerId();
-        String suffix = id == null ? "" : "/" + id;
-            
+        AccessControllerResolver resolver = null;
+        AccessController accessController = null;
+        boolean authorized;
         try {
-            controller = (AccessController) manager.lookup(AccessController.ROLE + suffix);
-            user = ((DefaultAccessController) controller).getAccreditableManager().getUserManager().getUser(username);
+            resolver = (AccessControllerResolver) manager.lookup(AccessControllerResolver.ROLE);
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            String context = request.getContextPath();
+            if (context == null) {
+                context = "";
+            }
+            String url = request.getRequestURI().substring(context.length());
+            accessController = resolver.resolveAccessController(url);
+            user = ((DefaultAccessController) accessController).getAccreditableManager().getUserManager().getUser(username);
         }
         finally {
-            if (controller != null) {
-                manager.release(controller);
+            if (resolver !=  null) {
+                if (accessController != null) {
+                    resolver.release(accessController);
+                }
+                manager.release(resolver);
             }
         }
         

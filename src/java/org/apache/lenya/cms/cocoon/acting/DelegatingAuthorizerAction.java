@@ -1,5 +1,5 @@
 /*
-$Id: DelegatingAuthorizerAction.java,v 1.7 2003/07/10 16:44:32 andreas Exp $
+$Id: DelegatingAuthorizerAction.java,v 1.8 2003/07/14 18:07:18 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,6 @@ $Id: DelegatingAuthorizerAction.java,v 1.7 2003/07/10 16:44:32 andreas Exp $
 */
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
 
 import org.apache.cocoon.environment.Redirector;
@@ -64,8 +62,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.ac2.AccessController;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.ac2.AccessControllerResolver;
 
 import java.util.Map;
 
@@ -77,56 +74,49 @@ import java.util.Map;
  */
 public class DelegatingAuthorizerAction extends AbstractAuthorizerAction {
     
-    public static final String ACCESS_CONTROLLER_ELEMENT = "access-controller";
-    private String accessControllerId;
-    
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration conf) throws ConfigurationException {
-        super.configure(conf);
-        Configuration accessControllerConfiguration = conf.getChild(ACCESS_CONTROLLER_ELEMENT);
-        accessControllerId = accessControllerConfiguration.getValue();
-    }
-
     /**
      * @see org.apache.lenya.cms.cocoon.acting.AbstractAuthorizerAction#authorize(org.apache.cocoon.environment.Request, java.util.Map)
      */
     public boolean authorize(Request request, Map ignore)
         throws Exception {
             
+        AccessControllerResolver resolver = null;
         AccessController accessController = null;
         boolean authorized;
         try {
-            accessController = (AccessController) manager.lookup(AccessController.ROLE + "/" + accessControllerId);
-            authorized = accessController.authorize(getPublication(), request);
+            resolver = (AccessControllerResolver) manager.lookup(AccessControllerResolver.ROLE);
+            
+            String requestURI = request.getRequestURI();
+            String context = request.getContextPath();
+            if (context == null) {
+                context = "";
+            }
+            String url = requestURI.substring(context.length());
+            
+            accessController = resolver.resolveAccessController(url);
+            authorized = accessController.authorize(request);
         }
         finally {
-            if (accessController != null) {
-                manager.release(accessController);
+            if (resolver !=  null) {
+                if (accessController != null) {
+                    resolver.release(accessController);
+                }
+                manager.release(resolver);
             }
         }
         return authorized;
     }
+    
+    private Map objectModel;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
         Parameters parameters) throws Exception {
-        publication = PublicationFactory.getPublication(objectModel);
+        this.objectModel = objectModel;
 
         return super.act(redirector, resolver, objectModel, src, parameters);
     }
 
-    private Publication publication;
-
-    /**
-     * Returns the envelope of the current page.
-     * @return A page envelope.
-     */
-    protected Publication getPublication() {
-        return publication;
-    }
-    
 }
