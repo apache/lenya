@@ -138,7 +138,7 @@ The schema of the CMS/F matrix is currently based on <a href="http://cvs.oscom.o
 </div>
 
 <div class="nnbe" style="padding-left: 10px;">
-<a class="nnbr" target="_blank" href="http://www.cmsreview.com/cmslisting.html">CMS Review</a>
+<a class="nnbr" target="_blank" href="http://www.cmsreview.com">CMS Review</a>
 </div>
 
 <div class="nnbe" style="padding-left: 10px;">
