@@ -56,7 +56,7 @@
     <xsl:apply-templates/>
 <!--
 	<br/>
-	<a href="index.html?lenya.usecase=uploadimage&amp;lenya.step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
+	<a href="index.html?lenya.usecase=upload&amp;lenya.step=showscreen&amp;documentid={$documentid}&amp;xpath=/NewsML/NewsItem/NewsComponent[1]/ContentItem/DataContent/nitf/body/body.content/block[{$block-position}]/p[{count(preceding-sibling::p)+1}]"><img src="/lenya/lenya/images/util/reddot.gif" alt="Insert Image" border="0"/></a><br/>
 -->
   </p>
 </xsl:template>
