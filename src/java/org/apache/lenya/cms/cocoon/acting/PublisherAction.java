@@ -85,9 +85,11 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
     String docid=request.getParameter("docid");
     String docids=request.getParameter("docids");
 
+    // Update (copy) files
     StringTokenizer st=new StringTokenizer(docids,",");
     while(st.hasMoreTokens()){
-      String docId=st.nextToken()+".xml";
+      String docId=st.nextToken();
+      //String docId=st.nextToken()+".xml";
       File sourceFile=new File(absoluteAuthoringPath+docId);
       File destinationFile=new File(absoluteLivePath+docId);
       if(copyFile(sourceFile,destinationFile)){
@@ -97,19 +99,6 @@ public class PublisherAction extends AbstractComplementaryConfigurableAction imp
         getLogger().error("EXCEPTION: Document not published: "+sourceFile+" "+destinationFile);
         }
       }
-
-/*
-    // Set absolute file paths
-    File source=new File(absoluteAuthoringPath+docid+".xml");
-    File destination=new File(absoluteLivePath+docid+".xml");
-    if(copyFile(source,destination)){
-      getLogger().error("COPY\nsource="+source+"\ndestination="+destination);
-      getLogger().error("Document published");
-      }
-    else{
-      getLogger().error("Document not published");
-      }
-*/
 
     // Update (copy) tree
     if(copyFile(new File(absoluteTreeAuthoringPath),new File(absoluteTreeLivePath))){
