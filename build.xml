@@ -21,7 +21,7 @@
     
     Copyright (c) 2002 wyona.org
 
-   @version CVS $Id: build.xml,v 1.14 2002/01/22 13:54:35 giacomo Exp $
+   @version CVS $Id: build.xml,v 1.15 2002/01/22 16:59:18 giacomo Exp $
 
 -->
 
@@ -78,13 +78,10 @@
   <property name="dist.bin.warfile" value="${dist.bin.dir}/${ant.project.name}.war"/>
 
   <!-- The filename of the final end-user tar file -->
-  <property name="dist.bin.tarfile" value="${dist.root}/${fullname}.tar"/>
+  <property name="dist.bin.dir" value="${dist.root}/${fullname}-bin"/>
   
   <!-- The toplevel directory for the final developer source distribution -->
   <property name="dist.src.dir" value="${dist.root}/${fullname}-src"/>
-
-  <!-- The filename of the final developer source tar file -->
-  <property name="dist.src.tarfile" value="${dist.root}/${fullname}-src.tar"/>
 
   <!-- The original, unmodified and expanded cocoon.war file upon which we base our package -->
   <property name="src.cocoon.dir" value="./src/cocoon"/>
@@ -179,8 +176,8 @@
 
     <property name="today"         value="${TODAY}"/>
     <echo message="Today is ${today}"/>
-    <property name="snapshot.bin.tarfile" value="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}.tar"/>
-    <property name="snapshot.src.tarfile" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}.tar"/>
+    <property name="snapshot.bin.dir" value="${dist.root}/${fullname}-bin-${SNAPSHOT_STAMP}"/>
+    <property name="snapshot.src.dir" value="${dist.root}/${fullname}-src-${SNAPSHOT_STAMP}"/>
 
     <available file="${tools.jar}" property="tools.jar.present"/>
   </target>
@@ -381,10 +378,10 @@
       </fileset>
     </copy>
 
-    <tar tarfile="${dist.bin.tarfile}" basedir="${dist.root}" includes="${fullname}/**"/>
+    <tar tarfile="${dist.bin.dir}.tar" basedir="${dist.root}" includes="${fullname}/**"/>
 
-    <gzip zipfile="${dist.bin.tarfile}.gz" src="${dist.bin.tarfile}"/>
-    <delete file="${dist.bin.tarfile}"/>
+    <gzip zipfile="${dist.bin.dir}.tar.gz" src="${dist.bin.dir}.tar"/>
+    <delete file="${dist.bin.dir}.tar"/>
 
   </target>
 
@@ -394,7 +391,7 @@
   dependency on the "clean" target in order to prevent garbage
   like the cocoon logfiles from ending up in the distribution tarball.
   -->
-  <target name="snapshot" depends="distclean,war" description="Build a binary distribution tar ball">
+  <target name="snapshot" depends="war" description="Build a binary distribution tar ball">
 
     <copy todir="${dist.root}/${fullname}">
       <fileset dir="${basedir}">
@@ -403,14 +400,14 @@
       </fileset>
     </copy>
 
-    <copy todir="${dist.root}/${fullname}-${SNAPSHOT_STAMP}">
+    <copy todir="${snapshot.bin.dir}">
       <fileset dir="${dist.root}/${fullname}"/>
     </copy>
 
-    <tar tarfile="${snapshot.bin.tarfile}" basedir="${dist.root}" includes="${fullname}-bin-${SNAPSHOT_STAMP}/**"/>
+    <tar tarfile="${snapshot.bin.dir}.tar" basedir="${basedir}" includes="${snapshot.bin.dir}/**"/>
 
-    <gzip zipfile="${snapshot.bin.tarfile}.gz" src="${snapshot.bin.tarfile}"/>
-    <delete file="${snapshot.bin.tarfile}"/>
+    <gzip zipfile="${snapshot.bin.dir}.tar.gz" src="${snapshot.bin.dir}.tar"/>
+    <delete file="${snapshot.bin.dir}.tar"/>
 
   </target>
 
@@ -436,10 +433,10 @@
     </copy>
 
 
-    <tar tarfile="${dist.src.tarfile}" basedir="${dist.root}" includes="${fullname}-src/**"/>
+    <tar tarfile="${dist.src.dir}.tar" basedir="${dist.root}" includes="${fullname}-src/**"/>
 
-    <gzip zipfile="${dist.src.tarfile}.gz" src="${dist.src.tarfile}"/>
-    <delete file="${dist.src.tarfile}"/>
+    <gzip zipfile="${dist.src.dir}.tar.gz" src="${dist.src.dir}.tar"/>
+    <delete file="${dist.src.dir}.tar"/>
 
   </target>
 
@@ -452,14 +449,14 @@
   -->
   <target name="snapshot-src" depends="dist-src" description="Builds a tar ball containing the sources for developers">
 
-    <copy todir="${dist.src.dir}-${SNAPSHOT_STAMP}">
+    <copy todir="${snapshot.src.dir}">
       <fileset dir="${dist.src.dir}"/>
     </copy>
 
-    <tar tarfile="${snapshot.src.tarfile}" basedir="${dist.root}" includes="${fullname}-src-${SNAPSHOT_STAMP}/**"/>
+    <tar tarfile="${snapshot.src.dir}.tar" basedir="${dist.root}" includes="${snapshot.src.dir}/**"/>
 
-    <gzip zipfile="${snapshot.src.tarfile}.gz" src="${snapshot.src.tarfile}"/>
-    <delete file="${snapshot.src.tarfile}"/>
+    <gzip zipfile="${snapshot.src.dir}.tar.gz" src="${snapshot.src.dir}.tar"/>
+    <delete file="${snapshot.src.dir}.tar"/>
 
   </target>
 
