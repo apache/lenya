@@ -13,26 +13,15 @@ function passwd() {
       newpassword = cocoon.request.getParameter("newpassword");
       confirmednewpassword = cocoon.request.getParameter("confirmednewpassword");
 
-/*
-      if (oldpassword != 'vanya') {
-          exceptionMessage = 'Authentication failed';
-          continue;
-      }
-      //if (newpassword != 'levi') {
-      if (newpassword.trim() != newpassword.trim()) {
-      //if (newpassword.trim() != confirmednewpassword.trim()) {
-          exceptionMessage = "New password and confirmed new password do not match (#" + newpassword + "##" + confirmednewpassword + "#)";
-          continue;
-      }
-      //if (oldpassword == 'vanya' && newpassword == confirmednewpassword) {
-      if (oldpassword == 'vanya' && newpassword == 'levi') {
-          break;
-      }
-*/
-      if (Packages.org.lenya.cms.ac.Identity.changePassword(oldpassword, newpassword, confirmednewpassword)) {
+
+      var session = cocoon.request.getSession(false);
+      var identityFromSession = session.getAttribute("org.lenya.cms.ac.Identity");
+      var filename = "/home/michi/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/lenya/pubs/oscom/content/ac/passwd/" + identityFromSession.getUsername() + ".iml";
+      var identity = new Packages.org.lenya.cms.ac.Identity(filename);
+      if (identity.changePassword(oldpassword, newpassword, confirmednewpassword)) {
           break;
       } else {
-          exceptionMessage = "Either authentication failed or new password and confirmed new password do not match (#" + newpassword + "##" + confirmednewpassword + "#)";
+          exceptionMessage = "Either authentication failed (" + identity.getUsername() + ") or new password and confirmed new password do not match (#" + newpassword + "##" + confirmednewpassword + "#)";
           continue;
       }
   }

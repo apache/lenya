@@ -1,5 +1,5 @@
 /*
- * $Id: Identity.java,v 1.8 2003/04/20 22:16:03 michi Exp $
+ * $Id: Identity.java,v 1.9 2003/04/21 23:22:55 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -69,19 +69,24 @@ public class Identity {
 
     private static String ROOT = "identity";
     private String username = null;
+    private String encryptedPassword = null;
     private Vector groupnames = null;
 
     /**
      * Creates a new Identity object.
      *
-     * @param doc DOCUMENT ME!
+     * @param doc XML Document
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception No such nodes
      */
     public Identity(Document doc) throws Exception {
         Node usernameNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/@id");
-        username = usernameNode.getNodeValue(); //"lenya"; //username;
-        log.debug("username: " + username);
+        username = usernameNode.getNodeValue();
+        log.debug("Username: " + username);
+
+        Node passwordNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/password");
+        encryptedPassword = passwordNode.getFirstChild().getNodeValue();
+        log.debug("Encrypted Password: " + encryptedPassword);
 
         NodeList groupNodes = XPathAPI.selectNodeList(doc, "/" + ROOT + "/groups/group");
 
@@ -93,51 +98,47 @@ public class Identity {
     }
 
     /**
-     * DOCUMENT ME!
+     * Creates a new Identity object.
      *
-     * @param args DOCUMENT ME!
+     * @param String filename
+     *
+     * @throws Exception Noch such file
      */
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: org.lenya.cms.ac.Identity lenya.iml");
-
-            return;
-        }
-
-        try {
-            javax.xml.parsers.DocumentBuilderFactory dbf = javax.xml.parsers.DocumentBuilderFactory.newInstance();
-            javax.xml.parsers.DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new java.io.FileInputStream(args[0]));
-            Identity id = new Identity(doc);
-            System.out.println(id);
-            System.out.println(id.getPassword(doc));
-        } catch (Exception e) {
-            System.err.println(".main(): " + e);
-        }
+    public Identity(String filename) throws Exception {
+        this(javax.xml.parsers.DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new java.io.FileInputStream(filename)));
     }
 
     /**
-     * DOCUMENT ME!
+     * Get username
      *
-     * @return DOCUMENT ME!
+     * @return username
      */
     public String getUsername() {
         return username;
     }
 
     /**
-     * DOCUMENT ME!
+     * Get encrypted password
      *
-     * @param doc DOCUMENT ME!
+     * @param doc XML Document
      *
-     * @return DOCUMENT ME!
+     * @return encrypted password
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception No such node
      */
     public static String getPassword(Document doc) throws Exception {
         Node passwordNode = XPathAPI.selectSingleNode(doc, "/" + ROOT + "/password");
 
         return passwordNode.getFirstChild().getNodeValue();
+    }
+
+    /**
+     * Get encrypted password
+     *
+     * @return encrypted password
+     */
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
     /**
@@ -182,8 +183,10 @@ public class Identity {
     /**
      * Change Password
      */
-     public static boolean changePassword(String oldP, String newP, String confirmedP) {
-         if (oldP.equals("levi") && newP.equals(confirmedP)) return true;
+     public boolean changePassword(String oldP, String newP, String confirmedP) throws Exception {
+         if (Password.encrypt(oldP).equals(getEncryptedPassword()) && newP.equals(confirmedP)) {
+             return true;
+         }
          return false;
      }
 }
