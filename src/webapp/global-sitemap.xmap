@@ -126,6 +126,8 @@
 
     <map:transformer logger="lenya.sitemap.transformer.index" name="index" src="org.apache.lenya.cms.cocoon.transformation.DocumentIndexTransformer">
     </map:transformer>
+    <map:transformer logger="lenya.sitemap.transformer.link-rewrite" name="link-rewrite" src="org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer">
+    </map:transformer>
    <map:transformer logger="sitemap.transformer.sql" name="sql" src="org.apache.cocoon.transformation.SQLTransformer"/>
 
 
