@@ -1,5 +1,4 @@
 /*
-$Id: RevisionControllerAction.java,v 1.28 2003/11/13 16:08:49 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,6 +73,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
 
+import org.apache.log4j.Category;
+
 import java.io.File;
 
 import java.util.Map;
@@ -82,9 +83,11 @@ import java.util.Map;
  * DOCUMENT ME!
  *
  * @author Michael Wechner
- * @version 2003.1.5
+ * @version $Id: RevisionControllerAction.java,v 1.29 2003/12/03 15:14:48 michi Exp $
  */
 public class RevisionControllerAction extends AbstractAction {
+    Category log = Category.getInstance(RevisionControllerAction.class);
+
     private String rcmlDirectory = null;
     private String backupDirectory = null;
     private RevisionController rc = null;
@@ -187,8 +190,7 @@ public class RevisionControllerAction extends AbstractAction {
 
             DocumentBuilder builder = publication.getDocumentBuilder();
 
-            String srcUrl =
-                builder.buildCanonicalUrl(publication, document.getArea(), documentid, language);
+            String srcUrl = builder.buildCanonicalUrl(publication, document.getArea(), documentid, language);
             Document srcDoc = builder.buildDocument(publication, srcUrl);
             File newFile = srcDoc.getFile();
             filename = newFile.getAbsolutePath();
@@ -198,7 +200,7 @@ public class RevisionControllerAction extends AbstractAction {
         }
 
         filename = filename.substring(publicationPath.length());
-        getLogger().debug("filename :" + filename);
+        log.error("Filename: " + filename);
 
         username = null;
 

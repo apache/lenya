@@ -1,5 +1,4 @@
 /*
-$Id: ReservedCheckoutAction.java,v 1.13 2003/07/17 09:13:21 egli Exp $
 <License>
 
  ============================================================================
@@ -62,17 +61,21 @@ import org.apache.cocoon.environment.SourceResolver;
 
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
 
+import org.apache.log4j.Category;
+
 import java.util.HashMap;
 import java.util.Map;
 
 
 /**
- * DOCUMENT ME!
+ * Action doing reserved checkout
  *
  * @author Edth Chevrier
- * @version 2002.6.25
+ * @version $Id: ReservedCheckoutAction.java,v 1.14 2003/12/03 15:14:48 michi Exp $
  */
 public class ReservedCheckoutAction extends RevisionControllerAction {
+    Category log = Category.getInstance(ReservedCheckoutAction.class);
+
     /**
      * DOCUMENT ME!
      *
@@ -118,7 +121,7 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
             actionMap.put("exception", "genericException");
             actionMap.put("filename", getFilename());
             actionMap.put("message", "" + e);
-            getLogger().error(".act(): The document " + getFilename() + " couldn't be checked out: ", e);
+            log.error("The document " + getFilename() + " couldn't be checked out: ", e);
 
             return actionMap;
         }
