@@ -1,5 +1,5 @@
 /*
-$Id: FilePolicyManager.java,v 1.14 2003/08/12 15:15:54 andreas Exp $
+$Id: FilePolicyManager.java,v 1.15 2003/08/13 13:10:56 andreas Exp $
 <License>
 
  ============================================================================
@@ -74,8 +74,8 @@ import org.apache.lenya.cms.ac2.InheritingPolicyManager;
 import org.apache.lenya.cms.ac2.Policy;
 import org.apache.lenya.cms.ac2.PolicyBuilder;
 import org.apache.lenya.cms.ac2.URLPolicy;
-import org.apache.lenya.cms.ac2.cache.CachedPolicy;
-import org.apache.lenya.util.CacheMap;
+import org.apache.lenya.cms.ac2.cache.CachingException;
+import org.apache.lenya.cms.ac2.cache.SourceCache;
 import org.apache.lenya.xml.DocumentHelper;
 
 import org.w3c.dom.Document;
@@ -100,7 +100,7 @@ public class FilePolicyManager
      * Returns the source cache.
      * @return A source cache.
      */
-    protected CacheMap getCache() {
+    protected SourceCache getCache() {
         return cache;
     }
 
@@ -120,10 +120,8 @@ public class FilePolicyManager
 
     private File policyDirectory;
     private SourceResolver resolver;
-    private CacheMap cache = new CacheMap(CAPACITY);
+    private SourceCache cache;
     
-    protected static final int CAPACITY = 1000;
-
     protected static final String URL_FILENAME = "url-policy.acml";
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
 
@@ -174,86 +172,9 @@ public class FilePolicyManager
         getLogger().debug("Policy source URI resolved to: " + policyUri);
 
         try {
-            String key = policyUri;
-
-            CachedPolicy cachedPolicy = (CachedPolicy) getCache().get(key);
-            boolean usedCache = false;
-            SourceValidity sourceValidity = null;
-            InputStream stream = null;
-
-            if (cachedPolicy != null) {
-                getLogger().debug("Found cached policy.");
-                SourceValidity cachedValidity = cachedPolicy.getValidityObject();
-
-                int result = cachedValidity.isValid();
-                boolean valid = false;
-                if (result == 0) {
-
-                    // get source validity and compare
-
-                    sourceValidity = getSourceValidity(policyUri);
-
-                    if (sourceValidity != null) {
-                        result = cachedValidity.isValid(sourceValidity);
-                        if (result == 0) {
-                            sourceValidity = null;
-                        } else {
-                            valid = (result == 1);
-                        }
-                    }
-                } else {
-                    valid = (result > 0);
-                }
-
-                if (valid) {
-                    if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger().debug(
-                            "Using valid cached source for '" + policyUri + "'.");
-                    }
-                    usedCache = true;
-                    policy = cachedPolicy.getPolicy();
-                } else {
-                    if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger().debug(
-                            "Cached content is invalid for '" + policyUri + "'.");
-                    }
-                    // remove invalid cached object
-                    getCache().remove(key);
-                }
-
-            } else {
-                getLogger().debug("Did not find cached policy.");
-            }
-
-            if (!usedCache) {
-                getLogger().debug("Did not use cache.");
-                if (key != null) {
-                    if (sourceValidity == null) {
-                        sourceValidity = getSourceValidity(policyUri);
-                    }
-                    if (sourceValidity != null) {
-                        getLogger().debug("Source validity is not null.");
-                    } else {
-                        getLogger().debug("Source validity is null - not caching.");
-                        key = null;
-                    }
-                }
-
-                stream = getInputStream(policyUri);
-                if (stream != null) {
-                    policy = PolicyBuilder.getInstance().buildPolicy(controller, stream);
-                }
-
-                // store the response
-                if (key != null) {
-                    if (this.getLogger().isDebugEnabled()) {
-                        this.getLogger().debug(
-                            "Caching content for further requests of '" + policyUri + "'.");
-                    }
-                    getCache().put(key, new CachedPolicy(sourceValidity, policy));
-                }
-            }
-        } catch (Exception e) {
+            PolicyBuilder builder = new PolicyBuilder(controller);
+            policy = (DefaultPolicy) getCache().get(policyUri, builder);
+        } catch (CachingException e) {
             throw new AccessControlException(e);
         }
 
@@ -378,10 +299,7 @@ public class FilePolicyManager
     protected void savePolicy(String url, DefaultPolicy policy, String filename)
         throws AccessControlException {
 
-        String key = getCacheKey(url);
-        cache.remove(key);
-
-        Document document = PolicyBuilder.getInstance().savePolicy(policy);
+        Document document = PolicyBuilder.savePolicy(policy);
         File file = getPolicyFile(url, filename);
 
         try {
@@ -400,22 +318,6 @@ public class FilePolicyManager
         throws AccessControlException {
 
         return new URLPolicy(controller, url, this);
-    }
-
-    /**
-     * Creates a cache key for a URL.
-     * @param url The url.
-     * @return A string value.
-     * @throws AccessControlException if something went wrong.
-     */
-    protected String getCacheKey(String url) throws AccessControlException {
-        String key;
-        try {
-            key = getPoliciesDirectory().getCanonicalPath() + ":" + url;
-        } catch (IOException e) {
-            throw new AccessControlException(e);
-        }
-        return key;
     }
 
     protected static final String DIRECTORY_PARAMETER = "directory";
@@ -477,6 +379,7 @@ public class FilePolicyManager
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
         resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
+        cache = (SourceCache) getManager().lookup(SourceCache.ROLE);
     }
 
     /**

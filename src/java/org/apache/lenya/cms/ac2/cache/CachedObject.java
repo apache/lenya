@@ -1,5 +1,5 @@
 /*
-$Id: CachedPolicy.java,v 1.1 2003/08/12 15:15:55 andreas Exp $
+$Id: CachedObject.java,v 1.1 2003/08/13 13:10:11 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,7 +56,6 @@ $Id: CachedPolicy.java,v 1.1 2003/08/12 15:15:55 andreas Exp $
 package org.apache.lenya.cms.ac2.cache;
 
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.lenya.cms.ac2.DefaultPolicy;
 
 /**
  * @author andreas
@@ -64,17 +63,17 @@ import org.apache.lenya.cms.ac2.DefaultPolicy;
  * To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class CachedPolicy {
+public class CachedObject {
 
     private SourceValidity validityObject;
-    private DefaultPolicy policy;
+    private Object value;
     
     /**
-     * Returns the policy.
-     * @return A policy.
+     * Returns the value.
+     * @return An object.
      */
-    public DefaultPolicy getPolicy() {
-        return policy;
+    public Object getValue() {
+        return value;
     }
 
     /**
@@ -88,11 +87,11 @@ public class CachedPolicy {
     /**
      * Ctor.
      * @param validity The source validity.
-     * @param policy The policy.
+     * @param value The value.
      */
-    public CachedPolicy(SourceValidity validity, DefaultPolicy policy) {
+    public CachedObject(SourceValidity validity, Object value) {
         this.validityObject = validity;
-        this.policy = policy;
+        this.value = value;
     }
 
 }
