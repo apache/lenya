@@ -113,14 +113,14 @@
 
 <xsl:template match="insert-after" mode="nodes">
     <tr>
-      <td><input type="submit" value="INSERT" name="update"/></td>
+      <td><input type="submit" value="INSERT" name="insert-after"/></td>
       <td colspan="2">
-        <select name="select" size="1">
-<xsl:for-each select="element">
-          <option value="{@value}"><xsl:value-of select="@name"/></option>
-</xsl:for-each>
+        <select name="&lt;xupdate:insert-after select=&quot;{@select}&quot;/&gt;" size="1">
+            <option value="null">Choose element ...</option>
+          <xsl:for-each select="element">
+            <option value="{@xupdate}"><xsl:value-of select="@name"/></option>
+          </xsl:for-each>
         </select>
-        <xsl:value-of select="@select"/>
       </td>
     </tr>
 </xsl:template>
