@@ -164,7 +164,7 @@
           <map:select type="resource-exists">
             <!-- Read from cache -->
             <!-- If configured within Apache then mod_lenya will nevertheless read from cache -->
-            <map:when test="{global:cache-dir}/{../1}/{../2}.htmlDISABLED">
+            <map:when test="{global:cache-dir}/{../1}/{../2}.html">
               <map:read src="{global:cache-dir}/{../1}/{../2}.html" mime-type="text/html"/>
             </map:when>
             <!-- Write to cache and serialize -->
