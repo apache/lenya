@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : rcml.xml
+    Created on : April 15, 2003 
+    Author     : ec
+    Description:
+        Configuration of the revision controller.
+-->
+
+<rcml>
+  <rcmlDirectory href="content/rcml"/>
+  <backupDirectory href="content/rcbak"/>
+</rcml>
