@@ -1,5 +1,4 @@
 /*
-$Id: SearchFiles.java,v 1.11 2004/02/02 02:50:36 stefano Exp $
 <License>
 
  ============================================================================
@@ -68,18 +67,22 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 
-
+/**
+ * Command Line Interface
+ * 
+ * @author Michael Wechner
+ * @version $Id: SearchFiles.java,v 1.12 2004/02/19 14:32:42 michi Exp $
+ */
 class SearchFiles {
+
     /**
-     * DOCUMENT ME!
+     * main method
      *
-     * @param args DOCUMENT ME!
+     * @param args Directory of the index
      */
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println(
-                "Usage: org.apache.lenya.lucene.SearchFiles \"directory_where_index_is_located\"");
-
+        if (args.length == 0) {
+            System.err.println("Usage: org.apache.lenya.lucene.SearchFiles \"directory_where_index_is_located\" <word>");
             return;
         }
 
@@ -92,14 +95,17 @@ class SearchFiles {
             return;
         }
 
+
         try {
-            Searcher searcher = new IndexSearcher(index_directory.getAbsolutePath());
-            Analyzer analyzer = new StandardAnalyzer();
+            if (args.length > 1) {
+                Hits hits = new SearchFiles().search(args[1], index_directory);
+                return;
+            }
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
             while (true) {
-                System.out.print("Query: ");
+                System.out.print("Search: ");
 
                 String line = in.readLine();
 
@@ -107,11 +113,36 @@ class SearchFiles {
                     break;
                 }
 
-                Query query = QueryParser.parse(line, "contents", analyzer);
-                System.out.println("Searching for: " + query.toString("contents"));
+		Hits hits = new SearchFiles().search(line, index_directory);
+
+                //if (hits.length() > end) {
+                    System.out.print("\nAnother Search (y/n) ? ");
+                    line = in.readLine();
+
+                    if ((line.length() == 0) || (line.charAt(0) == 'n')) {
+                         break;
+                    }
+                //}
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(" caught a " + e.getClass() + "\n with message: " + e.getMessage());
+        }
+    }
+
+    /**
+     *
+     */
+    public Hits search(String line, File index_directory) throws Exception {
+        Searcher searcher = new IndexSearcher(index_directory.getAbsolutePath());
+        Analyzer analyzer = new StandardAnalyzer();
+
+        Query query = QueryParser.parse(line, "contents", analyzer);
+        System.out.println("Searching for: " + query.toString("contents"));
 
                 Hits hits = searcher.search(query);
-                System.out.println(hits.length() + " total matching documents");
+                System.out.println("Total matching documents: " + hits.length());
 
                 final int HITS_PER_PAGE = 10;
 
@@ -136,20 +167,8 @@ class SearchFiles {
                         }
                     }
 
-                    if (hits.length() > end) {
-                        System.out.print("more (y/n) ? ");
-                        line = in.readLine();
-
-                        if ((line.length() == 0) || (line.charAt(0) == 'n')) {
-                            break;
-                        }
-                    }
                 }
-            }
-
-            searcher.close();
-        } catch (Exception e) {
-            System.out.println(" caught a " + e.getClass() + "\n with message: " + e.getMessage());
-        }
+                searcher.close();
+        return hits;
     }
 }
