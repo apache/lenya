@@ -5,15 +5,16 @@
   xmlns:xsp="http://apache.org/xsp"  
   xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
   xmlns:xsp-request="http://apache.org/xsp/request/2.0"
-  >
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+>
 
   <upload-image>
     
-    <!-- Import Lenya Page Envelope -->
-    <xsp-lenya:util/>
-    
     <xpath><xsp-request:get-parameter name="xpath"/></xpath>
-    <documentid><xsp-lenya:document-id/></documentid>
+    <documentid>
+      <input:get-attribute
+	module="page-envelope" as="string" name="document-id"/>
+    </documentid>
     <usecase><xsp-request:get-parameter name="lenya.usecase"/></usecase>
     <insertBefore><xsp-request:get-parameter name="insertBefore"/></insertBefore>
   </upload-image>
