@@ -6,7 +6,7 @@
                        |  Apache Lenya Build System |
                        * =========================== *
 
-       CVS $Id: build.xml,v 1.58 2003/06/12 14:59:35 gregor Exp $:
+       CVS $Id: build.xml,v 1.59 2003/09/26 11:23:32 andreas Exp $:
 
     History
     =======
@@ -21,15 +21,16 @@
 ============================================================================ -->
 
   <!-- ==================  Apache Lenya targets  ======================== --> 
-  <!ENTITY properties       SYSTEM "./src/targets/properties-build.xml"> 
-  <!ENTITY init-targets     SYSTEM "./src/targets/init-build.xml"> 
-  <!ENTITY ide-targets      SYSTEM "./src/targets/ide-build.xml"> 
-  <!ENTITY compile-targets  SYSTEM "./src/targets/compile-build.xml"> 
-  <!ENTITY docs-targets     SYSTEM "./src/targets/docs-build.xml"> 
-  <!ENTITY webapp-targets   SYSTEM "./src/targets/webapp-build.xml"> 
-  <!ENTITY test-targets     SYSTEM "./src/targets/test-build.xml"> 
-  <!ENTITY dist-targets     SYSTEM "./src/targets/dist-build.xml">
-  <!ENTITY export-targets   SYSTEM "./src/targets/export-build.xml">
+  <!ENTITY properties          SYSTEM "./src/targets/properties-build.xml"> 
+  <!ENTITY init-targets        SYSTEM "./src/targets/init-build.xml"> 
+  <!ENTITY ide-targets         SYSTEM "./src/targets/ide-build.xml"> 
+  <!ENTITY compile-targets     SYSTEM "./src/targets/compile-build.xml"> 
+  <!ENTITY docs-targets        SYSTEM "./src/targets/docs-build.xml"> 
+  <!ENTITY webapp-targets      SYSTEM "./src/targets/webapp-build.xml"> 
+  <!ENTITY test-targets        SYSTEM "./src/targets/test-build.xml"> 
+  <!ENTITY dist-targets        SYSTEM "./src/targets/dist-build.xml">
+  <!ENTITY export-targets      SYSTEM "./src/targets/export-build.xml">
+  <!ENTITY publication-targets SYSTEM "./src/targets/publication-build.xml">
   <!-- =================================================================== -->
 
 ]>
@@ -56,6 +57,8 @@
   <!-- Distribution targets    -->  &dist-targets;
   <!-- =================================================================== -->
   <!-- Export targets          -->  &export-targets;
+  <!-- =================================================================== -->
+  <!-- Publication targets     -->  &publication-targets;
   <!-- =================================================================== -->
 
 </project>
