@@ -1,5 +1,5 @@
 /*
-$Id: DeleteContentTask.java,v 1.4 2004/01/21 16:11:44 edith Exp $
+$Id: DeleteContentTask.java,v 1.5 2004/01/21 18:04:55 edith Exp $
 <License>
 
  ============================================================================
@@ -119,15 +119,19 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 			File directory = srcFile.getParentFile();
 			try {
 				FileUtil.forceDelete(srcFile);
-				log("delete file " + srcFile.getAbsolutePath());
-				if (directory.exists()
-					&& directory.isDirectory()
-					&& directory.listFiles().length == 0) {
-					FileUtil.forceDelete(directory);
-					log("delete directory " + directory.getAbsolutePath());
-				}
 			} catch (IOException e) {
-				throw new BuildException(e);
+				//FIXME: catch Exception because of window's delete problem 
+				log("exception " + e);
+			}
+			if (directory.exists()
+				&& directory.isDirectory()
+				&& directory.listFiles().length == 0) {
+				try {
+					FileUtil.forceDelete(directory);
+				} catch (IOException e) {
+					//FIXME: catch Exception because of window's delete problem 
+					log("exception " + e);
+				}
 			}
 		}
 

@@ -1,5 +1,5 @@
 /*
-$Id: DeleteRCTask.java,v 1.1 2004/01/21 16:11:44 edith Exp $
+$Id: DeleteRCTask.java,v 1.2 2004/01/21 18:04:55 edith Exp $
 <License>
 
  ============================================================================
@@ -56,6 +56,8 @@ s
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
+import java.io.IOException;
+
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -83,45 +85,55 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 	 * @see org.apache.lenya.cms.publication.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.publication.SiteTreeNode)
 	 */
 	public void visitSiteTreeNode(SiteTreeNode node) {
+		Publication publication = getPublication();
+		String publicationPath;
+		String rcmlDirectory;
+		String rcbakDirectory;
 		try {
-			Publication publication = getPublication();
-			String publicationPath =
-				this.getPublicationDirectory().getCanonicalPath();
-			String rcmlDirectory =
+			publicationPath = this.getPublicationDirectory().getCanonicalPath();
+			rcmlDirectory =
 				new File(publicationPath, this.getRcmldir()).getCanonicalPath();
-			String rcbakDirectory =
+			rcbakDirectory =
 				new File(publicationPath, this.getRcbakdir())
 					.getCanonicalPath();
-
-			String parentid = node.getAbsoluteParentId();
-			String destDocumentid = parentid + "/" + node.getId();
-			String srcDocumentid =
-				destDocumentid.replaceFirst(
-					getSecdocumentid(),
-					getFirstdocumentid());
-
-			File srcRcmlDir =
-				new File(
-					rcmlDirectory,
-					this.getSrcareadir() + File.separator + srcDocumentid);
-
-			if (srcRcmlDir.exists()) {
-				FileUtil.forceDelete(srcRcmlDir);
-				log("delete rcml directory " + srcRcmlDir.getAbsolutePath());
-			}
-
-			File srcRcbakDir =
-				new File(
-					rcbakDirectory,
-					this.getSrcareadir() + File.separator + srcDocumentid);
-
-			if (srcRcbakDir.exists()) {
-				FileUtil.forceDelete(srcRcbakDir);
-				log("delete rcbak directory " + srcRcbakDir.getAbsolutePath());
-			}
-
-		} catch (Exception e) {
+		} catch (IOException e) {
 			throw new BuildException(e);
+		}
+
+		String parentid = node.getAbsoluteParentId();
+		String destDocumentid = parentid + "/" + node.getId();
+		String srcDocumentid =
+			destDocumentid.replaceFirst(
+				getSecdocumentid(),
+				getFirstdocumentid());
+
+		File srcRcmlDir =
+			new File(
+				rcmlDirectory,
+				this.getSrcareadir() + File.separator + srcDocumentid);
+
+		if (srcRcmlDir.exists()) {
+			try {
+				FileUtil.forceDelete(srcRcmlDir);
+			} catch (IOException e) {
+				//FIXME: catch Exception because of window's delete problem 
+				log("exception " + e);
+			}
+		}
+
+		File srcRcbakDir =
+			new File(
+				rcbakDirectory,
+				this.getSrcareadir() + File.separator + srcDocumentid);
+
+		if (srcRcbakDir.exists()) {
+			try {
+				FileUtil.forceDelete(srcRcbakDir);
+			} catch (IOException e) {
+				//FIXME: catch Exception because of window's delete problem 
+				log("exception " + e);
+			}
+			log("delete rcbak directory " + srcRcbakDir.getAbsolutePath());
 		}
 
 	}

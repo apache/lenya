@@ -1,5 +1,5 @@
 /*
-$Id: DeletePoliciesTask.java,v 1.1 2004/01/21 16:11:44 edith Exp $
+$Id: DeletePoliciesTask.java,v 1.2 2004/01/21 18:04:55 edith Exp $
 <License>
 
  ============================================================================
@@ -122,21 +122,23 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
             log("no policies file to delete");
 			return;
 		}
-        try {
 		for (int i = 0; i < authoringPolicies.length; i++) {
+            try {
             FileUtil.forceDelete(authoringPolicies[i]);
+            } catch (IOException e) {
+                //FIXME: catch Exception because of window's delete problem 
+                log("exception " +e);
+            }
 
 		}
         if (srcDir.exists() && srcDir.isDirectory() && srcDir.listFiles().length == 0) {  
+            try {
           FileUtil.forceDelete(srcDir);
-          log(
-              "delete directory "
-                  + srcDir.getAbsolutePath());
+            } catch (IOException e) {
+				//FIXME: catch Exception because of window's delete problem 
+                log("exception " +e);
+            }
         }
-        } catch (IOException e) {
-            throw new BuildException(e);
-        }
-
 	}
 
 	/** (non-Javadoc)
