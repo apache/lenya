@@ -382,7 +382,7 @@
                   <map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=epoz&amp;lenya.step=save"/>
                   <map:parameter name="reload-on-save" value="0"/> <!-- 1 means you can see the saving -->
                   <map:parameter name="use-css" value="1"/>
-                  <map:parameter name="redirect-to" value="{../2}.html"/>
+                  <map:parameter name="redirect-to" value="{page-envelope:document-name}.html"/>
                 </map:transform>
 	        <map:serialize type="html"/>
               </map:act>
