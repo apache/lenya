@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-$Id: cmsui_de.xml,v 1.2 2004/02/13 15:27:16 roku Exp $
+$Id: cmsui_de.xml,v 1.3 2004/02/13 15:41:33 roku Exp $
 <License>
 
  ============================================================================
@@ -59,8 +59,8 @@ $Id: cmsui_de.xml,v 1.2 2004/02/13 15:27:16 roku Exp $
   <message key="Cancel">Abbrechen</message>
   
   <!-- usecase:submit -->
-  <message key="submit-for-approval">Dokument {0} ?bermitteln</message>
-  <message key="submit-for-approval?">M?chten Sie {0} zur Durchsicht ?bermitteln?</message>  
+  <message key="submit-for-approval">Dokument {0} &#252;bermitteln</message>
+  <message key="submit-for-approval?">M&#246;chten Sie {0} zur Durchsicht &#252;bermitteln?</message>  
   
 </catalogue>
 
