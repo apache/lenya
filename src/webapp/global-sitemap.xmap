@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap,v 1.61 2004/04/24 21:20:50 gregor Exp $ -->
+<!-- $Id: global-sitemap.xmap,v 1.62 2004/04/25 14:47:20 gregor Exp $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -452,10 +452,12 @@
     </map:resource>
    
     <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
+    <!-- FIXME: due to resolver issues, i18n can currently not be used outside
+        of a publication IF you do not make a hit into a publication context first.     
+         <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="lenya/xslt/util/page2xhtml.xsl">
+-->      <map:transform src="lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
