@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: info.xsl,v 1.28 2003/08/25 20:49:45 edith Exp $
+ $Id: info.xsl,v 1.29 2003/08/26 15:55:24 edith Exp $
  -->
 
 <xsl:stylesheet version="1.0"
@@ -206,24 +206,17 @@
             </tr>
           </xsl:when>
           
-          <!-- Note, important: The timestamp we're inserting into the anchor
-          in each row is actually the one from the *previous* version, thus the
-          position()-1 calculation. This is because in order to roll back
-          to a given version, we need to reactivate the backup file which was
-          written *before* that version was checked in.
-          --> 
-          
           <xsl:when test="position()>1">
-            <xsl:variable name="timeIndex" select="position() - 1"/>
+            <xsl:variable name="timeIndex" select="position()"/>
             <tr>
               <td>
                 <xsl:element name="a">
-                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;documentid=<xsl:value-of select="../../lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
+                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=rollback&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute>Rollback to this version</xsl:element>
                 
               </td>
               <td>
                 <xsl:element name="a">
-                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;documentid=<xsl:value-of select="../../lenya-info:documentid"/>&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
+                  <xsl:attribute name="href">?lenya.usecase=rollback&amp;lenya.step=view&amp;rollbackTime=<xsl:value-of select="../CheckIn[$timeIndex]/Time"/></xsl:attribute><xsl:attribute name="target">_blank</xsl:attribute>View</xsl:element>
                 
               </td>
               <xsl:apply-templates select="Time"/>
