@@ -1,10 +1,15 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'default/workflow.submit']">
 
     <component-instance name="default/workflow.submit"
-                        logger="lenya.usecases.workflow.submit"
+                        logger="lenya.usecases.workflow"
                         class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"/>
+                        
     <component-instance name="default/workflow.reject"
-                        logger="lenya.usecases.workflow.reject"
+                        logger="lenya.usecases.workflow"
                         class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"/>
+                        
+    <component-instance name="default/workflow.publish"
+                        logger="lenya.usecases.workflow"
+                        class="org.apache.lenya.defaultpub.cms.usecases.Publish"/>
 
   </xconf>
