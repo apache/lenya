@@ -45,6 +45,12 @@
 <target name="crawl" description="Crawl and dump hypertext documents" depends="init">
   <echo>INFO: Crawl and dump hypertext documents (${crawler.xconf})</echo>
 
+  <exec executable="${lenya.dir}/src/webapp/lenya/bin/crawl_and_index.sh">
+    <arg value="crawl"/>
+    <arg value="${crawler.xconf}"/>
+  </exec>
+
+<!-- TODO: Linkage problem
   <java classname="org.apache.lenya.search.crawler.CrawlerConfiguration">
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
@@ -55,6 +61,7 @@
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
+-->
 </target>
 
 
