@@ -42,7 +42,7 @@ public class TaskFactory {
             return task;
         }
         catch (Exception e) {
-            log.error("Cannot create Task " + e);
+            log.error("Cannot create Task: ", e);
             return null;
         }
     }
