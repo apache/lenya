@@ -327,12 +327,12 @@ width="24" height="16" border="0" /></td>
 </p>
 
 <p align="center">
-  <a href="/Conferences/Cambridge/">
+<!-- @ADD_BANNER@ -->
 <!--
-@ADD_BANNER@
--->
-<img src="{$imagesPrefix}/oscom3.png" border="0" alt="OSCOM3, May 2003, Cambridge/Boston, MA" title="OSCOM3, May 2003, Cambridge/Boston, MA" width="152" height="35"/>
+  <a href="/Conferences/Cambridge/">
+    <img src="{$imagesPrefix}/oscom3.png" border="0" alt="OSCOM3, May 2003, Cambridge/Boston, MA" title="OSCOM3, May 2003, Cambridge/Boston, MA" width="152" height="35"/>
   </a>
+-->
 </p>
 
 <p>&#160;</p>
