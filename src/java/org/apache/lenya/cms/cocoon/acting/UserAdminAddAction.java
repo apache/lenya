@@ -1,5 +1,5 @@
 /*
- * $Id: UserAdminAddAction.java,v 1.1 2003/06/06 13:55:45 egli Exp $
+ * $Id: UserAdminAddAction.java,v 1.2 2003/06/06 17:22:50 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -62,8 +62,8 @@ import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.FileUser;
 import org.apache.lenya.cms.ac.Group;
 import org.apache.lenya.cms.ac.GroupManager;
-import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * @author egli
@@ -83,16 +83,10 @@ public class UserAdminAddAction
 		throws Exception {
 
 		Request request = ObjectModelHelper.getRequest(objectModel);
-		PageEnvelope envelope = null;
-		try {
-			envelope = new PageEnvelope(resolver, request);
-		} catch (Exception e) {
-			getLogger().error(e.getMessage(), e);
-			return null;
-		}
+
 		Map emptyMap = Collections.EMPTY_MAP;
 
-		Publication publication = envelope.getPublication();
+		Publication publication = PublicationFactory.getPublication(objectModel);
 
 		String userId = request.getParameter(USER_ID);
 		String fullName = request.getParameter(FULL_NAME);
@@ -112,13 +106,15 @@ public class UserAdminAddAction
 			getLogger().error(e.getMessage(), e);
 			return null;
 		}
+				
 		FileUser user =
 			new FileUser(publication, userId, fullName, email, password);
-		String[] groups = request.getParameterValues(GROUP);
+		String[] groups = request.getParameterValues(GROUPS);
 		for (int i = 0; i < groups.length; i++) {
 			Group group = (Group) manager.getGroup(groups[i]);
 			user.addGroup(group);
 		}
+				
 		try {
 			user.save();
 		} catch (AccessControlException e) {
