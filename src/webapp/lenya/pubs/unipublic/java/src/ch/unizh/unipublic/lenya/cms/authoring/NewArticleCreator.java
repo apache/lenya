@@ -5,9 +5,6 @@ import java.io.FileWriter;
 
 import org.wyona.cms.authoring.AbstractParentChildCreator;
 
-import org.dom4j.Document;
-import org.dom4j.io.SAXReader;
-
 import org.apache.log4j.Category;
 
 /**
