@@ -21,10 +21,10 @@ package org.apache.lenya.cms.workflow;
 
 import java.io.File;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.util.FileUtil;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.History;
@@ -225,6 +225,17 @@ public class CMSHistory extends History {
         super.delete();
         
         File stopDirectory = new File(getDocument().getPublication().getDirectory(), HISTORY_PATH);
-        FileUtil.deleteParentDirs(getHistoryFile(), stopDirectory);
+        if (!stopDirectory.isDirectory())
+            throw new WorkflowException("Stop dir '" + stopDirectory.getAbsolutePath()
+                    + "' is not a directory");
+        if (!getHistoryFile().getAbsolutePath().startsWith(stopDirectory.getAbsolutePath()))
+            throw new WorkflowException("Start dir '" + getHistoryFile().getAbsolutePath()
+                    + "' is not a descending sibling of stop directory '" + stopDirectory.getAbsolutePath()
+                    + "'.");
+
+        File parent = getHistoryFile().getParentFile();
+
+        while (!parent.equals(stopDirectory) && parent.delete())
+            parent = parent.getParentFile();
     }
 }

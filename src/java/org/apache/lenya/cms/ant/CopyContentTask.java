@@ -23,11 +23,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-import org.apache.lenya.util.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -75,7 +75,7 @@ public class CopyContentTask extends TwoDocumentsOperationTask {
 
             log("copy file " + srcFile.getAbsolutePath() + "to file " + destFile.getAbsolutePath());
             try {
-                FileUtil.copy(srcFile.getAbsolutePath(), destFile.getAbsolutePath());
+                FileUtil.copyFile(srcFile, destFile);
             } catch (FileNotFoundException e) {
                 throw new BuildException(e);
             } catch (IOException e) {

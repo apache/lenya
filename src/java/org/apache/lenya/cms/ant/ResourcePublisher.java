@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.util.FileUtil;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -63,7 +63,7 @@ public class ResourcePublisher extends PublicationTask {
                 String destPath = liveResource.getAbsolutePath();
 
                 log("Copy file [" + resources[i].getAbsolutePath() + "] to [" + destPath + "]");
-                FileUtil.copy(resources[i].getAbsolutePath(), destPath);
+                FileUtil.copyFile(resources[i], liveResource);
             }
 
         } catch (Exception e) {
