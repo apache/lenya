@@ -1,5 +1,5 @@
 /*
-$Id: PolicyAuthorizer.java,v 1.13 2003/07/30 15:05:36 egli Exp $
+$Id: PolicyAuthorizer.java,v 1.14 2003/08/05 16:26:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,12 @@ $Id: PolicyAuthorizer.java,v 1.13 2003/07/30 15:05:36 egli Exp $
 */
 package org.apache.lenya.cms.ac2;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
@@ -70,27 +74,66 @@ import org.apache.lenya.cms.ac.Role;
 public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
     /**
+     * Returns the accreditable manager.
+     * @return An accreditable manager.
+     */
+    public AccreditableManager getAccreditableManager() {
+        return accreditableManager;
+    }
+
+    /**
+     * Returns the policy manager.
+     * @return A policy manager.
+     */
+    public PolicyManager getPolicyManager() {
+        return policyManager;
+    }
+
+    /**
      * Creates a new policy authorizer.
      */
     public PolicyAuthorizer() {
+    }
+    
+    private PolicyManager policyManager;
+    
+    /**
+     * Sets the policy manager.
+     * @param manager A policy manager.
+     */
+    public void setPolicyManager(PolicyManager manager) {
+        assert manager != null;
+        policyManager = manager;
+    }
+    
+    private AccreditableManager accreditableManager;
+    
+    /**
+     * Sets the accreditable manager.
+     * @param manager An accreditable manager.
+     */
+    public void setAccreditableManager(AccreditableManager manager) {
+        assert manager != null;
+        accreditableManager = manager;
     }
 
     /**
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, java.lang.String, java.util.Map)
      */
-    public boolean authorize(
-        AccreditableManager accreditableManager,
-        PolicyManager policyManager,
-        Identity identity,
-        Request request)
+    public boolean authorize(Request request)
         throws AccessControlException {
 
-        getLogger().debug("Authorizing identity: " + identity);
+        Session session = request.getSession(true);
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Trying to authorize identity: " + identity);
+        }
 
         boolean authorized;
 
-        if (identity.belongsTo(accreditableManager)) {
-            authorized = authorizePolicy(accreditableManager, policyManager, identity, request);
+        if (identity.belongsTo(getAccreditableManager())) {
+            authorized = authorizePolicy(identity, request);
         } else {
             getLogger().debug(
                 "Identity ["
@@ -106,16 +149,12 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
     /**
      * Authorizes an request for an identity depending on a policy.
-     * @param accreditableManager The accreditable manager.
-     * @param policyManager The policy manager.
      * @param identity The identity to authorize.
      * @param request The request to authorize.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
     protected boolean authorizePolicy(
-        AccreditableManager accreditableManager,
-        PolicyManager policyManager,
         Identity identity,
         Request request)
         throws AccessControlException {
@@ -129,11 +168,43 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
         String url = requestUri.substring(context.length());
 
-        Policy policy = policyManager.getPolicy(accreditableManager, url);
+        Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
         Role[] roles = policy.getRoles(identity);
+        saveRoles(request, roles);
 
         boolean authorized = roles.length > 0;
         return authorized;
+    }
+
+    /**
+     * Saves the roles of the current identity to the request.
+     * @param request The request.
+     * @param roles The roles.
+     */
+    protected void saveRoles(Request request, Role[] roles) {
+        String rolesString = "";
+        for (int i = 0; i < roles.length; i++) {
+            rolesString += " " + roles[i];
+        }
+        getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
+        request.setAttribute(Role.class.getName(), Arrays.asList(roles));
+    }
+    
+    /**
+     * Fetches the stored roles from the request.
+     * @param request The request.
+     * @return A role array.
+     * @throws AccessControlException If the request does not contain the roles list.
+     */
+    public static Role[] getRoles(Request request) throws AccessControlException {
+        List roleList = (List) request.getAttribute(Role.class.getName());
+
+        if (roleList == null) {
+            throw new AccessControlException("Request does not contain roles!");
+        }
+
+        Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
+        return roles;
     }
 
 }

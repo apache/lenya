@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.15 2003/08/05 11:56:57 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.16 2003/08/05 16:26:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -64,11 +64,8 @@ import org.apache.excalibur.source.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
-import org.apache.lenya.cms.ac2.AccreditableManager;
 import org.apache.lenya.cms.ac2.Authorizer;
-import org.apache.lenya.cms.ac2.Identity;
-import org.apache.lenya.cms.ac2.Policy;
-import org.apache.lenya.cms.ac2.PolicyManager;
+import org.apache.lenya.cms.ac2.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -77,8 +74,6 @@ import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowInstance;
-
-import java.util.Arrays;
 
 /**
  * If the client requested invoking a workflow event, this authorizer checks if
@@ -93,11 +88,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
     /**
      * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, org.apache.cocoon.environment.Request)
      */
-    public boolean authorize(
-        AccreditableManager accessController,
-        PolicyManager policyManager,
-        Identity identity,
-        Request request)
+    public boolean authorize(Request request)
         throws AccessControlException {
 
         getLogger().debug("Authorizing workflow");
@@ -113,10 +104,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
         String url = requestUri.substring(context.length());
 
-        Policy policy = policyManager.getPolicy(accessController, url);
-        Role[] roles = policy.getRoles(identity);
-        saveRoles(request, roles);
-
+        Role[] roles = PolicyAuthorizer.getRoles(request);
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
 
@@ -160,20 +148,6 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
         }
 
         return authorized;
-    }
-
-    /**
-     * Saves the roles of the current identity to the request.
-     * @param request The request.
-     * @param roles The roles.
-     */
-    protected void saveRoles(Request request, Role[] roles) {
-        String rolesString = "";
-        for (int i = 0; i < roles.length; i++) {
-            rolesString += " " + roles[i];
-        }
-        getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
-        request.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
 
     private ServiceManager manager;

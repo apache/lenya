@@ -1,5 +1,5 @@
 /*
-$Id: AccessControlAction.java,v 1.2 2003/07/17 16:24:18 andreas Exp $
+$Id: AccessControlAction.java,v 1.3 2003/08/05 16:26:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,13 +68,12 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.ac2.AccessController;
 import org.apache.lenya.cms.ac2.AccessControllerResolver;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
 public abstract class AccessControlAction extends ConfigurableComposerAction {
-
-    protected static final String DEFAULT_RESOLVER = "composable";
 
     private AccessController accessController;
 
@@ -101,26 +100,22 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
         accessController = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        
+
         Map result = null;
 
         try {
             selector =
                 (ComponentSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver = (AccessControllerResolver) selector.select(DEFAULT_RESOLVER);
+            resolver =
+                (AccessControllerResolver) selector.select(
+                    AccessControllerResolver.DEFAULT_RESOLVER);
 
-            String requestURI = request.getRequestURI();
-            String context = request.getContextPath();
-            if (context == null) {
-                context = "";
-            }
-            String url = requestURI.substring(context.length());
-            accessController = resolver.resolveAccessController(url);
-            
+            String webappUrl = ServletHelper.getWebappURI(request);
+            accessController = resolver.resolveAccessController(webappUrl);
+
             if (accessController == null) {
                 result = Collections.EMPTY_MAP;
-            }
-            else {
+            } else {
                 result = doAct(redirector, sourceResolver, objectModel, source, parameters);
             }
 
@@ -162,7 +157,8 @@ public abstract class AccessControlAction extends ConfigurableComposerAction {
         SourceResolver resolver,
         Map objectModel,
         String source,
-        Parameters parameters) throws Exception;
+        Parameters parameters)
+        throws Exception;
 
     /**
      * Returns the access controller.

@@ -1,5 +1,5 @@
 /*
-$Id: DefaultAccessController.java,v 1.9 2003/07/30 13:20:11 andreas Exp $
+$Id: DefaultAccessController.java,v 1.10 2003/08/05 16:26:01 andreas Exp $
 <License>
 
  ============================================================================
@@ -122,26 +122,22 @@ public class DefaultAccessController
         boolean authorized = false;
 
         Session session = request.getSession(true);
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Trying to authorize identity: " + identity);
-        }
-
-        if (identity != null && hasAuthorizers()) {
+        if (hasAuthorizers()) {
             Authorizer[] authorizers = getAuthorizers();
             int i = 0;
             authorized = true;
 
             while ((i < authorizers.length) && authorized) {
 
+                if (authorizers[i] instanceof PolicyAuthorizer) {
+                    PolicyAuthorizer authorizer = (PolicyAuthorizer) authorizers[i];
+                    authorizer.setAccreditableManager(accreditableManager);
+                    authorizer.setPolicyManager(policyManager);
+                }
+
                 authorized =
                     authorized
-                        && authorizers[i].authorize(
-                            accreditableManager,
-                            policyManager,
-                            identity,
-                            request);
+                        && authorizers[i].authorize(request);
 
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug(
@@ -222,6 +218,11 @@ public class DefaultAccessController
         }
     }
     
+    /**
+     * Configures the authorizers.
+     * @param configuration The main configuration.
+     * @throws ConfigurationException when something went wrong.
+     */
     protected void configureAuthorizers(Configuration configuration) throws ConfigurationException {
         Configuration[] authorizerConfigurations = configuration.getChildren(AUTHORIZER_ELEMENT);
 
