@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.workflow;
 
+import org.apache.avalon.excalibur.pool.Poolable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -38,7 +39,7 @@ import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
  * 
  * @version $Id:$
  */
-public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager, Serviceable {
+public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager, Serviceable, Poolable {
 
     /**
      * @see org.apache.lenya.cms.workflow.WorkflowManager#invoke(org.apache.lenya.cms.publication.Document,
