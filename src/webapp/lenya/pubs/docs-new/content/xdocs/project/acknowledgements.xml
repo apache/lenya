@@ -16,14 +16,17 @@
 <ul>
 <li><strong>Michael Wechner</strong> (michi at apache.org)
 <p>
-Lenya was originally started by Michael in early 1999 to manage the content of
-the journal of pattern formation. Michael previously did basic research in physics
-by writing computer simulations on dendritic growth.
+Lenya was originally started by Michael in early 1999 to manage the
+content of the journal of pattern formation. Michael previously did
+basic research in physics by writing computer simulations on dendritic
+growth.
 </p>
 <p>
-In early 2000 Michael co-founded <link href="http://www.wyona.com">Wyona</link>, which continued to develop Lenya on the basis
-of the interactive newspaper edition of <link href="http://www.nzz.ch">Neue Z&#252;rcher Zeitung</link>.
-The name Lenya is a combination of the names of his two sons Levi and Vanya.
+In early 2000 Michael co-founded <link
+href="http://www.wyona.com">Wyona</link>, which continued to develop
+Lenya on the basis of the interactive newspaper edition of <link
+href="http://www.nzz.ch">Neue Z&#252;rcher Zeitung</link>.  The name
+Lenya is a combination of the names of his two sons Levi and Vanya.
 <br />&#160;
 </p>
 </li>
@@ -62,8 +65,8 @@ Recently he rewrote the JavaScript of the Lenya menubar.
 </li>
 <li><strong>Christian Stocker</strong>
 <p>
-Christian is the original creator of the Bitflux Editor. He helped a lot to integrate Bitflux Editor into Lenya.
-<br />&#160;
+Christian is the original creator of the Bitflux Editor. He helped a
+lot to integrate Bitflux Editor into Lenya.  <br />&#160;
 </p>
 </li>
 <li><strong>Markus Vaterlaus</strong></li>
@@ -72,8 +75,7 @@ Christian is the original creator of the Bitflux Editor. He helped a lot to inte
 <li><strong>Martin L&#252;thi</strong></li>
 <li><strong>Stephen England</strong>
 <p>
-The Lenya logo has been designed by Stephen.
-<br />&#160;
+The Lenya logo has been designed by Stephen.  <br />&#160;
 </p>
 </li>
 <li><strong>Thomas Werschlein</strong></li>
@@ -82,11 +84,22 @@ The Lenya logo has been designed by Stephen.
 </ul>
 </section>
 
-<!--
     <section>
       <title>Credits</title>
-      <p>This product includes software developed by ...</p>
+
+      <p>This product includes software developed by the Apache
+      Software Foundation (http://www.apache.org/).</p>
+
+      <p>This product includes software developed by the DOM4J Project
+      (http://www.dom4j.org/).</p>
+
+      <p>This product includes software developed by the XML:DB
+      Initiative (http://www.xmldb.org/).</p>
+
+      <p>This product includes software developed by Bitflux GmbH
+      (http://www.bitflux.ch)</p>
+
     </section>
--->
+
   </body>
 </document>
