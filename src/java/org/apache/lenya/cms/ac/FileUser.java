@@ -74,16 +74,11 @@ public class FileUser extends User implements Item {
     private Category log = Category.getInstance(FileUser.class);
 
     public static final String ID = "identity";
-    public static final String FULL_NAME = "fullname";
     public static final String EMAIL = "email";
-    public static final String DESCRIPTION = "description";
     public static final String PASSWORD = "password";
     public static final String GROUPS = "groups";
     public static final String GROUP = "group";
     public static final String PASSWORD_ATTRIBUTE = "type";
-    public static final String ID_ATTRIBUTE = "id";
-    public static final String CLASS_ATTRIBUTE = "class";
-    private File configurationDirectory;
 
     /**
      * Creates a new FileUser object.
@@ -113,10 +108,8 @@ public class FileUser extends User implements Item {
      * @throws ConfigurationException if the necessary details aren't specified in the config
      */
     public void configure(Configuration config) throws ConfigurationException {
-        setId(config.getAttribute(ID_ATTRIBUTE));
-        setFullName(config.getChild(FULL_NAME).getValue(null));
+        new ItemConfiguration().configure(this, config);
         setEmail(config.getChild(EMAIL).getValue());
-        setDescription(config.getChild(DESCRIPTION).getValue(""));
         setEncryptedPassword(config.getChild(PASSWORD).getValue(null));
 
         Configuration[] groups = config.getChildren(GROUPS);
@@ -135,23 +128,25 @@ public class FileUser extends User implements Item {
             }
 
             for (int i = 0; i < groups.length; i++) {
-                String groupName = groups[i].getValue();
-                Group group = manager.getGroup(groupName);
+                String groupId = groups[i].getValue();
+                Group group = manager.getGroup(groupId);
 
+                if (group == null) {
+                    throw new ConfigurationException("Couldn't find Group for group name [" + groupId + "]");
+                }
+                
                 if (!group.contains(this)) {
                     group.add(this);
                 }
 
-                if (group == null) {
-                    log.error("Couldn't find Group for group name [" + groupName + "]");
-                }
             }
         } else {
             // strange, it should have groups
-            log.error("User " + config.getAttribute(ID_ATTRIBUTE) +
+            log.error("User " + getId() +
                 " doesn't seem to have any groups");
         }
     }
+
 
     /**
      * Create a configuration from the current user details. Can
@@ -161,24 +156,13 @@ public class FileUser extends User implements Item {
     */
     protected Configuration createConfiguration() {
         DefaultConfiguration config = new DefaultConfiguration(ID);
-        config.setAttribute(ID_ATTRIBUTE, getId());
-        config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
+        new ItemConfiguration().save(this, config);
 
         DefaultConfiguration child = null;
-
-        // add fullname node
-        child = new DefaultConfiguration(FULL_NAME);
-        child.setValue(getFullName());
-        config.addChild(child);
 
         // add email node
         child = new DefaultConfiguration(EMAIL);
         child.setValue(getEmail());
-        config.addChild(child);
-
-        // add description node
-        child = new DefaultConfiguration(DESCRIPTION);
-        child.setValue(getDescription());
         config.addChild(child);
 
         // add password node
@@ -195,7 +179,7 @@ public class FileUser extends User implements Item {
 
         for (int i = 0; i < groups.length; i++) {
             DefaultConfiguration groupNode = new DefaultConfiguration(GROUP);
-            groupNode.setValue(groups[i].getName());
+            groupNode.setValue(groups[i].getId());
             child.addChild(groupNode);
         }
 
@@ -208,10 +192,8 @@ public class FileUser extends User implements Item {
     public void save() throws AccessControlException {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
         Configuration config = createConfiguration();
-        UserManager manager = UserManager.instance(configurationDirectory);
-        manager.add(this);
 
-        File xmlPath = manager.getConfigurationDirectory();
+        File xmlPath = getConfigurationDirectory();
         File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
 
         try {
@@ -227,13 +209,12 @@ public class FileUser extends User implements Item {
     public void delete() throws AccessControlException {
         super.delete();
 
-        UserManager manager = UserManager.instance(configurationDirectory);
-        manager.remove(this);
-
-        File xmlPath = manager.getConfigurationDirectory();
+        File xmlPath = getConfigurationDirectory();
         File xmlfile = new File(xmlPath, getId() + UserManager.SUFFIX);
         xmlfile.delete();
     }
+
+    private File configurationDirectory;
 
     /**
      * Returns the configuration directory.
@@ -250,4 +231,5 @@ public class FileUser extends User implements Item {
         assert (configurationDirectory != null) && configurationDirectory.isDirectory();
         this.configurationDirectory = configurationDirectory;
     }
+    
 }

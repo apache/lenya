@@ -142,20 +142,7 @@ public class UserManager extends ItemManager {
      * no user with the given user id
      */
     public User getUser(String userId) {
-        User user = null;
-        Iterator iter = getUsers();
-
-        while (iter.hasNext()) {
-            User element = (User) iter.next();
-
-            if (element.getId().equals(userId)) {
-                user = element;
-
-                break;
-            }
-        }
-
-        return user;
+        return (User) getItem(userId);
     }
 
     /**

@@ -134,22 +134,11 @@ public final class GroupManager extends ItemManager {
     /**
      * Get the group with the given group name.
      *
-     * @param groupName the name of the requested group
+     * @param groupId the id of the requested group
      * @return a <code>Group</code> or null if there is no group with the given name
      */
-    public Group getGroup(String groupName) {
-        Group group = null;
-        Iterator iter = getGroups();
-
-        while (iter.hasNext()) {
-            Group element = (Group) iter.next();
-
-            if (element.getName().equals(groupName)) {
-                group = element;
-            }
-        }
-
-        return group;
+    public Group getGroup(String groupId) {
+        return (Group) getItem(groupId);
     }
 
     /**

@@ -72,16 +72,14 @@ public class FileRole extends Role implements Item {
     /**
     * Creates a new file role.
     * @param configurationDirectory The configuration directory.
-    * @param roleName The role name.
+    * @param id The role ID.
     */
-    public FileRole(File configurationDirectory, String roleName) {
-        setName(roleName);
+    public FileRole(File configurationDirectory, String id) {
+        setId(id);
         setConfigurationDirectory(configurationDirectory);
     }
 
-    public static final String GROUP = "role";
-    public static final String NAME_ATTRIBUTE = "name";
-    public static final String CLASS_ATTRIBUTE = "class";
+    public static final String ROLE = "role";
 
     /**
      * Creates a new FileRole object.
@@ -96,7 +94,7 @@ public class FileRole extends Role implements Item {
      * @throws ConfigurationException if the <code>FileRole</code> could not be configured
      */
     public void configure(Configuration config) throws ConfigurationException {
-        setName(config.getAttribute(NAME_ATTRIBUTE));
+        new ItemConfiguration().configure(this, config);
     }
 
     /**
@@ -108,7 +106,7 @@ public class FileRole extends Role implements Item {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
         Configuration config = createConfiguration();
         File xmlPath = getConfigurationDirectory();
-        File xmlfile = new File(xmlPath, getName() + RoleManager.SUFFIX);
+        File xmlfile = new File(xmlPath, getId() + RoleManager.SUFFIX);
 
         try {
             serializer.serializeToFile(xmlfile, config);
@@ -123,10 +121,8 @@ public class FileRole extends Role implements Item {
      * @return a <code>Configuration</code>
      */
     private Configuration createConfiguration() {
-        DefaultConfiguration config = new DefaultConfiguration(GROUP);
-        config.setAttribute(NAME_ATTRIBUTE, getName());
-        config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
-
+        DefaultConfiguration config = new DefaultConfiguration(ROLE);
+        new ItemConfiguration().save(this, config);
         return config;
     }
 

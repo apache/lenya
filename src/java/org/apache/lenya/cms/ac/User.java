@@ -63,18 +63,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  *
  * @author  nobby
  */
 public abstract class User extends AbstractGroupable implements Identifiable {
+
     private static Category log = Category.getInstance(User.class);
-    private String id;
-    private String fullName;
     private String email;
     private String encryptedPassword;
-    private String description = "";
     private Set groups = new HashSet();
 
     /**
@@ -92,8 +89,8 @@ public abstract class User extends AbstractGroupable implements Identifiable {
          * @param password the users password
          */
     public User(String id, String fullName, String email, String password) {
-        this.id = id;
-        this.fullName = fullName;
+        setId(id);
+        setName(fullName);
         this.email = email;
         setPassword(password);
     }
@@ -113,16 +110,7 @@ public abstract class User extends AbstractGroupable implements Identifiable {
      * @return a <code>String</code>
      */
     public String getFullName() {
-        return fullName;
-    }
-
-    /**
-     * Get the user id
-     *
-     * @return the user id
-     */
-    public String getId() {
-        return id;
+        return getName();
     }
 
     /**
@@ -140,7 +128,7 @@ public abstract class User extends AbstractGroupable implements Identifiable {
      * @param name the new full name
      */
     public void setFullName(String name) {
-        fullName = name;
+        setName(name);
     }
 
     /**
@@ -187,24 +175,6 @@ public abstract class User extends AbstractGroupable implements Identifiable {
         removeFromAllGroups();
     }
 
-    /** (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof User) {
-            return getId().equals(((User) obj).getId());
-        }
-
-        return false;
-    }
-
-    /** (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode() {
-        return getId().hashCode();
-    }
-
     /**
      * Authenticate a user. This is done by encrypting
      * the given password and comparing this to the
@@ -222,15 +192,6 @@ public abstract class User extends AbstractGroupable implements Identifiable {
     }
 
     /**
-     * Sets the ID of this user.
-     * @param string The ID.
-     */
-    public void setId(String string) {
-        assert (string != null) && !"".equals(string);
-        id = string;
-    }
-
-    /**
      * @see org.apache.lenya.cms.ac.Accreditable#getAccreditables()
      */
     public Accreditable[] getAccreditables() {
@@ -245,30 +206,6 @@ public abstract class User extends AbstractGroupable implements Identifiable {
         }
 
         return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
-    }
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-        return "[user " + getId() + "]";
-        
-    }
-    /**
-     * Returns the description of this user.
-     * @return A string.
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets the description of this user.
-     * @param description A string.
-     */
-    public void setDescription(String description) {
-        assert description != null;
-        this.description = description;
     }
 
 }

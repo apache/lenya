@@ -103,28 +103,13 @@ public final class RoleManager extends ItemManager {
     }
 
     /**
-     * Get the role for the given roleName
+     * Get the role for the given ID.
      *
-     * @param roleName the name of the role requested
+     * @param roleId The name of the role requested.
      * @return a <code>Role</code> or null if no role with the given name found
      */
-    public Role getRole(String roleName) {
-        Role role = null;
-        Iterator iter = getRoles();
-
-        while (iter.hasNext()) {
-            Role element = (Role) iter.next();
-
-            if (element.getName().equals(roleName)) {
-                role = element;
-            }
-        }
-
-        if (role == null) {
-            throw new IllegalArgumentException("Role '" + roleName + "' not found!");
-        }
-
-        return role;
+    public Role getRole(String roleId) {
+        return (Role) getItem(roleId);
     }
 
     /**

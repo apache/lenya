@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: ItemConfiguration.java,v 1.1 2003/07/07 09:44:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,67 +53,68 @@ $Id
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
+
 package org.apache.lenya.cms.ac;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-
-import java.io.File;
-
+import org.apache.avalon.framework.configuration.DefaultConfiguration;
 
 /**
- * An item can be initialized from a configuration.
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * Use this class to create configurations from {@link AbstractItem}s or
+ * to build {@link AbstractItem}s from configurations.
+ * 
+ * @author andreas
+ *
+ * To change the template for this generated type comment go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public interface Item {
+public class ItemConfiguration {
     
     /**
-     * Returns the ID.
-     * @return A string.
+     * Ctor.
      */
-    String getId();
+    public ItemConfiguration() {
+    }
     
     /**
-     * Returns the name.
-     * @return A string.
+     * Saves the ID, name and description of the Manageable to the configuration.
+     * @param manageable A manageable.
+     * @param configuration A configuration.
      */
-    String getName();
-    
-    /**
-     * Sets the name.
-     * @param name A string.
-     */
-    void setName(String name);
-    
-    /**
-     * Returns the description.
-     * @return A string.
-     */
-    String getDescription();
+    public void save(AbstractItem manageable, DefaultConfiguration configuration) {
+        configuration.setAttribute(CLASS_ATTRIBUTE, manageable.getClass().getName());
+        configuration.setAttribute(ID_ATTRIBUTE, manageable.getId());
+
+        DefaultConfiguration child = null;
+
+        // add name node
+        child = new DefaultConfiguration(NAME);
+        child.setValue(manageable.getName());
+        configuration.addChild(child);
+
+        // add description node
+        child = new DefaultConfiguration(DESCRIPTION);
+        child.setValue(manageable.getDescription());
+        configuration.addChild(child);
+
+    }
+
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
+    public static final String ID_ATTRIBUTE = "id";
+    public static final String CLASS_ATTRIBUTE = "class";
 
     /**
-     * Sets the description.
-     * @param description A string.
-     */
-    void setDescription(String description);
-    
-    /**
-     * Checks if a string is a valid ID.
-     * @param id The string to test.
-     * @return A boolean value.
-     */
-    boolean isValidId(String id);
-    
-    /**
-     * Sets the configuration directory of this item.
-     * @param configurationDirectory The configuration directory.
-     */
-    void setConfigurationDirectory(File configurationDirectory);
-
-    /**
-     * Configures this item.
+     * Configures a Manageable.
+     * @param manageable The manageable.
      * @param configuration The configuration.
      * @throws ConfigurationException when something went wrong.
-     */
-    void configure(Configuration configuration) throws ConfigurationException;
+     */    
+    public void configure(AbstractItem manageable, Configuration configuration) throws ConfigurationException {
+        manageable.setId(configuration.getAttribute(ID_ATTRIBUTE));
+        manageable.setName(configuration.getChild(NAME).getValue(""));
+        manageable.setDescription(configuration.getChild(DESCRIPTION).getValue(""));
+    }
+
 }

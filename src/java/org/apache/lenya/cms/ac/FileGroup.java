@@ -73,11 +73,8 @@ import java.io.File;
 public class FileGroup extends Group implements Item {
     private static Category log = Category.getInstance(FileGroup.class);
 
-    public static final String GROUP = "group";
     public static final String ROLES = "roles";
     public static final String ROLE = "role";
-    public static final String NAME_ATTRIBUTE = "name";
-    public static final String CLASS_ATTRIBUTE = "class";
 
     /**
      * Creates a new FileGroup object.
@@ -88,10 +85,10 @@ public class FileGroup extends Group implements Item {
     /**
      * Create a new instance of <code>FileGroup</code>
      * @param configurationDirectory to which the group will be attached to
-     * @param name the name of the group
+     * @param id the ID of the group
          */
-    public FileGroup(File configurationDirectory, String name) {
-        super(name);
+    public FileGroup(File configurationDirectory, String id) {
+        super(id);
         setConfigurationDirectory(configurationDirectory);
     }
 
@@ -101,7 +98,7 @@ public class FileGroup extends Group implements Item {
      * @throws ConfigurationException when something went wrong.
      */
     public void configure(Configuration config) throws ConfigurationException {
-        setName(config.getAttribute(NAME_ATTRIBUTE));
+        new ItemConfiguration().configure(this, config);
 
         Configuration[] rolesConfig = config.getChildren(ROLES);
 
@@ -122,7 +119,7 @@ public class FileGroup extends Group implements Item {
             }
         } else {
             // the Group should have a Roles node
-            log.error("The groups " + config.getAttribute(NAME_ATTRIBUTE) +
+            log.error("The group " + getId() +
                 "doesn't appear to have the mandatory roles node");
         }
     }
@@ -136,7 +133,7 @@ public class FileGroup extends Group implements Item {
         DefaultConfigurationSerializer serializer = new DefaultConfigurationSerializer();
         Configuration config = createConfiguration();
         File xmlPath = getConfigurationDirectory();
-        File xmlfile = new File(xmlPath, getName() + GroupManager.SUFFIX);
+        File xmlfile = new File(xmlPath, getId() + GroupManager.SUFFIX);
 
         try {
             serializer.serializeToFile(xmlfile, config);
@@ -145,6 +142,8 @@ public class FileGroup extends Group implements Item {
         }
     }
 
+    public static final String GROUP = "group";
+
     /**
      * Create a configuration containing the group details
      *
@@ -152,8 +151,7 @@ public class FileGroup extends Group implements Item {
      */
     private Configuration createConfiguration() {
         DefaultConfiguration config = new DefaultConfiguration(GROUP);
-        config.setAttribute(NAME_ATTRIBUTE, getName());
-        config.setAttribute(CLASS_ATTRIBUTE, this.getClass().getName());
+        new ItemConfiguration().save(this, config);
 
         DefaultConfiguration child = null;
 

@@ -64,9 +64,9 @@ import org.apache.log4j.Category;
 import java.io.File;
 import java.io.FileFilter;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.Map;
 
 
 /**
@@ -78,7 +78,7 @@ public abstract class ItemManager {
     private static final Category log = Category.getInstance(ItemManager.class);
 
     public static final String PATH = "config" + File.separator + "ac" + File.separator + "passwd";
-    private Set items = null;
+    private Map items = new HashMap();
     private File configurationDirectory;
 
     /**
@@ -99,7 +99,6 @@ public abstract class ItemManager {
         this.configurationDirectory = configurationDirectory;
 
         File[] itemFiles = configurationDirectory.listFiles(getFileFilter());
-        items = new HashSet();
 
         Configuration config = null;
 
@@ -122,7 +121,7 @@ public abstract class ItemManager {
             String klass = null;
 
             try {
-                klass = config.getAttribute(FileUser.CLASS_ATTRIBUTE);
+                klass = config.getAttribute(ItemConfiguration.CLASS_ATTRIBUTE);
             } catch (ConfigurationException e) {
                 String errorMsg = "Exception when extracting class name from identity file: " +
                     klass + config.getAttributeNames();
@@ -153,8 +152,17 @@ public abstract class ItemManager {
                 throw new AccessControlException(errorMsg, e);
             }
 
-            items.add(item);
+            add(item);
         }
+    }
+    
+    /**
+     * Returns an item for a given ID.
+     * @param id The id.
+     * @return An item.
+     */
+    public Item getItem(String id) {
+        return (Item) items.get(id);
     }
 
     /**
@@ -163,7 +171,7 @@ public abstract class ItemManager {
      * @return an <code>Iterator</code>
      */
     public Iterator getItems() {
-        return items.iterator();
+        return items.values().iterator();
     }
 
     /**
@@ -171,8 +179,9 @@ public abstract class ItemManager {
      *
      * @param item to be added
      */
-    public void add(Object item) {
-        items.add(item);
+    public void add(Item item) {
+        assert item != null;
+        items.put(item.getId(), item);
     }
 
     /**
@@ -181,8 +190,17 @@ public abstract class ItemManager {
      *
      * @param item to be removed
      */
-    public void remove(Object item) {
-        items.remove(item);
+    public void remove(Item item) {
+        items.remove(item.getId());
+    }
+    
+    /**
+     * Returns if the ItemManager contains an object.
+     * @param item The object.
+     * @return A boolean value.
+     */
+    public boolean contains(Item item) {
+        return items.containsValue(item);
     }
 
     /**

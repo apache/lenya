@@ -67,9 +67,7 @@ import java.util.Set;
  * @author egli
  * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
  */
-public class Group implements Accreditable {
-    private String name;
-
+public abstract class Group extends AbstractItem implements Accreditable {
     /**
      * Creates a new group.
      */
@@ -78,26 +76,10 @@ public class Group implements Accreditable {
 
     /**
      * Creates a new group.
-     * @param name The group name.
+     * @param id The group ID.
      */
-    public Group(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Get the name of this group
-     * @return The name.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Set the name of this group
-     * @param string The name.
-     */
-    public void setName(String string) {
-        name = string;
+    public Group(String id) {
+        setId(id);
     }
 
     private Set members = new HashSet();
@@ -131,26 +113,6 @@ public class Group implements Accreditable {
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        boolean equals = false;
-
-        if (obj instanceof Group) {
-            equals = getName().equals(((Group) obj).getName());
-        }
-
-        return equals;
-    }
-
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode() {
-        return getName().hashCode();
-    }
-
-    /**
      * Returns if this group contains this member.
      * @param member The member to check.
      * @return A boolean value.
@@ -166,11 +128,4 @@ public class Group implements Accreditable {
         return (Accreditable[]) Collections.singleton(this).toArray(new Accreditable[1]);
     }
     
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-        return getName();
-    }
-
 }

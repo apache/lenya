@@ -1,5 +1,5 @@
 /*
-$Id
+$Id: AbstractItem.java,v 1.1 2003/07/07 09:44:48 andreas Exp $
 <License>
 
  ============================================================================
@@ -53,67 +53,95 @@ $Id
  DOM4J Project, BitfluxEditor, Xopus, and WebSHPINX.
 </License>
 */
+
 package org.apache.lenya.cms.ac;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-
-import java.io.File;
-
-
 /**
- * An item can be initialized from a configuration.
- * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * Abstract superclass for all access control objects that can be
+ * managed by an {@link ItemManager}. It is only used for code reuse. 
+ * 
+ * @author andreas
  */
-public interface Item {
+public abstract class AbstractItem implements Item {
+
+    private String id;
+    private String description = "";
+    private String name = "";
     
+    /**
+     * Ctor.
+     */
+    public AbstractItem() {
+    }
+
+    /**
+     * Sets the ID.
+     * @param string The ID.
+     */
+    protected void setId(String string) {
+        assert isValidId(string);
+        id = string;
+    }
+
     /**
      * Returns the ID.
-     * @return A string.
+     * @return The ID.
      */
-    String getId();
-    
-    /**
-     * Returns the name.
-     * @return A string.
-     */
-    String getName();
-    
-    /**
-     * Sets the name.
-     * @param name A string.
-     */
-    void setName(String name);
-    
-    /**
-     * Returns the description.
-     * @return A string.
-     */
-    String getDescription();
+    public String getId() {
+        return id;
+    }
 
     /**
-     * Sets the description.
+     * Returns the description of this object.
+     * @return A string.
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the description of this object.
      * @param description A string.
      */
-    void setDescription(String description);
+    public void setDescription(String description) {
+        assert description != null;
+        this.description = description;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getId();
+        
+    }
+
+    /**
+     * Returns the name of this object.
+     *
+     * @return A <code>String</code>.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set the full name
+     *
+     * @param name the new full name
+     */
+    public void setName(String name) {
+        assert name != null;
+        this.name = name;
+    }
     
     /**
      * Checks if a string is a valid ID.
      * @param id The string to test.
      * @return A boolean value.
      */
-    boolean isValidId(String id);
+    public boolean isValidId(String id) {
+        return id != null && id.matches("\\w+");
+    }
     
-    /**
-     * Sets the configuration directory of this item.
-     * @param configurationDirectory The configuration directory.
-     */
-    void setConfigurationDirectory(File configurationDirectory);
-
-    /**
-     * Configures this item.
-     * @param configuration The configuration.
-     * @throws ConfigurationException when something went wrong.
-     */
-    void configure(Configuration configuration) throws ConfigurationException;
 }

@@ -65,7 +65,7 @@ import java.util.Set;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class AbstractGroupable implements Groupable {
+public abstract class AbstractGroupable extends AbstractItem implements Groupable {
     private Set groups = new HashSet();
 
     /**
@@ -103,4 +103,26 @@ public class AbstractGroupable implements Groupable {
             groups[i].remove(this);
         }
     }
+    
+    /**
+     * @see java.lang.Object#equals(Object)
+     */
+    public boolean equals(Object otherObject) {
+        boolean equals = false;
+
+        if (getClass().isInstance(otherObject)) {
+            AbstractItem otherManageable = (AbstractItem) otherObject;
+            equals = getId().equals(otherManageable.getId());
+        }
+
+        return equals;
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
 }
