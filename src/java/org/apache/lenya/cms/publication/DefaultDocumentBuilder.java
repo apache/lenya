@@ -147,4 +147,21 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
 
         return suffix;
     }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#isDocument(org.apache.lenya.cms.publication.Publication, java.lang.String)
+     */
+    public boolean isDocument(Publication publication, String url) throws DocumentBuildException {
+        boolean isDocument = true;
+        
+        String publicationURI = url.substring(("/" + publication.getId()).length());
+        String area = publicationURI.split("/")[1];
+        String documentUrl = publicationURI.substring(("/" + area).length());
+        
+        if (!documentUrl.startsWith("/")) {
+            isDocument = false;
+        }
+
+        return isDocument;
+    }
 }

@@ -74,4 +74,15 @@ public interface DocumentBuilder {
      */
     Document buildDocument(Publication publication, String url)
         throws DocumentBuildException;
+    
+    /**
+     * Checks if a URL corresponds to a CMS docuemnt.
+     * @param publication The publication the document belongs to.
+     * @param url The URL of the form /{publication-id}/...
+     * @return A boolean value.
+     * @throws DocumentBuildException when something went wrong.
+     */    
+    boolean isDocument(Publication publication, String url)
+        throws DocumentBuildException;
+    
 }

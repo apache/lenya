@@ -1,5 +1,5 @@
 /*
-$Id: PublicationFactory.java,v 1.10 2003/07/15 14:46:07 egli Exp $
+$Id: PublicationFactory.java,v 1.11 2003/07/18 18:02:02 andreas Exp $
 <License>
 
  ============================================================================
@@ -62,6 +62,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.log4j.Category;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -161,6 +162,30 @@ public final class PublicationFactory {
 
         String servletContextPath = context.getRealPath("");
         return getPublication(publicationId, servletContextPath);
+    }
+    
+    public static Publication getPublication(String webappUrl, File servletContext)
+        throws PublicationException {
+        
+        String url = webappUrl;
+        if (url.startsWith("/")) {
+            url = url.substring(1);
+        }
+
+        int slashIndex = url.indexOf("/");
+        if (slashIndex == -1) {
+            slashIndex = url.length();
+        }
+
+        String publicationId = url.substring(0, slashIndex);
+        
+        Publication publication;
+        try {
+            publication = getPublication(publicationId, servletContext.getCanonicalPath());
+        } catch (IOException e) {
+            throw new PublicationException(e);
+        }
+        return publication;
     }
 
     /**

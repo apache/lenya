@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowAuthorizer.java,v 1.10 2003/07/14 18:06:07 andreas Exp $
+$Id: WorkflowAuthorizer.java,v 1.11 2003/07/18 18:02:02 andreas Exp $
 <License>
 
  ============================================================================
@@ -55,8 +55,13 @@ $Id: WorkflowAuthorizer.java,v 1.10 2003/07/14 18:06:07 andreas Exp $
 */
 package org.apache.lenya.cms.ac2.workflow;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 
 import org.apache.lenya.cms.ac.AccessControlException;
 import org.apache.lenya.cms.ac.Role;
@@ -69,12 +74,15 @@ import org.apache.lenya.cms.publication.DefaultDocumentBuilder;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 
+import java.io.File;
+import java.net.URI;
 import java.util.Arrays;
 
 /**
@@ -83,19 +91,22 @@ import java.util.Arrays;
  *
  * @author andreas
  */
-public class WorkflowAuthorizer extends PolicyAuthorizer {
+public class WorkflowAuthorizer extends PolicyAuthorizer implements Serviceable {
+
     protected static final String EVENT_PARAMETER = "lenya.event";
 
     /**
-     * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, org.apache.lenya.cms.publication.PageEnvelope, org.apache.cocoon.environment.Request)
+     * @see org.apache.lenya.cms.ac2.Authorizer#authorize(org.apache.lenya.cms.ac2.Identity, org.apache.cocoon.environment.Request)
      */
     public boolean authorize(
         AccreditableManager accessController,
         PolicyManager policyManager,
         Identity identity,
-        Publication publication,
         Request request)
         throws AccessControlException {
+
+        getLogger().debug("Authorizing workflow");
+
         boolean authorized = true;
 
         String requestUri = request.getRequestURI();
@@ -107,43 +118,52 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
 
         String url = requestUri.substring(context.length());
 
-        String event = request.getParameter(EVENT_PARAMETER);
-        Document document;
-
-        try {
-            document = DefaultDocumentBuilder.getInstance().buildDocument(publication, url);
-        } catch (DocumentBuildException e) {
-            throw new AccessControlException(e);
-        }
-
         Policy policy = policyManager.getPolicy(accessController, url);
         Role[] roles = policy.getRoles(identity);
         saveRoles(request.getSession(), roles);
-        
-        try {
-            
-            WorkflowFactory factory = WorkflowFactory.newInstance();
-            if (factory.hasWorkflow(document)) {
-                WorkflowInstance instance = factory.buildInstance(document);
 
-                if (event != null) {
-                    authorized = false;
+        String event = request.getParameter(EVENT_PARAMETER);
+        SourceResolver resolver = null;
 
-                    Situation situation = factory.buildSituation(roles);
-                    Event[] events = instance.getExecutableEvents(situation);
-                    int i = 0;
+        if (event != null) {
+            try {
+                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+                Source servletContextSource = resolver.resolveURI("context:///");
+                File servletContext = new File(new URI(servletContextSource.getURI()));
+                Publication publication = PublicationFactory.getPublication(url, servletContext);
 
-                    while (!authorized && (i < events.length)) {
-                        if (events[i].getName().equals(event)) {
-                            authorized = true;
+                if (DefaultDocumentBuilder.getInstance().isDocument(publication, url)) {
+
+                    Document document =
+                        DefaultDocumentBuilder.getInstance().buildDocument(publication, url);
+                    WorkflowFactory factory = WorkflowFactory.newInstance();
+
+                    if (factory.hasWorkflow(document)) {
+                        WorkflowInstance instance = factory.buildInstance(document);
+
+                        authorized = false;
+
+                        Situation situation = factory.buildSituation(roles);
+                        Event[] events = instance.getExecutableEvents(situation);
+                        int i = 0;
+
+                        while (!authorized && (i < events.length)) {
+                            if (events[i].getName().equals(event)) {
+                                authorized = true;
+                            }
+
+                            i++;
                         }
-
-                        i++;
                     }
                 }
+
+            } catch (Exception e) {
+                throw new AccessControlException(e);
+            } finally {
+                if (resolver != null) {
+                    manager.release(resolver);
+                }
             }
-        } catch (WorkflowException e) {
-            throw new AccessControlException(e);
         }
 
         return authorized;
@@ -163,4 +183,14 @@ public class WorkflowAuthorizer extends PolicyAuthorizer {
         getLogger().debug("Adding roles [" + rolesString + " ] to session [" + session + "]");
         session.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
+
+    private ServiceManager manager;
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
+
 }
