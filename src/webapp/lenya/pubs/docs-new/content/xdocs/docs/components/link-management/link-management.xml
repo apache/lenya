@@ -113,6 +113,7 @@
 	  (<code>org.apache.lenya.cms.ant.LinkRewriteTask</code>)
 	  which traverses the repository and pipes all documents
 	  through an XSLT stylesheet
+<!-- 	FIXME: move the unizh stuff into the core. -->
 	  (<code>unizh/pubs/unizh/xslt/linkRewrite.xsl</code>) to
 	  modify all references to the document that changed its
 	  document-id.
@@ -156,8 +157,10 @@
 	<dd>A transformer that rewrites internal links for the
 	appropriate area.</dd>
 	<dt>$publication-id/config/tasks/targets.xml</dt>
-	<dd>Defines the <code>move-and-rewrite</code> the link
-	rewriting in the case of a paste, i.e. when a document-id has changed.</dd> 
+	<dd>Defines the <code>move-and-rewrite</code> target which
+	handles the link rewriting in the case of a paste, i.e. when a
+	document-id has changed.</dd>  
+<!-- 	FIXME: move the unizh stuff into the core. -->
 	<dt>unizh/pubs/unizh/xslt/linkRewrite.xsl</dt>
 	<dd>The XSLT transformation used by
 	<code>LinkRewriteTask</code> to actually rewrite the internal links.</dd>
