@@ -1,5 +1,5 @@
 /*
-$Id: LDAPUser.java,v 1.11 2003/07/23 13:21:16 gregor Exp $
+$Id: LDAPUser.java,v 1.12 2003/08/21 12:06:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -76,7 +76,6 @@ import javax.naming.directory.Attributes;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
-
 /**
  * @author egli
  *
@@ -87,8 +86,6 @@ public class LDAPUser extends FileUser {
     private static Category log = Category.getInstance(LDAPUser.class);
 
     public static final String LDAP_ID = "ldapid";
-    public static final String CONFIG_PATH = File.separator + "config" + File.separator + "ac" +
-        File.separator;
     private static String PROVIDER_URL = "provider-url";
     private static String MGR_DN = "mgr-dn";
     private static String MGR_PW = "mgr-pw";
@@ -97,6 +94,8 @@ public class LDAPUser extends FileUser {
     private static String SECURITY_PROTOCOL = "security-protocol";
     private static String SECURITY_AUTHENTICATION = "security-authentication";
     private String ldapId;
+    
+    private String ldapName;
 
     /**
      * Creates a new LDAPUser object.
@@ -118,11 +117,7 @@ public class LDAPUser extends FileUser {
         super(configurationDirectory, id, null, email, null);
         this.ldapId = ldapId;
 
-        try {
-            readProperties();
-        } catch (IOException e) {
-            throw new ConfigurationException("Could not read properties", e);
-        }
+        initialize();
     }
 
     /**
@@ -135,9 +130,42 @@ public class LDAPUser extends FileUser {
         super.configure(config);
         ldapId = config.getChild(LDAP_ID).getValue();
 
+        initialize();
+    }
+
+    /**
+     * Initializes this user.
+     * @throws ConfigurationException when something went wrong.
+     */
+    protected void initialize() throws ConfigurationException {
         try {
             readProperties();
-        } catch (IOException e) {
+
+            String name = null;
+            LdapContext ctx;
+
+            ctx =
+                bind(defaultProperties.getProperty(MGR_DN), defaultProperties.getProperty(MGR_PW));
+
+            String[] attrs = new String[1];
+            attrs[0] = "gecos"; /* users full name */
+
+            Attributes answer = ctx.getAttributes("uid=m400032,ou=People", attrs);
+
+            if (answer != null) {
+                Attribute attr = answer.get("gecos");
+
+                if (attr != null) {
+                    for (NamingEnumeration enum = attr.getAll(); enum.hasMore(); enum.next()) {
+                        name = (String) attr.get();
+                    }
+                }
+            }
+
+            close(ctx);
+
+            this.ldapName = name;
+        } catch (Exception e) {
             throw new ConfigurationException("Could not read properties", e);
         }
     }
@@ -178,8 +206,8 @@ public class LDAPUser extends FileUser {
      * @see org.apache.lenya.cms.ac.User#authenticate(java.lang.String)
      */
     public boolean authenticate(String password) {
-        String principal = "uid=" + getLdapId() + "," +
-            defaultProperties.getProperty(PARTIAL_USER_DN);
+        String principal =
+            "uid=" + getLdapId() + "," + defaultProperties.getProperty(PARTIAL_USER_DN);
         Context ctx;
 
         try {
@@ -195,40 +223,11 @@ public class LDAPUser extends FileUser {
         return true;
     }
 
-    /** (non-Javadoc)
-     * @see org.apache.lenya.cms.ac.User#getName()
+    /**
+     * @see org.apache.lenya.cms.ac.Item#getName()
      */
     public String getName() {
-        String fullName = null;
-        LdapContext ctx;
-
-        try {
-            ctx = bind(defaultProperties.getProperty(MGR_DN), defaultProperties.getProperty(MGR_PW));
-
-            String[] attrs = new String[1];
-            attrs[0] = "gecos"; /* users full name */
-
-            Attributes answer = ctx.getAttributes("uid=m400032,ou=People", attrs);
-
-            if (answer != null) {
-                Attribute attr = answer.get("gecos");
-
-                if (attr != null) {
-                    for (NamingEnumeration enum = attr.getAll(); enum.hasMore(); enum.next()) {
-                        fullName = (String) attr.get();
-                    }
-                }
-            }
-
-            close(ctx);
-
-            return fullName;
-        } catch (NamingException e) {
-            // log this failure
-            e.printStackTrace();
-
-            return null;
-        }
+        return ldapName;
     }
 
     /**
@@ -269,18 +268,20 @@ public class LDAPUser extends FileUser {
      * @return a <code>LdapContext</code>
      * @throws NamingException if there are problems establishing the Ldap connection
      */
-    private LdapContext bind(String principal, String credentials)
-        throws NamingException {
+    private LdapContext bind(String principal, String credentials) throws NamingException {
         Hashtable env = new Hashtable();
 
-        System.setProperty("javax.net.ssl.trustStore",
-            getConfigurationDirectory().getAbsolutePath() + File.separator +
-            defaultProperties.getProperty(KEY_STORE));
+        System.setProperty(
+            "javax.net.ssl.trustStore",
+            getConfigurationDirectory().getAbsolutePath()
+                + File.separator
+                + defaultProperties.getProperty(KEY_STORE));
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, defaultProperties.getProperty(PROVIDER_URL));
         env.put(Context.SECURITY_PROTOCOL, defaultProperties.getProperty(SECURITY_PROTOCOL));
-        env.put(Context.SECURITY_AUTHENTICATION,
+        env.put(
+            Context.SECURITY_AUTHENTICATION,
             defaultProperties.getProperty(SECURITY_AUTHENTICATION));
         env.put(Context.SECURITY_PRINCIPAL, principal);
         env.put(Context.SECURITY_CREDENTIALS, credentials);
