@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2tree.xsl,v 1.36 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id: sitetree2tree.xsl,v 1.37 2004/08/23 08:46:36 andreas Exp $ -->
 
 <!--
         Converts a sitetree into a javascript array suitable for the tree widget.
@@ -24,6 +24,8 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:s="http://apache.org/cocoon/lenya/navigation/1.0">
+
+<xsl:import href="../util/string-functions.xsl"/>
 
 <xsl:output omit-xml-declaration="yes" encoding = "iso-8859-1" />    
 
@@ -137,17 +139,50 @@ foldersTree.treeID = "t2"
 <xsl:template name="getLabel">
   <xsl:choose>
     <xsl:when test="s:label[lang($chosenlanguage)]">
-    	<xsl:value-of select="s:label[lang($chosenlanguage)]"/>
+      <xsl:call-template name="escape-characters">
+        <xsl:with-param name="input" select="s:label[lang($chosenlanguage)]"/>
+      </xsl:call-template>
     </xsl:when>
     <xsl:when test="s:label[lang($defaultlanguage)]">
-    	<xsl:value-of select="s:label[lang($defaultlanguage)]"/>
+      <xsl:call-template name="escape-characters">
+        <xsl:with-param name="input" select="s:label[lang($defaultlanguage)]"/>
+      </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
-    	<xsl:value-of select="s:label"/>
+      <xsl:call-template name="escape-characters">
+        <xsl:with-param name="input" select="s:label"/>
+      </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>	
 </xsl:template>
 
 <xsl:template match="s:label"/>
+
+
+<xsl:template name="escape-characters">
+  <xsl:param name="input"/>
+  <xsl:variable name="escape-lt">
+    <xsl:call-template name="search-and-replace">
+      <xsl:with-param name="input" select="$input"/>
+      <xsl:with-param name="search-string">&lt;</xsl:with-param>
+      <xsl:with-param name="replace-string">&amp;lt;</xsl:with-param>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:variable name="escape-gt">
+    <xsl:call-template name="search-and-replace">
+      <xsl:with-param name="input" select="$escape-lt"/>
+      <xsl:with-param name="search-string">&gt;</xsl:with-param>
+      <xsl:with-param name="replace-string">&amp;gt;</xsl:with-param>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:variable name="escape-quot">
+    <xsl:call-template name="search-and-replace">
+      <xsl:with-param name="input" select="$escape-gt"/>
+      <xsl:with-param name="search-string">"</xsl:with-param>
+      <xsl:with-param name="replace-string">\"</xsl:with-param>
+    </xsl:call-template>
+  </xsl:variable>
+  <xsl:value-of select="$escape-quot"/>
+</xsl:template>
 
 </xsl:stylesheet> 
