@@ -49,7 +49,7 @@
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
       <map:match pattern="*/*/*/**.xml">
-        <map:generate src="fallback://content/{2}/{4}.xml"/>
+        <map:generate src="lenya:/{4}.xml"/>
         <map:transform src="fallback://xslt/{3}2xhtml.xsl">
           <map:parameter name="rendertype" value="{1}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
