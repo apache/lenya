@@ -1,5 +1,5 @@
 /*
-$Id: InitWorkflowHistoryTask.java,v 1.4 2003/07/09 11:59:08 egli Exp $
+$Id: InitWorkflowHistoryTask.java,v 1.5 2003/08/05 18:17:28 egli Exp $
 <License>
 
  ============================================================================
@@ -69,8 +69,6 @@ import org.apache.tools.ant.BuildException;
 /**
  * @author andreas
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class InitWorkflowHistoryTask extends PublicationTask {
     /**
@@ -101,7 +99,9 @@ public class InitWorkflowHistoryTask extends PublicationTask {
     private String documentType;
 
     /**
-     * @return
+     * Get the document-id.
+     * 
+     * @return the document-id
      */
     public String getDocumentId() {
         assertString(documentId);
@@ -110,15 +110,19 @@ public class InitWorkflowHistoryTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the document-id.
+     * 
+     * @param aDocumentId the document-id
      */
-    public void setDocumentId(String string) {
-        assertString(string);
-        documentId = string;
+    public void setDocumentId(String aDocumentId) {
+        assertString(aDocumentId);
+        documentId = aDocumentId;
     }
 
     /**
-     * @return
+     * Get the document type.
+     * 
+     * @return the document type
      */
     public String getDocumentType() {
         assertString(documentType);
@@ -127,10 +131,12 @@ public class InitWorkflowHistoryTask extends PublicationTask {
     }
 
     /**
-     * @param string
+     * Set the document type.
+     * 
+     * @param aDocumentType the document type
      */
-    public void setDocumentType(String string) {
-        assertString(documentId);
-        documentType = string;
+    public void setDocumentType(String aDocumentType) {
+        assertString(aDocumentType);
+        documentType = aDocumentType;
     }
 }
