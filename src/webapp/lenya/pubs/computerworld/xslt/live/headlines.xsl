@@ -28,7 +28,7 @@
 			<tr bgcolor="{$color}">
 				<td width="440" valign="middle" colspan="2">
 					<!-- EVTL. BILD  WIDTH="50" HEIGHT="50" ALIGN="LEFT" -->
-<xsl:apply-templates select="head/media[1]">
+<xsl:apply-templates select="head/media[1]" mode="headlines">
   <xsl:with-param name="href"><xsl:value-of select="$href"/></xsl:with-param>
 </xsl:apply-templates>
 					<!-- NEWS LAUFTEXT -->
@@ -47,7 +47,7 @@
 		</xsl:for-each>
 	</xsl:template>
 	
-<xsl:template match="media">
+<xsl:template match="media" mode="headlines">
   <xsl:param name="href"/>
   <a href="{$href}">
   <img border="0" src="/img/news/{media-reference/@source}" width="50" height="50" align="left"/>

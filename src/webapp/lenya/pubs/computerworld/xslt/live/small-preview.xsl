@@ -6,7 +6,7 @@
 			<xsl:for-each select="item">
 				<tr>
 					<td width="52" valign="top" align="center">
-						<xsl:apply-templates select="media[1]"/>
+						<xsl:apply-templates select="media[1]" mode="small-preview"/>
 					</td>
 					<td width="88" valign="top">
 						<span class="txt-s-black">
@@ -27,7 +27,7 @@
 		<!-- COMPUTERWORLD MAGAZIN FORECAST ENDS HERE -->
 	</xsl:template>
 	
-	<xsl:template match="media">
+	<xsl:template match="media" mode="small-preview">
 		<a href="magazine/">
 			<img border="0" src="/img/{media-reference/@source}" width="42" height="42" alt="{media-reference/@alternate-text}"/>
 		</a>
