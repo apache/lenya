@@ -76,8 +76,8 @@
     <map:pipeline>
       <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
       <!-- NOTE: rendertype seems to be 'edit' or 'view' -->
-      <map:match pattern="lenya-document-*/*/*/**.xml">
-        <map:mount check-reload="true" reload-method="synchron" src="{fallback:doctypes.xmap}" uri-prefix="lenya-document-"/>
+      <map:match pattern="lenya-document/*/*/*/**.xml">
+        <map:mount uri-prefix="lenya-document/" src="{fallback:doctypes.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
 
@@ -131,7 +131,7 @@
           <map:part src="cocoon://navigation/{2}/{3}/tabs/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/menu/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/search/{5}.xml"/>
-          <map:part src="cocoon:/lenya-document-{1}/{3}/{4}/{page-envelope:document-path}"/>
+          <map:part src="cocoon:/lenya-document/{1}/{3}/{4}/{page-envelope:document-path}"/>
         </map:aggregate>
         <map:transform src="fallback://xslt/page2xhtml-{4}.xsl">
           <map:parameter name="root" value="{page-envelope:context-prefix}/{2}/{3}"/>
