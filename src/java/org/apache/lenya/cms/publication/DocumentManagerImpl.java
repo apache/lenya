@@ -46,9 +46,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Serviceable, Contextualizable {
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#addDocument(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document)
      */
-    public void addDocument(Document document) throws PublicationException {
+    public void add(Document document) throws PublicationException {
 
         Publication publication = document.getPublication();
         SiteManager siteManager = publication.getSiteManager();
@@ -64,10 +64,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * Template method to copy a document. Override
      * {@link #copyDocumentSource(Document, Document)}to implement access to a
      * custom repository.
-     * @see org.apache.lenya.cms.publication.DocumentManager#copyDocument(org.apache.lenya.cms.publication.Document,
+     * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.Document)
      */
-    public void copyDocument(Document sourceDocument, Document destinationDocument)
+    public void copy(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
 
         Publication publication = sourceDocument.getPublication();
@@ -91,9 +91,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#deleteDocument(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.publication.DocumentManager#delete(org.apache.lenya.cms.publication.Document)
      */
-    public void deleteDocument(Document document) throws PublicationException {
+    public void delete(Document document) throws PublicationException {
         if (!document.exists()) {
             throw new PublicationException("Document [" + document + "] does not exist!");
         }
@@ -118,13 +118,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#moveDocument(org.apache.lenya.cms.publication.Document,
+     * @see org.apache.lenya.cms.publication.DocumentManager#move(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.Document)
      */
-    public void moveDocument(Document sourceDocument, Document destinationDocument)
+    public void move(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
-        copyDocument(sourceDocument, destinationDocument);
-        deleteDocument(sourceDocument);
+        copy(sourceDocument, destinationDocument);
+        delete(sourceDocument);
 
         ResourcesManager resourcesManager = sourceDocument.getResourcesManager();
         WorkflowManager workflowManager = null;
@@ -144,25 +144,25 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#copyDocumentToArea(org.apache.lenya.cms.publication.Document,
+     * @see org.apache.lenya.cms.publication.DocumentManager#copyToArea(org.apache.lenya.cms.publication.Document,
      *      java.lang.String)
      */
-    public void copyDocumentToArea(Document sourceDocument, String destinationArea)
+    public void copyToArea(Document sourceDocument, String destinationArea)
             throws PublicationException {
         Publication publication = sourceDocument.getPublication();
         Document destinationDocument = publication.getAreaVersion(sourceDocument, destinationArea);
-        copyDocument(sourceDocument, destinationDocument);
+        copy(sourceDocument, destinationDocument);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#copyDocumentSetToArea(org.apache.lenya.cms.publication.util.DocumentSet,
+     * @see org.apache.lenya.cms.publication.DocumentManager#copyToArea(org.apache.lenya.cms.publication.util.DocumentSet,
      *      java.lang.String)
      */
-    public void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
+    public void copyToArea(DocumentSet documentSet, String destinationArea)
             throws PublicationException {
         Document[] documents = documentSet.getDocuments();
         for (int i = 0; i < documents.length; i++) {
-            copyDocumentToArea(documents[i], destinationArea);
+            copyToArea(documents[i], destinationArea);
         }
     }
 
@@ -292,7 +292,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     target.getArea(),
                     target.getId(),
                     languages[i]);
-            copyDocument(sourceVersion, targetVersion);
+            copy(sourceVersion, targetVersion);
         }
     }
 
@@ -455,7 +455,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         for (int i = 0; i < languages.length; i++) {
 
             Document version = identityMap.getFactory().getLanguageVersion(document, languages[i]);
-            deleteDocument(version);
+            delete(version);
         }
     }
 

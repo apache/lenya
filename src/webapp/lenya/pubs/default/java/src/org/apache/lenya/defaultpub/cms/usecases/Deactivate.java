@@ -100,7 +100,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                     Publication.LIVE_AREA);
             
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.deleteDocument(liveDocument);
+            documentManager.delete(liveDocument);
 
             wfManager.invoke(authoringDocument, getEvent());
             success = true;

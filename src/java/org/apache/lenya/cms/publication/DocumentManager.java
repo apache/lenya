@@ -37,7 +37,7 @@ public interface DocumentManager {
      * @throws PublicationException if a document which destinationDocument
      *             depends on does not exist.
      */
-    void copyDocument(Document sourceDocument, Document destinationDocument)
+    void copy(Document sourceDocument, Document destinationDocument)
             throws PublicationException;
 
     /**
@@ -47,7 +47,7 @@ public interface DocumentManager {
      * @throws PublicationException if a document which the destination document
      *             depends on does not exist.
      */
-    void copyDocumentToArea(Document sourceDocument, String destinationArea)
+    void copyToArea(Document sourceDocument, String destinationArea)
             throws PublicationException;
 
     /**
@@ -57,7 +57,7 @@ public interface DocumentManager {
      * @throws PublicationException if a document which one of the destination
      *             documents depends on does not exist.
      */
-    void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
+    void copyToArea(DocumentSet documentSet, String destinationArea)
             throws PublicationException;
 
     /**
@@ -65,14 +65,14 @@ public interface DocumentManager {
      * @param document The document.
      * @throws PublicationException if the document is already contained.
      */
-    void addDocument(Document document) throws PublicationException;
+    void add(Document document) throws PublicationException;
 
     /**
      * Deletes a document.
      * @param document The document to delete.
      * @throws PublicationException when something went wrong.
      */
-    void deleteDocument(Document document) throws PublicationException;
+    void delete(Document document) throws PublicationException;
 
     /**
      * Moves a document from one location to another.
@@ -81,7 +81,7 @@ public interface DocumentManager {
      * @throws PublicationException if a document which the destination document
      *             depends on does not exist.
      */
-    void moveDocument(Document sourceDocument, Document destinationDocument)
+    void move(Document sourceDocument, Document destinationDocument)
             throws PublicationException;
 
     /**

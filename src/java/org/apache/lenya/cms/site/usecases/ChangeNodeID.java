@@ -145,7 +145,7 @@ public class ChangeNodeID extends DocumentUsecase {
                         newDocumentId,
                         availableLanguages[i]);
 
-                documentManager.moveDocument(languageVersion, newLanguageVersion);
+                documentManager.move(languageVersion, newLanguageVersion);
 
                 if (availableLanguages[i].equals(document.getLanguage())) {
                     newDocument = newLanguageVersion;

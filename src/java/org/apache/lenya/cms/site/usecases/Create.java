@@ -89,7 +89,7 @@ public abstract class Create extends AbstractUsecase {
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.addDocument(document);
+            documentManager.add(document);
         }
         finally {
             if (documentManager != null) {

@@ -165,7 +165,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.copyDocumentToArea(authoringDocument, Publication.LIVE_AREA);
+            documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
             wfManager.invoke(authoringDocument, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -55,7 +55,7 @@ public class DeleteLanguage extends DocumentUsecase {
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.deleteDocument(document);
+            documentManager.delete(document);
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
