@@ -1,5 +1,5 @@
 /*
-$Id: DefaultTaskWrapper.java,v 1.5 2003/08/29 12:54:25 andreas Exp $
+$Id: DefaultTaskWrapper.java,v 1.6 2003/08/29 15:12:00 andreas Exp $
 <License>
 
  ============================================================================
@@ -85,9 +85,9 @@ public class DefaultTaskWrapper implements TaskWrapper {
     private static Category log = Category.getInstance(DefaultTaskWrapper.class);
 
     private Map parameters = new HashMap();
-    private TaskWrapperParameters wrapperParameters = new TaskWrapperParameters(parameters);
+    private TaskWrapperParameters wrapperParameters = new TaskWrapperParameters(getParameterObject());
     private WorkflowInvoker workflowInvoker = null;
-    private TaskParameters taskParameters = new TaskParameters(parameters);
+    private TaskParameters taskParameters = new TaskParameters(getParameterObject());
 
     /**
      * Default ctor for subclasses.
@@ -222,7 +222,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param roles The roles of the identity.
      */
     public void setWorkflowAware(String eventName, Identity identity, Role[] roles) {
-        this.workflowInvoker = new WorkflowInvoker(getParameters(), eventName, identity, roles);
+        this.workflowInvoker = new WorkflowInvoker(getParameterObject(), eventName, identity, roles);
     }
 
     /**
