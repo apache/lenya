@@ -13,7 +13,7 @@
 <xsl:param name="publication_name"/>
 <xsl:param name="contextprefix"/>
 
-<xsl:variable name="copyright">Copyright &#169; 2003-2004 Apache Software Foundation</xsl:variable>
+<xsl:variable name="copyright">Copyright &#169; 2003-2004 The Apache Software Foundation</xsl:variable>
 
 <xsl:template match="/">
   <xsl:apply-templates/>
@@ -78,7 +78,7 @@
 
 <xsl:template match="no_referer">
 <p>
-<font color="red">EXCEPTION:</font> <i18n:text>No referer</i18n:text>
+<font color="red"><i18n:text>EXCEPTION</i18n:text>:</font> <i18n:text>No referer</i18n:text>
 </p>
 </xsl:template>
 

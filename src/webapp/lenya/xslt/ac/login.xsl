@@ -6,7 +6,7 @@ xmlns:session="http://www.apache.org/xsp/session/2.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output indent="yes" version="1.0" />
   <xsl:param name="publication_name" />
-  <xsl:variable name="copyright">Copyright &#169; 2003-2004 Apache Software Foundation</xsl:variable>
+  <xsl:variable name="copyright">Copyright &#169; 2003-2004 The Apache Software Foundation</xsl:variable>
   <xsl:template match="/">
     <xsl:apply-templates />
   </xsl:template>
