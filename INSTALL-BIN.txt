@@ -1,5 +1,20 @@
-*********************************************************************************
 
-WARNING: This file is DEPRECATED and should definitely be updated.
 
-*********************************************************************************
+   +----------------------+
+   |    INSTALL BINARY    |
+   +----------------------+
+
+
+1) Copy the war file into the webapps directory of Tomcat
+
+2) Set your JAVA_HOME environment, e.g.
+
+   [unix] 
+   export JAVA_HOME=/usr/local/j2sdk1.4.2
+
+3) Start up Tomcat, e.g.
+
+   [unix]
+   /usr/local/jakarta-tomcat-4.1.24-LE-jdk14/bin/startup.sh
+
+4) Open http://localhost:8080/lenya/ with your browser
