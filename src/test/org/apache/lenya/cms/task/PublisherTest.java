@@ -71,12 +71,13 @@ import java.io.IOException;
 /**
  * @author andreas
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class PublisherTest extends AntTaskTest {
+
     /**
-     * @param test
+     * Create a test.
+     * 
+     * @param test the test
      */
     public PublisherTest(String test) {
         super(test);
@@ -84,6 +85,8 @@ public class PublisherTest extends AntTaskTest {
 
     /**
      * Creates a test suite.
+     * 
+     * @return a test
      */
     public static Test getSuite() {
         return new TestSuite(PublisherTest.class);
@@ -102,6 +105,10 @@ public class PublisherTest extends AntTaskTest {
     public static final String DOCUMENT_ID = "tutorial";
     public static final String LIVE_PATH = "content/live/".replace('/', File.separatorChar);
 
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.task.AntTaskTest#evaluateTest()
+	 */
     protected void evaluateTest() throws IOException {
         File publicationDirectory = PublicationHelper.getPublication().getDirectory();
         String livePath = LIVE_PATH + DOCUMENT_ID + File.separator + "index.xml";
@@ -111,6 +118,10 @@ public class PublisherTest extends AntTaskTest {
         System.out.println("Published file exists: " + publishedFile.getCanonicalPath());
     }
 
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.task.AntTaskTest#getTaskParameters()
+	 */
     protected Parameters getTaskParameters() {
         Parameters parameters = super.getTaskParameters();
         parameters.setParameter("properties.publish.documentid", DOCUMENT_ID);
@@ -120,6 +131,10 @@ public class PublisherTest extends AntTaskTest {
         return parameters;
     }
 
+	/**
+	 *  (non-Javadoc)
+	 * @see org.apache.lenya.cms.task.AntTaskTest#getTarget()
+	 */
     protected String getTarget() {
         return "publish";
     }
