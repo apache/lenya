@@ -378,13 +378,16 @@
         <docs href="content/authoring"/>
         <doctypes href="content/doctypes/"/>
    </map:action>
+<!--
       <map:action name="xopushandler" logger="sitemap.action.xopus" src="org.lenya.cms.cocoon.acting.XopusHandlerAction">
         <xml href="content/authoring/"/>
         <xsl href="xslt"/>
         <xsd href="content"/>
+-->
 <!--
         <xsd href="content/doctypes/schemas"/>
 -->
+<!--
         <temp href="temp"/>
         <rcmlDirectory href="config/rc/rcml"/>
         <backupDirectory href="content/backup"/>
@@ -402,6 +405,7 @@
         <rcmlDirectory href="config/rc/rcml"/>
         <backupDirectory href="content/backup"/>
       </map:action>
+-->
       <map:action name="file-upload" logger="sitemap.action.upload" src="org.lenya.cms.cocoon.acting.ArticleImageUploadCreatorAction">
         <resources-root href="resources/images/live"/>
         <docs-root href="content/authoring"/>
