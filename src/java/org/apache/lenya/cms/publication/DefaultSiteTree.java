@@ -1,5 +1,5 @@
 /*
-$Id: DefaultSiteTree.java,v 1.27 2003/08/08 09:08:19 egli Exp $
+$Id: DefaultSiteTree.java,v 1.28 2003/08/14 16:30:53 egli Exp $
 <License>
 
  ============================================================================
@@ -83,7 +83,7 @@ import javax.xml.transform.TransformerException;
  * DOCUMENT ME!
  *
  * @author $author$
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class DefaultSiteTree implements SiteTree {
     private static Category log = Category.getInstance(DefaultSiteTree.class);
@@ -94,6 +94,8 @@ public class DefaultSiteTree implements SiteTree {
 
     private Document document = null;
     private File treefile = null;
+    // the area is only retained to provide some more info when raising an exception.
+    private String area = "";
 
     /**
      * Create a DefaultSiteTree
@@ -113,6 +115,7 @@ public class DefaultSiteTree implements SiteTree {
                     + area
                     + File.separator
                     + SITE_TREE_FILENAME));
+        this.area = area;
     }
 
     /**
@@ -274,7 +277,7 @@ public class DefaultSiteTree implements SiteTree {
         Node parentNode = getNodeInternal(parentid);
 
         if (parentNode == null) {
-            throw new SiteTreeException("Parentid: " + parentid + " not found");
+            throw new SiteTreeException("Parentid: " + parentid + " in " + area + " tree not found");
         }
 
         log.debug("PARENT ELEMENT: " + parentNode);
