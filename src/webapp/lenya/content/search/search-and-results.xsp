@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsp,v 1.14 2004/05/09 00:01:28 michi Exp $ -->
+<!-- $Id: search-and-results.xsp,v 1.15 2004/05/13 16:52:46 michi Exp $ -->
 
 <xsp:page language="java"
           xmlns:xsp="http://apache.org/xsp"
@@ -33,9 +33,10 @@
     <xsp:include>org.apache.lucene.queryParser.QueryParser</xsp:include>
     <xsp:include>org.apache.lucene.queryParser.MultiFieldQueryParser</xsp:include>
     <xsp:include>org.apache.lucene.search.Hits</xsp:include>
-    <xsp:include>org.apache.lucene.search.Searcher</xsp:include>
     <xsp:include>org.apache.lucene.search.IndexSearcher</xsp:include>
     <xsp:include>org.apache.lucene.search.Query</xsp:include>
+    <xsp:include>org.apache.lucene.search.Searcher</xsp:include>
+    <xsp:include>org.apache.lucene.search.Sort</xsp:include>
     
     <xsp:include>java.io.FileNotFoundException</xsp:include>
     <xsp:include>java.util.Enumeration</xsp:include>
@@ -56,18 +57,18 @@
    String[] fields={"contents","title"};
    String field = "contents";
 
-/** 
- * Contextualize this class 
- */
+  /** 
+   * Contextualize this class 
+   */
   public void contextualize(Context context) throws ContextException {
     super.contextualize( context );
     workDir = (File) context.get(Constants.CONTEXT_WORK_DIR);
     }
 
-/**
- *
- */
-  Hits search(String query_string,String publication_id) throws ProcessingException, IOException{
+  /**
+   * Search index
+   */
+  Hits search(String query_string, String publication_id, String sortField, boolean sortReverse) throws ProcessingException, IOException{
       hits=null;
 
       try{
@@ -83,7 +84,12 @@
         Query l_query = l_queryParser.parse(query_string); // Single field
         //Query l_query = l_queryParser.parse(query_string,fields,l_analyzer); // Multiple fields
 
-        hits=searcher.search(l_query);
+        if (sortField != null) {
+            Sort sort = new Sort(sortField, sortReverse);
+            hits = searcher.search(l_query, sort);
+        } else {
+            hits = searcher.search(l_query);
+        }
         if(hits != null){
           return hits;
           }
@@ -99,9 +105,9 @@
       return null;
       }
 
-/**
- *
- */
+  /**
+   *
+   */
   String getPercent(float score){
     return ""+java.lang.Math.round(score*100.0);
     }
@@ -155,6 +161,7 @@
       String queryString = <xsp-request:get-parameter name="queryString" default=""/>;
       String publication_id = <xsp-request:get-parameter name="publication-id" default="levivanya"/>;
       String sortBy = <xsp-request:get-parameter name="sortBy" default="score"/>;
+      String sortReverse = <xsp-request:get-parameter name="sortReverse" default="false"/>;
 
       String startString = <xsp-request:get-parameter name="start" default="1"/>;
       String endString = <xsp-request:get-parameter name="end"/>;
@@ -280,12 +287,21 @@
             }
 
           if(queryString != null &amp;&amp; queryString.length() != 0 &amp;&amp; publication_id != null &amp;&amp; publication_id.length() > 0){
-            try{
-              hits = search(queryString,publication_id);
-              }
-            catch(Exception e){
-              <exception><xsp:expr>e.toString()</xsp:expr></exception>
-              }
+
+            try {
+                if (sortBy.equals("score")) {
+                   hits = search(queryString, publication_id, null, false);
+                } else {
+                   if (sortReverse.equals("true")) {
+                       hits = search(queryString, publication_id, sortBy, true);
+                   } else {
+                       hits = search(queryString, publication_id, sortBy, false);
+                   }
+                }
+            } catch(Exception e) {
+                <exception><xsp:expr>e.toString()</xsp:expr></exception>
+            }
+
             if(hits != null){
               hits_length=hits.length();
               }
