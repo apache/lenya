@@ -30,7 +30,7 @@
     http://ant.apache.org/manual/dirtasks.html
     http://ant.apache.org/manual/CoreTypes/mapper.html
 
-   @version CVS $Id: build.xml,v 1.47 2003/03/20 19:56:32 michi Exp $
+   @version CVS $Id: build.xml,v 1.48 2003/04/01 15:28:00 edith Exp $
 
 -->
 
@@ -238,12 +238,14 @@
   <target name="prepare-cocoon" depends="init,check-tools-lib,prepare-tools-lib">
     <echo>INFO: exclude: sitemap.xmap</echo>
     <echo>INFO: exclude: WEB-INF/cocoon.xconf</echo> 
+    <echo>INFO: exclude: WEB-INF/web.xml</echo>
     <echo>INFO: exclude: WEB-INF/lib/lucene**.jar</echo>
     <echo>INFO: exclude: **/javac.jar</echo>
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${src.cocoon.dir}">
         <exclude name="sitemap.xmap"/>
         <exclude name="WEB-INF/cocoon.xconf"/>
+        <exclude name="WEB-INF/web.xml"/>
         <exclude name="WEB-INF/lib/lucene**.jar"/>
         <!--<exclude name="**/logkit.xconf"/>-->
         <exclude name="**/javac.jar"/>
@@ -260,6 +262,16 @@
       <outputproperty name="indent" value="yes"/>
     </xslt>
     
+    <!-- patch web.xmlf -->
+    <echo>INFO: patching web.xml with XSLT stylesheet</echo>
+    <xslt
+        in="${src.cocoon.dir}/WEB-INF/web.xml"
+        out="${build.webapp}/WEB-INF/web.xml"
+        style="${src.webapp.dir}/WEB-INF/web-xml.xsl"
+        >
+      <outputproperty name="indent" value="yes"/>
+    </xslt>
+
     <!-- patch lucene -->
     <echo message="INFO: Patch Lucene"/>
     <copy todir="${build.webapp}" filtering="off">
