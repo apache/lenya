@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------------
 # The original, unmodified and expanded cocoon webapp directory
 
-cocoon.webapp.dir=../cocoon-2.1.2/build/webapp
+cocoon.webapp.dir=../cocoon-2.1.4/build/webapp
 
 
 #------------------------------------------------------------------------------------
@@ -85,4 +85,4 @@ target.reset.excludes=lenya/resources/bxeng/**,lenya/resources/epoz/**
 #------------------------------------------------------------------------------------
 # Xopus context name
 
-xopus.context=xopus
+xopus.context=Xopus2.1.64
