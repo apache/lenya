@@ -7,7 +7,7 @@
 <!--
   <branch name="San Francisco" href="conferences/sanfrancisco2002/">
 -->
-  <branch name="San Francisco" href="conferences/sanfrancisco2002/index.html">
+  <branch name="Berkeley" href="conferences/sanfrancisco2002/index.html">
 <!--
     <leaf name="Program"/>
     <leaf name="Registration&#160;&#38;&#160;Fees"/>
@@ -18,9 +18,9 @@
   </branch>
   <leaf name="Tokyo"/>
 </branch>
-<leaf name="CMF/S Overview"/>
-<leaf name="Editor Overview"/>
-<leaf name="Glossary"/>
-<leaf name="Mailing Lists" href="mailing-lists.html"/>
+<leaf name="CMF/S&#160;Overview" href="overview.html"/>
+<leaf name="Editor&#160;Overview"/>
+<leaf name="Glossary" href="glossary.html"/>
+<leaf name="Mailing&#160;Lists" href="mailing-lists.html"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>

@@ -98,6 +98,12 @@
         <map:generate type="serverpages" src="docs/publication/menus/mailing-lists.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
+<!--
+      <map:match pattern="authoring/menus/glossary.xml">
+        <map:generate type="serverpages" src="docs/publication/menus/mailing-lists.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+-->
       <map:match pattern="authoring/menus/**.xml">
         <map:generate type="serverpages" src="docs/publication/menus/generic.xsp"/>
         <!--<map:generate type="serverpages" src="../../docs/cms/menus/live.xsp"/>-->
@@ -150,6 +156,20 @@
       <map:match pattern="authoring/mailing-lists.html">
         <map:generate src="cocoon:/authoring/mailing-lists.xml"/>
         <map:transform src="stylesheets/publication/Page/Mailing-Lists/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- Glossary -->
+      <map:match pattern="authoring/glossary.html">
+        <map:generate src="cocoon:/authoring/glossary.xml"/>
+        <map:transform src="stylesheets/publication/Page/Glossary/Authoring/main.xsl"/>
+        <map:serialize type="html"/>
+      </map:match>
+
+      <!-- CM/F Overview -->
+      <map:match pattern="authoring/overview.html">
+        <map:generate src="cocoon:/authoring/overview.xml"/>
+        <map:transform src="stylesheets/publication/Page/Overview/Authoring/main.xsl"/>
         <map:serialize type="html"/>
       </map:match>
 

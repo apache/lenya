@@ -8,9 +8,15 @@
   </branch>
   <leaf name="Tokyo"/>
 </branch>
+<!--
 <leaf name="CMF/S Overview" href="overview.html"/>
+-->
+<leaf name="CMF/S Overview"/>
 <leaf name="Editor Overview"/>
+<!--
 <leaf name="Glossary" href="glossary.html"/>
+-->
+<leaf name="Glossary"/>
 <leaf name="Mailing Lists" href="mailing-lists.html"/>
 <leaf name="Board" href="board.html"/>
 </oscom:navigation>

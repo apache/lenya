@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<oscom xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<xi:include href="/authoring/conferences/sanfrancisco2002/navigation.xml" xml:base="cocoon:"/>
+<xi:include href="/authoring/conferences/sanfrancisco2002/press-release.xhtml" xml:base="cocoon:"/>
+
+</oscom>
