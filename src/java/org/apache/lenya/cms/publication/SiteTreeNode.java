@@ -1,5 +1,5 @@
 /*
- * $Id: SiteTreeNode.java,v 1.1 2003/05/13 12:25:05 egli Exp $
+ * $Id: SiteTreeNode.java,v 1.2 2003/05/14 16:31:56 egli Exp $
  * <License>
  * The Apache Software License
  *
@@ -46,6 +46,8 @@ package org.apache.lenya.cms.publication;
 public interface SiteTreeNode {
 
     String getParentId();
+
+    String getAbsoluteParentId();
 
     String getId();
 
