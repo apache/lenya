@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: overview.xsl,v 1.9 2004/04/28 15:00:08 andreas Exp $ -->
+<!-- $Id: overview.xsl,v 1.10 2004/06/01 14:29:23 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -136,7 +136,7 @@
   
   <xsl:template match="member">
     <xsl:if test="position() &gt; 1"><br/></xsl:if>
-    <a href="../../{local-name(..)}/{@id}/index.html"><xsl:value-of select="@id"/></a>
+    <a href="../../{local-name(..)}/{@id}.html"><xsl:value-of select="@id"/></a>
     <xsl:if test="normalize-space(.) != ''">
     	<xsl:text>&#160;</xsl:text>(<xsl:value-of select="translate(., ' ', '&#160;')"/>)
     </xsl:if>

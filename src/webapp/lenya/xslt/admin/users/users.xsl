@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: users.xsl,v 1.10 2004/04/30 16:34:23 andreas Exp $ -->
+<!-- $Id: users.xsl,v 1.11 2004/06/01 14:29:23 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -94,7 +94,7 @@
   
   
   <xsl:template match="group">
-    <a href="groups/{@id}/index.html"><xsl:value-of select="@id"/></a>
+    <a href="groups/{@id}.html"><xsl:value-of select="@id"/></a>
     <xsl:if test="position() != last()">, <xsl:text/>
     </xsl:if>
   </xsl:template>

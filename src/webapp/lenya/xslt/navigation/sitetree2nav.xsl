@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitetree2nav.xsl,v 1.22 2004/05/17 09:43:46 gregor Exp $ -->
+<!-- $Id: sitetree2nav.xsl,v 1.23 2004/06/01 14:29:22 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -26,11 +26,11 @@
     >
 
 <xsl:param name="url"/>
-<xsl:param name="root"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
     
 <xsl:variable name="path-to-context"><xsl:call-template name="create-path-to-context"/></xsl:variable>
+<xsl:variable name="root" select="$path-to-context"/>
   
 <xsl:template name="create-path-to-context">
   <xsl:param name="local-url" select="$url"/>

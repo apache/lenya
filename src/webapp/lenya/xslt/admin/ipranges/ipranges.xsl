@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: ipranges.xsl,v 1.4 2004/04/28 15:00:06 andreas Exp $ -->
+<!-- $Id: ipranges.xsl,v 1.5 2004/06/01 14:29:22 andreas Exp $ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -90,7 +90,7 @@
   
   
   <xsl:template match="group">
-    <a href="../groups/{@id}/index.html"><xsl:value-of select="@id"/></a>
+    <a href="../groups/{@id}.html"><xsl:value-of select="@id"/></a>
     <xsl:if test="position() != last()">, <xsl:text/>
     </xsl:if>
   </xsl:template>
