@@ -202,6 +202,43 @@ function user_add_user() {
 	add_user(false);
 }
 
+function validate(userManager, ldap, userId, email, password, confirmPassword, messages) {
+    
+	messages = new Packages.java.util.ArrayList();
+	
+    userid = new Packages.java.lang.String(email);
+    email = new Packages.java.lang.String(email);
+    password = new Packages.java.lang.String(password);
+    confirmPassword = new Packages.java.lang.String(confirmPassword);
+    
+    var existingUser = userManager.getUser(userId);
+			
+	if (existingUser != null) {
+		messages.add("This user already exists.");
+	}
+			
+	if (!ldap && !password.equals(confirmPassword)) {
+	   	messages.add("Password and confirmed password are not equal.");
+	}
+			
+	if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(userId)) {
+		messages.add("This is not a valid user ID.");
+	}
+			
+    if (email.length() == 0) {
+        messages.add("Please enter an e-mail address.");
+    }
+    
+    if (password.length() < 6) {
+        messages.add("The password must be at least six characters long.");
+    }
+    
+    if (!password.matches(".*\\d.*")) {
+        messages.add("The password must contain at least one number.");
+    }
+    
+    return messages;
+}
 
 //
 // Add a user.
@@ -221,7 +258,7 @@ function add_user(ldap) {
 		var email = "";
 		var fullName = "";
 		var description = "";
-		var message = "";
+		var messages = new Packages.java.util.ArrayList();
 		var password = "";
 		var confirmPassword = "";
 		var userManager = getAccreditableManager().getUserManager();
@@ -233,7 +270,7 @@ function add_user(ldap) {
 		    	"fullname" : fullName,
 		    	"email" : email,
 		    	"description" : description,
-		    	"message" : message,
+		    	"messages" : messages,
 		    	"ldap-id" : ldapId,
 	    		"password" : password,
 	    		"confirm-password" : confirmPassword,
@@ -245,7 +282,6 @@ function add_user(ldap) {
 		    	break;
 		    }
 		    
-			message = "";
 			userId = cocoon.request.get("userid");
 			email = cocoon.request.get("email");
 			fullName = cocoon.request.get("fullname");
@@ -254,18 +290,9 @@ function add_user(ldap) {
 			password = cocoon.request.get("password");
 			confirmPassword = cocoon.request.get("confirm-password");
 			
-			var existingUser = userManager.getUser(userId);
+			messages = validate(userManager, ldap, userId, email, password, confirmPassword);
 			
-			if (existingUser != null) {
-				message = "This user already exists.";
-			}
-			else if (!ldap && !password.equals(confirmPassword)) {
-	 		   	message = "Password and confirmed password are not equal!";
-			}
-			else if (!Packages.org.apache.lenya.cms.ac.AbstractItem.isValidId(userId)) {
-				message = "This is not a valid user ID.";
-			}
-			else {
+			if (messages.isEmpty()) {
 				var configDir = userManager.getConfigurationDirectory();
 				var user;
 				if (ldap) {

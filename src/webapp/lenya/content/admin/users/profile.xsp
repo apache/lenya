@@ -12,7 +12,16 @@
     <user>
       <xsp:attribute name="new"><jpath:value-of select="new-user"/></xsp:attribute>
       <xsp:attribute name="ldap"><jpath:value-of select="ldap"/></xsp:attribute>
-      <message type="error"><jpath:value-of select="message"/></message>
+      
+      <messages>
+        <xsp:logic>
+          java.util.List messages = (java.util.List) <jpath:value-of select="messages"/>;
+          for (java.util.Iterator i = messages.iterator(); i.hasNext(); ) {
+            <message type="error"><xsp:expr>i.next()</xsp:expr></message>
+          }
+        </xsp:logic>	  
+      </messages>
+      	
       <id><jpath:value-of select="user-id"/></id>
       
       <xsp:logic>

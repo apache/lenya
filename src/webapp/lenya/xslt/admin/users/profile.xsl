@@ -38,11 +38,17 @@
         <form method="GET" action="{/page/continuation}.continuation">
           <table class="lenya-table-noborder">
             
-            <xsl:apply-templates select="message | id | ldapid | fullname | email | description"/>
+            <xsl:apply-templates select="messages"/>
+            <xsl:apply-templates select="id"/>
+            <xsl:apply-templates select="ldapid"/>
+            <xsl:apply-templates select="fullname"/>
+            <xsl:apply-templates select="email"/>
+            <xsl:apply-templates select="description"/>
             
             <xsl:if test="@new = 'true' and not(@ldap = 'true')">
               <tr><td colspan="2">&#160;</td></tr>
-              <xsl:apply-templates select="password | confirm-password"/>
+              <xsl:apply-templates select="password"/>
+              <xsl:apply-templates select="confirm-password"/>
             </xsl:if>
             
             <tr>
@@ -144,14 +150,17 @@
 		</tr>
 	</xsl:template>  
 	
-	
-  <xsl:template match="message">
-    <xsl:if test="text()">
+	<xsl:template match="messages">
+    <xsl:if test="message">
       <tr>
-        <td colspan="2"><span class="lenya-form-message-{@type}"><xsl:apply-templates/></span></td>
+        <td colspan="2"><xsl:apply-templates/></td>
       </tr>
     </xsl:if>
+	</xsl:template>
+	
+  <xsl:template match="message">
+    <xsl:if test="preceding-sibling::message"><br/></xsl:if>
+    <span class="lenya-form-message-{@type}"><xsl:value-of select="."/></span>
   </xsl:template>
-  
   
 </xsl:stylesheet>
