@@ -63,7 +63,7 @@ import org.apache.log4j.Category;
  * A utility class for InetAddress. Also see http://jodies.de/ipcalc
  *
  * @author Michael Wechner
- * @version $Id: InetAddressUtil.java,v 1.9 2004/02/03 11:13:18 andreas Exp $
+ * @version $Id: InetAddressUtil.java,v 1.10 2004/02/20 14:33:57 gregor Exp $
  */
 public class InetAddressUtil {
 
@@ -154,7 +154,7 @@ public class InetAddressUtil {
         }
 
         for (int i = 0; i < 4; i++) {
-            log.error(".checkNetmask(): Check part: " + numbers[i]);
+            log.debug(".checkNetmask(): Check part: " + numbers[i]);
             if (0 <= numbers[i].intValue() && numbers[i].intValue() <= 255) {
                 if (numbers[i].intValue() != 255) {
                     for (int k = i + 1; k < 4; k++) {
