@@ -1,5 +1,5 @@
 /*
-$Id: Action.java,v 1.5 2003/07/23 13:21:13 gregor Exp $
+$Id: Action.java,v 1.6 2004/03/01 11:14:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,16 +57,16 @@ package org.apache.lenya.workflow;
 
 
 /**
+ * Workflow action.
  *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: Action.java,v 1.6 2004/03/01 11:14:15 andreas Exp $
  */
 public interface Action {
 	
     /**
      * Executes this action for a given workflow instance.
-     * 
      * @param instance the workflow instance
-     * 
      * @throws WorkflowException if the execution failed
      */
     void execute(WorkflowInstance instance) throws WorkflowException;

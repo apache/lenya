@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariableAssignment.java,v 1.3 2003/07/23 13:21:13 gregor Exp $
+$Id: BooleanVariableAssignment.java,v 1.4 2004/03/01 11:14:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,10 +57,10 @@ package org.apache.lenya.workflow;
 
 
 /**
- * @author andreas
+ * Boolean variable assignment.
  *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: BooleanVariableAssignment.java,v 1.4 2004/03/01 11:14:15 andreas Exp $
  */
 public interface BooleanVariableAssignment extends Action {
 }

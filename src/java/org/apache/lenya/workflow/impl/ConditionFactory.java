@@ -1,5 +1,5 @@
 /*
-$Id: ConditionFactory.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
+$Id: ConditionFactory.java,v 1.7 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -80,8 +80,6 @@ public final class ConditionFactory {
      */
     protected static Condition createCondition(String className, String expression)
         throws WorkflowException {
-        assert className != null;
-        assert expression != null;
 
         Condition condition;
 

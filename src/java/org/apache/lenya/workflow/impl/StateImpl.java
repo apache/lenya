@@ -1,5 +1,5 @@
 /*
-$Id: StateImpl.java,v 1.5 2003/09/02 13:17:21 andreas Exp $
+$Id: StateImpl.java,v 1.6 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,6 @@ public class StateImpl implements State {
      * @param stateId The state ID.
      */
     protected StateImpl(String stateId) {
-        assert stateId != null;
         id = stateId;
     }
 

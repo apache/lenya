@@ -1,5 +1,5 @@
 /*
-$Id: ActionImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
+$Id: ActionImpl.java,v 1.7 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -71,16 +71,14 @@ public class ActionImpl implements Action {
      * @param actionId The action ID.
      */
     protected ActionImpl(String actionId) {
-        assert actionId != null;
         id = actionId;
     }
 
     private String id;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * Returns the action ID.
+     * @return A string.
      */
     public String getId() {
         return id;

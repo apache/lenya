@@ -1,5 +1,5 @@
 /*
-$Id: History.java,v 1.17 2004/02/11 13:51:54 andreas Exp $
+$Id: History.java,v 1.18 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -82,10 +82,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * @author andreas
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * <p>The history of a workflow instance contains a list of all
+ * versions of the instance. A version contains
+ * </p>
+ * <ul>
+ * <li>the state,</li>
+ * <li>the event that caused the transition (omitted in the first version).</li>
+ * </ul>
+ * 
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: History.java,v 1.18 2004/03/01 11:14:16 andreas Exp $
  */
 public abstract class History implements WorkflowListener {
     public static final String WORKFLOW_ATTRIBUTE = "workflow";
@@ -447,7 +453,9 @@ public abstract class History implements WorkflowListener {
      * @throws WorkflowException when something went wrong.
      */
     protected Version restoreVersion(NamespaceHelper helper, Element element) throws WorkflowException {
-        assert element.getLocalName().equals(VERSION_ELEMENT);
+        if (!element.getLocalName().equals(VERSION_ELEMENT)) {
+            throw new WorkflowException("Invalid history XML!");
+        }
         
         Event event = null;
         String eventId = element.getAttribute(EVENT_ATTRIBUTE);

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowInstance.java,v 1.8 2003/10/02 15:27:42 andreas Exp $
+$Id: WorkflowInstance.java,v 1.9 2004/03/01 11:14:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,8 +56,14 @@ $Id: WorkflowInstance.java,v 1.8 2003/10/02 15:27:42 andreas Exp $
 package org.apache.lenya.workflow;
 
 /**
+ * <p>A workflow instance is an incarnation of a workflow schema. It consists of</p>
+ * <ul>
+ * <li>a current state,</li>
+ * <li>a mapping which assigns values to all state variables.</li>
+ * </ul>
  *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: WorkflowInstance.java,v 1.9 2004/03/01 11:14:15 andreas Exp $
  */
 public interface WorkflowInstance {
     /**

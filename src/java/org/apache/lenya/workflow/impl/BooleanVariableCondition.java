@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariableCondition.java,v 1.2 2003/09/08 19:29:54 andreas Exp $
+$Id: BooleanVariableCondition.java,v 1.3 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================

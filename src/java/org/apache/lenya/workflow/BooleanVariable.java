@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariable.java,v 1.5 2003/07/23 13:21:13 gregor Exp $
+$Id: BooleanVariable.java,v 1.6 2004/03/01 11:14:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,16 +57,23 @@ package org.apache.lenya.workflow;
 
 
 /**
+ * <p>Boolean state variable.</p>
+ * <p>
+ * A workflow schema can contain a set of state variables.
+ * For each instance, the state variables hold certain values.
+ * Values can be assigned during transitions, so a variable can
+ * change its value when a transition fires. Currently,
+ * the workflow supports only boolean state variables.
+ * </p>
  *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: BooleanVariable.java,v 1.6 2004/03/01 11:14:15 andreas Exp $
  */
 public interface BooleanVariable {
 	
     /**
      * Returns the name of this variable.
-     * 
      * @return the name
-     * 
      */
     String getName();
 

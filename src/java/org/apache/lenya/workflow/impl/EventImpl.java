@@ -1,5 +1,5 @@
 /*
-$Id: EventImpl.java,v 1.6 2003/09/02 13:17:21 andreas Exp $
+$Id: EventImpl.java,v 1.7 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -69,7 +69,6 @@ public class EventImpl implements Event {
      * @param eventName The event name.
      */
     protected EventImpl(String eventName) {
-        assert eventName != null;
         name = eventName;
     }
 
@@ -83,12 +82,8 @@ public class EventImpl implements Event {
         return getName();
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param otherObject DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object otherObject) {
         boolean equals = false;
@@ -103,10 +98,8 @@ public class EventImpl implements Event {
         return equals;
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
         return getName().hashCode();

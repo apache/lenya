@@ -1,5 +1,5 @@
 /*
-$Id: Condition.java,v 1.4 2003/09/02 13:17:22 andreas Exp $
+$Id: Condition.java,v 1.5 2004/03/01 11:14:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -56,8 +56,16 @@ $Id: Condition.java,v 1.4 2003/09/02 13:17:22 andreas Exp $
 package org.apache.lenya.workflow;
 
 /**
+ * <p>A condition can prevent a transition from firing,
+ * based on the current situation. Examples:</p>
+ * <ul>
+ * <li>Does the current user have a certain role on the current URL?</li>
+ * <li>Does a certain state variable have a certain value (e.g., is the document published)? (BooleanVariableCondition)<li>
+ * <li>Is the sun shining? (e.g., if the weather report may only be published on sunny days)</li>
+ * </ul>
  *
- * @author  andreas
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: Condition.java,v 1.5 2004/03/01 11:14:15 andreas Exp $
  */
 public interface Condition {
 

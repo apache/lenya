@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowBuilder.java,v 1.12 2004/02/02 02:50:38 stefano Exp $
+$Id: WorkflowBuilder.java,v 1.13 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -89,13 +89,10 @@ public class WorkflowBuilder {
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param file DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws WorkflowException DOCUMENT ME!
+     * Builds a workflow schema from a file.
+     * @param file The file.
+     * @return A workflow schema implementation.
+     * @throws WorkflowException if the file does not represent a valid workflow schema.
      */
     public static WorkflowImpl buildWorkflow(File file) throws WorkflowException {
         WorkflowImpl workflow;
@@ -143,8 +140,6 @@ public class WorkflowBuilder {
             }
         }
 
-        assert initialState != null;
-
         WorkflowImpl workflow = new WorkflowImpl(initialState);
 
         // load variables
@@ -187,8 +182,6 @@ public class WorkflowBuilder {
      * @return A boolean value.
      */
     protected static boolean isInitialStateElement(Element element) {
-        assert element.getLocalName().equals(STATE_ELEMENT);
-
         String initialAttribute = element.getAttribute(INITIAL_ATTRIBUTE);
 
         return (initialAttribute != null)
@@ -218,8 +211,6 @@ public class WorkflowBuilder {
      * @return A state.
      */
     protected static StateImpl buildState(Element element) {
-        assert element.getLocalName().equals(STATE_ELEMENT);
-
         String id = element.getAttribute(ID_ATTRIBUTE);
         StateImpl state = new StateImpl(id);
 
@@ -246,19 +237,11 @@ public class WorkflowBuilder {
             log.debug("Building transition");
         }
 
-        assert element.getLocalName().equals(TRANSITION_ELEMENT);
-
         String sourceId = element.getAttribute(SOURCE_ATTRIBUTE);
         String destinationId = element.getAttribute(DESTINATION_ATTRIBUTE);
 
-        assert sourceId != null;
-        assert destinationId != null;
-
         StateImpl source = (StateImpl) states.get(sourceId);
         StateImpl destination = (StateImpl) states.get(destinationId);
-
-        assert source != null;
-        assert destination != null;
 
         TransitionImpl transition = new TransitionImpl(source, destination);
 
@@ -266,11 +249,7 @@ public class WorkflowBuilder {
         Element eventElement =
             (Element) element.getElementsByTagNameNS(Workflow.NAMESPACE, EVENT_ELEMENT).item(0);
         String id = eventElement.getAttribute(ID_ATTRIBUTE);
-        assert id != null;
-
         Event event = (Event) events.get(id);
-        assert event != null;
-
         transition.setEvent(event);
 
         if (log.isDebugEnabled()) {
@@ -321,8 +300,6 @@ public class WorkflowBuilder {
      */
     protected static EventImpl buildEvent(Element element) {
         String id = element.getAttribute(ID_ATTRIBUTE);
-        assert id != null;
-
         EventImpl event = new EventImpl(id);
 
         return event;

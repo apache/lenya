@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowImpl.java,v 1.7 2004/02/02 02:50:38 stefano Exp $
+$Id: WorkflowImpl.java,v 1.8 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -107,7 +107,6 @@ public class WorkflowImpl implements Workflow {
      * @param transition The transition.
      */
     protected void addTransition(TransitionImpl transition) {
-        assert transition != null;
         transitions.add(transition);
         addState(transition.getSource());
         addState(transition.getDestination());
@@ -127,8 +126,6 @@ public class WorkflowImpl implements Workflow {
      *
      */
     protected State getDestination(Transition transition) {
-        assert transition instanceof TransitionImpl;
-
         return ((TransitionImpl) transition).getDestination();
     }
 
@@ -188,18 +185,14 @@ public class WorkflowImpl implements Workflow {
      * @param event An event.
      */
     protected void addEvent(EventImpl event) {
-        assert event != null;
         events.put(event.getName(), event);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param name DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws WorkflowException DOCUMENT ME!
+     * Returns the event for a certain event name.
+     * @param name A string.
+     * @return The event with this name.
+     * @throws WorkflowException when no event with the given name exists.
      */
     public EventImpl getEvent(String name) throws WorkflowException {
         if (!events.containsKey(name)) {
@@ -216,18 +209,14 @@ public class WorkflowImpl implements Workflow {
      * @param variable A variable.
      */
     protected void addVariable(BooleanVariableImpl variable) {
-        assert variable != null;
         variables.put(variable.getName(), variable);
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @param name DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws WorkflowException DOCUMENT ME!
+     * Returns the variable for a certain name.
+     * @param name The name of the variable.
+     * @return A variable.
+     * @throws WorkflowException if no variable with the given name exists.
      */
     public BooleanVariableImpl getVariable(String name)
         throws WorkflowException {

@@ -1,5 +1,5 @@
 /*
-$Id: WorkflowListener.java,v 1.4 2003/07/23 13:21:13 gregor Exp $
+$Id: WorkflowListener.java,v 1.5 2004/03/01 11:14:15 andreas Exp $
 <License>
 
  ============================================================================
@@ -57,10 +57,13 @@ package org.apache.lenya.workflow;
 
 
 /**
- * @author andreas
+ * Workflow listener interface.
  *
+ * @author <a href="mailto:andreas@apache.org">Andreas Hartmann</a>
+ * @version $Id: WorkflowListener.java,v 1.5 2004/03/01 11:14:15 andreas Exp $
  */
 public interface WorkflowListener {
+    
     /**
      * This method is invoked when a transition has fired.
      * 

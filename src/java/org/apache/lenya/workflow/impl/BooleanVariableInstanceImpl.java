@@ -1,5 +1,5 @@
 /*
-$Id: BooleanVariableInstanceImpl.java,v 1.4 2003/07/23 13:21:08 gregor Exp $
+$Id: BooleanVariableInstanceImpl.java,v 1.5 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================

@@ -1,5 +1,5 @@
 /*
-$Id: Version.java,v 1.1 2003/08/20 18:53:46 andreas Exp $
+$Id: Version.java,v 1.2 2004/03/01 11:14:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -91,10 +91,7 @@ public class Version {
      * @param state The destination state.
      */
     public Version(Event event, State state) {
-        assert event != null;
         this.event = event;
-        
-        assert state != null;
         this.state = state;
     }
 
