@@ -89,16 +89,6 @@
     <xs:attribute ref="xml:lang"/>
   </xs:attributeGroup>
   <!--
-    xml:space attribute ===============================================
-            Indicates that the element contains white space
-            that the formatter or other application should retain,
-            as appropriate to its function.
-    ====================================================================
-  -->
-  <xs:attributeGroup name="xmlspace.att">
-    <xs:attributeGroup ref="xml:space"/>
-  </xs:attributeGroup>
-  <!--
     def attribute =====================================================
             Points to the element where the relevant definition can be
             found, using the IDREF mechanism.  %def.att; is for optional
@@ -286,7 +276,6 @@
     <xs:complexType mixed="true">
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="content.mix"/>
       <xs:attributeGroup ref="common.att"/>
-      <xs:attributeGroup ref="xml:space1"/>
     </xs:complexType>
   </xs:element>
   <!-- Source Paragraph (normally space is preserved) -->
@@ -294,7 +283,6 @@
     <xs:complexType mixed="true">
       <xs:group minOccurs="0" maxOccurs="unbounded" ref="content.mix"/>
       <xs:attributeGroup ref="common.att"/>
-      <xs:attributeGroup ref="xmlspace.att"/>
     </xs:complexType>
   </xs:element>
   <!-- Note Paragraph (normally shown encapsulated) -->
