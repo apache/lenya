@@ -3,7 +3,7 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.7-dev">
+<meta name="Forrest-version" content="0.6">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Lenya Subversion Guide</title>
 <link type="text/css" href="../skin/basic.css" rel="stylesheet">
@@ -112,9 +112,6 @@
 <div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Installation</div>
 <div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
-<a title="" href="../installation/prerequisites.html">Prerequisites</a>
-</div>
-<div class="menuitem">
 <a title="" href="../installation/index.html">Download</a>
 </div>
 <div class="menupage">
@@ -169,7 +166,7 @@
 Start the shell of your choice and enter:
 </p>
 <pre class="code">
-svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-trunk
+svn co http://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X lenya-1.2.x
 </pre>
 </div>
 
@@ -181,11 +178,10 @@ svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-trunk
 Start the shell of your choice and enter:
 </p>
 <pre class="code">
-svn co http://svn.apache.org/repos/asf/incubator/lenya lenya
+svn co https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X lenya-1.2.x
 ssh -l username svn.apache.org
 svnpasswd username
 exit
-svn sw --relocate http://svn.apache.org/repos/asf/incubator/lenya https://svn.apache.org/repos/asf/incubator/lenya
 </pre>
 </div>
 
@@ -195,7 +191,7 @@ svn sw --relocate http://svn.apache.org/repos/asf/incubator/lenya https://svn.ap
 <div class="section">
 <p>
 
-<a href="http://svn.apache.org/repos/asf/lenya/trunk/">http://svn.apache.org/repos/asf/lenya/trunk/</a>
+<a href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">http://svn.apache.org/viewcvs.cgi/lenya/#dirlist</a>
 
 </p>
 </div>

@@ -5,10 +5,10 @@
 /Producer (FOP 0.20.5) >>
 endobj
 5 0 obj
-<< /Length 842 /Filter [ /ASCII85Decode /FlateDecode ]
+<< /Length 755 /Filter [ /ASCII85Decode /FlateDecode ]
  >>
 stream
-GasangQ'uA&:Ml+pb=nhp_)c<[r/ZZD,jSQM>C,M.O6?/$4`O5Lqg-5D@V=G6400DkF@rMccf<q=>(@")^5i0%<VE($j71F"!iBe.pXbSO?+Egp>D#-S=`38LN+f,"]uDhP6]<.`.RS0astW@d=H4@SAPO*$\GRF&Hdlg(j-aP;2@BITg95#dEd);n%#C6.a:D?15_kkFLoON+fmiu3AB<Kjr!md"W5ljLHXiG)si.A6f09),El4NF280aN1\,=72j`)g7f8fka<AH>@rarl5p0_pfj;TBuS7R#@1#a1k^2!g-"RrE*)G5p#;*5`.@VM_0X,]1hD3p;0H#c&X]9XlP[`O$=3:+=mDs'">ZgTO#6Gtf*O%`G`?N>DiVIYLC;^fo]](fB%[EJ2&t5#ONM9<4j<XDD-dR#N_=]=r/,U-mqK).ZL]*V.gjD?hWMNP?rm>1[PbJ[qZpK-D<*+uPm@o^0!D.D0da%)*fFb#Wp9)iZD(h8:Zku90J=&31ds&VFdg:G217"!F&dtdDT-ZrpW*E49p+%SAm``;mo;dK7SX_]/@.tg/28DK78prIdrX&t%M*!Tj/VB(/Lr>gJFgWU\CSR#AhKVo@s>PR\b7^Jg9E`7WL8Bn@IR*2k,U,h"%N\`m+sI(D4PR0f1!XH&7.)i^3c2eU5?ki(aDSVF!%+EJMpEPp%R;<KB;;oYTkI=;AJqEEX]@T->LY##$n)1Ur7n=JV&Mk[r_nkW8#?6EG_QbWtbpHL9_"PqC+Y!MbB*?gN$#U[Q=d^A19b:i!OXT0KuL<44pT]>FiVto=X.lLt1dE>$1CE)FGfIC,R_jETAhoCB"f_4QoH~>
+Gat%!9okbt&A@ZcHqY#cr.-Tpf'P@qX/]&6[$RYi-ug@BJJ=<@r;/P;b9S7-MF99Gc[57q4J(`_Z<%_O#9j^s/TgfH/Hc[o"/LD2X'?VX86laZHgkP8;Uftm7%7JR/AW"YSiX*3o$(Qic=I`%g$$4QOe8Bpp^+ejM@frEW#8;JQViQ%VkHBf&(*%!I,'XmMQ0sE[j\"Bl9i%=>SFu#-?d:[08Qd+n<#M-FQ$`n3nnWoEM8G2M*?[F+0.C,?9\IK])"+5>TMZ'cCs]P]d$HIH]3Rq"P.e_3U@s5"S?dfJjK,\1(d)$>=u4n*bt5ilkX;8*T#Im?.Ubk6ua\a;'u#!SD/$a85[5`g"G%IWkD`q<K!j%GFhu<B\'+.d,h'IbZAT.IG6&^Q(99>Y:()4Hd$a;^od[ARK;\5dg06ZIAE!AO@KPD(=g+T@)?,UZ^>$>j=*$W,<MR=I6gEe33+^VpEA'"I:S`:]4-p,a587Ab$bWOV*;T7D'AcVQra*cf/*((0[GI0s%G3>\CRDWg6ZHl+>`Eo&&:D&W32Vn9B`D8&Z9is0&h[>.#qji-4$dloJA_,]JCI9!/qMcfUYLqDfuq2jSCdfD63/H")CqX+gngeGFRHdRcln%eQ^,e\1'O2(aoR?2@8%e!\in?P"3%"$t?mr!5VKGd%hb@_n!EB(W4*l'5"<VJe33*+(oPHW>LTgH2n13.(3+rQ%ipO*:o0H50sRNDH^Q6"JfH6otm<="qKAe!Y3>SXo~>
 endstream
 endobj
 6 0 obj
@@ -26,16 +26,15 @@ endobj
 9 0 R
 10 0 R
 11 0 R
-12 0 R
 ]
 endobj
 8 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 18.0 648.3 79.992 636.3 ]
+/Rect [ 36.0 635.1 77.988 623.1 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
-/A << /URI (prerequisites.html)
+/A << /URI (http://www.apache.org/dyn/closer.cgi/lenya/)
 /S /URI >>
 /H /I
 >>
@@ -43,10 +42,10 @@ endobj
 9 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 36.0 621.9 90.0 609.9 ]
+/Rect [ 36.0 621.9 124.344 609.9 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
-/A << /URI (subversion.html)
+/A << /URI (http://svn.apache.org/snapshots/lenya/)
 /S /URI >>
 /H /I
 >>
@@ -54,10 +53,10 @@ endobj
 10 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 36.0 608.7 124.344 596.7 ]
+/Rect [ 36.0 608.7 90.0 596.7 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
-/A << /URI (http://cvs.wyona.org/nightly-builds/)
+/A << /URI (subversion.html)
 /S /URI >>
 /H /I
 >>
@@ -65,18 +64,7 @@ endobj
 11 0 obj
 << /Type /Annot
 /Subtype /Link
-/Rect [ 36.0 595.5 136.308 583.5 ]
-/C [ 0 0 0 ]
-/Border [ 0 0 0 ]
-/A << /URI (http://cvs.apache.org/dist/incubator/lenya/)
-/S /URI >>
-/H /I
->>
-endobj
-12 0 obj
-<< /Type /Annot
-/Subtype /Link
-/Rect [ 36.0 569.1 110.316 557.1 ]
+/Rect [ 36.0 582.3 110.316 570.3 ]
 /C [ 0 0 0 ]
 /Border [ 0 0 0 ]
 /A << /URI (source_version.html)
@@ -84,28 +72,28 @@ endobj
 /H /I
 >>
 endobj
-13 0 obj
+12 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F3
 /BaseFont /Helvetica-Bold
 /Encoding /WinAnsiEncoding >>
 endobj
-14 0 obj
+13 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F5
 /BaseFont /Times-Roman
 /Encoding /WinAnsiEncoding >>
 endobj
-15 0 obj
+14 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F1
 /BaseFont /Helvetica
 /Encoding /WinAnsiEncoding >>
 endobj
-16 0 obj
+15 0 obj
 << /Type /Font
 /Subtype /Type1
 /Name /F2
@@ -124,34 +112,33 @@ endobj
 endobj
 3 0 obj
 << 
-/Font << /F3 13 0 R /F5 14 0 R /F1 15 0 R /F2 16 0 R >> 
+/Font << /F3 12 0 R /F5 13 0 R /F1 14 0 R /F2 15 0 R >> 
 /ProcSet [ /PDF /ImageC /Text ] >> 
 endobj
 xref
-0 17
+0 16
 0000000000 65535 f 
-0000002483 00000 n 
-0000002541 00000 n 
-0000002591 00000 n 
+0000002226 00000 n 
+0000002284 00000 n 
+0000002334 00000 n 
 0000000015 00000 n 
 0000000071 00000 n 
-0000001004 00000 n 
-0000001124 00000 n 
-0000001176 00000 n 
-0000001339 00000 n 
-0000001497 00000 n 
-0000001680 00000 n 
-0000001870 00000 n 
-0000002036 00000 n 
-0000002149 00000 n 
-0000002259 00000 n 
-0000002367 00000 n 
+0000000917 00000 n 
+0000001037 00000 n 
+0000001082 00000 n 
+0000001270 00000 n 
+0000001454 00000 n 
+0000001613 00000 n 
+0000001779 00000 n 
+0000001892 00000 n 
+0000002002 00000 n 
+0000002110 00000 n 
 trailer
 <<
-/Size 17
+/Size 16
 /Root 2 0 R
 /Info 4 0 R
 >>
 startxref
-2703
+2446
 %%EOF
