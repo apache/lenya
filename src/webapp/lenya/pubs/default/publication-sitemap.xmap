@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.56 2003/10/06 14:54:11 michi Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.57 2003/10/13 16:17:41 michi Exp $ -->
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:components>
@@ -42,7 +42,7 @@
     <!-- BX Editor: Entries -->
     <map:pipeline type="noncaching">
       <map:match pattern="**/*-bxeng.html">
-        <map:act type="resource-exists" src="../../../../ROOT/bxeng/index.html"> <!-- Check for BXENG -->
+        <map:act type="resource-exists" src="../../../../ROOT/bxeng/index.html"> <!-- Check for BXE -->
           <map:aggregate element="bxeng">
             <map:part src="../../resources/misc/bxeng/index.xhtml"/>
             <map:part src="resources/misc/bxeng/simple-namespaces.xml"/>

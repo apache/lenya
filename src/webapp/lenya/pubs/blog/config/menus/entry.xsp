@@ -40,7 +40,7 @@
     <menu name="File" label="File">
       <block>
         <item uc:usecase="edit" href="?lenya.step=open&amp;doctype=entry">Edit&#160;with&#160;Forms</item>
-        <item href="index-bxeng.html">Edit&#160;with&#160;BXENG</item>
+        <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
 <!--
         <item>Edit&#160;with&#160;Midas</item>
 -->
@@ -80,12 +80,12 @@
         <item href="?cocoon-view=pagexml">Page</item>
       </block>
       <block>
-        <item href="index-bxeng.html">HTML&#160;for&#160;BXENG</item>
-        <item href="config-bxeng.xml">Config&#160;for&#160;BXENG</item>
-        <item href="/lenya/blog/webdav/entries/2003/07/28/1/index.xml">XML&#160;for&#160;BXENG</item>
-        <item href="entry-bxeng.xsl">XSLT&#160;for&#160;BXENG</item>
-        <item href="entry-bxeng.css">CSS&#160;for&#160;BXENG</item>
-        <item href="entry-relaxng-bxeng.xml">RelaxNG&#160;for&#160;BXENG</item>
+        <item href="index-bxeng.html">HTML&#160;for&#160;BXE</item>
+        <item href="config-bxeng.xml">Config&#160;for&#160;BXE</item>
+        <item href="/lenya/blog/webdav/entries/2003/07/28/1/index.xml">XML&#160;for&#160;BXE</item>
+        <item href="entry-bxeng.xsl">XSLT&#160;for&#160;BXE</item>
+        <item href="entry-bxeng.css">CSS&#160;for&#160;BXE</item>
+        <item href="entry-relaxng-bxeng.xml">RelaxNG&#160;for&#160;BXE</item>
       </block>
     </menu>
   </menus>

@@ -59,7 +59,7 @@
 if (docType.equals("simple")) {
         <block>
           <item href="?lenya.step=open&amp;doctype=simple" uc:usecase="edit" wf:event="edit">Edit&#160;with&#160;Forms</item>
-          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;BXENG</item>
+          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>Edit&#160;with&#160;BXE</item>
         </block>
 }
 else if (docType.equals("xhtml")) {
@@ -77,11 +77,11 @@ else if (docType.equals("xhtml")) {
 -->
 <!--
         <block>
-          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>HTML&#160;for&#160;BXENG</item>
-          <item><xsp:attribute name="href"><xsp:expr>documentId + "-config-bxeng.xml"</xsp:expr></xsp:attribute>Config&#160;for&#160;BXENG</item>
-          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.xml"</xsp:expr></xsp:attribute>XML&#160;for&#160;BXENG</item>
-          <item href="simple-bxeng.xsl">XSLT&#160;for&#160;BXENG</item>
-          <item href="simple-bxeng.css">CSS&#160;for&#160;BXENG</item>
+          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.html"</xsp:expr></xsp:attribute>HTML&#160;for&#160;BXE</item>
+          <item><xsp:attribute name="href"><xsp:expr>documentId + "-config-bxeng.xml"</xsp:expr></xsp:attribute>Config&#160;for&#160;BXE</item>
+          <item><xsp:attribute name="href"><xsp:expr>documentId + "-bxeng.xml"</xsp:expr></xsp:attribute>XML&#160;for&#160;BXE</item>
+          <item href="simple-bxeng.xsl">XSLT&#160;for&#160;BXE</item>
+          <item href="simple-bxeng.css">CSS&#160;for&#160;BXE</item>
         </block>
 -->
       </menu>
