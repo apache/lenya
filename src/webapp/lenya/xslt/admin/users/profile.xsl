@@ -40,7 +40,7 @@
             
             <xsl:apply-templates select="message | id | ldapid | fullname | email | description"/>
             
-            <xsl:if test="@new = 'true'">
+            <xsl:if test="@new = 'true' and not(@ldap = 'true')">
               <tr><td colspan="2">&#160;</td></tr>
               <xsl:apply-templates select="password | confirm-password"/>
             </xsl:if>
