@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: publication-sitemap.xmap,v 1.10 2003/04/16 13:53:15 egli Exp $ -->
+<!-- CVS: $Id: publication-sitemap.xmap,v 1.11 2003/04/17 12:09:51 egli Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -42,8 +42,8 @@
     </map:pipeline>
     
     <map:pipeline>
-      <!-- pattern="{stage}/article/{document-id}.html" -->
-      <map:match pattern="*/article/**.html">
+      <!-- pattern="{stage}/simple/{document-id}.html" -->
+      <map:match pattern="*/simple/**.html">
         <map:mount uri-prefix="" src="doctypes.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
