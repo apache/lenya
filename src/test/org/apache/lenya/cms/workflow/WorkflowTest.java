@@ -150,7 +150,7 @@ public class WorkflowTest extends TestCase {
             Role role = new Role(situations[situationIndex].getRole());
             System.out.println("Role: " + role);
         
-            Group group = new Group();
+            Group group = new Group("test-group");
             group.addRole(role);
         
             user.addGroup(group);

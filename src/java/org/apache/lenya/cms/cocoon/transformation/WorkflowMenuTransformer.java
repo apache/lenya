@@ -130,7 +130,7 @@ public class WorkflowMenuTransformer
             throw new ProcessingException(e);
         }
       
-        Group group = new Group();
+        Group group = new Group("test-group");
         group.addRole(new Role("editor"));
       
         User user = new FileUser("testuser");
