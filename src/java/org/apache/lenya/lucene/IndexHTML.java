@@ -127,19 +127,19 @@ class IndexHTML {
   /* documents, to be indexed.
    */
 
-  private static void indexDocs(File file, String index, boolean create)
-       throws Exception {
+  private static void indexDocs(File file, String index, boolean create) throws Exception{
+    //System.out.println("IndexHTML.indexDocs(File,String,boolean): "+file);
+
     if (!create) {				  // incrementally update
       
       reader = IndexReader.open(index);		  // open existing index
       uidIter = reader.terms(new Term("uid", "")); // init uid iterator
     
-      indexDocs(file);
+      indexDocs(file,file);
 
       if (deleting) {				  // delete rest of stale docs
 	while (uidIter.term() != null && uidIter.term().field() == "uid") {
-	  System.out.println("deleting " +
-			     HTMLDocument.uid2url(uidIter.term().text()));
+	  System.out.println("IndexHTML.indexDocs(): deleting " + HTMLDocument.uid2url(uidIter.term().text()));
 	  reader.delete(uidIter.term());
 	  uidIter.next();
 	}
@@ -150,28 +150,30 @@ class IndexHTML {
       reader.close();				  // close existing index
 
     } else					  // don't have exisiting
-      indexDocs(file);
+      indexDocs(file,file);
   }
 
-  private static void indexDocs(File file) throws Exception {
+  private static void indexDocs(File file,File root) throws Exception {
+    //System.out.println("IndexHTML.indexDocs(File,File): "+file+" "+root);
+
     if (file.isDirectory()) {			  // if a directory
       String[] files = file.list();		  // list its files
       Arrays.sort(files);			  // sort the files
       for (int i = 0; i < files.length; i++)	  // recursively index them
-	indexDocs(new File(file, files[i]));
+	indexDocs(new File(file, files[i]),root);
 
     } else if (file.getPath().endsWith(".html") || // index .html files
 	       file.getPath().endsWith(".htm") || // index .htm files
 	       file.getPath().endsWith(".txt")) { // index .txt files
       
       if (uidIter != null) {
-	String uid = HTMLDocument.uid(file);	  // construct uid for doc
+	String uid = HTMLDocument.uid(file,root);	  // construct uid for doc
+	//String uid = HTMLDocument.uid(file);	  // construct uid for doc
 
 	while (uidIter.term() != null && uidIter.term().field() == "uid" &&
 	       uidIter.term().text().compareTo(uid) < 0) {
 	  if (deleting) {			  // delete stale docs
-	    System.out.println("deleting " +
-			       HTMLDocument.uid2url(uidIter.term().text()));
+	    System.out.println("IndexHTML.indexDocs(File,File): deleting " + HTMLDocument.uid2url(uidIter.term().text()));
 	    reader.delete(uidIter.term());
 	  }
 	  uidIter.next();
@@ -180,13 +182,13 @@ class IndexHTML {
 	    uidIter.term().text().compareTo(uid) == 0) {
 	  uidIter.next();			  // keep matching docs
 	} else if (!deleting) {			  // add new docs
-	  Document doc = HTMLDocument.Document(file);
-	  System.out.println("adding " + doc.get("url"));
+	  Document doc = HTMLDocument.Document(file,root);
+	  System.out.println("IndexHTML.indexDocs(File,File): adding " + doc.get("url"));
 	writer.addDocument(doc);
 	}
       } else {					  // creating a new index
-	Document doc = HTMLDocument.Document(file);
-	System.out.println("adding " + doc.get("url"));
+	Document doc = HTMLDocument.Document(file,root);
+	System.out.println("IndexHTML.indexDocs(File,File): adding " + doc.get("url"));
 	writer.addDocument(doc);		  // add docs unconditionally
       }
     }

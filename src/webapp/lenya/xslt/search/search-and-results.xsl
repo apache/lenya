@@ -92,7 +92,7 @@ No Title!
 </xsl:template>
 
 <xsl:template match="no-excerpt">
-No excerpt available!
+No excerpt available: <xsl:value-of select="file/@src"/>
 </xsl:template>
 
 <xsl:template match="exception">

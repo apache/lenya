@@ -17,15 +17,23 @@ if ! [  $CRAWLER_CONF ];then
   exit 0
 fi
 
+echo ""
 echo "Target: crawl"
-/usr/local/jdk1.3.1/bin/java -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
-/usr/local/jdk1.3.1/bin/java -cp $CLASSPATH org.wyona.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
+##/usr/local/jdk1.3.1/bin/java -cp $CLASSPATH org.wyona.search.crawler.CrawlerEnvironment $CRAWLER_CONF
+##/usr/local/jdk1.3.1/bin/java -cp $CLASSPATH org.wyona.search.crawler.IterativeHTMLCrawler $CRAWLER_CONF
 
+
+echo ""
 echo "Target: extract_text_from_pdf"
 
-SEARCH_LUCENE_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/oscom/resources/publication/search/lucene
 
+echo ""
 echo "Target: index"
+PUBLICATION_ID=unipublic
+LUCENE_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/$PUBLICATION_ID/resources/publication/search/lucene
+HTDOCS_DUMP_DIR=/home/michiii/build/jakarta-tomcat-4.0.4-b3/webapps/wyona-cms/wyona/cms/pubs/$PUBLICATION_ID/resources/publication/export/pending/127.0.0.1:48080
+##HTDOCS_DUMP_DIR=$LUCENE_DIR/htdocs_dump
+INDEX_DIR=$LUCENE_DIR/index
 CLASSPATH=$CLASSPATH:$PREFIX/src/webapp/WEB-INF/lib/lucene-1.3-dev1.jar
-cd $SEARCH_LUCENE_DIR
-/usr/local/jdk1.3.1/bin/java -cp $CLASSPATH org.wyona.lucene.IndexHTML -create -index index htdocs_dump
+##/usr/local/jdk1.3.1/bin/java -cp $CLASSPATH org.wyona.lucene.IndexHTML -create -index $INDEX_DIR $HTDOCS_DUMP_DIR
+/usr/local/jdk1.3.1/bin/java -cp $CLASSPATH org.wyona.lucene.IndexHTML -index $INDEX_DIR $HTDOCS_DUMP_DIR

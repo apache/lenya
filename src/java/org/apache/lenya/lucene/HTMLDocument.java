@@ -62,30 +62,39 @@ import org.wyona.lucene.html.HTMLParser;
 
 public class HTMLDocument {
   static char dirSep = System.getProperty("file.separator").charAt(0);
-
-  public static String uid(File f) {
-    // Append path and date into a string in such a way that lexicographic
-    // sorting gives the same results as a walk of the file hierarchy.  Thus
-    // null (\u0000) is used both to separate directory components and to
-    // separate the path from the date.
-    return f.getPath().replace(dirSep, '\u0000') +
-      "\u0000" +
-      DateField.timeToString(f.lastModified());
-  }
-
+/**
+ * Append path and date into a string in such a way that lexicographic
+ * sorting gives the same results as a walk of the file hierarchy.  Thus
+ * null (\u0000) is used both to separate directory components and to
+ * separate the path from the date.
+ */
+  public static String uid(File f,File htdocsDumpDir) {
+    String requestURI=f.getPath().substring(htdocsDumpDir.getPath().length());
+    String uid = requestURI.replace(dirSep, '\u0000') + "\u0000" + DateField.timeToString(f.lastModified());
+    //String uid = f.getPath().replace(dirSep, '\u0000') + "\u0000" + DateField.timeToString(f.lastModified());
+    //System.out.println("HTMLDocument.uid(): "+uid+" "+htdocsDumpDir);
+    return uid;
+    }
+/**
+ *
+ */
   public static String uid2url(String uid) {
     String url = uid.replace('\u0000', '/');	  // replace nulls with slashes
     return url.substring(0, url.lastIndexOf('/')); // remove date from end
   }
-
-  public static Document Document(File f)
+/**
+ *
+ */
+  public static Document Document(File f,File htdocsDumpDir)
        throws IOException, InterruptedException  {
     // make a new, empty document
     Document doc = new Document();
 
     // Add the url as a field named "url".  Use an UnIndexed field, so
     // that the url is just stored with the document, but is not searchable.
-    doc.add(Field.UnIndexed("url", f.getPath().replace(dirSep, '/')));
+    String requestURI=f.getPath().replace(dirSep,'/').substring(htdocsDumpDir.getPath().length());
+    doc.add(Field.UnIndexed("url", requestURI));
+    //doc.add(Field.UnIndexed("url", f.getPath().replace(dirSep, '/')));
 
     // Add the last modified date of the file a field named "modified".  Use a
     // Keyword field, so that it's searchable, but so that no attempt is made
@@ -96,7 +105,7 @@ public class HTMLDocument {
     // Add the uid as a field, so that index can be incrementally maintained.
     // This field is not stored with document, it is indexed, but it is not
     // tokenized prior to indexing.
-    doc.add(new Field("uid", uid(f), false, true, false));
+    doc.add(new Field("uid", uid(f,htdocsDumpDir), false, true, false));
 
     HTMLParser parser = new HTMLParser(f);
 
