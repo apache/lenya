@@ -28,6 +28,7 @@
     <usecase:context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></usecase:context-prefix>
     <usecase:area><input:get-attribute module="page-envelope" name="area" as="string"/></usecase:area>
     <usecase:language><input:get-attribute module="page-envelope" name="document-language" as="string"/></usecase:language>
+    <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
     
     <usecase:task-id>publish</usecase:task-id>
     

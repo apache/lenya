@@ -27,6 +27,7 @@
     <usecase:document-id><xsp:expr>documentId</xsp:expr></usecase:document-id>
     <usecase:language><xsp:expr>language</xsp:expr></usecase:language>
     <usecase:label><xsp:expr>label</xsp:expr></usecase:label>
+    <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
     
     <!-- FIXME: this should be defined in the workflow schema -->
     <usecase:task-id>remove-language</usecase:task-id>
