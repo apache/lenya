@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  $Id: cmsui.xml,v 1.28 2004/02/23 13:04:54 roku Exp $
+  $Id: cmsui.xml,v 1.29 2004/02/23 15:00:15 roku Exp $
   
   @author Rolf Kulemann (roku at apache.org)
   
@@ -60,7 +60,9 @@
   <message key="true">yes</message>
   <message key="false">no</message>
   <message key="Rename">Rename</message>
-
+  <message key="Modify">Modify</message>
+  <message key="Document">Document</message>
+  
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>  
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>
@@ -192,5 +194,11 @@ c
   <message key="check the log files">check the log files</message>
   <message key="Task">Task</message>
   <message key="Day">Day</message>
- 
+      <!-- Deactivate and delete -->
+  <message key="docs-have-links-to-doc">The following documents have links to this document</message>
+  <message key="Deactivate Document">Deactivate Document</message>
+  <message key="Delete Document">Delete Document</message>
+  <message key="cannot-deactivate-unless-children-deactivated">This document cannot be deactivated unless the following child documents are deactivated</message>
+  <message key="delete-language-versions?">Do you really want to delete all language versions of this document?</message>
+
 </catalogue>

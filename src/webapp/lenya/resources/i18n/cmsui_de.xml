@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-   $Id: cmsui_de.xml,v 1.33 2004/02/23 13:04:54 roku Exp $
+   $Id: cmsui_de.xml,v 1.34 2004/02/23 15:00:15 roku Exp $
    
    @author Rolf Kulemann (roku at apache.org)
   
@@ -60,6 +60,8 @@
   <message key="true">ja</message>
   <message key="false">nein</message>
   <message key="Rename">Umbenennen</message>
+  <message key="Modify">&#196;ndern</message>
+  <message key="Document">Dokument</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} freigeben</message>
@@ -186,7 +188,7 @@
   <message key="Rename Document">Dokument umbenennen</message>
   <message key="New Document ID">Neue Dokument ID</message>
   <message key="No whitespace, no special characters">Keine Leer- oder Sonderzeichen</message>
-  <message key="No whitespace, no special characters">No whitespace, no special characters</message>
+
       <!-- Scheduler -->
   <message key="No active jobs">Keine aktiven Aufgaben.</message>
   <message key="The job date has expired">Das Datum der Aufgabe ist angelaufen.</message>
@@ -194,5 +196,11 @@
   <message key="Task">Aufgabe</message>
   <message key="Day">Tag</message>
 
+  <message key="docs-have-links-to-doc">Folgende Dokumente verweisen auf dieses Dokument</message>
+  <message key="Deactivate Document">Dokument deaktivieren</message>
+  <message key="Delete Document">Dokument l&#246;schen</message>
+  <message key="cannot-deactivate-unless-children-deactivated">Dieses Dokument kann erst deaktiviert werden, wenn alle untergeordneten Dokumente deaktiviert worden sind.</message>
+  <message key="delete-language-versions?">Wollen Sie wirklich alle Sprachversionen dieses Dokuments l&#246;schen?</message>
+    
 </catalogue>
 

@@ -1,19 +1,20 @@
 <?xml version="1.0"?>
 
 <!--
- $Id: delete.xsl,v 1.11 2003/10/26 19:15:01 andreas Exp $
+ $Id: delete.xsl,v 1.12 2004/02/23 15:01:41 roku Exp $
  -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    xmlns:session="http://www.apache.org/xsp/session/2.0"
+   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
   
   <xsl:param name="lenya.event"/>
   
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
+  <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
@@ -26,7 +27,7 @@
   
   <xsl:template match="page">
     <page:page>
-      <page:title>Delete Document</page:title>
+      <page:title><i18n:text>Delete Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
         <xsl:apply-templates select="info"/>
@@ -36,7 +37,7 @@
   
   <xsl:template match="info">
     <div class="lenya-box">
-      <div class="lenya-box-title">Delete Document</div>
+      <div class="lenya-box-title"><i18n:text>Delete Document</i18n:text></div>
       <div class="lenya-box-body">
         <form method="get">
           <xsl:attribute name="action"></xsl:attribute>
@@ -55,10 +56,10 @@
           <table class="lenya-table-noborder">
             <tr>
               <td/>
-              <td>Do you really want to delete all language versions of this document?<br/><br/></td>
+              <td><i18n:text key="delete-language-versions?"/><br/><br/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption">Document:</td>
+              <td class="lenya-entry-caption"><i18n:text>Document</i18n:text>:</td>
               <td><xsl:value-of select="document-id"/></td>
             </tr>
             <tr>
@@ -68,8 +69,8 @@
               <td/>
               <td>
                 <br/>
-                <input type="submit" value="Delete"/>&#160;
-                <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                <input i18n:attr="value" type="submit" value="Delete"/>&#160;
+                <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
               </td>
             </tr>
           </table>
@@ -80,7 +81,7 @@
 
   <xsl:template match="inconsistent-documents">
     <td class="lenya-entry-caption">
-      <span class="lenya-form-message-error">The following documents<br/> have links to this document:</span>
+      <span class="lenya-form-message-error"><i18n:text key="docs-have-links-to-doc"/>The following documents have links to this document:</span>
     </td>
     <td valign="top">
       <xsl:for-each select="inconsistent-document">
