@@ -20,10 +20,10 @@
 <form action="publishArticle">
 <input type="hidden" name="docid" value="{docid}"/>
 <input type="hidden" name="docids" value="{docids}"/>
-Do really want to publish this document <b><xsl:value-of select="docid"/></b>?
+Do you really want to publish this document <b><xsl:value-of select="docid"/></b>?
 <br />
 <br />
-<input type="submit" name="submit" value="publishArticle"/>
+<input type="submit" value="YES"/>
 <!--<input type="submit" name="submit" value="cancel"/>-->
 &#160;&#160;&#160;<a href="{referer}">CANCEL</a>
 </form>

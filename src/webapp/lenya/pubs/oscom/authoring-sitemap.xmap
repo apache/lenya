@@ -16,7 +16,11 @@
         <live href="docs/publication/live/"/>
         <tree-authoring href="docs/publication/authoring/tree.xml"/>
         <tree-live href="docs/publication/live/tree.xml"/>
+        <export-directory prefix="resources/publication/export"/>
+        <export-substitute-uri pattern="/wyona-cms/oscom/" substitution="/"/>
+<!--
         <replication-queue href="resources/cms/replication-queue"/>
+-->
       </map:action>
     </map:actions>
     <map:selectors default="browser">
