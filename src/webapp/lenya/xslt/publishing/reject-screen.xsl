@@ -33,6 +33,8 @@
 		</not:notification>
 
     <input type="submit" name="submit" value="Reject"/>
+    &#160;
+    <input type="button" onClick="location.href='{usecase:referer}';" value="Cancel"/>
       
     </form>  
         

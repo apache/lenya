@@ -19,6 +19,7 @@
 </xsp:structure>
 
 <usecase:reject>
+  <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
 	
 	<not:users>
 	<xsp:logic>
