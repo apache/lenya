@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<search-results xmlns="http://purl.org/atom/ns#">
+  <entry>
+    <title>My Last Entry</title>
+    <id>http://127.0.0.1:8080/lenya/blog/live/entries/1937/02/05/franz/index.xml</id>
+  </entry>
+  <entry>
+    <title>Levi and Vanya</title>
+    <id>http://127.0.0.1:8080/lenya/blog/live/entries/1969/02/16/michi/index.xml</id>
+  </entry>
+</search-results>
