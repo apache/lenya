@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.13 2003/05/14 09:16:26 gregor Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.14 2003/07/08 14:35:57 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -34,8 +34,16 @@
         <map:parameter name="publication_name" value="Default Publication"/>
         <map:parameter name="publication_id" value="default"/>
       </map:transform>
-      <map:serialize type="html"/>
+      <map:call resource="style-cms-page"/>
     </map:resource>
+    
+        <map:resource name="style-cms-page">
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize/>
+    </map:resource>
+    
   </map:resources>
 
 

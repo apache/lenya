@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- CVS: $Id: sitemap.xmap,v 1.17 2003/07/07 15:58:31 michi Exp $ -->
+<!-- CVS: $Id: sitemap.xmap,v 1.18 2003/07/08 14:35:57 gregor Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -38,9 +38,16 @@
         <map:parameter name="publication_name" value="Lenya News and Comments"/>
         <map:parameter name="publication_id" value="forum"/>
       </map:transform>
-      <map:serialize type="html"/>
+      <map:call resource="style-cms-page"/>
     </map:resource>
-  </map:resources>
+    
+        <map:resource name="style-cms-page">
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:serialize/>
+    </map:resource>
+   </map:resources>
 
 
   <map:pipelines>
