@@ -450,12 +450,6 @@
         <!--Rollback-->
         <map:match pattern="rollback" type="usecase">
           
-          <map:match pattern="showscreen" type="step">
-            <map:generate src="content/rc/versions-screen.xsp" type="serverpages"/>
-            <map:transform src="fallback://lenya/xslt/rc/rollback.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:match>
-          
           <map:match pattern="view" type="step">
             <map:redirect-to session="true" uri="{page-envelope:context-prefix}/{../../1}/authoring/{../../3}?lenya.step=view-revision&amp;rollbackTime={request-param:rollbackTime}"/>
           </map:match>
