@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.wyona.cms.task.AbstractTask;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * A task that sends an e-mail. Each parameter can either be
@@ -102,10 +103,18 @@ public class MailTask
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 factory.setValidating(true);
                 factory.setNamespaceAware(true);
+                factory.setExpandEntityReferences(true);
                 DocumentBuilder builder = factory.newDocumentBuilder();
+                builder.setEntityResolver(new DefaultHandler());
                 Document document = builder.parse(uri);
                 Element root = (Element) document.getChildNodes().item(0);
-
+/*
+                log.debug(
+                    "\n---------------------------" +
+                    "\n- Entity resolver: " + builder
+                    "\n---------------------------");
+*/                
+                
                 String keys[] = {
                     ELEMENT_SERVER,
                     ELEMENT_FROM,
