@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsl,v 1.28 2004/03/13 12:42:20 gregor Exp $ -->
+<!-- $Id: search-and-results.xsl,v 1.29 2004/03/18 16:53:26 michi Exp $ -->
 
 <xsl:stylesheet version="1.0" 
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
@@ -107,7 +107,9 @@
             <tr>
                 <td>Fields</td>
                 <td>
-                    <select name="{@pid}.fields" class="lenya-form-element">
+                    <select name="dummy-index-id.fields" class="lenya-form-element">
+                    <!-- TODO: ... -->
+                    <!--<select name="{@pid}.fields" class="lenya-form-element">-->
                         <xsl:for-each select="search-fields/field">
                             <option value="{.}">
                                 <xsl:if 
