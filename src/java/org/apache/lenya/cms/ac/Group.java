@@ -1,5 +1,5 @@
 /*
-$Id: Group.java,v 1.13 2003/07/30 15:04:50 egli Exp $
+$Id: Group.java,v 1.14 2003/07/31 11:33:12 andreas Exp $
 <License>
 
  ============================================================================
@@ -144,6 +144,10 @@ public abstract class Group extends AbstractItem implements Accreditable {
      * @throws AccessControlException if the delete failed
      */
     public void delete() throws AccessControlException {
+        Groupable[] members = getMembers();
+        for (int i = 0; i < members.length; i++) {
+            remove(members[i]);
+        }
     }
 
 }
