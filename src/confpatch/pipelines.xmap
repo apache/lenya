@@ -69,6 +69,9 @@
       <map:match pattern="ac.login" type="usecase">
         <map:mount src="lenya/usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
+      <map:match pattern="ac.logout" type="usecase">
+        <map:mount src="lenya/usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+      </map:match>
 
     <!-- favicon -->
     <map:match pattern="favicon.ico">

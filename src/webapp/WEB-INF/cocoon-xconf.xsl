@@ -241,6 +241,9 @@
     <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserPassword"/>
     <component-instance name="admin.userGroups" logger="lenya.admin" class="org.apache.lenya.cms.admin.UserGroups"/>
     <component-instance name="ac.login" logger="lenya.ac" class="org.apache.lenya.cms.ac.Login"/>
+    <component-instance name="ac.logout" logger="lenya.ac" class="org.apache.lenya.cms.ac.Logout"/>
+    <component-instance name="site.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.Metadata"/>
+    <component-instance name="authoring.create" logger="lenya.authoring" class="org.apache.lenya.cms.authoring.Create"/>
   </usecases>
       
 
