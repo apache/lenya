@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:session="http://www.apache.org/xsp/session/2.0">
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:session="http://www.apache.org/xsp/session/2.0"
+    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+    xmlns="http://www.w3.org/1999/xhtml"
+    >
 
 <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
 
@@ -12,23 +17,18 @@
 </xsl:template>
 
 <xsl:template match="page">
-  <html>
-   <head>
-    <title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></title>
-    <link rel="stylesheet" type="text/css" href="/lenya/lenya/css/default.css" />
-    </head>
-    <body bgcolor="#ffffff">
+  <page:page>
+    <page:title><xsl:value-of select="$publication_name"/> - <xsl:call-template name="html-title"/></page:title>
+    <page:body>
      <h2><xsl:value-of select="$publication_name"/></h2>
 
      <xsl:apply-templates select="body"/>
 
-     <p>
-     <font face="verdana" size="-2">
+     <p style="font-size: small">
        <xsl:value-of select="$copyright"/>
-     </font>
      </p>
-    </body>
-  </html>
+    </page:body>
+  </page:page>
 </xsl:template>
 
 <xsl:template match="body">
@@ -40,20 +40,23 @@ LOGOUT
 </xsl:template>
 
 <xsl:template match="logout">
-<font face="verdana">
-<br /><b>LOGOUT</b>
-
-
+  
 <xsl:apply-templates select="referer"/>
 <xsl:apply-templates select="no_referer"/>
 
-<br />Your history:
-<xsl:apply-templates select="uri"/>
-</font>
+  <div class="lenya-box">
+    <div class="lenya-box-title">Your history</div>
+    <div class="lenya-box-body">
+      <ul>
+        <xsl:apply-templates select="uri"/>
+      </ul>
+    </div>
+  </div>
+
 </xsl:template>
 
 <xsl:template match="uri">
-<br /><a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a>
+<li><a><xsl:attribute name="href"><xsl:value-of select="."/></xsl:attribute><xsl:value-of select="."/></a></li>
 </xsl:template>
 
 <xsl:template match="referer">

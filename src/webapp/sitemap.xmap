@@ -218,7 +218,7 @@
         <map:transform src="lenya/xslt/ac/logout.xsl">
           <map:parameter name="publication_name" value="Unknown Publication"/>
         </map:transform>
-        <map:serialize/>
+          <map:call resource="style-cms-page"/>
       </map:match>
 
     </map:pipeline>
