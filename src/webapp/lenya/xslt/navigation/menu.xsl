@@ -33,14 +33,7 @@
   <xsl:param name="relative-path"/>
   
   <xsl:variable name="href">
-    <xsl:choose>
-      <xsl:when test="substring(@href, string-length(@href), 1) = '/'">
-        <xsl:value-of select="concat($relative-path, @href, 'index.html')"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="concat($relative-path, @href)"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:value-of select="concat($relative-path, @id)"/>
   </xsl:variable>
   
   <xsl:choose>
@@ -57,7 +50,7 @@
   </xsl:choose>
   
   <xsl:apply-templates select="tree:node">
-    <xsl:with-param name="relative-path" select="concat($relative-path, @href)"/>
+    <xsl:with-param name="relative-path" select="concat($relative-path, @id, '/')"/>
   </xsl:apply-templates>
   
 </xsl:template>
@@ -66,7 +59,7 @@
 <xsl:template name="item">
   <xsl:param name="href"/>
   <div class="menuitem-{count(ancestor-or-self::tree:node)}">
-    <a href="{$path-to-context}{$href}"><xsl:value-of select="@label"/></a>
+    <a href="{$path-to-context}{$href}"><xsl:apply-templates select="tree:label"/></a>
   </div>
 </xsl:template>
     
@@ -74,8 +67,13 @@
 <xsl:template name="item-selected">
   <xsl:param name="href"/>
   <div class="menuitem-selected-{count(ancestor-or-self::tree:node)}">
-    <xsl:value-of select="@label"/>
+    <xsl:apply-templates select="tree:label"/>
   </div>
+</xsl:template>
+
+
+<xsl:template match="tree:label">
+  <xsl:apply-templates select="node()"/>
 </xsl:template>
     
     

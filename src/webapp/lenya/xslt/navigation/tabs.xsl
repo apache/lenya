@@ -15,10 +15,9 @@
     exclude-result-prefixes="tree"
     >
 
-<xsl:import href="util.xsl"/>    
+<xsl:import href="util.xsl"/>
     
 <xsl:param name="path"/>
-
 
 <xsl:template match="tree:site">
 
@@ -37,7 +36,7 @@
       </xsl:if>
       
       <xsl:choose>
-        <xsl:when test="starts-with(@href, $first-step)">
+        <xsl:when test="@id = $first-step">
           <xsl:call-template name="tab-selected"/>
         </xsl:when>
         <xsl:otherwise>
@@ -52,21 +51,22 @@
 
 
 <xsl:template name="tab">
-  <span class="tab">
-    <xsl:call-template name="label"/>
-  </span>
+  <span class="tab"><xsl:call-template name="label"/></span>
 </xsl:template>
 
 
 <xsl:template name="tab-selected">
-  <span class="tab-selected">
-    <xsl:call-template name="label"/>
-  </span>
+  <span class="tab-selected"><xsl:call-template name="label"/></span>
 </xsl:template>
 
 
 <xsl:template name="label">
-  <a href="{@href}"><xsl:value-of select="@label"/></a>
+  <a><xsl:call-template name="node2href"/><xsl:apply-templates select="tree:label"/></a>
+</xsl:template>
+
+
+<xsl:template match="tree:label">
+  <xsl:apply-templates select="node()"/>
 </xsl:template>
 
 
@@ -75,7 +75,7 @@
 
 
 <xsl:template name="separator">
-  &#160;
+   &#160;
 </xsl:template>
 
 
