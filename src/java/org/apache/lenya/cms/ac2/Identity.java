@@ -1,5 +1,5 @@
 /*
-$Id: Identity.java,v 1.7 2003/07/18 18:19:58 andreas Exp $
+$Id: Identity.java,v 1.8 2003/07/29 14:25:37 andreas Exp $
 <License>
 
  ============================================================================
@@ -60,6 +60,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.lenya.cms.ac.AccessControlException;
+import org.apache.lenya.cms.ac.Machine;
 import org.apache.lenya.cms.ac.User;
 
 
@@ -171,4 +172,22 @@ public class Identity implements Identifiable {
         }
         return user;
      }
+
+    /**
+     * Returns the machine of this identity.
+     * @return A machine.
+     */
+    public Machine getMachine() {
+        Machine machine = null;
+        Identifiable[] identifiables = getIdentifiables();
+        int i = 0;
+        while (machine == null && i < identifiables.length) {
+            if (identifiables[i] instanceof Machine) {
+                machine = (Machine) identifiables[i];
+            }
+            i++;
+        }
+        return machine;
+     }
+
 }
