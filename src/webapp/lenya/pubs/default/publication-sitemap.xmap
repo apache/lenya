@@ -173,7 +173,7 @@
           <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
 
           <map:select type="browser">
-            <map:when test="mozilla5DISABLED">
+            <map:when test="mozilla5">
               <map:match pattern="authoring/**.html">
                 <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}&amp;uiml=xul"/>
               </map:match>
