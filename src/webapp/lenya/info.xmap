@@ -35,15 +35,15 @@
     <!-- usecases -->
     <!-- Sitetree Javascript array -->
     <map:pipeline>
-    	
-    	<!-- {publication-id}/{area}/sitetree.xml -->
-    	<map:match pattern="*/*/sitetree.xml">
-    		<map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
+      
+      <!-- {publication-id}/{area}/sitetree.xml -->
+      <map:match pattern="*/*/sitetree.xml">
+        <map:generate src="pubs/{1}/content/{2}/sitetree.xml"/>
         <map:transform src="xslt/info/sitetree2areatree.xsl">
-        	<map:parameter name="area" value="{2}"/>
+          <map:parameter name="area" value="{2}"/>
         </map:transform>
-    		<map:serialize type="xml"/>
-    	</map:match>
+        <map:serialize type="xml"/>
+      </map:match>
       
       <!-- {publication-id}/{area}/info-sitetree -->
       <map:match pattern="*/*/info-sitetree/sitetree.js">
@@ -63,7 +63,7 @@
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
           <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
         </map:transform>
-        <map:serialize type="text"/>
+        <map:serialize type="text-iso-8859-1"/>
       </map:match>
     </map:pipeline>
     
@@ -84,50 +84,50 @@
     </map:pipeline>
 
     <map:pipeline internal-only="true">
-    	
-    	<!-- areas (default language) -->
+      
+      <!-- areas (default language) -->
       <map:match pattern="cmsbody/*/">
-				<map:generate src="cocoon:/tabs/{1}"/>
-				<map:transform src="xslt/info/info.xsl">
-					<map:parameter name="tab" value="{1}"/>
-					<map:parameter name="documentid" value="{page-envelope:document-id}"/>
+        <map:generate src="cocoon:/tabs/{1}"/>
+        <map:transform src="xslt/info/info.xsl">
+          <map:parameter name="tab" value="{1}"/>
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
-				</map:transform>
-				<map:serialize type="xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
       </map:match>
       
-    	<!-- areas (non-default language) -->
+      <!-- areas (non-default language) -->
       <map:match pattern="cmsbody/*/_*">
-				<map:generate src="cocoon:/tabs/{1}"/>
-				<map:transform src="xslt/info/info.xsl">
-					<map:parameter name="tab" value="{1}"/>
-					<map:parameter name="documentid" value="{page-envelope:document-id}"/>
+        <map:generate src="cocoon:/tabs/{1}"/>
+        <map:transform src="xslt/info/info.xsl">
+          <map:parameter name="tab" value="{1}"/>
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
           <map:parameter name="languageexists" value="true"/>
-				</map:transform>
-				<map:serialize type="xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
       </map:match>
       
       <!-- documents -->
       <map:match pattern="cmsbody/*/**">
-      	
-      	<map:act type="language-exists">
-					<map:generate src="cocoon:/tabs/{../1}"/>
-					<map:transform src="xslt/info/info.xsl">
-						<map:parameter name="tab" value="{../1}"/>
-						<map:parameter name="documentid" value="{page-envelope:document-id}"/>
+        
+        <map:act type="language-exists">
+          <map:generate src="cocoon:/tabs/{../1}"/>
+          <map:transform src="xslt/info/info.xsl">
+            <map:parameter name="tab" value="{../1}"/>
+            <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             <map:parameter name="languageexists" value="true"/>
-					</map:transform>
-					<map:serialize type="xml"/>
-				</map:act>
-				
-				<map:generate src="cocoon:/tabs/overview"/>
-				<map:transform src="xslt/info/info.xsl">
-					<map:parameter name="tab" value="{1}"/>
-					<map:parameter name="documentid" value="{page-envelope:document-id}"/>
-					<map:parameter name="languageexists" value="false"/>
-				</map:transform>
-				<map:serialize type="xml"/>
-				
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:act>
+        
+        <map:generate src="cocoon:/tabs/overview"/>
+        <map:transform src="xslt/info/info.xsl">
+          <map:parameter name="tab" value="{1}"/>
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+          <map:parameter name="languageexists" value="false"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+        
       </map:match>
     </map:pipeline>
     
@@ -136,8 +136,8 @@
       
       <!-- meta -->
       <map:match pattern="tabs/meta">
-      	
-      	<!-- update -->
+        
+        <!-- update -->
         <map:match pattern="update" type="step">
           <map:act type="task">
             <map:parameter name="task-id" value="{request-param:task-id}"/>
@@ -145,22 +145,22 @@
         </map:match>
         
         <!-- present screen -->
-				<map:generate src="content/info/meta.xsp" type="serverpages"/>
-				<map:serialize type="xml"/>
-				
+        <map:generate src="content/info/meta.xsp" type="serverpages"/>
+        <map:serialize type="xml"/>
+        
       </map:match>
       
       <!-- access control -->
       <map:match pattern="tabs/ac-*">
-				<map:generate src="content/info/access-control.xsp" type="serverpages">
-					<map:parameter name="area" value="{1}"/>
-				</map:generate>
-				<map:serialize type="xml"/>
+        <map:generate src="content/info/access-control.xsp" type="serverpages">
+          <map:parameter name="area" value="{1}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
       </map:match>
 
 			<!-- workflow -->
       <map:match pattern="tabs/workflow">
-      	<!-- check if history path exists -->
+        <!-- check if history path exists -->
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test" value="{workflow:history-path}"/>
           <map:when test=""/>
@@ -202,15 +202,15 @@
       </map:match>
       
       <map:match pattern="tabs/*">
-				<map:generate src="content/info/{1}.xsp" type="serverpages"/>
-				<map:serialize type="xml"/>
+        <map:generate src="content/info/{1}.xsp" type="serverpages"/>
+        <map:serialize type="xml"/>
       </map:match>
       
     </map:pipeline>
 
-		<!-- main pipeline -->    
+    <!-- main pipeline -->    
     <map:pipeline>
-    	
+      
       <!-- {publication-id}/{area}/{document-url} -->
       <map:match pattern="*/info-*/**">
         
