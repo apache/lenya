@@ -6,7 +6,7 @@
 <xsl:template match="dossier">
   <html>
     <head>
-      <title>unipublic - Dossier: <xsl:value-of select="title" /></title>
+      <title>unipublic - Dossier: <xsl:value-of select="head/title" /></title>
       <xsl:call-template name="styles"/>
       <xsl:call-template name="jscript"/>
     </head>
@@ -66,8 +66,8 @@
 
 <!-- Draws Dossier title and teaser image  -->
 <xsl:template name="dossier_head">
- <td valign="top" width="398" bgcolor="#9DC0D0" colspan="2">
-              <table cellspacing="0" cellpadding="0" width="398" bgcolor="#9DC0D0" border="0" bordercolor="blue">
+ <td valign="top" width="398" bgcolor="{head/color}" colspan="2">
+              <table cellspacing="0" cellpadding="0" width="398" bgcolor="{head/color}" border="0" bordercolor="blue">
                 <tbody>
                   <tr height="28">
                     <td align="left" width="402" colspan="2" height="28">&#160;&#160;&#160;&#160;&#160;
@@ -76,10 +76,10 @@
                   </tr>
                   <tr>
                     <td align="left" width="90">
-                      <img height="60" alt="" src="{teaser/image/@href}" width="80" border="0"/>
+                      <img height="60" alt="" src="{head/image/@href}" width="80" border="0"/>
                     </td>
                     <td class="dos-title1" valign="top" width="308">Dossier:<br/>
-                    <xsl:value-of select="title" />
+                    <xsl:value-of select="head/title" />
                     </td>
                   </tr>
                 </tbody>
