@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FlowHelper.java,v 1.11 2004/08/27 21:07:57 roku Exp $  */
+/* $Id: FlowHelper.java,v 1.12 2004/08/27 21:08:43 roku Exp $  */
 
 package org.apache.lenya.cms.cocoon.flow;
 
@@ -198,7 +198,7 @@ public class FlowHelper {
                 docOutputStream.close();
             }
             if(bos != null) {
-              bos.close(); // Not needed for ByteArrayOutpuStream, but it cleaner this way.    
+              bos.close(); // Not needed for ByteArrayOutputStream, but it cleaner this way.    
             }
         }
     }
