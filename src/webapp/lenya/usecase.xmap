@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase.xmap,v 1.231 2004/08/11 08:33:21 andreas Exp $ -->
+<!-- $Id: usecase.xmap,v 1.232 2004/08/11 08:34:39 andreas Exp $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
@@ -81,43 +81,6 @@
       <!-- NOTE: iso-8859-1 is necessary for the form editors, else special characters won't be handled correctly -->
       <map:serialize type="xhtml"/>
     </map:resource>
-    
-    <map:resource name="cms-screen-xml">
-      
-      <!-- use publication-specific schema if available -->
-      <map:select type="resource-exists">
-        <map:when test="pubs/{publication-id}/lenya/content/{serverpage}">
-          <map:generate src="pubs/{publication-id}/lenya/content/{serverpage}" type="serverpages"/>
-        </map:when>
-        <map:otherwise>
-          <map:generate src="content/{serverpage}" type="serverpages"/>
-        </map:otherwise>
-      </map:select>
-      
-      <map:select type="resource-exists">
-        <map:when test="pubs/{publication-id}/lenya/xslt/{stylesheet}">
-          <map:transform type="xalan" src="pubs/{publication-id}/lenya/xslt/{stylesheet}">
-            <map:parameter name="use-request-parameters" value="true"/>
-          </map:transform>
-        </map:when>
-        <map:otherwise>
-          <map:transform type="xalan" src="xslt/{stylesheet}">
-            <map:parameter name="use-request-parameters" value="true"/>
-          </map:transform>
-        </map:otherwise>
-      </map:select>
-      
-    </map:resource>
-    
-    <map:resource name="cms-screen">
-      <map:call resource="cms-screen-xml">
-        <map:parameter name="publication-id" value="{publication-id}"/>
-        <map:parameter name="serverpage" value="{serverpage}"/>
-        <map:parameter name="stylesheet" value="{stylesheet}"/>
-      </map:call>
-      <map:call resource="style-cms-page"/>
-    </map:resource>
-    
     
   </map:resources>
   
