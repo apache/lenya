@@ -1,5 +1,5 @@
 /*
-$Id: TaskJob.java,v 1.32 2003/08/29 11:36:34 andreas Exp $
+$Id: TaskJob.java,v 1.33 2003/08/29 12:53:47 andreas Exp $
 <License>
 
  ============================================================================
@@ -68,6 +68,7 @@ import java.util.Map;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
 import org.apache.lenya.cms.task.TaskParameters;
+import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
 
@@ -178,24 +179,12 @@ public class TaskJob extends ServletJob {
         JobDetail jobDetail = super.load(jobElement, jobGroup, servletContextPath);
         
         NamespaceHelper helper = SchedulerWrapper.getNamespaceHelper();
-
-        JobDataMap map = new JobDataMap();
-        /*
-        NamespaceMap mapWrapper = new NamespaceMap(map, SchedulerWrapper.JOB_PREFIX);
-        
-        Element[] parameterElements = helper.getChildren(jobElement, "parameter");
-
-        for (int i = 0; i < parameterElements.length; i++) {
-            String key = parameterElements[i].getAttribute("name");
-            String value = parameterElements[i].getAttribute("value");
-            mapWrapper.put(key, value);
-            log.debug("Setting job parameter: [" + key + "] = [" + value + "]");
-        }
-        */
         DefaultTaskWrapper wrapper = new DefaultTaskWrapper(helper, jobElement);
         wrapper.getTaskParameters().setServletContextPath(servletContextPath);
-        map.putAll(wrapper.getParameters());
+        
+        JobDataMap map = new JobDataMap(wrapper.getParameters());
         jobDetail.setJobDataMap(map);
+        
         return jobDetail;
     }
 
@@ -204,7 +193,6 @@ public class TaskJob extends ServletJob {
      *
      * @param jobDetail DOCUMENT ME!
      * @param helper namespace helper
-     * @param webappUrl The webapp URL.
      * @throws SchedulerException when something went wrong.
      *
      * @return DOCUMENT ME!
@@ -212,24 +200,9 @@ public class TaskJob extends ServletJob {
     public Element save(NamespaceHelper helper, JobDetail jobDetail) throws SchedulerException {
         
         Element jobElement = super.save(helper, jobDetail);
-        JobDataMap map = jobDetail.getJobDataMap();
-        
-        DefaultTaskWrapper wrapper = new DefaultTaskWrapper(map);
+        TaskWrapper wrapper = new DefaultTaskWrapper(jobDetail.getJobDataMap());
         jobElement.appendChild(wrapper.save(helper));
-/*
-        NamespaceMap jobMap = new NamespaceMap(map, SchedulerWrapper.JOB_PREFIX);
-
-        // job parameters
-        Map jobParameters = jobMap.getMap();
-
-        for (Iterator i = jobParameters.keySet().iterator(); i.hasNext(); ) {
-            String key = (String) i.next();
-            Element parameterElement = helper.createElement("parameter");
-            jobElement.appendChild(parameterElement);
-            parameterElement.setAttribute("name", key);
-            parameterElement.setAttribute("value", (String) jobMap.get(key));
-        }
-*/
+        
         return jobElement;
     }
 }
