@@ -19,7 +19,7 @@
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
 >
 
 <xsl:template match="/">
@@ -27,14 +27,14 @@
 </xsl:template>
 
 <xsl:template match="bxe">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<xsl:apply-templates select="xhtml:html/xhtml:head"/>
-<xsl:copy-of select="xhtml:html/xhtml:body"/>
+<html>
+<xsl:apply-templates select="html/head"/>
+<xsl:copy-of select="html/body"/>
 </html>
 </xsl:template>
 
-<xsl:template match="xhtml:head">
-<head xmlns="http://www.w3.org/1999/xhtml">
+<xsl:template match="head">
+<head>
 <xsl:for-each select="/bxe/namespaces/xmlns">
   <meta name="bxeNS" content="{.}"/>
 </xsl:for-each>
