@@ -21,8 +21,10 @@
 <ul>
   <li><a href="authoring/">Login&#160;as&#160;Editor</a></li>
   <li>Document&#160;Types</li>
+<!--
   <li>Collection&#160;Types</li>
-  <li><a href="#lenya:tests">Use&#160;Cases/Tests</a></li>
+-->
+  <li><a href="tests.html">Use&#160;Cases/Tests</a></li>
   <li>Features</li>
 </ul>
 <div class="lenya-publication-item"><a href="../index.html">Other&#160;Publications</a></div>
@@ -34,18 +36,22 @@
 </div>
 
 <div class="lenya-frontpage">
-<h2><xsl:value-of select="lenya:name"/></h2>
-<p>
-<h3>About</h3>
-  <xsl:copy-of select="lenya:description"/>
-  <br/><br/>
-  <xsl:apply-templates select="lenya:readme"/>
-</p>
+<xsl:apply-templates select="lenya:description"/>
 <xsl:apply-templates select="lenya:tests"/>
 </div>
 
 </page:body>
 </page:page>
+</xsl:template>
+
+<xsl:template match="lenya:description">
+<h2><xsl:value-of select="../lenya:name"/></h2>
+<p>
+<h3>About</h3>
+  <xsl:copy-of select="."/>
+  <br/><br/>
+  <xsl:apply-templates select="../lenya:readme"/>
+</p>
 </xsl:template>
 
 <xsl:template match="lenya:readme">

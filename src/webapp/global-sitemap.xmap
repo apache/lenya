@@ -832,6 +832,12 @@
         <map:transform src="lenya/xslt/util/publication.xsl"/>
         <map:call resource="style-cms-page"/>
       </map:match>
+      <!-- Publication Tests-->
+      <map:match pattern="*/tests.html">
+        <map:generate src="lenya/pubs/{1}/publication-tests.xml" />
+        <map:transform src="lenya/xslt/util/publication.xsl"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
 
       <!-- Navigation -->
       <map:match pattern="*/navigation_id*.xml">
