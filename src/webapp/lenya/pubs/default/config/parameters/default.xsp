@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+Returns the value of the parameter "value" as URI parameter.
+-->
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"  
+       xmlns:xsp-lenya="http://www.lenya.org/xsp/lenya/1.0"
+       >
+       
+<xsp:structure>
+  <xsp:include>java.io.File</xsp:include>
+  <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+  <xsp:include>org.apache.lenya.cms.ac.*</xsp:include>
+  <xsp:include>org.apache.lenya.cms.publication.*</xsp:include>
+</xsp:structure>
+
+<parameter xmlns="http://www.lenya.org/2003/uri-parameters"><xsp:expr>parameters.getParameter("value", "")</xsp:expr></parameter>
+       
+</xsp:page>
