@@ -1,5 +1,5 @@
 /*
- * $Id: TaskManager.java,v 1.6 2003/03/04 19:44:55 gregor Exp $
+ * $Id: TaskManager.java,v 1.7 2003/03/05 21:59:36 michi Exp $
  * <License>
  * The Apache Software License
  *
@@ -65,8 +65,7 @@ public class TaskManager implements Configurable {
     static Category log = Category.getInstance(TaskManager.class);
     public static String TASK_ELEMENT = "task";
     public static String TASK_ID_ATTRIBUTE = "id";
-    public static String CONFIGURATION_FILE = File.separator + "docs" + File.separator +
-        "publication" + File.separator + "tasks.xconf";
+    public static String CONFIGURATION_FILE = File.separator + "content" + File.separator + "tasks.xconf";
 
     // maps task-ids to tasks
     private Map tasks = new HashMap();
