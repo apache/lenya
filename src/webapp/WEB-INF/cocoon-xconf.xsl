@@ -236,13 +236,23 @@
       role="org.apache.lenya.cms.usecase.UnitOfWorkImpl"/>
       
   <usecases>
+
+     <!--+
+         | AC Usecases
+	 +-->
+
     <component-instance name="ac.login" logger="lenya.ac" class="org.apache.lenya.cms.ac.usecases.Login">
       <view template="ac/login"/>
     </component-instance>
+
     <component-instance name="ac.logout" logger="lenya.ac" class="org.apache.lenya.cms.ac.usecases.Logout">
       <view template="ac/logout"/>
     </component-instance>
     
+    <!--+
+        | Admin area usecases
+        +-->
+
     <component-instance name="admin.users" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.Users">
       <view template="admin/users" menu="true">
         <parameter name="tab" value="users"/>
@@ -318,10 +328,18 @@
     <component-instance name="admin.deleteIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteIPRange"/>
     -->
 
+    <!--+
+        | Search usecases
+        +-->
+
     <component-instance name="search.search" logger="lenya.search" class="org.apache.lenya.cms.search.usecases.Search">
       <view template="search/search"/>
     </component-instance>
     
+    <!--+
+        | Site area usecases
+        +-->
+
     <component-instance name="site.create" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.CreateDocument">
       <view template="site/create"/>
     </component-instance>
