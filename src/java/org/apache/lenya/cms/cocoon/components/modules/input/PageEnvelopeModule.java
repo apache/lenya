@@ -1,5 +1,5 @@
 /*
-$Id: PageEnvelopeModule.java,v 1.29 2003/09/12 16:47:53 andreas Exp $
+$Id: PageEnvelopeModule.java,v 1.30 2003/09/26 10:16:39 andreas Exp $
 <License>
 
  ============================================================================
@@ -70,7 +70,9 @@ import org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -180,7 +182,8 @@ public class PageEnvelopeModule extends AbstractInputModule implements Serviceab
             } else if (name.equals(PageEnvelope.DOCUMENT_DC_DATE_CREATED)) {
                 value = envelope.getDocument().getDublinCore().getDateCreated();
             } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
-                value = envelope.getDocument().getLastModified();
+                Date date = envelope.getDocument().getLastModified();
+                value = new SimpleDateFormat(DATE_FORMAT).format(date); 
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
             } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
@@ -198,6 +201,8 @@ public class PageEnvelopeModule extends AbstractInputModule implements Serviceab
 
         return value;
     }
+    
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * Returns the document type.
