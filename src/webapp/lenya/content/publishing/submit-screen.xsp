@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
+       >
+
+<xsp:structure>
+	<xsp:include>org.apache.lenya.cms.ac.User</xsp:include>
+  <xsp:include>org.apache.lenya.cms.ac2.xsp.PolicyHelper</xsp:include>
+</xsp:structure>
+
+<usecase:submit>
+	
+	<not:users>
+	<xsp:logic>
+			PolicyHelper helper = new PolicyHelper();
+			helper.setup(objectModel, this.manager, "authoring");
+			
+			User[] managers = helper.getUsersWithRole("manager");
+			for (int i = 0; i &lt; managers.length; i++) {
+					<not:user>
+						<xsp:attribute name="id"><xsp:expr>managers[i].getId()</xsp:expr></xsp:attribute>
+						<xsp:attribute name="name"><xsp:expr>managers[i].getName()</xsp:expr></xsp:attribute>
+						<xsp:attribute name="email"><xsp:expr>managers[i].getEmail()</xsp:expr></xsp:attribute>
+					</not:user>
+			}
+		
+		  helper.tearDown();
+	</xsp:logic>
+	</not:users>
+	
+</usecase:submit>
+  
+</xsp:page>
