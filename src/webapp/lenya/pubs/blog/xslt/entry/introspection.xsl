@@ -15,13 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: introspection.xsl,v 1.2 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 >
-
-<xsl:output method="xml"/>
 
 <xsl:param name="editURL" select="'http://no-such-url'"/>
 
