@@ -132,19 +132,21 @@ public interface Publication {
     DocumentBuilder getDocumentBuilder();
 
     /**
-     * Copies a document source from one location to another location.
+     * Copies a document from one location to another location.
      * @param sourceDocument The document to copy.
      * @param destinationDocument The destination document.
-     * @throws PublicationException when an error occurs.
+     * @throws PublicationException if a document which destinationDocument depends on
+     * does not exist.
      */
     void copyDocument(Document sourceDocument, Document destinationDocument)
         throws PublicationException;
 
     /**
-     * Copies a document source to another area.
+     * Copies a document to another area.
      * @param sourceDocument The document to copy.
      * @param destinationArea The destination area.
-     * @throws PublicationException when an error occurs.
+     * @throws PublicationException if a document which the
+     * destination document depends on does not exist.
      */
     void copyDocumentToArea(Document sourceDocument, String destinationArea)
         throws PublicationException;
@@ -153,7 +155,8 @@ public interface Publication {
      * Copies a document set to another area.
      * @param documentSet The document set to copy.
      * @param destinationArea The destination area.
-     * @throws PublicationException when an error occurs.
+     * @throws PublicationException if a document which one of the
+     * destination documents depends on does not exist.
      */
     void copyDocumentSetToArea(DocumentSet documentSet, String destinationArea)
         throws PublicationException;

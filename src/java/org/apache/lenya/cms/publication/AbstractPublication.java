@@ -1,5 +1,5 @@
 /*
-$Id: AbstractPublication.java,v 1.3 2003/11/28 15:52:32 andreas Exp $
+$Id: AbstractPublication.java,v 1.4 2003/11/28 16:57:16 andreas Exp $
 <License>
 
  ============================================================================
@@ -350,10 +350,10 @@ public abstract class AbstractPublication implements Publication {
      */
     public boolean dependsOn(Document dependingDocument, Document requiredDocument)
         throws PublicationException {
-        
+
         Document[] requiredDocuments = getRequiredDocuments(dependingDocument);
         List requiredList = Arrays.asList(requiredDocuments);
-        
+
         return requiredList.contains(requiredDocument);
     }
 
@@ -388,16 +388,92 @@ public abstract class AbstractPublication implements Publication {
      */
     public void copyDocument(Document sourceDocument, Document destinationDocument)
         throws PublicationException {
-            
+
         copyDocumentSource(sourceDocument, destinationDocument);
+
+        try {
+            SiteTree sourceTree = getSiteTree(sourceDocument.getArea());
+            SiteTree destinationTree = getSiteTree(destinationDocument.getArea());
+
+            SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
+            if (sourceNode == null) {
+                throw new PublicationException(
+                    "The node for source document [" + sourceDocument.getId() + "] doesn't exist!");
+            } else {
+
+                SiteTreeNode[] siblings = sourceNode.getNextSiblings();
+                String parentId = sourceNode.getAbsoluteParentId();
+                SiteTreeNode sibling = null;
+                String siblingDocId = null;
+
+                // same document ID -> insert at the same position
+                if (sourceDocument.getId().equals(destinationDocument.getId())) {
+                    for (int i = 0; i < siblings.length; i++) {
+                        String docId = parentId + "/" + siblings[i].getId();
+                        sibling = destinationTree.getNode(docId);
+                        if (sibling != null) {
+                            siblingDocId = docId;
+                            break;
+                        }
+                    }
+                }
+
+                Label label = sourceNode.getLabel(sourceDocument.getLanguage());
+                if (label == null) {
+                    // the node that we're trying to publish
+                    // doesn't have this language
+                    throw new PublicationException(
+                        "The node "
+                            + sourceDocument.getId()
+                            + " doesn't contain a label for language "
+                            + sourceDocument.getLanguage());
+                } else {
+                    SiteTreeNode destinationNode =
+                        destinationTree.getNode(destinationDocument.getId());
+                    if (destinationNode == null) {
+                        Label[] labels = { label };
+
+                        if (siblingDocId == null) {
+                            destinationTree.addNode(
+                                destinationDocument.getId(),
+                                labels,
+                                sourceNode.getHref(),
+                                sourceNode.getSuffix(),
+                                sourceNode.hasLink());
+                        } else {
+                            destinationTree.addNode(
+                                destinationDocument.getId(),
+                                labels,
+                                sourceNode.getHref(),
+                                sourceNode.getSuffix(),
+                                sourceNode.hasLink(),
+                                siblingDocId);
+                        }
+
+                    } else {
+                        // if the node already exists in the live
+                        // tree simply insert the label in the
+                        // live tree
+                        destinationTree.setLabel(destinationDocument.getId(), label);
+                    }
+                }
+            }
+
+            destinationTree.save();
+        } catch (SiteTreeException e) {
+            throw new PublicationException(e);
+        }
+
     }
-    
+
     /**
-     * Copies a document source.
-     * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
-     * @throws PublicationException when something went wrong.
-     */
-    protected abstract void copyDocumentSource(Document sourceDocument, Document destinationDocument) throws PublicationException;
-    
+                 * Copies a document source.
+                 * @param sourceDocument The source document.
+                 * @param destinationDocument The destination document.
+                 * @throws PublicationException when something went wrong.
+                 */
+    protected abstract void copyDocumentSource(
+        Document sourceDocument,
+        Document destinationDocument)
+        throws PublicationException;
 }
