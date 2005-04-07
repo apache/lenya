@@ -84,11 +84,8 @@
     </init-param>
   </xsl:template>
 
-  <xsl:template match="/web-app/servlet[position() = 1]/init-param[position() = last()]">
-    <xsl:copy-of select="."/>
   <!-- Does not work if form-encoding is commented within Cocoon's web.xml -->
-  <!-- <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'form-encoding']"> -->
-
+  <xsl:template match="/web-app/servlet[position() = 1]/init-param[normalize-space(param-name) = 'form-encoding']">
     <xsl:comment>Patched by Lenya build process</xsl:comment>
 
     <init-param>
