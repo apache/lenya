@@ -90,7 +90,7 @@ public class URLPolicy implements Policy {
                 addRoles(this.policies[i], identity, roles);
             }
         }
-        return (AbstractRole[]) roles.toArray(new AbstractRole[roles.size()]);
+        return (Role[]) roles.toArray(new Role[roles.size()]);
     }
 
     /**

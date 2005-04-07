@@ -132,7 +132,7 @@ public class DefaultPolicy implements Policy {
             }
         }
 
-        return (AbstractRole[]) roles.toArray(new AbstractRole[roles.size()]);
+        return (Role[]) roles.toArray(new Role[roles.size()]);
     }
 
     /**
