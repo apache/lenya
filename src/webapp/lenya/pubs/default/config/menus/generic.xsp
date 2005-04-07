@@ -17,11 +17,6 @@
 
 <!-- $Id: generic.xsp 155806 2005-03-01 17:55:42Z andreas $ -->
 
-<!--+
-    | This XSP builds that standard CMS menu
-    | It moved here from $PUB_HOME/config/menus/generic.xsp
-    +-->
-
 <xsp:page 
     language="java" 
     xmlns:xsp="http://apache.org/xsp"
@@ -157,10 +152,6 @@
         <block>
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
-        </block>
-
-        <block>
-          <item uc:usecase="view-logs" uc:step="overview" href="?"><i18n:text>View Task Logs</i18n:text></item>
         </block>
       </menu>
     </menus>

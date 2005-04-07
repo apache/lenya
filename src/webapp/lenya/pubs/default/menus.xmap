@@ -48,7 +48,7 @@
       
       <!-- all other document types: xhtml, ... -->
       <map:match pattern="**">
-        <map:generate type="serverpages" src="fallback://lenya/cmsmenus.xsp"/>
+        <map:generate type="serverpages" src="fallback://config/menus/generic.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       
