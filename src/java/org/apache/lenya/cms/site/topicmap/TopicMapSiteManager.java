@@ -21,6 +21,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteStructure;
 
 /**
  * Site manager to support topic maps.
@@ -117,6 +118,14 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      */
     public Document[] getDocuments(DocumentIdentityMap map, Publication publication, String area)
             throws SiteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentIdentityMap, org.apache.lenya.cms.publication.Publication, java.lang.String)
+     */
+    public SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation, String area) throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }

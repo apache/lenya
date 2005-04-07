@@ -19,6 +19,7 @@ package org.apache.lenya.cms.metadata.usecases;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * Usecase to edit metadata for a resource.
@@ -35,6 +36,18 @@ public class Metadata extends SiteUsecase {
         super();
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+        try {
+            getSourceDocument().lock();
+        } catch (TransactionException e) {
+            throw new UsecaseException(e);
+        }
+    }
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */

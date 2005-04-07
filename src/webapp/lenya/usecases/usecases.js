@@ -75,6 +75,7 @@ function executeUsecase() {
 
         passRequestParameters(flowHelper, usecase);
         usecase.checkPreconditions();
+        usecase.lockInvolvedObjects();
         proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
     }
     finally {

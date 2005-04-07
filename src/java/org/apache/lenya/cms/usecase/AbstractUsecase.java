@@ -27,8 +27,6 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
@@ -44,8 +42,7 @@ import org.apache.lenya.transaction.LockException;
  * 
  * @version $Id$
  */
-public class AbstractUsecase extends AbstractOperation implements Usecase, Contextualizable,
-        Configurable {
+public class AbstractUsecase extends AbstractOperation implements Usecase, Configurable {
 
     /**
      * Ctor.
@@ -400,15 +397,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
         return (Part) getParameter(name);
     }
 
-    private Context context;
-
-    /**
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context _context) throws ContextException {
-        this.context = _context;
-    }
-
     protected DocumentIdentityMap getDocumentIdentityMap() {
         try {
             return (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
@@ -508,6 +496,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Conte
      */
     public void setView(UsecaseView view) {
         this.view = view;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
     }
 
 }

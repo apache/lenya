@@ -119,6 +119,7 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
             if (!errorMessages.isEmpty()) {
                 logErrorMessages("Pre condition messages:", errorMessages);
             } else {
+                usecase.lockInvolvedObjects();
                 usecase.checkExecutionConditions();
                 errorMessages = usecase.getErrorMessages();
                 if (!errorMessages.isEmpty()) {

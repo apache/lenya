@@ -49,6 +49,11 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
 
         Identity identity = (Identity) request.getSession(false).getAttribute(
                 Identity.class.getName());
+        
+        if (identity == null) {
+            throw new AccessControlException("The session does not contain the identity!");
+        }
+        
         boolean authenticated = authenticate(accreditableManager, username, password, identity);
         return authenticated;
     }

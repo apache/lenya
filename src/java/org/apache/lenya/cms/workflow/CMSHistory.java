@@ -19,9 +19,7 @@
 
 package org.apache.lenya.cms.workflow;
 
-import java.io.File;
-
-import org.apache.lenya.cms.publication.Document;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -33,45 +31,22 @@ import org.w3c.dom.Element;
  * The CMS history
  */
 public class CMSHistory extends History {
-    private Document document;
+    //    private Document document;
 
     /**
      * <code>HISTORY_PATH</code> The path to the workflow history
      */
     public static final String HISTORY_PATH = "content/workflow/history";
-    
+
     /**
      * Ctor.
-     * @param document The document.
-     * @param file The history file.
+     * @param sourceUri The source URI.
+     * @param manager The service manager.
      * @throws WorkflowException if an error occurs.
      */
-    public CMSHistory(Document document, File file) throws WorkflowException {
-        super(file);
-        this.document = document;
-    }
-
-    /**
-     * Additionally to deleting the workflow history, the parent directories are
-     * deleted up to the workflow history directory.
-     * @see org.apache.lenya.cms.workflow.History#delete()
-     */
-    public void delete() throws WorkflowException {
-        super.delete();
-
-        File stopDirectory = new File(document.getPublication().getDirectory(), HISTORY_PATH);
-        if (!stopDirectory.isDirectory())
-            throw new WorkflowException("Stop dir '" + stopDirectory.getAbsolutePath()
-                    + "' is not a directory");
-        if (!getHistoryFile().getAbsolutePath().startsWith(stopDirectory.getAbsolutePath()))
-            throw new WorkflowException("Start dir '" + getHistoryFile().getAbsolutePath()
-                    + "' is not a descending sibling of stop directory '"
-                    + stopDirectory.getAbsolutePath() + "'.");
-
-        File parent = getHistoryFile().getParentFile();
-
-        while (!parent.equals(stopDirectory) && parent.delete())
-            parent = parent.getParentFile();
+    public CMSHistory(String sourceUri, ServiceManager manager) throws WorkflowException {
+        super(sourceUri, manager);
+        //        this.document = document;
     }
 
     /**
@@ -120,8 +95,7 @@ public class CMSHistory extends History {
 
         /**
          * @see org.apache.lenya.cms.workflow.History.VersionWrapper#initialize(org.apache.lenya.workflow.Workflow,
-         *      org.apache.lenya.workflow.Version,
-         *      org.apache.lenya.workflow.Situation)
+         *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
          */
         public void initialize(Workflow workflow, Version version, Situation situation) {
             super.initialize(workflow, version, situation);

@@ -28,16 +28,14 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
  * </p>
  * 
  * <p>
- * Dependence on a set of resources must be a strict partial order <strong>&lt;
- * </strong>:
+ * Dependence on a set of resources must be a strict partial order <strong>&lt; </strong>:
  * </p>
  * <ul>
- * <li><em>irreflexive:</em> d <strong>&lt; </strong>d does not hold for any
- * resource d</li>
- * <li><em>antisymmetric:</em> d <strong>&lt; </strong>e and e <strong>&lt;
- * </strong>d implies d=e</li>
- * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt;
- * </strong>f implies d <strong>&lt; </strong>f</li>
+ * <li><em>irreflexive:</em> d <strong>&lt; </strong>d does not hold for any resource d</li>
+ * <li><em>antisymmetric:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>d implies
+ * d=e</li>
+ * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>f implies d
+ * <strong>&lt; </strong>f</li>
  * </ul>*
  * @version $Id$
  */
@@ -81,8 +79,7 @@ public interface SiteManager {
     void add(Document document) throws SiteException;
 
     /**
-     * Checks if the site structure contains a certain resource in a certain
-     * area.
+     * Checks if the site structure contains a certain resource in a certain area.
      * @param resource The resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
@@ -90,8 +87,8 @@ public interface SiteManager {
     boolean contains(Document resource) throws SiteException;
 
     /**
-     * Checks if the site structure contains any language version of a certain
-     * resource in a certain area.
+     * Checks if the site structure contains any language version of a certain resource in a certain
+     * area.
      * @param resource The resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
@@ -139,12 +136,21 @@ public interface SiteManager {
      */
     Document[] getDocuments(DocumentIdentityMap identityMap, Publication publication, String area)
             throws SiteException;
-    
+
     /**
      * Sorts a set of documents using the "requires" relation.
      * @param set The set.
      * @throws SiteException if an error occurs.
      */
     void sortAscending(DocumentSet set) throws SiteException;
-    
+
+    /**
+     * @param map The identity map.
+     * @param publiation The publication.
+     * @param area The area.
+     * @return The object that holds the site structure information.
+     * @throws SiteException if an error occurs.
+     */
+    SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation, String area)
+            throws SiteException;
 }

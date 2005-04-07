@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -35,6 +34,7 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.workflow.WorkflowException;
@@ -61,14 +61,41 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         Date now = new GregorianCalendar().getTime();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(SCHEDULE_TIME, format.format(now));
-        
-        // resolve involved documents to lock them
-        Document doc = getSourceDocument();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
         try {
-            Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
-            getInvolvedDocuments(liveVersion);
-        } catch (DocumentBuildException e) {
+            Document doc = getSourceDocument();
+            DocumentSet set = getInvolvedDocuments(doc);
+            Document[] documents = set.getDocuments();
+            for (int i = 0; i < documents.length; i++) {
+                Document liveVersion = documents[i].getIdentityMap().getAreaVersion(documents[i],
+                        Publication.LIVE_AREA);
+                liveVersion.lock();
+            }
+
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+            siteManager.getSiteStructure(doc.getIdentityMap(),
+                    doc.getPublication(),
+                    Publication.LIVE_AREA).lock();
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
     }
 
@@ -237,7 +264,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
     /**
      * @param document The document.
-     * @return A set containing the document itself and all requiring documents.
+     * @return All documents that are involved in this transaction.
      */
     protected DocumentSet getInvolvedDocuments(Document document) {
         DocumentSet set;

@@ -46,7 +46,6 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
         if (transactionable == null) {
             try {
                 transactionable = getFactory(type).build(this, key);
-                transactionable.lock();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

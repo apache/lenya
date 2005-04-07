@@ -317,7 +317,7 @@ public class RCML {
                 NodeList versionElements = elem.getElementsByTagName("Version");
                 int version = 0;
                 if (versionElements.getLength() > 0) {
-                    String versionString = elem.getFirstChild().getNodeValue();
+                    String versionString = versionElements.item(0).getFirstChild().getNodeValue();
                     version = new Integer(versionString).intValue();
                 }
 

@@ -88,9 +88,10 @@ public interface Transactionable {
     String getTransactionableType();
     
     /**
-     * @return The latest version.
+     * Checks if the transactionable has been changed since it has been locked.
+     * @return A boolean value.
      * @throws TransactionException if an error occurs.
      */
-    int getVersion() throws TransactionException;
+    boolean hasChanged() throws TransactionException;
     
 }

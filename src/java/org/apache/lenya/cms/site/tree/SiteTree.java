@@ -19,14 +19,14 @@ package org.apache.lenya.cms.site.tree;
 
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.cms.site.SiteStructure;
 
 /**
  * A sitetree.
  * 
  * @version $Id$
  */
-public interface SiteTree extends Transactionable {
+public interface SiteTree extends SiteStructure {
 
     /**
      * The type of sitetree transactionable objects.

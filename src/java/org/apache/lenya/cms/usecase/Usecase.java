@@ -105,6 +105,12 @@ public interface Usecase extends Operation {
      *             system.
      */
     void checkExecutionConditions() throws UsecaseException;
+    
+    /**
+     * Locks all objects that are involved in the transaction.
+     * @throws UsecaseException if an error occurs.
+     */
+    void lockInvolvedObjects() throws UsecaseException;
 
     /**
      * Returns the error messages from the previous operation. Error messages

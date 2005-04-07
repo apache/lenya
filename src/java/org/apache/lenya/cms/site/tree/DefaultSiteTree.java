@@ -17,8 +17,6 @@
 
 package org.apache.lenya.cms.site.tree;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -28,17 +26,14 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.User;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -47,7 +42,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Default sitetree implementation.
@@ -66,13 +60,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     public static final String SITE_TREE_FILENAME = "sitetree.xml";
 
-    private Document document = null;
-    private File treefile = null;
+    private String sourceUri;
     // the area is only retained to provide some more info when raising an
     // exception.
     private String area = "";
     private IdentityMap identityMap;
     private Publication publication;
+    protected ServiceManager manager;
 
     protected void setup(IdentityMap map, Publication publication) {
         this.identityMap = map;
@@ -85,71 +79,41 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @param _area the area
      * @throws SiteException if an error occurs
      */
-    protected DefaultSiteTree(File pubDir, String _area) throws SiteException {
-        this(new File(pubDir, Publication.CONTENT_PATH + File.separator + _area + File.separator
-                + SITE_TREE_FILENAME));
+    protected DefaultSiteTree(Publication publication, String _area, ServiceManager manager)
+            throws SiteException {
+        this.sourceUri = "lenya://lenya/pubs/" + publication.getId() + "/content/" + _area + "/"
+                + SITE_TREE_FILENAME;
         this.area = _area;
-    }
-
-    /**
-     * Create a DefaultSiteTree from a filename.
-     * @param treefilename file name of the tree
-     * @throws SiteException if an error occurs
-     * @deprecated use the DefaultSiteTree(File pubDir, String area) constructor instead.
-     */
-    protected DefaultSiteTree(String treefilename) throws SiteException {
-        this(new File(treefilename));
-    }
-
-    /**
-     * Create a DefaultSiteTree from a file.
-     * @param _treefile the file containing the tree
-     * @throws SiteException if an error occurs
-     * @deprecated this constructor will be private in the future
-     */
-    protected DefaultSiteTree(File _treefile) throws SiteException {
-        this.treefile = _treefile;
-
-        try {
-            if (!_treefile.isFile()) {
-                //the treefile doesn't exist, so create it
-
-                this.document = createDocument();
-            } else {
-                // Read tree
-                this.document = DocumentHelper.readDocument(_treefile);
-            }
-        } catch (ParserConfigurationException e) {
-            throw new SiteException(e);
-        } catch (SAXException e) {
-            throw new SiteException(e);
-        } catch (IOException e) {
-            throw new SiteException(e);
-        }
-
+        this.manager = manager;
     }
 
     private long lastModified = 0;
 
-    /**
-     * Checks if the tree file has been modified externally and reloads the site tree.
-     */
-    protected synchronized void checkModified() {
-        if (this.area.equals(Publication.LIVE_AREA) && this.treefile.isFile()
-                && this.treefile.lastModified() > this.lastModified) {
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Sitetree [" + this.treefile + "] has changed: reloading.");
+    protected Document load() throws SiteException {
+        try {
+            Document document = SourceUtil.readDOM(this.sourceUri, this.manager);
+            if (document == null) {
+                document = createDocument();
+                SourceUtil.writeDOM(document, this.sourceUri, this.manager);
             }
-
-            try {
-                this.document = DocumentHelper.readDocument(this.treefile);
-            } catch (Exception e) {
-                throw new IllegalStateException(e.getMessage());
-            }
-            this.lastModified = this.treefile.lastModified();
+            return document;
+        } catch (Exception e) {
+            throw new SiteException(e);
         }
     }
+
+    /**
+     * Checks if the tree file has been modified externally and reloads the site tree. protected
+     * synchronized void checkModified() { if (this.area.equals(Publication.LIVE_AREA) &&
+     * this.treefile.lastModified() > this.lastModified) {
+     * 
+     * if (getLogger().isDebugEnabled()) { getLogger().debug("Sitetree [" + this.treefile + "] has
+     * changed: reloading."); }
+     * 
+     * try { this.document = DocumentHelper.readDocument(this.treefile); } catch (Exception e) {
+     * throw new IllegalStateException(e.getMessage()); } this.lastModified =
+     * this.treefile.lastModified(); } }
+     */
 
     /**
      * Create a new DefaultSiteTree xml document.
@@ -157,15 +121,15 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @throws ParserConfigurationException if an error occurs
      */
     public synchronized Document createDocument() throws ParserConfigurationException {
-        this.document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
+        Document document = DocumentHelper.createDocument(NAMESPACE_URI, "site", null);
 
-        Element root = this.document.getDocumentElement();
+        Element root = document.getDocumentElement();
         root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
         root
                 .setAttribute("xsi:schemaLocation",
                         "http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd");
 
-        return this.document;
+        return document;
     }
 
     /**
@@ -176,8 +140,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @return the node that matches the path given in the list of ids
      */
     protected synchronized Node findNode(Node node, List ids) {
-
-        checkModified();
 
         if (ids.size() < 1) {
             return node;
@@ -206,7 +168,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      java.lang.String)
      */
     public synchronized void addNode(SiteTreeNode node, String refDocumentId) throws SiteException {
-        this.addNode(node.getParent().getAbsoluteId(), node.getId(), node.getLabels(), node
+        addNode(node.getParent().getAbsoluteId(), node.getId(), node.getLabels(), node
                 .getHref(), node.getSuffix(), node.hasLink(), refDocumentId);
     }
 
@@ -223,7 +185,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public synchronized void addNode(SiteTreeNode node) throws SiteException {
-        this.addNode(node, null);
+        addNode(node, null);
     }
 
     /**
@@ -242,7 +204,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
         String parentid = buf.toString();
         String id = st.nextToken();
-        this.addNode(parentid, id, labels, href, suffix, link, refDocumentId);
+        addNode(parentid, id, labels, href, suffix, link, refDocumentId);
     }
 
     /**
@@ -251,7 +213,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     public synchronized void addNode(String documentid, Label[] labels, String href, String suffix,
             boolean link) throws SiteException {
-        this.addNode(documentid, labels, href, suffix, link, null);
+        addNode(documentid, labels, href, suffix, link, null);
     }
 
     /**
@@ -260,7 +222,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     public synchronized void addNode(String parentid, String id, Label[] labels, String href,
             String suffix, boolean link) throws SiteException {
-        this.addNode(parentid, id, labels, href, suffix, link, null);
+        addNode(parentid, id, labels, href, suffix, link, null);
     }
 
     /**
@@ -290,7 +252,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
 
         // Create node
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
+        Document document = load();
+        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
         Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
         child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
 
@@ -329,7 +292,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         } else {
             parentNode.appendChild(child);
         }
-        getLogger().debug("Tree has been modified: " + this.document.getDocumentElement());
+        getLogger().debug("Tree has been modified: " + document.getDocumentElement());
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
 
     }
 
@@ -342,6 +306,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (node != null) {
             node.addLabel(label);
         }
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
     }
 
     /**
@@ -353,6 +318,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (node != null) {
             node.removeLabel(label);
         }
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
     }
 
     /**
@@ -361,8 +327,12 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public synchronized SiteTreeNode removeNode(String documentId) {
         assert documentId != null;
 
-        Node node = removeNodeInternal(documentId);
-
+        Node node;
+        try {
+            node = removeNodeInternal(documentId);
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
         if (node == null) {
             return null;
         }
@@ -376,12 +346,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * removes the node corresponding to the given document-id and returns it
      * @param documentId the document-id of the Node to be removed
      * @return the <code>Node</code> that was removed
+     * @throws SiteException
      */
-    private synchronized Node removeNodeInternal(String documentId) {
+    private synchronized Node removeNodeInternal(String documentId) throws SiteException {
         Node node = this.getNodeInternal(documentId);
         Node parentNode = node.getParentNode();
         Node newNode = parentNode.removeChild(node);
-
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
         return newNode;
     }
 
@@ -391,8 +362,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @param documentId the document-id of the Node that we're trying to get
      * 
      * @return the Node if there is a Node for the given document-id, null otherwise
+     * @throws SiteException
      */
-    private synchronized Node getNodeInternal(String documentId) {
+    private synchronized Node getNodeInternal(String documentId) throws SiteException {
         StringTokenizer st = new StringTokenizer(documentId, "/");
         ArrayList ids = new ArrayList();
 
@@ -400,7 +372,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             ids.add(st.nextToken());
         }
 
-        Node node = findNode(this.document.getDocumentElement(), ids);
+        Node node = findNode(load().getDocumentElement(), ids);
         return node;
     }
 
@@ -412,7 +384,12 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
         SiteTreeNode treeNode = null;
 
-        Node node = getNodeInternal(documentId);
+        Node node;
+        try {
+            node = getNodeInternal(documentId);
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
         if (node != null) {
             treeNode = new SiteTreeNodeImpl(node);
             ContainerUtil.enableLogging(treeNode, getLogger());
@@ -427,9 +404,15 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public SiteTreeNode[] getTopNodes() {
         List childElements = new ArrayList();
 
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
+        Document doc;
+        try {
+            doc = load();
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
+        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", doc);
 
-        Element[] elements = helper.getChildren(this.document.getDocumentElement(),
+        Element[] elements = helper.getChildren(doc.getDocumentElement(),
                 SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
@@ -470,6 +453,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
         Node insertNode = parentNode.removeChild(node);
         parentNode.insertBefore(insertNode, previousNode);
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
     }
 
     /**
@@ -504,6 +488,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         } else {
             parentNode.insertBefore(insertNode, nextNode);
         }
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
     }
 
     /**
@@ -531,21 +516,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         for (int i = 0; i < children.length; i++) {
             importSubtree(newParent, children[i], children[i].getId(), null);
         }
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
     }
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#save()
      */
     public synchronized void save() throws TransactionException {
-        try {
-            DocumentHelper.writeDocument(this.document, this.treefile);
-        } catch (TransformerException e) {
-            throw new TransactionException("The document [" + this.document.getLocalName()
-                    + "] could not be transformed");
-        } catch (IOException e) {
-            throw new TransactionException("The saving of document ["
-                    + this.document.getLocalName() + "] failed");
-        }
     }
 
     /**
@@ -557,87 +534,40 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (node != null) {
             node.setLabel(label);
         }
+        SourceUtil.registerDirty(this.sourceUri, this.manager);
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkin()
      */
     public void checkin() throws TransactionException {
-        checkin(true);
-    }
-
-    protected void checkin(boolean backup) throws TransactionException {
-        try {
-            String userName = getUserID();
-            boolean newVersion = this.identityMap.getUnitOfWork().isDirty(this);
-            getRevisionController().reservedCheckIn(getRCPath(), userName, backup, newVersion);
-            isCheckedOut = false;
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        }
-    }
-
-    /**
-     * @return The username of the unit of work's identity.
-     */
-    protected String getUserID() {
-        String userName = null;
-        UnitOfWork unit = this.identityMap.getUnitOfWork();
-        Identity identity = unit.getIdentity();
-        User user = identity.getUser();
-        if (user != null) {
-            userName = user.getId();
-        }
-        return userName;
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkout()
      */
     public void checkout() throws TransactionException {
-        try {
-            String userName = getUserID();
-            getRevisionController().reservedCheckOut(getRCPath(), userName);
-            isCheckedOut = true;
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        }
     }
-    
-    protected String getRCPath() {
-        return this.area + "/" + SITE_TREE_FILENAME;
-    }
-    
-    private boolean isCheckedOut = false;
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
-     */
-    public boolean isCheckedOut() throws TransactionException {
-        return isCheckedOut;
-    }
-
-    private Lock lock;
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws TransactionException {
-        this.lock = new Lock(getVersion());
+        SourceUtil.lock(this.sourceUri, this.manager);
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#unlock()
      */
     public void unlock() throws TransactionException {
-        this.lock = null;
+        SourceUtil.unlock(this.sourceUri, this.manager);
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isLocked()
      */
     public boolean isLocked() throws TransactionException {
-        return this.lock != null;
+        return false;
     }
 
     /**
@@ -659,43 +589,25 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public void create() throws TransactionException {
     }
 
-    private RevisionController revisionController;
-
-    protected RevisionController getRevisionController() throws TransactionException {
-        if (this.revisionController == null) {
-            try {
-                String publicationPath = this.publication.getDirectory().getCanonicalPath();
-                RCEnvironment rcEnvironment = RCEnvironment.getInstance(this.publication
-                        .getServletContext().getCanonicalPath());
-                String rcmlDirectory = publicationPath + File.separator
-                        + rcEnvironment.getRCMLDirectory();
-                String backupDirectory = publicationPath + File.separator
-                        + rcEnvironment.getBackupDirectory();
-
-                this.revisionController = new RevisionController(rcmlDirectory, backupDirectory,
-                        publicationPath);
-            } catch (IOException e) {
-                throw new TransactionException(e);
-            }
-        }
-        return this.revisionController;
-    }
-
     /**
      * @see org.apache.lenya.transaction.Transactionable#getLock()
      */
     public Lock getLock() {
-        return this.lock;
+        return null;
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#getVersion()
+     * @see org.apache.lenya.transaction.Transactionable#hasChanged()
      */
-    public int getVersion() throws TransactionException {
-        try {
-            return getRevisionController().getLatestVersion(getRCPath());
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        }
+    public boolean hasChanged() throws TransactionException {
+        return false;
     }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
+     */
+    public boolean isCheckedOut() throws TransactionException {
+        return false;
+    }
+
 }

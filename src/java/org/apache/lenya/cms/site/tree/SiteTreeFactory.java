@@ -68,7 +68,7 @@ public class SiteTreeFactory extends AbstractLogEnabled implements Transactionab
             Publication publication = factory.getPublication(publicationId, servletContext
                     .getAbsolutePath());
            
-            tree = new DefaultSiteTree(publication.getDirectory(), area);
+            tree = new DefaultSiteTree(publication, area, this.manager);
             tree.setup(map, publication);
             ContainerUtil.enableLogging(tree, getLogger());
             

@@ -19,10 +19,15 @@ package org.apache.lenya.transaction;
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Session;
 
 /**
  * Abstract operation implementation.
@@ -30,7 +35,7 @@ import org.apache.avalon.framework.service.Serviceable;
  * @version $Id: AbstractOperation.java 158088 2005-03-18 16:17:38Z jwkaltz $
  */
 public class AbstractOperation extends AbstractLogEnabled implements Operation, Serviceable,
-        Initializable, Disposable {
+        Initializable, Disposable, Contextualizable {
 
     /**
      * Ctor.
@@ -42,31 +47,33 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
     private UnitOfWork unitOfWork;
 
     /**
-     * Retrieves a unit-of-work, which gives the operation access to business
-     * objects affected by the operation.
-     *
+     * Retrieves a unit-of-work, which gives the operation access to business objects affected by
+     * the operation.
+     * 
      * @return a UnitOfWork, the interface to access the objects
-     * @throws ServiceException if the unit-of-work component can not be initialized by the component framework
-     *
+     * @throws ServiceException if the unit-of-work component can not be initialized by the
+     *             component framework
+     * 
      * @see org.apache.lenya.transaction.Operation#getUnitOfWork()
      */
     public UnitOfWork getUnitOfWork() throws ServiceException {
         if (this.unitOfWork == null) {
-           if (getLogger().isDebugEnabled())
-               getLogger().debug("AbstractOperation.getUnitOfWork() does not yet have instance, looking up role [" + UnitOfWork.ROLE + "]");
-
-           this.unitOfWork = new UnitOfWorkImpl();
-           ContainerUtil.enableLogging(this.unitOfWork, getLogger());
+            setUnitOfWork(new UnitOfWorkImpl());
         }
 
         return this.unitOfWork;
     }
-    
+
     /**
      * @param unit The unit of work.
      */
     public void setUnitOfWork(UnitOfWork unit) {
         this.unitOfWork = unit;
+        ContainerUtil.enableLogging(this.unitOfWork, getLogger());
+        Session session = ContextHelper.getRequest(this.context).getSession(false);
+        if (session != null) {
+            session.setAttribute(UnitOfWork.class.getName(), unit);
+        }
     }
 
     protected ServiceManager manager;
@@ -82,7 +89,11 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public void initialize() throws Exception {
-        // do nothing
+        // reset the unit of work
+        /*
+         * Session session = ContextHelper.getRequest(this.context).getSession(false); if (session !=
+         * null) { session.setAttribute(UnitOfWork.class.getName(), null); }
+         */
     }
 
     /**
@@ -94,6 +105,15 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
                 this.manager.release(this.unitOfWork);
             }
         }
+    }
+
+    protected Context context;
+
+    /**
+     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
+     */
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
     }
 
 }

@@ -60,8 +60,6 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
                             + "] in the situation [" + situation + "]");
                 }
                 engine.invoke(document, workflow, situation, event);
-
-                ((DefaultDocument) document).getHistory().save();
             }
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -176,11 +174,11 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
 
                 sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
-                String sourceUri = ((DefaultDocument) source).getHistorySourceURI();
+                String sourceUri = ((DefaultDocument) source).getHistory().getSourceURI();
                 sourceHistory = sourceResolver.resolveURI(sourceUri);
 
                 if (sourceHistory.exists()) {
-                    String targetUri = ((DefaultDocument) target).getHistorySourceURI();
+                    String targetUri = ((DefaultDocument) target).getHistory().getSourceURI();
                     targetHistory = sourceResolver.resolveURI(targetUri);
                     SourceUtil.copy(sourceHistory, (ModifiableSource) targetHistory, true);
                 }
@@ -224,7 +222,7 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(sourceDocument)) {
                 sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                String uri = ((DefaultDocument) sourceDocument).getHistorySourceURI();
+                String uri = ((DefaultDocument) sourceDocument).getHistory().getSourceURI();
                 historySource = sourceResolver.resolveURI(uri);
                 if (historySource.exists()) {
                     ((ModifiableSource) historySource).delete();

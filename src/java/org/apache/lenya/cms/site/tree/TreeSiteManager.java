@@ -32,6 +32,7 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.TransactionableFactory;
 
@@ -154,8 +155,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Obtaining requiring resources completed.");
             }
-        }
-        else {
+        } else {
             resources = new Document[0];
         }
 
@@ -248,11 +248,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             destinationTree.setLabel(destinationDocument.getId(), label);
         }
 
-        try {
-            sourceDocument.getIdentityMap().getUnitOfWork().registerDirty(destinationTree);
-        } catch (TransactionException e) {
-            throw new SiteException(e);
-        }
     }
 
     /**
@@ -285,11 +280,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (node.getLabels().length == 0) {
             tree.removeNode(document.getId());
         }
-        try {
-            document.getIdentityMap().getUnitOfWork().registerDirty(tree);
-        } catch (TransactionException e) {
-            throw new SiteException(e);
-        }
     }
 
     /**
@@ -310,11 +300,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         SiteTree tree = getTree(document);
         tree.setLabel(document.getId(), labelObject);
-        try {
-            document.getIdentityMap().getUnitOfWork().registerDirty(tree);
-        } catch (TransactionException e) {
-            throw new SiteException(e);
-        }
     }
 
     /**
@@ -376,11 +361,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (node == null) {
             Label[] labels = { label };
             tree.addNode(document.getId(), labels, null, null, false);
-            try {
-                document.getIdentityMap().getUnitOfWork().registerDirty(tree);
-            } catch (TransactionException e) {
-                throw new SiteException(e);
-            }
         } else {
             tree.addLabel(document.getId(), label);
         }
@@ -403,6 +383,15 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
+     */
+    public SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation,
+            String area) throws SiteException {
+        return getTree(map, publiation, area);
     }
 
 }

@@ -20,31 +20,24 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.excalibur.source.ModifiableSource;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.History;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -53,7 +46,7 @@ import org.apache.lenya.workflow.WorkflowException;
 /**
  * A typical CMS document.
  */
-public class DefaultDocument extends AbstractLogEnabled implements Document {
+public class DefaultDocument extends AbstractLogEnabled implements Document, Transactionable {
 
     private String id;
     private DublinCore dublincore;
@@ -72,22 +65,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
             Publication publication, String _id, String _area) {
-        if (_id == null) {
-            throw new IllegalArgumentException("The document ID must not be null!");
-        }
-        if (!_id.startsWith("/")) {
-            throw new IllegalArgumentException("The document ID must start with a slash!");
-        }
-        this.manager = manager;
-        this.id = _id;
-        this.publication = publication;
-
-        this.identityMap = map;
-
-        setArea(_area);
-        setLanguage(getPublication().getDefaultLanguage());
-
-        this.dublincore = new DublinCoreProxy(this, this.manager);
+        this(manager, map, publication, _id, _area, publication.getDefaultLanguage());
     }
 
     /**
@@ -101,13 +79,13 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
             Publication publication, String _id, String _area, String _language) {
+        this.manager = manager;
         if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
         if (!_id.startsWith("/")) {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
-        this.manager = manager;
         this.id = _id;
         this.publication = publication;
 
@@ -306,7 +284,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             if (siteManager != null) {
                 exists = siteManager.contains(this);
             } else {
-                exists = getFile().exists();
+                exists = SourceUtil.exists(getSourceURI(), this.manager);
             }
         } catch (Exception e) {
             throw new DocumentException(e);
@@ -405,71 +383,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * If the document is involved in a unit of work, a temporary source is created to be used in
-     * the transaction.
-     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
-     */
-    public String getSourceURI() {
-        String uri = getRealSourceURI();
-
-        if (getIdentityMap().getUnitOfWork() != null) {
-            String workUri = getWorkSourceURI();
-
-            SourceResolver resolver = null;
-            ModifiableSource realSource = null;
-            ModifiableSource workSource = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                realSource = (ModifiableSource) resolver.resolveURI(uri);
-                workSource = (ModifiableSource) resolver.resolveURI(workUri);
-                if (realSource.exists() && !workSource.exists()) {
-                    SourceUtil.copy(realSource, workSource, true);
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (resolver != null) {
-                    if (realSource != null) {
-                        resolver.release(realSource);
-                    }
-                    if (workSource != null) {
-                        resolver.release(workSource);
-                    }
-                    this.manager.release(resolver);
-                }
-            }
-
-            uri = workUri;
-        }
-
-        return uri;
-    }
-
-    /**
-     * @return The real source URI.
-     */
-    protected String getRealSourceURI() {
-        try {
-            return "file:/" + getFile().getCanonicalPath();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @return A source URI to be used in a transaction.
-     */
-    protected String getWorkSourceURI() {
-        String workUri = "file:/" + getPublication().getDirectory().getAbsolutePath() + "/work/";
-        workUri += getUserId();
-
-        String path = getPublication().getPathMapper().getPath(getId(), getLanguage());
-        workUri += "/" + getArea() + "/" + path;
-
-        return workUri;
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.Document#accept(org.apache.lenya.cms.publication.util.DocumentVisitor)
      */
     public void accept(DocumentVisitor visitor) throws PublicationException {
@@ -484,7 +397,11 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public History getHistory() {
         if (this.history == null) {
             try {
-                this.history = new CMSHistory(this, getHistoryFile());
+                final String path = getPublication().getPathMapper()
+                        .getPath(getId(), getLanguage());
+                final String uri = "lenya://lenya/pubs/" + getPublication().getId()
+                        + "/content/workflow/history/" + path;
+                this.history = new CMSHistory(uri, this.manager);
             } catch (WorkflowException e) {
                 throw new RuntimeException(e);
             }
@@ -512,54 +429,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * Returns the history file inside the publication directory.
-     * @return A string.
-     */
-    public File getHistoryFile() {
-        if (getIdentityMap().getUnitOfWork() == null) {
-            return getRealHistoryFile();
-        } else {
-            return getWorkHistoryFile();
-        }
-    }
-
-    protected File getRealHistoryFile() {
-        DocumentIdToPathMapper pathMapper = getPublication().getPathMapper();
-        String documentPath = pathMapper.getPath(getId(), getLanguage());
-
-        String area = getArea();
-        if (!area.equals(Publication.ARCHIVE_AREA) && !area.equals(Publication.TRASH_AREA)) {
-            area = Publication.AUTHORING_AREA;
-        }
-
-        String path = CMSHistory.HISTORY_PATH + "/" + area + "/" + documentPath;
-        path = path.replace('/', File.separatorChar);
-        return new File(getPublication().getDirectory(), path);
-    }
-
-    protected File getWorkHistoryFile() {
-        DocumentIdToPathMapper pathMapper = getPublication().getPathMapper();
-        String documentPath = pathMapper.getPath(getId(), getLanguage());
-
-        String area = getArea();
-        if (!area.equals(Publication.ARCHIVE_AREA) && !area.equals(Publication.TRASH_AREA)) {
-            area = Publication.AUTHORING_AREA;
-        }
-
-        String path = "work/" + getUserId() + "/" + CMSHistory.HISTORY_PATH + "/" + area + "/"
-                + documentPath;
-        path = path.replace('/', File.separatorChar);
-        return new File(getPublication().getDirectory(), path);
-    }
-
-    /**
-     * @return The source URI of the history file.
-     */
-    public String getHistorySourceURI() {
-        return getHistoryFile().toURI().toString();
-    }
-
-    /**
      * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
      *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
      */
@@ -571,153 +440,17 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.transaction.Transactionable#save()
      */
     public void save() throws TransactionException {
-
-        SourceResolver sourceResolver = null;
-        ModifiableSource realSource = null;
-        ModifiableSource workSource = null;
         try {
             getDublinCore().save();
-            getHistory().save();
-
-            if (getWorkHistoryFile().exists()) {
-                FileUtil.copyFile(getWorkHistoryFile(), getRealHistoryFile());
-                getWorkHistoryFile().delete();
-            }
-
-            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            realSource = (ModifiableSource) sourceResolver.resolveURI(getRealSourceURI());
-            workSource = (ModifiableSource) sourceResolver.resolveURI(getWorkSourceURI());
-            if (workSource.exists()) {
-                SourceUtil.copy(workSource, realSource, true);
-                workSource.delete();
-            }
-
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        } finally {
-            if (sourceResolver != null) {
-                if (realSource != null) {
-                    sourceResolver.release(realSource);
-                }
-                if (workSource != null) {
-                    sourceResolver.release(workSource);
-                }
-                this.manager.release(sourceResolver);
-            }
-        }
-
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#checkin()
-     */
-    public void checkin() throws TransactionException {
-        checkin(true);
-    }
-
-    private boolean isCheckedOut = false;
-
-    protected void checkin(boolean backup) throws TransactionException {
-        try {
-            String userName = getUserId();
-            boolean newVersion = getIdentityMap().getUnitOfWork().isDirty(this);
-            getRevisionController().reservedCheckIn(getRCPath(), userName, backup, newVersion);
-            this.isCheckedOut = false;
         } catch (Exception e) {
             throw new TransactionException(e);
         }
-    }
-
-    /**
-     * @return The username of the unit of work's identity.
-     */
-    protected String getUserId() {
-        String userName = null;
-        User user = getIdentityMap().getUnitOfWork().getIdentity().getUser();
-        if (user != null) {
-            userName = user.getId();
-        }
-        return userName;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#checkout()
-     */
-    public void checkout() throws TransactionException {
-        try {
-            String userName = getUserId();
-            getRevisionController().reservedCheckOut(getRCPath(), userName);
-            this.isCheckedOut = true;
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
-     */
-    public boolean isCheckedOut() throws TransactionException {
-        return this.isCheckedOut;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#lock()
-     */
-    public void lock() throws TransactionException {
-        this.lock = new Lock(getVersion());
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#unlock()
-     */
-    public void unlock() throws TransactionException {
-        this.lock = null;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#isLocked()
-     */
-    public boolean isLocked() throws TransactionException {
-        return this.lock != null;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#getTransactionableType()
-     */
-    public String getTransactionableType() {
-        return Document.TRANSACTIONABLE_TYPE;
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#delete()
      */
     public void delete() throws TransactionException {
-        SourceResolver sourceResolver = null;
-        Source realSource = null;
-        Source workSource = null;
-        try {
-            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            realSource = sourceResolver.resolveURI(getSourceURI());
-            if (realSource.exists()) {
-                ((ModifiableSource) realSource).delete();
-            }
-            workSource = sourceResolver.resolveURI(getWorkSourceURI());
-            if (workSource.exists()) {
-                ((ModifiableSource) workSource).delete();
-            }
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        } finally {
-            if (sourceResolver != null) {
-                if (realSource != null) {
-                    sourceResolver.release(realSource);
-                }
-                if (workSource != null) {
-                    sourceResolver.release(workSource);
-                }
-                this.manager.release(sourceResolver);
-            }
-        }
     }
 
     /**
@@ -726,54 +459,76 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public void create() throws TransactionException {
     }
 
-    private RevisionController revisionController;
+    protected static final String TRANSACTIONABLE_TYPE = "document";
 
-    protected RevisionController getRevisionController() throws TransactionException {
-        if (this.revisionController == null) {
-            try {
-                String publicationPath = getPublication().getDirectory().getCanonicalPath();
-                RCEnvironment rcEnvironment = RCEnvironment.getInstance(getPublication()
-                        .getServletContext().getCanonicalPath());
-                String rcmlDirectory = publicationPath + File.separator
-                        + rcEnvironment.getRCMLDirectory();
-                String backupDirectory = publicationPath + File.separator
-                        + rcEnvironment.getBackupDirectory();
-
-                this.revisionController = new RevisionController(rcmlDirectory, backupDirectory,
-                        publicationPath);
-            } catch (IOException e) {
-                throw new TransactionException(e);
-            }
-        }
-        return this.revisionController;
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#getTransactionableType()
+     */
+    public String getTransactionableType() {
+        return TRANSACTIONABLE_TYPE;
     }
 
-    private Lock lock;
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
+     */
+    public String getSourceURI() {
+        String path = publication.getPathMapper().getPath(getId(), getLanguage());
+        return "lenya://lenya/pubs/" + publication.getId() + "/content/" + getArea() + "/" + path;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#checkin()
+     */
+    public void checkin() throws TransactionException {
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#checkout()
+     */
+    public void checkout() throws TransactionException {
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
+     */
+    public boolean isCheckedOut() throws TransactionException {
+        return false;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#lock()
+     */
+    public void lock() throws TransactionException {
+        SourceUtil.lock(getSourceURI(), this.manager);
+        SourceUtil.lock(getHistory().getSourceURI(), this.manager);
+    }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#getLock()
      */
     public Lock getLock() {
-        return this.lock;
+        return null;
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#getVersion()
+     * @see org.apache.lenya.transaction.Transactionable#unlock()
      */
-    public int getVersion() throws TransactionException {
-        try {
-            return getRevisionController().getLatestVersion(getRCPath());
-        } catch (Exception e) {
-            throw new TransactionException(e);
-        }
+    public void unlock() throws TransactionException {
+        SourceUtil.unlock(getSourceURI(), this.manager);
     }
 
     /**
-     * @return The path to use for the revision controller.
-     * @throws IOException if an error occurs.
+     * @see org.apache.lenya.transaction.Transactionable#isLocked()
      */
-    protected String getRCPath() throws IOException {
-        return getArea() + "/" + getPublication().getPathMapper().getPath(getId(), getLanguage());
+    public boolean isLocked() throws TransactionException {
+        return false;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#hasChanged()
+     */
+    public boolean hasChanged() throws TransactionException {
+        return false;
     }
 
 }

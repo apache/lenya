@@ -107,7 +107,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 
         for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
-            if (t.getVersion() > t.getLock().getVersion()) {
+            if (t.hasChanged()) {
                 throw new LockException("Cannot commit transaction: The object [" + t
                         + "] was modified after it has been locked.");
             }

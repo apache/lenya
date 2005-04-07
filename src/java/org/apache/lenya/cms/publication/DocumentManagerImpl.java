@@ -434,7 +434,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
             SourceUtil.copy(source, (ModifiableSource) destination, true);
             destinationDocument.getDublinCore().replaceBy(sourceDocument.getDublinCore());
-            destinationDocument.getIdentityMap().getUnitOfWork().registerDirty(destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {

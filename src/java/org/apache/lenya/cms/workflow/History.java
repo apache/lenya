@@ -19,7 +19,6 @@
 
 package org.apache.lenya.cms.workflow;
 
-import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,29 +26,30 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.impl.VersionImpl;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
  * <p>
- * The history of a workflow instance contains a list of all versions of the
- * instance. A version contains
+ * The history of a workflow instance contains a list of all versions of the instance. A version
+ * contains
  * </p>
  * <ul>
  * <li>the state,</li>
- * <li>the event that caused the transition (omitted in the first version),
- * </li>
+ * <li>the event that caused the transition (omitted in the first version),</li>
  * <li>all variable assignments.</li>
  * </ul>
  */
-public abstract class History {
+public abstract class History extends AbstractLogEnabled {
 
     /**
      * <code>WORKFLOW_ATTRIBUTE</code> The workflow attribute
@@ -108,47 +108,57 @@ public abstract class History {
      * <code>IP_ATTRIBUTE</code> The IP attribute
      */
     public static final String IP_ATTRIBUTE = "ip-address";
-
-    private File historyFile;
-    private List versions;
+    protected ServiceManager manager;
+    private String sourceUri;
 
     /**
      * Creates a new history object for a workflow instance.
-     * @param historyFile The history file.
+     * @param sourceUri The URI of the source to store the history.
+     * @param manager The service manager.
      * @throws WorkflowException if an error occurs.
      */
-    public History(File historyFile) throws WorkflowException {
-        this.historyFile = historyFile;
+    public History(String sourceUri, ServiceManager manager)
+            throws WorkflowException {
+        this.manager = manager;
+
+        if (sourceUri == null) {
+            throw new WorkflowException("The source URI must not be null!");
+        }
+        this.sourceUri = sourceUri;
+
     }
 
     /**
      * @return An array of version wrappers.
      */
-    protected VersionWrapper[] getVersionWrappers() {
+    protected List getVersionWrappers() {
 
-        if (this.versions == null) {
-            this.versions = new ArrayList();
-            if (getHistoryFile().exists()) {
+        List versions = new ArrayList();
+        try {
+            Document document = SourceUtil.readDOM(this.sourceUri, this.manager);
+            if (document != null) {
                 NamespaceHelper helper = getNamespaceHelper();
                 Element documentElement = helper.getDocument().getDocumentElement();
                 Element[] versionElements = helper.getChildren(documentElement, VERSION_ELEMENT);
                 for (int i = 0; i < versionElements.length; i++) {
                     VersionWrapper version = restoreVersion(helper, versionElements[i]);
-                    this.versions.add(version);
+                    versions.add(version);
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return (VersionWrapper[]) this.versions.toArray(new VersionWrapper[this.versions.size()]);
+        return versions;
     }
 
     /**
      * @return An array of versions.
      */
     public Version[] getVersions() {
-        VersionWrapper[] wrappers = getVersionWrappers();
-        Version[] versions = new Version[wrappers.length];
+        List wrappers = getVersionWrappers();
+        Version[] versions = new Version[wrappers.size()];
         for (int i = 0; i < versions.length; i++) {
-            versions[i] = wrappers[i].getVersion();
+            versions[i] = ((VersionWrapper) wrappers.get(i)).getVersion();
         }
         return versions;
     }
@@ -160,8 +170,8 @@ public abstract class History {
     protected NamespaceHelper getNamespaceHelper() {
         NamespaceHelper helper;
         try {
-            if (getHistoryFile().exists()) {
-                Document document = DocumentHelper.readDocument(getHistoryFile());
+            Document document = SourceUtil.readDOM(this.sourceUri, this.manager);
+            if (document != null) {
                 helper = new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX, document);
             } else {
                 helper = new NamespaceHelper(Workflow.NAMESPACE, Workflow.DEFAULT_PREFIX,
@@ -200,36 +210,8 @@ public abstract class History {
         return workflowId;
     }
 
-    /**
-     * Factory method to obtain the history file.
-     * @return A file.
-     */
-    protected File getHistoryFile() {
-        return this.historyFile;
-    }
-
     protected VersionWrapper createVersionWrapper() {
         return new VersionWrapper();
-    }
-
-    /**
-     * Saves the history.
-     */
-    public void save() {
-        try {
-            NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
-                    Workflow.DEFAULT_PREFIX, HISTORY_ELEMENT);
-
-            Element documentElement = helper.getDocument().getDocumentElement();
-            VersionWrapper[] versions = getVersionWrappers();
-            for (int i = 0; i < versions.length; i++) {
-                Element versionElement = versions[i].getVersionElement(helper);
-                documentElement.appendChild(versionElement);
-            }
-            DocumentHelper.writeDocument(helper.getDocument(), getHistoryFile());
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -239,9 +221,23 @@ public abstract class History {
      * @param situation The situation.
      */
     public void newVersion(Workflow workflow, Version version, Situation situation) {
+        List versions = getVersionWrappers();
         VersionWrapper wrapper = createVersionWrapper();
         wrapper.initialize(workflow, version, situation);
-        this.versions.add(wrapper);
+        versions.add(wrapper);
+        try {
+            NamespaceHelper helper = new NamespaceHelper(Workflow.NAMESPACE,
+                    Workflow.DEFAULT_PREFIX, HISTORY_ELEMENT);
+
+            Element documentElement = helper.getDocument().getDocumentElement();
+            for (int i = 0; i < versions.size(); i++) {
+                Element versionElement = ((VersionWrapper) versions.get(i)).getVersionElement(helper);
+                documentElement.appendChild(versionElement);
+            }
+            SourceUtil.writeDOM(helper.getDocument(), this.sourceUri, this.manager);
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -262,21 +258,18 @@ public abstract class History {
     }
 
     /**
-     * Deletes the history.
-     * @throws WorkflowException when something went wrong.
+     * @throws WorkflowException if an error occurs.
      */
     public void delete() throws WorkflowException {
-        if (getHistoryFile().exists()) {
-            boolean deleted = getHistoryFile().delete();
-            if (!deleted) {
-                throw new WorkflowException("The workflow history could not be deleted!");
-            }
+        try {
+            SourceUtil.delete(this.sourceUri, this.manager);
+        } catch (Exception e) {
+            throw new WorkflowException(e);
         }
     }
 
     /**
-     * Use subclasses of this class to store additional information for a
-     * version.
+     * Use subclasses of this class to store additional information for a version.
      */
     public class VersionWrapper {
 
@@ -372,6 +365,13 @@ public abstract class History {
             return versionElement;
         }
 
+    }
+
+    /**
+     * @return The source URI.
+     */
+    public String getSourceURI() {
+        return this.sourceUri;
     }
 
 }

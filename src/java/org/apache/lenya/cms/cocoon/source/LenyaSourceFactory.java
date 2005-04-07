@@ -31,6 +31,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Session;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
@@ -40,12 +41,13 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.transaction.UnitOfWork;
 
 /**
- * A factory for the "lenya" scheme (virtual protocol), which is used to 
- * resolve any src="lenya:..." attributes in sitemaps. This implementation constructs
- * the path to the source document from the page envelope and delegates
- * any further resolving to the "context" source resolver of Cocoon.
+ * A factory for the "lenya" scheme (virtual protocol), which is used to resolve any src="lenya:..."
+ * attributes in sitemaps. This implementation constructs the path to the source document from the
+ * page envelope and delegates any further resolving to the "context" source resolver of Cocoon.
  * 
  * @version $Id$
  */
@@ -109,8 +111,8 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                     PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
 
                     if (pageEnvelopeFactory != null) {
-                        PageEnvelope pageEnvelope = pageEnvelopeFactory
-                                .getPageEnvelope(map, objectModel);
+                        PageEnvelope pageEnvelope = pageEnvelopeFactory.getPageEnvelope(map,
+                                objectModel);
 
                         if (pageEnvelope != null) {
                             String publicationID = pageEnvelope.getPublication().getId();
@@ -125,10 +127,32 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                 }
             }
 
-            path = this.delegationScheme + this.delegationPrefix + path;
+            while (path.startsWith("/")) {
+                path = path.substring(1);
+            }
 
-            return sourceResolver.resolveURI(path);
-            
+            UnitOfWork unit = null;
+            IdentityMap map = null;
+            Session session = ContextHelper.getRequest(this.context).getSession(false);
+            if (session != null) {
+                unit = (UnitOfWork) session.getAttribute(UnitOfWork.class.getName());
+                if (unit != null) {
+                    map = unit.getIdentityMap();
+                }
+                else {
+                    map = new DocumentIdentityMap(this.manager, getLogger());
+                }
+            }
+
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Creating repository source for URI [" + location + "]");
+            }
+
+            //            path = this.delegationScheme + this.delegationPrefix + path;
+            return new RepositorySource(this.manager, location, map, getLogger());
+
+            //            return sourceResolver.resolveURI(path);
+
         } catch (final ServiceException e) {
             throw new SourceException(e.getMessage(), e);
         } finally {
@@ -141,6 +165,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
      * @see org.apache.excalibur.source.SourceFactory#release(org.apache.excalibur.source.Source)
      */
     public void release(Source source) {
-	    // do nothing
+        // do nothing
     }
 }

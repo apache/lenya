@@ -19,9 +19,6 @@
 
 package org.apache.lenya.cms.metadata.dublincore;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,10 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.ProcessingException;
-import org.apache.excalibur.source.ModifiableSource;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
@@ -119,13 +113,9 @@ public class DublinCoreImpl {
      */
     protected void loadValues() throws DocumentException {
 
-        SourceResolver resolver = null;
-        Source source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(this.sourceUri);
-            if (source.exists()) {
-                org.w3c.dom.Document doc = DocumentHelper.readDocument(source.getInputStream());
+            org.w3c.dom.Document doc = SourceUtil.readDOM(this.sourceUri, this.manager);
+            if (doc != null) {
 
                 // FIXME: what if "lenya:meta" element doesn't exist yet?
                 // Currently the element is inserted.
@@ -153,13 +143,6 @@ public class DublinCoreImpl {
             }
         } catch (Exception e) {
             throw new DocumentException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
     }
 
@@ -169,14 +152,9 @@ public class DublinCoreImpl {
      */
     public void save() throws DocumentException {
 
-        SourceResolver resolver = null;
-        ModifiableSource source = null;
         try {
 
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (ModifiableSource) resolver.resolveURI(this.sourceUri);
-
-            org.w3c.dom.Document doc = DocumentHelper.readDocument(source.getInputStream());
+            org.w3c.dom.Document doc = SourceUtil.readDOM(this.sourceUri, this.manager);
 
             Element metaElement = getMetaElement(doc);
 
@@ -201,29 +179,11 @@ public class DublinCoreImpl {
                     }
                 }
             }
+            SourceUtil.writeDOM(doc, this.sourceUri, this.manager);
 
-            OutputStream oStream = source.getOutputStream();
-            Writer writer = new OutputStreamWriter(oStream);
-            DocumentHelper.writeDocument(doc, writer);
-            if (oStream != null) {
-                oStream.flush();
-                try {
-                    oStream.close();
-                } catch (Throwable t) {
-                    throw new ProcessingException("Could not write document: ", t);
-                }
-            }
         } catch (Exception e) {
             throw new DocumentException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
-
     }
 
     /**

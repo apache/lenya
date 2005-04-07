@@ -17,13 +17,13 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
@@ -47,6 +47,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
     public static final String VARIABLE_PREFIX = "variable.";
     /**
      * <code>HISTORY_PATH</code> The history path
+     * @deprecated Exposes implementation details.
      */
     public static final String HISTORY_PATH = "history-path";
 
@@ -68,15 +69,14 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             if (document != null) {
                 resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
                 if (resolver.hasWorkflow(document)) {
-                    
+
                     Version latestVersion = document.getLatestVersion();
-                    
+
                     if (name.equals(STATE)) {
                         if (latestVersion == null) {
                             Workflow workflow = resolver.getWorkflowSchema(document);
                             value = workflow.getInitialState();
-                        }
-                        else {
+                        } else {
                             value = latestVersion.getState();
                         }
                     } else if (name.startsWith(VARIABLE_PREFIX)) {
@@ -86,13 +86,18 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                         if (Arrays.asList(variableNames).contains(variableName)) {
                             if (latestVersion == null) {
                                 value = Boolean.valueOf(workflow.getInitialValue(variableName));
-                            }
-                            else {
+                            } else {
                                 value = Boolean.valueOf(latestVersion.getValue(variableName));
                             }
                         }
                     } else if (name.equals(HISTORY_PATH)) {
-                        value = ((DefaultDocument) document).getHistoryFile().getAbsolutePath();
+                        final String path = document.getPublication().getPathMapper()
+                                .getPath(document.getId(), document.getLanguage());
+                        final String uri = "content/workflow/history/" + path;
+                        final File pubDir = document.getPublication().getDirectory();
+                        final File workflowFile = new File(pubDir, uri.replace('/',
+                                File.separatorChar));
+                        value = workflowFile.getAbsolutePath();
                     } else {
                         throw new ConfigurationException("The attribute [" + name
                                 + "] is not supported!");
@@ -103,8 +108,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             throw e;
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute failed: ", e);
-        }
-        finally {
+        } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
             }

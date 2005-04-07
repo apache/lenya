@@ -150,7 +150,7 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
         boolean hasWorkflow = false;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            String uri = ((DefaultDocument) document).getHistorySourceURI();
+            String uri = ((DefaultDocument) document).getHistory().getSourceURI();
             source = resolver.resolveURI(uri);
             if (source.exists()) {
                 hasWorkflow = true;

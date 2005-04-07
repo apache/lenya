@@ -160,6 +160,27 @@ public class RevisionController {
 
         return !checkedOutByOther;
     }
+    
+    /**
+     * @param source A source.
+     * @return If the source is checked out.
+     * @throws Exception if an error occurs.
+     */
+    public boolean isCheckedOut(String source) throws Exception {
+        RCML rcml = new RCML(this.rcmlDir, source, this.rootDir);
+
+        RCMLEntry entry = rcml.getLatestEntry();
+
+        // The same user is allowed to check out repeatedly without
+        // having to check back in first.
+        //
+        if (entry != null) {
+            log.debug("entry: " + entry);
+            log.debug("entry.type:" + entry.getType());
+            log.debug("entry.identity" + entry.getIdentity());
+        }
+        return entry != null && entry.getType() == RCML.co;
+    }
 
     /**
      * Try to make a reserved check in of the file destination for a user with identity. A backup
