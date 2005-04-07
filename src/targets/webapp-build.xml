@@ -85,11 +85,8 @@
             includes="*/targets/test-build.xconf"
             addComments="true"/>
 
-    <!-- now copy our logicsheets -->
+    <!-- now copy our roles -->
     <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
-        <include name="**/*.xsl"/>
-      </fileset>
       <fileset dir="${java.dir}">
         <include name="**/*.roles"/>
       </fileset>
