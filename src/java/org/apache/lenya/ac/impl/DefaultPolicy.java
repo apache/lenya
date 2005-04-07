@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultPolicy.java,v 1.5 2004/04/28 16:18:33 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -136,7 +136,7 @@ public class DefaultPolicy implements Policy {
             }
         }
 
-        return (AbstractRole[]) roles.toArray(new AbstractRole[roles.size()]);
+        return (Role[]) roles.toArray(new Role[roles.size()]);
     }
 
     /**

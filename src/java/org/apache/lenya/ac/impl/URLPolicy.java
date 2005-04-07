@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URLPolicy.java,v 1.8 2004/08/16 08:18:15 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -90,7 +90,7 @@ public class URLPolicy implements Policy {
                 addRoles(policies[i], identity, roles);
             }
         }
-        return (AbstractRole[]) roles.toArray(new AbstractRole[roles.size()]);
+        return (Role[]) roles.toArray(new Role[roles.size()]);
     }
 
     /**
