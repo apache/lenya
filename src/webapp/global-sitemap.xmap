@@ -300,11 +300,6 @@
         <map:mount uri-prefix="{1}/admin" src="lenya/admin.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
-      <!-- Scheduler -->
-      <map:match pattern="scheduler/**">
-        <map:mount uri-prefix="scheduler/" src="lenya/scheduler.xmap" check-reload="true" reload-method="synchron"/>
-       </map:match>
-
       <!-- Internal usecases -->
       <map:pipeline internal-only="true">
         <map:match type="usecase" pattern="*">
