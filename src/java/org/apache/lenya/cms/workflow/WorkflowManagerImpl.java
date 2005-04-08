@@ -216,29 +216,17 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
      */
     public void deleteHistory(Document sourceDocument) throws WorkflowException {
         WorkflowResolver resolver = null;
-        SourceResolver sourceResolver = null;
-        Source historySource = null;
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
             if (resolver.hasWorkflow(sourceDocument)) {
-                sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                String uri = ((DefaultDocument) sourceDocument).getHistory().getSourceURI();
-                historySource = sourceResolver.resolveURI(uri);
-                if (historySource.exists()) {
-                    ((ModifiableSource) historySource).delete();
-                }
+                SourceUtil.delete(((DefaultDocument) sourceDocument).getHistory().getSourceURI(),
+                        this.manager);
             }
         } catch (Exception e) {
             throw new WorkflowException(e);
         } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
-            }
-            if (sourceResolver != null) {
-                if (historySource != null) {
-                    sourceResolver.release(historySource);
-                }
-                this.manager.release(sourceResolver);
             }
         }
     }

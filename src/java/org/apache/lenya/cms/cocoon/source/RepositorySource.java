@@ -81,11 +81,11 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
 
         setScheme(scheme);
 
-        if (map.getFactory(Node.TRANSACTIONABLE_TYPE) == null) {
-            map.setFactory(Node.TRANSACTIONABLE_TYPE, new SourceNodeFactory(this.manager, logger));
+        if (map.getFactory(Node.IDENTIFIABLE_TYPE) == null) {
+            map.setFactory(Node.IDENTIFIABLE_TYPE, new SourceNodeFactory(this.manager, logger));
         }
 
-        this.node = (Node) map.get(Node.TRANSACTIONABLE_TYPE, uri);
+        this.node = (Node) map.get(Node.IDENTIFIABLE_TYPE, uri);
 
     }
 
@@ -113,11 +113,10 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
      */
     public void delete() {
         try {
-            if (!this.node.isCheckedOut()) {
-                throw new RuntimeException("Cannot delete source [" + getURI()
-                        + "]: not checked out!");
+            if (!this.node.isLocked()) {
+                throw new RuntimeException("Cannot delete source [" + getURI() + "]: not locked!");
             } else {
-                this.node.delete();
+                this.identityMap.getUnitOfWork().registerRemoved(this.node);
             }
         } catch (TransactionException e) {
             throw new RuntimeException(e);
@@ -224,22 +223,16 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.cocoon.source.TransactionableSource#checkout()
      */
     public void checkout() throws TransactionException {
-        // TODO Auto-generated method stub
-
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * @see org.apache.lenya.cms.cocoon.source.TransactionableSource#checkin()
      */
     public void checkin() throws TransactionException {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -278,11 +271,11 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         }
         return false;
     }
-    
+
     public Document getDocument() {
         return this.node.getDocument();
     }
-    
+
     public void setDocument(Document document) {
         this.node.setDocument(document);
         try {
@@ -291,7 +284,7 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
             throw new RuntimeException(e);
         }
     }
-    
+
     public void registerDirty() throws TransactionException {
         this.identityMap.getUnitOfWork().registerDirty(this.node);
     }

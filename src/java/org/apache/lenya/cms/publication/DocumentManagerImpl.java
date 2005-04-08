@@ -140,8 +140,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             siteManager.delete(document);
             
-            UnitOfWork unit = document.getIdentityMap().getUnitOfWork();
-            unit.registerRemoved(document);
+            document.delete();
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {

@@ -41,7 +41,7 @@ import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
-import org.apache.lenya.transaction.TransactionableFactory;
+import org.apache.lenya.transaction.IdentifiableFactory;
 import org.apache.lenya.workflow.Situation;
 import org.apache.log4j.Logger;
 
@@ -240,17 +240,17 @@ public abstract class PublicationTask extends AbstractTask {
     protected SiteTree getSiteTree1(String area) {
         try {
 
-            TransactionableFactory factory = getIdentityMap()
-                    .getFactory(SiteTree.TRANSACTIONABLE_TYPE);
+            IdentifiableFactory factory = getIdentityMap()
+                    .getFactory(SiteTree.IDENTIFIABLE_TYPE);
             if (factory == null) {
                 factory = new SiteTreeFactory(getServiceManager());
                 ContainerUtil.enableLogging(factory, new ConsoleLogger());
-                getIdentityMap().setFactory(SiteTree.TRANSACTIONABLE_TYPE, factory);
+                getIdentityMap().setFactory(SiteTree.IDENTIFIABLE_TYPE, factory);
             }
             
             String key = getPublication().getId() + ":" + area;
 
-            return (SiteTree) getIdentityMap().get(SiteTree.TRANSACTIONABLE_TYPE, key);
+            return (SiteTree) getIdentityMap().get(SiteTree.IDENTIFIABLE_TYPE, key);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }

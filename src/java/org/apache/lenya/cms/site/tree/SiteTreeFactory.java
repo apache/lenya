@@ -26,16 +26,16 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.Transactionable;
-import org.apache.lenya.transaction.TransactionableFactory;
+import org.apache.lenya.transaction.IdentifiableFactory;
 
 /**
  * Factory for sitetree objects.
  * 
  * @version $Id:$
  */
-public class SiteTreeFactory extends AbstractLogEnabled implements TransactionableFactory {
+public class SiteTreeFactory extends AbstractLogEnabled implements IdentifiableFactory {
 
     protected ServiceManager manager;
 
@@ -48,10 +48,10 @@ public class SiteTreeFactory extends AbstractLogEnabled implements Transactionab
     }
 
     /**
-     * @see org.apache.lenya.transaction.TransactionableFactory#build(org.apache.lenya.transaction.IdentityMap,
+     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
      *      java.lang.String)
      */
-    public Transactionable build(IdentityMap map, String key) throws Exception {
+    public Identifiable build(IdentityMap map, String key) throws Exception {
         String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String area = snippets[1];
@@ -69,7 +69,6 @@ public class SiteTreeFactory extends AbstractLogEnabled implements Transactionab
                     .getAbsolutePath());
            
             tree = new DefaultSiteTree(publication, area, this.manager);
-            tree.setup(map, publication);
             ContainerUtil.enableLogging(tree, getLogger());
             
         } finally {

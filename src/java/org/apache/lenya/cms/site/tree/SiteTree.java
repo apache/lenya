@@ -20,6 +20,7 @@ package org.apache.lenya.cms.site.tree;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * A sitetree.
@@ -29,9 +30,9 @@ import org.apache.lenya.cms.site.SiteStructure;
 public interface SiteTree extends SiteStructure {
 
     /**
-     * The type of sitetree transactionable objects.
+     * The type of sitetree identifiable objects.
      */
-    String TRANSACTIONABLE_TYPE = "site";
+    String IDENTIFIABLE_TYPE = "site";
 
     /**
      * Add a node.
@@ -209,5 +210,10 @@ public interface SiteTree extends SiteStructure {
      */
     void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid,
             String refDocumentId) throws SiteException;
+
+    /**
+     * @deprecated Superceded by transactions.
+     */
+    void save() throws TransactionException;
 
 }

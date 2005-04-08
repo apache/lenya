@@ -102,6 +102,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     /**
      * Create a new instance of Resources.
      * @param _document the document for which the resources are managed
+     * @param manager The service manager.
      */
     public DefaultResourcesManager(Document _document, ServiceManager manager) {
         this.document = _document;
@@ -233,7 +234,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 value = (String) entry.getValue();
                 dc.setValue(key, value);
             }
-            dc.save();
         } catch (final Exception e) {
             getLogger().error("Saving of [" + metaDataFile + "] �failed.");
             throw new DocumentException(e);

@@ -17,28 +17,19 @@
 package org.apache.lenya.transaction;
 
 /**
- * Object to take part in a transaction.
+ * Factory for transactionables.
  *
  * @version $Id:$
  */
-public interface Transactionable extends Identifiable, Versionable {
+public interface IdentifiableFactory {
 
     /**
-     * Saves the object.
-     * @throws TransactionException if an error occurs.
+     * Builds an identifiable.
+     * @param map The identity map.
+     * @param key The key.
+     * @return A transactionable.
+     * @throws Exception if an error occurs.
      */
-    void saveTransactionable() throws TransactionException;
-
-    /**
-     * Deletes the object.
-     * @throws TransactionException if an error occurs.
-     */
-    void deleteTransactionable() throws TransactionException;
-    
-    /**
-     * Creates the object.
-     * @throws TransactionException if an error occurs.
-     */
-    void createTransactionable() throws TransactionException;
+    Identifiable build(IdentityMap map, String key) throws Exception;
     
 }

@@ -241,7 +241,6 @@ public class WriteDCParametersTask extends PublicationTask {
         dc.setValue(DublinCore.ELEMENT_SUBJECT, _subject);
         dc.setValue(DublinCore.ELEMENT_PUBLISHER, _publisher);
         dc.setValue(DublinCore.ELEMENT_RIGHTS, _rights);
-        dc.save();
     }
 
     /**

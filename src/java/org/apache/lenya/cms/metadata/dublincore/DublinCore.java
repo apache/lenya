@@ -347,13 +347,6 @@ public interface DublinCore {
     static final String TERM_VALID = "valid";
 
     /**
-     * Save the meta data.
-     * 
-     * @throws DocumentException if the meta data could not be made persistent.
-     */
-    void save() throws DocumentException;
-
-    /**
      * Returns the values for a certain key.
      * @param key The key.
      * @return An array of strings.

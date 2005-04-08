@@ -17,19 +17,33 @@
 package org.apache.lenya.transaction;
 
 /**
- * Factory for transactionables.
+ * Object that can be locked.
  *
  * @version $Id:$
  */
-public interface TransactionableFactory {
+public interface Lockable {
+    
+    /**
+     * Locks this object.
+     * @throws TransactionException if an error occurs.
+     */
+    void lock() throws TransactionException;
 
     /**
-     * Builds a transactionable.
-     * @param map The identity map.
-     * @param key The key.
-     * @return A transactionable.
-     * @throws Exception if an error occurs.
+     * Unlocks this object.
+     * @throws TransactionException if an error occurs.
      */
-    Transactionable build(IdentityMap map, String key) throws Exception;
-    
+    void unlock() throws TransactionException;
+
+    /**
+     * @return if this object is locked.
+     * @throws TransactionException if an error occurs.
+     */
+    boolean isLocked() throws TransactionException;
+
+    /**
+     * @return The lock which is held by this object.
+     */
+    Lock getLock();
+
 }

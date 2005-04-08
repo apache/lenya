@@ -14,38 +14,38 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
-
-import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.Transactionable;
-import org.w3c.dom.Document;
+package org.apache.lenya.transaction;
 
 /**
- * Repository node.
+ * A versionable object.
  *
  * @version $Id:$
  */
-public interface Node extends Transactionable {
+public interface Versionable extends Lockable {
 
     /**
-     * @return The DOM that holds the information.
-     */
-    Document getDocument();
-    
-    /**
-     * @param document The DOM that holds the information.
-     */
-    void setDocument(Document document);
-    
-    /**
-     * The identifiable type.
-     */
-    String IDENTIFIABLE_TYPE = "node";
-    
-    /**
-     * @return if the node exists.
+     * Checks the object in.
      * @throws TransactionException if an error occurs.
      */
-    boolean exists() throws TransactionException;
-    
+    void checkin() throws TransactionException;
+
+    /**
+     * Checks the object out.
+     * @throws TransactionException if an error occurs.
+     */
+    void checkout() throws TransactionException;
+
+    /**
+     * @return if the object is checked out.
+     * @throws TransactionException if an error occurs.
+     */
+    boolean isCheckedOut() throws TransactionException;
+
+    /**
+     * Checks if the object has been changed since it has been locked.
+     * @return A boolean value.
+     * @throws TransactionException if an error occurs.
+     */
+    boolean hasChanged() throws TransactionException;
+
 }

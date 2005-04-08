@@ -31,7 +31,6 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.DocumentHelper;
@@ -64,20 +63,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     // the area is only retained to provide some more info when raising an
     // exception.
     private String area = "";
-    private IdentityMap identityMap;
-    private Publication publication;
     protected ServiceManager manager;
-
-    protected void setup(IdentityMap map, Publication publication) {
-        this.identityMap = map;
-        this.publication = publication;
-    }
 
     /**
      * Create a DefaultSiteTree
-     * @param pubDir the publication directory
-     * @param _area the area
-     * @throws SiteException if an error occurs
+     * @param publication The publication.
+     * @param _area The area.
+     * @param manager The service manager.
+     * @throws SiteException if an error occurs.
      */
     protected DefaultSiteTree(Publication publication, String _area, ServiceManager manager)
             throws SiteException {
@@ -86,8 +79,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         this.area = _area;
         this.manager = manager;
     }
-
-    private long lastModified = 0;
 
     protected Document load() throws SiteException {
         try {
@@ -520,12 +511,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#save()
-     */
-    public synchronized void save() throws TransactionException {
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#setLabel(java.lang.String,
      *      org.apache.lenya.cms.site.Label)
      */
@@ -538,76 +523,44 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#checkin()
-     */
-    public void checkin() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#checkout()
-     */
-    public void checkout() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#lock()
+     * @see org.apache.lenya.transaction.Lockable#lock()
      */
     public void lock() throws TransactionException {
         SourceUtil.lock(this.sourceUri, this.manager);
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#unlock()
+     * @see org.apache.lenya.transaction.Lockable#unlock()
      */
     public void unlock() throws TransactionException {
         SourceUtil.unlock(this.sourceUri, this.manager);
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#isLocked()
+     * @see org.apache.lenya.transaction.Lockable#isLocked()
      */
     public boolean isLocked() throws TransactionException {
         return false;
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#getTransactionableType()
+     * @see org.apache.lenya.transaction.Identifiable#getIdentifiableType()
      */
-    public String getTransactionableType() {
-        return SiteTree.TRANSACTIONABLE_TYPE;
+    public String getIdentifiableType() {
+        return SiteTree.IDENTIFIABLE_TYPE;
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#delete()
-     */
-    public void delete() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#create()
-     */
-    public void create() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#getLock()
+     * @see org.apache.lenya.transaction.Lockable#getLock()
      */
     public Lock getLock() {
         return null;
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#hasChanged()
+     * @see org.apache.lenya.cms.site.tree.SiteTree#save()
      */
-    public boolean hasChanged() throws TransactionException {
-        return false;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
-     */
-    public boolean isCheckedOut() throws TransactionException {
-        return false;
+    public void save() throws TransactionException {
     }
 
 }

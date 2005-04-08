@@ -26,7 +26,7 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.transaction.IdentityMapImpl;
-import org.apache.lenya.transaction.TransactionableFactory;
+import org.apache.lenya.transaction.IdentifiableFactory;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
@@ -48,8 +48,8 @@ public class DocumentIdentityMap extends IdentityMapImpl {
     /**
      * @see org.apache.lenya.transaction.IdentityMap#getFactory(java.lang.String)
      */
-    public TransactionableFactory getFactory(String type) {
-        TransactionableFactory factory = super.getFactory(type);
+    public IdentifiableFactory getFactory(String type) {
+        IdentifiableFactory factory = super.getFactory(type);
         if (factory == null && type.equals(Document.TRANSACTIONABLE_TYPE)) {
             factory = new DocumentFactory(this.manager);
             ContainerUtil.enableLogging(factory, getLogger());

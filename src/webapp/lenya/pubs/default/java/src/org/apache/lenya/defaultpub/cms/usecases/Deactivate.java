@@ -27,6 +27,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.workflow.WorkflowException;
 
@@ -45,7 +46,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
+
         if (getErrorMessages().isEmpty()) {
 
             if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
@@ -73,10 +74,46 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             // get involved objects to lock them
             Document doc = getSourceDocument();
             try {
-                Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+                Document liveVersion = doc.getIdentityMap().getAreaVersion(doc,
+                        Publication.LIVE_AREA);
                 getInvolvedDocuments(liveVersion);
             } catch (DocumentBuildException e) {
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            Document doc = getSourceDocument();
+            Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+            DocumentSet set = getInvolvedDocuments(liveVersion);
+            Document[] documents = set.getDocuments();
+            for (int i = 0; i < documents.length; i++) {
+                documents[i].lock();
+            }
+
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+            siteManager.getSiteStructure(doc.getIdentityMap(),
+                    doc.getPublication(),
+                    Publication.LIVE_AREA).lock();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
             }
         }
     }
@@ -228,10 +265,8 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             for (int i = 0; i < languages.length; i++) {
                 Document version = document.getIdentityMap().getLanguageVersion(document,
                         languages[i]);
-                if (version.exists()) {
-                    if (wfManager.canInvoke(getSourceDocument(), getEvent())) {
-                        deactivate(version);
-                    }
+                if (version.exists() && wfManager.canInvoke(version, getEvent())) {
+                    deactivate(version);
                 }
             }
         } catch (ServiceException e) {

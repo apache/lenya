@@ -172,7 +172,6 @@ public abstract class Create extends AbstractUsecase {
         dublinCore.setValue(DublinCore.ELEMENT_RIGHTS,
                 getParameterAsString(DublinCore.ELEMENT_RIGHTS));
         dublinCore.setValue(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
-        dublinCore.save();
     }
 
     /**

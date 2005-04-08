@@ -113,7 +113,6 @@ public class Nudge extends DocumentUsecase {
                 } else if (direction.equals(DOWN)) {
                     tree.moveDown(getSourceDocument().getId());
                 }
-                tree.save();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

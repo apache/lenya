@@ -1,8 +1,18 @@
 /*
- * Created on 06.04.2005
+ * Copyright  1999-2004 The Apache Software Foundation
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
 package org.apache.lenya.cms.repository;
 
@@ -136,9 +146,9 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#delete()
+     * @see org.apache.lenya.transaction.Transactionable#deleteTransactionable()
      */
-    public void delete() throws TransactionException {
+    public void deleteTransactionable() throws TransactionException {
         try {
             if (!isCheckedOut()) {
                 throw new RuntimeException("Cannot delete source [" + this.sourceUri
@@ -210,9 +220,9 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#save()
+     * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
      */
-    public void save() throws TransactionException {
+    public void saveTransactionable() throws TransactionException {
         if (!isCheckedOut()) {
             throw new TransactionException("Cannot save node [" + this.sourceUri
                     + "]: not checked out!");
@@ -229,9 +239,9 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#create()
+     * @see org.apache.lenya.transaction.Transactionable#createTransactionable()
      */
-    public void create() throws TransactionException {
+    public void createTransactionable() throws TransactionException {
     }
 
     /**
@@ -274,10 +284,10 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#getTransactionableType()
+     * @see org.apache.lenya.transaction.Identifiable#getIdentifiableType()
      */
-    public String getTransactionableType() {
-        return Node.TRANSACTIONABLE_TYPE;
+    public String getIdentifiableType() {
+        return Node.IDENTIFIABLE_TYPE;
     }
 
     /**

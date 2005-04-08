@@ -116,19 +116,19 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 
         for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
-            t.create();
-            t.save();
+            t.createTransactionable();
+            t.saveTransactionable();
         }
         for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("save [" + t + "]");
             }
-            t.save();
+            t.saveTransactionable();
         }
         for (Iterator i = this.removedObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
-            t.delete();
+            t.deleteTransactionable();
         }
 
         for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
@@ -139,14 +139,14 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         }
 
         if (getIdentityMap() != null) {
-            Transactionable[] objects = getIdentityMap().getObjects();
+            Identifiable[] objects = getIdentityMap().getObjects();
             for (int i = 0; i < objects.length; i++) {
-                if (objects[i].isLocked()) {
-                    objects[i].unlock();
+                if (objects[i] instanceof Transactionable
+                        && ((Transactionable) objects[i]).isLocked()) {
+                    ((Transactionable) objects[i]).unlock();
                 }
             }
         }
-
     }
 
     private Identity identity;

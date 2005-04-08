@@ -28,20 +28,20 @@ public interface IdentityMap {
      * @param key The key for the transactionable.
      * @return A transcationable.
      */
-    Transactionable get(String type, String key);
+    Identifiable get(String type, String key);
 
     /**
      * Sets the factory.
      * @param type The transactionable type to use the factory for.
      * @param factory The factory to use.
      */
-    void setFactory(String type, TransactionableFactory factory);
+    void setFactory(String type, IdentifiableFactory factory);
 
     /**
      * @param type The type to return the factory for.
      * @return The factory.
      */
-    TransactionableFactory getFactory(String type);
+    IdentifiableFactory getFactory(String type);
 
     /**
      * Returns the unit of work. This maybe <code>null</code> if the identity map is not involved
@@ -58,6 +58,6 @@ public interface IdentityMap {
     /**
      * @return All objects in this map.
      */
-    Transactionable[] getObjects();
+    Identifiable[] getObjects();
 
 }

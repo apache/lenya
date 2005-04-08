@@ -16,13 +16,14 @@
  */
 package org.apache.lenya.cms.site;
 
-import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.transaction.Identifiable;
+import org.apache.lenya.transaction.Lockable;
 
 /**
  * Object to hold a site structure information.
  *
  * @version $Id:$
  */
-public interface SiteStructure extends Transactionable {
+public interface SiteStructure extends Identifiable, Lockable {
 
 }

@@ -24,14 +24,14 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.Transactionable;
-import org.apache.lenya.transaction.TransactionableFactory;
+import org.apache.lenya.transaction.IdentifiableFactory;
 
 /**
  * Document factory.
  */
-public class DocumentFactory extends AbstractLogEnabled implements TransactionableFactory {
+public class DocumentFactory extends AbstractLogEnabled implements IdentifiableFactory {
 
     protected ServiceManager manager;
 
@@ -102,10 +102,10 @@ public class DocumentFactory extends AbstractLogEnabled implements Transactionab
     }
 
     /**
-     * @see org.apache.lenya.transaction.TransactionableFactory#build(org.apache.lenya.transaction.IdentityMap,
+     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
      *      java.lang.String)
      */
-    public Transactionable build(IdentityMap map, String key) throws Exception {
+    public Identifiable build(IdentityMap map, String key) throws Exception {
 
         String[] snippets = key.split(":");
         String publicationId = snippets[0];

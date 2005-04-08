@@ -36,39 +36,39 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
     /**
      * @see org.apache.lenya.transaction.IdentityMap#get(java.lang.String, java.lang.String)
      */
-    public Transactionable get(String type, String key) {
+    public Identifiable get(String type, String key) {
         Map map = (Map) this.maps.get(type);
         if (map == null) {
             map = new HashMap();
             this.maps.put(type, map);
         }
-        Transactionable transactionable = (Transactionable) map.get(key);
-        if (transactionable == null) {
+        Identifiable object = (Identifiable) map.get(key);
+        if (object == null) {
             try {
-                transactionable = getFactory(type).build(this, key);
+                object = getFactory(type).build(this, key);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            map.put(key, transactionable);
+            map.put(key, object);
         }
-        return transactionable;
+        return object;
     }
 
     private Map factories = new HashMap();
 
     /**
      * @see org.apache.lenya.transaction.IdentityMap#setFactory(java.lang.String,
-     *      org.apache.lenya.transaction.TransactionableFactory)
+     *      org.apache.lenya.transaction.IdentifiableFactory)
      */
-    public void setFactory(String type, TransactionableFactory factory) {
+    public void setFactory(String type, IdentifiableFactory factory) {
         this.factories.put(type, factory);
     }
 
     /**
      * @see org.apache.lenya.transaction.IdentityMap#getFactory(java.lang.String)
      */
-    public TransactionableFactory getFactory(String type) {
-        return (TransactionableFactory) this.factories.get(type);
+    public IdentifiableFactory getFactory(String type) {
+        return (IdentifiableFactory) this.factories.get(type);
     }
 
     private UnitOfWork unitOfWork;
@@ -90,7 +90,7 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
     /**
      * @see org.apache.lenya.transaction.IdentityMap#getObjects()
      */
-    public Transactionable[] getObjects() {
+    public Identifiable[] getObjects() {
         Set objects = new HashSet();
         for (Iterator i = this.maps.values().iterator(); i.hasNext(); ) {
             Map map = (Map) i.next();
@@ -98,7 +98,7 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
                 objects.add(j.next());
             }
         }
-        return (Transactionable[]) objects.toArray(new Transactionable[objects.size()]);
+        return (Identifiable[]) objects.toArray(new Identifiable[objects.size()]);
     }
 
 }

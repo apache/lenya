@@ -150,7 +150,7 @@ public class DublinCoreImpl {
      * Save the meta data.
      * @throws DocumentException if the meta data could not be made persistent.
      */
-    public void save() throws DocumentException {
+    protected void save() throws DocumentException {
 
         try {
 
@@ -290,6 +290,7 @@ public class DublinCoreImpl {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
         }
+        save();
     }
 
     /**
@@ -312,6 +313,7 @@ public class DublinCoreImpl {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
         }
+        save();
     }
 
     /**
@@ -325,6 +327,7 @@ public class DublinCoreImpl {
         for (int i = 0; i < values.length; i++) {
             addValue(key, values[i]);
         }
+        save();
     }
 
     /**
@@ -356,6 +359,7 @@ public class DublinCoreImpl {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
         }
+        save();
     }
 
     /**
@@ -374,6 +378,7 @@ public class DublinCoreImpl {
             throw new DocumentException("The key [" + key
                     + "] does not refer to a dublin core element or term!");
         }
+        save();
     }
 
     /**
@@ -392,6 +397,7 @@ public class DublinCoreImpl {
             removeAllValues(key);
             addValues(key, other.getValues(key));
         }
+        save();
     }
 
     /**

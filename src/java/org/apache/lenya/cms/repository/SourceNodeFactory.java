@@ -1,25 +1,34 @@
 /*
- * Created on 06.04.2005
+ * Copyright  1999-2004 The Apache Software Foundation
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
 package org.apache.lenya.cms.repository;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.Transactionable;
-import org.apache.lenya.transaction.TransactionableFactory;
+import org.apache.lenya.transaction.IdentifiableFactory;
 
 /**
- * @author nobby
+ * Factory to create source nodes.
  *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * @version $Id:$
  */
-public class SourceNodeFactory extends AbstractLogEnabled implements TransactionableFactory {
+public class SourceNodeFactory extends AbstractLogEnabled implements IdentifiableFactory {
 
     private ServiceManager manager;
     
@@ -34,9 +43,9 @@ public class SourceNodeFactory extends AbstractLogEnabled implements Transaction
     }
     
     /**
-     * @see org.apache.lenya.transaction.TransactionableFactory#build(org.apache.lenya.transaction.IdentityMap, java.lang.String)
+     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap, java.lang.String)
      */
-    public Transactionable build(IdentityMap map, String key) throws Exception {
+    public Identifiable build(IdentityMap map, String key) throws Exception {
         return new SourceNode(map, key, this.manager, getLogger());
     }
 

@@ -37,7 +37,6 @@ import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.History;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -46,7 +45,7 @@ import org.apache.lenya.workflow.WorkflowException;
 /**
  * A typical CMS document.
  */
-public class DefaultDocument extends AbstractLogEnabled implements Document, Transactionable {
+public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     private String id;
     private DublinCore dublincore;
@@ -437,35 +436,26 @@ public class DefaultDocument extends AbstractLogEnabled implements Document, Tra
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#save()
+     * @see org.apache.lenya.cms.publication.Document#delete()
      */
-    public void save() throws TransactionException {
+    public void delete() throws DocumentException {
         try {
-            getDublinCore().save();
+            SourceUtil.delete(getSourceURI(), this.manager);
+            if (getArea().equals(Publication.AUTHORING_AREA)) {
+                SourceUtil.delete(getHistory().getSourceURI(), this.manager);
+            }
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new DocumentException(e);
         }
     }
 
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#delete()
-     */
-    public void delete() throws TransactionException {
-    }
+    protected static final String IDENTIFIABLE_TYPE = "document";
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#create()
+     * @see org.apache.lenya.transaction.Identifiable#getIdentifiableType()
      */
-    public void create() throws TransactionException {
-    }
-
-    protected static final String TRANSACTIONABLE_TYPE = "document";
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#getTransactionableType()
-     */
-    public String getTransactionableType() {
-        return TRANSACTIONABLE_TYPE;
+    public String getIdentifiableType() {
+        return IDENTIFIABLE_TYPE;
     }
 
     /**
@@ -477,26 +467,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document, Tra
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#checkin()
-     */
-    public void checkin() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#checkout()
-     */
-    public void checkout() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
-     */
-    public boolean isCheckedOut() throws TransactionException {
-        return false;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#lock()
+     * @see org.apache.lenya.transaction.Lockable#lock()
      */
     public void lock() throws TransactionException {
         SourceUtil.lock(getSourceURI(), this.manager);
@@ -504,30 +475,23 @@ public class DefaultDocument extends AbstractLogEnabled implements Document, Tra
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#getLock()
+     * @see org.apache.lenya.transaction.Lockable#getLock()
      */
     public Lock getLock() {
         return null;
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#unlock()
+     * @see org.apache.lenya.transaction.Lockable#unlock()
      */
     public void unlock() throws TransactionException {
         SourceUtil.unlock(getSourceURI(), this.manager);
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#isLocked()
+     * @see org.apache.lenya.transaction.Lockable#isLocked()
      */
     public boolean isLocked() throws TransactionException {
-        return false;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#hasChanged()
-     */
-    public boolean hasChanged() throws TransactionException {
         return false;
     }
 

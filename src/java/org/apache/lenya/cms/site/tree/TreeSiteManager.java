@@ -33,8 +33,7 @@ import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.TransactionableFactory;
+import org.apache.lenya.transaction.IdentifiableFactory;
 
 /**
  * A tree-based site manager.
@@ -64,13 +63,13 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         String key = getKey(publication, area);
         DefaultSiteTree sitetree;
-        TransactionableFactory factory = map.getFactory(SiteTree.TRANSACTIONABLE_TYPE);
+        IdentifiableFactory factory = map.getFactory(SiteTree.IDENTIFIABLE_TYPE);
         if (factory == null) {
             factory = new SiteTreeFactory(this.manager);
             ContainerUtil.enableLogging(factory, getLogger());
-            map.setFactory(SiteTree.TRANSACTIONABLE_TYPE, factory);
+            map.setFactory(SiteTree.IDENTIFIABLE_TYPE, factory);
         }
-        sitetree = (DefaultSiteTree) map.get(SiteTree.TRANSACTIONABLE_TYPE, key);
+        sitetree = (DefaultSiteTree) map.get(SiteTree.IDENTIFIABLE_TYPE, key);
 
         return sitetree;
     }

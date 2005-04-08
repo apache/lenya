@@ -110,7 +110,6 @@ public class Metadata extends SiteUsecase {
         this.dc.setValue(DublinCore.ELEMENT_SUBJECT, subject);
         this.dc.setValue(DublinCore.ELEMENT_PUBLISHER, publisher);
         this.dc.setValue(DublinCore.ELEMENT_RIGHTS, rights);
-        this.dc.save();
         //TODO set workflow situation to edit here.
     }
 

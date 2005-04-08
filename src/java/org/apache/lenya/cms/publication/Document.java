@@ -24,13 +24,14 @@ import java.util.Date;
 
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.transaction.Identifiable;
+import org.apache.lenya.transaction.Lockable;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
  * A CMS document.
  */
-public interface Document extends Workflowable, Transactionable {
+public interface Document extends Workflowable, Identifiable, Lockable {
     
     /**
      * The document namespace URI.
@@ -188,5 +189,10 @@ public interface Document extends Workflowable, Transactionable {
      * @throws PublicationException if an error occurs.
      */
     void accept(DocumentVisitor visitor) throws PublicationException;
-    
+
+    /**
+     * Deletes the document.
+     * @throws DocumentException if an error occurs.
+     */
+    void delete() throws DocumentException;
 }
