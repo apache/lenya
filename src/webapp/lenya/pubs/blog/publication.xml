@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:pub-version>@lenya.version@</lenya:pub-version>
 <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
-<lenya:cocoon-version>2.1.6</lenya:cocoon-version>
+<lenya:cocoon-version>2.1.7</lenya:cocoon-version>
 <lenya:name>Lenya's Weblog</lenya:name>
 <lenya:description>
 This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo/Atom"</a> specification for syndicating, archiving and
