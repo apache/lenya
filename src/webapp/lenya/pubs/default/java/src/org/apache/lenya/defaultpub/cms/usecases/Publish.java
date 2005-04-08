@@ -313,7 +313,18 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         }
 
         try {
-            publishAllLanguageVersions(document);
+            Document parent = document.getIdentityMap().getParent(document);
+            boolean publish = true;
+            if (parent != null) {
+                Document liveParent = parent.getIdentityMap().getAreaVersion(parent,
+                        Publication.LIVE_AREA);
+                if (!liveParent.exists()) {
+                    publish = false;
+                }
+            }
+            if (publish) {
+                publishAllLanguageVersions(document);
+            }
         } catch (WorkflowException e) {
             throw new PublicationException(e);
         }
