@@ -46,6 +46,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private ArrayList languages = new ArrayList();
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
+    private String instantiatorHint = null;
 
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
@@ -67,7 +68,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private static final String ELEMENT_DOCUMENT_BUILDER = "document-builder";
     private static final String ELEMENT_SITE_MANAGER = "site-manager";
     private static final String ATTRIBUTE_NAME = "name";
-    private static final String ATTRIBUTE_SUPPORTS_TEMPLATING = "supports-templating";
+    private static final String ELEMENT_TEMPLATE_INSTANTIATOR = "template-instantiator";
     private static final String LANGUAGES = "languages";
     private static final String DEFAULT_LANGUAGE_ATTR = "default";
     private static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
@@ -178,8 +179,12 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
                 }
             }
 
-            this.supportsTemplating = config
-                    .getAttributeAsBoolean(PublicationImpl.ATTRIBUTE_SUPPORTS_TEMPLATING, false);
+            Configuration templateInstantiatorConfig = config
+                    .getChild(ELEMENT_TEMPLATE_INSTANTIATOR, false);
+            if (templateInstantiatorConfig != null) {
+                this.instantiatorHint = templateInstantiatorConfig
+                        .getAttribute(PublicationImpl.ATTRIBUTE_NAME);
+            }
 
         } catch (final Exception e) {
             throw new RuntimeException("Problem with config file: " + configFile.getAbsolutePath(),
@@ -384,21 +389,19 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return (Publication[]) list.toArray(new Publication[list.size()]);
     }
 
-    private boolean supportsTemplating = false;
-
-    /**
-     * @see org.apache.lenya.cms.publication.Publication#supportsTemplating()
-     */
-    public boolean supportsTemplating() {
-        loadConfiguration();
-        return this.supportsTemplating;
-    }
-
     /**
      * @see org.apache.lenya.cms.publication.Publication#getSiteManagerHint()
      */
     public String getSiteManagerHint() {
         loadConfiguration();
         return this.siteManagerName;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getInstantiatorHint()
+     */
+    public String getInstantiatorHint() {
+        loadConfiguration();
+        return this.instantiatorHint;
     }
 }

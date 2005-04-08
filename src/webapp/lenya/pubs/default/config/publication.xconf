@@ -17,11 +17,12 @@
 
 <!-- $Id$ -->
 
-<publication supports-templating="true">
+<publication>
   <languages>
     <language default="true">en</language>
     <language>de</language>
   </languages>
+  <template-instantiator name="default"/>
   <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
   <document-builder name="default"/>
   <breadcrumb-prefix/>

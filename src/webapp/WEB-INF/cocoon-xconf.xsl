@@ -420,7 +420,9 @@
     <component-instance name="default" logger="lenya.publication"
                         class="org.apache.lenya.cms.publication.DefaultDocumentBuilder"/>
   </document-builders>
-             
+  
+  <template-instantiators/>
+  
   <!-- move scheduler to the end, datasources have to be available -->
   <xsl:apply-templates select="component[@role = 'org.apache.cocoon.components.cron.JobScheduler']" mode="scheduler"/>
              

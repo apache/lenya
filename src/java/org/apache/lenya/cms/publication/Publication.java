@@ -69,7 +69,7 @@ public interface Publication {
     /**
      * <code>PENDING_PATH</code> The pending path
      */
-    String PENDING_PATH = "pending";    
+    String PENDING_PATH = "pending";
     /**
      * <code>DELETE_PATH</code> The delete path
      */
@@ -90,12 +90,12 @@ public interface Publication {
     String getId();
 
     /**
-     * Returns the servlet context this publication belongs to
-     * (usually, the <code>webapps/lenya</code> directory).
+     * Returns the servlet context this publication belongs to (usually, the
+     * <code>webapps/lenya</code> directory).
      * @return A <code>File</code> object.
      */
     File getServletContext();
-    
+
     /**
      * @return if this publication exists.
      */
@@ -110,7 +110,7 @@ public interface Publication {
     /**
      * Return the directory of a specific area.
      * @param area a <code>File</code> representing the root of the area content directory.
-     * @return the directory of the given content area. 
+     * @return the directory of the given content area.
      */
     File getContentDirectory(String area);
 
@@ -145,7 +145,8 @@ public interface Publication {
     String[] getLanguages();
 
     /**
-     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger site
+     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger
+     * site
      * @return the breadcrumb prefix
      */
     String getBreadcrumbPrefix();
@@ -158,27 +159,28 @@ public interface Publication {
 
     /**
      * Returns the document builder class of this instance.
-     * @return A class.
+     * @return A hint to use for service selection.
      */
     String getDocumentBuilderHint();
-    
+
     /**
-     * Returns the proxy which is used for a particular document. 
+     * Returns the publication template instantiator hint. If the publication does not allow
+     * templating, <code>null</code> is returned.
+     * @return A hint to use for service selection.
+     */
+    String getInstantiatorHint();
+
+    /**
+     * Returns the proxy which is used for a particular document.
      * @param document The document.
      * @param isSslProtected A boolean value.
-     * @return A proxy or <code>null</code> if no proxy is defined
-     * for this version.
+     * @return A proxy or <code>null</code> if no proxy is defined for this version.
      */
     Proxy getProxy(Document document, boolean isSslProtected);
-    
+
     /**
      * @return The templates of the publication.
      */
     Publication[] getTemplates();
-    
-    /**
-     * @return if the publication can be used as a template.
-     */
-    boolean supportsTemplating();
-    
+
 }

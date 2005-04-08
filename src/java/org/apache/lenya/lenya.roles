@@ -122,6 +122,10 @@
   	    shorthand="document-builders"
   	    default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
         
+  <role name="org.apache.lenya.cms.publication.templating.InstantiatorSelector"
+  	    shorthand="template-instantiators"
+  	    default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+        
   <role name="org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler"
   	    shorthand="usecase-scheduler"
   	    default-class="org.apache.lenya.cms.usecase.scheduling.UsecaseSchedulerImpl"/>
