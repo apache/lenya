@@ -67,11 +67,11 @@ public class MoveNode extends TwoNodesTask {
 		}
 		String newid = st.nextToken();
 
-		SiteTreeNode node = firsttree.removeNode(firstdocumentid);
+		SiteTreeNode node = firsttree.getNode(firstdocumentid);
 		if (node != null) {
-			SiteTreeNode parentNode = sectree.getNode(parentid);
+		    SiteTreeNode parentNode = sectree.getNode(parentid);
 			if (parentNode != null) {
-				sectree.importSubtree(parentNode, node, newid, this.getRefdocumentid());
+                sectree.move(node, parentNode, newid, this.getRefdocumentid());
 			} else {
 				throw new SiteTreeException(
 					"The parent node "

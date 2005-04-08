@@ -150,8 +150,14 @@ public interface SiteTreeNode {
      * Remove the children of the node
      * 
      * @return the removed node
+     * @deprecated Use deleteChildren() instead
      */
     SiteTreeNode[] removeChildren();
+    
+    /**
+     * Remove the children of this node.
+     */
+    void deleteChildren() throws SiteTreeException;
 
 	/**
 	 * Get the sitetreenodes, which are the siblings following this node

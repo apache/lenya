@@ -566,11 +566,11 @@ public abstract class AbstractPublication implements Publication {
 
             node.removeLabel(label);
 
-            if (node.getLabels().length == 0) {
-                tree.removeNode(document.getId());
-            }
-
             try {
+                if (node.getLabels().length == 0) {
+                    tree.deleteNode(document.getId());
+                }
+
                 tree.save();
             } catch (SiteTreeException e) {
                 throw new PublicationException(e);

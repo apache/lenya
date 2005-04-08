@@ -30,7 +30,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,7 +43,9 @@ import org.xml.sax.SAXException;
  * Default Sitetree implementation
  */
 public class DefaultSiteTree implements SiteTree {
-    private static Category log = Category.getInstance(DefaultSiteTree.class);
+    private static Logger log = Logger.getLogger(DefaultSiteTree.class);
+    
+    private static Object lock = new Object();
 
     public static final String SITE_TREE_FILENAME = "sitetree.xml";
 
@@ -400,8 +402,18 @@ public class DefaultSiteTree implements SiteTree {
             return null;
         }
 
-        return new SiteTreeNodeImpl(node);
+        return new SiteTreeNodeImpl(node, this);
     }
+    
+    /* (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.SiteTree#deleteNode(java.lang.String)
+     */
+    public void deleteNode(String documentId) throws SiteTreeException {
+        Node node = this.getNodeInternal(documentId);
+        Node parentNode = node.getParentNode();
+        Node newNode = parentNode.removeChild(node);
+    }
+
 
     /**
      * removes the node corresponding to the given document-id
@@ -448,7 +460,7 @@ public class DefaultSiteTree implements SiteTree {
 
         Node node = getNodeInternal(documentId);
         if (node != null) {
-            treeNode = new SiteTreeNodeImpl(node);
+            treeNode = new SiteTreeNodeImpl(node, this);
         }
 
         return treeNode;
@@ -465,7 +477,7 @@ public class DefaultSiteTree implements SiteTree {
         Element[] elements = helper.getChildren((Element) document.getDocumentElement(), SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i], this);
             childElements.add(newNode);
         }
 
@@ -606,4 +618,71 @@ public class DefaultSiteTree implements SiteTree {
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTree#copy(org.apache.lenya.cms.publication.SiteTreeNode, org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String, java.lang.String)
+     */
+    public void copy(SiteTreeNode src, SiteTreeNode dst, String newId, String followingSibling) throws SiteTreeException {
+        assert dst instanceof SiteTreeNodeImpl;
+        
+        SiteTreeNodeImpl dstNode = (SiteTreeNodeImpl)dst;
+        if (this.equals(dstNode.getDefaultSiteTree())) {
+            // Copy if this sitetree is the destination sitetree.
+            // Acquire global sitetree lock to establish lock hierarchy in case of copy operation
+            synchronized(DefaultSiteTree.lock) {
+                DefaultSiteTree srcSiteTree = ((SiteTreeNodeImpl)src).getDefaultSiteTree();
+                synchronized(srcSiteTree) {
+                    synchronized(this) {
+                        String parentId = dst.getAbsoluteId();
+                        String id = newId;
+            
+                        this.addNode(
+                            parentId,
+                            id,
+                            src.getLabels(),
+                            src.visibleInNav(),
+                            src.getHref(),
+                            src.getSuffix(),
+                            src.hasLink(),
+                            followingSibling);
+                        SiteTreeNode node = this.getNode(parentId + "/" + id);
+                        if (node == null) {
+                            throw new SiteTreeException("The added node was not found.");
+                        }
+                        SiteTreeNode[] children = src.getChildren();
+                        if (children == null) {
+                            log.debug("The node " + src.toString() + " has no children");
+                            return;
+                        } else {
+                            for (int i = 0; i < children.length; i++) {
+                                copy(children[i], node, children[i].getId(), null);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            // Delegate copy operation to destination sitetree.
+            dstNode.getDefaultSiteTree().copy(src, dst, newId, followingSibling);
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.SiteTree#move(org.apache.lenya.cms.publication.SiteTreeNode, org.apache.lenya.cms.publication.SiteTreeNode, java.lang.String, java.lang.String)
+     */
+    public void move(SiteTreeNode src, SiteTreeNode dst, String newId, String followingSibling) throws SiteTreeException {
+        assert dst != null;
+        assert src instanceof SiteTreeNodeImpl;
+        
+        // Acquire global sitetree lock to establish lock hierarchy in case of move operation
+        synchronized(DefaultSiteTree.lock) {
+            // Lock both source and destination sitetree.
+            synchronized(((SiteTreeNodeImpl)src).getDefaultSiteTree()) {
+                synchronized(((SiteTreeNodeImpl)dst).getDefaultSiteTree()) {
+                    copy(src, dst, newId, followingSibling);
+                    DefaultSiteTree sitetree = ((SiteTreeNodeImpl)src).getDefaultSiteTree();
+                    sitetree.deleteNode(src.getAbsoluteId());
+                }
+            }
+        }
+    }
 }

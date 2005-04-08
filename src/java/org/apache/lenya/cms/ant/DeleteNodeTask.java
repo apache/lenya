@@ -88,10 +88,7 @@ public class DeleteNodeTask extends PublicationTask {
 
 	  	try {
 			tree = getPublication().getTree(area);
-			SiteTreeNode node = tree.removeNode(documentid);
-			if (node == null) {
-				throw new SiteTreeException("Node " + node + " couldn't be removed");
-			} 
+			tree.deleteNode(documentid);
 			tree.save();
 		} catch (Exception e) {
 			throw new SiteTreeException(e);

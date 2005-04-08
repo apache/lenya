@@ -191,8 +191,17 @@ public interface SiteTree {
      * @param documentId the document-id of the node that is to be removed
      * 
      * @return the removed node
+     * @deprecated Use deleteNode() instead
      */
     SiteTreeNode removeNode(String documentId);
+    
+    /**
+     * Removes the node corresponding to the given document-id
+     * from the tree.
+     *
+     * @param documentId the document-id of the node that is to be removed
+     */
+    void deleteNode(String documentId) throws SiteTreeException;
 
     /**
      * Return the Node for a given document-id.
@@ -224,7 +233,29 @@ public interface SiteTree {
      * @throws SiteTreeException if the moving failed.
      */
     void moveDown(String documentid) throws SiteTreeException;
-
+    
+    /**
+     * Copy a node with all its child node.
+     * @param src Node to copy.
+     * @param dst Parent node where node will be inserted.
+     * @param newId The new id of the inserted node (in case when the node id exists already).
+     * @param followingSibling The sibling node that should follow this node (ordering),
+     * if null the node will be inserted at the end.
+     */
+    void copy(SiteTreeNode src, SiteTreeNode dst, String newId, String followingSibling)
+        throws SiteTreeException;
+    
+    /**
+     * Move a node with all its child node.
+     * @param src Node to move.
+     * @param dst Parent node where node will be inserted.
+     * @param newId The new id of the inserted node (in case when the node id exists already).
+     * @param followingSibling The sibling node that should follow the moved node (ordering),
+     * if null the node will be inserted at the end.
+     */
+    void move(SiteTreeNode src, SiteTreeNode dst, String newId, String followingSibling)
+        throws SiteTreeException;
+    
     /**
      * Imports a subtree (from this or from another tree) at a certain position.
      * @param subtreeRoot The root of the subtree to import.
@@ -234,6 +265,7 @@ public interface SiteTree {
      * the subtree should be inserted. If null, the subtree is inserted at the end. 
      * in case there is already a node with the same id in the tree).
      * @throws SiteTreeException when an error occurs.
+     * @deprecated Use copy, move instead.
      */
     void importSubtree(
         SiteTreeNode subtreeRoot,

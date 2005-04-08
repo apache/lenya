@@ -61,7 +61,7 @@ public class SiteTreeResetTask extends PublicationTask {
 			SiteTree tree = publication.getTree(getArea());
            
 			SiteTreeNode node = tree.getNode("/");
-            node.removeChildren(); 			
+            node.deleteChildren(); 			
 			tree.save();
 			} catch (
 				Exception e) {
