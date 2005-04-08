@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -24,7 +25,10 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * Change the node ID of a document.
@@ -43,6 +47,41 @@ public class ChangeNodeID extends DocumentUsecase {
         Document document = getSourceDocument();
         if (document != null) {
             setParameter(NODE_ID, document.getName());
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            Document doc = getSourceDocument();
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+            siteManager.getSiteStructure(doc.getIdentityMap(), doc.getPublication(), doc.getArea())
+                    .lock();
+            
+            lockAllLanguageVersions(doc);
+        } catch (Exception e) {
+            throw new UsecaseException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+    }
+
+    protected void lockAllLanguageVersions(Document doc) throws DocumentException, TransactionException, DocumentBuildException {
+        String[] languages = doc.getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+            doc.getIdentityMap().getLanguageVersion(doc, languages[i]).lock();
         }
     }
 
@@ -79,8 +118,12 @@ public class ChangeNodeID extends DocumentUsecase {
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            String[] messages = documentManager.canCreate(identityMap, getSourceDocument()
-                    .getArea(), parent, nodeId, getSourceDocument().getLanguage());
+            String[] messages = documentManager.canCreate(identityMap,
+                    getSourceDocument().getPublication(),
+                    getSourceDocument().getArea(),
+                    parent,
+                    nodeId,
+                    getSourceDocument().getLanguage());
             addErrorMessages(messages);
         } finally {
             if (documentManager != null) {
@@ -139,12 +182,15 @@ public class ChangeNodeID extends DocumentUsecase {
                 Document newLanguageVersion = identityMap.get(document.getPublication(), document
                         .getArea(), newDocumentId, availableLanguages[i]);
 
+                newLanguageVersion.lock();
                 documentManager.move(languageVersion, newLanguageVersion);
 
                 if (availableLanguages[i].equals(document.getLanguage())) {
                     newDocument = newLanguageVersion;
                 }
             }
+        } catch (TransactionException e) {
+            throw new PublicationException(e);
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);

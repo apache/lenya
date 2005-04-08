@@ -67,6 +67,7 @@ public class CreateDocument extends Create {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             String[] messages = documentManager.canCreate(getDocumentIdentityMap(),
+                    getPublication(),
                     getArea(),
                     parent,
                     nodeId,

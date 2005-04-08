@@ -16,9 +16,6 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Map;
 
 import org.apache.avalon.framework.context.Context;
@@ -32,8 +29,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.excalibur.source.ModifiableSource;
-import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -41,7 +37,6 @@ import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -91,7 +86,6 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         }
 
         DocumentTypeResolver doctypeResolver = null;
-        SourceResolver sourceResolver = null;
 
         Request request = ObjectModelHelper.getRequest(this.objectModel);
         String contextPath = request.getContextPath();
@@ -100,7 +94,6 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             for (int documentIndex = 0; documentIndex < documents.length; documentIndex++) {
 
                 doctypeResolver = (DocumentTypeResolver) manager.lookup(DocumentTypeResolver.ROLE);
-                sourceResolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
 
                 Document examinedDocument = documents[documentIndex];
                 if (examinedDocument.exists()) {
@@ -113,14 +106,10 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
 
                     DocumentType doctype = doctypeResolver.resolve(examinedDocument);
                     String[] xPaths = doctype.getLinkAttributeXPaths();
-                    ModifiableSource source = null;
 
                     try {
 
-                        source = (ModifiableSource) sourceResolver.resolveURI(examinedDocument
-                                .getSourceURI());
-                        org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(source
-                                .getInputStream());
+                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(), this.manager);
 
                         for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
                             NodeList nodes = XPathAPI.selectNodeList(xmlDocument,
@@ -153,26 +142,11 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                         }
 
                         if (linksRewritten) {
-                            OutputStream oStream = source.getOutputStream();
-                            Writer writer = new OutputStreamWriter(oStream);
-                            DocumentHelper.writeDocument(xmlDocument, writer);
-                            if (oStream != null) {
-                                oStream.flush();
-                                try {
-                                    oStream.close();
-                                } catch (Throwable t) {
-                                    if (getLogger().isDebugEnabled()) {
-                                        getLogger().debug("Exception closing output stream: ", t);
-                                    }
-                                    throw new RuntimeException("Could not write document: ", t);
-                                }
-                            }
+                            examinedDocument.lock();
+                            SourceUtil.writeDOM(xmlDocument, examinedDocument.getSourceURI(), this.manager);
                         }
 
                     } finally {
-                        if (source != null) {
-                            sourceResolver.release(source);
-                        }
                     }
 
                 }

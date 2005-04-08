@@ -38,7 +38,6 @@ import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.workflow.WorkflowManager;
-import org.apache.lenya.transaction.UnitOfWork;
 
 /**
  * Abstract DocumentManager implementation.
@@ -139,7 +138,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             siteManager.delete(document);
-            
+
             document.delete();
         } catch (Exception e) {
             throw new PublicationException(e);
@@ -233,11 +232,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#canCreate(org.apache.lenya.cms.publication.DocumentIdentityMap,
-     *      java.lang.String, org.apache.lenya.cms.publication.Document, java.lang.String,
-     *      java.lang.String)
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String,
+     *      org.apache.lenya.cms.publication.Document, java.lang.String, java.lang.String)
      */
-    public String[] canCreate(DocumentIdentityMap identityMap, String area, Document parent,
-            String nodeId, String language) throws DocumentBuildException, DocumentException {
+    public String[] canCreate(DocumentIdentityMap identityMap, Publication publication,
+            String area, Document parent, String nodeId, String language)
+            throws DocumentBuildException, DocumentException {
 
         List errorMessages = new ArrayList();
 
@@ -253,10 +253,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } else if (nodeId.indexOf("/") > -1) {
             errorMessages.add("The document ID may not contain a slash ('/').");
         } else if (identityMap.isValidDocumentId(newDocumentId)) {
-            Document newDocument = identityMap.get(parent.getPublication(),
-                    area,
-                    newDocumentId,
-                    language);
+            Document newDocument = identityMap.get(publication, area, newDocumentId, language);
 
             if (newDocument.exists()) {
                 errorMessages.add("A document with this ID already exists.");
