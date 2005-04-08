@@ -63,7 +63,7 @@
           <p>
             <strong>Java 2 Platform, Standard Edition</strong>
             <br/>
-            version 1.4.2 or newer, 1.5.x is not tested yet.
+            version 1.4.2 or newer, <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.5.x works with limitations</link>.
             <br/>
             Get it from <link href="site:java">http://java.sun.com/j2se/1.4.2/download.html</link>
           </p>
@@ -88,13 +88,13 @@
             your_home/ (or c:\ on Windows, NOT My Documents)
               `-- src/
                    |-- lenya-1.2.x/            $LENYA_HOME
-                   `-- cocoon-2.1.6/           $COCOON_HOME
+                   `-- cocoon-2.1.7/           $COCOON_HOME
                         `-- build/
                              `-- webapp/       $COCOON_WEBAPP
      		</source>
      		
      		<p>
-     		The directories inside cocoon-2.1.6/ will be created when you build Cocoon. 
+     		The directories inside cocoon-2.1.7/ will be created when you build Cocoon. 
      		The variables will later be used in the local.build.properties file that configures the Lenya build process.
       		</p>
       		
@@ -117,7 +117,7 @@
           <p>
             <strong>Get Apache Cocoon</strong>
             <br/>
-            version: 2.1.6
+            version: 2.1.7
             <br/>
             Get it from <link href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</link><br/>
             Unpack Coccon in <code>src/</code>.
@@ -198,7 +198,7 @@
           <p>
             If your Cocoon source tree is set up as described above, you
             can skip this step.  If your Cocoon source tree is not at
-            <code>../cocoon-2.1.6</code> relative to Lenya, you need
+            <code>../cocoon-2.1.7</code> relative to Lenya, you need
             to edit your build properties. To do this, copy
             <code>$LENYA_HOME/build.properties</code> to
             <code>$LENYA_HOME/local.build.properties</code>.
@@ -295,7 +295,7 @@
           <p>
             <strong>Get Apache Tomcat</strong> for JDK 1.4
             <br/>
-            version: 5.0.28 or newer, 5.5.x not tested.
+            version: 5.0.28 or newer, 5.5.x should work too.
             <br/>
             Get it from  <link href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</link>
           </p>
@@ -349,7 +349,7 @@
             <code>tomcat.home.dir</code> is an absolute path. Replace
             <code>$TOMCAT_HOME</code> by your Tomcat installation
             directory.  If your Cocoon source directory is not at
-            <code>../cocoon-2.1.6</code> relative to Lenya, then change
+            <code>../cocoon-2.1.7</code> relative to Lenya, then change
             the <code>cocoon.webapp.dir</code>, <code>web.app.server</code> and
             <code>cocoon.src.dir</code> properties.
           </p>
