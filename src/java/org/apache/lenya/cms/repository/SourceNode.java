@@ -238,8 +238,9 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws TransactionException {
-        System.out.println("Locking " + this);
-        new Exception().printStackTrace();
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Locking [" + this + "]");
+        }
         int currentVersion;
         try {
             currentVersion = getRevisionController().getLatestVersion(getRCPath());
@@ -303,5 +304,5 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     public String toString() {
         return "node " + this.sourceUri;
     }
-    
+
 }
