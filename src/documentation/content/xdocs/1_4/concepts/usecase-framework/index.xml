@@ -162,7 +162,8 @@ $PUB_HOME
           </li>
           <li>
             Add the usecase handler class declaration to an XPatch file, e.g. <code>$PUB_HOME/config/usecases.xconf</code>:
-<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'article.editHeadline']">
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases"
+       unless="/cocoon/usecases/component-instance[@name = 'article.editHeadline']">
   <component-instance name="article.editHeadline"
                       logger="lenya.usecases.editHeadline"
                       class="org.myproject.lenya.usecases.EditHeadline"/>
@@ -173,10 +174,34 @@ $PUB_HOME
       
       <section>
         <title>Implement the View</title>
-        <ol>
-          <li>The view for a usecase is implemented using a JX template.</li>
-          <li>
-            The output of the view has to be a Lenya page:
+          <p>
+            The view of a usecase is optional. If you omit the view declaration, no screen is presented
+            to the user. The view is declared in the usecase configuration:
+          </p>
+<source xml:space="preserve"><![CDATA[  <component-instance ...>
+    <view template="article/editHeadline" menu="false">
+      <parameter name="title" value="Edit Headline"/>
+      <parameter name="..." value="..."/>
+    </view>
+  </component-instance>]]></source>
+
+        <p>
+          The <code>&lt;view&gt;</code> element takes an optional <code>menu</code> attribute
+          which denotes if the menubar should be visible when the usecase screen is presented.
+          If omitted, it defaults to <code>false</code>.
+        </p>
+        <p>
+          The <code>&lt;view&gt;</code> element can contain an arbitrary number of <code>&lt;parameter&gt;</code>
+          elements, each containing a <code>name</code> and <code>value</code> attribute. These
+          parameters can be accessed in the JX template using
+          <code>${usecase.getView().getParameter('...')}</code>.
+        </p>
+        <p>
+          The view for a usecase is implemented using a JX template. The location of the
+          JX template is defined using the <code>&lt;view&gt;</code> element's <code>template</code>
+          attribute (relatively to the <code>usecases</code> directory, the suffix <code>.jx</code>
+          is appended). The output of the view has to be a Lenya page:
+        </p>
 <source xml:space="preserve"><![CDATA[<page:page
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
@@ -184,12 +209,14 @@ $PUB_HOME
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
 
-  <page:title><i18n:text>Edit Headline</i18n:text></page:title>
+  <page:title>
+    <i18n:text><jx:out value="${usecase.getView().getParameter('title')}"/></i18n:text>
+  </page:title>
   <page:body>
   
     <form>
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-      <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+      <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
 
       ...
 
@@ -197,12 +224,9 @@ $PUB_HOME
 
   </page:body>
 </page:page>]]></source>
-          </li>
-          <li>Take care of adding the hidden <code>lenya.usecase</code> and <code>lenya.continuation</code> fields as shown above.</li>
-          <li>The template has to be located at <code><![CDATA[$PUB_HOME/lenya/usecases/<usecase>.jx]]></code>
-            (replace . with /), for instance
-          </li>
-        </ol>
+          <p>
+          Take care of adding the hidden <code>lenya.usecase</code> and <code>lenya.continuation</code> fields as shown above.
+          </p>
       </section>
       
     </section>

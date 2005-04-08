@@ -89,6 +89,7 @@
       </ul>
       
       <p>
+        The publication <em>my-pub</em> is called an <strong>instance</strong> of the publication <em>template(my-pub)</em>.
         Note that, in contrast to the fallback mechanism in Lenya 1.2, the prefix <code>lenya</code> is not used,
         but the path is resolved relatively to the <code>context://</code> root. 
       </p>
@@ -183,6 +184,58 @@
   <usecases>
     <usecase name="create"/>
   </usecases>
+  ...
+</publication>]]></source>
+    </section>
+    
+    <section>
+      <title>Setting Up a Publication To Support Templating</title>
+      
+      <p>
+        The service <code>org.apache.lenya.cms.publication.templating.Instantiator</code> is responsible for
+        creating instances of publications which support templating. If your publication shall support
+        templating, you have to follow these steps:
+      </p>
+      
+      <section>
+        <title>Implement an <code>Instantiator</code> Class</title>
+        
+<source xml:space="preserve"><![CDATA[package org.myproject.lenya;
+
+public class MyInstantiator extends AbstractLogEnabled implements Instantiator {
+
+    public void instantiate(Publication template, String newPublicationId, String name)
+            throws Exception {
+        ...
+    }
+
+}]]></source>
+      </section>
+      
+      <section>
+        <title>Add it to <code>cocoon.xconf</code> Using a Patch File</title>
+        
+        <p>
+          For instance <code>my-pub/config/instantiator.xconf</code>:
+        </p>
+        
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/template-instantiators"
+       unless="/cocoon/template-instantiators/component-instance[@name = 'default']">
+
+    <component-instance name="mypub"
+                        logger="myproject.publication"
+                        class="org.myproject.lenya.MyInstantiator"/>
+
+</xconf>]]></source>
+      </section>
+      
+      <section>
+        <title>Declare the Instantiator in <code>publication.xconf</code></title>
+      </section>
+      
+<source xml:space="preserve"><![CDATA[<publication>
+  ...
+  <template-instantiator name="mypub"/>
   ...
 </publication>]]></source>
     </section>
