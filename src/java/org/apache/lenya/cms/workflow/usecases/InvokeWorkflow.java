@@ -20,7 +20,9 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * Invoke a workflow event on the current document. The event is obtained from
@@ -72,6 +74,18 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+        try {
+            getSourceDocument().lock();
+        } catch (TransactionException e) {
+            throw new UsecaseException(e);
+        }
+    }
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
