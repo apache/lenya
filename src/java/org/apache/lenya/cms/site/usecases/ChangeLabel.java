@@ -21,6 +21,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Change the label of a document.
@@ -45,6 +46,31 @@ public class ChangeLabel extends DocumentUsecase {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         } else if (!getSourceDocument().exists()) {
             addErrorMessage("This usecase can only be invoked on existing documents.");
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            Document doc = getSourceDocument();
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+            siteManager.getSiteStructure(doc.getIdentityMap(), doc.getPublication(), doc.getArea())
+                    .lock();
+        } catch (Exception e) {
+            throw new UsecaseException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
     }
 
