@@ -105,6 +105,7 @@ public class CreateDocument extends Create {
                 area,
                 documentId,
                 language);
+        document.lock();
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);

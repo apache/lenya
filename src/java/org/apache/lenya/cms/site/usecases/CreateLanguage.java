@@ -132,6 +132,7 @@ public class CreateLanguage extends Create {
         DocumentIdentityMap map = source.getIdentityMap();
         String area = source.getArea();
         Document document = map.get(publication, area, source.getId(), language);
+        document.lock();
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);

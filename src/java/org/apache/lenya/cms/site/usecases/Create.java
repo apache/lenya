@@ -36,7 +36,9 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Abstract superclass for usecases to create a resource.
@@ -64,6 +66,33 @@ public abstract class Create extends AbstractUsecase {
 
         if (!getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getSourceDocument().getPublication()
+                    .getSiteManagerHint());
+            SiteStructure structure = siteManager.getSiteStructure(getSourceDocument().getIdentityMap(), getSourceDocument()
+                    .getPublication(), getSourceDocument().getArea());
+            structure.lock();
+        } catch (Exception e) {
+            throw new UsecaseException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
     }
 
