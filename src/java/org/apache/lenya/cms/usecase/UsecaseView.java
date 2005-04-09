@@ -47,8 +47,8 @@ public class UsecaseView implements Configurable {
         
         Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
         for (int i = 0; i < parameterConfigs.length; i++) {
-            String name = parameterConfigs[i].getAttribute("name");
-            String value = parameterConfigs[i].getAttribute("value");
+            String name = parameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
+            String value = parameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
             this.parameters.put(name, value);
         }
     }

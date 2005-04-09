@@ -479,11 +479,23 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     public UsecaseView getView() {
         return this.view;
     }
+    
+    protected static final String ELEMENT_PARAMETER = "parameter";
+    protected static final String ATTRIBUTE_NAME = "name";
+    protected static final String ATTRIBUTE_VALUE = "value";
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration config) throws ConfigurationException {
+        
+        Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
+        for (int i = 0; i < parameterConfigs.length; i++) {
+            String name = parameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
+            String value = parameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
+            setParameter(name, value);
+        }
+        
         Configuration viewConfig = config.getChild("view", false);
         if (viewConfig != null) {
             this.view = new UsecaseView();
