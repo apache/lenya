@@ -12,17 +12,31 @@
       
     <jx:import uri="templates/messages.jx"/>
     <p>
-    <strong><i18n:text>Documents in trash</i18n:text>:</strong>
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('documents').isEmpty()}">
+          <i18n:text>The trash is empty.</i18n:text>
+        </jx:when>
+        <jx:otherwise>
+          <strong><i18n:text>Documents in trash</i18n:text>:</strong>
+          <ul style="list-style-type: none">
+            <jx:forEach var="document" items="${usecase.getParameter('documents')}">
+              <li><jx:out value="${document.getId()}"/></li>
+            </jx:forEach>
+          </ul>
+        </jx:otherwise>
+      </jx:choose>
     </p>
-    <ul style="list-style-type: none">
-      <jx:forEach var="document" items="${usecase.getParameter('documents')}">
-        <li><jx:out value="${document.getId()}"/></li>
-      </jx:forEach>
-    </ul>
     <form>
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
-      <input i18n:attr="value" name="submit" type="submit" value="Empty"/>
+      <jx:choose>
+        <jx:when test="${usecase.getParameter('documents').isEmpty()}">
+          <input i18n:attr="value" name="submit" type="submit" value="Delete" disabled="disabled"/>
+        </jx:when>
+        <jx:otherwise>
+          <input i18n:attr="value" name="submit" type="submit" value="Delete"/>
+        </jx:otherwise>
+      </jx:choose>
     </form>
     </div>
   </page:body>
