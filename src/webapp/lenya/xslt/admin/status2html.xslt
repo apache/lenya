@@ -15,29 +15,24 @@
   limitations under the License.
 -->
 
-<!-- $Id: status2html.xslt,v 1.3 2004/03/13 12:42:10 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns="http://www.w3.org/1999/xhtml"
  xmlns:status="http://apache.org/cocoon/status/2.0">
  
-  <xsl:param name="contextPath" select="string('/cocoon')"/>
+  <xsl:param name="contextPath"/>
 
   <xsl:template match="status:statusinfo">
-    <html>
-      <head>
-        <title>Lenya Status [<xsl:value-of select="@status:host"/>]</title>
-      </head>
-
-      <body>
-        <h1><xsl:value-of select="@status:host"/> - <xsl:value-of select="@status:date"/></h1>
-        <xsl:apply-templates/>    
-      </body>
-    </html>
+    <div>
+      <h2><xsl:value-of select="@status:host"/> - <xsl:value-of select="@status:date"/></h2>
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
 
   <xsl:template match="status:group">
-    <h2><xsl:value-of select="@status:name"/></h2>
+    <h3><xsl:value-of select="@status:name"/></h3>
     <ul><xsl:apply-templates select="status:value"/></ul>
     <xsl:apply-templates select="status:group"/>
   </xsl:template>
