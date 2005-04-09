@@ -156,7 +156,19 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         }
         try {
             Document doc = this.node.getDocument();
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer transformer = tFactory.newTransformer();
+
+            transformer.setOutputProperty("encoding", "UTF-8");
+            transformer.setOutputProperty("indent", "yes");
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            transformer.transform(new DOMSource(doc), new StreamResult(bos));
+            return new ByteArrayInputStream(bos.toByteArray());
+            
+            /*
             return convert(doc);
+            */
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -180,7 +192,8 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
                 } finally {
                     try {
                         pos.close();
-                    } catch (IOException ignore) {
+                    } catch (Exception ignore) {
+                        ignore.printStackTrace();
                     }
                 }
             }
