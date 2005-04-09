@@ -29,6 +29,7 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
@@ -125,7 +126,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             getLogger().debug("Obtaining requiring resources of [" + resource + "]");
         }
 
-        Document[] resources;
+        DocumentSet resources = new DocumentSet();
         SiteTree tree = getTree(resource);
 
         SiteTreeNode node = tree.getNode(resource.getId());
@@ -135,16 +136,19 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             // remove original resource (does not require itself)
             preOrder.remove(0);
 
-            resources = new Document[preOrder.size()];
-
             try {
-                for (int i = 0; i < resources.length; i++) {
+                for (int i = 0; i < preOrder.size(); i++) {
                     SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                    resources[i] = resource.getIdentityMap().get(resource.getPublication(),
-                            resource.getArea(),
-                            descendant.getAbsoluteId());
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("    Descendant: [" + resources[i] + "]");
+                    Label[] labels = descendant.getLabels();
+                    for (int j = 0; j < labels.length; j++) {
+                        Document version = resource.getIdentityMap().get(resource.getPublication(),
+                                resource.getArea(),
+                                descendant.getAbsoluteId(),
+                                labels[i].getLanguage());
+                        resources.add(version);
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("    Descendant: [" + version + "]");
+                        }
                     }
                 }
             } catch (PublicationException e) {
@@ -154,11 +158,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Obtaining requiring resources completed.");
             }
-        } else {
-            resources = new Document[0];
         }
 
-        return resources;
+        return resources.getDocuments();
     }
 
     /**
@@ -393,4 +395,65 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         return getTree(map, publiation, area);
     }
 
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
+     */
+    public Document getAvailableDocument(Document document) throws SiteException {
+        String availableDocumentId = computeUniqueDocumentId(document);
+        Document availableDocument;
+        try {
+            availableDocument = document.getIdentityMap().get(document.getPublication(),
+                    document.getArea(),
+                    availableDocumentId,
+                    document.getLanguage());
+        } catch (DocumentBuildException e) {
+            throw new SiteException(e);
+        }
+        return availableDocument;
+    }
+
+    /**
+     * compute an unique document id
+     * @param document The document.
+     * @return the unique documentid
+     * @throws SiteException if an error occurs.
+     */
+    protected String computeUniqueDocumentId(Document document) throws SiteException {
+        String documentId = document.getId();
+
+        SiteTree tree = getTree(document);
+
+        SiteTreeNode node = tree.getNode(documentId);
+        String suffix = null;
+        int version = 0;
+        String idwithoutsuffix = null;
+
+        if (node != null) {
+            int n = documentId.lastIndexOf("/");
+            String lastToken = "";
+            String substring = documentId;
+            if ((n < documentId.length()) && (n > 0)) {
+                lastToken = documentId.substring(n);
+                substring = documentId.substring(0, n);
+            }
+
+            int l = lastToken.length();
+            int index = lastToken.lastIndexOf("-");
+            if (0 < index && index < l) {
+                suffix = lastToken.substring(index + 1);
+                idwithoutsuffix = substring + lastToken.substring(0, index);
+                version = Integer.parseInt(suffix);
+            } else {
+                idwithoutsuffix = substring + lastToken;
+            }
+
+            while (node != null) {
+                version = version + 1;
+                documentId = idwithoutsuffix + "-" + version;
+                node = tree.getNode(documentId);
+            }
+        }
+
+        return documentId;
+    }
 }

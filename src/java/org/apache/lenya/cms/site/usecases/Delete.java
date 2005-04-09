@@ -16,14 +16,14 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Delete a document and all its descendants, including all language versions. The documents are
@@ -49,31 +49,44 @@ public class Delete extends DocumentUsecase {
         Document document = getSourceDocument();
         DocumentIdentityMap identityMap = getDocumentIdentityMap();
 
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        DocumentSet set;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-            set = new DocumentSet(siteManager.getRequiringResources(document));
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-
-        set.add(document);
+        DocumentSet set = SiteUtil.getSubSite(this.manager, document);
         Document[] documents = set.getDocuments();
         for (int i = 0; i < documents.length; i++) {
-            Document liveVersion = identityMap.getAreaVersion(documents[i],
-                    Publication.LIVE_AREA);
+            Document liveVersion = identityMap.getAreaVersion(documents[i], Publication.LIVE_AREA);
             if (liveVersion.exists()) {
                 addErrorMessage("Cannot delete because document [" + liveVersion + "] is live!");
             }
+        }
+    }
+
+    /**
+     * Lock the following objects:
+     * <ul>
+     * <li>all involved documents in the document's area</li>
+     * <li>the trash versions of these documents</li>
+     * <li>the document area's site structure</li>
+     * <li>the trash site structure</li>
+     * </ul>
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+
+        Document doc = getSourceDocument();
+        try {
+            DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
+            sources.lock();
+
+            DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
+                    doc,
+                    Publication.TRASH_AREA,
+                    SiteUtil.MODE_CHANGE_ID);
+            targets.lock();
+
+            SiteUtil.getSiteStructure(this.manager, doc).lock();
+            SiteUtil.getSiteStructure(this.manager, targets.getDocuments()[0]).lock();
+        } catch (Exception e) {
+            throw new UsecaseException(e);
         }
     }
 
@@ -83,16 +96,21 @@ public class Delete extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        Document source = getSourceDocument();
-        DocumentIdentityMap identityMap = source.getIdentityMap();
+        Document doc = getSourceDocument();
+        Document target = doc.getIdentityMap().getAreaVersion(doc, Publication.TRASH_AREA);
+        target = SiteUtil.getAvailableDocument(this.manager, target);
 
         DocumentManager documentManager = null;
-        Document target;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            target = identityMap.getAreaVersion(source, Publication.TRASH_AREA);
-            target = documentManager.getAvailableDocument(target);
-            documentManager.moveAll(source, target);
+
+            DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
+            DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
+                    doc,
+                    Publication.TRASH_AREA,
+                    SiteUtil.MODE_CHANGE_ID);
+
+            documentManager.move(sources, targets);
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);

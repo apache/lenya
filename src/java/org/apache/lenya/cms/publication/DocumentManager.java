@@ -81,6 +81,26 @@ public interface DocumentManager {
     void move(Document sourceDocument, Document destinationDocument) throws PublicationException;
 
     /**
+     * Moves a document set from one location to another. A source is moved to the destination of
+     * the same position in the set.
+     * @param sources The source documents.
+     * @param destinations The destination documents.
+     * @throws PublicationException if a document which the destination document depends on does not
+     *             exist.
+     */
+    void move(DocumentSet sources, DocumentSet destinations) throws PublicationException;
+
+    /**
+     * Copies a document set from one location to another. A source is copied to the destination of
+     * the same position in the set.
+     * @param sources The source documents.
+     * @param destinations The destination documents.
+     * @throws PublicationException if a document which the destination document depends on does not
+     *             exist.
+     */
+    void copy(DocumentSet sources, DocumentSet destinations) throws PublicationException;
+
+    /**
      * Checks if a document can be created. This is the case if the document ID is valid and the
      * document does not yet exist.
      * @param identityMap The identity map to use.
@@ -97,15 +117,6 @@ public interface DocumentManager {
     String[] canCreate(DocumentIdentityMap identityMap, Publication publication, String area,
             Document parent, String nodeId, String language) throws DocumentBuildException,
             DocumentException;
-
-    /**
-     * Checks if the document does already exist. If it does, returns a non-existing document with a
-     * similar document ID. If it does not, the original document is returned.
-     * @param document The document.
-     * @return A document.
-     * @throws DocumentBuildException if the new document could not be built.
-     */
-    Document getAvailableDocument(Document document) throws DocumentBuildException;
 
     /**
      * Moves a document to another location, incl. all requiring documents. If a sitetree is used,

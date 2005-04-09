@@ -130,4 +130,11 @@ public class TopicMapSiteManager extends AbstractSiteManager {
         return null;
     }
 
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
+     */
+    public Document getAvailableDocument(Document document) throws SiteException {
+        return document;
+    }
+
 }

@@ -33,6 +33,7 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
@@ -69,8 +70,6 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     public void lockInvolvedObjects() throws UsecaseException {
         super.lockInvolvedObjects();
 
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
         try {
             Document doc = getSourceDocument();
             DocumentSet set = getInvolvedDocuments(doc);
@@ -81,21 +80,13 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 liveVersion.lock();
             }
 
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
-            siteManager.getSiteStructure(doc.getIdentityMap(),
+            SiteUtil.getSiteStructure(this.manager,
+                    doc.getIdentityMap(),
                     doc.getPublication(),
                     Publication.LIVE_AREA).lock();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
+            throw new UsecaseException(e);
         }
     }
 

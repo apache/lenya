@@ -401,7 +401,7 @@ public final class SourceUtil {
      * @param sourceUri The source URI.
      * @param manager The service manager.
      */
-    public static void registerDirty(String sourceUri, ServiceManager manager)  {
+    public static void registerDirty(String sourceUri, ServiceManager manager) {
         SourceResolver resolver = null;
         RepositorySource source = null;
         try {

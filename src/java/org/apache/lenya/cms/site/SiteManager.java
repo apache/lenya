@@ -153,4 +153,14 @@ public interface SiteManager {
      */
     SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation, String area)
             throws SiteException;
+
+    /**
+     * Checks if the document does already exist. If it does, returns a non-existing document with a
+     * similar document ID. If it does not, the original document is returned.
+     * @param document The document.
+     * @return A document.
+     * @throws SiteException if the new document could not be built.
+     */
+    Document getAvailableDocument(Document document) throws SiteException;
+
 }

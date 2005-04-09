@@ -20,6 +20,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
@@ -85,7 +86,7 @@ public class Paste extends DocumentUsecase {
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            Document availableDocument = documentManager.getAvailableDocument(potentialDocument);
+            Document availableDocument = SiteUtil.getAvailableDocument(this.manager, potentialDocument);
 
             if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
                 documentManager.copyAll(clippedDocument, availableDocument);

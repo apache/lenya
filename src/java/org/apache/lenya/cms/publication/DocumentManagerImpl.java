@@ -17,7 +17,9 @@
 package org.apache.lenya.cms.publication;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
@@ -34,9 +36,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
@@ -263,83 +263,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
 
         return (String[]) errorMessages.toArray(new String[errorMessages.size()]);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
-     */
-    public Document getAvailableDocument(Document document) throws DocumentBuildException {
-        String availableDocumentId = computeUniqueDocumentId(document);
-        Document availableDocument = document.getIdentityMap().get(document.getPublication(),
-                document.getArea(),
-                availableDocumentId,
-                document.getLanguage());
-        return availableDocument;
-    }
-
-    /**
-     * compute an unique document id
-     * @param document The document.
-     * @return the unique documentid
-     */
-    protected String computeUniqueDocumentId(Document document) {
-        String documentId = document.getId();
-
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            Publication pub = document.getPublication();
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
-
-            if (!(siteManager instanceof TreeSiteManager)) {
-                throw new RuntimeException("Only supported for site trees!");
-            }
-            DocumentIdentityMap map = document.getIdentityMap();
-            SiteTree tree = ((TreeSiteManager) siteManager).getTree(map, pub, document.getArea());
-
-            SiteTreeNode node = tree.getNode(documentId);
-            String suffix = null;
-            int version = 0;
-            String idwithoutsuffix = null;
-
-            if (node != null) {
-                int n = documentId.lastIndexOf("/");
-                String lastToken = "";
-                String substring = documentId;
-                if ((n < documentId.length()) && (n > 0)) {
-                    lastToken = documentId.substring(n);
-                    substring = documentId.substring(0, n);
-                }
-
-                int l = lastToken.length();
-                int index = lastToken.lastIndexOf("-");
-                if (0 < index && index < l) {
-                    suffix = lastToken.substring(index + 1);
-                    idwithoutsuffix = substring + lastToken.substring(0, index);
-                    version = Integer.parseInt(suffix);
-                } else {
-                    idwithoutsuffix = substring + lastToken;
-                }
-
-                while (node != null) {
-                    version = version + 1;
-                    documentId = idwithoutsuffix + "-" + version;
-                    node = tree.getNode(documentId);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-
-        return documentId;
     }
 
     /**
@@ -622,5 +545,55 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
         }
 
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#move(org.apache.lenya.cms.publication.util.DocumentSet, org.apache.lenya.cms.publication.util.DocumentSet)
+     */
+    public void move(DocumentSet sources, DocumentSet destinations) throws PublicationException {
+        Document[] sourceDocs = sources.getDocuments();
+        Document[] targetDocs = destinations.getDocuments();
+        
+        if (sourceDocs.length != targetDocs.length) {
+            throw new PublicationException("The number of source and destination documents must be equal!");
+        }
+        
+        Map source2target = new HashMap();
+        for (int i = 0; i < sourceDocs.length; i++) {
+            source2target.put(sourceDocs[i], targetDocs[i]);
+        }
+        
+        DocumentSet sortedSources = new DocumentSet(sourceDocs);
+        SiteUtil.sortAscending(this.manager, sortedSources);
+        Document[] sortedSourceDocs = sortedSources.getDocuments();
+        
+        for (int i = 0; i < sortedSourceDocs.length; i++) {
+            move(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.util.DocumentSet, org.apache.lenya.cms.publication.util.DocumentSet)
+     */
+    public void copy(DocumentSet sources, DocumentSet destinations) throws PublicationException {
+        Document[] sourceDocs = sources.getDocuments();
+        Document[] targetDocs = destinations.getDocuments();
+        
+        if (sourceDocs.length != targetDocs.length) {
+            throw new PublicationException("The number of source and destination documents must be equal!");
+        }
+        
+        Map source2target = new HashMap();
+        for (int i = 0; i < sourceDocs.length; i++) {
+            source2target.put(sourceDocs[i], targetDocs[i]);
+        }
+        
+        DocumentSet sortedSources = new DocumentSet(sourceDocs);
+        SiteUtil.sortAscending(this.manager, sortedSources);
+        Document[] sortedSourceDocs = sortedSources.getDocuments();
+        
+        for (int i = 0; i < sortedSourceDocs.length; i++) {
+            copy(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
+        }
     }
 }

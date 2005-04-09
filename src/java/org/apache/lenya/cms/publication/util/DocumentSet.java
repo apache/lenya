@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * An ordered set of documents without duplicates.
@@ -120,6 +121,17 @@ public class DocumentSet {
      */
     public void reverse() {
         Collections.reverse(getList());
+    }
+    
+    /**
+     * Locks all contained documents.
+     * @throws TransactionException if an error occurs.
+     */
+    public void lock() throws TransactionException  {
+        Document[] docs = getDocuments();
+        for (int i = 0; i < docs.length; i++) {
+            docs[i].lock();
+        }
     }
 
 }
