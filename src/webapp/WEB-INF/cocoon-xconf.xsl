@@ -408,9 +408,14 @@
       <view template="tab/scheduler" menu="true"/>
     </component-instance>
     
-    <component-instance name="publication.createPublicationFromTemplate" logger="lenya.site"
+    <component-instance name="publication.createPublicationFromTemplate" logger="lenya.publication"
                         class="org.apache.lenya.cms.publication.usecases.CreatePublicationFromTemplate">
       <view template="publication/createPublicationFromTemplate"/>
+    </component-instance>
+
+    <component-instance name="publication.edit" logger="lenya.publication"
+                        class="org.apache.lenya.cms.publication.usecases.EditDocument">
+      <parameter name="sourceUri" value="cocoon:/request2document"/>
     </component-instance>
   </usecases>
 

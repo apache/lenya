@@ -289,14 +289,14 @@
              </map:act>
           
              <map:call function="editDocument">
+               <map:parameter name="lenya.usecase" value="publication.edit"/>
                <map:parameter name="sourceUri" value="cocoon:/request2document"/>
                <map:parameter name="noCheckin" value="true"/>
              </map:call>
-
           </map:when>
 
           <map:otherwise> <!-- GET -->
-            <map:generate src="content/authoring/{page-envelope:document-path}"/>
+            <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
             <map:transform src="../../xslt/bxe/change-object-path.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             </map:transform>

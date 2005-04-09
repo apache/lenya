@@ -1,0 +1,76 @@
+/*
+ * Copyright  1999-2004 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.lenya.cms.publication.usecases;
+
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.transaction.TransactionException;
+
+/**
+ * Usecase to edit documents.
+ * 
+ * @version $Id:$
+ */
+public class EditDocument extends DocumentUsecase {
+
+    /**
+     * The URI to copy the document source from.
+     */
+    public static final String SOURCE_URI = "sourceUri";
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
+     */
+    protected void doExecute() throws Exception {
+        super.doExecute();
+        SourceResolver resolver = null;
+        WorkflowManager wfManager = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            SourceUtil.copy(resolver, getParameterAsString(SOURCE_URI), getSourceDocument()
+                    .getSourceURI());
+
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            if (wfManager.canInvoke(getSourceDocument(), "edit")) {
+                wfManager.invoke(getSourceDocument(), "edit");
+            }
+
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
+            if (wfManager != null) {
+                this.manager.release(wfManager);
+            }
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     */
+    public void lockInvolvedObjects() throws UsecaseException {
+        super.lockInvolvedObjects();
+        try {
+            getSourceDocument().lock();
+        } catch (TransactionException e) {
+            throw new UsecaseException(e);
+        }
+    }
+}
