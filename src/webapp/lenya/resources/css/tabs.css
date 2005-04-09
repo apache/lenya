@@ -25,10 +25,25 @@
 
 	position: relative;
 	top: 1px;
+}
+
+.lenya-tab-sitetree {
+	font-family: verdana, sans-serif;
+	font-size: small;
+	background-color: #F5F4E9; 
+	padding: 20px;
+	color: black;
+	border: solid 1px #CCCCCC;
+
+	position: relative;
+	top: 1px;
 	margin-left: 270px;
 }
 
 .lenya-tabs {
+}
+
+.lenya-tabs-sitetree {
     margin-left: 270px;
 }
 

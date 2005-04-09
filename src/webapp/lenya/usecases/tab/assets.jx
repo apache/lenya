@@ -26,7 +26,7 @@
   <page:body>
     <jx:import uri="tab/sitetree.jx"/>
     <jx:import uri="tab/tabs.jx"/>
-    <div id="contentblock1" class="lenya-tab">
+    <div id="contentblock1" class="lenya-tab-sitetree">
       <table class="lenya-table">
         <tr>
           <th><i18n:text>Assets</i18n:text></th>
