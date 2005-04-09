@@ -60,9 +60,8 @@
           
         <!-- INFO/SITE TAB -->
         <xsl:variable name="info-area">
-          <xsl:text>info-</xsl:text>
           <xsl:choose>
-            <xsl:when test="$documentarea = 'admin'">authoring</xsl:when>
+            <xsl:when test="not(starts-with($documentarea, 'info-'))">info-authoring</xsl:when>
             <xsl:otherwise><xsl:value-of select="$documentarea"/></xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
