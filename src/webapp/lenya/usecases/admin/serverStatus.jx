@@ -1,0 +1,20 @@
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  >
+  
+  <page:body>
+    <jx:import uri="admin/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+      <jx:import uri="templates/messages.jx"/>
+      
+      <cinclude:includexml>
+        <cinclude:src>cocoon://ignore/admin/internal/status.xml</cinclude:src>
+      </cinclude:includexml>
+      
+    </div>
+  </page:body>
+</page:page>
