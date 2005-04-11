@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Usecase to edit a user's group affiliation.
@@ -57,7 +58,7 @@ public class UserGroups extends AccessControlUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#advance()
      */
-    public void advance() {
+    public void advance() throws UsecaseException {
         super.advance();
 
         String add = getParameterAsString(ADD);
