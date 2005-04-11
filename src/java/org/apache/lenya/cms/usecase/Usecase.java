@@ -82,8 +82,9 @@ public interface Usecase extends Operation {
     /**
      * Advances the usecase to the next step. This method is called when all
      * parameters are set.
+     * @throws UsecaseException if an error occurs.
      */
-    void advance();
+    void advance() throws UsecaseException;
 
     /**
      * Checks the conditions before a form is displayed.

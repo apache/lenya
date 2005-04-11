@@ -427,7 +427,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#advance()
      */
-    public void advance() {
+    public void advance() throws UsecaseException {
         // do nothing
     }
 
