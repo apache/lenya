@@ -58,22 +58,4 @@
     </javac>
   </target>
 
-  <!-- The XSP compilation target -->
-  <target name="compile-xsp" depends="prepare-src"
-          description="Compile the XSP sources">
-    <mkdir dir="${build.dir}/work"/>
-    <java classname="org.apache.lenya.cms.cocoon.bean.XSPPrecompileWrapper">
-      <arg value="-c${build.webapp}"/>
-      <arg value="-w${build.dir}/work"/>
-      <classpath>
-         <pathelement path="${build.webapp}/WEB-INF/classes"/>
-         <fileset dir="${build.webapp}/WEB-INF/lib">
-            <include name="*.jar"/>
-         </fileset>
-         <fileset dir="tools/jetty/lib">
-          <include name="servlet-2.3.jar"/>
-         </fileset>
-      </classpath>
-    </java>
-  </target>
 </project>
