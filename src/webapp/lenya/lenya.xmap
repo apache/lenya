@@ -93,7 +93,7 @@
 
       <map:handle-errors>
         <map:select type="exception">
-           <map:when test="resourcenotfound">
+           <map:when test="not-found">
              <map:generate src="content/util/empty.xml" />
             <map:transform src="xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">

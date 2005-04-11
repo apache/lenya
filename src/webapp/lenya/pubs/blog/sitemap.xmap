@@ -137,7 +137,7 @@
 
       <map:handle-errors>
         <map:select type="exception">
-           <map:when test="resourcenotfound">
+           <map:when test="not-found">
              <map:generate src="../../content/util/empty.xml" />
             <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
@@ -202,7 +202,7 @@
       </map:match>
       <map:handle-errors>
         <map:select type="exception">
-           <map:when test="resourcenotfound">
+           <map:when test="not-found">
              <map:generate src="../../content/util/empty.xml" />
             <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
@@ -276,7 +276,7 @@
       </map:match>
       <map:handle-errors>
         <map:select type="exception">
-           <map:when test="resourcenotfound">
+           <map:when test="not-found">
              <map:generate src="../../content/util/empty.xml" />
             <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
@@ -327,7 +327,7 @@
       </map:match>
       <map:handle-errors>
         <map:select type="exception">
-           <map:when test="resourcenotfound">
+           <map:when test="not-found">
              <map:generate src="../../content/util/empty.xml" />
             <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">

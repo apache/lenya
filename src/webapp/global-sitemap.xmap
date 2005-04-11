@@ -149,7 +149,7 @@
       </map:match>
       <map:handle-errors>
         <map:select type="exception">
-           <map:when test="resourcenotfound">
+           <map:when test="not-found">
              <map:generate src="lenya/content/util/empty.xml" />
             <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
@@ -182,7 +182,7 @@
       </map:match>
     </map:pipeline>
 
-    <!-- Editor Epoz -->
+    <!-- Editor Kupu -->
     <map:pipeline>
       <map:match pattern="kupu/**">
         <map:read src="lenya/resources/kupu/{1}"/>
@@ -350,7 +350,7 @@
     
       <map:handle-errors>
         <map:select type="exception">
-           <map:when test="resourcenotfound">
+           <map:when test="not-found">
              <map:generate src="lenya/content/util/empty.xml" />
             <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
@@ -418,9 +418,9 @@
 
       <map:handle-errors>
         <map:select type="exception">
-          <map:when test="resourcenotfound">
+          <map:when test="not-found">
             <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:transform src="fallback://xslt/exception/document-does-not-exist.xsl"/>
             <map:call resource="style-cms-page">
               <map:parameter name="statusCode" value="404"/>
             </map:call>
