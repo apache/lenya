@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: xhtml.xsl 42703 2004-03-13 12:57:53Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -24,21 +24,6 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
 >
 
-<xsl:import href="../../../../../usecases/edit/form.xsl"/>
-<xsl:import href="xhtml-common.xsl"/>
-
-<xsl:template match="xhtml:html">
-  
-<namespace prefix="xhtml" uri="http://www.w3.org/1999/xhtml"/>
-<namespace prefix="lenya" uri="http://apache.org/cocoon/lenya/page-envelope/1.0"/>
-<namespace prefix="dc" uri="http://purl.org/dc/elements/1.1/"/>
-  
-<node name="Title" select="/xhtml:html/lenya:meta/dc:title[@tagID='{lenya:meta/dc:title/@tagID}']">
-  <content><input type="text" name="&lt;xupdate:update select=&quot;/xhtml:html/lenya:meta/dc:title[@tagID='{lenya:meta/dc:title/@tagID}']&quot;&gt;" size="40"><xsl:attribute name="value"><xsl:value-of select="lenya:meta/dc:title"/></xsl:attribute></input></content>
-</node>
-
-<xsl:apply-templates select="xhtml:body"/>
-
-</xsl:template>
+<xsl:import href="xhtml.xsl"/>
 
 </xsl:stylesheet>  

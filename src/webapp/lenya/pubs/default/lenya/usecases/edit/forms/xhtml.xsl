@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: xhtml.xsl 42703 2004-03-13 12:57:53Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -24,7 +24,7 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
 >
 
-<xsl:import href="../../../../../usecases/edit/form.xsl"/>
+<xsl:import href="../../../../../../usecases/edit/forms/form.xsl"/>
 <xsl:import href="xhtml-common.xsl"/>
 
 <xsl:template match="xhtml:html">

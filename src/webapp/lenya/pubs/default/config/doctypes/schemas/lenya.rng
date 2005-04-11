@@ -48,10 +48,11 @@
 
 <!-- namespace dummy attributes -->
 <define name="dummy.attlist">
-  <attribute name="dc:dummy"><ref name="Text.datatype"/></attribute>
-  <attribute name="dcterms:dummy"><ref name="Text.datatype"/></attribute>
-  <attribute name="lenya:dummy"><ref name="Text.datatype"/></attribute>
-  <attribute name="xhtml:dummy"><ref name="Text.datatype"/></attribute>
+  <optional><attribute name="dummy"><ref name="Text.datatype"/></attribute></optional>
+  <optional><attribute name="dc:dummy"><ref name="Text.datatype"/></attribute></optional>
+  <optional><attribute name="dcterms:dummy"><ref name="Text.datatype"/></attribute></optional>
+  <optional><attribute name="lenya:dummy"><ref name="Text.datatype"/></attribute></optional>
+  <optional><attribute name="xhtml:dummy"><ref name="Text.datatype"/></attribute></optional>
 </define>
 
 

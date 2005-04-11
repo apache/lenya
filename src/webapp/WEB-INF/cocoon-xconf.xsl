@@ -414,8 +414,14 @@
     </component-instance>
 
     <component-instance name="publication.edit" logger="lenya.publication"
-                        class="org.apache.lenya.cms.publication.usecases.EditDocument">
+                        class="org.apache.lenya.cms.editors.EditDocument">
       <parameter name="sourceUri" value="cocoon:/request2document"/>
+    </component-instance>
+    <component-instance name="edit.forms" logger="lenya.publication"
+                        class="org.apache.lenya.cms.editors.forms.FormsEditor">
+      <view template="edit/forms" menu="false">
+        <parameter name="formUri" value="cocoon://core/edit/form.xml"/>
+      </view>
     </component-instance>
   </usecases>
 

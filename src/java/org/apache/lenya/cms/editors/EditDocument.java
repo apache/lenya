@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication.usecases;
+package org.apache.lenya.cms.editors;
 
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
