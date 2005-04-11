@@ -15,34 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: admin.xmap 160670 2005-04-09 09:12:12Z andreas $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-
-    <map:resources>
-      <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="xslt/admin/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
-      </map:transform>
-      <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="xhtml"/>
-    </map:resource>
-  </map:resources>
 
   <map:pipelines>
     <map:pipeline>
 
-      <map:select type="parameter">
-        <map:parameter name="parameter-selector-test" value="{request-param:lenya.usecase}"/>
-        <map:when test="">
-          <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=admin.users"/>
-        </map:when>
-      </map:select>
-
-      <map:match pattern="internal/status.xml">
+      <map:match pattern="status.xml">
         <map:generate src="status" type="status"/>
         <map:transform src="fallback://lenya/xslt/admin/status2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
@@ -50,11 +30,7 @@
         <map:serialize type="xml"/>
       </map:match>
     
-      <map:match type="registered-usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
-      </map:match>
-
     </map:pipeline>
-    
   </map:pipelines>
+  
 </map:sitemap>
