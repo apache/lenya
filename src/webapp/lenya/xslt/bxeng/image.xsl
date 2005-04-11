@@ -35,6 +35,22 @@
     <xsl:param name="extensions" select="'gif jpg png swf'"/>
     <xsl:param name="contextprefix"/>
 
+	<xsl:template match="lenya-info:asset">
+	  <tr>
+	    <td/>
+	    <td>
+	      <input type="radio" name="asset"
+	        onclick="document.getElementById('assetTitle').value = '{dc:title}';
+	                 document.getElementById('imageSource').value = '{dc:source}';
+	                 document.getElementById('imageFormat').value = '{dc:format}';
+	                 document.getElementById('imageExtent').value = '{dc:extent}';"/>
+	    </td>
+	    <td><xsl:value-of select="dc:title"/></td>
+	    <td><xsl:value-of select="dc:extent"/> KB</td>
+	    <td><xsl:value-of select="dc:date"/></td>
+	  </tr>
+	</xsl:template>
+
     <xsl:template match="lenya-info:assets">
         <page:page>
             <page:title>
@@ -151,106 +167,58 @@
                         </table>
                     </form>
                 </div>
-                <div class="lenya-box">
-                    <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
-                    <form id="image">
-                        <table class="lenya-table-noborder">
-                            <xsl:choose>
-                                <xsl:when test="not(lenya-info:asset)">
-                                    <tr>
-                                        <td colspan="5" 
-                                            class="lenya-form-caption">
-                                            <xsl:value-of select="dc:title"/><i18n:text key="lenya.imageupload.info.noimages"/></td>
-                                    </tr>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:for-each select="lenya-info:asset">
-                                        <xsl:choose>
-                                            <xsl:when 
-                                                test="dc:format = 'image/jpeg' or dc:format = 'image/gif' or  dc:format = 'image/png' or dc:format = 'application/x-shockwave-flash'">
-                                                <tr>
-                                                    <td 
-                                                        colspan="2">
-                                                        <xsl:value-of 
-                                                            select="dc:title"/>
-                                                    </td>
-                                                    <td>
-                                                         <xsl:value-of 
-                                                        select="dc:extent"/> 
-                                                        kB</td>
-                                                    <td>
-                                                        <xsl:value-of 
-                                                            select="dc:date"/>
-                                                    </td>
-                                                    <td>
-                                                        <a 
-                                                            href="javascript:insertImage('{dc:source}', '{dc:format}');">
-                                                             <i18n:text>Insert</i18n:text></a>
-                                                    </td>
-                                                </tr>
-                                                <xsl:variable name="noimages">
-                                                    false</xsl:variable>
-                                            </xsl:when>
-                                            <xsl:otherwise>
-                                                <xsl:variable name="noimages">
-                                                    true</xsl:variable>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </xsl:for-each>
-                                    <xsl:choose>
-                                        <xsl:when test="$noimages = 'true'">
-                                            <tr>
-                                                <td colspan="5" 
-                                                    class="lenya-form-caption"> 
-                                                    <xsl:value-of 
-                                                    select="dc:title"/><i18n:text key="lenya.imageupload.info.noimages"/></td>
-                                            </tr>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <tr>
-                                                <td class="lenya-form-caption" 
-                                                    colspan="5">&#160;</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lenya-form-caption"> 
-                                                    <i18n:text>Title</i18n:text>:</td>
-                                                <td colspan="4" 
-                                                    class="lenya-form-caption">
-                                                    <input 
-                                                        class="lenya-form-element" 
-                                                        type="text" 
-                                                        name="title"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lenya-form-caption"> 
-                                                    <i18n:text>Caption</i18n:text>:</td>
-                                                <td colspan="4" 
-                                                    class="lenya-form-caption">
-                                                    <input 
-                                                        class="lenya-form-element" 
-                                                        type="text" 
-                                                        name="caption" 
-                                                        />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lenya-form-caption" style="vertical-align:top"> 
-                                                    <i18n:text>Link</i18n:text>:</td>
-                                                <td colspan="4" 
-                                                    class="lenya-form-caption"> 
-                                                    <input 
-                                                    class="lenya-form-element" 
-                                                    type="text" 
-                                                    name="link"/><br/><i18n:text key="lenya.imageupload.links.hint"/></td>
-                                            </tr>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </table>
-                    </form>
-                </div>
+				 <div class="lenya-box">
+				    <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
+				      <form id="image">
+				        <table class="lenya-table-noborder">
+				        <xsl:choose>
+				        <xsl:when test="not(lenya-info:asset)">
+				            <tr>
+				                <td colspan="5" class="lenya-form-caption">
+				                    <xsl:value-of select="dc:title"/><i18n:text key="lenya.imageupload.info.noimages"/></td>
+				            </tr>
+				        </xsl:when>
+				         <xsl:otherwise>
+				          <tr>
+                            <td class="lenya-form-caption" colspan="5">&#160;</td>
+                 		       </tr>
+                        		<tr>
+                            	<td class="lenya-form-caption"> 
+                                <i18n:text>Title</i18n:text>:</td>
+                            <td colspan="4" class="lenya-form-caption">
+				              <input id="assetTitle" class="lenya-form-element" type="text" name="title" value=""/>
+				              <input type="hidden" id="imageSource" name="data" value=""/>
+				              <input type="hidden" id="imageFormat" name="format" value=""/>
+                            </td>
+                            </tr>
+                            <tr>
+                                <td class="lenya-form-caption"> 
+                                    <i18n:text>Caption</i18n:text>:</td>
+                                <td colspan="4" class="lenya-form-caption">
+                                    <input class="lenya-form-element" type="text" name="caption"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lenya-form-caption" style="vertical-align:top"> 
+                                    <i18n:text>Link</i18n:text>:</td>
+                                <td colspan="4" class="lenya-form-caption"> 
+                                    <input class="lenya-form-element" type="text" name="link"/>
+                                    <br/><i18n:text key="lenya.imageupload.links.hint"/></td>
+                            </tr>          
+				          <xsl:apply-templates select="lenya-info:asset"/>
+				          <tr>
+				            <td/>
+				            <td colspan="4">
+								 <input i18n:attr="value" type="submit"
+				      		   onClick="javascript:insertImage(document.getElementById('imageSource').value, escape(document.getElementById('imageFormat').value));" value="Submit"/>&#160;
+				 			 <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
+				            </td>
+				          </tr>
+				          </xsl:otherwise>
+				          </xsl:choose>
+				        </table>
+				      </form>
+				  </div>                
             </page:body>
         </page:page>
     </xsl:template>
