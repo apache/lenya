@@ -22,6 +22,7 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -42,7 +43,7 @@ import org.xml.sax.SAXException;
 /**
  * Default Sitetree implementation
  */
-public class DefaultSiteTree implements SiteTree {
+public class DefaultSiteTree implements SiteTree, LastModified {
     private static Logger log = Logger.getLogger(DefaultSiteTree.class);
     
     private static Object lock = new Object();
@@ -53,6 +54,8 @@ public class DefaultSiteTree implements SiteTree {
     private File treefile = null;
     // the area is only retained to provide some more info when raising an exception.
     private String area = "";
+    
+    private long lastModified = 0;
 
     /**
      * Create a DefaultSiteTree
@@ -117,8 +120,6 @@ public class DefaultSiteTree implements SiteTree {
         }
 
     }
-
-    private long lastModified = 0;
 
     /**
      * Checks if the tree file has been modified externally and reloads the site tree.
@@ -366,7 +367,6 @@ public class DefaultSiteTree implements SiteTree {
             parentNode.appendChild(child);
         }
         log.debug("Tree has been modified: " + document.getDocumentElement());
-
     }
     /**
      *  (non-Javadoc)
@@ -586,8 +586,7 @@ public class DefaultSiteTree implements SiteTree {
         if (children == null) {
             log.info("The node " + subtreeRoot.toString() + " has no children");
             return;
-        } else {
-            for (int i = 0; i < children.length; i++) {
+        } else {            for (int i = 0; i < children.length; i++) {
                 importSubtree(newParent, children[i], children[i].getId(), null);
             }
         }
@@ -606,6 +605,7 @@ public class DefaultSiteTree implements SiteTree {
             throw new SiteTreeException(
                 "The saving of document [" + document.getLocalName() + "] failed");
         }
+        lastModified = new Date().getTime();    
     }
 
     /**
@@ -684,5 +684,12 @@ public class DefaultSiteTree implements SiteTree {
                 }
             }
         }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.LastModified#getLastModified()
+     */
+    public long getLastModified() {
+        return lastModified;
     }
 }

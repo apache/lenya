@@ -20,15 +20,20 @@
 package org.apache.lenya.cms.cocoon.generation;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
+import org.apache.excalibur.source.SourceValidity;
+import org.apache.excalibur.source.impl.validity.TimeStampValidity;
 import org.apache.lenya.cms.publication.Label;
+import org.apache.lenya.cms.publication.LastModified;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -40,7 +45,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 public class SiteTreeGenerator extends ServiceableGenerator
-    implements Parameterizable
+    implements Parameterizable, CacheableProcessingComponent
 {
     private static Logger log = Logger.getLogger(SiteTreeGenerator.class);
     
@@ -171,5 +176,24 @@ public class SiteTreeGenerator extends ServiceableGenerator
         super.recycle();
         sitetree = null;
         area = null;
+    }
+
+    /**
+     * @see org.apache.cocoon.caching.CacheableProcessingComponent#getKey()
+     */
+    public Serializable getKey() {
+        return area;
+    }
+
+    /**
+     * @see org.apache.cocoon.caching.CacheableProcessingComponent#getValidity()
+     */
+    public SourceValidity getValidity() {
+        // Check if sitetree implementation supports last modified
+        if (!(sitetree instanceof LastModified)) {
+            return null;
+        } else {
+            return new TimeStampValidity(((LastModified)sitetree).getLastModified());
+        }
     }
 }
