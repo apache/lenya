@@ -197,23 +197,35 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @see org.apache.lenya.cms.usecase.Usecase#execute()
      */
     public final void execute() throws UsecaseException {
+        Exception exception = null;
         try {
             clearErrorMessages();
             clearInfoMessages();
             doExecute();
             dumpErrorMessages();
-
-            if (getErrorMessages().size() == 0) {
-                getUnitOfWork().commit();
-            }
-
         } catch (LockException e) {
+            exception = e;
             addErrorMessage("The operation could not be completed because an involved object was changed by another user.");
         } catch (Exception e) {
+            exception = e;
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
             if (getLogger().isDebugEnabled()) {
                 throw new UsecaseException(e);
+            }
+        } finally {
+            try {
+                if (getErrorMessages().isEmpty() && exception == null) {
+                    getUnitOfWork().commit();
+                } else {
+                    getUnitOfWork().rollback();
+                }
+            } catch (ServiceException e1) {
+                getLogger().error("Service could not be obtained: ", e1);
+            } catch (TransactionException e1) {
+                getLogger().error("Exception during commit or rollback: ", e1);
+                addErrorMessage("Exception during commit or rollback: " + e1.getMessage()
+                        + " (see logfiles for details)");
             }
         }
     }
