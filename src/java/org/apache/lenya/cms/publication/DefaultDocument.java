@@ -276,24 +276,29 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public boolean exists() throws DocumentException {
         boolean exists;
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            if (siteManager != null) {
-                exists = siteManager.contains(this);
-            } else {
+        String hint = getPublication().getSiteManagerHint();
+        if (hint == null) {
+            try {
                 exists = SourceUtil.exists(getSourceURI(), this.manager);
+            } catch (Exception e) {
+                throw new DocumentException(e);
             }
-        } catch (Exception e) {
-            throw new DocumentException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
+        } else {
+            SiteManager siteManager = null;
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+                siteManager = (SiteManager) selector.select(hint);
+                exists = siteManager.contains(this);
+            } catch (Exception e) {
+                throw new DocumentException(e);
+            } finally {
+                if (selector != null) {
+                    if (siteManager != null) {
+                        selector.release(siteManager);
+                    }
+                    this.manager.release(selector);
                 }
-                this.manager.release(selector);
             }
         }
         return exists;
@@ -483,8 +488,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             nodes[1] = historySource.getNode();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             if (resolver != null) {
                 if (documentSource != null) {
                     resolver.release(documentSource);
