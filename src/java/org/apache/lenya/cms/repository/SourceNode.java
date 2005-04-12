@@ -105,19 +105,22 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             String userName = getUserId();
             boolean newVersion = this.identityMap.getUnitOfWork().isDirty(this);
             getRevisionController().reservedCheckIn(getRCPath(), userName, true, newVersion);
-            this.isCheckedOut = false;
         } catch (Exception e) {
             throw new TransactionException(e);
         }
     }
 
-    private boolean isCheckedOut = false;
-
     /**
      * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
      */
     public boolean isCheckedOut() throws TransactionException {
-        return isCheckedOut;
+        try {
+            return getRevisionController().isCheckedOut(getRCPath());
+        } catch (TransactionException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
     }
 
     /**
@@ -127,7 +130,6 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         if (!isCheckedOut()) {
             try {
                 getRevisionController().reservedCheckOut(getRCPath(), getUserId());
-                this.isCheckedOut = true;
             } catch (Exception e) {
                 throw new TransactionException(e);
             }
