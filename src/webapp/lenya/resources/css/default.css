@@ -88,6 +88,12 @@ td.lenya-frontpage {
     font-weight: bold;
 }
 
+div.lenya-error {
+    padding: 5px;
+    margin: 5px 0px;
+    background-color: #FF9999;
+}
+
 .lenya-page-subtitle {
     background-color: #E5F5F8;
     border-bottom: solid 1px #B1B1B1;

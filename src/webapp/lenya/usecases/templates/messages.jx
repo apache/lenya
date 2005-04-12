@@ -22,24 +22,28 @@
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
 
-  <ul>
-    
-    <jx:forEach var="message" items="${usecase.getErrorMessages()}">
-      <li>
-        <i18n:text>
-          <jx:out value="${message}"/>
-        </i18n:text>
-      </li>
-    </jx:forEach>
-    
-    <jx:forEach var="message" items="${usecase.getInfoMessages()}">
-      <li>
-        <i18n:text>
-          <jx:out value="${message}"/>
-        </i18n:text>
-      </li>
-    </jx:forEach>
-    
-  </ul>
+  <jx:if test="${!usecase.getErrorMessages().isEmpty() || !usecase.getInfoMessages().isEmpty()}">
+    <div class="lenya-error">
+      <ul>
+        
+        <jx:forEach var="message" items="${usecase.getErrorMessages()}">
+          <li>
+            <i18n:text>
+              <jx:out value="${message}"/>
+            </i18n:text>
+          </li>
+        </jx:forEach>
+        
+        <jx:forEach var="message" items="${usecase.getInfoMessages()}">
+          <li>
+            <i18n:text>
+              <jx:out value="${message}"/>
+            </i18n:text>
+          </li>
+        </jx:forEach>
+        
+      </ul>
+    </div>
+  </jx:if>
 
 </jx:template>

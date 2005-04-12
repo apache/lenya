@@ -83,7 +83,7 @@
             <td>
               <br/>
               <jx:choose>
-                <jx:when test="${usecase.getParameter('document').getArea().equals('authoring')}">
+                <jx:when test="${usecase.getParameter('document').getArea().equals('authoring') &amp;&amp; usecase.getErrorMessages().isEmpty()}">
                   <input i18n:attr="value" name="submit" type="submit" value="Save"/>
                 </jx:when>
                 <jx:otherwise>
