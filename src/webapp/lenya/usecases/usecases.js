@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  *  limitations under the License.
  *
  */
+/* $Id$ */
  
 /* Helper method to add all request parameters to a usecase */
 function passRequestParameters(flowHelper, usecase) {
@@ -58,6 +59,9 @@ function executeUsecase() {
     
     var usecaseResolver;
     var usecase;
+    
+    if (cocoon.log.isDebugEnabled())
+       cocoon.log.debug("usecases.js::executeUsecase() called, parameter lenya.usecase = [" + usecaseName + "]");
     
     try {
         usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
