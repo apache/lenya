@@ -31,6 +31,7 @@ import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to create a new language version of a resource.
@@ -74,8 +75,10 @@ public class CreateLanguage extends Create {
         String[] languages = source.getPublication().getLanguages();
         DocumentIdentityMap map = source.getIdentityMap();
         for (int i = 0; i < languages.length; i++) {
-            Document version = map.get(source.getPublication(), source.getArea(), source
-                    .getId(), languages[i]);
+            Document version = map.get(source.getPublication(),
+                    source.getArea(),
+                    source.getId(),
+                    languages[i]);
             if (!version.exists()) {
                 nonExistingLanguages.add(languages[i]);
             }
@@ -132,7 +135,10 @@ public class CreateLanguage extends Create {
         DocumentIdentityMap map = source.getIdentityMap();
         String area = source.getArea();
         Document document = map.get(publication, area, source.getId(), language);
-        document.lock();
+        Transactionable[] nodes = document.getRepositoryNodes();
+        for (int i = 0; i < nodes.length; i++) {
+            nodes[i].lock();
+        }
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);

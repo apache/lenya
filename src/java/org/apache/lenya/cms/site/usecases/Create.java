@@ -35,10 +35,13 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Abstract superclass for usecases to create a resource.
@@ -70,29 +73,15 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
-
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
         try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getSourceDocument().getPublication()
-                    .getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(getSourceDocument().getIdentityMap(), getSourceDocument()
-                    .getPublication(), getSourceDocument().getArea());
-            structure.lock();
-        } catch (Exception e) {
+            SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
+            Transactionable[] nodes = { structure.getRepositoryNode() };
+            return nodes;
+        } catch (SiteException e) {
             throw new UsecaseException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 

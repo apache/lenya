@@ -16,6 +16,10 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
@@ -26,9 +30,11 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Change the node ID of a document.
@@ -51,9 +57,9 @@ public class ChangeNodeID extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
         super.lockInvolvedObjects();
 
         SiteManager siteManager = null;
@@ -62,10 +68,13 @@ public class ChangeNodeID extends DocumentUsecase {
             Document doc = getSourceDocument();
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
-            siteManager.getSiteStructure(doc.getIdentityMap(), doc.getPublication(), doc.getArea())
-                    .lock();
-            
-            lockAllLanguageVersions(doc);
+            SiteStructure structure = siteManager.getSiteStructure(doc.getIdentityMap(), doc
+                    .getPublication(), doc.getArea());
+
+            List objects = new ArrayList();
+            objects.add(structure.getRepositoryNode());
+            objects.addAll(getAllLanguageVersionNodes(doc));
+            return (Transactionable[]) objects.toArray(new Transactionable[objects.size()]);
         } catch (Exception e) {
             throw new UsecaseException(e);
         } finally {
@@ -78,11 +87,15 @@ public class ChangeNodeID extends DocumentUsecase {
         }
     }
 
-    protected void lockAllLanguageVersions(Document doc) throws DocumentException, TransactionException, DocumentBuildException {
+    protected List getAllLanguageVersionNodes(Document doc) throws DocumentException,
+            TransactionException, DocumentBuildException {
         String[] languages = doc.getLanguages();
+        List nodes = new ArrayList();
         for (int i = 0; i < languages.length; i++) {
-            doc.getIdentityMap().getLanguageVersion(doc, languages[i]).lock();
+            nodes.addAll(Arrays.asList(doc.getIdentityMap().getLanguageVersion(doc, languages[i])
+                    .getRepositoryNodes()));
         }
+        return nodes;
     }
 
     /**
@@ -182,7 +195,10 @@ public class ChangeNodeID extends DocumentUsecase {
                 Document newLanguageVersion = identityMap.get(document.getPublication(), document
                         .getArea(), newDocumentId, availableLanguages[i]);
 
-                newLanguageVersion.lock();
+                Transactionable[] nodes = newLanguageVersion.getRepositoryNodes();
+                for (int j = 0; j < nodes.length; j++) {
+                    nodes[j].lock();
+                }
                 documentManager.move(languageVersion, newLanguageVersion);
 
                 if (availableLanguages[i].equals(document.getLanguage())) {

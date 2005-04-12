@@ -21,7 +21,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowManager;
-import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to edit documents.
@@ -62,15 +62,7 @@ public class EditDocument extends DocumentUsecase {
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
-     */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
-        try {
-            getSourceDocument().lock();
-        } catch (TransactionException e) {
-            throw new UsecaseException(e);
-        }
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        return getSourceDocument().getRepositoryNodes();
     }
 }

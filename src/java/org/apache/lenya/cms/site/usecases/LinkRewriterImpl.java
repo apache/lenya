@@ -37,6 +37,7 @@ import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.transaction.Transactionable;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -142,7 +143,10 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                         }
 
                         if (linksRewritten) {
-                            examinedDocument.lock();
+                            Transactionable nodes[] = examinedDocument.getRepositoryNodes();
+                            for (int i = 0; i < nodes.length; i++) {
+                                nodes[i].lock();
+                            }
                             SourceUtil.writeDOM(xmlDocument, examinedDocument.getSourceURI(), this.manager);
                         }
 

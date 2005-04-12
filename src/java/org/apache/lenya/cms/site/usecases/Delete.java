@@ -16,6 +16,10 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -24,6 +28,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Delete a document and all its descendants, including all language versions. The documents are
@@ -67,27 +72,33 @@ public class Delete extends DocumentUsecase {
      * <li>the document area's site structure</li>
      * <li>the trash site structure</li>
      * </ul>
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
-
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        List nodes = new ArrayList();
         Document doc = getSourceDocument();
         try {
             DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
-            sources.lock();
+            Document[] docs = sources.getDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
+            }
 
             DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
                     doc,
                     Publication.TRASH_AREA,
                     SiteUtil.MODE_CHANGE_ID);
-            targets.lock();
+            docs = targets.getDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
+            }
 
-            SiteUtil.getSiteStructure(this.manager, doc).lock();
-            SiteUtil.getSiteStructure(this.manager, targets.getDocuments()[0]).lock();
+            nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager, targets.getDocuments()[0]).getRepositoryNode());
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
+        return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
     }
 
     /**

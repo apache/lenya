@@ -419,6 +419,7 @@
     </component-instance>
     <component-instance name="edit.forms" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.forms.FormsEditor">
+      <transaction policy="pessimistic"/>
       <view template="edit/forms" menu="false">
         <parameter name="formUri" value="cocoon://core/edit/form.xml"/>
       </view>

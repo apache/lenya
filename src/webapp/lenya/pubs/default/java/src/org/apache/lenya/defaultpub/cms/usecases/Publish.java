@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -38,6 +39,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -65,26 +67,26 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
 
         try {
+            List nodes = new ArrayList();
             Document doc = getSourceDocument();
             DocumentSet set = getInvolvedDocuments(doc);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 Document liveVersion = documents[i].getIdentityMap().getAreaVersion(documents[i],
                         Publication.LIVE_AREA);
-                liveVersion.lock();
+                nodes.addAll(Arrays.asList(liveVersion.getRepositoryNodes()));
             }
 
-            SiteUtil.getSiteStructure(this.manager,
+            nodes.add(SiteUtil.getSiteStructure(this.manager,
                     doc.getIdentityMap(),
                     doc.getPublication(),
-                    Publication.LIVE_AREA).lock();
-
+                    Publication.LIVE_AREA).getRepositoryNode());
+            return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
         } catch (Exception e) {
             throw new UsecaseException(e);
         }

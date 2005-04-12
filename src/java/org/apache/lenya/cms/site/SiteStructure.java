@@ -16,14 +16,19 @@
  */
 package org.apache.lenya.cms.site;
 
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.Lockable;
 
 /**
  * Object to hold a site structure information.
  *
  * @version $Id:$
  */
-public interface SiteStructure extends Identifiable, Lockable {
+public interface SiteStructure extends Identifiable {
+    
+    /**
+     * @return The repository node the site structure is stored in.
+     */
+    Node getRepositoryNode();
 
 }

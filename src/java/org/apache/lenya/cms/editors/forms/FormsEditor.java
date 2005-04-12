@@ -45,7 +45,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
@@ -93,15 +93,10 @@ public class FormsEditor extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
-        try {
-            getSourceDocument().lock();
-        } catch (TransactionException e) {
-            throw new UsecaseException(e);
-        }
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        return getSourceDocument().getRepositoryNodes();
     }
 
     /**
@@ -259,14 +254,12 @@ public class FormsEditor extends DocumentUsecase {
         for (int paramIndex = 0; paramIndex < paramNames.length; paramIndex++) {
             String pname = paramNames[paramIndex];
             getLogger().debug("Parameter: " + pname + " = " + getParameterAsString(pname));
-            System.out.println("Parameter: " + pname + " = " + getParameterAsString(pname));
 
             // Extract the xpath to edit
             if (pname.indexOf("edit[") >= 0) {
                 if (pname.endsWith("].x")) {
                     editSelect = pname.substring(5, pname.length() - 3);
                     getLogger().debug("Edit: " + editSelect);
-                    System.out.println("Edit: " + editSelect);
                 }
                 deleteParameter(pname);
             }
@@ -277,7 +270,6 @@ public class FormsEditor extends DocumentUsecase {
                 String select = pname.substring(pname.indexOf("select") + 8);
                 select = select.substring(0, select.indexOf("\""));
                 getLogger().debug("Select Node: " + select);
-                System.out.println("Select Node: " + select);
 
                 // Check if node exists
                 PrefixResolver resolver = new FormPrefixResolver(document.getDocumentElement());

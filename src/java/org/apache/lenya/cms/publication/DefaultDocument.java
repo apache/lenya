@@ -28,15 +28,16 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.workflow.CMSHistory;
 import org.apache.lenya.cms.workflow.History;
-import org.apache.lenya.transaction.Lock;
-import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -467,32 +468,34 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Lockable#lock()
+     * @see org.apache.lenya.cms.publication.Document#getRepositoryNodes()
      */
-    public void lock() throws TransactionException {
-        SourceUtil.lock(getSourceURI(), this.manager);
-        SourceUtil.lock(getHistory().getSourceURI(), this.manager);
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Lockable#getLock()
-     */
-    public Lock getLock() {
-        return null;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Lockable#unlock()
-     */
-    public void unlock() throws TransactionException {
-        SourceUtil.unlock(getSourceURI(), this.manager);
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Lockable#isLocked()
-     */
-    public boolean isLocked() throws TransactionException {
-        return false;
+    public Node[] getRepositoryNodes() {
+        Node[] nodes = new Node[2];
+        SourceResolver resolver = null;
+        RepositorySource documentSource = null;
+        RepositorySource historySource = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
+            historySource = (RepositorySource) resolver.resolveURI(getHistory().getSourceURI());
+            nodes[0] = documentSource.getNode();
+            nodes[1] = historySource.getNode();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (resolver != null) {
+                if (documentSource != null) {
+                    resolver.release(documentSource);
+                }
+                if (historySource != null) {
+                    resolver.release(historySource);
+                }
+                this.manager.release(resolver);
+            }
+        }
+        return nodes;
     }
 
 }

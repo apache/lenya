@@ -199,7 +199,6 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                docs[i].lock();
                 Document target = SiteUtil.getTarget(siteManager, docs[i], targetArea, mode);
                 if (target != null) {
                     set.add(target);

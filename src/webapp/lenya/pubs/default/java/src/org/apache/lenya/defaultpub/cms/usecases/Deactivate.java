@@ -16,6 +16,10 @@
  */
 package org.apache.lenya.defaultpub.cms.usecases;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
@@ -30,6 +34,7 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -85,23 +90,24 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
-
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
         try {
+            List nodes = new ArrayList();
             Document doc = getSourceDocument();
             Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
             DocumentSet set = getInvolvedDocuments(liveVersion);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                documents[i].lock();
+                nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
             }
 
-            SiteUtil.getSiteStructure(this.manager, doc.getIdentityMap(),
+            nodes.add(SiteUtil.getSiteStructure(this.manager,
+                    doc.getIdentityMap(),
                     doc.getPublication(),
-                    Publication.LIVE_AREA).lock();
+                    Publication.LIVE_AREA).getRepositoryNode());
+            return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);

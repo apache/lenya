@@ -22,18 +22,19 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowManager;
-import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
- * Invoke a workflow event on the current document. The event is obtained from
- * the configuration in <code>cocoon.xconf</code>:
- * <code>
+ * Invoke a workflow event on the current document. The event is obtained from the configuration in
+ * <code>cocoon.xconf</code>:<code>
  * <pre>
- *   &lt;component-instance name="default/workflow.submit"
- *                       logger="lenya.usecases.workflow"
- *                       class="org.apache.lenya.cms.workflow.usecases.InvokeWorkflow"&gt;
- *     &lt;event id="submit"/&gt;
- *   &lt;/component-instance&gt;
+ * 
+ *    &lt;component-instance name=&quot;default/workflow.submit&quot;
+ *                        logger=&quot;lenya.usecases.workflow&quot;
+ *                        class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
+ *      &lt;event id=&quot;submit&quot;/&gt;
+ *    &lt;/component-instance&gt;
+ *  
  * </pre>
  * </code>
  * 
@@ -75,17 +76,12 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
-        try {
-            getSourceDocument().lock();
-        } catch (TransactionException e) {
-            throw new UsecaseException(e);
-        }
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        return getSourceDocument().getRepositoryNodes();
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -102,7 +98,7 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
             }
         }
     }
-    
+
     protected static final String ELEMENT_EVENT = "event";
     protected static final String ATTRIBUTE_ID = "id";
 

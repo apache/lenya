@@ -36,6 +36,8 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.transaction.AbstractOperation;
 import org.apache.lenya.transaction.LockException;
+import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Abstract usecase implementation.
@@ -479,27 +481,50 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     public UsecaseView getView() {
         return this.view;
     }
-    
+
     protected static final String ELEMENT_PARAMETER = "parameter";
     protected static final String ATTRIBUTE_NAME = "name";
     protected static final String ATTRIBUTE_VALUE = "value";
+    protected static final String ELEMENT_VIEW = "view";
+    protected static final String ELEMENT_TRANSACTION = "transaction";
+    protected static final String ATTRIBUTE_POLICY = "policy";
+    protected static final String VALUE_OPTIMISTIC = "optimistic";
+    protected static final String VALUE_PESSIMISTIC = "pessimistic";
+
+    private boolean isOptimistic = true;
+
+    /**
+     * @return <code>true</code> if the transaction policy is optimistic offline lock,
+     *         <code>false</code> if it is pessimistic offline lock.
+     */
+    protected boolean isOptimistic() {
+        return this.isOptimistic;
+    }
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration config) throws ConfigurationException {
-        
+
         Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
         for (int i = 0; i < parameterConfigs.length; i++) {
             String name = parameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
             String value = parameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
             setParameter(name, value);
         }
-        
-        Configuration viewConfig = config.getChild("view", false);
+
+        Configuration viewConfig = config.getChild(ELEMENT_VIEW, false);
         if (viewConfig != null) {
             this.view = new UsecaseView();
             view.configure(viewConfig);
+        }
+
+        Configuration transactionConfig = config.getChild(ELEMENT_TRANSACTION, false);
+        if (transactionConfig != null) {
+            String policy = transactionConfig.getAttribute(ATTRIBUTE_POLICY);
+            if (policy.equals(VALUE_PESSIMISTIC)) {
+                this.isOptimistic = false;
+            }
         }
     }
 
@@ -511,9 +536,42 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     }
 
     /**
+     * @return The objects that could be changed during the usecase.
+     * @throws UsecaseException if an error occurs.
+     */
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        return new Transactionable[0];
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
+    public final void lockInvolvedObjects() throws UsecaseException {
+        try {
+            Transactionable[] objects = getObjectsToLock();
+            boolean canExecute = true;
+
+            for (int i = 0; i < objects.length; i++) {
+                if (objects[i].isCheckedOut()) {
+                    canExecute = false;
+                }
+            }
+
+            if (canExecute) {
+                for (int i = 0; i < objects.length; i++) {
+                    objects[i].lock();
+                    if (!isOptimistic()) {
+                        objects[i].checkout();
+                    }
+                }
+            } else {
+                addErrorMessage("The operation cannot be executed because one ore more of the "
+                        + "involved objects are checked out.");
+            }
+
+        } catch (TransactionException e) {
+            throw new UsecaseException(e);
+        }
     }
 
 }

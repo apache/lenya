@@ -27,11 +27,12 @@ import javax.xml.transform.TransformerException;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -523,27 +524,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Lockable#lock()
-     */
-    public void lock() throws TransactionException {
-        SourceUtil.lock(this.sourceUri, this.manager);
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Lockable#unlock()
-     */
-    public void unlock() throws TransactionException {
-        SourceUtil.unlock(this.sourceUri, this.manager);
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Lockable#isLocked()
-     */
-    public boolean isLocked() throws TransactionException {
-        return false;
-    }
-
-    /**
      * @see org.apache.lenya.transaction.Identifiable#getIdentifiableType()
      */
     public String getIdentifiableType() {
@@ -551,16 +531,32 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Lockable#getLock()
-     */
-    public Lock getLock() {
-        return null;
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#save()
      */
     public void save() throws TransactionException {
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteStructure#getRepositoryNode()
+     */
+    public org.apache.lenya.cms.repository.Node getRepositoryNode() {
+        SourceResolver resolver = null;
+        RepositorySource source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = (RepositorySource) resolver.resolveURI(this.sourceUri);
+            return source.getNode();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
     }
 
 }

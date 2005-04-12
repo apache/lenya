@@ -141,7 +141,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     protected String getRCPath() throws IOException {
         String publicationsPath = this.sourceUri.substring("lenya://lenya/pubs/".length());
         String publicationId = publicationsPath.split("/")[0];
-        String path = publicationsPath + "/" + publicationId + "/content/";
+        String path = "lenya://lenya/pubs/" + publicationId + "/content/";
         return this.sourceUri.substring(path.length());
     }
 
@@ -248,6 +248,9 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws TransactionException {
+        if (isCheckedOut()) {
+            throw new TransactionException("Cannot lock [" + this + "]: node is checked out.");
+        }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
         }

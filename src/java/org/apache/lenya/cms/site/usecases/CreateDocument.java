@@ -26,6 +26,7 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to create a document.
@@ -106,7 +107,10 @@ public class CreateDocument extends Create {
                 area,
                 documentId,
                 language);
-        document.lock();
+        Transactionable[] nodes = document.getRepositoryNodes();
+        for (int i = 0; i < nodes.length; i++) {
+            nodes[i].lock();
+        }
 
         DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
                 publication);

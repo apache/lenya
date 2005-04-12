@@ -86,7 +86,13 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         }
 
         this.node = (Node) map.get(Node.IDENTIFIABLE_TYPE, uri);
-
+    }
+    
+    /**
+     * @return The repository node which is accessed by this source.
+     */
+    public Node getNode() {
+        return this.node;
     }
 
     protected Logger getLogger() {

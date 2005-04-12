@@ -19,7 +19,7 @@ package org.apache.lenya.cms.metadata.usecases;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to edit metadata for a resource.
@@ -28,8 +28,9 @@ import org.apache.lenya.transaction.TransactionException;
  */
 public class Metadata extends SiteUsecase {
 
-	private DublinCore dc;
-	/**
+    private DublinCore dc;
+
+    /**
      * Ctor.
      */
     public Metadata() {
@@ -37,17 +38,12 @@ public class Metadata extends SiteUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
-    public void lockInvolvedObjects() throws UsecaseException {
-        super.lockInvolvedObjects();
-        try {
-            getSourceDocument().lock();
-        } catch (TransactionException e) {
-            throw new UsecaseException(e);
-        }
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        return getSourceDocument().getRepositoryNodes();
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
@@ -55,33 +51,42 @@ public class Metadata extends SiteUsecase {
         super.initParameters();
 
         try {
-        	this.dc = getSourceDocument().getDublinCore();
-            setParameter(DublinCore.ELEMENT_CREATOR, this.dc.getFirstValue(DublinCore.ELEMENT_CREATOR));
+            this.dc = getSourceDocument().getDublinCore();
+            setParameter(DublinCore.ELEMENT_CREATOR, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_CREATOR));
             setParameter(DublinCore.ELEMENT_TITLE, this.dc.getFirstValue(DublinCore.ELEMENT_TITLE));
-            setParameter(DublinCore.ELEMENT_DESCRIPTION, this.dc.getFirstValue(DublinCore.ELEMENT_CREATOR));
-            setParameter(DublinCore.ELEMENT_SUBJECT, this.dc.getFirstValue(DublinCore.ELEMENT_SUBJECT));
-            setParameter(DublinCore.ELEMENT_PUBLISHER, this.dc.getFirstValue(DublinCore.ELEMENT_PUBLISHER));
-            setParameter(DublinCore.ELEMENT_RIGHTS, this.dc.getFirstValue(DublinCore.ELEMENT_RIGHTS));
+            setParameter(DublinCore.ELEMENT_DESCRIPTION, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_CREATOR));
+            setParameter(DublinCore.ELEMENT_SUBJECT, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_SUBJECT));
+            setParameter(DublinCore.ELEMENT_PUBLISHER, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_PUBLISHER));
+            setParameter(DublinCore.ELEMENT_RIGHTS, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_RIGHTS));
             setParameter(DublinCore.ELEMENT_TYPE, this.dc.getFirstValue(DublinCore.ELEMENT_TYPE));
             setParameter(DublinCore.ELEMENT_DATE, this.dc.getFirstValue(DublinCore.ELEMENT_DATE));
-            setParameter(DublinCore.ELEMENT_FORMAT, this.dc.getFirstValue(DublinCore.ELEMENT_FORMAT));
-            setParameter(DublinCore.ELEMENT_SOURCE, this.dc.getFirstValue(DublinCore.ELEMENT_SOURCE));
-            setParameter(DublinCore.ELEMENT_LANGUAGE, this.dc.getFirstValue(DublinCore.ELEMENT_LANGUAGE));
-            setParameter(DublinCore.ELEMENT_RELATION, this.dc.getFirstValue(DublinCore.ELEMENT_RELATION));
-            setParameter(DublinCore.ELEMENT_COVERAGE, this.dc.getFirstValue(DublinCore.ELEMENT_COVERAGE));
-        }
-        catch (Exception e) {
-        	getLogger().error("Unable to load Dublin Core metadata.", e);
-        	addErrorMessage("Unable to load Dublin Core metadata.");
+            setParameter(DublinCore.ELEMENT_FORMAT, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_FORMAT));
+            setParameter(DublinCore.ELEMENT_SOURCE, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_SOURCE));
+            setParameter(DublinCore.ELEMENT_LANGUAGE, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_LANGUAGE));
+            setParameter(DublinCore.ELEMENT_RELATION, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_RELATION));
+            setParameter(DublinCore.ELEMENT_COVERAGE, this.dc
+                    .getFirstValue(DublinCore.ELEMENT_COVERAGE));
+        } catch (Exception e) {
+            getLogger().error("Unable to load Dublin Core metadata.", e);
+            addErrorMessage("Unable to load Dublin Core metadata.");
         }
     }
-            
-     /**
+
+    /**
      * Validates the request parameters.
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -98,7 +103,7 @@ public class Metadata extends SiteUsecase {
         super.doExecute();
 
         String creator = getParameterAsString(DublinCore.ELEMENT_CREATOR);
-        String title  = getParameterAsString(DublinCore.ELEMENT_TITLE);
+        String title = getParameterAsString(DublinCore.ELEMENT_TITLE);
         String description = getParameterAsString(DublinCore.ELEMENT_DESCRIPTION);
         String subject = getParameterAsString(DublinCore.ELEMENT_SUBJECT);
         String publisher = getParameterAsString(DublinCore.ELEMENT_PUBLISHER);
@@ -118,6 +123,6 @@ public class Metadata extends SiteUsecase {
      */
     public void setParameter(String name, Object value) {
         super.setParameter(name, value);
-        
+
     }
 }
