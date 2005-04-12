@@ -24,6 +24,7 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.transaction.Operation;
 import org.apache.lenya.transaction.UnitOfWork;
+import org.apache.lenya.transaction.UnitOfWorkImpl;
 
 /**
  * Super class for operation-based input modules.
@@ -62,9 +63,9 @@ public class OperationModule extends AbstractInputModule implements Operation, S
     public UnitOfWork getUnitOfWork() throws ServiceException {
         if (this.unitOfWork == null) {
            if (getLogger().isDebugEnabled())
-               getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance, looking up role [" + UnitOfWork.ROLE + "]");
+               getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance.");
 
-           this.unitOfWork = (UnitOfWork) this.manager.lookup(UnitOfWork.ROLE);
+           this.unitOfWork = new UnitOfWorkImpl();
            this.unitOfWork.setIdentityMap(getDocumentIdentityMap());
         }
 
