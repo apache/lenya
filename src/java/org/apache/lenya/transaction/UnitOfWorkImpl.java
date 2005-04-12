@@ -131,19 +131,17 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             t.deleteTransactionable();
         }
 
-        for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
-            Transactionable t = (Transactionable) i.next();
-            if (t.isCheckedOut()) {
-                t.checkin();
-            }
-        }
-
         if (getIdentityMap() != null) {
             Identifiable[] objects = getIdentityMap().getObjects();
             for (int i = 0; i < objects.length; i++) {
-                if (objects[i] instanceof Transactionable
-                        && ((Transactionable) objects[i]).isLocked()) {
-                    ((Transactionable) objects[i]).unlock();
+                if (objects[i] instanceof Transactionable) {
+                    Transactionable t = (Transactionable) objects[i];
+                    if (t.isCheckedOut()) {
+                        t.checkin();
+                    }
+                    if (t.isLocked()) {
+                        t.unlock();
+                    }
                 }
             }
         }
