@@ -51,11 +51,15 @@
       <install href="source_version.html" label="Installation Instructions"/>
     </installation>
 
-    <concepts href="reference/" label="Technical Reference"> 	 
+    <concepts href="concepts/" label="Concepts"> 	 
+      <wysiwyg href="wysiwyg.html" label="WYSIWYG" />
+    </concepts>
+
+    <reference href="reference/" label="Technical Reference"> 	 
       <sitemaps14 href="lenya-sitemaps.html" label="Overview of Lenya Sitemaps" />
       <usecase-framework-index href="usecase-framework/index.html" label="Usecase Framework"/> 	 
       <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
-    </concepts>
+    </reference>
 
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
 
