@@ -26,14 +26,6 @@
                   <td><jx:out value="${usecase.getParameter('document').getId()}"/></td>
                 </tr>
                 <tr>
-                  <td class="lenya-entry-caption">Form:</td>
-                  <td><jx:out value="${usecase.getParameter('form')}"/></td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption">Node:</td>
-                  <td><jx:out value="${usecase.getParameter('editSelect')}"/></td>
-                </tr>
-                <tr>
                   <td class="lenya-entry-caption">Workflow Event:</td>
                   <jx:set var="event" value="${request.getParameter('lenya.event')}"/>
                   <jx:choose>
@@ -50,7 +42,7 @@
           </div>
           
           <cinclude:includexml>
-            <cinclude:src>cocoon://core/edit/form/<jx:out value="${usecase.getParameter('form')}"/>/<jx:out value="${usecase.getParameter('editSelect')}"/></cinclude:src>
+            <cinclude:src>cocoon://core/edit/oneform</cinclude:src>
           </cinclude:includexml>
         </jx:when>
         <jx:otherwise>
