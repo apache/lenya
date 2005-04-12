@@ -15,11 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: sidebar.xsl,v 1.11 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id: sidebar.xsl 42702 2004-03-13 12:34:18Z gregor $ -->
                                                                 
 <xsl:stylesheet version="1.0"  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-<xsl:import href="../../../../../xslt/authoring/edit/form.xsl"/>
+<xsl:import href="../../../../../../usecases/edit/forms/form.xsl"/>
 
 <xsl:template match="sidebar">
  <xsl:apply-templates select="block"/>

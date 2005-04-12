@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: entry.xsl,v 1.15 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id: entry.xsl 42702 2004-03-13 12:34:18Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -23,7 +23,7 @@
   xmlns:ent="http://www.purl.org/NET/ENT/1.0/"
 >
 
-<xsl:import href="../../../../../xslt/authoring/edit/form.xsl"/>
+<xsl:import href="../../../../../../usecases/edit/forms/form.xsl"/>
 
 <xsl:template match="echo:entry">
 <node name="Title" select="/echo:entry/echo:title[@tagID='{echo:title/@tagID}']">
