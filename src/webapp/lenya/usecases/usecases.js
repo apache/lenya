@@ -16,6 +16,7 @@
  */
 /* $Id$ */
  
+
 /* Helper method to add all request parameters to a usecase */
 function passRequestParameters(flowHelper, usecase) {
     var names = cocoon.request.getParameterNames();
@@ -51,6 +52,13 @@ function getTargetQueryString(usecaseName) {
 }
 
 
+/*
+ * Main function to execute a usecase.
+ *
+ * Uses request parameter "lenya.usecase" to determine what
+ * usecase to execute.
+ * 
+ */
 function executeUsecase() {
     var usecaseName = cocoon.request.getParameter("lenya.usecase");
     var view;
@@ -96,14 +104,30 @@ function executeUsecase() {
     var success = false;
     var targetUrl;
 
+
+    /*
+     * If the usecase has a view, this means we want to display something 
+     * to the user before proceeding. This also means the usecase consists
+     * several steps; repeated until the user chooses to submit or cancel.
+     *
+     * If the usecase does not have a view, it is simply executed.
+     */
+
     if (view) {
         var ready = false;
         while (!ready) {
+
+            var viewUri = "view/" + menu + "/" + view.getTemplateURI();
+            if (cocoon.log.isDebugEnabled())
+               cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
         
-            cocoon.sendPageAndWait("view/" + menu + "/" + view.getTemplateURI(), {
+            cocoon.sendPageAndWait(viewUri, {
                 "usecase" : proxy
             });
             
+            if (cocoon.log.isDebugEnabled())
+               cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", after view, now advancing in usecase");
+        
             try {
                 usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
                 usecase = usecaseResolver.resolve(usecaseName);
@@ -162,6 +186,10 @@ function executeUsecase() {
     }
     
     var url = request.getContextPath() + targetUrl + getTargetQueryString(usecaseName);
+
+    if (cocoon.log.isDebugEnabled())
+       cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", completed, redirecting to url = [" + url + "]");
+        
     cocoon.redirectTo(url);
     
 }
