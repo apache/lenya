@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import org.apache.cocoon.environment.Session;
 /**
  * Abstract operation implementation.
  * 
- * @version $Id: AbstractOperation.java 158088 2005-03-18 16:17:38Z jwkaltz $
+ * @version $Id$
  */
 public class AbstractOperation extends AbstractLogEnabled implements Operation, Serviceable,
         Initializable, Disposable, Contextualizable {
@@ -102,7 +102,8 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
     public void dispose() {
         if (this.manager != null) {
             if (this.unitOfWork != null) {
-                this.manager.release(this.unitOfWork);
+                // FIXME: determine if unitOfWork needs some message
+                // that it should clean up itself
             }
         }
     }

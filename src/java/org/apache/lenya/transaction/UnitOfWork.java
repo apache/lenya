@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,14 +28,9 @@ import org.apache.lenya.ac.Identity;
  *
  * <p>This interface may be extended in the future to allow for access to further types of business objects.</p>
  * 
- * @version $Id: UnitOfWork.java 157924 2005-03-17 09:27:53Z jwkaltz $
+ * @version $Id$
  */
 public interface UnitOfWork {
-
-    /**
-     * The Avalon role.
-     */
-    String ROLE = UnitOfWork.class.getName();
 
     /**
      * Returns the identity map.
