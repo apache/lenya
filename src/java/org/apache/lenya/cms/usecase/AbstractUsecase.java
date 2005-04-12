@@ -574,4 +574,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.Usecase#cancel()
+     */
+    public void cancel() throws UsecaseException {
+        try {
+            getUnitOfWork().rollback();
+        } catch (Exception e) {
+            throw new UsecaseException(e);
+        }
+    }
 }

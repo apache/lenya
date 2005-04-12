@@ -129,7 +129,7 @@ public class RevisionController {
             throw new FileReservedCheckOutException(this.rootDir + source, rcml);
         }
 
-        rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false, false);
+        rcml.checkOutIn(RCML.co, identity, new Date().getTime(), false);
 
         return file;
     }
@@ -160,7 +160,7 @@ public class RevisionController {
 
         return !checkedOutByOther;
     }
-    
+
     /**
      * @param source A source.
      * @return If the source is checked out.
@@ -275,7 +275,11 @@ public class RevisionController {
                 }
             }
 
-            rcml.checkOutIn(RCML.ci, identity, time, backup, newVersion);
+            if (newVersion) {
+                rcml.checkOutIn(RCML.ci, identity, time, backup);
+            } else {
+                rcml.deleteFirstCheckOut();
+            }
             rcml.pruneEntries(this.backupDir);
             rcml.write();
 

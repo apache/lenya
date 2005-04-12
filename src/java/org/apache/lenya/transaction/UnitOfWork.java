@@ -71,6 +71,12 @@ public interface UnitOfWork {
     void commit() throws TransactionException;
     
     /**
+     * Rolls the transaction back.
+     * @throws TransactionException if an error occurs.
+     */
+    void rollback() throws TransactionException;
+    
+    /**
      * @return The identity.
      */
     Identity getIdentity();

@@ -104,7 +104,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         involvedObjects.addAll(this.newObjects);
         involvedObjects.addAll(this.modifiedObjects);
         involvedObjects.addAll(this.removedObjects);
-
+        
         for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
             if (t.hasChanged()) {
@@ -168,6 +168,29 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      */
     public boolean isDirty(Transactionable transactionable) {
         return this.modifiedObjects.contains(transactionable);
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.UnitOfWork#rollback()
+     */
+    public void rollback() throws TransactionException {
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("rollback");
+        }
+        if (getIdentityMap() != null) {
+            Identifiable[] objects = getIdentityMap().getObjects();
+            for (int i = 0; i < objects.length; i++) {
+                if (objects[i] instanceof Transactionable) {
+                    Transactionable t = (Transactionable) objects[i];
+                    if (t.isCheckedOut()) {
+                        t.checkin();
+                    }
+                    if (t.isLocked()) {
+                        t.unlock();
+                    }
+                }
+            }
+        }
     }
 
 }

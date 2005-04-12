@@ -104,7 +104,7 @@ public class RCML {
             // system checked the document in. We use the filesystem
             // modification date as checkin time.
             //
-            checkOutIn(RCML.ci, RevisionController.systemUsername, lastModified, false, false);
+            checkOutIn(RCML.ci, RevisionController.systemUsername, lastModified, false);
 
             File parent = new File(this.rcmlFile.getParent());
             parent.mkdirs();
@@ -153,12 +153,11 @@ public class RCML {
      * @param identity The identity of the user
      * @param time Time at which the check in/out is made
      * @param backup Create backup element
-     * @param newVersion If true, a new version will be created.
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
-    public void checkOutIn(short type, String identity, long time, boolean backup,
-            boolean newVersion) throws IOException, Exception {
+    public void checkOutIn(short type, String identity, long time, boolean backup)
+            throws IOException, Exception {
 
         if (type != co && type != ci) {
             throw new IllegalArgumentException("ERROR: " + this.getClass().getName()
@@ -182,9 +181,7 @@ public class RCML {
             if (latestEntry != null) {
                 version = latestEntry.getVersion();
             }
-            if (newVersion) {
-                version++;
-            }
+            version++;
             Element versionElement = helper.createElement("Version", "" + version);
             checkOutElement.appendChild(versionElement);
         }
@@ -395,6 +392,18 @@ public class RCML {
     public void deleteFirstCheckIn() throws Exception {
         Node root = this.document.getDocumentElement();
         Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckIn[1]");
+        root.removeChild(firstCheckIn);
+        root.removeChild(root.getFirstChild()); // remove EOL (end of line)
+        setDirty();
+    }
+
+    /**
+     * Delete the latest check in
+     * @throws Exception if an error occurs
+     */
+    public void deleteFirstCheckOut() throws Exception {
+        Node root = this.document.getDocumentElement();
+        Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckOut[1]");
         root.removeChild(firstCheckIn);
         root.removeChild(root.getFirstChild()); // remove EOL (end of line)
         setDirty();

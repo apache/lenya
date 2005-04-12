@@ -137,6 +137,12 @@ public interface Usecase extends Operation {
     void execute() throws UsecaseException;
     
     /**
+     * Cancels the usecase.
+     * @throws UsecaseException if an error occurs.
+     */
+    void cancel() throws UsecaseException;
+    
+    /**
      * @return The web application URL the usecase was invoked on.
      */
     String getSourceURL();

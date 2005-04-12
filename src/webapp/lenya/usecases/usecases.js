@@ -126,6 +126,7 @@ function executeUsecase() {
                     }
                 }
                 else if (cocoon.request.getParameter("cancel")) {
+                    usecase.cancel();
                     ready = true;
                 }
                 proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
