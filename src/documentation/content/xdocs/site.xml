@@ -51,7 +51,7 @@
       <install href="source_version.html" label="Installation Instructions"/>
     </installation>
 
-    <concepts href="concepts/" label="Concepts"> 	 
+    <concepts href="reference/" label="Technical Reference"> 	 
       <sitemaps14 href="lenya-sitemaps.html" label="Overview of Lenya Sitemaps" />
       <usecase-framework-index href="usecase-framework/index.html" label="Usecase Framework"/> 	 
       <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
