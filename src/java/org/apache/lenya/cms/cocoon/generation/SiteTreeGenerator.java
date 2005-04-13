@@ -43,6 +43,7 @@ import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
+import org.xml.sax.helpers.NamespaceSupport;
 
 public class SiteTreeGenerator extends ServiceableGenerator
     implements Parameterizable, CacheableProcessingComponent
@@ -160,7 +161,7 @@ public class SiteTreeGenerator extends ServiceableGenerator
     
     private void generateLabels(Label label) throws SAXException {
         atts.clear();
-        atts.addAttribute("", LANG_ATTRIBUTE, Q_LANG_ATTRIBUTE, CDATA, label.getLanguage());
+        atts.addAttribute(NamespaceSupport.XMLNS, LANG_ATTRIBUTE, Q_LANG_ATTRIBUTE, CDATA, label.getLanguage());
 
         this.contentHandler.startElement(SiteTree.NAMESPACE_URI, LABEL_ELEMENT, LABEL_ELEMENT, atts);
         char[] labelA = label.getLabel().toCharArray();
