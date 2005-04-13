@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -44,11 +45,12 @@ public class XlinkCollection extends CollectionImpl {
      * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
+     * @param _logger a logger
      * @throws DocumentException when something went wrong.
      */
     public XlinkCollection(ServiceManager manager, DocumentIdentityMap map,
-            Publication publication, String id, String area) throws DocumentException {
-        super(manager, map, publication, id, area);
+            Publication publication, String id, String area, Logger _logger) throws DocumentException {
+        super(manager, map, publication, id, area, _logger);
     }
 
     /**
@@ -59,12 +61,13 @@ public class XlinkCollection extends CollectionImpl {
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @param language The language of the document.
+     * @param _logger a logger
      * @throws DocumentException when something went wrong.
      */
     public XlinkCollection(ServiceManager manager, DocumentIdentityMap map,
-            Publication publication, String id, String area, String language)
+            Publication publication, String id, String area, String language, Logger _logger)
             throws DocumentException {
-        super(manager, map, publication, id, area, language);
+        super(manager, map, publication, id, area, language, _logger);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
@@ -62,10 +63,11 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @param publication The publication.
      * @param _id The document ID (starting with a slash).
      * @param _area The area.
+     * @param _logger a logger
      */
     protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
-            Publication publication, String _id, String _area) {
-        this(manager, map, publication, _id, _area, publication.getDefaultLanguage());
+            Publication publication, String _id, String _area, Logger _logger) {
+        this(manager, map, publication, _id, _area, publication.getDefaultLanguage(), _logger);
     }
 
     /**
@@ -76,9 +78,16 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @param _id The document ID (starting with a slash).
      * @param _area The area.
      * @param _language the language
+     * @param _logger a logger
      */
     protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
-            Publication publication, String _id, String _area, String _language) {
+            Publication publication, String _id, String _area, String _language,
+            Logger _logger) {
+
+        ContainerUtil.enableLogging(this, _logger);
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultDocument() creating new instance with _id [" + _id + "], _language [" + _language + "]");
+
         this.manager = manager;
         if (_id == null) {
             throw new IllegalArgumentException("The document ID must not be null!");

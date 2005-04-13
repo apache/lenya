@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
@@ -55,11 +56,12 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param publication The publication.
      * @param id The document ID.
      * @param area The area the document belongs to.
+     * @param _logger a logger
      * @throws DocumentException when something went wrong.
      */
     public CollectionImpl(ServiceManager manager, DocumentIdentityMap map, Publication publication,
-            String id, String area) throws DocumentException {
-        super(manager, map, publication, id, area);
+            String id, String area, Logger _logger) throws DocumentException {
+        super(manager, map, publication, id, area, _logger);
     }
 
     /**
@@ -70,11 +72,12 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @param id The document ID.
      * @param area The area the document belongs to.
      * @param language The language of the document.
+     * @param _logger a logger
      * @throws DocumentException when something went wrong.
      */
     public CollectionImpl(ServiceManager manager, DocumentIdentityMap map, Publication publication,
-            String id, String area, String language) throws DocumentException {
-        super(manager, map, publication, id, area, language);
+            String id, String area, String language, Logger _logger) throws DocumentException {
+        super(manager, map, publication, id, area, language, _logger);
     }
 
     private List documentsList = new ArrayList();
