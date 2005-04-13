@@ -500,6 +500,12 @@ public abstract class AbstractPublication implements Publication {
                             destinationNode.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME,
                                     visibility);
 
+                            // also update the link attribute if necessary
+                            if (sourceNode.hasLink() != destinationNode.hasLink()) {
+                                String link = (sourceNode.hasLink() ? "true" : "false");
+                                destinationNode.setNodeAttribute(SiteTreeNodeImpl.LINK_ATTRIBUTE_NAME, link);
+                            }
+
                         }
                     }
                 }
