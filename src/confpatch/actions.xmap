@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<!-- $Id$  -->
 
 <xmap xpath="/sitemap/components/actions" unless="/sitemap/components/actions/action[@name = 'authenticator']">
    <map:action name="authorizer" src="org.apache.lenya.cms.cocoon.acting.DelegatingAuthorizerAction" logger="lenya.sitemap.action.authorizer"/>
    <map:action name="language-exists" logger="lenya.sitemap.action.language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
-   <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
    <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" src="org.apache.cocoon.acting.RequestParameterExistsAction" />
    <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
    <map:action name="reserved-checkout" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckoutAction" logger="sitemap.action.reserved-checkout"/>
@@ -26,7 +26,6 @@
    <map:action name="resource-exists" logger="sitemap.action.resource-exists" src="org.apache.cocoon.acting.ResourceExistsAction"/>
    <map:action name="resource-exists-enhanced" logger="sitemap.action.resource-exists-enhanced" src="org.apache.lenya.cms.cocoon.acting.ResourceExistsAction"/>
    <map:action name="rollback" src="org.apache.lenya.cms.cocoon.acting.RollbackAction"/>
-   <map:action name="save" logger="sitemap.action.save" src="org.apache.lenya.cms.cocoon.acting.HTMLFormSaveAction" />
    <map:action name="task" logger="sitemap.action.task" src="org.apache.lenya.cms.cocoon.acting.TaskAction"/>
    <map:action name="upload" logger="sitemap.action.upload" src="org.apache.lenya.cms.cocoon.acting.UploadAction">
      <resources-root href="resources/images/live"/>
