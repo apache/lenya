@@ -114,10 +114,92 @@ $PUB_HOME
         The methods of this interface are called in a certain order when the usecase is invoked:
       </p>
       <ol>
-        <li><code>setup(String sourceUrl, Situation situation);</code> Initializes the handler.</li>
-        <li><code>isInteractive()</code> Asks is the usecase is interactive, i.e. if a confirmation screen should be presented to the user.</li>
-        <li><code>checkPreconditions()</code> This allows the handler to check if the usecase may be invoked in this situation.</li>
+        <li><code>setSourceURL(String sourceUrl)</code>
+            <br/>
+            <code>setName(String)</code>
+          <p>Initialize the handler.</p>
+          <br/>
+        </li>
+        <li><code>checkPreconditions()</code>
+          <p>
+            This method is called to check the pre-conditions of the usecase. The pre-conditions
+            are checked before the usecase is started, i.e., before the first screen is presented
+            to the user. To denote that a condition does not comply, add an appropriate error message
+            using <code>addErrorMessage(String)</code>. If an error message was added, the usecase
+            is not started. Alternatively, you can provide information to the user using
+            <code>addInfoMessage(String)</code>. This doesn't prevent the usecase from being executed.
+          </p>
+          <br/>
+        </li>
+        <li><code>lockInvolvedObjects()</code>
+          <p>
+            This method is called to lock all objects which could be changed during the usecase.
+          </p>
+          <br/>
+        </li>
       </ol>
+      
+      <p>
+        The following methods are called in a loop while the user interacts with the usecase,
+        until a request parameter with the name <code>submit</code> was sent.
+      </p>
+      
+      <ol>
+        <li><code>getView()</code>
+          <p>
+            Requests the next view to be displayed. The view may be <code>null</code> if no
+            screen should be presented to the user.
+          </p>
+          <br/>
+        </li>
+        <li><code>advance()</code>
+          <p>
+            This method is called to advance the usecase after the a user interaction.
+            In contrast to <code>execute()</code>, this method is not called when the
+            <code>&lt;input type="submit" name="submit"&gt;</code> was pressed, but for every
+            other submitting of the form. A typical usecase is the <em>multiple forms editor</em> where
+            <code>advance()</code> is used to update the document when the user switched to
+            another element.
+          </p>
+          <br/>
+        </li>
+      </ol>
+      
+      <p>
+        When the form is submitted using the <code>&lt;input type="submit" name="submit"&gt;</code>
+        button, the usecase is finished:
+      </p>
+      
+      <ol>
+        <li><code>checkExecutionConditions()</code>
+          <p>
+            This method is called before the usecase is actually executed. A typical example
+            is the validation of form data.
+          </p>
+          <br/>
+        </li>
+        <li><code>execute()</code>
+          <p>
+            This method actually executes the final step of the usecase.
+          </p>
+          <br/>
+        </li>
+      </ol>
+
+      <p>
+        When the form is submitted using the <code>&lt;input type="submit" name="cancel"&gt;</code>
+        button, the usecase is cancelled:
+      </p>
+      
+      <ol>
+        <li><code>cancel()</code>
+          <p>
+            This method cancels the usecase. The transaction is rolled back.
+          </p>
+          <br/>
+        </li>
+      </ol>
+
     </section>
     
     <section>

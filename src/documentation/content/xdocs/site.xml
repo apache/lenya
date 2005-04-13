@@ -57,7 +57,10 @@
 
     <reference href="reference/" label="Technical Reference"> 	 
       <sitemaps14 href="lenya-sitemaps.html" label="Overview of Lenya Sitemaps" />
-      <usecase-framework-index href="usecase-framework/index.html" label="Usecase Framework"/> 	 
+      <usecase-framework href="usecase-framework/" label="Usecase Framework">
+        <usecase-framework-overview href="index.html" label="Overview"/>
+        <abstractusecase href="abstractusecase.html" label="AbstractUsecase"/> 	 
+      </usecase-framework>
       <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
     </reference>
 

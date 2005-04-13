@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<document> 
+  <header> 
+    <title>The AbstractUsecase Class</title> 
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      <p>
+        When you implement a custom usecase, you're very likely to extend
+        <code>org.apache.lenya.cms.usecase.AbstractUsecase</code>. This class provides a set of
+        functionality to simplify the implementation of usecases.
+      </p>
+    </section>
+    
+    <section>
+      <title>Configuration</title>
+      <p>
+        The usecase is configured in <code>cocoon.xconf</code>.
+        A typical configuration looks like this:
+      </p>
+      
+<source xml:space="preserve"><![CDATA[
+<component-instance name="edit.forms" logger="lenya.publication"
+                    class="org.apache.lenya.cms.editors.forms.FormsEditor">
+  <transaction policy="pessimistic"/>
+  <view template="edit/forms/forms" menu="false"/>
+</component-instance>
+]]></source>
+
+      <p>
+        The following configuration options are available:
+      </p>
+      
+      <ul>
+        <li>Element <code>&lt;transaction&gt;</code> (optional)
+          <ul>
+            <li>Attribute <code>policy = (optimistic | pessimistic)</code></li>
+          </ul>
+          <br/>
+          <p>
+            This element is used to determine the transaction policy of the usecase
+            (<em>optimistic</em> or <em>pessimistic offline lock</em>). It can be omitted,
+            the default is optimistic behaviour.
+            You should only use pessimistic behaviour for complex usecases when the user
+            can't afford to lose all changes.
+          </p>
+          <br/>
+        </li>
+        
+        <li>Element <code>&lt;view&gt;</code> (optional)
+          <ul>
+            <li>Attribute <code>template</code> (required)</li>
+            <li>Attribute <code>menu = (true | false)</code> (optional)</li>
+          </ul>
+          <br/>
+          <p>
+            This element declares the view of the usecase. The <code>template</code> attribute
+            points to the JX template to use, relatively to the <code>lenya/usecases</code>
+            directory. The suffix <code>.jx</code> is added automatically. The attribute <code>menu</code>
+            determines if the menu should be visible. It can be omitted and defaults to <code>false</code>.
+          </p>
+          <br/>
+        </li>
+      </ul>
+      
+    </section>
+    
+    <section>
+      <title>Extending AbstractUsecase</title>
+      
+      <p>
+        The following methods of the <code>AbstractUsecase</code> class are meant to be overridden:
+      </p>
+      
+      <ul>
+      <li>
+        <code>protected void initParameters()</code>
+        <p>
+          This method is called to initialize the parameters of the usecase. For instance, if
+          your usecase shall display meta data on the view screen, <code>initParameters()</code>
+          reads the meta data from the document and puts them into the parameter map using
+          <code>setParameter(String, Object)</code> to make them available to the JX template.
+        </p>
+        <br/>
+      </li>
+      
+      <li>
+        <code>protected void doCheckPreconditions()</code>
+        <p>
+          The method <code>checkPreconditions()</code> is a template method which calls this
+          method. For details on <code>checkPreconditions()</code>, see section
+          <link href="index.html">Overview</link>.
+        </p>
+        <br/>
+      </li>
+      
+      <li>
+        <code>protected void doCheckExecutionConditions()</code>
+        <p>
+          The method <code>checkExecutionConditions()</code> is a template method which calls this
+          method. For details on <code>checkExecutionConditions()</code>, see section
+          <link href="index.html">Overview</link>.
+        </p>
+        <br/>
+      </li>
+      
+      <li>
+        <code>protected void doCheckPostconditions()</code>
+        <p>
+          The method <code>checkPostonditions()</code> is a template method which calls this
+          method. For details on <code>checkPostonditions()</code>, see section
+          <link href="index.html">Overview</link>.
+        </p>
+        <br/>
+      </li>
+      
+      <li>
+        <code>protected void doExecute()</code>
+        <p>
+          The method <code>execute()</code> is a template method which calls this
+          method. For details on <code>execute()</code>, see section
+          <link href="index.html">Overview</link>.
+        </p>
+        <br/>
+      </li>
+      
+      <li>
+        <code>public void advance()</code>
+        <p>
+          For details on <code>advance()</code>, see section
+          <link href="index.html">Overview</link>.
+        </p>
+        <br/>
+      </li>
+      
+      <li>
+        <code>protected Transactionable[] getObjectsToLock()</code>
+        <p>
+          This method is supposed to return all objects which should be locked before
+          the usecase is started. If the transaction policy is <em>pessimistic offline lock</em>,
+          these objects are checked out immediately.
+        </p>
+        <br/>
+      </li>
+      
+      </ul>
+      
+    </section>
+    
+  </body>
+</document>
