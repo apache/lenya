@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Abstract superclass for usecases to create a resource.
  * 
- * @version $Id: Create.java 123982 2005-01-03 15:01:19Z andreas $
+ * @version $Id$
  */
 public abstract class Create extends AbstractUsecase {
 
@@ -212,6 +212,15 @@ public abstract class Create extends AbstractUsecase {
 
     private Publication publication;
 
+    /**
+     * Access to the current publication. 
+     * Use this when the publication is not yet known in the usecase: 
+     * e.g. when creating a global asset. When adding a resource or a child
+     * to a document, access the publication via that document's interface
+     * instead.
+     *
+     * @return the publication in which the use-case is being executed
+     */
     protected Publication getPublication() {
         if (this.publication == null) {
             PublicationFactory factory = PublicationFactory.getInstance(getLogger());

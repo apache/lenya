@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Usecase to create a document.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class CreateDocument extends Create {
 
@@ -51,7 +51,7 @@ public class CreateDocument extends Create {
             setParameter(PARENT_ID, "");
         }
 
-        String[] languages = getPublication().getLanguages();
+        String[] languages = parent.getPublication().getLanguages();
         setParameter(LANGUAGES, languages);
     }
 
@@ -68,7 +68,7 @@ public class CreateDocument extends Create {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             String[] messages = documentManager.canCreate(getDocumentIdentityMap(),
-                    getPublication(),
+                    parent.getPublication(),
                     getArea(),
                     parent,
                     nodeId,
@@ -103,7 +103,8 @@ public class CreateDocument extends Create {
 
         Publication publication = parent.getPublication();
         String area = parent.getArea();
-        Document document = parent.getIdentityMap().get(getPublication(),
+
+        Document document = parent.getIdentityMap().get(publication,
                 area,
                 documentId,
                 language);
