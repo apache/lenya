@@ -27,7 +27,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Session;
+import org.apache.cocoon.environment.Request;
 
 /**
  * Abstract operation implementation.
@@ -70,10 +70,8 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
     public void setUnitOfWork(UnitOfWork unit) {
         this.unitOfWork = unit;
         ContainerUtil.enableLogging(this.unitOfWork, getLogger());
-        Session session = ContextHelper.getRequest(this.context).getSession(false);
-        if (session != null) {
-            session.setAttribute(UnitOfWork.class.getName(), unit);
-        }
+        Request request = ContextHelper.getRequest(this.context);
+        request.setAttribute(UnitOfWork.class.getName(), unit);
     }
 
     protected ServiceManager manager;

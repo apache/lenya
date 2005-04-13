@@ -31,7 +31,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Session;
+import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
@@ -131,17 +131,14 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                 path = path.substring(1);
             }
 
-            UnitOfWork unit = null;
             IdentityMap map = null;
-            Session session = ContextHelper.getRequest(this.context).getSession(false);
-            if (session != null) {
-                unit = (UnitOfWork) session.getAttribute(UnitOfWork.class.getName());
-                if (unit != null) {
-                    map = unit.getIdentityMap();
-                }
-                else {
-                    map = new DocumentIdentityMap(this.manager, getLogger());
-                }
+
+            Request request = ContextHelper.getRequest(this.context);
+            UnitOfWork unit = (UnitOfWork) request.getAttribute(UnitOfWork.class.getName());
+            if (unit != null) {
+                map = unit.getIdentityMap();
+            } else {
+                map = new DocumentIdentityMap(this.manager, getLogger());
             }
 
             if (getLogger().isDebugEnabled()) {

@@ -104,10 +104,10 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
      */
     public OutputStream getOutputStream() throws IOException {
         try {
-            this.identityMap.getUnitOfWork().registerDirty(this.node);
             if (!this.node.isLocked()) {
                 throw new RuntimeException("Cannot write to source [" + getURI() + "]: not locked!");
             }
+            this.identityMap.getUnitOfWork().registerDirty(this.node);
             return new DOMOutputStream();
         } catch (TransactionException e) {
             throw new RuntimeException(e);
