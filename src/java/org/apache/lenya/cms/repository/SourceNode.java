@@ -16,12 +16,19 @@
  */
 package org.apache.lenya.cms.repository;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Identity;
@@ -34,6 +41,7 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 
 /**
@@ -43,7 +51,6 @@ import org.w3c.dom.Document;
  */
 public class SourceNode extends AbstractLogEnabled implements Node {
 
-    private Document document;
     private String sourceUri;
     private ServiceManager manager;
     private IdentityMap identityMap;
@@ -66,14 +73,15 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see org.apache.lenya.cms.repository.Node#getDocument()
      */
     public Document getDocument() {
+        Document document = null;
         try {
-            if (this.document == null && SourceUtil.exists(getRealSourceURI(), this.manager)) {
-                this.document = SourceUtil.readDOM(getRealSourceURI(), this.manager);
+            if (exists()) {
+                document = DocumentHelper.readDocument(getInputStream());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return this.document;
+        return document;
     }
 
     protected String getUserId() {
@@ -143,7 +151,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     protected String getRCPath() throws IOException {
         String publicationsPath = this.sourceUri.substring("lenya://lenya/pubs/".length());
         String publicationId = publicationsPath.split("/")[0];
-        String path = "lenya://lenya/pubs/" + publicationId + "/content/";
+        String path = "lenya://lenya/pubs/" + publicationId + "/";
         return this.sourceUri.substring(path.length());
     }
 
@@ -229,14 +237,54 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             throw new TransactionException("Cannot save node [" + this.sourceUri
                     + "]: not checked out!");
         }
-        try {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Saving document [" + document.getDocumentElement().getNodeName()
-                        + "] to source [" + getRealSourceURI() + "]");
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Saving [" + this + "] to source [" + getRealSourceURI() + "]");
+        }
+
+        if (this.data != null) {
+            SourceResolver resolver = null;
+            ModifiableSource source = null;
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+
+                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+                source = (ModifiableSource) resolver.resolveURI(getRealSourceURI());
+
+                out = source.getOutputStream();
+
+                byte[] buf = new byte[4096];
+                in = new ByteArrayInputStream(this.data);
+                int read = in.read(buf);
+
+                while (read > 0) {
+                    out.write(buf, 0, read);
+                    read = in.read(buf);
+                }
+
+            } catch (Exception e) {
+                throw new TransactionException(e);
+            } finally {
+
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                    if (out != null) {
+                        out.flush();
+                        out.close();
+                    }
+                } catch (Throwable t) {
+                    throw new RuntimeException("Could not close streams: ", t);
+                }
+
+                if (resolver != null) {
+                    if (source != null) {
+                        resolver.release(source);
+                    }
+                    manager.release(resolver);
+                }
             }
-            SourceUtil.writeDOM(this.document, getRealSourceURI(), this.manager);
-        } catch (Exception e) {
-            throw new TransactionException(e);
         }
     }
 
@@ -303,14 +351,30 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             getLogger().debug("Setting document [" + document.getDocumentElement().getNodeName()
                     + "]");
         }
-        this.document = document;
+
+        Writer writer = null;
+        try {
+            writer = new OutputStreamWriter(getOutputStream());
+            DocumentHelper.writeDocument(document, writer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e1) {
+                    throw new RuntimeException(e1);
+                }
+            }
+        }
     }
 
     /**
      * @see org.apache.lenya.cms.repository.Node#exists()
      */
     public boolean exists() throws TransactionException {
-        return getDocument() != null;
+        loadData();
+        return this.data != null;
     }
 
     /**
@@ -318,6 +382,90 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      */
     public String toString() {
         return "node " + this.sourceUri;
+    }
+
+    private byte[] data = null;
+
+    /**
+     * @see org.apache.lenya.cms.repository.Node#getInputStream()
+     */
+    public InputStream getInputStream() throws TransactionException {
+        if (!exists()) {
+            throw new RuntimeException(this + " does not exist!");
+        }
+        return new ByteArrayInputStream(this.data);
+    }
+
+    /**
+     * Loads the data from the real source.
+     * @throws TransactionException if an error occurs.
+     */
+    protected void loadData() throws TransactionException {
+
+        if (this.data != null) {
+            return;
+        }
+
+        ByteArrayOutputStream out = null;
+        InputStream in = null;
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getRealSourceURI());
+
+            if (source.exists()) {
+                byte[] buf = new byte[4096];
+                out = new ByteArrayOutputStream();
+                in = source.getInputStream();
+                int read = in.read(buf);
+
+                while (read > 0) {
+                    out.write(buf, 0, read);
+                    read = in.read(buf);
+                }
+
+                this.data = out.toByteArray();
+            }
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        } finally {
+            try {
+                if (in != null)
+                    in.close();
+                if (out != null)
+                    out.close();
+            } catch (Exception e) {
+                throw new TransactionException(e);
+            }
+
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.repository.Node#getOutputStream()
+     */
+    public OutputStream getOutputStream() throws TransactionException {
+        return new NodeOutputStream();
+    }
+
+    /**
+     * Output stream.
+     */
+    private class NodeOutputStream extends ByteArrayOutputStream {
+        /**
+         * @see java.io.OutputStream#close()
+         */
+        public void close() throws IOException {
+            SourceNode.this.data = super.toByteArray();
+            super.close();
+        }
     }
 
 }

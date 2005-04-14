@@ -31,7 +31,6 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.SourceNodeFactory;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 
 /**
@@ -108,7 +107,7 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
                 throw new RuntimeException("Cannot write to source [" + getURI() + "]: not locked!");
             }
             this.identityMap.getUnitOfWork().registerDirty(this.node);
-            return new DOMOutputStream();
+            return this.node.getOutputStream();
         } catch (TransactionException e) {
             throw new RuntimeException(e);
         }
@@ -219,27 +218,6 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
 
         transformer.transform(new DOMSource(edoc), new StreamResult(pos));
 
-    }
-
-    /**
-     * DOM output stream.
-     */
-    private class DOMOutputStream extends ByteArrayOutputStream {
-        /**
-         * @see java.io.OutputStream#close()
-         */
-        public void close() throws IOException {
-            byte[] content = super.toByteArray();
-            InputStream in = new ByteArrayInputStream(content);
-            Document document;
-            try {
-                document = DocumentHelper.readDocument(in);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            RepositorySource.this.node.setDocument(document);
-            super.close();
-        }
     }
 
     /**

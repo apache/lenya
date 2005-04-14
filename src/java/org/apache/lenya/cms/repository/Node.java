@@ -16,13 +16,16 @@
  */
 package org.apache.lenya.cms.repository;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
 import org.w3c.dom.Document;
 
 /**
  * Repository node.
- *
+ * 
  * @version $Id:$
  */
 public interface Node extends Transactionable {
@@ -31,21 +34,33 @@ public interface Node extends Transactionable {
      * @return The DOM that holds the information.
      */
     Document getDocument();
-    
+
     /**
      * @param document The DOM that holds the information.
      */
     void setDocument(Document document);
-    
+
     /**
      * The identifiable type.
      */
     String IDENTIFIABLE_TYPE = "node";
-    
+
     /**
      * @return if the node exists.
      * @throws TransactionException if an error occurs.
      */
     boolean exists() throws TransactionException;
-    
+
+    /**
+     * @return The input stream.
+     * @throws TransactionException if the node does not exist.
+     */
+    InputStream getInputStream() throws TransactionException;
+
+    /**
+     * @return The output stream.
+     * @throws TransactionException if the node does not exist.
+     */
+    OutputStream getOutputStream() throws TransactionException;
+
 }
