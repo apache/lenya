@@ -51,6 +51,7 @@
       
       <!-- create the current job snapshot -->
       <map:match pattern="servlet">
+        <!-- TODO: This can lead to problems if the request does not come through the "HTTP port" but for instance through the mod_jk port 8009 -->
         <map:generate src="{request:contextPath}/servlet/QuartzSchedulerServlet" type="servletproxy"/>
         <map:transform src="xslt/scheduler/sort.xsl"/>
         <map:serialize type="xml"/>
