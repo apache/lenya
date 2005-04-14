@@ -36,17 +36,19 @@
           <th><i18n:text>Creation Date</i18n:text></th>
           <th></th>
         </tr>
-        <jx:forEach var="item" items="${usecase.getParameter('assets')}">
+        <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
           <tr>
-            <td><jx:out value="${item.source}"/></td>
+            <td><jx:out value="${asset.getName()}"/></td>
             <td>        
+              <!--
               <jx:if test="${item.format.equals('image/jpeg') or item.format.equals('image/gif') or item.format.equals('image/png')}">
                   <img src="../authoring/${usecase.getParameter('documentname')}/${item.source}" style="height: 32px; vertical-align: middle;"/>&#160;
               </jx:if>
+              -->
             </td>
-            <td><jx:out value="${item.title}"/></td>
-            <td align="right"><jx:out value="${item.extent}"/> kB</td>
-            <td align="right"><jx:out value="${item.date}"/></td>
+            <td><jx:out value="${asset.getMetaData().getFirstValue('title')}"/></td>
+            <td align="right"><!--<jx:out value="${item.extent}"/> kB--></td>
+            <td align="right"><!--<jx:out value="${item.date}"/>--></td>
             <td>
               <form method="POST">
                 <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
@@ -61,9 +63,9 @@
           </tr> 
         </jx:forEach>
       </table>
-     <jx:if test="${usecase.getParameter('area').equals('authoring')}">
+     <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
       <form method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
         <table class="lenya-table-noborder">
           <tr>
