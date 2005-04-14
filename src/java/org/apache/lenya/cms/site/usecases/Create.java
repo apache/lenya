@@ -148,7 +148,7 @@ public abstract class Create extends AbstractUsecase {
      * @throws DocumentException if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
-        DublinCore dublinCore = document.getDublinCore();
+        DublinCore dublinCore = (DublinCore) document.getMetaData();
         dublinCore.setValue(DublinCore.ELEMENT_TITLE,
                 getParameterAsString(DublinCore.ELEMENT_TITLE));
         dublinCore.setValue(DublinCore.ELEMENT_CREATOR,

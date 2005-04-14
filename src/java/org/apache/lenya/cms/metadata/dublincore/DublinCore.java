@@ -17,7 +17,7 @@
 
 package org.apache.lenya.cms.metadata.dublincore;
 
-import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.metadata.MetaDataManager;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ import org.apache.lenya.cms.publication.DocumentException;
  * 
  * @version $Id$
  */
-public interface DublinCore {
+public interface DublinCore extends MetaDataManager {
 
     /**
      * A name given to the resource. Typically, Title will be a name by which the resource is
@@ -345,68 +345,5 @@ public interface DublinCore {
      * Date (often a range) of validity of a resource.
      */
     static final String TERM_VALID = "valid";
-
-    /**
-     * Returns the values for a certain key.
-     * @param key The key.
-     * @return An array of strings.
-     * @throws DocumentException when something went wrong.
-     */
-    String[] getValues(String key) throws DocumentException;
-
-    /**
-     * Returns the first value for a certain key.
-     * @param key The key.
-     * @return A string or <code>null</code> if no value is set for this key.
-     * @throws DocumentException if an error occurs.
-     */
-    String getFirstValue(String key) throws DocumentException;
-
-    /**
-     * Sets the value for a certain key. All existing values will be removed.
-     * @param key The key.
-     * @param value The value to set.
-     * @throws DocumentException when something went wrong.
-     */
-    void setValue(String key, String value) throws DocumentException;
-
-    /**
-     * Adds a value for a certain key.
-     * @param key The key.
-     * @param value The value to add.
-     * @throws DocumentException when something went wrong.
-     */
-    void addValue(String key, String value) throws DocumentException;
-
-    /**
-     * Add all values for a certain key.
-     * 
-     * @param key The key
-     * @param values The value to add
-     * @throws DocumentException if something went wrong
-     */
-    void addValues(String key, String[] values) throws DocumentException;
-
-    /**
-     * Removes a specific value for a certain key.
-     * @param key The key.
-     * @param value The value to remove.
-     * @throws DocumentException when something went wrong.
-     */
-    void removeValue(String key, String value) throws DocumentException;
-
-    /**
-     * Removes all values for a certain key.
-     * @param key The key.
-     * @throws DocumentException when something went wrong.
-     */
-    void removeAllValues(String key) throws DocumentException;
-
-    /**
-     * Replace the contents of the current dublin core by the contents of other.
-     * @param other The other dublin core object.
-     * @throws DocumentException if an error occurs.
-     */
-    void replaceBy(DublinCore other) throws DocumentException;
 
 }

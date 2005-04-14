@@ -19,8 +19,9 @@
 
 package org.apache.lenya.cms.metadata.dublincore;
 
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
@@ -42,6 +43,7 @@ public final class DublinCoreHelper {
 
     /**
      * Get the value of the DCIdentifier corresponding to a document id.
+     * @param manager The service manager.
      * @param map The identity map.
      * @param publication The publication the document(s) belongs to.
      * @param area The area the document(s) belongs to.
@@ -49,11 +51,13 @@ public final class DublinCoreHelper {
      * @return a String. The value of the DCIdentifier.
      * @throws DocumentException when something with the document went wrong.
      */
-    public static String getDCIdentifier(DocumentIdentityMap map, Publication publication,
-            String area, String documentId) throws DocumentException {
+    public static String getDCIdentifier(ServiceManager manager, DocumentIdentityMap map,
+            Publication publication, String area, String documentId) throws DocumentException {
 
         String identifier = null;
+        SourceResolver resolver = null;
         try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
             identifier = null;
 
             Document baseDocument = map.get(publication, area, documentId);
@@ -64,7 +68,7 @@ public final class DublinCoreHelper {
                 while (identifier == null && i < languages.length) {
                     Document document = map.get(publication, area, documentId, languages[i]);
                     log.debug("document file : " + document.getFile().getAbsolutePath());
-                    DublinCore dublincore = document.getDublinCore();
+                    DublinCore dublincore = (DublinCore) document.getMetaData();
                     log.debug("dublincore title : "
                             + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
                     identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
@@ -72,15 +76,18 @@ public final class DublinCoreHelper {
                 }
             }
             if (languages.length < 1 || identifier == null) {
-                DublinCore dublincore = baseDocument.getDublinCore();
+                DublinCore dublincore = (DublinCore) baseDocument.getMetaData();
                 identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
             }
-        } catch (final DocumentBuildException e) {
-            log.error("" + e.toString());
-            throw new DocumentException(e);
         } catch (final DocumentException e) {
-            log.error("" + e.toString());
+            throw e;
+        } catch (final Exception e) {
             throw new DocumentException(e);
+        }
+        finally {
+            if (resolver != null) {
+                manager.release(resolver);
+            }
         }
 
         return identifier;

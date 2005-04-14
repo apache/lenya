@@ -19,10 +19,7 @@
 
 package org.apache.lenya.cms.ant;
 
-import java.io.File;
-
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -64,19 +61,19 @@ public class DeactivateResourcesTask extends PublicationTask {
         }
         if (node == null || (labels != null && labels.length < 1)) {
 
-            Document doc;
+            ResourcesManager resMgr = null;
             try {
-                doc = getIdentityMap().get(getPublication(), _area, _documentid, _language);
-            } catch (DocumentBuildException e) {
+                Document doc = getIdentityMap()
+                        .get(getPublication(), _area, _documentid, _language);
+                resMgr = (ResourcesManager) getServiceManager().lookup(ResourcesManager.ROLE);
+                resMgr.deleteResources(doc);
+            } catch (Exception e) {
                 throw new BuildException(e);
+            } finally {
+                if (resMgr != null) {
+                    getServiceManager().release(resMgr);
+                }
             }
-            ResourcesManager resourcesMgr = doc.getResourcesManager();
-            File[] resources = resourcesMgr.getResources();
-            for (int i = 0; i < resources.length; i++) {
-                resources[i].delete();
-            }
-            File directory = resourcesMgr.getPath();
-            directory.delete();
         }
     }
 

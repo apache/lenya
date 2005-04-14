@@ -69,6 +69,7 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
      * @see org.apache.lenya.cms.publication.DocumentTypeResolver#resolve(org.apache.lenya.cms.publication.Document)
      */
     public DocumentType resolve(Document document) {
+        
         DocumentType documentType;
         URIParameterizer parameterizer = null;
         Map map = null;

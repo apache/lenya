@@ -16,13 +16,17 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -45,7 +49,6 @@ public class Assets extends SiteUsecase {
         if (title.length() == 0) {
             addErrorMessage("Please enter a title.");
         }
-
     }
 
     /**
@@ -62,36 +65,46 @@ public class Assets extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        ResourcesManager resourcesManager = getSourceDocument().getResourcesManager();
-        File[] resources = resourcesManager.getResources();
 
-        if (resources != null) {
-            Map[] assets = new Map[resources.length];
+        ResourcesManager resourcesManager = null;
+        SourceResolver resolver = null;
 
-            for (int i = 0; i < resources.length; i++) {
-                Map asset = new HashMap();
-                String title = "";
-                String format = "";
-                org.w3c.dom.Document metaDoc;
-                try {
-                    metaDoc = DocumentHelper.readDocument(resourcesManager
-                            .getMetaFile(resources[i]));
-                    title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
-                            "title").item(0).getChildNodes().item(0).getNodeValue();
-                    format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
-                            "format").item(0).getChildNodes().item(0).getNodeValue();
-                } catch (final Exception e) {
-                    throw new RuntimeException(e);
-                }
-                asset.put("source", resources[i].getName());
-                asset.put("title", title);
-                asset.put("date", DateFormat.getDateInstance().format(new Date(resources[i]
-                        .lastModified())));
-                asset.put("format", format);
-                asset.put("extent", new Long(resources[i].length() / 1024));
-                assets[i] = asset;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
+
+            Resource[] resources = resourcesManager.getResources(getSourceDocument());
+            setParameter("assets", Arrays.asList(resources));
+
+            /*
+             * Map[] assets = new Map[resources.length];
+             * 
+             * for (int i = 0; i < resources.length; i++) { Map asset = new HashMap(); String title =
+             * ""; String format = ""; org.w3c.dom.Document metaDoc; Source assetSource = null;
+             * Source metaSource = null; try { DublinCore core = (DublinCore)
+             * resources[i].getMetaData(); metaDoc =
+             * DocumentHelper.readDocument(metaSource.getInputStream()); title =
+             * metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
+             * "title").item(0).getChildNodes().item(0).getNodeValue(); format =
+             * metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
+             * "format").item(0).getChildNodes().item(0).getNodeValue();
+             * 
+             * assetSource = resolver.resolveURI(resources[i].getSourceURI()); asset.put("source",
+             * resources[i].getName()); asset.put("title", title); Date lastModified = new
+             * Date(assetSource.getLastModified()); asset.put("date",
+             * DateFormat.getDateInstance().format(lastModified)); asset.put("format", format);
+             * asset.put("extent", new Long(assetSource.getContentLength() / 1024)); assets[i] =
+             * asset;
+             *  } finally { if (metaSource != null) { resolver.release(metaSource); } if
+             * (assetSource != null) { resolver.release(assetSource); } } } setParameter("assets",
+             * assets);
+             */
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resourcesManager != null) {
+                this.manager.release(resourcesManager);
             }
-            setParameter("assets", assets);
         }
     }
 
@@ -114,7 +127,18 @@ public class Assets extends SiteUsecase {
      */
     protected void deleteAsset() throws Exception {
         String assetName = getParameterAsString("delete");
-        getSourceDocument().getResourcesManager().deleteResource(assetName);
+        ResourcesManager resourcesManager = null;
+        try {
+            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
+            resourcesManager.deleteResource(getSourceDocument(), assetName);
+        } catch (final Exception e) {
+            getLogger().error("The resource could not be added: ", e);
+            addErrorMessage("The resource could not be added (see log files for details).");
+        } finally {
+            if (resourcesManager != null) {
+                this.manager.release(resourcesManager);
+            }
+        }
     }
 
     /**
@@ -130,11 +154,17 @@ public class Assets extends SiteUsecase {
         metadata.put("title", title);
         metadata.put("creator", creator);
         metadata.put("rights", rights);
+        ResourcesManager resourcesManager = null;
         try {
-            getSourceDocument().getResourcesManager().addResource(file, metadata);
+            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
+            resourcesManager.addResource(getSourceDocument(), file, metadata);
         } catch (final Exception e) {
             getLogger().error("The resource could not be added: ", e);
             addErrorMessage("The resource could not be added (see log files for details).");
+        } finally {
+            if (resourcesManager != null) {
+                this.manager.release(resourcesManager);
+            }
         }
     }
 

@@ -32,7 +32,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
@@ -50,9 +50,7 @@ import org.apache.lenya.workflow.WorkflowException;
 public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     private String id;
-    private DublinCore dublincore;
     private DocumentIdentityMap identityMap;
-    private ResourcesManager resourcesManager;
     protected ServiceManager manager;
 
     /**
@@ -101,8 +99,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         this.identityMap = map;
         this.language = _language;
         setArea(_area);
-
-        this.dublincore = new DublinCoreProxy(this, this.manager);
     }
 
     /**
@@ -136,13 +132,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public Date getLastModified() {
         return new Date(getFile().lastModified());
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getDublinCore()
-     */
-    public DublinCore getDublinCore() {
-        return this.dublincore;
     }
 
     /**
@@ -372,17 +361,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getResourcesManager()
-     */
-    public ResourcesManager getResourcesManager() {
-        if (this.resourcesManager == null) {
-            this.resourcesManager = new DefaultResourcesManager(this, this.manager);
-            ContainerUtil.enableLogging(this.resourcesManager, getLogger());
-        }
-        return this.resourcesManager;
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.Document#getCanonicalWebappURL()
      */
     public String getCanonicalWebappURL() {
@@ -401,6 +379,13 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public void accept(DocumentVisitor visitor) throws PublicationException {
         visitor.visitDocument(this);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaData()
+     */
+    public MetaDataManager getMetaData() {
+        return new DublinCoreProxy(getSourceURI(), this.manager);
     }
 
     private History history;

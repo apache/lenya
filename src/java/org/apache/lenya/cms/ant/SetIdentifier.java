@@ -80,8 +80,10 @@ public class SetIdentifier extends PublicationTask {
      *             DublinCore.
      */
     public void writeDCIdentifier(Document document) throws DocumentException {
+        /*
         DublinCore dublincore = document.getDublinCore();
         dublincore.setValue("identifier", this.documentid);
+        */
     }
 
     /**

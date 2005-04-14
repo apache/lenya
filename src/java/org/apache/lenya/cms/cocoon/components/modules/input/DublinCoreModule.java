@@ -27,9 +27,9 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 
 /**
  * Input module to access the dublin core values.
@@ -38,7 +38,8 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -54,8 +55,9 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
         }
         Object value;
         try {
-            value = document.getDublinCore().getFirstValue(name);
-        } catch (DocumentException e) {
+            DublinCore dc = (DublinCore) document.getMetaData();
+            value = dc.getFirstValue(name);
+        } catch (Exception e) {
             throw new ConfigurationException("Obtaining dublin core value for [" + name
                     + "] failed: ", e);
         }
@@ -78,7 +80,8 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {

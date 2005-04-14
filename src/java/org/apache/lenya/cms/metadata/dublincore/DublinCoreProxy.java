@@ -20,7 +20,7 @@
 package org.apache.lenya.cms.metadata.dublincore;
 
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.DocumentException;
 
 /**
@@ -30,17 +30,16 @@ import org.apache.lenya.cms.publication.DocumentException;
 public class DublinCoreProxy implements DublinCore {
 
     private DublinCoreImpl dcCore;
-    private Document cmsDocument;
+    private String sourceUri;
     private ServiceManager manager;
 
-    /** 
-     * Creates a new instance of Dublin Core
-     * 
-     * @param aDocument the document for which the Dublin Core instance is created.
+    /**
+     * Ctor.
+     * @param sourceUri The source URI.
      * @param manager The service manager.
      */
-    public DublinCoreProxy(Document aDocument, ServiceManager manager) {
-        this.cmsDocument = aDocument;
+    public DublinCoreProxy(String sourceUri, ServiceManager manager) {
+        this.sourceUri = sourceUri;
         this.manager = manager;
     }
 
@@ -52,7 +51,7 @@ public class DublinCoreProxy implements DublinCore {
      */
     protected DublinCoreImpl instance() throws DocumentException {
         if (this.dcCore == null) {
-            this.dcCore = new DublinCoreImpl(this.cmsDocument, this.manager);
+            this.dcCore = new DublinCoreImpl(this.sourceUri, this.manager);
         }
         return this.dcCore;
     }
@@ -101,10 +100,10 @@ public class DublinCoreProxy implements DublinCore {
     }
     
 	/**
-	 * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#replaceBy(org.apache.lenya.cms.metadata.dublincore.DublinCore)
+	 * @see org.apache.lenya.cms.metadata.MetaDataManager#replaceBy(org.apache.lenya.cms.metadata.MetaDataManager)
 	 */
-	public void replaceBy(DublinCore other) throws DocumentException {
-		instance().replaceBy(other);
+	public void replaceBy(MetaDataManager other) throws DocumentException {
+		instance().replaceBy((DublinCore) other);
 
 	}
 
@@ -121,6 +120,17 @@ public class DublinCoreProxy implements DublinCore {
      */
     public void setValue(String key, String value) throws DocumentException {
         instance().setValue(key, value);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.metadata.MetaDataManager#getPossibleKeys()
+     */
+    public String[] getPossibleKeys() {
+        try {
+            return instance().getPossibleKeys();
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

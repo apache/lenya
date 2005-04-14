@@ -19,7 +19,6 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
 import java.util.Map;
 
 import org.apache.cocoon.servlet.multipart.Part;
@@ -28,6 +27,11 @@ import org.apache.cocoon.servlet.multipart.Part;
  * Manager for resources of a CMS document.
  */
 public interface ResourcesManager {
+    
+    /**
+     * The Avalon role.
+     */
+    String ROLE = ResourcesManager.class.getName();
 
     /**
      * <code>CONTENT_PREFIX</code> The content prefix
@@ -75,77 +79,48 @@ public interface ResourcesManager {
 
     /**
      * Add a resource to the document.
+     * @param document The document.
      * @param part the part that contains the uploaded file
      * @param metadata the metadata for the resource
      * @throws Exception if an error occurs
      */
-    void addResource(Part part, Map metadata) throws Exception;
+    void addResource(Document document, Part part, Map metadata) throws Exception;
 
     /**
      * Delete a resource from the document.
+     * @param document The document.
      * @param name The filename of the resource.
      * @throws Exception if an error occurs
      */
-    void deleteResource(String name) throws Exception;
-
-    /**
-     * Get the path to the resources.
-     * @return the path to the resources
-     * @deprecated the resource manager should not expose storage details.
-     */
-    File getPath();
-
-    /**
-     * Returns the path of a resource relative to the context prefix.
-     * @param resource The resource
-     * @return The path of a resource relative to the context prefix.
-     */
-    String getResourceUrl(File resource);
+    void deleteResource(Document document, String name) throws Exception;
 
     /**
      * Get all resources for the associated document.
+     * @param document The document.
      * @return all resources of the associated document
      */
-    File[] getResources();
+    Resource[] getResources(Document document);
 
     /**
-     * Return all resources which are images.
-     * @return All image resources.
-     */
-    File[] getImageResources();
-
-    /**
-     * Get the meta data for all resources for the associated document.
+     * Get the image resources for the associated document.
+     * @param document The document.
      * @return all meta data files for the resources for the associated
      *         document.
      */
-    File[] getMetaFiles();
-
-    /**
-     * Returns a meta file for a given resource.
-     * @param resource A resource the meta file should be returned for.
-     * @return A file containing meta information about a resource. Returns null
-     *         if no meta file was found.
-     * @throws IllegalArgumentException If resource is a meta file itself.
-     */
-    File getMetaFile(final File resource) throws IllegalArgumentException;
+    Resource[] getImageResources(Document document);
 
     /**
      * Deletes all resources.
+     * @param document The document.
      */
-    void deleteResources();
-
-    /**
-     * Gets the document this resource manager belongs to.
-     * @return The document
-     */
-    Document getDocument();
+    void deleteResources(Document document);
 
     /**
      * Copies the resources of a document to another document.
+     * @param sourceDocument The source document.
      * @param destinationDocument The destination document.
      * @throws Exception when something went wrong.
      */
-    void copyResourcesTo(Document destinationDocument) throws Exception;
+    void copyResources(Document sourceDocument, Document destinationDocument) throws Exception;
 
 }

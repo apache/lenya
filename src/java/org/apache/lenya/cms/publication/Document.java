@@ -22,6 +22,7 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 import java.util.Date;
 
+import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
@@ -31,7 +32,7 @@ import org.apache.lenya.workflow.Workflowable;
 /**
  * A CMS document.
  */
-public interface Document extends Workflowable, Identifiable {
+public interface Document extends MetaDataOwner, Workflowable, Identifiable {
     
     /**
      * The document namespace URI.
@@ -84,12 +85,6 @@ public interface Document extends Workflowable, Identifiable {
      * @return A string.
      */
     String getCanonicalDocumentURL();
-
-	/**
-	 * Returns the dublin core class for this document.
-	 * @return A DublinCore object.
-	 */
-	DublinCore getDublinCore();
 
     /**
      * Returns the language of this document.
@@ -172,12 +167,6 @@ public interface Document extends Workflowable, Identifiable {
     DocumentIdentityMap getIdentityMap();
     
     /**
-     * Returns the resources manager for this document.
-     * @return A resources manager.
-     */
-    ResourcesManager getResourcesManager();
-
-    /**
      * Returns the URI to resolve the document's source.
      * @return A string.
      */
@@ -200,4 +189,5 @@ public interface Document extends Workflowable, Identifiable {
      * @return The repository nodes that represent this document.
      */
     Node[] getRepositoryNodes();
+
 }

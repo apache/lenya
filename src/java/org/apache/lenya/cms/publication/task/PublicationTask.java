@@ -91,7 +91,6 @@ public abstract class PublicationTask extends AbstractTask {
      * @param sourceDocument The source document.
      * @param destinationDocument The destination document.
      * @throws ExecutionException when something went wrong.
-     */
     protected void copyResources(Document sourceDocument, Document destinationDocument)
             throws ExecutionException {
 
@@ -121,6 +120,7 @@ public abstract class PublicationTask extends AbstractTask {
             }
         }
     }
+     */
 
     /**
      * <code>PARAMETER_WORKFLOW_EVENT</code> The workflow event parameter

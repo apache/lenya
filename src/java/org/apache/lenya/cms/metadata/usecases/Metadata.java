@@ -16,7 +16,7 @@
  */
 package org.apache.lenya.cms.metadata.usecases;
 
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
@@ -27,8 +27,6 @@ import org.apache.lenya.transaction.Transactionable;
  * @version $Id: Metadata.java 123979 2005-01-03 14:59:45Z andreas $
  */
 public class Metadata extends SiteUsecase {
-
-    private DublinCore dc;
 
     /**
      * Ctor.
@@ -51,30 +49,16 @@ public class Metadata extends SiteUsecase {
         super.initParameters();
 
         try {
-            this.dc = getSourceDocument().getDublinCore();
-            setParameter(DublinCore.ELEMENT_CREATOR, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_CREATOR));
-            setParameter(DublinCore.ELEMENT_TITLE, this.dc.getFirstValue(DublinCore.ELEMENT_TITLE));
-            setParameter(DublinCore.ELEMENT_DESCRIPTION, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_CREATOR));
-            setParameter(DublinCore.ELEMENT_SUBJECT, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_SUBJECT));
-            setParameter(DublinCore.ELEMENT_PUBLISHER, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_PUBLISHER));
-            setParameter(DublinCore.ELEMENT_RIGHTS, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_RIGHTS));
-            setParameter(DublinCore.ELEMENT_TYPE, this.dc.getFirstValue(DublinCore.ELEMENT_TYPE));
-            setParameter(DublinCore.ELEMENT_DATE, this.dc.getFirstValue(DublinCore.ELEMENT_DATE));
-            setParameter(DublinCore.ELEMENT_FORMAT, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_FORMAT));
-            setParameter(DublinCore.ELEMENT_SOURCE, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_SOURCE));
-            setParameter(DublinCore.ELEMENT_LANGUAGE, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_LANGUAGE));
-            setParameter(DublinCore.ELEMENT_RELATION, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_RELATION));
-            setParameter(DublinCore.ELEMENT_COVERAGE, this.dc
-                    .getFirstValue(DublinCore.ELEMENT_COVERAGE));
+            MetaDataManager meta = getSourceDocument().getMetaData();
+
+            String[] keys = meta.getPossibleKeys();
+            for (int i = 0; i < keys.length; i++) {
+                String value = meta.getFirstValue(keys[i]);
+                if (value != null) {
+                    setParameter(keys[i], value);
+                }
+            }
+
         } catch (Exception e) {
             getLogger().error("Unable to load Dublin Core metadata.", e);
             addErrorMessage("Unable to load Dublin Core metadata.");
@@ -102,27 +86,17 @@ public class Metadata extends SiteUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        String creator = getParameterAsString(DublinCore.ELEMENT_CREATOR);
-        String title = getParameterAsString(DublinCore.ELEMENT_TITLE);
-        String description = getParameterAsString(DublinCore.ELEMENT_DESCRIPTION);
-        String subject = getParameterAsString(DublinCore.ELEMENT_SUBJECT);
-        String publisher = getParameterAsString(DublinCore.ELEMENT_PUBLISHER);
-        String rights = getParameterAsString(DublinCore.ELEMENT_RIGHTS);
+        MetaDataManager meta = getSourceDocument().getMetaData();
 
-        this.dc.setValue(DublinCore.ELEMENT_CREATOR, creator);
-        this.dc.setValue(DublinCore.ELEMENT_TITLE, title);
-        this.dc.setValue(DublinCore.ELEMENT_DESCRIPTION, description);
-        this.dc.setValue(DublinCore.ELEMENT_SUBJECT, subject);
-        this.dc.setValue(DublinCore.ELEMENT_PUBLISHER, publisher);
-        this.dc.setValue(DublinCore.ELEMENT_RIGHTS, rights);
+        String[] keys = meta.getPossibleKeys();
+        for (int i = 0; i < keys.length; i++) {
+            String value = getParameterAsString(keys[i]);
+            if (value != null) {
+                meta.setValue(keys[i], value);
+            }
+        }
+
         //TODO set workflow situation to edit here.
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
-     */
-    public void setParameter(String name, Object value) {
-        super.setParameter(name, value);
-
-    }
 }

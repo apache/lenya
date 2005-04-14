@@ -22,30 +22,31 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.OutputStream;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.avalon.framework.service.Serviceable;
 
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Manager for resources of a CMS document.
  */
-public class DefaultResourcesManager extends AbstractLogEnabled implements ResourcesManager {
+public class DefaultResourcesManager extends AbstractLogEnabled implements ResourcesManager,
+        Serviceable {
 
     private static final class MetaSuffixFileFilter implements FileFilter {
         /**
@@ -94,30 +95,19 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         }
     }
 
-    private Document document = null;
-    private ServiceManager manager;
-
     protected static final String NAMESPACE_META = "http://lenya.apache.org/meta/1.0";
 
     /**
      * Create a new instance of Resources.
-     * @param _document the document for which the resources are managed
-     * @param manager The service manager.
      */
-    public DefaultResourcesManager(Document _document, ServiceManager manager) {
-        this.document = _document;
-        this.manager = manager;
+    public DefaultResourcesManager() {
     }
 
     /**
-     * Add the file in the Part either as a resource or content
-     * @param part The Part
-     * @param metadata Holds the metadata for the resource
-     * @exception IOException if an error occurs
+     * @see org.apache.lenya.cms.publication.ResourcesManager#addResource(org.apache.lenya.cms.publication.Document,
+     *      org.apache.cocoon.servlet.multipart.Part, java.util.Map)
      */
-    public void addResource(Part part, Map metadata) throws IOException {
-
-        File resourceFile;
+    public void addResource(Document document, Part part, Map metadata) throws Exception {
 
         try {
             String fileName = part.getFileName();
@@ -128,6 +118,13 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             }
             // convert spaces in the file name to underscores
             fileName = fileName.replace(' ', '_');
+
+            Resource resource = new Resource(document, fileName, this.manager);
+            Transactionable[] nodes = resource.getRepositoryNodes();
+            for (int i = 0; i < nodes.length; i++) {
+                nodes[i].lock();
+            }
+
             String mimeType = part.getMimeType();
             int fileSize = part.getSize();
 
@@ -135,23 +132,17 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             metadata.put("extent", Integer.toString(fileSize));
 
             /* if (type.equals("resource")) { */
-            resourceFile = new File(this.getPath(), fileName);
-
-            if (!this.getPath().exists()) {
-                this.getPath().mkdirs();
-            }
 
             // create an extra file containing the meta description for
             // the resource.
-            File metaDataFile = new File(this.getPath(), fileName + RESOURCES_META_SUFFIX);
-            createMetaData(metaDataFile, metadata);
+            createMetaData(resource, metadata);
 
             /*
              * } // must be a content upload then else { resourceFile = new
              * File(document.getFile().getParent(), fileName); getLogger().debug("resourceFile: " +
              * resourceFile); }
              */
-            saveResource(resourceFile, part);
+            saveResource(resource, part);
         } catch (final DocumentException e) {
             getLogger().error("Document exception " + e.toString());
             throw new RuntimeException(e);
@@ -163,24 +154,23 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Saves the resource to a file.
-     * @param resourceFile The resource file.
+     * @param resource The resource.
      * @param part The part of the multipart request.
      * @throws IOException if an error occurs.
      */
-    protected void saveResource(File resourceFile, Part part) throws IOException {
-        FileOutputStream out = null;
+    protected void saveResource(Resource resource, Part part) throws IOException {
+        OutputStream out = null;
         InputStream in = null;
 
-        if (!resourceFile.exists()) {
-            boolean created = resourceFile.createNewFile();
-            if (!created) {
-                throw new IOException("The file [" + resourceFile + "]�could not be created.");
-            }
-        }
+        SourceResolver resolver = null;
+        ModifiableSource source = null;
 
         try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = (ModifiableSource) resolver.resolveURI(resource.getSourceURI());
+
             byte[] buf = new byte[4096];
-            out = new FileOutputStream(resourceFile);
+            out = source.getOutputStream();
             in = part.getInputStream();
             int read = in.read(buf);
 
@@ -198,198 +188,207 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             getLogger().error("Exception" + e.toString());
             throw new IOException(e.toString());
         } finally {
-            if (in != null)
+            if (in != null) {
                 in.close();
-            if (out != null)
+            }
+            if (out != null) {
+                out.flush();
                 out.close();
+            }
+
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
         }
     }
 
     /**
      * Create the meta data file given the dublin core parameters.
-     * @param metaDataFile the file where the meta data file is to be created
+     * @param resource the resource
      * @param metadata a <code>Map</code> containing the dublin core values
      * @throws DocumentException if an error occurs
      */
-    protected void createMetaData(File metaDataFile, Map metadata) throws DocumentException {
+    protected void createMetaData(Resource resource, Map metadata) throws DocumentException {
 
-        assert (metaDataFile.getParentFile().exists());
+        SourceResolver resolver = null;
         try {
-
-            if (!metaDataFile.exists()) {
-                metaDataFile.createNewFile();
-                NamespaceHelper helper = new NamespaceHelper(NAMESPACE_META, "", "meta");
-                DocumentHelper.writeDocument(helper.getDocument(), metaDataFile);
-            }
-            String key;
-            String value;
-            Map.Entry entry;
-            String sourceUrl = "file:/" + metaDataFile.getAbsolutePath();
-            DublinCoreImpl dc = new DublinCoreImpl(sourceUrl, this.manager);
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            MetaDataManager meta = resource.getMetaData();
             Iterator iter = metadata.entrySet().iterator();
 
             while (iter.hasNext()) {
-                entry = (Map.Entry) iter.next();
-                key = (String) entry.getKey();
-                value = (String) entry.getValue();
-                dc.setValue(key, value);
+                Map.Entry entry = (Map.Entry) iter.next();
+                meta.setValue((String) entry.getKey(), (String) entry.getValue());
             }
         } catch (final Exception e) {
-            getLogger().error("Saving of [" + metaDataFile + "] �failed.");
+            getLogger().error("Saving of [" + resource.getSourceURI() + "]� failed.");
             throw new DocumentException(e);
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
     }
 
     /**
-     * Get the path to the resources.
-     * @return the path to the resources
+     * @see org.apache.lenya.cms.publication.ResourcesManager#getResources(org.apache.lenya.cms.publication.Document)
      */
-    private String getPathFromPublication() {
-        return RESOURCES_PREFIX + "/" + getDocument().getArea() + getDocument().getId();
-    }
-
-    /**
-     * Get the path to the resources.
-     * @return the path to the resources
-     */
-    public File getPath() {
-        File publicationPath = getDocument().getPublication().getDirectory();
-        File resourcesPath = new File(publicationPath, getPathFromPublication().replace('/',
-                File.separatorChar));
-        return resourcesPath;
-    }
-
-    /**
-     * Returns the path of a resource relative to the context prefix.
-     * @param resource The resource
-     * @return The path of a resource relative to the context prefix.
-     */
-    public String getResourceUrl(File resource) {
-        return getDocument().getPublication().getId() + "/" + getDocument().getArea()
-                + getDocument().getId() + "/" + resource.getName();
-    }
-
-    /**
-     * Get all resources for the associated document.
-     * @return all resources of the associated document
-     */
-    public File[] getResources() {
+    public Resource[] getResources(Document document) {
 
         // filter the meta files out. We only want to see the "real" resources.
         FileFilter filter = new NotMetaSuffixFileFilter();
 
-        return getFiles(filter);
+        return getResources(document, filter);
     }
 
     /**
-     * Return all resources which are images.
-     * @return All image resources.
+     * @see org.apache.lenya.cms.publication.ResourcesManager#getImageResources(org.apache.lenya.cms.publication.Document)
      */
-    public File[] getImageResources() {
-        return getFiles(new ImageExtensionsFileFilter());
+    public Resource[] getImageResources(Document document) {
+        return getResources(document, new ImageExtensionsFileFilter());
     }
 
     /**
      * Returns the resources that are matched by a certain file filter.
+     * @param document The document.
      * @param filter A file filter.
-     * @return A file array.
+     * @return A resource array.
      */
-    protected File[] getFiles(FileFilter filter) {
+    protected Resource[] getResources(Document document, FileFilter filter) {
         File[] files = new File[0];
-        if (getPath().isDirectory()) {
-            files = getPath().listFiles(filter);
+        Resource tempResource = new Resource(document, "temp", this.manager);
+
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            Resource[] resources;
+            
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(tempResource.getBaseURI());
+            if (source.exists()) {
+                File directory = org.apache.excalibur.source.SourceUtil.getFile(source);
+                if (directory.isDirectory()) {
+                    files = directory.listFiles(filter);
+                }
+                resources = new Resource[files.length];
+                for (int i = 0; i < files.length; i++) {
+                    resources[i] = new Resource(document, files[i].getName(), this.manager);
+                }
+            }
+            else {
+                resources = new Resource[0];
+            }
+            return resources;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
         }
 
-        return files;
     }
 
     /**
-     * Get the meta data for all resources for the associated document.
-     * @return all meta data files for the resources for the associated document.
+     * @see org.apache.lenya.cms.publication.ResourcesManager#deleteResources(org.apache.lenya.cms.publication.Document)
      */
-    public File[] getMetaFiles() {
-        FileFilter filter = new MetaSuffixFileFilter();
-        return getFiles(filter);
-    }
+    public void deleteResources(Document document) {
 
-    /**
-     * Returns a meta file for a given resource.
-     * @param resource A resource the meta file should be returned for.
-     * @return A file containing meta information about a resource. Returns null if no meta file was
-     *         found.
-     * @throws IllegalArgumentException If resource is a meta file itself.
-     */
-    public File getMetaFile(final File resource) throws IllegalArgumentException {
-        if (resource.getName().endsWith(RESOURCES_META_SUFFIX))
-            throw new IllegalArgumentException("File is itself a meta file.");
-
-        final FileFilter filter = new ResourceMetaFileFilter(resource);
-
-        final File[] metaFiles = getFiles(filter);
-        assert (metaFiles.length == 0);
-        return metaFiles[0];
-    }
-
-    /**
-     * Deletes all resources.
-     */
-    public void deleteResources() {
-
-        File[] resources = getResources();
-        for (int i = 0; i < resources.length; i++) {
-            resources[i].delete();
+        try {
+            Resource[] resources = getResources(document);
+            for (int i = 0; i < resources.length; i++) {
+                SourceUtil.delete(resources[i].getSourceURI(), this.manager);
+                SourceUtil.delete(resources[i].getMetaSourceURI(), this.manager);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        File[] metas = getMetaFiles();
-        for (int i = 0; i < metas.length; i++) {
-            metas[i].delete();
-        }
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.ResourcesManager#getDocument()
+     * @see org.apache.lenya.cms.publication.ResourcesManager#copyResources(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.cms.publication.Document)
      */
-    public Document getDocument() {
-        return this.document;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.ResourcesManager#copyResourcesTo(org.apache.lenya.cms.publication.Document)
-     */
-    public void copyResourcesTo(Document destinationDocument) throws Exception {
+    public void copyResources(Document sourceDocument, Document destinationDocument)
+            throws Exception {
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Copying resources of document [" + getDocument() + "]");
+            getLogger().debug("Copying resources from [" + sourceDocument + "] to ["
+                    + destinationDocument + "]");
         }
 
-        ResourcesManager _destinationManager = destinationDocument.getResourcesManager();
+        SourceResolver resolver = null;
+        try {
+            Resource[] resources = getResources(sourceDocument);
+            for (int i = 0; i < resources.length; i++) {
+                Resource sourceResource = resources[i];
+                Resource destinationResource = new Resource(destinationDocument, sourceResource
+                        .getName(), this.manager);
 
-        List resourcesList = new ArrayList(Arrays.asList(getResources()));
-        resourcesList.addAll(Arrays.asList(getMetaFiles()));
-        File[] resources = (File[]) resourcesList.toArray(new File[resourcesList.size()]);
-        File destinationDirectory = _destinationManager.getPath();
+                Source sourceSource = null;
+                Source sourceMetaSource = null;
+                ModifiableSource destSource = null;
+                ModifiableSource destMetaSource = null;
 
-        for (int i = 0; i < resources.length; i++) {
-            File destinationResource = new File(destinationDirectory, resources[i].getName());
+                try {
 
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Copy file [" + resources[i].getAbsolutePath() + "] to ["
-                        + destinationResource.getAbsolutePath() + "]");
+                    sourceSource = resolver.resolveURI(sourceResource.getSourceURI());
+                    sourceMetaSource = resolver.resolveURI(sourceResource.getMetaSourceURI());
+                    destSource = (ModifiableSource) resolver.resolveURI(destinationResource
+                            .getSourceURI());
+                    destMetaSource = (ModifiableSource) resolver.resolveURI(destinationResource
+                            .getMetaSourceURI());
+
+                    SourceUtil.copy(sourceSource, destSource, true);
+                    SourceUtil.copy(sourceMetaSource, destMetaSource, true);
+                } finally {
+                    if (sourceSource != null) {
+                        resolver.release(sourceSource);
+                    }
+                    if (sourceMetaSource != null) {
+                        resolver.release(sourceMetaSource);
+                    }
+                    if (destSource != null) {
+                        resolver.release(destSource);
+                    }
+                    if (destMetaSource != null) {
+                        resolver.release(destMetaSource);
+                    }
+                }
             }
-            FileUtil.copyFile(resources[i], destinationResource);
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
     }
 
+    protected ServiceManager manager;
+
     /**
-     * @see org.apache.lenya.cms.publication.ResourcesManager#deleteResource(java.lang.String)
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void deleteResource(String name) throws Exception {
-        File[] resources = getResources();
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.ResourcesManager#deleteResource(org.apache.lenya.cms.publication.Document,
+     *      java.lang.String)
+     */
+    public void deleteResource(Document document, String name) throws Exception {
+        Resource[] resources = getResources(document);
         for (int i = 0; i < resources.length; i++) {
             if (resources[i].getName().equals(name)) {
-                File metaFile = getMetaFile(resources[i]);
-                metaFile.delete();
-                resources[i].delete();
+                SourceUtil.delete(resources[i].getMetaSourceURI(), this.manager);
+                SourceUtil.delete(resources[i].getSourceURI(), this.manager);
             }
         }
     }

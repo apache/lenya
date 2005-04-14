@@ -28,9 +28,8 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  * @version $Id: Overview.java 123984 2005-01-03 15:02:18Z andreas $
  */
 public class Overview extends SiteUsecase {
-	private DublinCore dc;
 
-	/**
+    /**
      * Ctor.
      */
     public Overview() {
@@ -42,36 +41,36 @@ public class Overview extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        this.dc = getSourceDocument().getDublinCore();
-        
+
         DocumentTypeResolver doctypeResolver = null;
         try {
+            DublinCore dc = (DublinCore) getSourceDocument().getMetaData();
+            setParameter("languages", getSourceDocument().getLanguages());
+            setParameter("title", dc.getFirstValue(DublinCore.ELEMENT_TITLE));
+
             doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
             DocumentType doctype = doctypeResolver.resolve(getSourceDocument());
-	        setParameter("languages", getSourceDocument().getLanguages());
-	        setParameter("title", this.dc.getFirstValue(DublinCore.ELEMENT_TITLE));
-	        setParameter("description", this.dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
-	        setParameter("lastmodified", getSourceDocument().getLastModified());
-	        setParameter("resourcetype", doctype.getName());
-	        setParameter("live", "");
-        } catch (Exception e) {
-        	addErrorMessage("Could not read a value. See log files for details.");
-        	getLogger().error("Could not read value for Overview usecase. ", e);
-        }
-        finally {
+            setParameter("languages", getSourceDocument().getLanguages());
+            setParameter("lastmodified", getSourceDocument().getLastModified());
+            setParameter("resourcetype", doctype.getName());
+            setParameter("live", "");
+        } catch (final Exception e) {
+            addErrorMessage("Could not read a value. See log files for details.");
+            getLogger().error("Could not read value for Overview usecase. ", e);
+        } finally {
             if (doctypeResolver != null) {
                 this.manager.release(doctypeResolver);
             }
         }
     }
-            
-     /**
+
+    /**
      * Validates the request parameters.
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
-	    // do nothing
-   }
+        // do nothing
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()

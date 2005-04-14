@@ -109,10 +109,12 @@ public class UploadAction extends ServiceableAction {
      * 
      * @exception Exception if an error occurs
      */
+    
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
 
         Map results = new HashMap();
+        /*
         Request request = ObjectModelHelper.getRequest(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
         this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
@@ -174,6 +176,7 @@ public class UploadAction extends ServiceableAction {
         }
 
         saveAsset(assetFile, part);
+    */
 
         return Collections.unmodifiableMap(results);
     }

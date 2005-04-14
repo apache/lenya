@@ -19,23 +19,15 @@
 
 package org.apache.lenya.cms.ant;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Ant task, which implements the SiteTreeNodeVisitor for the operation copy the
- * resources. (Visitor pattern)
+ * Ant task, which implements the SiteTreeNodeVisitor for the operation copy the resources. (Visitor
+ * pattern)
  */
 public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
@@ -47,8 +39,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
     }
 
     /**
-     * Copy the resources files belongs to the documents corresponding to this
-     * node
+     * Copy the resources files belongs to the documents corresponding to this node
      * @see org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor#visitSiteTreeNode(org.apache.lenya.cms.site.tree.SiteTreeNode)
      */
     public void visitSiteTreeNode(SiteTreeNode node) {
@@ -63,43 +54,20 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
 
         String language = labels[0].getLanguage();
         Document srcDoc;
+        ResourcesManager resourcesManager = null;
         try {
-            srcDoc = getIdentityMap().get(getPublication(),
-                    getFirstarea(),
-                    srcDocumentid,
-                    language);
-        } catch (DocumentBuildException e) {
-            throw new BuildException(e);
-        }
-        ResourcesManager resourcesMgr = srcDoc.getResourcesManager();
-        List resources = new ArrayList(Arrays.asList(resourcesMgr.getResources()));
-        resources.addAll(Arrays.asList(resourcesMgr.getMetaFiles()));
-        File[] srcFiles = (File[]) resources.toArray(new File[resources.size()]);
+            srcDoc = getIdentityMap()
+                    .get(getPublication(), getFirstarea(), srcDocumentid, language);
 
-        if (srcFiles == null) {
-            log("There are no resources for the document " + getFirstdocumentid());
-            return;
-        }
+            resourcesManager = (ResourcesManager) getServiceManager().lookup(ResourcesManager.ROLE);
 
-        Document destDoc;
-        try {
-            destDoc = getIdentityMap().get(getPublication(),
+            Document destDoc = getIdentityMap().get(getPublication(),
                     getSecarea(),
                     destDocumentid,
                     language);
-        } catch (DocumentBuildException e) {
+            resourcesManager.copyResources(srcDoc, destDoc);
+        } catch (Exception e) {
             throw new BuildException(e);
-        }
-        resourcesMgr = destDoc.getResourcesManager();
-        for (int i = 0; i < srcFiles.length; i++) {
-
-            try {
-                log("copy file " + srcFiles[i].getAbsolutePath() + "to file "
-                        + resourcesMgr.getPath().getCanonicalPath());
-                FileUtil.copyFileToDirectory(srcFiles[i], resourcesMgr.getPath());
-            } catch (IOException e) {
-                throw new BuildException(e);
-            }
         }
 
     }

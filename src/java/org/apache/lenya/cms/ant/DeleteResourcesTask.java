@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -54,18 +53,23 @@ public class DeleteResourcesTask extends TwoDocumentsOperationTask {
         Label[] labels = node.getLabels();
         for (int i = 0; i < labels.length; i++) {
             String language = labels[i].getLanguage();
-            Document srcDoc;
+            ResourcesManager resMgr = null;
             try {
-                srcDoc = getIdentityMap().get(getPublication(),
+                Document srcDoc = getIdentityMap().get(getPublication(),
                         getFirstarea(),
                         srcDocumentid,
                         language);
-            } catch (DocumentBuildException e) {
+                resMgr = (ResourcesManager) getServiceManager().lookup(ResourcesManager.ROLE);
+                resMgr.deleteResources(srcDoc);
+            } catch (Exception e) {
                 throw new BuildException(e);
             }
+            finally {
+                if (resMgr != null) {
+                    getServiceManager().release(resMgr);
+                }
+            }
 
-            ResourcesManager resourcesMgr = srcDoc.getResourcesManager();
-            resourcesMgr.deleteResources();
         }
     }
 

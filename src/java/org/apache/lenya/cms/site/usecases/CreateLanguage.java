@@ -94,21 +94,12 @@ public class CreateLanguage extends Create {
 
         Document source = getSourceDocument();
         if (source != null) {
-            DocumentTypeResolver resolver = null;
-
             try {
-                resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-                DocumentType type = resolver.resolve(source);
-                this.documentTypeName = type.getName();
-
                 List nonExistingLanguages = getNonExistingLanguages();
                 setParameter(LANGUAGES, nonExistingLanguages
                         .toArray(new String[nonExistingLanguages.size()]));
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            } finally {
-                this.manager.release(resolver);
             }
         }
     }
@@ -169,6 +160,24 @@ public class CreateLanguage extends Create {
      * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()
      */
     protected String getDocumentTypeName() {
+        if (this.documentTypeName == null) {
+            Document source = getSourceDocument();
+            DocumentTypeResolver resolver = null;
+            try {
+                resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
+                DocumentType type = resolver.resolve(source);
+                this.documentTypeName = type.getName();
+
+                List nonExistingLanguages = getNonExistingLanguages();
+                setParameter(LANGUAGES, nonExistingLanguages.toArray(new String[nonExistingLanguages
+                        .size()]));
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                this.manager.release(resolver);
+            }
+        }
         return this.documentTypeName;
     }
 

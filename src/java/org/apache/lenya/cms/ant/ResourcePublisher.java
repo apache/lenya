@@ -17,12 +17,6 @@
 
 package org.apache.lenya.cms.ant;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourcesManager;
@@ -42,33 +36,24 @@ public class ResourcePublisher extends PublicationTask {
      */
     public void execute() throws BuildException {
 
+        ResourcesManager resMgr = null;
         try {
+            resMgr = (ResourcesManager) getServiceManager().lookup(ResourcesManager.ROLE);
             Document authoringDocument = getIdentityMap().get(getPublication(),
                     Publication.AUTHORING_AREA,
                     this.documentId);
-            ResourcesManager authoringManager = authoringDocument.getResourcesManager();
-
             Document liveDocument = getIdentityMap().get(getPublication(),
                     Publication.LIVE_AREA,
                     this.documentId);
-            ResourcesManager liveManager = liveDocument.getResourcesManager();
-
-            // find all resource files and their associated meta files
-            List resourcesList = new ArrayList(Arrays.asList(authoringManager.getResources()));
-            resourcesList.addAll(Arrays.asList(authoringManager.getMetaFiles()));
-            File[] resources = (File[]) resourcesList.toArray(new File[resourcesList.size()]);
-            File liveDirectory = liveManager.getPath();
-
-            for (int i = 0; i < resources.length; i++) {
-                File liveResource = new File(liveDirectory, resources[i].getName());
-                String destPath = liveResource.getAbsolutePath();
-
-                log("Copy file [" + resources[i].getAbsolutePath() + "] to [" + destPath + "]");
-                FileUtil.copyFile(resources[i], liveResource);
-            }
+            resMgr.copyResources(authoringDocument, liveDocument);
 
         } catch (Exception e) {
             throw new BuildException(e);
+        }
+        finally {
+            if (resMgr != null) {
+                getServiceManager().release(resMgr);
+            }
         }
     }
 

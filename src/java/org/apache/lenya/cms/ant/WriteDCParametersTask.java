@@ -234,7 +234,7 @@ public class WriteDCParametersTask extends PublicationTask {
 
         Document doc = getIdentityMap()
                 .get(getPublication(), _area, _documentId, lang);
-        DublinCore dc = doc.getDublinCore();
+        DublinCore dc = (DublinCore) doc.getMetaData();
         dc.setValue(DublinCore.ELEMENT_CREATOR, _creator);
         dc.setValue(DublinCore.ELEMENT_TITLE, _title);
         dc.setValue(DublinCore.ELEMENT_DESCRIPTION, _description);

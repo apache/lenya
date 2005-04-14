@@ -19,21 +19,26 @@
 
 package org.apache.lenya.cms.metadata.dublincore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * Access dublin core meta data in documents. This class uses the dublin core specification from
@@ -85,18 +90,6 @@ public class DublinCoreImpl {
 
     /**
      * Creates a new instance of Dublin Core
-     * @param aDocument the document for which the Dublin Core instance is created.
-     * @param manager The service manager.
-     * @throws DocumentException if an error occurs
-     */
-    protected DublinCoreImpl(Document aDocument, ServiceManager manager) throws DocumentException {
-        this.manager = manager;
-        this.sourceUri = aDocument.getSourceURI();
-        loadValues();
-    }
-
-    /**
-     * Creates a new instance of Dublin Core
      * @param sourceUri The source URI.
      * @param manager The service manager.
      * @throws DocumentException if an error occurs
@@ -114,7 +107,7 @@ public class DublinCoreImpl {
     protected void loadValues() throws DocumentException {
 
         try {
-            org.w3c.dom.Document doc = SourceUtil.readDOM(this.sourceUri, this.manager);
+            Document doc = getDocument();
             if (doc != null) {
 
                 // FIXME: what if "lenya:meta" element doesn't exist yet?
@@ -153,11 +146,8 @@ public class DublinCoreImpl {
     protected void save() throws DocumentException {
 
         try {
-
-            org.w3c.dom.Document doc = SourceUtil.readDOM(this.sourceUri, this.manager);
-
+            Document doc = getDocument();
             Element metaElement = getMetaElement(doc);
-
             String[] namespaces = { DC_NAMESPACE, DCTERMS_NAMESPACE };
             String[] prefixes = { DC_PREFIX, DCTERMS_PREFIX };
             String[][] arrays = { ELEMENTS, TERMS };
@@ -179,25 +169,25 @@ public class DublinCoreImpl {
                     }
                 }
             }
-            SourceUtil.writeDOM(doc, this.sourceUri, this.manager);
 
-        } catch (Exception e) {
+            SourceUtil.writeDOM(doc, this.sourceUri, this.manager);
+        } catch (final Exception e) {
             throw new DocumentException(e);
         }
     }
 
     /**
      * Returns the Lenya meta data element.
-     * @param doc The XML document.
+     * @param document The XML document.
      * @return A DOM element.
      * @throws DocumentException if an error occurs.
      */
-    protected Element getMetaElement(org.w3c.dom.Document doc) throws DocumentException {
+    protected Element getMetaElement(Document document) throws DocumentException {
         Element metaElement;
         try {
             NamespaceHelper namespaceHelper = new NamespaceHelper(PageEnvelope.NAMESPACE,
-                    PageEnvelope.DEFAULT_PREFIX, doc);
-            Element documentElement = doc.getDocumentElement();
+                    PageEnvelope.DEFAULT_PREFIX, document);
+            Element documentElement = namespaceHelper.getDocument().getDocumentElement();
             metaElement = namespaceHelper.getFirstChild(documentElement, META);
 
             if (metaElement == null) {
@@ -209,11 +199,24 @@ public class DublinCoreImpl {
                     documentElement.insertBefore(metaElement, children[0]);
                 }
             }
-        } catch (final DOMException e) {
+        } catch (final Exception e) {
             throw new DocumentException(e);
         }
         return metaElement;
+    }
 
+    protected Document getDocument() throws ServiceException, SourceNotFoundException,
+            ParserConfigurationException, SAXException, IOException {
+        org.w3c.dom.Document doc = SourceUtil.readDOM(this.sourceUri, this.manager);
+        NamespaceHelper namespaceHelper;
+        if (doc == null) {
+            namespaceHelper = new NamespaceHelper(PageEnvelope.NAMESPACE,
+                    PageEnvelope.DEFAULT_PREFIX, "document");
+        } else {
+            namespaceHelper = new NamespaceHelper(PageEnvelope.NAMESPACE,
+                    PageEnvelope.DEFAULT_PREFIX, doc);
+        }
+        return namespaceHelper.getDocument();
     }
 
     /**
@@ -432,6 +435,16 @@ public class DublinCoreImpl {
      */
     public static boolean isValidElement(String key) {
         return Arrays.asList(DublinCoreImpl.ELEMENTS).contains(key);
+    }
+
+    /**
+     * @return All possible keys.
+     */
+    public String[] getPossibleKeys() {
+        List keys = new ArrayList();
+        keys.addAll(Arrays.asList(DublinCoreImpl.ELEMENTS));
+        keys.addAll(Arrays.asList(DublinCoreImpl.TERMS));
+        return (String[]) keys.toArray(new String[keys.size()]);
     }
 
 }
