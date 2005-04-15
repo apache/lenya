@@ -46,7 +46,7 @@ function validRequired(formField,fieldLabel)
 	
 	if (formField.value == "")
 	{
-		alert('<i18n:text key="failmessage.createdoc.required"/>');
+		alert("<i18n:text key="failmessage.createdoc.required"/>");
 		formField.focus();
 		result = false;
 	}
@@ -60,7 +60,7 @@ function validContent(formField,fieldLabel)
 	
 	if (formField.value.match("[^a-zA-Z0-9\\-]+"))
 	{
-		alert('<i18n:text key="failmessage.createdoc.invalidformat"/>');
+		alert("<i18n:text key="failmessage.createdoc.invalidformat"/>");
 		formField.focus();
 		result = false;
 	}
