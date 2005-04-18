@@ -48,7 +48,7 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.usecase.Usecase;
-import org.apache.lenya.cms.usecase.UsecaseResolver;
+import org.apache.lenya.cms.usecase.UsecaseInvoker;
 
 /**
  * Job to schedule usecase execution.
@@ -98,52 +98,19 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
      * @see org.apache.cocoon.components.cron.CronJob#execute(java.lang.String)
      */
     public void execute(String jobname) {
-        UsecaseResolver resolver = null;
-        Usecase usecase = null;
+        UsecaseInvoker invoker = null;
         try {
-
             setupOriginalRequest();
-
             authorizeRequest();
 
-            resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
-            usecase = resolver.resolve(getSourceURL(), getUsecaseName());
-
-            usecase.setSourceURL(getSourceURL());
-            usecase.setName(getUsecaseName());
-
-            passParameters(usecase);
-
-            usecase.checkPreconditions();
-            List errorMessages = usecase.getErrorMessages();
-            if (!errorMessages.isEmpty()) {
-                logErrorMessages("Pre condition messages:", errorMessages);
-            } else {
-                usecase.lockInvolvedObjects();
-                usecase.checkExecutionConditions();
-                errorMessages = usecase.getErrorMessages();
-                if (!errorMessages.isEmpty()) {
-                    logErrorMessages("Execution condition messages:", errorMessages);
-                } else {
-                    usecase.execute();
-                    logErrorMessages("Execution messages:", usecase.getErrorMessages());
-                    usecase.checkPostconditions();
-                    logErrorMessages("Post condition messages:", usecase.getErrorMessages());
-                }
-            }
+            invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
+            invoker.invoke(getSourceURL(), getUsecaseName(), getParameters());
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (resolver != null) {
-                if (usecase != null) {
-                    try {
-                        resolver.release(usecase);
-                    } catch (ServiceException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                this.manager.release(resolver);
+            if (invoker != null) {
+                this.manager.release(invoker);
             }
         }
     }
@@ -234,29 +201,6 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
             }
         }
 
-    }
-
-    /**
-     * @param headline The headline of the messages.
-     * @param errorMessages The messages to log.
-     */
-    protected void logErrorMessages(String headline, List errorMessages) {
-        getLogger().error("Usecase [" + getUsecaseName() + "] - " + headline);
-        for (Iterator i = errorMessages.iterator(); i.hasNext();) {
-            getLogger().error((String) i.next());
-        }
-    }
-
-    /**
-     * @param usecase The usecase to pass the parameters to.
-     */
-    protected void passParameters(Usecase usecase) {
-        Map parameters = getParameters();
-        for (Iterator i = parameters.keySet().iterator(); i.hasNext();) {
-            String key = (String) i.next();
-            Object value = parameters.get(key);
-            usecase.setParameter(key, value);
-        }
     }
 
     /**

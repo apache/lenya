@@ -86,6 +86,10 @@
         shorthand="usecases"
         default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
 
+  <role name="org.apache.lenya.cms.usecase.UsecaseInvoker"
+  	    shorthand="usecase-invoker"
+  	    default-class="org.apache.lenya.cms.usecase.UsecaseInvokerImpl"/>
+        
   <role name="org.apache.lenya.cms.usecase.UsecaseResolver"
   	    shorthand="usecase-resolver"
   	    default-class="org.apache.lenya.cms.usecase.UsecaseResolverImpl"/>
