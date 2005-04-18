@@ -64,33 +64,8 @@ public class Assets extends SiteUsecase {
 
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-
             Resource[] resources = resourcesManager.getResources(getSourceDocument());
             setParameter("assets", Arrays.asList(resources));
-
-            /*
-             * Map[] assets = new Map[resources.length];
-             * 
-             * for (int i = 0; i < resources.length; i++) { Map asset = new HashMap(); String title =
-             * ""; String format = ""; org.w3c.dom.Document metaDoc; Source assetSource = null;
-             * Source metaSource = null; try { DublinCore core = (DublinCore)
-             * resources[i].getMetaData(); metaDoc =
-             * DocumentHelper.readDocument(metaSource.getInputStream()); title =
-             * metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
-             * "title").item(0).getChildNodes().item(0).getNodeValue(); format =
-             * metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/",
-             * "format").item(0).getChildNodes().item(0).getNodeValue();
-             * 
-             * assetSource = resolver.resolveURI(resources[i].getSourceURI()); asset.put("source",
-             * resources[i].getName()); asset.put("title", title); Date lastModified = new
-             * Date(assetSource.getLastModified()); asset.put("date",
-             * DateFormat.getDateInstance().format(lastModified)); asset.put("format", format);
-             * asset.put("extent", new Long(assetSource.getContentLength() / 1024)); assets[i] =
-             * asset;
-             *  } finally { if (metaSource != null) { resolver.release(metaSource); } if
-             * (assetSource != null) { resolver.release(assetSource); } } } setParameter("assets",
-             * assets);
-             */
         } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
