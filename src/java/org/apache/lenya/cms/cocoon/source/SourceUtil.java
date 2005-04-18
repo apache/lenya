@@ -73,7 +73,6 @@ public final class SourceUtil {
             sourceInputStream = source.getInputStream();
             destOutputStream = destination.getOutputStream();
 
-            useBuffer = false;
             if (useBuffer) {
                 final ByteArrayOutputStream sourceBos = new ByteArrayOutputStream();
                 CopyUtils.copy(sourceInputStream, sourceBos);
