@@ -91,30 +91,4 @@ public class InsertAsset extends DocumentUsecase {
         }
     }
 
-    /**
-     * Adds an asset.
-     */
-    protected void addAsset() {
-        String title = getParameterAsString("title");
-        String creator = getParameterAsString("creator");
-        String rights = getParameterAsString("rights");
-        Part file = getPart("file");
-
-        Map metadata = new HashMap();
-        metadata.put("title", title);
-        metadata.put("creator", creator);
-        metadata.put("rights", rights);
-        ResourcesManager resourcesManager = null;
-        try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            resourcesManager.addResource(getSourceDocument(), file, metadata);
-        } catch (final Exception e) {
-            getLogger().error("The resource could not be added: ", e);
-            addErrorMessage("The resource could not be added (see log files for details).");
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
-        }
-    }
 }
