@@ -158,11 +158,7 @@ public final class SourceUtil {
             source = resolver.resolveURI(sourceUri);
 
             if (source.exists()) {
-                if (source instanceof RepositorySource) {
-                    document = ((RepositorySource) source).getDocument();
-                } else {
-                    document = DocumentHelper.readDocument(source.getInputStream());
-                }
+                document = DocumentHelper.readDocument(source.getInputStream());
             }
         } finally {
             if (resolver != null) {
@@ -196,19 +192,15 @@ public final class SourceUtil {
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
             source = (ModifiableSource) resolver.resolveURI(sourceUri);
 
-            if (source instanceof RepositorySource) {
-                ((RepositorySource) source).setDocument(document);
-            } else {
-                OutputStream oStream = source.getOutputStream();
-                Writer writer = new OutputStreamWriter(oStream);
-                DocumentHelper.writeDocument(document, writer);
-                if (oStream != null) {
-                    oStream.flush();
-                    try {
-                        oStream.close();
-                    } catch (Throwable t) {
-                        throw new RuntimeException("Could not write document: ", t);
-                    }
+            OutputStream oStream = source.getOutputStream();
+            Writer writer = new OutputStreamWriter(oStream);
+            DocumentHelper.writeDocument(document, writer);
+            if (oStream != null) {
+                oStream.flush();
+                try {
+                    oStream.close();
+                } catch (Throwable t) {
+                    throw new RuntimeException("Could not write document: ", t);
                 }
             }
         } finally {

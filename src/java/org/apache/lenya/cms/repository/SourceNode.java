@@ -22,14 +22,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
@@ -41,8 +40,6 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.xml.DocumentHelper;
-import org.w3c.dom.Document;
 
 /**
  * A repository node.
@@ -67,21 +64,6 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         this.manager = manager;
         enableLogging(logger);
         this.identityMap = map;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.repository.Node#getDocument()
-     */
-    public Document getDocument() {
-        Document document = null;
-        try {
-            if (exists()) {
-                document = DocumentHelper.readDocument(getInputStream());
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return document;
     }
 
     protected String getUserId() {
@@ -344,32 +326,6 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     * @see org.apache.lenya.cms.repository.Node#setDocument(org.w3c.dom.Document)
-     */
-    public void setDocument(Document document) {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Setting document [" + document.getDocumentElement().getNodeName()
-                    + "]");
-        }
-
-        Writer writer = null;
-        try {
-            writer = new OutputStreamWriter(getOutputStream());
-            DocumentHelper.writeDocument(document, writer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e1) {
-                    throw new RuntimeException(e1);
-                }
-            }
-        }
-    }
-
-    /**
      * @see org.apache.lenya.cms.repository.Node#exists()
      */
     public boolean exists() throws TransactionException {
@@ -465,6 +421,87 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         public void close() throws IOException {
             SourceNode.this.data = super.toByteArray();
             super.close();
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.repository.Node#getContentLength()
+     */
+    public long getContentLength() throws TransactionException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getRealSourceURI());
+            if (source.exists()) {
+                return source.getContentLength();
+            } else {
+                throw new SourceNotFoundException("The source [" + getRealSourceURI()
+                        + "] does not exist!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.repository.Node#getLastModified()
+     */
+    public long getLastModified() throws TransactionException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getRealSourceURI());
+            if (source.exists()) {
+                return source.getLastModified();
+            } else {
+                throw new TransactionException("The source [" + getRealSourceURI()
+                        + "] does not exist!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.repository.Node#getMimeType()
+     */
+    public String getMimeType() throws TransactionException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getRealSourceURI());
+            if (source.exists()) {
+                return source.getMimeType();
+            } else {
+                throw new SourceNotFoundException("The source [" + getRealSourceURI()
+                        + "] does not exist!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
         }
     }
 

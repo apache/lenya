@@ -6,8 +6,6 @@
  */
 package org.apache.lenya.cms.cocoon.source;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,7 +29,6 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.SourceNodeFactory;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.TransactionException;
-import org.w3c.dom.Document;
 
 /**
  * Repository source.
@@ -86,7 +83,7 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
 
         this.node = (Node) map.get(Node.IDENTIFIABLE_TYPE, uri);
     }
-    
+
     /**
      * @return The repository node which is accessed by this source.
      */
@@ -160,21 +157,8 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
             throw new SourceNotFoundException("The source [" + getURI() + "] does not exist!");
         }
         try {
-            Document doc = this.node.getDocument();
-            TransformerFactory tFactory = TransformerFactory.newInstance();
-            Transformer transformer = tFactory.newTransformer();
-
-            transformer.setOutputProperty("encoding", "UTF-8");
-            transformer.setOutputProperty("indent", "yes");
-
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            transformer.transform(new DOMSource(doc), new StreamResult(bos));
-            return new ByteArrayInputStream(bos.toByteArray());
-            
-            /*
-            return convert(doc);
-            */
-        } catch (Exception e) {
+            return this.node.getInputStream();
+        } catch (TransactionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -269,21 +253,44 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         return false;
     }
 
-    public Document getDocument() {
-        return this.node.getDocument();
+    /**
+     * Registerns the source as dirty.
+     * @throws TransactionException if an error occurs.
+     */
+    public void registerDirty() throws TransactionException {
+        this.identityMap.getUnitOfWork().registerDirty(this.node);
     }
 
-    public void setDocument(Document document) {
-        this.node.setDocument(document);
+    /**
+     * @see org.apache.excalibur.source.Source#getContentLength()
+     */
+    public long getContentLength() {
         try {
-            registerDirty();
+            return this.node.getContentLength();
         } catch (TransactionException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void registerDirty() throws TransactionException {
-        this.identityMap.getUnitOfWork().registerDirty(this.node);
+    /**
+     * @see org.apache.excalibur.source.Source#getLastModified()
+     */
+    public long getLastModified() {
+        try {
+            return this.node.getLastModified();
+        } catch (TransactionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /**
+     * @see org.apache.excalibur.source.Source#getMimeType()
+     */
+    public String getMimeType() {
+        try {
+            return this.node.getMimeType();
+        } catch (TransactionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

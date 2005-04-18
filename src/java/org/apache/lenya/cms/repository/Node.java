@@ -21,7 +21,6 @@ import java.io.OutputStream;
 
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
-import org.w3c.dom.Document;
 
 /**
  * Repository node.
@@ -29,16 +28,6 @@ import org.w3c.dom.Document;
  * @version $Id:$
  */
 public interface Node extends Transactionable {
-
-    /**
-     * @return The DOM that holds the information.
-     */
-    Document getDocument();
-
-    /**
-     * @param document The DOM that holds the information.
-     */
-    void setDocument(Document document);
 
     /**
      * The identifiable type.
@@ -62,5 +51,23 @@ public interface Node extends Transactionable {
      * @throws TransactionException if the node does not exist.
      */
     OutputStream getOutputStream() throws TransactionException;
+    
+    /**
+     * @return The last modification date.
+     * @throws TransactionException if the node does not exist.
+     */
+    long getLastModified() throws TransactionException;
+    
+    /**
+     * @return The content length.
+     * @throws TransactionException if the node does not exist.
+     */
+    long getContentLength() throws TransactionException;
+    
+    /**
+     * @return The MIME type.
+     * @throws TransactionException if the node does not exist.
+     */
+    String getMimeType() throws TransactionException;
 
 }

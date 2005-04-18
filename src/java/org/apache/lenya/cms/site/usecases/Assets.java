@@ -16,21 +16,15 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.text.DateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.xml.DocumentHelper;
 
 /**
  * Usecase to add Assets to a resource.
@@ -67,10 +61,8 @@ public class Assets extends SiteUsecase {
         super.initParameters();
 
         ResourcesManager resourcesManager = null;
-        SourceResolver resolver = null;
 
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
 
             Resource[] resources = resourcesManager.getResources(getSourceDocument());

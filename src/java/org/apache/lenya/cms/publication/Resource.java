@@ -17,6 +17,8 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.metadata.MetaDataManager;
@@ -129,4 +131,88 @@ public class Resource implements MetaDataOwner {
         return nodes;
     }
 
+    /**
+     * @return The content length of the source.
+     * @throws SourceNotFoundException if the source does not exist.
+     */
+    public long getContentLength() throws SourceNotFoundException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getSourceURI());
+            if (source.exists()) {
+                return source.getContentLength();
+            } else {
+                throw new SourceNotFoundException("The source [" + getSourceURI()
+                        + "] does not exist!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+    
+    /**
+     * @return The last modification date of the source.
+     * @throws SourceNotFoundException if the source does not exist.
+     */
+    public long getLastModified() throws SourceNotFoundException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getSourceURI());
+            if (source.exists()) {
+                return source.getLastModified();
+            } else {
+                throw new SourceNotFoundException("The source [" + getSourceURI()
+                        + "] does not exist!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+    
+    /**
+     * @return The mime type of the source.
+     * @throws SourceNotFoundException if the source does not exist.
+     */
+    public String getMimeType() throws SourceNotFoundException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getSourceURI());
+            if (source.exists()) {
+                return source.getMimeType();
+            } else {
+                throw new SourceNotFoundException("The source [" + getSourceURI()
+                        + "] does not exist!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+    
 }
