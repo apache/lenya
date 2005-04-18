@@ -95,7 +95,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
     /**
      * @see org.apache.lenya.transaction.UnitOfWork#commit()
      */
-    public void commit() throws TransactionException {
+    public synchronized void commit() throws TransactionException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("commit");
         }
@@ -173,7 +173,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
     /**
      * @see org.apache.lenya.transaction.UnitOfWork#rollback()
      */
-    public void rollback() throws TransactionException {
+    public synchronized void rollback() throws TransactionException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("rollback");
         }
