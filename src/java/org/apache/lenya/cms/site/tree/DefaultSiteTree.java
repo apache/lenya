@@ -65,6 +65,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     // exception.
     private String area = "";
     protected ServiceManager manager;
+    private Document document;
 
     /**
      * Create a DefaultSiteTree
@@ -79,16 +80,19 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
                 + SITE_TREE_FILENAME;
         this.area = _area;
         this.manager = manager;
+        try {
+            this.document = SourceUtil.readDOM(this.sourceUri, this.manager);
+            if (this.document == null) {
+                this.document = createDocument();
+            }
+        } catch (Exception e) {
+            throw new SiteException(e);
+        }
     }
 
-    protected Document load() throws SiteException {
+    protected void saveDocument() throws SiteException {
         try {
-            Document document = SourceUtil.readDOM(this.sourceUri, this.manager);
-            if (document == null) {
-                document = createDocument();
-                SourceUtil.writeDOM(document, this.sourceUri, this.manager);
-            }
-            return document;
+            SourceUtil.writeDOM(this.document, this.sourceUri, this.manager);
         } catch (Exception e) {
             throw new SiteException(e);
         }
@@ -160,8 +164,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      java.lang.String)
      */
     public synchronized void addNode(SiteTreeNode node, String refDocumentId) throws SiteException {
-        addNode(node.getParent().getAbsoluteId(), node.getId(), node.getLabels(), node
-                .getHref(), node.getSuffix(), node.hasLink(), refDocumentId);
+        addNode(node.getParent().getAbsoluteId(),
+                node.getId(),
+                node.getLabels(),
+                node.getHref(),
+                node.getSuffix(),
+                node.hasLink(),
+                refDocumentId);
     }
 
     /**
@@ -244,8 +253,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
 
         // Create node
-        Document document = load();
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
+        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
         Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
         child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
 
@@ -285,8 +293,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             parentNode.appendChild(child);
         }
         getLogger().debug("Tree has been modified: " + document.getDocumentElement());
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
-
+        saveDocument();
     }
 
     /**
@@ -298,7 +305,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (node != null) {
             node.addLabel(label);
         }
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
+        try {
+            saveDocument();
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -310,7 +321,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (node != null) {
             node.removeLabel(label);
         }
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
+        try {
+            saveDocument();
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -364,7 +379,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             ids.add(st.nextToken());
         }
 
-        Node node = findNode(load().getDocumentElement(), ids);
+        Node node = findNode(this.document.getDocumentElement(), ids);
         return node;
     }
 
@@ -396,15 +411,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public SiteTreeNode[] getTopNodes() {
         List childElements = new ArrayList();
 
-        Document doc;
-        try {
-            doc = load();
-        } catch (SiteException e) {
-            throw new RuntimeException(e);
-        }
-        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", doc);
+        NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
 
-        Element[] elements = helper.getChildren(doc.getDocumentElement(),
+        Element[] elements = helper.getChildren(this.document.getDocumentElement(),
                 SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
@@ -445,7 +454,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
         Node insertNode = parentNode.removeChild(node);
         parentNode.insertBefore(insertNode, previousNode);
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
+        saveDocument();
     }
 
     /**
@@ -480,7 +489,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         } else {
             parentNode.insertBefore(insertNode, nextNode);
         }
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
+        saveDocument();
     }
 
     /**
@@ -508,7 +517,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         for (int i = 0; i < children.length; i++) {
             importSubtree(newParent, children[i], children[i].getId(), null);
         }
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
+        saveDocument();
     }
 
     /**
@@ -520,7 +529,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (node != null) {
             node.setLabel(label);
         }
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
+        try {
+            saveDocument();
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -548,8 +561,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             return source.getNode();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             if (resolver != null) {
                 if (source != null) {
                     resolver.release(source);
