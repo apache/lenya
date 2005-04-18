@@ -417,6 +417,17 @@
                         class="org.apache.lenya.cms.editors.EditDocument">
       <parameter name="sourceUri" value="cocoon:/request2document"/>
     </component-instance>
+    <component-instance name="edit.insertImage" logger="lenya.publication"
+                        class="org.apache.lenya.cms.editors.InsertAsset">
+      <view template="edit/insertAsset" menu="false"/>
+      <parameter name="mimeTypePrefix" value="image/"/>
+      <parameter name="asset-usecase" value="tab.assets"/>
+    </component-instance>
+    <component-instance name="edit.insertAsset" logger="lenya.publication"
+                        class="org.apache.lenya.cms.editors.InsertAsset">
+      <view template="edit/insertAsset" menu="false"/>
+      <parameter name="asset-usecase" value="tab.assets"/>
+    </component-instance>
     <component-instance name="edit.forms" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.forms.FormsEditor">
       <transaction policy="pessimistic"/>
