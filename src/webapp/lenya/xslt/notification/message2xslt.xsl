@@ -63,7 +63,7 @@
 			<div class="lenya-box-body">
 			<table class="lenya-table-noborder">
 				<tr>
-					<td class="lenya-entry-caption">Recipient(s):</td>
+					<td class="lenya-entry-caption">Recipient(s): <br />Use comma to separate <br />several e-mail addresses.</td>
 					<td>
 						<xslt:apply-templates/>
 					</td>
@@ -105,7 +105,7 @@
 	
 	<xslt:template match="not:preset">
 		<xslt:variable name="user" select="not:users/not:user"/>
-		<input type="hidden" name="notification.tolist">
+		<input type="hidden" name="notification.tolist.preset" id="notification.tolist.preset">
 			<xslt:attribute name="value"><xslt:value-of select="$user/@email"/></xslt:attribute>
 		</input> 
 		<span style="white-space: nobreak">
