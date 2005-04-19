@@ -160,7 +160,7 @@
                 <td class="lenya-form-caption"><i18n:text>Caption</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.caption" value=""/></td>
               </tr>
               <tr>
-                <td class="lenya-form-caption"><i18n:text>Link</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
+                <td class="lenya-form-caption" style="vertical-align:top"><i18n:text>Link</i18n:text>:</td><td><input class="lenya-form-element" type="text" name="properties.insert.asset.link"/><br/>External links have to start with 'http://', internal links have to start with '/'</td>
               </tr>
             </xsl:if>
             <tr><td>&#160;</td></tr>
@@ -203,9 +203,11 @@
               <input type="hidden" name="properties.insert.asset.language" value="{/lenya-info:info/lenya-info:assets/lenya-info:language}"/>
 
               <table class="lenya-table-noborder">
-                <xsl:if test="not(lenya-info:asset)">
+              <xsl:choose>
+                <xsl:when test="not(lenya-info:asset)">
                   <tr><td colspan="5" class="lenya-form-caption"><i18n:text>No assets available</i18n:text></td></tr>
-                </xsl:if>
+                </xsl:when>
+                <xsl:otherwise>
                 <tr>
                   <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
                   <td colspan="4">
@@ -222,7 +224,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="lenya-form-caption"><i18n:text>Link</i18n:text>:</td>
+                    <td class="lenya-form-caption" style="vertical-align:top"><i18n:text>Link</i18n:text>:</td>
                     <td colspan="4">
                       <input class="lenya-form-element" type="text" name="properties.insert.asset.link"/>
                       <br/>
@@ -238,6 +240,8 @@
                     <input i18n:attr="value" type="button" onClick="location.href='{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
                   </td>
                 </tr>
+                </xsl:otherwise>
+                </xsl:choose>                
               </table>
       
               <!--
