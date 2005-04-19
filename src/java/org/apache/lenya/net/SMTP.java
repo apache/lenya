@@ -20,10 +20,12 @@
 package org.apache.lenya.net;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.util.StringTokenizer;
@@ -41,7 +43,7 @@ public class SMTP {
     int port;
     String domain = null;
     Socket socket = null;
-    PrintStream out = null;
+    PrintWriter out = null;
     DataInputStream in = null;
     String errlog = null;
     String from = null;
@@ -95,9 +97,9 @@ public class SMTP {
 
         try {
             socket = new Socket(host, port);
-            out = new PrintStream(socket.getOutputStream(), true);
+            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8")), true);
             in = new DataInputStream(socket.getInputStream());
-
+            
             errlog = errlog + getResponse(220);
 
             errlog = errlog + "HELO " + domain + "\n";
