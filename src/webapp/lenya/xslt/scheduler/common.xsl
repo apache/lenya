@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: common.xsl,v 1.17 2004/05/17 14:53:46 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -121,7 +121,7 @@
           onclick="
             elements['notification.subject'].value = document.getElementById('notification.subject').value;
             elements['notification.message'].value = document.getElementById('notification.message').value;
-            elements['notification.tolist'].value = document.getElementById('notification.tolist').value;
+            elements['notification.tolist'].value = document.getElementById('notification.tolist').value.replace(/[^a-zA-Z0-9_,.@%-]/g, '')+','+document.getElementById('notification.tolist.preset').value;
           "/>
       </td>
     </tr>
