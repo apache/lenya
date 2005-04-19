@@ -69,7 +69,7 @@ public class UploadAction extends AbstractConfigurableAction {
 
     public static final String CONTENT_PREFIX = "content";
 
-    public static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_. ]+";
+    public static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
 
     // optional parameters for meta data according to dublin core
     public static final String[] DUBLIN_CORE_PARAMETERS = { "title", "creator", "subject",

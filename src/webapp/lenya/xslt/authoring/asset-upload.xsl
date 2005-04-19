@@ -74,7 +74,7 @@ Override this template to add scripts etc.
           <xsl:if test="$error = 'true'">
             <tr>
               <td colspan="2" class="lenya-form-caption">
-                <span class="lenya-form-message-error"><i18n key="filename-format-exception"/></span>
+                <span class="lenya-form-message-error"><i18n:text key="filename-format-exception"/></span>
               </td>
             </tr>
           </xsl:if>
