@@ -77,6 +77,11 @@
                 <map:parameter name="docid" value="{page-envelope:document-id}"/>
                 <map:parameter name="language" value="{page-envelope:document-language}"/>
               </map:transform>
+              <map:act type="set-header">
+                <!-- prevent caching in the browser -->
+                <map:parameter name="Cache-Control" value="pre-check=0" />
+                <map:parameter name="Expires" value="-1" />
+              </map:act>              
               <map:call resource="style-cms-page"/>
             </map:match>
           </map:match>
