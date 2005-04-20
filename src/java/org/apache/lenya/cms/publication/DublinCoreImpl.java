@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DublinCoreImpl.java,v 1.17 2004/07/30 10:18:35 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -33,7 +33,10 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.log4j.Category;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -41,6 +44,7 @@ import org.xml.sax.SAXException;
  * This class uses the dublin core specification from 2003-03-04.
  */
 public class DublinCoreImpl {
+    private static final Category log = Category.getInstance(DublinCoreImpl.class);
     private Document cmsdocument;
     private File infofile;
 
@@ -194,14 +198,22 @@ public class DublinCoreImpl {
         String[][] arrays = { ELEMENTS, TERMS };
         Map[] maps = { elements, terms };
 
+        List childNodes = new ArrayList();
+        NodeList nodes = metaElement.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            if (nodes.item(i).getParentNode() == metaElement) {
+                childNodes.add(nodes.item(i));
+            }
+        }
+        Node[] children = (Node[])childNodes.toArray(new Node[childNodes.size()]);
+        for (int i = 0; i < children.length; i++){
+            metaElement.removeChild(children[i]);  
+        }
+
         for (int type = 0; type < 2; type++) {
             NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
             String[] elementNames = arrays[type];
             for (int i = 0; i < elementNames.length; i++) {
-                Element[] children = helper.getChildren(metaElement, elementNames[i]);
-                for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
-                    metaElement.removeChild(children[valueIndex]);
-                }
                 String[] values = (String[]) maps[type].get(elementNames[i]);
                 for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
                     Element valueElement =
