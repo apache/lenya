@@ -132,6 +132,7 @@
           <map:parameter name="url" value="{5}"/>
           <map:parameter name="document-id" value="{page-envelope:document-id}"/>
           <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
         </map:transform>
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test" value="{1}"/>
