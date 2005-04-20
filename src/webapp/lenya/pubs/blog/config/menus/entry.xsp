@@ -52,8 +52,11 @@
     <menu i18n:attr="name" name="File" label="File">
       <block>
         <item uc:usecase="edit" uc:step="open" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
+	<!--
+	<item uc:usecase="xopus" uc:step="open"><xsp:attribute name="href">?doctype=entry</xsp:attribute>Edit&#160;with&#160;Xopus</item>
+	-->
         <item href="index-bxeng.html">Edit&#160;with&#160;BXE</item>
-        <item uc:usecase="1formedit" uc:step="open">Edit&#160;with&#160;one&#160;Form</item>
+        <item uc:usecase="1formedit" uc:step="open" href="?">Edit&#160;with&#160;Source&#160;Editor</item>
       </block>
       <block>
         <item uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute><i18n:text>Publish</i18n:text></item>
