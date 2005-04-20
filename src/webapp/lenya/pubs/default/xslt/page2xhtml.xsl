@@ -33,11 +33,15 @@
 <!-- {context-prefix}/{publication-id}/{area} -->
 <xsl:param name="root"/>
 
-<!-- i.e. doctypes/xhtml-document -->
 <xsl:param name="document-id"/>
+
+<!-- i.e. doctypes/xhtml-document -->
+<xsl:param name="document-type"/>
 
 <!-- The rquest url i.e. /lenya/doctypes/xhtml-document_en.html -->
 <xsl:param name="url"/>
+
+<xsl:param name="language"/>
 
 
 <xsl:template match="cmsbody">
@@ -51,7 +55,16 @@
       <div id="page">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td id="publication-title">Welcome to the Default Publication!</td>
+          <td id="publication-title">
+            <xsl:choose>
+              <xsl:when test="$language = 'de'">
+	        Willkommen zur Default Publikation!
+              </xsl:when>
+              <xsl:otherwise>
+	        Welcome to the Default Publication!
+              </xsl:otherwise>
+	    </xsl:choose>
+          </td>
           <td id="project-logo"><img src="{$root}/images/project-logo.png" alt="project logo"/></td>
         </tr>
       </table>
