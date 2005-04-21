@@ -85,6 +85,10 @@ public class CreateDocument extends Create {
      * @see org.apache.lenya.cms.site.usecases.Create#createDocument()
      */
     protected Document createDocument() throws Exception {
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("createDocument() called; first retrieving parent");
+
         Document parent = getSourceDocument();
 
         String documentId = parent.getId() + "/" + getParameterAsString(DOCUMENT_ID);
@@ -93,7 +97,7 @@ public class CreateDocument extends Create {
         String language = getParameterAsString(LANGUAGE);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Creating document");
+            getLogger().debug("createDocument() read parameters:");
             getLogger().debug("    Parent document:   [" + parent.getId() + "]");
             getLogger().debug("    Child document:    [" + documentId + "]");
             getLogger().debug("    Language:          [" + language + "]");
@@ -113,22 +117,31 @@ public class CreateDocument extends Create {
             nodes[i].lock();
         }
 
-        DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
-                publication);
+        // create an instance of DocumentType
+        DocumentTypeBuilder documentTypeBuilder = null;
+        DocumentType documentType = null;
+        try {
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
 
-        String parentId = parent.getId().substring(1);
-        String childId = document.getName();
+            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
 
-        File doctypesDirectory = new File(publication.getDirectory(),
-                DocumentTypeBuilder.DOCTYPE_DIRECTORY);
+            String parentId = parent.getId().substring(1);
+            String childId = document.getName();
 
-        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
+            documentType.getCreator().create(
+                documentType.getSampleContentLocation(),
                 new File(publication.getContentDirectory(area), parentId),
                 childId,
                 ParentChildCreatorInterface.BRANCH_NODE,
                 navigationTitle,
                 language,
                 Collections.EMPTY_MAP);
+        } 
+        finally {
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
+            }
+        }
 
         return document;
     }

@@ -131,27 +131,37 @@ public class CreateLanguage extends Create {
             nodes[i].lock();
         }
 
-        DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
-                publication);
+        // create an instance of DocumentType
+        DocumentTypeBuilder documentTypeBuilder = null;
+        DocumentType documentType = null;
+        try {
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
 
-        String parentId = "";
-        Document parent = map.getParent(document);
-        if (parent != null) {
-            parentId = map.getParent(document).getId().substring(1);
-        }
+            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
 
-        String childId = document.getName();
+            String parentId = "";
+            Document parent = map.getParent(document);
+            if (parent != null) {
+                parentId = map.getParent(document).getId().substring(1);
+            }
 
-        File doctypesDirectory = new File(publication.getDirectory(),
-                DocumentTypeBuilder.DOCTYPE_DIRECTORY);
+            String childId = document.getName();
 
-        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
+            documentType.getCreator().create(
+                documentType.getSampleContentLocation(),
                 new File(publication.getContentDirectory(area), parentId),
                 childId,
                 ParentChildCreatorInterface.BRANCH_NODE,
                 navigationTitle,
                 language,
                 Collections.EMPTY_MAP);
+        } 
+        finally {
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
+            }
+        }
+
 
         return document;
     }

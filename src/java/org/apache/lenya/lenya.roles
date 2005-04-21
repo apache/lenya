@@ -118,6 +118,10 @@
   	    shorthand="document-manager"
   	    default-class="org.apache.lenya.cms.publication.DocumentManagerImpl"/>
         
+  <role name="org.apache.lenya.cms.publication.DocumentTypeBuilder"
+  	    shorthand="document-type-builder"
+  	    default-class="org.apache.lenya.cms.publication.DocumentTypeBuilderImpl"/>
+
   <role name="org.apache.lenya.cms.publication.ResourcesManager"
   	    shorthand="resources-manager"
   	    default-class="org.apache.lenya.cms.publication.DefaultResourcesManager"/>

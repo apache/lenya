@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,13 +19,17 @@
 
 package org.apache.lenya.cms.publication;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
+
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 
 
 /**
  * A document type.
  */
-public class DocumentType {
+public class DocumentType extends AbstractLogEnabled {
     /**
      * <code>NAMESPACE</code> The doctypes namespace
      */
@@ -38,11 +42,18 @@ public class DocumentType {
     /** Creates a new instance of DocumentType
      * 
      * @param _name the name of the document type
-     * 
+     * @param _sampleContentLocation location of sample contents
      */
-    protected DocumentType(String _name) {
+    protected DocumentType(String _name, Logger _logger) {
         assert _name != null;
+
+        ContainerUtil.enableLogging(this, _logger);
         this.name = _name;
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentType() constructed with"
+              + "\n\t name [" + name + "]"
+		);
     }
 
     private String name;
@@ -106,13 +117,6 @@ public class DocumentType {
         this.workflowFile = string;
     }
 
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString() {
-        return getName();
-    }
-
     private String[] linkAttributeXPaths = { };
 
     /**
@@ -131,4 +135,33 @@ public class DocumentType {
     public void setLinkAttributeXPaths(String[] xPaths) {
         this.linkAttributeXPaths = xPaths;
     }
+
+
+    private String sampleContentLocation;
+
+    /**
+    * Returns the location of sample contents for this type
+     * @return A string value.
+     */
+    public String getSampleContentLocation() {
+        return this.sampleContentLocation;
+    }
+
+    /**
+    * Set the location of sample contents for this type
+     * @param _location the location
+     */
+    public void setSampleContentLocation(String _location) {
+        this.sampleContentLocation = _location;
+    }
+
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getName();
+    }
+
+
 }

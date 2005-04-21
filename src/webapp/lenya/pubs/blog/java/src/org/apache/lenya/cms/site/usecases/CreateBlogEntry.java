@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,8 +35,9 @@ import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
+
 /**
- * Usecase to create a document.
+ * Usecase to create a Blog entry.
  * 
  * @version $Id$
  */
@@ -105,25 +106,35 @@ public class CreateBlogEntry extends DocumentUsecase {
                 documentId,
                 language);
 
-        DocumentType documentType = DocumentTypeBuilder.buildDocumentType(documentTypeName,
-                publication);
+        // create an instance of DocumentType
+        DocumentTypeBuilder documentTypeBuilder = null;
+        DocumentType documentType = null;
+        try {
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
 
-        String childId = document.getName();
+            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
 
-        File doctypesDirectory = new File(publication.getDirectory(),
-                DocumentTypeBuilder.DOCTYPE_DIRECTORY);
+            String childId = document.getName();
 
-        HashMap allParameters = new HashMap();
-        allParameters.put(Identity.class.getName(), session.getAttribute(Identity.class.getName()));
-        allParameters.put("title", title);
+            HashMap allParameters = new HashMap();
+            allParameters.put(Identity.class.getName(), session.getAttribute(Identity.class.getName()));
+            allParameters.put("title", title);
 
-        documentType.getCreator().create(new File(doctypesDirectory, "samples"),
+            documentType.getCreator().create(
+                documentType.getSampleContentLocation(),
                 new File(publication.getContentDirectory(area), ""),
                 childId,
                 ParentChildCreatorInterface.LEAF_NODE,
                 title,
                 language,
                 allParameters);
+        } 
+        finally {
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
+            }
+        }
+
 
     }
 

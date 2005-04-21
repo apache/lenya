@@ -103,6 +103,10 @@ public abstract class Create extends AbstractUsecase {
         super.doExecute();
 
         Document document = createDocument();
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Create.doExecute() got document instance, now notifying document manager");
+
         DocumentManager documentManager = null;
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -126,7 +130,11 @@ public abstract class Create extends AbstractUsecase {
             }
         }
 
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Create.doExecute() done notifying document manager, now setting meta data");
+
         setMetaData(document);
+
         setTargetURL(document.getCanonicalWebappURL());
     }
 

@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 
 /**
- * Interface for creation of hierarchial documents
+ * Interface for creation of hierarchical documents
  */
 public interface ParentChildCreatorInterface {
     /**
@@ -85,7 +85,7 @@ public interface ParentChildCreatorInterface {
     /**
      * Create a new document.
      *
-     * @param samplesDir the directory where the template file is located.
+     * @param samplesLocation the location where samples for this document can be found.
      * @param parentDir in which directory the document is to be created.
      * @param childId the document id of the new document
      * @param childType the type of the new document.
@@ -96,7 +96,7 @@ public interface ParentChildCreatorInterface {
      * @exception Exception if an error occurs
      */
     void create(
-        File samplesDir,
+        String samplesLocation,
         File parentDir,
         String childId,
         short childType,
@@ -104,4 +104,5 @@ public interface ParentChildCreatorInterface {
         String language,
         Map parameters)
         throws Exception;
+
 }

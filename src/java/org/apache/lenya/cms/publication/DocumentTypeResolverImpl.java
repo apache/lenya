@@ -73,6 +73,8 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
         DocumentType documentType;
         URIParameterizer parameterizer = null;
         Map map = null;
+        DocumentTypeBuilder documentTypeBuilder = null;
+
         try {
             parameterizer = (URIParameterizer) this.manager.lookup(URIParameterizer.ROLE);
 
@@ -95,13 +97,18 @@ public class DocumentTypeResolverImpl extends AbstractLogEnabled implements Serv
             if (getLogger().isDebugEnabled())
                 getLogger().debug("DocumentTypeResolverImpl.resolve() name = [" + name + "], now calling DocumentTypeBuilder");
 
-            documentType = DocumentTypeBuilder.buildDocumentType(name, document.getPublication());
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
+
+            documentType = documentTypeBuilder.buildDocumentType(name, document.getPublication());
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (parameterizer != null) {
                 this.manager.release(parameterizer);
+            }
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
             }
         }
 

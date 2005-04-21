@@ -99,6 +99,10 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         this.identityMap = map;
         this.language = _language;
         setArea(_area);
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultDocument() done building instance with _id [" + _id + "], _language [" + _language + "]");
+
     }
 
     /**

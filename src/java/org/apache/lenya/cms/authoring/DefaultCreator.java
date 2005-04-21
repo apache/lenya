@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,58 +29,27 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 /**
- * The default creator
+ * The default creator for documents
  */
-public class DefaultCreator implements ParentChildCreatorInterface {
-    private static Logger log = Logger.getLogger(DefaultCreator.class);
-    /**
-     * <code>RESOURCE_NAME</code> The resource name parameter
-     */
-    public static final String RESOURCE_NAME = "resource-name";
-    /**
-     * <code>RESOURCE_META_NAME</code> The resource meta name parameter
-     */
-    public static final String RESOURCE_META_NAME = "resource-meta-name";
-    /**
-     * <code>SAMPLE_NAME</code> The sample name parameter
-     */
-    public static final String SAMPLE_NAME = "sample-name";
-    /**
-     * <code>SAMPLE_META_NAME</code> The sample meta name parameter
-     */
-    public static final String SAMPLE_META_NAME = "sample-meta-name";
+public class DefaultCreator implements ParentChildCreatorInterface  {
 
-    private String resourceName = null;
-    private String resourceMetaName = null;
+    // FIXME: remove direct reference to log4j. A logger could be passed
+    // to init(), as DocumentTypeBuilder is a service. However, whoever
+    // creates blog entries is not yet a service, so that would need
+    // to be switched as well at the same time.
+    private Logger log = Logger.getLogger(DefaultCreator.class);
+    
+    public Logger getLogger() {
+        return log;
+    }
+
     private String sampleResourceName = null;
-    private String sampleMetaName = null;
 
     /**
      * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration)
      */
     public void init(Configuration conf) {
-        if (conf == null) {
-            return;
-        }
-
-        if (conf.getChild(RESOURCE_NAME, false) != null) {
-            this.resourceName = conf.getChild(RESOURCE_NAME).getValue("index.xml");
-        }
-
-        if (conf.getChild(RESOURCE_META_NAME, false) != null) {
-            this.resourceMetaName =
-                conf.getChild(RESOURCE_META_NAME).getValue("index-meta.xml");
-        }
-
-        if (conf.getChild(SAMPLE_NAME, false) != null) {
-            this.sampleResourceName =
-                conf.getChild(SAMPLE_NAME).getValue("sampleindex.xml");
-        }
-
-        if (conf.getChild(SAMPLE_META_NAME, false) != null) {
-            this.sampleMetaName =
-                conf.getChild(SAMPLE_META_NAME).getValue("samplemeta.xml");
-        }
+        // nothing to configure in current implementation
     }
 
     /**
@@ -119,11 +88,11 @@ public class DefaultCreator implements ParentChildCreatorInterface {
     }
 
     /**
-     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#create(File, File,
+     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#create(String, File,
      * String, short, String, String, Map)
       */
     public void create(
-        File samplesDir,
+        String samplesLocation,
         File parentDir,
         String childId,
         short childType,
@@ -131,29 +100,35 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         String language,
         Map parameters)
         throws Exception {
+
         // Set filenames
         String id = generateTreeId(childId, childType);
         String filename = getChildFileName(parentDir, id, language);
         String filenameMeta = getChildMetaFileName(parentDir, id, language);
 
-        String doctypeSample = samplesDir + File.separator + this.sampleResourceName;
-        String doctypeMeta = samplesDir + File.separator + this.sampleMetaName;
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultCreator.create(), ready to read sample contents, samplesLocation [" + samplesLocation + "]");
 
-        File sampleFile = new File(doctypeSample);
-        if (!sampleFile.exists()) {
-            log.error("No such sample file: " + sampleFile + " Have you configured the sample within doctypes.xconf?");
-            throw new FileNotFoundException("" + sampleFile);
+        File sampleFile = null;
+        if (samplesLocation != null) {
+            sampleFile = new File(samplesLocation.replace('/', File.separatorChar));
+            if (!sampleFile.exists())
+               throw new FileNotFoundException("Sample file [" + sampleFile + "] not found, make sure you configured it within doctypes.xconf");
         }
+        else 
+            throw new Exception("sample configuration setup error, samplesLocation is not set - verify your doctypes.xconf");
+
 
         // Read sample file
-        log.debug("Read sample file: " + doctypeSample);
+        Document doc = DocumentHelper.readDocument(sampleFile);
 
-        Document doc = DocumentHelper.readDocument(new File(doctypeSample));
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("sample document: " + doc);
 
-        log.debug("sample document: " + doc);
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("transform sample file: ");
 
         // transform the xml if needed
-        log.debug("transform sample file: ");
         transformXML(doc, id, childType, childName, parameters);
 
         // write the document (create the path, i.e. the parent
@@ -164,25 +139,12 @@ public class DefaultCreator implements ParentChildCreatorInterface {
             parent.mkdirs();
         }
 
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("write file: " + filename);
+
         // Write file
-        log.debug("write file: " + filename);
         DocumentHelper.writeDocument(doc, new File(filename));
 
-        // now do the same thing for the meta document if the
-        // sampleMetaName is specified
-        if (this.sampleMetaName != null) {
-            doc = DocumentHelper.readDocument(new File(doctypeMeta));
-
-            transformMetaXML(doc, id, childType, childName, parameters);
-
-            parent = new File(new File(filenameMeta).getParent());
-
-            if (!parent.exists()) {
-                parent.mkdirs();
-            }
-
-            DocumentHelper.writeDocument(doc, new File(filenameMeta));
-        }
     }
 
     /**
