@@ -42,7 +42,7 @@ public class DocumentType extends AbstractLogEnabled {
     /** Creates a new instance of DocumentType
      * 
      * @param _name the name of the document type
-     * @param _sampleContentLocation location of sample contents
+     * @param _logger a logger
      */
     protected DocumentType(String _name, Logger _logger) {
         assert _name != null;
