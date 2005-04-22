@@ -1,16 +1,18 @@
 /*
- * Copyright 1999-2004 The Apache Software Foundation
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- *  
+ * Copyright  1999-2005 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
 
 package org.apache.lenya.ac.ldap;
@@ -35,6 +37,8 @@ import javax.naming.ldap.InitialLdapContext;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.file.FileUser;
 
@@ -79,7 +83,7 @@ public class LDAPUser extends FileUser {
      * Creates a new LDAPUser object.
      */
     public LDAPUser() {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -98,9 +102,10 @@ public class LDAPUser extends FileUser {
      * @param _ldapId of LDAPUser
      * @throws ConfigurationException if the properties could not be read
      */
-    public LDAPUser(File configurationDirectory, String id, String email, String _ldapId)
+    public LDAPUser(File configurationDirectory, String id, String email, String _ldapId, Logger _logger)
             throws ConfigurationException {
         super(configurationDirectory, id, null, email, null);
+        ContainerUtil.enableLogging(this, _logger);
         this.ldapId = _ldapId;
 
         initialize();
@@ -126,8 +131,8 @@ public class LDAPUser extends FileUser {
      */
     public boolean existsUser(String _ldapId) throws AccessControlException {
 
-	if (getLogger().isDebugEnabled())
-	    getLogger().debug("existsUser() checking id " + _ldapId);
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("existsUser() checking id " + _ldapId);
 
         boolean exists = false;
 
@@ -137,13 +142,13 @@ public class LDAPUser extends FileUser {
 
             exists = (entry != null);
         } catch (final IOException e) {
-    	    if (getLogger().isDebugEnabled())
+            if (getLogger().isDebugEnabled())
                 getLogger().debug("existsUser() for id " + _ldapId + " got exception: " + e);
-                throw new AccessControlException("Exception during search: ", e);
+            throw new AccessControlException("Exception during search: ", e);
         } catch (final NamingException e) {
-    	    if (getLogger().isDebugEnabled())
+            if (getLogger().isDebugEnabled())
                 getLogger().debug("existsUser() for id " + _ldapId + " got exception: " + e);
-                throw new AccessControlException("Exception during search: ", e);
+            throw new AccessControlException("Exception during search: ", e);
         }
 
         return exists;
@@ -159,51 +164,41 @@ public class LDAPUser extends FileUser {
      * goes wrong ? After all, it's only used to get additional info for display?
      * This is a design decision, I'm not sure what's best.
      * @throws ConfigurationException when something went wrong.
-     * FIXME DirContext is unused at this time
      */
     protected void initialize() throws ConfigurationException {
-        DirContext context = null;
 
-	    try {
+        try {
             if (getLogger().isDebugEnabled())
                 getLogger().debug("initialize() getting entry ...");
 
             SearchResult entry = getDirectoryEntry(this.ldapId);
-            StringBuffer name = new StringBuffer();
-
             if (entry != null) {
-            /* users full name */
-            String usrNameAttr = 
-                defaultProperties.getProperty(USR_NAME_ATTR_PROP, USR_NAME_ATTR_DEFAULT);
+                StringBuffer name = new StringBuffer();
+                /* users full name */
+                String usrNameAttr = 
+                    defaultProperties.getProperty(USR_NAME_ATTR_PROP, USR_NAME_ATTR_DEFAULT);
 
-            if (getLogger().isDebugEnabled())
-                getLogger().debug("initialize() got entry, going to look for attribute " + usrNameAttr + " in entry, which is: " + entry);
+                if (getLogger().isDebugEnabled())
+                    getLogger().debug("initialize() got entry, going to look for attribute " + usrNameAttr + " in entry, which is: " + entry);
             
-            Attributes attributes = entry.getAttributes();
-            if (attributes != null) {
-                Attribute userNames = attributes.get(usrNameAttr);
-                if (userNames != null) {
-            	for (NamingEnumeration enumeration = userNames.getAll(); enumeration.hasMore(); enumeration.next()) {
-            	    name.append((String)userNames.get());
-            	}
+                Attributes attributes = entry.getAttributes();
+                if (attributes != null) {
+                    Attribute userNames = attributes.get(usrNameAttr);
+                    if (userNames != null)
+            	       for (NamingEnumeration enumeration = userNames.getAll(); enumeration.hasMore(); enumeration.next())
+            	           name.append((String)userNames.get());
                 }
+                this.ldapName = name.toString();
+                if (getLogger().isDebugEnabled())
+                    getLogger().debug("initialize() set name to " + this.ldapName);
             }
+            else {
+                this.ldapName = "";
             }
-            this.ldapName = name.toString();
-            if (getLogger().isDebugEnabled())
-                getLogger().debug("initialize() set name to " + this.ldapName);
         } catch (final NamingException e1) {
             throw new ConfigurationException("Could not read properties", e1);
         } catch (final IOException e1) {
             throw new ConfigurationException("Could not read properties", e1);
-        } finally {
-            try {
-                if (context != null) {
-                    close(context);
-                }
-            } catch (final NamingException e) {
-                throw new ConfigurationException("Closing context failed: ", e);
-            }
         }
     }
 
@@ -247,24 +242,23 @@ public class LDAPUser extends FileUser {
      */
     public boolean authenticate(String password) {
 
-	boolean authenticated = false;
-	String principal = "";
-	Context ctx = null;
+        boolean authenticated = false;
+        String principal = "";
+        Context ctx = null;
 
         try {
-	    principal = getPrincipal();
+            principal = getPrincipal();
 	    
-	    if (getLogger().isDebugEnabled())
-            getLogger().debug("Authenticating with principal [" + principal + "]");
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("Authenticating with principal [" + principal + "]");
 
             ctx = bind(principal, password,
-		       defaultProperties.getProperty(USR_AUTH_TYPE_PROP, 
-						     USR_AUTH_TYPE_DEFAULT));
+                       defaultProperties.getProperty(USR_AUTH_TYPE_PROP, 
+                                                     USR_AUTH_TYPE_DEFAULT));
             authenticated = true;
             close(ctx);
-            if (getLogger().isDebugEnabled()) {
+            if (getLogger().isDebugEnabled())
                 getLogger().debug("Context closed.");
-            }
         } catch (IOException e) {
             getLogger().warn("authenticate handling IOException, check your setup: " + e);
         } catch (AuthenticationException e) {
@@ -322,10 +316,10 @@ public class LDAPUser extends FileUser {
      * @return a <code>DirContext</code>
      * @throws NamingException if there are problems establishing the Ldap connection
      */
-    private DirContext bind(String principal, String credentials,
-			    String authMethod) throws NamingException {
+    private DirContext bind(String principal, String credentials, String authMethod) throws NamingException {
 
-        getLogger().info("Binding principal: [" + principal + "]");
+        if (getLogger().isInfoEnabled())
+            getLogger().info("Binding principal: [" + principal + "]");
 
         Hashtable env = new Hashtable();
 
@@ -338,14 +332,15 @@ public class LDAPUser extends FileUser {
         env.put(Context.SECURITY_PROTOCOL, defaultProperties.getProperty(SECURITY_PROTOCOL_PROP));
 
         env.put(Context.SECURITY_AUTHENTICATION, authMethod);
-	if (authMethod != null && ! authMethod.equals("none")) {
-	    env.put(Context.SECURITY_PRINCIPAL, principal);
-	    env.put(Context.SECURITY_CREDENTIALS, credentials);
-	}
+        if (authMethod != null && ! authMethod.equals("none")) {
+            env.put(Context.SECURITY_PRINCIPAL, principal);
+            env.put(Context.SECURITY_CREDENTIALS, credentials);
+        }
 
         DirContext ctx = new InitialLdapContext(env, null);
 
-        getLogger().info("Finished binding principal.");
+        if (getLogger().isInfoEnabled())
+            getLogger().info("Finished binding principal.");
 
         return ctx;
     }
@@ -356,7 +351,8 @@ public class LDAPUser extends FileUser {
      * @throws NamingException if there is a problem communicating to the LDAP server
      */
     private void close(Context ctx) throws NamingException {
-        ctx.close();
+        if (ctx != null)
+            ctx.close();
     }
 
     /**
@@ -403,43 +399,44 @@ public class LDAPUser extends FileUser {
 
 
     private SearchResult getDirectoryEntry(String userId) 
-	throws NamingException, IOException
+        throws NamingException, IOException
     {
-	DirContext context = null;
-	String searchFilter = "";
-	String objectName = "";
-	boolean recursiveSearch;
-	SearchResult result = null;
-	
-	try {
+        DirContext context = null;
+        String searchFilter = "";
+        String objectName = "";
+        boolean recursiveSearch;
+        SearchResult result = null;
+ 
+        try {
             readProperties();
 	    
             context = bind(defaultProperties.getProperty(MGR_DN_PROP), 
-			   defaultProperties.getProperty(MGR_PW_PROP),
-			   defaultProperties.getProperty(SECURITY_AUTHENTICATION_PROP));
+                           defaultProperties.getProperty(MGR_PW_PROP),
+                           defaultProperties.getProperty(SECURITY_AUTHENTICATION_PROP));
 
-	    // Get search information and user attribute from properties
-	    // provide defaults if not present (backward compatibility)
-	    String userAttribute = 
-		defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT);
-	    searchFilter = "(" + userAttribute + "=" + userId + ")";
-	    SearchControls scope = new SearchControls();
+            // Get search information and user attribute from properties
+            // provide defaults if not present (backward compatibility)
+            String userAttribute = 
+               defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT);
+            searchFilter = "(" + userAttribute + "=" + userId + ")";
+            SearchControls scope = new SearchControls();
 
-	    recursiveSearch = isSubtreeSearch();
-	    if (recursiveSearch) {
-		scope.setSearchScope(SearchControls.SUBTREE_SCOPE);
-		objectName = defaultProperties.getProperty(PROVIDER_URL_PROP);
-	    }
-	    else {
-		scope.setSearchScope(SearchControls.ONELEVEL_SCOPE);
-		objectName =  
-		    defaultProperties.getProperty(USR_BRANCH_PROP, USR_BRANCH_DEFAULT);
+            recursiveSearch = isSubtreeSearch();
+            if (recursiveSearch) {
+                scope.setSearchScope(SearchControls.SUBTREE_SCOPE);
+                objectName = defaultProperties.getProperty(PROVIDER_URL_PROP);
+            }
+            else {
+                scope.setSearchScope(SearchControls.ONELEVEL_SCOPE);
+                objectName = defaultProperties.getProperty(USR_BRANCH_PROP, USR_BRANCH_DEFAULT);
 	    }
 	
-	    if (getLogger().isDebugEnabled())
-		getLogger().debug("searching object " + objectName + " filtering with " + searchFilter + ", recursive search ? " + recursiveSearch);
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("searching object " + objectName + " filtering with " + searchFilter + ", recursive search ? " + recursiveSearch);
 
-	    NamingEnumeration results = context.search(objectName, searchFilter, scope);
+            NamingEnumeration results = context.search(objectName, searchFilter, scope);
+            if (results != null && results.hasMore())
+                result = (SearchResult)results.next();
 
 	    // sanity check: if more than one entry is returned
 	    // for a user-id, then the directory is probably flawed,
@@ -457,22 +454,22 @@ public class LDAPUser extends FileUser {
 // 			getLogger().debug("Catching and ignoring PartialResultException, as this means LDAP server does not support our sanity check");
 // 		}
 
-	}
+        }
         catch (NamingException e) {
-	    if (getLogger().isDebugEnabled())
-		getLogger().debug("NamingException caught when searching on objectName = " + objectName + " and searchFilter=" + searchFilter + ", this exception will be propagated: " + e);
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("NamingException caught when searching on objectName = " + objectName + " and searchFilter=" + searchFilter + ", this exception will be propagated: " + e);
             throw e;
         } 
-	finally {
+        finally {
             try {
                 if (context != null) {
                     close(context);
                 }
             } catch (NamingException e) {
-		getLogger().warn("this should not happen: exception closing context " + e);
+                getLogger().warn("this should not happen: exception closing context " + e);
             }
         }
-	return result;
+        return result;
     }
 
     /**
@@ -492,31 +489,28 @@ public class LDAPUser extends FileUser {
      */
     private String getPrincipal() throws IOException, NamingException {
 
-	String principal;
+        String principal;
 
-	// 1. Check if domain-name is to be supported
-	String domainProp = defaultProperties.getProperty(DOMAIN_NAME_PROP);
-	if (domainProp != null && domainProp.trim().length() > 0) {
-	    principal = domainProp + "\\" + getLdapId();
-	}
-	else {
-	    if (isSubtreeSearch()) {
-		// 2. Principal is constructed from directory entry
-		SearchResult entry = getDirectoryEntry(getLdapId());
-		principal = entry.getName();
-		if (entry.isRelative()) {
-		    if (principal.length()>0){
-			principal = principal +","+ defaultProperties.getProperty(BASE_DN_PROP);
-		    }
-		}
-	    }
-	    else {
-		// 3. Principal is constructed from properties
-		principal = constructPrincipal(getLdapId());
-	    }
-	}
+        // 1. Check if domain-name is to be supported
+        String domainProp = defaultProperties.getProperty(DOMAIN_NAME_PROP);
+        if (domainProp != null && domainProp.trim().length() > 0) {
+            principal = domainProp + "\\" + getLdapId();
+        }
+        else {
+            if (isSubtreeSearch()) {
+                // 2. Principal is constructed from directory entry
+                SearchResult entry = getDirectoryEntry(getLdapId());
+                principal = entry.getName();
+                if (entry.isRelative())
+                    if (principal.length() > 0)
+                        principal = principal +","+ defaultProperties.getProperty(BASE_DN_PROP);
+            }
+	    else
+                // 3. Principal is constructed from properties
+                principal = constructPrincipal(getLdapId());
+        }
 
-	return principal;
+        return principal;
     }
 
     /**
@@ -526,36 +520,36 @@ public class LDAPUser extends FileUser {
      * @return The principal
      */
     private String constructPrincipal(String userId) {
-	StringBuffer principal = new StringBuffer();
-	principal
-	    .append(defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT))
-	    .append("=")
-	    .append(userId)
-	    .append(",");
+        StringBuffer principal = new StringBuffer();
+        principal
+            .append(defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT))
+            .append("=")
+            .append(userId)
+            .append(",");
 
-	String baseDn = defaultProperties.getProperty(BASE_DN_PROP);
-	if (baseDn != null && baseDn.length() > 0) {
-	    // USR_BRANCH_PROP may be empty, so only append when not-empty
-	    String usrBranch = defaultProperties.getProperty(USR_BRANCH_PROP);
-	    if (usrBranch != null) {
-		if (usrBranch.trim().length() > 0)
-		    principal.append(usrBranch).append(",");
-	    }
-	    else
-		principal.append(USR_BRANCH_DEFAULT).append(",");
+        String baseDn = defaultProperties.getProperty(BASE_DN_PROP);
+        if (baseDn != null && baseDn.length() > 0) {
+            // USR_BRANCH_PROP may be empty, so only append when not-empty
+            String usrBranch = defaultProperties.getProperty(USR_BRANCH_PROP);
+            if (usrBranch != null) {
+                if (usrBranch.trim().length() > 0)
+                    principal.append(usrBranch).append(",");
+            }
+            else
+                principal.append(USR_BRANCH_DEFAULT).append(",");
 		
-	    principal.append(defaultProperties.getProperty(BASE_DN_PROP));
-	}
-	else {
-	    // try for backwards compatibility of ldap properties
-	    getLogger().warn("getPrincipal() read a deprecated format in ldap properties, please update");
-	    principal.append(defaultProperties.getProperty(PARTIAL_USER_DN_PROP));
-	}
+            principal.append(defaultProperties.getProperty(BASE_DN_PROP));
+        }
+        else {
+            // try for backwards compatibility of ldap properties
+            getLogger().warn("getPrincipal() read a deprecated format in ldap properties, please update");
+            principal.append(defaultProperties.getProperty(PARTIAL_USER_DN_PROP));
+        }
 
-	if (getLogger().isDebugEnabled())
-	    getLogger().debug("getPrincipal() returning " + principal.toString());
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("getPrincipal() returning " + principal.toString());
 
-	return principal.toString();
+        return principal.toString();
     }
 
 }

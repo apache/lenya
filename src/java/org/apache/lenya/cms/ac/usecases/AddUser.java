@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -72,6 +72,8 @@ public class AddUser extends AccessControlUsecase {
         if (className.equals(LDAPUser.class.getName())) {
             LDAPUser ldapUser = new LDAPUser(((FileUserManager) getUserManager())
                     .getConfigurationDirectory());
+            ContainerUtil.enableLogging(ldapUser, getLogger());
+
             try {
                 if (!ldapUser.existsUser(ldapId)) {
                     addErrorMessage("This LDAP user ID does not exist.");
@@ -112,7 +114,7 @@ public class AddUser extends AccessControlUsecase {
         User user;
         if (className.equals(LDAPUser.class.getName())) {
             String ldapId = getParameterAsString(LDAP_ID);
-            user = new LDAPUser(configDir, userId, email, ldapId);
+            user = new LDAPUser(configDir, userId, email, ldapId, getLogger());
         } else {
             String password = getParameterAsString(UserPassword.NEW_PASSWORD);
             user = new FileUser(configDir, userId, fullName, email, "");
