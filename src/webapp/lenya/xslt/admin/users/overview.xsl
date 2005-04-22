@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: overview.xsl,v 1.11 2004/06/01 14:29:23 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -62,6 +62,12 @@
               <td class="lenya-entry-caption"><i18n:text>User ID</i18n:text>:</td>
               <td><xsl:value-of select="id"/></td>
             </tr>
+            <xsl:if test="@ldap = 'true'">
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>LDAP ID</i18n:text>:</td>
+                <td><xsl:value-of select="ldapid"/></td>
+              </tr>
+            </xsl:if>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Full Name</i18n:text>:</td>
               <td><xsl:value-of select="name"/></td>
