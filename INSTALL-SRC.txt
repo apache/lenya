@@ -15,9 +15,10 @@
   You will need
 
 	* Java 2 Platform, Standard Edition
-	  version 1.4.2 or newer, 1.5.x is not tested yet
+	  version 1.4.2 or newer, 1.5.x works with some limitations
+	  (see http://issues.apache.org/bugzilla/show_bug.cgi?id=32923)
 
-	* Apache Cocoon, version 2.1.6
+	* Apache Cocoon, version 2.1.7
 	  Available from http://cocoon.apache.org/mirror.cgi
 
 	* Apache Tomcat, version 5
@@ -31,7 +32,7 @@
 
 	1.	Create a directory src/ in a location with no spaces in the path
 
-	2.	Unpack Cocoon in src/, thereby creating src/cocoon-2.1.6
+	2.	Unpack Cocoon in src/, thereby creating src/cocoon-2.1.7
 
 	3.	Unpack Lenya in src/, thereby creating src/lenya-1.2.x
 
@@ -42,9 +43,9 @@
 			src/lenya-1.2.x/src/cocoon/local.build.properties
 			src/lenya-1.2.x/src/cocoon/local.blocks.properties
 
-		to	src/cocoon-2.1.6/
+		to	src/cocoon-2.1.7/
 
-	2.	Go to src/cocoon-2.1.6 and type
+	2.	Go to src/cocoon-2.1.7 and type
 
 			./build.sh on Unix
 			build.bat  on Windows
@@ -61,7 +62,7 @@
  
 		Edit local.build.properties and make sure that
 
-			cocoon.src.dir=../cocoon-2.1.6
+			cocoon.src.dir=../cocoon-2.1.7
 			web.app.server=Jetty
 
 		If you want to upload files to your Lenya website
@@ -109,7 +110,7 @@
 
 		Edit local.build.properties and make sure that
 
-			cocoon.src.dir=../cocoon-2.1.6
+			cocoon.src.dir=../cocoon-2.1.7
 			web.app.server=Tomcat
 			tomcat.home.dir=[path_to_tomcat]
 

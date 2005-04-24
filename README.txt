@@ -54,8 +54,6 @@
   Known issues
   ------------
 
-  http://makeashorterlink.com/?P22462778 has a list of known issues/bugs in Lenya 1.2.1
-
   The Apache issue tracker is available at
   http://issues.apache.org/bugzilla/ .
 
