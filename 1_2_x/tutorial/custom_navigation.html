@@ -1,0 +1,720 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Part 5: Custom Navigation in Lenya</title>
+<link type="text/css" href="../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../skin/profile.css" rel="stylesheet">
+<script src="../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://lenya.apache.org"><img class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png" title="
+  	Apache Lenya is a Java-based Open-Source Content Management System.
+  	It is based on open standards such as XML and XSLT.
+  	One of its core components is Cocoon from the Apache Software Foundation.
+  "></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../1_4/index.html">Version 1.4</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript" language="JavaScript"><!--
+              document.write("Published: " + document.lastModified);
+              //  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Version 1.2</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a title="" href="../../1_2_x/index.html">Index</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', '../../skin/')" id="menu_1.1.2Title" class="menutitle">Installation</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.3', '../../skin/')" id="menu_selected_1.1.3Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Tutorial</div>
+<div id="menu_selected_1.1.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a title="" href="../../1_2_x/tutorial/index.html">Introduction</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/tutorial/understanding_lenya.html">1. Understanding Lenya</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/tutorial/installing_lenya.html">2. Installing Lenya</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/tutorial/anatomy_of_the_pipeline.html">3. Anatomy of the Pipeline</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/tutorial/editing_in_lenya.html">4. Editing in Lenya</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">5. Custom Navigation in Lenya</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="Customizing Lenya
+            navigation items" href="#customizing_lenya_navigation_items">Customizing Lenya
+ ...</a>
+</div>
+<div class="menupageitem">
+<a title="Understanding
+        the site tree" href="#understanding_the_site_tree">Understanding
+     ...</a>
+</div>
+<div class="menupageitem">
+<a title="The nav:
+        namespace" href="#the_nav_namespace">The nav:
+        na...</a>
+</div>
+<div class="menupageitem">
+<a title="Using your
+        new-found knowledge" href="#Using_your_new-found_knowledge">Using your
+        ...</a>
+</div>
+<div class="menupageitem">
+<a href="#give_it_a_try">Give it a try</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/tutorial/mod_proxy_and_lenya.html">6a. Mod Proxy and Lenya</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/tutorial/mod_proxy_and_lenya_continued.html">6b. Mod Proxy and Lenya</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../skin/')" id="menu_1.1.4Title" class="menutitle">Components</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.4.1', '../../skin/')" id="menu_1.1.4.1Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_1.1.4.1" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.2', '../../skin/')" id="menu_1.1.4.2Title" class="menutitle">Authoring</div>
+<div id="menu_1.1.4.2" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/authoring/adding-document-creator.html">Adding a new document creator</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/authoring/image-upload.html">Image Upload</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/authoring/openoffice.html">OpenOffice</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.3', '../../skin/')" id="menu_1.1.4.3Title" class="menutitle">Deployment</div>
+<div id="menu_1.1.4.3" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/deployment/proxying.html">Proxying</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.4', '../../skin/')" id="menu_1.1.4.4Title" class="menutitle">Editors</div>
+<div id="menu_1.1.4.4" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/editors/bxe.html">Bitflux Editor</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.5', '../../skin/')" id="menu_1.1.4.5Title" class="menutitle">Layout</div>
+<div id="menu_1.1.4.5" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.6', '../../skin/')" id="menu_1.1.4.6Title" class="menutitle">Publication</div>
+<div id="menu_1.1.4.6" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.7', '../../skin/')" id="menu_1.1.4.7Title" class="menutitle">Resource&nbsp;Types</div>
+<div id="menu_1.1.4.7" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/resource-types/resource-types.html">Resource&nbsp;Types</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.8', '../../skin/')" id="menu_1.1.4.8Title" class="menutitle">Revision Control</div>
+<div id="menu_1.1.4.8" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.9', '../../skin/')" id="menu_1.1.4.9Title" class="menutitle">Repository</div>
+<div id="menu_1.1.4.9" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/repository/webdav.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.10', '../../skin/')" id="menu_1.1.4.10Title" class="menutitle">Search</div>
+<div id="menu_1.1.4.10" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.11', '../../skin/')" id="menu_1.1.4.11Title" class="menutitle">URI Handling</div>
+<div id="menu_1.1.4.11" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.12', '../../skin/')" id="menu_1.1.4.12Title" class="menutitle">Asset Management</div>
+<div id="menu_1.1.4.12" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.13', '../../skin/')" id="menu_1.1.4.13Title" class="menutitle">Link Management</div>
+<div id="menu_1.1.4.13" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.14', '../../skin/')" id="menu_1.1.4.14Title" class="menutitle">Meta Data</div>
+<div id="menu_1.1.4.14" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.15', '../../skin/')" id="menu_1.1.4.15Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.1.4.15" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.16', '../../skin/')" id="menu_1.1.4.16Title" class="menutitle">Tasks</div>
+<div id="menu_1.1.4.16" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.16.5', '../../skin/')" id="menu_1.1.4.16.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.1.4.16.5" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.17', '../../skin/')" id="menu_1.1.4.17Title" class="menutitle">Workflow</div>
+<div id="menu_1.1.4.17" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.18', '../../skin/')" id="menu_1.1.4.18Title" class="menutitle">Site Management</div>
+<div id="menu_1.1.4.18" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/components/sitemanagement/restore.html">Restore</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.1.5" class="menuitemgroup">
+<div class="menuitem">
+<a title="" href="../../1_2_x/misc/namespaces.html">Namespaces</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../1_2_x/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a title="" href="../../../apidocs/1.2/index.html">1.2 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div id="skinconf-txtlink"></div>
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="custom_navigation.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Part 5: Custom Navigation in Lenya</h1>
+        
+<p>OK, so you have the basics: you know how to install Lenya, you understand it's
+            approach to content management, you understand the pipeline bit, and you know
+            how to edit existing documents. Through playing around, you probably now know
+            how to make new pages, and create the content hierarchy for your site. Now the
+            question becomes, how do we customize the navigation to be marked up the way you
+            want.</p>
+        
+        
+<a name="N10011"></a><a name="customizing_lenya_navigation_items"></a>
+<h2 class="h3">Customizing Lenya
+            navigation items</h2>
+<div class="section">
+<p>In order to understand customizing navigation items in Lenya, you'll need to
+                understand where that's possible. In the default publication's root
+                directory, you'll see a directory called 'lenya'. It's here where you can
+                add folders and files that override the global defaults set aside for all of
+                Lenya.</p>
+<p>One of the directories is 'navigation'. In there, you'll most likely see a
+                file called tabs.xsl. This is a customized version of the tabs just for the
+                default publication. But you can do others. Here's the list of the file names
+                you can add in the 'navigation' folder that will override the global
+                files:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+                
+<tr>
+                    
+<td colspan="1" rowspan="1">breadcrumb.xsl</td>
+                    <td colspan="1" rowspan="1">The breadcrumb trails at the top of the page
+                        (e.g. Home &gt; Products &gt; Furniture)</td>
+                
+</tr>
+                
+<tr>
+                    
+<td colspan="1" rowspan="1">menu.xsl</td>
+                    <td colspan="1" rowspan="1">The menu at the left of the pages (in the
+                        default publication, for example)</td>
+                
+</tr>
+                
+<tr>
+                    
+<td colspan="1" rowspan="1">tabs.xsl</td>
+                    <td colspan="1" rowspan="1">The tabs at the top of the page (in the
+                        default publication, they are the highest levels of nav on the
+                        site)</td>
+                
+</tr>
+                
+<tr>
+                    
+<td colspan="1" rowspan="1">search.xsl</td>
+                    <td colspan="1" rowspan="1">The search box on the site</td>
+                
+</tr>
+            
+</table>
+<p>There are others, but these will do for now. You can check out what the
+                originals are in
+                /usr/local/tomcat/webapps/lenya/lenya/xslt/navigation/. It
+                requires some understanding XSLT, which is again beyond the scope of this
+                article.
+                <a href="http://www.w3schools.com/xsl/default.asp">W3Schools</a>
+                has a nice place to learn XSLT quickly.</p>
+<p>We're going to take a look at the sitetree structure to find out what you're
+                capable of knowing about an item in the navigation of the site, then do a quick
+                example of how to create your own menu.</p>
+</div>
+<a name="N1005D"></a><a name="understanding_the_site_tree"></a>
+<h2 class="h3">Understanding
+        the site tree</h2>
+<div class="section">
+<p>The site tree is the place where all the "nodes", or pages in your publication are
+            stored, preserving the hierarchy. The XML file can be found by going to the
+            content/authoring/ directory in the default publication and viewing the
+            sitetree.xml file. Let's take a look at a chunk:</p>
+<pre class="code">
+            &lt;site&gt;
+                &lt;node id="index"&gt;
+                    &lt;label xml:lang="en"&gt;Home&lt;/label&gt;
+                    &lt;label xml:lang="de"&gt;Home&lt;/label&gt;
+                &lt;/node&gt;
+            
+                &lt;node id="tutorial"&gt;
+                    &lt;label xml:lang="en"&gt;Tutorial&lt;/label&gt;
+                    &lt;label xml:lang="de"&gt;Tutorial&lt;/label&gt;
+            
+                        &lt;node id="new_doctype"&gt;
+                            &lt;label xml:lang="en"&gt;Create new doctype&lt;/label&gt;
+                        &lt;/node&gt;
+                &lt;/node&gt;
+            &lt;/site&gt;
+        </pre>
+<p>The above tells us that each page is characterized by a &lt;node&gt; tag. Each
+            &lt;node&gt; tag has an "id" attribute, which is the name of the document. So, if
+            this publication's address were http://www.someplace.com/, then the ID for
+            the second node would make the address to page
+            http://www.someplace.com/tutorial.html.</p>
+<p>Each node has an inner element called &lt;label&gt;. The label tag's contents are
+            the navigation title for the page. It's the link to the page that you see in menu of
+            the site. The xml:lang attribute signifies the language for this label, and as
+            you can see, this site has multiple supported languages: "en" for English, and
+            "de" for German.</p>
+<p>Nodes can be inside other nodes. In the example above, the "new_doctype" node is
+            inside the "tutorial" node. This means that the "tutorial" page is a parent of the
+            "new_doctype" page, so they fall underneath each other like so:</p>
+<pre class="code"> 
+            1. Home 
+            2. Tutorial 
+                a. Create new doctype
+        </pre>
+<p>Order is also important - the order of the nodes in the sitetree file is the order in
+            which the pages are displayed in the hierarchy of the site.</p>
+</div>
+<a name="N10079"></a><a name="the_nav_namespace"></a>
+<h2 class="h3">The nav:
+        namespace</h2>
+<div class="section">
+<p>An XML namespace was created for users to grab these nodes with the appropriate
+            information. So, for example, you can reference a node in your XSL using
+            nav:node. Once you reference the node, you can reference it's label too:
+            nav:label. There's some other items you can reference when you are pointing at a
+            specific node:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+            
+<tr>
+                
+<td colspan="1" rowspan="1">@href</td>
+                <td colspan="1" rowspan="1">The location of the page relative to where you
+                    are currently in the site</td>
+            
+</tr>
+            
+            
+<tr>
+                
+<td colspan="1" rowspan="1">@current</td>
+                <td colspan="1" rowspan="1">A true or false value is possible to determine
+                    whether or not the page you are on is the node you are referencing</td>
+            
+</tr>
+            
+<tr>
+                
+<td colspan="1" rowspan="1">@visibleinnav</td>
+                <td colspan="1" rowspan="1">Another true/false value given if the page had
+                    been labeled as visible in the navigation</td>
+                
+            
+</tr>
+        
+</table>
+<p>Hiding navigation items can be helpful for situations like form
+            submission/confirmation pages. You don't want the user to go to that page right
+            away from within the site's menu, so you hide it, letting the programming of the
+            form's input redirect the user to that page instead. Other examples abound.</p>
+</div>
+<a name="N100AE"></a><a name="Using_your_new-found_knowledge"></a>
+<h2 class="h3">Using your
+        new-found knowledge</h2>
+<div class="section">
+<p>Let's try putting together a simple menu.xsl file that creates our own simple
+            markup. The contents are below:</p>
+<pre class="code">
+            &lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+            
+            &lt;xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
+                xmlns="http://www.w3.org/1999/xhtml"
+                exclude-result-prefixes="nav"&gt;
+            
+            &lt;xsl:template match="nav:site"&gt;
+            
+                &lt;ul&gt;
+            
+                &lt;!-- loop through all top-level items and return as list items --&gt;
+                &lt;xsl:for-each select="/*/nav:node[@visibleinnav = 'true']"&gt;
+                    &lt;xsl:when test="@current = 'true'"&gt;
+                        &lt;li class="current"&gt;&lt;a href="{@href}"&gt;&lt;xsl:apply-templates select="nav:label"/&gt;&lt;/a&gt;&lt;/li&gt;
+                    &lt;/xsl:when&gt;
+                    &lt;xsl:otherwise&gt;
+                        &lt;li&gt;&lt;a href="{@href}"&gt;&lt;xsl:apply-templates select="nav:label"/&gt;&lt;/a&gt;&lt;/li&gt;
+                    &lt;/xsl:otherwise&gt;
+                &lt;/xsl:for-each&gt;
+            
+                &lt;/ul&gt;
+            &lt;/xsl:template&gt;
+            
+            &lt;xsl:template match="nav:label"&gt;
+                &lt;xsl:value-of select="."/&gt;
+            &lt;/xsl:template&gt;
+            
+            &lt;/xsl:stylesheet&gt;
+        </pre>
+<p>OK, so let's dissect this one. You always start with your XML prologue and
+            stylesheet tags (notice how the root stylesheet tag references the nav
+            namespace?). Then, one template is created to match the &lt;site&gt; tag -
+            that's the root tag that wraps around all the &lt;node&gt; tags in our
+            sitetree.xml file.</p>
+<p>We open up the unordered list, and then we'll just loop through the top-level
+            navigation items on the site. The '/*/nav:node' part of the for-each loop steps
+            down into the site tag that you just matched (/*), and then through the nodes
+            underneath the site tag (/nav:node). Note that this is only the top level nodes,
+            not all the parents and children! Read up on
+            <a href="http://www.w3schools.com/xsl/default.asp">XSLT</a> and
+            <a href="http://www.w3schools.com/xpath/default.asp">XPath</a> to
+            better understand how this notation works.</p>
+<p>For each top-level item, we test to see that node happens to be the page we are
+            looking at right now (@current = 'true'). If it is, then we open up our list tag and
+            assign it the class of "current". Your CSS can then be created to give some special
+            styling to that list item.</p>
+<p>Once the list item is created, we need the link. The address for the link tag is
+            gathered from our handy @href. The text for the link will be the label of the node.
+            So, we call out another template shown at the bottom of our example menu.xsl file
+            where it basically just grabs the value of the contents inside the &lt;label&gt;
+            tags in the sitetree.xml file. We close the the link and the list items.</p>
+<p>Of course, if this isn't the page we are on, then we do the same thing but don't add in
+            our special class. Simple, no?</p>
+</div>
+<a name="N100D1"></a><a name="give_it_a_try"></a>
+<h2 class="h3">Give it a try</h2>
+<div class="section">
+<p>You now pretty much have the basics for putting together your own custom
+            navigation. There are those that feel our methods for generating the menus are
+            incorrect and that we should grab the nodes that we need in one fell swoop instead of
+            looping through each one, but this was the only method we could find where wewould
+            achieve the coding standards we wanted. Go experiment and have fun!</p>
+</div>
+    
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+ Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_2_x/tutorial/custom_navigation.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>
