@@ -17,17 +17,15 @@
 
 <!-- $Id: lenya-menubar.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>The Lenya Menubar</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body>
   
@@ -149,7 +147,7 @@ In this approach, the publication simply builds its XHTML
 page without any additional XML. The Lenya menubar is added using
 a meta stylesheet in the last transformation step.
 You find more information on meta stylesheets on the page
-<link href="http://wiki.cocoondev.org/Wiki.jsp?page=MetaStylesheets">MetaStylesheets</link>
+<a href="http://wiki.cocoondev.org/Wiki.jsp?page=MetaStylesheets">MetaStylesheets</a>
 in the cocoondev wiki.
 </p>
 

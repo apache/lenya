@@ -48,7 +48,7 @@
     <installation href="installation/" label="Installation">
       <download href="index.html" label="Download"/>
       <cvs href="subversion.html" label="Subversion Access"/>
-      <install href="source_version.html" label="Installation Instructions"/>
+      <install href="source_version.html" label="Install Instructions"/>
     </installation>
 
     <concepts href="concepts/" label="Concepts"> 	 
@@ -86,7 +86,7 @@
             <installation12 href="installation/" label="Installation">
               <download12 href="index.html" label="Download"/>
               <cvs href="subversion.html" label="Subversion Access"/>
-              <install href="source_version.html" label="Installation Instructions"/>
+              <install href="source_version.html" label="Install Instructions"/>
             </installation12>
 
             <components href="components/" label="Components">
@@ -150,9 +150,9 @@
                 <asset-management href="asset-management/" label="Asset Management">
                     <asset-management-1 href="management.html" label="Asset Management"/>
                 </asset-management>
-                <link-management href="link-management/" label="Link Management">
-                    <link-management-1 href="link-management.html" label="Link Management"/>
-                </link-management>
+                <a-management href="link-management/" label="Link Management">
+                    <a-management-1 href="link-management.html" label="Link Management"/>
+                </a-management>
                 <meta-data href="metadata/" label="Meta Data">
                     <meta-data-1 href="metadata.html" label="Meta Data Handling"/>
                 </meta-data>
@@ -191,11 +191,8 @@
                 </sitemanagement>
             </components>
 
-            <specs href="specs/" label="Specifications" wholesite="true">
-                <namespaces href="namespaces.html" label="Namespaces"/>
-            </specs>
-
             <misc href="misc/" label="Miscellaneous" wholesite="true">
+                <namespaces href="namespaces.html" label="Namespaces"/>
                 <coding href="coding-guidelines.html" label="Coding Guidelines"/>
                 <javadoc-error href="javadoc-error.html"/>
                 <node-e href="unittests.html" label="Unit Tests"/>
@@ -219,7 +216,6 @@
                 label="Bug Tracker"/>
         <ml href="mailing-lists.html" label="Mailing Lists"/>
         <irc href="irc.html" label="IRC"/>
-        <meetings href="meetings.html" label="Meetings and Sprints"/>
         <live-sites href="live-sites.html" label="Live Sites"/>
         <website-update href="website-update.html" label="Website Update"/>
     </community>
@@ -233,6 +229,7 @@
 
     <external-refs>
         <asf href="http://www.apache.org/"/>
+        <apachecon href="http://apachecon.com/"/>
         <cocoon href="http://cocoon.apache.org/">
             <cocoon.2.1 href="2.1/">
                 <cocoon.howto href="howto/">
@@ -244,6 +241,7 @@
             <mirror href="mirror.cgi"/>
         </cocoon>
         <lenya href="http://lenya.apache.org"/>
+        <lenya.demo href="http://olr.kbs.uni-hannover.de:8888"/>
         <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
         <cvs.asf href="http://svn.apache.org/"/>
         <bxe href="http://bxe.oscom.org"/>

@@ -17,43 +17,28 @@
 
 <!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
 	<header>
-		<title>Apache Lenya</title>
-		<version/>
-		<type/>
-		<authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-		</authors>
+		<title>Apache Lenya - Open Source Java/XML Content Management System</title>
 	</header>
 	<body>
-        <section id="introduction" >
-                <title>Introduction</title>
-                <p>
-Apache Lenya is an Open-Source Content Management System written in Java and based on open standards such as 
-XML and XSLT. Lenya is built on top of Apache Cocoon and other components from the Apache Software Stack. 
-Its XML-centric architecture allows for content delivery targeted to the capabilities of various devices, 
-and avoids data lock-in. Apache Lenya is built around Off the Shelf components from the Apache Software Foundation.</p>
-<p>Apache Lenya comes with the features you can expect of a modern Content Management System, such as 
-    Revision Control, Scheduling, a built-in Search Engine, separate Staging Areas, and Workflow.</p><p>
-Because Apache Lenya is based on Cocoon, you can use <link href="ext:cocoon.2.1.features">Cocoon features</link> 
-such as robust Caching, multi-channel output, it's many connectivity options to quickly build 
-customized solutions to meet your specific needs that are not already covered by Apache Lenya today.</p>
+<p><img src="images/menubar.png" alt="Screenshot of the Apache Lenya authoring area"/></p><p>
+Apache Lenya is an Open Source Java/XML Content Management System and comes with revision control, site management, scheduling, search, WYSIWYG editors, and workflow.</p>
+
 <p>
-<link href="ext:lenya.dist">Download Apache Lenya</link>.
+<a href="screenshots.html">Screenshots</a> | <a href="ext:lenya.demo">Demo</a> | <a href="ext:lenya.dist">Download</a>
 </p>
-        </section>
 
         <section id="news">
-      <title>News and events</title>
+      <title>News</title>
       <ul>
-        <li><strong>Apache Lenya 1.2.2 released</strong> (February 28, 2005) </li>
-        <li><strong>Apache Lenya 1.2.1 released</strong> (December 29, 2004) </li>
-        <li>The Lenya project has evolved to become a "top-level" Apache
-         project.
-        </li>
-        <li>Apache Lenya 1.2 released (June 27, 2004) </li>
+        <li>Two Lenya presentations at <a href="ext:apachecon">ApacheCon Europe 2005</a> (Stuttgart, Germany
+18-22 July 2005)</li>
+        <li>Lenya 1.2.2 released (February 28, 2005) </li>
+        <li>Lenya 1.2.1 released (December 29, 2004) </li>
+        <li>Apache Lenya becomes a top-level Apache project. (September 22, 2004)</li>
+        <li>Lenya 1.2 released (June 27, 2004) </li>
       </ul>
     </section>
 		
@@ -61,6 +46,8 @@ customized solutions to meet your specific needs that are not already covered by
 			<title>
 				<strong>Features</strong>
 			</title>
+<p>If you have additional requirements beyond the 
+features listed below, you have access to all <a href="ext:cocoon.2.1.features">Apache Cocoon features</a> to develop them.</p>
 		<section>
 			<title>
 				<strong>Authoring</strong>
@@ -68,9 +55,9 @@ customized solutions to meet your specific needs that are not already covered by
 			<ul>
 <li> Browser-based WYSIWYG Editors that validate input against a Relax
 NG Schema. This prevents invalid markup as produced by other WYSIWYG
-editors, and allows to enforce web site style guidelines. Lenya ships with the <link href="http://bxe.oscom.org">BXE</link> 
-and <link href="http://kupu.oscom.org">Kupu</link> editors out of the box. Lenya asset management 
-and link management are integrated into BXE.
+editors, and allows to enforce web site style guidelines. ships with the <a href="http://bxe.oscom.org">BXE</a> 
+and <a href="http://kupu.oscom.org">Kupu</a> editors out of the box. Asset management 
+and link management are integrated into BXE and Kupu.
 </li>
 <li> A forms editor is available for situations where a full-blown 
     WYSIWYG editor is overkill or where legacy browsers need to be supported.
@@ -87,12 +74,12 @@ and link management are integrated into BXE.
 				<strong>Workflow</strong>
 			</title>
 			<ul>
-<li> Lenya contains a customizable workflow engine that uses an easy XML format to define workflows. 
-    Standard one- and two-stage workflows ship with Lenya. Users can be notified by email about pending approvals.
+<li> A customizable workflow engine that uses an easy XML format to define workflows. 
+    Standard one- and two-stage workflows are included. Users can be notified by email about pending approvals.
 </li>
 <li> Workflow events such as publishing or deactivating a page can be scheduled.
 </li>
-<li>Lenya supports separate authoring, staging and live areas. For convenience, the staging area is 
+<li>Supports separate authoring, staging and live areas. For convenience, the staging area is 
     disabled by default.
 </li>
 <li>All workflow steps are logged, providing an audit trail.
@@ -107,7 +94,7 @@ and link management are integrated into BXE.
 <li> Pages can be created in multiple languages with no impact on your site structure. Lenya automatically 
     displays your page in the default languge if it is not available in a specific language.
 </li>
-<li> The Lenya user interface is currently localized in spanish, italian, french, german and english.
+<li> The user interface is currently localized in spanish, italian, french, german, english, dutch and japanese.
 </li>
 </ul>
 		</section>
@@ -120,14 +107,14 @@ and link management are integrated into BXE.
     to the content level. Different publications can share content and business logic, and new 
     publications can be created with a cloning process.
 </li>
-<li> Lenya supports XHTML+CSS templating, eliminating the need to learn yet another templating language. 
-    Wherever possible, Lenya uses CSS for styling, therefore enforcing the separation of content and layout.
+<li>Supports XHTML+CSS templating, eliminating the need to learn yet another templating language. 
+    Wherever possible, uses CSS for styling, therefore enforcing the separation of content and layout.
 
 </li>
 <li>The navigation framework automatically creates navigation items such as menus, breadcrumb paths and tabs. 
     A sitemap can be easily created.
 </li>
-<li>Lenya has clean URLs and is thus optimally accessible for search engines.
+<li>Produces clean URLs without request parameters and is thus optimally accessible for search engines.
 </li>
 <li>There are no restrictions on the nesting of templates. You can use 
     any template you have defined at any level of your site structure thanks to the URI parametrizer.
@@ -139,7 +126,7 @@ and link management are integrated into BXE.
 				<strong>Site Management</strong>
 			</title>
 			<ul>
-<li> Lenya allows you to move, copy, rename, archive or delete individual pages or whole parts 
+<li>Allows you to move, copy, rename, archive or delete individual pages or whole parts 
     of your site within an easy to use site view that shows you the pages of your site in an explorer-like view.
 </li>
 <li> Each page has tabs for easy access to meta data, assets, workflow status, revisions, access control 
@@ -157,13 +144,13 @@ and link management are integrated into BXE.
 <li> Link management ensures that internal links are not shown if the target page doesn't exist or the 
     user has no access to it. Link management also warns users about broken links when they publish a page.
 </li>
-<li> Lenya checks if parent pages of a page to be published are already live to avoid inconsistent sites.
+<li>Checks if parent pages of a page to be published are already live to avoid inconsistent sites.
 
 </li>
 <li>Deployment is flexible: Sites can be served dynamically by the authoring server (for small deployments) 
     or another servlet container. It is also possible to export content statically or to use Apache as a proxy.
 </li>
-<li>If used with a reverse proxy, Lenya can be configured to rewrite URLs based on the site structure of 
+<li>If used with a reverse proxy, can be configured to rewrite URLs based on the site structure of 
     the live site.
 </li>
 </ul>
@@ -176,12 +163,12 @@ and link management are integrated into BXE.
 <li> Each page or parts of your site can be protected by SSL. Protect just the parts of your site that need 
     protection for best performance.
 </li>
-<li> The Lenya access control allows you to restrict access to parts of your site to members of a group or 
-    individuals. You can also restrict specific Lenya functionalities, such as editing, approval or 
+<li> The access control allows you to restrict access to parts of your site to members of a group or 
+    individuals. You can also restrict specific functionalities, such as editing, approval or 
     administrative features.
 </li>
 
-<li> Lenya users can be authenticated against an LDAP server.
+<li>Users can be authenticated against an LDAP server.
 </li>
 <li> Access can also be controlled by IP ranges.
 </li>
@@ -194,7 +181,7 @@ and link management are integrated into BXE.
 <ul>
 <li> A Windows Installer makes installation on windows a 3-click process.
 </li>
-<li> Apache Lucene is integrated into Lenya to offer full-text and field search.
+<li> Apache Lucene is integrated for full-text and field search.
 
 </li>
 </ul>
@@ -204,8 +191,7 @@ and link management are integrated into BXE.
 				<strong>Under the Hood</strong>
 			</title>
 <ul>
-<li> The integration with Cocoon has been improved. For the next release, it is planned to move Lenya to a 
-    block-based system which should make it much easier to mix and match Cocoon and Lenya components.
+<li>Based on Apache Cocoon. All Cocoon components can be used to develop customized functionality.
 </li>
 <li> Unit Tests help to discover regressions in the code.
 </li>
@@ -215,8 +201,7 @@ and link management are integrated into BXE.
     Default implementations are provided for convenience and ease of development.
 
 </li>
-<li> Lenya uses Ant for portable scripting. This allows you to integrate Lenya into your enviroment and 
-    accomplish custom tasks easily.
+<li>Uses Ant for portable scripting.
 </li>
 </ul>
 		</section>

@@ -16,26 +16,25 @@
 -->
 
 <!-- $Id: website-update.xml 47579 2004-09-30 12:25:51Z thorsten $ -->
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
 	<header>
 		<title>Updating the Lenya Website</title>
-		<version/>
-		<type/>
 	</header>
 	<body>
 		<section>
 		<title>Prerequisites</title>
 		<p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
 		<ul>
-			<li>You have <link href="http://forrest.apache.org">Apache Forrest</link> installed on your machine. This means you have your environment set up
+			<li>You have <a href="http://forrest.apache.org">Apache Forrest</a> installed on your machine. This means you have your environment set up
 			in a way that you can call <code>forrest</code> in any directory.</li>
 			<li>You are an active Lenya committer with write access to SVN.</li>
 		</ul>
 		<p>If you are not a committer but like to contribute to the documentation, you're most welcome as well. If you
 		 want to make additions or corrections to the lenya documentation/website, please keep on reading.</p>
-     <p> Instead of committing please make an <code>svn diff</code> of <code>lenya.docu</code> (see above) and contribute the patch via our <link href="site:issue.add">bug tracker</link>. 
+     <p> Instead of committing please make an <code>svn diff</code> of <code>lenya.docu</code> (see above) and contribute the patch via our <a href="site:issue.add">bug tracker</a>. 
     Let us know about it on the developer's mailing list. A committer will happily pick your patch up from the bug tracker and apply it.</p>
+    </section>        
     <section>
 		<title>First time checkout</title>
     <p>You will have to do this only the first time when doing the website.</p>
@@ -48,7 +47,7 @@
 			<title>Generating changes.html</title>
 			<p>changes.html can be directly generated from the SVN commit logs with the following procedure:</p>
 			<ul>
-				<li>install <link href="http://saxon.sf.net">Saxon 8</link> (the svn2changes stylesheet requires a XSLT 2.0 processor)</li>
+				<li>install <a href="http://saxon.sf.net">Saxon 8</a> (the svn2changes stylesheet requires a XSLT 2.0 processor)</li>
 				<li>run <code>svn log -v --xml http://svn.apache.org/repos/asf/lenya > log.xml</code> in the root of the docu branch. This might take a while as the log file is several MB in size.</li>
 				<li>run <code>java -jar saxon8.jar -o status.xml log.xml tools/svn2changes.xsl</code>
 				</li>
@@ -56,7 +55,6 @@
 			</ul>
 			<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
 
-		</section>
 		</section>
 
 		<section>

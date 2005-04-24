@@ -17,17 +17,15 @@
 
 <!-- $Id: implementation.xml 43104 2004-07-01 23:59:25Z thorsten $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Workflow Implementation</title>
-    <version>0.1</version> 
+     
     <type>Overview document</type> 
-    <authors>
-      <person name="Andreas Hartmann" email="andreas.hartmann@wyona.org"/> 
-    </authors> 
+     
 </header> 
 <body>
   

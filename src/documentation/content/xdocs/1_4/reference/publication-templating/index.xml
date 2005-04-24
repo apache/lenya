@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
     <title>Publication Templating</title> 
@@ -154,7 +154,7 @@
     <section>
       <title>Usecases</title>
       <p>
-        The <link href="../usecase-framework/index.html">usecase framework</link>
+        The <a href="../usecase-framework/index.html">usecase framework</a>
         supports publication templating by default.
       </p>
       <p>

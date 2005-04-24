@@ -17,17 +17,15 @@
 
 <!-- $Id: lucene.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Lucene</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body> 
 
@@ -80,7 +78,7 @@ crawler.xconf needs to have the following elements:
     <li>scope-url limits the scope of the crawl to that site, or subdirectory</li>
     <li>uri-list is a reference to a file that will contain all URLs found during the crawl</li>
     <li>htdocs-dump-dir specifies the directory that will contain the crawled site</li>
-    <li>robots specifies an (optional) robots file that follows the <link href="http://www.robotstxt.org/wc/norobots.html">Robot Exclusion Standard</link></li>
+    <li>robots specifies an (optional) robots file that follows the <a href="http://www.robotstxt.org/wc/norobots.html">Robot Exclusion Standard</a></li>
 </ul>
 <p>
 If you want to fine-tune the crawling (and do not have access to the remote server to put a robots.txt there), then

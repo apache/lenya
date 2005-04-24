@@ -17,22 +17,20 @@
 
 <!-- $Id: cvs.xml 43104 2004-07-01 23:59:25Z thorsten $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Lenya 1.4 Subversion Guide</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body> 
 
 <section>
-<title>Subversion for the public</title>
+<title>For the public</title>
 <p>
 Start the shell of your choice and enter:
 </p>
@@ -42,7 +40,7 @@ svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-1.4.x
 </section>
 
 <section>
-<title>Subversion for committers</title>
+<title>For committers</title>
 <p>
 Start the shell of your choice and enter:
 </p>
@@ -57,7 +55,7 @@ exit
 <section>
 <title>View Subversion</title>
 <p>
-<link href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">http://svn.apache.org/viewcvs.cgi/lenya/#dirlist</link>
+<a href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">http://svn.apache.org/viewcvs.cgi/lenya/#dirlist</a>
 </p>
 </section>
 

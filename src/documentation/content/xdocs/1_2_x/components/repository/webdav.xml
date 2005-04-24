@@ -17,17 +17,15 @@
 
 <!-- $Id: webdav.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>WebDAV Servers</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body> 
 
@@ -74,8 +72,8 @@ To see the files open "Konqueror" and type <code>webdav://127.0.0.1:8080</code>.
 More info on <code>mod_dav</code> can be found at
 </p>
 <ul>
-<li><link href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</link></li>
-<li><link href="http://www.ibiblio.org/pub/Linux/docs/HOWTO/other-formats/html_single/Apache-WebDAV-LDAP-HOWTO.html">Apache and DAV with LDAP and SSL</link></li>
+<li><a href="http://www.webdav.org/mod_dav/">http://www.webdav.org/mod_dav/</a></li>
+<li><a href="http://www.ibiblio.org/pub/Linux/docs/HOWTO/other-formats/html_single/Apache-WebDAV-LDAP-HOWTO.html">Apache and DAV with LDAP and SSL</a></li>
 </ul>
 </section>
 
@@ -113,9 +111,9 @@ More info on <code>mod_dav</code> can be found at
 </p>
 
 <ul>
-<li><link href="http://apacheworld.org/ty24/site.chapter13.html">http://apacheworld.org/ty24/site.chapter13.html</link></li>
-<li><link href="http://httpd.apache.org/docs-2.0/mod/mod_dav.html">http://httpd.apache.org/docs-2.0/mod/mod_dav.html</link></li>
-<li><link href="http://www.informit.com/isapi/product_id~%7BA27264B1-CE7A-47A4-8CC5-DA14003AD454%7D/element_id~%7B35D4A98B-60C6-45BE-853C-239742BA0FD9%7D/st~%7BEA04B5C6-6D59-4670-AC88-4982C49B746D%7D/content/articlex.asp">Apache and DAV</link></li>
+<li><a href="http://apacheworld.org/ty24/site.chapter13.html">http://apacheworld.org/ty24/site.chapter13.html</a></li>
+<li><a href="http://httpd.apache.org/docs-2.0/mod/mod_dav.html">http://httpd.apache.org/docs-2.0/mod/mod_dav.html</a></li>
+<li><a href="http://www.informit.com/isapi/product_id~%7BA27264B1-CE7A-47A4-8CC5-DA14003AD454%7D/element_id~%7B35D4A98B-60C6-45BE-853C-239742BA0FD9%7D/st~%7BEA04B5C6-6D59-4670-AC88-4982C49B746D%7D/content/articlex.asp">Apache and DAV</a></li>
 </ul>
 </section>
 

@@ -17,50 +17,47 @@
 
 <!-- $Id: index.xml 43150 2004-07-27 19:41:17Z thorsten $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>The Apache Lenya Community</title>
-    <version/>
-    <type/>
   </header>
   <body>
 	<p>
 		Here you will find information on how to interact with and become a member 
-		of the Apache Lenya community. Please read as well <link href="ext:forrest.contrib">Contributing to Apache Forrest</link> 
-    from the forrest community because it contains some more information about the process.
+		of the Apache Lenya community. Please read <a href="ext:forrest.contrib">Contributing to Apache Forrest</a> 
+    as well because it contains some more information about the process.
 	</p>
 
   <section>
     <title>Contribute to the Wiki</title>
-    <p>The <link href="ext:wiki/lenya">Lenya Wiki</link> is the scratchpad for the
-    Lenya documentation as well as a kind of whiteboard that is used by the community
-    to sketch proposals about the further direction of the project.</p>
+    <p>The <a href="ext:wiki/lenya">Lenya Wiki</a> is the scratchpad for the
+    Lenya documentation as well as a whiteboard that is used by the community
+    to sketch out proposals about the further direction of the project.</p>
   </section>
 
   <section>
 	<title>Contribute code</title>
-  <note>Please use our <link href="site:issue.add">Bug tracker</link> to submit patches instead of sending them to the mailing list. 
-    All our committer started in creating an account here. ;-)<br/>
-    
+  <note>Please use our <a href="site:issue.add">Bug tracker</a> to submit patches instead of sending them to the mailing list. 
+    All our committers started in creating an account there ;-)<br/>
     </note>
 	<p>
-		You can contribute code as patch via our <link href="site:issue.add">Bug tracker</link>. 
+		You can contribute code as patch via our <a href="site:issue.add">Bug tracker</a>. 
 		For this, you file a bug entry in Bugzilla, using the links provided below. 
 		The bug entries in Bugzilla should provide a description of what the patch does, 
-		and how to apply it. Any further discussion should occur on the Lenya Developer list (see <link href="site:ml">mailing lists</link>)
+		and how to apply it. Any further discussion should occur on the Lenya Developer list (see <a href="site:ml">mailing lists</a>)
 	</p>
 	<section>
 		<title>Preparing a Patch</title>
 			<ul>
-				<li>For general procedures please see the Cocoon documentation <link href="site:cocoon.howto.patch">How to Prepare a Patch</link> and 
-          <link href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</link>. 
+				<li>For general procedures please see the Cocoon documentation <a href="site:cocoon.howto.patch">How to Prepare a Patch</a> and 
+          <a href="site:cocoon.howto.bugzilla">How to Contribute a Patch via Bugzilla</a>. 
           Note that the actual command to create the patch is <code>svn diff</code> (instead of <code>cvs diff -u</code> as 
           suggested in said documents).</li>
-				<li>Make sure you follow the <link href="site:coding">coding guidelines</link>.</li>
+				<li>Make sure you follow the <a href="site:coding">coding guidelines</a>.</li>
 				<li>Test your patch by applying it to a fresh checkout of Lenya. In Eclipse for instance, this is done by choosing "apply patch" in the team perspective.</li>
-				<li>Follow this link to enter your patch in Bugzilla: <link href="site:issue.add">add a new patch</link>.</li>
+				<li>Follow this link to enter your patch in Bugzilla: <a href="site:issue.add">add a new patch</a>.</li>
 			</ul>
 	</section>
 	<section>
@@ -70,8 +67,8 @@
 			Just go ahead fix them ;-).
 		</p>
 		<ul>
-			<li><link href="ext:issues.open.bugs.enhancement">list of all provided enhancement bugs</link></li>
-			<li><link href="ext:issues.open.patches">list of all provided patches</link></li>
+			<li><a href="ext:issues.open.bugs.enhancement">list of all provided enhancement bugs</a></li>
+			<li><a href="ext:issues.open.patches">list of all provided patches</a></li>
 		</ul>
 	</section>
 </section>

@@ -17,16 +17,14 @@
 
 <!-- $Id: deactivate.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
 	<header>
 		<title>Deactivate a document</title>
-		<version/>
-		<type/>
-		<authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-		</authors>
+		
+		
+		
 	</header>
 
   <body>
@@ -107,7 +105,7 @@
 	  <p>The ant target <code>deactivateDocument</code>is in the publication :</p>
 	  <source>{publication}/config/tasks/targets.xml</source>
       <p>and depends on the target <code>livedocumentpath</code>, to compute the live directory of the contents</p>
-      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/1.2/index.html">Javadoc</link></p>
+      <p>More about ant task, see the documentation <a href="../tasks/anttask.html">Ant Task</a> and the <a href="../../apidocs/1.2/index.html">Javadoc</a></p>
     </section>
 
   </body>

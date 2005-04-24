@@ -17,13 +17,13 @@
 
 <!-- $Id: accesscontrollers.xml 43161 2004-07-30 22:50:28Z thorsten $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
 	<header>
 		<title>Access Controllers</title>
-		<version/>
-		<type/>
+		
+		
 	</header>
 
   <body>
@@ -47,7 +47,7 @@
 		Each <em>AccessController</em> component needs a type that is attached to the
 		<code>role</code> attribute, separated with a slash (/). This allows you to choose an
 		<em>AccessController</em> in your publication in combination with the
-		Publication<link href="accesscontrollerresolvers.html">AccessControllerResolver</link>.
+		Publication<a href="accesscontrollerresolvers.html">AccessControllerResolver</a>.
 		The following example shows the declaration of an <em>AccessController</em> with
 		the type <em>bypassable</em>:
 	</p>
@@ -63,10 +63,10 @@
 	<section>
 		<title>Default Access Controller</title>
 		<p>The <em>DefaultAccessController</em> combines an
-			<link href="authenticators.html">Authenticator</link>, a set of
-			<link href="authorizers.html">Authorizers</link>, an
-			<link href="accreditablemanagers.html">AccreditableManager</link> and a
-			<link href="policymanagers.html">PolicyManager</link> to perform these tasks.</p>
+			<a href="authenticators.html">Authenticator</a>, a set of
+			<a href="authorizers.html">Authorizers</a>, an
+			<a href="accreditablemanagers.html">AccreditableManager</a> and a
+			<a href="policymanagers.html">PolicyManager</a> to perform these tasks.</p>
 			<source><![CDATA[<component logger="lenya.ac.accesscontroller.default"
     class="org.apache.lenya.ac.impl.DefaultAccessController"
     role="org.apache.lenya.ac.AccessController/default"/>]]></source>

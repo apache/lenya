@@ -17,15 +17,11 @@
 
 <!-- $Id: source_version.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
-    <title>Installation of the 1.2 Source Version</title>
-    <type>Documentation</type>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    <title>Apache Lenya 1.2 Install instructions</title>
   </header>
 
   <body>
@@ -56,16 +52,15 @@
   	</section>
     <section id="prerequisites">
       <title>Prerequisites</title>
-
       <ul>
       	      	
         <li>
           <p>
             <strong>Java 2 Platform, Standard Edition</strong>
             <br/>
-            version 1.4.2 or newer, <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.5.x works with limitations</link>.
+            version 1.4.2 or newer, <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.5.x works with limitations</a>.
             <br/>
-            Get it from <link href="site:java">http://java.sun.com/j2se/1.4.2/download.html</link>
+            Get it from <a href="site:java">http://java.sun.com/j2se/1.4.2/download.html</a>
           </p>
         </li>
         
@@ -80,7 +75,7 @@
       		</p>
       		
       		<p>
-      		After expanding the	downloaded archives or after a <link href="site:subversion">svn checkout</link>,
+      		After expanding the	downloaded archives or after a <a href="site:subversion">svn checkout</a>,
       		the directory structure should look like this:
       		</p>
       		
@@ -104,11 +99,11 @@
           <p>
             <strong>Get Apache Lenya</strong>
             <br/>
-            (see <link href="site:download12">Download Lenya</link>)
+            (see <a href="site:download12">Download Lenya</a>)
             <br/>
             Extract the downloaded Lenya archive in the
             <code>src/</code> directory described above. This will create <code>lenya-1.2.x/</code> inside <code>src/</code>.
-            If you use <link href="site:subversion">Subversion</link>, checkout Lenya inside the
+            If you use <a href="site:subversion">Subversion</a>, checkout Lenya inside the
             <code>src/</code> directory. 
           </p>
         </li>
@@ -119,7 +114,7 @@
             <br/>
             version: 2.1.7
             <br/>
-            Get it from <link href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</link><br/>
+            Get it from <a href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</a><br/>
             Unpack Coccon in <code>src/</code>.
           </p>
 
@@ -129,8 +124,8 @@
             Note that Cocoon is needed to build the source
             version of Lenya, but the resulting Lenya webapp is
             completely self contained and therefore  does not need
-            the Cocoon webapp to be installed. See the <link
-            href="site:wiki/lenya/FAQ">FAQ</link>
+            the Cocoon webapp to be installed. See the <a
+            href="site:wiki/lenya/FAQ">FAQ</a>
             for details of configuration changes required when running
             multiple Cocoon based applications.
           </p>
@@ -175,7 +170,7 @@
           </p>
 
           <source>
-            $COCOON_HOME > ./build.sh -Dinclude.webapp.libs=yes webapp
+            $COCOON_HOME > ./build.sh
           </source>
         </li>
         
@@ -186,8 +181,8 @@
 
 
     <section>
-      <title>1: Standalone Installation (using the built-in Jetty)</title>
-
+      <title>Standalone Install</title>
+      
       <ol>
 
         <li>
@@ -253,8 +248,8 @@
             servlet</code> in your Lenya source directory, depending on
             your platform.  Make sure that you have the environment
             variable <code>JAVA_HOME</code> defined to point to the
-            location of the Java SDK you installed (see <link
-            href="#prerequisites">Prerequisites</link>).
+            location of the Java SDK you installed (see <a
+            href="#prerequisites">Prerequisites</a>).
           </p>
 
           <p>
@@ -280,14 +275,14 @@
           </p>
 
           <p>
-            <link href="http://localhost:8888">http://localhost:8888/</link>
+            <a href="http://localhost:8888">http://localhost:8888/</a>
           </p>
         </li>
       </ol>
     </section>
 
     <section>
-      <title>2: Installation with Apache Tomcat</title>
+      <title>Install with Tomcat</title>
 
       <ol>
 
@@ -297,7 +292,7 @@
             <br/>
             version: 5.0.28 or newer, 5.5.x should work too.
             <br/>
-            Get it from  <link href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</link>
+            Get it from  <a href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
           </p>
 
         </li>
@@ -308,8 +303,8 @@
           </p>
 
           <p>
-            See <link
-            href="site:tomcat5.setup">Tomcat 5.0 Setup</link>
+            See <a
+            href="site:tomcat5.setup">Tomcat 5.0 Setup</a>
           </p>
 
           <p>
@@ -436,16 +431,16 @@
     
         <ul>
           <li>
-            <link href="site:tomcat5.classloader">
+            <a href="site:tomcat5.classloader">
               Tomcat Class Loader HOWTO (http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html)
-            </link>
+            </a>
           </li>
     
           <li>
-            <link href="site:java.endorsedmechanism">
+            <a href="site:java.endorsedmechanism">
               Java 2 Endorsed Standards Override Mechanism
               (http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html)
-            </link>
+            </a>
           </li>
         </ul>
       </li>
@@ -494,7 +489,7 @@
           </p>
 
           <p>
-            <link href="http://localhost:8080/lenya">http://localhost:8080/lenya/</link>
+            <a href="http://localhost:8080/lenya">http://localhost:8080/lenya/</a>
           </p>
         </li>
       </ol>

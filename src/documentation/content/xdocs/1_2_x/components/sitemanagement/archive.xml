@@ -17,16 +17,14 @@
 
 <!-- $Id: archive.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
 	<header>
 		<title>Archive</title>
-		<version/>
-		<type/>
-		<authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-		</authors>
+		
+		
+		
 	</header>
 
   <body>
@@ -38,7 +36,7 @@
 	  
     <section>
 	  <title>Implementation</title>
-      <p>Similar to the operation <link href="move.html">move</link></p>  
+      <p>Similar to the operation <a href="move.html">move</a></p>  
     </section>
 	  
     <section>
@@ -105,7 +103,7 @@
         <li><code>setIdentifier</code>, to save the source document id (in the dc:identifier). Necessary to be able to restore later the document</li>
         <li><code>move</code>, to execute the different move operations</li>
       </ul>
-      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/1.2/index.html">Javadoc</link></p>
+      <p>More about ant task, see the documentation <a href="../tasks/anttask.html">Ant Task</a> and the <a href="../../apidocs/1.2/index.html">Javadoc</a></p>
     </section>
 
   </body>

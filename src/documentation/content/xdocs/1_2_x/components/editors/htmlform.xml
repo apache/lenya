@@ -17,23 +17,18 @@
 
 <!-- $Id: htmlform.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Forms Editor</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
 </header> 
 <body> 
 
 <section>
 <title>XUpdate</title>
-<p>The Forms Editor is using the <link href="http://xmldb.org/xupdate/xupdate-wd.html">XUpdate specification</link> from the xmldb group to update elements and attributes. 
+<p>The Forms Editor is using the <a href="http://xmldb.org/xupdate/xupdate-wd.html">XUpdate specification</a> from the xmldb group to update elements and attributes. 
 You can test-drive the XUpdate engine in Lenya by doing the following:</p>
 <source>
 <![CDATA[

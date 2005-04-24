@@ -17,31 +17,17 @@
 
 <!-- $Id: related-projects.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Related Projects</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
   </header>
   <body>
 <p>
-This list is featuring projects which are closely related to Apache Lenya.
-</p>
-
-<p>
-Open Source Content Management Systems overviews can be found at 
-<link href="http://www.oscom.org">oscom.org</link> or 
-<link href="http://www.cmsinfo.org">cmsinfo.org</link>.
-</p>
-
-<p>
-More information on Cocoon-based projects can be found at
-<link href="http://cocoon.apache.org/link/projects.html">http://cocoon.apache.org/link/projects.html</link>.
+This list is featuring projects which are closely related to Apache Lenya. Open Source Content Management Systems overviews can be found at 
+<a href="http://www.oscom.org">oscom.org</a> or <a href="http://www.cmsinfo.org">cmsinfo.org</a>. More information on Cocoon-based projects can be found at
+<a href="http://cocoon.apache.org/link/projects.html">http://cocoon.apache.org/link/projects.html</a>.
 </p>
 
 <section><title>Cocoon</title>
@@ -54,7 +40,7 @@ off, Cocoons centralized configuration system and sophisticated caching help you
 create, deploy, and maintain rock-solid XML server applications.
 </p>
 <p>
-<link href="http://cocoon.apache.org">http://cocoon.apache.org</link>
+<a href="http://cocoon.apache.org">http://cocoon.apache.org</a>
 </p>
 </section>
 
@@ -67,7 +53,7 @@ heterogenous, distributed data stores. In addition, Slide integrates security, l
 versioning, as well as many other services.
 </p>
 <p>
-<link href="http://jakarta.apache.org/slide/">http://jakarta.apache.org/slide/</link>
+<a href="http://jakarta.apache.org/slide/">http://jakarta.apache.org/slide/</a>
 </p>
 </section>
 
@@ -76,7 +62,7 @@ versioning, as well as many other services.
 The Jackrabbit Project has been formed to develop an open source implementation of the Content Repository for Java Technology API (JCR), being specified within the Java Community Process as JSR-170.
 </p>
 <p>
-<link href="http://incubator.apache.org/jackrabbit/">http://incubator.apache.org/jackrabbit/</link>
+<a href="http://incubator.apache.org/jackrabbit/">http://incubator.apache.org/jackrabbit/</a>
 </p>
 </section>
 
@@ -85,7 +71,7 @@ The Jackrabbit Project has been formed to develop an open source implementation 
 Apache Forrest is an XML standards-oriented documentation framework based on Apache Cocoon, providing XSLT stylesheets and schemas, images and other resources. Forrest uses these to render the XML source content into a website via command-line, robot, or a dynamic web application.
 </p>
 <p>
-<link href="http://forrest.apache.org/">http://forrest.apache.org/</link>
+<a href="http://forrest.apache.org/">http://forrest.apache.org/</a>
 </p>
 </section>
 

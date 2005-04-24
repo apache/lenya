@@ -17,14 +17,12 @@
 
 <!-- $Id: standardURI.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
     <title>URI Scheme</title>
     <version major="0" minor="2">Version 0.2</version>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
     <abstract>Proposal for a standardization of URIs which are used
       for CMS functionality. </abstract> 
   </header> 
@@ -60,7 +58,7 @@
 	    e.g. "showscreen"</dd> 
 	</dl>
         <p>
-        For further information about usecases, see section <link href="usecases.html">Usecases</link>.
+        For further information about usecases, see section <a href="usecases.html">Usecases</a>.
         </p>
       </section>
       
@@ -127,7 +125,7 @@
       <title>Dynamic URIs</title>
 
         <p>The dynamic URIs that are used for usecases are explained in the
-        section <link href="usecases.html">Usecases</link>.
+        section <a href="usecases.html">Usecases</a>.
         </p>
       
     </section>

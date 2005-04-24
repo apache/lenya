@@ -17,19 +17,13 @@
 
 <!-- $Id: license.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Apache Lenya: License</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
   </header>
   <body>
-<section><title>The Apache Software License, Version 2.0</title>
 <p>Apache License</p>
 <p>Version 2.0, January 2004</p>
 <p>http://www.apache.org/licenses/</p>
@@ -239,6 +233,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.    
 </p>
-</section></section>
+</section>
   </body>
 </document>

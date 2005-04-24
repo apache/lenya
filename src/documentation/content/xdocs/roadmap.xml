@@ -17,35 +17,19 @@
 
 <!-- $Id$ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Apache Lenya: Roadmap</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
   </header>
   <body>
 
-<section><title>Contents</title>
-<ul>
-<li><link href="#positioning">Positioning Diagram</link></li>
-<li><link href="#releases">Releases</link></li>
-<li><link href="#goals">Long-Term Goals</link></li>
-<li><link href="#release_1.0">Release 1.0</link></li>
-<li><link href="#release_1.2">Release 1.2</link></li>
-<li><link href="#release_1.4">Release 1.4</link></li>
-</ul>
-</section>
-<anchor id="positioning" />
-<section><title>Positioning Diagram</title>
+<section id="positioning"><title>Positioning Diagram</title>
 <p>
 The Lenya roadmap is determined by the Lenya positioning diagram. It specifies the priorities
 and orientation, and shows areas for futher development. The 1.0 release marks the point
-where Lenya is donated to the Apache foundation. Subsequent releases are under the Apache
+where Lenya was donated to the Apache foundation. Subsequent releases have been under the Apache
 umbrella. Items in bold type mark completed items. <br /><br />
 <img src="images/live/cms-positioning.png" alt=""/><br /><br />
 
@@ -74,24 +58,21 @@ usability best practice?</li>
 </ol>
 </section>
 
-
-<anchor id="releases" />
-<section><title>Releases</title>
+<section id="releases"><title>Releases</title>
 <p>
 Three releases are planned: 1.0, 1.2 and 1.4, with the possibility of smaller maintenance releases
 in between. Even numbers are stable releases, odd numbers development releases. Minor releases are
-used for bug fixes, e.g. 1.0.2.
+used for bug fixes, e.g. 1.2.2.
 </p>
 <ul>
 <li>Release 1.0 Summer 2003</li>
 <li>Release 1.2 Fall 2003</li>
-<li>Release 1.4 Spring 2005</li>
+<li>Release 1.4 Summer 2005</li>
 </ul>
 </section>
 
 
-<anchor id="goals"/>
-<section><title>Long-term Goals</title><p>
+<section id="goals"><title>Long-term Goals</title><p>
 </p>
 <ul>
 <li>Improve communication and collaboration with sister Apache projects</li>
@@ -99,8 +80,7 @@ used for bug fixes, e.g. 1.0.2.
 </section>
 
 
-<anchor id="release_1.0" />
-<section><title>Release 1.0</title>
+<section id="release_1.0"><title>Release 1.0</title>
 <section><title>Community</title>
 <p>
 </p>
@@ -177,12 +157,11 @@ used for bug fixes, e.g. 1.0.2.
 </ul>
 
 </section></section>
-<anchor id="release_1.2" />
-<section><title>Release 1.2</title>
+<section id="release_1.2"><title>Release 1.2</title>
 <section><title>Community</title>
 
 <ul>
-<li>Get additional commiters on board</li>
+<li><strong>Get additional commiters on board</strong></li>
 <li>Define scope and collaboration with the Forrest project</li>
 </ul>
 
@@ -251,14 +230,13 @@ used for bug fixes, e.g. 1.0.2.
 </ul>
 
 </section></section>
-<anchor id="release_1.4" />
-<section><title>Release 1.4</title>
+<section id="release_1.4"><title>Release 1.4</title>
 <section><title>Community</title>
 
 <ul>
 <li>Work with OSCOM.org on CMS standards</li>
 <li>Organize Lenya Sprints</li>
-<li>Leverage other Apache projects</li>
+<li><strong>Leverage other Apache projects</strong></li>
 </ul>
 
 </section>
@@ -284,7 +262,7 @@ used for bug fixes, e.g. 1.0.2.
 <ul>
 <li><strong>Improve reverse proxying</strong></li>
 <li><strong>Research advanced caching strategies</strong></li>
-<li>Implement transaction management</li>
+<li><strong>Implement transaction management</strong></li>
 </ul>
 
 </section>

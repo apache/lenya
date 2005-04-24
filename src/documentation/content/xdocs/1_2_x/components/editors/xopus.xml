@@ -17,17 +17,15 @@
 
 <!-- $Id: xopus.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Xopus</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body> 
 
@@ -40,7 +38,7 @@
     
 <section>
 <title>Demo</title>
-<p>There is an online <link href="http://www.xopus.com/demo/index.html">XOPUS demo</link> available. You need Internet
+<p>There is an online <a href="http://www.xopus.com/demo/index.html">XOPUS demo</a> available. You need Internet
     Explorer 5.5 or newer to view the demo.</p>
 </section>
 
@@ -113,7 +111,7 @@ $PUBLICATION/lenya/xslt/xopus/$DOCTYPE.xsl
 ]]>
 </source>
 <p>
-You might want to use <link href="http://www.thaiopensource.com/relaxng/trang.html">Trang</link> to generate XML Schemas.
+You might want to use <a href="http://www.thaiopensource.com/relaxng/trang.html">Trang</a> to generate XML Schemas.
 </p>
 <p>
 Editing with Xopus is implemented as a usecase. One can add a menu item as follows:

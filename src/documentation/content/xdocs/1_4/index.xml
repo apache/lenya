@@ -17,16 +17,14 @@
 
 <!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Apache Lenya 1.4 Documentation</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
+    
+    
   </header>
   <body>
           <warning>
@@ -37,7 +35,7 @@
            we suggest you also check there for more information while we build up this documentation.
         </p>
 <p>
-More documentation (work in progress) can be found at the <link href="site:wiki/lenya/">Apache Lenya Wiki</link>.
+More documentation (work in progress) can be found at the <a href="site:wiki/lenya/">Apache Lenya Wiki</a>.
 </p>
   </body>
 </document>

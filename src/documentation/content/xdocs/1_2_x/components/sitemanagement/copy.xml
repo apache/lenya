@@ -17,16 +17,14 @@
 
 <!-- $Id: copy.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
 	<header>
 		<title>Copy</title>
-		<version/>
-		<type/>
-		<authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-		</authors>
+		
+		
+		
 	</header>
 
   <body>
@@ -153,7 +151,7 @@
             </map:match>
           </map:match>
         ]]></source>
-	    <p>The paste step is also used by the move operation. In this case the parameter org.apache.lenya.cms.info.cutdocumentid must be set to the value of the document id (see <link href="move.html">Move</link>).
+	    <p>The paste step is also used by the move operation. In this case the parameter org.apache.lenya.cms.info.cutdocumentid must be set to the value of the document id (see <a href="move.html">Move</a>).
         In case of the copy function the value of org.apache.lenya.cms.info.cutdocumentid in the session must be "".
         The action org.apache.lenya.cms.cocoon.acting.TaskAction calls the execution of the ant task.</p> 
       </section>  
@@ -164,7 +162,7 @@
 	  <p>The ant target is in the publication :</p>
 	  <source>{publication}/config/tasks/targets.xml</source>
       <p>The target for copying a document depends on the target newdocumentid, to be sure, that the document id for the destination is unique</p> 
-      <p>More about ant task, see the documentation <link href="../tasks/anttask.html">Ant Task</link> and the <link href="../../apidocs/1.2/index.html">Javadoc</link></p>
+      <p>More about ant task, see the documentation <a href="../tasks/anttask.html">Ant Task</a> and the <a href="../../apidocs/1.2/index.html">Javadoc</a></p>
     </section>
 
   </body>

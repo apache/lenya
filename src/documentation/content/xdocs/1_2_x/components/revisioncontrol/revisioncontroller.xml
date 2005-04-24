@@ -17,16 +17,13 @@
 
 <!-- $Id: revisioncontroller.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN"
-"document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
     <title>Revision Controller</title>
     <version />
     <type />
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
   </header>
   <body>
     <section>
@@ -39,30 +36,30 @@
     <section>
       <title>Check-in / Check-out</title>
       <p>The 
-      <link href="checkin.html">check-in</link>
+      <a href="checkin.html">check-in</a>
       and 
-      <link href="checkout.html">check-out</link>
+      <a href="checkout.html">check-out</a>
       are reserved: a checked out document cannot be checked out by
       another user.</p>
       <p>A user "System" exists, who can force internally a checkin</p>
       <p>The different check-in/check-out states (the checkin/out,
       the time, the user's identity) of a document are stored in an
       xml file with a own markup language: the 
-      <link href="rcml.html">RCML-file.</link></p>
+      <a href="rcml.html">RCML-file.</a></p>
     </section>
 
     <section>
       <title>Versions</title>
       <p>When a document is checked in, the old version of the
       document is copied ( 
-      <link href="version.html">backup</link>
+      <a href="version.html">backup</a>
       )</p>
     </section>
 
     <section>
       <title>Rollback</title>
       <p>It is also possible to retrieve an old version with the 
-      <link href="rollback.html">rollback</link>
+      <a href="rollback.html">rollback</a>
       </p>
     </section>
     
@@ -72,4 +69,3 @@
     </section>
   </body>
 </document>
-

@@ -17,14 +17,12 @@
 
 <!-- $Id: openoffice.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
     <title>OpenOffice Documents with Lenya</title>
     <version major="0" minor="1">Initial version</version>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
     <notice></notice> 
     <abstract>This document describes the integration of Openoffice with Lenya
 CMS</abstract> 
@@ -110,8 +108,8 @@ catalogs=/home/slide/build/jakarta-tomcat-4.1.18-LE-jdk14/webapps/lenya/lenya/re
 to provide the necessary transformations.</p>
 
 	<p>A very good XSLT which is fairly complete can be fetched
-	  from zope.org (<link
-	  href="http://www.zope.org/Members/philikon/ZooDocument">http://www.zope.org/Members/philikon/ZooDocument</link>).</p>
+	  from zope.org (<a
+	  href="http://www.zope.org/Members/philikon/ZooDocument">http://www.zope.org/Members/philikon/ZooDocument</a>).</p>
 
       </section>
 

@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
     <title>Samples</title> 
@@ -22,7 +22,7 @@
   <body> 
     <section>
       <title>If something goes wrong..</title>
-      <p>Patches are welcome: <link href="http://forrest.apache.org/faq.html">Forrest FAQ</link></p>
+      <p>Patches are welcome: <a href="http://forrest.apache.org/faq.html">Forrest FAQ</a></p>
     </section>
   </body>
 </document>

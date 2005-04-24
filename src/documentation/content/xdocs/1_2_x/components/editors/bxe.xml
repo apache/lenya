@@ -17,24 +17,22 @@
 
 <!-- $Id: bxe.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Bitflux Editor (BXE)</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body> 
 
 <section>
 <title>Overview</title>
-<p><link href="http://bxe.oscom.org">BXE</link> is a validating WYSIWYG XML editor for Mozilla-based browsers.
-    It uses <link href="http://www.relaxng.org/">RELAX NG</link> for validation and CSS for layout. 
+<p><a href="http://bxe.oscom.org">BXE</a> is a validating WYSIWYG XML editor for Mozilla-based browsers.
+    It uses <a href="http://www.relaxng.org/">RELAX NG</a> for validation and CSS for layout. 
     Integration with Lenya is done with a series of use case steps that are defined
     in a sitemap inside your publication: <code>usecase-bxeng.xmap</code>. If you understand the purpose
     of the various use case steps, you will have a good grasp of how to integration is done, and will be
@@ -105,7 +103,7 @@
         in the right URL for these parameters. The default publication uses additional pipelines
         for these URL to provide more flexibility (such as automatically loading the correct
         RELAX NG schema based on the resource type of the current page). More information about
-        the format of <code>config.xml</code> is available at the <link href="http://wiki.bitfluxeditor.org/Config.xml">BXE wiki</link>. 
+        the format of <code>config.xml</code> is available at the <a href="http://wiki.bitfluxeditor.org/Config.xml">BXE wiki</a>. 
         The config step pipeline looks as follows in the default publication:</p>
     <source>
     <![CDATA[
@@ -257,7 +255,7 @@
 <title>Further BXE configuration</title>
     <p>BXE offers a lot of customization options beyond those outlined above. If you plan to make the most
         of BXE, you should familiarize yourself with the contents of the 
-            <link href="http://wiki.bitfluxeditor.org/Main_Page">BXE wiki</link>.</p>
+            <a href="http://wiki.bitfluxeditor.org/Main_Page">BXE wiki</a>.</p>
 </section>    
 
 </body>

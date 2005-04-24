@@ -17,19 +17,16 @@
 
 <!-- $Id: license.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Apache Lenya Project Charter</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
+    
+    
   </header>
   <body>
-<section><title>Apache Lenya Project Charter</title>
 <p>
 The Apache Lenya Project is a community project developing open source content management solutions. 
 </p><p>
@@ -48,6 +45,5 @@ standards-based XML editing environments that are developed in an open and colla
    <li>to add user-oriented functionality on top of the Cocoon framework and other Apache projects.</li>
    <li>to advance the state of the art of content management and structured text editing.</li>
 </ul>
-</section>
   </body>
 </document>

@@ -14,46 +14,44 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
     <title>Apache Lenya Screenshots</title> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
   </header> 
   <body> 
-
 <p>
 The following screenshots are meant for the evaluator in a hurry. For a much more complete impression
-of Apache Lenya, download the latest release and try it out yourself.
+, <a href="ext:lenya.dist">download</a> the latest release and try it out yourself. You may also want
+to try out the <a href="ext:lenya.demo">online demo</a>.
 </p>
-<ul>
-  <li>
+        <section id="authoring">
+      <title>Authoring</title><p>
     The Apache Lenya authoring area is used to edit individual pages. The author browses through the authoring
     area just like a visitor to the web site would, by using the navigation of the site. The menu at the top of
     the screen is the only indication that you are inside the authoring environment, everything else is just
     like it appears on the live site. <br/><br/>
       <img src="images/live/apache-lenya-authoring-area.jpg" alt="Screenshot of the Apache Lenya authoring area"/>
-      <br/><br/><br/>
-  </li>
-  <li>
+      </p>
+  </section>
+        <section id="site">
+      <title>Site management</title><p>
     The Apache Lenya site area is used to perform operations that concern multiple pages, like moving pages
     around, renaming sections of the site, etc. The site area gives a quick overview of the complete site.
     Detailed information about each page can be accessed by clicking on the relevant node in the tree
     structure at left. <br/><br/><img src="images/live/apache-lenya-site-area.jpg" alt="Screenshot of the Apache Lenya site area"/>
-    <br/><br/><br/>
-  </li>
-  <li>
-    Apache Lenya comes with different editors for content editing. One of the more advanced ones is <link href="ext:bxe">BXE</link>. 
+      </p>
+  </section>
+        <section id="wysiwyg">
+      <title>WYSIWYG editing</title><p>
+    Apache Lenya comes with different editors for content editing. One of the more advanced ones is <a href="ext:bxe">BXE</a>. 
     Using BXE, you can edit arbitrary XML in WYSIWYG and validate your document against an Relax NG
     schema while it is being edited.
     BXE uses validation to restrict the editing choices instead of allowing free-form input and then
     generating validation errors on save (an approach that makes it different from most other editors).
       <br/><br/><img src="images/live/apache-lenya-editor-bxe.jpg" alt="Screenshot of editing a page with the BXE editor inside Apache Lenya"/>
-    <br/><br/><br/>
-  </li>
-</ul>
+      </p>
+  </section>
 
   </body>
 </document>

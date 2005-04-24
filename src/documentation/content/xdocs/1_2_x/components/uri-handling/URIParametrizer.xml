@@ -17,14 +17,12 @@
 
 <!-- $Id: URIParametrizer.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
     <title>URI Parametrizer</title>
     <version major="0" minor="1">Initial version</version>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
     <notice></notice> 
     <abstract>Desciption of the URI Parametrizer which is a key
     element of the site tree framework.</abstract>
@@ -34,8 +32,8 @@
     <section>
       <title>Motivation</title>
 
-      <p>The problem of <link
-      href="../publication/siteTree.html">determining the doctype</link>
+      <p>The problem of <a
+      href="../publication/siteTree.html">determining the doctype</a>
       independent of request URI needs a flexible and yet simple
       solution. This is where the URI Parametrizer comes to the
       rescue.</p>
@@ -137,8 +135,8 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</source>
 
 	<p>A more serious example could possibly include matchers
 	using the SourceTypeAction from the Forrest Project or a
-	HashMapAction as outlined in the <link
-	href="../publication/siteTree.html">SiteTree proposal</link>.</p>
+	HashMapAction as outlined in the <a
+	href="../publication/siteTree.html">SiteTree proposal</a>.</p>
 
 	<p>After a match has been found the pipeline in the parameter
 	sitemap returns an XML snippet in the following form:</p>
@@ -156,8 +154,8 @@ cocoon://uri-parameter/{publication-id}/path/foo.html</source>
       </section>
 
       <p>The fact that the actual determination is delegated back to
-      the sitemap allows for a combination of the <link
-      href="../publication/siteTree.html">original proposals</link> where
+      the sitemap allows for a combination of the <a
+      href="../publication/siteTree.html">original proposals</a> where
       solutions such as Hashmap and SourceTypeAction were
       outlined.</p>
     </section>

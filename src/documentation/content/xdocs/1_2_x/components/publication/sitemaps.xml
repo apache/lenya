@@ -17,17 +17,15 @@
 
 <!-- $Id: sitemaps.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Sitemaps, and their functions</title>
-    <version>0.1</version> 
+     
     <type>Overview document</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
 </header> 
 <body> 
 
@@ -95,7 +93,7 @@ This Sitemap contains the functionality for the Lucene Search engine. It is moun
 </p>
 </section>
 <section><title>8) The Resources Sitemap</title> 
-<p>The resources sitemap serves static resources, as described in <link href="site:xhtml-templating">Serving static Resources</link>
+<p>The resources sitemap serves static resources, as described in <a href="site:xhtml-templating">Serving static Resources</a>
 </p>
 </section>
 <section><title>10) The Doctypes Sitemap</title> 

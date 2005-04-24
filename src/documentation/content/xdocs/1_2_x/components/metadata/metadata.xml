@@ -17,16 +17,14 @@
 
 <!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Meta Data</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
+    
+    
   </header>
 
   <body>
@@ -35,7 +33,7 @@
       <title>Introduction</title>
 
       <p>Meta data is kept directly inside the xml document. It is
-      based on the <link href="http://dublincore.org">Dublin Core</link>
+      based on the <a href="http://dublincore.org">Dublin Core</a>
       standard.</p>
 
       <p>There are basically three use cases:</p>
@@ -120,11 +118,11 @@
 	data.</dd>
 	<dt>org.apache.lenya.cms.cocoon.acting.ReservedCheckoutTestAction</dt>
 	<dd>Action that tests if a document can be checked out and if
-	yes does check it out (See <link
-	href="../revisioncontrol/revisioncontroller.html">Revision Controller</link>).</dd>
+	yes does check it out (See <a
+	href="../revisioncontrol/revisioncontroller.html">Revision Controller</a>).</dd>
 	<dt>org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction</dt>
-	<dd>Action that checks a document in (See <link
-	href="../revisioncontrol/revisioncontroller.html">Revision Controller</link>).</dd>
+	<dd>Action that checks a document in (See <a
+	href="../revisioncontrol/revisioncontroller.html">Revision Controller</a>).</dd>
 	<dt>src/webapp/lenya/content/info/meta.xsp, src/webapp/lenya/xslt/info/info.xsl</dt>
 	<dd>Handle the display of the meta data in the info area. This
 	is also a form which can be used to modify the meta data via a

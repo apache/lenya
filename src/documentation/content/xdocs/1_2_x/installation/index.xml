@@ -17,14 +17,14 @@
 
 <!-- $Id: index.xml 47563 2004-09-30 07:19:08Z michi $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Downloading and Installing Apache Lenya 1.2.x</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
+     
+     
 </header> 
 <body> 
 
@@ -32,15 +32,15 @@
   <li>
     Download Apache Lenya 1.2.x
     <ul>
-      <li><link href="ext:releases">Releases</link></li>
-      <li><link href="ext:nightly.builds">Nightly Snapshots</link></li>
-      <li><link href="subversion.html">Subversion</link></li>
+      <li><a href="ext:releases">Releases</a></li>
+      <li><a href="ext:nightly.builds">Nightly Snapshots</a></li>
+      <li><a href="subversion.html">Subversion</a></li>
     </ul>
   </li>
   <li>
     Install Apache Lenya 1.2.x
     <ul>
-      <li><link href="source_version.html">Source Version</link></li>
+      <li><a href="source_version.html">Source Version</a></li>
     </ul>
   </li>
 </ul>

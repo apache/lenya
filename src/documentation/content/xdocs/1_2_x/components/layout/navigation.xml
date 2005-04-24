@@ -17,20 +17,11 @@
 
 <!-- $Id: navigation.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC
-    "-//APACHE//DTD Documentation V1.1//EN"
-    "document-v11.dtd"
-    >
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
     
 <document> 
   <header> 
     <title>The Navigation Framework</title>
-    <version major="0" minor="1">Initial version</version>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
-    <notice></notice> 
-    <abstract>Proposal for a standard navigation framework.</abstract> 
   </header> 
   <body> 
 
@@ -216,7 +207,4 @@ The URI steps are:
 </section>
 
   </body> 
-  <footer> 
-    <legal>© 200 wyona.org</legal> 
-  </footer>
 </document>

@@ -17,16 +17,14 @@
 
 <!-- $Id: mailing-lists.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Mailing Lists</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
+    
+    
   </header>
   <body>
  
@@ -42,46 +40,46 @@
   Some useful articles about how to write mailing list e-mails:
 </p>
 <ul>
-  <li><link href="http://www.digital-web.com/articles/how_to_write_effective_mailing_list_email/">How to Write Effective Mailing List Email</link></li>
-  <li><link href="http://www.netmeister.org/news/learn2quote.html">How do I quote correctly in Usenet?</link></li>
+  <li><a href="http://www.digital-web.com/articles/how_to_write_effective_mailing_list_email/">How to Write Effective Mailing List Email</a></li>
+  <li><a href="http://www.netmeister.org/news/learn2quote.html">How do I quote correctly in Usenet?</a></li>
 </ul>
 </section>
 
 <section><title>Subscribe/Unsubscribe</title>
 
 <p>
-<strong>User List:</strong> <link href="mailto:user-subscribe@lenya.apache.org">Subscribe</link>, <link href="mailto:user-unsubscribe@lenya.apache.org">Unsubscribe</link>
+<strong>User List:</strong> <a href="mailto:user-subscribe@lenya.apache.org">Subscribe</a>, <a href="mailto:user-unsubscribe@lenya.apache.org">Unsubscribe</a>
 <br />
-<strong>Developer List:</strong> <link href="mailto:dev-subscribe@lenya.apache.org">Subscribe</link>, <link href="mailto:dev-unsubscribe@lenya.apache.org">Unsubscribe</link>
+<strong>Developer List:</strong> <a href="mailto:dev-subscribe@lenya.apache.org">Subscribe</a>, <a href="mailto:dev-unsubscribe@lenya.apache.org">Unsubscribe</a>
 <br />
-<strong>Commits List:</strong> <link href="mailto:commits-subscribe@lenya.apache.org">Subscribe</link>, <link href="mailto:commits-unsubscribe@lenya.apache.org">Unsubscribe</link>
+<strong>Commits List:</strong> <a href="mailto:commits-subscribe@lenya.apache.org">Subscribe</a>, <a href="mailto:commits-unsubscribe@lenya.apache.org">Unsubscribe</a>
 </p>
 </section>
 
 <section><title>Gmane</title>
 <p>
-You can also read our mailing lists at <link href="http://gmane.org/">Gmane</link>
+You can also read our mailing lists at <a href="http://gmane.org/">Gmane</a>
 </p>
 <ul>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.user">gmane.comp.cms.lenya.user</link></li>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.devel">gmane.comp.cms.lenya.devel</link></li>
+  <li><a href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.user">gmane.comp.cms.lenya.user</a></li>
+  <li><a href="http://news.gmane.org/thread.php?group=gmane.comp.cms.lenya.devel">gmane.comp.cms.lenya.devel</a></li>
 </ul>
 <p>
 The Cocoon mailing lists can be read at
 </p>
 <ul>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.text.xml.cocoon.user">gmane.text.xml.cocoon.user</link></li>
-  <li><link href="http://news.gmane.org/thread.php?group=gmane.text.xml.cocoon.devel">gmane.text.xml.cocoon.devel</link></li>
+  <li><a href="http://news.gmane.org/thread.php?group=gmane.text.xml.cocoon.user">gmane.text.xml.cocoon.user</a></li>
+  <li><a href="http://news.gmane.org/thread.php?group=gmane.text.xml.cocoon.devel">gmane.text.xml.cocoon.devel</a></li>
 </ul>
 </section>
  
 <section><title>Archive</title>
 <p>
-<strong>User List:</strong> <link href="http://mail-archives.apache.org/mod_mbox/lenya-user/">http://mail-archives.apache.org/mod_mbox/lenya-user/</link>
+<strong>User List:</strong> <a href="http://mail-archives.apache.org/mod_mbox/lenya-user/">http://mail-archives.apache.org/mod_mbox/lenya-user/</a>
 <br />
-<strong>Developer List:</strong> <link href="http://mail-archives.apache.org/mod_mbox/lenya-dev/">http://mail-archives.apache.org/mod_mbox/lenya-dev/</link>
+<strong>Developer List:</strong> <a href="http://mail-archives.apache.org/mod_mbox/lenya-dev/">http://mail-archives.apache.org/mod_mbox/lenya-dev/</a>
 <br />
-<strong>Commits List:</strong> <link href="http://mail-archives.apache.org/mod_mbox/lenya-commits/">http://mail-archives.apache.org/mod_mbox/lenya-commits/</link>
+<strong>Commits List:</strong> <a href="http://mail-archives.apache.org/mod_mbox/lenya-commits/">http://mail-archives.apache.org/mod_mbox/lenya-commits/</a>
 </p>
 </section>
  

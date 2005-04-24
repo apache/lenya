@@ -62,7 +62,7 @@ which will be used to configure the chosen Forrest skin.
   <disable-compliance-links>true</disable-compliance-links>
 
   <!-- Render mailto: links unrecognisable by spam harvesters? -->
-  <obfuscate-mail-links>true</obfuscate-mail-links>
+  <obfuscate-mail-links>false</obfuscate-mail-links>
   <obfuscate-mail-value>.at.</obfuscate-mail-value>
 
   <!-- Disable the javascript facility to change the font size -->
@@ -150,10 +150,10 @@ which will be used to configure the chosen Forrest skin.
   @location ("page","menu","page,menu", "none")
    Where to show the TOC.
   -->
-  <toc max-depth="3" min-sections="2" location="page"/>
+  <toc max-depth="3" min-sections="2" location="menu"/>
 
   <!-- Heading types can be clean|underlined|boxed  -->
-  <headings type="underlined"/>
+  <headings type="clean"/>
 
   <!-- The optional feedback element will be used to construct a
     feedback link in the footer with the page pathname appended:
@@ -174,16 +174,9 @@ which will be used to configure the chosen Forrest skin.
         To define the css definition of a new element that you may have used
         in the class attribute of a <p> node.
         e.g. <p class="quote"/>
+  -->
     
-    .imageFloat {
-      margin: 2;
-      padding: 2;
-      float:left;
-    } 
-    .stopFloat{
-    clear: both;
-    float: none;
-    }-->
+
   </extra-css>
 
   <colors>
@@ -239,17 +232,17 @@ which will be used to configure the chosen Forrest skin.
        the outer edge vice versa.
        Specified below are the default settings.
     -->
-    <margins double-sided="false">
+    <margins double-sided="true">
       <top>1 cm</top>
       <bottom>1 cm</bottom>
-      <inner>1.25 cm</inner>
-      <outer>1 cm</outer>
+      <inner>2.25 cm</inner>
+      <outer>2 cm</outer>
     </margins>
 
     <!--
       Print the URL text next to all links going outside the file
     -->
-    <show-external-urls>false</show-external-urls>
+    <show-external-urls>true</show-external-urls>
   </pdf>
 
   <!-- Credits are typically rendered as a set of small clickable

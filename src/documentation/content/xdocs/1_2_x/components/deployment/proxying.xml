@@ -17,17 +17,15 @@
 
 <!-- $Id: mod_proxy.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>Reverse Proxying Apache Lenya</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body> 
 
@@ -85,9 +83,9 @@
     <li> There is an ssl enabled live server with (cms.live.ch and cms.sandbox.live.ch) and the URL you get on the live side is e.g. <code>http://cms.sandbox.live.ch/lenya/index.html</code> </li>
   </ul>
   <p><strong>Note:</strong> Up to now, session is only working if you add /lenya after your domain because the cookie which is sent to the client stores the web application context. Therefore the browser did not send back the cookie if you request a page like http://cms.sandbox.live.ch/index.html. 
-    This is also mentioned on the <link href="http://wiki.apache.org/cocoon/ApacheModProxy">Cocoon Wiki page on proxying</link>. With Apache 2.1 a recently introduced proxy directive for translating the cookie path <code>ProxyPassReverseCookiePath</code> will be available, which will allow you to 
+    This is also mentioned on the <a href="http://wiki.apache.org/cocoon/ApacheModProxy">Cocoon Wiki page on proxying</a>. With Apache 2.1 a recently introduced proxy directive for translating the cookie path <code>ProxyPassReverseCookiePath</code> will be available, which will allow you to 
     get the cookie path translated by Apache with <code>ProxyPassReverseCookiePath&#160;/lenya&#160;/</code> so that the cookie is always sent back to the server. As of today even the trunk version of Apache httpd does not have this feature. If you still want to use it with Apache 2.0 you will have 
-    to apply a patch <link href="http://issues.apache.org/bugzilla/show_bug.cgi?id=10722"> http://issues.apache.org/bugzilla/show_bug.cgi?id=10722</link> and rebuild the Apache modules mod_proxy and mod_http_proxy. The patch should work with Apache 2.0.49+ (I use it with 2.0.52 without any 
+    to apply a patch <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=10722"> http://issues.apache.org/bugzilla/show_bug.cgi?id=10722</a> and rebuild the Apache modules mod_proxy and mod_http_proxy. The patch should work with Apache 2.0.49+ (I use it with 2.0.52 without any 
     problems). </p>
   <p> As an alternative to patching Apache, you could install Lenya within the ROOT context, because 
     then the CookiePath will contain "/" instead of "/lenya" and it will work with the common mod_proxy settings.

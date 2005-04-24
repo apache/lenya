@@ -17,17 +17,15 @@
 
 <!-- $Id: anttask.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document> 
 
 <header> 
     <title>The AntTask</title>
-    <version>0.1</version> 
-    <type>Documentation</type> 
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors> 
+     
+     
+     
 </header> 
 <body> 
 
@@ -45,7 +43,7 @@ The task parameters are:
   <li><strong><code>publication-id</code></strong>: The publication ID</li>
   <li><strong><code>buildfile (optional)</code></strong>: The location of the build file
       relative to the publication directory. If this parameter is
-      not provided, the file is loaded from the default location (see section <link href="#File+Locations">File Locations</link>).</li>
+      not provided, the file is loaded from the default location (see section <a href="#File+Locations">File Locations</a>).</li>
   <li><strong><code>target (optional)</code></strong>: The build target. If this parameter
       is not provided, the default target is executed.</li>
   <li><strong><code>properties.*</code></strong>: The project properties.</li>
@@ -59,9 +57,9 @@ The task parameters are:
 <p>
 Every time an <code>AntTask</code> is invoked, a log file is created unsing
 the <code>XmlLogger</code>
-(<link href="http://ant.apache.org/manual/listeners.html">manual entry</link>,
-<link href="http://issues.apache.org/gump/javadoc/ant/build/javadocs/org/apache/tools/ant/XmlLogger.html">JavaDoc</link>).
-For the location of the log files, see section <link href="#File+Locations">File Locations</link>.
+(<a href="http://ant.apache.org/manual/listeners.html">manual entry</a>,
+<a href="http://issues.apache.org/gump/javadoc/ant/build/javadocs/org/apache/tools/ant/XmlLogger.html">JavaDoc</a>).
+For the location of the log files, see section <a href="#File+Locations">File Locations</a>.
 The log history can be viewed at the URI
 </p>
 <source>
@@ -90,7 +88,7 @@ for a buildfile property named <code>filename</code>.
 <title>Using custom Ant Tasks</title>
 <p>
 The implementation of custom Ant tasks is described in the
-<link href="http://ant.apache.org/manual/index.html">Ant User Manual</link>.
+<a href="http://ant.apache.org/manual/index.html">Ant User Manual</a>.
 If you want to write a general Lenya task, put it into the package
 <code>org.lenya.cms.ant</code>. If you want to write a task
 that is only suited for your publication, put it in the

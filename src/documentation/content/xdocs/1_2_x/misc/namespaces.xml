@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: namespaces.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Namespaces Used in Apache Lenya</title>
+  </header>
+  <body><p>
+The following namespaces are defined in Lenya. The base namespace is <a href="http://apache.org/cocoon/lenya/">http://apache.org/cocoon/lenya/</a>, followed by the Name/Version entries from the list below.</p> 
+<table>
+<tr>
+<td>
+ <strong>Name/Version</strong> 
+
+</td>
+<td>
+ <strong>Purpose</strong> 
+</td>
+</tr>
+<tr>
+<td>
+ ac/1.0
+</td>
+<td>
+Access Control 
+
+</td>
+</tr>
+<tr>
+<td>
+ doctype/1.0
+</td>
+<td>
+Doctype configuration 
+</td>
+</tr>
+<tr>
+<td>
+ cms-page/1.0
+
+</td>
+<td>
+CMS Page 
+</td>
+</tr>
+<tr>
+<td>
+ document/1.0
+</td>
+<td>
+Lenya-specific data in documents 
+</td>
+</tr>
+
+<tr>
+<td>
+ info/1.0
+</td>
+<td>
+Lenya Info Area 
+</td>
+</tr>
+<tr>
+<td>
+ lucene/1.0
+</td>
+
+<td>
+Lucene Search Configuration 
+</td>
+</tr>
+<tr>
+<td>
+ mail/1.0
+</td>
+<td>
+Mail 
+</td>
+</tr>
+<tr>
+
+<td>
+ menubar/1.0
+</td>
+<td>
+Lenya Menubar 
+</td>
+</tr>
+<tr>
+<td>
+ navigation/1.0
+</td>
+<td>
+
+Breadcrumb navigation 
+</td>
+</tr>
+<tr>
+<td>
+ notification/1.0
+</td>
+<td>
+Notification 
+</td>
+</tr>
+<tr>
+<td>
+
+ page-envelope/1.0
+</td>
+<td>
+Page envelope 
+</td>
+</tr>
+<tr>
+<td>
+ proxygenerator/1.0
+</td>
+<td>
+ProxyGenerator 
+</td>
+</tr>
+<tr>
+<td>
+ publication/1.0
+</td>
+<td>
+Publication 
+</td>
+</tr>
+<tr>
+<td>
+ rc/1.0
+
+</td>
+<td>
+Revision Control 
+</td>
+</tr>
+<tr>
+<td>
+ scheduler/1.0
+</td>
+<td>
+Scheduler 
+</td>
+</tr>
+
+<tr>
+<td>
+ simple-document
+</td>
+<td>
+Simple Document Doctype 
+</td>
+</tr>
+<tr>
+<td>
+ sitetree/1.0
+</td>
+
+<td>
+Sitetree 
+</td>
+</tr>
+<tr>
+<td>
+ uri-parameters/1.0
+</td>
+<td>
+URI Parameters 
+</td>
+</tr>
+<tr>
+
+<td>
+ usecase/1.0
+</td>
+<td>
+Usecases 
+</td>
+</tr>
+<tr>
+<td>
+ workflow/1.0
+</td>
+<td>
+
+Workflow 
+</td>
+</tr>
+<tr>
+<td>
+ xslt/1.0
+</td>
+<td>
+XSLT namespace alias for meta stylesheets 
+</td>
+</tr>
+<tr>
+<td>
+
+ xsp/1.0
+</td>
+<td>
+Lenya XSP
+</td>
+</tr>
+</table>  </body>
+</document>

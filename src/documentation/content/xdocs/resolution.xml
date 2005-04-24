@@ -17,19 +17,13 @@
 
 <!-- $Id: license.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
-    <title>Resolution for the creation of Apache Lenya Project</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    <title>Resolution for the creation of the Apache Lenya Project</title>
   </header>
   <body>
-<section><title>Resolution for the creation of Apache Lenya Project</title>
 <p>
 WHEREAS, the Board of Directors deems it to be in the best
 interests of the Foundation and consistent with the
@@ -95,6 +89,5 @@ RESOLVED, that all responsibility pertaining to the incubating
 Apache Lenya project encumbered upon the incubator PMC
 be hereafter discharged. 
 </p>
-</section>
   </body>
 </document>

@@ -17,16 +17,14 @@
 
 <!-- $Id: multilingual.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Mulitilingual Document handling</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
+    
+    
   </header>
 
   <body>
@@ -52,8 +50,8 @@
 
       <dl>
 	<dt>Site tree</dt>
-	<dd>The <link href="../publication/siteTree.html">site
-	tree</link> contains information about documents. It has been
+	<dd>The <a href="../publication/siteTree.html">site
+	tree</a> contains information about documents. It has been
 	expanded to also contain information about different language
 	versions of the same document. Different language versions of
 	the same document share the same
@@ -73,9 +71,9 @@
 	language are specified.</dd>
 
 	<dt>page-envelope</dt> 
-	<dd>The <link
+	<dd>The <a
 	href="../publication/pageenvelopemodule.html">page
-	envelope</link> exports document specific information such as
+	envelope</a> exports document specific information such as
 	document-id via an input module. Naturally language specific
 	information for the current document is also available via the
 	page envelope.
@@ -147,9 +145,9 @@
       <section>
 	<title>page-envelope</title>
 
-	<p>The <link
+	<p>The <a
 	href="../publication/pageenvelopemodule.html">page-envelope
-	input module</link> exports language related information,
+	input module</a> exports language related information,
 	namely <code>default-language</code>,
 	<code>document-label</code>, <code>document-language</code>,
 	<code>document-languages</code> and

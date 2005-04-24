@@ -17,16 +17,14 @@
 
 <!-- $Id: pageenvelopemodule.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.1//EN" "document-v11.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>The PageEnvelopeModule</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
+    
+    
   </header>
   <body>
 
@@ -34,8 +32,8 @@
 <p>
 The <code>PageEnvelopeModule</code> is an <code>InputModule</code>
 that provides access to the <code>PageEnvelope</code> parameters. For
-documentation on input modules see section <link
-href="http://cocoon.apache.org/2.1/userdocs/concepts/modules.html">Modules</link>
+documentation on input modules see section <a
+href="http://cocoon.apache.org/2.1/userdocs/concepts/modules.html">Modules</a>
 of the Cocoon documentation.
 </p>
 </section>

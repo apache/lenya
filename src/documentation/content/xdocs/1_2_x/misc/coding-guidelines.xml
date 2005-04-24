@@ -17,16 +17,14 @@
 
 <!-- $Id: coding-guidelines.xml 55543 2004-10-26 00:14:59Z gregor $ -->
 
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
 <document>
   <header>
     <title>Apache Lenya Coding Guidelines</title>
-    <version/>
-    <type/>
-    <authors>
-      <person name="Lenya community" email="dev@lenya.apache.org"/>
-    </authors>
+    
+    
+    
   </header>
   <body>
     <section>
@@ -52,8 +50,8 @@
       </p>
       <ul>
         <li>Thou shalt only produce code conforming to the Java code
-        conventions, as they are set down on the page <link
-        href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html</link>
+        conventions, as they are set down on the page <a
+        href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html</a>
         <p/>
         </li>
         <li>Thou shalt not produce any code containing tab-stops.

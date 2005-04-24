@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V1.2//EN" "http://forrest.apache.org/dtd/document-v12.dtd">
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
     <title>The AbstractUsecase Class</title> 
@@ -107,7 +107,7 @@
         <p>
           The method <code>checkPreconditions()</code> is a template method which calls this
           method. For details on <code>checkPreconditions()</code>, see section
-          <link href="index.html">Overview</link>.
+          <a href="index.html">Overview</a>.
         </p>
         <br/>
       </li>
@@ -117,7 +117,7 @@
         <p>
           The method <code>checkExecutionConditions()</code> is a template method which calls this
           method. For details on <code>checkExecutionConditions()</code>, see section
-          <link href="index.html">Overview</link>.
+          <a href="index.html">Overview</a>.
         </p>
         <br/>
       </li>
@@ -127,7 +127,7 @@
         <p>
           The method <code>checkPostonditions()</code> is a template method which calls this
           method. For details on <code>checkPostonditions()</code>, see section
-          <link href="index.html">Overview</link>.
+          <a href="index.html">Overview</a>.
         </p>
         <br/>
       </li>
@@ -137,7 +137,7 @@
         <p>
           The method <code>execute()</code> is a template method which calls this
           method. For details on <code>execute()</code>, see section
-          <link href="index.html">Overview</link>.
+          <a href="index.html">Overview</a>.
         </p>
         <br/>
       </li>
@@ -146,7 +146,7 @@
         <code>public void advance()</code>
         <p>
           For details on <code>advance()</code>, see section
-          <link href="index.html">Overview</link>.
+          <a href="index.html">Overview</a>.
         </p>
         <br/>
       </li>
