@@ -103,9 +103,9 @@
           <p>
             <strong>Get Apache Lenya</strong>
             <br/>
-            (see <a href="site:download">Download Lenya</a>)
+            (see <a href="site:download14">Download Lenya</a>)
             <br/>
-            Using <a href="site:subversion">Subversion</a>, checkout Lenya inside the
+            Using <a href="site:subversion14">Subversion</a>, checkout Lenya inside the
             <code>src/</code> directory. 
           </p>
         </li>

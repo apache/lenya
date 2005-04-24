@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Part 4: Editing in Lenya</title>
+  </header>
+    <body>
+        <p>There are several editors that you can use in Lenya, but because we only have used 2 of
+            them, these are the ones we will briefly go over here.</p>
+        
+       <section id="Kupu"><title>Kupu</title>
+        
+        <p><a href="ext:kupu">Kupu</a> is a WYSIWYG editor that was developed through <a href="ext:oscom">OSCOM</a> and has been integrated
+            into Lenya. The editor is quite simple to use, and has an aggressive timeline for
+            future improvements. You can see a screenshot of Kupu in action below:</p>
+        
+        <p><img src="images/kuput.gif" alt="kupu"/></p>
+        
+        <p>When you
+            <a href="installing_lenya.html">install Lenya</a>, you'll
+            notice that when you try to edit a page in your publication using it, you'll get a
+            message stating to build it before you can use it. You'll need to go to Kupu's main
+            directory and type make to build it properly:</p>
+        
+        <source> 
+            cd /usr/local/tomcat/webapps/lenya/lenya/resources/kupu
+            make
+        </source>
+        
+        <p>You may get an error stating that the build could not be completed successfully
+            because it could not find xsltproc. If this is the case, you'll need to download
+            the xsltproc package and install it before continuing. Since we are using RedHat
+            Linux, we'll give you the steps for installing the RPM. Adapt the instructions for
+            your own OS.</p>
+        
+        <p>First off, check to see if you have the proper RPMs:</p>
+        
+        <source> rpm -qa | grep libxml2 rpm -qa | grep libxslt</source>
+        
+        <p>If nothing is returned for either one of them (or both), then there's two ways to
+            download the proper RPMs. One is by using RPMFind. Go to these URLs:</p>
+        
+        <ul>
+            <li>
+                    <a href="http://rpmfind.net/linux/rpm2html/search.php?query=libxml2">
+                http://rpmfind.net/linux/rpm2html/search.php?query=libxml2</a>
+                </li>
+            <li>
+                    <a href="http://rpmfind.net/linux/rpm2html/search.php?query=libxslt">
+                http://rpmfind.net/linux/rpm2html/search.php?query=libxslt</a>
+                </li>
+            
+        </ul>
+        
+        <p>Look for your OS and download the appropriate RPM. Once downloaded to your server,
+            install the packages:</p>
+        
+        <source> 
+            rpm -ivh libxml2-2.5.10-7.i386.rpm 
+            rpm -ivh libxslt-1.0.33-5.i386.rpm
+        </source>
+        
+        <p>The version numbers are probably different from the latest. Just be sure you get
+            the latest versions of each.</p>
+        
+        <p>The second way is if you use RedHat's up2date program (you must be registered with
+            RedHat). To use this, just run the following command:</p>
+        
+        <source> 
+            up2date --showall | grep libxml2 
+            up2date --showall | grep libxslt
+        </source>
+        
+        <p>Once the package names are found, you can download them from the up2date server
+            like so:</p>
+        
+        <source> 
+            up2date --get libxml2-2.5.10-7.i386 
+            up2date --get libxslt-1.0.33-5.i386
+        </source>
+        
+        <p>The RPMs will be stored in /var/spool/up2date/. Go there, then install them as
+            mentioned above (recapped below as well):</p>
+        
+        <source> 
+            rpm -ivh libxml2-2.5.10-7.i386.rpm 
+            rpm -ivh libxslt-1.0.33-5.i386.rpm
+        </source>
+        
+        <p>Those that are savvy with up2date can find a more efficient way to install these
+            RPMs, but this will do for now. Once the RPMs are installed, go back to Kupu's
+            directory and run make as mentioned above. Now you're ready to edit using
+            Kupu!</p>
+        
+        </section><section id="bxe"><title>BXE</title>
+        
+        <p>Bitflux Editor (<a href="ext:bxe">BXE</a>) is another WYSIWYG editor that was developed separately from Lenya and
+            integrated into the project. BXE's approach is slightly different from
+            Kupu's in that from the visual standpoint, it appears as if you are editing the
+            content right on the layout of the page. Kupu, from the screenshot above, gives
+            you a whole new page that focuses just on the content. We'll let you work with either
+            one and decide which is your favorite. Hiram College chose to use Kupu, not
+            because BXE was worse, but because Kupu was more flexible and easier to
+            understand for the faculty and staff that were using it. Below is a screenshot of
+            BXE at work:</p>
+        
+        <p><img alt="bxe" src="images/bxet.gif"/></p>
+        
+        <p>In version 1.2.3, BXE is already installed and ready to go, so there's no need
+            for any added configuration.</p>
+        
+        </section><section id="next_articles"><title>Next articles</title>
+        
+        <p>Well, we wanted to keep this one short, as we are working on cooking up some more heftier
+            articles, including customizing your navigation and an intro to doctypes and
+            usecases.</p>
+        </section>
+    </body>
+</document>

@@ -45,11 +45,11 @@
 <!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
           <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
 -->          
-    <installation href="installation/" label="Installation">
-      <download href="index.html" label="Download"/>
-      <cvs href="subversion.html" label="Subversion Access"/>
-      <install href="source_version.html" label="Install Instructions"/>
-    </installation>
+    <installation14 href="installation/" label="Installation">
+      <download14 href="index.html" label="Download"/>
+      <subversion14 href="subversion.html" label="Subversion Access"/>
+      <instal14l href="source_version.html" label="Install Instructions"/>
+    </installation14>
 
     <concepts href="concepts/" label="Concepts"> 	 
       <wysiwyg href="wysiwyg.html" label="WYSIWYG" />
@@ -88,6 +88,17 @@
               <cvs href="subversion.html" label="Subversion Access"/>
               <install href="source_version.html" label="Install Instructions"/>
             </installation12>
+      
+            <tutorial href="tutorial/" label="Tutorial">
+                <index_pm href="index.html" label="Introduction"/>
+                <understanding href="understanding_lenya.html" label="1. Understanding Lenya"/>
+                <installing_lenya href="installing_lenya.html" label="2. Installing Lenya"/>
+                <pipeline href="anatomy_of_the_pipeline.html" label="3. Anatomy of the Pipeline"/>
+                <editing_in_lenya href="editing_in_lenya.html" label="4. Editing in Lenya"/>
+                <custom_navigation href="custom_navigation.html" label="5. Custom Navigation in Lenya"/>
+                <mod_proxy_and_lenya href="mod_proxy_and_lenya.html" label="6a. Mod Proxy and Lenya"/>
+                <mod_proxy_and_lenya_cont href="mod_proxy_and_lenya_continued.html" label="6b. Mod Proxy and Lenya"/>
+            </tutorial>
 
             <components href="components/" label="Components">
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">
@@ -245,7 +256,8 @@
         <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
         <cvs.asf href="http://svn.apache.org/"/>
         <bxe href="http://bxe.oscom.org"/>
-        <forrest.apache.org href="http://forrest.apache.org/">
+        <kupu href="http://kupu.oscom.org"/>
+                <forrest.apache.org href="http://forrest.apache.org/">
             <forrest.build href="build.html"/>
             <forrest.install href="docs/your-project.html#installing"/>
             <forrest.contrib href="contrib.html"/>
@@ -273,6 +285,7 @@
                 <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
             </cocoon>
         </wiki>
+        <oscom href="http://oscom.org"/>
         <wyona href="http://wyona.com" />
         <java href="http://java.sun.com/j2se/1.4.2/download.html"/>
         <java.endorsedmechanism href="http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html"/>

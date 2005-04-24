@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Part 2: Installing Lenya</title>
+  </header>
+  <body>
+<p>So here you are, ready to install the mysterious Lenya. If you haven't already, we encourage
+    you to take a quick gander at
+    <a href="understanding_lenya.html">Part I: Understanding Lenya</a>
+    to make sure you know what you are getting into before attempting this install. Also, some
+    knowledge in the basics of using a UNIX/Linux operating system are assumed. So without
+    further delay, let's kick it!</p>
+
+<section id="Requirements"><title>Requirements</title>
+
+<p>OK, we do have to mention one thing: while you can install Lenya on Windows, I'm going to be
+    taking you through a Linux installation. For Windows help, I'll have to direct you to the
+    <a href="site:ml">user mailing
+        lists</a>.</p>
+
+<p>We also recommend a broadband connection, especially for downloading Cocoon (approx. 43
+    MB) and the Java SDK (approx. 35 MB), but if you want to sit around and wait while they
+    download on a phone line, be our guest!</p>
+
+<ol>
+  <li>Linux/UNIX (I'm using <a href="http://www.redhat.com/software/rhel/as/">RedHat Enterprise AS</a>, but any Linux will do)</li>
+  <li><a href="http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&amp;PartDetailId=j2sdk-1.4.2_07-oth-JPR&amp;SiteId=JSC&amp;TransactionId=noreg">Java 1.4.2 SDK</a>  (we downloaded the RedHat RPM)</li>
+
+  <li><a href="http://cocoon.apache.org/mirror.cgi">Cocoon 2.1.7</a>  (the TAR/GZ source version)</li>
+  <li><a href="ext:lenya.dist">Lenya 1.2.3</a>  (the tar.gz source version is what we are using, under the SOURCES directory)</li>
+  <li>(optional) <a href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0">Tomcat 5.0.28</a>  (the binary tar.gz version)</li>
+</ol>
+
+<p>Why is Tomcat optional? Well, because Lenya already comes with a servlet container called
+    Jetty. Both Jetty and Tomcat are the servlet containers tested with Lenya, and since we're
+    using Tomcat for Hiram's site, that's what I'll be taking you through. For brief
+    instructions on using Jetty, read
+    <a href="site:install">the
+        tutorial on Lenya's site</a>.</p>
+
+<p>It's also assumed that the first steps before switching to our new user in step 5 are done with
+    a user that has the capabilities of installing Java and the like. We used the root user to do
+    the installs and moves, then switched to the our new user for the rest.</p>
+</section>
+<section id="tensteps"><title>10 Steps to Lenya bliss</title>
+
+<section id="download"><title>Step 1: Download!</title>
+<p>Yeah, seems simple enough, doesn't it? Get 2-5 from above downloaded and on the server
+    you'll be using.</p>
+</section>
+<section id="installsdk"><title>Step 2: Install Java SDK</title>
+    <p>If you downloaded the RPM, you'll need to execute the file first. It spits out the
+        Licensing Agreement, for which you must agree to, and then your RPM file is ready. To
+        install on RedHat, type in the following:</p>
+    
+    <source>rpm -ivh j2sdk-1_4_2_07-linux-i586.rpm</source>
+    
+    <p>or whatever your RPM file happens to be named. This should install your Java files in
+        /usr/java/ by default. You'll also need to setup some environment variables for Java
+        in order for Tomcat to start up correctly later on. Again, these instructions are for
+        RedHat, so consult documentation for your OS if need be.</p>
+    
+    <source>cd /etc/profile.d/</source>
+    
+    <p>Create a new file called java.sh and fill it with the following for now:</p>
+    
+    <source> export JAVA_HOME=/usr/java/java export PATH=$PATH:$JAVA_HOME/bin export
+        CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib/ext
+    </source>
+    
+    <p>Save it and exit from the file. While we are here, let's add the rest of the environment
+        variables for the other applications. So, for Tomcat, create a new file called
+        tomcat.sh and add the following inside:</p>
+    
+    <source> export CATALINA_HOME=/usr/local/tomcat export
+        PATH=$PATH:$CATALINA_HOME/bin
+    </source>
+    
+    <p>Save and exit. Then, create a new file called webapps.sh and add the following
+        inside:</p>
+    
+    <source> export LENYA_HOME=/home/webapp/web_software/lenya-1.2.3 export
+        COCOON_HOME=/home/webapp/web_software/cocoon-2.1.7 export
+        COCOON_WEBAPP=/home/webapp/web_software/cocoon-2.1.7/build/webapp
+    </source>
+    
+    <p>Save and exit.</p>
+</section>
+<section id="setup_a_new_user"><title>Step 3: Setup a new user</title>
+<p>You'll want to create a new user that has access to all of the Cocoon, Tomcat, and Lenya files.
+    I'll call the user "webapp". In most Linux distributions, you can use the graphical tools
+    to add a new user, or if you are a die-hard command-line junkie, use the following command in
+    RedHat to add our new user:</p>
+
+<source>useradd -c "Web Applications" -m webapp</source>
+
+<p>This basically sets up a new user with the name of "Web Applications", a username of "webapp"
+    and creates a home directory (the -m switch) with the standard initialization files.</p>
+
+<p>You may want to setup a password for this user.  To do that, simply do this:</p>
+
+<source>passwd webapp</source>
+
+<p>It will prompt you for the new password twice. Assuming you typed it in the same way both
+    times, you're all set! This is only basic, so if you want to add password expiration
+    options, etc., go right ahead!</p>
+</section>
+<section id="move_downloads_to_right_places"><title>Step 4: Move downloads to right places</title>
+
+<p>In most UNIX/Linux systems, webapp's home directory should be /home/webapp/. Inside
+    webapp's home directory, we'll create a new directory to store our source files. Let's
+    call it "web_software":</p>
+
+<source>
+mkdir /home/webapp/web_software
+chown -R webapp:webapp /home/webapp/web_software
+</source>
+
+<p>Go ahead and move both Lenya's and Cocoon's zipped up files to that directory (you'll have to
+    change to the directory that your downloaded files are stored first):</p>
+
+<source>
+mv apache-lenya-1.2.3-src.tar.gz /home/webapp/web_software/
+mv cocoon-2.1.7-src.tar.gz /home/webapp/web_software/
+</source>
+
+<p>Tomcat needs to go in /usr/local/ (at least that's the typical place for it):</p>
+
+<source>mv jakarta-tomcat-5.0.28.tar.gz /usr/local/</source>
+</section>
+<section id="change_permissions_of_files"><title>Step 5: Change permissions of files</title>
+<p>Now that you created that webapp user, you'll want to assign permissions to the Lenya,
+    Cocoon, and Tomcat files to webapp:</p>
+
+<source>
+chown webapp:webapp /usr/local/jakarta-tomcat-5.0.28.tar.gz
+chown -R webapp:webapp /home/webapp/web_software/
+
+</source>
+
+<p>And then switch to that user:</p>
+
+<source>su - webapp</source>
+</section>
+<section id="unzip_lenya"><title>Step 6: Unzip Lenya</title>
+<p>Pretty easy stuff:</p>
+
+<source>
+cd web_software
+tar xzvf apache-lenya-1.2.3-src.tar.gz
+
+mv apache-lenya-1.2.3-src lenya-1.2.3
+</source>
+</section>
+<section id="unzip_and_build_cocoon"><title>Step 7: Unzip and build Cocoon</title>
+<p>Same deal here:</p>
+
+<source>
+tar xzvf cocoon-2.1.7-src.tar.gz
+mv cocoon-2.1.7-src cocoon-2.1.7
+</source>
+
+<p>Now, you'll need to copy some config files from Lenya into Cocoon's directory:</p>
+
+<source>
+cp lenya-1.2.3/local.build.properties cocoon-2.1.7/
+cp lenya-1.2.3/local.blocks.properties cocoon-2.1.7/
+</source>
+
+<p>Then the all-important part, compiling Cocoon.  It's this simple:</p>
+
+<source>
+cd cocoon-2.1.7
+./build.sh -Dinclude.webapp.libs=yes webapp
+</source>
+</section>
+<section id="install_tomcat"><title>Step 8: Install Tomcat</title>
+
+<p>Since we downloaded the binary version of Tomcat, there's not much to do except to unzip the files.  So here we go again:</p>
+
+<source>
+cd /usr/local/
+tar xzvf jakarta-tomcat-5.0.28.tar.gz
+</source>
+
+<p>Since that name is rather long, let's create a link to it:</p>
+
+<source>ln -s jakarta-tomcat-5.0.28 tomcat</source>
+</section>
+<section id="configure_and_install_lenya"><title>Step 9: Configure and install
+    Lenya</title>
+    
+    <p>OK, we need to let Lenya know where Tomcat is before we install it.</p>
+    
+    <source> cd /home/webapp/web_software/lenya-1.2.3/ cp build.properties
+        local.build.properties
+        </source>
+    
+    <p>Inside this file, you'll need to change a couple of things. Below are the lines you'll
+        need to change in local.build.properties, so scope them out in the file, make the
+        changes, and save them:</p>
+    
+    <source> cocoon.src.dir=../cocoon-2.1.7 tomcat.home.dir=/usr/local/tomcat
+        enable.uploads=true
+        </source>
+    
+    <p>Once done, we'll need to compile:</p>
+    
+    <source>./build.sh install</source>
+</section>
+<section id="start_up_tomcat"><title>Step 10: Start up Tomcat</title>
+<p>To start Tomcat, simply type in the following:</p>
+
+<source>/usr/local/tomcat/bin/startup.sh</source>
+    </section>
+<section id="getting_your_first_access_to_lenya"><title>Getting your first access to Lenya</title>
+<p>Now that Tomcat is up, you should be able to access Lenya pretty easily. Just go to the
+    following URL: http://your.server.url:8080/lenya/. You should see a couple of
+    publications listed on the left with general information about Lenya. From there, you can
+    log into the Default Publication with the username "lenya" and the password "levi".</p>
+</section>
+</section>
+<section id="next_article"><title>Next Article</title>
+<p>Now that you have the basic installation done, play around and have some fun. In the next
+    article, we'll take a look at how pages are created, published, and customized by changing
+    some of the files in the Default Publication as well as creating our own pipeline.</p>
+</section>
+  </body>
+</document>

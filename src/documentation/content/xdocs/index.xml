@@ -23,7 +23,7 @@
 		<title>Apache Lenya - Open Source Java/XML Content Management System</title>
 	</header>
 	<body>
-<p><img src="images/menubar.png" alt="Screenshot of the Apache Lenya authoring area"/></p><p>
+<p><img src="images/menubar.png" alt="Screenshot of the Apache Lenya menu bar"/></p><p>
 Apache Lenya is an Open Source Java/XML Content Management System and comes with revision control, site management, scheduling, search, WYSIWYG editors, and workflow.</p>
 
 <p>
@@ -35,6 +35,7 @@ Apache Lenya is an Open Source Java/XML Content Management System and comes with
       <ul>
         <li>Two Lenya presentations at <a href="ext:apachecon">ApacheCon Europe 2005</a> (Stuttgart, Germany
 18-22 July 2005)</li>
+        <li>New <a href="site:tutorial">Lenya tutorials</a> posted (April 24, 2005) </li>
         <li>Lenya 1.2.2 released (February 28, 2005) </li>
         <li>Lenya 1.2.1 released (December 29, 2004) </li>
         <li>Apache Lenya becomes a top-level Apache project. (September 22, 2004)</li>
@@ -56,7 +57,7 @@ features listed below, you have access to all <a href="ext:cocoon.2.1.features">
 <li> Browser-based WYSIWYG Editors that validate input against a Relax
 NG Schema. This prevents invalid markup as produced by other WYSIWYG
 editors, and allows to enforce web site style guidelines. ships with the <a href="http://bxe.oscom.org">BXE</a> 
-and <a href="http://kupu.oscom.org">Kupu</a> editors out of the box. Asset management 
+and <a href="ext:kupu">Kupu</a> editors out of the box. Asset management 
 and link management are integrated into BXE and Kupu.
 </li>
 <li> A forms editor is available for situations where a full-blown 
