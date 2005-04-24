@@ -69,17 +69,6 @@ which will be used to configure the chosen Forrest skin.
   <disable-font-script>true</disable-font-script>
 
   <!-- mandatory project logo
-       default skin: renders it at the top 
-  <project-name>Lenya</project-name>
-  <project-description>
-  	Apache Lenya is a Java-based Open-Source Content Management System.
-  	It is based on open standards such as XML and XSLT.
-  	One of its core components is Cocoon from the Apache Software Foundation.
-  </project-description>
-  <project-url>http://lenya.apache.org</project-url>
-  <project-logo>images/apache-lenya-light.png</project-logo>
--->
-  <!-- mandatory project logo
        default skin: renders it at the top -->
   <project-name></project-name>
   <project-description/>
@@ -90,28 +79,9 @@ which will be used to configure the chosen Forrest skin.
     <!-- mandatory project logo
        default skin: renders it at the top -->
   <group-name>Lenya</group-name>
-  <group-description>
-  	Apache Lenya is a Java-based Open-Source Content Management System.
-  	It is based on open standards such as XML and XSLT.
-  	One of its core components is Cocoon from the Apache Software Foundation.
-  </group-description>
-  <group-url>http://lenya.apache.org</group-url>
+  <group-description/>
+  <group-url/>
   <group-logo>images/apache-lenya-light.png</group-logo>
-  
-  <!-- Alternative static image:
-  <project-logo>images/project-logo.gif</project-logo> -->
-
-  <!-- optional group logo
-       skin: forrest-site renders it at the top-left corner -->
-<!--  <group-name>Apache Cocoon</group-name>
-  <group-description>
-  	The Apache Cocoon Project is the open source community project developing Apache Cocoon
-  	and Cocoon-based application frameworks.
-  </group-description>
-  <group-url>http://cocoon.apache.org</group-url>
-  <group-logo>images/cocoon-project-logo-big.png</group-logo>-->
- <!-- Alternative static image:
-  <group-logo>images/group-logo.gif</group-logo> -->
 
   <!-- optional host logo (e.g. sourceforge logo)
        skin: forrest-site renders it at the bottom-left corner -->
