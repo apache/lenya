@@ -42,7 +42,7 @@
 
 
   <!-- Project version and name -->
-  <property name="version" value="1.2.3-dev"/>
+  <property name="version" value="1.2.3"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
   <property name="distname" value="apache-${ant.project.name}-${version}"/>
 
