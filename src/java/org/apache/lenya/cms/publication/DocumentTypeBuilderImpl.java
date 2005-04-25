@@ -81,6 +81,10 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
      */
     public static final String TYPE_ATTRIBUTE = "type";
     /**
+     * <code>SCHEMA_ELEMENT</code> The RelaxNG schema element
+     */
+    public static final String SCHEMA_ELEMENT = "schema";
+    /**
      * <code>CREATOR_ELEMENT</code> The creator element
      */
     public static final String CREATOR_ELEMENT = "creator";
@@ -162,6 +166,13 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
 
                 if (doctypeConf == null) {
                     throw new DocumentTypeBuildException("No definition found for doctype '" + name);
+                }
+
+                Configuration schemaConf = doctypeConf.getChild(SCHEMA_ELEMENT, false);
+
+                if (schemaConf != null) {
+                    String schemaFileName = schemaConf.getAttribute(SRC_ATTRIBUTE);
+                    type.setSchemaDefinition(schemaFileName);
                 }
 
                 ParentChildCreatorInterface creator;

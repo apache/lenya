@@ -66,6 +66,24 @@ public class DocumentType extends AbstractLogEnabled {
         return this.name;
     }
 
+    private String schemaDefinition;
+    
+	/**
+	 * @return Returns the path to the RelaxNG schema file
+	 * for this resource type
+	 */
+	public String getSchemaDefinition() {
+		return schemaDefinition;
+	}
+	/**
+	 * @param schemaDefinition The path to the RelaxNG schema
+	 * definition file
+	 */
+	public void setSchemaDefinition(String schemaDefinition) {
+		this.schemaDefinition = schemaDefinition;
+	}
+    
+    
     private ParentChildCreatorInterface creator = null;
 
 	/**
@@ -162,6 +180,5 @@ public class DocumentType extends AbstractLogEnabled {
     public String toString() {
         return getName();
     }
-
 
 }
