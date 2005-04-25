@@ -17,6 +17,12 @@
 
 <!-- $Id$ -->
 
+<!--+
+    | This configuration file is read by the
+    | org.apache.lenya.cms.publication.DocumentTypeBuilder
+    | to digest the resource types known to the publication
+    +-->
+
 <doctypes>
 
   <doc type="homepage">
@@ -28,6 +34,7 @@
   </doc>
   
   <doc type="links">
+    <schema src="schemas/links.rng" />
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>links.xml</sample-name>
     </creator>
