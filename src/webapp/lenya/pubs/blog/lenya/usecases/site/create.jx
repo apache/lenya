@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -28,32 +28,15 @@
       <div class="lenya-box-title">
         <i18n:text>New Entry</i18n:text>
       </div>
+
+      <jx:import uri="templates/messages.jx"/>
+
       <div class="lenya-box-body">
         <form>
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
       	  <input type="hidden" name="doctype" value="entry"/>
           <table class="lenya-table-noborder">
-            <tr>
-              <td colspan="2">
-                <ul>
-                  <jx:forEach var="message" items="${usecase.getErrorMessages()}">
-                    <li>
-                      <i18n:text>
-                        <jx:out value="${message}"/>
-                      </i18n:text>
-                    </li>
-                  </jx:forEach>
-                  <jx:forEach var="message" items="${usecase.getInfoMessages()}">
-                    <li>
-                      <i18n:text>
-                        <jx:out value="${message}"/>
-                      </i18n:text>
-                    </li>
-                  </jx:forEach>
-                </ul>
-              </td>
-            </tr>
               <tr>
                 <td class="lenya-entry-caption">
                   <i18n:text>Entry ID</i18n:text>*: </td>
