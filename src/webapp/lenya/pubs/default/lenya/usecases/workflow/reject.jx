@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: login.jx 123986 2005-01-03 15:23:11Z andreas $ -->
+<!-- $Id$ -->
 
 <page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
            xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
@@ -31,31 +31,14 @@
           <i18n:param><jx:out value="${usecase.getParameter('document').getId()}"/></i18n:param>
         </i18n:translate>      
       </div>
+
+      <jx:import uri="templates/messages.jx"/>
+
       <div class="lenya-box-body">
         <form>
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">
-            <tr>
-              <td colspan="2">
-                <ul>
-                  <jx:forEach var="message" items="${usecase.getErrorMessages()}">
-                    <li>
-                      <i18n:text>
-                        <jx:out value="${message}"/>
-                      </i18n:text>
-                    </li>
-                  </jx:forEach>
-                  <jx:forEach var="message" items="${usecase.getInfoMessages()}">
-                    <li>
-                      <i18n:text>
-                        <jx:out value="${message}"/>
-                      </i18n:text>
-                    </li>
-                  </jx:forEach>
-                </ul>
-              </td>
-            </tr>
               <tr>
                 <td colspan="2" class="lenya-entry-caption">
                   <i18n:translate>

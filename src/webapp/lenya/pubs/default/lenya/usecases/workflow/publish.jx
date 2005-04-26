@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: login.jx 123986 2005-01-03 15:23:11Z andreas $ -->
+<!-- $Id$ -->
 
 <page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
            xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
