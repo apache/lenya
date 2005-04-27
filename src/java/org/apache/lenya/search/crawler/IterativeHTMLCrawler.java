@@ -92,15 +92,15 @@ public class IterativeHTMLCrawler {
 
 
         this.url_list_file = ce.getURIListResolved();
-        log.error("URI list file: " + this.url_list_file);
+        log.debug("URI list file: " + this.url_list_file);
 
         this.html_dump_directory = ce.getHTDocsDumpDirResolved();
-        log.error("HTDocs Dump Dir: " + this.html_dump_directory);
+        log.debug("HTDocs Dump Dir: " + this.html_dump_directory);
 
         robot = new RobotExclusion(ce.getUserAgent());
 
         String robots_file = ce.getRobotsFileResolved();
-        log.error("Robots File: " + robots_file);
+        log.debug("Robots File: " + robots_file);
         String robots_domain = ce.getRobotsDomain();
         if (robots_file != null && robots_domain != null) {
             log.debug(robots_file + " " + robots_domain);
