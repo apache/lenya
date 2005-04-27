@@ -178,14 +178,25 @@ public class CrawlerConfiguration {
     }
 
     /**
-     * DOCUMENT ME!
+     * Get URI list path
      *
-     * @return DOCUMENT ME!
+     * @return URI list path
      */
     public String getURIList() {
         log.debug(".getURIList(): " + uri_list);
 
         return uri_list;
+    }
+
+    /**
+     * Get URI list path as absolute path
+     *
+     * @return URI list path
+     */
+    public String getURIListResolved() {
+        log.debug(".getURIList(): " + uri_list);
+
+        return resolvePath(uri_list);
     }
 
     /**
@@ -200,6 +211,16 @@ public class CrawlerConfiguration {
     }
 
     /**
+     * Get htdocs-dump-dir/@src as absolute path
+     *
+     * @return htdocs-dump-dir/@src
+     */
+    public String getHTDocsDumpDirResolved() {
+
+        return resolvePath(htdocs_dump_dir);
+    }
+
+    /**
      * Get robots/@src
      *
      * @return robots/@src
@@ -208,6 +229,17 @@ public class CrawlerConfiguration {
         log.debug(robots_file);
 
         return robots_file;
+    }
+
+    /**
+     * Get robots/@src as absolute path
+     *
+     * @return robots/@src
+     */
+    public String getRobotsFileResolved() {
+        log.debug(robots_file);
+
+        return resolvePath(robots_file);
     }
 
     /**
