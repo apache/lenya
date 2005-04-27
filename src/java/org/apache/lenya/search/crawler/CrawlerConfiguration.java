@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CrawlerConfiguration.java,v 1.9 2004/03/05 11:00:06 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.search.crawler;
 
@@ -31,7 +31,7 @@ import org.w3c.dom.Element;
 
 
 /**
- * DOCUMENT ME!
+ * Web-Crawler (it might make sense to replace this by Nutch)
  */
 public class CrawlerConfiguration {
     static Category log = Category.getInstance(CrawlerConfiguration.class);
@@ -97,31 +97,28 @@ public class CrawlerConfiguration {
             }
         } else {
             parameter = ce.getBaseURL();
-            System.out.println(parameter);
+            System.out.println("Crawler Config: Base URL: " + parameter);
 
             parameter = ce.getScopeURL();
-            System.out.println(parameter);
+            System.out.println("Crawler Config: Scope URL: " + parameter);
 
             parameter = ce.getUserAgent();
-            System.out.println(parameter);
+            System.out.println("Crawler Config: User Agent: " + parameter);
 
             parameter = ce.getURIList();
-            System.out.println(parameter);
-            System.out.println(ce.resolvePath(parameter));
+            System.out.println("Crawler Config: URI List: " + ce.resolvePath(parameter) + " (" + parameter + ")");
 
             parameter = ce.getHTDocsDumpDir();
-            System.out.println("htdocs-dump-dir/@src: " + parameter);
-            System.out.println(ce.resolvePath(parameter));
+            System.out.println("Crawler Config: HTDocs Dump Dir: " + ce.resolvePath(parameter) + " (" + parameter + ")");
 
             parameter = ce.getRobotsFile();
             if (parameter != null) {
-                System.out.println("robots/@src: " + parameter);
-                System.out.println(ce.resolvePath(parameter));
+                System.out.println("Crawler Config: Robots File: " + ce.resolvePath(parameter + " (" + parameter + ")"));
             }
 
             parameter = ce.getRobotsDomain();
             if (parameter != null) {
-                System.out.println("robots/@domain: " + parameter);
+                System.out.println("Crawler Config: Robots Domain: " + parameter);
             }
         }
     }
