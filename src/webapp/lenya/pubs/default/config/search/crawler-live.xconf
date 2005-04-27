@@ -22,7 +22,7 @@
   <scope-url href="http://127.0.0.1:8888/default/live/"/>
 
   <uri-list src="../../work/search/lucene/uris.txt"/>
-  <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump/live"/>
+  <htdocs-dump-dir src="../../work/search/lucene/htdocs_dump"/>
 
   <robots src="robots.txt" domain="127.0.0.1"/>
 </crawler>
