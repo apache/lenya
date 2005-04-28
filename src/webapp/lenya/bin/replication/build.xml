@@ -152,14 +152,22 @@
             <map from="${delete_dest.dir}" to="${specific.remote.dir}"/>
     </pathconvert>     
    
-    <echo>delete ${remote_delete.path}</echo>
+    <echo>Delete ${remote_delete.path} on remote server ${specific.username}@${specific.host}</echo>
                 
+<!--
     <sshexec 
             host="${specific.host}" 
             username="${specific.username}" 
             keyfile="${local.keyfile}" 
             command="rm -r ${remote_delete.path}" 
             failonerror="false"/>
+-->
+
+   <exec executable="${basedir}/delete-remote-resource.sh">
+     <arg value="${specific.username}"/>
+     <arg value="${specific.host}"/>
+     <arg value="${remote_delete.path}"/>
+   </exec>
    
     <delete dir="${delete_dest.dir}"/> 
             
