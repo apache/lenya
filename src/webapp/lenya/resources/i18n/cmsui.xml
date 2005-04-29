@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -188,6 +188,8 @@
   <message key="Group Affiliation">Group Affiliation</message>
   <message key="Change Password">Change Password</message>
   <message key="Edit Group Affiliation">Edit Group Affiliation</message>
+    <!-- Errors in user administration -->
+  <message key="ldap_no_such_user">The user {0} does not exist in the LDAP directory.</message>
 
     <!-- User Types -->
   <message key="LDAP User">LDAP User</message>
@@ -326,4 +328,5 @@
   <message key="lenya.rc.nocheckin">Resource could not be checked in</message>
   <message key="Generic Exception">Generic Exception</message>
   <message key="Check the log files.">Check the log files.</message>
+
 </catalogue>

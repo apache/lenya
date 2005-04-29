@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -83,7 +83,7 @@
             <td>
               <br/>
               <jx:choose>
-                <jx:when test="${usecase.getParameter('document').getArea().equals('authoring') &amp;&amp; usecase.getErrorMessages().isEmpty()}">
+                <jx:when test="${usecase.getParameter('document').getArea().equals('authoring') &amp;&amp; ! usecase.hasErrors()}">
                   <input i18n:attr="value" name="submit" type="submit" value="Save"/>
                 </jx:when>
                 <jx:otherwise>

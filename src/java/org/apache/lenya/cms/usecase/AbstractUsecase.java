@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -78,6 +78,34 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     }
 
     /**
+     * Determine if the usecase has error messages.
+     * Provides a way of checking for errors without actually retrieving them.
+     * @return true if the usecase resulted in error messages.
+     */
+    public boolean hasErrors() {
+        boolean ret = false;
+        if (this.errorMessages != null)
+            ret = ! this.errorMessages.isEmpty();
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("AbstractUsecase::hasErrors() called, returning " + ret);
+
+        return ret;
+    }
+
+    /**
+     * Determine if the usecase has info messages.
+     * Provides a way of checking for info messages without actually retrieving them.
+     * @return true if the usecase resulted in info messages being generated.
+     */
+    public boolean hasInfoMessages() {
+        boolean ret = false;
+        if (this.infoMessages != null)
+            ret = ! this.infoMessages.isEmpty();
+        return ret;
+    }
+
+    /**
      * Checks if the operation can be executed and returns the error messages. Error messages
      * prevent the operation from being executed.
      * @return A boolean value.
@@ -102,7 +130,16 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @param message The message.
      */
     public void addErrorMessage(String message) {
-        this.errorMessages.add(message);
+        addErrorMessage(message, null);
+    }
+
+    /**
+     * Adds an error message.
+     * @param message The message.
+     * @param _params parameters
+     */
+    public void addErrorMessage(String message, String[] _params) {
+        this.errorMessages.add(new UsecaseMessage(message, _params));
     }
 
     /**
@@ -118,9 +155,18 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     /**
      * Adds an info message.
      * @param message The message.
+     * @param _params parameters
+     */
+    public void addInfoMessage(String message, String[] _params) {
+        this.infoMessages.add(new UsecaseMessage(message, _params));
+    }
+
+    /**
+     * Adds an info message.
+     * @param message The message.
      */
     public void addInfoMessage(String message) {
-        this.infoMessages.add(message);
+        addInfoMessage(message, null);
     }
 
     /**
@@ -160,7 +206,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
 
             List _errorMessages = getErrorMessages();
             for (int i = 0; i < _errorMessages.size(); i++) {
-                getLogger().info((String) _errorMessages.get(i));
+                getLogger().info(_errorMessages.get(i).toString());
             }
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
@@ -236,7 +282,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     protected void dumpErrorMessages() {
         List _errorMessages = getErrorMessages();
         for (int i = 0; i < _errorMessages.size(); i++) {
-            getLogger().error((String) _errorMessages.get(i));
+            getLogger().error(_errorMessages.get(i).toString());
         }
     }
 

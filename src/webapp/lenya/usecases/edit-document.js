@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -56,9 +56,10 @@ function editDocument() {
         usecase.lockInvolvedObjects();
         
         usecase.execute();
-        if (usecase.getErrorMessages().isEmpty()) {
-            // TODO: handle error messages
-        }
+
+        // FIXME: handle error messages
+        //if (usecase.hasErrors()) {
+        //}
 
         if(_getParameter("noStatus", "false") == "false")
             cocoon.sendStatus(_getParameter("status", 204));

@@ -76,7 +76,7 @@ public class AddUser extends AccessControlUsecase {
 
             try {
                 if (!ldapUser.existsUser(ldapId)) {
-                    addErrorMessage("This LDAP user ID does not exist.");
+                    addErrorMessage("ldap_no_such_user", new String[]{ldapId});
                 }
             } catch (AccessControlException e) {
                 throw new UsecaseException(e);

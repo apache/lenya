@@ -130,6 +130,30 @@ public class UsecaseProxy {
     }
 
     /**
+     * Determine if the usecase has error messages.
+     * Provides a way of checking for errors without actually retrieving them.
+     * @return true if the usecase resulted in error messages.
+     */
+    public boolean hasErrors() {
+        boolean ret = false;
+        if (this.errorMessages != null)
+            ret = ! this.errorMessages.isEmpty();
+        return ret;
+    }
+
+    /**
+     * Determine if the usecase has info messages.
+     * Provides a way of checking for info messages without actually retrieving them.
+     * @return true if the usecase resulted in info messages being generated.
+     */
+    public boolean hasInfoMessages() {
+        boolean ret = false;
+        if (this.infoMessages != null)
+            ret = ! this.infoMessages.isEmpty();
+        return ret;
+    }
+
+    /**
      * @return The name of this usecase.
      */
     public String getName() {

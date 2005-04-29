@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
 
-        if (getErrorMessages().isEmpty()) {
+        if (! hasErrors()) {
 
             if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
                 addErrorMessage("This usecase can only be invoked from the authoring area.");

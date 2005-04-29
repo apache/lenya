@@ -128,6 +128,20 @@ public interface Usecase extends Operation {
     List getInfoMessages();
 
     /**
+     * Determine if the usecase has error messages.
+     * Provides a way of checking for errors without actually retrieving them.
+     * @return true if the usecase resulted in error messages.
+     */
+    public boolean hasErrors();
+
+    /**
+     * Determine if the usecase has info messages.
+     * Provides a way of checking for info messages without actually retrieving them.
+     * @return true if the usecase resulted in info messages being generated.
+     */
+    public boolean hasInfoMessages();
+
+    /**
      * Executes the usecase. During this method error and info messages are
      * filled in. If getErrorMessages() returns an empty array, the operation
      * succeeded. Otherwise, the operation failed.

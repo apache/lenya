@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,30 +15,44 @@
   limitations under the License.
 -->
 
-<!-- $Id: archive.jx 123421 2004-12-27 16:02:27Z gregor $ -->
+<!-- $Id$ -->
 
 <jx:template name="messages"
            xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
 
-  <jx:if test="${!usecase.getErrorMessages().isEmpty() || !usecase.getInfoMessages().isEmpty()}">
+  <!-- 
+     Note: in current implementation, ${usecase} refers to an 
+     instance of UsecaseProxy, not of Usecase !
+     -->
+  <jx:if test="${usecase.hasErrors() || usecase.hasInfoMessages()}">
     <div class="lenya-error">
       <ul>
         
         <jx:forEach var="message" items="${usecase.getErrorMessages()}">
           <li>
-            <i18n:text>
-              <jx:out value="${message}"/>
-            </i18n:text>
+            <i18n:translate>
+              <i18n:text><jx:out value="${message.getMessage()}"/></i18n:text>
+                <jx:if test="${message.hasParameters()}"> 
+                    <jx:forEach var="param" items="${message.getParameters()}">
+                        <i18n:param><jx:out value="${param}"/></i18n:param>
+                    </jx:forEach>
+                </jx:if>
+            </i18n:translate>
           </li>
         </jx:forEach>
         
         <jx:forEach var="message" items="${usecase.getInfoMessages()}">
           <li>
-            <i18n:text>
-              <jx:out value="${message}"/>
-            </i18n:text>
+            <i18n:translate>
+              <i18n:text><jx:out value="${message.getMessage()}"/></i18n:text>
+                <jx:if test="${message.hasParameters()}"> 
+                    <jx:forEach var="param" items="${message.getParameters()}">
+                        <i18n:param><jx:out value="${param}"/></i18n:param>
+                    </jx:forEach>
+                </jx:if>
+            </i18n:translate>
           </li>
         </jx:forEach>
         

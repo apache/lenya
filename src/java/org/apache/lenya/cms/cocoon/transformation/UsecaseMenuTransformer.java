@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -119,7 +119,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                             passRequestParameters(usecase, attr.getValue(HREF_ATTRIBUTE));
                         }
                         usecase.checkPreconditions();
-                        if (!usecase.getErrorMessages().isEmpty()) {
+                        if (usecase.hasErrors()) {
                             if (getLogger().isDebugEnabled()) {
                                 getLogger().debug("Usecase preconditions not complied");
                             }

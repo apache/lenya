@@ -155,11 +155,11 @@ function executeUsecase() {
             
                 if (cocoon.request.getParameter("submit")) {
                     usecase.checkExecutionConditions();
-                    if (usecase.getErrorMessages().isEmpty()) {
+                    if (! usecase.hasErrors()) {
                         usecase.execute();
-                        if (usecase.getErrorMessages().isEmpty()) {
+                        if (! usecase.hasErrors()) {
                             usecase.checkPostconditions();
-                            if (usecase.getErrorMessages().isEmpty()) {
+                            if (! usecase.hasErrors()) {
                                 ready = true;
                                 success = true;
                             }
@@ -192,9 +192,9 @@ function executeUsecase() {
             proxy.setup(usecase);
                 
             usecase.execute();
-            if (usecase.getErrorMessages().isEmpty()) {
+            if (! usecase.hasErrors()) {
                 usecase.checkPostconditions();
-                if (usecase.getErrorMessages().isEmpty()) {
+                if (! usecase.hasErrors()) {
                     success = true;
                 }
             }

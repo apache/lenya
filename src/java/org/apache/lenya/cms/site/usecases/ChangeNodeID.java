@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Change the node ID of a document.
  * 
- * @version $Id: ChangeLabel.java 152682 2005-02-08 18:13:39Z gregor $
+ * @version $Id$
  */
 public class ChangeNodeID extends DocumentUsecase {
 
@@ -103,7 +103,7 @@ public class ChangeNodeID extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!getErrorMessages().isEmpty()) {
+        if (hasErrors()) {
             return;
         }
 
