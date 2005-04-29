@@ -36,7 +36,7 @@ public class Group extends AccessControlUsecase {
             String groupId = (String) value;
             org.apache.lenya.ac.Group group = getGroupManager().getGroup(groupId);
             if (group == null) {
-                addErrorMessage("The group [" + groupId + "] does not exist.");
+                addErrorMessage("group_no_such_entry", new String[]{groupId});
             } else {
                 setParameter(GROUP, group);
             }

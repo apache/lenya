@@ -34,7 +34,7 @@ import org.apache.lenya.transaction.Transactionable;
  * Delete a document and all its descendants, including all language versions. The documents are
  * moved to the trash.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Delete extends DocumentUsecase {
 
@@ -59,7 +59,7 @@ public class Delete extends DocumentUsecase {
         for (int i = 0; i < documents.length; i++) {
             Document liveVersion = identityMap.getAreaVersion(documents[i], Publication.LIVE_AREA);
             if (liveVersion.exists()) {
-                addErrorMessage("Cannot delete because document [" + liveVersion + "] is live!");
+                addErrorMessage("delete-doc-live", new String[]{liveVersion.getId()});
             }
         }
     }

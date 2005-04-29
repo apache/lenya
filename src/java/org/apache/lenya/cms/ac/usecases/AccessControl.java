@@ -95,7 +95,7 @@ public class AccessControl extends AccessControlUsecase {
                         Role role = getRoleManager().getRole(roleId);
 
                         if (role == null) {
-                            addErrorMessage("Role [" + roleId + "] does not exist!");
+                            addErrorMessage("role_no_such_role", new String[]{roleId});
                         }
 
                         this.helper.manipulateCredential(item, role, operations[j]);

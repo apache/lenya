@@ -173,6 +173,7 @@
   <message key="Group Administration">Group Administration</message>
   <message key="Add Group">Add Group</message>
   <message key="Group Data">Group Data</message>
+  <message key="group_no_such_entry">The group {0} does not exist.</message>
 
     <!-- User Administration -->
   <message key="User Data">User&#160;Data</message>
@@ -188,13 +189,16 @@
   <message key="Group Affiliation">Group Affiliation</message>
   <message key="Change Password">Change Password</message>
   <message key="Edit Group Affiliation">Edit Group Affiliation</message>
-    <!-- Errors in user administration -->
+  <message key="user_no_such_user">The user {0} does not exist.</message>
   <message key="ldap_no_such_user">The user {0} does not exist in the LDAP directory.</message>
 
     <!-- User Types -->
   <message key="LDAP User">LDAP User</message>
   <message key="Local User">CMS User</message>
   
+    <!-- Role Administration -->
+  <message key="role_no_such_role">The role {0} does not exist.</message>
+
     <!-- IP Range Administration -->
   <message key="IP Range">IP&#160;Range</message>
   <message key="IP Range ID">IP&#160;Range&#160;ID</message>
@@ -203,7 +207,7 @@
   <message key="IP Range Administration">IP&#160;Range&#160;Administration</message>
   <message key="Add IP Range">Add&#160;IP&#160;Range</message>
   <message key="IP Range Profile">IP&#160;Range&#160;Profile</message>
- 
+
   <!-- Site tab (info screens) -->
   <message key="Available Languages">Available Languages</message>
   <message key="This document is not available in this language.">This document is not available in this language.</message>
@@ -229,6 +233,7 @@
   <message key="Task">Task</message>
   <message key="Day">Day</message>
   <message key="Time">Time</message>
+
       <!-- Deactivate and delete -->
   <message key="docs-have-links-to-doc">The following documents have links to this document</message>
   <message key="Deactivate Document">Deactivate Document</message>
@@ -238,6 +243,8 @@
   <message key="delete-doc">Delete document {0}</message>
   <message key="cannot-deactivate-unless-children-deactivated">This document cannot be deactivated unless the following child documents are deactivated</message>
   <message key="delete-language-versions?">Do you really want to delete all language versions of the document {0}?</message>      
+  <message key="delete-doc-live">Cannot delete because document {0} is live!</message>
+
       <!-- Archive document -->
   <message key="Archive Document">Archive Document</message>
   <message key="archive-doc">Archive document {0}</message>
@@ -254,10 +261,16 @@
   <message key="Paste Document">Paste Document</message>
   <message key="paste-doc">Paste document {0}</message>
   <message key="paste-doc-from-clip?">Do you want to paste the document {0} from the clipboard?</message>
+
       <!-- Cut document -->
   <message key="Cut Document">Cut Document</message>
   <message key="cut-doc">Cut document {0}</message>
   <message key="cut-doc-to-clip?">Do you want to cut the document {0} and move it to the clipboard? You can paste the document later at the location of your choosing.</message>
+
+      <!-- Nudge document -->
+  <message key="nudge-error-direction-unknown">The direction {0} is not supported!</message>
+  <message key="nudge-error-direction">Cannot move the node in this direction.</message>
+  <message key="nudge-error-area">This operation can only be invoked on site trees.</message>
 
   <!-- Info Asset -->
   <message key="Insert Image">Insert Image</message>
@@ -266,7 +279,7 @@
   <message key="Insert a new Image">Insert a new Image</message>
   <message key="Upload an Asset">Upload an Asset</message>
 
-  <!-- Info workflow  --> 
+  <!-- Workflow  --> 
   <message key="Value">Value</message>
   <message key="Event">Event</message>
   <message key="Variables">Variables</message>
@@ -277,6 +290,8 @@
   <message key="submit">submit</message>
   <message key="reject">reject</message>
   <message key="publish">publish</message>
+  <message key="error-workflow-document">The event {0} is not executable on
+  document {1}</message>
 
   <!-- Info asset  --> 
   <message key="New Asset">New Asset</message>
@@ -328,5 +343,10 @@
   <message key="lenya.rc.nocheckin">Resource could not be checked in</message>
   <message key="Generic Exception">Generic Exception</message>
   <message key="Check the log files.">Check the log files.</message>
+
+  <!-- Error messages of a general nature -->
+  <message key="error-document-form">Document is not well-formed: {0}</message>
+  <message key="error-validation">Schema validation failed: {0}</message>
+
 
 </catalogue>

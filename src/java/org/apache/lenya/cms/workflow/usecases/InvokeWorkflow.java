@@ -38,7 +38,7 @@ import org.apache.lenya.transaction.Transactionable;
  * </pre>
  * </code>
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class InvokeWorkflow extends DocumentUsecase implements Configurable {
 
@@ -65,8 +65,7 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
         try {
             workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             if (!workflowManager.canInvoke(getSourceDocument(), getEvent())) {
-                addErrorMessage("The event [" + getEvent() + "] is not executable on document ["
-                        + getSourceDocument() + "].");
+                addErrorMessage("error-workflow-document", new String[]{getEvent(), getSourceDocument().getId()});
             }
         } finally {
             if (workflowManager != null) {

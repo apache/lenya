@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -101,7 +101,7 @@ public class OneFormEditor extends DocumentUsecase {
                 DocumentHelper.readDocument(xmlSource.getInputStream());
                 wellFormed = true;
             } catch (SAXException e) {
-                addErrorMessage("Document is not well-formed: " + e.getMessage());
+                addErrorMessage("error-document-form", new String[]{e.getMessage()});
             }
 
             if (wellFormed) {
@@ -116,7 +116,7 @@ public class OneFormEditor extends DocumentUsecase {
 
                 String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
                 if (message != null) {
-                    addErrorMessage("RELAX NG Validation failed: " + message);
+                    addErrorMessage("error-validation", new String[]{message});
                 }
             }
 

@@ -27,7 +27,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 /**
  * Nudge a document one position up or down.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Nudge extends DocumentUsecase {
 
@@ -67,14 +67,14 @@ public class Nudge extends DocumentUsecase {
                 } else if (direction.equals(DOWN)) {
                     siblings = node.getNextSiblings();
                 } else {
-                    addErrorMessage("The direction [" + direction + "] is not supported!");
+                    addErrorMessage("nudge-error-direction-unknown", new String[]{direction});
                 }
 
                 if (siblings != null && siblings.length == 0) {
-                    addErrorMessage("Cannot move the node in this direction.");
+                    addErrorMessage("nudge-error-direction");
                 }
             } else {
-                addErrorMessage("This operation can only be invoked on site trees.");
+                addErrorMessage("nudge-error-area");
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

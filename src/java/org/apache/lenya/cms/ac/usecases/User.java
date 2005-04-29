@@ -36,7 +36,7 @@ public class User extends AccessControlUsecase {
             String userId = (String) value;
             org.apache.lenya.ac.User user = getUserManager().getUser(userId);
             if (user == null) {
-                addErrorMessage("The user [" + userId + "] does not exist.");
+                addErrorMessage("user_no_such_user", new String[]{userId});
             } else {
                 setParameter(USER, user);
             }
