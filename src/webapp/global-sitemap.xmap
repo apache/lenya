@@ -367,6 +367,7 @@
       <map:match type="usecase" pattern="info-*">
         <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
+    </map:pipeline>
 
       <!-- Internal usecases -->
       <map:pipeline internal-only="true">
@@ -377,6 +378,7 @@
         </map:match>
       </map:pipeline>
 
+    <map:pipeline>
       <!-- Usecases -->
         <map:match type="usecase" pattern="*">
           <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
