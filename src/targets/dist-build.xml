@@ -98,7 +98,10 @@
         <exclude name="local.build.properties"/>
         <exclude name=".classpath"/>
         <exclude name=".project"/>
+        <exclude name=".fbprefs"/>
         <exclude name="dist/**"/>
+        <exclude name="build/**"/>
+        <exclude name="bin/**"/>
       </fileset>
     </copy>
   	
