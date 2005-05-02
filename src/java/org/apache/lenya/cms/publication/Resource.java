@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,6 +16,9 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -32,7 +35,7 @@ import org.apache.lenya.transaction.Transactionable;
  * 
  * @version $Id:$
  */
-public class Resource implements MetaDataOwner {
+public class Resource extends AbstractLogEnabled implements MetaDataOwner {
 
     private Document document;
     private String name;
@@ -44,7 +47,8 @@ public class Resource implements MetaDataOwner {
      * @param name The name.
      * @param manager The service manager.
      */
-    public Resource(Document document, String name, ServiceManager manager) {
+    public Resource(Document document, String name, ServiceManager manager, Logger _logger) {
+        ContainerUtil.enableLogging(this, _logger);
         this.document = document;
         this.name = name;
         this.manager = manager;
@@ -68,7 +72,7 @@ public class Resource implements MetaDataOwner {
      * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaData()
      */
     public MetaDataManager getMetaData() {
-        return new DublinCoreProxy(getMetaSourceURI(), this.manager);
+        return new DublinCoreProxy(getMetaSourceURI(), this.manager, getLogger());
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -43,6 +43,10 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
             this.maps.put(type, map);
         }
         Identifiable object = (Identifiable) map.get(key);
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("IdentityMapImpl::get() looked up type [" + type + "], key [" + key + "] in map, is it there ? " + (object != null));
+
         if (object == null) {
             try {
                 object = getFactory(type).build(this, key);

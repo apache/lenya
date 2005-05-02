@@ -28,6 +28,9 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -44,7 +47,8 @@ import org.xml.sax.SAXException;
  * Access dublin core meta data in documents. This class uses the dublin core specification from
  * 2003-03-04.
  */
-public class DublinCoreImpl {
+public class DublinCoreImpl extends AbstractLogEnabled {
+
     private String sourceUri;
 
     private Map elements = new HashMap();
@@ -94,7 +98,8 @@ public class DublinCoreImpl {
      * @param manager The service manager.
      * @throws DocumentException if an error occurs
      */
-    public DublinCoreImpl(String sourceUri, ServiceManager manager) throws DocumentException {
+    public DublinCoreImpl(String sourceUri, ServiceManager manager, Logger _logger) throws DocumentException {
+        ContainerUtil.enableLogging(this, _logger);
         this.sourceUri = sourceUri;
         this.manager = manager;
         loadValues();
@@ -144,6 +149,9 @@ public class DublinCoreImpl {
      * @throws DocumentException if the meta data could not be made persistent.
      */
     protected void save() throws DocumentException {
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DublinCoreImpl::save() called, sourceUri [" + sourceUri + "]");
 
         try {
             Document doc = getDocument();

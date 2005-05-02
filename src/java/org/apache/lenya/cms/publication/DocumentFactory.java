@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,6 +30,8 @@ import org.apache.lenya.transaction.IdentifiableFactory;
 
 /**
  * Document factory.
+ *
+ * @version $Id:$
  */
 public class DocumentFactory extends AbstractLogEnabled implements IdentifiableFactory {
 
@@ -107,6 +109,9 @@ public class DocumentFactory extends AbstractLogEnabled implements IdentifiableF
      */
     public Identifiable build(IdentityMap map, String key) throws Exception {
 
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentFactory::build() called with key [" + key + "]");
+
         String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String area = snippets[1];
@@ -145,6 +150,9 @@ public class DocumentFactory extends AbstractLogEnabled implements IdentifiableF
                 this.manager.release(resolver);
             }
         }
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentFactory::build() done.");
+
         return document;
     }
 

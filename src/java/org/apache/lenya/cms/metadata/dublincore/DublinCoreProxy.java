@@ -19,6 +19,9 @@
 
 package org.apache.lenya.cms.metadata.dublincore;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -27,7 +30,7 @@ import org.apache.lenya.cms.publication.DocumentException;
  * A proxy to the dublin core meta implementation so that meta data is 
  * only read from file when it is actually requested.
  */
-public class DublinCoreProxy implements DublinCore {
+public class DublinCoreProxy extends AbstractLogEnabled implements DublinCore {
 
     private DublinCoreImpl dcCore;
     private String sourceUri;
@@ -38,7 +41,8 @@ public class DublinCoreProxy implements DublinCore {
      * @param sourceUri The source URI.
      * @param manager The service manager.
      */
-    public DublinCoreProxy(String sourceUri, ServiceManager manager) {
+    public DublinCoreProxy(String sourceUri, ServiceManager manager, Logger _logger) {
+        ContainerUtil.enableLogging(this, _logger);
         this.sourceUri = sourceUri;
         this.manager = manager;
     }
@@ -51,7 +55,7 @@ public class DublinCoreProxy implements DublinCore {
      */
     protected DublinCoreImpl instance() throws DocumentException {
         if (this.dcCore == null) {
-            this.dcCore = new DublinCoreImpl(this.sourceUri, this.manager);
+            this.dcCore = new DublinCoreImpl(this.sourceUri, this.manager, getLogger());
         }
         return this.dcCore;
     }
@@ -99,13 +103,12 @@ public class DublinCoreProxy implements DublinCore {
         instance().removeAllValues(key);
     }
     
-	/**
-	 * @see org.apache.lenya.cms.metadata.MetaDataManager#replaceBy(org.apache.lenya.cms.metadata.MetaDataManager)
-	 */
-	public void replaceBy(MetaDataManager other) throws DocumentException {
-		instance().replaceBy((DublinCore) other);
-
-	}
+    /**
+     * @see org.apache.lenya.cms.metadata.MetaDataManager#replaceBy(org.apache.lenya.cms.metadata.MetaDataManager)
+     */
+    public void replaceBy(MetaDataManager other) throws DocumentException {
+        instance().replaceBy((DublinCore) other);
+    }
 
     /**
      * @see org.apache.lenya.cms.metadata.dublincore.DublinCore#addValues(java.lang.String, java.lang.String[])

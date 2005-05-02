@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -69,6 +69,10 @@ public class InsertAsset extends DocumentUsecase {
     }
 
     /**
+     * Delegates to the main assets usecase; the name of
+     * the usecase being delegated to is set in the
+     * configuration parameter "asset-usecase".
+     *
      * @see org.apache.lenya.cms.usecase.Usecase#advance()
      */
     public void advance() throws UsecaseException {
@@ -78,6 +82,9 @@ public class InsertAsset extends DocumentUsecase {
             try {
                 invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
                 String usecaseName = getParameterAsString("asset-usecase");
+
+                if (getLogger().isDebugEnabled())
+                    getLogger().debug("InsertAsset::advance() calling invoker with usecaseName [" + usecaseName + "]");
                 invoker.invoke(getSourceURL(), usecaseName, getParameters());
                 loadResources();
             }

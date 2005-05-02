@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,9 +24,12 @@ package org.apache.lenya.transaction;
 public interface IdentityMap {
 
     /**
+     * Retrieve an instance from the map. If no instance exists
+     * for the given key, the factory is used to build one.
+     * @see #getFactory(java.lang.String)
      * @param type The type of the transactionable.
      * @param key The key for the transactionable.
-     * @return A transcationable.
+     * @return A transactionable.
      */
     Identifiable get(String type, String key);
 

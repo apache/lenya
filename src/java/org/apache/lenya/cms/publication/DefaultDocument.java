@@ -389,7 +389,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaData()
      */
     public MetaDataManager getMetaData() {
-        return new DublinCoreProxy(getSourceURI(), this.manager);
+        return new DublinCoreProxy(getSourceURI(), this.manager, getLogger());
     }
 
     private History history;

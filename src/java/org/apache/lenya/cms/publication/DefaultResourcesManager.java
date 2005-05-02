@@ -119,7 +119,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             // convert spaces in the file name to underscores
             fileName = fileName.replace(' ', '_');
 
-            Resource resource = new Resource(document, fileName, this.manager);
+            Resource resource = new Resource(document, fileName, this.manager, getLogger());
             Transactionable[] nodes = resource.getRepositoryNodes();
             for (int i = 0; i < nodes.length; i++) {
                 nodes[i].lock();
@@ -259,7 +259,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      */
     protected Resource[] getResources(Document document, FileFilter filter) {
         File[] files = new File[0];
-        Resource tempResource = new Resource(document, "temp", this.manager);
+        Resource tempResource = new Resource(document, "temp", this.manager, getLogger());
 
         SourceResolver resolver = null;
         Source source = null;
@@ -275,7 +275,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 }
                 resources = new Resource[files.length];
                 for (int i = 0; i < files.length; i++) {
-                    resources[i] = new Resource(document, files[i].getName(), this.manager);
+                    resources[i] = new Resource(document, files[i].getName(), this.manager, getLogger());
                 }
             }
             else {
@@ -330,7 +330,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             for (int i = 0; i < resources.length; i++) {
                 Resource sourceResource = resources[i];
                 Resource destinationResource = new Resource(destinationDocument, sourceResource
-                        .getName(), this.manager);
+                        .getName(), this.manager, getLogger());
 
                 Source sourceSource = null;
                 Source sourceMetaSource = null;

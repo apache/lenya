@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -112,6 +112,10 @@ public class Assets extends SiteUsecase {
      * Adds an asset.
      */
     protected void addAsset() {
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Assets::addAsset() called");
+
         String title = getParameterAsString("title");
         String creator = getParameterAsString("creator");
         String rights = getParameterAsString("rights");
@@ -133,6 +137,10 @@ public class Assets extends SiteUsecase {
                 this.manager.release(resourcesManager);
             }
         }
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Assets::addAsset() done.");
+
     }
 
 }

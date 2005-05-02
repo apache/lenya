@@ -69,11 +69,17 @@ public class DocumentIdentityMap extends IdentityMapImpl {
      */
     public Document get(Publication publication, String area, String documentId, String language)
             throws DocumentBuildException {
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentIdentityMap::get() called on publication [" + publication.getId() + "], area [" + area + "], documentId [" + documentId + "], language [" + language + "]");
+
         DocumentFactory factory = (DocumentFactory) getFactory(Document.TRANSACTIONABLE_TYPE);
-        return (Document) get(Document.TRANSACTIONABLE_TYPE, factory.getKey(publication,
-                area,
-                documentId,
-                language));
+        String key = factory.getKey(publication, area, documentId, language);
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentIdentityMap::get() got key [" + key + "] from DocumentFactory");
+
+        return (Document) get(Document.TRANSACTIONABLE_TYPE, key);
     }
 
     /**

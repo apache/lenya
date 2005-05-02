@@ -108,6 +108,13 @@ public class CreateDocument extends Create {
         Publication publication = parent.getPublication();
         String area = parent.getArea();
 
+        /*
+         * Get an instance of Document.
+         * This will (ultimately) be created by the implementation for
+         * the DocumentBuilder role.
+         */
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("createDocument() creating Document instance");
         Document document = parent.getIdentityMap().get(publication,
                 area,
                 documentId,
@@ -117,7 +124,13 @@ public class CreateDocument extends Create {
             nodes[i].lock();
         }
 
-        // create an instance of DocumentType
+        /*
+         * Create an instance of DocumentType, and then
+         * use the creator for this DocumentType to actually
+         * physically create a document of this type.
+         */
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("createDocument() looking up a DocumentTypeBuilder so that we can call the creator");
         DocumentTypeBuilder documentTypeBuilder = null;
         DocumentType documentType = null;
         try {
@@ -127,8 +140,8 @@ public class CreateDocument extends Create {
 
             String parentId = parent.getId().substring(1);
             String childId = document.getName();
-
-            documentType.getCreator().create(
+            ParentChildCreatorInterface creator = documentType.getCreator();
+            creator.create(
                 documentType.getSampleContentLocation(),
                 new File(publication.getContentDirectory(area), parentId),
                 childId,
