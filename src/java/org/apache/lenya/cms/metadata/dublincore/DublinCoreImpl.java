@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -41,6 +41,8 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -161,14 +163,22 @@ public class DublinCoreImpl extends AbstractLogEnabled {
             String[][] arrays = { ELEMENTS, TERMS };
             Map[] maps = { this.elements, this.terms };
 
+            List childNodes = new ArrayList();
+            NodeList nodes = metaElement.getChildNodes();
+            for (int i = 0; i < nodes.getLength(); i++) {
+                if (nodes.item(i).getParentNode() == metaElement) {
+                    childNodes.add(nodes.item(i));
+                }
+            }
+            Node[] children = (Node[])childNodes.toArray(new Node[childNodes.size()]);
+            for (int i = 0; i < children.length; i++){
+                metaElement.removeChild(children[i]);  
+            }
+
             for (int type = 0; type < 2; type++) {
                 NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
                 String[] elementNames = arrays[type];
                 for (int i = 0; i < elementNames.length; i++) {
-                    Element[] children = helper.getChildren(metaElement, elementNames[i]);
-                    for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
-                        metaElement.removeChild(children[valueIndex]);
-                    }
                     String[] values = (String[]) maps[type].get(elementNames[i]);
                     for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
                         Element valueElement = helper.createElement(elementNames[i],
