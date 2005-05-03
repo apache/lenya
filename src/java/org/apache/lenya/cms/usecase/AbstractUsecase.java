@@ -256,9 +256,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
             exception = e;
             getLogger().error(e.getMessage(), e);
             addErrorMessage(e.getMessage() + " - Please consult the logfiles.");
-            if (getLogger().isDebugEnabled()) {
-                throw new UsecaseException(e);
-            }
+            throw new UsecaseException(e);
         } finally {
             try {
                 if (getErrorMessages().isEmpty() && exception == null) {
