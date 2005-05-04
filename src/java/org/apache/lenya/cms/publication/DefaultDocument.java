@@ -389,7 +389,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaData()
      */
     public MetaDataManager getMetaData() {
-        return new DublinCoreProxy(getSourceURI(), this.manager, getLogger());
+        return new DublinCoreProxy(getMetaSourceURI(), this.manager, getLogger());
     }
 
     private History history;
@@ -471,25 +471,38 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
+     * @return The meta source URI.
+     */
+    public String getMetaSourceURI() {
+        return getSourceURI() + Document.DOCUMENT_META_SUFFIX;
+    }
+
+    /**
      * @see org.apache.lenya.cms.publication.Document#getRepositoryNodes()
      */
     public Node[] getRepositoryNodes() {
-        Node[] nodes = new Node[2];
+        Node[] nodes = new Node[3];
         SourceResolver resolver = null;
         RepositorySource documentSource = null;
+        RepositorySource metaSource = null;
         RepositorySource historySource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
+            metaSource = (RepositorySource) resolver.resolveURI(getMetaSourceURI());
             historySource = (RepositorySource) resolver.resolveURI(getHistory().getSourceURI());
             nodes[0] = documentSource.getNode();
-            nodes[1] = historySource.getNode();
+            nodes[1] = metaSource.getNode();
+            nodes[2] = historySource.getNode();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (resolver != null) {
                 if (documentSource != null) {
                     resolver.release(documentSource);
+                }
+                if (metaSource != null) {
+                    resolver.release(metaSource);
                 }
                 if (historySource != null) {
                     resolver.release(historySource);

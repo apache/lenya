@@ -50,6 +50,11 @@ public interface Document extends MetaDataOwner, Workflowable, Identifiable {
     String TRANSACTIONABLE_TYPE = "document";
     
     /**
+     * <code>DOCUMENT_META_SUFFIX</code> The suffix for document meta Uris
+     */
+    final String DOCUMENT_META_SUFFIX = ".meta";
+
+    /**
      * Returns the document ID of this document.
      * @return the document-id of this document.
      */

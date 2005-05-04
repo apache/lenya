@@ -109,6 +109,9 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      */
     public void addResource(Document document, Part part, Map metadata) throws Exception {
 
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultResourcesManager::addResource() called");
+
         try {
             String fileName = part.getFileName();
             if (!fileName.matches(FILE_NAME_REGEXP)) {
@@ -150,6 +153,9 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             getLogger().error("IO Error " + e.toString());
             throw e;
         }
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultResourcesManager::addResource() done.");
     }
 
     /**
@@ -213,24 +219,19 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      */
     protected void createMetaData(Resource resource, Map metadata) throws DocumentException {
 
-        SourceResolver resolver = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            MetaDataManager meta = resource.getMetaData();
-            Iterator iter = metadata.entrySet().iterator();
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultResourcesManager::createMetaData() called");
 
-            while (iter.hasNext()) {
-                Map.Entry entry = (Map.Entry) iter.next();
-                meta.setValue((String) entry.getKey(), (String) entry.getValue());
-            }
-        } catch (final Exception e) {
-            getLogger().error("Saving of [" + resource.getSourceURI() + "]� failed.");
-            throw new DocumentException(e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
+        MetaDataManager meta = resource.getMetaData();
+        Iterator iter = metadata.entrySet().iterator();
+
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            meta.setValue((String) entry.getKey(), (String) entry.getValue());
         }
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultResourcesManager::createMetaData() done.");
     }
 
     /**

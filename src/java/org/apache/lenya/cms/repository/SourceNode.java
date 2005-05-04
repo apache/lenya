@@ -117,6 +117,10 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see org.apache.lenya.transaction.Transactionable#checkout()
      */
     public void checkout() throws TransactionException {
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("SourceNode::checkout() called, sourceUri [" + sourceUri + "]");
+
         if (!isCheckedOut()) {
             try {
                 getRevisionController().reservedCheckOut(getRCPath(), getUserId());

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,22 +15,26 @@
   limitations under the License.
 -->
 
-<!-- $Id: xhtml.rng,v 1.5 2004/03/13 12:34:17 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!--+
     | XHTML doctype
     +-->
 
+<!--+
+    | Namespaces:
+    | lenya namespace is required for embedding assets.
+    +-->
+
 <grammar ns="http://www.w3.org/1999/xhtml"
          xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:dcterms="http://purl.org/dc/terms/"
          xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
          >
 
-<include href="lenya.rng"/>
 
+<!-- include Lenya schema, for Lenya assets within xhtml -->
+<include href="lenya.rng"/>
 
 <!-- include original XHTML transitional schema -->
 <include href="xhtml/xhtml-basic.rng">
@@ -38,7 +42,6 @@
   <define name="html">
     <element name="html">
       <ref name="html.attlist"/>
-      <ref name="lenya.meta"/>
       <ref name="head"/>
       <ref name="body"/>
     </element>
@@ -47,7 +50,6 @@
   <define name="html.attlist">
     <ref name="XHTML.version.attrib"/>
     <ref name="I18n.attrib"/>
-    <ref name="dummy.attlist"/>
   </define>
 
 </include>

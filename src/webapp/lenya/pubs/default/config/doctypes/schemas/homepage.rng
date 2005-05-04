@@ -21,12 +21,15 @@
     | XHTML doctype
     +-->
 
+<!--+
+    | Namespaces:
+    | lenya namespace is required for embedding assets.
+    +-->
+
 <grammar ns="http://www.w3.org/1999/xhtml"
          xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
-         xmlns:dc="http://purl.org/dc/elements/1.1/"
-         xmlns:dcterms="http://purl.org/dc/terms/"
          xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
          >
 
 <include href="xhtml.rng"/>
