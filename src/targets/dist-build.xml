@@ -52,8 +52,11 @@
     </copy>
     <delete dir="${dist.bin.dir}/tools/anttasks"/>
     
-	<!-- Make executable -->
+     <!-- Make shell scripts executable -->
     <chmod file="${dist.bin.dir}/*.sh" perm="ugo+rx"/>
+
+  	<!-- Make sure linefeeds in shell scripts are UNIX-style -->
+   <fixcrlf srcdir="${dist.bin.dir}" eol="lf" includes="*.sh"/>
   </target>
 
   <target name="dist-bin" depends="prepare-dist-bin" description="Build a regular binary distribution tar ball">
@@ -112,6 +115,12 @@
   	  <include name="**/about.xml"/>
   	  <replacefilter token="@lenya.version@" value="${version}"/>
   	</replace>
+
+    <!-- Make shell scripts executable -->
+   <chmod file="${dist.src.dir}/*.sh" perm="ugo+rx"/>
+
+  	<!-- Make sure linefeeds in shell scripts are UNIX-style -->
+   <fixcrlf srcdir="${dist.src.dir}" eol="lf" includes="*.sh"/>
   </target>
 
   <target name="dist-src" depends="prepare-dist-src" description="Builds a regular tar ball containing the sources for developers">
