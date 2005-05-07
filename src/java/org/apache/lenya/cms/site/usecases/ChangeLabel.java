@@ -91,11 +91,11 @@ public class ChangeLabel extends DocumentUsecase {
             siteManager = (SiteManager) selector.select(document.getPublication()
                     .getSiteManagerHint());
 
-            if (document != null && document.exists()) {
+            if (document.exists()) {
                 setParameter(DOCUMENT_ID, document.getId());
                 setParameter(LABEL, siteManager.getLabel(document));
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (selector != null) {
