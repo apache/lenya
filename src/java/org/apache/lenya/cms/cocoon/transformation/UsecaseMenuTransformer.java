@@ -20,20 +20,16 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Authorizer;
@@ -42,7 +38,6 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
@@ -233,11 +228,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             }
 
             getLogger().debug("Using authorizer [" + this.authorizer + "]");
-        } catch (final ServiceException e) {
-            throw new ProcessingException(e);
-        } catch (final AccessControlException e) {
-            throw new ProcessingException(e);
-        } catch (final PublicationException e) {
+        } catch (final Exception e) {
             throw new ProcessingException(e);
         }
 
