@@ -51,7 +51,7 @@
         <item uc:usecase="publish" uc:step="showscreen" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html"><i18n:text>Publish Sidebar</i18n:text></item>
       </block>
       <block>
-        <item uc:usecase="logout"><i18n:text>Logout</i18n:text></item>
+        <item uc:usecase="logout" href="?"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
  
