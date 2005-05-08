@@ -17,6 +17,7 @@
 
 package org.apache.lenya.ac;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.List;
  * A machine (representing an IP address).
  * @version $Id$
  */
-public class Machine implements Identifiable {
+public class Machine implements Identifiable, Serializable {
 
     /**
      * Creates a new machine object. This method accepts

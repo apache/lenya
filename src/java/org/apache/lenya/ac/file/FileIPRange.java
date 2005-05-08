@@ -20,6 +20,7 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -36,7 +37,7 @@ import org.apache.lenya.net.InetAddressUtil;
 /**
  * IP range that is stored in a file.
  */
-public class FileIPRange extends AbstractIPRange {
+public class FileIPRange extends AbstractIPRange implements Serializable {
 
     /**
      * Main method.

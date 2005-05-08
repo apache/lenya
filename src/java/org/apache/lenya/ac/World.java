@@ -17,13 +17,14 @@
 
 package org.apache.lenya.ac;
 
+import java.io.Serializable;
 import java.util.Collections;
 
 /**
  * The world.
  * @version $Id$
  */
-public final class World implements Identifiable {
+public final class World implements Identifiable, Serializable {
     
     /**
      * Creates a new World object.
