@@ -22,9 +22,6 @@
 <document>
 	<header>
 		<title>Authenticators</title>
-		
-		
-		
 	</header>
 
   <body>
@@ -46,7 +43,7 @@
 </section>
 
 	<section>
-		<title>The UserAuthenticator</title>
+		<title>The user authenticator</title>
 		<p>The <em>UserAuthenticator</em> uses the request parameters</p>
 		<ul>
 			<li><code>username</code> and</li>
@@ -67,5 +64,15 @@
 		
 	</section>
 
+	<section>
+		<title>The anonymous authenticator</title>
+		<p>The <em>AnonymousAuthenticator</em> authenticates the request against the credentials of the user called 'anonymous' 
+     (which you have to create, and assign the desired permissions). This is useful in conjunction with client certificates.  It is configured in <code>cocoon.xconf</code>
+		as follows (commented out by default):</p>
+		
+	<source><![CDATA[<component logger="lenya.ac.authenticator"
+    class="org.apache.lenya.ac.impl.AnonymousAuthenticator"
+    role="org.apache.lenya.ac.Authenticator"/>]]></source>
+	</section>
   </body>
 </document>
