@@ -38,6 +38,7 @@ import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.file.FileUser;
 import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.sun.jndi.ldap.LdapCtxFactory;
 
@@ -47,7 +48,7 @@ import com.sun.jndi.ldap.LdapCtxFactory;
  */
 public class LDAPUser extends FileUser {
     private static Properties defaultProperties = null;
-    private static Category log = Category.getInstance(LDAPUser.class);
+    private static Category log =  Logger.getLogger(LDAPUser.class);
 
     public static final String LDAP_ID = "ldapid";
     private static String LDAP_PROPERTIES_FILE = "ldap.properties"; 
