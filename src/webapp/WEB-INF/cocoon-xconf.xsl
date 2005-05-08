@@ -219,6 +219,14 @@
       class="org.apache.lenya.ac.impl.UserAuthenticator"
       role="org.apache.lenya.ac.Authenticator"/>
       
+<xsl:comment>
+Enable this authenticator and disable the UserAuthenticator for anonymous authentication (useful for client certs, for instance)
+
+&lt;component logger="lenya.ac.authenticator"
+      class="org.apache.lenya.ac.impl.AnonymousAuthenticator"
+      role="org.apache.lenya.ac.Authenticator"/&gt;      
+</xsl:comment>
+ 
   <component logger="lenya.ac.cache"
      	class="org.apache.lenya.ac.cache.SourceCacheImpl"
      	role="org.apache.lenya.ac.cache.SourceCache"/>
