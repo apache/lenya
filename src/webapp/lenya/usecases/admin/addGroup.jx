@@ -38,15 +38,15 @@
           </td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Group ID</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="groupId"><i18n:text>Group ID</i18n:text> *</label></td>
           <td><input type="text" name="groupId" class="lenya-form-element" value="${request.getParameter('groupId')}"/></td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Name</i18n:text></td>
+          <td class="lenya-entry-caption"><label for="name"><i18n:text>Name</i18n:text></label></td>
           <td><input type="text" name="name" class="lenya-form-element" value="${request.getParameter('name')}"/></td>
         </tr>
         <tr>
-          <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text></td>
+          <td valign="top" class="lenya-entry-caption"><label for="description"><i18n:text>Description</i18n:text></label></td>
           <td>
             <!-- N.B.: do not put spaces or carriage returns inside the
                  textarea element - these would be rendered -->

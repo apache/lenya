@@ -52,13 +52,13 @@
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">
             <tr>
-              <td> <i18n:text>Username</i18n:text>:</td>
+              <td><label for="name"><i18n:text>Username</i18n:text>: </label></td>
               <td>
                 <input class="lenya-form-element" name="username" type="text" />
               </td>
             </tr>
             <tr>
-              <td> <i18n:text>Password</i18n:text>:</td>
+              <td><label for="password"> <i18n:text>Password</i18n:text>: </label></td>
               <td>
                 <input class="lenya-form-element" name="password" type="password" />
               </td>
@@ -66,7 +66,7 @@
             <tr>
               <td />
               <td>
-                <input i18n:attr="value" name="submit" type="submit" value="Login" />
+                <input i18n:attr="value" name="submit" type="submit" value="Login"/>
               </td>
             </tr>
           </table>
