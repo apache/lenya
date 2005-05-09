@@ -68,9 +68,7 @@
       		<p>
       		<strong>Recommended: Create a directory</strong> to better organise the various source files
       		<br/>
-      		In this document, we will assume the name <code>src/</code> for that directory. It is important to not have
-      		spaces in any of the directory names (so on Windows, make sure you don't create <code>src/</code> in
-      		<code>My Documents</code> but rather directly in <code>c:\</code>).
+      		In this document, we will assume the name <code>src/</code> for that directory. 
       		This directory will contain the Lenya distribution as well as Cocoon.
       		</p>
       		
@@ -317,11 +315,6 @@
             installer. Decide to run Tomcat as a Windows
             NT/2000/XP-Service.
           </p>
-
-          <warning>
-            Make sure you do not install Tomcat at a location with spaces in
-            the path.
-          </warning>
         </li>
 
         <li>
