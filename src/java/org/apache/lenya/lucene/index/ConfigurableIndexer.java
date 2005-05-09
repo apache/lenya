@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableIndexer.java,v 1.17 2004/05/16 23:25:15 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 
@@ -32,6 +32,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.cocoon.util.NetUtils;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
@@ -70,7 +71,7 @@ public class ConfigurableIndexer extends AbstractIndexer {
         log.debug(".getStylesheet(): Configuration file: " + configurationFile.getAbsolutePath());
 
         URL configurationCreatorURL = ConfigurableIndexer.class.getClassLoader().getResource(CONFIGURATION_CREATOR_STYLESHEET);
-        File configurationStylesheetFile = new File(new URI(configurationCreatorURL.toString()));
+        File configurationStylesheetFile = new File(new URI(NetUtils.encodePath(configurationCreatorURL.toString())));
         Document configurationDocument = DocumentHelper.readDocument(configurationFile);
 
         TransformerFactory tFactory = TransformerFactory.newInstance();

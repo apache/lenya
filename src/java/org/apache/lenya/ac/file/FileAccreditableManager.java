@@ -44,6 +44,8 @@ import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.impl.AbstractAccreditableManager;
 
+import org.apache.cocoon.util.NetUtils;
+
 /**
  * File-based accreditable manager.
  */
@@ -112,7 +114,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
                 source = resolver.resolveURI(configurationDirectoryPath);
 
                 getLogger().debug("Configuration directory URI: " + source.getURI());
-                directory = new File(new URI(source.getURI()));
+                directory = new File(new URI(NetUtils.encodePath(source.getURI())));
             } catch (Exception e) {
                 throw new AccessControlException(e);
             } finally {
