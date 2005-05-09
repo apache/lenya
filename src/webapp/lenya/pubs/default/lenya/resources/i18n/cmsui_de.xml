@@ -24,6 +24,7 @@
 <catalogue xml:lang="de">
 
   <message key="default.doc.create.idtaken">Die eingebene ID ist schon vergeben. Bitte wä;hlen Sie eine andere ID.</message>
+  <message key="default.createdoc.visibleinnavigation">Dokument sichtbar in der Navigation:</message>
 
   <message key="Create new language version">Neue Sprachversion anlegen</message>
   <message key="New language for existing Document">Neue Sprachversion für existierendes Dokument anlegen</message>

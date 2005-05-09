@@ -107,11 +107,11 @@ function validateForm(theForm)
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">Document visible in navigation:</td>
+                <td class="lenya-entry-caption"><i18n:text>default.createdoc.visibleinnavigation</i18n:text></td>
                 <td>
                   <select class="lenya-form-element" name="properties.create.visible">
-                    <option selected="true">yes</option>
-                    <option>no</option>
+                    <option selected="true" value="yes"><i18n:text>true</i18n:text></option>
+                    <option value="no"><i18n:text>false</i18n:text></option>
                   </select>
                 </td>
               </tr>
