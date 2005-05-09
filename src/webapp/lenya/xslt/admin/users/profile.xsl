@@ -185,7 +185,7 @@
 	
   <xsl:template match="message">
     <xsl:if test="preceding-sibling::message"><br/></xsl:if>
-    <span class="lenya-form-message-{@type}"><xsl:value-of select="."/></span>
+    <span class="lenya-form-message-{@type}"><i18n:text><xsl:value-of select="."/></i18n:text></span>
   </xsl:template>
   
 </xsl:stylesheet>

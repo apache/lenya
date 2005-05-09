@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: password.xsl,v 1.4 2004/04/30 15:26:30 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -134,7 +134,7 @@
   <xsl:template match="message">
     <xsl:if test="text()">
       <tr>
-        <td colspan="2"><span class="lenya-form-message-error"><xsl:apply-templates/></span></td>
+        <td colspan="2"><span class="lenya-form-message-error"><i18n:text><xsl:apply-templates/></i18n:text></span></td>
       </tr>
     </xsl:if>
   </xsl:template>

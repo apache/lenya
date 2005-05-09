@@ -172,6 +172,8 @@
   <message key="Group Administration">Group Administration</message>
   <message key="Add Group">Add Group</message>
   <message key="Group Data">Group Data</message>
+  <message key="This group already exists.">This group already exists.</message>
+  <message key="This is not a valid group ID.">This is not a valid group ID.</message>
 
     <!-- User Administration -->
   <message key="User Data">User&#160;Data</message>
@@ -187,7 +189,15 @@
   <message key="Group Affiliation">Group Affiliation</message>
   <message key="Change Password">Change Password</message>
   <message key="Edit Group Affiliation">Edit Group Affiliation</message>
-
+  <message key="This user already exists.">This user already exists.</message>
+  <message key="This is not a valid user ID.">This is not a valid user ID.</message>
+  <message key="Please enter an e-mail address.">Please enter an e-mail address.</message>
+  <message key="This LDAP user ID does not exist.">This LDAP user ID does not exist.</message>
+  <message key="Password and confirmed password are not equal.">Password and confirmed password are not equal.</message>
+  <message key="The password must be at least six characters long.">The password must be at least six characters long.</message>
+  <message key="The password must contain at least one number.">The password must contain at least one number.</message>
+  <message key="You cannot change the password of this user.">You cannot change the password of this user.</message>
+ 
     <!-- User Types -->
   <message key="LDAP User">LDAP User</message>
   <message key="Local User">CMS User</message>
