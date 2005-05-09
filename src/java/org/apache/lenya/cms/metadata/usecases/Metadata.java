@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Usecase to edit metadata for a resource.
  * 
- * @version $Id: Metadata.java 123979 2005-01-03 14:59:45Z andreas $
+ * @version $Id$
  */
 public class Metadata extends SiteUsecase {
 
