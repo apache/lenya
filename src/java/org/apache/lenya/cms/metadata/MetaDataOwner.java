@@ -16,16 +16,18 @@
  */
 package org.apache.lenya.cms.metadata;
 
+import org.apache.lenya.cms.publication.DocumentException;
+
 /**
- * Owner of meta data.
+ * Owner of meta-data.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface MetaDataOwner {
 
     /**
-     * @return The meta data.
+     * @return A manager for the meta data.
      */
-    MetaDataManager getMetaData();
+    MetaDataManager getMetaDataManager() throws DocumentException;
     
 }

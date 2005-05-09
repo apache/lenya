@@ -21,6 +21,7 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 
 /**
@@ -63,7 +64,7 @@ public class DublinCoreTest extends TestCase {
         Publication publication = PublicationHelper.getPublication();
         DocumentIdentityMap map = new DocumentIdentityMap();
         Document doc = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
-        DublinCore dcCore = doc.getDublinCore();
+        MetaData dcCore = doc.getMetaDataManager().getDublinCoreMetaData();
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
         String subject = dcCore.getFirstValue(DublinCore.ELEMENT_SUBJECT);
         String creator = dcCore.getFirstValue(DublinCore.ELEMENT_CREATOR);
@@ -74,7 +75,7 @@ public class DublinCoreTest extends TestCase {
 
         Document doc2 = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
 
-        DublinCore dcCore2 = doc2.getDublinCore();
+        MetaData dcCore2 = doc2.getMetaDataManager().getDublinCoreMetaData();
         assertEquals(title, dcCore2.getFirstValue(DublinCore.ELEMENT_TITLE));
         assertEquals(subject, dcCore2.getFirstValue(DublinCore.ELEMENT_SUBJECT));
         assertEquals(dateIssued, dcCore2.getFirstValue(DublinCore.TERM_ISSUED));

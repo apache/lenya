@@ -32,8 +32,8 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
@@ -52,6 +52,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     private String id;
     private DocumentIdentityMap identityMap;
     protected ServiceManager manager;
+    private MetaDataManager metaDataManager;
 
     /**
      * Creates a new instance of DefaultDocument. The language of the document is the default
@@ -386,11 +387,15 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaData()
+     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaDataManager()
      */
-    public MetaDataManager getMetaData() {
-        return new DublinCoreProxy(getMetaSourceURI(), this.manager, getLogger());
+    public MetaDataManager getMetaDataManager() {
+        if (this.metaDataManager == null) {
+            metaDataManager = new MetaDataManager(getMetaSourceURI(), this.manager, getLogger());
+        }
+        return metaDataManager;
     }
+
 
     private History history;
 

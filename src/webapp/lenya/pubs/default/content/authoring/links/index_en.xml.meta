@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-xmlns:xhtml="http://www.w3.org/1999/xhtml" 
-xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
-
 <!--
   Copyright 1999-2005 The Apache Software Foundation
 
@@ -18,18 +14,14 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-
 <!-- $Id$ -->
-  <head>
-    <title>The XHTML Document Doctype</title>
-  </head>
-  <body>
-    <h1>The XHTML Document Doctype</h1>
-
-    <p>The XHTML Document Doctype is simply a XHTML document that
-    conforms to the <a href="http://www.w3.org/TR/xhtml1/">XHTML 1.0
-    definition</a> of the <a href="http://www.w3.org/">World Wide Web
-    Consortium (W3C)</a>.</p>  
-
-  </body>
-</html>
+<lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<lenya:meta>
+<lenya:internal>
+<lenya:resourceType>links</lenya:resourceType>
+<lenya:contentType>xml</lenya:contentType>
+</lenya:internal>
+<lenya:dc>
+</lenya:dc>
+</lenya:meta>
+</lenya:document>

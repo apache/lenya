@@ -16,88 +16,88 @@
  */
 package org.apache.lenya.cms.metadata;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.publication.DocumentException;
 
 /**
- * Generic meta data interface.
+ * Manager for meta data of a Lenya resource/document
  * 
- * @version $Id:$
+ * @version $Id$
  */
-public interface MetaDataManager {
+public class MetaDataManager extends AbstractLogEnabled {
     
-    /**
-     * Save the meta data.
-     * 
-     * @throws DocumentException if the meta data could not be made persistent.
-     */
-    void save() throws DocumentException;
+    private String sourceUri;
+    private ServiceManager serviceManager;
+
+    private DublinCoreImpl dublinCore;
+    private LenyaMetaData lenyaMetaData;
+    private CustomMetaData customMetaData;
 
     /**
-     * Returns the values for a certain key.
-     * @param key The key.
-     * @return An array of strings.
-     * @throws DocumentException when something went wrong.
+     * Ctor.
      */
-    String[] getValues(String key) throws DocumentException;
+    public MetaDataManager(String _sourceUri, ServiceManager _serviceManager, Logger _logger) {
+        ContainerUtil.enableLogging(this, _logger);
+        this.sourceUri = _sourceUri;
+        this.serviceManager = _serviceManager;
+    }
 
     /**
-     * Returns the first value for a certain key.
-     * @param key The key.
-     * @return A string or <code>null</code> if no value is set for this key.
-     * @throws DocumentException if an error occurs.
+     * Retrieve the dublin core meta-data managed by this instance.
+     * @return the dublin core meta-data
+     * @throws DocumentException if the meta-data could not be retrieved
      */
-    String getFirstValue(String key) throws DocumentException;
+    public DublinCoreImpl getDublinCoreMetaData() throws DocumentException {
+        if (dublinCore == null) {
+            dublinCore = new DublinCoreImpl(this.sourceUri, this.serviceManager, getLogger());
+        }
+        return dublinCore;
+    }
 
     /**
-     * Sets the value for a certain key. All existing values will be removed.
-     * @param key The key.
-     * @param value The value to set.
-     * @throws DocumentException when something went wrong.
+     * Retrieve the Lenya internal meta-data managed by this instance.
+     * @return the Lenya meta-data
+     * @throws DocumentException if the meta-data could not be retrieved
      */
-    void setValue(String key, String value) throws DocumentException;
+    public LenyaMetaData getLenyaMetaData() throws DocumentException {
+        if (lenyaMetaData == null) {
+            lenyaMetaData = new LenyaMetaData(this.sourceUri, this.serviceManager, getLogger());
+        }
+        return lenyaMetaData;
+    }
 
     /**
-     * Adds a value for a certain key.
-     * @param key The key.
-     * @param value The value to add.
-     * @throws DocumentException when something went wrong.
+     * Retrieve the custom meta-data managed by this instance.
+     * @return the custom meta-data
+     * @throws DocumentException if the meta-data could not be retrieved
      */
-    void addValue(String key, String value) throws DocumentException;
+    public CustomMetaData getCustomMetaData() throws DocumentException {
+        if (customMetaData == null) {
+            customMetaData = new CustomMetaData(this.sourceUri, this.serviceManager, getLogger());
+        }
+        return customMetaData;
+    }
 
     /**
-     * Add all values for a certain key.
-     * 
-     * @param key The key
-     * @param values The value to add
-     * @throws DocumentException if something went wrong
+     * Replace the contents of the meta-data managed by this instance with
+     * the contents of the meta-data managed by another instance of
+     * MetaDataManager.
+     * @param sourceManager the MetaDataManager from which to read the new meta-data
+     * @throws DocumentException if something goes wrong
      */
-    void addValues(String key, String[] values) throws DocumentException;
-
-    /**
-     * Removes a specific value for a certain key.
-     * @param key The key.
-     * @param value The value to remove.
-     * @throws DocumentException when something went wrong.
-     */
-    void removeValue(String key, String value) throws DocumentException;
-
-    /**
-     * Removes all values for a certain key.
-     * @param key The key.
-     * @throws DocumentException when something went wrong.
-     */
-    void removeAllValues(String key) throws DocumentException;
-
-    /**
-     * Replace the contents of the current meta data by the contents of other.
-     * @param other The other meta data manager.
-     * @throws DocumentException if an error occurs.
-     */
-    void replaceBy(MetaDataManager other) throws DocumentException;
-    
-    /**
-     * @return All keys that can be used.
-     */
-    String[] getPossibleKeys();
-
+    public void replaceMetaData(MetaDataManager sourceManager) throws DocumentException {
+        MetaData source = sourceManager.getDublinCoreMetaData();
+        MetaData dest = this.getDublinCoreMetaData();
+        dest.replaceBy(source);
+        source = sourceManager.getLenyaMetaData();
+        dest = this.getLenyaMetaData();
+        dest.replaceBy(source);
+        source = sourceManager.getCustomMetaData();
+        dest = this.getCustomMetaData();
+        dest.replaceBy(source);
+    }
 }

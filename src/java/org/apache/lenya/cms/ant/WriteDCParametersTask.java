@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 
 package org.apache.lenya.cms.ant;
 
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -234,13 +235,14 @@ public class WriteDCParametersTask extends PublicationTask {
 
         Document doc = getIdentityMap()
                 .get(getPublication(), _area, _documentId, lang);
-        DublinCore dc = (DublinCore) doc.getMetaData();
+        MetaData dc = (MetaData) doc.getMetaDataManager().getDublinCoreMetaData();
         dc.setValue(DublinCore.ELEMENT_CREATOR, _creator);
         dc.setValue(DublinCore.ELEMENT_TITLE, _title);
         dc.setValue(DublinCore.ELEMENT_DESCRIPTION, _description);
         dc.setValue(DublinCore.ELEMENT_SUBJECT, _subject);
         dc.setValue(DublinCore.ELEMENT_PUBLISHER, _publisher);
         dc.setValue(DublinCore.ELEMENT_RIGHTS, _rights);
+        dc.save();
     }
 
     /**

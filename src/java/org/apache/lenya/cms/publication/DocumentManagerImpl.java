@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
@@ -41,7 +41,7 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
- * Abstract DocumentManager implementation.
+ * DocumentManager implementation.
  * 
  * @version $Id:$
  */
@@ -364,9 +364,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
             SourceUtil.copy(source, (ModifiableSource) destination, true);
             
-            MetaDataManager sourceCore = sourceDocument.getMetaData();
-            MetaDataManager destCore = destinationDocument.getMetaData();
-            destCore.replaceBy(sourceCore);
+            destinationDocument.getMetaDataManager().replaceMetaData(sourceDocument.getMetaDataManager());
+
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -403,14 +402,23 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             this.rootTarget = target;
         }
 
+        /**
+         * @return the root source
+         */
         protected Document getRootSource() {
             return rootSource;
         }
 
+        /**
+         * @return the root target
+         */
         protected Document getRootTarget() {
             return rootTarget;
         }
 
+        /**
+         * @return the document manager
+         */
         protected DocumentManager getDocumentManager() {
             return this.manager;
         }

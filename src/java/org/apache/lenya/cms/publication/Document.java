@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -98,33 +98,33 @@ public interface Document extends MetaDataOwner, Workflowable, Identifiable {
      */
     String getLanguage();
 
-	/**
-	 * Returns all the languages this document is available in.
+    /**
+     * Returns all the languages this document is available in.
      * A document has one associated language (@see Document#getLanguage)
      * but there are possibly a number of other languages for which a 
      * document with the same document-id is also available in. 
      * 
- 	 * @return An array of strings denoting the languages.
+     * @return An array of strings denoting the languages.
      * 
      * @throws DocumentException if an error occurs
-	 */
-	String[] getLanguages() throws DocumentException;
+     */
+    String[] getLanguages() throws DocumentException;
 
-	/**
-	 * Get the navigation label associated with this document 
-	 * for the language.
-	 * 
-	 * @return the label String
-	 * 
-	 * @throws DocumentException if an error occurs
-	 */
-	String getLabel() throws DocumentException;
+    /**
+     * Get the navigation label associated with this document 
+     * for the language.
+     * 
+     * @return the label String
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    String getLabel() throws DocumentException;
 
-	/**
-	 * Returns the date of the last modification of this document.
-	 * @return A date denoting the date of the last modification.
-	 */
-	Date getLastModified();
+    /**
+     * Returns the date of the last modification of this document.
+     * @return A date denoting the date of the last modification.
+     */
+    Date getLastModified();
 
     /**
      * Returns the area this document belongs to.

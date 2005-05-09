@@ -24,22 +24,23 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreProxy;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.transaction.Transactionable;
 
 /**
  * A resource (asset).
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Resource extends AbstractLogEnabled implements MetaDataOwner {
 
     private Document document;
     private String name;
     private ServiceManager manager;
+    private MetaDataManager metaDataManager;
 
     /**
      * Ctor.
@@ -69,10 +70,13 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
     }
 
     /**
-     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaData()
+     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaDataManager()
      */
-    public MetaDataManager getMetaData() {
-        return new DublinCoreProxy(getMetaSourceURI(), this.manager, getLogger());
+    public MetaDataManager getMetaDataManager() {
+        if (this.metaDataManager == null) {
+            metaDataManager = new MetaDataManager(getMetaSourceURI(), this.manager, getLogger());
+        }
+        return metaDataManager;
     }
 
     /**

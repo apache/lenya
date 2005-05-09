@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ package org.apache.lenya.cms.metadata.dublincore;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -40,6 +41,9 @@ public final class DublinCoreHelper {
     }
 
     private static Logger log = Logger.getLogger(DublinCoreHelper.class);
+    private static Logger getLogger() {
+        return log;
+    }
 
     /**
      * Get the value of the DCIdentifier corresponding to a document id.
@@ -67,16 +71,18 @@ public final class DublinCoreHelper {
             if (languages.length > 0) {
                 while (identifier == null && i < languages.length) {
                     Document document = map.get(publication, area, documentId, languages[i]);
-                    log.debug("document file : " + document.getFile().getAbsolutePath());
-                    DublinCore dublincore = (DublinCore) document.getMetaData();
-                    log.debug("dublincore title : "
+                    if (getLogger().isDebugEnabled())
+                        getLogger().debug("document file : " + document.getFile().getAbsolutePath());
+                    MetaData dublincore = document.getMetaDataManager().getDublinCoreMetaData();
+                    if (getLogger().isDebugEnabled())
+                        getLogger().debug("dublincore title : "
                             + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
                     identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
                     i = i + 1;
                 }
             }
             if (languages.length < 1 || identifier == null) {
-                DublinCore dublincore = (DublinCore) baseDocument.getMetaData();
+                MetaData dublincore = baseDocument.getMetaDataManager().getDublinCoreMetaData();
                 identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
             }
         } catch (final DocumentException e) {

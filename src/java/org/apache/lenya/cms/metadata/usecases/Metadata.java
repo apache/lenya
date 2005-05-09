@@ -16,7 +16,7 @@
  */
 package org.apache.lenya.cms.metadata.usecases;
 
-import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
@@ -49,7 +49,7 @@ public class Metadata extends SiteUsecase {
         super.initParameters();
 
         try {
-            MetaDataManager meta = getSourceDocument().getMetaData();
+            MetaData meta = getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
 
             String[] keys = meta.getPossibleKeys();
             for (int i = 0; i < keys.length; i++) {
@@ -86,7 +86,7 @@ public class Metadata extends SiteUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        MetaDataManager meta = getSourceDocument().getMetaData();
+        MetaData meta = getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
 
         String[] keys = meta.getPossibleKeys();
         for (int i = 0; i < keys.length; i++) {
@@ -95,6 +95,7 @@ public class Metadata extends SiteUsecase {
                 meta.setValue(keys[i], value);
             }
         }
+        meta.save();
 
         //TODO set workflow situation to edit here.
     }

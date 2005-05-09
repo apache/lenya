@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
@@ -44,7 +45,7 @@ public class Overview extends SiteUsecase {
 
         DocumentTypeResolver doctypeResolver = null;
         try {
-            DublinCore dc = (DublinCore) getSourceDocument().getMetaData();
+            MetaData dc = (MetaData) getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
             setParameter("languages", getSourceDocument().getLanguages());
             setParameter("title", dc.getFirstValue(DublinCore.ELEMENT_TITLE));
 

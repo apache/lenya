@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -39,11 +37,13 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Manager for resources of a CMS document.
+ * @version $Id$
  */
 public class DefaultResourcesManager extends AbstractLogEnabled implements ResourcesManager,
         Serviceable {
@@ -95,10 +95,9 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         }
     }
 
-    protected static final String NAMESPACE_META = "http://lenya.apache.org/meta/1.0";
 
     /**
-     * Create a new instance of Resources.
+     * Constructor
      */
     public DefaultResourcesManager() {
     }
@@ -136,8 +135,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
             /* if (type.equals("resource")) { */
 
-            // create an extra file containing the meta description for
-            // the resource.
+            // create the meta description for the resource.
             createMetaData(resource, metadata);
 
             /*
@@ -222,13 +220,19 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         if (getLogger().isDebugEnabled())
             getLogger().debug("DefaultResourcesManager::createMetaData() called");
 
-        MetaDataManager meta = resource.getMetaData();
+        // Write Dublin Core meta-data
+        MetaData meta = resource.getMetaDataManager().getDublinCoreMetaData();
         Iterator iter = metadata.entrySet().iterator();
-
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             meta.setValue((String) entry.getKey(), (String) entry.getValue());
         }
+        meta.save();
+
+        // Now write Lenya internal metadata
+        MetaData lenyaMetaData = resource.getMetaDataManager().getLenyaMetaData();
+        lenyaMetaData.setValue(LenyaMetaData.ELEMENT_CONTENT_TYPE, "asset");
+        lenyaMetaData.save();
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DefaultResourcesManager::createMetaData() done.");

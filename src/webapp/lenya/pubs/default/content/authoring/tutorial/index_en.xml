@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" 
 xmlns:xhtml="http://www.w3.org/1999/xhtml" 
-xmlns:dc="http://purl.org/dc/elements/1.1/" 
-xmlns:dcterms="http://purl.org/dc/terms/"
-xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
-xhtml:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" 
-lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -24,23 +20,6 @@ lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
 -->
 
 <!-- $Id$ -->
-    <lenya:meta>
-        <dc:title>A short Lenya Tutorial</dc:title>
-        <dc:creator>Lenya Development Team</dc:creator>
-        <dc:subject>Lenya Tutorial</dc:subject>
-        <dc:description>A short tutorial on using Apache Lenya</dc:description>
-        <dc:publisher>Apache Software Foundation</dc:publisher>
-        <dc:contributor/>
-        <dc:date>2005-01-31</dc:date>
-        <dc:type/>
-        <dc:format/>
-        <dc:identifier/>
-        <dc:source/>
-        <dc:language>en</dc:language>
-        <dc:relation/>
-        <dc:coverage/>
-        <dc:rights>All rights reserved</dc:rights>
-    </lenya:meta>
   <head>
     <title>Lenya Tutorial</title>
   </head>

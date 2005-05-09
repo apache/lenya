@@ -27,6 +27,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -44,7 +46,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
 
 /**
- * Abstract superclass for usecases to create a resource.
+ * Abstract superclass for usecases to create a document.
  * 
  * @version $Id$
  */
@@ -156,19 +158,26 @@ public abstract class Create extends AbstractUsecase {
      * @throws DocumentException if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
-        DublinCore dublinCore = (DublinCore) document.getMetaData();
-        dublinCore.setValue(DublinCore.ELEMENT_TITLE,
+        MetaData metaData = document.getMetaDataManager().getDublinCoreMetaData();
+        metaData.setValue(DublinCore.ELEMENT_TITLE,
                 getParameterAsString(DublinCore.ELEMENT_TITLE));
-        dublinCore.setValue(DublinCore.ELEMENT_CREATOR,
+        metaData.setValue(DublinCore.ELEMENT_CREATOR,
                 getParameterAsString(DublinCore.ELEMENT_CREATOR));
-        dublinCore.setValue(DublinCore.ELEMENT_PUBLISHER,
+        metaData.setValue(DublinCore.ELEMENT_PUBLISHER,
                 getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
-        dublinCore.setValue(DublinCore.ELEMENT_SUBJECT,
+        metaData.setValue(DublinCore.ELEMENT_SUBJECT,
                 getParameterAsString(DublinCore.ELEMENT_SUBJECT));
-        dublinCore.setValue(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
-        dublinCore.setValue(DublinCore.ELEMENT_RIGHTS,
+        metaData.setValue(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
+        metaData.setValue(DublinCore.ELEMENT_RIGHTS,
                 getParameterAsString(DublinCore.ELEMENT_RIGHTS));
-        dublinCore.setValue(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
+        metaData.setValue(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
+        metaData.save();
+
+        // Now write Lenya internal metadata
+        MetaData lenyaMetaData = document.getMetaDataManager().getLenyaMetaData();
+        lenyaMetaData.setValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE, getDocumentTypeName());
+        lenyaMetaData.setValue(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
+        lenyaMetaData.save();
     }
 
     /**
