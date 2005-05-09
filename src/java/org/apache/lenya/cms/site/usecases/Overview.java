@@ -18,8 +18,6 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -43,25 +41,22 @@ public class Overview extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        DocumentTypeResolver doctypeResolver = null;
         try {
+            // read parameters from Dublin Core meta-data
             MetaData dc = (MetaData) getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
-            setParameter("languages", getSourceDocument().getLanguages());
-            setParameter("title", dc.getFirstValue(DublinCore.ELEMENT_TITLE));
+            setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));
+            setParameter(DublinCore.ELEMENT_DESCRIPTION, dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
 
-            doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-            DocumentType doctype = doctypeResolver.resolve(getSourceDocument());
+            // read parameters from document attributes
             setParameter("languages", getSourceDocument().getLanguages());
-            setParameter("lastmodified", getSourceDocument().getLastModified());
-            setParameter("resourcetype", doctype.getName());
+            setParameter("languages", getSourceDocument().getLanguages());
+            setParameter("lastmodified", getSourceDocument().getLastModified());     
+            setParameter("resourcetype", getSourceDocument().getResourceType());           
             setParameter("live", "");
+
         } catch (final Exception e) {
             addErrorMessage("Could not read a value. See log files for details.");
             getLogger().error("Could not read value for Overview usecase. ", e);
-        } finally {
-            if (doctypeResolver != null) {
-                this.manager.release(doctypeResolver);
-            }
         }
     }
 
