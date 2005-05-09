@@ -32,6 +32,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
@@ -516,6 +517,15 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             }
         }
         return nodes;
+    }
+
+    /**
+     * Convenience method to read the document's resource type from
+     * the meta-data.
+     * @see #Document.getResourceType()
+     */
+    public String getResourceType() throws DocumentException {
+        return getMetaDataManager().getLenyaMetaData().getFirstValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE);
     }
 
 }
