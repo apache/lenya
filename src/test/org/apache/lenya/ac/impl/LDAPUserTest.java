@@ -113,7 +113,7 @@ public class LDAPUserTest extends AccessControlTest {
         FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
         FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
 
-        LDAPUser user = new LDAPUser(configDir, userName, email, ldapId);
+        LDAPUser user = new LDAPUser(configDir, userName, email, ldapId, getLogger());
 
         editorRole.save();
         adminRole.save();
