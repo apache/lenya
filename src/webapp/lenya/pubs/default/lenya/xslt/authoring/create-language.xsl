@@ -99,21 +99,21 @@ function validateForm(theForm)
             <table class="lenya-table-noborder">
               <tr>
                 <td class="lenya-form-caption">
-                  <i18n:text>Document ID</i18n:text>:</td>
+                  <i18n:text>Document ID</i18n:text>: </td>
                 <td>
                   <xsl:value-of select="/parent-child/document-id"/>
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">
-                  <i18n:text>Navigation Title</i18n:text>*:</td>
+                <td class="lenya-form-caption"><label for="properties.create.child-name">
+                  <i18n:text>Navigation Title</i18n:text>*: </label></td>
                 <td>
                   <input class="lenya-form-element" type="text" name="properties.create.child-name"/>
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">
-                  <i18n:text>Language</i18n:text>:</td>
+                <td class="lenya-form-caption"><label for="properties.create.new.language">
+                  <i18n:text>Language</i18n:text>: </label></td>
                 <td>
                   <select class="lenya-form-element" name="properties.create.new.language">
                     <xsl:apply-templates select="dc:languages"/>
@@ -121,38 +121,38 @@ function validateForm(theForm)
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">
-                  <i18n:text>Creator</i18n:text>:</td>
+                <td class="lenya-form-caption"><label for="properties.create.creator">
+                  <i18n:text>Creator</i18n:text>: </label></td>
                 <td>
                   <input class="lenya-form-element" type="hidden" name="properties.create.creator" value="{/parent-child/dc:creator}"/>
                   <xsl:value-of select="/parent-child/dc:creator"/>
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">
-                  <i18n:text>Subject</i18n:text>:</td>
+                <td class="lenya-form-caption"><label for="properties.create.subject">
+                  <i18n:text>Subject</i18n:text>:</label></td>
                 <td>
                   <input class="lenya-form-element" type="text" name="properties.create.subject"/>
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">
-                  <i18n:text>Publisher</i18n:text>:</td>
+                <td class="lenya-form-caption"><label for="properties.create.publisher">
+                  <i18n:text>Publisher</i18n:text>:</label></td>
                 <td>
                   <input class="lenya-form-element" type="text" name="properties.create.publisher" value="{/parent-child/dc:publisher}"/>
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">
-                  <i18n:text>Date</i18n:text>:</td>
+                <td class="lenya-form-caption"><label for="properties.create.date">
+                  <i18n:text>Date</i18n:text>: </label></td>
                 <td>
                   <input class="lenya-form-element" type="hidden" name="properties.create.date" value="{/parent-child/dc:date}"/>
                   <xsl:value-of select="/parent-child/dc:date"/>
                 </td>
               </tr>
               <tr>
-                <td class="lenya-form-caption">
-                  <i18n:text>Rights</i18n:text>:</td>
+                <td class="lenya-form-caption"><label for="properties.create.rights">
+                  <i18n:text>Rights</i18n:text>: </label></td>
                 <td>
                   <input class="lenya-form-element" type="text" name="properties.create.rights" value="{/parent-child/dc:rights}"/>
                 </td>
