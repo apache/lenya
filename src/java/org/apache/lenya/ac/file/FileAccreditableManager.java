@@ -34,6 +34,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.util.NetUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
@@ -111,7 +112,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
                 source = resolver.resolveURI(this.configurationDirectoryPath);
 
                 getLogger().debug("Configuration directory URI: " + source.getURI());
-                directory = new File(new URI(source.getURI()));
+                directory = new File(new URI(NetUtils.encodePath(source.getURI())));
             } catch (Exception e) {
                 throw new AccessControlException(e);
             } finally {

@@ -36,6 +36,7 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.util.NetUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
@@ -207,8 +208,8 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         String fileUri = getPolicySourceURI(url, policyFilename);
         File file;
         try {
-            file = new File(new URI(fileUri));
-        } catch (Exception e) {
+            file = new File(new URI(NetUtils.encodePath(fileUri)));
+        } catch (final Exception e) {
             throw new AccessControlException(e);
         }
         return file;
@@ -317,8 +318,8 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
                 resolver = (SourceResolver) getServiceManager().lookup(SourceResolver.ROLE);
                 source = resolver.resolveURI(this.policiesDirectoryUri);
                 getLogger().debug("Policies directory source: [" + source.getURI() + "]");
-                directory = new File(new URI(source.getURI()));
-            } catch (Exception e) {
+                directory = new File(new URI(NetUtils.encodePath(source.getURI())));
+            } catch (final Exception e) {
                 throw new AccessControlException("Resolving policies directory failed: ", e);
             } finally {
                 if (resolver != null) {
