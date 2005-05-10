@@ -41,15 +41,15 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>Publication ID</i18n:text>:</td>
+              <td class="lenya-entry-caption"><label for="publicationId"><i18n:text>Publication ID</i18n:text>:</label></td>
               <td><input type="text" class="lenya-form-element" name="publicationId" value="${usecase.getParameter('publicationId')}"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>Publication Name</i18n:text>:</td>
+              <td class="lenya-entry-caption"><label for="publicationName"><i18n:text>Publication Name</i18n:text>:</label></td>
               <td><input type="text" class="lenya-form-element" name="publicationName" value="${usecase.getParameter('publicationName')}"/></td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>Template</i18n:text>:</td>
+              <td class="lenya-entry-caption"><label for="template"><i18n:text>Template</i18n:text>:</label></td>
               <td>
                 <select name="template" class="lenya-form-element">
                   <jx:forEach var="template" items="${usecase.getParameter('availableTemplates')}">

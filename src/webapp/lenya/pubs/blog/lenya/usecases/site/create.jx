@@ -39,14 +39,14 @@
           <table class="lenya-table-noborder">
               <tr>
                 <td class="lenya-entry-caption">
-                  <i18n:text>Entry ID</i18n:text>*: </td>
+                  <label for="documentId"><i18n:text>Entry ID</i18n:text>*:</label></td>
                 <td>
                   <input class="lenya-form-element" type="text" name="documentId" value="${usecase.getParameter('documentId')}"/>
                   <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)</td>
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
-                  <i18n:text>Title</i18n:text>*: </td>
+                  <label for="title"><i18n:text>Title</i18n:text>*: </label></td>
                 <td>
                   <input class="lenya-form-element" type="text" name="title" value="${usecase.getParameter('title')}"/>
                 </td>

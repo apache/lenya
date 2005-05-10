@@ -48,7 +48,7 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>New Navigation Title</i18n:text>:</td>
+              <td class="lenya-entry-caption"><label for="label"><i18n:text>New Navigation Title</i18n:text>:</label></td>
               <td><input type="text" class="lenya-form-element" name="label" value="${usecase.getParameter('label')}"/></td>
             </tr>
             <tr>

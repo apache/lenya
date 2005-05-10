@@ -39,23 +39,23 @@
           </td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>User ID</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="userId"><i18n:text>User ID</i18n:text> *</label></td>
           <td><input type="text" name="userId" class="lenya-form-element" value="${request.getParameter('userId')}"/></td>
         </tr>
         
         <jx:if test="${request.getParameter('className') == 'org.apache.lenya.ac.ldap.LDAPUser'}">
           <tr>
-            <td class="lenya-entry-caption"><i18n:text>LDAP ID</i18n:text> *</td>
+            <td class="lenya-entry-caption"><label for="ldapId"><i18n:text>LDAP ID</i18n:text> *</label></td>
             <td><input type="text" name="ldapId" class="lenya-form-element" value="${request.getParameter('ldapId')}"/></td>
           </tr>
         </jx:if>
         
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Name</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="fullName"><i18n:text>Name</i18n:text> *</label></td>
           <td><input type="text" name="fullName" class="lenya-form-element" value="${request.getParameter('fullName')}"/></td>
         </tr>
         <tr>
-          <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text></td>
+          <td valign="top" class="lenya-entry-caption"><label for="description"><i18n:text>Description</i18n:text></label></td>
           <td>
             <!-- N.B.: do not put spaces or carriage returns inside the
                  textare element - these would be rendered -->
@@ -63,17 +63,17 @@
           </td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>E-Mail</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="email"><i18n:text>E-Mail</i18n:text> *</label></td>
           <td><input type="text" name="email" class="lenya-form-element" value="${request.getParameter('email')}"/></td>
         </tr>
         
         <jx:if test="${request.getParameter('className') != 'org.apache.lenya.ac.ldap.LDAPUser'}">
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Password</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="password"><i18n:text>Password</i18n:text> *</label></td>
           <td><input type="password" name="password" class="lenya-form-element" value="${request.getParameter('password')}"/></td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Confirm password</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="confirmPassword"><i18n:text>Confirm password</i18n:text> *</label></td>
           <td><input type="password" name="confirmPassword" class="lenya-form-element" value="${request.getParameter('confirmPassword')}"/></td>
         </tr>
         </jx:if>

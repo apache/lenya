@@ -48,7 +48,7 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>New Document ID</i18n:text>:</td>
+              <td class="lenya-entry-caption"><label for="nodeId"><i18n:text>New Document ID</i18n:text>:</label></td>
               <td><input type="text" class="lenya-form-element" name="nodeId" value="${usecase.getParameter('nodeId')}"/></td>
             </tr>
             <tr>

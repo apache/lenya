@@ -38,11 +38,11 @@
           </td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Name</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="name"><i18n:text>Name</i18n:text> *</label></td>
           <td><input type="text" name="fullName" class="lenya-form-element" value="${usecase.getParameter('fullName')}"/></td>
         </tr>
         <tr>
-          <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text></td>
+          <td valign="top" class="lenya-entry-caption"><label for="description"><i18n:text>Description</i18n:text></label></td>
           <td>
             <!-- N.B.: do not put spaces or carriage returns inside the
                  textarea element - these would be rendered -->
@@ -51,17 +51,17 @@
         </tr>
 
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>E-Mail</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="email"><i18n:text>E-Mail</i18n:text> *</label></td>
           <td><input type="text" name="email" class="lenya-form-element" value="${usecase.getParameter('email')}"/></td>
         </tr>
         
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Default Menu Locale</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="defaultMenuLocale"><i18n:text>Default Menu Locale</i18n:text> *</label></td>
           <td><input type="text" name="defaultMenuLocale" class="lenya-form-element" value="${usecase.getParameter('defaultMenuLocale')}"/></td>
         </tr>
         
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Default Document Locale</i18n:text> *</td>
+          <td class="lenya-entry-caption"><label for="defaultDocumentLocale"><i18n:text>Default Document Locale</i18n:text> *</label></td>
           <td><input type="text" name="defaultDocumentLocale" class="lenya-form-element" value="${usecase.getParameter('defaultDocumentLocale')}"/></td>
         </tr>
         

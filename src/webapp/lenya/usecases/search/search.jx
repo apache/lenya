@@ -39,14 +39,14 @@
       
             <table class="lenya-table-noborder">
               <tr>
-                  <td><i18n:text>Search</i18n:text></td>
+                  <td><label for="queryString"><i18n:text>Search</i18n:text></label></td>
                   <td>
                       <input type="text" name="queryString" size="60" class="lenya-form-element" value="${usecase.getParameter('query')}"/>
                   </td>
               </tr>
               <jx:forEach var="publication" items="${usecase.getParameter('publications')}">
                   <tr>
-                      <td><i18n:text>Publications</i18n:text></td>
+                      <td><label for="publication-id"><i18n:text>Publications</i18n:text></label></td>
                       <td>
                           <jx:choose>
                               <jx:when test="@pid = ../@checked-pid">
@@ -61,7 +61,7 @@
                       </td>
                   </tr>
                   <tr>
-                      <td><i18n:text>Fields</i18n:text></td>
+                      <td><label for="dummy-index-id.fields"><i18n:text>Fields</i18n:text></label></td>
                       <td>
                           <select name="dummy-index-id.fields" class="lenya-form-element">
                               <jx:forEach select="search-fields/field">
@@ -83,7 +83,7 @@
                   </tr>
               </jx:forEach>
               <tr>
-                  <td><i18n:text>Sort by</i18n:text></td>
+                  <td><label for="sortBy"><i18n:text>Sort by</i18n:text></label></td>
                   <td>
                       <select name="sortBy" class="lenya-form-element">
                         <jx:choose>
