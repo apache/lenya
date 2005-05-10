@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.metadata;
 
+import java.util.Iterator;
+import java.util.Map;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -80,6 +82,28 @@ public class MetaDataManager extends AbstractLogEnabled {
             customMetaData = new CustomMetaData(this.sourceUri, this.serviceManager, getLogger());
         }
         return customMetaData;
+    }
+
+    /**
+     * Set values of meta-data managed by this instance.
+     * @throws DocumentException if meta-data could not be written
+     */
+    public void setMetaData(Map dcMetaData, Map lenyaMetaData, Map customMetaData) throws DocumentException {
+        if (dcMetaData != null)
+            setMetaData(getDublinCoreMetaData(), dcMetaData);
+        if (lenyaMetaData != null)
+            setMetaData(getLenyaMetaData(), lenyaMetaData);
+        if (customMetaData != null)
+            setMetaData(getCustomMetaData(), customMetaData);
+    }
+
+    private void setMetaData(MetaData _metaData, Map _metaDataMap) throws DocumentException {
+        Iterator iter = _metaDataMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            _metaData.setValue((String) entry.getKey(), (String) entry.getValue());
+        }
+        _metaData.save();
     }
 
     /**

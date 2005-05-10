@@ -18,6 +18,7 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -158,26 +159,28 @@ public abstract class Create extends AbstractUsecase {
      * @throws DocumentException if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
-        MetaData metaData = document.getMetaDataManager().getDublinCoreMetaData();
-        metaData.setValue(DublinCore.ELEMENT_TITLE,
-                getParameterAsString(DublinCore.ELEMENT_TITLE));
-        metaData.setValue(DublinCore.ELEMENT_CREATOR,
-                getParameterAsString(DublinCore.ELEMENT_CREATOR));
-        metaData.setValue(DublinCore.ELEMENT_PUBLISHER,
-                getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
-        metaData.setValue(DublinCore.ELEMENT_SUBJECT,
-                getParameterAsString(DublinCore.ELEMENT_SUBJECT));
-        metaData.setValue(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
-        metaData.setValue(DublinCore.ELEMENT_RIGHTS,
-                getParameterAsString(DublinCore.ELEMENT_RIGHTS));
-        metaData.setValue(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
-        metaData.save();
 
-        // Now write Lenya internal metadata
-        MetaData lenyaMetaData = document.getMetaDataManager().getLenyaMetaData();
-        lenyaMetaData.setValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE, getDocumentTypeName());
-        lenyaMetaData.setValue(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
-        lenyaMetaData.save();
+        Map dcMetaData = new HashMap();
+        dcMetaData.put(DublinCore.ELEMENT_TITLE,
+                getParameterAsString(DublinCore.ELEMENT_TITLE));
+        dcMetaData.put(DublinCore.ELEMENT_CREATOR,
+                getParameterAsString(DublinCore.ELEMENT_CREATOR));
+        dcMetaData.put(DublinCore.ELEMENT_PUBLISHER,
+                getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
+        dcMetaData.put(DublinCore.ELEMENT_SUBJECT,
+                getParameterAsString(DublinCore.ELEMENT_SUBJECT));
+        dcMetaData.put(DublinCore.ELEMENT_DATE, 
+                getParameterAsString(DublinCore.ELEMENT_DATE));
+        dcMetaData.put(DublinCore.ELEMENT_RIGHTS,
+                getParameterAsString(DublinCore.ELEMENT_RIGHTS));
+        dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, 
+                getParameterAsString(LANGUAGE));
+
+        Map lenyaMetaData = new HashMap(2);
+        lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, getDocumentTypeName());
+        lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
+
+        document.getMetaDataManager().setMetaData(dcMetaData, lenyaMetaData, null);
     }
 
     /**

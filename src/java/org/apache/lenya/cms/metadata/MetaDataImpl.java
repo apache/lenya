@@ -68,7 +68,9 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
     private static final String META_ROOT = "meta";
 
     /**
-     * Creates a new instance of metadata
+     * Creates a new instance of metadata, reading any existing
+     * values from the source URI.
+     *
      * @param sourceUri The source URI.
      * @param manager The service manager.
      * @param _logger A logger

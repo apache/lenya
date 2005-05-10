@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -130,19 +131,16 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             String mimeType = part.getMimeType();
             int fileSize = part.getSize();
 
-            metadata.put("format", mimeType);
-            metadata.put("extent", Integer.toString(fileSize));
-
-            /* if (type.equals("resource")) { */
-
-            // create the meta description for the resource.
-            createMetaData(resource, metadata);
 
             /*
-             * } // must be a content upload then else { resourceFile = new
-             * File(document.getFile().getParent(), fileName); getLogger().debug("resourceFile: " +
-             * resourceFile); }
+             * complement and create the meta description for the resource.
              */
+            metadata.put("format", mimeType);
+            metadata.put("extent", Integer.toString(fileSize));
+            Map lenyaMetaData = new HashMap(1);
+            lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "asset");
+            resource.getMetaDataManager().setMetaData(metadata, lenyaMetaData, null);
+
             saveResource(resource, part);
         } catch (final DocumentException e) {
             getLogger().error("Document exception " + e.toString());
@@ -209,34 +207,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         }
     }
 
-    /**
-     * Create the meta data file given the dublin core parameters.
-     * @param resource the resource
-     * @param metadata a <code>Map</code> containing the dublin core values
-     * @throws DocumentException if an error occurs
-     */
-    protected void createMetaData(Resource resource, Map metadata) throws DocumentException {
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultResourcesManager::createMetaData() called");
-
-        // Write Dublin Core meta-data
-        MetaData meta = resource.getMetaDataManager().getDublinCoreMetaData();
-        Iterator iter = metadata.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            meta.setValue((String) entry.getKey(), (String) entry.getValue());
-        }
-        meta.save();
-
-        // Now write Lenya internal metadata
-        MetaData lenyaMetaData = resource.getMetaDataManager().getLenyaMetaData();
-        lenyaMetaData.setValue(LenyaMetaData.ELEMENT_CONTENT_TYPE, "asset");
-        lenyaMetaData.save();
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultResourcesManager::createMetaData() done.");
-    }
 
     /**
      * @see org.apache.lenya.cms.publication.ResourcesManager#getResources(org.apache.lenya.cms.publication.Document)
