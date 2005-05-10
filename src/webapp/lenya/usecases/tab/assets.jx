@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@
                      style="height: 32px; vertical-align: middle;"/>&#160;
               </jx:if>
             </td>
-            <td><jx:out value="${asset.getMetaData().getFirstValue('title')}"/></td>
+            <td><jx:out value="${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}"/></td>
             <td align="right"><jx:out value="${asset.getContentLength() / 1000}"/> kB</td>
             <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
             <td>
