@@ -142,9 +142,6 @@
       </map:match> 
       
           <map:match type="step" pattern="asset-upload">
-            <map:act type="upload">
-              <map:redirect-to uri="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=asset-upload-show"/>
-            </map:act>
             <map:call resource="cms-screen">
               <map:parameter name="serverpage" value="info/assets.xsp"/>
               <map:parameter name="stylesheet" value="bxe/asset.xsl"/>
@@ -152,9 +149,6 @@
           </map:match>
 
           <map:match type="step" pattern="image-upload">
-            <map:act type="upload">
-              <map:redirect-to uri="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=image-upload-show"/>
-            </map:act>
 	        <map:call resource="cms-screen">
 	           <map:parameter name="serverpage" value="info/assets.xsp"/>
 	           <map:parameter name="stylesheet" value="bxe/image.xsl"/>
