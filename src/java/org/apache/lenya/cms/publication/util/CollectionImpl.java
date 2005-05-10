@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
 
 package org.apache.lenya.cms.publication.util;
 
@@ -46,6 +44,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Implementation of a Collection.
+ * @version $Id$
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
 
@@ -187,7 +186,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#save()
+     * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
      */
     public void save() throws TransactionException {
         try {

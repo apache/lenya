@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,13 +32,14 @@ import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * Flowscript utility class.
+ * @version $Id$
  */
 public interface FlowHelper {
 	
-	/**
-	 * The Avalon Role.
-	 */
-	String ROLE = FlowHelper.class.getName();
+    /**
+     * The Avalon Role.
+     */
+    String ROLE = FlowHelper.class.getName();
 
     /**
      * Returns the current workflow situation.
@@ -125,7 +126,7 @@ public interface FlowHelper {
      * @param backup Wether a new revision should be created.
      * @throws FileReservedCheckInException
      * @throws Exception
-     * @see RevisionController#reservedCheckIn(String, String, boolean)
+     * @see RevisionController#reservedCheckIn(String, String, boolean, boolean)
      */
     void reservedCheckIn(FOM_Cocoon cocoon, boolean backup) throws FileReservedCheckInException,
             Exception;
