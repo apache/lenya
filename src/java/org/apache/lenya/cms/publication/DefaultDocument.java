@@ -522,7 +522,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     /**
      * Convenience method to read the document's resource type from
      * the meta-data.
-     * @see #Document.getResourceType()
+     * @see Document#getResourceType()
      */
     public String getResourceType() throws DocumentException {
         return getMetaDataManager().getLenyaMetaData().getFirstValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE);
