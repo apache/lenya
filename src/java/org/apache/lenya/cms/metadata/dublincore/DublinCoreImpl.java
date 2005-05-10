@@ -75,7 +75,6 @@ public class DublinCoreImpl extends MetaDataImpl {
             DublinCore.TERM_AVAILABLE,
             DublinCore.TERM_ISSUED, 
             DublinCore.TERM_MODIFIED, 
-            DublinCore.TERM_EXTENT,
             DublinCore.TERM_LICENSE, 
             DublinCore.TERM_MEDIUM, 
             DublinCore.TERM_ISVERSIONOF,
