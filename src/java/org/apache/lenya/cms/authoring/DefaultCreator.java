@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.authoring;
 
 import java.io.File;
@@ -24,31 +22,25 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 /**
  * The default creator for documents
+ * @version $Id$
  */
-public class DefaultCreator implements ParentChildCreatorInterface  {
-
-    // FIXME: remove direct reference to log4j. A logger could be passed
-    // to init(), as DocumentTypeBuilder is a service. However, whoever
-    // creates blog entries is not yet a service, so that would need
-    // to be switched as well at the same time.
-    private Logger log = Logger.getLogger(DefaultCreator.class);
-    
-    public Logger getLogger() {
-        return log;
-    }
+public class DefaultCreator extends AbstractLogEnabled implements ParentChildCreatorInterface  {
 
     private String sampleResourceName = null;
 
     /**
-     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration)
+     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration, Logger)
      */
-    public void init(Configuration conf) {
+    public void init(Configuration conf, Logger _logger) {
+        ContainerUtil.enableLogging(this, _logger);
         // nothing to configure in current implementation
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,17 +15,17 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.authoring;
 
 import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.logger.Logger;
 
 /**
  * Interface for creation of hierarchical documents
+ * @version $Id$
  */
 public interface ParentChildCreatorInterface {
     /**
@@ -48,8 +48,9 @@ public interface ParentChildCreatorInterface {
      * Configures the Creator, based on a configuration file.
      * 
      * @param doctypeConf A configuration.
+     * @param logger A logger
      */
-    void init(Configuration doctypeConf);
+    void init(Configuration doctypeConf, Logger logger);
 
     /**
      * Return the type of node this creator will create. It can be

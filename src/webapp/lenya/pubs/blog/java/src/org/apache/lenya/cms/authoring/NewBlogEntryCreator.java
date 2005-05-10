@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,13 +15,10 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.authoring;
 
-import org.apache.log4j.Logger;
-
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.logger.Logger;
 
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -36,8 +33,11 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Date;
 
+/**
+ * Creator a blog entry
+ * @version $Id$
+ */
 public class NewBlogEntryCreator extends DefaultBranchCreator {
-    private static Logger log = Logger.getLogger(NewBlogEntryCreator.class);
 
     private String year;
     private String month;
@@ -47,8 +47,8 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
     /**
      *
      */
-    public void init(Configuration conf) {
-        super.init(conf);
+    public void init(Configuration conf, Logger _logger) {
+        super.init(conf, _logger);
 
         DateFormat fmtyyyy = new SimpleDateFormat("yyyy");
         DateFormat fmtMM = new SimpleDateFormat("MM");
@@ -59,7 +59,8 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         month = fmtMM.format(date);
         day = fmtdd.format(date);
 
-        log.debug(".init(): Initialize Creator: " + year + "/" + month + "/" + day);
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("NewBlogEntryCreator.init(): Initialize Creator: " + year + "/" + month + "/" + day);
     }
 
     /**
@@ -67,7 +68,10 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
      */
     protected String getChildFileName(File parentDir, String childId, String language) {
         String newFilename = parentDir + File.separator + "entries" + File.separator + year + File.separator + month + File.separator + day + File.separator + childId + File.separator + "index.xml";
-        log.debug(".getChildFileName(): " + newFilename);
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("NewBlogEntryCreator.getChildFileName(): " + newFilename);
+
         return newFilename;
     }
 
@@ -76,7 +80,9 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
      */
     protected void transformXML(Document doc, String childId, short childType, String childName, Map parameters) throws Exception {
        Element parent = doc.getDocumentElement();
-       log.debug(".transformXML(): " + childId);
+
+       if (getLogger().isDebugEnabled())
+           getLogger().debug("NewBlogEntryCreator.transformXML(): " + childId);
 
        // Replace id
         Element element = (Element) XPathAPI.selectSingleNode(parent, "/*[local-name() = 'entry']/*[local-name() = 'id']");

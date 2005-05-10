@@ -182,7 +182,7 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     String creatorClassName = creatorConf.getAttribute(SRC_ATTRIBUTE);
                     Class creatorClass = Class.forName(creatorClassName);
                     creator = (ParentChildCreatorInterface) creatorClass.newInstance();
-                    creator.init(creatorConf);
+                    creator.init(creatorConf, getLogger());
                 } else {
                     creator = new DefaultBranchCreator();
                 }
