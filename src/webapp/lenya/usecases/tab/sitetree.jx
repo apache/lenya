@@ -34,7 +34,7 @@
         <jx:set var="languageVersion"
                 value="${document.getIdentityMap().getLanguageVersion(document, language)}"/>
         <jx:set var="languageUrl"
-                value="${request.contextPath + publicationId + '/info-' + area + languageVersion.getCanonicalDocumentURL()}"/>
+                value="${request.contextPath + '/' + publicationId + '/info-' + area + languageVersion.getCanonicalDocumentURL()}"/>
         
         <td>
           <jx:choose>
