@@ -100,6 +100,11 @@
                 <mod_proxy_and_lenya_cont href="mod_proxy_and_lenya_continued.html" label="6b. Mod Proxy and Lenya"/>
             </tutorial>
 
+            <howtos href="how-to/" label="How-To">
+                <newpub href="new_publication.html" label="New Publication"/>
+                <deploypub href="deploy_publication.html" label="Deploy Publication"/>
+                <lookandfeel href="look_and_feel.html" label="Look and Feel"/>
+            </howtos>
             <components href="components/" label="Components">
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">
                     <ac-terms href="terms.html" label="Basic Terms"/>

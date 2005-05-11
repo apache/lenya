@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Look and Feel How-To</title>
+  </header>
+    <body>
+<p>To change your copy of the Default publication into your publication and have some first successes, you probably want to work on two things: </p>
+<ol type="1">
+<li><p>Change the color scheme and fonts to your own taste. </p>
+
+</li>
+<li><p>Replace the page header with your own one. </p>
+</li>
+</ol>
+<p>More advanced topics that are not (yet) covered here might be: </p>
+<ul>
+<li><p>  Put the menu somewhere else </p>
+</li>
+<li><p>  Use a different menu style </p>
+</li>
+<li><p>  Define different and more complex page templates </p>
+
+</li>
+</ul>
+<p>As a first step you will feel much better once you managed 1. and 2. as you will be able to show your new publication to someone and it will not look like just a sample. </p>
+
+<section>
+<title id="head-48d03a781f848cc1709f936dc346a0b04fefcb6b">Changing fonts and colors</title>
+
+<p>Fonts and colors are defined by a Cascading Style Sheet (CSS). For now, don't try to understand the nested sitemaps to find it. Go straight to $LENYA_DIR/your_pub_name/resources/shared/css/page.css. </p>
+<p>Though it says "resources/shared" this is not shared among different publications. In case you mess with it you can always go ahead and copy $LENYA_DIR/default/resources/shared/css/page.css and you are back to the original one. </p>
+<p>Make any changes, reload in your browser and you will see them. That's it for here. </p>
+<p>Note: I assume you are familiar with CSS and how to use them to create dynamically looking menus in pure HTML. If not, Google will be your best friend. This is nothing specific to Lenya.
+ For an introduction to CSS try the <a  href="http://www.nypl.org/styleguide/css/"> NYPL online Style Guide</a>, for other good tutorials <a  href="http://www.alistapart.com/"> a list apart</a> and for invaluable hints and quirks <a  href="http://css-discuss.incutio.com/?page=FrontPage"> css-discuss</a>.  </p>
+</section><section>
+<title id="head-b454d82a4ed2d09ec2a591f3f24d7bf0d07e52f0">Replacing the page header</title>
+
+<p>Have a look at the file $LENYA_DIR/your_pub_name/xslt/page2xhtml.xsl and look for this piece in it: </p>
+
+<pre>
+      &lt;table width="100%" cellpadding="0" cellspacing="0" border="0"&gt;
+        &lt;tr&gt;
+          &lt;td id="publication-title"&gt;Welcome to the Default Publication!&lt;/td&gt;
+
+          &lt;td id="project-logo"&gt;&lt;img src="{$root}/images/project-logo.png"/&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+</pre>
+<p>This is the page header. Put in what you want. It's that simple! </p>
+</section><section>
+<title id="head-3c25d4848127ea4921c40dfeee910b6a0216b60a">Altering navigational components (Tabs, Breadcrumbs and Menus)</title>
+
+<p>As long as it is sufficient to change the fonts and colors or navigational elements such as Breadcrumbs, Tabs oder Menus you can get away with changes to the CSS. In case you decide you want to go without some of them (for example you might not even want any breadcrumbs on your site) you can change that by modifying the XSLT as described above. </p>
+<p>But in case you want to change the <strong>behaviour</strong> of the navigational elements it's getting a bit more complex. Changing the behaviour would mean for example you would want the whole menu tree to be shown at all times, not just the top level menu items with only the subitems of the currently selected item. </p>
+<p>The navigational elements are built from the file sitetree.xml (look for it in the directory structure) using XSLTs that are usually global to Lenya and therefore not part of you publication. But the global XSLTs can be overridden with local ones quite easily. </p>
+<p>All it takes is to create the files </p>
+
+<pre>
+$LENYA_DIR/lenya/pubs/__your_pub_name__/lenya/xslt/navigation/breadcrumbs.xsl
+$LENYA_DIR/lenya/pubs/__your_pub_name__/lenya/xslt/navigation/tabs.xsl
+$LENYA_DIR/lenya/pubs/__your_pub_name__/lenya/xslt/navigation/menu.xsl
+</pre>
+<p>which will be used in favor of the core files </p>
+
+<pre>
+$LENYA_DIR/lenya/lenya/xslt/navigation/breadcrumbs.xsl
+$LENYA_DIR/lenya/lenya/xslt/navigation/tabs.xsl
+$LENYA_DIR/lenya/lenya/xslt/navigation/menu.xsl
+</pre>
+<p>Usually, you will not want to use a completely different version of the stylesheet. So it is recommended to include the core file using <tt>&lt;xsl:import/&gt;</tt>. </p>
+<p>This is possible because of a built-in fallback mechanism that will make Lenya use the global XSLTs in case there are no local versions inside the publication.
+ See the <a href="site:navigation">Navigation Framework</a> for details on this. </p>    </section></body>
+</document>

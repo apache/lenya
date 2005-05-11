@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Deploy Publication How-To</title>
+  </header>
+    <body>
+<p>How to deploy a publication in Apache Lenya: </p>
+
+<h4 id="head-4e8484518e11290b9ee62111d0dbd603f11932df">Note:</h4>
+
+<p>It is <strong>not</strong> sufficient to copy the publication directories to the <tt>lenya/pubs</tt> directory of your Lenya installation. This way, the core configuration files are not patched, the libraries are not deployed, and other important deployment steps are not applied. </p>
+
+<h4 id="head-25336e7dc2bcad9b79daba07afd7af57b3236a6c">Deploying a Publication</h4>
+
+<ol type="1">
+<li><p>Download the publication to a directory of your choice. For instance: </p>
+<ul>
+
+<li style="list-style-type:none">
+<source>
+/src
+    /lenya-1.2.x                  &lt;- $LENYA_HOME
+    /projects/lenya/pubs          &lt;- $PUBS_HOME
+                        /my-pub   &lt;- $MY_PUB_HOME
+   </source>
+</li>
+</ul>
+</li>
+<li><p>Declare the publications in <tt>$LENYA_HOME/local.build.properties</tt> using <tt>pubs.root.dirs</tt> </p>
+
+<ul>
+<li><p> For deploying a single publication, add the publication home directory:
+ <tt>pubs.root.dirs=src/webapp/lenya/pubs:../../projects/lenya/pubs/my-pub</tt> </p>
+</li>
+<li><p> For deploying a directory containing publications, add the directory:
+ <tt>pubs.root.dirs=src/webapp/lenya/pubs:../../projects/lenya/pubs</tt> </p>
+</li>
+
+</ul>
+</li>
+<li><p>Deploy the publication: </p>
+<ul>
+<li><p> Jetty: <tt>$LENYA_HOME&gt;&nbsp;build</tt> </p>
+</li>
+<li><p> Tomcat: </p>
+<ol type="a">
+<li><p><tt>$LENYA_HOME&gt;&nbsp;build&nbsp;install-pub</tt> </p>
+
+</li>
+<li><p>in case if this fails try it in a different way: <tt>$LENYA_HOME&gt;&nbsp;./build.sh&nbsp;install-pub&nbsp;-Dpub.prefix=""</tt> </p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li class="gap"><p>Restart the servlet engine </p>
+</li>
+<li><p>Go to your Lenya homepage and enjoy the new publication </p>
+
+</li>
+</ol></body>
+</document>
