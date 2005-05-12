@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -51,6 +49,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Various utility methods to work with JAXP.
+ * @version $Id$
  */
 public class DocumentHelper {
     /**
@@ -184,6 +183,12 @@ public class DocumentHelper {
      */
     public static void writeDocument(Document document, File file)
             throws TransformerConfigurationException, TransformerException, IOException {
+        // sanity checks
+        if (document == null)
+            throw new IllegalArgumentException("parameter document may not be null");
+        if (file == null)
+            throw new IllegalArgumentException("parameter file may not be null");
+
         file.getParentFile().mkdirs();
         file.createNewFile();
 
