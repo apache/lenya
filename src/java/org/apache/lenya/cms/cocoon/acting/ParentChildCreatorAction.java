@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ParentChildCreatorAction.java,v 1.35 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -109,8 +109,20 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         // Get parameters
         String parentid = request.getParameter("parentid");
         String childid = request.getParameter("childid");
+        if (childid == null) {
+            getLogger().error("No childid parameter defined! Please specify childid as request parameter.");
+            throw new Exception("No childname defined!");
+        }
         String childname = request.getParameter("childname");
+        if (childname == null) {
+            getLogger().error("No childname defined! Please specify childname as request parameter which is being used as label within a sitetree or topic map.");
+            throw new Exception("No childname defined!");
+        }
         String childtype = request.getParameter("childtype");
+        if (childtype == null) {
+            getLogger().error("No childtype defined! Please specify childtype as request parameter with value either \"branch\" or \"leaf\".");
+            throw new Exception("No childname defined!");
+        }
         short childType;
 
         if (childtype.equals("branch")) {
@@ -119,12 +131,14 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
             childType = ParentChildCreatorInterface.LEAF_NODE;
         } else {
             getLogger().error("No such child type: " + childtype);
-
             return null;
         }
 
         String doctype = request.getParameter("doctype");
-		String language = request.getParameter("language");
+        if (doctype == null) {
+            getLogger().warn("No doctype defined! Please specify doctype as request parameter, which is being used to resolve the creator within doctypes.xconf. Otherwise the DefaultCreator class is being used (see below)!");
+        }
+        String language = request.getParameter("language");
 
         if (!validate(parentid, childid, childname, childtype, doctype)) {
             getLogger().error("Exception: Validation of parameters failed");
@@ -157,7 +171,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
             Class creatorClass = Class.forName(creator_src.getValue());
             creator = (ParentChildCreatorInterface) creatorClass.newInstance();
         } else {
-            getLogger().warn(".act(): No creator found for \"" + doctype +
+            getLogger().warn("No creator found for \"" + doctype +
                 "\". DefaultParentChildreator will be taken.");
             creator = new org.apache.lenya.cms.authoring.DefaultCreator();
         }
@@ -187,7 +201,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         getLogger().debug(".act(): Filename of tree: " + treefilename);
 
         if (!new File(treefilename).exists()) {
-            getLogger().error(".act(): No tree: " + treefilename);
+            getLogger().warn("No sitetree or topic map: " + treefilename);
         } else {
             if (!updateTree(childtype, childType, childid, childname, parentid, doctype, creator, treefilename)) return null;
         }
