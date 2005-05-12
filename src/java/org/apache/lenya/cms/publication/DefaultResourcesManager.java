@@ -355,17 +355,40 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     }
 
     /**
+     * @see org.apache.lenya.cms.publication.ResourcesManager#getResource(org.apache.lenya.cms.publication.Document,
+     *      java.lang.String)
+     */
+    public Resource getResource(Document document, String resourceName) {
+        Resource theResource = null;
+        Resource[] resources = getResources(document);
+        for (int i = 0; i < resources.length; i++) {
+            if (resources[i].getName().equals(resourceName)) {
+                theResource = resources[i];
+                break;
+            }
+        }
+        return theResource;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.ResourcesManager#deleteResource(org.apache.lenya.cms.publication.Resource)
+     */
+    public void deleteResource(Resource theResource) throws Exception {
+
+        SourceUtil.delete(theResource.getMetaSourceURI(), this.manager);
+        SourceUtil.delete(theResource.getSourceURI(), this.manager);
+    }
+
+    /**
      * @see org.apache.lenya.cms.publication.ResourcesManager#deleteResource(org.apache.lenya.cms.publication.Document,
      *      java.lang.String)
      */
     public void deleteResource(Document document, String name) throws Exception {
-        Resource[] resources = getResources(document);
-        for (int i = 0; i < resources.length; i++) {
-            if (resources[i].getName().equals(name)) {
-                SourceUtil.delete(resources[i].getMetaSourceURI(), this.manager);
-                SourceUtil.delete(resources[i].getSourceURI(), this.manager);
-            }
-        }
+        Resource theResource = getResource(document, name);
+        if (theResource == null)
+            throw new Exception("no such resource [" + name + "] exists for document [ " + document.getId() + "]");
+
+        deleteResource(theResource);
     }
 
 }

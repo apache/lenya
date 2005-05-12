@@ -603,8 +603,23 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
     public final void lockInvolvedObjects() throws UsecaseException {
+        lockInvolvedObjects(getObjectsToLock());
+    }
+
+    /**
+     * Lock the objects, for example when you need to change them
+     * (for example, delete). If you know when entering the usecase
+     * what these objects are, you do not need to call this, the
+     * framework will take of it if you implement getObjectsToLock().
+     * If you do not know in advance what the objects are, you can
+     * call this method explicitly when appropriate.
+     *
+     * @param objects the transactionable objects to lock
+     * @see #lockInvolvedObjects()
+     * @see #getObjectsToLock()
+     */
+    public final void lockInvolvedObjects(Transactionable[] objects) throws UsecaseException {
         try {
-            Transactionable[] objects = getObjectsToLock();
             boolean canExecute = true;
 
             for (int i = 0; i < objects.length; i++) {

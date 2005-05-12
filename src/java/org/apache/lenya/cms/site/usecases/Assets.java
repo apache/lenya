@@ -16,7 +16,10 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.servlet.multipart.Part;
@@ -25,6 +28,7 @@ import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to add Assets to a resource.
@@ -96,11 +100,26 @@ public class Assets extends SiteUsecase {
         String assetName = getParameterAsString("delete");
         ResourcesManager resourcesManager = null;
         try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            resourcesManager.deleteResource(getSourceDocument(), assetName);
+
+            // Retrieve the resource instance via the ResourcesManager
+            resourcesManager = (ResourcesManager) 
+                this.manager.lookup(ResourcesManager.ROLE);
+            Resource theResource = 
+                resourcesManager.getResource(getSourceDocument(), assetName);
+            if (theResource == null)
+                throw new Exception("no such resource [" + assetName + "] exists for document [ " + getSourceDocument().getId() + "]");
+
+            // Lock the resource nodes
+            List nodes = new ArrayList();
+            nodes.addAll(Arrays.asList(theResource.getRepositoryNodes()));
+            lockInvolvedObjects((Transactionable[])nodes.toArray(new Transactionable[nodes.size()]));
+
+            // Delete the resource
+            resourcesManager.deleteResource(theResource);
+
         } catch (final Exception e) {
-            getLogger().error("The resource could not be added: ", e);
-            addErrorMessage("The resource could not be added (see log files for details).");
+            getLogger().error("The resource could not be deleted: ", e);
+            addErrorMessage("The resource could not be deleted (see log files for details).");
         } finally {
             if (resourcesManager != null) {
                 this.manager.release(resourcesManager);

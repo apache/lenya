@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.util.Map;
@@ -25,6 +23,7 @@ import org.apache.cocoon.servlet.multipart.Part;
 
 /**
  * Manager for resources of a CMS document.
+ * @version $Id$
  */
 public interface ResourcesManager {
     
@@ -87,6 +86,13 @@ public interface ResourcesManager {
     void addResource(Document document, Part part, Map metadata) throws Exception;
 
     /**
+     * Delete a resource.
+     * @param resource The resource.
+     * @throws Exception if an error occurs
+     */
+    void deleteResource(Resource resource) throws Exception;
+
+    /**
      * Delete a resource from the document.
      * @param document The document.
      * @param name The filename of the resource.
@@ -122,5 +128,13 @@ public interface ResourcesManager {
      * @throws Exception when something went wrong.
      */
     void copyResources(Document sourceDocument, Document destinationDocument) throws Exception;
+
+    /**
+     * Retrieve a resource
+     * @param document The document the resource belongs to
+     * @param resourceName The name of the resource
+     * @return the resource, or null if no such resource exists.
+     */
+    Resource getResource(Document document, String resourceName);
 
 }
