@@ -450,6 +450,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public void delete() throws DocumentException {
         try {
             SourceUtil.delete(getSourceURI(), this.manager);
+            SourceUtil.delete(getMetaSourceURI(), this.manager);
             if (getArea().equals(Publication.AUTHORING_AREA)) {
                 SourceUtil.delete(getHistory().getSourceURI(), this.manager);
             }

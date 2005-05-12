@@ -16,11 +16,17 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Delete a language version.
@@ -43,6 +49,20 @@ public class DeleteLanguage extends DocumentUsecase {
         } else if (getSourceDocument().getLanguages().length == 1) {
             addErrorMessage("The last language version cannot be removed.");
         }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     */
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        List nodes = new ArrayList();
+        Document doc = getSourceDocument();
+        try {
+            nodes.addAll(Arrays.asList(doc.getRepositoryNodes()));
+        } catch (Exception e) {
+            throw new UsecaseException(e);
+        }
+        return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
     }
 
     /**
