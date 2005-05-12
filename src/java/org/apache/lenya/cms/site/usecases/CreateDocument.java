@@ -16,17 +16,11 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
-import java.util.Collections;
-
-import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to create a document.
@@ -82,82 +76,29 @@ public class CreateDocument extends Create {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.usecases.Create#createDocument()
+     * @see Create#getNewDocumentId()
      */
-    protected Document createDocument() throws Exception {
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("createDocument() called; first retrieving parent");
-
-        Document parent = getSourceDocument();
-
-        String documentId = parent.getId() + "/" + getParameterAsString(DOCUMENT_ID);
-        String navigationTitle = getParameterAsString(DublinCore.ELEMENT_TITLE);
-        String documentTypeName = getDocumentTypeName();
-        String language = getParameterAsString(LANGUAGE);
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("createDocument() read parameters:");
-            getLogger().debug("    Parent document:   [" + parent.getId() + "]");
-            getLogger().debug("    Child document:    [" + documentId + "]");
-            getLogger().debug("    Language:          [" + language + "]");
-            getLogger().debug("    Document Type:     [" + documentTypeName + "]");
-            getLogger().debug("    Navigation Title:  [" + navigationTitle + "]");
-        }
-
-        Publication publication = parent.getPublication();
-        String area = parent.getArea();
-
-        /*
-         * Get an instance of Document.
-         * This will (ultimately) be created by the implementation for
-         * the DocumentBuilder role.
-         */
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("createDocument() creating Document instance");
-        Document document = parent.getIdentityMap().get(publication,
-                area,
-                documentId,
-                language);
-        Transactionable[] nodes = document.getRepositoryNodes();
-        for (int i = 0; i < nodes.length; i++) {
-            nodes[i].lock();
-        }
-
-        /*
-         * Create an instance of DocumentType, and then
-         * use the creator for this DocumentType to actually
-         * physically create a document of this type.
-         */
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("createDocument() looking up a DocumentTypeBuilder so that we can call the creator");
-        DocumentTypeBuilder documentTypeBuilder = null;
-        DocumentType documentType = null;
-        try {
-            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
-
-            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
-
-            String parentId = parent.getId().substring(1);
-            String childId = document.getName();
-            ParentChildCreatorInterface creator = documentType.getCreator();
-            creator.create(
-                documentType.getSampleContentLocation(),
-                new File(publication.getContentDirectory(area), parentId),
-                childId,
-                ParentChildCreatorInterface.BRANCH_NODE,
-                navigationTitle,
-                language,
-                Collections.EMPTY_MAP);
-        } 
-        finally {
-            if (documentTypeBuilder != null) {
-                this.manager.release(documentTypeBuilder);
-            }
-        }
-
-        return document;
+    protected String getNewDocumentId() {
+        return getSourceDocument().getId() + "/" + getParameterAsString(DOCUMENT_ID);
     }
+
+    /**
+     * In this usecase, the parent document is simply the source
+     * document the usecase was invoked upon.
+     * @see Create#getParentDocument(Document)
+     */
+    protected Document getParentDocument(Document newDocument) throws DocumentBuildException {
+        return getSourceDocument();
+    }
+
+    /**
+     * New document: reference not relevant, use type sample
+     * @see Create#getInitialContentsURI(Document, DocumentType)
+     */
+    protected String getInitialContentsURI(Document referenceDocument, DocumentType type) {
+        return type.getSampleContentLocation();
+    }
+
 
     /**
      * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()

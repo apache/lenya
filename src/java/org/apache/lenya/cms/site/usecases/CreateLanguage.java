@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,22 +16,16 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to create a new language version of a resource.
@@ -105,65 +99,37 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.usecases.Create#createDocument()
+     * For new language version of a document, id is the same
+     * as that document's
+     * @see Create#getNewDocumentId()
      */
-    protected Document createDocument() throws Exception {
+    protected String getNewDocumentId() {
+        return getSourceDocument().getId();
+    }
 
-        Document source = getSourceDocument();
-        String navigationTitle = getParameterAsString(DublinCore.ELEMENT_TITLE);
-        String documentTypeName = getDocumentTypeName();
-        String language = getParameterAsString(LANGUAGE);
+    /**
+     * The parent document is retrieved via the new document's
+     * identity map.
+     * @see Create#getParentDocument(Document)
+     */
+    protected Document getParentDocument(Document newDocument) throws DocumentBuildException {
+        DocumentIdentityMap documentMap = newDocument.getIdentityMap();
+        Document parent = documentMap.getParent(newDocument);
+        return parent;
+    }
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Creating document language version");
-            getLogger().debug("    Child document:    [" + source.getId() + "]");
-            getLogger().debug("    Language:          [" + language + "]");
-            getLogger().debug("    Document Type:     [" + documentTypeName + "]");
-            getLogger().debug("    Navigation Title:  [" + navigationTitle + "]");
-        }
+    /**
+     * New language version of a document: 
+     * use that document's content
+     * @see Create#getInitialContentsURI(Document, DocumentType)
+     */
+    protected String getInitialContentsURI(Document referenceDocument, DocumentType type) {
+        // FIXME: this should be
+        //    return referenceDocument.getSourceURI();
+        // but this can only work if DefaultCreator no longer uses
+        // File to read initial contents, and can work with a Lenya URI
 
-        Publication publication = source.getPublication();
-        DocumentIdentityMap map = source.getIdentityMap();
-        String area = source.getArea();
-        Document document = map.get(publication, area, source.getId(), language);
-        Transactionable[] nodes = document.getRepositoryNodes();
-        for (int i = 0; i < nodes.length; i++) {
-            nodes[i].lock();
-        }
-
-        // create an instance of DocumentType
-        DocumentTypeBuilder documentTypeBuilder = null;
-        DocumentType documentType = null;
-        try {
-            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
-
-            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
-
-            String parentId = "";
-            Document parent = map.getParent(document);
-            if (parent != null) {
-                parentId = map.getParent(document).getId().substring(1);
-            }
-
-            String childId = document.getName();
-
-            documentType.getCreator().create(
-                documentType.getSampleContentLocation(),
-                new File(publication.getContentDirectory(area), parentId),
-                childId,
-                ParentChildCreatorInterface.BRANCH_NODE,
-                navigationTitle,
-                language,
-                Collections.EMPTY_MAP);
-        } 
-        finally {
-            if (documentTypeBuilder != null) {
-                this.manager.release(documentTypeBuilder);
-            }
-        }
-
-
-        return document;
+        return type.getSampleContentLocation();
     }
 
     /**
