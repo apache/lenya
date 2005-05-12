@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     protected DefaultSiteTree(Publication publication, String _area, ServiceManager manager)
             throws SiteException {
-        this.sourceUri = "lenya://lenya/pubs/" + publication.getId() + "/content/" + _area + "/"
+        this.sourceUri = publication.getSourceURI() + "/content/" + _area + "/"
                 + SITE_TREE_FILENAME;
         this.area = _area;
         this.manager = manager;

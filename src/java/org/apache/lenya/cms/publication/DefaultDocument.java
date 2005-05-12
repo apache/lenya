@@ -407,7 +407,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             try {
                 final String path = getPublication().getPathMapper()
                         .getPath(getId(), getLanguage());
-                final String uri = "lenya://lenya/pubs/" + getPublication().getId()
+                final String uri = getPublication().getSourceURI()
                         + "/content/workflow/history/" + path;
                 this.history = new CMSHistory(uri, this.manager);
             } catch (WorkflowException e) {
@@ -473,7 +473,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public String getSourceURI() {
         String path = publication.getPathMapper().getPath(getId(), getLanguage());
-        return "lenya://lenya/pubs/" + publication.getId() + "/content/" + getArea() + "/" + path;
+        return publication.getSourceURI() + "/content/" + getArea() + "/" + path;
     }
 
     /**

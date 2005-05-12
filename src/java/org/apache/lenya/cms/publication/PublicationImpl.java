@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
@@ -29,6 +27,7 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.lenya.cms.repository.Node;
 
 /**
  * A publication.
@@ -405,4 +404,12 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         loadConfiguration();
         return this.instantiatorHint;
     }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getSourceURI()
+     */
+    public String getSourceURI() {
+        return Node.LENYA_PROTOCOL + PUBLICATION_PREFIX_URI + "/" + this.id;
+    }
+
 }

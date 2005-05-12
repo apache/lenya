@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
@@ -106,7 +107,9 @@ public class FormsEditor extends DocumentUsecase {
         super.advance();
 
         String form = getParameterAsString("form");
-        String pubUrl = "context://lenya/pubs/" + getSourceDocument().getPublication().getId();
+        String pubUrl = "context://" 
+            + Publication.PUBLICATION_PREFIX + "/"
+            + getSourceDocument().getPublication().getId();
         String schemaUri = pubUrl + "/config/doctypes/schemas/" + form + ".rng";
         String unnumberTagsXslUri = "context://lenya/usecases/edit/forms/unnumberTags.xsl";
         String numberTagsXslUri = "context://lenya/usecases/edit/forms/numberTags.xsl";

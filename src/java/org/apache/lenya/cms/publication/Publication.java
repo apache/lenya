@@ -183,4 +183,9 @@ public interface Publication {
      */
     Publication[] getTemplates();
 
+    /**
+     * @return the URI source under which all contents of this
+     * publication can be accessed
+     */
+    String getSourceURI();
 }

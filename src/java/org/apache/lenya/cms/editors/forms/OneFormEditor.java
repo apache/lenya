@@ -31,6 +31,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
@@ -42,7 +43,7 @@ import org.xml.sax.SAXException;
 /**
  * One form editor.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class OneFormEditor extends DocumentUsecase {
 
@@ -86,8 +87,10 @@ public class OneFormEditor extends DocumentUsecase {
         }
 
         String pubId = getSourceDocument().getPublication().getId();
-        String schemaUri = "context://lenya/pubs/" + pubId + "/config/doctypes/schemas/"
-                + doctype.getName() + ".rng";
+        String schemaUri = "context://" 
+            + Publication.PUBLICATION_PREFIX_URI + "/" 
+            + pubId + "/config/doctypes/schemas/"
+            + doctype.getName() + ".rng";
         Source schemaSource = null;
         ModifiableSource xmlSource = null;
         SourceResolver resolver = null;

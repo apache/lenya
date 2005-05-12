@@ -98,13 +98,12 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
      * @return The directory URI where the resources are located.
      */
     public String getBaseURI() {
-        String resourcesUri = getResourcesURI().substring("lenya://".length());
+        String resourcesUri = getResourcesURI().substring(Node.LENYA_PROTOCOL.length());
         return "context://" + resourcesUri;
     }
 
     protected String getResourcesURI() {
-        String pubId = document.getPublication().getId();
-        String resourcesUri = "lenya://lenya/pubs/" + pubId + "/"
+        String resourcesUri = document.getPublication().getSourceURI() + "/"
                 + ResourcesManager.RESOURCES_PREFIX + "/" + document.getArea() + document.getId();
         return resourcesUri;
     }

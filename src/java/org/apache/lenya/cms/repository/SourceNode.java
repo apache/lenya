@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     protected String getRealSourceURI() {
-        return "context://" + this.sourceUri.substring("lenya://".length());
+        return "context://" + this.sourceUri.substring(Node.LENYA_PROTOCOL.length());
     }
 
     /**
@@ -135,9 +135,10 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @throws IOException if an error occurs.
      */
     protected String getRCPath() throws IOException {
-        String publicationsPath = this.sourceUri.substring("lenya://lenya/pubs/".length());
+        String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
+        String publicationsPath = this.sourceUri.substring(pubBase.length());
         String publicationId = publicationsPath.split("/")[0];
-        String path = "lenya://lenya/pubs/" + publicationId + "/";
+        String path = pubBase + publicationId + "/";
         return this.sourceUri.substring(path.length());
     }
 
@@ -162,7 +163,8 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     protected RevisionController getRevisionController() throws TransactionException {
         if (this.revisionController == null) {
             try {
-                String publicationsPath = this.sourceUri.substring("lenya://lenya/pubs/".length());
+                String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
+                String publicationsPath = this.sourceUri.substring(pubBase.length());
                 String publicationId = publicationsPath.split("/")[0];
 
                 Source contextSource = null;

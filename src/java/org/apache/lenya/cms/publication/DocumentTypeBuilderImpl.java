@@ -194,8 +194,7 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     Configuration sampleConf = creatorConf.getChild(SAMPLE_NAME, false);
                     if (sampleConf != null) {
                         String sampleLocation = sampleConf.getValue();
-                        // FIXME: is there a cleaner way to set this ?
-                        String pubBase = "lenya://lenya/pubs/" + publication.getId();
+                        String pubBase = publication.getSourceURI();
                         type.setSampleContentLocation(pubBase + "/" + DOCTYPE_SAMPLES + sampleLocation);
                     }
                 } 
