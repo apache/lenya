@@ -30,7 +30,7 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * Usecase to create a new language version of a resource.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class CreateLanguage extends Create {
 
@@ -124,12 +124,7 @@ public class CreateLanguage extends Create {
      * @see Create#getInitialContentsURI(Document, DocumentType)
      */
     protected String getInitialContentsURI(Document referenceDocument, DocumentType type) {
-        // FIXME: this should be
-        //    return referenceDocument.getSourceURI();
-        // but this can only work if DefaultCreator no longer uses
-        // File to read initial contents, and can work with a Lenya URI
-
-        return type.getSampleContentLocation();
+        return referenceDocument.getSourceURI();
     }
 
     /**

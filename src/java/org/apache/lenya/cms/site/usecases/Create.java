@@ -212,7 +212,7 @@ public abstract class Create extends AbstractUsecase {
             String childId = document.getName();
             ParentChildCreatorInterface creator = documentType.getCreator();
             creator.create(
-                getInitialContentsURI(parentDocument, documentType),
+                getInitialContentsURI(usecaseDocument, documentType),
                 new File(publication.getContentDirectory(area), parentId),
                 childId,
                 ParentChildCreatorInterface.BRANCH_NODE,

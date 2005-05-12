@@ -25,6 +25,9 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 
@@ -35,13 +38,15 @@ import org.w3c.dom.Document;
 public class DefaultCreator extends AbstractLogEnabled implements ParentChildCreatorInterface  {
 
     private String sampleResourceName = null;
+    private ServiceManager manager;
 
     /**
-     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration, Logger)
+     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration, ServiceManager, Logger)
      */
-    public void init(Configuration conf, Logger _logger) {
+    public void init(Configuration conf, ServiceManager _manager, Logger _logger) {
+        // parameter conf ignored: nothing to configure in current implementation
+        this.manager = _manager;
         ContainerUtil.enableLogging(this, _logger);
-        // nothing to configure in current implementation
     }
 
     /**
@@ -79,12 +84,13 @@ public class DefaultCreator extends AbstractLogEnabled implements ParentChildCre
         return "abstract_default";
     }
 
+
     /**
      * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#create(String, File,
      * String, short, String, String, Map)
       */
     public void create(
-        String samplesLocation,
+        String initialContentsURI,
         File parentDir,
         String childId,
         short childType,
@@ -98,24 +104,17 @@ public class DefaultCreator extends AbstractLogEnabled implements ParentChildCre
         String filename = getChildFileName(parentDir, id, language);
         String filenameMeta = getChildMetaFileName(parentDir, id, language);
 
+        // Read initial contents as DOM
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultCreator.create(), ready to read sample contents, samplesLocation [" + samplesLocation + "]");
+            getLogger().debug("DefaultCreator::create(), ready to read initial contents from URI [" + initialContentsURI + "]");
 
-        File sampleFile = null;
-        if (samplesLocation != null) {
-            sampleFile = new File(samplesLocation.replace('/', File.separatorChar));
-            if (!sampleFile.exists())
-               throw new FileNotFoundException("Sample file [" + sampleFile + "] not found, make sure you configured it within doctypes.xconf");
+        Document doc = null;
+        try {
+           doc = SourceUtil.readDOM(initialContentsURI, manager);
         }
-        else 
-            throw new Exception("sample configuration setup error, samplesLocation is not set - verify your doctypes.xconf");
-
-
-        // Read sample file
-        Document doc = DocumentHelper.readDocument(sampleFile);
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("sample document: " + doc);
+        catch (Exception e) {
+	    throw new DocumentException("could not read document at location [ " + initialContentsURI + "]", e);
+        }
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("transform sample file: ");

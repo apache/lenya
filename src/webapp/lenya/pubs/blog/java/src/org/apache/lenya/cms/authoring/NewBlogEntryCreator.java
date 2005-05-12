@@ -19,6 +19,7 @@ package org.apache.lenya.cms.authoring;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
 
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -45,10 +46,10 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
     private Date date;
 
     /**
-     *
+     * @see org.apache.lenya.cms.authoring.DefaultBranchCreator#init(Configuration, ServiceManager, Logger)
      */
-    public void init(Configuration conf, Logger _logger) {
-        super.init(conf, _logger);
+    public void init(Configuration conf, ServiceManager _manager, Logger _logger) {
+        super.init(conf, _manager, _logger);
 
         DateFormat fmtyyyy = new SimpleDateFormat("yyyy");
         DateFormat fmtMM = new SimpleDateFormat("MM");

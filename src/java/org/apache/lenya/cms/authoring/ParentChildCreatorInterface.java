@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
 
 /**
  * Interface for creation of hierarchical documents
@@ -48,9 +49,10 @@ public interface ParentChildCreatorInterface {
      * Configures the Creator, based on a configuration file.
      * 
      * @param doctypeConf A configuration.
+     * @param manager the service manager
      * @param logger A logger
      */
-    void init(Configuration doctypeConf, Logger logger);
+    void init(Configuration doctypeConf, ServiceManager manager, Logger logger);
 
     /**
      * Return the type of node this creator will create. It can be
@@ -86,7 +88,7 @@ public interface ParentChildCreatorInterface {
     /**
      * Create a new document.
      *
-     * @param samplesLocation the location where samples for this document can be found.
+     * @param initialContentsURI the URI where initial content for this document can be found.
      * @param parentDir in which directory the document is to be created.
      * @param childId the document id of the new document
      * @param childType the type of the new document.
@@ -97,7 +99,7 @@ public interface ParentChildCreatorInterface {
      * @exception Exception if an error occurs
      */
     void create(
-        String samplesLocation,
+        String initialContentsURI,
         File parentDir,
         String childId,
         short childType,

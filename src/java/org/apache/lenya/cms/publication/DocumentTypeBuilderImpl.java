@@ -182,7 +182,7 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     String creatorClassName = creatorConf.getAttribute(SRC_ATTRIBUTE);
                     Class creatorClass = Class.forName(creatorClassName);
                     creator = (ParentChildCreatorInterface) creatorClass.newInstance();
-                    creator.init(creatorConf, getLogger());
+                    creator.init(creatorConf, manager, getLogger());
                 } else {
                     creator = new DefaultBranchCreator();
                 }
@@ -194,7 +194,9 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     Configuration sampleConf = creatorConf.getChild(SAMPLE_NAME, false);
                     if (sampleConf != null) {
                         String sampleLocation = sampleConf.getValue();
-                        type.setSampleContentLocation(publication.getDirectory() + "/" + DOCTYPE_SAMPLES + sampleLocation);
+                        // FIXME: is there a cleaner way to set this ?
+                        String pubBase = "lenya://lenya/pubs/" + publication.getId();
+                        type.setSampleContentLocation(pubBase + "/" + DOCTYPE_SAMPLES + sampleLocation);
                     }
                 } 
 
