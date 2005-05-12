@@ -22,6 +22,8 @@
 <lenya:contentType>xml</lenya:contentType>
 </lenya:internal>
 <lenya:dc>
+        <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Lenya links</dc:title>
+        <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Lenya Development Team</dc:creator>
 </lenya:dc>
 </lenya:meta>
 </lenya:document>
