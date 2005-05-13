@@ -99,6 +99,15 @@ public class CreateLanguage extends Create {
     }
 
     /**
+     * For new language version of a document, name is the same
+     * as that document's
+     * @see Create#getNewDocumentName()
+     */
+    protected String getNewDocumentName() {
+        return getSourceDocument().getName();
+    }
+
+    /**
      * For new language version of a document, id is the same
      * as that document's
      * @see Create#getNewDocumentId()

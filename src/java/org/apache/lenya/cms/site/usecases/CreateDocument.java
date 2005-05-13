@@ -76,10 +76,17 @@ public class CreateDocument extends Create {
     }
 
     /**
+     * @see Create#getNewDocumentName()
+     */
+    protected String getNewDocumentName() {
+        return getParameterAsString(DOCUMENT_ID);
+    }
+
+    /**
      * @see Create#getNewDocumentId()
      */
     protected String getNewDocumentId() {
-        return getSourceDocument().getId() + "/" + getParameterAsString(DOCUMENT_ID);
+        return getSourceDocument().getId() + "/" + getNewDocumentName();
     }
 
     /**

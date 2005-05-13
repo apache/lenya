@@ -209,12 +209,11 @@ public abstract class Create extends AbstractUsecase {
             if (parentDocument != null)
                 parentId = parentDocument.getId().substring(1);
 
-            String childId = document.getName();
             ParentChildCreatorInterface creator = documentType.getCreator();
             creator.create(
                 getInitialContentsURI(usecaseDocument, documentType),
                 new File(publication.getContentDirectory(area), parentId),
-                childId,
+                getNewDocumentName(),
                 ParentChildCreatorInterface.BRANCH_NODE,
                 navigationTitle,
                 language,
@@ -229,6 +228,11 @@ public abstract class Create extends AbstractUsecase {
         return document;
     }
 
+
+    /**
+     * @return the name of the document being created in the usecase
+     */
+    protected abstract String getNewDocumentName();
 
     /**
      * @return the id of the new document being created in the usecase

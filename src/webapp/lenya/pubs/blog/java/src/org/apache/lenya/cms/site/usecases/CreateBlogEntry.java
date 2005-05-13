@@ -75,6 +75,10 @@ public class CreateBlogEntry extends DocumentUsecase {
         super.doCheckExecutionConditions();
     }
 
+    protected String getNewDocumentName() {
+        return getParameterAsString(DOCUMENT_ID);
+    }
+
     protected void doExecute() throws Exception {
         super.doExecute();
 
@@ -84,7 +88,7 @@ public class CreateBlogEntry extends DocumentUsecase {
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession(false);
 
-        String documentId = "/" + getParameterAsString(DOCUMENT_ID);
+        String documentId = "/" + getNewDocumentName();
         String title = getParameterAsString(DublinCore.ELEMENT_TITLE);
         String documentTypeName = getDocumentTypeName();
 
@@ -114,8 +118,6 @@ public class CreateBlogEntry extends DocumentUsecase {
 
             documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
 
-            String childId = document.getName();
-
             HashMap allParameters = new HashMap();
             allParameters.put(Identity.class.getName(), session.getAttribute(Identity.class.getName()));
             allParameters.put("title", title);
@@ -123,7 +125,7 @@ public class CreateBlogEntry extends DocumentUsecase {
             documentType.getCreator().create(
                 documentType.getSampleContentLocation(),
                 new File(publication.getContentDirectory(area), ""),
-                childId,
+                documentId,
                 ParentChildCreatorInterface.LEAF_NODE,
                 title,
                 language,
