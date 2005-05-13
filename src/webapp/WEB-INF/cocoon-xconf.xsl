@@ -342,6 +342,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
         <parameter name="tab" value="ipRanges"/>
       </view>
     </component-instance>
+    <component-instance name="admin.ipRangeGroups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeGroups">
+      <view template="admin/ipRangeGroups" menu="true">
+        <parameter name="tab" value="ipRanges"/>
+      </view>
+    </component-instance>
     <component-instance name="admin.deleteIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteIPRange">
       <view template="admin/deleteIPRange" menu="true">
         <parameter name="tab" value="ipRanges"/>
