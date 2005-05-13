@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@
   <property name="fullname" value="${ant.project.name}-${version}"/>
   <property name="distname" value="apache-${ant.project.name}-${version}"/>
   <property name="Name"     value="Apache Lenya"/>
-  <property name="year"     value="1999-2004"/>
+  <property name="year"     value="1999-2005"/>
 
   <property name="debug"          value="on"/>
   <property name="optimize"       value="on"/>
