@@ -32,7 +32,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
-import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -242,6 +241,7 @@ public abstract class Create extends AbstractUsecase {
     /**
      * @param newDocument the new document being created in the usecase
      * @return the new document's parent
+     * @throws DocumentBuildException if an error occurs.
      */
     protected abstract Document getParentDocument(Document newDocument) throws DocumentBuildException;
 
@@ -252,6 +252,7 @@ public abstract class Create extends AbstractUsecase {
      *
      * @param referenceDocument the document to use as reference for the initial contents
      * @param type the type of resource to be created
+     * @return A URI.
      */
     protected abstract String getInitialContentsURI(Document referenceDocument, DocumentType type);
 

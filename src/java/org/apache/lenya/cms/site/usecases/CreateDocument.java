@@ -20,7 +20,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.Publication;
 
 /**
  * Usecase to create a document.

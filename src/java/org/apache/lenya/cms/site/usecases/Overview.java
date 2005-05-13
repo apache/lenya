@@ -43,7 +43,7 @@ public class Overview extends SiteUsecase {
 
         try {
             // read parameters from Dublin Core meta-data
-            MetaData dc = (MetaData) getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
+            MetaData dc = getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
             setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));
             setParameter(DublinCore.ELEMENT_DESCRIPTION, dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
 
