@@ -337,7 +337,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
         <parameter name="tab" value="ipRanges"/>
       </view>
     </component-instance>
-    <component-instance name="admin.ipRangeProfileProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeProfile">
+    <component-instance name="admin.ipRangeProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeProfile">
       <view template="admin/ipRangeProfile" menu="true">
         <parameter name="tab" value="ipRanges"/>
       </view>

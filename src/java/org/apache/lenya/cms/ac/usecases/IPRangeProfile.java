@@ -20,6 +20,8 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -37,6 +39,13 @@ public class IPRangeProfile extends AccessControlUsecase {
     protected static final String PART_NUMBERS = "partNumbers";
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
+     */
+    protected void doCheckExecutionConditions() throws Exception {
+        IPRangeProfile.validateAddresses(this);
+    }
+    
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
@@ -44,10 +53,33 @@ public class IPRangeProfile extends AccessControlUsecase {
 
         String name = getParameterAsString(NAME);
         String description = getParameterAsString(DESCRIPTION);
+        
+        IPRange ipRange = getIPRange();
 
-        getIPRange().setName(name);
-        getIPRange().setDescription(description);
-        getIPRange().save();
+        ipRange.setName(name);
+        ipRange.setDescription(description);
+        
+        String networkString = "";
+        String subnetString = "";
+        
+        for (int i = 0; i < 4; i++) {
+            if (i > 0) {
+                networkString += ".";
+                subnetString += ".";
+            }
+            Part netPart = (Part) getParameter(IPRangeProfile.NETWORK_ADDRESS + "-" + i);
+            networkString += netPart.getValue();
+            Part subPart = (Part) getParameter(IPRangeProfile.SUBNET_MASK + "-" + i);
+            subnetString += subPart.getValue();
+        }
+
+        InetAddress networkAddress = InetAddress.getByName(networkString);
+        ipRange.setNetworkAddress(networkAddress.getAddress());
+
+        InetAddress subnetMask = InetAddress.getByName(subnetString);
+        ipRange.setSubnetMask(subnetMask.getAddress());
+
+        ipRange.save();
 
     }
 
@@ -79,11 +111,14 @@ public class IPRangeProfile extends AccessControlUsecase {
             InetAddress networkAddress = this.ipRange.getNetworkAddress();
             InetAddress subnetMask = this.ipRange.getSubnetMask();
 
+            List partNumbers = new ArrayList();
             for (byte i = 0; i < 4; i++) {
                 setParameter(NETWORK_ADDRESS + "-" + i, new Part(i, ""
                         + networkAddress.getAddress()[i]));
                 setParameter(SUBNET_MASK + "-" + i, new Part(i, "" + subnetMask.getAddress()[i]));
+                partNumbers.add(new Integer(i));
             }
+            setParameter(IPRangeProfile.PART_NUMBERS, partNumbers);
 
         }
     }
@@ -103,39 +138,6 @@ public class IPRangeProfile extends AccessControlUsecase {
                 }
                 usecase.setParameter(paramName, part);
             }
-        }
-    }
-
-    /**
-     * IP address holder.
-     */
-    public static class Address {
-        private Part[] parts = new Part[4];
-
-        /**
-         * Ctor.
-         */
-        public Address() {
-            for (byte i = 0; i < this.parts.length; i++) {
-                this.parts[i] = new Part(i);
-            }
-        }
-
-        /**
-         * Ctor.
-         * @param address The address.
-         */
-        public Address(InetAddress address) {
-            for (byte i = 0; i < this.parts.length; i++) {
-                this.parts[i] = new Part(i, "" + address.getAddress()[i]);
-            }
-        }
-
-        /**
-         * @return The parts of this address.
-         */
-        public Part[] getParts() {
-            return this.parts;
         }
     }
 

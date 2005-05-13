@@ -30,7 +30,6 @@ import org.apache.lenya.ac.file.FileIPRange;
 import org.apache.lenya.ac.file.FileIPRangeManager;
 import org.apache.lenya.ac.impl.AbstractItem;
 import org.apache.lenya.cms.ac.usecases.IPRangeProfile.Part;
-import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Usecase to add an IP range.
@@ -38,11 +37,9 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 public class AddIPRange extends AccessControlUsecase {
 
     /**
-     * Validates the request parameters.
-     * @throws UsecaseException if an error occurs.
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
-    void validate() throws UsecaseException {
-
+    protected void doCheckExecutionConditions() throws Exception {
         String id = getParameterAsString(IPRangeProfile.ID);
 
         IPRange existingIPRange = getIpRangeManager().getIPRange(id);
@@ -56,14 +53,6 @@ public class AddIPRange extends AccessControlUsecase {
         }
 
         IPRangeProfile.validateAddresses(this);
-
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        validate();
     }
 
     /**
@@ -78,13 +67,13 @@ public class AddIPRange extends AccessControlUsecase {
 
         IPRange ipRange = new FileIPRange(configDir, id);
         ContainerUtil.enableLogging(ipRange, getLogger());
-        
+
         ipRange.setName(name);
         ipRange.setDescription(description);
-        
+
         String networkString = "";
         String subnetString = "";
-        
+
         for (int i = 0; i < 4; i++) {
             if (i > 0) {
                 networkString += ".";
@@ -112,14 +101,11 @@ public class AddIPRange extends AccessControlUsecase {
     protected void initParameters() {
         super.initParameters();
         List partNumbers = new ArrayList();
-        partNumbers.add(new Integer(0));
-        partNumbers.add(new Integer(1));
-        partNumbers.add(new Integer(2));
-        partNumbers.add(new Integer(3));
-        setParameter(IPRangeProfile.PART_NUMBERS, partNumbers);
         for (byte i = 0; i < 4; i++) {
             setParameter(IPRangeProfile.NETWORK_ADDRESS + "-" + i, new Part(i));
             setParameter(IPRangeProfile.SUBNET_MASK + "-" + i, new Part(i));
+            partNumbers.add(new Integer(i));
         }
+        setParameter(IPRangeProfile.PART_NUMBERS, partNumbers);
     }
 }
