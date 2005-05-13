@@ -198,5 +198,5 @@ public interface Document extends MetaDataOwner, Workflowable, Identifiable {
      * @return The resource type of this document (formerly known as doctype)
      * @throws DocumentException if an error occurs.
      */
-    String getResourceType() throws DocumentException;
+    DocumentType getResourceType() throws DocumentException;
 }

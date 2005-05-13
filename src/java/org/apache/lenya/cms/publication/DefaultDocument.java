@@ -80,12 +80,12 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @param _logger a logger
      */
     protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
-            Publication publication, String _id, String _area, String _language,
-            Logger _logger) {
+            Publication publication, String _id, String _area, String _language, Logger _logger) {
 
         ContainerUtil.enableLogging(this, _logger);
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultDocument() creating new instance with _id [" + _id + "], _language [" + _language + "]");
+            getLogger().debug("DefaultDocument() creating new instance with _id [" + _id
+                    + "], _language [" + _language + "]");
 
         this.manager = manager;
         if (_id == null) {
@@ -102,7 +102,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         setArea(_area);
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultDocument() done building instance with _id [" + _id + "], _language [" + _language + "]");
+            getLogger().debug("DefaultDocument() done building instance with _id [" + _id
+                    + "], _language [" + _language + "]");
 
     }
 
@@ -396,7 +397,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return metaDataManager;
     }
 
-
     private History history;
 
     /**
@@ -407,8 +407,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             try {
                 final String path = getPublication().getPathMapper()
                         .getPath(getId(), getLanguage());
-                final String uri = getPublication().getSourceURI()
-                        + "/content/workflow/history/" + path;
+                final String uri = getPublication().getSourceURI() + "/content/workflow/history/"
+                        + path;
                 this.history = new CMSHistory(uri, this.manager);
             } catch (WorkflowException e) {
                 throw new RuntimeException(e);
@@ -519,13 +519,29 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return nodes;
     }
 
+    private DocumentType resourceType;
+
     /**
-     * Convenience method to read the document's resource type from
-     * the meta-data.
+     * Convenience method to read the document's resource type from the meta-data.
      * @see Document#getResourceType()
      */
-    public String getResourceType() throws DocumentException {
-        return getMetaDataManager().getLenyaMetaData().getFirstValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE);
+    public DocumentType getResourceType() throws DocumentException {
+        if (this.resourceType == null) {
+            String name = getMetaDataManager().getLenyaMetaData()
+                    .getFirstValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE);
+            DocumentTypeBuilder builder = null;
+            try {
+                builder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
+                this.resourceType = builder.buildDocumentType(name, getPublication());
+            } catch (Exception e) {
+                throw new DocumentException(e);
+            } finally {
+                if (builder != null) {
+                    this.manager.release(builder);
+                }
+            }
+        }
+        return this.resourceType;
     }
 
 }
