@@ -80,6 +80,7 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
      * @param id The IP range ID.
      */
     public FileIPRange(File configurationDirectory, String id) {
+        super(id);
         setConfigurationDirectory(configurationDirectory);
     }
 
