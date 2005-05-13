@@ -327,6 +327,26 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
         <parameter name="tab" value="ipRanges"/>
       </view>
     </component-instance>
+    <component-instance name="admin.addIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddIPRange">
+      <view template="admin/addIPRange" menu="true">
+        <parameter name="tab" value="ipRanges"/>
+      </view>
+    </component-instance>
+    <component-instance name="admin.ipRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRange">
+      <view template="admin/ipRange" menu="true">
+        <parameter name="tab" value="ipRanges"/>
+      </view>
+    </component-instance>
+    <component-instance name="admin.ipRangeProfileProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeProfile">
+      <view template="admin/ipRangeProfile" menu="true">
+        <parameter name="tab" value="ipRanges"/>
+      </view>
+    </component-instance>
+    <component-instance name="admin.deleteIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteIPRange">
+      <view template="admin/deleteIPRange" menu="true">
+        <parameter name="tab" value="ipRanges"/>
+      </view>
+    </component-instance>
     <component-instance name="admin.emptyTrash" logger="lenya.admin" class="org.apache.lenya.cms.site.usecases.EmptyTrash">
       <view template="admin/emptyTrash" menu="true">
         <parameter name="tab" value="trash"/>
@@ -337,12 +357,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
         <parameter name="tab" value="serverStatus"/>
       </view>
     </component-instance>
-
-    <!--
-    <component-instance name="admin.addIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddIPRange"/>
-    <component-instance name="admin.ipRangeProfileProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeProfile"/>
-    <component-instance name="admin.deleteIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteIPRange"/>
-    -->
 
     <!--+
         | Search usecases
@@ -427,13 +441,17 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     </component-instance>
     <component-instance name="edit.insertImage" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.InsertAsset">
-      <view template="edit/insertAsset" menu="false"/>
+      <view template="edit/insertAsset" menu="false">
+        <parameter name="callbackFunction" value="insertImage"/>
+      </view>
       <parameter name="mimeTypePrefix" value="image/"/>
       <parameter name="asset-usecase" value="tab.assets"/>
     </component-instance>
     <component-instance name="edit.insertAsset" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.InsertAsset">
-      <view template="edit/insertAsset" menu="false"/>
+      <view template="edit/insertAsset" menu="false">
+        <parameter name="callbackFunction" value="insertAsset"/>
+      </view>
       <parameter name="asset-usecase" value="tab.assets"/>
     </component-instance>
     <component-instance name="edit.forms" logger="lenya.publication"
@@ -445,6 +463,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
                         class="org.apache.lenya.cms.editors.forms.OneFormEditor">
       <transaction policy="pessimistic"/>
       <view template="edit/forms/oneform" menu="false"/>
+    </component-instance>
+    <component-instance name="edit.bxe" logger="lenya.publication"
+                        class="org.apache.lenya.cms.editors.Editor">
+      <transaction policy="pessimistic"/>
+      <view template="edit/bxe/bxe" menu="false"/>
     </component-instance>
   </usecases>
 
