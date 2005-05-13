@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.Date;
 
 import org.apache.lenya.cms.metadata.MetaDataOwner;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.transaction.Identifiable;
@@ -197,6 +196,7 @@ public interface Document extends MetaDataOwner, Workflowable, Identifiable {
 
     /**
      * @return The resource type of this document (formerly known as doctype)
+     * @throws DocumentException if an error occurs.
      */
     String getResourceType() throws DocumentException;
 }
