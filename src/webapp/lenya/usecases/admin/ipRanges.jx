@@ -57,7 +57,7 @@
         <jx:forEach var="ipRange" items="${usecase.getParameter('ipRanges')}">
           <tr>
             <td style="vertical-align: middle">
-              <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.ipRangeProfile&amp;ipRangeId=${ipRange.getId()}"><jx:out value="${ipRange.getId()}"/></a>
+              <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.ipRange&amp;ipRangeId=${ipRange.getId()}"><jx:out value="${ipRange.getId()}"/></a>
             </td>
             <td style="vertical-align: middle">
               <jx:out value="${ipRange.getName()}"/>
