@@ -33,7 +33,6 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
@@ -43,7 +42,7 @@ import org.apache.lenya.cms.workflow.WorkflowManager;
 /**
  * DocumentManager implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentManager,
         Serviceable, Contextualizable {

@@ -24,7 +24,6 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
-import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repository.Node;
@@ -47,6 +46,7 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
      * @param document The document the resource belongs to.
      * @param name The name.
      * @param manager The service manager.
+     * @param _logger The logger.
      */
     public Resource(Document document, String name, ServiceManager manager, Logger _logger) {
         ContainerUtil.enableLogging(this, _logger);

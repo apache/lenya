@@ -186,7 +186,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
+     * Saves the collection. 
+     * @throws TransactionException if an error occurs.
      */
     public void save() throws TransactionException {
         try {

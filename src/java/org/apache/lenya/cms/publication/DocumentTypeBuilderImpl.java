@@ -35,18 +35,17 @@ import org.apache.lenya.cms.authoring.DefaultBranchCreator;
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
 import org.xml.sax.SAXException;
 
-
 /**
  * A service for building an instance of DocumentType.
- *
- * Since this service is very frequently used, it is implemented as a poolable
- * service. Furthermore, the instances are cached, to avoid re-reading
- * configuration unless necessary (that is, when the configuration file
- * has changed).
+ * 
+ * Since this service is very frequently used, it is implemented as a poolable service. Furthermore,
+ * the instances are cached, to avoid re-reading configuration unless necessary (that is, when the
+ * configuration file has changed).
  * 
  * @version $Id$
  */
-public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements DocumentTypeBuilder, Serviceable, Poolable {
+public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
+        DocumentTypeBuilder, Serviceable, Poolable {
 
     /** Creates a new instance of DocumentTypeBuilder */
     public DocumentTypeBuilderImpl() {
@@ -56,16 +55,17 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
     /**
      * The default document types configuration directory, relative to the publication directory.
      */
-    private static final String DOCTYPE_DIRECTORY = "config/doctypes".replace('/', File.separatorChar);
+    private static final String DOCTYPE_DIRECTORY = "config/doctypes".replace('/',
+            File.separatorChar);
 
     /**
-     * The location of sample contents for this resource type.
-     * Note that this need not be a file.
+     * The location of sample contents for this resource type. Note that this need not be a file.
      */
     private static final String DOCTYPE_SAMPLES = "config/doctypes/samples/";
 
     /**
-     * <code>CONFIG_FILE</code> The default document types configuration file, relative to the publication directory.
+     * <code>CONFIG_FILE</code> The default document types configuration file, relative to the
+     * publication directory.
      */
     public static final String CONFIG_FILE = "doctypes.xconf";
     /**
@@ -110,18 +110,16 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
      */
     public static final String SAMPLE_NAME = "sample-name";
 
-
-
     /**
      * Builds an instance of document type for a given resource type name.
-     *
+     * 
      * @param name The name of the resource type
      * @param publication The publication the document type belongs to.
      * @return A document type object.
      * @throws DocumentTypeBuildException When something went wrong.
      */
     public DocumentType buildDocumentType(String name, Publication publication)
-        throws DocumentTypeBuildException {
+            throws DocumentTypeBuildException {
 
         if (publication == null)
             throw new DocumentTypeBuildException("illegal usage, publication is null");
@@ -129,8 +127,8 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
         // see if configuration has changed since last load.
         // if it has, do not use cache.
         boolean useCache = isEntryUptodate(confLastModifiedCache,
-                                           publication.getId(), 
-                                           getDocTypeConfigFile(publication).lastModified());
+                publication.getId(),
+                getDocTypeConfigFile(publication).lastModified());
 
         // this will refer to the returned instance
         DocumentType type = null;
@@ -141,7 +139,9 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
         }
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("buildDocumentType() called with name [" + name + "], publication.getId [" + publication.getId() + "], lookInCache [" + useCache + "], is in cache [" + (type != null) + "]");
+            getLogger().debug("buildDocumentType() called with name [" + name
+                    + "], publication.getId [" + publication.getId() + "], lookInCache ["
+                    + useCache + "], is in cache [" + (type != null) + "]");
 
         if (type == null) {
 
@@ -195,10 +195,10 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     if (sampleConf != null) {
                         String sampleLocation = sampleConf.getValue();
                         String pubBase = publication.getSourceURI();
-                        type.setSampleContentLocation(pubBase + "/" + DOCTYPE_SAMPLES + sampleLocation);
+                        type.setSampleContentLocation(pubBase + "/" + DOCTYPE_SAMPLES
+                                + sampleLocation);
                     }
-                } 
-
+                }
 
                 Configuration workflowConf = doctypeConf.getChild(WORKFLOW_ELEMENT, false);
 
@@ -206,8 +206,9 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     String workflowFileName = workflowConf.getAttribute(SRC_ATTRIBUTE);
                     type.setWorkflowFileName(workflowFileName);
                 }
-            
-                Configuration[] rewriteAttributeConfigs = doctypeConf.getChildren(ELEMENT_REWRITE_ATTRIBUTE);
+
+                Configuration[] rewriteAttributeConfigs = doctypeConf
+                        .getChildren(ELEMENT_REWRITE_ATTRIBUTE);
                 List xPaths = new ArrayList();
                 for (int i = 0; i < rewriteAttributeConfigs.length; i++) {
                     String xPath = rewriteAttributeConfigs[i].getAttribute(ATTRIBUTE_XPATH);
@@ -215,7 +216,7 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                 }
                 String[] xPathArray = (String[]) xPaths.toArray(new String[xPaths.size()]);
                 type.setLinkAttributeXPaths(xPathArray);
-            
+
                 docTypeCache.add(publication.getId(), name, type);
 
             } catch (final ConfigurationException e) {
@@ -240,37 +241,39 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
 
     // for each publication key, stores a hash of docType objects
     private DocTypeCache docTypeCache = new DocTypeCache();
-    
 
     private Hashtable confCache = new Hashtable();
     private Hashtable confLastModifiedCache = new Hashtable();
 
-    private Configuration getDocTypeConfiguration(Publication _publication) throws DocumentTypeBuildException, SAXException, IOException, ConfigurationException {
+    private Configuration getDocTypeConfiguration(Publication _publication)
+            throws DocumentTypeBuildException, SAXException, IOException, ConfigurationException {
 
         Object conf = confCache.get(_publication.getId());
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("getDocTypeConfiguration() for publication [" + _publication.getId() + "], conf in cache ? " + (conf != null));
+            getLogger().debug("getDocTypeConfiguration() for publication [" + _publication.getId()
+                    + "], conf in cache ? " + (conf != null));
 
         File configFile = getDocTypeConfigFile(_publication);
-        if (! configFile.exists())
-            throw new DocumentTypeBuildException("configuration file for publication [" + _publication.getId() + "] does not exist");
+        if (!configFile.exists())
+            throw new DocumentTypeBuildException("configuration file for publication ["
+                    + _publication.getId() + "] does not exist");
 
-        if (conf == null || 
-            ! isEntryUptodate(confLastModifiedCache,
-                              _publication.getId(), 
-                              configFile.lastModified())) {
+        if (conf == null
+                || !isEntryUptodate(confLastModifiedCache, _publication.getId(), configFile
+                        .lastModified())) {
 
             // load / reload the configuration from file
             if (getLogger().isDebugEnabled())
-                getLogger().debug("getDocTypeConfiguration() reloading configuration for publication [" + _publication.getId() + "]");
+                getLogger()
+                        .debug("getDocTypeConfiguration() reloading configuration for publication ["
+                                + _publication.getId() + "]");
 
             conf = new DefaultConfigurationBuilder().buildFromFile(configFile);
 
             // put in cache
             confCache.put(_publication.getId(), conf);
-            confLastModifiedCache.put(_publication.getId(), 
-                                      new Long(configFile.lastModified()));
+            confLastModifiedCache.put(_publication.getId(), new Long(configFile.lastModified()));
         }
 
         return (Configuration) conf;
@@ -281,29 +284,37 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
         boolean isUptodate = false;
         Object lastModifiedEntry = entryTimestamps.get(key);
         if (lastModifiedEntry != null) {
-            long oldTimestamp = ((Long)lastModifiedEntry).longValue();
+            long oldTimestamp = ((Long) lastModifiedEntry).longValue();
             if (timestamp <= oldTimestamp)
                 isUptodate = true;
 
-            if (getLogger().isDebugEnabled()) 
-                getLogger().debug("isEntryUptodate() called for key [" + key + "] and timestamp [" + timestamp + "], current timestamp is [" + timestamp + "], returning " + isUptodate);
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("isEntryUptodate() called for key [" + key + "] and timestamp ["
+                        + timestamp + "], current timestamp is [" + timestamp + "], returning "
+                        + isUptodate);
 
-        }
-        else {
-            if (getLogger().isDebugEnabled()) 
-                getLogger().debug("isEntryUptodate() has no previous entry, returning [" + isUptodate);
+        } else {
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("isEntryUptodate() has no previous entry, returning ["
+                        + isUptodate);
         }
 
         return isUptodate;
     }
 
-    /** configFile must exist; otherwise exception is thrown */
+    /**
+     * @param _publication The publication.
+     * @return The doctype configuration file.
+     * @throws DocumentTypeBuildException if the configuration file does not exist.
+     */
     private File getDocTypeConfigFile(Publication _publication) throws DocumentTypeBuildException {
 
         File configDirectory = new File(_publication.getDirectory(), DOCTYPE_DIRECTORY);
         File ret = new File(configDirectory, CONFIG_FILE);
-        if (! ret.exists())
-            throw new DocumentTypeBuildException("Resource types configuration file for publication " + _publication.getId() + " does not exist; should be located at [" + ret.getPath() + "]");
+        if (!ret.exists())
+            throw new DocumentTypeBuildException(
+                    "Resource types configuration file for publication " + _publication.getId()
+                            + " does not exist; should be located at [" + ret.getPath() + "]");
 
         return ret;
     }
@@ -317,35 +328,32 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
         this.manager = manager;
     }
 
-
     private class DocTypeCache {
 
-       // for each publication key, stores a hash of docType objects
-       private Hashtable cache = new Hashtable();
-    
-       void add(String publicationId, String docTypeName, DocumentType type) {
-           Object docTypes = cache.get(publicationId);
-           if (docTypes == null) {
-               Hashtable docTypesTable = new Hashtable();
-               docTypesTable.put(docTypeName, type);
-               cache.put(publicationId, docTypesTable);
-           }
-           else {
-               Hashtable docTypesTable = (Hashtable)docTypes;
-               docTypesTable.put(docTypeName, type);
-           }
-       }
+        // for each publication key, stores a hash of docType objects
+        private Hashtable cache = new Hashtable();
 
-       DocumentType get(String publicationId, String docTypeName) {
-           DocumentType ret = null;
-           Object docTypes = cache.get(publicationId);
-           if (docTypes != null) {
-               Hashtable docTypesTable = (Hashtable)docTypes;
-               ret = (DocumentType)docTypesTable.get(docTypeName);
-           }
-           return ret;
-       }
+        void add(String publicationId, String docTypeName, DocumentType type) {
+            Object docTypes = cache.get(publicationId);
+            if (docTypes == null) {
+                Hashtable docTypesTable = new Hashtable();
+                docTypesTable.put(docTypeName, type);
+                cache.put(publicationId, docTypesTable);
+            } else {
+                Hashtable docTypesTable = (Hashtable) docTypes;
+                docTypesTable.put(docTypeName, type);
+            }
+        }
+
+        DocumentType get(String publicationId, String docTypeName) {
+            DocumentType ret = null;
+            Object docTypes = cache.get(publicationId);
+            if (docTypes != null) {
+                Hashtable docTypesTable = (Hashtable) docTypes;
+                ret = (DocumentType) docTypesTable.get(docTypeName);
+            }
+            return ret;
+        }
     }
-
 
 }
