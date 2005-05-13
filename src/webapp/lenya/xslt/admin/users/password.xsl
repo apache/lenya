@@ -20,14 +20,14 @@
 <xsl:stylesheet
     version="1.0"
     xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:session="http://www.apache.org/xsp/session/2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     >
-    
-  <xsl:output encoding="ISO-8859-1" indent="yes" version="1.0"/>
-  
-  
+
+  <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
+
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
