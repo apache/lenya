@@ -464,11 +464,13 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <transaction policy="pessimistic"/>
       <view template="edit/forms/oneform" menu="false"/>
     </component-instance>
+<!--
     <component-instance name="edit.bxe" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.Editor">
       <transaction policy="pessimistic"/>
       <view template="edit/bxe/bxe" menu="false"/>
     </component-instance>
+-->
   </usecases>
 
   <component role="org.apache.cocoon.components.cron.CronJob/usecase"
