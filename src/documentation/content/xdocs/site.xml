@@ -104,6 +104,7 @@
                 <newpub href="new_publication.html" label="New Publication"/>
                 <deploypub href="deploy_publication.html" label="Deploy Publication"/>
                 <lookandfeel href="look_and_feel.html" label="Look and Feel"/>
+                <customresourcetype  href="custom_resourcetype.html" label="Custom Resource Type"/>
             </howtos>
             <components href="components/" label="Components">
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">
