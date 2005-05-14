@@ -230,9 +230,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     /**
-     * Return the directory of a specific area.
-     * @param area a <code>File</code> representing the root of the area content directory.
-     * @return the directory of the given content area.
+     * @see org.apache.lenya.cms.publication.Publication#getContentDirectory(String)
      */
     public File getContentDirectory(String area) {
         return new File(getDirectory(), CONTENT_PATH + File.separator + area);
@@ -411,5 +409,13 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public String getSourceURI() {
         return Node.LENYA_PROTOCOL + PUBLICATION_PREFIX_URI + "/" + this.id;
     }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getContentDirectory(String)
+     */
+    public String getContentURI(String area) {
+        return getSourceURI() + "/" + CONTENT_PATH + "/" + area;
+    }
+
 
 }

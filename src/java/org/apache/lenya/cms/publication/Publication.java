@@ -184,8 +184,13 @@ public interface Publication {
     Publication[] getTemplates();
 
     /**
-     * @return the URI source under which all contents of this
-     * publication can be accessed
+     * @return the URI base for this publication
      */
     String getSourceURI();
+
+    /**
+     * @return the URI base under which contents in this publication are accessed
+     */
+    String getContentURI(String area);
+
 }
