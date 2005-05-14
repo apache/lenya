@@ -35,7 +35,7 @@ public class MetaDataManager extends AbstractLogEnabled {
     private String sourceUri;
     private ServiceManager serviceManager;
 
-    private DublinCoreImpl dublinCore;
+    private DublinCoreImpl dublinCoreMetaData;
     private LenyaMetaData lenyaMetaData;
     private CustomMetaData customMetaData;
 
@@ -54,10 +54,20 @@ public class MetaDataManager extends AbstractLogEnabled {
      * @throws DocumentException if the meta-data could not be retrieved
      */
     public DublinCoreImpl getDublinCoreMetaData() throws DocumentException {
-        if (dublinCore == null) {
-            dublinCore = new DublinCoreImpl(this.sourceUri, this.serviceManager, getLogger());
+        if (dublinCoreMetaData == null) {
+            dublinCoreMetaData = new DublinCoreImpl(this.sourceUri, this.serviceManager, getLogger());
         }
-        return dublinCore;
+        return dublinCoreMetaData;
+    }
+
+    /**
+     * Set the dublin-core meta-data managed by this instance.
+     * @param dcMetaDataValues the dublin-core meta-data
+     * @throws DocumentException if the meta-data could not be written
+     */
+    public void setDublinCoreMetaData(Map dcMetaDataValues) throws DocumentException {
+        dublinCoreMetaData = new DublinCoreImpl(this.sourceUri, this.serviceManager, getLogger());
+        setMetaData(dublinCoreMetaData, dcMetaDataValues);
     }
 
     /**
@@ -73,6 +83,16 @@ public class MetaDataManager extends AbstractLogEnabled {
     }
 
     /**
+     * Set the Lenya internal meta-data managed by this instance.
+     * @param lenyaMetaDataValues the Lenya meta-data
+     * @throws DocumentException if the meta-data could not be written
+     */
+    public void setLenyaMetaData(Map lenyaMetaDataValues) throws DocumentException {
+        lenyaMetaData = new LenyaMetaData(this.sourceUri, this.serviceManager, getLogger());
+        setMetaData(lenyaMetaData, lenyaMetaDataValues);
+    }
+
+    /**
      * Retrieve the custom meta-data managed by this instance.
      * @return the custom meta-data
      * @throws DocumentException if the meta-data could not be retrieved
@@ -82,6 +102,16 @@ public class MetaDataManager extends AbstractLogEnabled {
             customMetaData = new CustomMetaData(this.sourceUri, this.serviceManager, getLogger());
         }
         return customMetaData;
+    }
+
+    /**
+     * Set the custom meta-data managed by this instance.
+     * @param customMetaDataValues the custom meta-data
+     * @throws DocumentException if the meta-data could not be written
+     */
+    public void setCustomMetaData(Map customMetaDataValues) throws DocumentException {
+        customMetaData = new CustomMetaData(this.sourceUri, this.serviceManager, getLogger());
+        setMetaData(customMetaData, customMetaDataValues);
     }
 
     /**
