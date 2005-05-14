@@ -25,7 +25,7 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Repository node.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface Node extends Transactionable {
 
@@ -74,5 +74,12 @@ public interface Node extends Transactionable {
      * @throws TransactionException if the node does not exist.
      */
     String getMimeType() throws TransactionException;
+
+    /**
+     * Accessor for the source URI of this node
+     * @return the source URI
+     * @throws TransactionException if the node does not exist.
+     */
+    String getSourceURI();
 
 }

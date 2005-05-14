@@ -44,23 +44,23 @@ import org.apache.lenya.transaction.TransactionException;
 /**
  * A repository node.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class SourceNode extends AbstractLogEnabled implements Node {
 
-    private String sourceUri;
+    private String sourceURI;
     private ServiceManager manager;
     private IdentityMap identityMap;
 
     /**
      * Ctor.
      * @param map
-     * @param sourceUri
+     * @param sourceURI
      * @param manager
      * @param logger
      */
-    public SourceNode(IdentityMap map, String sourceUri, ServiceManager manager, Logger logger) {
-        this.sourceUri = sourceUri;
+    public SourceNode(IdentityMap map, String sourceURI, ServiceManager manager, Logger logger) {
+        this.sourceURI = sourceURI;
         this.manager = manager;
         enableLogging(logger);
         this.identityMap = map;
@@ -79,7 +79,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     protected String getRealSourceURI() {
-        return "context://" + this.sourceUri.substring(Node.LENYA_PROTOCOL.length());
+        return "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
     }
 
     /**
@@ -87,7 +87,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      */
     public void checkin() throws TransactionException {
         if (!isCheckedOut()) {
-            throw new TransactionException("Cannot check in node [" + this.sourceUri
+            throw new TransactionException("Cannot check in node [" + this.sourceURI
                     + "]: not checked out!");
         }
 
@@ -119,7 +119,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     public void checkout() throws TransactionException {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("SourceNode::checkout() called, sourceUri [" + sourceUri + "]");
+            getLogger().debug("SourceNode::checkout() called, sourceURI [" + sourceURI + "]");
 
         if (!isCheckedOut()) {
             try {
@@ -136,10 +136,10 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      */
     protected String getRCPath() throws IOException {
         String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
-        String publicationsPath = this.sourceUri.substring(pubBase.length());
+        String publicationsPath = this.sourceURI.substring(pubBase.length());
         String publicationId = publicationsPath.split("/")[0];
         String path = pubBase + publicationId + "/";
-        return this.sourceUri.substring(path.length());
+        return this.sourceURI.substring(path.length());
     }
 
     /**
@@ -148,7 +148,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     public void deleteTransactionable() throws TransactionException {
         try {
             if (!isCheckedOut()) {
-                throw new RuntimeException("Cannot delete source [" + this.sourceUri
+                throw new RuntimeException("Cannot delete source [" + this.sourceURI
                         + "]: not checked out!");
             } else {
                 SourceUtil.delete(getRealSourceURI(), this.manager);
@@ -164,7 +164,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         if (this.revisionController == null) {
             try {
                 String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
-                String publicationsPath = this.sourceUri.substring(pubBase.length());
+                String publicationsPath = this.sourceURI.substring(pubBase.length());
                 String publicationId = publicationsPath.split("/")[0];
 
                 Source contextSource = null;
@@ -222,7 +222,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      */
     public void saveTransactionable() throws TransactionException {
         if (!isCheckedOut()) {
-            throw new TransactionException("Cannot save node [" + this.sourceUri
+            throw new TransactionException("Cannot save node [" + this.sourceURI
                     + "]: not checked out!");
         }
         if (getLogger().isDebugEnabled()) {
@@ -343,7 +343,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "node " + this.sourceUri;
+        return "node " + this.sourceURI;
     }
 
     private byte[] data = null;
@@ -510,5 +510,13 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             }
         }
     }
+
+    /**
+     * @see org.apache.lenya.cms.repository.Node#getSourceURI()
+     */
+    public String getSourceURI() {
+        return sourceURI;
+    }
+
 
 }
