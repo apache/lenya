@@ -204,7 +204,7 @@ public abstract class Create extends AbstractUsecase {
             documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
 
             String parentId = "";
-            Document parentDocument = getParentDocument(document);
+            Document parentDocument = getParentDocument();
             if (parentDocument != null)
                 parentId = parentDocument.getId().substring(1);
 
@@ -239,11 +239,11 @@ public abstract class Create extends AbstractUsecase {
     protected abstract String getNewDocumentId();
 
     /**
-     * @param newDocument the new document being created in the usecase
-     * @return the new document's parent
+     * Determine the parent document of the document being created by this usecase
+     * @return the parent document
      * @throws DocumentBuildException if an error occurs.
      */
-    protected abstract Document getParentDocument(Document newDocument) throws DocumentBuildException;
+    protected abstract Document getParentDocument() throws DocumentBuildException;
 
     /**
      * If there is a reference document from which to copy contents, 

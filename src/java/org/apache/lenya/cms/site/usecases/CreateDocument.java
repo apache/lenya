@@ -89,11 +89,10 @@ public class CreateDocument extends Create {
     }
 
     /**
-     * In this usecase, the parent document is simply the source
-     * document the usecase was invoked upon.
-     * @see Create#getParentDocument(Document)
+     * In this usecase, the parent document is simply the source document the usecase was invoked upon.
+     * @see Create#getParentDocument()
      */
-    protected Document getParentDocument(Document newDocument) throws DocumentBuildException {
+    protected Document getParentDocument() throws DocumentBuildException {
         return getSourceDocument();
     }
 

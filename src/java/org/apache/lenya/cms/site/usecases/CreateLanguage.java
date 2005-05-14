@@ -117,13 +117,12 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * The parent document is retrieved via the new document's
-     * identity map.
-     * @see Create#getParentDocument(Document)
+     * For new language version, the parent document is the same as for the document the usecase is called on
+     * @see Create#getParentDocument()
      */
-    protected Document getParentDocument(Document newDocument) throws DocumentBuildException {
-        DocumentIdentityMap documentMap = newDocument.getIdentityMap();
-        Document parent = documentMap.getParent(newDocument);
+    protected Document getParentDocument() throws DocumentBuildException {
+        DocumentIdentityMap documentMap = getSourceDocument().getIdentityMap();
+        Document parent = documentMap.getParent(getSourceDocument());
         return parent;
     }
 
