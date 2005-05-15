@@ -108,6 +108,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
 
         // Get parameters
         String parentid = request.getParameter("parentid");
+        if (parentid == null) {
+            getLogger().warn("No parentid parameter defined! It might be necessary to specify a parentid request parameter.");
+        }
         String childid = request.getParameter("childid");
         if (childid == null) {
             getLogger().error("No childid parameter defined! Please specify childid as request parameter.");
@@ -260,7 +263,7 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
                 new File(sitemapParentPath + docsPath + parentid), childid, childType, childname, language,
                 allParameters);
         } catch (Exception e) {
-            getLogger().error(".act(): Creator threw exception: " + e);
+            getLogger().error("Creator threw exception: " + e);
         }
 
         // Redirect to referer
