@@ -203,7 +203,40 @@
 					<p>For an explaination of the workflow engine, see the workflow engine (coming soon).</p>
 				</section>
 			
-			</section>	
+<section><title id="head-fbc9e3a3c8fa10b2383dbed3e8d0afbfc73fa211">The "lenya:" scheme</title>
+
+<p>When reading the sitemaps in Lenya 1.4 you probably came across the lenya-scheme, often also referred to as the lenya protocol. For example, in the doctypes.xmap, you will find this section: </p>
+
+<pre>
+      &lt;!-- parametrized doctype matcher --&gt;
+      &lt;!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" --&gt;
+      &lt;map:match pattern="*/*/*/**.xml"&gt;
+        &lt;map:generate src="lenya:/{4}.xml"/&gt;
+        &lt;map:transform src="fallback://xslt/{3}2xhtml.xsl"&gt;
+
+</pre>
+<p>The lenya: scheme just needs the document path to locate the source document, i.e. lenya:/concepts/index_en.xml. All other elements of the actual storage location of the document (publication id and area) will be read from the page envelope and interpreted in the LenyaSourceFactory. </p>
+<p>In other words: The lenya: scheme hides the storage implementation details from the sitemap. </p>
+
+<section><title id="head-6e96c3b9146b3a1dcac05ffbfa66643b3bf9a363">What is a scheme?</title>
+
+<p>The lenya scheme is a virtual protocol in Cocoon, similar to the cocoon and context scheme. </p>
+<p>Note: In case you are not familiar with the latest official naming of the components of a URI or you still think that a URL is the same as a URI, please read this: <a  href="http://www.bernzilla.com/item.php?id=100"> http://www.bernzilla.com/item.php?id=100</a>. </p>
+<p>The two sentence summary: </p>
+
+<p>The URI <a  href="http://lenya.apache.org/"> http://lenya.apache.org/</a> is a URL. The URL is a special case of a URI. "http" is the scheme, which in a URL referes directly to a TCP/IP protocol. The part left of the colon (http) defines how the part right of the colon (//lenya.apache.org/) is to be interpreted by selecting an appropriate handler. </p>
+<p>The JDK provides build-in mechanisms to handle many common schemes such as file, http, ftp and some more. But Cocoon adds an additional layer through its Excalibur SourceResolver system, see: <a  href="http://excalibur.apache.org/sourceresolve/index.html"> http://excalibur.apache.org/sourceresolve/index.html</a>. </p>
+<p>Lenya hooks in there with the LenyaSourceFactory which defines the lenya schema. The actual implementation is in the org.apache.lenya.cms.cocoon.source.LenyaSourceFactory class, see </p>
+<ul>
+<li><p> <a  href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/LenyaSourceFactory.html">LenyaSourceFactory JavaDoc</a> </p>
+
+</li>
+<li><p> <a   href="http://svn.apache.org/viewcvs.cgi/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/LenyaSourceFactory.java"> LenyaSourceFactory source code</a> </p>
+</li>
+</ul>			
+</section>
+</section>
+</section>	
 			
 		
 	</body>
