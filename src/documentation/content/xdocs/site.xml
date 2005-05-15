@@ -216,7 +216,7 @@
             <misc href="misc/" label="Miscellaneous" wholesite="true">
                 <namespaces href="namespaces.html" label="Namespaces"/>
                 <coding href="coding-guidelines.html" label="Coding Guidelines"/>
-                <javadoc-error href="javadoc-error.html"/>
+                <reservednames href="reserved_names.html" label="Reserved Names"/>
                 <node-e href="unittests.html" label="Unit Tests"/>
                 <node-e href="xinclude-processor.html" label="XInclude Processor"/>
             </misc>
