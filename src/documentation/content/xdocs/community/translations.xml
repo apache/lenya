@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: website-update.xml 47579 2004-09-30 12:25:51Z thorsten $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Translating Lenya</title>
+	</header>
+	<body>
+<p>If you want to contribute translations to Lenya, you need to know about dictionary files only. If you are a developer, read the key naming conventions too. </p>
+
+<section><title id="head-2e0b803ec8bb1aeca6151343d92c6736e12621a8">Dictionary Files</title>
+
+<p>Dictionary files are loacted at </p>
+<ul>
+<li><p> lenya/resources/i18n/*(_)?*.xml </p>
+</li>
+<li><p> lenya/pubs/@@pubname@@/lenya/resources/i18n/*(_)?*.xml </p>
+</li>
+</ul>
+<p>The latter one is a publication specific translation file which gets merged with the global one. The publication specific translations will override the global ones. 
+ 
+
+ An example name for a dictionary file is <tt>cmsui_de.xml</tt> or <tt>cmsui_fr.xml</tt> where <tt>_de</tt> and <tt>_fr</tt> are the official locale extensions. If you want to contribute a translation, make a copy of <tt>cmsui.xml</tt> , add your locale extension to the file name, and translate the text as shown below </p>
+
+<p>Change </p>
+
+<pre>
+&lt;message key="lenya.news.main.title"&gt;Maintain News&lt;/message&gt;
+</pre>
+<p>to </p>
+
+<pre>
+&lt;message key="lenya.news.main.title"&gt;News verwalten&lt;/message&gt;
+
+</pre>
+<p>When you are done, submit a bug report to Bugzilla and attach your new dictionary file. That way, it gets noticed and can be added to Lenya. </p>
+
+</section><section><title id="head-3dccef277d6eba19c1ecd022ab2023c746c4de85">Message Key Naming Conventions</title>
+
+<p>In general we can differ between  </p>
+<ul>
+<li><p>  global messages </p>
+</li>
+<li><p>  context specific messages </p>
+
+</li>
+</ul>
+<p>It is considered a good practice to encode the context within the message key. This will avoid key collisions if message catalogies of different contexts are merged. The context should be the key's prefix and MUST always start with "lenya.". </p>
+<p>We propose here to use the following naming scheme of i18n message keys. </p>
+
+</section><section><title id="head-a95e9b852ff1f985e7b7c2c1cabaa430129dcc04">Global Message Keys</title>
+
+
+<pre>
+&lt;message key="lenya.common.delete.label"&gt;Delete&lt;/message&gt;
+&lt;message key="lenya.common.delete.hint"&gt;Delete object&lt;/message&gt;
+
+&lt;message key="lenya.common.delete.label"&gt;Cancel&lt;/message&gt;
+&lt;message key="lenya.common.delete.hint"&gt;Cancel current action.&lt;/message&gt;
+</pre>
+
+<p> 
+ In the above examples the context is lenya.common which indicates the global context. </p>
+
+</section><section><title id="head-72f923ab0c18f9c75ebdec73ae50097813e5c0fe">Context Specific Message Keys</title>
+
+
+<pre>
+&lt;message key="lenya.news.main.title"&gt;Maintain News&lt;/message&gt;
+&lt;message key="lenya.news.delete.hint"&gt;Delete all selected news items.&lt;/message&gt;
+</pre>
+
+<p> 
+ It is up to the message author how long(detailed) the context prefix is. </p>
+
+</section><section><title id="head-c573c67e7eded7f63f9c54594da2992d11fbc4cb">I18N Survival Resources</title>
+
+<ul>
+<li><p>  <a  href="http://intertwingly.net/stories/2004/04/14/i18n.html"> http://intertwingly.net/stories/2004/04/14/i18n.html</a> </p>
+</li>
+<li><p>  <a  href="http://www.joelonsoftware.com/articles/Unicode.html"> http://www.joelonsoftware.com/articles/Unicode.html</a> </p>
+</li>
+
+<li><p>  <a  href="http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode"> http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode</a>  </p>
+</li>
+<li><p>  <a  href="http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF"> http://www.tbray.org/ongoing/When/200x/2003/04/26/UTF</a> </p>
+</li>
+</ul>		</section>
+
+		
+	</body>
+</document>

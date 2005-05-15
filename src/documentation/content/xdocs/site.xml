@@ -229,6 +229,7 @@
   <community href="community/" label="Community" tab="community">
     <index_com href="index.html" label="Contributing"/>
     <wiki href="ext:wiki/lenya" label="Lenya Wiki" />
+    <translating href="translations.html" label="Translations" />
     <node-h href="acknowledgements.html" label="Credits"/>
     <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
         <node-g
