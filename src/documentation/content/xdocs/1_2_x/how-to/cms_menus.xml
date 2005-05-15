@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>CMS Menus How-To</title>
+  </header>
+    <body>
+<p>The CMS Menus are the menu options in Lenya that are available only in authoring mode and that are used by the editor, reviewer or admin to trigger operations such as editing, deleting or publishing a page and the like. CMS Menus are completely different and have nothing in common with the navigational menus in your publication! </p>
+<p>In other words: The site navigation is what the readers in the Live view will see, while the CMS Menus are only visible in the authoring area. </p>
+
+<section><title id="head-d4956a0675807cf9a821ed7373a9f0ac8b2c4283">Why care about CMS Menus</title>
+
+<p>Most of the time the CMS Menus can be seen as a part of the Lenya application and should just work. But sometimes it will be necessary to introduce additional menu options if your publication has any special operations that need to be accessible through a menu option. Sometimes you might also find that a menu option is grayed out when you think it should be accessible. In that case understanding the anatomy of the CMS menus will help you in debugging the problem. </p>
+
+</section><section><title id="head-8e7bea88bc6cc2c0ef5910f4785f11121b6ebde2">Lenya Core Documentation</title>
+
+<p>There is some information on the CMS Menus in the official Lenya documentation, but it's hidden in a pleace where you might not expect it. So here's a link: <a  href="site:menubar">Menubar documentation</a> </p>
+<p>Make sure you read that before continuing reading this page here! </p>
+<p>Unfortunately the picture on the page mentioned above is a bit misleading. You might think that "Usecases" and "Workflow" steps in read in the right part of the picture refer to XSLT stylesheets which are applied using the XSLT transformer. This is not the case! They are own transformers implemted directly in the Lenya Java layer: </p>
+
+<pre>
+    &lt;map:transformer name="workflowmenu" logger="lenya.sitemap.transformer.workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/&gt;
+    &lt;map:transformer name="usecasemenu" logger="lenya.sitemap.transformer.usecasemenu" src="org.apache.lenya.cms.cocoon.transformation.UsecaseMenuTransformer"/&gt;
+
+</pre>
+<p>Nevertheless they do exactly what is described in the picture: They disable menu options if they are not accessible because  </p>
+<ul>
+<li><p> executing the usecase requires a role which the user belonging to the current session is lacking or  </p>
+</li>
+<li><p> the current workflow state of the document forbidds the usecase </p>
+</li>
+</ul>
+
+</section><section><title id="head-f06da7765bdcb4fdb7ca94cedada41bafeee1d5b">Introducing a new menu option</title>
+
+<p>First of all, before you start adding a new menu option to the CMS menus, ask yourself what usecase should be linked to that menu option and if the usecase exists already. If you find out that you need a new usecase as well, it is up to you if you first implement the new usecase and test it manuelly by invoking the appropriate URIs and then add the menu option or do it vice versa. It is just important that you understand that it will take both: The usecase and the menu option to enable new functionality for the user. </p>
+<p>According to the page on the core documentation mentioned above, the CMS menus are defined in an XML document like this: </p>
+
+<pre>
+&lt;menu
+    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
+    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"&gt;
+
+  ...
+
+  &lt;item wf:event="edit"
+        uc:usecase="edit-forms"
+        uc:step="open" href="?..."&gt;Edit with Forms&lt;/item&gt;
+  
+  ...
+
+
+&lt;/menu&gt;
+</pre>
+
+</section><section><title id="head-717f7a242c8db5f6fb81e54e27fcbcf590009452">Edit generic.xsp to add the item for the menu option</title>
+
+<p>In practive this XML is generated of an XSP which you can find in </p>
+<p><tt>lenya/pubs/&lt;your-pub&gt;/config/menus/generic.xsp</tt> </p>
+<p>Edit this XSP to add your new menu item! </p>
+<p>The XSP is used in the following section of global-sitemap.xmap: </p>
+
+<pre>
+      &lt;map:match pattern="lenya-page/*/*/**"&gt;
+        &lt;map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/&gt;
+
+        &lt;map:call resource="i18n"/&gt;
+
+        &lt;map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/"&gt;
+          &lt;map:transform type="workflowmenu"/&gt;
+
+        &lt;/map:act&gt;
+
+        &lt;map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml"&gt;
+          &lt;map:transform type="usecasemenu"/&gt;
+        &lt;/map:act&gt;
+
+        &lt;map:transform src="lenya/xslt/menu/menu2xhtml.xsl"&gt;
+
+          &lt;map:parameter name="contextprefix" value="{request:contextPath}"/&gt;
+          &lt;map:parameter name="publicationid" value="{1}"/&gt;
+          &lt;map:parameter name="completearea" value="{2}"/&gt;
+          &lt;map:parameter name="documentarea" value="{page-envelope:area}"/&gt;
+          &lt;map:parameter name="documenturl" value="{page-envelope:document-url}"/&gt;
+          &lt;map:parameter name="documentid" value="{page-envelope:document-id}"/&gt;
+
+          &lt;map:parameter name="userid" value="{access-control:user-id}"/&gt;
+          &lt;map:parameter name="servertime" value="{date-i18n:currentDate}"/&gt;
+          &lt;map:parameter name="workflowstate" value="{workflow:state}"/&gt;
+          &lt;map:parameter name="islive" value="{workflow:variable.is_live}"/&gt;
+        &lt;/map:transform&gt;
+
+        &lt;map:call resource="i18n"/&gt;
+
+        &lt;map:transform src="lenya/xslt/menu/menu2xslt.xsl"&gt;
+          &lt;map:parameter name="contextprefix" value="{request:contextPath}"/&gt;
+          &lt;map:parameter name="publicationid" value="{1}"/&gt;
+          &lt;map:parameter name="area" value="{2}"/&gt;
+          &lt;map:parameter name="documenturl" value="{page-envelope:document-url}"/&gt;
+        &lt;/map:transform&gt;
+
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+</pre>
+<p>The <tt>&lt;map:generate&nbsp;src="cocoon:/menu-xml/{1}/{2}/{3}"/&gt;</tt> is an internal pipeline, which can be found in the same file: </p>
+
+<pre>
+      &lt;!-- menu-xml/{publication-id}/... --&gt;
+
+      &lt;map:match pattern="menu-xml/*/**" internal-only="true"&gt;
+        &lt;map:mount uri-prefix="menu-xml/{1}/" src="lenya/pubs/{1}/menus.xmap" check-reload="true" reload-method="synchron"/&gt;
+      &lt;/map:match&gt;
+</pre>
+<p>This mounts the <tt>lenya/pubs/&lt;your-pub&gt;/menus.xmap</tt> sitemap snippet from the publication which then will decide weather we are in live or authoring mode and generate the menu definition from the publication specific menu.xsp: </p>
+
+<pre>
+      &lt;map:match pattern="live/**"&gt;
+        &lt;map:generate type="serverpages" src="../../content/menus/live.xsp"/&gt;
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+
+      &lt;map:match pattern="**"&gt;
+
+        &lt;map:generate type="serverpages" src="config/menus/generic.xsp"/&gt;
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+
+    &lt;/map:pipeline&gt;
+</pre>
+
+</section><section><title id="head-3c7c7b03da78f976501b3a61c43af692d6ced2c4">Double-check usecase and workflow configuration</title>
+
+<p>If you look back at the <tt>lenya-page/*/*/**</tt> matcher in global-sitemap.xmap above, the menus are built by: </p>
+<ul>
+<li><p> generating the menu definition from the XSP (which we edited already) </p>
+</li>
+<li><p> applying the workflowmenu and usecasemenu transformers </p>
+</li>
+<li><p> using <tt>lenya/xslt/menu/menu2xhtml.xsl</tt> to generate the XHTML </p>
+
+</li>
+</ul>
+<p>This means if you added your new menu option to the XSP it should show up in the menu. But it might be grayed out. </p>
+<p>If this is the case, either the workflowmenu or the usecasemneu transformer decided based on the workflow configuration or based on the usecase policy that this option is not available to this user at this point in time. You may want to check the appropriate configurations to check why this is the case. </p>
+<p>The usecase configuration can be found in <tt>lenya/pubs/&lt;your-pub&gt;/config/ac/usecase-policies.xml</tt> </p></section>   </body>
+</document>

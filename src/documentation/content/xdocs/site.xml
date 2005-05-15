@@ -108,6 +108,7 @@
                 <newmimetype href="new_mime_type.html" label="Adding Mime Types"/>
                 <sitenavigation href="site_navigation.html" label="Site Navigation"/>
                 <ldapauthentication href="ldap_authentication.html" label="LDAP Authentication"/>
+                <cmsmenus href="cms_menus.html" label="CMS Menus"/>
             </howtos>
             <components href="components/" label="Components">
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">
