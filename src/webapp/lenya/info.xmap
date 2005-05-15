@@ -301,7 +301,7 @@
             <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
           </map:transform>
           
-          <map:transform src="cocoon://lenya-page/{../1}/info/default.xml"/>
+          <map:transform src="cocoon://lenya-page/{../1}/info/default.xml?doctype={page-envelope:document-type}"/>
         
           <map:call resource="i18n"/>
           <map:transform src="xslt/util/strip_namespaces.xsl"/>        
